@@ -1,26 +1,33 @@
 # FARA
 
-## Foundational Architecture of Reasoning Analysis
+**Foundational Architecture of Reasoning Analysis**
 
-FARA is the theoretical foundation of Project FAR.
+---
 
-Its objective is to identify the smallest architecture capable of representing every structured, explicit, auditable reasoning process within its stated scope.
+## Purpose
 
-FARA does not propose a new reasoning calculus.
+This directory contains the proposed foundational architecture of Project FAR.
 
-Instead, it provides a common representational architecture within which existing reasoning systems may be represented, compared, and analyzed.
+FARA attempts to identify the minimal architecture capable of representing structured, explicit, auditable reasoning within the project's stated scope.
+
+The documents in this directory define the architecture itself. Formal definitions, proofs, and research notes are maintained elsewhere in the repository.
+
+---
 
 ## Contents
 
-- architecture.md
-- primitives.md
-- ontology.md
-- semantics.md
-- omega.md
-- reasoning-states.md
+- `architecture.md` — Introduces FARA.
+- `primitives.md` — Defines the candidate primitive concepts.
+- `ontology.md` — Defines the ontology of FARA.
+- `semantics.md` — Defines how representations acquire meaning.
+- `reasoning-states.md` — Defines reasoning states.
+- `transition-signatures.md` — Defines reasoning state transitions.
+- `omega.md` — Defines Ω, the admissibility structure.
 
-## Current Status
+---
 
-FARA remains a candidate foundational architecture.
+## Related Directories
 
-Several central claims remain conjectural and are currently undergoing formalization and validation.
+- `theory/` — Formal definitions, propositions, theorems, and proofs.
+- `validation/` — Validation against existing reasoning frameworks.
+- `research/` — Open problems, research notes, and development history.
