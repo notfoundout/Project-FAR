@@ -4,7 +4,7 @@
 
 This document defines the ontological structure of the Foundational Architecture of Reasoning Analysis (FARA).
 
-It distinguishes the primitive concepts of the architecture from concepts that are derived from them.
+It distinguishes the primitive concepts of the architecture from concepts derived from them.
 
 Unless explicitly stated otherwise, the terminology used here follows the canonical definitions provided in `theory/definitions.md`.
 
@@ -12,23 +12,17 @@ Unless explicitly stated otherwise, the terminology used here follows the canoni
 
 # Primitive Concepts
 
-The following concepts are treated as primitive within the current version of FARA.
+The current formulation of FARA recognizes the following candidate primitive concepts.
 
 - Investigation
 - Representation
 - Representational Structure
 - Interpretation
 - Reasoning Calculus
-- Reasoning State
-- Transition Signature
-- Candidate
-- Admissibility Structure (Ω)
-- Resolution Rule
-- Resolution
 
-Primitive concepts are not currently defined in terms of other architectural concepts.
+These concepts are presently regarded as irreducible within the framework.
 
-Whether this collection is minimal or complete remains an open research question.
+Whether this collection is both minimal and sufficient remains an active research question.
 
 ---
 
@@ -36,7 +30,14 @@ Whether this collection is minimal or complete remains an open research question
 
 The following concepts are currently regarded as derived from the primitive concepts.
 
-Examples include:
+- Reasoning State
+- Transition Signature
+- Candidate
+- Admissibility Structure (Ω)
+- Resolution Rule
+- Resolution
+
+Additional derived concepts include, but are not limited to:
 
 - Evidence
 - Observation
@@ -49,7 +50,7 @@ Examples include:
 - Prediction
 - Counterexample
 
-Additional derived concepts may be introduced provided they can be defined using the primitive concepts.
+Every derived concept should ultimately be definable in terms of the primitive concepts.
 
 ---
 
@@ -57,24 +58,24 @@ Additional derived concepts may be introduced provided they can be defined using
 
 Primitive concepts provide the architectural foundation of FARA.
 
-Derived concepts are defined in terms of the primitive concepts and their relationships.
+Derived concepts are defined in terms of primitive concepts and other previously established derived concepts.
 
-The objective is to maintain a minimal ontology while preserving the expressive power required to represent reasoning across multiple domains.
+The objective is to maintain the smallest collection of primitive concepts capable of representing every reasoning process within the intended scope of Project FAR.
 
 ---
 
 # Research Status
 
-The current ontology is regarded as provisional.
+The ontology remains provisional.
 
-Ongoing research seeks to determine:
+Current research investigates:
 
-- Whether any primitive concepts can be derived.
 - Whether additional primitive concepts are required.
-- Whether the current ontology is minimal.
-- Whether the ontology is universal within the scope of Project FAR.
+- Whether any current primitive can be reduced.
+- Whether the current primitive collection is minimal.
+- Whether the architecture is universal within its stated scope.
 
-These questions are tracked in:
+See:
 
 `research/open-questions.md`
 
@@ -82,6 +83,8 @@ These questions are tracked in:
 
 # Design Principle
 
-New primitive concepts should be introduced only after demonstrating that existing primitive concepts cannot adequately represent the required architectural structure.
+Project FAR prefers reduction over expansion.
 
-Whenever possible, Project FAR prefers reduction over expansion.
+A concept should be regarded as primitive only after reasonable attempts to derive it from simpler concepts have failed.
+
+Accordingly, every candidate primitive remains subject to revision as the formal theory develops.
