@@ -2,65 +2,63 @@
 
 ## Purpose
 
-This document defines transition signatures within FARA.
+This document defines transition signatures within the Foundational Architecture of Reasoning Analysis (FARA).
 
-A transition signature explicitly describes the transformation from one reasoning state to another.
+A transition signature explicitly represents the transformation from one reasoning state to another.
 
-It does not define the reasoning states themselves or evaluate the results of a transition.
+It does not define reasoning states or determine the admissibility of candidates.
 
 ---
 
 ## Definition
 
-A transition signature is the explicit description of the changes required to transform one reasoning state into another.
+A **transition signature** is the explicit description of the transformation between two reasoning states.
 
-If
-
-```
-S₁ → S₂
-```
-
-is a reasoning transition,
-
-the transition signature specifies the transformation from **S₁** to **S₂**.
-
-The formal definition of a transition signature is maintained in:
+The canonical definition of a transition signature is maintained in:
 
 `theory/definitions.md`
 
 ---
 
+## Objective
+
+The purpose of a transition signature is to make every transformation performed during reasoning explicit.
+
+Transition signatures provide a complete record of how an investigation progresses from one reasoning state to the next.
+
+---
+
 ## Properties
 
-A valid transition signature should satisfy the following properties.
+A transition signature should satisfy the following properties.
 
 ### Explicitness
 
-Every modification between reasoning states is represented explicitly.
+Every transformation between reasoning states is explicitly represented.
 
 ---
 
 ### Traceability
 
-Each modification possesses an identifiable justification.
+Every transformation possesses an identifiable justification.
 
 ---
 
 ### Auditability
 
-Another investigator should be capable of reconstructing the transition from its explicit description.
+Another investigator should be capable of reconstructing the transformation from its explicit description.
 
 ---
 
 ### Reproducibility
 
-Applying an equivalent transition signature to an equivalent reasoning state should produce an equivalent result.
+Applying an equivalent transition signature to an equivalent reasoning state should produce an equivalent resulting reasoning state.
 
 ---
 
-## Transition Categories
+## Transformation Categories
 
-Common classes of transitions include:
+Common categories of transformations include:
 
 - Addition
 - Removal
@@ -69,21 +67,20 @@ Common classes of transitions include:
 - Interpretation Change
 - Investigation Change
 
-These categories classify transitions but do not constitute distinct architectural components.
+These categories classify transformations but are not themselves architectural components.
 
 ---
 
 ## Relationship to Other Components
 
-Transition signatures operate upon reasoning states.
+Transition signatures transform reasoning states.
 
-The admissibility of the resulting reasoning state is determined independently.
+The resulting reasoning state may produce a different classification of candidates by the Admissibility Structure (Ω).
 
 See:
 
-`reasoning-states.md`
-
-`omega.md`
+- `reasoning-states.md`
+- `admissibility-structure.md`
 
 ---
 
@@ -91,8 +88,9 @@ See:
 
 Current research investigates:
 
-- minimal transition descriptions,
-- transition equivalence,
+- minimal transition representations,
 - transition composition,
-- transition algebra,
-- and semantic preservation across transitions.
+- transition decomposition,
+- transition equivalence,
+- semantic preservation across transformations,
+- and transition algebra.
