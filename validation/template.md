@@ -1,90 +1,69 @@
-# Validation Template
+# Validation — <Framework Name>
 
 ## Purpose
 
-This document defines the standard methodology used to validate existing reasoning frameworks against Project FAR.
+This document evaluates the applicability of Project FAR to <Framework Name>.
 
-Every validation study should follow this structure to ensure consistency, comparability, reproducibility, and auditability.
-
----
-
-# 1. Framework
-
-## Name
-
-Identify the reasoning framework being examined.
+The objective is to determine whether the architectural components of FARA, the methodology of FAR, and the operations of FARO adequately represent reasoning conducted within the framework.
 
 ---
 
-## Purpose
+# Framework
 
-Describe the objective of the framework.
+Provide a concise overview of the reasoning framework being evaluated.
 
----
+Describe:
 
-## Domain
-
-Identify the domains for which the framework was developed.
-
----
-
-# 2. Structural Analysis
-
-## Primitive Concepts
-
-Identify the concepts treated as primitive within the framework.
+- Purpose
+- Primary concepts
+- Reasoning methodology
+- Scope
 
 ---
 
-## Derived Concepts
-
-Identify concepts derived from the framework's primitives.
-
----
-
-## Architectural Structure
-
-Describe how the framework organizes its concepts and relationships.
-
----
-
-# 3. Reasoning Analysis
+# FARA Analysis
 
 ## Investigation
 
-Describe what constitutes an investigation within the framework.
+Describe the object of investigation.
 
 ---
 
 ## Representations
 
-Identify the representations manipulated during reasoning.
+Identify the primary representations manipulated by the framework.
+
+---
+
+## Representational Structure
+
+Describe how representations are organized.
 
 ---
 
 ## Interpretation
 
-Describe how meaning is assigned to representations.
+Explain how meaning is assigned to representations.
 
 ---
 
+# FAR Analysis
+
 ## Reasoning Calculus
 
-Identify the rules governing reasoning.
+Describe the rules governing reasoning within the framework.
 
 ---
 
 ## Reasoning States
 
-Describe how reasoning progresses.
-
-If the framework does not explicitly define reasoning states, describe an equivalent representation.
+Describe the information contained within each reasoning state.
 
 ---
 
-## Transformations
+## Transition Signatures
 
-Describe how reasoning states evolve.
+Describe the transformations connecting reasoning states.
 
 ---
 
@@ -94,129 +73,60 @@ Identify the candidates admitted for consideration.
 
 ---
 
-## Admissibility
+## Admissibility Structure (Ω)
 
-Describe how candidate admissibility is determined.
+Explain how candidates are classified as admissible or inadmissible.
+
+---
+
+## Resolution Rule
+
+Describe how admissible candidates are selected.
 
 ---
 
 ## Resolution
 
-Describe how the framework reaches a final resolution.
+Describe the resulting conclusion or outcome of the investigation.
 
 ---
 
-# 4. Mapping to FARA
+# FARO Analysis
 
-Describe how the framework maps onto the Foundational Architecture of Reasoning Analysis (FARA).
+Describe how Project FAR can compare two reasoning processes within the framework.
 
-Identify:
+Consider questions such as:
 
-- Direct correspondences
-- Missing components
-- Additional components
-- Structural differences
-
----
-
-# 5. Application of FAR
-
-Describe how an investigation would be conducted using the Foundational Analysis of Reasoning (FAR) within this framework.
+- What representations are shared?
+- Where do the investigations first diverge?
+- Do the reasoning calculi differ?
+- Do the admissibility structures differ?
+- Do the resolution rules differ?
+- How does the divergence propagate?
 
 ---
 
-# 6. Application of FARO
+# Evaluation
 
-Describe how reasoning processes within this framework can be:
+Evaluate how effectively Project FAR represents the framework.
 
-- Compared
-- Audited
-- Subjected to disagreement analysis
+Discuss:
 
----
-
-# 7. Evaluation
-
-## Strengths
-
-Identify aspects of the framework that align well with Project FAR.
+- Architectural compatibility
+- Methodological compatibility
+- Operational compatibility
+- Limitations (if any)
 
 ---
 
-## Limitations
+# Conclusion
 
-Identify limitations or incompatibilities.
+Summarize the overall results of the validation.
 
----
-
-## Open Questions
-
-Identify unresolved issues requiring further investigation.
+State whether the framework is naturally representable within Project FAR and identify any observations relevant to future development.
 
 ---
 
-# 8. Validation Summary
+# Notes
 
-## Architecture Compatibility
-
-- Full
-- Partial
-- None
-
-Provide justification.
-
----
-
-## Methodology Compatibility
-
-- Full
-- Partial
-- None
-
-Provide justification.
-
----
-
-## Operational Compatibility
-
-- Full
-- Partial
-- None
-
-Provide justification.
-
----
-
-## Overall Assessment
-
-Summarize the overall compatibility of the framework with Project FAR.
-
----
-
-## Recommended Research
-
-Identify future research that could improve either the validation or Project FAR itself.
-
----
-
-# 9. Conclusion
-
-Summarize the validation study.
-
-State whether the framework appears:
-
-- Fully representable
-- Partially representable
-- Not currently representable
-
-Provide justification for the conclusion.
-
----
-
-## Notes
-
-Validation studies describe existing reasoning frameworks.
-
-They should not modify Project FAR to accommodate those frameworks.
-
-Potential improvements to Project FAR identified during validation should be documented separately and evaluated independently.
+Record any observations, open questions, or opportunities for future research identified during the validation.
