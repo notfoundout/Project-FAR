@@ -133,16 +133,22 @@ See:
 
 ---
 
-# Current Focus
+## Current Phase
 
-Project FAR is now primarily focused on:
+### Phase V — Methodological Foundations
 
-1. Developing the formal theory.
-2. Establishing formal propositions.
-3. Developing lemmas and theorems.
-4. Constructing formal proofs.
-5. Expanding validation across additional reasoning frameworks.
-6. Preparing publication-quality papers.
+The current focus of Project FAR is the formal investigation of the methodology used to justify theoretical results.
+
+Recent research has shifted attention from proving the flagship theorems to validating the proof techniques upon which those theorems depend.
+
+No canonical theoretical revisions are currently pending.
+
+## Current Priorities
+
+1. Investigate the logical foundations of model separation.
+2. Determine appropriate proof strategies for primitive independence.
+3. Resume investigation of T-MINIMAL-PRIMITIVE-ARCHITECTURE.
+4. Continue the flagship theorem research program.
 
 ---
 
