@@ -2,105 +2,78 @@
 
 ## Purpose
 
-Semantics specifies how representations acquire meaning within FARA.
+This document defines the semantic component of FARA.
 
-FARA distinguishes between representation and interpretation.
+Semantics specifies how explicit representations are assigned meaning within the architecture.
 
-Representations specify what is explicitly present within a reasoning state.
-
-Interpretations specify what those representations denote.
-
-This separation allows identical representations to possess different meanings under different interpretations.
+It does not define the representations themselves or the entities that participate in reasoning.
 
 ---
 
-# Representation
+## Semantic Principle
 
-A representation consists solely of explicit structure.
+Representations possess structure independently of meaning.
 
-Representations may be:
+Meaning arises only through interpretation.
 
-- statements,
-- graphs,
-- mathematical expressions,
-- models,
-- observations,
-- definitions,
-- or any other explicitly distinguishable object.
-
-Representations alone possess no intrinsic meaning.
+Consequently, identical representations may possess different meanings under different interpretations.
 
 ---
 
-# Interpretation
+## Interpretation
 
-An interpretation assigns semantic content to representations.
+Interpretation assigns semantic content to representations.
 
-Interpretation maps explicit representations onto whatever domain the investigation concerns.
+An interpretation specifies what a representation denotes within the context of an investigation.
 
-Different interpretations may assign different meanings to identical representations.
+The formal definition of interpretation is maintained in:
 
----
-
-# Semantic Validity
-
-A representation is semantically valid relative to an investigation if:
-
-1. every representation possesses an explicit interpretation,
-
-2. every interpretation is explicitly specified,
-
-3. every reasoning transition preserves explicitly stated interpretations unless the change itself is represented,
-
-4. every conclusion remains traceable to interpreted representations.
-
-Semantic validity therefore depends upon explicit representation rather than implicit understanding.
+`theory/definitions.md`
 
 ---
 
-# Meaning Preservation
+## Semantic Dependence
 
-A reasoning transition preserves meaning when:
+The meaning of a representation depends upon:
 
-- every representation remaining after the transition possesses the same interpretation,
-
-or
-
-- every change of interpretation is itself explicitly represented.
-
-Meaning preservation is therefore determined by explicit semantic correspondence rather than syntactic similarity alone.
-
----
-
-# Equivalent Representations
-
-Two representations are semantically equivalent if they denote the same interpreted content relative to the same investigation.
-
-Semantic equivalence does not require identical syntax.
-
-Different symbolic forms may represent identical meaning.
-
----
-
-# Investigation Dependence
-
-Meaning is always relative to:
-
-- the representational structure,
+- the representation itself,
 - the interpretation,
-- and the investigation.
+- the investigation.
 
-No representation possesses absolute semantic content independently of these components.
+Meaning is therefore relative rather than intrinsic.
 
 ---
 
-# Open Problems
+## Semantic Equivalence
 
-Current research has not yet established:
+Two representations are semantically equivalent if they denote the same content under the same interpretation.
 
-- a complete formal semantics,
-- representation theorems for semantic equivalence,
-- independence of interpretation,
-- completeness of semantic validity.
+Semantic equivalence does not require syntactic equivalence.
 
-These remain active areas of investigation.
+Different representations may express the same meaning.
+
+---
+
+## Semantic Change
+
+A reasoning transition may preserve or modify semantic content.
+
+Changes in meaning should occur only through explicitly represented changes of interpretation.
+
+The mechanisms governing reasoning transitions are defined in:
+
+`transition-signatures.md`
+
+---
+
+## Research Status
+
+A complete formal semantics has not yet been established.
+
+Current work includes:
+
+- formal semantic models,
+- semantic preservation,
+- semantic equivalence,
+- completeness,
+- and representation theorems.
