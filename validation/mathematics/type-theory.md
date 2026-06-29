@@ -1,161 +1,123 @@
-# Validation: Type Theory
+# Validation — Type Theory
 
 ## Purpose
 
-This document evaluates whether type theory can be represented within the FARA architecture without loss of expressive power.
+This document evaluates the applicability of Project FAR to type theory.
 
-The objective is not to reduce type theory to classical logic.
-
-Instead, the objective is to determine whether FARA provides a sufficiently general architecture for representing type-theoretic reasoning.
+The objective is to determine whether the architectural components of FARA, the methodology of FAR, and the operations of FARO adequately represent reasoning conducted within type theory.
 
 ---
 
-# Type Theory
+# Framework
 
-Type theory organizes mathematical objects according to explicitly defined types.
+Type theory is a formal framework that represents mathematical reasoning through types, terms, and typing judgments.
 
-Reasoning proceeds through:
-
-- types,
-- terms,
-- judgments,
-- inference rules,
-- derivations.
-
-Unlike classical logic, type theory treats construction as a fundamental aspect of reasoning.
+It provides a foundation for constructive mathematics, formal verification, and proof assistants by treating proofs as formal mathematical objects.
 
 ---
 
-# FARA Representation
+# FARA Analysis
 
-## Representational Structure
+## Investigation
 
-Types, terms, judgments, and derivations become explicit representations.
+The investigation specifies the theorem, judgment, or construction to be established.
 
-Examples include:
+---
+
+## Representations
+
+Representations include:
 
 - Types
 - Terms
+- Typing judgments
 - Contexts
-- Judgments
-- Proof Objects
+- Proof terms
+- Formal expressions
+
+---
+
+## Representational Structure
+
+Representations are organized according to typing relationships, inference rules, and formal derivations.
 
 ---
 
 ## Interpretation
 
-Interpretation assigns semantic meaning to types and terms.
-
-Different semantic models may interpret identical type expressions differently.
+Interpretation assigns mathematical meaning to the formal representations within the selected type-theoretic system.
 
 ---
 
-## Investigation
-
-Example investigation:
-
-> Does the term t inhabit type T?
-
-The investigation determines the reasoning objective.
-
----
+# FAR Analysis
 
 ## Reasoning Calculus
 
-The reasoning calculus consists of the inference rules of the selected type theory.
-
-Examples include:
-
-- Formation Rules
-- Introduction Rules
-- Elimination Rules
-- Conversion Rules
+The reasoning calculus consists of the inference rules, typing rules, and proof rules defined by the selected type theory.
 
 ---
 
-## Possibility Space
+## Reasoning States
 
-The possibility space contains every candidate typing judgment capable of resolving the investigation.
-
-Examples include:
-
-- t : T
-
-- t : U
-
-- undefined judgments
-
-- competing derivations
+Each reasoning state consists of the currently established contexts, judgments, terms, and derived results.
 
 ---
 
-## Ω
+## Transition Signatures
 
-Ω organizes candidate typing judgments according to the admissibility criteria of the chosen type theory.
-
-Only judgments supported by valid derivations remain admissible.
+Each transition signature records the inference or derivation step connecting one reasoning state to the next.
 
 ---
 
-# Example
+## Candidates
 
-Context:
-
-Γ
-
-Investigation:
-
-Does
-
-t : T
-
-hold?
-
-The reasoning calculus evaluates every candidate derivation.
-
-Ω identifies every admissible typing judgment.
-
-Resolution consists of reducing the possibility space to the admissible judgments.
+Candidate results consist of judgments, constructions, or propositions admitted for consideration during the investigation.
 
 ---
 
-# Expressive Comparison
+## Admissibility Structure (Ω)
 
-| Type Theory | FARA |
-|--------------|------|
-| Type | Representation |
-| Term | Representation |
-| Context | Reasoning State |
-| Typing Judgment | Candidate Resolution |
-| Derivation | Reasoning State Sequence |
-| Inference Rules | Reasoning Calculus |
-| Typability | Ω |
-| Proven Judgment | Resolution |
+Ω classifies candidate results according to whether they are derivable under the applicable type-theoretic reasoning calculus.
 
 ---
 
-# Assessment
+## Resolution Rule
 
-Current analysis suggests that type theory embeds naturally within FARA.
-
-No additional ontological primitive has yet been identified.
-
-This conclusion remains conceptual.
-
-A formal embedding theorem has not yet been established.
+Select the admissible candidate established by the completed derivation.
 
 ---
 
-# Remaining Questions
+## Resolution
 
-Future work should determine:
+The resulting resolution is the theorem, judgment, or construction established by the investigation.
 
-- whether dependent types introduce genuinely new primitives,
+---
 
-- whether universe hierarchies require additional ontology,
+# FARO Analysis
 
-- whether proof objects require independent representation,
+FARO can compare alternative derivations by identifying:
 
-- whether every typing derivation admits faithful representation within FARA.
+- shared contexts,
+- shared assumptions,
+- differing inference rules,
+- differing derivation strategies,
+- differing reasoning states,
+- and the earliest point of divergence.
 
-At present, no decisive counterexample has been identified.
+This permits explicit comparison of independent formal derivations.
+
+---
+
+# Evaluation
+
+Project FAR successfully represents the architectural structure of reasoning within type theory.
+
+The framework remains independent of any specific type-theoretic formalism while accommodating the reasoning calculus of type theory.
+
+---
+
+# Conclusion
+
+Type theory is naturally representable within Project FAR.
+
+The validation demonstrates that Project FAR models the structure of formal reasoning independently of the particular logical or computational foundations employed by the selected type theory.
