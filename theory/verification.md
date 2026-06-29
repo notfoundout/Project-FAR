@@ -377,3 +377,84 @@ Current evidence suggests that interpretation may legitimately evolve during an 
 The proposed derivation of Reasoning State remains viable provided the current interpretation is regarded as part of the characterization of the reasoning process.
 
 Further analysis is required.
+
+---
+
+## Verification Update — Investigation Objective
+
+### Objective
+
+Determine whether the concept of an objective is required to define the identity of an Investigation.
+
+---
+
+### Observation
+
+Previous analysis suggested that the identity of an Investigation may be determined by its objective.
+
+However, the concept of an objective has not been formally defined within Project FAR.
+
+This raises the possibility that the proposed explanation introduces another hidden assumption.
+
+---
+
+### Candidate Hypotheses
+
+#### Hypothesis A
+
+Objective is a primitive concept.
+
+**Implication**
+
+The primitive architecture must be expanded.
+
+---
+
+#### Hypothesis B
+
+Objective is a derived concept.
+
+**Implication**
+
+Objective requires a formal derivation before it can be used to characterize an Investigation.
+
+---
+
+#### Hypothesis C
+
+Objective is unnecessary.
+
+The identity of an Investigation can instead be characterized entirely by concepts already present within the primitive architecture.
+
+Possible alternatives include:
+
+- the question under analysis,
+- the initial specification of representations,
+- the criteria governing the reasoning process,
+- or another construct derivable from the primitive architecture.
+
+---
+
+### Preliminary Assessment
+
+Hypothesis C presently appears preferable.
+
+Introducing objective as a primitive concept would weaken the current claim of architectural minimality.
+
+Before expanding the primitive architecture, every attempt should be made to characterize Investigation using only existing primitives.
+
+---
+
+### Open Questions
+
+Can an Investigation be identified without introducing the concept of an objective?
+
+If not, is objective primitive or derivable?
+
+---
+
+### Provisional Conclusion
+
+The identity conditions of an Investigation remain unresolved.
+
+The concept of an objective should not be incorporated into the formal theory until its ontological status has been determined.
