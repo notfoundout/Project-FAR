@@ -1,166 +1,73 @@
-# FARA
+# Architecture
 
-## Foundational Architecture of Reasoning Analysis
+## Purpose
 
----
+This document defines the Foundational Architecture of Reasoning Analysis (FARA).
 
-# Abstract
+FARA is the proposed architectural foundation of Project FAR. Its objective is to determine whether every structured, explicit, auditable reasoning process within the project's stated scope can be represented by a common minimal architecture.
 
-FARA is a candidate foundational architecture for representing structured, explicit, and auditable reasoning.
-
-Unlike formal logic, Bayesian inference, optimization theory, or decision theory, FARA does not prescribe how reasoning should proceed. Instead, it attempts to identify the minimal architecture common to every reasoning system within its stated scope.
-
-The framework seeks to answer a single foundational question:
-
-> What is the smallest collection of primitive concepts capable of representing every structured, explicit, auditable reasoning process?
-
-The long-term objective is not merely to propose such an architecture, but to determine whether one exists at all.
+This document defines the architecture itself. Individual components are defined in their respective documents.
 
 ---
 
-# Motivation
+## Architectural Objective
 
-Reasoning has historically been studied through specialized formal systems.
+FARA seeks to identify the smallest collection of irreducible concepts sufficient to represent structured reasoning.
 
-Deductive logic studies valid inference.
+The architecture is intended to be independent of any particular reasoning calculus or application domain.
 
-Probability theory studies uncertainty.
-
-Decision theory studies rational choice.
-
-Scientific methodology studies empirical investigation.
-
-Category theory studies mathematical structure.
-
-Each succeeds within its intended domain.
-
-Project FAR investigates a different question.
-
-Rather than asking how one particular kind of reasoning proceeds, it asks what these diverse reasoning systems have in common at the level of representation itself.
-
-If such a common architecture exists, it should describe reasoning without depending upon any particular reasoning calculus.
+Whether such an architecture exists remains an open research question.
 
 ---
 
-# Scope
+## Design Principles
 
-FARA applies only to reasoning satisfying four conditions.
+The architecture is developed according to the following principles.
 
-- Structured
-- Explicit
-- Auditable
-- Reconstructible
+- Minimality
+- Generality
+- Explicitness
+- Auditability
+- Extensibility
 
-Processes that cannot be explicitly represented remain outside the intended scope.
-
-This restriction is methodological rather than metaphysical.
-
-FARA does not claim that all cognition is explicit.
-
-It claims only that explicit reasoning can be analyzed explicitly.
+These principles guide the development of the architecture but are not themselves architectural components.
 
 ---
 
-# Design Goals
+## Architecture
 
-The architecture should satisfy the following objectives.
+The current formulation of FARA consists of a collection of candidate primitive concepts together with the relationships between them.
 
-## Minimality
+The candidate primitives are defined in:
 
-The framework should contain the smallest possible collection of primitive assumptions.
+`primitives.md`
 
-Every surviving primitive introduces explanatory cost.
+The architecture derived from those primitives includes:
 
----
+- an ontology,
+- a semantic framework,
+- reasoning states,
+- transition signatures,
+- and the admissibility structure Ω.
 
-## Generality
-
-The architecture should remain independent of individual reasoning systems.
-
-It should represent logical reasoning, scientific reasoning, legal reasoning, optimization, and comparable systems without privileging any particular framework.
-
----
-
-## Auditability
-
-Every reasoning process should be reconstructible from explicit representations.
-
-No hidden assumptions should be required to understand the reasoning.
+Each component is defined in its own document.
 
 ---
 
-## Extensibility
+## Scope
 
-New reasoning calculi should be representable without requiring modification of the architecture itself.
+FARA is intended to represent structured, explicit, auditable reasoning within the scope defined by Project FAR.
 
----
+It does not prescribe how reasoning should be performed.
 
-# Current Architecture
-
-The present formulation proposes four candidate primitives.
-
-- Representational Structure
-- Interpretation
-- Investigation Question
-- Reasoning Calculus
-
-These are regarded as provisional.
-
-Future work attempts either to derive them from simpler concepts or prove their independence.
+Instead, it provides an architecture within which reasoning may be represented and analyzed.
 
 ---
 
-# Derived Objects
+## Current Status
 
-Current derived objects include:
+FARA remains a candidate architecture.
 
-- Reasoning States
-- Possibility Space
-- Ω (Admissibility Structure)
-- Resolution
+Its components continue to undergo formalization, reduction attempts, validation, and proof.
 
-These objects emerge from interactions among the candidate primitives rather than existing independently.
-
----
-
-# Development Methodology
-
-FARA develops through elimination.
-
-Whenever a new primitive is proposed, the first question asked is:
-
-> Can this be derived?
-
-If the answer is yes, the primitive is removed.
-
-If repeated attempts at reduction fail, the primitive remains only as a candidate for independence.
-
----
-
-# Research Status
-
-FARA remains a research framework.
-
-Its current formulation includes definitions, candidate primitives, working axioms, conjectures, and initial validation efforts.
-
-Major proof obligations remain outstanding, including:
-
-- representation theorems,
-- independence proofs,
-- formal semantics,
-- completeness analysis,
-- external validation.
-
-Accordingly, FARA should presently be regarded as a candidate foundation rather than an established theory.
-
----
-
-# Long-Term Objective
-
-The ultimate objective of FARA is not to defend a particular architecture.
-
-It is to determine whether a universal minimal architecture of structured reasoning exists.
-
-If future work demonstrates that no such architecture is possible, that conclusion would represent a successful outcome of the research program.
-
-Project FAR therefore treats successful counterexamples as scientific progress rather than failure.
+No claim of completeness or minimality has yet been established.
