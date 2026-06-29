@@ -1,44 +1,122 @@
 # FARO
 
-**Foundational Analysis of Reasoning Operations**
-
----
-
 ## Purpose
 
-This directory defines the Foundational Analysis of Reasoning Operations (FARO).
+FARO (Formal Analysis of Reasoning Operations) defines the operations that may be performed upon reasoning representations constructed using the Project FAR architecture.
 
-FARO provides methods for comparing, auditing, and analyzing reasoning processes represented using the Foundational Architecture of Reasoning Analysis (FARA).
+Where FARA defines how reasoning is represented, FARO defines how those representations are manipulated, analyzed, evaluated, transformed, and compared.
 
-Unlike FAR, which defines how investigations are conducted, FARO defines how completed reasoning processes are examined.
-
----
-
-## Contents
-
-- `comparison.md` — Defines comparison between reasoning processes.
-- `auditing.md` — Defines the auditing of reasoning processes.
-- `disagreement-analysis.md` — Defines the analysis of disagreements between reasoning processes.
+Accordingly, FARO constitutes the operational layer of Project FAR.
 
 ---
 
-## Relationship to Project FAR
+# Objective
 
-FARO operates on reasoning processes represented by FARA and conducted using FAR.
+The objective of FARO is to provide a complete operational framework for reasoning analysis.
 
-It extends the framework by providing methods for:
-
-- comparing reasoning processes,
-- auditing procedural integrity,
-- and identifying the causes of disagreement.
-
-FARO remains independent of any particular reasoning calculus or application domain.
+Every FARO operation shall act upon explicit reasoning representations without altering the underlying theoretical architecture.
 
 ---
 
-## Related Directories
+# Relationship to Project FAR
 
-- `fara/` — Foundational architecture.
-- `far/` — Investigation methodology.
-- `theory/` — Formal definitions, axioms, propositions, conjectures, theorems, and proofs.
-- `validation/` — Validation against existing reasoning frameworks.
+Project FAR consists of three complementary components.
+
+## FAR
+
+The foundational theory.
+
+Defines the concepts, principles, and theoretical claims concerning reasoning.
+
+---
+
+## FARA
+
+The representational architecture.
+
+Defines the formal objects used to represent reasoning.
+
+---
+
+## FARO
+
+The operational framework.
+
+Defines the admissible operations that may be performed upon FARA representations.
+
+---
+
+# Design Principles
+
+Every FARO operation should satisfy the following principles.
+
+- Operate upon explicit representations.
+- Preserve formal rigor.
+- Produce reproducible results.
+- Specify required inputs.
+- Specify produced outputs.
+- State any assumptions explicitly.
+
+---
+
+# Categories of Operations
+
+Operations are organized into the following categories.
+
+## Construction
+
+Operations that create representations.
+
+---
+
+## Analysis
+
+Operations that extract information from representations.
+
+---
+
+## Verification
+
+Operations that determine whether specified properties hold.
+
+---
+
+## Transformation
+
+Operations that modify representations while preserving specified properties.
+
+---
+
+## Comparison
+
+Operations that compare two or more representations.
+
+---
+
+## Classification
+
+Operations that assign representations to formally defined categories.
+
+---
+
+## Evaluation
+
+Operations that assess reasoning according to explicitly defined criteria.
+
+---
+
+# Operational Independence
+
+Operations do not alter the theoretical definitions of Project FAR.
+
+Instead, they operate upon representations already defined by the framework.
+
+Accordingly, FARO extends the practical capabilities of Project FAR without modifying its theoretical foundations.
+
+---
+
+# Current Status
+
+The operational framework is under active development.
+
+Individual operations are specified in separate documents.
