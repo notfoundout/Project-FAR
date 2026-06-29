@@ -6,6 +6,8 @@ This example demonstrates how Project FAR represents historical reasoning.
 
 Unlike deductive reasoning, historical investigations rely upon interpreting incomplete evidence to evaluate competing explanations.
 
+This example also illustrates that a valid investigation may conclude that the available evidence is insufficient to justify a stronger conclusion.
+
 ---
 
 # Investigation
@@ -48,7 +50,7 @@ Archaeological evidence provides independent corroboration.
 
 # Interpretation
 
-Historical documents are interpreted according to their language, context, authorship, and provenance.
+Historical documents are interpreted according to their language, context, authorship, provenance, and historical context.
 
 Archaeological evidence is interpreted according to established historical methodology.
 
@@ -64,7 +66,7 @@ The investigation employs historical reasoning through source criticism, corrobo
 
 The investigation begins before a chronological relationship has been established.
 
-The available evidence is incomplete.
+The available evidence is incomplete and partially conflicting.
 
 ---
 
@@ -84,13 +86,13 @@ Identify agreements and conflicts among the sources.
 
 ## Transformation 3
 
-Incorporate archaeological evidence.
+Evaluate the archaeological evidence.
 
 ---
 
 ## Transformation 4
 
-Construct a chronological interpretation supported by the available evidence.
+Determine whether the available evidence justifies a chronological conclusion.
 
 Each transformation produces a new reasoning state.
 
@@ -102,7 +104,7 @@ The investigation admits three candidates.
 
 - Event A occurred before Event B.
 - Event B occurred before Event A.
-- The available evidence is insufficient to determine the order.
+- The available evidence is insufficient to determine the chronological relationship.
 
 ---
 
@@ -110,9 +112,9 @@ The investigation admits three candidates.
 
 | Candidate | Admissibility |
 |-----------|---------------|
-| Event A occurred before Event B | Admissible |
+| Event A occurred before Event B | Not Admissible |
 | Event B occurred before Event A | Not Admissible |
-| Evidence is insufficient | Not Admissible |
+| The available evidence is insufficient to determine the chronological relationship | Admissible |
 
 The admissibility classifications are determined according to the available evidence and the selected historical reasoning calculus.
 
@@ -120,22 +122,40 @@ The admissibility classifications are determined according to the available evid
 
 # Resolution Rule
 
-Select the admissible candidate best supported by the available evidence.
+Select the admissible candidate supported by the investigation.
 
 ---
 
 # Resolution
 
-The available evidence supports the conclusion that Event A occurred before Event B.
+The available evidence is insufficient to determine whether Event A occurred before Event B.
 
-This resolution remains subject to revision if additional historical evidence becomes available.
+The investigation therefore remains unresolved pending additional evidence.
 
 ---
 
 # Discussion
 
-This example demonstrates that historical reasoning differs from deductive reasoning in its treatment of evidence rather than its architectural structure.
+This example demonstrates an important property of Project FAR.
 
-Project FAR represents the investigation using the same architectural components employed in previous examples.
+A completed investigation is not required to establish a positive conclusion.
 
-The reasoning calculus changes from deductive or empirical reasoning to historical reasoning, while the underlying architecture remains unchanged.
+The appropriate resolution may instead be that the available evidence is insufficient to justify any stronger claim.
+
+Project FAR therefore represents justified reasoning rather than forcing determinate conclusions.
+
+The architecture remains unchanged:
+
+- Investigation
+- Representations
+- Representational Structure
+- Interpretation
+- Reasoning Calculus
+- Reasoning States
+- Transformations
+- Candidates
+- Admissibility Structure (Ω)
+- Resolution Rule
+- Resolution
+
+Only the reasoning process and the resulting admissibility classifications differ from previous examples.
