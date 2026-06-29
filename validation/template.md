@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This document defines the standard template used to validate existing reasoning frameworks against Project FAR.
+This document defines the standard methodology used to validate existing reasoning frameworks against Project FAR.
 
-Every validation study should follow this structure to ensure consistency, comparability, and auditability.
+Every validation study should follow this structure to ensure consistency, comparability, reproducibility, and auditability.
 
 ---
 
@@ -24,7 +24,7 @@ Describe the objective of the framework.
 
 ## Domain
 
-Identify the domains in which the framework is intended to operate.
+Identify the domains for which the framework was developed.
 
 ---
 
@@ -70,7 +70,7 @@ Describe how meaning is assigned to representations.
 
 ## Reasoning Calculus
 
-Identify the rules governing reasoning within the framework.
+Identify the rules governing reasoning.
 
 ---
 
@@ -108,7 +108,7 @@ Describe how the framework reaches a final resolution.
 
 # 4. Mapping to FARA
 
-Describe how each architectural component maps onto the Foundational Architecture of Reasoning Analysis.
+Describe how the framework maps onto the Foundational Architecture of Reasoning Analysis (FARA).
 
 Identify:
 
@@ -121,7 +121,7 @@ Identify:
 
 # 5. Application of FAR
 
-Describe how an investigation would be conducted using the FAR methodology within this framework.
+Describe how an investigation would be conducted using the Foundational Analysis of Reasoning (FAR) within this framework.
 
 ---
 
@@ -155,9 +155,53 @@ Identify unresolved issues requiring further investigation.
 
 ---
 
-# 8. Conclusion
+# 8. Validation Summary
 
-Summarize the validation results.
+## Architecture Compatibility
+
+- Full
+- Partial
+- None
+
+Provide justification.
+
+---
+
+## Methodology Compatibility
+
+- Full
+- Partial
+- None
+
+Provide justification.
+
+---
+
+## Operational Compatibility
+
+- Full
+- Partial
+- None
+
+Provide justification.
+
+---
+
+## Overall Assessment
+
+Summarize the overall compatibility of the framework with Project FAR.
+
+---
+
+## Recommended Research
+
+Identify future research that could improve either the validation or Project FAR itself.
+
+---
+
+# 9. Conclusion
+
+Summarize the validation study.
 
 State whether the framework appears:
 
@@ -171,8 +215,8 @@ Provide justification for the conclusion.
 
 ## Notes
 
-Validation studies should describe existing reasoning frameworks.
+Validation studies describe existing reasoning frameworks.
 
 They should not modify Project FAR to accommodate those frameworks.
 
-Any proposed changes to Project FAR resulting from a validation study should be documented separately and evaluated independently.
+Potential improvements to Project FAR identified during validation should be documented separately and evaluated independently.
