@@ -1,156 +1,138 @@
-# Validation: Classical Logic
+# Validation — Classical Logic
 
 ## Purpose
 
-This document evaluates whether classical propositional logic can be represented within the FARA architecture without loss of expressive power.
+This document evaluates the applicability of Project FAR to classical logic.
 
-The objective is not to replace classical logic.
-
-The objective is to determine whether FARA can faithfully represent its reasoning process.
+The objective is to determine whether the architectural components of FARA, the methodology of FAR, and the operations of FARO adequately represent deductive reasoning within classical logic.
 
 ---
 
-# Classical Logic
+# Framework
 
-Classical propositional logic consists of:
+Classical logic is a formal system for deriving valid conclusions from explicitly stated premises according to fixed rules of inference.
 
-- propositions,
-- logical connectives,
-- inference rules,
-- proofs,
-- models.
-
-Its objective is to determine logical consequence.
+The framework emphasizes deductive validity, consistency, and truth preservation.
 
 ---
 
-# FARA Representation
+# FARA Analysis
+
+## Investigation
+
+The investigation specifies the proposition to be established.
+
+---
+
+## Representations
+
+Representations include:
+
+- Propositions
+- Premises
+- Conclusions
+- Logical symbols
+- Inference rules
+
+---
 
 ## Representational Structure
 
-Logical formulas become explicit representations.
-
-Examples:
-
-- P
-- Q
-- P → Q
-- P ∧ Q
+Representations are organized into formal logical expressions and their inferential relationships.
 
 ---
 
 ## Interpretation
 
-Interpretation assigns meaning to propositions.
-
-The logical symbols themselves remain representations.
-
-Meaning depends upon the chosen interpretation.
+Interpretation assigns semantics to logical symbols and propositions.
 
 ---
 
-## Investigation
-
-Example investigation:
-
-> Does Q logically follow?
-
-This becomes the investigation question.
-
----
+# FAR Analysis
 
 ## Reasoning Calculus
 
-The reasoning calculus is classical propositional logic.
-
-Inference proceeds according to its rules.
+The reasoning calculus consists of the inference rules of classical logic.
 
 Examples include:
 
 - Modus Ponens
 - Modus Tollens
-- Double Negation
-- Resolution
+- Hypothetical Syllogism
+- Conjunction Introduction
+- Disjunction Elimination
 
 ---
 
-## Possibility Space
+## Reasoning States
 
-The possibility space consists of every well-formed logical conclusion relevant to the investigation.
-
----
-
-## Ω
-
-Ω organizes every candidate conclusion according to classical logical consequence.
-
-Candidate conclusions may be:
-
-- provable,
-- disprovable,
-- independent,
-- or otherwise classified according to the reasoning calculus.
+Each reasoning state consists of the currently established propositions during a proof.
 
 ---
 
-# Example
+## Transition Signatures
 
-Premises:
-
-P
-
-P → Q
-
-Investigation:
-
-Does Q follow?
-
-Possibility Space:
-
-- Q
-- ¬Q
-- Neither
-
-Applying classical logic:
-
-Ω identifies Q as admissible.
-
-The remaining candidates become inadmissible.
-
-Resolution therefore consists of reducing the possibility space to the admissible conclusion.
+Each transition signature records the inference rule applied to obtain the next reasoning state.
 
 ---
 
-# Expressive Comparison
+## Candidates
 
-| Classical Logic | FARA |
-|-----------------|------|
-| Proposition | Representation |
-| Interpretation | Interpretation |
-| Goal | Investigation |
-| Inference Rules | Reasoning Calculus |
-| Proof | Reasoning State Sequence |
-| Consequence Relation | Ω |
-| Conclusion | Resolution |
+Candidate conclusions consist of propositions admitted for consideration during the investigation.
 
 ---
 
-# Assessment
+## Admissibility Structure (Ω)
 
-No obvious expressive loss has been identified.
-
-Every major component of classical logic appears representable within FARA.
-
-This comparison remains conceptual rather than formally proven.
+Ω classifies candidate conclusions according to whether they are derivable from the premises using the reasoning calculus.
 
 ---
 
-# Remaining Questions
+## Resolution Rule
 
-Future work should determine:
+Select a candidate that is admissible according to Ω.
 
-- whether a formal embedding theorem can be proven,
-- whether Ω preserves every consequence relation,
-- whether any logical construct cannot be represented within FARA.
+---
 
-At present, no decisive counterexample has been identified.
+## Resolution
+
+The resulting resolution is the proposition formally established by the proof.
+
+---
+
+# FARO Analysis
+
+FARO can compare two logical proofs by identifying:
+
+- shared premises,
+- differing inference rules,
+- differing reasoning states,
+- differing admissibility structures,
+- and the earliest point of divergence.
+
+This permits explicit comparison of alternative proofs.
+
+---
+
+# Evaluation
+
+Project FAR successfully represents the essential architectural components of classical logical reasoning.
+
+The architecture remains independent of any particular inference rule while accommodating the reasoning calculus of classical logic.
+
+---
+
+# Conclusion
+
+Classical logic is naturally representable within Project FAR.
+
+The framework successfully separates:
+
+- representations,
+- interpretations,
+- reasoning calculus,
+- reasoning states,
+- admissibility,
+- and resolution,
+
+while preserving the structure of deductive reasoning.
