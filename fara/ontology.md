@@ -2,59 +2,86 @@
 
 ## Purpose
 
-This document defines the ontology of FARA.
+This document defines the ontology of the Foundational Architecture of Reasoning Analysis (FARA).
 
-The ontology specifies the classes of entities assumed to exist within the architecture.
+The ontology specifies the classes of objects assumed to exist within the architecture.
 
-It does not define their semantics or behavior.
-
----
-
-## Ontological Commitment
-
-FARA is committed only to entities required for the representation of structured, explicit, auditable reasoning.
-
-No additional entities should be introduced without demonstrating their necessity.
+It does not define the meaning, behavior, or admissibility of those objects.
 
 ---
 
-## Fundamental Entities
+## Definition
 
-The current ontology includes the following categories of entities.
+Within FARA, the ontology consists of the objects required to represent structured, explicit, auditable reasoning.
 
-- Representations
-- Representational Structures
-- Interpretations
-- Investigations
-- Reasoning Calculi
-
-These constitute the candidate primitive entities of the architecture.
-
-Formal definitions are maintained in:
+The canonical definitions of these objects are maintained in:
 
 `theory/definitions.md`
 
 ---
 
-## Derived Entities
+## Objective
 
-The following entities are currently regarded as derived.
+The objective of the ontology is to identify the objects required by the architecture while minimizing unnecessary ontological commitments.
 
-- Reasoning States
-- Transition Signatures
-- Possibility Spaces
-- Ω (Admissibility Structures)
-- Resolutions
+Only objects required for representation should be included.
 
-Their existence depends upon relationships among the primitive entities.
+---
+
+## Fundamental Objects
+
+The current architecture recognizes the following fundamental objects.
+
+- Representation
+- Representational Structure
+- Interpretation
+- Investigation
+- Reasoning Calculus
+
+These objects serve as the architectural foundation of FARA.
+
+---
+
+## Derived Objects
+
+The following objects are currently regarded as derived from the fundamental objects.
+
+- Reasoning State
+- Transition Signature
+- Candidate
+- Admissibility Structure (Ω)
+- Resolution
+
+Derived objects are defined in terms of the fundamental objects and their relationships.
 
 ---
 
 ## Ontological Neutrality
 
-The ontology is independent of any particular reasoning calculus or application domain.
+The ontology is independent of:
 
-It specifies only the entities required by the architecture, not the rules governing their use.
+- any particular reasoning calculus,
+- any application domain,
+- any implementation,
+- and any specific reasoning methodology.
+
+It specifies only the objects required by the architecture.
+
+---
+
+## Relationships
+
+The ontology identifies the existence of architectural objects.
+
+The relationships among those objects are defined elsewhere within FARA.
+
+Semantics assigns meaning to representations.
+
+Reasoning states organize representations.
+
+Transition signatures represent transformations.
+
+The Admissibility Structure (Ω) classifies candidates.
 
 ---
 
@@ -62,6 +89,9 @@ It specifies only the entities required by the architecture, not the rules gover
 
 The ontology remains provisional.
 
-Future work may eliminate, refine, or introduce ontological commitments if required by formal analysis or validation.
+Current research investigates:
 
-The long-term objective is to identify the minimal ontology sufficient to support the architecture.
+- ontological reduction,
+- independence of candidate primitives,
+- minimal ontological commitments,
+- and alternative architectural formulations.
