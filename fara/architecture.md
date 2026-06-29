@@ -4,17 +4,15 @@
 
 This document defines the Foundational Architecture of Reasoning Analysis (FARA).
 
-FARA is the proposed architectural foundation of Project FAR. Its objective is to determine whether every structured, explicit, auditable reasoning process within the project's stated scope can be represented by a common minimal architecture.
+FARA is the proposed architectural foundation of Project FAR. Its objective is to determine whether structured, explicit, auditable reasoning can be represented by a common minimal architecture.
 
-This document defines the architecture itself. Individual components are defined in their respective documents.
+This document defines the architecture itself. The formal definitions of its components are maintained in `theory/definitions.md`.
 
 ---
 
-## Architectural Objective
+## Objective
 
-FARA seeks to identify the smallest collection of irreducible concepts sufficient to represent structured reasoning.
-
-The architecture is intended to be independent of any particular reasoning calculus or application domain.
+FARA seeks to identify the smallest collection of primitive concepts sufficient to represent structured reasoning within the scope of Project FAR.
 
 Whether such an architecture exists remains an open research question.
 
@@ -22,7 +20,7 @@ Whether such an architecture exists remains an open research question.
 
 ## Design Principles
 
-The architecture is developed according to the following principles.
+FARA is developed according to the following principles.
 
 - Minimality
 - Generality
@@ -34,23 +32,32 @@ These principles guide the development of the architecture but are not themselve
 
 ---
 
-## Architecture
+## Primitive Concepts
 
-The current formulation of FARA consists of a collection of candidate primitive concepts together with the relationships between them.
+The current formulation of FARA is constructed from a collection of candidate primitive concepts.
 
-The candidate primitives are defined in:
+The current candidate primitives are identified in:
 
 `primitives.md`
 
-The architecture derived from those primitives includes:
+Their canonical definitions are maintained in:
 
-- an ontology,
-- a semantic framework,
-- reasoning states,
-- transition signatures,
-- and the admissibility structure Ω.
+`theory/definitions.md`
 
-Each component is defined in its own document.
+---
+
+## Derived Concepts
+
+From the candidate primitive concepts, FARA derives a collection of architectural concepts, including:
+
+- Reasoning
+- Reasoning States
+- Transition Signatures
+- Candidates
+- Admissibility Structure (Ω)
+- Resolutions
+
+Each derived concept is defined in its own document.
 
 ---
 
@@ -60,7 +67,7 @@ FARA is intended to represent structured, explicit, auditable reasoning within t
 
 It does not prescribe how reasoning should be performed.
 
-Instead, it provides an architecture within which reasoning may be represented and analyzed.
+Instead, it provides the architectural foundation upon which reasoning may be represented, analyzed, and compared.
 
 ---
 
@@ -68,6 +75,6 @@ Instead, it provides an architecture within which reasoning may be represented a
 
 FARA remains a candidate architecture.
 
-Its components continue to undergo formalization, reduction attempts, validation, and proof.
+Its primitive concepts, derived concepts, and formal properties continue to undergo reduction, formalization, validation, and proof.
 
-No claim of completeness or minimality has yet been established.
+No claim of completeness, minimality, or universality has yet been established.
