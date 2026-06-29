@@ -1,57 +1,206 @@
 # Project FAR
 
-> A research program investigating the foundations of structured, explicit, auditable reasoning.
+> A foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
 
 ---
 
-## Overview
+# Overview
 
-Project FAR investigates a single question:
+Project FAR is an ongoing research project whose goal is to develop a rigorous, minimal, and universal framework for reasoning.
 
-> **Can every structured, explicit, auditable reasoning process be represented by a common minimal architecture?**
+Rather than proposing a new reasoning methodology, Project FAR seeks to identify the architectural components common to reasoning processes across diverse domains, represent investigations explicitly, and provide a consistent methodology for analyzing and comparing reasoning.
 
-To answer this question, the project develops and evaluates three complementary frameworks:
+The project consists of three primary components built upon a common formal theory:
 
 - **FARA** — Foundational Architecture of Reasoning Analysis
 - **FAR** — Foundational Analysis of Reasoning
 - **FARO** — Foundational Analysis of Reasoning Operations
 
-Project FAR is an active research program. Its central claims remain under development and are subject to formal proof, external validation, and revision.
+---
+
+# Objectives
+
+Project FAR aims to:
+
+- Identify the primitive concepts underlying structured reasoning.
+- Develop a universal architecture for representing reasoning processes.
+- Provide a methodology for conducting explicit investigations.
+- Enable comparison and analysis of different reasoning processes.
+- Establish a formal mathematical foundation for the framework.
+- Validate the framework across multiple reasoning domains.
 
 ---
 
-## Core Documents
+# Repository Structure
 
-For readers beginning the project:
-
-- **Overview:** `docs/overview.md`
-- **Mission:** `docs/mission.md`
-- **Philosophy:** `docs/philosophy.md`
-- **Scope:** `docs/scope.md`
-- **Glossary:** `docs/glossary.md`
-- **Formal Definitions:** `theory/definitions.md`
-- **FARA Architecture:** `fara/architecture.md`
-
----
-
-## Getting Started
-
-Recommended reading order:
-
-1. `docs/overview.md`
-2. `docs/mission.md`
-3. `docs/philosophy.md`
-4. `docs/scope.md`
-5. `fara/architecture.md`
-
-For a higher-level introduction, see:
-
-`papers/paper-1-project-far.md`
+```
+Project-FAR/
+│
+├── docs/
+├── theory/
+├── fara/
+├── far/
+├── faro/
+├── validation/
+├── examples/
+├── research/
+├── papers/
+│
+├── README.md
+├── ROADMAP.md
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+└── LICENSE
+```
 
 ---
 
-## Status
+# Reading Order
 
-**Version:** 0.1.0
+Readers unfamiliar with Project FAR are encouraged to proceed in the following order.
 
-**Stage:** Research Draft
+## 1. Documentation
+
+Introduces the project and repository.
+
+```
+docs/
+```
+
+---
+
+## 2. Formal Theory
+
+Defines the terminology and formal foundations.
+
+```
+theory/
+```
+
+---
+
+## 3. FARA
+
+Introduces the Foundational Architecture of Reasoning Analysis.
+
+```
+fara/
+```
+
+---
+
+## 4. FAR
+
+Introduces the Foundational Analysis of Reasoning.
+
+```
+far/
+```
+
+---
+
+## 5. FARO
+
+Introduces the Foundational Analysis of Reasoning Operations.
+
+```
+faro/
+```
+
+---
+
+## 6. Examples
+
+Demonstrates the framework through complete investigations.
+
+```
+examples/
+```
+
+---
+
+## 7. Validation
+
+Evaluates the framework across existing reasoning methodologies.
+
+```
+validation/
+```
+
+---
+
+## 8. Research
+
+Documents the ongoing development of Project FAR.
+
+```
+research/
+```
+
+---
+
+## 9. Papers
+
+Contains mature publications derived from Project FAR.
+
+```
+papers/
+```
+
+---
+
+# Current Status
+
+## Repository
+
+Complete
+
+## Architecture (FARA)
+
+Complete
+
+## Methodology (FAR)
+
+Complete
+
+## Operations (FARO)
+
+Complete
+
+## Formal Theory
+
+In Progress
+
+## Validation
+
+Complete
+
+## Examples
+
+Complete
+
+---
+
+# Contributing
+
+Contributions are welcome.
+
+Please read:
+
+- `CONTRIBUTING.md`
+
+before opening issues or submitting pull requests.
+
+---
+
+# License
+
+Project FAR is distributed under the terms of the license provided in:
+
+`LICENSE`
+
+---
+
+# Acknowledgments
+
+Project FAR is an independent research project dedicated to the rigorous study of reasoning through explicit representation, formal analysis, and systematic comparison.
