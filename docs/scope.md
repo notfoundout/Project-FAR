@@ -4,126 +4,72 @@
 
 This document defines the intended scope of Project FAR.
 
-The scope specifies which reasoning processes the framework attempts to represent and which lie outside its current objectives.
-
-Clearly defining scope prevents both overstatement and misapplication of the theory.
+It specifies the classes of reasoning the project attempts to represent and the classes that currently lie outside its objectives.
 
 ---
 
-# Included
+## Included
 
-Project FAR applies to reasoning that satisfies all of the following conditions.
+Project FAR currently applies to reasoning that is:
 
-## Structured
+- Structured
+- Explicit
+- Auditable
+- Reconstructible
 
-Reasoning proceeds through identifiable representations rather than arbitrary mental activity.
-
-The organization of the reasoning process can be described explicitly.
-
----
-
-## Explicit
-
-The information participating in reasoning is explicitly represented.
-
-Representations may consist of:
-
-- statements,
-- models,
-- definitions,
-- observations,
-- hypotheses,
-- mathematical objects,
-- or any equivalent formal representation.
+Within this scope, the project seeks a common representational architecture independent of any particular reasoning calculus.
 
 ---
 
-## Auditable
+## Domains
 
-Another investigator should be capable of examining every representation, every transition, and every conclusion.
+Project FAR is intended to apply across domains, including but not limited to:
 
-Reasoning should therefore be reproducible from its explicit record.
+- Mathematics
+- Science
+- Engineering
+- Philosophy
+- Law
+- History
+- Political Analysis
+- Artificial Intelligence
 
----
-
-## Reconstructible
-
-The reasoning process can be reconstructed from recorded reasoning states and their transitions.
-
-Every conclusion should possess an identifiable chain of justification.
-
----
-
-# Excluded
-
-Project FAR does not presently attempt to represent:
-
-- unconscious cognition,
-- intuition lacking explicit representation,
-- perception prior to representation,
-- emotional experience,
-- biological information processing independent of explicit reasoning.
-
-These exclusions are methodological rather than metaphysical.
-
-The framework makes no claim that such processes are impossible to represent.
-
-Only that they fall outside the current research program.
+The framework is intended to be domain-independent.
 
 ---
 
-# Domain Independence
+## Reasoning Frameworks
 
-Project FAR is intended to remain independent of application domain.
-
-The framework is designed to apply equally to:
-
-- mathematics,
-- science,
-- engineering,
-- philosophy,
-- law,
-- history,
-- political analysis,
-- artificial intelligence,
-- and other structured investigations.
-
-No application domain receives privileged treatment.
-
----
-
-# Reasoning Calculi
-
-Project FAR remains neutral regarding the reasoning calculus employed.
-
-Examples include:
+Project FAR seeks to represent reasoning performed using existing frameworks, including:
 
 - Classical Logic
-- Bayesian Inference
-- Scientific Method
-- Legal Reasoning
-- Optimization
+- Proof Theory
 - Type Theory
 - Category Theory
+- Bayesian Reasoning
+- Scientific Methodology
+- Legal Reasoning
 
-The framework seeks to represent these systems rather than replace them.
-
----
-
-# Scope Revisions
-
-The scope of Project FAR may evolve as the research progresses.
-
-Future work may expand the framework to additional classes of reasoning if explicit representation becomes possible.
-
-Any expansion of scope should be documented explicitly and accompanied by corresponding revisions to the formal theory.
+These frameworks are treated as subjects of representation rather than competitors.
 
 ---
 
-# Summary
+## Excluded
 
-Project FAR studies structured, explicit, auditable reasoning.
+Project FAR does not currently attempt to represent:
 
-It does not attempt to model all cognition.
+- Unconscious cognition
+- Perception prior to explicit representation
+- Intuition lacking explicit representation
+- Emotional experience
+- Biological processes unrelated to explicit reasoning
 
-Its objective is to determine whether reasoning within this scope admits a universal minimal architecture.
+These exclusions define the project's current scope and should not be interpreted as claims about the nature of cognition.
+
+---
+
+## Scope Revisions
+
+The scope of Project FAR may expand or contract as the framework develops.
+
+Any change in scope should be explicitly documented and justified.
