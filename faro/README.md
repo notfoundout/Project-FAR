@@ -1,23 +1,29 @@
 # FARO
 
-## Foundational Analysis of Reasoning Operations
+**Foundational Analysis of Reasoning Operations**
 
-FARO compares reasoning processes rather than conclusions.
+---
 
-Its objective is to explain why different reasoning systems or investigators reach different results.
+## Purpose
 
-Rather than asking:
+This directory defines the comparative framework of Project FAR.
 
-"Who is correct?"
+FARO provides methods for comparing, auditing, and analyzing reasoning processes represented within FARA.
 
-FARO asks:
+Unlike FAR, which defines how investigations are conducted, FARO defines how completed reasoning processes are examined.
 
-- Which representations differ?
-- Which interpretations differ?
-- Which investigations differ?
-- Which reasoning calculi differ?
-- Which admissibility structures differ?
+---
 
-## Current Status
+## Contents
 
-FARO remains an active area of research within Project FAR.
+- `comparison.md` — Defines comparison between reasoning processes.
+- `auditing.md` — Defines reasoning audits.
+- `disagreement-analysis.md` — Defines the analysis of reasoning disagreements.
+
+---
+
+## Related Directories
+
+- `fara/` — Foundational architecture.
+- `far/` — Investigation methodology.
+- `validation/` — Validation against existing reasoning frameworks.
