@@ -295,3 +295,85 @@ Every proposed concept should be examined to determine whether it represents:
 - a genuinely new ontological commitment,
 - a derived concept, or
 - merely convenient terminology for concepts already present within the framework.
+
+---
+
+## Verification Update — Interpretation Stability
+
+### Objective
+
+Determine whether the interpretation associated with an investigation remains fixed throughout reasoning or may legitimately change during the course of an investigation.
+
+---
+
+### Observation
+
+The proposed derivation of Reasoning State assumes that interpretation forms part of the characterization of the reasoning process.
+
+It remains unclear whether interpretation is fixed or may evolve.
+
+---
+
+### Candidate Hypotheses
+
+#### Hypothesis A
+
+Interpretation remains fixed throughout an investigation.
+
+**Implication**
+
+Changes in reasoning occur solely through changes in representations and their relationships.
+
+The proposed derivation remains unchanged.
+
+---
+
+#### Hypothesis B
+
+Interpretation may change during an investigation.
+
+Examples include:
+
+- redefining a concept,
+- revising semantic assumptions,
+- adopting an alternative interpretation of evidence,
+- changing the meaning assigned to representations.
+
+**Implication**
+
+Interpretation itself becomes part of the evolving reasoning process.
+
+A change in interpretation therefore changes the Reasoning State.
+
+---
+
+### Preliminary Assessment
+
+Hypothesis B presently appears more consistent with actual reasoning.
+
+Many investigations explicitly revise the meanings assigned to representations as understanding develops.
+
+Accordingly, interpretation should not be assumed to remain fixed throughout an investigation.
+
+Instead, the current interpretation should be regarded as part of the condition of the investigation at any point in reasoning.
+
+---
+
+### Open Question
+
+Does a change in interpretation constitute:
+
+- a new Reasoning State within the same investigation, or
+- the beginning of a new investigation?
+
+The answer will influence the formal derivation of Reasoning State.
+
+---
+
+### Provisional Conclusion
+
+Current evidence suggests that interpretation may legitimately evolve during an investigation.
+
+The proposed derivation of Reasoning State remains viable provided the current interpretation is regarded as part of the characterization of the reasoning process.
+
+Further analysis is required.
