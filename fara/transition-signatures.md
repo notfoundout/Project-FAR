@@ -1,38 +1,18 @@
 # Transition Signatures
 
-## Abstract
+## Purpose
 
-A transition signature describes the explicit transformation by which one reasoning state becomes another.
+This document defines transition signatures within FARA.
 
-Within FARA, reasoning is modeled not as isolated conclusions but as a sequence of state transitions.
+A transition signature explicitly describes the transformation from one reasoning state to another.
 
-Every transition should be explicit, auditable, and reproducible.
-
-A transition signature records exactly what changed between two reasoning states.
+It does not define the reasoning states themselves or evaluate the results of a transition.
 
 ---
 
-# Purpose
+## Definition
 
-Reasoning is fundamentally dynamic.
-
-Investigations progress by modifying reasoning states.
-
-Transition signatures make those modifications explicit.
-
-They therefore provide the foundation for:
-
-- auditability,
-- reproducibility,
-- explanation,
-- comparison,
-- and validation.
-
----
-
-# Definition
-
-A transition signature is the complete explicit description of every change occurring between two reasoning states.
+A transition signature is the explicit description of the changes required to transform one reasoning state into another.
 
 If
 
@@ -40,181 +20,79 @@ If
 S₁ → S₂
 ```
 
-is a valid reasoning transition,
+is a reasoning transition,
 
-the transition signature specifies precisely why S₂ differs from S₁.
+the transition signature specifies the transformation from **S₁** to **S₂**.
 
----
+The formal definition of a transition signature is maintained in:
 
-# Components
-
-Every transition signature records:
-
-- added representations,
-- removed representations,
-- modified representations,
-- interpretation changes,
-- investigation changes,
-- reasoning calculus changes,
-- justification for each modification.
+`theory/definitions.md`
 
 ---
 
-# Properties
+## Properties
 
-Every valid transition signature should satisfy the following.
+A valid transition signature should satisfy the following properties.
 
-## Explicitness
+### Explicitness
 
-Every modification is represented explicitly.
-
-No hidden transformation is permitted.
+Every modification between reasoning states is represented explicitly.
 
 ---
 
-## Auditability
+### Traceability
 
-Another investigator should be capable of reconstructing the transition.
-
----
-
-## Traceability
-
-Every modification identifies the representation responsible for the change.
+Each modification possesses an identifiable justification.
 
 ---
 
-## Justification
+### Auditability
 
-Every modification is justified according to the reasoning calculus.
-
----
-
-## Reproducibility
-
-Applying the same transition signature to the same reasoning state should produce an equivalent reasoning state.
+Another investigator should be capable of reconstructing the transition from its explicit description.
 
 ---
 
-# Transition Types
+### Reproducibility
 
-Current research recognizes several common transition classes.
-
-## Expansion
-
-New representations are introduced.
-
-Examples:
-
-- new evidence,
-- new definitions,
-- additional hypotheses.
+Applying an equivalent transition signature to an equivalent reasoning state should produce an equivalent result.
 
 ---
 
-## Contraction
+## Transition Categories
 
-Representations are removed.
+Common classes of transitions include:
 
-Examples:
+- Addition
+- Removal
+- Modification
+- Reorganization
+- Interpretation Change
+- Investigation Change
 
-- rejected hypotheses,
-- disproven claims,
-- irrelevant information.
-
----
-
-## Refinement
-
-Existing representations become more precise.
-
-Examples:
-
-- narrower definitions,
-- stronger evidence,
-- improved models.
+These categories classify transitions but do not constitute distinct architectural components.
 
 ---
 
-## Revision
+## Relationship to Other Components
 
-Interpretations change.
+Transition signatures operate upon reasoning states.
 
-Representations remain.
+The admissibility of the resulting reasoning state is determined independently.
 
-Meaning changes.
+See:
 
----
+`reasoning-states.md`
 
-## Investigation Revision
-
-The investigation itself changes.
-
-Example:
-
-Instead of asking
-
-"Is fascism socialist?"
-
-the investigation becomes
-
-"Under which definition of socialism is fascism socialist?"
+`omega.md`
 
 ---
 
-# Relationship to Ω
+## Research Status
 
-Transition signatures modify reasoning states.
+Current research investigates:
 
-Modified reasoning states produce different possibility spaces.
-
-Different possibility spaces produce different admissibility structures.
-
-Transition signatures therefore influence Ω indirectly rather than directly.
-
----
-
-# Example
-
-Initial reasoning state:
-
-Definition of socialism:
-
-"Worker ownership."
-
-Historical evidence:
-
-Incomplete.
-
-Transition:
-
-Historical documents added.
-
-Economic definition expanded.
-
-Result:
-
-Reasoning state updated.
-
-Ω recomputed.
-
-Admissible conclusions revised.
-
----
-
-# Research Questions
-
-Current work investigates:
-
-- whether every reasoning transition admits a unique transition signature,
-- whether transition signatures can be decomposed into simpler transformations,
-- whether every reasoning calculus induces equivalent transition signatures,
-- whether transition signatures form an algebra.
-
----
-
-# Current Status
-
-Transition signatures remain a candidate derived concept.
-
-Future work should determine whether they constitute an irreducible component of structured reasoning or can be derived entirely from reasoning states and admissibility structures.
+- minimal transition descriptions,
+- transition equivalence,
+- transition composition,
+- transition algebra,
+- and semantic preservation across transitions.
