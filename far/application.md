@@ -2,32 +2,45 @@
 
 ## Purpose
 
-This document describes how the FAR methodology is applied during an investigation.
+This document describes the application of the Foundational Analysis of Reasoning (FAR).
 
-It provides a conceptual overview of the investigative process. Complete worked investigations are maintained in the `examples/` directory.
+It explains how the FAR methodology is applied to investigations across different domains.
+
+It does not redefine the architectural concepts established by FARA or the stages of the FAR workflow.
+
+---
+
+## Objective
+
+The objective of FAR is to provide a methodology that can be applied consistently to structured, explicit, auditable investigations regardless of their subject matter.
+
+The methodology remains independent of any particular reasoning calculus or application domain.
 
 ---
 
 ## Applying FAR
 
-A FAR investigation consists of the following stages:
+Applying FAR consists of:
 
-1. Define the investigation.
-2. Establish the representations.
-3. Specify the interpretation.
-4. Select the reasoning calculus.
-5. Construct the initial reasoning state.
-6. Record explicit reasoning transitions.
-7. Determine the admissibility structure.
-8. Record the resolution.
+1. Defining an investigation.
+2. Establishing the representational structure.
+3. Specifying the interpretation.
+4. Selecting a reasoning calculus.
+5. Constructing reasoning states.
+6. Recording explicit transformations through transition signatures.
+7. Constructing the Admissibility Structure (Ω).
+8. Applying the appropriate resolution rule.
+9. Recording the resulting resolution.
 
-Each stage is defined in greater detail elsewhere within this directory.
+The detailed workflow is defined in:
+
+`workflow.md`
 
 ---
 
 ## Representative Applications
 
-The methodology is intended to support investigations across diverse domains, including:
+The FAR methodology is intended to support investigations in domains including:
 
 - Mathematics
 - Science
@@ -38,12 +51,20 @@ The methodology is intended to support investigations across diverse domains, in
 - Political Analysis
 - Artificial Intelligence
 
-The methodology remains independent of the reasoning calculus employed.
+The methodology is intended to remain applicable wherever reasoning can be represented explicitly.
 
 ---
 
 ## Relationship to Examples
 
-This document describes the application of FAR in general.
+This document describes the general application of FAR.
 
-Complete case studies demonstrating the methodology are maintained in the `examples/` directory.
+Complete worked investigations demonstrating the methodology are maintained in the `examples/` directory.
+
+---
+
+## Current Status
+
+Application of the methodology remains an active area of research.
+
+Current work includes expanding representative investigations, evaluating the methodology across additional domains, and refining best practices through practical use.
