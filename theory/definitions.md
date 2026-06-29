@@ -8,7 +8,7 @@ Unless explicitly stated otherwise, every technical term appearing elsewhere in 
 
 ---
 
-# General Concepts
+# Foundational Concepts
 
 ## Object
 
@@ -46,6 +46,20 @@ A **system** is a collection of interacting objects organized according to a str
 
 ---
 
+## Class
+
+A **class** is a collection of objects defined by one or more specified properties.
+
+---
+
+## Domain
+
+A **domain** is the collection of objects to which a claim, property, or framework is intended to apply.
+
+---
+
+# Framework Concepts
+
 ## Model
 
 A **model** is a representation of a system intended to capture selected properties of that system.
@@ -58,17 +72,47 @@ A **framework** is an organized collection of concepts, definitions, and procedu
 
 ---
 
+## Theory
+
+A **theory** is a structured collection of definitions, axioms, conjectures, propositions, lemmas, theorems, and proofs concerning a specified domain.
+
+---
+
 ## Architecture
 
 An **architecture** is a specification of the objects, relations, and organizing principles required to represent a class of systems.
 
 ---
 
-## Domain
+## Ontology
 
-A **domain** is the collection of objects to which a claim, property, or framework is intended to apply.
+An **ontology** is a specification of the concepts, categories, and relations assumed to exist within a framework or domain.
+
+An ontology specifies what exists for the purposes of the framework.
 
 ---
+
+## Syntax
+
+**Syntax** specifies the structural organization of representations independently of their meaning.
+
+---
+
+## Semantics
+
+**Semantics** specifies the meaning assigned to representations.
+
+---
+
+## Scope
+
+The **scope** of a framework is the collection of objects, systems, or domains for which the framework is intended to apply.
+
+Claims of universality are meaningful only with respect to an explicitly stated scope.
+
+---
+
+# Formal Concepts
 
 ## Universal
 
@@ -80,21 +124,21 @@ Universality is always relative to an explicitly stated domain.
 
 ## Universal Architecture
 
-A **universal architecture** is an architecture capable of representing every member of a specified domain.
+A **universal architecture** is an architecture capable of representing every member within its stated scope.
 
-Universality does not imply uniqueness or minimality.
+Universality does not imply uniqueness, minimality, or optimality.
 
 ---
 
 ## Minimal
 
-A structure is **minimal** if removing any required component reduces its intended expressive power.
+A structure is **minimal** if removing any required component reduces its expressive power with respect to its intended domain.
 
 ---
 
 ## Primitive
 
-A **primitive** is a concept that has not been derived from simpler concepts within the framework.
+A **primitive** is a concept that is not derived from simpler concepts within the framework.
 
 ---
 
@@ -118,13 +162,37 @@ Two concepts are **independent** if neither can be derived from the other within
 
 ## Equivalence
 
-Two objects are **equivalent** if they satisfy the criteria specified by an explicitly stated equivalence relation.
+Two objects are **equivalent** if they satisfy an explicitly defined equivalence relation.
 
 ---
 
 ## Expressive Power
 
-The **expressive power** of a framework is the collection of objects, relations, or systems that it is capable of representing.
+The **expressive power** of a framework is the collection of objects, relations, or systems that it is capable of representing within its stated scope.
+
+---
+
+# Representational Concepts
+
+## Representation
+
+A **representation** is an explicitly distinguishable object used to represent information within an investigation.
+
+Representations are the primary objects manipulated during reasoning.
+
+---
+
+## Representational Structure
+
+A **representational structure** is an organized collection of representations together with the relations between them.
+
+---
+
+## Interpretation
+
+An **interpretation** assigns semantics to representations.
+
+The same representation may possess different meanings under different interpretations.
 
 ---
 
@@ -138,31 +206,9 @@ Every reasoning process is relative to an investigation.
 
 ---
 
-## Representation
-
-A **representation** is an explicitly distinguishable object used to represent information within an investigation.
-
-Representations are the fundamental objects manipulated during reasoning.
-
----
-
-## Representational Structure
-
-A **representational structure** is an organized collection of representations together with the relations between them.
-
----
-
-## Interpretation
-
-An **interpretation** assigns meaning to representations.
-
-The same representation may possess different meanings under different interpretations.
-
----
-
 ## Reasoning
 
-**Reasoning** is the process of producing, transforming, or evaluating explicit representations according to a reasoning calculus within the context of an investigation.
+**Reasoning** is the process of producing, transforming, or evaluating representations according to a reasoning calculus within the context of an investigation.
 
 ---
 
@@ -190,7 +236,7 @@ A **transformation** is a rule or process that maps one state to another.
 
 A **reasoning state** is the complete explicit representation of an investigation at a particular stage of reasoning.
 
-A reasoning state is a specialized form of state.
+A reasoning state is a specialized form of a state.
 
 ---
 
@@ -199,6 +245,8 @@ A reasoning state is a specialized form of state.
 A **transition signature** is the explicit description of the transformation between two reasoning states.
 
 ---
+
+# Decision Concepts
 
 ## Candidate
 
@@ -228,7 +276,7 @@ A **classification** is the assignment of one or more objects to categories acco
 
 ## Admissibility Structure (Ω)
 
-The **admissibility structure**, denoted **Ω**, classifies the candidates admitted for consideration within an investigation according to the applicable reasoning calculus.
+The **Admissibility Structure**, denoted **Ω**, classifies the candidates admitted for consideration within an investigation according to the applicable reasoning calculus.
 
 Ω records the admissibility status of each candidate.
 
@@ -242,4 +290,4 @@ A **resolution rule** specifies how one or more admissible candidates are select
 
 ## Resolution
 
-A **resolution** is the candidate, or collection of candidates, selected from an admissibility structure according to the applicable resolution rule.
+A **resolution** is the candidate, or collection of candidates, selected from the Admissibility Structure according to the applicable resolution rule.
