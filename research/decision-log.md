@@ -2,363 +2,194 @@
 
 ## Purpose
 
-This document records the historical evolution of Project FAR.
+This document records significant architectural and theoretical decisions made during the development of Project FAR.
 
-Every major architectural decision is documented together with the reasoning that motivated it, the alternatives considered, and its current status.
+Each entry records the decision, its rationale, and its impact on the framework.
 
-The objective is complete auditability of the framework's development.
-
----
-
-# Decision 001
-
-## Title
-
-Project FAR Initiated
-
-**Version**
-
-Pre-0.1
-
-**Problem**
-
-No general research program existed for investigating whether a universal architecture of structured reasoning exists.
-
-**Decision**
-
-Create Project FAR.
-
-**Reasoning**
-
-Existing reasoning frameworks specialize in particular domains rather than investigating reasoning itself as a representational phenomenon.
-
-**Status**
-
-Active.
+The purpose of this log is to preserve design history, prevent repeated discussions of previously resolved issues, and document the evolution of the project.
 
 ---
 
-# Decision 002
+# Decision 1
 
-## Title
+## Decision
 
-Scope Restriction
-
-**Version**
-
-Pre-0.1
-
-**Problem**
-
-The project initially lacked a clearly defined scope.
-
-**Alternatives**
-
-- All cognition.
-- Human reasoning.
-- Artificial intelligence.
-- Structured, explicit, auditable reasoning.
-
-**Decision**
-
-Restrict the scope to structured, explicit, auditable reasoning.
-
-**Reasoning**
-
-This makes every claim testable, reconstructible, and falsifiable.
-
-**Status**
-
-Active.
+Adopt `theory/definitions.md` as the canonical source for all formal terminology.
 
 ---
 
-# Decision 003
+## Rationale
 
-## Title
-
-Definitions Before Conclusions
-
-**Problem**
-
-Classification disputes frequently arise from conflicting definitions.
-
-**Decision**
-
-Require explicit definitions before evaluating evidence.
-
-**Reasoning**
-
-Definitions determine what evidence is relevant.
-
-Changing definitions after evaluating evidence invalidates comparison.
-
-**Status**
-
-Active.
+Maintaining a single canonical source eliminates redundant definitions and ensures consistency throughout the repository.
 
 ---
 
-# Decision 004
+## Impact
 
-## Title
-
-Universal Standards
-
-**Problem**
-
-Many frameworks classify different systems using different standards.
-
-**Decision**
-
-Apply identical standards to every reasoning framework.
-
-**Reasoning**
-
-Classification should depend upon principles rather than preferred conclusions.
-
-**Status**
-
-Active.
+All architectural, methodological, operational, and documentation files now reference the canonical definitions instead of redefining terms.
 
 ---
 
-# Decision 005
+# Decision 2
 
-## Title
+## Decision
 
-Three Primitive Operators
+Separate Project FAR into four primary components:
 
-**Problem**
-
-A minimal reasoning architecture was required.
-
-**Decision**
-
-Initially adopt Construct, Differentiate, and Restrict as primitive reasoning operations.
-
-**Reasoning**
-
-Early investigation suggested these operations generated all explicit reasoning processes.
-
-**Status**
-
-Superseded.
-
-**Superseded By**
-
-Decision 012.
+- FARA
+- FAR
+- FARO
+- Theory
 
 ---
 
-# Decision 006
+## Rationale
 
-## Title
+Each component has a distinct responsibility.
 
-Eliminate Attributes
-
-**Problem**
-
-Attributes appeared to constitute an independent ontological category.
-
-**Decision**
-
-Treat attributes as representable using existing structures.
-
-**Reasoning**
-
-No independent expressive power was found.
-
-**Status**
-
-Active.
+Separating them reduces redundancy and establishes a clear dependency structure.
 
 ---
 
-# Decision 007
+## Impact
 
-## Title
-
-Stress-Test Every Primitive
-
-**Problem**
-
-Primitive concepts were accumulating.
-
-**Decision**
-
-Every proposed primitive must survive repeated elimination attempts.
-
-**Reasoning**
-
-Minimality requires attempted reduction before acceptance.
-
-**Status**
-
-Active.
+The repository now distinguishes architecture, methodology, operations, and formal theory.
 
 ---
 
-# Decision 008
+# Decision 3
 
-## Title
+## Decision
 
-Separate Architecture From Methodology
-
-**Problem**
-
-Representation and investigation were becoming conflated.
-
-**Decision**
-
-Separate FARA from FAR.
-
-**Reasoning**
-
-The architecture should remain independent of investigative procedure.
-
-**Status**
-
-Active.
+Replace **Candidate Resolution** with **Candidate**.
 
 ---
 
-# Decision 009
+## Rationale
 
-## Title
+The previous terminology introduced an unnecessary circular dependency.
 
-Introduce FARO
-
-**Problem**
-
-The project lacked a systematic method for comparing reasoning systems.
-
-**Decision**
-
-Create FARO.
-
-**Reasoning**
-
-Reasoning systems should themselves become objects of analysis.
-
-**Status**
-
-Active.
+A candidate exists before admissibility is evaluated or a resolution is selected.
 
 ---
 
-# Decision 010
+## Impact
 
-## Title
-
-Introduce Reasoning States
-
-**Problem**
-
-Operators alone failed to provide a stable representation of reasoning.
-
-**Decision**
-
-Represent reasoning using explicit reasoning states.
-
-**Reasoning**
-
-Reasoning states became the primary unit of analysis.
-
-**Status**
-
-Active.
+The dependency graph became acyclic and conceptually simpler.
 
 ---
 
-# Decision 011
+# Decision 4
 
-## Title
+## Decision
 
-Introduce Ω
-
-**Problem**
-
-Reasoning frequently produces multiple admissible outcomes rather than one conclusion.
-
-**Decision**
-
-Represent admissibility explicitly using Ω.
-
-**Reasoning**
-
-Repeated attempts to eliminate Ω failed.
-
-Equivalent structures repeatedly reappeared.
-
-**Status**
-
-Active.
+Remove **Possibility Space** as a primitive architectural concept.
 
 ---
 
-# Decision 012
+## Rationale
 
-## Title
+The concept was reducible to the collection of candidates admitted for consideration within an investigation.
 
-Replace Primitive Operators
-
-**Problem**
-
-Construct, Differentiate, and Restrict appeared reducible.
-
-**Decision**
-
-Treat them as descriptions of reasoning state transitions rather than primitive operations.
-
-**Reasoning**
-
-State transitions generalized every successful operator decomposition considered.
-
-**Status**
-
-Active.
+Maintaining it as an independent concept added unnecessary complexity.
 
 ---
 
-# Decision 013
+## Impact
 
-## Title
-
-Separate Theory From Research
-
-**Decision**
-
-Introduce a dedicated research directory.
-
-**Reasoning**
-
-Formal theory should remain separate from experiments, failed proofs, and open problems.
-
-**Status**
-
-Active.
+The architecture was simplified without reducing expressive power.
 
 ---
 
-# Decision 014
+# Decision 5
 
-## Title
+## Decision
 
-Public Release
+Rename **Ω** to **Admissibility Structure (Ω)** on first reference.
 
-**Version**
+---
 
-0.1.0
+## Rationale
 
-**Decision**
+The descriptive name communicates the purpose of Ω while preserving the symbolic notation.
 
-Publish Project FAR as a public research repository.
+---
 
-**Reasoning**
+## Impact
 
-Public versioning enables independent review, criticism, and future collaboration.
+Repository terminology became clearer and more self-explanatory.
 
-**Status**
+---
 
-Active.
+# Decision 6
+
+## Decision
+
+Introduce **Resolution Rules** as a concept distinct from the reasoning calculus.
+
+---
+
+## Rationale
+
+Determining candidate admissibility and selecting a final resolution are logically distinct operations.
+
+Separating them simplifies the architecture and clarifies the reasoning process.
+
+---
+
+## Impact
+
+The workflow now distinguishes:
+
+- Candidate classification
+- Resolution selection
+
+---
+
+# Decision 7
+
+## Decision
+
+Replace **Fundamental Objects** with **Primitive Concepts**.
+
+---
+
+## Rationale
+
+"Primitive" has a precise meaning within formal systems.
+
+"Fundamental" is broader and may refer only to importance.
+
+---
+
+## Impact
+
+Repository terminology now aligns with formal mathematical practice.
+
+---
+
+# Decision 8
+
+## Decision
+
+Organize the repository according to a directed dependency structure.
+
+---
+
+## Rationale
+
+Every component should depend only upon lower-level components.
+
+This minimizes circular dependencies and simplifies maintenance.
+
+---
+
+## Impact
+
+The repository now follows the dependency order:
+
+- Theory
+- FARA
+- FAR
+- FARO
+- Documentation
