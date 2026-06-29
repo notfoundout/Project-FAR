@@ -1,4 +1,4 @@
-## Open Questions
+# Open Questions
 
 ## Purpose
 
@@ -16,9 +16,7 @@ Questions should be removed from this document only after they have been resolve
 
 Can one or more candidate primitive concepts be derived from simpler concepts without reducing the expressive power of the architecture?
 
-Status:
-
-Active
+**Status:** Active
 
 ---
 
@@ -26,9 +24,7 @@ Active
 
 Are the current candidate primitive concepts mutually independent?
 
-Status:
-
-Active
+**Status:** Active
 
 ---
 
@@ -38,9 +34,7 @@ Is the current collection of candidate primitive concepts minimal?
 
 Would removing any primitive reduce the expressive power of the architecture?
 
-Status:
-
-Active
+**Status:** Active
 
 ---
 
@@ -48,9 +42,7 @@ Active
 
 Does there exist a universal architecture capable of representing every structured, explicit, and auditable reasoning process within the stated scope of Project FAR?
 
-Status:
-
-Active
+**Status:** Active
 
 ---
 
@@ -62,9 +54,7 @@ Can expressive power be measured?
 
 Can two architectures be compared according to expressive power?
 
-Status:
-
-Active
+**Status:** Active
 
 ---
 
@@ -74,11 +64,9 @@ Active
 
 Is Investigation a primitive concept?
 
-Or can it be derived from more fundamental concepts?
+Or can it be derived from more primitive concepts?
 
-Status:
-
-Active
+**Status:** Active
 
 ---
 
@@ -86,13 +74,11 @@ Active
 
 What is the formal relationship between:
 
-- reasoning calculi,
-- admissibility,
-- and resolution rules?
+- Reasoning Calculi
+- Admissibility Structures
+- Resolution Rules
 
-Status:
-
-Active
+**Status:** Active
 
 ---
 
@@ -103,12 +89,10 @@ Should these concepts receive formal treatment within Project FAR?
 If so:
 
 - Where do they belong?
-- Are they properties or architectural objects?
+- Are they primitive or derived concepts?
 - Can they be represented independently of probability?
 
-Status:
-
-Active
+**Status:** Active
 
 ---
 
@@ -116,9 +100,7 @@ Active
 
 Can the distinction between representational structure and interpretation be established as a formal proposition or theorem?
 
-Status:
-
-Active
+**Status:** Active
 
 ---
 
@@ -128,9 +110,7 @@ Active
 
 Does the architecture remain unchanged across every reasoning framework successfully validated?
 
-Status:
-
-Active
+**Status:** Active
 
 ---
 
@@ -138,58 +118,45 @@ Active
 
 Will future validation studies require additional primitive concepts?
 
-Status:
+**Status:** Active
 
-Active Open Problems
+---
 
-This document records major unresolved questions within Project FAR.
+# Open Problems
 
-An open problem remains until it is either:
-
-- solved,
-- disproven,
-- shown to be ill-posed,
-- or reformulated.
+This section records major unresolved problems within Project FAR.
 
 ---
 
 ## OP-1
 
-Can every structured, explicit, auditable reasoning process be represented within FARA?
+Can every structured, explicit, and auditable reasoning process be represented within FARA?
 
-Status:
-
-Open.
+**Status:** Open
 
 ---
 
 ## OP-2
 
-Are the four candidate primitives mutually independent?
+Are the current candidate primitive concepts mutually independent?
 
-Status:
-
-Open.
+**Status:** Open
 
 ---
 
 ## OP-3
 
-Can Ω be eliminated or derived from simpler concepts?
+Can the Admissibility Structure (Ω) be derived from simpler primitive concepts?
 
-Status:
-
-Open.
+**Status:** Open
 
 ---
 
 ## OP-4
 
-Can reasoning states be reduced to a more fundamental object?
+Can reasoning states be reduced to more primitive concepts?
 
-Status:
-
-Open.
+**Status:** Open
 
 ---
 
@@ -197,26 +164,20 @@ Open.
 
 Can semantic validity be defined without circularity?
 
-Status:
-
-Open.
+**Status:** Open
 
 ---
 
 ## OP-6
 
-Does every reasoning calculus induce an admissibility structure equivalent to Ω?
+Does every reasoning calculus induce an equivalent Admissibility Structure?
 
-Status:
-
-Open.
+**Status:** Open
 
 ---
 
 ## OP-7
 
-Does a complete representation theorem exist?
+Does a complete representation theorem exist for Project FAR?
 
-Status:
-
-Open.
+**Status:** Open
