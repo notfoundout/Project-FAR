@@ -12,70 +12,76 @@ It does not prescribe the reasoning calculus used within those stages.
 
 ## Stage 1 — Define the Investigation
 
-Specify the question the investigation seeks to resolve.
+Specify the investigation and its objective.
 
-The investigation establishes the objective of the reasoning process.
-
----
-
-## Stage 2 — Establish the Representation
-
-Identify the representations relevant to the investigation.
-
-Representations should be explicit and appropriately organized.
+The investigation establishes the context within which reasoning is performed.
 
 ---
 
-## Stage 3 — Establish the Interpretation
+## Stage 2 — Establish the Representational Structure
 
-Specify how representations are to be interpreted throughout the investigation.
+Identify the representations relevant to the investigation and organize them within an explicit representational structure.
 
-Changes of interpretation should be explicitly recorded.
+---
+
+## Stage 3 — Specify the Interpretation
+
+Assign interpretations to the representations.
+
+Changes in interpretation should be represented explicitly.
 
 ---
 
 ## Stage 4 — Select the Reasoning Calculus
 
-Identify the reasoning calculus governing admissibility.
+Identify the reasoning calculus governing the investigation.
 
-The methodology remains independent of the chosen calculus.
+The workflow remains independent of the selected reasoning calculus.
 
 ---
 
 ## Stage 5 — Construct the Initial Reasoning State
 
-Assemble the initial reasoning state from the available representations.
+Construct the initial reasoning state from the available representations.
 
-The reasoning state serves as the starting point for the investigation.
+This reasoning state serves as the starting point of the investigation.
 
 ---
 
 ## Stage 6 — Perform Reasoning
 
-Develop the investigation through explicit reasoning transitions.
+Develop the investigation through explicit transformations represented by transition signatures.
 
-Every transition should be recorded.
-
----
-
-## Stage 7 — Evaluate Admissibility
-
-Determine the admissibility structure induced by the completed reasoning state.
-
-The admissibility structure identifies the admissible candidate resolutions.
+Each transformation should produce a new reasoning state.
 
 ---
 
-## Stage 8 — Record the Resolution
+## Stage 7 — Construct the Admissibility Structure (Ω)
 
-Record the final resolution together with its supporting reasoning.
+Classify the candidates admitted for consideration according to the applicable reasoning calculus.
 
-The complete investigation should remain auditable and reproducible.
+The resulting Admissibility Structure records the admissibility status of each candidate.
+
+---
+
+## Stage 8 — Apply the Resolution Rule
+
+Apply the appropriate resolution rule to the classified candidates.
+
+The resolution rule determines which admissible candidate, or collection of admissible candidates, constitutes the resolution of the investigation.
+
+---
+
+## Stage 9 — Record the Resolution
+
+Record the resolution together with the reasoning process that produced it.
+
+The complete investigation should remain explicit, auditable, and reproducible.
 
 ---
 
 ## Iteration
 
-Investigations may revisit earlier stages whenever new information, revised interpretations, or modified objectives require further analysis.
+An investigation may return to any previous stage whenever new representations, revised interpretations, modified criteria, or additional reasoning require further analysis.
 
 The workflow therefore supports iterative refinement rather than requiring a strictly linear process.
