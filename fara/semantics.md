@@ -2,33 +2,41 @@
 
 ## Purpose
 
-This document defines the semantic component of FARA.
+This document defines the semantic component of the Foundational Architecture of Reasoning Analysis (FARA).
 
-Semantics specifies how explicit representations are assigned meaning within the architecture.
+Semantics specifies how representations acquire meaning within an investigation.
 
-It does not define the representations themselves or the entities that participate in reasoning.
+It does not define representations, reasoning states, or admissibility.
 
 ---
 
-## Semantic Principle
+## Definition
 
-Representations possess structure independently of meaning.
+Within FARA, semantics concerns the assignment of meaning to representations through interpretation.
 
-Meaning arises only through interpretation.
+The canonical definitions of representation and interpretation are maintained in:
 
-Consequently, identical representations may possess different meanings under different interpretations.
+`theory/definitions.md`
+
+---
+
+## Objective
+
+The purpose of semantics is to distinguish the structure of a representation from its meaning.
+
+Representations possess structure independently of interpretation.
+
+Meaning arises through interpretation.
 
 ---
 
 ## Interpretation
 
-Interpretation assigns semantic content to representations.
+Interpretation assigns meaning to representations within the context of an investigation.
 
-An interpretation specifies what a representation denotes within the context of an investigation.
+The same representation may possess different meanings under different interpretations.
 
-The formal definition of interpretation is maintained in:
-
-`theory/definitions.md`
+Changes in interpretation should be represented explicitly during an investigation.
 
 ---
 
@@ -36,44 +44,52 @@ The formal definition of interpretation is maintained in:
 
 The meaning of a representation depends upon:
 
-- the representation itself,
+- the representation,
 - the interpretation,
-- the investigation.
+- and the investigation.
 
-Meaning is therefore relative rather than intrinsic.
+Meaning is therefore context-dependent rather than intrinsic.
 
 ---
 
 ## Semantic Equivalence
 
-Two representations are semantically equivalent if they denote the same content under the same interpretation.
+Two representations are semantically equivalent if they possess the same meaning under the same interpretation.
 
-Semantic equivalence does not require syntactic equivalence.
+Semantic equivalence does not require structural equivalence.
 
 Different representations may express the same meaning.
 
 ---
 
-## Semantic Change
+## Semantic Preservation
 
-A reasoning transition may preserve or modify semantic content.
+A transformation may preserve or modify semantic content.
 
-Changes in meaning should occur only through explicitly represented changes of interpretation.
+Whether semantic preservation occurs depends upon the transformation and the interpretation.
 
-The mechanisms governing reasoning transitions are defined in:
+---
 
-`transition-signatures.md`
+## Relationship to Other Components
+
+Semantics assigns meaning to representations.
+
+Reasoning states organize representations.
+
+Transition signatures describe transformations between reasoning states.
+
+The Admissibility Structure (Ω) classifies candidates according to the applicable reasoning calculus.
+
+Each component is defined separately within FARA.
 
 ---
 
 ## Research Status
 
-A complete formal semantics has not yet been established.
-
-Current work includes:
+Current research investigates:
 
 - formal semantic models,
-- semantic preservation,
 - semantic equivalence,
-- completeness,
+- semantic preservation,
+- semantic completeness,
 - and representation theorems.
