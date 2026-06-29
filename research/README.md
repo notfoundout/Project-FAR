@@ -1,15 +1,19 @@
 # Research
 
-This directory documents the ongoing development of Project FAR.
+## Purpose
 
-Unlike the `theory` directory, which contains the current formal presentation of the framework, this directory records the research process itself.
+This directory contains ongoing research supporting the development of Project FAR.
 
-Contents include:
+Unlike the formal theory, the contents of this directory are exploratory.
 
-- open problems,
-- failed proof attempts,
-- future research directions,
-- research notes,
-- bibliography.
+Ideas recorded here should not be regarded as established components of the framework until formally incorporated elsewhere.
 
-The objective is to preserve the evolution of the project while keeping the formal theory concise.
+---
+
+## Contents
+
+- Backburner
+- Open Questions
+- Decision Log
+- Future Directions
+- Failed Approaches
