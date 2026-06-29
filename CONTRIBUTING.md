@@ -6,7 +6,21 @@ Thank you for your interest in contributing to Project FAR.
 
 Project FAR is a research project developing a rigorous, minimal, and universal framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
 
-Contributions should strengthen the framework while preserving its internal consistency, minimality, and formal rigor.
+Contributions should strengthen the framework while preserving its logical consistency, minimality, and formal rigor.
+
+---
+
+# Before You Contribute
+
+Before proposing changes, contributors should become familiar with the project.
+
+Recommended reading order:
+
+1. `README.md`
+2. `ROADMAP.md`
+3. `theory/definitions.md`
+4. The README for the relevant directory
+5. `research/decision-log.md` (for architectural changes)
 
 ---
 
@@ -21,143 +35,65 @@ All contributions should follow these principles.
 - New concepts require explicit justification.
 - Formal claims should ultimately be supported by proof.
 - Avoid circular dependencies.
-- Preserve consistency throughout the repository.
+- Preserve internal consistency.
 
 ---
 
-# Repository Structure
-
-The repository is organized into the following components.
+# Repository Organization
 
 | Directory | Purpose |
 |-----------|---------|
 | `docs/` | Project documentation |
 | `theory/` | Formal theory |
-| `fara/` | Foundational Architecture of Reasoning Analysis |
-| `far/` | Foundational Analysis of Reasoning |
-| `faro/` | Foundational Analysis of Reasoning Operations |
+| `fara/` | Architectural framework |
+| `far/` | Investigation methodology |
+| `faro/` | Reasoning operations |
 | `examples/` | Worked examples |
 | `validation/` | Validation studies |
-| `research/` | Ongoing research |
+| `research/` | Active research |
 | `papers/` | Publications |
 
 ---
 
-# Before Contributing
+# Canonical Definitions
 
-Before making changes, contributors should:
-
-- Read the root `README.md`.
-- Read `ROADMAP.md`.
-- Read `theory/definitions.md`.
-- Review the relevant directory README.
-- Review `research/decision-log.md` if proposing architectural changes.
-
----
-
-# Definitions
-
-Formal terminology is defined only in:
+All formal terminology is defined exclusively in:
 
 ```text
 theory/definitions.md
 ```
 
-Do not redefine terms elsewhere in the repository.
+Do not redefine technical terms elsewhere.
 
-Instead, reference the canonical definition.
+If a new concept is required, add it to the canonical definitions before using it throughout the repository.
 
 ---
 
-# Architectural Changes
+# Architectural Contributions
 
-Architectural changes should satisfy the following criteria.
+Architectural changes should satisfy all of the following:
 
-- Solve a demonstrated problem.
+- Address a demonstrated limitation.
 - Preserve or increase expressive power.
-- Avoid unnecessary complexity.
+- Minimize additional complexity.
 - Avoid introducing circular dependencies.
-- Be consistent with existing definitions.
+- Remain consistent with existing definitions.
 
-Whenever possible, prefer reducing existing concepts before introducing new ones.
+Whenever possible, derive existing concepts before introducing new primitive concepts.
 
 ---
 
-# Theory
+# Formal Theory
 
-Changes to the formal theory should maintain logical consistency.
+Changes to the formal theory should identify dependencies where appropriate.
 
-New:
+Examples include:
 
 - Definitions
 - Axioms
-- Conjectures
 - Propositions
 - Lemmas
 - Theorems
 - Proofs
 
-should identify their dependencies where appropriate.
-
----
-
-# Validation
-
-Validation studies should describe existing reasoning frameworks.
-
-They should not modify Project FAR.
-
-Potential improvements identified during validation should instead be documented within the research directory.
-
----
-
-# Examples
-
-Examples should demonstrate the framework.
-
-They should not introduce new concepts or modify the formal theory.
-
----
-
-# Documentation
-
-Documentation should remain:
-
-- accurate,
-- concise,
-- internally consistent,
-- and synchronized with the formal theory.
-
----
-
-# Pull Requests
-
-Pull requests should include:
-
-- A summary of the proposed changes.
-- The motivation for the changes.
-- The affected files.
-- Any new dependencies introduced.
-- Any unresolved questions.
-
----
-
-# Reporting Issues
-
-When reporting an issue, include:
-
-- A clear description.
-- The affected files.
-- The observed problem.
-- The expected behavior.
-- Any suggested resolution.
-
----
-
-# Code of Conduct
-
-Contributors are expected to engage respectfully and constructively.
-
-Discussion should focus on improving the framework through evidence, logical analysis, and clear reasoning.
-
-Disagreements should be resolved through explicit argumentation rather than authority or preference.
+The goal
