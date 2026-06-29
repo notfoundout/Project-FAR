@@ -1,197 +1,109 @@
-# Project FAR Style Guide
+# Style Guide
 
 ## Purpose
 
-This document defines the writing standards used throughout Project FAR.
+This document defines the documentation standards used throughout Project FAR.
 
-The objective is to produce a repository that is internally consistent, non-redundant, and suitable for long-term development.
+Its purpose is to promote clarity, consistency, precision, and maintainability across the repository.
 
----
-
-# Principle 1 — One Concept, One Definition
-
-Every technical concept should have exactly one canonical definition.
-
-Examples include:
-
-- Representation
-- Interpretation
-- Reasoning State
-- Investigation
-- Ω
-- Resolution
-
-Canonical definitions belong in:
-
-theory/definitions.md
-
-Other documents should reference those definitions rather than restating them.
+The style guide governs presentation rather than theory.
 
 ---
 
-# Principle 2 — One Question Per Document
+## General Principles
 
-Every document should answer one primary question.
+Documentation should be:
 
-For example:
+- Precise
+- Explicit
+- Consistent
+- Concise
+- Auditable
 
-overview.md
-
-"What is Project FAR?"
-
-mission.md
-
-"Why does Project FAR exist?"
-
-scope.md
-
-"What reasoning lies within the project's scope?"
-
-No document should attempt to answer every question.
+Clarity should always take precedence over stylistic preference.
 
 ---
 
-# Principle 3 — Definitions Before Conclusions
+## Terminology
 
-Every argument should proceed in the following order.
+Technical terms shall be used consistently throughout the repository.
 
-Definitions
+Unless explicitly stated otherwise, every technical term refers to its canonical definition in:
 
-↓
+`theory/definitions.md`
 
-Assumptions
-
-↓
-
-Representations
-
-↓
-
-Reasoning
-
-↓
-
-Conclusions
-
-Definitions should never be modified after conclusions have been reached.
+New terminology should not be introduced if an existing defined term is sufficient.
 
 ---
 
-# Principle 4 — Separate Stable Theory From Active Research
+## Canonical Sources
 
-Stable material belongs in:
+Every concept should possess exactly one canonical location.
 
-- theory/
-- fara/
-- far/
-- faro/
+Other documents should reference that location rather than restating the concept.
 
-Exploratory material belongs in:
-
-- research/
-
-Experimental ideas should not appear in the formal theory until sufficiently developed.
+Redundant definitions should be avoided.
 
 ---
 
-# Principle 5 — Explicit Status
+## Document Structure
 
-Every important claim should identify its current status.
+Documents should generally follow this structure:
 
-Possible statuses include:
+1. Purpose
+2. Definition (when applicable)
+3. Objective
+4. Core Content
+5. Relationships
+6. Research Status (when applicable)
 
-Definition
+Not every document requires every section.
 
-Axiom
-
-Proposition
-
-Conjecture
-
-Lemma
-
-Theorem
-
-Proof Sketch
-
-Open Problem
-
-No claim should appear without indicating its status.
+Sections should be included only when they contribute meaningful information.
 
 ---
 
-# Principle 6 — Avoid Redundancy
+## Language
 
-Information should appear once.
+Documentation should:
 
-Later documents should reference earlier documents instead of repeating them.
+- use precise language,
+- avoid unnecessary ambiguity,
+- distinguish clearly between established results and ongoing research,
+- avoid rhetorical or persuasive language.
 
-Repeated explanations should be replaced with references whenever practical.
-
----
-
-# Principle 7 — Progressive Detail
-
-Higher-level documents should summarize.
-
-Lower-level documents should provide detail.
-
-For example:
-
-README.md
-
-↓
-
-overview.md
-
-↓
-
-architecture.md
-
-↓
-
-definitions.md
-
-↓
-
-proofs.md
-
-Readers should move from general concepts toward increasing formal precision.
+Normative language should be used only when specifying framework requirements.
 
 ---
 
-# Principle 8 — Revision History
+## Definitions
 
-Major conceptual changes should be recorded in:
+Formal definitions belong exclusively in:
 
-CHANGELOG.md
+`theory/definitions.md`
 
-Design decisions should be recorded in:
-
-research/decision-log.md
-
-Research progress should be recorded in:
-
-research/journal.md
-
-The repository should preserve both the current theory and its historical development.
+Other documents should reference canonical definitions rather than redefining terms.
 
 ---
 
-# Principle 9 — Falsifiability
+## Cross References
 
-Every substantial claim should identify the conditions under which it would be considered false.
-
-Counterexamples should be documented rather than discarded.
+Whenever another document provides the canonical treatment of a concept, reference that document instead of duplicating its content.
 
 ---
 
-# Principle 10 — Minimality
+## Repository Organization
 
-Every document should justify its existence.
+Every file should have a single primary responsibility.
 
-Every section should justify its inclusion.
+If removing a file does not reduce the expressive power of the repository, that file should be merged with another document or removed.
 
-Every concept should justify its necessity.
+Similarly, if two files substantially overlap in purpose, they should be consolidated.
 
-The organization of the repository should reflect the same minimality principle that guides the development of Project FAR itself.
+---
+
+## Revision Policy
+
+Changes to canonical definitions should be made only after considering their effects throughout the repository.
+
+Whenever a canonical definition changes, all dependent documents should be updated to maintain consistency.
