@@ -28,9 +28,9 @@ Only objects required for representation should be included.
 
 ---
 
-## Fundamental Objects
+## Primitive Objects
 
-The current architecture recognizes the following fundamental objects.
+The current architecture recognizes the following primitive objects.
 
 - Representation
 - Representational Structure
