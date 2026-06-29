@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+
+title: "Project FAR"
+
+message: >
+  If you use Project FAR in research, publications, or other scholarly work,
+  please cite this repository.
+
+type: software
+
+authors:
+  - family-names: Jackson
+    given-names: Alex
+
+repository-code: "https://github.com/notfoundout/Project-FAR"
+
+abstract: >
+  Project FAR is an ongoing research project developing a rigorous, minimal,
+  and universal framework for representing, analyzing, and comparing
+  structured, explicit, and auditable reasoning.
+
+keywords:
+  - reasoning
+  - logic
+  - formal methods
+  - reasoning architecture
+  - epistemology
+  - methodology
+  - decision making
+  - formal systems
+  - philosophy
+  - mathematics
+
+license: "Proprietary"
+
+version: "0.1.0"
