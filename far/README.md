@@ -8,23 +8,22 @@
 
 This directory defines the methodology of Project FAR.
 
-FAR provides a structured procedure for conducting investigations using the architectural concepts defined by FARA.
+FAR provides a structured methodology for conducting investigations using the architectural framework established by FARA.
 
-Unlike FARA, which defines what exists within the architecture, FAR defines how those components are used during an investigation.
+Unlike FARA, which defines the architecture of structured reasoning, FAR defines how that architecture is applied during an investigation.
 
 ---
 
 ## Contents
 
 - `methodology.md` — Defines the FAR methodology.
-- `workflow.md` — Defines the stages of an investigation.
-- `investigation-protocol.md` — Defines procedural standards.
-- `examples.md` — Demonstrates the methodology through worked investigations.
+- `workflow.md` — Defines the stages of a FAR investigation.
+- `application.md` — Describes how the methodology is applied in practice.
 
 ---
 
 ## Related Directories
 
 - `fara/` — Foundational architecture.
-- `theory/` — Formal definitions and proofs.
-- `validation/` — Validation against existing reasoning frameworks.
+- `theory/` — Formal definitions, propositions, and proofs.
+- `examples/` — Complete worked investigations.
