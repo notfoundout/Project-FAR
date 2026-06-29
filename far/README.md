@@ -1,21 +1,30 @@
 # FAR
 
-## Foundational Analysis of Reasoning
+**Foundational Analysis of Reasoning**
 
-FAR is the investigative methodology of Project FAR.
+---
 
-It provides a systematic procedure for conducting structured, explicit, auditable investigations.
+## Purpose
 
-Rather than beginning with conclusions, FAR begins with definitions, representations, assumptions, and investigation objectives.
+This directory defines the methodology of Project FAR.
 
-## Objectives
+FAR provides a structured procedure for conducting investigations using the architectural concepts defined by FARA.
 
-- Make assumptions explicit.
-- Reduce ambiguity.
-- Preserve auditability.
-- Record every reasoning transition.
-- Produce justified resolutions.
+Unlike FARA, which defines what exists within the architecture, FAR defines how those components are used during an investigation.
 
-## Current Status
+---
 
-FAR is derived from the current formulation of FARA and continues to evolve alongside the architecture.
+## Contents
+
+- `methodology.md` — Defines the FAR methodology.
+- `workflow.md` — Defines the stages of an investigation.
+- `investigation-protocol.md` — Defines procedural standards.
+- `examples.md` — Demonstrates the methodology through worked investigations.
+
+---
+
+## Related Directories
+
+- `fara/` — Foundational architecture.
+- `theory/` — Formal definitions and proofs.
+- `validation/` — Validation against existing reasoning frameworks.
