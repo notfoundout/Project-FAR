@@ -1,81 +1,60 @@
-# Project FAR
+# Overview
 
-## Overview
+## Purpose
 
-Project FAR is an open research program investigating the foundations of structured, explicit, auditable reasoning.
+This document provides an overview of Project FAR.
 
-Its central research question is:
+Project FAR is a research program investigating whether structured, explicit, and auditable reasoning can be represented by a common minimal architecture and analyzed through a general methodology.
 
-> **Can every structured, explicit, auditable reasoning process be represented by a common minimal architecture?**
-
-Rather than proposing a new logic, reasoning calculus, or decision procedure, Project FAR seeks to identify the fundamental structure shared by existing reasoning frameworks.
-
-The project aims to provide a common language for representing, analyzing, comparing, and auditing reasoning across diverse disciplines.
+The project develops formal definitions, architectural models, investigative methods, comparative tools, and mathematical theory toward that objective.
 
 ---
 
-# Organization
+## Project Structure
 
-Project FAR is organized into three complementary frameworks.
+Project FAR is organized into four primary components.
 
-## FARA
+### FARA
 
-**Foundational Architecture of Reasoning Analysis**
+The **Foundational Architecture of Reasoning Analysis (FARA)** defines the architectural components required to represent structured reasoning.
 
-Develops the proposed foundational architecture for representing structured reasoning.
-
-See:
-
-`fara/architecture.md`
+FARA identifies candidate primitive concepts and derives the remaining architectural concepts from them.
 
 ---
 
-## FAR
+### FAR
 
-**Foundational Analysis of Reasoning**
-
-Develops a methodology for conducting structured investigations using the architectural principles established by FARA.
-
-See:
-
-`far/methodology.md`
+The **Foundational Analysis of Reasoning (FAR)** defines the methodology for conducting investigations using the architectural framework established by FARA.
 
 ---
 
-## FARO
+### FARO
 
-**Foundational Analysis of Reasoning Operations**
-
-Develops methods for comparing, evaluating, and auditing reasoning processes.
-
-See:
-
-`faro/comparison.md`
+The **Foundational Analysis of Reasoning Operations (FARO)** defines methods for comparing, auditing, and analyzing reasoning processes represented using FARA and conducted using FAR.
 
 ---
 
-# Repository
+### Theory
 
-The repository is organized into the following major sections.
-
-| Directory | Purpose |
-|-----------|---------|
-| `docs/` | Project documentation |
-| `fara/` | Foundational architecture |
-| `far/` | Investigation methodology |
-| `faro/` | Comparative framework |
-| `theory/` | Formal definitions, propositions, conjectures, and proofs |
-| `validation/` | Comparisons with existing reasoning frameworks |
-| `examples/` | Worked examples and case studies |
-| `papers/` | Research papers |
-| `research/` | Research notes and project development |
+The formal theory provides the mathematical foundation of Project FAR through definitions, axioms, propositions, lemmas, theorems, conjectures, and proofs.
 
 ---
 
-# Current Status
+## Design Objectives
 
-Project FAR is under active development.
+Project FAR is guided by the following objectives.
 
-The repository contains both stable documentation and ongoing research. Formal proofs, mathematical development, and external validation remain active areas of work.
+- Explicit representation
+- Minimal architecture
+- General applicability
+- Auditability
+- Reproducibility
+- Formal rigor
 
-Readers should distinguish between established definitions and open research questions by consulting the corresponding documents within the repository.
+---
+
+## Current Status
+
+Project FAR remains an active research program.
+
+The architecture, methodology, comparative framework, and formal theory continue to undergo refinement, validation, and formalization.
