@@ -40,7 +40,9 @@ A derived concept is considered formally established only if:
 
 ## Status
 
-Pending
+**Proposed**
+
+---
 
 ## Primitive Dependencies
 
@@ -50,219 +52,87 @@ Pending
 - Interpretation
 - Reasoning Calculus
 
+---
+
 ## Derived Dependencies
-
-None
-
-## Objective
-
-Demonstrate that a reasoning state can be completely characterized using only the primitive architecture.
-
-## Proposed Derivation
-
-Pending.
-
-## Formal Derivation
-
-Pending.
-
-## Notes
 
 None.
 
 ---
 
-# DC-TRANSITION-SIGNATURE
-
-## Status
-
-Pending
-
-## Primitive Dependencies
-
-- Investigation
-- Representation
-- Representational Structure
-- Interpretation
-- Reasoning Calculus
-
-## Derived Dependencies
-
-- DC-REASONING-STATE
-
 ## Objective
 
-Demonstrate that a transition signature can be completely characterized using the primitive architecture together with the derived concept of a reasoning state.
+Determine whether a Reasoning State can be completely characterized using only the primitive architecture.
+
+---
 
 ## Proposed Derivation
 
-Pending.
+An investigation specifies the context within which reasoning occurs.
+
+Representations constitute the explicit information manipulated during the investigation.
+
+The representational structure specifies how those representations are organized.
+
+Interpretation assigns meaning to the representations.
+
+The reasoning calculus governs the admissible transformations of the representations.
+
+At any stage of an investigation, the complete configuration of representations, together with their organization, interpretation, and governing reasoning calculus, completely characterizes the current condition of the reasoning process.
+
+Accordingly, no additional primitive concept appears necessary.
+
+Reasoning State is therefore proposed to be a derived concept rather than a primitive concept.
+
+---
+
+## Proposed Derived Definition
+
+A **Reasoning State** is the complete configuration of representations, their representational structure, their interpretation, and the governing reasoning calculus at a particular stage of an investigation.
+
+---
+
+## Verification Checklist
+
+Before this derivation can be accepted, it must be shown that:
+
+- No hidden primitive concepts have been introduced.
+- The derivation is non-circular.
+- The derivation preserves expressive power.
+- No counterexamples require Reasoning State to remain primitive.
+
+---
 
 ## Formal Derivation
 
 Pending.
 
-## Notes
-
-None.
-
 ---
-
-# DC-CANDIDATE
-
-## Status
-
-Pending
-
-## Primitive Dependencies
-
-- Investigation
-- Representation
-- Interpretation
-
-## Derived Dependencies
-
-None
-
-## Objective
-
-Demonstrate that a candidate can be completely characterized using the primitive architecture.
-
-## Proposed Derivation
-
-Pending.
-
-## Formal Derivation
-
-Pending.
 
 ## Notes
 
-None.
+This derivation is provisional.
+
+Acceptance requires successful verification against the criteria above.
 
 ---
 
-# DC-ADMISSIBILITY-STRUCTURE
+# Remaining Derived Concepts
 
-## Status
+The following concepts remain pending derivation.
 
-Pending
-
-## Primitive Dependencies
-
-- Reasoning Calculus
-
-## Derived Dependencies
-
+- DC-TRANSITION-SIGNATURE
 - DC-CANDIDATE
-
-## Objective
-
-Demonstrate that the Admissibility Structure (Ω) can be completely characterized from the primitive architecture.
-
-## Proposed Derivation
-
-Pending.
-
-## Formal Derivation
-
-Pending.
-
-## Notes
-
-None.
-
----
-
-# DC-RESOLUTION-RULE
-
-## Status
-
-Pending
-
-## Primitive Dependencies
-
-None
-
-## Derived Dependencies
-
-- DC-ADMISSIBILITY-STRUCTURE
-
-## Objective
-
-Demonstrate that a resolution rule can be completely characterized from the Admissibility Structure.
-
-## Proposed Derivation
-
-Pending.
-
-## Formal Derivation
-
-Pending.
-
-## Notes
-
-None.
-
----
-
-# DC-RESOLUTION
-
-## Status
-
-Pending
-
-## Primitive Dependencies
-
-None
-
-## Derived Dependencies
-
 - DC-ADMISSIBILITY-STRUCTURE
 - DC-RESOLUTION-RULE
-
-## Objective
-
-Demonstrate that a resolution can be completely characterized from previously established concepts.
-
-## Proposed Derivation
-
-Pending.
-
-## Formal Derivation
-
-Pending.
-
-## Notes
-
-None.
-
----
-
-# Dependency Graph
-
-The intended dependency structure is:
-
-```text
-Primitive Architecture
-        │
-        ├── DC-REASONING-STATE
-        │         │
-        │         └── DC-TRANSITION-SIGNATURE
-        │
-        ├── DC-CANDIDATE
-        │         │
-        │         └── DC-ADMISSIBILITY-STRUCTURE
-        │                     │
-        │                     └── DC-RESOLUTION-RULE
-        │                                 │
-        │                                 └── DC-RESOLUTION
-```
+- DC-RESOLUTION
 
 ---
 
 # Research Status
 
-No formal derivations have yet been completed.
+Project FAR has begun the formal reduction of its architecture.
 
-This document serves as the canonical record of Project FAR's derived concepts and will be updated as formal derivations are established.
+No derived concept has yet been formally established.
+
+All proposed derivations remain subject to verification and possible rejection.
