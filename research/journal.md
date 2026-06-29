@@ -113,3 +113,88 @@ Future journal entries should record only significant developments, including:
 - Publication milestones
 
 Routine edits and minor corrections should not be recorded.
+
+## 2026-06-29
+
+# Transition to Formal Theory
+
+Today marked a major transition in the development of Project FAR.
+
+The repository has largely completed its architectural and organizational phase. Future work will focus primarily on developing the formal theory rather than expanding repository infrastructure.
+
+---
+
+# Primitive Architecture
+
+The candidate primitive architecture was reduced to five concepts:
+
+- Investigation
+- Representation
+- Representational Structure
+- Interpretation
+- Reasoning Calculus
+
+The following concepts were reclassified as candidate derived concepts:
+
+- Reasoning State
+- Transition Signature
+- Candidate
+- Admissibility Structure (Ω)
+- Resolution Rule
+- Resolution
+
+This establishes a substantially smaller provisional foundation for FARA.
+
+---
+
+# Theory Reorganization
+
+The formal theory was reorganized to reflect the new architecture.
+
+Major changes included:
+
+- Introducing `derived-concepts.md`.
+- Reducing the axiomatic foundation from eight axioms to five.
+- Removing provisional lemmas from the formal theory.
+- Treating conjectures as parallel research rather than part of the dependency chain.
+- Replacing a single `proofs.md` document with a dedicated `proofs/` directory.
+
+---
+
+# First Primitive Reduction
+
+The first derivation effort focused on **Reasoning State**.
+
+Initial analysis suggests that Reasoning State may be characterized entirely by:
+
+- Investigation
+- Representation
+- Representational Structure
+- Interpretation
+- Reasoning Calculus
+
+Rather than accepting this conclusion immediately, the proposed derivation has been recorded as provisional pending formal verification.
+
+---
+
+# Current Research Direction
+
+The principal objective of Project FAR is now to determine whether every non-primitive concept can be derived from the five primitive concepts without reducing expressive power.
+
+The next planned derivations are:
+
+1. Transition Signature
+2. Candidate
+3. Admissibility Structure (Ω)
+4. Resolution Rule
+5. Resolution
+
+Successful completion of these derivations would significantly strengthen the claim that the primitive architecture is both minimal and sufficient.
+
+---
+
+# Reflection
+
+Today's work marked the beginning of the theoretical phase of Project FAR.
+
+Future progress will depend less on repository organization and more on establishing formal derivations, proving propositions, and testing the architecture against potential counterexamples.
