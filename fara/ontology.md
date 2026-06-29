@@ -2,96 +2,86 @@
 
 ## Purpose
 
-This document defines the ontology of the Foundational Architecture of Reasoning Analysis (FARA).
+This document defines the ontological structure of the Foundational Architecture of Reasoning Analysis (FARA).
 
-The ontology specifies the classes of objects assumed to exist within the architecture.
+It distinguishes the primitive concepts of the architecture from concepts that are derived from them.
 
-It does not define the meaning, behavior, or admissibility of those objects.
-
----
-
-## Definition
-
-Within FARA, the ontology consists of the objects required to represent structured, explicit, auditable reasoning.
-
-The canonical definitions of these objects are maintained in:
-
-`theory/definitions.md`
+Unless explicitly stated otherwise, the terminology used here follows the canonical definitions provided in `theory/definitions.md`.
 
 ---
 
-## Objective
+# Primitive Concepts
 
-The objective of the ontology is to identify the objects required by the architecture while minimizing unnecessary ontological commitments.
+The following concepts are treated as primitive within the current version of FARA.
 
-Only objects required for representation should be included.
-
----
-
-## Primitive Objects
-
-The current architecture recognizes the following primitive objects.
-
+- Investigation
 - Representation
 - Representational Structure
 - Interpretation
-- Investigation
 - Reasoning Calculus
-
-These objects serve as the architectural foundation of FARA.
-
----
-
-## Derived Objects
-
-The following objects are currently regarded as derived from the fundamental objects.
-
 - Reasoning State
 - Transition Signature
 - Candidate
 - Admissibility Structure (Ω)
+- Resolution Rule
 - Resolution
 
-Derived objects are defined in terms of the fundamental objects and their relationships.
+Primitive concepts are not currently defined in terms of other architectural concepts.
+
+Whether this collection is minimal or complete remains an open research question.
 
 ---
 
-## Ontological Neutrality
+# Derived Concepts
 
-The ontology is independent of:
+The following concepts are currently regarded as derived from the primitive concepts.
 
-- any particular reasoning calculus,
-- any application domain,
-- any implementation,
-- and any specific reasoning methodology.
+Examples include:
 
-It specifies only the objects required by the architecture.
+- Evidence
+- Observation
+- Hypothesis
+- Proof
+- Argument
+- Explanation
+- Model
+- Theory
+- Prediction
+- Counterexample
 
----
-
-## Relationships
-
-The ontology identifies the existence of architectural objects.
-
-The relationships among those objects are defined elsewhere within FARA.
-
-Semantics assigns meaning to representations.
-
-Reasoning states organize representations.
-
-Transition signatures represent transformations.
-
-The Admissibility Structure (Ω) classifies candidates.
+Additional derived concepts may be introduced provided they can be defined using the primitive concepts.
 
 ---
 
-## Research Status
+# Primitive and Derived Concepts
 
-The ontology remains provisional.
+Primitive concepts provide the architectural foundation of FARA.
 
-Current research investigates:
+Derived concepts are defined in terms of the primitive concepts and their relationships.
 
-- ontological reduction,
-- independence of candidate primitives,
-- minimal ontological commitments,
-- and alternative architectural formulations.
+The objective is to maintain a minimal ontology while preserving the expressive power required to represent reasoning across multiple domains.
+
+---
+
+# Research Status
+
+The current ontology is regarded as provisional.
+
+Ongoing research seeks to determine:
+
+- Whether any primitive concepts can be derived.
+- Whether additional primitive concepts are required.
+- Whether the current ontology is minimal.
+- Whether the ontology is universal within the scope of Project FAR.
+
+These questions are tracked in:
+
+`research/open-questions.md`
+
+---
+
+# Design Principle
+
+New primitive concepts should be introduced only after demonstrating that existing primitive concepts cannot adequately represent the required architectural structure.
+
+Whenever possible, Project FAR prefers reduction over expansion.
