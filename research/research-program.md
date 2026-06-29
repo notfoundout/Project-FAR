@@ -2,194 +2,133 @@
 
 ## Purpose
 
-This document defines the long-term research program of Project FAR.
+This document defines the long-term research objectives of Project FAR.
 
-It identifies the principal research objectives, their relationships, and the order in which they should be investigated.
+Its purpose is to identify the fundamental questions whose resolution will determine the completeness, correctness, and scope of the framework.
 
-Unlike the project roadmap, which describes repository development, the research program describes the theoretical development of Project FAR.
-
----
-
-# Research Goal
-
-Develop a rigorous, minimal, universal framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning within the stated scope of Project FAR.
+Unlike the roadmap, which describes project development, this document describes the research program itself.
 
 ---
 
-# Research Program
+# Primary Objective
 
-## Stage I — Foundations
-
-### Objective
-
-Establish the conceptual and organizational foundations of Project FAR.
-
-### Components
-
-- Canonical terminology
-- Primitive concepts
-- Ontology
-- Semantics
-- Reasoning states
-- Transition signatures
-- Admissibility Structure (Ω)
-- FAR methodology
-- FARO operations
-- Repository organization
-
-### Status
-
-Completed
+Determine whether Project FAR constitutes a minimal universal architecture for representing and analyzing reasoning.
 
 ---
 
-## Stage II — Formal Theory
+# Research Areas
 
-### Objective
+## 1. Primitive Analysis
 
-Develop the formal mathematical foundation of Project FAR.
+Determine whether every primitive concept is:
 
-### Components
+- Necessary
+- Independent
+- Irreducible
+- Sufficient
 
-- Definitions
-- Axioms
-- Conjectures
-- Propositions
-- Lemmas
-- Theorems
-- Proofs
+Questions:
 
-### Primary Questions
-
-- Is the architecture minimal?
-- Are the primitive concepts independent?
-- Can expressive power be formally defined?
-- Does a universal architecture exist?
-
-### Status
-
-In Progress
+- Can any primitive be eliminated?
+- Can any primitive be derived?
+- Are additional primitives required?
 
 ---
 
-## Stage III — Validation
+## 2. Universality
 
-### Objective
+Determine the scope over which Project FAR is universal.
 
-Determine whether existing reasoning frameworks can be represented using Project FAR.
+Questions:
 
-### Initial Validation Targets
-
-- Scientific Method
-- Mathematical Proof
-- Bayesian Reasoning
-- Historical Method
-- Legal Reasoning
-- Software Engineering
-
-### Future Validation Targets
-
-- Machine Learning
-- Engineering Design
-- Medical Diagnosis
-- Intelligence Analysis
-- Economic Reasoning
-- Ethical Reasoning
-
-### Status
-
-In Progress
+- Which reasoning frameworks are representable?
+- Are there reasoning frameworks that cannot be represented?
+- If so, why?
 
 ---
 
-## Stage IV — Comparative Analysis
+## 3. Minimality
 
-### Objective
+Determine whether the architecture is minimal.
 
-Evaluate similarities and differences between reasoning frameworks using FARO.
+Questions:
 
-### Example Studies
-
-- Scientific vs. Historical reasoning
-- Bayesian vs. Frequentist reasoning
-- Common Law vs. Civil Law
-- Classical vs. Intuitionistic logic
-
-### Status
-
-Planned
+- Does removing any primitive reduce expressive power?
+- Can expressive power be preserved with fewer primitives?
 
 ---
 
-## Stage V — Formal Results
+## 4. Expressive Power
 
-### Objective
+Characterize the expressive power of Project FAR.
 
-Establish mathematically rigorous results concerning Project FAR itself.
+Questions:
 
-### Expected Topics
-
-- Minimality
-- Independence
-- Consistency
-- Expressive power
-- Universality
-- Completeness
-
-### Status
-
-Planned
+- What classes of reasoning can be represented?
+- What limitations exist?
 
 ---
 
-## Stage VI — Tooling
+## 5. Formal Theory
 
-### Objective
+Develop the formal mathematical theory.
 
-Develop software supporting Project FAR.
+Objectives:
 
-### Possible Deliverables
-
-- Investigation editor
-- Reasoning state visualizer
-- Comparison tools
-- Audit tools
-- Dependency graph generator
-- Validation tools
-
-### Status
-
-Planned
+- Refine definitions.
+- Strengthen axioms.
+- Develop propositions.
+- Prove theorems.
+- Construct rigorous proofs.
 
 ---
 
-## Stage VII — Publication
+## 6. Validation
 
-### Objective
+Validate Project FAR across diverse reasoning frameworks.
 
-Communicate mature portions of Project FAR.
+Current areas include:
 
-### Deliverables
+- Mathematics
+- Science
+- History
+- Law
+- Engineering
+- Communication
+- Argumentation
 
-- Academic papers
-- Reference manual
-- Tutorials
-- Case studies
-- Educational material
-
-### Status
-
-Planned
+Additional validations should be conducted whenever they improve confidence in the framework's scope.
 
 ---
 
-# Guiding Principles
+## 7. Computational Applications
 
-The research program should remain guided by the following principles:
+Investigate computational implementations of Project FAR.
 
-- Definitions precede conclusions.
-- Simplicity is preferred over complexity.
-- Reduction is preferred over expansion.
-- New concepts require explicit justification.
-- Every concept has one canonical definition.
-- Every theoretical claim should ultimately be supported by formal argument.
+Possible directions include:
+
+- Reasoning engines
+- Argument comparison
+- Automated auditing
+- Explainable AI
+- Formal verification
+
+---
+
+# Success Criteria
+
+The research program will be considered substantially complete when:
+
+- The primitive architecture has been justified.
+- The formal theory has been rigorously developed.
+- The scope of universality has been characterized.
+- The architecture has been validated across diverse reasoning frameworks.
+- The principal theoretical claims have been formally established.
+
+---
+
+# Guiding Principle
+
+The objective of Project FAR is not to defend a predetermined architecture, but to discover the simplest architecture capable of representing reasoning within its intended scope.
+
+Accordingly, every component of the framework remains subject to revision in light of stronger theoretical results.
