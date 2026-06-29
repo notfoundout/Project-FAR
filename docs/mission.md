@@ -2,96 +2,65 @@
 
 ## Purpose
 
-Project FAR exists to investigate whether a universal architecture underlies every structured, explicit, and auditable reasoning process.
+Project FAR exists to investigate whether a universal architecture underlies structured, explicit, auditable reasoning.
 
-The project does not begin by assuming such an architecture exists.
+The project does not assume such an architecture exists.
 
-Instead, it treats this as a research question.
+Instead, it treats this as an open scientific question.
 
 ---
 
 ## The Problem
 
-Many formal systems describe reasoning within specific domains.
+Many formal systems successfully describe reasoning within particular domains.
 
 Examples include:
 
-- Classical logic
-- Probability theory
-- Bayesian inference
-- Decision theory
-- Scientific methodology
-- Optimization theory
-- Legal reasoning
-- Type theory
-- Category theory
+- Classical Logic
+- Probability Theory
+- Bayesian Inference
+- Decision Theory
+- Scientific Methodology
+- Type Theory
+- Category Theory
+- Proof Theory
 
-Each provides powerful tools for particular classes of problems.
+Each provides a framework for specific kinds of reasoning.
 
-However, they differ significantly in:
-
-- primitive assumptions,
-- representational structures,
-- semantics,
-- inference rules,
-- and intended scope.
-
-Project FAR investigates whether these diverse systems share a common representational foundation.
+Project FAR asks whether these systems share a common underlying architecture.
 
 ---
 
-## Research Question
+## Research Objective
 
-The central question is:
+The objective of Project FAR is to determine whether there exists a minimal architecture capable of representing every structured, explicit, auditable reasoning process within its stated scope.
 
-> Can every structured, explicit, auditable reasoning process be represented by a common minimal architecture without loss of expressive power?
+If such an architecture exists, the project seeks to identify it.
 
-If the answer is yes, the project seeks to identify that architecture.
+If no such architecture exists, the project seeks to determine why.
 
-If the answer is no, the project seeks to determine precisely why.
-
-Both outcomes advance understanding.
+Both outcomes advance the understanding of reasoning.
 
 ---
 
-## Method
+## Approach
 
-Project FAR develops through elimination rather than accumulation.
+Project FAR develops candidate architectures, formalizes their components, compares them against existing reasoning frameworks, and attempts to identify counterexamples.
 
-Every proposed primitive is repeatedly challenged.
+The project emphasizes formalization, validation, and revision throughout its development.
 
-A concept remains primitive only if:
+Details of the research methodology are described in:
 
-- it cannot be derived,
-- removing it reduces expressive power,
-- or external frameworks require it independently.
-
-The project therefore attempts to simplify itself continuously.
+`docs/philosophy.md`
 
 ---
 
 ## Success Criteria
 
-Project FAR will be considered successful if it either:
+Project FAR will be considered successful if it achieves either of the following:
 
-1. identifies a minimal architecture capable of representing all reasoning systems within its stated scope,
+1. Identifies a minimal architecture capable of representing every reasoning process within its stated scope.
 
-or
-
-2. rigorously demonstrates why no such architecture exists.
+2. Demonstrates that no such architecture can exist.
 
 Either result contributes to the foundations of reasoning.
-
----
-
-## Philosophy
-
-Project FAR does not seek confirmation.
-
-It seeks refutation.
-
-A successful counterexample is considered scientific progress because it either improves the framework or demonstrates its limitations.
-
-The objective is not to defend a theory.
-
-The objective is to determine whether the theory survives sustained attempts at falsification.
