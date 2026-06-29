@@ -2,29 +2,26 @@
 
 ## Purpose
 
-This document records active development tasks within Project FAR.
+This document records known issues affecting the current development of Project FAR.
 
-Unlike open research problems, issues represent actionable work required to improve the framework.
+Unlike open research questions, issues represent concrete deficiencies, inconsistencies, missing components, or implementation tasks that require resolution.
 
-Issues may be closed, reopened, or replaced as the project evolves.
+Issues should be removed from this document once resolved.
 
 ---
 
 # High Priority
 
-## Issue 001
+## Formal Theory Incomplete
 
-Formalize semantic validity.
+The formal theory currently contains only the foundational structure.
 
-Status:
+Remaining work includes:
 
-Open
-
----
-
-## Issue 002
-
-Formalize admissibility.
+- Propositions
+- Lemmas
+- Theorems
+- Proofs
 
 Status:
 
@@ -32,59 +29,11 @@ Open
 
 ---
 
-## Issue 003
+## Validation Coverage
 
-Develop mathematical notation for reasoning states.
+The current validation set is incomplete.
 
-Status:
-
-Open
-
----
-
-## Issue 004
-
-Develop mathematical notation for Ω.
-
-Status:
-
-Open
-
----
-
-## Issue 005
-
-Complete representation theorem.
-
-Status:
-
-Open
-
----
-
-## Issue 006
-
-Attempt primitive independence proofs.
-
-Status:
-
-Open
-
----
-
-## Issue 007
-
-Formalize transition signatures.
-
-Status:
-
-Open
-
----
-
-## Issue 008
-
-Complete external validation against proof theory.
+Additional validation studies should be completed before making strong claims regarding the generality of Project FAR.
 
 Status:
 
@@ -94,19 +43,9 @@ Open
 
 # Medium Priority
 
-## Issue 009
+## Cross-Reference Audit
 
-Expand glossary.
-
-Status:
-
-Open
-
----
-
-## Issue 010
-
-Improve examples.
+A complete repository audit should verify that every cross-reference points to the current canonical document.
 
 Status:
 
@@ -114,19 +53,15 @@ Open
 
 ---
 
-## Issue 011
+## Terminology Audit
 
-Complete software roadmap.
+Verify that obsolete terminology has been completely removed.
 
-Status:
+Examples include:
 
-Open
-
----
-
-## Issue 012
-
-Develop repository diagrams.
+- Fundamental Objects
+- Candidate Resolution
+- Possibility Space
 
 Status:
 
@@ -134,9 +69,9 @@ Open
 
 ---
 
-## Issue 013
+## Repository Consistency
 
-Expand bibliography.
+Verify that every directory README accurately reflects the current repository organization.
 
 Status:
 
@@ -146,19 +81,9 @@ Open
 
 # Low Priority
 
-## Issue 014
+## Internal Linking
 
-Develop GitHub Pages website.
-
-Status:
-
-Open
-
----
-
-## Issue 015
-
-Design project logo.
+Add additional cross-references between related documents where appropriate.
 
 Status:
 
@@ -166,23 +91,10 @@ Open
 
 ---
 
-## Issue 016
+## Dependency Visualization
 
-Write introductory tutorial.
+Develop a visualization of document and theoretical dependencies.
 
 Status:
 
 Open
-
----
-
-# Workflow
-
-Every issue should eventually be:
-
-- Open
-- In Progress
-- Resolved
-- Closed
-
-Every closed issue should reference the commit, document, or proof that resolved it.
