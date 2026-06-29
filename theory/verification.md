@@ -120,6 +120,93 @@ Accordingly, verification is regarded as an essential component of theoretical d
 Determine whether the concept of a *configuration* introduces an additional primitive concept into the proposed derivation of **Reasoning State**.
 
 ---
+---
+
+## Verification Update — Representational Structure Analysis
+
+### Objective
+
+Determine whether an investigation possesses a single representational structure or may contain multiple representational structures.
+
+---
+
+### Observation
+
+The proposed derivation of Reasoning State assumes that the representations within an investigation are organized by a representational structure.
+
+It remains unclear whether this structure is necessarily unique.
+
+---
+
+### Candidate Hypotheses
+
+#### Hypothesis A
+
+Every investigation possesses exactly one representational structure.
+
+**Implication**
+
+The current derivation remains unchanged.
+
+---
+
+#### Hypothesis B
+
+An investigation may possess multiple representational structures.
+
+Examples may include:
+
+- logical structure,
+- causal structure,
+- temporal structure,
+- evidential structure.
+
+**Implication**
+
+A reasoning state would contain multiple representational structures rather than a single representational structure.
+
+---
+
+#### Hypothesis C
+
+A representational structure is itself a composite object capable of representing multiple relational organizations simultaneously.
+
+Under this interpretation, logical, temporal, causal, and evidential relationships are all components of a single representational structure.
+
+**Implication**
+
+The primitive architecture remains unchanged.
+
+---
+
+### Preliminary Assessment
+
+Hypothesis C presently appears to provide the simplest explanation.
+
+A representational structure need not consist of only one kind of relation.
+
+Instead, it may represent every explicitly defined relation between representations within an investigation.
+
+Under this interpretation, multiple relation types do not imply multiple representational structures.
+
+---
+
+### Open Question
+
+Can a reasoning process be identified that genuinely requires more than one representational structure?
+
+If no such counterexample exists, the current primitive architecture remains sufficient.
+
+---
+
+### Provisional Conclusion
+
+Current analysis suggests that a representational structure should be understood as the complete organization of relationships among representations within an investigation rather than as a single relation type.
+
+The proposed derivation of Reasoning State therefore remains consistent with the current primitive architecture.
+
+Further verification is required.
+
 
 ### Observation
 
