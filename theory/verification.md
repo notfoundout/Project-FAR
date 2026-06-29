@@ -110,3 +110,101 @@ Project FAR adopts a falsification-oriented methodology.
 Proposed results should be subjected to rigorous attempts at refutation before being accepted as part of the established theory.
 
 Accordingly, verification is regarded as an essential component of theoretical development rather than a final review step.
+
+---
+
+## Verification Update — Configuration Analysis
+
+### Objective
+
+Determine whether the concept of a *configuration* introduces an additional primitive concept into the proposed derivation of **Reasoning State**.
+
+---
+
+### Observation
+
+The proposed derivation refers to the "complete configuration of representations."
+
+The term **configuration** does not currently appear within the primitive architecture.
+
+This raises the possibility that the derivation has introduced a hidden assumption.
+
+---
+
+### Candidate Explanations
+
+Three possibilities were identified.
+
+#### Hypothesis A
+
+Configuration is a primitive concept.
+
+**Implication**
+
+The current five-primitive architecture is incomplete.
+
+---
+
+#### Hypothesis B
+
+Configuration is a derived concept.
+
+**Implication**
+
+Configuration requires its own formal derivation before Reasoning State can be derived.
+
+---
+
+#### Hypothesis C
+
+Configuration is merely convenient terminology describing concepts already present within the primitive architecture.
+
+Specifically, configuration denotes:
+
+- the collection of representations; and
+- the representational structure relating those representations.
+
+Under this interpretation, no additional ontology is introduced.
+
+---
+
+### Preliminary Assessment
+
+Hypothesis C presently appears to provide the simplest explanation.
+
+If correct, configuration is not an independent concept but merely a convenient description of:
+
+- representations; and
+- their representational structure.
+
+No additional primitive concept is required.
+
+---
+
+### Open Question
+
+Can any reasoning process be identified that requires a notion of configuration beyond representations and their representational structure?
+
+If no such counterexample exists, configuration should be regarded as descriptive terminology rather than an ontological commitment.
+
+---
+
+### Provisional Conclusion
+
+The current evidence suggests that configuration does not constitute an additional primitive concept.
+
+The proposed derivation of Reasoning State therefore remains viable, pending further verification.
+
+---
+
+### Emerging Methodological Principle
+
+Convenient terminology should not be mistaken for ontology.
+
+The introduction of a useful descriptive term does not, by itself, justify the introduction of a new primitive concept.
+
+Every proposed concept should be examined to determine whether it represents:
+
+- a genuinely new ontological commitment,
+- a derived concept, or
+- merely convenient terminology for concepts already present within the framework.
