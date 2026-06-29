@@ -2,56 +2,127 @@
 
 ## Purpose
 
-This document records formal propositions derived from the canonical definitions, derived concepts, and axioms of Project FAR.
+This document records the formal propositions of Project FAR.
+
+A proposition is a formal statement derived from the canonical definitions, established derived concepts, axioms, and previously established results.
 
 Unlike axioms, propositions require justification.
 
-Unlike theorems, propositions establish immediate consequences of the foundational theory.
+Unlike theorems, propositions establish intermediate results that contribute to the development of the formal theory.
 
 ---
 
-# Current Status
+# Proposition Lifecycle
 
-No propositions have yet been formally established.
+Every proposition progresses through the following stages.
 
-The current focus of Project FAR is:
+1. Proposed
+2. Verified
+3. Established
 
-- Establishing the primitive architecture.
-- Deriving non-primitive concepts.
-- Refining the axiomatic foundation.
-
-Formal propositions will be introduced only after the necessary derived concepts have been rigorously established.
+Only established propositions may be used as dependencies for subsequent propositions and theorems.
 
 ---
 
 # Proposition Format
 
-Each proposition should follow the structure below.
+Every proposition should contain the following sections.
+
+## Identifier
+
+A unique identifier of the form:
+
+```text
+P-NAME
+```
 
 ---
 
-## P-IDENTIFIER — Title
+## Statement
+
+The formal claim.
+
+---
+
+## Dependencies
+
+Every definition, derived concept, axiom, proposition, and theorem upon which the proposition depends.
+
+---
+
+## Justification
+
+The reasoning supporting the proposition.
+
+---
+
+## Status
+
+One of:
+
+- Proposed
+- Verified
+- Established
+
+---
+
+## Notes
+
+Optional observations.
+
+---
+
+# Proposed Propositions
+
+## P-REPRESENTATION-STRUCTURE-INDEPENDENCE
 
 ### Statement
 
-State the proposition precisely.
+Representational Structure is not derivable from Representation alone.
 
 ### Dependencies
 
-List every definition, derived concept, and axiom upon which the proposition depends.
+#### Definitions
+
+- Representation
+- Representational Structure
+- Reduction
+- Independence
+
+#### Verification
+
+- VR-REPRESENTATIONAL-STRUCTURE
 
 ### Justification
 
-Provide the reasoning establishing the proposition.
+Current verification has failed to derive Representational Structure solely from Representation.
+
+Counterexample analysis demonstrates that identical representations may possess different representational structures.
+
+Accordingly, no successful reduction has presently been established.
+
+### Status
+
+Proposed
 
 ### Notes
 
-Optional observations or consequences.
+Formal proof pending.
 
 ---
 
-# Research Principle
+# Established Propositions
 
-Every proposition should reduce the number of assumptions required by the formal theory.
+None.
 
-Accordingly, propositions should be introduced only after they have been rigorously justified from previously established results.
+---
+
+# Research Status
+
+Project FAR has entered the proposition development phase.
+
+At present, propositions are introduced only after successful verification.
+
+They become established only after successful formal proof.
+
+Accordingly, the established proposition set is presently empty.
