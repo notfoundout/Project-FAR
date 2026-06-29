@@ -6,9 +6,9 @@
 
 ## Purpose
 
-This directory defines the methodology of Project FAR.
+This directory defines the methodology of the Foundational Analysis of Reasoning (FAR).
 
-FAR provides a structured methodology for conducting investigations using the architectural framework established by FARA.
+FAR provides a structured methodology for conducting investigations within the architectural framework established by the Foundational Architecture of Reasoning Analysis (FARA).
 
 Unlike FARA, which defines the architecture of structured reasoning, FAR defines how that architecture is applied during an investigation.
 
@@ -18,12 +18,12 @@ Unlike FARA, which defines the architecture of structured reasoning, FAR defines
 
 - `methodology.md` — Defines the FAR methodology.
 - `workflow.md` — Defines the stages of a FAR investigation.
-- `application.md` — Describes how the methodology is applied in practice.
+- `application.md` — Describes how the FAR methodology is applied across domains.
 
 ---
 
 ## Related Directories
 
 - `fara/` — Foundational architecture.
-- `theory/` — Formal definitions, propositions, and proofs.
+- `theory/` — Formal definitions, axioms, propositions, conjectures, theorems, and proofs.
 - `examples/` — Complete worked investigations.
