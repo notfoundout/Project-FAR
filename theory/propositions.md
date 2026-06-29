@@ -2,83 +2,126 @@
 
 ## Purpose
 
-This document records propositions derived from the current formulation of Project FAR.
+This document records propositions that follow directly from the canonical definitions of Project FAR.
 
-A proposition is a statement supported by the framework but not yet elevated to theorem status through a complete formal proof.
-
-Propositions serve as intermediate results from which conjectures, lemmas, and theorems may eventually be developed.
+Unlike axioms, propositions require justification and may later be strengthened into lemmas or theorems.
 
 ---
 
 # Proposition 1
 
-Every structured, explicit, auditable reasoning process possesses an explicit reasoning state.
+## Statement
+
+Every reasoning process is relative to an investigation.
 
 ## Justification
 
-A reasoning process cannot be audited unless the information required for continuation and reconstruction is explicitly represented.
+Follows directly from the definition of Investigation.
 
 ---
 
 # Proposition 2
 
-Every reasoning state exists relative to an investigation.
+## Statement
+
+Every reasoning state belongs to exactly one investigation.
 
 ## Justification
 
-Without an investigation there is no objective by which relevance, progress, or completion can be evaluated.
+Follows from the definitions of Investigation and Reasoning State.
 
 ---
 
 # Proposition 3
 
-Every reasoning state admits at least one interpretation.
+## Statement
+
+Every transition signature relates exactly two reasoning states.
 
 ## Justification
 
-Representations lacking interpretation remain syntactic objects and cannot participate in semantic reasoning.
+Follows from the definition of Transition Signature.
 
 ---
 
 # Proposition 4
 
-Every investigation induces a possibility space.
+## Statement
+
+Every admissibility classification is relative to both an investigation and a reasoning calculus.
 
 ## Justification
 
-An investigation necessarily distinguishes between potential candidate resolutions and representations unrelated to the investigation.
+Follows from the definitions of Admissibility and Reasoning Calculus.
 
 ---
 
 # Proposition 5
 
-Every reasoning calculus partitions or organizes the possibility space into an admissibility structure.
+## Statement
+
+Every resolution is a candidate.
 
 ## Justification
 
-Different reasoning calculi evaluate candidate resolutions differently, but every calculus determines some organization over candidate resolutions.
+A resolution is defined as a candidate selected according to a resolution rule.
 
 ---
 
 # Proposition 6
 
-Resolution consists of reducing the admissible portion of the possibility space relative to the investigation.
+## Statement
+
+Every resolution belongs to the admissibility structure from which it is selected.
 
 ## Justification
 
-Reasoning progresses by eliminating, refining, or organizing candidate resolutions according to the reasoning calculus.
+Follows from the definitions of Resolution and Admissibility Structure.
 
 ---
 
-# Research Status
+# Proposition 7
 
-The propositions recorded here represent current working results.
+## Statement
 
-Future work should either:
+Every resolution is relative to a resolution rule.
 
-- prove them formally,
-- strengthen them,
-- weaken them,
-- or replace them with better formulations.
+## Justification
 
-No proposition should be regarded as a theorem until a complete proof has been established.
+Follows directly from the definition of Resolution.
+
+---
+
+# Proposition 8
+
+## Statement
+
+Changing the interpretation of a representation may change the reasoning process without changing the representation itself.
+
+## Justification
+
+Follows from the definitions of Representation and Interpretation.
+
+---
+
+# Proposition 9
+
+## Statement
+
+Different reasoning calculi may produce different admissibility structures for the same investigation.
+
+## Justification
+
+Admissibility is defined relative to the applicable reasoning calculus.
+
+---
+
+# Proposition 10
+
+## Statement
+
+The architecture of Project FAR is independent of any particular reasoning calculus.
+
+## Justification
+
+Follows directly from the definition of Reasoning Calculus.
