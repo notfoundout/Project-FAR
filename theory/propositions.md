@@ -2,126 +2,56 @@
 
 ## Purpose
 
-This document records propositions that follow directly from the canonical definitions of Project FAR.
+This document records formal propositions derived from the canonical definitions, derived concepts, and axioms of Project FAR.
 
-Unlike axioms, propositions require justification and may later be strengthened into lemmas or theorems.
+Unlike axioms, propositions require justification.
 
----
-
-# Proposition 1
-
-## Statement
-
-Every reasoning process is relative to an investigation.
-
-## Justification
-
-Follows directly from the definition of Investigation.
+Unlike theorems, propositions establish immediate consequences of the foundational theory.
 
 ---
 
-# Proposition 2
+# Current Status
 
-## Statement
+No propositions have yet been formally established.
 
-Every reasoning state belongs to exactly one investigation.
+The current focus of Project FAR is:
 
-## Justification
+- Establishing the primitive architecture.
+- Deriving non-primitive concepts.
+- Refining the axiomatic foundation.
 
-Follows from the definitions of Investigation and Reasoning State.
-
----
-
-# Proposition 3
-
-## Statement
-
-Every transition signature relates exactly two reasoning states.
-
-## Justification
-
-Follows from the definition of Transition Signature.
+Formal propositions will be introduced only after the necessary derived concepts have been rigorously established.
 
 ---
 
-# Proposition 4
+# Proposition Format
 
-## Statement
-
-Every admissibility classification is relative to both an investigation and a reasoning calculus.
-
-## Justification
-
-Follows from the definitions of Admissibility and Reasoning Calculus.
+Each proposition should follow the structure below.
 
 ---
 
-# Proposition 5
+## P-IDENTIFIER — Title
 
-## Statement
+### Statement
 
-Every resolution is a candidate.
+State the proposition precisely.
 
-## Justification
+### Dependencies
 
-A resolution is defined as a candidate selected according to a resolution rule.
+List every definition, derived concept, and axiom upon which the proposition depends.
 
----
+### Justification
 
-# Proposition 6
+Provide the reasoning establishing the proposition.
 
-## Statement
+### Notes
 
-Every resolution belongs to the admissibility structure from which it is selected.
-
-## Justification
-
-Follows from the definitions of Resolution and Admissibility Structure.
+Optional observations or consequences.
 
 ---
 
-# Proposition 7
+# Research Principle
 
-## Statement
+Every proposition should reduce the number of assumptions required by the formal theory.
 
-Every resolution is relative to a resolution rule.
-
-## Justification
-
-Follows directly from the definition of Resolution.
-
----
-
-# Proposition 8
-
-## Statement
-
-Changing the interpretation of a representation may change the reasoning process without changing the representation itself.
-
-## Justification
-
-Follows from the definitions of Representation and Interpretation.
-
----
-
-# Proposition 9
-
-## Statement
-
-Different reasoning calculi may produce different admissibility structures for the same investigation.
-
-## Justification
-
-Admissibility is defined relative to the applicable reasoning calculus.
-
----
-
-# Proposition 10
-
-## Statement
-
-The architecture of Project FAR is independent of any particular reasoning calculus.
-
-## Justification
-
-Follows directly from the definition of Reasoning Calculus.
+Accordingly, propositions should be introduced only after they have been rigorously justified from previously established results.
