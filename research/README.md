@@ -6,14 +6,16 @@ This directory contains ongoing research supporting the development of Project F
 
 Unlike the formal theory, the contents of this directory are exploratory.
 
-Ideas recorded here should not be regarded as established components of the framework until formally incorporated elsewhere.
-
----
+Ideas recorded here should not be regarded as established components of the framework until formally incorporated 
 
 ## Contents
 
-- Backburner
-- Open Questions
-- Decision Log
-- Future Directions
-- Failed Approaches
+- `research-program.md` — Defines the long-term research agenda of Project FAR.
+- `open-questions.md` — Records active research questions.
+- `backburner.md` — Records deferred ideas for future consideration.
+- `decision-log.md` — Records significant architectural and theoretical decisions.
+- `failed-approaches.md` — Records approaches that were considered and rejected.
+- `future-directions.md` — Records long-term opportunities for expanding Project FAR.
+- `issues.md` — Tracks known issues, inconsistencies, and unresolved implementation concerns.
+- `journal.md` — Chronological research journal documenting ongoing development.
+- `bibliography.md` — References and sources relevant to Project FAR.
