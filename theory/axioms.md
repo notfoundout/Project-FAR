@@ -1,82 +1,55 @@
-# Working Axioms
+# Axioms
 
 ## Purpose
 
-This document records the current working axioms of Project FAR.
+This document defines the foundational assumptions of Project FAR.
 
-An axiom is a statement accepted temporarily as the foundation of the theory.
-
-Every axiom remains subject to elimination through successful derivation or counterexample.
-
-The long-term objective is to minimize the number of independent axioms.
+An axiom is accepted without proof within the framework and serves as a foundation for subsequent propositions, lemmas, and theorems.
 
 ---
 
 # Axiom 1 — Explicit Representation
 
-Every reasoning process within the scope of Project FAR can be represented using explicit representations.
-
-Processes requiring irreducibly implicit information fall outside the current scope.
+Every reasoning process within the scope of Project FAR admits an explicit representation.
 
 ---
 
-# Axiom 2 — State Representation
+# Axiom 2 — Structural Organization
 
-Every stage of reasoning corresponds to a reasoning state.
-
-A reasoning state contains all explicitly represented information required to continue or audit the reasoning process.
+Every explicit reasoning process possesses a representational structure.
 
 ---
 
-# Axiom 3 — State Transition
+# Axiom 3 — Interpretation
 
-Reasoning proceeds through transitions between reasoning states.
-
-Every reasoning process is therefore representable as a sequence of reasoning states connected by admissible transitions.
+Every representation participating in a reasoning process is interpreted within the context of an investigation.
 
 ---
 
-# Axiom 4 — Investigation Relativity
+# Axiom 4 — Investigation
 
-Every reasoning process exists relative to an explicitly defined investigation.
-
-Without an investigation, concepts such as relevance, progress, and resolution are undefined.
+Every reasoning process occurs relative to an investigation.
 
 ---
 
-# Axiom 5 — Interpretation
+# Axiom 5 — Reasoning Calculus
 
-Representations possess meaning only relative to an interpretation.
-
-Identical representations may possess different meanings under different interpretations.
+Every reasoning process proceeds according to a reasoning calculus.
 
 ---
 
-# Axiom 6 — Calculus Relativity
+# Axiom 6 — State Evolution
 
-Admissibility is determined relative to a reasoning calculus.
-
-Different calculi may evaluate identical reasoning states differently.
+Every non-trivial reasoning process may be represented as an ordered collection of reasoning states connected by transition signatures.
 
 ---
 
-# Axiom 7 — Auditability
+# Axiom 7 — Candidate Admissibility
 
-Every conclusion within scope must be reconstructible from explicitly represented reasoning states and transitions.
-
-If reconstruction is impossible, the reasoning process lies outside the intended scope of Project FAR.
+Every investigation admits one or more candidates whose admissibility is determined according to the applicable reasoning calculus.
 
 ---
 
-# Axiom Reduction Policy
+# Axiom 8 — Resolution
 
-These axioms are provisional.
-
-Future work attempts to:
-
-- derive them,
-- replace them with weaker assumptions,
-- eliminate them entirely,
-- or prove their independence.
-
-The ideal endpoint is a theory containing the smallest possible collection of irreducible assumptions.
+Every completed investigation produces a resolution through the application of a resolution rule to the classified candidates.
