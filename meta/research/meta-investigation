@@ -1,1 +1,100 @@
+# Meta-Theory Investigation
 
+## Purpose
+
+This document records the ongoing investigation of the foundational concepts of the Meta-Theory.
+
+Unlike the canonical theory documents, this document serves as a research notebook.
+
+Its purpose is to investigate, challenge, and refine the concepts required to construct formal theories.
+
+No result recorded herein should be regarded as established until formally incorporated into the canonical Meta-Theory.
+
+---
+
+# Primary Research Program
+
+The current research program consists of the following investigations.
+
+1. The Nature of Formal Theories
+2. Primitive Formal Objects
+3. Derivability
+4. Independence
+5. Models
+6. Axiomatization
+7. Proof Systems
+
+Investigations should proceed in this order unless dependencies require otherwise.
+
+---
+
+# Research Methodology
+
+Every investigation shall proceed according to the Project FAR research methodology.
+
+1. State the research question.
+2. Formulate the current hypothesis.
+3. Attempt a formal justification.
+4. Search for counterexamples.
+5. Identify hidden assumptions.
+6. Revise the hypothesis if necessary.
+7. Record the current assessment.
+8. Determine the next investigation.
+
+---
+
+# Investigation 1 — The Nature of Formal Theories
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+What constitutes a formal theory?
+
+---
+
+## Motivation
+
+Every component of Project FAR is intended to be a formal theory.
+
+Accordingly, the nature of formal theories must itself be understood before constructing their foundations.
+
+---
+
+## Current Hypothesis
+
+A formal theory consists of:
+
+- a language;
+- definitions;
+- assumptions;
+- inference rules; and
+- derivable statements.
+
+---
+
+## Open Questions
+
+- Is language primitive?
+- Are semantics part of every formal theory?
+- Can a theory exist without models?
+- Are proofs part of a theory or consequences of it?
+- What is the minimal architecture of a formal theory?
+
+---
+
+## Current Assessment
+
+The current hypothesis provides a useful working characterization.
+
+Its minimality and sufficiency remain under investigation.
+
+---
+
+## Next Investigation
+
+Determine the primitive architecture of formal theories.
