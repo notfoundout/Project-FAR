@@ -1,91 +1,132 @@
 # Reasoning States
 
-## Purpose
+## Abstract
 
-The reasoning state is the fundamental unit of analysis within FARA.
+A reasoning state is the fundamental object of analysis within FARA.
 
-Every structured, explicit, auditable reasoning process is represented as a sequence of reasoning states connected by explicit transitions.
+Rather than viewing reasoning as a sequence of isolated inferences, FARA models reasoning as a progression through explicitly represented reasoning states.
 
-Reasoning therefore becomes the study of changes between reasoning states rather than isolated conclusions.
+Every investigation proceeds by transforming one reasoning state into another according to an explicitly specified reasoning calculus.
+
+The reasoning state therefore serves as the basic unit from which auditability, traceability, admissibility, and resolution are defined.
+
+---
+
+# Motivation
+
+Traditional reasoning systems typically emphasize conclusions or inference rules.
+
+FARA instead emphasizes the state of an investigation.
+
+At any point during reasoning there exists a complete explicit description of what is currently represented.
+
+Reasoning consists of changing that description.
+
+This viewpoint makes the reasoning process itself the primary object of study rather than only its conclusions.
 
 ---
 
 # Definition
 
-A reasoning state is the complete explicit representation of all information required to continue or audit an investigation at a particular stage.
+A reasoning state is the complete explicit representation of an investigation at a particular stage of reasoning.
 
-A reasoning state does not represent reality.
+A reasoning state contains every explicit representation required to continue, reconstruct, or audit the reasoning process.
 
-It represents the current state of reasoning.
+Nothing required for explicit reasoning should exist outside the reasoning state.
 
 ---
 
 # Components
 
-Every reasoning state consists of four components.
+Every reasoning state is defined relative to:
 
-- Representational Structure
-- Interpretation
-- Investigation
-- Explicit Representations
+- a representational structure,
+- an interpretation,
+- an investigation,
+- and a collection of explicit representations.
 
-The reasoning calculus operates on reasoning states but is not itself contained within them.
+The reasoning calculus governs transitions between reasoning states but is not itself part of the state.
 
 ---
 
 # Properties
 
-A reasoning state should satisfy the following properties.
+A valid reasoning state should satisfy the following properties.
+
+## Explicitness
+
+Every representation relevant to the investigation is explicitly represented.
+
+Hidden assumptions are treated as absent representations.
+
+---
 
 ## Completeness
 
-Every explicit representation required for continuation is present.
+The reasoning state contains sufficient information to continue the reasoning process according to the selected reasoning calculus.
 
 ---
 
 ## Auditability
 
-Every representation can be inspected independently.
-
----
-
-## Consistency
-
-Contradictions may exist only if explicitly represented.
-
-Hidden contradictions are not permitted.
-
----
-
-## Traceability
-
 Every representation possesses an identifiable origin.
 
-No conclusion appears without an explicit chain of reasoning.
+Every conclusion can be traced to supporting representations.
+
+---
+
+## Internal Consistency
+
+Contradictions may exist only when explicitly represented.
+
+Competing hypotheses are themselves representations.
+
+Implicit contradiction is not permitted.
+
+---
+
+## Reconstructibility
+
+Another investigator possessing the same reasoning state and reasoning calculus should be capable of reproducing the same admissibility analysis.
 
 ---
 
 # State Transitions
 
-Reasoning proceeds by transforming one reasoning state into another.
+Reasoning proceeds through transitions between reasoning states.
 
 A transition may:
 
-- introduce new representations,
+- introduce representations,
 - remove representations,
 - refine representations,
 - reorganize representations,
-- or change interpretations.
+- revise interpretations,
+- redefine the investigation.
 
-Every transition must be explicitly recorded.
+Every transition should itself be explicitly represented.
 
 ---
 
-# Investigation Dependence
+# Minimality
 
-Reasoning states are always relative to an investigation.
+Current research suggests that reasoning states may constitute the minimal object capable of supporting structured reasoning.
 
-The same explicit representations may belong to different reasoning states if the investigations differ.
+Whether a still more fundamental representation exists remains an open question.
+
+---
+
+# Relationship to Ω
+
+Reasoning states describe what is represented.
+
+Ω describes which candidate resolutions remain admissible after evaluating those representations according to the reasoning calculus.
+
+The two concepts therefore serve distinct purposes.
+
+Reasoning states represent information.
+
+Ω represents admissibility.
 
 ---
 
@@ -93,38 +134,28 @@ The same explicit representations may belong to different reasoning states if th
 
 Investigation:
 
-Is fascism socialist?
+"Is fascism a form of socialism?"
 
 Initial reasoning state:
 
-- investigation defined
-- competing definitions represented
-- historical evidence represented
-- economic evidence represented
-- political evidence represented
+- investigation defined,
+- competing definitions represented,
+- historical evidence represented,
+- economic evidence represented,
+- political evidence represented,
+- methodological assumptions represented.
 
-Subsequent reasoning states progressively refine the admissible possibility space until a justified resolution is obtained.
-
----
-
-# Relationship to Ω
-
-A reasoning state does not determine admissibility by itself.
-
-The reasoning calculus evaluates the reasoning state to produce Ω.
-
-Ω therefore depends upon reasoning states but is not identical to them.
+Subsequent reasoning states modify these representations until the admissibility structure changes sufficiently to justify a resolution.
 
 ---
 
-# Research Questions
+# Open Problems
 
 Current research investigates:
 
 - whether every structured reasoning process admits a finite reasoning state,
+- whether reasoning states possess unique minimal representations,
+- whether reasoning states are themselves reducible,
+- whether every reasoning transition preserves auditability.
 
-- whether every reasoning transition preserves auditability,
-
-- whether reasoning states admit a unique minimal representation,
-
-- whether reasoning states constitute an irreducible primitive of structured reasoning.
+These questions remain central to the future development of FARA.
