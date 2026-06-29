@@ -2,15 +2,17 @@
 
 ## Purpose
 
-This document defines the foundational assumptions of Project FAR.
+This document records the foundational assumptions of Project FAR.
 
-An axiom is accepted without proof within the framework and serves as a foundation for subsequent propositions, lemmas, and theorems.
+An axiom is accepted without proof within the framework and serves as a foundation for subsequent propositions and theorems.
+
+Axioms should be minimal, independent, and stated only in terms of primitive concepts.
 
 ---
 
 # Axiom 1 — Explicit Representation
 
-Every reasoning process within the scope of Project FAR admits an explicit representation.
+Every reasoning process within the stated scope of Project FAR admits an explicit representation.
 
 ---
 
@@ -38,18 +40,8 @@ Every reasoning process proceeds according to a reasoning calculus.
 
 ---
 
-# Axiom 6 — State Evolution
+# Research Status
 
-Every non-trivial reasoning process may be represented as an ordered collection of reasoning states connected by transition signatures.
+The current axioms constitute the provisional foundation of the formal theory.
 
----
-
-# Axiom 7 — Candidate Admissibility
-
-Every investigation admits one or more candidates whose admissibility is determined according to the applicable reasoning calculus.
-
----
-
-# Axiom 8 — Resolution
-
-Every completed investigation produces a resolution through the application of a resolution rule to the classified candidates.
+Additional assumptions should be introduced only if they cannot be derived from the primitive architecture together with the existing axioms.
