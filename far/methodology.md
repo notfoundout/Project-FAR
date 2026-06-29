@@ -6,6 +6,8 @@ This document defines the methodology of the Foundational Analysis of Reasoning 
 
 FAR provides a structured process for conducting investigations within the architectural framework established by FARA.
 
+It defines how the architectural components are applied during an investigation.
+
 ---
 
 ## Objective
@@ -21,20 +23,21 @@ The methodology is independent of any particular reasoning calculus or applicati
 
 ---
 
-## Method
+## Methodology
 
 A FAR investigation proceeds through the following stages.
 
 1. Define the investigation.
-2. Specify the representational structure.
+2. Establish the representational structure.
 3. Specify the interpretation.
 4. Select the reasoning calculus.
 5. Construct the initial reasoning state.
-6. Apply explicit reasoning transitions.
-7. Evaluate admissibility.
-8. Record the resolution.
+6. Apply explicit transformations represented by transition signatures.
+7. Construct the Admissibility Structure (Ω).
+8. Apply the applicable resolution rule.
+9. Record the resolution.
 
-Each stage is defined in greater detail elsewhere within this directory.
+Each stage is described in greater detail elsewhere within this directory.
 
 ---
 
@@ -44,13 +47,13 @@ Every FAR investigation should satisfy the following principles.
 
 ### Explicitness
 
-Every assumption, representation, and reasoning step should be explicitly represented.
+Every assumption, representation, transformation, and conclusion should be explicitly represented.
 
 ---
 
 ### Auditability
 
-The complete investigation should be reconstructible from its recorded reasoning states and transitions.
+The complete investigation should be reconstructible from its recorded reasoning states and transition signatures.
 
 ---
 
@@ -58,7 +61,7 @@ The complete investigation should be reconstructible from its recorded reasoning
 
 The methodology does not prescribe which reasoning calculus should be used.
 
-Different investigations may employ different calculi.
+Different investigations may employ different reasoning calculi.
 
 ---
 
@@ -72,9 +75,9 @@ Equivalent investigators following the same methodology should be capable of rep
 
 FARA defines the architectural components used during an investigation.
 
-FAR defines the procedure for using those components.
+FAR defines the methodology for applying those components.
 
-The methodology therefore depends upon the architecture but does not modify it.
+The methodology depends upon the architecture but does not modify it.
 
 ---
 
@@ -82,4 +85,8 @@ The methodology therefore depends upon the architecture but does not modify it.
 
 The FAR methodology remains under development.
 
-Future work includes refining investigation procedures, formalizing workflows, and validating the methodology across diverse domains.
+Current work includes:
+
+- refinement of investigation procedures,
+- formalization of workflows,
+- and validation across diverse reasoning domains.
