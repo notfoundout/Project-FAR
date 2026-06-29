@@ -1,0 +1,153 @@
+# Validation — Argumentation Theory
+
+## Purpose
+
+This document evaluates the applicability of Project FAR to argumentation theory.
+
+The objective is to determine whether the architectural components of FARA, the methodology of FAR, and the operations of FARO adequately represent reasoning conducted through formal argumentation.
+
+---
+
+# Framework
+
+Argumentation theory studies the construction, evaluation, comparison, and resolution of arguments.
+
+Reasoning proceeds by presenting claims, supporting them with premises and evidence, evaluating objections, and determining which conclusions are justified.
+
+Different traditions employ different evaluation criteria, but all analyze the relationships between claims, reasons, evidence, and conclusions.
+
+---
+
+# FARA Analysis
+
+## Investigation
+
+The investigation specifies the claim or question under consideration.
+
+---
+
+## Representations
+
+Representations include:
+
+- Claims
+- Premises
+- Conclusions
+- Evidence
+- Counterarguments
+- Objections
+- Rebuttals
+
+---
+
+## Representational Structure
+
+Representations are organized according to their inferential and argumentative relationships.
+
+These relationships may include support, contradiction, rebuttal, or dependency.
+
+---
+
+## Interpretation
+
+Interpretation assigns meaning to the claims, evidence, and argumentative relationships.
+
+Different interpretations may produce different evaluations of the same argument.
+
+---
+
+# FAR Analysis
+
+## Reasoning Calculus
+
+The reasoning calculus consists of the rules governing argument construction, evaluation, and criticism within the selected argumentation framework.
+
+---
+
+## Reasoning States
+
+Each reasoning state consists of the current collection of accepted, rejected, and undecided argumentative representations.
+
+---
+
+## Transition Signatures
+
+Each transition signature records the argumentative step connecting one reasoning state to the next.
+
+Examples include:
+
+- Introducing evidence
+- Presenting an objection
+- Responding to a rebuttal
+- Revising a conclusion
+
+---
+
+## Candidates
+
+Candidates consist of the competing conclusions admitted for consideration.
+
+---
+
+## Admissibility Structure (Ω)
+
+Ω classifies candidate conclusions according to the applicable argumentation framework.
+
+---
+
+## Resolution Rule
+
+Select the admissible conclusion supported by the completed argumentative process.
+
+---
+
+## Resolution
+
+The resulting resolution is the conclusion justified by the argumentation.
+
+The resolution may change if new arguments or evidence are introduced.
+
+---
+
+# FARO Analysis
+
+FARO compares competing arguments by identifying:
+
+- shared claims,
+- shared evidence,
+- differing premises,
+- differing interpretations,
+- differing reasoning calculi,
+- differing admissibility structures,
+- and the earliest point of divergence.
+
+This permits explicit comparison of competing argumentative processes.
+
+---
+
+# Evaluation
+
+Project FAR successfully represents the architectural structure of argumentation independently of any particular theory of argument.
+
+The framework accommodates multiple systems of argument evaluation while preserving a common architectural representation.
+
+---
+
+# Conclusion
+
+Argumentation theory is naturally representable within Project FAR.
+
+The validation demonstrates that Project FAR represents the structure of argumentative reasoning while remaining independent of any particular argumentative methodology.
+
+---
+
+# Notes
+
+Future validation studies may examine specific systems of argumentation, including:
+
+- Informal logic
+- Formal argumentation frameworks
+- Dialectical reasoning
+- Debate methodologies
+- Legal argumentation
+- Scientific argumentation
