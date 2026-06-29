@@ -198,3 +198,38 @@ Successful completion of these derivations would significantly strengthen the cl
 Today's work marked the beginning of the theoretical phase of Project FAR.
 
 Future progress will depend less on repository organization and more on establishing formal derivations, proving propositions, and testing the architecture against potential counterexamples.
+
+## 2026-06-29 — Formal Theorem Investigation Begins
+
+### Summary
+
+Today marked the beginning of the formal investigation of the foundational theorems of Project FAR.
+
+Rather than immediately attempting formal proofs, the research focused on evaluating the methodology required to justify those proofs.
+
+### Major Results
+
+- Began investigation of T-MINIMAL-PRIMITIVE-ARCHITECTURE.
+- Replaced pairwise independence with global independence as the appropriate criterion for primitive minimality.
+- Determined that unsuccessful reduction attempts do not themselves establish non-derivability.
+- Adopted model separation as the preferred method for investigating primitive independence.
+- Successfully constructed model-separation arguments for:
+  - Representational Structure
+  - Interpretation
+  - Reasoning Calculus
+- Determined that Representation and Investigation presently resist model-separation analysis.
+- Identified the possibility that different primitive concepts may require different proof strategies.
+- Recognized that the proof methodology itself requires formal investigation before it can support the flagship theorems.
+
+### Decisions
+
+No changes were made to the canonical theory.
+
+All results remain part of the active research program pending further methodological investigation.
+
+### Next Steps
+
+- Investigate the logical foundations of model separation.
+- Determine whether model separation requires formal justification.
+- Investigate whether alternative proof strategies are required for Representation and Investigation.
+- Resume investigation of T-MINIMAL-PRIMITIVE-ARCHITECTURE after the methodology has been strengthened.
