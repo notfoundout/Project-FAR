@@ -1,13 +1,19 @@
 # Examples
 
-This directory contains worked investigations demonstrating the use of Project FAR.
+## Purpose
 
-Examples include:
+This directory contains worked examples demonstrating the application of Project FAR.
 
-- Fascism classification
-- Scientific investigations
-- Legal reasoning
-- Optimization problems
-- Historical analysis
+The examples illustrate the architecture and methodology through complete investigations.
 
-The objective is to demonstrate the practical application of FARA, FAR, and FARO.
+They are educational rather than normative.
+
+---
+
+## Planned Examples
+
+- Simple Investigation
+- Mathematical Proof
+- Scientific Investigation
+- Historical Analysis
+- Disagreement Analysis
