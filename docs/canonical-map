@@ -2,13 +2,11 @@
 
 ## Purpose
 
-This document identifies the canonical location of every major concept within Project FAR.
+This document identifies the canonical location of the major concepts defined throughout Project FAR.
 
-Each concept should have exactly one authoritative definition.
+Each concept should have exactly one canonical source.
 
-All other documents should reference the canonical source rather than redefining the concept.
-
-This policy minimizes redundancy and prevents inconsistent definitions from developing over time.
+Other documents should reference the canonical source rather than duplicate definitions.
 
 ---
 
@@ -18,11 +16,11 @@ This policy minimizes redundancy and prevents inconsistent definitions from deve
 
 Canonical Location:
 
-docs/overview.md
+`docs/overview.md`
 
 Purpose:
 
-Introduces the project as a whole.
+Provides an overview of Project FAR.
 
 ---
 
@@ -30,11 +28,11 @@ Introduces the project as a whole.
 
 Canonical Location:
 
-docs/mission.md
+`docs/mission.md`
 
 Purpose:
 
-Explains why the project exists.
+Defines the mission of Project FAR.
 
 ---
 
@@ -42,11 +40,11 @@ Explains why the project exists.
 
 Canonical Location:
 
-docs/philosophy.md
+`docs/philosophy.md`
 
 Purpose:
 
-Describes the research methodology.
+Defines the philosophical principles guiding the project's development.
 
 ---
 
@@ -54,37 +52,37 @@ Describes the research methodology.
 
 Canonical Location:
 
-docs/scope.md
+`docs/scope.md`
 
 Purpose:
 
-Defines what Project FAR does and does not attempt to represent.
+Defines the intended scope and limitations of Project FAR.
 
 ---
 
 # FARA
 
-## FARA
+## Architecture
 
 Canonical Location:
 
-fara/architecture.md
+`fara/architecture.md`
 
 Purpose:
 
-Defines the architecture.
+Defines the Foundational Architecture of Reasoning Analysis.
 
 ---
 
-## Candidate Primitives
+## Primitive Concepts
 
 Canonical Location:
 
-fara/primitives.md
+`fara/primitives.md`
 
 Purpose:
 
-Defines the current candidate primitive concepts.
+Identifies the current candidate primitive concepts.
 
 ---
 
@@ -92,23 +90,11 @@ Defines the current candidate primitive concepts.
 
 Canonical Location:
 
-fara/ontology.md
+`fara/ontology.md`
 
 Purpose:
 
-Defines what exists within the architecture.
-
----
-
-## Reasoning State
-
-Canonical Location:
-
-fara/reasoning-states.md
-
-Purpose:
-
-Defines the fundamental object of reasoning.
+Defines the ontology of FARA.
 
 ---
 
@@ -116,23 +102,23 @@ Defines the fundamental object of reasoning.
 
 Canonical Location:
 
-fara/semantics.md
+`fara/semantics.md`
 
 Purpose:
 
-Defines how representations acquire meaning.
+Defines the semantic component of FARA.
 
 ---
 
-## Ω (Admissibility Structure)
+## Reasoning States
 
 Canonical Location:
 
-fara/omega.md
+`fara/reasoning-states.md`
 
 Purpose:
 
-Defines admissibility.
+Defines reasoning states.
 
 ---
 
@@ -140,63 +126,75 @@ Defines admissibility.
 
 Canonical Location:
 
-fara/transition-signatures.md
+`fara/transition-signatures.md`
 
 Purpose:
 
-Defines reasoning transitions.
+Defines transitions between reasoning states.
+
+---
+
+## Admissibility Structure (Ω)
+
+Canonical Location:
+
+`fara/admissibility-structure.md`
+
+Purpose:
+
+Defines the Admissibility Structure.
 
 ---
 
 # FAR
 
-## FAR
+## Methodology
 
 Canonical Location:
 
-far/methodology.md
+`far/methodology.md`
 
 Purpose:
 
-Defines the investigative methodology.
+Defines the FAR methodology.
 
 ---
 
-## Investigation Workflow
+## Workflow
 
 Canonical Location:
 
-far/workflow.md
+`far/workflow.md`
 
 Purpose:
 
-Defines the sequence of an investigation.
+Defines the stages of a FAR investigation.
 
 ---
 
-## Investigation Protocol
+## Application
 
 Canonical Location:
 
-far/investigation-protocol.md
+`far/application.md`
 
 Purpose:
 
-Defines investigation procedures.
+Describes the application of the FAR methodology.
 
 ---
 
 # FARO
 
-## FARO
+## Comparison
 
 Canonical Location:
 
-faro/comparison.md
+`faro/comparison.md`
 
 Purpose:
 
-Defines the comparative framework.
+Defines comparison between reasoning processes.
 
 ---
 
@@ -204,11 +202,11 @@ Defines the comparative framework.
 
 Canonical Location:
 
-faro/auditing.md
+`faro/auditing.md`
 
 Purpose:
 
-Defines reasoning audits.
+Defines auditing of reasoning processes.
 
 ---
 
@@ -216,11 +214,11 @@ Defines reasoning audits.
 
 Canonical Location:
 
-faro/disagreement-analysis.md
+`faro/disagreement-analysis.md`
 
 Purpose:
 
-Defines analysis of disagreement.
+Defines methods for analyzing disagreement between reasoning processes.
 
 ---
 
@@ -230,11 +228,11 @@ Defines analysis of disagreement.
 
 Canonical Location:
 
-theory/definitions.md
+`theory/definitions.md`
 
 Purpose:
 
-Provides every formal definition used throughout Project FAR.
+Provides the canonical definitions for all formal terminology.
 
 ---
 
@@ -242,11 +240,11 @@ Provides every formal definition used throughout Project FAR.
 
 Canonical Location:
 
-theory/axioms.md
+`theory/axioms.md`
 
 Purpose:
 
-Records current foundational assumptions.
+Defines the foundational assumptions of the theory.
 
 ---
 
@@ -254,11 +252,11 @@ Records current foundational assumptions.
 
 Canonical Location:
 
-theory/propositions.md
+`theory/propositions.md`
 
 Purpose:
 
-Records intermediate formal claims.
+Records intermediate formal results.
 
 ---
 
@@ -266,7 +264,7 @@ Records intermediate formal claims.
 
 Canonical Location:
 
-theory/lemmas.md
+`theory/lemmas.md`
 
 Purpose:
 
@@ -274,27 +272,27 @@ Records supporting formal results.
 
 ---
 
-## Conjectures
-
-Canonical Location:
-
-theory/conjectures.md
-
-Purpose:
-
-Records unproven research claims.
-
----
-
 ## Theorems
 
 Canonical Location:
 
-theory/theorems.md
+`theory/theorems.md`
 
 Purpose:
 
-Records formally established results.
+Records the principal formal results.
+
+---
+
+## Conjectures
+
+Canonical Location:
+
+`theory/conjectures.md`
+
+Purpose:
+
+Records unproven formal statements.
 
 ---
 
@@ -302,76 +300,8 @@ Records formally established results.
 
 Canonical Location:
 
-theory/proofs.md
+`theory/proofs.md`
 
 Purpose:
 
-Records proofs and proof obligations.
-
----
-
-# Validation
-
-## Validation
-
-Canonical Location:
-
-validation/README.md
-
-Purpose:
-
-Introduces validation efforts.
-
-Each individual validation document serves as the canonical source for its respective framework.
-
----
-
-# Research
-
-## Open Problems
-
-Canonical Location:
-
-research/open-problems.md
-
----
-
-## Decision Log
-
-Canonical Location:
-
-research/decision-log.md
-
----
-
-## Research Journal
-
-Canonical Location:
-
-research/journal.md
-
----
-
-## Future Directions
-
-Canonical Location:
-
-research/future-directions.md
-
----
-
-## Bibliography
-
-Canonical Location:
-
-research/bibliography.md
-
----
-
-# Repository Rule
-
-Every concept should have exactly one canonical home.
-
-Every other document should reference that location rather than redefining the concept.
-
-This rule applies to all future additions to Project FAR.
+Contains formal proofs and proof obligations.
