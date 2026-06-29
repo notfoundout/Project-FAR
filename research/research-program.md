@@ -1,176 +1,195 @@
-# Project FAR Research Program
+# Research Program
 
 ## Purpose
 
-This document defines the long-term research agenda of Project FAR.
+This document defines the long-term research program of Project FAR.
 
-The objective is to transform Project FAR from a conceptual framework into a mathematically rigorous and externally validated theory.
+It identifies the principal research objectives, their relationships, and the order in which they should be investigated.
 
-Each milestone identifies a major research objective required for the completion of the project.
-
----
-
-# Phase I — Foundations
-
-Objective:
-
-Establish a precise formal language.
-
-Tasks:
-
-- Complete formal definitions.
-- Complete ontology.
-- Complete semantics.
-- Complete reasoning state theory.
-- Complete Ω formalization.
-
-Status:
-
-In Progress.
+Unlike the project roadmap, which describes repository development, the research program describes the theoretical development of Project FAR.
 
 ---
 
-# Phase II — Mathematical Foundations
+# Research Goal
 
-Objective:
-
-Transform FARA into a formal mathematical theory.
-
-Tasks:
-
-- Define formal notation.
-- Define reasoning state algebra.
-- Define transition algebra.
-- Define semantic validity.
-- Define admissibility formally.
-
-Status:
-
-Not Started.
+Develop a rigorous, minimal, universal framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning within the stated scope of Project FAR.
 
 ---
 
-# Phase III — Representation Theory
+# Research Program
 
-Objective:
+## Stage I — Foundations
 
-Determine the expressive power of FARA.
+### Objective
 
-Tasks:
+Establish the conceptual and organizational foundations of Project FAR.
 
-- Representation theorem.
-- Embedding theorems.
-- Equivalence theorems.
-- Minimality theorem.
+### Components
 
-Status:
+- Canonical terminology
+- Primitive concepts
+- Ontology
+- Semantics
+- Reasoning states
+- Transition signatures
+- Admissibility Structure (Ω)
+- FAR methodology
+- FARO operations
+- Repository organization
 
-Not Started.
+### Status
+
+Completed
 
 ---
 
-# Phase IV — Validation
+## Stage II — Formal Theory
 
-Objective:
+### Objective
 
-Compare FARA against existing reasoning frameworks.
+Develop the formal mathematical foundation of Project FAR.
 
-Tasks:
+### Components
 
-- Classical Logic
-- Proof Theory
-- Type Theory
-- Category Theory
-- Bayesian Reasoning
-- Model-Based Reasoning
+- Definitions
+- Axioms
+- Conjectures
+- Propositions
+- Lemmas
+- Theorems
+- Proofs
+
+### Primary Questions
+
+- Is the architecture minimal?
+- Are the primitive concepts independent?
+- Can expressive power be formally defined?
+- Does a universal architecture exist?
+
+### Status
+
+In Progress
+
+---
+
+## Stage III — Validation
+
+### Objective
+
+Determine whether existing reasoning frameworks can be represented using Project FAR.
+
+### Initial Validation Targets
+
 - Scientific Method
+- Mathematical Proof
+- Bayesian Reasoning
+- Historical Method
 - Legal Reasoning
+- Software Engineering
 
-Status:
+### Future Validation Targets
 
-In Progress.
+- Machine Learning
+- Engineering Design
+- Medical Diagnosis
+- Intelligence Analysis
+- Economic Reasoning
+- Ethical Reasoning
 
----
+### Status
 
-# Phase V — Applications
-
-Objective:
-
-Demonstrate practical usefulness.
-
-Tasks:
-
-- Political classification
-- Scientific investigations
-- Historical investigations
-- Legal reasoning
-- Artificial Intelligence
-- Knowledge management
-
-Status:
-
-Not Started.
+In Progress
 
 ---
 
-# Phase VI — Software
+## Stage IV — Comparative Analysis
 
-Objective:
+### Objective
 
-Develop computational implementations.
+Evaluate similarities and differences between reasoning frameworks using FARO.
 
-Tasks:
+### Example Studies
 
-- Reasoning engine
-- Visualization tools
+- Scientific vs. Historical reasoning
+- Bayesian vs. Frequentist reasoning
+- Common Law vs. Civil Law
+- Classical vs. Intuitionistic logic
+
+### Status
+
+Planned
+
+---
+
+## Stage V — Formal Results
+
+### Objective
+
+Establish mathematically rigorous results concerning Project FAR itself.
+
+### Expected Topics
+
+- Minimality
+- Independence
+- Consistency
+- Expressive power
+- Universality
+- Completeness
+
+### Status
+
+Planned
+
+---
+
+## Stage VI — Tooling
+
+### Objective
+
+Develop software supporting Project FAR.
+
+### Possible Deliverables
+
 - Investigation editor
-- FARO comparison engine
-- Automated auditing
+- Reasoning state visualizer
+- Comparison tools
+- Audit tools
+- Dependency graph generator
+- Validation tools
 
-Status:
+### Status
 
-Not Started.
+Planned
 
 ---
 
-# Phase VII — Publication
+## Stage VII — Publication
 
-Objective:
+### Objective
 
-Submit Project FAR for external evaluation.
+Communicate mature portions of Project FAR.
 
-Tasks:
+### Deliverables
 
-- Technical papers
-- Peer review
-- Conference presentations
-- Public website
+- Academic papers
+- Reference manual
+- Tutorials
+- Case studies
 - Educational material
 
-Status:
+### Status
 
-Not Started.
-
----
-
-# Success Criteria
-
-Project FAR will be considered successful if it achieves one of two outcomes.
-
-1. Demonstrates that a universal minimal architecture of structured, explicit, auditable reasoning exists.
-
-or
-
-2. Demonstrates that no such architecture can exist, together with a rigorous explanation of why.
-
-Either outcome advances the foundations of reasoning.
+Planned
 
 ---
 
-# Guiding Principle
+# Guiding Principles
 
-Project FAR does not seek confirmation.
+The research program should remain guided by the following principles:
 
-It seeks understanding through formalization, validation, criticism, and continual refinement.
-
-Every successful proof, reduction, or counterexample contributes to that objective.
+- Definitions precede conclusions.
+- Simplicity is preferred over complexity.
+- Reduction is preferred over expansion.
+- New concepts require explicit justification.
+- Every concept has one canonical definition.
+- Every theoretical claim should ultimately be supported by formal argument.
