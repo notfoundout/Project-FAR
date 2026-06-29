@@ -458,3 +458,295 @@ If not, is objective primitive or derivable?
 The identity conditions of an Investigation remain unresolved.
 
 The concept of an objective should not be incorporated into the formal theory until its ontological status has been determined.
+
+---
+
+## Verification Update — Independence of Representational Structure
+
+### Objective
+
+Determine whether Representational Structure is an independent primitive concept or can be derived from Representation.
+
+---
+
+### Observation
+
+The current primitive architecture recognizes both Representation and Representational Structure as primitive concepts.
+
+This distinction should be justified rather than assumed.
+
+---
+
+### Proposed Reduction
+
+Assume that Representational Structure is not primitive.
+
+Under this assumption, every representational structure should be recoverable solely from the collection of representations participating in an investigation.
+
+---
+
+### Analysis
+
+Consider two investigations containing exactly the same representations.
+
+**Investigation A**
+
+Representations:
+
+- R₁
+- R₂
+- R₃
+
+Relationships:
+
+- R₁ supports R₂.
+- R₂ contradicts R₃.
+
+---
+
+**Investigation B**
+
+Representations:
+
+- R₁
+- R₂
+- R₃
+
+Relationships:
+
+- R₁ contradicts R₂.
+- R₂ supports R₃.
+
+---
+
+Both investigations contain identical representations.
+
+However, they possess different organizations.
+
+Nothing contained within the representations themselves uniquely determines these relationships.
+
+Consequently, the representational structure cannot be reconstructed solely from the representations.
+
+The attempted reduction therefore fails.
+
+---
+
+### Hidden Assumption Analysis
+
+No additional primitive concepts were introduced during the attempted reduction.
+
+The failure results from missing relational information rather than incomplete terminology.
+
+---
+
+### Counterexample Analysis
+
+The pair of investigations above constitutes a counterexample to the claim that Representational Structure is derivable from Representation alone.
+
+Any successful reduction would require both investigations to possess identical structures.
+
+They do not.
+
+---
+
+### Preliminary Assessment
+
+Current evidence suggests that Representation and Representational Structure contain independent information.
+
+Representations specify the explicit objects manipulated during reasoning.
+
+Representational Structure specifies the explicit relationships among those objects.
+
+Neither appears recoverable from the other.
+
+---
+
+### Provisional Conclusion
+
+The attempted reduction was unsuccessful.
+
+Current evidence supports retaining Representational Structure as an independent primitive concept.
+
+Further attempts at reduction remain encouraged as the theory develops.
+
+---
+
+## Verification Update — Independence of Interpretation
+
+### Objective
+
+Determine whether Interpretation is an independent primitive concept or can be derived from Representation and Representational Structure.
+
+---
+
+### Observation
+
+Representations and their organization describe the explicit structure of a reasoning process.
+
+It remains to be determined whether this information alone is sufficient to establish meaning.
+
+---
+
+### Proposed Reduction
+
+Assume that Interpretation is not primitive.
+
+Under this assumption, the meaning of every representation should be recoverable solely from:
+
+- the representations themselves; and
+- their representational structure.
+
+---
+
+### Analysis
+
+Consider two investigations containing identical representations and identical representational structures.
+
+Investigation A interprets the representation "P" as:
+
+> "The switch is closed."
+
+Investigation B interprets the same representation "P" as:
+
+> "The patient has recovered."
+
+The representations are identical.
+
+The representational structures are identical.
+
+Only the assigned meanings differ.
+
+Consequently, neither the representations nor their organization uniquely determine their meaning.
+
+The attempted reduction therefore fails.
+
+---
+
+### Hidden Assumption Analysis
+
+No additional primitive concepts were introduced during the attempted reduction.
+
+The failure results from the absence of semantic information rather than from hidden assumptions.
+
+---
+
+### Counterexample Analysis
+
+The pair of investigations above constitutes a counterexample to the claim that Interpretation is derivable from Representation and Representational Structure alone.
+
+Identical syntactic organization does not uniquely determine identical meaning.
+
+---
+
+### Preliminary Assessment
+
+Current evidence suggests that Interpretation contributes information that cannot be recovered solely from representations and their organization.
+
+Representations specify explicit objects.
+
+Representational Structure specifies explicit relationships.
+
+Interpretation assigns meaning to those objects and relationships.
+
+---
+
+### Provisional Conclusion
+
+The attempted reduction was unsuccessful.
+
+Current evidence supports retaining Interpretation as an independent primitive concept.
+
+Further attempts at reduction remain encouraged as the theory develops.
+
+---
+
+## Verification Update — Reassessment of Investigation
+
+### Observation
+
+The previous attempt to justify Investigation as an independent primitive relied upon reasoning processes having different objects of analysis despite identical primitive components.
+
+Further analysis reveals that this argument is unsound.
+
+If the object of analysis changes, the corresponding representations also change.
+
+The previous counterexample therefore fails.
+
+---
+
+### Revised Question
+
+Can an Investigation be characterized entirely by distinguished representations specifying:
+
+- the object of analysis,
+- the governing criteria,
+- and the initial context for reasoning?
+
+If so, Investigation may be reducible to representations interpreted within an appropriate reasoning calculus.
+
+---
+
+### Preliminary Assessment
+
+The independence of Investigation remains unresolved.
+
+The previous verification does not establish that Investigation contributes information unavailable from the remaining primitive concepts.
+
+Accordingly, Investigation should remain under active investigation.
+
+No conclusion regarding its primitive status should presently be drawn.
+
+---
+## Verification Update — Independence of Reasoning Calculus
+### Objective
+Determine whether Reasoning Calculus is an independent primitive concept or can be derived from the remaining primitive concepts.
+---
+### Observation
+The current primitive architecture recognizes Reasoning Calculus as a primitive concept.
+It remains to be determined whether a reasoning calculus contributes information unavailable from:
+- Investigation,
+- Representation,
+- Representational Structure, and
+- Interpretation.
+---
+### Proposed Reduction
+Assume that Reasoning Calculus is not primitive.
+Under this assumption, every reasoning process should be recoverable solely from the remaining primitive concepts.
+---
+### Analysis
+Consider two investigations possessing:
+- identical representations,
+- identical representational structures,
+- identical interpretations, and
+- identical investigation boundaries.
+Investigation A applies classical logic.
+Investigation B applies paraconsistent logic.
+Both investigations begin from exactly the same representations.
+Both assign identical meanings.
+Both organize representations identically.
+Despite this, they may legitimately reach different conclusions because different inference rules govern the admissible reasoning steps.
+Nothing contained within the representations, their organization, their interpretation, or the investigation itself uniquely determines which reasoning rules are permitted.
+Consequently, the reasoning calculus cannot be reconstructed from the remaining primitive concepts.
+The attempted reduction therefore fails.
+---
+### Hidden Assumption Analysis
+No additional primitive concepts were introduced during the attempted reduction.
+The failure results from the absence of information specifying which reasoning transitions are admissible.
+---
+### Counterexample Analysis
+The pair of investigations above constitutes a counterexample to the claim that Reasoning Calculus is derivable from the remaining primitive concepts.
+Identical investigations may legitimately employ different reasoning calculi while preserving identical representations, structure, and interpretation.
+---
+### Preliminary Assessment
+Current evidence suggests that Reasoning Calculus contributes information that cannot be recovered from the remaining primitive concepts.
+Representations specify what is represented.
+Representational Structure specifies how representations relate.
+Interpretation specifies what representations mean.
+Investigation specifies the bounded reasoning process.
+Reasoning Calculus specifies which reasoning transitions are admissible.
+Each primitive therefore contributes distinct information.
+---
+### Provisional Conclusion
+The attempted reduction was unsuccessful.
+Current evidence supports retaining Reasoning Calculus as an independent primitive concept.
+Further attempts at reduction remain encouraged as the theory develops.
