@@ -1,14 +1,9 @@
 # Papers
 
-This directory contains formal papers describing Project FAR.
+## Purpose
 
-Planned papers include:
+This directory contains formal papers derived from Project FAR.
 
-1. Project FAR
-2. FARA
-3. FAR
-4. FARO
-5. Validation of FARA
-6. Mathematical Foundations
+Papers present mature portions of the framework intended for publication or public distribution.
 
-These papers are intended for eventual public release and peer review.
+Unlike the research directory, papers should reflect stable developments of the theory.
