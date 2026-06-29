@@ -1,19 +1,20 @@
 # Validation
 
-Validation tests whether Project FAR faithfully represents existing reasoning frameworks.
+## Purpose
 
-Current validation efforts include:
+This directory contains validation studies for Project FAR.
 
-- Classical Logic
-- Type Theory
-- Category Theory
+Validation investigates whether existing reasoning frameworks can be represented using the Foundational Architecture of Reasoning Analysis (FARA) and analyzed using the Foundational Analysis of Reasoning (FAR).
 
-Future work includes:
+Validation evaluates the applicability of the framework rather than its correctness.
 
+---
+
+## Planned Studies
+
+- Scientific Method
+- Mathematical Proof
 - Bayesian Reasoning
-- Scientific Methodology
-- Model-Based Reasoning
-- Proof Theory
 - Legal Reasoning
-
-The objective is not to replace these frameworks, but to determine whether they can be represented within FARA without expressive loss.
+- Historical Method
+- Software Engineering
