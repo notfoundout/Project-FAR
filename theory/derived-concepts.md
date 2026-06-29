@@ -2,11 +2,11 @@
 
 ## Purpose
 
-This document records the concepts of Project FAR that are regarded as derived rather than primitive.
+This document records the concepts of Project FAR that are currently regarded as derived rather than primitive.
 
-The objective is to demonstrate that each derived concept can be completely characterized in terms of the primitive architecture of FARA.
+The objective is to determine whether each derived concept can be completely characterized in terms of the primitive architecture of FARA.
 
-Successful derivations strengthen the claim that the primitive architecture is both minimal and sufficient.
+Successful derivations strengthen the claim that the primitive architecture is both minimal and sufficient while reducing the number of primitive concepts required by the framework.
 
 ---
 
@@ -26,13 +26,17 @@ Every derived concept should ultimately depend only upon these primitives.
 
 # Derivation Standards
 
-A derived concept is considered formally established only if:
+A derived concept is considered established only if:
 
-- Its derivation is complete.
-- Its derivation is non-circular.
-- Every dependency is explicitly identified.
-- Every dependency ultimately terminates at the primitive architecture.
-- The derivation preserves the expressive power of Project FAR.
+- its derivation is complete;
+- its derivation is non-circular;
+- every dependency has been explicitly identified;
+- every dependency ultimately terminates at the primitive architecture;
+- no hidden assumptions remain;
+- no successful counterexample has been identified; and
+- the derivation preserves the expressive power of Project FAR.
+
+Until these conditions are satisfied, a derivation remains proposed rather than established.
 
 ---
 
@@ -40,7 +44,7 @@ A derived concept is considered formally established only if:
 
 ## Status
 
-**Proposed**
+Proposed
 
 ---
 
@@ -62,44 +66,47 @@ None.
 
 ## Objective
 
-Determine whether a Reasoning State can be completely characterized using only the primitive architecture.
+Determine whether Reasoning State can be completely characterized using only the primitive architecture.
 
 ---
 
 ## Proposed Derivation
 
-An investigation specifies the context within which reasoning occurs.
+An Investigation specifies the bounded context within which reasoning occurs.
 
-Representations constitute the explicit information manipulated during the investigation.
+Representations constitute the explicit objects manipulated during reasoning.
 
-The representational structure specifies how those representations are organized.
+The Representational Structure specifies the explicit relationships among those representations.
 
-Interpretation assigns meaning to the representations.
+Interpretation assigns meaning to the representations and their relationships.
 
-The reasoning calculus governs the admissible transformations of the representations.
+The Reasoning Calculus governs the admissible transformations of those representations.
 
-At any stage of an investigation, the complete configuration of representations, together with their organization, interpretation, and governing reasoning calculus, completely characterizes the current condition of the reasoning process.
+Accordingly, the complete condition of a reasoning process at any point appears to be completely characterized by these primitive concepts.
 
-Accordingly, no additional primitive concept appears necessary.
+No additional primitive concept has presently been identified.
 
-Reasoning State is therefore proposed to be a derived concept rather than a primitive concept.
+Reasoning State is therefore proposed to be a derived concept.
 
 ---
 
 ## Proposed Derived Definition
 
-A **Reasoning State** is the complete configuration of representations, their representational structure, their interpretation, and the governing reasoning calculus at a particular stage of an investigation.
+A **Reasoning State** is the complete characterization of an Investigation at a particular condition of reasoning, consisting of its representations, their representational structure, their interpretation, and the governing reasoning calculus.
 
 ---
 
-## Verification Checklist
+## Verification Status
 
-Before this derivation can be accepted, it must be shown that:
+Verification in progress.
 
-- No hidden primitive concepts have been introduced.
-- The derivation is non-circular.
-- The derivation preserves expressive power.
-- No counterexamples require Reasoning State to remain primitive.
+Current verification has identified several questions requiring resolution, including:
+
+- whether "stage" introduces a hidden assumption;
+- whether "configuration" constitutes an independent concept;
+- whether the proposed derivation preserves expressive power.
+
+No successful counterexample has presently been identified.
 
 ---
 
@@ -111,9 +118,7 @@ Pending.
 
 ## Notes
 
-This derivation is provisional.
-
-Acceptance requires successful verification against the criteria above.
+This derivation remains provisional until formal verification has been completed.
 
 ---
 
@@ -131,8 +136,8 @@ The following concepts remain pending derivation.
 
 # Research Status
 
-Project FAR has begun the formal reduction of its architecture.
+Project FAR has entered the formal derivation phase.
+
+The current objective is to determine whether every non-primitive concept can be derived from the primitive architecture without reducing expressive power.
 
 No derived concept has yet been formally established.
-
-All proposed derivations remain subject to verification and possible rejection.
