@@ -2,66 +2,141 @@
 
 ## Purpose
 
-This document records the formally established theorems of Project FAR.
+This document records the established theorems of Project FAR.
 
-A theorem is a statement that has been rigorously derived from the canonical definitions, axioms, propositions, and previously established theorems of the framework.
+A theorem is a formal result proved from the canonical definitions, established derived concepts, axioms, and previously established propositions.
 
-Unlike conjectures, propositions, and research notes, theorems represent established results within the formal theory.
-
-Every theorem should be accompanied by a complete formal proof.
+Theorems represent the highest level of the formal theory.
 
 ---
 
-# Current Status
+# Theorem Lifecycle
 
-No theorems have yet been formally established.
+Every theorem progresses through the following stages.
 
-Current research is focused on:
+1. Proposed
+2. Verified
+3. Established
 
-- Refining the canonical definitions.
-- Strengthening the axiomatic foundation.
-- Developing propositions.
-- Identifying conjectures suitable for proof.
-
-As the formal theory matures, formally proved theorems will be added to this document.
+Only established theorems should be regarded as part of the canonical theory.
 
 ---
 
 # Theorem Format
 
-Each theorem should follow the structure below.
+Every theorem should contain the following sections.
+
+## Identifier
+
+A unique identifier of the form:
+
+```text
+T-NAME
+```
 
 ---
 
-## T-IDENTIFIER — Title
+## Statement
 
-### Statement
-
-State the theorem precisely and unambiguously.
-
-### Dependencies
-
-List every formal result required by the theorem.
-
-Examples include:
-
-- Definitions
-- Axioms
-- Propositions
-- Previously established theorems
-
-### Proof
-
-Provide a complete formal proof.
-
-### Corollaries
-
-List any immediate consequences that follow directly from the theorem.
+The formal claim.
 
 ---
 
-# Research Principle
+## Dependencies
 
-A statement should appear in this document only after its proof has been completed and verified for logical correctness.
+Every definition, derived concept, axiom, proposition, and theorem upon which the theorem depends.
 
-Conjectures, proposed results, and incomplete arguments belong elsewhere in the formal theory until they have been formally established.
+---
+
+## Proof
+
+A reference to the corresponding proof document located within the `proofs/` directory.
+
+---
+
+## Status
+
+One of:
+
+- Proposed
+- Verified
+- Established
+
+---
+
+## Notes
+
+Optional observations.
+
+---
+
+# Planned Theorems
+
+The following theorems represent major long-term research objectives.
+
+## T-MINIMAL-PRIMITIVE-ARCHITECTURE
+
+**Objective**
+
+Demonstrate that the primitive architecture of FARA is minimal by proving that no primitive concept is derivable from the remaining primitive concepts.
+
+**Status**
+
+Research
+
+---
+
+## T-SUFFICIENCY-OF-PRIMITIVE-ARCHITECTURE
+
+**Objective**
+
+Demonstrate that every non-primitive concept within Project FAR is derivable from the primitive architecture.
+
+**Status**
+
+Research
+
+---
+
+## T-EXPRESSIVE-SUFFICIENCY
+
+**Objective**
+
+Demonstrate that the primitive architecture preserves the expressive power required to represent every reasoning process within the stated scope of Project FAR.
+
+**Status**
+
+Research
+
+---
+
+## T-REPRESENTATION-THEOREM
+
+**Objective**
+
+Demonstrate that every reasoning process within the stated scope of Project FAR admits a representation within FARA.
+
+**Status**
+
+Research
+
+---
+
+# Established Theorems
+
+None.
+
+---
+
+# Research Status
+
+Project FAR has not yet established any formal theorems.
+
+Current research is focused on:
+
+- deriving non-primitive concepts;
+- verifying primitive independence;
+- establishing propositions; and
+- developing formal proofs.
+
+Theorems will be introduced only after a sufficient body of established propositions has been developed.
