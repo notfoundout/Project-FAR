@@ -189,7 +189,11 @@ The long-term development plan is described in:
 
 # License
 
-Project FAR is distributed under the terms specified in:
+Project FAR is proprietary.
+
+Unless explicitly stated otherwise, all rights are reserved.
+
+See:
 
 `LICENSE`
 
