@@ -1,4 +1,4 @@
-# Ω
+# Admissibility Structure (Ω)
 
 ## Purpose
 
