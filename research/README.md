@@ -19,3 +19,12 @@ Ideas recorded here should not be regarded as established components of the fram
 - `issues.md` — Tracks known issues, inconsistencies, and unresolved implementation concerns.
 - `journal.md` — Chronological research journal documenting ongoing development.
 - `bibliography.md` — References and sources relevant to Project FAR.
+
+## Research Documents
+
+| Document | Purpose |
+|----------|---------|
+| theorem-investigation.md | Investigation of the flagship theorems. |
+| methodology.md | Investigation of proof techniques and research methodology. |
+| journal.md | Chronological record of research progress. |
+| open-questions.md | Outstanding theoretical questions. |
