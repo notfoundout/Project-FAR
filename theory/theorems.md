@@ -2,105 +2,66 @@
 
 ## Purpose
 
-This document records formally established results within Project FAR.
+This document records the formally established theorems of Project FAR.
 
-A statement should appear in this document only after it has been supported by a complete proof satisfying the project's standards of rigor.
+A theorem is a statement that has been rigorously derived from the canonical definitions, axioms, propositions, and previously established theorems of the framework.
 
-Until then, statements belong in the conjectures or propositions documents.
+Unlike conjectures, propositions, and research notes, theorems represent established results within the formal theory.
 
----
-
-# Standards
-
-A theorem must satisfy all of the following:
-
-1. Every term is defined.
-2. Every assumption is explicit.
-3. Every inference is justified.
-4. Every dependency is identified.
-5. The proof is complete.
-6. The theorem lies within the stated scope of Project FAR.
-
-If any requirement is missing, the result should not be classified as a theorem.
-
----
-
-# Proof Format
-
-Every theorem should include:
-
-## Statement
-
-The formal claim.
-
-## Assumptions
-
-Every assumption required by the proof.
-
-## Dependencies
-
-Definitions, propositions, lemmas, and previous theorems used.
-
-## Proof
-
-A complete proof.
-
-## Scope
-
-The domain over which the theorem is claimed to hold.
-
-## Notes
-
-Additional discussion, limitations, or future work.
+Every theorem should be accompanied by a complete formal proof.
 
 ---
 
 # Current Status
 
-No statements have yet been promoted to theorem status.
+No theorems have yet been formally established.
 
-This reflects the current stage of Project FAR.
+Current research is focused on:
 
-The objective is not to maximize the number of theorems, but to ensure that every theorem admitted into the framework meets a consistent standard of rigor.
+- Refining the canonical definitions.
+- Strengthening the axiomatic foundation.
+- Developing propositions.
+- Identifying conjectures suitable for proof.
 
----
-
-# Promotion Policy
-
-A statement progresses through the following stages.
-
-Question
-
-↓
-
-Definition
-
-↓
-
-Proposition
-
-↓
-
-Conjecture
-
-↓
-
-Lemma
-
-↓
-
-Theorem
-
-↓
-
-Corollary
-
-Each promotion requires stronger justification than the previous stage.
+As the formal theory matures, formally proved theorems will be added to this document.
 
 ---
 
-# Philosophy
+# Theorem Format
 
-Project FAR values rigorous uncertainty over premature certainty.
+Each theorem should follow the structure below.
 
-A well-defined conjecture contributes more to the project than a theorem whose proof is incomplete or unclear.
+---
+
+## T-IDENTIFIER — Title
+
+### Statement
+
+State the theorem precisely and unambiguously.
+
+### Dependencies
+
+List every formal result required by the theorem.
+
+Examples include:
+
+- Definitions
+- Axioms
+- Propositions
+- Previously established theorems
+
+### Proof
+
+Provide a complete formal proof.
+
+### Corollaries
+
+List any immediate consequences that follow directly from the theorem.
+
+---
+
+# Research Principle
+
+A statement should appear in this document only after its proof has been completed and verified for logical correctness.
+
+Conjectures, proposed results, and incomplete arguments belong elsewhere in the formal theory until they have been formally established.
