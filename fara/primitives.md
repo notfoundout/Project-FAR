@@ -12,41 +12,33 @@ Each remains subject to reduction, replacement, or elimination through future re
 
 ---
 
-## Current Candidate Primitives
+# Current Candidate Primitives
 
-The current formulation of FARA includes the following candidate primitives.
+The current formulation of FARA includes the following candidate primitive concepts.
 
-- Representational Structure
-- Representation
-- Interpretation
 - Investigation
+- Representation
+- Representational Structure
+- Interpretation
 - Reasoning Calculus
+- Reasoning State
+- Transition Signature
+- Candidate
+- Admissibility Structure (Ω)
+- Resolution Rule
+- Resolution
 
-These concepts constitute the present foundation upon which the remainder of the architecture is constructed.
+These concepts constitute the current architectural foundation of FARA.
 
-Their formal definitions are maintained in:
+Their canonical definitions are maintained in:
 
 `theory/definitions.md`
 
 ---
 
-## Derived Concepts
+# Primitive Status
 
-The following concepts are currently regarded as derived rather than primitive.
-
-- Reasoning State
-- Transition Signature
-- Possibility Space
-- Ω (Admissibility Structure)
-- Resolution
-
-These concepts emerge from interactions among the candidate primitives and are defined elsewhere within the architecture.
-
----
-
-## Primitive Status
-
-No candidate primitive should be regarded as permanently fundamental.
+No candidate primitive should be regarded as permanently irreducible.
 
 Each remains an active subject of investigation.
 
@@ -56,7 +48,7 @@ Likewise, if a previously unrecognized irreducible concept is discovered, it sho
 
 ---
 
-## Current Research
+# Current Research
 
 Current work focuses on:
 
