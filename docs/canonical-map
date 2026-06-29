@@ -1,0 +1,377 @@
+# Canonical Map
+
+## Purpose
+
+This document identifies the canonical location of every major concept within Project FAR.
+
+Each concept should have exactly one authoritative definition.
+
+All other documents should reference the canonical source rather than redefining the concept.
+
+This policy minimizes redundancy and prevents inconsistent definitions from developing over time.
+
+---
+
+# Project
+
+## Project FAR
+
+Canonical Location:
+
+docs/overview.md
+
+Purpose:
+
+Introduces the project as a whole.
+
+---
+
+## Mission
+
+Canonical Location:
+
+docs/mission.md
+
+Purpose:
+
+Explains why the project exists.
+
+---
+
+## Philosophy
+
+Canonical Location:
+
+docs/philosophy.md
+
+Purpose:
+
+Describes the research methodology.
+
+---
+
+## Scope
+
+Canonical Location:
+
+docs/scope.md
+
+Purpose:
+
+Defines what Project FAR does and does not attempt to represent.
+
+---
+
+# FARA
+
+## FARA
+
+Canonical Location:
+
+fara/architecture.md
+
+Purpose:
+
+Defines the architecture.
+
+---
+
+## Candidate Primitives
+
+Canonical Location:
+
+fara/primitives.md
+
+Purpose:
+
+Defines the current candidate primitive concepts.
+
+---
+
+## Ontology
+
+Canonical Location:
+
+fara/ontology.md
+
+Purpose:
+
+Defines what exists within the architecture.
+
+---
+
+## Reasoning State
+
+Canonical Location:
+
+fara/reasoning-states.md
+
+Purpose:
+
+Defines the fundamental object of reasoning.
+
+---
+
+## Semantics
+
+Canonical Location:
+
+fara/semantics.md
+
+Purpose:
+
+Defines how representations acquire meaning.
+
+---
+
+## Ω (Admissibility Structure)
+
+Canonical Location:
+
+fara/omega.md
+
+Purpose:
+
+Defines admissibility.
+
+---
+
+## Transition Signatures
+
+Canonical Location:
+
+fara/transition-signatures.md
+
+Purpose:
+
+Defines reasoning transitions.
+
+---
+
+# FAR
+
+## FAR
+
+Canonical Location:
+
+far/methodology.md
+
+Purpose:
+
+Defines the investigative methodology.
+
+---
+
+## Investigation Workflow
+
+Canonical Location:
+
+far/workflow.md
+
+Purpose:
+
+Defines the sequence of an investigation.
+
+---
+
+## Investigation Protocol
+
+Canonical Location:
+
+far/investigation-protocol.md
+
+Purpose:
+
+Defines investigation procedures.
+
+---
+
+# FARO
+
+## FARO
+
+Canonical Location:
+
+faro/comparison.md
+
+Purpose:
+
+Defines the comparative framework.
+
+---
+
+## Auditing
+
+Canonical Location:
+
+faro/auditing.md
+
+Purpose:
+
+Defines reasoning audits.
+
+---
+
+## Disagreement Analysis
+
+Canonical Location:
+
+faro/disagreement-analysis.md
+
+Purpose:
+
+Defines analysis of disagreement.
+
+---
+
+# Theory
+
+## Definitions
+
+Canonical Location:
+
+theory/definitions.md
+
+Purpose:
+
+Provides every formal definition used throughout Project FAR.
+
+---
+
+## Axioms
+
+Canonical Location:
+
+theory/axioms.md
+
+Purpose:
+
+Records current foundational assumptions.
+
+---
+
+## Propositions
+
+Canonical Location:
+
+theory/propositions.md
+
+Purpose:
+
+Records intermediate formal claims.
+
+---
+
+## Lemmas
+
+Canonical Location:
+
+theory/lemmas.md
+
+Purpose:
+
+Records supporting formal results.
+
+---
+
+## Conjectures
+
+Canonical Location:
+
+theory/conjectures.md
+
+Purpose:
+
+Records unproven research claims.
+
+---
+
+## Theorems
+
+Canonical Location:
+
+theory/theorems.md
+
+Purpose:
+
+Records formally established results.
+
+---
+
+## Proofs
+
+Canonical Location:
+
+theory/proofs.md
+
+Purpose:
+
+Records proofs and proof obligations.
+
+---
+
+# Validation
+
+## Validation
+
+Canonical Location:
+
+validation/README.md
+
+Purpose:
+
+Introduces validation efforts.
+
+Each individual validation document serves as the canonical source for its respective framework.
+
+---
+
+# Research
+
+## Open Problems
+
+Canonical Location:
+
+research/open-problems.md
+
+---
+
+## Decision Log
+
+Canonical Location:
+
+research/decision-log.md
+
+---
+
+## Research Journal
+
+Canonical Location:
+
+research/journal.md
+
+---
+
+## Future Directions
+
+Canonical Location:
+
+research/future-directions.md
+
+---
+
+## Bibliography
+
+Canonical Location:
+
+research/bibliography.md
+
+---
+
+# Repository Rule
+
+Every concept should have exactly one canonical home.
+
+Every other document should reference that location rather than redefining the concept.
+
+This rule applies to all future additions to Project FAR.
