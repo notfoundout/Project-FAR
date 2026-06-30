@@ -323,4 +323,1525 @@ The investigation shall produce:
 - Canonical derivation graph.
 - Canonical Meta-Theory.
 
+---
+
+# Investigation MT3 — Necessary Conditions of Representation
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+What conditions are necessary for an object to constitute a representation?
+
+---
+
+## Motivation
+
+Previous investigations identified Representation as the strongest candidate primitive formal object.
+
+However,
+
+its objective characterization remains unresolved.
+
+Accordingly,
+
+the necessary conditions of representation require independent investigation.
+
+---
+
+## Current Hypothesis
+
+Every representation satisfies a unique set of objectively necessary conditions.
+
+This hypothesis remains provisional.
+
+---
+
+## Investigation Strategy
+
+Rather than attempting to define representation directly,
+
+identify conditions that every representation must satisfy.
+
+Reject every proposed condition that is:
+
+- unnecessary;
+- reducible;
+- circular;
+- or dependent upon higher theoretical layers.
+
+Accept only objectively necessary conditions.
+
+---
+
+## Candidate Conditions
+
+Current candidates include:
+
+- Distinguishability
+- Identity
+- Structure
+- Relations
+- Interpretability
+- Persistence
+- Transformability
+
+No condition has yet been accepted.
+
+---
+
+## Candidate 1 — Distinguishability
+
+### Question
+
+Must every representation be distinguishable?
+
+### Analysis
+
+If an object cannot be distinguished,
+
+it cannot be individually investigated,
+
+accepted,
+
+rejected,
+
+or transformed.
+
+Accordingly,
+
+Distinguishability appears necessary.
+
+### Assessment
+
+Provisionally Accepted.
+
+---
+
+## Candidate 2 — Identity
+
+### Analysis
+
+Whether representations require identity remains unresolved.
+
+Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 3 — Structure
+
+### Analysis
+
+Some representations may consist of a single distinguishable object.
+
+Structure therefore may not be universally required.
+
+Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 4 — Relations
+
+### Analysis
+
+A solitary representation may possess no relations.
+
+Relations therefore do not presently appear necessary.
+
+Current Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 5 — Interpretability
+
+### Analysis
+
+Interpretation appears to concern observers rather than representations themselves.
+
+Accordingly,
+
+interpretability may not be primitive.
+
+Current Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 6 — Persistence
+
+### Analysis
+
+Persistence concerns change through time.
+
+Time has not yet been established.
+
+Current Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 7 — Transformability
+
+### Analysis
+
+Transformation presupposes operations.
+
+Operations have not yet been established.
+
+Current Assessment
+
+Provisionally Rejected.
+
+---
+
+## Counterexample Strategy
+
+Attempt to identify:
+
+- a representation lacking an accepted necessary condition;
+- an accepted condition absent from a genuine representation.
+
+Either successful example requires revision.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- Root Theory
+- MT1 — Entry Conditions
+- MT2 — First Formal Object
+
+Supports:
+
+- FARA
+- FARO
+- Formal object theory
+
+---
+
+## Provisional Result
+
+Current evidence identifies Distinguishability as the only presently surviving necessary condition of representation.
+
+No additional condition has yet been demonstrated to be universally necessary.
+
+---
+
+## Interim Conclusion
+
+Current investigations suggest that representation should not initially be characterized by meaning,
+
+interpretation,
+
+or structure.
+
+Rather,
+
+its first objectively demonstrated property appears to be distinguishability.
+
+Further investigation should determine whether additional necessary conditions survive objective evaluation.
+
+---
+
+# Investigation MT4 — Sufficiency of Distinguishability
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+Is distinguishability sufficient for representation?
+
+---
+
+## Motivation
+
+Previous investigations identified distinguishability as the only surviving necessary condition of representation.
+
+However,
+
+necessity alone does not establish sufficiency.
+
+Accordingly,
+
+the sufficiency of distinguishability requires independent investigation.
+
+---
+
+## Current Hypothesis
+
+Every distinguishable formal object constitutes a representation.
+
+This hypothesis remains provisional.
+
+---
+
+## Investigation Strategy
+
+Attempt to identify distinguishable formal objects that are not representations.
+
+If such an object exists,
+
+distinguishability is insufficient.
+
+If none can be identified,
+
+distinguishability provisionally constitutes both the necessary and sufficient condition.
+
+---
+
+## Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate Counterexample 1 — Random Symbol
+
+### Description
+
+A single distinguishable symbol with no assigned meaning.
+
+### Analysis
+
+The symbol remains objectively identifiable.
+
+Whether meaning is required for representation has not been established.
+
+Current evidence therefore does not reject the hypothesis.
+
+### Assessment
+
+Does Not Refute.
+
+---
+
+## Candidate Counterexample 2 — Physical Mark
+
+### Description
+
+A distinguishable mark on a surface.
+
+### Analysis
+
+The mark is objectively distinguishable.
+
+No additional condition has been shown necessary.
+
+### Assessment
+
+Does Not Refute.
+
+---
+
+## Candidate Counterexample 3 — Unique Token
+
+### Description
+
+An arbitrary distinguishable token.
+
+### Analysis
+
+The token is identifiable independently of interpretation.
+
+Current evidence supports the hypothesis.
+
+### Assessment
+
+Does Not Refute.
+
+---
+
+## Candidate Counterexample 4 — Observer Requirement
+
+### Description
+
+Suppose no observer exists.
+
+Can a distinguishable object still be a representation?
+
+### Analysis
+
+Representation has not been characterized in terms of observation.
+
+Current methodology evaluates objective properties rather than observers.
+
+Accordingly,
+
+observer dependence is presently unsupported.
+
+### Assessment
+
+Does Not Refute.
+
+---
+
+## Counterexample Strategy
+
+Attempt to construct a distinguishable formal object that fails to qualify as a representation without appealing to interpretation, semantics, or higher-layer concepts.
+
+Any successful construction falsifies the hypothesis.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- MT3 — Necessary Conditions of Representation
+
+Supports:
+
+- Formal Object Theory
+- FARA
+- FARO
+
+---
+
+## Failure Modes
+
+The hypothesis fails if:
+
+- an objectively distinguishable object is shown not to constitute a representation;
+- an additional indispensable condition is demonstrated.
+
+---
+
+## Provisional Theorem
+
+### Statement
+
+Every objectively distinguishable formal object presently qualifies as a representation.
+
+### Current Status
+
+Provisionally Accepted.
+
+Further investigation should attempt to refute this theorem.
+
+---
+
+## Interim Conclusion
+
+Current evidence suggests that distinguishability is not merely necessary for representation,
+
+but may also be sufficient.
+
+If this conclusion survives further investigation,
+
+representation ceases to be primitive and becomes the first derived formal object of the Meta-Theory.
+
+---
+
+# Investigation MT5 — Nature of Representation
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+Does representation constitute an intrinsic property of an object or a relation between objects?
+
+---
+
+## Motivation
+
+Previous investigations provisionally concluded that distinguishability may be sufficient for representation.
+
+However,
+
+this conclusion assumes that representation is an intrinsic property.
+
+This assumption has not been investigated.
+
+Accordingly,
+
+the nature of representation requires independent investigation.
+
+---
+
+## Current Hypothesis
+
+Representation is fundamentally relational rather than intrinsic.
+
+This hypothesis remains provisional.
+
+---
+
+## Candidate Characterizations
+
+Current candidates include:
+
+- Intrinsic property
+- Relation between objects
+- Relation between object and structure
+- Relation between object and interpretation
+- Hybrid characterization
+
+No characterization has yet been accepted.
+
+---
+
+## Investigation Strategy
+
+Evaluate each candidate independently.
+
+Reject every characterization introducing concepts not yet established or relying upon higher theoretical layers.
+
+---
+
+## Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 1 — Intrinsic Property
+
+### Claim
+
+An object is a representation simply by virtue of its own properties.
+
+### Analysis
+
+No relation to anything else is required.
+
+However,
+
+the term "representation" ordinarily implies that something is represented.
+
+Current evidence does not establish intrinsic representation.
+
+### Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 2 — Relation Between Objects
+
+### Claim
+
+Representation consists in an objective relation between one object and another.
+
+### Analysis
+
+This characterization preserves objectivity while avoiding appeal to observers.
+
+Current evidence supports this characterization.
+
+### Assessment
+
+Provisionally Accepted.
+
+---
+
+## Candidate 3 — Relation Between Object and Structure
+
+### Claim
+
+An object represents only within a larger structure.
+
+### Analysis
+
+Structures have not yet been established.
+
+Accordingly,
+
+this characterization introduces an underived concept.
+
+### Assessment
+
+Rejected.
+
+---
+
+## Candidate 4 — Relation Between Object and Interpretation
+
+### Claim
+
+Representation requires interpretation.
+
+### Analysis
+
+Interpretation depends upon observers.
+
+The Meta-Theory seeks observer-independent foundations.
+
+Accordingly,
+
+this characterization is unsupported.
+
+### Assessment
+
+Rejected.
+
+---
+
+## Candidate 5 — Hybrid Characterization
+
+### Claim
+
+Representation is partly intrinsic and partly relational.
+
+### Analysis
+
+No independent justification has been demonstrated.
+
+Current Assessment
+
+Rejected.
+
+---
+
+## Counterexample Strategy
+
+Attempt to identify:
+
+- an intrinsic representation requiring no relation;
+- a relational representation requiring no represented object.
+
+Either successful example requires revision.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- MT3 — Necessary Conditions of Representation
+- MT4 — Sufficiency of Distinguishability
+
+Supports:
+
+- Representation Theory
+- FARA
+- FARO
+
+---
+
+## Failure Modes
+
+The hypothesis fails if:
+
+- intrinsic representation is demonstrated;
+- representation necessarily depends upon interpretation;
+- objective relations cannot support representation.
+
+---
+
+## Provisional Theorem
+
+### Statement
+
+Representation is presently best characterized as an objective relation rather than an intrinsic property.
+
+### Current Status
+
+Provisionally Accepted.
+
+Further investigation should attempt to refute this theorem.
+
+---
+
+## Interim Conclusion
+
+Current evidence suggests that distinguishability is necessary for representation,
+
+but distinguishability alone does not establish representation.
+
+Rather,
+
+representation presently appears to require an objective relation between distinguishable objects.
+
+Further investigation should establish the nature of that relation.
+
+
+---
+
+---
+
+# Investigation MT6 — Nature of Relations
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+What constitutes an objective relation?
+
+---
+
+## Motivation
+
+Previous investigations provisionally concluded that representation is relational.
+
+However,
+
+the notion of a relation has not itself been established.
+
+Accordingly,
+
+the nature of relations requires independent investigation.
+
+---
+
+## Current Hypothesis
+
+A relation is an objective formal connection between distinguishable formal objects.
+
+This hypothesis remains provisional.
+
+---
+
+## Candidate Characterizations
+
+Current candidates include:
+
+- Pairing
+- Association
+- Connection
+- Mapping
+- Constraint
+
+No characterization has yet been accepted.
+
+---
+
+## Investigation Strategy
+
+Evaluate each candidate independently.
+
+Reject every characterization that:
+
+- presupposes stronger formal objects;
+- depends upon interpretation;
+- introduces higher-layer concepts.
+
+Accept only objectively necessary characterizations.
+
+---
+
+## Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 1 — Pairing
+
+### Analysis
+
+Pairing identifies objects together.
+
+However,
+
+nothing presently establishes that pairing itself constitutes a relation.
+
+### Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 2 — Association
+
+### Analysis
+
+Association appears informal.
+
+No objective criterion has presently been established.
+
+### Assessment
+
+Rejected.
+
+---
+
+## Candidate 3 — Connection
+
+### Analysis
+
+Connection identifies an objective linkage without specifying semantics.
+
+Current evidence supports this characterization.
+
+### Assessment
+
+Provisionally Accepted.
+
+---
+
+## Candidate 4 — Mapping
+
+### Analysis
+
+Mappings presuppose functions or domains.
+
+Neither has been established.
+
+### Assessment
+
+Rejected.
+
+---
+
+## Candidate 5 — Constraint
+
+### Analysis
+
+Constraints govern permissible structures.
+
+They therefore appear to presuppose relations rather than characterize them.
+
+### Assessment
+
+Rejected.
+
+---
+
+## Counterexample Strategy
+
+Attempt to identify:
+
+- a relation lacking objective connection;
+- an objective connection that is not a relation.
+
+Either successful example requires revision.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- MT5 — Nature of Representation
+
+Supports:
+
+- Representation Theory
+- Formal Object Theory
+- FARA
+
+---
+
+## Failure Modes
+
+The hypothesis fails if:
+
+- connection proves reducible;
+- relations require interpretation;
+- relations require higher-layer concepts.
+
+---
+
+## Provisional Theorem
+
+### Statement
+
+Relations are presently best characterized as objective formal connections between distinguishable formal objects.
+
+### Current Status
+
+Provisionally Accepted.
+
+Further investigation should attempt to refute this theorem.
+
+---
+
+## Interim Conclusion
+
+Current evidence suggests that relations are primitive formal connections independent of interpretation.
+
+Representation therefore appears to arise when distinguishable formal objects participate in an objective relation.
+
+Further investigation should establish the properties of such relations.
+
+
+---
+
+# Investigation MT7 — Primitiveness of Relations
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+Are relations primitive formal objects, or are they derivable from more fundamental concepts?
+
+---
+
+## Motivation
+
+Previous investigations provisionally characterized relations as objective formal connections.
+
+However,
+
+this characterization does not establish whether relations themselves are primitive.
+
+Accordingly,
+
+the primitiveness of relations requires independent investigation.
+
+---
+
+## Current Hypothesis
+
+Relations are not primitive.
+
+Rather,
+
+they are derivable from more fundamental formal concepts.
+
+This hypothesis remains provisional.
+
+---
+
+## Candidate Characterizations
+
+Current candidates include:
+
+- Primitive formal object
+- Derived from representations
+- Derived from distinctions
+- Derived from structure
+- Derived from operations
+
+No characterization has yet been accepted.
+
+---
+
+## Investigation Strategy
+
+Evaluate each candidate independently.
+
+Reject every characterization introducing stronger assumptions than relations themselves.
+
+Accept only the weakest sufficient characterization.
+
+---
+
+## Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 1 — Primitive Formal Object
+
+### Analysis
+
+Accepting relations as primitive increases the primitive basis.
+
+Current investigations favor minimizing primitives whenever possible.
+
+No indispensability has yet been demonstrated.
+
+### Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 2 — Derived from Representations
+
+### Analysis
+
+Suppose two representations exist.
+
+Nothing yet establishes that they are related.
+
+Accordingly,
+
+representations alone appear insufficient.
+
+### Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 3 — Derived from Distinctions
+
+### Analysis
+
+Distinction identifies separability.
+
+No relation necessarily follows.
+
+Accordingly,
+
+distinction alone appears insufficient.
+
+### Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 4 — Derived from Structure
+
+### Analysis
+
+Structures presuppose relations among objects.
+
+This characterization is circular.
+
+### Assessment
+
+Rejected.
+
+---
+
+## Candidate 5 — Derived from Operations
+
+### Analysis
+
+Operations presuppose relations between inputs and outputs.
+
+This characterization is circular.
+
+### Assessment
+
+Rejected.
+
+---
+
+## Counterexample Strategy
+
+Attempt to identify:
+
+- a relation requiring no more fundamental concepts;
+- a derivation of relations from accepted lower-layer concepts.
+
+Either successful example requires revision.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- MT5 — Nature of Representation
+- MT6 — Nature of Relations
+
+Supports:
+
+- Primitive Formal Objects
+- Representation Theory
+- FARA
+
+---
+
+## Failure Modes
+
+The hypothesis fails if:
+
+- relations prove indispensable as primitives;
+- a successful derivation cannot be found.
+
+---
+
+## Interim Conclusion
+
+Current evidence establishes neither the primitiveness nor the derivability of relations.
+
+Accordingly,
+
+their ontological status remains unresolved.
+
+
+---
+
+# Investigation MT8 — Minimal Formal Basis
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+What is the minimal irreducible formal basis required for the existence of any formal system?
+
+---
+
+## Motivation
+
+Previous investigations examined individual candidate formal objects.
+
+However,
+
+this approach risks introducing an unbounded sequence of increasingly primitive concepts.
+
+Accordingly,
+
+the primitive basis of the Meta-Theory requires direct investigation.
+
+---
+
+## Current Hypothesis
+
+The Meta-Theory possesses a unique minimal formal basis.
+
+This hypothesis remains provisional.
+
+---
+
+## Candidate Primitive Bases
+
+Current candidates include:
+
+- {}
+- {Representation}
+- {Relation}
+- {Representation, Relation}
+- {Structure}
+- {Operation}
+- Other objectively characterizable bases
+
+---
+
+## Investigation Strategy
+
+Apply the Canonical Primitive Evaluation Framework.
+
+For every candidate basis evaluate:
+
+- Independence
+- Necessity
+- Minimality
+- Sufficiency
+- Non-Circularity
+- Reconstructability
+
+Reject every basis failing any criterion.
+
+Accept only surviving bases.
+
+---
+
+## Counterexample Strategy
+
+Attempt to construct:
+
+- a smaller primitive basis;
+- an alternative irreducible basis;
+- a formal system requiring fewer primitives.
+
+Any successful construction requires revision.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- Canonical Primitive Evaluation Framework
+- Root Theory
+
+Supports:
+
+- Entire Meta-Theory.
+
+---
+
+## Success Criterion
+
+The investigation succeeds only if:
+
+- every surviving primitive basis has been evaluated;
+- exactly one minimal basis survives,
+  or objective evidence demonstrates multiple equivalent bases.
+
+---
+
+## Failure Modes
+
+The investigation fails if:
+
+- no primitive basis survives;
+- primitive comparison proves impossible;
+- an infinite regress of primitive concepts occurs.
+
+---
+
+## Interim Conclusion
+
+None.
+
+The investigation shall remain open until every objectively characterizable primitive basis has completed evaluation.
+
+---
+
+# Investigation MT9 — Necessity of Formal Objects
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+Must every formal system contain formal objects?
+
+---
+
+## Motivation
+
+Previous investigations sought the primitive formal basis of the Meta-Theory.
+
+However,
+
+those investigations implicitly assumed that formal systems are fundamentally composed of formal objects.
+
+This assumption has not been independently justified.
+
+Accordingly,
+
+the necessity of formal objects requires investigation.
+
+---
+
+## Current Hypothesis
+
+Every formal system necessarily contains formal objects.
+
+This hypothesis remains provisional.
+
+---
+
+## Investigation Strategy
+
+Attempt to construct coherent formal systems that contain:
+
+- no formal objects;
+- only relations;
+- only transformations;
+- only constraints;
+- only distinctions.
+
+Determine whether formal construction remains possible.
+
+---
+
+## Candidate 1 — Relation-Only System
+
+### Analysis
+
+Relations require relata.
+
+Accordingly,
+
+relations alone do not presently constitute a formal system.
+
+### Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 2 — Transformation-Only System
+
+### Analysis
+
+Transformations require something transformed.
+
+Accordingly,
+
+transformations alone appear insufficient.
+
+### Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 3 — Constraint-Only System
+
+### Analysis
+
+Constraints govern permissible configurations.
+
+Without anything constrained,
+
+constraints appear empty.
+
+### Assessment
+
+Provisionally Rejected.
+
+---
+
+## Candidate 4 — Distinction-Only Formal System
+
+### Analysis
+
+Distinction originates within the Root Theory.
+
+Whether distinguishability alone constitutes a formal system remains unresolved.
+
+### Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 5 — Object-Based System
+
+### Analysis
+
+Every currently known formal system employs identifiable entities.
+
+Current evidence supports this characterization.
+
+### Assessment
+
+Provisionally Accepted.
+
+---
+
+## Counterexample Strategy
+
+Attempt to identify a coherent formal system possessing no formal objects.
+
+Any successful construction falsifies the hypothesis.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- MT8 — Minimal Formal Basis
+
+Supports:
+
+- Entire Meta-Theory.
+
+---
+
+## Failure Modes
+
+The hypothesis fails if:
+
+- a coherent object-free formal system is demonstrated;
+- formal objects prove reducible to non-object primitives.
+
+---
+
+## Provisional Theorem
+
+### Statement
+
+Every presently known coherent formal system contains formal objects.
+
+### Current Status
+
+Provisionally Accepted.
+
+Further investigation should attempt to identify an object-free formal system.
+
+---
+
+## Interim Conclusion
+
+Current evidence suggests that formal objects are indispensable components of formal systems.
+
+Whether they are primitive or derivable remains unresolved.
+
+---
+
+# Investigation MT10 — Constructibility of Formal Objects
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+Must every formal object admitted by the Meta-Theory be constructible?
+
+---
+
+## Motivation
+
+Previous investigations identified candidate formal objects and primitive bases.
+
+However,
+
+they implicitly assumed that formal objects may simply be accepted once characterized.
+
+This assumption has not been independently justified.
+
+Accordingly,
+
+the constructibility of formal objects requires investigation.
+
+---
+
+## Current Hypothesis
+
+Every formal object admitted by the Meta-Theory must be constructible from previously accepted foundations.
+
+This hypothesis remains provisional.
+
+---
+
+## Investigation Strategy
+
+For every proposed formal object:
+
+1. Identify its dependencies.
+
+2. Determine whether every dependency has been accepted.
+
+3. Provide an explicit construction.
+
+4. Reject every object lacking a valid construction.
+
+---
+
+## Candidate 1 — Representation
+
+### Question
+
+Can Representation be explicitly constructed?
+
+### Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 2 — Relation
+
+### Question
+
+Can Relation be explicitly constructed?
+
+### Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 3 — Structure
+
+### Question
+
+Can Structure be explicitly constructed?
+
+### Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 4 — Operation
+
+### Question
+
+Can Operation be explicitly constructed?
+
+### Current Assessment
+
+Under Investigation.
+
+---
+
+## Acceptance Criterion
+
+A formal object is admitted only if:
+
+- every dependency is accepted;
+- its construction is explicit;
+- no circular dependency exists.
+
+---
+
+## Counterexample Strategy
+
+Attempt to identify a formal object that is indispensable but cannot be constructed.
+
+Any successful example requires revision.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- Root Theory
+- MT8 — Minimal Formal Basis
+- MT9 — Necessity of Formal Objects
+
+Supports:
+
+- Entire Meta-Theory
+- FARA
+- FARO
+
+---
+
+## Failure Modes
+
+The hypothesis fails if:
+
+- indispensable formal objects prove non-constructible;
+- explicit construction is impossible for coherent formal systems.
+
+---
+
+## Provisional Theorem
+
+### Statement
+
+No formal object should be admitted without an explicit construction from accepted foundations.
+
+### Current Status
+
+Provisionally Accepted.
+
+Further investigation should attempt to identify a necessary exception.
+
+---
+
+## Interim Conclusion
+
+Current evidence supports treating the Meta-Theory as a constructive theory rather than a descriptive ontology.
+
+Accordingly,
+
+future formal objects should enter the theory only through explicit construction.
 
