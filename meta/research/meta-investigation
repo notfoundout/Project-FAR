@@ -98,3 +98,58 @@ Its minimality and sufficiency remain under investigation.
 ## Next Investigation
 
 Determine the primitive architecture of formal theories.
+
+# Investigation 1 — Primitive Architecture of Formal Theories
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+What primitive concepts are required to construct a formal theory?
+
+---
+
+## Motivation
+
+Project FAR is itself a collection of formal theories.
+
+Accordingly, the architecture of formal theories should itself be investigated.
+
+---
+
+## Current Hypothesis
+
+Every formal theory possesses the following primitive architecture.
+
+- Language
+- Definitions
+- Axioms
+- Inference Rules
+
+All remaining components are derivable from these primitives.
+
+---
+
+## Open Questions
+
+Are all four primitives necessary?
+
+Can one primitive be derived from the others?
+
+Does every formal theory possess semantics?
+
+Is semantics primitive or derived?
+
+---
+
+## Current Assessment
+
+The primitive architecture remains under investigation.
+
+No primitive has yet been analyzed.
+
+
