@@ -59,10 +59,10 @@ Explain.
 
 Reference any relevant documents.
 
-- `research/open-questions.md`
-- `research/decision-log.md`
-- `research/backburner.md`
-- `research/failed-approaches.md`
+- `research/open-problems/open-questions.md`
+- `docs/DECISION_LOG.md`
+- `research/notes/backburner.md`
+- `research/notes/failed-approaches.md`
 
 ---
 

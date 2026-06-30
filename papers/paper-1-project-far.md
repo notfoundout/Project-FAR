@@ -1,4 +1,4 @@
-# Project FAR
+# Paper 1 — Project FAR
 
 ## A Research Program for the Foundations of Structured, Explicit, Auditable Reasoning
 
