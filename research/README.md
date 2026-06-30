@@ -1,30 +1,15 @@
-# Research
+# Research Index
 
-## Purpose
+This directory contains exploratory work. Content here is not canonical until it is promoted into `../foundations/`, `../theory/`, `../frameworks/`, or `../methodology/`.
 
-This directory contains ongoing research supporting the development of Project FAR.
+## Areas
 
-Unlike the formal theory, the contents of this directory are exploratory.
+- `literature/` — literature review material.
+- `notes/` — exploratory research notes, journals, programs, and investigations.
+- `comparisons/` — comparisons with other approaches.
+- `bibliography/` — references and source lists.
+- `open-problems/` — unresolved questions, known issues, and open problems.
 
-Ideas recorded here should not be regarded as established components of the framework until formally incorporated 
+## Promotion Rule
 
-## Contents
-
-- `research-program.md` — Defines the long-term research agenda of Project FAR.
-- `open-questions.md` — Records active research questions.
-- `backburner.md` — Records deferred ideas for future consideration.
-- `decision-log.md` — Records significant architectural and theoretical decisions.
-- `failed-approaches.md` — Records approaches that were considered and rejected.
-- `future-directions.md` — Records long-term opportunities for expanding Project FAR.
-- `issues.md` — Tracks known issues, inconsistencies, and unresolved implementation concerns.
-- `journal.md` — Chronological research journal documenting ongoing development.
-- `bibliography.md` — References and sources relevant to Project FAR.
-
-## Research Documents
-
-| Document | Purpose |
-|----------|---------|
-| theorem-investigation.md | Investigation of the flagship theorems. |
-| methodology.md | Investigation of proof techniques and research methodology. |
-| journal.md | Chronological record of research progress. |
-| open-questions.md | Outstanding theoretical questions. |
+When a research result becomes accepted, move the canonical statement into the appropriate non-research directory and leave only historical or exploratory context here.

@@ -1,4 +1,4 @@
-# Proofs
+# Proofs Index
 
 ## Purpose
 

@@ -17,10 +17,10 @@ Before proposing changes, contributors should become familiar with the project.
 Recommended reading order:
 
 1. `README.md`
-2. `ROADMAP.md`
-3. `theory/definitions.md`
+2. `docs/ROADMAP.md`
+3. `theory/definitions/definitions.md`
 4. The README for the relevant directory
-5. `research/decision-log.md` (for architectural changes)
+5. `docs/DECISION_LOG.md` (for architectural changes)
 
 ---
 
@@ -45,11 +45,11 @@ All contributions should follow these principles.
 |-----------|---------|
 | `docs/` | Project documentation |
 | `theory/` | Formal theory |
-| `fara/` | Architectural framework |
-| `far/` | Investigation methodology |
-| `faro/` | Reasoning operations |
+| `frameworks/FARA/` | Architectural framework |
+| `frameworks/FAR/` | Investigation methodology |
+| `frameworks/FARO/` | Reasoning operations |
 | `examples/` | Worked examples |
-| `validation/` | Validation studies |
+| `methodology/validation/` | Validation studies |
 | `research/` | Active research |
 | `papers/` | Publications |
 
@@ -60,7 +60,7 @@ All contributions should follow these principles.
 All formal terminology is defined exclusively in:
 
 ```text
-theory/definitions.md
+theory/definitions/definitions.md
 ```
 
 Do not redefine technical terms elsewhere.
