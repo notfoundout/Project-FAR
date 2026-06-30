@@ -1,166 +1,25 @@
-# Theory
+# Theory Index
 
-## Purpose
+This directory contains the canonical theory of Project FAR. Research notes and unresolved investigations belong in `../research/`; framework-specific extensions belong under `../frameworks/`.
 
-This directory contains the formal theoretical foundation of Project FAR.
+## Canonical Areas
 
-It defines the canonical terminology, notation, assumptions, formal statements, and proofs upon which the remainder of the framework is built.
+- `definitions/` — canonical definitions and derived concepts.
+- `axioms/` — core axioms and accepted axiom schemas.
+- `semantics/` — semantic and model-theoretic material.
+- `operators/` — canonical theoretical operators.
+- `notation/` — notation and symbolic conventions.
+- `theorems/` — propositions, conjectures, and theorems.
+- `proofs/` — proof material and proof-theoretic foundations.
+- `consistency/` — verification and consistency checks.
 
-All architectural, methodological, and operational components of Project FAR ultimately depend upon the theory contained within this directory.
+## Reading Order
 
----
-
-# Objectives
-
-The formal theory aims to:
-
-- Establish a precise vocabulary.
-- Minimize ambiguity through canonical definitions.
-- State the foundational assumptions of the framework.
-- Develop formally derived results.
-- Support rigorous mathematical proofs.
-- Provide a stable foundation for future theoretical development.
-
----
-
-# Directory Structure
-
-```text
-theory/
-├── README.md
-├── definitions.md
-├── notation.md
-├── axioms.md
-├── conjectures.md
-├── propositions.md
-├── theorems.md
-└── proofs/
-    └── README.md
-```
-
----
-
-# Reading Order
-
-Readers are encouraged to proceed in the following order.
-
-1. `definitions.md`
-2. `notation.md`
-3. `axioms.md`
-4. `propositions.md`
-5. `theorems.md`
-6. `proofs/`
-
-Conjectures may be read at any time after the canonical definitions have been understood, as they represent ongoing research rather than established results.
-
----
-
-# Components
-
-## Definitions
-
-Provides the canonical definitions used throughout Project FAR.
-
-Every technical term appearing elsewhere in the repository refers to these definitions unless explicitly stated otherwise.
-
----
-
-## Notation
-
-Defines the symbols, identifiers, and naming conventions used throughout the formal theory.
-
----
-
-## Axioms
-
-States the foundational assumptions accepted by the framework.
-
-Axioms are accepted without proof within Project FAR.
-
----
-
-## Conjectures
-
-Records statements believed to be true but not yet formally established.
-
-Conjectures represent active research and potential future theorems.
-
----
-
-## Propositions
-
-Records formal results that follow directly from the canonical definitions and axioms.
-
-Propositions establish immediate consequences of the framework and provide the foundation for later theoretical development.
-
----
-
-## Theorems
-
-Records formally established results derived from the definitions, axioms, propositions, and previously established theorems.
-
-Every theorem should be accompanied by a complete formal proof.
-
----
-
-## Proofs
-
-Contains the complete formal proofs supporting the theorems of Project FAR.
-
-Each substantial theorem should have its own proof document.
-
----
-
-# Dependency Structure
-
-The established formal theory develops according to the following progression.
-
-```text
-Definitions
-      ↓
-Notation
-      ↓
-Axioms
-      ↓
-Propositions
-      ↓
-Theorems
-      ↓
-Proofs
-```
-
-Conjectures develop in parallel with the established theory.
-
-```text
-Conjectures
-      │
-      └──► Potential Future Theorems
-```
-
----
-
-# Design Principles
-
-The formal theory is developed according to the following principles.
-
-- Definitions precede conclusions.
-- Simplicity is preferred over complexity.
-- Reduction is preferred over expansion.
-- Every concept has one canonical definition.
-- Formal statements should identify their dependencies whenever practical.
-- Every theorem should ultimately be supported by a complete formal proof.
-
----
-
-# Current Status
-
-The foundational structure of the formal theory has been established.
-
-Current research is focused on:
-
-- Refining the formal definitions.
-- Strengthening the axiomatic foundation.
-- Developing propositions.
-- Investigating conjectures.
-- Establishing theorems.
-- Constructing formal proofs.
+1. `definitions/definitions.md`
+2. `notation/notation.md`
+3. `axioms/axioms.md`
+4. `semantics/scope.md`
+5. `theorems/propositions.md`
+6. `theorems/theorems.md`
+7. `proofs/proofs.md`
+8. `consistency/verification.md`
