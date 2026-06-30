@@ -2662,6 +2662,133 @@ Provisionally Accepted.
 
 ---
 
+# Investigation M16 — Generality of the Investigation Framework
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+Does the investigation framework developed within Project FAR apply universally to objective investigations?
+
+---
+
+## Motivation
+
+The methodology,
+
+Canonical Investigation Protocol,
+
+and Canonical Primitive Evaluation Framework
+
+were developed to support Project FAR.
+
+However,
+
+nothing presently limits their application to FAR alone.
+
+Accordingly,
+
+their generality requires investigation.
+
+---
+
+## Current Hypothesis
+
+The investigation framework applies to every objective investigation independently of subject matter.
+
+This hypothesis remains provisional.
+
+---
+
+## Investigation Strategy
+
+Evaluate the framework against investigations from different domains.
+
+Determine whether the framework remains valid without modification.
+
+Reject universality if domain-specific procedures become necessary.
+
+---
+
+## Candidate Domains
+
+Current candidates include:
+
+- Mathematics
+- Logic
+- Computer Science
+- Physics
+- Biology
+- Linguistics
+- Political Theory
+- Formal Systems
+
+---
+
+## Evaluation Criteria
+
+The framework shall:
+
+- identify candidates;
+- evaluate candidates objectively;
+- eliminate failures;
+- reduce surviving structures;
+- support falsification;
+- support reconstruction.
+
+Failure in any domain rejects universality.
+
+---
+
+## Counterexample Strategy
+
+Attempt to identify an objective investigation that cannot be conducted using the canonical investigation framework.
+
+Any successful example requires revision.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- Canonical Methodology
+- CIP
+- CPEF
+
+Supports:
+
+- Entire Project FAR architecture.
+
+---
+
+## Failure Modes
+
+The investigation fails if:
+
+- objective investigation requires fundamentally different procedures in different domains;
+- reconstruction becomes domain-dependent;
+- objective evaluation criteria cannot be generalized.
+
+---
+
+## Interim Conclusion
+
+Current evidence suggests that the investigation framework is not specific to Project FAR.
+
+Rather,
+
+Project FAR appears to constitute one application of a more general investigation framework.
+
+Further investigation should attempt to identify domains requiring fundamentally different investigative procedures.
+
+
+---
+
 ## Candidate 5 — Corollary
 
 ### Proposed Role
