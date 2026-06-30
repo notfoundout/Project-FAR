@@ -1845,3 +1845,393 @@ Accordingly,
 
 future formal objects should enter the theory only through explicit construction.
 
+---
+
+# Investigation MT11 — Necessity of Meta-Theoretical Primitives
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+Does the Meta-Theory require primitive concepts independent of the Root Theory?
+
+---
+
+## Motivation
+
+Previous investigations searched for primitive formal objects.
+
+However,
+
+those investigations implicitly assumed that the Meta-Theory possesses primitives distinct from those established by the Root Theory.
+
+This assumption has not been independently justified.
+
+Accordingly,
+
+the necessity of Meta-Theoretical primitives requires investigation.
+
+---
+
+## Current Hypothesis
+
+The Meta-Theory introduces no new primitives.
+
+Rather,
+
+every Meta-Theoretical object is constructible from the accepted Root Theory together with the accepted methodology.
+
+This hypothesis remains provisional.
+
+---
+
+## Investigation Strategy
+
+Attempt to identify a Meta-Theoretical primitive satisfying all of the following.
+
+- Indispensable.
+- Underivable from the Root Theory.
+- Underivable from the methodology.
+- Necessary for formal construction.
+
+Any successful example refutes the hypothesis.
+
+---
+
+## Candidate Primitives
+
+Current candidates include:
+
+- Representation
+- Relation
+- Structure
+- Operation
+- Rule
+- Object
+
+---
+
+## Evaluation Procedure
+
+For each candidate determine:
+
+1. Can it be derived?
+
+2. Can it be eliminated?
+
+3. Does formal construction fail without it?
+
+4. Is it merely methodological?
+
+5. Does it ultimately reduce to Root-Theoretical concepts?
+
+---
+
+## Counterexample Strategy
+
+Attempt to construct the Meta-Theory while introducing no new primitives.
+
+If successful,
+
+the hypothesis survives.
+
+If impossible,
+
+identify the indispensable primitive.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- Accepted Methodology
+- Accepted Root Theory
+
+Supports:
+
+- Entire Meta-Theory.
+
+---
+
+## Failure Modes
+
+The hypothesis fails if an indispensable Meta-Theoretical primitive is demonstrated.
+
+---
+
+## Provisional Theorem
+
+### Statement
+
+No Meta-Theoretical primitive has presently been demonstrated to be indispensable.
+
+### Current Status
+
+Provisionally Accepted.
+
+Further investigation should attempt to identify a necessary exception.
+
+---
+
+## Interim Conclusion
+
+Current evidence does not establish that the Meta-Theory requires its own primitive basis.
+
+Accordingly,
+
+the burden of proof remains upon any proposed Meta-Theoretical primitive.
+
+---
+
+# Investigation MT12 — Sufficiency of the Root-Theoretical Foundation
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+Can the entire Meta-Theory be constructed without introducing new primitive concepts beyond those established by the Root Theory and the Canonical Methodology?
+
+---
+
+## Motivation
+
+Previous investigations questioned the necessity of Meta-Theoretical primitives.
+
+The present investigation attempts to construct the complete Meta-Theory under the strongest possible reduction hypothesis.
+
+If successful,
+
+the Meta-Theory introduces no primitives.
+
+If unsuccessful,
+
+the investigation shall identify the indispensable primitive.
+
+---
+
+## Current Hypothesis
+
+Every Meta-Theoretical object is constructible from:
+
+- the accepted Root Theory;
+- the Canonical Methodology;
+- previously constructed Meta-Theoretical objects.
+
+No additional primitive concepts are required.
+
+This hypothesis remains provisional.
+
+---
+
+# Universal Construction Procedure
+
+Every proposed Meta-Theoretical object shall undergo the following evaluation.
+
+### Step 1
+
+State the object explicitly.
+
+---
+
+### Step 2
+
+List every dependency.
+
+---
+
+### Step 3
+
+Attempt explicit construction.
+
+---
+
+### Step 4
+
+Attempt reduction to previously accepted objects.
+
+---
+
+### Step 5
+
+Attempt elimination.
+
+---
+
+### Step 6
+
+Attempt reconstruction.
+
+---
+
+### Step 7
+
+Attempt falsification.
+
+---
+
+### Step 8
+
+Determine whether the object is:
+
+- Constructed
+- Derived
+- Primitive
+- Rejected
+
+---
+
+# Candidate Objects
+
+The following candidates shall be evaluated.
+
+- Representation
+- Relation
+- Structure
+- Operation
+- Transformation
+- Constraint
+- Mapping
+- Property
+- State
+- Formal Object
+- Composition
+- Equivalence
+- Identity Preservation
+- Context
+- Rule
+
+Additional candidates require objective justification.
+
+---
+
+# Acceptance Criteria
+
+A candidate is accepted only if:
+
+- explicit construction succeeds;
+- every dependency is accepted;
+- no circularity exists;
+- reconstruction succeeds;
+- falsification fails.
+
+---
+
+# Primitive Test
+
+If construction fails,
+
+determine whether failure results from:
+
+- incomplete construction;
+- missing dependency;
+- indispensable primitive.
+
+Only the third outcome justifies introducing a new primitive.
+
+---
+
+# Comparative Reduction
+
+After every candidate has been evaluated,
+
+attempt to:
+
+- eliminate redundant objects;
+- merge equivalent objects;
+- simplify constructions;
+- minimize dependencies.
+
+Repeat until no further reduction succeeds.
+
+---
+
+# Completion Criterion
+
+The investigation terminates only when exactly one of the following conditions holds.
+
+## Outcome A
+
+Every candidate object is constructible.
+
+No Meta-Theoretical primitives exist.
+
+---
+
+## Outcome B
+
+One or more indispensable Meta-Theoretical primitives survive objective evaluation.
+
+Those primitives become the canonical primitive basis of the Meta-Theory.
+
+---
+
+## Outcome C
+
+Construction proves impossible.
+
+The Root Theory or Methodology requires revision.
+
+---
+
+# Counterexample Strategy
+
+Attempt to identify:
+
+- an indispensable object lacking construction;
+- a hidden primitive;
+- a circular construction;
+- an unlisted dependency;
+- an alternative construction requiring fewer primitives.
+
+Any successful example requires revision.
+
+---
+
+# Dependency Analysis
+
+Depends upon:
+
+- Canonical Methodology
+- Canonical Investigation Protocol
+- Canonical Primitive Evaluation Framework
+- Accepted Root Theory
+
+Supports:
+
+- Entire Meta-Theory
+- FARA
+- FARO
+
+---
+
+# Failure Modes
+
+This investigation fails if:
+
+- construction cannot begin;
+- indispensable objects remain unconstructible;
+- hidden primitives are discovered;
+- circular constructions survive;
+- objective reconstruction fails.
+
+---
+
+# Final Deliverables
+
+This investigation shall produce:
+
+- Canonical Meta-Theoretical primitive basis (if any).
+- Canonical construction order.
+- Canonical dependency graph.
+- Canonical derivation graph.
+- Canonical Meta-Theory.
+
