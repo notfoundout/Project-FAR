@@ -1,4 +1,4 @@
-# Construction C1 — Formal Object
+# Construction C1 — First Derived Concept
 
 ## Status
 
@@ -8,71 +8,387 @@ Under Construction
 
 ## Purpose
 
-Construct the weakest formal object derivable from the accepted Root Theory.
+Determine the first derived concept constructible from the accepted Root Theory.
 
-No new primitive concepts may be introduced.
+No new primitives or methodological components may be introduced.
 
 ---
 
 ## Accepted Dependencies
 
-The following dependencies are assumed accepted.
-
 - Accepted Methodology
 - Accepted Root Theory
 - Proof — Canonical Primitive Evaluation
-
-No additional dependencies are permitted.
 
 ---
 
 ## Construction Goal
 
-Determine whether a formal object can be explicitly constructed from the accepted primitive basis.
-
-If construction fails,
-
-identify the precise dependency responsible for failure.
+Identify the weakest concept constructible from the accepted primitive basis.
 
 ---
 
-## Construction Attempt
+## Construction Procedure
 
-Assume the accepted primitive basis.
+Apply the accepted methodology.
 
-Attempt to construct a formal object using only accepted concepts.
+For every candidate concept:
 
-No additional concepts, relations, structures, operations, or representations may be introduced.
+1. Explicitly identify the candidate.
+2. List every dependency.
+3. Attempt construction.
+4. Attempt reduction.
+5. Attempt elimination.
+6. Attempt reconstruction.
 
----
+Reject every candidate failing construction.
 
-## Result
-
-Construction presently fails.
-
-No accepted concept presently permits the introduction of a formal object.
-
-The failure does not demonstrate that formal objects are impossible.
-
-Rather,
-
-it demonstrates that the existing accepted foundations are insufficient to express one.
+Accept only the weakest surviving constructible concept.
 
 ---
 
-## Failure Analysis
+## Current Candidates
 
-The failed construction identifies one unresolved dependency.
+- Formal Object
+- Representation
+- Relation
+- Structure
+- Operation
 
-The Meta-Theory presently lacks an accepted rule specifying when a derived concept may first be introduced.
+No additional candidates shall be introduced without objective justification.
 
-No further deficiency has presently been demonstrated.
+---
+
+## Current Result
+
+No candidate has yet successfully completed construction.
+
+Accordingly,
+
+the first derived concept remains undetermined.
 
 ---
 
 ## Current Status
 
-Construction Failed.
+Under Construction.
 
-Further progress depends upon resolving the identified dependency without violating methodological minimalism.
+---
+
+# Construction C1.1 — Evaluation of Formal Object
+
+## Status
+
+Under Construction
+
+---
+
+## Purpose
+
+Determine whether Formal Object is the first constructible concept of the Meta-Theory.
+
+---
+
+## Accepted Dependencies
+
+- Accepted Methodology
+- Accepted Root Theory
+- Proof — Canonical Primitive Evaluation
+- Construction C1 — First Derived Concept
+
+No additional dependencies are permitted.
+
+---
+
+## Candidate
+
+Formal Object
+
+---
+
+## Construction Attempt
+
+Suppose a Formal Object is introduced.
+
+Determine whether the concept can be constructed using only accepted foundations.
+
+---
+
+## Dependency Analysis
+
+A Formal Object must be capable of being:
+
+- identified;
+- referred to;
+- distinguished from other formal objects.
+
+The first requirement already introduces the concept of an object.
+
+Accordingly,
+
+the construction presupposes the very concept it seeks to construct.
+
+---
+
+## Reduction Audit
+
+Attempt to eliminate the concept "object."
+
+If elimination succeeds,
+
+the construction survives.
+
+Current Result:
+
+The construction cannot presently be expressed without already assuming the existence of an object.
+
+---
+
+## Circularity Audit
+
+Current construction assumes the target concept.
+
+Accordingly,
+
+the construction is circular.
+
+---
+
+## Result
+
+Construction fails.
+
+Formal Object cannot presently serve as the first derived concept.
+
+---
+
+## Conclusion
+
+Formal Object is rejected as the first constructible concept.
+
+The next candidate shall be evaluated using the same procedure.
+
+---
+
+## Current Status
+
+Rejected as First Derived Concept.
+
+---
+
+# Construction C1.2 — Evaluation of Representation
+
+## Status
+
+Under Construction
+
+---
+
+## Purpose
+
+Determine whether Representation is the first constructible concept of the Meta-Theory.
+
+---
+
+## Accepted Dependencies
+
+- Accepted Methodology
+- Accepted Root Theory
+- Proof — Canonical Primitive Evaluation
+- Construction C1 — First Derived Concept
+
+No additional dependencies are permitted.
+
+---
+
+## Candidate
+
+Representation
+
+---
+
+## Construction Attempt
+
+Suppose Representation is introduced as the first derived concept.
+
+Determine whether it can be constructed using only accepted foundations.
+
+---
+
+## Dependency Analysis
+
+A representation must represent.
+
+Accordingly,
+
+Representation necessarily presupposes:
+
+- something represented;
+- or an equivalent relation between distinguishable entities.
+
+Neither dependency has been accepted.
+
+---
+
+## Reduction Audit
+
+Attempt to eliminate the concept of "something represented."
+
+If elimination succeeds,
+
+Representation survives.
+
+Current Result:
+
+Representation without anything represented possesses no established meaning within the current framework.
+
+The dependency cannot presently be eliminated.
+
+---
+
+## Circularity Audit
+
+Representation is not directly circular.
+
+However,
+
+its construction depends upon concepts not yet accepted.
+
+Accordingly,
+
+the construction cannot presently proceed.
+
+---
+
+## Result
+
+Construction fails.
+
+Representation cannot presently serve as the first derived concept.
+
+---
+
+## Conclusion
+
+Representation is rejected as the first constructible concept.
+
+The next candidate shall be evaluated using the same procedure.
+
+---
+
+## Current Status
+
+Rejected as First Derived Concept.
+
+---
+
+# Construction C1.3 — Evaluation of Relation
+
+## Status
+
+Under Construction
+
+---
+
+## Purpose
+
+Determine whether Relation is the first constructible concept of the Meta-Theory.
+
+---
+
+## Accepted Dependencies
+
+- Accepted Methodology
+- Accepted Root Theory
+- Proof — Canonical Primitive Evaluation
+- Construction C1 — First Derived Concept
+
+No additional dependencies are permitted.
+
+---
+
+## Candidate
+
+Relation
+
+---
+
+## Construction Attempt
+
+Suppose Relation is introduced as the first derived concept.
+
+Determine whether it can be constructed using only accepted foundations.
+
+---
+
+## Dependency Analysis
+
+A relation requires at least two distinguishable terms.
+
+However,
+
+it does not require those terms to already be formal objects or representations.
+
+Accordingly,
+
+the only demonstrated dependency is distinguishability.
+
+No additional dependency has presently been established.
+
+---
+
+## Reduction Audit
+
+Attempt to eliminate one of the related terms.
+
+If successful,
+
+the relation survives.
+
+Current Result
+
+Removal of either term eliminates the relation.
+
+Accordingly,
+
+the relation cannot presently be reduced further.
+
+---
+
+## Circularity Audit
+
+No circular dependency has presently been identified.
+
+Current construction does not assume:
+
+- Representation;
+- Formal Object;
+- Structure;
+- Operation.
+
+---
+
+## Counterexample Audit
+
+Attempt to construct a relation requiring representation.
+
+No successful demonstration has presently been established.
+
+Current evidence therefore does not justify introducing Representation as a dependency.
+
+---
+
+## Result
+
+Current construction survives evaluation.
+
+Relation is presently the weakest surviving candidate.
+
+---
+
+## Current Status
+
+Provisionally Constructed.
+
+Further proof and falsification are required before canonical acceptance.
 
