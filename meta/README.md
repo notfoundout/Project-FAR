@@ -2,40 +2,68 @@
 
 ## Purpose
 
-The Meta-Theory establishes the formal foundations shared by every component of Project FAR.
+The Meta-Theory constructs the minimal formal framework required to express, derive, and analyze formal systems.
 
-Its purpose is not to study reasoning itself.
+Unlike the Root Theory,
 
-Rather, it studies the mathematical structure of formal theories.
+the Meta-Theory does not determine primitive concepts.
 
-Accordingly, the Meta-Theory defines the concepts required to construct, analyze, and compare formal systems.
-
-These concepts include:
-
-- definitions;
-- axioms;
-- propositions;
-- theorems;
-- proofs;
-- inference rules;
-- models;
-- derivability;
-- independence; and
-- axiomatization.
-
-Every canonical theory developed within Project FAR shall inherit its foundational methodology from the Meta-Theory unless explicitly stated otherwise.
+The primitive basis is inherited from the accepted Root Theory.
 
 ---
 
 ## Scope
 
-The Meta-Theory governs:
+The Meta-Theory is responsible for:
 
-- FAR;
-- FARA;
-- FARO; and
-- every future formal subsystem of Project FAR.
+- constructing formal concepts;
+- defining derivations;
+- defining formal objects;
+- establishing formal relationships;
+- supporting the construction of FAR, FARA, and FARO.
 
-It does not define the specific concepts of those theories.
+The Meta-Theory introduces no new primitive concepts unless their necessity has been objectively demonstrated.
 
-Instead, it defines the general framework within which those theories are constructed.
+---
+
+## Dependency
+
+The Meta-Theory depends upon:
+
+- Accepted Methodology
+- Accepted Root Theory
+
+No Meta-Theoretical result may contradict either dependency.
+
+---
+
+## Construction Principle
+
+Every Meta-Theoretical concept shall satisfy the following process.
+
+1. Proposal
+2. Investigation
+3. Construction
+4. Proof
+5. Canonicalization
+
+Concepts failing any stage shall not become canonical.
+
+---
+
+## Completion Criterion
+
+The Meta-Theory is complete only when every formal concept required by FAR has either:
+
+- been explicitly constructed; or
+- been objectively shown to be unnecessary.
+
+---
+
+## Guiding Principle
+
+The Meta-Theory shall introduce no concept that cannot be shown to be necessary.
+
+Whenever possible,
+
+existing accepted concepts shall be preferred over new concepts.
