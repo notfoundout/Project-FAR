@@ -2235,3 +2235,483 @@ This investigation shall produce:
 - Canonical derivation graph.
 - Canonical Meta-Theory.
 
+---
+
+# Investigation MT13 — Identity and Reference
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+Does consistent reference require Identity?
+
+---
+
+## Motivation
+
+Proof P1 argued that Identity is necessary because objective investigation requires consistent reference.
+
+However,
+
+this argument establishes only the necessity of consistent reference.
+
+Whether consistent reference itself requires Identity has not been independently demonstrated.
+
+Accordingly,
+
+the relationship between Identity and Reference requires investigation.
+
+---
+
+## Current Hypothesis
+
+Consistent reference does not by itself establish Identity.
+
+This hypothesis remains provisional.
+
+---
+
+## Candidate Characterizations
+
+Current candidates include:
+
+- Identity grounds reference.
+- Reference grounds Identity.
+- Identity and reference are independent.
+- Both derive from a deeper principle.
+
+No characterization has yet been accepted.
+
+---
+
+## Investigation Strategy
+
+Attempt to construct systems possessing:
+
+- reference without identity;
+- identity without reference;
+- both;
+- neither.
+
+Determine whether objective investigation remains possible.
+
+---
+
+## Candidate 1 — Reference Without Identity
+
+### Analysis
+
+If successful,
+
+Proof P1 fails.
+
+Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 2 — Identity Without Reference
+
+### Analysis
+
+If successful,
+
+Identity cannot be justified from methodology alone.
+
+Current Assessment
+
+Under Investigation.
+
+---
+
+## Candidate 3 — Common Dependency
+
+### Analysis
+
+Identity and reference may both depend upon a more fundamental concept.
+
+Current Assessment
+
+Under Investigation.
+
+---
+
+## Counterexample Strategy
+
+Attempt to identify any coherent objective investigation in which reference succeeds while Identity fails,
+
+or vice versa.
+
+Either successful example requires revision.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- Proof P1
+
+Supports:
+
+- Entire Meta-Theory.
+
+---
+
+## Failure Modes
+
+The investigation fails if:
+
+- Proof P1 remains valid without revision;
+- Identity and reference prove inseparable.
+
+---
+
+## Interim Conclusion
+
+Current evidence establishes only that the accepted methodology requires consistent reference.
+
+Whether this requirement entails Identity remains unresolved.
+
+---
+
+# Investigation MT14 — Operational Requirements of Objective Reference
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+What operations must objective reference support?
+
+---
+
+## Motivation
+
+Previous investigations sought the minimal conditions of objective reference.
+
+However,
+
+those investigations characterized reference by candidate properties.
+
+The present investigation instead characterizes reference by the operations it must support.
+
+---
+
+## Current Hypothesis
+
+Objective reference is completely characterized by the operations it necessarily enables.
+
+This hypothesis remains provisional.
+
+---
+
+## Investigation Strategy
+
+Attempt to identify every operation required for objective investigation.
+
+Determine whether objective reference must support that operation.
+
+Reject every unnecessary operation.
+
+---
+
+## Candidate Operations
+
+Current candidates include:
+
+- Introduction
+- Re-identification
+- Comparison
+- Distinction
+- Acceptance
+- Rejection
+- Dependency tracking
+- Substitution
+
+---
+
+## Evaluation Procedure
+
+For each operation determine:
+
+1. Is the operation required by objective investigation?
+
+2. Can it occur without objective reference?
+
+3. Does failure of the operation prevent investigation?
+
+---
+
+## Counterexample Strategy
+
+Attempt to construct an objective investigation in which one candidate operation is absent.
+
+If successful,
+
+that operation is unnecessary.
+
+---
+
+## Success Criterion
+
+The investigation succeeds when every indispensable operation has been identified.
+
+Those operations constitute the operational characterization of objective reference.
+
+---
+
+## Interim Conclusion
+
+None.
+
+Current investigation remains in progress.
+
+---
+
+# Investigation MT15 — Necessity of Reference
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+Must every objective investigation employ reference?
+
+---
+
+## Motivation
+
+Previous investigations sought to characterize objective reference.
+
+However,
+
+those investigations assumed that reference is indispensable.
+
+This assumption has not been independently established.
+
+Accordingly,
+
+the necessity of reference requires investigation.
+
+---
+
+## Current Hypothesis
+
+Every objective investigation necessarily employs reference.
+
+This hypothesis remains provisional.
+
+---
+
+## Investigation Strategy
+
+Attempt to construct an objective investigation that proceeds without reference.
+
+If successful,
+
+reference is unnecessary.
+
+If impossible,
+
+identify the minimal role that reference performs.
+
+---
+
+## Candidate Characterizations
+
+Current candidates include:
+
+- Reference is indispensable.
+- Reference is reducible to distinction.
+- Reference is reducible to construction.
+- Reference is reducible to dependency.
+- Reference is unnecessary.
+
+---
+
+## Evaluation Procedure
+
+For each candidate determine:
+
+1. Can objective investigation proceed?
+
+2. Can accepted results be reconstructed?
+
+3. Can proofs remain unambiguous?
+
+4. Can dependencies be tracked?
+
+---
+
+## Counterexample Strategy
+
+Attempt to perform a complete objective investigation while avoiding every act of reference.
+
+Any successful example falsifies the current hypothesis.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- Accepted Methodology
+
+Supports:
+
+- MT13
+- MT14
+- Proof P1
+
+---
+
+## Failure Modes
+
+The investigation fails if:
+
+- objective investigation succeeds without reference;
+- reference reduces completely to previously accepted concepts.
+
+---
+
+## Interim Conclusion
+
+Current evidence does not yet establish that reference is a primitive methodological requirement.
+
+Accordingly,
+
+its necessity remains under investigation.
+---
+
+# Investigation MT16 — Nature of Derivation
+
+## Status
+
+In Progress
+
+---
+
+## Research Question
+
+What constitutes a valid derivation within the Meta-Theory?
+
+---
+
+## Motivation
+
+Previous investigations repeatedly appealed to derivation when determining whether formal objects are primitive or constructible.
+
+However,
+
+the notion of derivation has not itself been established.
+
+Accordingly,
+
+the nature of derivation requires independent investigation.
+
+---
+
+## Current Hypothesis
+
+A derivation is a finite sequence of justified construction steps beginning with accepted foundations and terminating in a target result.
+
+This hypothesis remains provisional.
+
+---
+
+## Investigation Strategy
+
+Evaluate competing characterizations of derivation.
+
+Reject every characterization that:
+
+- permits hidden assumptions;
+- permits circularity;
+- depends upon unaccepted concepts;
+- cannot be independently reconstructed.
+
+---
+
+## Candidate Characterizations
+
+Current candidates include:
+
+- Logical inference
+- Explicit construction
+- Dependency-preserving transformation
+- Rule application
+- Composite characterization
+
+---
+
+## Evaluation Procedure
+
+For each candidate determine:
+
+1. Can every step be independently verified?
+
+2. Does the characterization prevent circular reasoning?
+
+3. Does it preserve dependency traceability?
+
+4. Can independent investigators reproduce the derivation?
+
+---
+
+## Counterexample Strategy
+
+Attempt to identify:
+
+- a valid derivation excluded by the characterization;
+- an invalid derivation accepted by the characterization.
+
+Either successful example requires revision.
+
+---
+
+## Dependency Analysis
+
+Depends upon:
+
+- Accepted Methodology
+
+Supports:
+
+- Every Meta-Theory construction.
+- Every proof.
+- Every future theorem.
+
+---
+
+## Failure Modes
+
+The investigation fails if:
+
+- no objective characterization survives;
+- multiple incompatible characterizations survive;
+- derivation cannot be objectively verified.
+
+---
+
+## Interim Conclusion
+
+Current evidence does not yet establish the nature of derivation.
+
+Accordingly,
+
+all future constructions remain provisional until derivation has been objectively characterized.
+
+
+
