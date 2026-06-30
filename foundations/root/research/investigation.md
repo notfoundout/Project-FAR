@@ -670,4 +670,57 @@ Can a distinction exist without identifiable relata?
 
 Unresolved.
 
+## Phase 8 — Consequences of Distinction
+
+### Research Question
+
+What necessarily follows from the existence of distinction?
+
+---
+
+### Theorem D3 — Distinction Is Informative
+
+#### Statement
+
+A distinction necessarily excludes at least one possible state.
+
+---
+
+#### Motivation
+
+A distinction appears to reduce uncertainty by ruling out the possibility that no distinction exists.
+
+This investigation determines whether such exclusion is a necessary consequence of distinction.
+
+---
+
+#### Candidate Proof
+
+Suppose distinction exists.
+
+Suppose further that every possible state remains possible.
+
+Then the state of complete indistinguishability remains possible.
+
+However,
+
+complete indistinguishability is incompatible with the existence of distinction.
+
+Therefore,
+
+at least one possible state has been excluded.
+
+Accordingly,
+
+every distinction necessarily excludes at least one possibility.
+
+---
+
+#### Current Assessment
+
+Provisionally Accepted.
+
+Further investigation should determine whether stronger consequences follow.
+
+
 
