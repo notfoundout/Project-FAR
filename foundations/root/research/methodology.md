@@ -48,3 +48,16 @@ A derived concept may be introduced only if:
 
 Accordingly, concepts are consequences of theory rather than starting points of theory.
 
+## Principle of Primitive Vocabulary
+
+When investigating a primitive concept,
+
+every theorem shall be expressed using only:
+
+- the primitive itself;
+- previously established concepts;
+- previously established theorems.
+
+The introduction of undefined vocabulary is prohibited.
+
+
