@@ -2713,5 +2713,83 @@ Accordingly,
 
 all future constructions remain provisional until derivation has been objectively characterized.
 
+---
+
+# Investigation MT1 — First Derived Concept
+
+## Status
+
+In Progress
+
+---
+
+## Purpose
+
+Determine whether the first derived concept of the Meta-Theory can be introduced using only the accepted Methodology and Root Theory.
+
+---
+
+## Motivation
+
+Construction C1 failed because no accepted procedure presently identifies when the first derived concept may be introduced.
+
+This investigation determines whether the existing framework is already sufficient.
+
+No new methodological component shall be introduced unless this investigation objectively demonstrates its necessity.
+
+---
+
+## Accepted Dependencies
+
+- Accepted Methodology
+- Accepted Root Theory
+- Construction C1 — Formal Object
+
+---
+
+## Research Question
+
+Can the first derived concept be introduced without modifying the accepted methodology?
+
+---
+
+## Investigation Strategy
+
+Attempt the following in order.
+
+1. Construct the first derived concept using only accepted methodology.
+
+2. If unsuccessful, determine whether the failure results from:
+   - misuse of the methodology;
+   - an unresolved dependency;
+   - an actual methodological deficiency.
+
+3. Introduce no new concept unless every previous possibility has been eliminated.
+
+---
+
+## Success Criterion
+
+The investigation succeeds if either:
+
+- the first derived concept is successfully constructed using existing methodology; or
+- the minimum objectively necessary addition has been identified.
+
+---
+
+## Failure Criterion
+
+The investigation fails if:
+
+- the source of failure cannot be objectively identified; or
+- multiple incompatible minimal additions survive evaluation.
+
+---
+
+## Current Status
+
+In Progress.
+
+
 
 
