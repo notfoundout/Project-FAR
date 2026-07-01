@@ -18,19 +18,29 @@ Project FAR seeks to develop a universal formal framework for representing, anal
 
 The objective is not to defend particular conclusions.
 
-The objective is to develop a framework within which conclusions may be investigated according to explicit and formally defined principles.
+The objective is to discover and develop a framework within which conclusions may be investigated according to explicit and formally defined principles.
 
 Accordingly, Project FAR is concerned with the structure of reasoning rather than the truth of any particular belief.
 
 ---
 
-# Principle 1 — Definitions Precede Conclusions
+# Principle 1 — Discovery, Definition, and Conclusion Order
 
-No meaningful investigation can begin until its terminology has been explicitly defined.
+Grounding work begins with discovery before formal definition.
 
-Accordingly, definitions precede arguments, proofs, classifications, and conclusions.
+A concept shall not be treated as foundational merely because it has been named or defined.
 
-Whenever ambiguity exists, definitions take priority over inference.
+For foundational research, the project first asks whether something corresponding to the concept is required.
+
+Only after a candidate has been discovered and bounded should formal definition occur.
+
+Once definitions are introduced, no meaningful argument, proof, classification, or conclusion may proceed without explicitly defined terms.
+
+Accordingly:
+
+- discovery precedes the acceptance of foundational definitions;
+- definitions precede formal conclusions;
+- ambiguity blocks inference.
 
 ---
 
@@ -107,11 +117,13 @@ Whenever contradictions are discovered, the theory shall be revised before furth
 
 ---
 
-# Principle 8 — Universality
+# Principle 8 — Universality Within Scope
 
 Whenever possible, Project FAR seeks principles that apply generally rather than principles restricted to particular domains.
 
 General principles are preferred over domain-specific constructions unless domain specificity is logically unavoidable.
+
+No conclusion may exceed the scope under which it was justified.
 
 ---
 
@@ -133,14 +145,34 @@ Subsystems may extend one another but shall not duplicate foundational concepts 
 
 No component of Project FAR is regarded as immune from revision.
 
-Definitions, axioms, and theories remain subject to reconsideration whenever stronger formal analysis reveals deficiencies.
+Definitions, axioms, theories, and methodology remain subject to reconsideration whenever stronger formal analysis reveals deficiencies.
 
 Revision strengthens the framework by improving its explanatory power and internal coherence.
 
 ---
 
+# Principle 11 — Framework Non-Privilege
+
+FAR, FARA, and FARO are not immune from grounding, reduction, replacement, or rejection.
+
+A framework component is justified only to the extent that it is derived from accepted necessities, accepted definitions, accepted proofs, or explicitly stated design decisions.
+
+The project shall not preserve a framework component merely because it already exists in the repository.
+
+---
+
+# Discovery Work
+
+First-principles grounding work is maintained in `discovery/`.
+
+That directory investigates what must exist before explicit reasoning is possible.
+
+Work in `discovery/` is research unless explicitly promoted under the governing methodology.
+
+---
+
 # Commitment
 
-Project FAR is committed to constructing a formally rigorous, explicitly defined, and systematically justified framework for reasoning.
+Project FAR is committed to constructing a formally rigorous, explicitly defined, systematically justified, and self-correcting framework for reasoning.
 
 Every component of the project shall be developed according to these foundational principles.
