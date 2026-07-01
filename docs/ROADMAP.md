@@ -60,7 +60,7 @@ Develop the mathematical foundation of Project FAR.
 
 Evaluate the applicability of Project FAR across existing reasoning frameworks.
 
-### Planned Validation Studies
+### Validation Studies
 
 - Scientific Method
 - Mathematical Proof
@@ -72,7 +72,7 @@ Evaluate the applicability of Project FAR across existing reasoning frameworks.
 
 ### Status
 
-⚪ Planned
+Current completion state is recorded in `PROJECT_STATUS.md`.
 
 ---
 
@@ -82,7 +82,7 @@ Evaluate the applicability of Project FAR across existing reasoning frameworks.
 
 Demonstrate Project FAR through complete worked investigations.
 
-### Planned Examples
+### Examples
 
 - Simple Investigation
 - Mathematical Proof
@@ -92,7 +92,7 @@ Demonstrate Project FAR through complete worked investigations.
 
 ### Status
 
-⚪ Planned
+Current completion state is recorded in `PROJECT_STATUS.md`.
 
 ---
 

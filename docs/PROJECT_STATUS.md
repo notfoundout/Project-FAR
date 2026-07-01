@@ -8,6 +8,8 @@ Unlike the roadmap, which describes the planned development of the project, this
 
 It should be updated whenever a significant milestone is completed.
 
+Status and maturity labels in this document describe project maturity only. They do not assign Charter artifact status.
+
 ---
 
 # Current Version
