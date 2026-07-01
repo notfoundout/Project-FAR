@@ -10,6 +10,8 @@
 
 Research Draft
 
+This stage label describes release maturity only. It does not assign Charter artifact status.
+
 ---
 
 ## Status
