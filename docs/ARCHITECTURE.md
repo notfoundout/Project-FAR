@@ -149,7 +149,7 @@ Project FAR now uses a permanent Version 1.0 repository architecture with one ca
 - Shared formal theory is canonical under `theory/`.
 - FAR, FARA, and FARO are framework-specific and are canonical under `frameworks/`.
 - Proof, validation, falsification, and comparison methods are canonical under `methodology/`.
-- Exploratory material is canonical under `research/` until promoted.
+- Exploratory material is maintained under `research/` and is not canonical until promoted to the appropriate canonical location.
 - Meaningful superseded material is retained under `archive/`.
 - Exact duplicate empty placeholders were removed.
 
