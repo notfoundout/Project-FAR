@@ -6,6 +6,18 @@ This document contains the canonical definitions of the formal terminology used 
 
 Unless explicitly stated otherwise, every technical term appearing elsewhere in the project refers to the definitions given here.
 
+## Authority Notice
+
+These definitions are canonical for current Project FAR usage.
+
+Canonical usage does not mean that every definition has been derived from first principles or proven necessary.
+
+Some definitions currently function as framework-internal specifications rather than grounded foundational results.
+
+Definitions remain subject to revision when discovery work, artifact audits, proof attempts, counterexamples, or methodology revisions expose hidden assumptions, collapsed dimensions, circularity, overbroad scope, or stronger formulations.
+
+First-principles grounding work is tracked separately under `../../foundations/discovery/`.
+
 ---
 
 # Foundational Concepts
