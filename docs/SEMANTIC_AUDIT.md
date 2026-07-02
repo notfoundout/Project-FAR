@@ -95,3 +95,21 @@ Research documents contain exploratory dependency hypotheses, but these are non-
 No unresolved authoritative semantic inconsistency remains after the applied fixes.
 
 Remaining legacy terminology is explicitly marked as non-authoritative where it appears in canonical theory directories.
+
+---
+
+## Discovery Consolidation — 2026-06-30
+
+This consolidation records only discoveries directly supported by repository text or mechanical execution during the 2026-06-30 discovery audit.
+
+| Discovery | Evidence | Classification |
+|---|---|---|
+| The repository contains 144 non-Git file artifacts at the time of audit. | `python` artifact enumeration over the repository tree returned `artifact_count 144`. | A — Mechanically Executable |
+| The repository contains 133 Markdown artifacts at the time of audit. | `python` artifact enumeration over the repository tree returned `markdown_count 133`. | A — Mechanically Executable |
+| Mechanical internal Markdown path checking found no broken relative Markdown links. | The link-check execution returned `bad_markdown_links 0`. | A — Mechanically Executable |
+| The research execution charter is explicitly provisional. | `docs/governance/research-execution-charter.md` declares `Status: Provisional`. | B — Structurally Executable |
+| Research content is explicitly non-canonical until promoted outside `research/`. | `research/README.md` states that exploratory content is not canonical until promoted into `foundations/`, `theory/`, `frameworks/`, or `methodology/`. | B — Structurally Executable |
+| Archive material is explicitly non-authoritative in the active semantic audit. | This audit records that archive documents are not authoritative and that archive documents received non-authoritative status notices. | B — Structurally Executable |
+| FARO has no adopted canonical axioms, propositions, theorems, or proofs in its theory files. | `frameworks/FARO/theory/axioms.md`, `propositions.md`, `theorems.md`, and `proofs.md` each state that no corresponding canonical items have yet been adopted or incorporated. | B — Structurally Executable |
+| Legacy proof/construction artifacts remain in canonical theory directories but are marked non-authoritative until rewritten against current canonical definitions and axioms. | This audit identifies `theory/proofs/identity.md`, `theory/proofs/relation.md`, and `theory/semantics/construction.md` as legacy files requiring future rewrite before canonical use. | C — Research Required |
+| The accepted repository status and the execution audit are in tension: project status says repository completion/documentation/frameworks are complete, while the audit identifies remaining unknown statuses and legacy non-authoritative artifacts. | `docs/PROJECT_STATUS.md` records multiple complete statuses; this audit records remaining legacy files and the 2026-06-30 audit found status cannot be objectively assigned to every artifact without additional explicit status metadata. | D — Human Decision Required |

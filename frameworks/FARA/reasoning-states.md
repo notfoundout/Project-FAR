@@ -2,57 +2,70 @@
 
 ## Purpose
 
-This document defines reasoning states within the Foundational Architecture of Reasoning Analysis (FARA).
+This document specifies the role of reasoning states within the Foundational Architecture of Reasoning Analysis (FARA).
 
-A reasoning state is the fundamental representational object through which reasoning is recorded and analyzed.
+Reasoning states describe the condition of an investigation throughout a reasoning process.
 
-It does not define how reasoning states are transformed or evaluated.
+The canonical definitions of all terminology used here are maintained in:
+
+`theory/definitions/definitions.md`
+
+This document specifies the architectural role of reasoning states rather than redefining the underlying concepts.
+
+---
+
+## Overview
+
+Every reasoning process occurs within an investigation.
+
+At any stage of that reasoning process, the investigation possesses a particular reasoning state.
+
+A reasoning state is distinct from:
+
+- a reasoning state representation;
+- a reasoning state record;
+- a transition signature;
+- a reasoning trace.
+
+This distinction preserves the separation between an object and representations of that object.
 
 ---
 
 ## Definition
 
-A **reasoning state** is the complete explicit representation of an investigation at a particular stage of reasoning.
+A **reasoning state** is the state of an investigation at a particular stage of a reasoning process.
 
-The canonical definition of a reasoning state is maintained in:
+A reasoning state is not itself a representation.
 
-`theory/definitions/definitions.md`
-
----
-
-## Objective
-
-The purpose of a reasoning state is to provide a complete, explicit snapshot of an investigation at a particular stage of analysis.
-
-Every subsequent stage of reasoning is represented by a new reasoning state.
+A reasoning state may be represented by one or more reasoning state representations.
 
 ---
 
-## Properties
+## Reasoning State Representations
 
-A reasoning state should satisfy the following properties.
+A **reasoning state representation** is a representation describing a reasoning state.
 
-### Explicitness
+Different reasoning state representations may describe the same reasoning state.
 
-Every representation participating in the investigation is explicitly represented.
-
----
-
-### Completeness
-
-The reasoning state contains the information required to continue or audit the investigation.
+Differences among representations do not necessarily imply differences in the underlying reasoning state.
 
 ---
 
-### Traceability
+## Reasoning State Records
 
-Every representation possesses an identifiable origin within the investigation.
+A **reasoning state record** is a persistent representation of one or more reasoning state representations.
 
----
+Reasoning state records exist for purposes including:
 
-### Reconstructibility
+- documentation;
+- auditing;
+- reproducibility;
+- verification;
+- historical reconstruction.
 
-Another investigator using the same reasoning calculus should be capable of reconstructing the reasoning process from the recorded reasoning states and transition signatures.
+Reasoning state records are repository artifacts.
+
+They are not reasoning states.
 
 ---
 
@@ -60,32 +73,59 @@ Another investigator using the same reasoning calculus should be capable of reco
 
 A reasoning state exists relative to:
 
-- an investigation,
-- a representational structure,
-- an interpretation,
-- and a reasoning calculus.
+- an investigation;
+- a reasoning process;
+- a reasoning calculus;
+- an interpretation;
+- one or more reasoning state representations.
 
-These concepts are defined in:
+Reasoning states do not exist independently of investigations.
 
-`theory/definitions/definitions.md`
-
----
-
-## Evolution
-
-Reasoning states evolve through explicit transformations represented by transition signatures.
-
-The representation of those transformations is defined in:
-
-`transition-signatures.md`
+They remain distinct from every representation used to describe them.
 
 ---
 
-## Admissibility
+## Progression
+
+Reasoning processes progress through sequences of reasoning states.
+
+Progression occurs through transformation executions governed by the applicable reasoning calculus.
+
+Transition signatures record those transformation executions.
+
+Reasoning states themselves do not perform transitions.
+
+---
+
+## Relationship to Transition Signatures
+
+Transition signatures document transformation executions between reasoning state representations.
+
+A transition signature represents a transition.
+
+It is not itself the transition.
+
+Multiple transition signatures may describe equivalent transformation executions.
+
+---
+
+## Relationship to Reasoning Traces
+
+A reasoning trace is an ordered collection of transition signatures representing the progression of a reasoning process.
+
+Reasoning traces document reasoning.
+
+They do not constitute reasoning processes.
+
+---
+
+## Relationship to Admissibility
 
 Reasoning states do not determine admissibility.
 
-The candidates represented within a reasoning state are classified by the Admissibility Structure (Ω).
+Admissibility is determined by the applicable reasoning calculus.
+
+The Admissibility Structure (Ω) records admissibility classifications of candidates within an investigation.
 
 See:
 
@@ -93,12 +133,51 @@ See:
 
 ---
 
+## Architectural Role
+
+Within FARA, reasoning states provide reference points for describing the condition of an investigation throughout reasoning.
+
+They provide the state-level context within which transformation executions, transition signatures, admissibility classifications, and resolutions can be represented and audited.
+
+---
+
+## Design Principles
+
+Reasoning states should satisfy the following principles:
+
+- **Explicit representability** — Every reasoning state should admit explicit representation.
+- **Representational independence** — Multiple representations may describe the same reasoning state.
+- **Auditability** — Reasoning state records should support independent reconstruction of reasoning.
+- **Calculus independence** — The concept of a reasoning state does not depend upon any particular reasoning calculus.
+- **Interpretation separation** — A reasoning state is distinct from interpretations assigned to its representations.
+
+---
+
+## Scope
+
+This document specifies the architectural role of reasoning states within FARA.
+
+It does not define:
+
+- representation;
+- interpretation;
+- reasoning calculus;
+- transformation execution;
+- transition signature;
+- admissibility;
+- resolution.
+
+Those concepts are defined by the canonical definitions and related architectural documents.
+
+---
+
 ## Research Status
 
 Current research investigates:
 
-- minimal reasoning state representations,
-- reasoning state equivalence,
-- reasoning state composition,
-- reasoning state decomposition,
-- and formal properties of reasoning state transformations.
+- minimal reasoning state representations;
+- reasoning state equivalence;
+- reasoning state composition;
+- reasoning state decomposition;
+- representation completeness for reasoning states;
+- formal properties of reasoning state transitions.

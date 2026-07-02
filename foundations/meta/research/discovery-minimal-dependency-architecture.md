@@ -1,4 +1,6 @@
-# Investigation I1 — Discovery of the Minimal Dependency Architecture
+# Investigation I1-MINIMAL-DEPENDENCY-ARCHITECTURE — Discovery of the Minimal Dependency Architecture
+
+Previous Identifier: I1
 
 ## Status
 

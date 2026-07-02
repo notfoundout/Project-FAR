@@ -2,89 +2,185 @@
 
 ## Purpose
 
-This document defines the ontological structure of the Foundational Architecture of Reasoning Analysis (FARA).
+This document specifies the conceptual ontology of the Foundational Architecture of Reasoning Analysis (FARA).
 
-It distinguishes the primitive concepts of the architecture from concepts derived from them.
+The ontology identifies the principal categories of concepts used throughout the framework and distinguishes candidate primitive concepts from derived concepts.
 
-Unless explicitly stated otherwise, the terminology used here follows the canonical definitions provided in `theory/definitions/definitions.md`.
+The canonical definitions of all concepts are maintained in:
+
+`theory/definitions/definitions.md`
+
+This document specifies conceptual organization rather than introducing new definitions.
 
 ---
 
-# Primitive Concepts
+# Ontological Organization
 
-The current formulation of FARA recognizes the following candidate primitive concepts.
+The ontology of FARA is organized into two categories:
 
-- Investigation
+- candidate primitive concepts;
+- derived concepts.
+
+Candidate primitives constitute the current unreduced conceptual basis of the framework.
+
+Derived concepts are explicitly defined in terms of candidate primitives and previously established derived concepts.
+
+This organization is provisional and remains subject to grounding investigations.
+
+---
+
+# Candidate Primitive Concepts
+
+The current candidate primitive concepts are:
+
+- Object
+- Property
+- Relation
 - Representation
-- Representational Structure
 - Interpretation
+- Investigation
 - Reasoning Calculus
 
-These concepts are presently regarded as irreducible within the framework.
+These concepts currently form the smallest unreduced conceptual basis of FARA.
 
-Whether this collection is both minimal and sufficient remains an active research question.
+Candidate primitive status does not imply permanent irreducibility.
 
 ---
 
 # Derived Concepts
 
-The following concepts are currently regarded as derived from the primitive concepts.
+Derived concepts include every concept defined from candidate primitives, including:
 
-- Reasoning State
-- Transition Signature
-- Candidate
-- Admissibility Structure (Ω)
-- Resolution Rule
-- Resolution
+## Structural Concepts
 
-Additional derived concepts include, but are not limited to:
-
-- Evidence
-- Observation
-- Hypothesis
-- Proof
-- Argument
-- Explanation
-- Model
-- Theory
-- Prediction
-- Counterexample
-
-Every derived concept should ultimately be definable in terms of the primitive concepts.
+- Structure
+- Component
+- System
+- Class
+- Domain
 
 ---
 
-# Primitive and Derived Concepts
+## Representational Concepts
 
-Primitive concepts provide the architectural foundation of FARA.
+- Representational Structure
+- Representation Mapping
+- Representation Transformation
+- Representation Fidelity
+- Representation Completeness
+- Representation Consistency
+- Representation Invariance
 
-Derived concepts are defined in terms of primitive concepts and other previously established derived concepts.
+---
 
-The objective is to maintain the smallest collection of primitive concepts capable of representing every reasoning process within the intended scope of Project FAR.
+## Reasoning Concepts
+
+- Reasoning Process
+- Reasoning State
+- Reasoning State Representation
+- Reasoning State Record
+- Transformation Rule
+- Transformation Execution
+- Transition Signature
+- Reasoning Trace
+
+---
+
+## Decision Concepts
+
+- Candidate
+- Criterion
+- Admissibility
+- Admissibility Classification
+- Admissibility Structure (Ω)
+- Resolution Rule
+- Resolution Execution
+- Resolution
+
+---
+
+## Evidence Concepts
+
+- Claim
+- Evidence
+- Observation
+- Assumption
+- Hypothesis
+- Explanation
+- Prediction
+- Counterexample
+
+---
+
+## Formal Concepts
+
+- Model
+- Framework
+- Theory
+- Architecture
+- Equivalence
+- Reduction
+- Independence
+- Universal Architecture
+- Expressive Power
+
+---
+
+Additional derived concepts may be introduced provided they are explicitly defined within the canonical terminology.
+
+---
+
+# Reduction Principle
+
+Project FAR adopts reduction as a guiding methodological principle.
+
+Whenever a concept can be completely defined in terms of simpler concepts without loss of expressive power relative to the intended scope, it should be treated as a derived concept rather than a candidate primitive.
+
+Grounding investigations should continually seek additional reductions.
+
+---
+
+# Ontological Stability
+
+The ontology should evolve only when supported by explicit justification, including:
+
+- grounding investigations;
+- reduction proofs;
+- independence proofs;
+- artifact audits;
+- identification of hidden assumptions;
+- improvements in explanatory or expressive power.
+
+Architectural stability is achieved through demonstrated reduction rather than by declaration.
+
+---
+
+# Relationship to the Primitive Registry
+
+This document specifies the conceptual organization of FARA.
+
+The current registry of candidate primitives is maintained in:
+
+`primitives.md`
+
+Changes to the primitive registry should be reflected in this ontology.
 
 ---
 
 # Research Status
 
-The ontology remains provisional.
-
 Current research investigates:
 
-- Whether additional primitive concepts are required.
-- Whether any current primitive can be reduced.
-- Whether the current primitive collection is minimal.
-- Whether the architecture is universal within its stated scope.
-
-See:
-
-`research/open-problems/open-questions.md`
+- whether additional candidate primitives are required;
+- whether existing candidate primitives can be reduced;
+- whether the primitive basis is minimal;
+- whether the ontology is sufficient for universal reasoning representation within the intended scope of Project FAR;
+- formal relationships among the major conceptual categories.
 
 ---
 
-# Design Principle
+# Version Status
 
-Project FAR prefers reduction over expansion.
+This ontology represents the current conceptual organization of FARA.
 
-A concept should be regarded as primitive only after reasonable attempts to derive it from simpler concepts have failed.
-
-Accordingly, every candidate primitive remains subject to revision as the formal theory develops.
+It remains provisional pending future grounding investigations and formal reduction proofs.

@@ -2,57 +2,170 @@
 
 ## Purpose
 
-This document identifies the current candidate primitive concepts of FARA.
+This document identifies the concepts currently treated as candidate primitives within the Foundational Architecture of Reasoning Analysis (FARA).
 
-A primitive is a concept that has not yet been derived from simpler concepts within the framework.
+A candidate primitive is a concept that has not yet been successfully reduced to simpler concepts within the current framework.
 
-Candidate primitives are provisional.
+Candidate primitive status is provisional.
 
-Each remains subject to reduction, replacement, or elimination through future research.
+Every candidate primitive remains subject to future reduction, replacement, refinement, or elimination through grounding investigations.
 
----
-
-# Current Candidate Primitives
-
-The current formulation of FARA includes the following candidate primitive concepts.
-
-- Investigation
-- Representation
-- Representational Structure
-- Interpretation
-- Reasoning Calculus
-- Reasoning State
-- Transition Signature
-- Candidate
-- Admissibility Structure (Ω)
-- Resolution Rule
-- Resolution
-
-These concepts constitute the current architectural foundation of FARA.
-
-Their canonical definitions are maintained in:
+The canonical definitions of all concepts listed here are maintained in:
 
 `theory/definitions/definitions.md`
 
 ---
 
-# Primitive Status
+# Primitive Policy
 
-No candidate primitive should be regarded as permanently irreducible.
+A concept should appear in this document only if:
 
-Each remains an active subject of investigation.
+- no complete reduction has been established;
+- no simpler definition preserves the required expressive power;
+- repeated reduction attempts have not yet succeeded.
 
-Whenever a primitive can be rigorously derived from simpler concepts without loss of expressive power, it should be removed from this list.
+Candidate primitive status is not evidence of irreducibility.
 
-Likewise, if a previously unrecognized irreducible concept is discovered, it should be added following appropriate justification.
+It reflects only the current state of investigation.
 
 ---
 
-# Current Research
+# Current Candidate Primitives
 
-Current work focuses on:
+The current candidate primitive concepts are:
 
-- reducing the number of candidate primitives,
-- establishing independence where reduction fails,
-- determining whether the current collection is minimal,
-- identifying additional proof obligations arising from primitive reduction.
+- Object
+- Property
+- Relation
+- Representation
+- Interpretation
+- Investigation
+- Reasoning Calculus
+
+These concepts presently serve as the smallest unreduced conceptual foundation of FARA.
+
+All remaining architectural concepts are currently treated as derived concepts.
+
+---
+
+# Derived Architectural Concepts
+
+The following concepts are presently defined in terms of the candidate primitives and other derived concepts.
+
+## Structural Concepts
+
+- Structure
+- Component
+- System
+- Class
+- Domain
+
+---
+
+## Representational Concepts
+
+- Representational Structure
+- Representation Mapping
+- Representation Transformation
+- Representation Fidelity
+- Representation Completeness
+- Representation Consistency
+- Representation Invariance
+
+---
+
+## Reasoning Concepts
+
+- Reasoning Process
+- Reasoning State
+- Reasoning State Representation
+- Reasoning State Record
+- Transformation Rule
+- Transformation Execution
+- Transition Signature
+- Reasoning Trace
+
+---
+
+## Decision Concepts
+
+- Candidate
+- Criterion
+- Admissibility
+- Admissibility Classification
+- Admissibility Structure (Ω)
+- Resolution Rule
+- Resolution Execution
+- Resolution
+
+---
+
+## Evidence Concepts
+
+- Claim
+- Evidence
+- Observation
+- Assumption
+- Hypothesis
+- Explanation
+- Prediction
+- Counterexample
+
+---
+
+## Formal Concepts
+
+- Model
+- Framework
+- Theory
+- Architecture
+- Equivalence
+- Reduction
+- Independence
+- Universal Architecture
+- Expressive Power
+
+---
+
+This list is informational.
+
+Canonical definitions remain in:
+
+`theory/definitions/definitions.md`
+
+---
+
+# Primitive Stability
+
+No candidate primitive should be regarded as permanently fundamental.
+
+Grounding investigations should continually attempt to:
+
+- derive candidate primitives from simpler concepts;
+- demonstrate independence where reduction fails;
+- identify hidden assumptions;
+- eliminate unnecessary primitives;
+- establish a smaller foundational basis.
+
+Successful reductions should remove concepts from the candidate primitive list.
+
+---
+
+# Research Objectives
+
+Current research focuses on:
+
+- reducing the primitive set;
+- establishing independence where reduction fails;
+- proving minimality of the remaining primitive basis;
+- identifying hidden conceptual dependencies;
+- determining whether additional candidate primitives are required;
+- producing formal reduction proofs.
+
+---
+
+# Version Status
+
+This document records the current candidate primitive basis for FARA.
+
+It is expected to evolve as Project FAR's grounding investigations progress.
