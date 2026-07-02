@@ -50,14 +50,33 @@ All remaining architectural concepts are currently treated as derived concepts.
 
 # Derived Architectural Concepts
 
-The following concepts are presently defined in terms of the candidate primitives and other derived concepts:
+The following concepts are presently defined in terms of the candidate primitives and other derived concepts.
+
+## Structural Concepts
 
 - Structure
+- Component
 - System
-- Model
-- Framework
-- Theory
+- Class
+- Domain
+
+---
+
+## Representational Concepts
+
 - Representational Structure
+- Representation Mapping
+- Representation Transformation
+- Representation Fidelity
+- Representation Completeness
+- Representation Consistency
+- Representation Invariance
+
+---
+
+## Reasoning Concepts
+
+- Reasoning Process
 - Reasoning State
 - Reasoning State Representation
 - Reasoning State Record
@@ -65,13 +84,48 @@ The following concepts are presently defined in terms of the candidate primitive
 - Transformation Execution
 - Transition Signature
 - Reasoning Trace
+
+---
+
+## Decision Concepts
+
 - Candidate
+- Criterion
 - Admissibility
 - Admissibility Classification
 - Admissibility Structure (Ω)
 - Resolution Rule
 - Resolution Execution
 - Resolution
+
+---
+
+## Evidence Concepts
+
+- Claim
+- Evidence
+- Observation
+- Assumption
+- Hypothesis
+- Explanation
+- Prediction
+- Counterexample
+
+---
+
+## Formal Concepts
+
+- Model
+- Framework
+- Theory
+- Architecture
+- Equivalence
+- Reduction
+- Independence
+- Universal Architecture
+- Expressive Power
+
+---
 
 This list is informational.
 
