@@ -16,9 +16,9 @@ Evaluation Geodesic
 
 This document defines evaluation geodesics within an evaluation space.
 
-Evaluation geodesics represent shortest admissible transformation paths between evaluations.
+Evaluation geodesics are optimal transformation paths connecting evaluations.
 
-They provide the fundamental notion of optimal navigation through an evaluation space.
+They constitute the fundamental paths studied in the geometry of evaluation spaces.
 
 ---
 
@@ -28,15 +28,15 @@ Evaluation paths establish connectivity.
 
 Evaluation distance quantifies separation.
 
-Evaluation geodesics identify optimal transformation sequences.
+Evaluation geodesics identify transformation paths that are optimal with respect to the adopted evaluation distance.
 
-They provide the foundation for:
+They provide the mathematical foundation for:
 
-- optimization;
-- normalization;
+- neighborhoods;
 - curvature;
 - convexity;
-- completion.
+- completion;
+- optimization.
 
 ---
 
@@ -59,7 +59,13 @@ $end:math:display$
 
 be evaluations belonging to the same evaluation space.
 
-An **evaluation geodesic** is an evaluation path connecting
+An **evaluation geodesic** is an evaluation path
+
+$begin:math:display$
+P
+$end:math:display$
+
+connecting
 
 $begin:math:display$
 E\_1
@@ -71,79 +77,87 @@ $begin:math:display$
 E\_2
 $end:math:display$
 
-whose total transformation cost equals the evaluation distance
+whose total transformation cost equals the evaluation distance between its endpoints.
+
+Formally,
 
 $begin:math:display$
-d\(E\_1\,E\_2\)\.
+Cost\(P\)\=d\(E\_1\,E\_2\)\.
 $end:math:display$
 
 ---
 
-# Existence
+# Initial Evaluation
 
-A geodesic exists only if:
-
-- an evaluation path exists; and
-- at least one path realizes the minimum transformation cost.
-
-This definition does not assume that every pair of evaluations possesses a geodesic.
+The initial evaluation of a geodesic is the initial evaluation of its underlying evaluation path.
 
 ---
 
-# Length
+# Terminal Evaluation
 
-The length of a geodesic equals the evaluation distance between its endpoints.
-
----
-
-# Non-Uniqueness
-
-Multiple distinct geodesics may connect the same pair of evaluations.
-
-Uniqueness is not assumed.
+The terminal evaluation of a geodesic is the terminal evaluation of its underlying evaluation path.
 
 ---
 
-# Geodesic Equivalence
+# Geodesic Length
 
-Two geodesics are equivalent if they possess:
+The length of a geodesic is defined as its total transformation cost.
 
-- identical initial evaluations;
-- identical terminal evaluations;
-- identical total transformation cost.
+Therefore,
 
-They need not consist of identical transformations.
-
----
-
-# Geodesic Segment
-
-A **geodesic segment** is any contiguous portion of a geodesic.
-
-Every geodesic segment is itself a geodesic between its endpoints.
-
-Whether this property always holds remains a subject for future investigation.
+$begin:math:display$
+Length\(P\)\=d\(E\_1\,E\_2\)\.
+$end:math:display$
 
 ---
 
-# Minimality
+# Geodesic Family
 
-Every geodesic is a minimum-cost evaluation path.
+For fixed evaluations
 
-Not every minimum-length path is necessarily unique.
+$begin:math:display$
+E\_1\,E\_2\,
+$end:math:display$
+
+the **geodesic family**
+
+$begin:math:display$
+\\mathcal\{G\}\(E\_1\,E\_2\)
+$end:math:display$
+
+is the collection of every evaluation geodesic connecting
+
+$begin:math:display$
+E\_1
+$end:math:display$
+
+to
+
+$begin:math:display$
+E\_2\.
+$end:math:display$
+
+---
+
+# Trivial Geodesic
+
+The identity path is a geodesic from every evaluation to itself.
 
 ---
 
 # Structural Properties
 
-This definition does not assume:
+This definition introduces no assumptions regarding:
 
+- existence;
 - uniqueness;
-- reversibility;
 - symmetry;
-- completeness.
+- reversibility;
+- continuity;
+- completeness;
+- geodesic segments.
 
-These properties require independent investigation.
+These properties are subjects of later mathematical investigation.
 
 ---
 
@@ -151,26 +165,41 @@ These properties require independent investigation.
 
 Evaluation distance specifies the minimum attainable transformation cost.
 
-Evaluation geodesics realize that minimum.
+Evaluation geodesics are precisely those evaluation paths that realize that minimum.
+
+---
+
+# Mathematical Role
+
+Evaluation geodesics define optimal movement through an evaluation space.
+
+Later mathematical definitions and theorems use geodesics to define:
+
+- neighborhoods;
+- convexity;
+- curvature;
+- convergence;
+- completion;
+- geometric invariants.
 
 ---
 
 # Future Investigations
 
-Future investigations should determine:
+Open mathematical questions include:
 
-- conditions guaranteeing geodesic existence;
-- conditions guaranteeing uniqueness;
-- algorithms for geodesic computation;
-- relationships between geodesics and canonical forms;
-- effects of curvature on geodesic behavior.
+- Does every pair of evaluations admit a geodesic?
+- When are geodesics unique?
+- Under what conditions do geodesics compose?
+- When are geodesic segments themselves geodesics?
+- How does curvature influence geodesic behavior?
 
 ---
 
 # Notes
 
-Evaluation geodesics are intrinsic objects of evaluation spaces.
+This definition introduces only the mathematical object.
 
-They are defined entirely in terms of admissible transformations and evaluation distance.
+It intentionally avoids asserting any structural properties beyond those required by the definition itself.
 
-No external notion of geometry is assumed.
+Whether evaluation spaces exhibit geometric behavior analogous to existing mathematical spaces is a question for subsequent investigation rather than an assumption built into the definition.
