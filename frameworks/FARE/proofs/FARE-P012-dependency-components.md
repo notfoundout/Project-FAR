@@ -8,7 +8,7 @@ FARE-P012
 
 # Title
 
-Dependency Components
+Weak Dependency Components
 
 ---
 
@@ -20,7 +20,7 @@ Draft
 
 # Objective
 
-Demonstrate that every assessment graph is partitioned into dependency components.
+Demonstrate that every assessment node in a dependency subgraph belongs to exactly one weak dependency component of that dependency subgraph.
 
 ---
 
@@ -28,85 +28,87 @@ Demonstrate that every assessment graph is partitioned into dependency component
 
 - Assessment
 - Assessment Graph
-- Assessment Dependency
-- Dependency Reachability
+- Dependency Subgraph
+- Weak Connectivity
+- Weak Dependency Component
+
+Canonical graph terminology is defined in:
+
+`frameworks/FARE/definitions/graph-definitions.md`
 
 ---
 
 # Theorem
 
-Every assessment belongs to exactly one dependency component.
+Every assessment node in a dependency subgraph belongs to exactly one weak dependency component of that dependency subgraph.
 
 ---
 
 # Proof
 
-By FARE-P001, every assessment is represented as a graph node.
+1. By the definition of Assessment Graph, assessments are represented as graph nodes.
 
-By FARE-P002, dependency relationships correspond to directed paths.
+2. By the definition of Dependency Subgraph, the dependency subgraph is induced by dependency edges and the nodes incident to those edges.
 
-Define a dependency component as the maximal collection of assessments connected through dependency relationships.
+3. Therefore this theorem concerns only assessment nodes included in the dependency subgraph.
 
-Suppose an assessment belonged to two distinct dependency components.
+4. By the definition of Weak Dependency Component, a weak dependency component is a weakly connected component of a dependency subgraph.
 
-Then there would exist dependency paths connecting it to assessments in both components.
+5. By the definition of Weakly Connected Component, each weak dependency component is a maximal subgraph in which every pair of nodes is weakly connected.
 
-Those paths would connect the two components into a single larger dependency component.
+6. Suppose a node in the dependency subgraph belonged to two distinct weak dependency components.
 
-This contradicts maximality.
+7. Then the two components would share a node.
 
-Therefore no assessment belongs to more than one dependency component.
+8. If two weakly connected components share a node, their union is weakly connected.
 
-Every assessment belongs to at least one component consisting of itself.
+9. That union would form a larger weakly connected subgraph.
 
-Hence every assessment belongs to exactly one dependency component.
+10. This contradicts the maximality required by the definition of Weakly Connected Component.
 
-∎
+11. Therefore a node in the dependency subgraph cannot belong to more than one weak dependency component.
+
+12. Every node in the dependency subgraph belongs to at least one weakly connected component containing itself.
+
+13. Therefore every assessment node in a dependency subgraph belongs to exactly one weak dependency component of that dependency subgraph.
+
+**Q.E.D.**
 
 ---
 
 # Corollary 1
 
-Dependency components partition the assessment graph.
+Weak dependency components partition the nodes of the dependency subgraph.
 
 ---
 
 # Corollary 2
 
-Assessments in different dependency components possess no dependency relationships.
-
----
-
-# Corollary 3
-
-Dependency analysis may be performed independently on each component.
+Dependency analysis may be performed independently on weak dependency components when only weak dependency connectivity is relevant.
 
 ---
 
 # Consequences
 
-Large assessment systems may be decomposed into independent dependency components.
+Large dependency subgraphs may be decomposed into weak dependency components.
 
-Parallel evaluation becomes possible.
-
-Dependency visualization becomes modular.
+This supports modular dependency visualization and component-level analysis.
 
 ---
 
 # Dependencies
 
-FARE-028
-
-FARE-037
-
-FARE-P001
-
-FARE-P002
+- `frameworks/FARE/definitions/graph-definitions.md`
+- FARE-P001
 
 ---
 
 # Notes
 
-This theorem concerns dependency relationships only.
+This theorem concerns weak dependency components only.
 
-Other relationship types, such as support or conflict, may connect different dependency components.
+It does not apply to assessment nodes outside the dependency subgraph.
+
+It does not establish claims about strong dependency components.
+
+It does not imply that other relationship types, such as support or conflict, cannot connect nodes that lie in different weak dependency components of the dependency subgraph.

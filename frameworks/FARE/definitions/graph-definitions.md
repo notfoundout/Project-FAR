@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the graph-theoretic terminology used throughout the Formal Architecture of Reasoning Evaluation.
+This document defines the canonical graph-theoretic terminology used throughout the Formal Architecture of Reasoning Evaluation.
 
 Unless explicitly stated otherwise, every graph-theoretic term appearing elsewhere in FARE refers to the definitions given here.
 
@@ -38,63 +38,129 @@ An **edge type** identifies the semantic relationship represented by an edge.
 
 Current edge types include:
 
-- Dependency
-- Support
-- Conflict
-- Refinement
+- Dependency;
+- Support;
+- Conflict;
+- Refinement.
 
 Additional edge types may be introduced through future investigations.
 
 ---
 
-# Definition 5 — Path
+# Definition 5 — Directed Path
 
-A **path** is an ordered sequence of edges connecting one node to another.
+A **directed path** is an ordered sequence of edges connecting one node to another while preserving edge direction.
 
-A path preserves edge direction.
-
----
-
-# Definition 6 — Reachability
-
-A node is **reachable** from another node if a directed path exists between them.
+A directed path may contain one or more edges.
 
 ---
 
-# Definition 7 — Cycle
+# Definition 6 — Undirected Path
+
+An **undirected path** is an ordered sequence of edges connecting one node to another while ignoring edge direction.
+
+An undirected path may contain one or more edges.
+
+Undirected paths are used only when a definition or theorem explicitly ignores edge direction.
+
+---
+
+# Definition 7 — Reachability
+
+A node is **reachable** from another node if a directed path exists from the first node to the second node.
+
+Reachability always preserves edge direction unless explicitly stated otherwise.
+
+---
+
+# Definition 8 — Cycle
 
 A **cycle** is a directed path beginning and ending at the same node.
 
+Cycle existence is structural.
+
+Cycle admissibility is semantic.
+
 ---
 
-# Definition 8 — Subgraph
+# Definition 9 — Subgraph
 
 A **subgraph** is a graph whose nodes and edges are subsets of another assessment graph.
 
----
-
-# Definition 9 — Connected Component
-
-A **connected component** is a maximal connected subgraph under a specified notion of connectivity.
-
-Whenever the term **component** is used within FARE, the applicable notion of connectivity shall be explicitly stated.
-
-Examples include:
-
-- weakly connected component;
-- strongly connected component.
+A subgraph preserves the node and edge types inherited from the original graph.
 
 ---
 
-# Definition 10 — Dependency Component
+# Definition 10 — Weak Connectivity
 
-A **dependency component** is a connected component induced exclusively by dependency edges.
+Two nodes are **weakly connected** if an undirected path exists between them.
 
-The applicable notion of connectivity shall be explicitly specified whenever dependency components are discussed.
+Weak connectivity concerns structural connectedness without directional dependency.
 
 ---
 
-# Definition 11 — Graph Traversal
+# Definition 11 — Strong Connectivity
+
+Two nodes are **strongly connected** if each node is reachable from the other by directed paths.
+
+Strong connectivity requires mutual directed reachability.
+
+---
+
+# Definition 12 — Weakly Connected Component
+
+A **weakly connected component** is a maximal subgraph in which every pair of nodes is weakly connected.
+
+---
+
+# Definition 13 — Strongly Connected Component
+
+A **strongly connected component** is a maximal subgraph in which every pair of nodes is strongly connected.
+
+---
+
+# Definition 14 — Dependency Subgraph
+
+A **dependency subgraph** is the subgraph induced exclusively by dependency edges and the nodes incident to those edges.
+
+Assessments with no incident dependency edge are not part of the dependency subgraph unless a theorem explicitly defines an isolated dependency-node convention.
+
+---
+
+# Definition 15 — Dependency Component
+
+A **dependency component** is a connected component of a dependency subgraph under an explicitly specified notion of connectivity.
+
+If the connectivity type is not specified, the term **dependency component** shall not be used in a theorem.
+
+Permitted forms include:
+
+- weak dependency component;
+- strong dependency component.
+
+---
+
+# Definition 16 — Weak Dependency Component
+
+A **weak dependency component** is a weakly connected component of a dependency subgraph.
+
+---
+
+# Definition 17 — Strong Dependency Component
+
+A **strong dependency component** is a strongly connected component of a dependency subgraph.
+
+---
+
+# Definition 18 — Conflict Subgraph
+
+A **conflict subgraph** is the subgraph induced by conflict edges and the nodes incident to those edges.
+
+Because conflict is symmetric, conflict subgraphs may be analyzed using undirected connectivity when only incompatibility is under consideration.
+
+---
+
+# Definition 19 — Graph Traversal
 
 A **graph traversal** is a procedure for systematically visiting nodes and edges within an assessment graph.
 
@@ -102,25 +168,25 @@ Traversal order depends upon the chosen traversal method.
 
 ---
 
-# Definition 12 — Graph Transformation
+# Definition 20 — Graph Transformation
 
 A **graph transformation** is an operation that modifies the structure of an assessment graph by adding, removing, or replacing nodes or edges.
 
 ---
 
-# Definition 13 — Graph Composition
+# Definition 21 — Graph Composition
 
 A **graph composition** combines two or more assessment graphs into a single assessment graph according to explicitly defined composition rules.
 
 ---
 
-# Definition 14 — Graph Decomposition
+# Definition 22 — Graph Decomposition
 
 A **graph decomposition** partitions an assessment graph into smaller subgraphs according to explicitly defined decomposition rules.
 
 ---
 
-# Definition 15 — Graph Reconstruction
+# Definition 23 — Graph Reconstruction
 
 A **graph reconstruction** is the process of reconstructing the structural organization of an assessment system from its assessment graph.
 
