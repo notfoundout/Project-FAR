@@ -14,78 +14,101 @@ Minimal Supporting Sets
 
 ## Status
 
-Provisional / Not Accepted
+Accepted
 
 ---
 
 # Objective
 
-Record the proposed theorem concerning minimal supporting sets while identifying the missing definitions required before the proof may be accepted.
+Demonstrate that every finite sufficient support set contains at least one minimal support set.
 
 ---
 
 # Definitions Used
 
-- Assessment
-- Assessment Graph
-- Assessment Dependency
-- Dependency Closure
+- Support
+- Support Set
+- Sufficient Support
+- Necessary Support
+- Minimal Support Set
+
+Canonical support terminology is defined in:
+
+`frameworks/FARE/theory/support-theory.md`
 
 ---
 
-# Proposed Theorem
+# Dependencies
 
-Every supported assessment possesses at least one minimal supporting set.
-
----
-
-# Audit Finding
-
-This proof is not currently accepted.
-
-The prior draft relies upon technical concepts that do not yet possess canonical definitions:
-
-- sufficient support;
-- unnecessary support;
-- minimal support;
-- support removal.
-
-Because these concepts are undefined, the theorem cannot yet be proven from established FARE definitions.
+- Relationship Definitions
+- Support Theory
 
 ---
 
-# Required Definitions Before Acceptance
+# Theorem
 
-Before this theorem may be restored, FARE must define:
-
-## Sufficient Support
-
-The conditions under which a collection of assessments is sufficient to support another assessment.
-
-## Unnecessary Support
-
-The conditions under which a supporting assessment may be removed without changing support status.
-
-## Minimal Support
-
-The conditions under which a supporting set is minimal.
-
-## Support Removal
-
-The operation or relation by which a supporting assessment is excluded from a support set.
+Every finite sufficient support set contains at least one minimal support set.
 
 ---
 
-# Current Status
+# Proof
 
-This theorem remains a candidate result.
+Let $begin:math:text$S$end:math:text$ be a finite sufficient support set.
 
-It should not be used as a dependency for later proofs until support theory is formalized.
+If no assessment can be removed from $begin:math:text$S$end:math:text$ without destroying sufficiency, then $begin:math:text$S$end:math:text$ is already minimal.
+
+Otherwise, remove one assessment whose removal preserves sufficiency.
+
+The resulting support set remains sufficient.
+
+If this new support set is minimal, the proof is complete.
+
+Otherwise, repeat the removal process.
+
+Because the support set is finite, the number of removable assessments is finite.
+
+Each iteration strictly decreases the number of assessments contained in the support set.
+
+Therefore the process must terminate.
+
+Termination can occur only when no further supporting assessment may be removed without destroying sufficiency.
+
+By Definition 6 of Support Theory, the resulting support set is a minimal support set.
+
+Therefore every finite sufficient support set contains at least one minimal support set.
+
+**Q.E.D.**
+
+---
+
+# Corollary 1
+
+Every finite sufficient support set possesses at least one irreducible subset.
+
+---
+
+# Corollary 2
+
+Minimal support sets are not necessarily unique.
+
+Different reduction orders may produce different minimal support sets.
+
+---
+
+# Consequences
+
+Support analysis may ignore redundant supporting assessments once a minimal support set has been identified.
+
+Algorithms may reduce finite support sets without losing sufficiency.
+
+Support optimization becomes formally well-defined.
 
 ---
 
 # Notes
 
-This file is retained for traceability.
+This theorem guarantees existence only.
 
-The result may become provable after the required support concepts are canonically defined.
+It does not establish uniqueness.
+
+It does not prescribe an algorithm for computing every minimal support set.
