@@ -36,61 +36,20 @@ Many mathematical concepts depend only upon neighborhoods rather than explicit d
 
 - MDEF-001 — Evaluation Space
 - MDEF-004 — Evaluation Distance
-- MDEF-005 — Evaluation Geodesic
 
 ---
 
 # Definition
 
-Let
+Let `E` be an evaluation belonging to an evaluation space.
 
-$begin:math:display$
-E
-$end:math:display$
-
-be an evaluation belonging to an evaluation space.
-
-An **evaluation neighborhood** of
-
-$begin:math:display$
-E
-$end:math:display$
-
-is a collection of evaluations considered locally adjacent to
-
-$begin:math:display$
-E
-$end:math:display$
-
-under a specified neighborhood criterion.
+An **evaluation neighborhood** of `E` is a collection of evaluations considered locally adjacent to `E` under a specified neighborhood criterion.
 
 ---
 
 # Distance Neighborhood
 
-Given a non-negative radius
-
-$begin:math:display$
-r\,
-$end:math:display$
-
-the **distance neighborhood**
-
-$begin:math:display$
-N\_r\(E\)
-$end:math:display$
-
-is the collection
-
-$begin:math:display$
-N\_r\(E\)
-\=
-\\\{
-X
-\:
-d\(E\,X\)\\le r
-\\\}\.
-$end:math:display$
+Given a non-negative radius `r`, the **distance neighborhood** `N_r(E)` is the collection of evaluations `X` such that `d(E, X) <= r`.
 
 Alternative neighborhood definitions may also be admitted.
 
@@ -98,7 +57,7 @@ Alternative neighborhood definitions may also be admitted.
 
 # Center
 
-Every neighborhood possesses exactly one distinguished evaluation called its **center**.
+Every neighborhood possesses a distinguished evaluation called its **center**.
 
 ---
 
@@ -110,17 +69,7 @@ If a neighborhood is defined by evaluation distance, its **radius** is the maxim
 
 # Neighborhood Family
 
-The **neighborhood family**
-
-$begin:math:display$
-\\mathcal N\(E\)
-$end:math:display$
-
-is the collection of every admissible neighborhood centered at
-
-$begin:math:display$
-E\.
-$end:math:display$
+The **neighborhood family** `N(E)` is the collection of every admissible neighborhood centered at `E`.
 
 ---
 
@@ -149,7 +98,8 @@ This definition does not assume:
 - closure;
 - compactness;
 - connectedness;
-- continuity.
+- continuity;
+- uniqueness of neighborhood representation.
 
 Such properties require additional mathematical definitions.
 
@@ -182,7 +132,8 @@ Future investigations should determine:
 - whether neighborhood systems induce a topology;
 - whether multiple neighborhood systems exist;
 - which neighborhood systems best capture evaluation locality;
-- relationships between neighborhoods and geodesics.
+- relationships between neighborhoods and geodesics;
+- conditions under which distance neighborhoods are sufficient for convergence.
 
 ---
 

@@ -35,34 +35,15 @@ They provide the notion of an asymptotic evaluation.
 # Dependencies
 
 - MDEF-001 — Evaluation Space
-- MDEF-006 — Evaluation Neighborhood
 - MDEF-007 — Evaluation Convergence
 
 ---
 
 # Definition
 
-Let
+Let `(E_1, E_2, E_3, ...)` be a sequence of evaluations.
 
-$begin:math:display$
-\(E\_1\,E\_2\,E\_3\,\\ldots\)
-$end:math:display$
-
-be a sequence of evaluations.
-
-An evaluation
-
-$begin:math:display$
-L
-$end:math:display$
-
-is a **limit evaluation** of the sequence if the sequence converges to
-
-$begin:math:display$
-L
-$end:math:display$
-
-according to the definition of evaluation convergence.
+An evaluation `L` is a **limit evaluation** of the sequence if the sequence converges to `L` according to the definition of evaluation convergence.
 
 ---
 
@@ -94,23 +75,9 @@ Whether this property holds is a subject of future investigation.
 
 The **limit set** of a sequence is the collection of every limit evaluation of that sequence.
 
-For a sequence
+For a sequence `S`, its limit set is denoted `Lim(S)`.
 
-$begin:math:display$
-S\,
-$end:math:display$
-
-its limit set is denoted
-
-$begin:math:display$
-Lim\(S\)\.
-$end:math:display$
-
-If the sequence has no limits,
-
-$begin:math:display$
-Lim\(S\)\=\\varnothing\.
-$end:math:display$
+If the sequence has no limits, `Lim(S) = empty`.
 
 ---
 
