@@ -41,23 +41,7 @@ Evaluation paths formalize these transformation sequences.
 
 # Definition
 
-An **evaluation path** is a finite ordered sequence of admissible evaluation transformations
-
-$begin:math:display$
-\(\\tau\_1\,\\tau\_2\,\\ldots\,\\tau\_n\)
-$end:math:display$
-
-such that
-
-$begin:math:display$
-\\tau\_i\:E\_i\\rightarrow E\_\{i\+1\}
-$end:math:display$
-
-for every
-
-$begin:math:display$
-i\=1\,\\ldots\,n\.
-$end:math:display$
+An **evaluation path** is a finite ordered sequence of admissible evaluation transformations `P = (tau_1, tau_2, ..., tau_n)` such that each transformation has the form `tau_i: E_i -> E_(i+1)` for every `i = 1, ..., n`.
 
 The codomain of each transformation shall equal the domain of the next transformation.
 
@@ -65,13 +49,13 @@ The codomain of each transformation shall equal the domain of the next transform
 
 # Initial Evaluation
 
-The initial evaluation of a path is the domain of its first transformation.
+The initial evaluation of a non-empty path is the domain of its first transformation.
 
 ---
 
 # Terminal Evaluation
 
-The terminal evaluation of a path is the codomain of its final transformation.
+The terminal evaluation of a non-empty path is the codomain of its final transformation.
 
 ---
 
@@ -79,19 +63,15 @@ The terminal evaluation of a path is the codomain of its final transformation.
 
 The **length** of an evaluation path is the number of transformations it contains.
 
-Formally,
-
-$begin:math:display$
-\\ell\(P\)\=n\.
-$end:math:display$
+For `P = (tau_1, tau_2, ..., tau_n)`, `length(P) = n`.
 
 ---
 
 # Empty Path
 
-Every evaluation possesses an empty path of length zero.
+Every evaluation possesses an empty path of length zero from itself to itself.
 
-The empty path consists solely of the identity transformation.
+The empty path is associated with the identity transformation.
 
 ---
 
@@ -109,46 +89,13 @@ A path is **simple** if no evaluation appears more than once, except that the in
 
 # Path Composition
 
-If
-
-- path $begin:math:text$P\_1$end:math:text$ terminates at evaluation $begin:math:text$E$end:math:text$, and
-- path $begin:math:text$P\_2$end:math:text$ begins at evaluation $begin:math:text$E$end:math:text$,
-
-then their concatenation
-
-$begin:math:display$
-P\_2\\circ P\_1
-$end:math:display$
-
-is an evaluation path.
+If path `P_1` terminates at evaluation `E` and path `P_2` begins at evaluation `E`, then their concatenation `P_2 ∘ P_1` is an evaluation path.
 
 ---
 
 # Reachability
 
-Evaluation
-
-$begin:math:display$
-E\_2
-$end:math:display$
-
-is **reachable** from
-
-$begin:math:display$
-E\_1
-$end:math:display$
-
-if an evaluation path exists from
-
-$begin:math:display$
-E\_1
-$end:math:display$
-
-to
-
-$begin:math:display$
-E\_2\.
-$end:math:display$
+Evaluation `E_2` is **reachable** from `E_1` if an evaluation path exists from `E_1` to `E_2`.
 
 ---
 
@@ -168,7 +115,8 @@ This definition does not assume:
 - uniqueness;
 - optimality;
 - invertibility;
-- distance.
+- distance;
+- transformation cost.
 
 These concepts require additional mathematical definitions.
 

@@ -16,13 +16,13 @@ Evaluation Completion
 
 This document defines the completion of an evaluation space.
 
-Evaluation completion extends an evaluation space by adjoining limit evaluations required to make specified convergent evaluation sequences represented within the completed space.
+Evaluation completion extends an evaluation space by adjoining limit evaluations required by a specified completion criterion.
 
 ---
 
 # Motivation
 
-Not every evaluation space necessarily contains the limits associated with its convergent evaluation sequences.
+Not every evaluation space necessarily contains the limits associated with sequences that a chosen completion criterion treats as requiring limits.
 
 Completion provides a systematic object for studying extensions in which such limits are represented as valid evaluations.
 
@@ -38,11 +38,21 @@ Completion therefore studies the global structure of evaluation spaces.
 
 ---
 
+# Completion Criterion
+
+A **completion criterion** specifies which evaluation sequences require limit evaluations in an extended evaluation space.
+
+The criterion may be based on convergence, a Cauchy-like condition, refinement behavior, or another formally defined requirement.
+
+The completion criterion must be stated before a completion claim is made.
+
+---
+
 # Definition
 
-Let `E` be an evaluation space.
+Let `E` be an evaluation space equipped with a specified completion criterion.
 
-An **evaluation completion** of `E` is an evaluation space `E_hat` together with an inclusion of evaluations from `E` into `E_hat` such that every convergent evaluation sequence in `E` whose required limit is represented by the completion possesses at least one limit evaluation in `E_hat`.
+An **evaluation completion** of `E` is an evaluation space `E_hat` together with an inclusion map `i: E -> E_hat` such that every sequence identified by the completion criterion possesses at least one limit evaluation in `E_hat`.
 
 ---
 
@@ -54,7 +64,7 @@ An evaluation space possessing all limit evaluations required by the adopted com
 
 # Completion Map
 
-The natural inclusion `i: E -> E_hat` is called the **completion map**.
+The inclusion map `i: E -> E_hat` is called the **completion map**.
 
 The completion map preserves every evaluation already present in the original evaluation space.
 
@@ -64,7 +74,7 @@ The completion map preserves every evaluation already present in the original ev
 
 A **completion object** is a limit evaluation introduced during completion that was not originally contained in the evaluation space.
 
-Completion objects represent asymptotic evaluations relative to the adopted convergence structure.
+Completion objects represent asymptotic evaluations relative to the adopted completion criterion and convergence structure.
 
 ---
 
@@ -78,7 +88,7 @@ Whether every completion possesses this property remains a subject of future inv
 
 # Completion Equivalence
 
-Two completions are **equivalent** if they preserve identical convergence behavior.
+Two completions are **equivalent** if they preserve identical completion behavior under the same completion criterion.
 
 Whether equivalent completions are necessarily identical remains an open mathematical question.
 

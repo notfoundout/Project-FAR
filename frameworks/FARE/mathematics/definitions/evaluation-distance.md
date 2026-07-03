@@ -16,9 +16,7 @@ Evaluation Distance
 
 This document defines evaluation distance within an evaluation space.
 
-Evaluation distance quantifies the separation between evaluations in terms of admissible transformation paths.
-
-It provides the foundation for the geometry of evaluation spaces.
+Evaluation distance quantifies separation between evaluations using admissible transformation paths and a specified transformation cost model.
 
 ---
 
@@ -26,15 +24,9 @@ It provides the foundation for the geometry of evaluation spaces.
 
 Evaluation paths establish connectivity.
 
-Distance measures how far apart evaluations are.
+Distance measures how far apart evaluations are relative to admissible transformations.
 
-Distance serves as the basis for:
-
-- geodesics;
-- neighborhoods;
-- convergence;
-- optimization;
-- evaluation geometry.
+Distance serves as the basis for geodesics, neighborhoods, convergence, optimization, and evaluation geometry.
 
 ---
 
@@ -46,132 +38,61 @@ Distance serves as the basis for:
 
 ---
 
-# Definition
+# Transformation Cost Model
 
-Let
+A **transformation cost model** assigns a non-negative cost to every admissible evaluation transformation under consideration.
 
-$begin:math:display$
-E\_1\,E\_2
-$end:math:display$
+For every admissible transformation `tau`, `Cost(tau) >= 0`.
 
-be evaluations belonging to the same evaluation space.
+The identity transformation has cost `0`.
 
-The **evaluation distance**
-
-$begin:math:display$
-d\(E\_1\,E\_2\)
-$end:math:display$
-
-is a function assigning a non-negative quantity to the pair
-
-$begin:math:display$
-\(E\_1\,E\_2\)\.
-$end:math:display$
-
-The precise value depends upon the adopted transformation cost model.
-
----
-
-# Transformation Cost
-
-Every admissible evaluation transformation possesses a non-negative cost.
-
-Transformation costs may depend upon:
-
-- structural modification;
-- dependency modification;
-- support modification;
-- information modification;
-
-or other formally defined criteria.
+Transformation costs may depend upon structural modification, dependency modification, support modification, information modification, or other formally defined criteria.
 
 ---
 
 # Path Cost
 
-The cost of an evaluation path is the sum of the costs of its constituent transformations.
+The **cost** of an evaluation path is the sum of the costs of its constituent transformations.
 
-If
+For `P = (tau_1, tau_2, ..., tau_n)`, `Cost(P) = Cost(tau_1) + Cost(tau_2) + ... + Cost(tau_n)`.
 
-$begin:math:display$
-P\=\(\\tau\_1\,\\tau\_2\,\\ldots\,\\tau\_n\)\,
-$end:math:display$
-
-then
-
-$begin:math:display$
-Cost\(P\)
-\=
-\\sum\_\{i\=1\}\^\{n\}
-Cost\(\\tau\_i\)\.
-$end:math:display$
+The empty path has cost `0`.
 
 ---
 
-# Evaluation Distance
+# Definition
 
-If at least one evaluation path exists between
+Let `E_1` and `E_2` be evaluations belonging to the same evaluation space.
 
-$begin:math:display$
-E\_1
-$end:math:display$
+The **evaluation distance** `d(E_1, E_2)` is defined relative to a specified transformation cost model.
 
-and
+If at least one admissible evaluation path exists from `E_1` to `E_2`, then `d(E_1, E_2)` is the infimum of `Cost(P)` over all admissible paths `P` from `E_1` to `E_2`.
 
-$begin:math:display$
-E\_2\,
-$end:math:display$
+If no admissible path exists from `E_1` to `E_2`, then `d(E_1, E_2) = infinity`.
 
-their evaluation distance is the minimum cost among all admissible paths connecting them.
+---
 
-Formally,
+# Infimum Rather Than Minimum
 
-$begin:math:display$
-d\(E\_1\,E\_2\)
-\=
-\\min
-\\\{
-Cost\(P\)
-\:
-P
-\\text\{ connects \}
-E\_1
-\\text\{ to \}
-E\_2
-\\\}\.
-$end:math:display$
+The distance is defined using an infimum rather than a minimum because a minimum-cost path may fail to exist.
 
-If no path exists,
-
-$begin:math:display$
-d\(E\_1\,E\_2\)
-\=
-\\infty\.
-$end:math:display$
+A path realizes the distance only when its cost equals the infimum.
 
 ---
 
 # Zero Distance
 
-An evaluation possesses zero distance from itself.
+An evaluation possesses zero distance from itself because the empty path and identity transformation have cost `0`.
 
-Whether distinct evaluations may possess zero distance depends upon the adopted notion of evaluation equivalence.
+Whether distinct evaluations may possess zero distance depends upon the adopted transformation cost model and any applicable notion of evaluation equivalence.
 
 ---
 
 # Symmetry
 
-Evaluation distance is **not assumed** to be symmetric.
+Evaluation distance is not assumed to be symmetric.
 
-Whether
-
-$begin:math:display$
-d\(E\_1\,E\_2\)
-\=
-d\(E\_2\,E\_1\)
-$end:math:display$
-
-holds depends upon the transformation system.
+Whether `d(E_1, E_2) = d(E_2, E_1)` holds depends upon the transformation system and cost model.
 
 ---
 
@@ -189,9 +110,20 @@ This definition guarantees only:
 
 - non-negative distance;
 - zero self-distance;
-- minimal-path interpretation when paths exist.
+- infinite distance when no admissible path exists;
+- infimum-based path-cost interpretation when paths exist.
 
 No additional metric properties are assumed.
+
+---
+
+# Relationship to Geodesics
+
+Evaluation distance specifies the infimum of attainable transformation costs.
+
+Evaluation geodesics are paths that realize that infimum.
+
+A geodesic may fail to exist even when the distance is finite.
 
 ---
 
@@ -199,13 +131,7 @@ No additional metric properties are assumed.
 
 Evaluation distance provides the first quantitative structure on an evaluation space.
 
-It enables:
-
-- shortest paths;
-- neighborhoods;
-- convergence;
-- optimization;
-- geometric analysis.
+It enables shortest-path analysis, neighborhoods, convergence, optimization, and geometric analysis.
 
 ---
 
@@ -216,7 +142,8 @@ Future investigations should determine:
 - whether evaluation distance is a metric;
 - whether multiple useful distance functions exist;
 - how transformation costs should be assigned;
-- whether canonical cost models exist.
+- whether canonical cost models exist;
+- conditions under which distance infima are realized by paths.
 
 ---
 
@@ -224,6 +151,6 @@ Future investigations should determine:
 
 This definition intentionally avoids assuming any existing notion of mathematical distance.
 
-Instead, evaluation distance is defined from the admissible transformations of FARE itself.
+Instead, evaluation distance is defined from admissible transformations and a transformation cost model.
 
 Any stronger mathematical properties must be established by later investigation rather than assumed here.

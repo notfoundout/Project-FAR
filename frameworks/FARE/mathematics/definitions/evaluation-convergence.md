@@ -16,7 +16,7 @@ Evaluation Convergence
 
 This document defines convergence within an evaluation space.
 
-Evaluation convergence formalizes the notion of a sequence of evaluations approaching another evaluation.
+Evaluation convergence formalizes the notion of a sequence of evaluations approaching another evaluation relative to a specified admissible neighborhood system.
 
 It provides the mathematical foundation for completion, continuity, iterative reasoning, and optimization.
 
@@ -43,29 +43,31 @@ Convergence determines whether such refinement stabilizes.
 
 Let `(E_1, E_2, E_3, ...)` be a sequence of evaluations within an evaluation space.
 
-The sequence **converges** to an evaluation `E` if, beyond some point in the sequence, every evaluation belongs to every admissible neighborhood of `E`.
+Let `N(E)` be an admissible neighborhood system for evaluation `E`.
 
-The evaluation `E` is called a **limit** of the sequence.
+The sequence **converges** to `E` relative to `N(E)` if, for every neighborhood `U` in `N(E)`, there exists an index `N_0` such that for every `n >= N_0`, `E_n` belongs to `U`.
+
+The evaluation `E` is called a **limit** of the sequence relative to the specified neighborhood system.
 
 ---
 
 # Convergent Sequence
 
-A sequence is **convergent** if it possesses at least one limit.
+A sequence is **convergent** if it possesses at least one limit relative to an explicitly specified admissible neighborhood system.
 
 ---
 
 # Divergent Sequence
 
-A sequence is **divergent** if it possesses no limit.
+A sequence is **divergent** if it possesses no limit relative to the specified admissible neighborhood system.
 
 ---
 
 # Eventually Constant Sequence
 
-A sequence is **eventually constant** if there exists an index `N` such that `E_n = E` for every `n >= N`.
+A sequence is **eventually constant** if there exists an index `N_0` such that `E_n = E` for every `n >= N_0`.
 
-Whether every eventually constant sequence is convergent depends upon the adopted neighborhood structure.
+Every eventually constant sequence at `E` converges to `E` whenever every neighborhood of `E` contains `E`.
 
 ---
 
@@ -81,9 +83,9 @@ Future investigations may introduce alternative convergence structures.
 
 # Limit
 
-A **limit evaluation** is an evaluation satisfying the convergence definition for a given sequence.
+A **limit evaluation** is an evaluation satisfying the convergence definition for a given sequence and neighborhood system.
 
-Whether limits are unique depends upon the structure of the evaluation space.
+Whether limits are unique depends upon the structure of the evaluation space and the specified neighborhood system.
 
 Uniqueness is not assumed.
 
@@ -98,7 +100,7 @@ This definition does not assume:
 - compactness;
 - continuity;
 - Cauchy sequences;
-- convergence of eventually constant sequences without suitable neighborhoods.
+- convergence independent of neighborhood choice.
 
 These properties require independent investigation.
 
@@ -133,7 +135,7 @@ Future investigations should determine:
 - convergence under different neighborhood systems;
 - relationships between convergence and evaluation distance;
 - convergence of normalization algorithms;
-- minimal neighborhood conditions under which eventually constant sequences converge.
+- minimal neighborhood conditions required for useful convergence theory.
 
 ---
 
