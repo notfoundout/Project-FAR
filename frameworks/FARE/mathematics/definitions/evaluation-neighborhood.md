@@ -39,11 +39,21 @@ Many mathematical concepts depend only upon neighborhoods rather than explicit d
 
 ---
 
+# Neighborhood System
+
+A **neighborhood system** assigns to each evaluation `E` a collection `N(E)` of neighborhoods centered at `E`.
+
+Every neighborhood `U` in `N(E)` shall contain `E`.
+
+This center-containment condition is the minimum admissibility condition for neighborhood systems used by FARE convergence.
+
+---
+
 # Definition
 
 Let `E` be an evaluation belonging to an evaluation space.
 
-An **evaluation neighborhood** of `E` is a collection of evaluations considered locally adjacent to `E` under a specified neighborhood criterion.
+An **evaluation neighborhood** of `E` is an element `U` of an admissible neighborhood system `N(E)`.
 
 ---
 
@@ -51,13 +61,15 @@ An **evaluation neighborhood** of `E` is a collection of evaluations considered 
 
 Given a non-negative radius `r`, the **distance neighborhood** `N_r(E)` is the collection of evaluations `X` such that `d(E, X) <= r`.
 
-Alternative neighborhood definitions may also be admitted.
+Distance neighborhoods are one possible neighborhood system when they satisfy the adopted admissibility conditions.
 
 ---
 
 # Center
 
 Every neighborhood possesses a distinguished evaluation called its **center**.
+
+A neighborhood centered at `E` shall contain `E`.
 
 ---
 
@@ -70,6 +82,14 @@ If a neighborhood is defined by evaluation distance, its **radius** is the maxim
 # Neighborhood Family
 
 The **neighborhood family** `N(E)` is the collection of every admissible neighborhood centered at `E`.
+
+---
+
+# Alternative Neighborhood Systems
+
+Alternative neighborhood systems may be admitted only when their admissibility conditions are explicitly stated.
+
+No arbitrary collection of evaluations is a neighborhood unless it satisfies the applicable neighborhood-system requirements.
 
 ---
 
