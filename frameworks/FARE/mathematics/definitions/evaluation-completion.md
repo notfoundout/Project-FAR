@@ -16,15 +16,15 @@ Evaluation Completion
 
 This document defines the completion of an evaluation space.
 
-Evaluation completion extends an evaluation space by adjoining limit evaluations required to make convergent evaluation sequences well-defined within the completed space.
+Evaluation completion extends an evaluation space by adjoining limit evaluations required by a specified convergence or Cauchy-like completion criterion.
 
 ---
 
 # Motivation
 
-Not every evaluation space necessarily contains the limits of its convergent evaluation sequences.
+Not every evaluation space necessarily contains the limits required by a chosen completion criterion.
 
-Completion provides a systematic method for extending an evaluation space so that these limits are represented as valid evaluations.
+Completion provides a systematic object for studying extensions in which such limits are represented as valid evaluations.
 
 Completion therefore studies the global structure of evaluation spaces.
 
@@ -40,63 +40,23 @@ Completion therefore studies the global structure of evaluation spaces.
 
 # Definition
 
-Let
+Let `E` be an evaluation space equipped with a specified convergence or Cauchy-like completion criterion.
 
-$begin:math:display$
-\\mathcal\{E\}
-$end:math:display$
+An **evaluation completion** of `E` is an extension evaluation space `E_hat` equipped with an inclusion map `i: E -> E_hat` such that completion objects are added to represent the limits required by the chosen completion criterion.
 
-be an evaluation space.
-
-An **evaluation completion** of
-
-$begin:math:display$
-\\mathcal\{E\}
-$end:math:display$
-
-is an evaluation space
-
-$begin:math:display$
-\\widehat\{\\mathcal\{E\}\}
-$end:math:display$
-
-such that:
-
-- every evaluation of
-  $begin:math:display$
-  \\mathcal\{E\}
-  $end:math:display$
-  belongs to
-  $begin:math:display$
-  \\widehat\{\\mathcal\{E\}\}\;
-  $end:math:display$
-
-- every convergent evaluation sequence in
-  $begin:math:display$
-  \\mathcal\{E\}
-  $end:math:display$
-  possesses a limit in
-  $begin:math:display$
-  \\widehat\{\\mathcal\{E\}\}\.
-  $end:math:display$
+The completion criterion must identify which sequences require limits.
 
 ---
 
 # Completed Evaluation Space
 
-An evaluation space possessing this property is called **complete**.
+An evaluation space possessing all limit evaluations required by the adopted completion criterion is called **complete** relative to that criterion.
 
 ---
 
 # Completion Map
 
-The natural inclusion
-
-$begin:math:display$
-i\:\\mathcal\{E\}\\rightarrow\\widehat\{\\mathcal\{E\}\}
-$end:math:display$
-
-is called the **completion map**.
+The inclusion map `i: E -> E_hat` is called the **completion map**.
 
 The completion map preserves every evaluation already present in the original evaluation space.
 
@@ -106,7 +66,7 @@ The completion map preserves every evaluation already present in the original ev
 
 A **completion object** is a limit evaluation introduced during completion that was not originally contained in the evaluation space.
 
-Completion objects represent asymptotic evaluations.
+Completion objects represent asymptotic evaluations relative to the adopted completion criterion.
 
 ---
 
@@ -120,7 +80,7 @@ Whether every completion possesses this property remains a subject of future inv
 
 # Completion Equivalence
 
-Two completions are **equivalent** if they preserve identical convergence behavior.
+Two completions are **equivalent** if they preserve identical convergence behavior under the adopted completion criterion.
 
 Whether equivalent completions are necessarily identical remains an open mathematical question.
 
@@ -134,7 +94,8 @@ This definition does not assume:
 - minimality;
 - canonicity;
 - computability;
-- existence for every evaluation space.
+- existence for every evaluation space;
+- density of the original evaluation space in the completion.
 
 Each property requires independent mathematical investigation.
 
@@ -142,9 +103,9 @@ Each property requires independent mathematical investigation.
 
 # Relationship to Limits
 
-Completion enlarges an evaluation space by incorporating limit evaluations.
+Completion enlarges an evaluation space by incorporating limit evaluations required by an adopted completion criterion.
 
-No additional evaluations are introduced except those required by the adopted notion of completion.
+No additional evaluations are introduced except those required by that criterion.
 
 ---
 
@@ -168,7 +129,8 @@ Future investigations should determine:
 - whether completions are unique;
 - whether minimal completions exist;
 - whether completion preserves evaluation equivalence;
-- algorithms for constructing completions.
+- algorithms for constructing completions;
+- criteria determining which limits are required by completion.
 
 ---
 

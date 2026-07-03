@@ -46,16 +46,10 @@ These changes are represented mathematically as evaluation transformations.
 
 An **evaluation transformation** is an admissible operation that maps one evaluation to another within the same evaluation space.
 
-Formally,
+Formally, `tau: E_1 -> E_2`, where:
 
-$begin:math:display$
-\\tau \: E\_1 \\rightarrow E\_2
-$end:math:display$
-
-where
-
-- $begin:math:text$E\_1$end:math:text$ and $begin:math:text$E\_2$end:math:text$ belong to the same evaluation space;
-- $begin:math:text$\\tau$end:math:text$ satisfies every admissibility requirement imposed by FARE.
+- `E_1` and `E_2` belong to the same evaluation space;
+- `tau` satisfies every admissibility requirement imposed by FARE.
 
 ---
 
@@ -73,59 +67,19 @@ The **codomain** of a transformation is the evaluation produced by the transform
 
 # Identity Transformation
 
-Every evaluation possesses an identity transformation
-
-$begin:math:display$
-id\_E \: E \\rightarrow E
-$end:math:display$
-
-that leaves the evaluation unchanged.
+Every evaluation possesses an identity transformation `id_E: E -> E` that leaves the evaluation unchanged.
 
 ---
 
 # Composition
 
-If
-
-$begin:math:display$
-\\tau\_1\:E\_1\\rightarrow E\_2
-$end:math:display$
-
-and
-
-$begin:math:display$
-\\tau\_2\:E\_2\\rightarrow E\_3\,
-$end:math:display$
-
-then their composition
-
-$begin:math:display$
-\\tau\_2\\circ\\tau\_1\:E\_1\\rightarrow E\_3
-$end:math:display$
-
-is an evaluation transformation whenever both component transformations are admissible.
+If `tau_1: E_1 -> E_2` and `tau_2: E_2 -> E_3`, then their composition `tau_2 circ tau_1: E_1 -> E_3` is an evaluation transformation whenever both component transformations are admissible.
 
 ---
 
 # Invertibility
 
-A transformation is **invertible** if there exists another admissible transformation
-
-$begin:math:display$
-\\tau\^\{\-1\}
-$end:math:display$
-
-such that
-
-$begin:math:display$
-\\tau\^\{\-1\}\\circ\\tau\=id
-$end:math:display$
-
-and
-
-$begin:math:display$
-\\tau\\circ\\tau\^\{\-1\}\=id\.
-$end:math:display$
+A transformation is **invertible** if there exists another admissible transformation `tau^{-1}` such that `tau^{-1} circ tau = id` and `tau circ tau^{-1} = id`.
 
 Not every admissible transformation is invertible.
 

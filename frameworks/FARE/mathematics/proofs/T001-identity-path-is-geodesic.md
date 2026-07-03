@@ -36,57 +36,27 @@ Demonstrate that every evaluation possesses a trivial geodesic connecting it to 
 
 # Theorem
 
-For every evaluation
-
-$begin:math:display$
-E\,
-$end:math:display$
-
-the identity path from
-
-$begin:math:display$
-E
-$end:math:display$
-
-to
-
-$begin:math:display$
-E
-$end:math:display$
-
-is an evaluation geodesic.
+For every evaluation `E`, the identity path from `E` to `E` is an evaluation geodesic.
 
 ---
 
 # Proof
 
-Let
+Let `E` be an arbitrary evaluation.
 
-$begin:math:display$
-E
-$end:math:display$
-
-be an arbitrary evaluation.
-
-By MDEF-002,
-
-$begin:math:display$
-id\_E
-$end:math:display$
-
-is an admissible evaluation transformation.
+By MDEF-002, `id_E` is an admissible evaluation transformation.
 
 By MDEF-003,
 
 the identity transformation forms an evaluation path of length zero.
 
-By MDEF-004,
+By MDEF-004, transformation costs are non-negative and the identity transformation has cost `0`.
 
-the evaluation distance from an evaluation to itself is zero.
+The identity path therefore has total transformation cost `0`.
 
-The identity path therefore has total transformation cost zero.
+Since an admissible path of cost `0` exists from `E` to `E`, and no admissible path has negative cost, `d(E, E) = 0`.
 
-Since its total transformation cost equals the evaluation distance,
+Since the identity path realizes this distance infimum,
 
 the identity path satisfies the definition of an evaluation geodesic.
 

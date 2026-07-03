@@ -16,7 +16,7 @@ Evaluation Space
 
 This document defines the mathematical object known as an evaluation space.
 
-Evaluation spaces provide the ambient mathematical structure within which evaluations, transformations, distances, paths, and geometric properties are studied.
+Evaluation spaces provide the ambient mathematical structure within which evaluations, transformations, distances, paths, limits, completions, and geometric properties are studied.
 
 ---
 
@@ -24,7 +24,7 @@ Evaluation spaces provide the ambient mathematical structure within which evalua
 
 Individual evaluations are mathematical objects.
 
-Collections of evaluations together with the relationships among them form larger mathematical structures.
+Collections of evaluations together with the admissible transformations among them form larger mathematical structures.
 
 These structures constitute evaluation spaces.
 
@@ -34,20 +34,14 @@ The remainder of FARE geometry is built upon this definition.
 
 # Definition
 
-An **evaluation space** is an ordered pair
+An **evaluation space** is an ordered pair `E = (V, T)` where:
 
-$begin:math:display$
-\\mathcal\{E\}\=\(V\,T\)
-$end:math:display$
+- `V` is a collection of valid evaluations;
+- `T` is a collection of admissible evaluation transformations between evaluations in `V`.
 
-where:
+Every element of `V` is called an evaluation.
 
-- $begin:math:text$V$end:math:text$ is a collection of valid evaluations;
-- $begin:math:text$T$end:math:text$ is a collection of admissible evaluation transformations between evaluations.
-
-Every element of $begin:math:text$V$end:math:text$ is called an evaluation.
-
-Every element of $begin:math:text$T$end:math:text$ relates one evaluation to another.
+Every element of `T` relates one evaluation in `V` to another evaluation in `V`.
 
 ---
 
@@ -56,9 +50,9 @@ Every element of $begin:math:text$T$end:math:text$ relates one evaluation to ano
 An evaluation space consists of:
 
 - evaluations;
-- admissible transformations;
-- transformation composition;
-- identity transformations.
+- admissible transformations between evaluations.
+
+Transformation composition and identity transformations are treated by the definition of evaluation transformation.
 
 Additional mathematical structure may be introduced through future definitions.
 
@@ -113,7 +107,10 @@ In particular, this definition does not assume:
 - ordering;
 - convexity;
 - completeness;
-- geometry.
+- geometry;
+- convergence;
+- limits;
+- invariants.
 
 These structures must be defined separately.
 
@@ -141,7 +138,9 @@ Evaluation spaces provide the mathematical universe in which:
 - geodesics;
 - neighborhoods;
 - convergence;
+- limits;
 - completion;
+- invariants;
 
 are defined.
 

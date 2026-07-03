@@ -35,94 +35,55 @@ Convergence determines whether such refinement stabilizes.
 # Dependencies
 
 - MDEF-001 — Evaluation Space
-- MDEF-004 — Evaluation Distance
 - MDEF-006 — Evaluation Neighborhood
 
 ---
 
 # Definition
 
-Let
+Let `(E_1, E_2, E_3, ...)` be a sequence of evaluations within an evaluation space equipped with a specified admissible neighborhood system.
 
-$begin:math:display$
-\(E\_1\,E\_2\,E\_3\,\\ldots\)
-$end:math:display$
+The sequence **converges** to an evaluation `E` if for every neighborhood `U` in `N(E)`, there exists an index `N` such that for every `n >= N`, `E_n` belongs to `U`.
 
-be a sequence of evaluations within an evaluation space.
-
-The sequence **converges** to an evaluation
-
-$begin:math:display$
-E
-$end:math:display$
-
-if, beyond some point in the sequence, every evaluation belongs to every admissible neighborhood of
-
-$begin:math:display$
-E\.
-$end:math:display$
-
-The evaluation
-
-$begin:math:display$
-E
-$end:math:display$
-
-is called the **limit** of the sequence.
+The evaluation `E` is called a **limit** of the sequence.
 
 ---
 
 # Convergent Sequence
 
-A sequence is **convergent** if it possesses at least one limit.
+A sequence is **convergent** if it possesses at least one limit relative to the specified admissible neighborhood system.
 
 ---
 
 # Divergent Sequence
 
-A sequence is **divergent** if it possesses no limit.
+A sequence is **divergent** if it possesses no limit relative to the specified admissible neighborhood system.
 
 ---
 
 # Eventually Constant Sequence
 
-A sequence is **eventually constant** if there exists an index
+A sequence is **eventually constant** if there exists an index `N` such that `E_n = E` for every `n >= N`.
 
-$begin:math:display$
-N
-$end:math:display$
-
-such that
-
-$begin:math:display$
-E\_n\=E
-$end:math:display$
-
-for every
-
-$begin:math:display$
-n\\ge N\.
-$end:math:display$
-
-Every eventually constant sequence is convergent.
+Eventually constant sequences converge to `E` only when every neighborhood of `E` contains `E`.
 
 ---
 
 # Convergence Criterion
 
-The precise criterion for convergence depends upon the adopted neighborhood structure.
+The precise criterion for convergence depends upon the adopted admissible neighborhood system.
 
 Distance-induced neighborhoods provide one possible convergence model.
 
-Future investigations may introduce alternative convergence structures.
+Future investigations may introduce alternative convergence structures satisfying explicit admissibility conditions.
 
 ---
 
 # Limit
 
-A **limit evaluation** is an evaluation satisfying the convergence definition for a given sequence.
+A **limit evaluation** is an evaluation satisfying the convergence definition for a given sequence and neighborhood system.
 
-Whether limits are unique depends upon the structure of the evaluation space.
+Whether limits are unique depends upon the structure of the evaluation space and the specified neighborhood system.
 
 Uniqueness is not assumed.
 
@@ -144,7 +105,7 @@ These properties require independent investigation.
 
 # Relationship to Neighborhoods
 
-Neighborhoods define convergence.
+Admissible neighborhood systems define convergence.
 
 Changing the neighborhood system may change which sequences converge.
 
@@ -170,7 +131,8 @@ Future investigations should determine:
 - convergence rates;
 - convergence under different neighborhood systems;
 - relationships between convergence and evaluation distance;
-- convergence of normalization algorithms.
+- convergence of normalization algorithms;
+- minimal admissibility conditions for useful convergence behavior.
 
 ---
 

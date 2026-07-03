@@ -48,25 +48,9 @@ Distance serves as the basis for:
 
 # Definition
 
-Let
+Let `E_1` and `E_2` be evaluations belonging to the same evaluation space.
 
-$begin:math:display$
-E\_1\,E\_2
-$end:math:display$
-
-be evaluations belonging to the same evaluation space.
-
-The **evaluation distance**
-
-$begin:math:display$
-d\(E\_1\,E\_2\)
-$end:math:display$
-
-is a function assigning a non-negative quantity to the pair
-
-$begin:math:display$
-\(E\_1\,E\_2\)\.
-$end:math:display$
+The **evaluation distance** `d(E_1, E_2)` is a function assigning a non-negative quantity or `infinity` to the ordered pair `(E_1, E_2)`.
 
 The precise value depends upon the adopted transformation cost model.
 
@@ -75,6 +59,8 @@ The precise value depends upon the adopted transformation cost model.
 # Transformation Cost
 
 Every admissible evaluation transformation possesses a non-negative cost.
+
+The identity transformation has cost `0`.
 
 Transformation costs may depend upon:
 
@@ -91,69 +77,27 @@ or other formally defined criteria.
 
 The cost of an evaluation path is the sum of the costs of its constituent transformations.
 
-If
+If `P = (tau_1, tau_2, ..., tau_n)`, then `Cost(P) = sum_{i=1}^n Cost(tau_i)`.
 
-$begin:math:display$
-P\=\(\\tau\_1\,\\tau\_2\,\\ldots\,\\tau\_n\)\,
-$end:math:display$
-
-then
-
-$begin:math:display$
-Cost\(P\)
-\=
-\\sum\_\{i\=1\}\^\{n\}
-Cost\(\\tau\_i\)\.
-$end:math:display$
+The empty path has cost `0`.
 
 ---
 
 # Evaluation Distance
 
-If at least one evaluation path exists between
+If at least one evaluation path exists from `E_1` to `E_2`, their evaluation distance is the infimum of the costs of all admissible paths from `E_1` to `E_2`.
 
-$begin:math:display$
-E\_1
-$end:math:display$
+Formally, `d(E_1, E_2) = inf { Cost(P) : P is an admissible path from E_1 to E_2 }`.
 
-and
+If no path exists, `d(E_1, E_2) = infinity`.
 
-$begin:math:display$
-E\_2\,
-$end:math:display$
-
-their evaluation distance is the minimum cost among all admissible paths connecting them.
-
-Formally,
-
-$begin:math:display$
-d\(E\_1\,E\_2\)
-\=
-\\min
-\\\{
-Cost\(P\)
-\:
-P
-\\text\{ connects \}
-E\_1
-\\text\{ to \}
-E\_2
-\\\}\.
-$end:math:display$
-
-If no path exists,
-
-$begin:math:display$
-d\(E\_1\,E\_2\)
-\=
-\\infty\.
-$end:math:display$
+A minimum-cost path may or may not exist.
 
 ---
 
 # Zero Distance
 
-An evaluation possesses zero distance from itself.
+An evaluation possesses zero distance from itself because the identity path has cost `0`.
 
 Whether distinct evaluations may possess zero distance depends upon the adopted notion of evaluation equivalence.
 
@@ -163,15 +107,7 @@ Whether distinct evaluations may possess zero distance depends upon the adopted 
 
 Evaluation distance is **not assumed** to be symmetric.
 
-Whether
-
-$begin:math:display$
-d\(E\_1\,E\_2\)
-\=
-d\(E\_2\,E\_1\)
-$end:math:display$
-
-holds depends upon the transformation system.
+Whether `d(E_1, E_2) = d(E_2, E_1)` holds depends upon the transformation system.
 
 ---
 
@@ -187,9 +123,11 @@ Whether evaluation distance forms a metric, pseudometric, quasimetric, or anothe
 
 This definition guarantees only:
 
-- non-negative distance;
-- zero self-distance;
-- minimal-path interpretation when paths exist.
+- non-negative transformation costs;
+- identity transformation cost `0`;
+- path costs given by sums of transformation costs;
+- distance defined by the infimum of admissible path costs;
+- infinite distance when no admissible path exists.
 
 No additional metric properties are assumed.
 
@@ -201,7 +139,8 @@ Evaluation distance provides the first quantitative structure on an evaluation s
 
 It enables:
 
-- shortest paths;
+- shortest-path investigations;
+- geodesics as paths realizing distance infima;
 - neighborhoods;
 - convergence;
 - optimization;
@@ -216,7 +155,8 @@ Future investigations should determine:
 - whether evaluation distance is a metric;
 - whether multiple useful distance functions exist;
 - how transformation costs should be assigned;
-- whether canonical cost models exist.
+- whether canonical cost models exist;
+- when distance infima are realized by admissible paths.
 
 ---
 

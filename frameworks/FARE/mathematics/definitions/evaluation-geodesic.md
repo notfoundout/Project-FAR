@@ -26,9 +26,9 @@ They constitute the fundamental paths studied in the geometry of evaluation spac
 
 Evaluation paths establish connectivity.
 
-Evaluation distance quantifies separation.
+Evaluation distance quantifies separation by an infimum of admissible path costs.
 
-Evaluation geodesics identify transformation paths that are optimal with respect to the adopted evaluation distance.
+Evaluation geodesics identify transformation paths that realize that infimum.
 
 They provide the mathematical foundation for:
 
@@ -51,39 +51,11 @@ They provide the mathematical foundation for:
 
 # Definition
 
-Let
+Let `E_1` and `E_2` be evaluations belonging to the same evaluation space.
 
-$begin:math:display$
-E\_1\,E\_2
-$end:math:display$
+An **evaluation geodesic** is an evaluation path `P` from `E_1` to `E_2` such that `Cost(P) = d(E_1, E_2)`.
 
-be evaluations belonging to the same evaluation space.
-
-An **evaluation geodesic** is an evaluation path
-
-$begin:math:display$
-P
-$end:math:display$
-
-connecting
-
-$begin:math:display$
-E\_1
-$end:math:display$
-
-to
-
-$begin:math:display$
-E\_2
-$end:math:display$
-
-whose total transformation cost equals the evaluation distance between its endpoints.
-
-Formally,
-
-$begin:math:display$
-Cost\(P\)\=d\(E\_1\,E\_2\)\.
-$end:math:display$
+A geodesic exists only when the distance infimum between its endpoints is realized by an admissible path.
 
 ---
 
@@ -103,45 +75,19 @@ The terminal evaluation of a geodesic is the terminal evaluation of its underlyi
 
 The length of a geodesic is defined as its total transformation cost.
 
-Therefore,
-
-$begin:math:display$
-Length\(P\)\=d\(E\_1\,E\_2\)\.
-$end:math:display$
+Therefore, `Length(P) = d(E_1, E_2)`.
 
 ---
 
 # Geodesic Family
 
-For fixed evaluations
-
-$begin:math:display$
-E\_1\,E\_2\,
-$end:math:display$
-
-the **geodesic family**
-
-$begin:math:display$
-\\mathcal\{G\}\(E\_1\,E\_2\)
-$end:math:display$
-
-is the collection of every evaluation geodesic connecting
-
-$begin:math:display$
-E\_1
-$end:math:display$
-
-to
-
-$begin:math:display$
-E\_2\.
-$end:math:display$
+For fixed evaluations `E_1` and `E_2`, the **geodesic family** `G(E_1, E_2)` is the collection of every evaluation geodesic from `E_1` to `E_2`.
 
 ---
 
 # Trivial Geodesic
 
-The identity path is a geodesic from every evaluation to itself.
+The identity path is a geodesic from every evaluation to itself because the identity transformation has cost `0`.
 
 ---
 
@@ -149,7 +95,7 @@ The identity path is a geodesic from every evaluation to itself.
 
 This definition introduces no assumptions regarding:
 
-- existence;
+- existence between arbitrary evaluations;
 - uniqueness;
 - symmetry;
 - reversibility;
@@ -163,15 +109,15 @@ These properties are subjects of later mathematical investigation.
 
 # Relationship to Evaluation Distance
 
-Evaluation distance specifies the minimum attainable transformation cost.
+Evaluation distance specifies the infimum of admissible transformation path costs.
 
-Evaluation geodesics are precisely those evaluation paths that realize that minimum.
+Evaluation geodesics are precisely those evaluation paths that realize that infimum.
 
 ---
 
 # Mathematical Role
 
-Evaluation geodesics define optimal movement through an evaluation space.
+Evaluation geodesics define optimal movement through an evaluation space when an optimal path exists.
 
 Later mathematical definitions and theorems use geodesics to define:
 
@@ -193,6 +139,7 @@ Open mathematical questions include:
 - Under what conditions do geodesics compose?
 - When are geodesic segments themselves geodesics?
 - How does curvature influence geodesic behavior?
+- When are distance infima realized by admissible paths?
 
 ---
 
