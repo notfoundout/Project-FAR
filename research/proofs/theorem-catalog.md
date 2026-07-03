@@ -14,12 +14,12 @@ It does not contain proofs.
 
 # Organization
 
-Formal results are organized according to the following hierarchy.
+Formal results are organized according to the following hierarchy:
 
-- Lemma
-- Proposition
-- Theorem
-- Corollary
+- Lemma;
+- Proposition;
+- Theorem;
+- Corollary.
 
 Each result receives a unique identifier.
 
@@ -29,56 +29,62 @@ Identifiers shall never be reused.
 
 # Status Classifications
 
-Every formal result shall possess exactly one status.
+Every formal result shall possess exactly one status:
 
-- Draft
-- Under Review
-- Accepted
-- Refuted
-- Superseded
+- Draft;
+- Under Review;
+- Accepted;
+- Refuted;
+- Superseded.
 
 ---
 
 # Lemmas
 
-| ID | Title | Status | Dependencies |
-|----|-------|--------|--------------|
-| None | — | — | — |
+| ID | Title | Status | Dependencies | File |
+|----|-------|--------|--------------|------|
+| L-001 | Representation/Object Distinction | Draft | Object; Representation; Interpretation | `lemmas/L-001-representation-object-distinction.md` |
+| L-002 | Interpretation/Representation Distinction | Draft | Representation; Interpretation; L-001 | `lemmas/L-002-interpretation-representation-distinction.md` |
+| L-003 | Object/Property Distinction | Draft | Object; Property; L-001; L-002 | `lemmas/L-003-object-property-distinction.md` |
+| L-004 | Relation Non-Identity | Draft | Object; Property; Relation; L-001; L-003 | `lemmas/L-004-relation-non-identity.md` |
+| L-005 | Investigation/Reasoning Calculus Distinction | Draft | Investigation; Reasoning Calculus; L-001; L-002; L-003; L-004 | `lemmas/L-005-investigation-reasoning-calculus-distinction.md` |
+| L-006 | Representations Require Explicit Structure | Draft | Representation; Representational Structure; L-001; L-002 | `lemmas/L-006-representations-require-explicit-structure.md` |
+| L-007 | Interpretation Preserves Representational Identity | Draft | Representation; Interpretation; L-001; L-002; L-006 | `lemmas/L-007-interpretation-preserves-representational-identity.md` |
 
 ---
 
 # Propositions
 
-| ID | Title | Status | Dependencies |
-|----|-------|--------|--------------|
-| None | — | — | — |
+| ID | Title | Status | Dependencies | File |
+|----|-------|--------|--------------|------|
+| P-001 | Representational Integrity | Draft | Representation; Representational Structure; Interpretation; L-001; L-002; L-006; L-007 | `propositions/P-001-representational-integrity.md` |
 
 ---
 
 # Theorems
 
-| ID | Title | Status | Dependencies |
-|----|-------|--------|--------------|
-| None | — | — | — |
+| ID | Title | Status | Dependencies | File |
+|----|-------|--------|--------------|------|
+| T-001 | Representational Integrity Theorem | Draft | Representation; Representational Structure; Interpretation; L-001; L-002; L-006; L-007; P-001 | `theorems/T-001-representational-integrity-theorem.md` |
 
 ---
 
 # Corollaries
 
-| ID | Title | Status | Dependencies |
-|----|-------|--------|--------------|
-| None | — | — | — |
+| ID | Title | Status | Dependencies | File |
+|----|-------|--------|--------------|------|
+| None | — | — | — | — |
 
 ---
 
 # Numbering Convention
 
-The following prefixes shall be used.
+The following prefixes shall be used:
 
-- L-XXX — Lemma
-- P-XXX — Proposition
-- T-XXX — Theorem
-- C-XXX — Corollary
+- L-XXX — Lemma;
+- P-XXX — Proposition;
+- T-XXX — Theorem;
+- C-XXX — Corollary.
 
 Identifiers are assigned sequentially.
 
@@ -103,23 +109,14 @@ No dependency may be implicit.
 
 ---
 
-# Maintenance Policy
-
-Whenever a new formal result is created:
-
-1. Assign the next available identifier.
-2. Record its title.
-3. Record its current status.
-4. Record its dependencies.
-5. Link to the canonical proof document.
-
-Whenever a result changes status, this catalog shall be updated accordingly.
-
----
-
 # Current Status
 
-No formal lemmas, propositions, theorems, or corollaries have yet been accepted.
+The initial proof library has been normalized.
 
-The catalog has been established in preparation for future formal development.
+Current artifacts:
 
+- seven draft lemmas;
+- one draft proposition;
+- one draft theorem.
+
+No formal result has yet been accepted.
