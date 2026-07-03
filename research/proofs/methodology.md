@@ -37,163 +37,90 @@ It does not govern exploratory research or validation investigations.
 
 # Required Structure
 
-Every formal proof shall contain the following sections.
+Every formal proof shall contain:
 
-## Statement
-
-The precise claim being proven.
-
----
-
-## Status
-
-One of:
-
-- Draft
-- Under Review
-- Accepted
-- Refuted
-- Superseded
+- identifier;
+- title;
+- status;
+- statement;
+- purpose;
+- dependencies;
+- assumptions;
+- proof strategy;
+- numbered proof steps;
+- conclusion;
+- consequences;
+- limitations;
+- related results.
 
 ---
 
-## Dependencies
+# Proof Strategy
 
-Every definition, lemma, proposition, theorem, or assumption used by the proof.
+Every proof shall explicitly state its proof strategy.
+
+Permitted strategies include:
+
+- direct proof;
+- proof by contradiction;
+- proof by contrapositive;
+- proof by construction;
+- case analysis;
+- induction, when explicitly justified.
+
+---
+
+# Numbered Proof Steps
+
+Every proof shall be written as numbered steps.
+
+Each step shall contain:
+
+1. the claim established at that step;
+2. a justification identifying the dependency, assumption, or inference rule used.
+
+No inference may be implicit.
+
+---
+
+# Dependency Discipline
+
+Every proof shall list every definition, lemma, proposition, theorem, corollary, or assumption used by the proof.
 
 No dependency may be implicit.
 
----
-
-## Assumptions
-
-Every assumption not already established by accepted results.
-
-Assumptions should be minimized.
-
----
-
-## Proof
-
-A complete logical argument.
-
-Every inference should follow from:
-
-- accepted definitions;
-- accepted results;
-- explicitly stated assumptions;
-- valid rules of inference.
-
----
-
-## Conclusion
-
-The final proven result.
-
-The conclusion shall not exceed the scope established by the assumptions.
-
----
-
-## Limitations
-
-Every proof should explicitly state what it does not establish.
-
----
-
-# Proof Standards
-
-Every proof should satisfy the following requirements.
-
-## Explicitness
-
-No inference should depend upon unstated assumptions.
-
----
-
-## Traceability
-
-Every inference should identify its justification.
-
----
-
-## Dependency Discipline
-
-Proofs shall depend only upon previously accepted artifacts.
+Proofs shall not depend on later results.
 
 Circular reasoning is prohibited.
 
 ---
 
-## Minimal Assumptions
+# Termination
 
-Proofs should minimize the number of assumptions required.
+Every completed proof shall end with:
 
----
+**Q.E.D.**
 
-## Generality
-
-A proof should establish the strongest justified conclusion.
-
-Claims extending beyond the proven result are prohibited.
+A draft may include Q.E.D. only if the argument is intended as a complete proof rather than a partial attempt.
 
 ---
 
-## Reproducibility
+# Proof Standards
 
-An independent reviewer should be capable of reconstructing the proof using only the documented dependencies.
+Every proof should satisfy:
 
----
-
-# Permitted Dependencies
-
-A proof may depend upon:
-
-- canonical definitions;
-- accepted lemmas;
-- accepted propositions;
-- accepted theorems;
-- accepted corollaries;
-- explicitly stated assumptions.
-
-A proof may not depend upon:
-
-- intuition;
-- authority;
-- consensus;
-- undocumented assumptions;
-- examples alone.
-
----
-
-# Proof Classification
-
-Formal proof artifacts are organized as follows.
-
-Definition
-
-↓
-
-Lemma
-
-↓
-
-Proposition
-
-↓
-
-Theorem
-
-↓
-
-Corollary
-
-Each level may depend only upon previously established results.
+- explicitness;
+- traceability;
+- dependency discipline;
+- minimal assumptions;
+- justified generality;
+- reproducibility.
 
 ---
 
 # Invalid Proof Practices
 
-The following are prohibited.
+The following are prohibited:
 
 - circular reasoning;
 - equivocation;
@@ -201,7 +128,8 @@ The following are prohibited.
 - hidden assumptions;
 - dependency cycles;
 - unsupported generalization;
-- contradiction without explicit resolution.
+- contradiction without explicit resolution;
+- appeal to examples as proof of universal claims.
 
 ---
 
@@ -212,8 +140,6 @@ Validation investigations provide evidence regarding architectural claims.
 Formal proofs establish logical necessity.
 
 Evidence alone does not constitute proof.
-
-Likewise, a failed validation investigation does not automatically refute a theorem.
 
 Validation and proof complement one another but remain distinct.
 
@@ -227,15 +153,13 @@ Proofs may be revised only when:
 - a stronger proof is discovered;
 - dependencies change;
 - assumptions are reduced;
-- a counterexample is discovered.
+- a counterexample is discovered;
+- proof style is normalized across the proof library.
 
-Superseded proofs should be retained for historical traceability.
+Superseded proofs should be retained for historical traceability when they contain unique information.
 
 ---
 
 # Guiding Principle
 
 Every accepted theorem should be reproducible from explicitly documented assumptions through valid logical inference.
-
-The strength of a theorem is determined not by the significance of its conclusion but by the rigor of its proof.
-
