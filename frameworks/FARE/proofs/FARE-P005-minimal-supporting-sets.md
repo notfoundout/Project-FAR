@@ -14,13 +14,13 @@ Minimal Supporting Sets
 
 ## Status
 
-Draft
+Provisional / Not Accepted
 
 ---
 
 # Objective
 
-Demonstrate that every assessment possesses one or more minimal supporting sets consisting of the smallest collections of supporting assessments sufficient to sustain the assessment.
+Record the proposed theorem concerning minimal supporting sets while identifying the missing definitions required before the proof may be accepted.
 
 ---
 
@@ -33,80 +33,59 @@ Demonstrate that every assessment possesses one or more minimal supporting sets 
 
 ---
 
-# Theorem
+# Proposed Theorem
 
 Every supported assessment possesses at least one minimal supporting set.
 
 ---
 
-# Proof
+# Audit Finding
 
-Let A be an assessment possessing one or more supporting assessments.
+This proof is not currently accepted.
 
-By FARE-P004, A possesses a dependency closure containing every assessment upon which A depends.
+The prior draft relies upon technical concepts that do not yet possess canonical definitions:
 
-The dependency closure itself supports A.
+- sufficient support;
+- unnecessary support;
+- minimal support;
+- support removal.
 
-If the closure contains unnecessary supporting assessments, remove one.
-
-If A remains supported, the removed assessment was unnecessary.
-
-Repeat this process.
-
-Because the dependency closure is finite, repeated removal must eventually terminate.
-
-Termination occurs when removing any remaining supporting assessment would prevent adequate support for A.
-
-The remaining collection is therefore minimal.
-
-Hence every supported assessment possesses at least one minimal supporting set.
-
-∎
+Because these concepts are undefined, the theorem cannot yet be proven from established FARE definitions.
 
 ---
 
-# Corollary 1
+# Required Definitions Before Acceptance
 
-Minimal supporting sets need not be unique.
+Before this theorem may be restored, FARE must define:
 
-Different collections of supporting assessments may independently provide sufficient support.
+## Sufficient Support
 
----
+The conditions under which a collection of assessments is sufficient to support another assessment.
 
-# Corollary 2
+## Unnecessary Support
 
-Every minimal supporting set is contained within the dependency closure.
+The conditions under which a supporting assessment may be removed without changing support status.
 
----
+## Minimal Support
 
-# Corollary 3
+The conditions under which a supporting set is minimal.
 
-The dependency closure generally contains more assessments than any individual minimal supporting set.
+## Support Removal
 
----
-
-# Consequences
-
-Minimal supporting sets provide a formal basis for:
-
-- dependency reduction;
-- explanation generation;
-- impact analysis;
-- justification minimization;
-- efficient reevaluation.
+The operation or relation by which a supporting assessment is excluded from a support set.
 
 ---
 
-# Dependencies
+# Current Status
 
-FARE-028
+This theorem remains a candidate result.
 
-FARE-P004
+It should not be used as a dependency for later proofs until support theory is formalized.
 
 ---
 
 # Notes
 
-This theorem establishes existence only.
+This file is retained for traceability.
 
-It does not establish algorithms for computing minimal supporting sets.
+The result may become provable after the required support concepts are canonically defined.
