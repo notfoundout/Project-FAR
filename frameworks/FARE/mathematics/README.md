@@ -48,6 +48,7 @@ Mathematics is organized by subject.
 ```text
 mathematics/
 ├── README.md
+├── definitions/
 ├── graph/
 ├── dependency/
 ├── support/
@@ -71,6 +72,13 @@ The primary mathematical objects studied within FARE include:
 - dependency graphs;
 - support graphs;
 - conflict graphs;
+- evaluation spaces;
+- evaluation transformations;
+- evaluation paths;
+- evaluation neighborhoods;
+- evaluation limits;
+- evaluation completions;
+- evaluation invariants;
 - evaluation structures;
 - lifecycle structures;
 - assessment transformations.

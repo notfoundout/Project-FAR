@@ -35,40 +35,17 @@ Convergence determines whether such refinement stabilizes.
 # Dependencies
 
 - MDEF-001 — Evaluation Space
-- MDEF-004 — Evaluation Distance
 - MDEF-006 — Evaluation Neighborhood
 
 ---
 
 # Definition
 
-Let
+Let `(E_1, E_2, E_3, ...)` be a sequence of evaluations within an evaluation space.
 
-$begin:math:display$
-\(E\_1\,E\_2\,E\_3\,\\ldots\)
-$end:math:display$
+The sequence **converges** to an evaluation `E` if, beyond some point in the sequence, every evaluation belongs to every admissible neighborhood of `E`.
 
-be a sequence of evaluations within an evaluation space.
-
-The sequence **converges** to an evaluation
-
-$begin:math:display$
-E
-$end:math:display$
-
-if, beyond some point in the sequence, every evaluation belongs to every admissible neighborhood of
-
-$begin:math:display$
-E\.
-$end:math:display$
-
-The evaluation
-
-$begin:math:display$
-E
-$end:math:display$
-
-is called the **limit** of the sequence.
+The evaluation `E` is called a **limit** of the sequence.
 
 ---
 
@@ -86,25 +63,9 @@ A sequence is **divergent** if it possesses no limit.
 
 # Eventually Constant Sequence
 
-A sequence is **eventually constant** if there exists an index
+A sequence is **eventually constant** if there exists an index `N` such that `E_n = E` for every `n >= N`.
 
-$begin:math:display$
-N
-$end:math:display$
-
-such that
-
-$begin:math:display$
-E\_n\=E
-$end:math:display$
-
-for every
-
-$begin:math:display$
-n\\ge N\.
-$end:math:display$
-
-Every eventually constant sequence is convergent.
+Whether every eventually constant sequence is convergent depends upon the adopted neighborhood structure.
 
 ---
 
@@ -136,7 +97,8 @@ This definition does not assume:
 - completeness;
 - compactness;
 - continuity;
-- Cauchy sequences.
+- Cauchy sequences;
+- convergence of eventually constant sequences without suitable neighborhoods.
 
 These properties require independent investigation.
 
@@ -170,7 +132,8 @@ Future investigations should determine:
 - convergence rates;
 - convergence under different neighborhood systems;
 - relationships between convergence and evaluation distance;
-- convergence of normalization algorithms.
+- convergence of normalization algorithms;
+- minimal neighborhood conditions under which eventually constant sequences converge.
 
 ---
 
