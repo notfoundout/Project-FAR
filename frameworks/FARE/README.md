@@ -10,11 +10,13 @@ FARE defines the formal architecture governing the evaluation of reasoning.
 
 Where:
 
-- FARA defines representational architecture,
-- FARO defines operational reasoning,
-- FARM defines methodological framework construction,
+- FARA defines representational architecture;
+- FARO defines operational reasoning;
+- FARE defines how reasoning outcomes are formally assessed.
 
-FARE defines how reasoning outcomes are formally assessed.
+FARM is not assumed as an existing dependency of FARE in this repository state.
+
+If FARM is later formalized, FARE may be reviewed for possible generalization or import of shared methodological concepts.
 
 ---
 
@@ -22,15 +24,90 @@ FARE defines how reasoning outcomes are formally assessed.
 
 FARE investigates:
 
-- justification;
+- evaluation;
+- assessment;
+- assessment properties;
+- assessment relationships;
+- assessment lifecycle;
+- assessment graphs;
 - reliability;
+- reproducibility;
 - validity;
+- justification;
 - admissibility;
-- consistency;
 - completeness;
-- confidence;
 - robustness;
+- consistency;
+- confidence;
 - revision.
+
+---
+
+# Canonical Definition Sources
+
+FARE terminology is governed by the canonical definition documents in:
+
+`frameworks/FARE/definitions/`
+
+Current canonical definition files:
+
+- `evaluation-definitions.md`
+- `assessment-definitions.md`
+- `relationship-definitions.md`
+- `graph-definitions.md`
+
+Investigations discover concepts.
+
+Definitions formalize concepts.
+
+Proofs establish consequences of definitions.
+
+Audits verify consistency across the framework.
+
+---
+
+# Internal Architecture
+
+FARE currently separates into the following architectural areas:
+
+```text
+Evaluation Theory
+├── Evaluation
+├── Evaluation Objects
+├── Evaluation Criteria
+├── Evaluation Conditions
+├── Comparison
+└── Assessment
+
+Assessment Theory
+├── Structure
+├── Identity
+├── Equivalence
+├── Properties
+└── Confidence
+
+Relationship Theory
+├── Dependency
+├── Support
+├── Conflict
+└── Refinement
+
+Lifecycle Theory
+├── Status
+├── State Transitions
+├── History
+└── Versioning
+
+Graph Theory
+├── Assessment Graphs
+├── Dependency Subgraphs
+├── Conflict Subgraphs
+├── Weak Dependency Components
+└── Strong Dependency Components
+
+Proof Theory
+└── Formal consequences of canonical definitions
+```
 
 ---
 
@@ -38,28 +115,39 @@ FARE investigates:
 
 FARE seeks to answer questions including:
 
-- What makes a conclusion justified?
-- What makes reasoning reliable?
+- What is evaluation?
+- What is an assessment?
+- What makes an assessment valid?
+- What makes an evaluation reliable?
 - How should proofs be evaluated?
 - How should investigations be evaluated?
 - How should frameworks be evaluated?
-- When should conclusions be revised?
-- What distinguishes reliable reasoning from unreliable reasoning?
+- When should assessments be revised?
+- What distinguishes reliable evaluation from unreliable evaluation?
 
 ---
 
 # Relationship to Other Frameworks
 
-FARA provides the architectural objects.
+FARA provides the architectural objects that may be evaluated.
 
-FARO provides the operational processes.
+FARO provides the operational processes whose outputs may be evaluated.
 
-FARM provides the methodology for constructing and validating frameworks.
+FARE evaluates reasoning outputs, assessment structures, assessment relationships, and evaluation processes.
 
-FARE evaluates the outputs of those frameworks.
+FARE remains self-contained unless a dependency upon another framework is explicitly stated.
 
 ---
 
 # Current Status
 
-Discovery
+Canonicalization / Formalization
+
+FARE is architecturally coherent but still under formal refinement.
+
+Known active refinement areas:
+
+- graph-theoretic precision;
+- proof normalization;
+- support theory;
+- lifecycle and relationship classification.
