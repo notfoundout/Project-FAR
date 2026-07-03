@@ -34,167 +34,25 @@ Demonstrate that composing compatible evaluation paths preserves reachability.
 
 # Theorem
 
-Let
+Let `E_1`, `E_2`, and `E_3` be evaluations in the same evaluation space.
 
-$begin:math:display$
-E\_1\,E\_2\,E\_3
-$end:math:display$
-
-be evaluations in the same evaluation space.
-
-If
-
-$begin:math:display$
-E\_2
-$end:math:display$
-
-is reachable from
-
-$begin:math:display$
-E\_1
-$end:math:display$
-
-and
-
-$begin:math:display$
-E\_3
-$end:math:display$
-
-is reachable from
-
-$begin:math:display$
-E\_2\,
-$end:math:display$
-
-then
-
-$begin:math:display$
-E\_3
-$end:math:display$
-
-is reachable from
-
-$begin:math:display$
-E\_1\.
-$end:math:display$
+If `E_2` is reachable from `E_1`, and `E_3` is reachable from `E_2`, then `E_3` is reachable from `E_1`.
 
 ---
 
 # Proof
 
-Assume
+Assume `E_2` is reachable from `E_1`.
 
-$begin:math:display$
-E\_2
-$end:math:display$
+By the definition of reachability, there exists an evaluation path `P_1` from `E_1` to `E_2`.
 
-is reachable from
+Assume `E_3` is reachable from `E_2`.
 
-$begin:math:display$
-E\_1\.
-$end:math:display$
+Then there exists an evaluation path `P_2` from `E_2` to `E_3`.
 
-By the definition of reachability, there exists an evaluation path
+By the definition of path composition, since `P_1` terminates at `E_2` and `P_2` begins at `E_2`, their concatenation `P_2 ∘ P_1` is an evaluation path from `E_1` to `E_3`.
 
-$begin:math:display$
-P\_1
-$end:math:display$
-
-from
-
-$begin:math:display$
-E\_1
-$end:math:display$
-
-to
-
-$begin:math:display$
-E\_2\.
-$end:math:display$
-
-Assume
-
-$begin:math:display$
-E\_3
-$end:math:display$
-
-is reachable from
-
-$begin:math:display$
-E\_2\.
-$end:math:display$
-
-Then there exists an evaluation path
-
-$begin:math:display$
-P\_2
-$end:math:display$
-
-from
-
-$begin:math:display$
-E\_2
-$end:math:display$
-
-to
-
-$begin:math:display$
-E\_3\.
-$end:math:display$
-
-By the definition of path composition, since
-
-$begin:math:display$
-P\_1
-$end:math:display$
-
-terminates at
-
-$begin:math:display$
-E\_2
-$end:math:display$
-
-and
-
-$begin:math:display$
-P\_2
-$end:math:display$
-
-begins at
-
-$begin:math:display$
-E\_2\,
-$end:math:display$
-
-their concatenation
-
-$begin:math:display$
-P\_2 \\circ P\_1
-$end:math:display$
-
-is an evaluation path from
-
-$begin:math:display$
-E\_1
-$end:math:display$
-
-to
-
-$begin:math:display$
-E\_3\.
-$end:math:display$
-
-Therefore
-
-$begin:math:display$
-E\_3
-$end:math:display$
-
-is reachable from
-
-$begin:math:display$
-E\_1\.
-$end:math:display$
+Therefore `E_3` is reachable from `E_1`.
 
 **Q.E.D.**
 
