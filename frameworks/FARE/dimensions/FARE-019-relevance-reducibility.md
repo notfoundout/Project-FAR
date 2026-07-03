@@ -8,7 +8,7 @@ FARE-019
 
 # Title
 
-Influence Reducibility
+Relevance Reducibility
 
 ---
 
@@ -20,35 +20,35 @@ In Progress
 
 # Purpose
 
-Determine whether influence is a primitive evaluative concept or a specialized instance of dependency.
+Determine whether relevance is a primitive evaluative concept or whether it is reducible to more fundamental concepts within FARE.
 
-The objective is to minimize the number of irreducible concepts required by FARE.
+The objective is to minimize the number of irreducible concepts required by the Formal Architecture of Reasoning Evaluation.
 
 ---
 
 # Motivation
 
-Previous investigations identified influence as the concept underlying evaluative relevance.
+Previous investigations introduced relevance as the concept distinguishing evaluatively significant elements from irrelevant ones.
 
-Project FAR favors explanatory economy.
+Subsequent investigations introduced influence as the mechanism by which elements affect assessment outcomes.
 
-Before accepting influence as primitive, its reducibility must be investigated.
+This investigation determines whether relevance constitutes an independent concept or whether it is entirely explainable in terms of influence.
 
 ---
 
 # Central Question
 
-Is influence reducible to dependency?
+Is relevance reducible?
 
 ---
 
 # Candidate 1
 
-Influence is Primitive.
+Relevance is Primitive.
 
 Question
 
-Must influence be accepted as an independent concept?
+Must relevance be accepted as an independent evaluative concept?
 
 Evaluation
 
@@ -64,17 +64,19 @@ Undetermined.
 
 # Candidate 2
 
-Influence as Dependency.
+Relevance as Influence.
 
 Question
 
-Does influence consist of dependency between an evaluation element and an assessment?
+Is an element relevant if and only if it influences the resulting assessment?
 
 Evaluation
 
-Changing an influencing element changes the resulting assessment.
+Every investigated relevant element possesses evaluative influence.
 
-This appears to establish a dependency relationship.
+Elements lacking influence have consistently failed to qualify as relevant.
+
+Current evidence supports this hypothesis.
 
 Result
 
@@ -84,19 +86,39 @@ Supported.
 
 # Candidate 3
 
-Influence as Causation.
+Relevance as Importance.
 
 Question
 
-Is influence identical to causation?
+Is relevance determined by importance?
 
 Evaluation
 
-Evaluative influence concerns formal dependence within an evaluation.
+Importance presupposes relevance.
 
-Causation concerns relationships in the world.
+An element cannot be important to an evaluation unless it is already relevant.
 
-These concepts are distinct.
+The reduction is circular.
+
+Result
+
+Rejected.
+
+---
+
+# Candidate 4
+
+Relevance as Association.
+
+Question
+
+Is relevance determined by association with the evaluation object?
+
+Evaluation
+
+Associated elements frequently possess no influence upon the resulting assessment.
+
+Association alone is insufficient.
 
 Result
 
@@ -106,27 +128,37 @@ Rejected.
 
 # Pattern Analysis
 
-Every investigated instance of influence exhibits dependency.
+Every investigated instance of relevance exhibits evaluative influence.
 
-Not every dependency necessarily constitutes influence.
+No investigated instance of influence has been identified that is irrelevant to the evaluation.
 
-Influence therefore appears to be evaluative dependency.
+Current evidence suggests the concepts may be extensionally equivalent.
+
+Whether they remain conceptually distinct requires further investigation.
 
 ---
 
 # Emerging Hypothesis
 
-Influence is a specialized dependency relation connecting evaluation elements to assessment outcomes.
+Relevance is the property of possessing evaluative influence.
+
+Influence explains why an element is relevant.
+
+Relevance identifies those elements possessing that property.
 
 ---
 
 # Observation
 
-Dependency is framework-independent.
+Influence appears operational.
 
-Influence is specific to evaluation.
+Relevance appears classificatory.
 
-Influence may therefore inherit the properties of dependency while introducing additional evaluative constraints.
+Influence explains.
+
+Relevance classifies.
+
+The concepts therefore appear related but not identical.
 
 ---
 
@@ -134,25 +166,25 @@ Influence may therefore inherit the properties of dependency while introducing a
 
 If accepted:
 
-FARE imports dependency theory from FARM.
+Relevance ceases to be an independent primitive.
 
-No independent primitive for influence is required.
+FARE gains explanatory economy.
 
-The foundational architecture of Project FAR becomes more unified.
+Subsequent investigations may define relevance entirely through influence.
 
 ---
 
 # Relationship to Previous Investigations
 
-FARM
+Evaluation
 
 ↓
 
-Dependency
+Assessment
 
 ↓
 
-FARE
+Conditions
 
 ↓
 
@@ -162,17 +194,9 @@ Influence
 
 Relevance
 
-↓
+Influence provides the explanatory basis for relevance.
 
-Condition Equivalence
-
-↓
-
-Reliability
-
-↓
-
-Reproducibility
+Relevance classifies elements according to influence.
 
 ---
 
@@ -180,10 +204,10 @@ Reproducibility
 
 Future investigations should determine:
 
-- whether every influence relation satisfies the properties of dependency;
-- what additional constraints distinguish influence from dependency;
-- whether influence graphs are specialized dependency graphs;
-- whether evaluative dependencies admit formal composition.
+- whether influence itself is primitive within FARE;
+- whether influence admits degrees;
+- whether influence possesses formal algebraic properties;
+- whether influence graphs may represent evaluative structure.
 
 ---
 
@@ -191,4 +215,4 @@ Future investigations should determine:
 
 The investigation remains active.
 
-Current evidence supports treating influence as a candidate specialization of dependency rather than an independent primitive.
+Current evidence supports treating relevance as a classification based upon evaluative influence rather than as an independent primitive.
