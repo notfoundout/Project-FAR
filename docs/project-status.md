@@ -4,7 +4,9 @@
 
 Project FAR has completed its first stable FARE mathematics milestone.
 
-Active development now shifts back to the FAR core framework.
+FAR has completed Phase 4 consistency audit and is eligible for FAR v1.0 Stable freeze after review and merge of the audit branch.
+
+FARO development should begin only after the FAR v1.0 Stable milestone is formally recorded.
 
 ---
 
@@ -29,20 +31,37 @@ FARE Mathematics v0.1 is now requirement-driven. It shall not expand unless FAR 
 
 ---
 
+### FAR Phase 1 — Canonical Audit
+
+Status: Complete
+
+---
+
+### FAR Phase 2 — Structural Audit
+
+Status: Complete
+
+---
+
+### FAR Phase 3 — Methodology Audit
+
+Status: Complete
+
+---
+
+### FAR Phase 4 — Consistency Audit
+
+Status: Complete
+
+---
+
 ## Active Focus
 
-### FAR Core Framework
+### FAR v1.0 Stable Freeze
 
-The next development target is FAR v1.0 Stable.
+The next development target is recording the FAR v1.0 Stable milestone.
 
-Work should focus on:
-
-- canonical terminology;
-- framework architecture;
-- dependency graph;
-- methodology;
-- consistency audit;
-- integration with the frozen FARE mathematics layer.
+This should occur only after the Phase 4 audit changes are reviewed and merged.
 
 ---
 
@@ -52,9 +71,9 @@ The current project order is:
 
 1. Freeze FARE Mathematics v0.1.
 2. Stabilize FAR.
-3. Begin FARO once FAR reaches comparable stability.
-4. Develop FARA after FAR and FARO requirements are clear.
-5. Expand FARE Mathematics only when required by FAR, FARO, or FARA.
+3. Record FAR v1.0 Stable.
+4. Begin FARO once FAR v1.0 Stable is recorded.
+5. Develop FARA or FARE further only when later requirements demand it.
 
 ---
 
@@ -81,7 +100,8 @@ Completion criteria:
 - stable methodology;
 - no unresolved circular definitions;
 - clear separation between FAR, FARO, FARA, and FARE;
-- explicit integration points with FARE Mathematics v0.1.
+- explicit integration points with FARE Mathematics v0.1;
+- Phase 4 consistency audit completed with no blockers.
 
 ---
 
