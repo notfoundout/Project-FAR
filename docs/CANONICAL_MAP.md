@@ -156,7 +156,7 @@ Canonical Location:
 
 Purpose:
 
-Defines the FAR methodology.
+Defines the methodological principles governing FAR investigations.
 
 ---
 
@@ -168,7 +168,7 @@ Canonical Location:
 
 Purpose:
 
-Defines the stages of a FAR investigation.
+Defines the canonical stages of a FAR investigation.
 
 ---
 
@@ -181,6 +181,42 @@ Canonical Location:
 Purpose:
 
 Describes the application of the FAR methodology.
+
+---
+
+## FAR Dependency Graph
+
+Canonical Location:
+
+`frameworks/FAR/dependency-graph.md`
+
+Purpose:
+
+Records FAR document and concept dependency order.
+
+---
+
+## FAR Design Principles
+
+Canonical Location:
+
+`frameworks/FAR/design-principles.md`
+
+Purpose:
+
+Records governing design principles for FAR.
+
+---
+
+## FAR v1.0 Criteria
+
+Canonical Location:
+
+`frameworks/FAR/FAR-v1.0-criteria.md`
+
+Purpose:
+
+Defines criteria required before FAR v1.0 Stable.
 
 ---
 
@@ -257,75 +293,3 @@ Canonical Location:
 Purpose:
 
 Records intermediate formal results.
-
----
-
-## Lemmas
-
-Canonical Location:
-
-`theory/theorems/`
-
-Purpose:
-
-Records supporting formal results.
-
----
-
-## Theorems
-
-Canonical Location:
-
-`theory/theorems/theorems.md`
-
-Purpose:
-
-Records the principal formal results.
-
----
-
-## Conjectures
-
-Canonical Location:
-
-`theory/theorems/conjectures.md`
-
-Purpose:
-
-Records unproven formal statements.
-
----
-
-## Proofs
-
-Canonical Location:
-
-`theory/proofs/proofs.md`
-
-Purpose:
-
-Contains formal proofs and proof obligations.
-
----
-
-## FARO-Specific Definitions
-
-Canonical Location:
-
-`frameworks/FARO/theory/definitions.md`
-
-Purpose:
-
-Provides the canonical definitions for FARO-specific operational terminology.
-
----
-
-## Meta-Theoretic Definitions
-
-Canonical Location:
-
-`theory/definitions/meta-theory-definitions.md`
-
-Purpose:
-
-Provides the canonical definitions for meta-theoretic terminology.
