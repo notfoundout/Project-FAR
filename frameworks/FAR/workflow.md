@@ -68,6 +68,10 @@ Develop the investigation through explicit transformations represented by transi
 
 Each transformation should produce a new reasoning state.
 
+Candidate generation belongs within this stage when candidates arise during reasoning.
+
+Candidates generated during reasoning should be identified before admissibility classification.
+
 ---
 
 ## Stage 7 — Construct the Admissibility Structure (Ω)
@@ -75,6 +79,8 @@ Each transformation should produce a new reasoning state.
 Classify the candidates admitted for consideration according to the applicable reasoning calculus.
 
 The resulting Admissibility Structure records the admissibility status of each candidate.
+
+If no candidates are generated, the investigation record should state that Ω is not applicable or empty, together with the reason.
 
 ---
 
@@ -84,13 +90,25 @@ Apply the appropriate resolution rule to the classified candidates.
 
 The resolution rule determines which admissible candidate, or collection of admissible candidates, constitutes the resolution of the investigation.
 
+If no resolution rule is applicable, the investigation may close as unresolved, suspended, incomplete, or invalid according to the investigation validation policy.
+
 ---
 
 ## Stage 9 — Record the Resolution
 
 Record the resolution together with the reasoning process that produced it.
 
-The complete investigation should remain explicit, auditable, and reproducible.
+The complete investigation should remain explicit, auditable, and reconstructible.
+
+A resolution record may state that the investigation is resolved, provisionally resolved, unresolved, suspended, incomplete, or invalid.
+
+---
+
+## Optional Stage Policy
+
+A workflow stage may be marked `Not applicable` only when the investigation record explicitly states why the stage is not applicable.
+
+A stage shall not be silently omitted.
 
 ---
 
@@ -99,3 +117,27 @@ The complete investigation should remain explicit, auditable, and reproducible.
 An investigation may return to any previous stage whenever new representations, revised interpretations, modified criteria, or additional reasoning require further analysis.
 
 The workflow therefore supports iterative refinement rather than requiring a strictly linear process.
+
+Every return to an earlier stage should record:
+
+- the stage revisited;
+- the reason for revision;
+- the artifact changed;
+- the effect on later stages.
+
+---
+
+## Closure Policy
+
+A FAR investigation may close with one of the following statuses:
+
+- `Resolved` — a resolution has been recorded under the stated resolution rule.
+- `Provisionally resolved` — a resolution has been recorded, but limitations remain.
+- `Unresolved` — no resolution is currently available under the stated method.
+- `Suspended` — the investigation is paused pending additional representations, interpretations, criteria, or reasoning.
+- `Incomplete` — required methodological artifacts are missing.
+- `Invalid` — the investigation violates core FAR methodology or cannot be reconstructed.
+
+Closure status records the methodological state of the investigation.
+
+It does not assert that the resolution is true, optimal, final, or unique.
