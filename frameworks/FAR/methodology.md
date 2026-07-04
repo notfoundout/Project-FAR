@@ -77,13 +77,15 @@ Every FAR investigation should satisfy the following principles.
 
 ### Explicitness
 
-Every assumption, representation, transformation, and conclusion should be explicitly represented.
+Every assumption, representation, transformation, candidate, admissibility classification, resolution rule, and conclusion should be explicitly represented when relevant.
+
+Silent omission weakens the investigation record.
 
 ---
 
 ### Auditability
 
-The complete investigation should be reconstructible from its recorded reasoning states and transition signatures.
+The complete investigation should be reconstructible from its recorded reasoning states, transition signatures, revision records, validation status, and closure status.
 
 ---
 
@@ -93,17 +95,35 @@ The methodology does not prescribe which reasoning calculus should be used.
 
 Different investigations may employ different reasoning calculi.
 
+FAR does not require a specific logic, mathematical system, epistemology, scientific domain, legal standard, historical method, or AI architecture.
+
 ---
 
-### Reproducibility
+### Reconstructibility
 
-Equivalent investigators following the same methodology should be capable of reproducing equivalent investigations.
+A FAR investigation is reproducible to the extent that another investigator can reconstruct the reasoning process from the recorded artifacts under the stated interpretation and reasoning calculus.
+
+FAR does not require that independent investigators reach identical psychological states or identical judgments.
+
+It requires enough explicit structure for the investigation to be reconstructed, audited, and compared.
 
 ---
 
 ### Iterative Revisability
 
 A FAR investigation may return to earlier workflow stages whenever new representations, revised interpretations, modified criteria, or additional reasoning require further analysis.
+
+Every such revision should record the stage revisited, the reason for revision, the artifact changed, and the effect on later stages.
+
+---
+
+### Closure Discipline
+
+A FAR investigation should not simply stop without status.
+
+Closure should be recorded as resolved, provisionally resolved, unresolved, suspended, incomplete, or invalid.
+
+Closure status is methodological rather than truth-guaranteeing.
 
 ---
 
@@ -127,10 +147,11 @@ FARO should not redefine FAR methodology, alter FAR workflow stages, or introduc
 
 ## Current Status
 
-The FAR methodology remains under Phase 1 canonical stabilization.
+The FAR methodology remains under Phase 3 methodology audit.
 
 Current work includes:
 
-- synchronization of workflow, methodology, and application documents;
-- explicit delegation to canonical definitions and FARA;
-- and preparation for FAR v1.0 Stable.
+- verifying methodological neutrality;
+- strengthening revision and closure policies;
+- ensuring artifact-based reconstructibility;
+- and preparing for Phase 4 consistency audit.
