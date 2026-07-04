@@ -18,11 +18,9 @@ FAR does not introduce new primitives.
 
 ## Current Status
 
-FAR is undergoing Phase 2 structural stabilization.
+FAR has completed Phase 4 consistency audit and is eligible for a FAR v1.0 Stable freeze after review and merge of the audit branches.
 
-The active objective is FAR v1.0 Stable.
-
-FARO development should begin only after FAR reaches comparable stability.
+FARO development should begin only after FAR v1.0 Stable is formally recorded.
 
 ---
 
