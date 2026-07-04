@@ -12,18 +12,61 @@ FAR provides a structured methodology for conducting investigations within the a
 
 Unlike FARA, which defines the architecture of structured reasoning, FAR defines how that architecture is applied during an investigation.
 
+FAR does not introduce new primitives.
+
+---
+
+## Current Status
+
+FAR is undergoing Phase 1 canonical stabilization.
+
+The active objective is FAR v1.0 Stable.
+
+FARO development should begin only after FAR reaches comparable stability.
+
+---
+
+## Canonical Source Rule
+
+`workflow.md` is the canonical source for the ordered stages of a FAR investigation.
+
+`methodology.md` describes the methodological principles governing that workflow.
+
+`application.md` describes how the methodology is applied across domains.
+
+---
+
+## Delegation to FARA
+
+FAR uses architectural concepts defined by FARA, including:
+
+- reasoning states;
+- transition signatures;
+- the Admissibility Structure (Ω);
+- resolution rules;
+- resolution executions;
+- resolutions.
+
+FAR specifies when and how these concepts are used during an investigation.
+
+FAR does not redefine them.
+
 ---
 
 ## Contents
 
-- `methodology.md` — Defines the FAR methodology.
-- `workflow.md` — Defines the stages of a FAR investigation.
-- `application.md` — Describes how the FAR methodology is applied across domains.
+- `workflow.md` — Canonical source for the stages of a FAR investigation.
+- `methodology.md` — Defines the principles governing FAR investigation practice.
+- `application.md` — Describes how FAR is applied across domains.
+- `dependency-graph.md` — Records FAR document and concept dependency order.
+- `design-principles.md` — Records governing design principles for FAR.
+- `FAR-v1.0-criteria.md` — Defines the criteria required before FAR v1.0 Stable.
 
 ---
 
 ## Related Directories
 
 - `frameworks/FARA/` — Foundational architecture.
+- `frameworks/FARO/` — Future operational layer, downstream of stable FAR.
 - `theory/` — Formal definitions, axioms, propositions, conjectures, theorems, and proofs.
 - `examples/` — Complete worked investigations.
