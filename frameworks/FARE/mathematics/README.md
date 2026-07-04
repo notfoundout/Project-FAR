@@ -14,12 +14,15 @@ The objective of this directory is to discover, prove, classify, and organize th
 
 Mathematical development includes:
 
+- notation;
+- definitions;
 - theorems;
 - lemmas;
 - propositions;
 - corollaries;
 - conjectures;
 - counterexamples;
+- examples;
 - complexity results;
 - structural properties.
 
@@ -35,6 +38,8 @@ Theory establishes structure.
 
 Mathematics discovers consequences.
 
+Examples illustrate mathematics but do not define or prove it.
+
 The mathematics of FARE is not designed in advance.
 
 It is investigated, developed, and refined through formal reasoning.
@@ -48,7 +53,20 @@ Mathematics is organized by subject.
 ```text
 mathematics/
 ├── README.md
+├── notation.md
+├── proof-policy.md
+├── theorem-index.md
 ├── definitions/
+├── proofs/
+│   ├── foundations/
+│   ├── logic/
+│   ├── geometry/
+│   ├── topology/
+│   ├── analysis/
+│   ├── algorithms/
+│   └── archive/
+│       └── legacy/
+├── examples/
 ├── graph/
 ├── dependency/
 ├── support/
@@ -56,11 +74,21 @@ mathematics/
 ├── lifecycle/
 ├── complexity/
 ├── algebra/
-├── topology/
 └── conjectures/
 ```
 
 Additional mathematical domains may be introduced as required.
+
+---
+
+# Core References
+
+- `notation.md` records standard notation.
+- `proof-policy.md` governs theorem status, dependency rules, and proof requirements.
+- `theorem-index.md` indexes active theorem documents.
+- `definitions/` contains mathematical definitions.
+- `proofs/` contains active theorem development.
+- `examples/` contains illustrative material only.
 
 ---
 
@@ -82,23 +110,6 @@ The primary mathematical objects studied within FARE include:
 - evaluation structures;
 - lifecycle structures;
 - assessment transformations.
-
----
-
-# Mathematical Goals
-
-The mathematics of FARE seeks to establish:
-
-- existence theorems;
-- uniqueness theorems;
-- preservation theorems;
-- decomposition theorems;
-- reconstruction theorems;
-- optimization theorems;
-- complexity bounds;
-- invariants;
-- equivalence classes;
-- canonical forms.
 
 ---
 
@@ -150,15 +161,16 @@ Demonstrates that a proposed statement is false.
 
 # Proof Requirements
 
-Every proof shall satisfy the FARE Proof Standard.
+Every proof shall follow `proof-policy.md`.
 
 Every dependency shall be explicit.
 
 Every theorem shall identify:
 
-- definitions used;
 - dependencies;
 - assumptions;
+- statement;
+- proof;
 - consequences.
 
 ---
@@ -184,23 +196,7 @@ Mathematics investigates the consequences of those concepts.
 
 No mathematical result may introduce new terminology.
 
-All terminology shall first be established through the canonical definition process.
-
----
-
-# Long-Term Objectives
-
-The long-term objective is to develop a coherent mathematical theory of reasoning evaluation.
-
-This includes identifying:
-
-- fundamental invariants;
-- canonical decompositions;
-- optimal evaluation structures;
-- computational complexity classes;
-- reconstruction algorithms;
-- completeness and incompleteness results;
-- limits of formal reasoning evaluation.
+All terminology shall first be established through the accepted definition process.
 
 ---
 
