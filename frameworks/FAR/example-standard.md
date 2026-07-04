@@ -74,25 +74,59 @@ Construct Ω when the investigation involves candidate admissibility or selectio
 
 Ω should record admissibility classifications rather than determine them.
 
+If Ω is not applicable, explain why.
+
 ---
 
 ### 8. Resolution Rule
 
 Identify the rule used to select the resolution from admissible candidates.
 
+If no resolution rule is applicable, explain why.
+
 ---
 
-### 9. Resolution
+### 9. Resolution or Closure Status
 
 Record the resolution produced by the investigation.
 
 The resolution should be distinguishable from the rule and execution that produced it.
 
+If no resolution is produced, record the closure status.
+
+Allowed closure statuses include:
+
+- `Resolved`;
+- `Provisionally resolved`;
+- `Unresolved`;
+- `Suspended`;
+- `Incomplete`;
+- `Invalid`.
+
 ---
 
-### 10. Audit Notes
+### 10. Revision Records
 
-Record any limitations, assumptions, unresolved issues, or reproducibility concerns.
+If the investigation revisits any earlier stage, record:
+
+- the stage revisited;
+- the reason for revision;
+- the artifact changed;
+- the effect on later stages.
+
+---
+
+### 11. Audit Notes
+
+Record any limitations, assumptions, unresolved issues, missing artifacts, or reproducibility concerns.
+
+---
+
+## Optional Stage Rule
+
+A section may be marked `Not applicable` only when the example states why it is not applicable.
+
+No required section should be silently omitted.
 
 ---
 
@@ -105,6 +139,23 @@ It belongs within Stage 6 — Perform Reasoning.
 Stage 7 classifies candidates through the Admissibility Structure (Ω).
 
 This preserves the generality of FAR across investigations where candidates emerge continuously rather than in a discrete phase.
+
+---
+
+## Edge-Case Requirements
+
+Examples involving edge cases should explicitly record the relevant condition.
+
+This includes:
+
+- no admissible candidates;
+- multiple admissible candidates;
+- changing interpretations;
+- changing reasoning calculi;
+- unresolved investigations;
+- suspended investigations;
+- incomplete records;
+- conflicting resolutions.
 
 ---
 
