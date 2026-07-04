@@ -26,7 +26,7 @@ It does not mean FAR is final, unrevisable, universal, or proven minimal.
 
 Other documents may summarize the workflow but shall not maintain independent stage definitions.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -36,7 +36,7 @@ The nine-stage workflow shall not be independently defined across multiple FAR d
 
 `methodology.md` and `application.md` shall refer to `workflow.md` for the canonical stage sequence.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -48,7 +48,7 @@ Candidate admissibility shall be classified in Stage 7 through the Admissibility
 
 Candidate generation is not a separate universal FAR workflow stage.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -58,7 +58,7 @@ FAR shall permit stages to be marked `Not applicable` only when the investigatio
 
 No workflow stage shall be silently omitted.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -68,7 +68,7 @@ FAR shall require revision records when an investigation revisits an earlier sta
 
 A revision record should identify the stage revisited, the reason for revision, the artifact changed, and the effect on later stages.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -78,7 +78,7 @@ FAR shall define investigation closure statuses.
 
 At minimum, FAR shall distinguish resolved, provisionally resolved, unresolved, suspended, incomplete, and invalid investigations.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -88,7 +88,7 @@ FAR shall define reproducibility in terms of artifact-based reconstructibility.
 
 It shall not rely on assumptions about identical investigators or identical psychological states.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -96,7 +96,7 @@ Status: required.
 
 FAR shall explicitly handle edge cases including no admissible candidates, multiple admissible candidates, changing interpretations, changing reasoning calculi, open-ended investigations, and conflicting resolutions.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -108,7 +108,7 @@ All technical terms used by FAR shall be either:
 - defined architecturally by FARA;
 - or explicitly identified as FAR document roles rather than new primitives.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -118,7 +118,7 @@ FAR shall not introduce new primitives.
 
 FAR workflow stages are procedural roles, not primitive concepts.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -128,7 +128,7 @@ FAR shall remain downstream of FARA.
 
 FAR applies the FARA architecture during investigations but does not modify the FARA architecture.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -140,7 +140,7 @@ FARO shall not begin as a stable operational layer until FAR reaches comparable 
 
 FARO shall operationalize FAR rather than redefine it.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -150,7 +150,7 @@ Status: required.
 
 The dependency graph shall state that the ordering is document-maintenance order, not conceptual priority.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -158,7 +158,7 @@ Status: required.
 
 `design-principles.md` shall exist and identify the governing design constraints of FAR.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -166,7 +166,7 @@ Status: required.
 
 `example-standard.md` shall exist and define the minimum required structure for canonical FAR examples.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -174,7 +174,7 @@ Status: required.
 
 `investigation-validation.md` shall exist and define the minimum methodological validation checklist for completed FAR investigations.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -188,15 +188,15 @@ The following documents shall be synchronized:
 
 They may have different roles, but they shall not conflict.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
 ### 18. Audit Records Present
 
-The Phase 1 canonical audit, Phase 2 structural audit, and Phase 3 methodology audit shall be recorded and preserved under `docs/audits/`.
+The Phase 1 canonical audit, Phase 2 structural audit, Phase 3 methodology audit, and Phase 4 consistency audit shall be recorded and preserved under `docs/audits/`.
 
-Status: required.
+Status: verified by Phase 4 consistency audit.
 
 ---
 
@@ -204,32 +204,34 @@ Status: required.
 
 Before FAR v1.0 Stable is declared, verify:
 
-- [ ] `workflow.md` is the canonical stage source.
-- [ ] candidate generation is treated as part of Stage 6.
-- [ ] candidate admissibility classification is treated as part of Stage 7.
-- [ ] optional-stage policy is present.
-- [ ] revision-record policy is present.
-- [ ] closure policy is present.
-- [ ] reproducibility is framed as artifact-based reconstructibility.
-- [ ] edge-case handling is present.
-- [ ] `methodology.md` delegates stage order to `workflow.md`.
-- [ ] `application.md` delegates stage order to `workflow.md`.
-- [ ] `dependency-graph.md` exists.
-- [ ] dependency graph order is identified as document-maintenance order.
-- [ ] `design-principles.md` exists.
-- [ ] `faro-boundary.md` exists.
-- [ ] `example-standard.md` exists.
-- [ ] `investigation-validation.md` exists.
-- [ ] all FARA concepts used by FAR are explicitly delegated.
-- [ ] no FAR document introduces new primitives.
-- [ ] FARO boundary is stated.
-- [ ] canonical map is updated if necessary.
-- [ ] README navigation is updated.
-- [ ] final methodology audit is complete.
-- [ ] final consistency audit is complete.
+- [x] `workflow.md` is the canonical stage source.
+- [x] candidate generation is treated as part of Stage 6.
+- [x] candidate admissibility classification is treated as part of Stage 7.
+- [x] optional-stage policy is present.
+- [x] revision-record policy is present.
+- [x] closure policy is present.
+- [x] reproducibility is framed as artifact-based reconstructibility.
+- [x] edge-case handling is present.
+- [x] `methodology.md` delegates stage order to `workflow.md`.
+- [x] `application.md` delegates stage order to `workflow.md`.
+- [x] `dependency-graph.md` exists.
+- [x] dependency graph order is identified as document-maintenance order.
+- [x] `design-principles.md` exists.
+- [x] `faro-boundary.md` exists.
+- [x] `example-standard.md` exists.
+- [x] `investigation-validation.md` exists.
+- [x] all FARA concepts used by FAR are explicitly delegated.
+- [x] no FAR document introduces new primitives.
+- [x] FARO boundary is stated.
+- [x] canonical map is updated if necessary.
+- [x] README navigation is updated.
+- [x] final methodology audit is complete.
+- [x] final consistency audit is complete.
 
 ---
 
 ## Notes
 
-FAR v1.0 Stable should be declared only after final methodology and consistency audits confirm that these criteria are satisfied.
+The Phase 4 consistency audit found no remaining blocker to FAR v1.0 Stable.
+
+FAR v1.0 should be declared through a dedicated milestone PR after the Phase 4 audit changes are merged.
