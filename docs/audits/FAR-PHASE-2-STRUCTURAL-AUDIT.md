@@ -2,13 +2,13 @@
 
 ## Status
 
-Initial structural audit complete.
+Complete.
 
 ---
 
 ## Scope
 
-This audit reviews FAR after the Phase 1 canonical cleanup branch changes.
+This audit reviews FAR after Phase 1 canonical cleanup and Phase 2 structural completion.
 
 Reviewed files:
 
@@ -18,6 +18,9 @@ Reviewed files:
 - `frameworks/FAR/application.md`
 - `frameworks/FAR/dependency-graph.md`
 - `frameworks/FAR/design-principles.md`
+- `frameworks/FAR/faro-boundary.md`
+- `frameworks/FAR/example-standard.md`
+- `frameworks/FAR/investigation-validation.md`
 - `frameworks/FAR/FAR-v1.0-criteria.md`
 - `docs/CANONICAL_MAP.md`
 
@@ -28,7 +31,7 @@ The audit asks:
 3. Are there missing interfaces between components?
 4. Does FAR remain independent of any particular logic, mathematics, or epistemology?
 5. Are FAR, FARA, FARO, and FARE cleanly separated?
-6. Is the resulting structure ready for FAR v1.0 final review?
+6. Is the resulting structure ready for Phase 3 methodology audit?
 
 ---
 
@@ -47,6 +50,9 @@ Maintenance and governance are handled separately:
 ```text
 dependency-graph.md
  design-principles.md
+ faro-boundary.md
+ example-standard.md
+ investigation-validation.md
  FAR-v1.0-criteria.md
 ```
 
@@ -54,17 +60,15 @@ This separation is structurally sound.
 
 ---
 
-## Finding 1 — Core document roles are now properly separated
+## Finding 1 — Core document roles are properly separated
 
 `workflow.md` is explicitly the canonical source for the FAR stage sequence.
 
-`methodology.md` now states that the canonical ordered stage sequence is maintained in `workflow.md` and no longer maintains an independent stage list.
+`methodology.md` states that the canonical ordered stage sequence is maintained in `workflow.md` and does not maintain an independent stage list.
 
-`application.md` also delegates canonical workflow order to `workflow.md` and states that its requirements summarize but do not replace the workflow.
+`application.md` delegates canonical workflow order to `workflow.md` and states that its requirements summarize but do not replace the workflow.
 
 Assessment: pass.
-
-The previous duplication problem has been mostly corrected.
 
 ---
 
@@ -82,7 +86,7 @@ FAR remains a methodology layer rather than an architecture layer.
 
 ## Finding 3 — FAR and FARA are cleanly separated
 
-The updated FAR documents explicitly delegate architectural concepts to FARA and repository-wide definitions.
+The FAR documents explicitly delegate architectural concepts to FARA and repository-wide definitions.
 
 The workflow delegates transition signatures and the Admissibility Structure (Ω) to FARA.
 
@@ -98,25 +102,17 @@ FARA -> FAR
 
 ---
 
-## Finding 4 — FAR and FARO boundary is stated but still underdeveloped
+## Finding 4 — FAR and FARO boundary is explicit
 
-The FAR README says FARO is the future operational layer downstream of stable FAR.
+`faro-boundary.md` identifies permitted and prohibited FARO responsibilities.
 
-The methodology says FARO should operationalize stable FAR methodology and not redefine workflow stages or introduce replacement primitives.
+It states that FARO may operationalize FAR investigations, comparison, auditing, missing artifact checks, workflow completion checks, disagreement detection, reporting, and automation of FAR validation checks.
 
-The application document says FARO should operationalize stable FAR applications after FAR reaches sufficient stability.
+It also states that FARO shall not introduce primitives, redefine FARA concepts, redefine FAR methodology, replace workflow, or validate investigations by criteria not grounded in FAR.
 
-Assessment: partial pass.
+Assessment: pass.
 
-The boundary is stated, but not yet operationally specified.
-
-This is acceptable before FARO development, but FAR v1.0 should include a short boundary statement identifying what FARO may and may not do.
-
-Recommended addition:
-
-`frameworks/FAR/faro-boundary.md`
-
-or a section in `design-principles.md` with explicit allowed and prohibited FARO roles.
+The boundary is sufficient for FAR v1.0 preparation.
 
 ---
 
@@ -134,23 +130,19 @@ The canonical workflow covers:
 8. resolution rule;
 9. resolution record.
 
-Assessment: pass with one caveat.
+Assessment: pass.
 
-The workflow represents the major stages of a structured investigation. However, it does not yet explicitly distinguish candidate generation from candidate classification.
+Candidate generation is explicitly placed within Stage 6 — Perform Reasoning.
 
-Currently candidates appear implicitly at the admissibility stage.
+Candidate admissibility classification occurs in Stage 7 through the Admissibility Structure (Ω).
 
-This may be acceptable if candidate generation is treated as part of reasoning, but the choice should be explicit.
+No separate candidate-generation stage is added.
 
-Recommended review question:
-
-Should FAR include a distinct stage for candidate generation, or should candidate generation remain part of Stage 6 reasoning?
-
-No change is required yet, but this should be resolved before FAR v1.0 Stable.
+This preserves calculus-neutrality and domain-neutrality.
 
 ---
 
-## Finding 6 — Methodological interfaces are mostly present
+## Finding 6 — Methodological interfaces are present
 
 FAR now has clear interfaces:
 
@@ -160,150 +152,78 @@ FAR now has clear interfaces:
 - application supplies domain-facing usage guidance;
 - dependency graph supplies maintenance order;
 - design principles supply constraints;
+- FARO boundary supplies downstream separation;
+- example standard supplies example artifact requirements;
+- investigation validation supplies methodological validation requirements;
 - v1.0 criteria supply freeze conditions.
 
 Assessment: pass.
 
-The architecture now has enough maintenance structure to support final stabilization.
+---
+
+## Finding 7 — Example interface is present
+
+`example-standard.md` defines the required structure for canonical FAR examples.
+
+It requires examples to identify the investigation, representational structure, interpretation, reasoning calculus, initial reasoning state, reasoning and candidate generation, Ω where applicable, resolution rule, resolution, and audit notes.
+
+Assessment: pass.
+
+This prevents examples from drifting into informal essays.
 
 ---
 
-## Finding 7 — Missing artifact interface for examples
+## Finding 8 — Validation interface is present
 
-Application points to complete worked investigations in `examples/`, but FAR does not define what counts as a valid FAR example.
+`investigation-validation.md` defines the minimum validation checklist for completed FAR investigations.
 
-Assessment: gap.
+It distinguishes methodological validation from truth, correctness, soundness, completeness, and future FARO auditing.
 
-Recommended addition before FAR v1.0:
-
-`frameworks/FAR/example-standard.md`
-
-Minimum requirements:
-
-- identify the investigation;
-- identify the representational structure;
-- identify the interpretation;
-- identify the reasoning calculus;
-- record reasoning states;
-- record transition signatures;
-- construct Ω where applicable;
-- apply a resolution rule;
-- record the resolution;
-- preserve auditability.
-
-This would prevent examples from drifting into informal essays.
+Assessment: pass.
 
 ---
 
-## Finding 8 — Validation interface is missing
+## Finding 9 — Dependency graph ordering is clarified
 
-FAR says investigations should be auditable and reproducible, but it does not yet define a minimal validation checklist for completed FAR investigations.
+`dependency-graph.md` states that its order is document-maintenance order, not philosophical priority, conceptual fundamentality, or chronological rigidity.
 
-Assessment: gap.
+Assessment: pass.
 
-Recommended addition before FAR v1.0:
-
-`frameworks/FAR/investigation-validation.md`
-
-Minimum validation checks:
-
-- all stages represented or explicitly marked not applicable;
-- every transition signature recorded;
-- reasoning calculus specified;
-- interpretation specified;
-- Ω constructed when candidate admissibility is required;
-- resolution rule applied explicitly;
-- final resolution recorded;
-- enough artifacts exist to reconstruct the investigation.
-
-This is methodological validation, not FARO auditing.
-
-FARO may later operationalize or automate these checks.
-
----
-
-## Finding 9 — The dependency graph is directionally sound but slightly underspecified
-
-The dependency graph gives this order:
-
-```text
-theory/definitions/definitions.md
-  -> frameworks/FARA/
-  -> frameworks/FAR/workflow.md
-  -> frameworks/FAR/methodology.md
-  -> frameworks/FAR/application.md
-```
-
-Assessment: acceptable but debatable.
-
-There is a structural tension:
-
-- `workflow.md` is the canonical procedural stage source.
-- `methodology.md` defines principles governing workflow use.
-
-Either order can be defended:
-
-- workflow before methodology if stages are the primary procedural artifact;
-- methodology before workflow if principles generate the workflow.
-
-Current choice is acceptable because `workflow.md` is explicitly the canonical stage source.
-
-Recommended note:
-
-Add a sentence stating that this order is document-maintenance order, not conceptual priority.
+This resolves the prior ambiguity around whether workflow precedes methodology conceptually.
 
 ---
 
 ## Finding 10 — No structural dependence on FARE mathematics is currently needed
 
-FAR v1.0 cleanup does not require new FARE definitions or theorems.
+FAR Phase 2 completion does not require new FARE definitions or theorems.
 
 Assessment: pass.
 
 FARE remains frozen correctly.
 
-Future FARE expansion should occur only if FAR requires mathematical justification for a specific claim.
-
 ---
 
 ## Structural Verdict
 
-FAR is now structurally coherent enough to proceed toward final stabilization.
+FAR Phase 2 is complete.
 
-However, FAR should not yet be declared v1.0 Stable.
+FAR is structurally coherent enough to proceed to Phase 3 — Methodology Audit.
 
-Before final freeze, the following gaps should be addressed:
-
-1. candidate generation placement;
-2. FARO boundary statement;
-3. example standard;
-4. investigation validation checklist;
-5. dependency graph clarification that document order is maintenance order, not conceptual priority.
+FAR should not yet be declared v1.0 Stable because Phase 3 and Phase 4 remain required final gates.
 
 ---
 
-## Required Changes Before FAR v1.0 Stable
+## Remaining Work Before FAR v1.0 Stable
 
-1. Decide whether candidate generation is a distinct workflow stage or part of Stage 6.
-2. Add a FARO boundary statement.
-3. Add `frameworks/FAR/example-standard.md`.
-4. Add `frameworks/FAR/investigation-validation.md`.
-5. Clarify dependency-graph ordering.
-6. Update `FAR-v1.0-criteria.md` to include examples and validation.
-7. Update `README.md` navigation after adding the new documents.
+1. Complete Phase 3 — Methodology Audit.
+2. Complete Phase 4 — Consistency Audit.
+3. Resolve any defects discovered by those audits.
+4. Perform a final FAR v1.0 criteria review.
 
 ---
 
-## Recommended Next PR
-
-Open a focused FAR Phase 2 cleanup PR implementing:
-
-- example standard;
-- investigation validation checklist;
-- FARO boundary clarification;
-- dependency graph clarification;
-- v1.0 criteria expansion.
-
-Do not modify FARE.
+## Notes
 
 Do not begin FARO yet.
+
+Do not expand FARE unless FAR requires a specific mathematical support result.

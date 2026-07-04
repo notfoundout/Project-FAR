@@ -40,7 +40,19 @@ Status: required.
 
 ---
 
-### 3. Explicit Delegation of Technical Terms
+### 3. Candidate Generation Placement
+
+Candidate generation shall remain part of Stage 6 — Perform Reasoning.
+
+Candidate admissibility shall be classified in Stage 7 through the Admissibility Structure (Ω).
+
+Candidate generation is not a separate universal FAR workflow stage.
+
+Status: required.
+
+---
+
+### 4. Explicit Delegation of Technical Terms
 
 All technical terms used by FAR shall be either:
 
@@ -52,7 +64,7 @@ Status: required.
 
 ---
 
-### 4. No New FAR Primitives
+### 5. No New FAR Primitives
 
 FAR shall not introduce new primitives.
 
@@ -62,7 +74,7 @@ Status: required.
 
 ---
 
-### 5. FARA Dependency Preserved
+### 6. FARA Dependency Preserved
 
 FAR shall remain downstream of FARA.
 
@@ -72,7 +84,9 @@ Status: required.
 
 ---
 
-### 6. FARO Boundary Preserved
+### 7. FARO Boundary Preserved
+
+`faro-boundary.md` shall exist and identify permitted and prohibited FARO responsibilities.
 
 FARO shall not begin as a stable operational layer until FAR reaches comparable stability.
 
@@ -82,15 +96,17 @@ Status: required.
 
 ---
 
-### 7. Dependency Graph Present
+### 8. Dependency Graph Present and Clarified
 
 `dependency-graph.md` shall exist and identify the FAR document dependency order.
+
+The dependency graph shall state that the ordering is document-maintenance order, not conceptual priority.
 
 Status: required.
 
 ---
 
-### 8. Design Principles Present
+### 9. Design Principles Present
 
 `design-principles.md` shall exist and identify the governing design constraints of FAR.
 
@@ -98,7 +114,23 @@ Status: required.
 
 ---
 
-### 9. Methodology, Workflow, and Application Synchronized
+### 10. Example Standard Present
+
+`example-standard.md` shall exist and define the minimum required structure for canonical FAR examples.
+
+Status: required.
+
+---
+
+### 11. Investigation Validation Present
+
+`investigation-validation.md` shall exist and define the minimum methodological validation checklist for completed FAR investigations.
+
+Status: required.
+
+---
+
+### 12. Methodology, Workflow, and Application Synchronized
 
 The following documents shall be synchronized:
 
@@ -112,9 +144,9 @@ Status: required.
 
 ---
 
-### 10. Audit Record Present
+### 13. Audit Records Present
 
-The Phase 1 canonical audit shall be recorded and preserved under `docs/audits/`.
+The Phase 1 canonical audit and Phase 2 structural audit shall be recorded and preserved under `docs/audits/`.
 
 Status: required.
 
@@ -125,18 +157,26 @@ Status: required.
 Before FAR v1.0 Stable is declared, verify:
 
 - [ ] `workflow.md` is the canonical stage source.
+- [ ] candidate generation is treated as part of Stage 6.
+- [ ] candidate admissibility classification is treated as part of Stage 7.
 - [ ] `methodology.md` delegates stage order to `workflow.md`.
 - [ ] `application.md` delegates stage order to `workflow.md`.
 - [ ] `dependency-graph.md` exists.
+- [ ] dependency graph order is identified as document-maintenance order.
 - [ ] `design-principles.md` exists.
+- [ ] `faro-boundary.md` exists.
+- [ ] `example-standard.md` exists.
+- [ ] `investigation-validation.md` exists.
 - [ ] all FARA concepts used by FAR are explicitly delegated.
 - [ ] no FAR document introduces new primitives.
 - [ ] FARO boundary is stated.
 - [ ] canonical map is updated if necessary.
 - [ ] README navigation is updated.
+- [ ] final methodology audit is complete.
+- [ ] final consistency audit is complete.
 
 ---
 
 ## Notes
 
-FAR v1.0 Stable should be declared only after a final consistency audit confirms that these criteria are satisfied.
+FAR v1.0 Stable should be declared only after final methodology and consistency audits confirm that these criteria are satisfied.

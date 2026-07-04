@@ -18,7 +18,7 @@ FAR does not introduce new primitives.
 
 ## Current Status
 
-FAR is undergoing Phase 1 canonical stabilization.
+FAR is undergoing Phase 2 structural stabilization.
 
 The active objective is FAR v1.0 Stable.
 
@@ -33,6 +33,16 @@ FARO development should begin only after FAR reaches comparable stability.
 `methodology.md` describes the methodological principles governing that workflow.
 
 `application.md` describes how the methodology is applied across domains.
+
+---
+
+## Candidate Generation Placement
+
+Candidate generation is part of Stage 6 — Perform Reasoning.
+
+Candidate admissibility classification occurs in Stage 7 through the Admissibility Structure (Ω).
+
+Candidate generation is not a separate universal FAR workflow stage.
 
 ---
 
@@ -60,6 +70,9 @@ FAR does not redefine them.
 - `application.md` — Describes how FAR is applied across domains.
 - `dependency-graph.md` — Records FAR document and concept dependency order.
 - `design-principles.md` — Records governing design principles for FAR.
+- `faro-boundary.md` — Defines the boundary between FAR and future FARO.
+- `example-standard.md` — Defines the required structure for canonical FAR examples.
+- `investigation-validation.md` — Defines methodological validation checks for completed FAR investigations.
 - `FAR-v1.0-criteria.md` — Defines the criteria required before FAR v1.0 Stable.
 
 ---
