@@ -36,7 +36,9 @@ Propositions establish useful results of limited scope.
 
 Theorems establish mathematical properties from accepted dependencies.
 
-A theorem shall not merely restate a definition.
+A theorem should not merely restate a definition.
+
+Foundational theorems may record immediate definitional consequences when doing so clarifies dependency structure for later proofs.
 
 ---
 
