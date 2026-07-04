@@ -2,11 +2,25 @@
 
 ## Purpose
 
-This document defines the standard workflow of a FAR investigation.
+This document defines the canonical workflow of a FAR investigation.
 
 The workflow organizes an investigation into a sequence of stages.
 
 It does not prescribe the reasoning calculus used within those stages.
+
+This document is the canonical source for the FAR stage sequence.
+
+Other FAR documents may summarize the workflow, but they shall not maintain independent stage definitions.
+
+---
+
+## Delegation Notice
+
+The workflow uses architectural concepts defined by FARA and repository-wide canonical definitions.
+
+Transition signatures are defined by FARA and used by FAR as documentation artifacts during a reasoning process.
+
+The Admissibility Structure (Ω) is defined by FARA. FAR specifies when it is constructed during an investigation, not what it is architecturally.
 
 ---
 
