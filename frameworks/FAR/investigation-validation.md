@@ -20,6 +20,16 @@ Validation means the investigation was conducted and recorded according to FAR m
 
 ---
 
+## Optional Stage Policy
+
+A workflow stage may be marked `Not applicable` only when the investigation record states why it is not applicable.
+
+No stage shall be silently omitted.
+
+If a stage is skipped without justification, the investigation is incomplete.
+
+---
+
 ## Minimum Checklist
 
 A completed FAR investigation should satisfy the following checks.
@@ -75,28 +85,124 @@ A completed FAR investigation should satisfy the following checks.
 - Candidate admissibility is classified when relevant.
 - Ω records admissibility classifications.
 - Ω is not treated as the source of admissibility criteria.
+- If no candidates exist, Ω is marked empty or not applicable with an explicit reason.
 
 ---
 
-### 8. Resolution Rule Applied
+### 8. Resolution Rule Applied When Applicable
 
-- The resolution rule is identified.
+- The resolution rule is identified when a resolution is attempted.
 - The resolution execution is distinguishable from the rule.
+- If no resolution rule is applicable, the reason is recorded.
 
 ---
 
-### 9. Resolution Recorded
+### 9. Resolution or Closure Status Recorded
 
-- The resolution is explicitly recorded.
+- The resolution is explicitly recorded when one is produced.
 - The resolution is distinguishable from Ω, the resolution rule, and the resolution execution.
+- If no resolution is produced, the closure status is recorded.
 
 ---
 
-### 10. Reconstructibility Preserved
+### 10. Revision Records Preserved
+
+If the investigation revisits an earlier stage, the record identifies:
+
+- the stage revisited;
+- the reason for revision;
+- the artifact changed;
+- the effect on later stages.
+
+---
+
+### 11. Reconstructibility Preserved
 
 - The investigation record contains enough information for another investigator to reconstruct the reasoning process.
 - Missing artifacts are explicitly identified.
 - Limitations and unresolved issues are recorded.
+
+---
+
+## Closure Statuses
+
+A FAR investigation may close with one of the following statuses.
+
+### Resolved
+
+A resolution has been recorded under the stated resolution rule.
+
+---
+
+### Provisionally Resolved
+
+A resolution has been recorded, but limitations, uncertainty, or unresolved issues remain.
+
+---
+
+### Unresolved
+
+No resolution is currently available under the stated methodology.
+
+---
+
+### Suspended
+
+The investigation is paused pending additional representations, interpretations, criteria, evidence, or reasoning.
+
+---
+
+### Incomplete
+
+Required methodological artifacts are missing.
+
+---
+
+### Invalid
+
+The investigation cannot be reconstructed or violates core FAR methodology.
+
+---
+
+## Edge-Case Handling
+
+### No Admissible Candidates
+
+If no candidates are admissible, the investigation may close as unresolved, suspended, or incomplete depending on the cause.
+
+The cause must be recorded.
+
+---
+
+### Multiple Admissible Candidates
+
+If multiple candidates are admissible, the resolution rule must specify how they are selected, ranked, combined, preserved, or left unresolved.
+
+---
+
+### Changing Interpretations
+
+If interpretation changes during the investigation, the change must be recorded with its effect on later stages.
+
+---
+
+### Changing Reasoning Calculi
+
+If the reasoning calculus changes, the investigation record must identify the change, justify the change, and record which stages are affected.
+
+---
+
+### Open-Ended Investigations
+
+Open-ended investigations may close as suspended or provisionally resolved.
+
+They should not be recorded as resolved unless a resolution rule has actually produced a resolution.
+
+---
+
+### Conflicting Resolutions
+
+If conflicting resolutions are produced, the conflict must be recorded and either resolved by a stated rule or preserved as unresolved.
 
 ---
 
