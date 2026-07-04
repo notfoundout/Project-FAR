@@ -208,6 +208,42 @@ Records governing design principles for FAR.
 
 ---
 
+## FARO Boundary
+
+Canonical Location:
+
+`frameworks/FAR/faro-boundary.md`
+
+Purpose:
+
+Defines the boundary between FAR and future FARO.
+
+---
+
+## FAR Example Standard
+
+Canonical Location:
+
+`frameworks/FAR/example-standard.md`
+
+Purpose:
+
+Defines the required structure for canonical FAR examples.
+
+---
+
+## FAR Investigation Validation
+
+Canonical Location:
+
+`frameworks/FAR/investigation-validation.md`
+
+Purpose:
+
+Defines methodological validation checks for completed FAR investigations.
+
+---
+
 ## FAR v1.0 Criteria
 
 Canonical Location:
