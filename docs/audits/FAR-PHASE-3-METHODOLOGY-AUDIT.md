@@ -2,13 +2,13 @@
 
 ## Status
 
-Initial methodology audit complete.
+Complete.
 
 ---
 
 ## Scope
 
-This audit reviews whether FAR's methodology functions coherently after Phase 1 canonical cleanup and Phase 2 structural completion.
+This audit reviews whether FAR's methodology functions coherently after Phase 1 canonical cleanup, Phase 2 structural completion, and Phase 3 methodology corrections.
 
 Reviewed files:
 
@@ -39,11 +39,11 @@ This audit asks:
 
 ## Methodological Verdict
 
-FAR's methodology is coherent, general, and mostly implementable.
+FAR's methodology is coherent, general, and implementable enough to proceed to Phase 4 — Consistency Audit.
 
-It should proceed toward Phase 4 after correcting several methodology-level gaps.
+The Phase 3 corrections resolve the methodology-level gaps identified in the initial audit.
 
-The current methodology is not yet ready for FAR v1.0 Stable because termination conditions, optional-stage handling, edge-case behavior, and reproducibility standards need sharper specification.
+FAR should not yet be declared v1.0 Stable because Phase 4 remains the final gate.
 
 ---
 
@@ -69,7 +69,7 @@ No stage is obviously redundant.
 
 ---
 
-## Finding 2 — Each stage has a mostly distinct responsibility
+## Finding 2 — Each stage has a distinct responsibility
 
 The current single-responsibility analysis is:
 
@@ -80,16 +80,12 @@ The current single-responsibility analysis is:
 | Stage 3 | Assign meaning through interpretation | Pass |
 | Stage 4 | Identify governing rules or criteria | Pass |
 | Stage 5 | Establish starting state | Pass |
-| Stage 6 | Conduct reasoning and generate candidates | Pass with clarification |
+| Stage 6 | Conduct reasoning and generate candidates when they arise | Pass |
 | Stage 7 | Classify candidate admissibility through Ω | Pass |
-| Stage 8 | Select by resolution rule | Pass |
-| Stage 9 | Record final resolution and process | Pass |
+| Stage 8 | Select by resolution rule when applicable | Pass |
+| Stage 9 | Record resolution or closure status | Pass |
 
-Assessment: pass with minor clarification needed.
-
-Stage 6 should explicitly state that candidate generation belongs there when candidates arise.
-
-This is already recorded in the example standard and validation documents, but should also be reflected directly in `workflow.md`.
+Assessment: pass.
 
 ---
 
@@ -110,7 +106,7 @@ The stages should remain separate.
 
 ---
 
-## Finding 4 — Candidate generation should remain inside Stage 6
+## Finding 4 — Candidate generation remains inside Stage 6
 
 Candidate generation is not a universal separate stage.
 
@@ -118,11 +114,9 @@ In many investigations, candidates arise iteratively during reasoning rather tha
 
 Assessment: pass.
 
-The Phase 2 decision is methodologically sound.
+Candidate generation remains within Stage 6.
 
-Candidate generation should remain within Stage 6.
-
-Stage 7 should classify admissibility for candidates produced by reasoning.
+Stage 7 classifies admissibility for candidates produced by reasoning.
 
 ---
 
@@ -138,11 +132,11 @@ No current FAR document forces a particular logic, mathematics, epistemology, or
 
 ---
 
-## Finding 6 — Required artifacts are mostly specified
+## Finding 6 — Required artifacts are sufficiently specified
 
 The example standard and investigation validation documents specify the required artifacts for completed FAR investigations.
 
-Required artifacts now include:
+Required artifacts include:
 
 - investigation;
 - representational structure;
@@ -152,109 +146,85 @@ Required artifacts now include:
 - reasoning trace or equivalent artifact;
 - candidates where they arise;
 - Ω when candidate admissibility is relevant;
-- resolution rule;
-- resolution;
+- resolution rule when applicable;
+- resolution or closure status;
+- revision records when iteration occurs;
 - audit notes.
 
-Assessment: pass with one gap.
-
-The methodology still needs explicit handling for stages that are not applicable.
-
-For example, an exploratory investigation may not have a final resolution, and a descriptive investigation may not require candidate admissibility classification.
-
-Recommended addition:
-
-Add an optional-stage policy explaining that a stage may be marked `Not applicable` only when the reason is explicitly recorded.
+Assessment: pass.
 
 ---
 
-## Finding 7 — Iteration is acknowledged but underspecified
+## Finding 7 — Optional-stage handling is now explicit
 
-The workflow states that an investigation may return to earlier stages when new representations, revised interpretations, modified criteria, or additional reasoning require further analysis.
+The workflow and validation documents now state that a stage may be marked `Not applicable` only when the investigation record explicitly states why the stage is not applicable.
 
-Assessment: partial pass.
+Assessment: pass.
 
-Iteration is permitted, but the methodology does not yet specify how revisions are recorded.
+No stage may be silently omitted.
 
-Recommended addition:
+---
 
-Add a revision rule requiring that any return to an earlier stage record:
+## Finding 8 — Iteration and revision are now consistently handled
+
+The workflow, methodology, validation checklist, and example standard require revision records when an investigation revisits an earlier stage.
+
+Required revision records identify:
 
 - the stage revisited;
 - the reason for revision;
-- the changed artifact;
+- the artifact changed;
 - the effect on later stages.
 
-Without this, auditability weakens in iterative investigations.
+Assessment: pass.
 
 ---
 
-## Finding 8 — Termination conditions are insufficiently specified
+## Finding 9 — Termination and closure are now sufficiently specified
 
-The workflow ends with recording the resolution.
-
-However, FAR does not yet specify when an investigation is allowed to terminate.
-
-Assessment: gap.
-
-Recommended addition:
-
-Add an investigation closure policy distinguishing:
+The workflow and validation documents distinguish:
 
 - resolved investigations;
 - provisionally resolved investigations;
 - unresolved investigations;
 - suspended investigations;
-- invalid or incomplete investigations.
+- incomplete investigations;
+- invalid investigations.
 
-This should not force every investigation to produce a final true conclusion.
+Assessment: pass.
 
-It should only define how closure status is recorded.
-
----
-
-## Finding 9 — Reproducibility is stated but not operationally specified
-
-The methodology states that equivalent investigators following the same methodology should be capable of reproducing equivalent investigations.
-
-Assessment: partial pass.
-
-The idea is sound, but `equivalent investigators` and `equivalent investigations` are not operationally specified enough to function as validation standards.
-
-Recommended correction:
-
-Reframe reproducibility as artifact-based reconstructibility:
-
-> A FAR investigation is reproducible to the extent that another investigator can reconstruct the reasoning process from the recorded artifacts under the stated interpretation and reasoning calculus.
-
-This is cleaner and avoids unnecessary assumptions about investigator equivalence.
+Closure status is methodological and does not assert truth, optimality, finality, or uniqueness.
 
 ---
 
-## Finding 10 — Edge cases need explicit methodological handling
+## Finding 10 — Reproducibility is correctly reframed as artifact-based reconstructibility
 
-The current methodology can probably handle edge cases, but not all are explicit.
+The methodology now avoids relying on vague assumptions about equivalent investigators.
 
-Edge cases requiring explicit policy:
+It states that a FAR investigation is reproducible to the extent that another investigator can reconstruct the reasoning process from recorded artifacts under the stated interpretation and reasoning calculus.
+
+Assessment: pass.
+
+This is more precise and more consistent with FAR's auditability goal.
+
+---
+
+## Finding 11 — Edge cases are explicitly handled
+
+The validation document now handles:
 
 - no admissible candidates;
 - multiple admissible candidates;
 - changing interpretations;
 - changing reasoning calculi;
 - open-ended investigations;
-- suspended investigations;
-- investigations with incomplete records;
-- investigations with conflicting resolutions.
+- conflicting resolutions.
 
-Assessment: gap.
-
-Recommended addition:
-
-Add an edge-case policy to `investigation-validation.md` or a dedicated `edge-cases.md` file.
+Assessment: pass.
 
 ---
 
-## Finding 11 — FAR does not drift into FARA, FARO, or FARE
+## Finding 12 — FAR does not drift into FARA, FARO, or FARE
 
 The methodology delegates architectural concepts to FARA, preserves FARO as downstream, and does not require new FARE mathematics.
 
@@ -264,40 +234,42 @@ No methodology document currently requires FARE expansion.
 
 ---
 
-## Finding 12 — Methodology satisfies explicitness and auditability only if revision and closure policies are added
+## Finding 13 — Methodology satisfies its own stated principles
 
-The explicitness and auditability principles are strong.
+The methodology now supports:
 
-However, in iterative investigations, auditability requires explicit revision records.
+- explicitness through required artifact representation;
+- auditability through transition signatures, revision records, and closure status;
+- neutrality through reasoning-calculus independence;
+- reconstructibility through artifact-based reproducibility;
+- iterative revisability through revision-record requirements.
 
-In unresolved or open-ended investigations, auditability requires explicit closure status.
-
-Assessment: partial pass.
-
-The methodology is close, but still underspecified for complex investigations.
+Assessment: pass.
 
 ---
 
 ## Required Corrections Before Phase 3 Completion
 
-1. Update `workflow.md` to state that candidate generation belongs in Stage 6 when candidates arise.
-2. Add an optional-stage policy.
-3. Add a revision-record rule for iteration.
-4. Add an investigation closure policy.
-5. Reframe reproducibility around artifact-based reconstructibility.
-6. Add edge-case handling.
-7. Update `investigation-validation.md` to include optional stages, revision records, closure status, and edge cases.
-8. Update `example-standard.md` to include revision records and closure status.
-9. Update `FAR-v1.0-criteria.md` to require these methodology policies before FAR v1.0 Stable.
+All Phase 3 corrections have been implemented.
+
+Completed corrections:
+
+1. Updated `workflow.md` to state that candidate generation belongs in Stage 6 when candidates arise.
+2. Added optional-stage policy.
+3. Added revision-record rule for iteration.
+4. Added investigation closure policy.
+5. Reframed reproducibility around artifact-based reconstructibility.
+6. Added edge-case handling.
+7. Updated `investigation-validation.md` to include optional stages, revision records, closure status, and edge cases.
+8. Updated `example-standard.md` to include revision records and closure status.
+9. Updated `FAR-v1.0-criteria.md` to require these methodology policies before FAR v1.0 Stable.
 
 ---
 
 ## Recommendation
 
-Open a focused FAR Phase 3 cleanup PR implementing the corrections above.
+Proceed to Phase 4 — Consistency Audit after this Phase 3 cleanup is reviewed and merged.
 
 Do not begin FARO.
 
 Do not modify FARE.
-
-After the corrections are merged, proceed to Phase 4 — Consistency Audit.
