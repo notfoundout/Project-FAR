@@ -20,21 +20,33 @@ The methodology remains independent of any particular reasoning calculus or appl
 
 ## Applying FAR
 
-Applying FAR consists of:
-
-1. Defining an investigation.
-2. Establishing the representational structure.
-3. Specifying the interpretation.
-4. Selecting a reasoning calculus.
-5. Constructing reasoning states.
-6. Recording explicit transformations through transition signatures.
-7. Constructing the Admissibility Structure (Ω).
-8. Applying the appropriate resolution rule.
-9. Recording the resulting resolution.
-
-The detailed workflow is defined in:
+Applying FAR means conducting an investigation according to the canonical workflow defined in:
 
 `workflow.md`
+
+The methodological principles governing this application are defined in:
+
+`methodology.md`
+
+This document does not maintain an independent stage list.
+
+---
+
+## Application Requirements
+
+Every application of FAR should:
+
+- define the investigation explicitly;
+- specify the representational structure;
+- specify the interpretation;
+- identify the reasoning calculus;
+- record reasoning states and transition signatures;
+- construct the Admissibility Structure (Ω) when required by the workflow;
+- apply an appropriate resolution rule;
+- record the resulting resolution;
+- preserve auditability and reproducibility.
+
+These requirements summarize the workflow but do not replace it as the canonical stage source.
 
 ---
 
@@ -42,14 +54,14 @@ The detailed workflow is defined in:
 
 The FAR methodology is intended to support investigations in domains including:
 
-- Mathematics
-- Science
-- Engineering
-- Philosophy
-- Law
-- History
-- Political Analysis
-- Artificial Intelligence
+- mathematics;
+- science;
+- engineering;
+- philosophy;
+- law;
+- history;
+- political analysis;
+- artificial intelligence.
 
 The methodology is intended to remain applicable wherever reasoning can be represented explicitly.
 
@@ -63,8 +75,16 @@ Complete worked investigations demonstrating the methodology are maintained in t
 
 ---
 
+## Relationship to FARO
+
+FARO should operationalize stable FAR applications after FAR reaches sufficient stability.
+
+FARO should not redefine FAR workflow stages or replace the FAR methodology.
+
+---
+
 ## Current Status
 
-Application of the methodology remains an active area of research.
+Application of the methodology remains under Phase 1 canonical stabilization.
 
 Current work includes expanding representative investigations, evaluating the methodology across additional domains, and refining best practices through practical use.
