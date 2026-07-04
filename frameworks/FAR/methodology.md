@@ -8,36 +8,66 @@ FAR provides a structured process for conducting investigations within the archi
 
 It defines how the architectural components are applied during an investigation.
 
+This document describes methodological principles.
+
+The canonical ordered stage sequence is maintained in:
+
+`workflow.md`
+
 ---
 
 ## Objective
 
 The objective of FAR is to conduct investigations that are:
 
-- Structured
-- Explicit
-- Auditable
-- Reconstructible
+- structured;
+- explicit;
+- auditable;
+- reconstructible.
 
 The methodology is independent of any particular reasoning calculus or application domain.
 
 ---
 
-## FAR Methodology
+## Methodological Role
 
-A FAR investigation proceeds through the following stages.
+FAR does not define the architecture of reasoning.
 
-1. Define the investigation.
-2. Establish the representational structure.
-3. Specify the interpretation.
-4. Select the reasoning calculus.
-5. Construct the initial reasoning state.
-6. Apply explicit transformations represented by transition signatures.
-7. Construct the Admissibility Structure (Ω).
-8. Apply the applicable resolution rule.
-9. Record the resolution.
+FAR applies the architecture supplied by FARA.
 
-Each stage is described in greater detail elsewhere within this directory.
+FAR does not introduce new primitives.
+
+FAR workflow stages are procedural roles used to organize investigation activity.
+
+---
+
+## Workflow Delegation
+
+A FAR investigation proceeds according to the canonical workflow defined in:
+
+`workflow.md`
+
+This document does not maintain an independent stage list.
+
+Any change to the FAR stage sequence shall be made in `workflow.md` and then reflected in dependent documents.
+
+---
+
+## Delegated Architectural Concepts
+
+The following concepts are defined by FARA and repository-wide canonical definitions:
+
+- reasoning state;
+- reasoning state representation;
+- transition signature;
+- Admissibility Structure (Ω);
+- resolution rule;
+- resolution execution;
+- resolution.
+
+FAR specifies how these concepts are used during an investigation.
+
+FAR does not redefine them.
 
 ---
 
@@ -71,6 +101,12 @@ Equivalent investigators following the same methodology should be capable of rep
 
 ---
 
+### Iterative Revisability
+
+A FAR investigation may return to earlier workflow stages whenever new representations, revised interpretations, modified criteria, or additional reasoning require further analysis.
+
+---
+
 ## Relationship to FARA
 
 FARA defines the architectural components used during an investigation.
@@ -81,12 +117,20 @@ The methodology depends upon the architecture but does not modify it.
 
 ---
 
+## Relationship to FARO
+
+FARO should operationalize stable FAR methodology.
+
+FARO should not redefine FAR methodology, alter FAR workflow stages, or introduce replacement primitives.
+
+---
+
 ## Current Status
 
-The FAR methodology remains under development.
+The FAR methodology remains under Phase 1 canonical stabilization.
 
 Current work includes:
 
-- refinement of investigation procedures,
-- formalization of workflows,
-- and validation across diverse reasoning domains.
+- synchronization of workflow, methodology, and application documents;
+- explicit delegation to canonical definitions and FARA;
+- and preparation for FAR v1.0 Stable.
