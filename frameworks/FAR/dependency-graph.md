@@ -22,6 +22,12 @@ theory/definitions/definitions.md
   -> frameworks/FAR/application.md
 ```
 
+This order is a document-maintenance order.
+
+It does not assert philosophical priority, conceptual fundamentality, or chronological rigidity.
+
+`workflow.md` appears before `methodology.md` because it is the canonical source for stage order. `methodology.md` governs the principles for using that workflow.
+
 Navigation and maintenance documents depend on the whole FAR set:
 
 ```text
@@ -29,6 +35,9 @@ frameworks/FAR/README.md
 frameworks/FAR/dependency-graph.md
 frameworks/FAR/design-principles.md
 frameworks/FAR/FAR-v1.0-criteria.md
+frameworks/FAR/faro-boundary.md
+frameworks/FAR/example-standard.md
+frameworks/FAR/investigation-validation.md
 ```
 
 ---
@@ -70,6 +79,10 @@ It does not modify their definitions.
 
 Other FAR documents may summarize the workflow, but they should not maintain independent stage definitions.
 
+Candidate generation belongs within Stage 6 — Perform Reasoning.
+
+Stage 7 evaluates and records candidate admissibility through the Admissibility Structure (Ω).
+
 ---
 
 ### Methodology
@@ -101,12 +114,15 @@ Investigation
   -> Reasoning Calculus
   -> Reasoning State
   -> Transition Signature
+  -> Candidate Generation
   -> Admissibility Structure (Ω)
   -> Resolution Rule
   -> Resolution
 ```
 
 This flow describes methodological dependence, not strict chronological irreversibility.
+
+Candidate generation is included within reasoning activity rather than elevated to a separate universal stage.
 
 FAR investigations may iterate and revisit earlier stages.
 
