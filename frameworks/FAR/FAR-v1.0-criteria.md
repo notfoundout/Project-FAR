@@ -52,7 +52,55 @@ Status: required.
 
 ---
 
-### 4. Explicit Delegation of Technical Terms
+### 4. Optional Stage Policy
+
+FAR shall permit stages to be marked `Not applicable` only when the investigation record explicitly states why the stage is not applicable.
+
+No workflow stage shall be silently omitted.
+
+Status: required.
+
+---
+
+### 5. Revision Record Policy
+
+FAR shall require revision records when an investigation revisits an earlier stage.
+
+A revision record should identify the stage revisited, the reason for revision, the artifact changed, and the effect on later stages.
+
+Status: required.
+
+---
+
+### 6. Closure Policy
+
+FAR shall define investigation closure statuses.
+
+At minimum, FAR shall distinguish resolved, provisionally resolved, unresolved, suspended, incomplete, and invalid investigations.
+
+Status: required.
+
+---
+
+### 7. Artifact-Based Reconstructibility
+
+FAR shall define reproducibility in terms of artifact-based reconstructibility.
+
+It shall not rely on assumptions about identical investigators or identical psychological states.
+
+Status: required.
+
+---
+
+### 8. Edge-Case Handling
+
+FAR shall explicitly handle edge cases including no admissible candidates, multiple admissible candidates, changing interpretations, changing reasoning calculi, open-ended investigations, and conflicting resolutions.
+
+Status: required.
+
+---
+
+### 9. Explicit Delegation of Technical Terms
 
 All technical terms used by FAR shall be either:
 
@@ -64,7 +112,7 @@ Status: required.
 
 ---
 
-### 5. No New FAR Primitives
+### 10. No New FAR Primitives
 
 FAR shall not introduce new primitives.
 
@@ -74,7 +122,7 @@ Status: required.
 
 ---
 
-### 6. FARA Dependency Preserved
+### 11. FARA Dependency Preserved
 
 FAR shall remain downstream of FARA.
 
@@ -84,7 +132,7 @@ Status: required.
 
 ---
 
-### 7. FARO Boundary Preserved
+### 12. FARO Boundary Preserved
 
 `faro-boundary.md` shall exist and identify permitted and prohibited FARO responsibilities.
 
@@ -96,7 +144,7 @@ Status: required.
 
 ---
 
-### 8. Dependency Graph Present and Clarified
+### 13. Dependency Graph Present and Clarified
 
 `dependency-graph.md` shall exist and identify the FAR document dependency order.
 
@@ -106,7 +154,7 @@ Status: required.
 
 ---
 
-### 9. Design Principles Present
+### 14. Design Principles Present
 
 `design-principles.md` shall exist and identify the governing design constraints of FAR.
 
@@ -114,7 +162,7 @@ Status: required.
 
 ---
 
-### 10. Example Standard Present
+### 15. Example Standard Present
 
 `example-standard.md` shall exist and define the minimum required structure for canonical FAR examples.
 
@@ -122,7 +170,7 @@ Status: required.
 
 ---
 
-### 11. Investigation Validation Present
+### 16. Investigation Validation Present
 
 `investigation-validation.md` shall exist and define the minimum methodological validation checklist for completed FAR investigations.
 
@@ -130,7 +178,7 @@ Status: required.
 
 ---
 
-### 12. Methodology, Workflow, and Application Synchronized
+### 17. Methodology, Workflow, and Application Synchronized
 
 The following documents shall be synchronized:
 
@@ -144,9 +192,9 @@ Status: required.
 
 ---
 
-### 13. Audit Records Present
+### 18. Audit Records Present
 
-The Phase 1 canonical audit and Phase 2 structural audit shall be recorded and preserved under `docs/audits/`.
+The Phase 1 canonical audit, Phase 2 structural audit, and Phase 3 methodology audit shall be recorded and preserved under `docs/audits/`.
 
 Status: required.
 
@@ -159,6 +207,11 @@ Before FAR v1.0 Stable is declared, verify:
 - [ ] `workflow.md` is the canonical stage source.
 - [ ] candidate generation is treated as part of Stage 6.
 - [ ] candidate admissibility classification is treated as part of Stage 7.
+- [ ] optional-stage policy is present.
+- [ ] revision-record policy is present.
+- [ ] closure policy is present.
+- [ ] reproducibility is framed as artifact-based reconstructibility.
+- [ ] edge-case handling is present.
 - [ ] `methodology.md` delegates stage order to `workflow.md`.
 - [ ] `application.md` delegates stage order to `workflow.md`.
 - [ ] `dependency-graph.md` exists.
