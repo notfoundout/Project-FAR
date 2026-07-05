@@ -8,9 +8,9 @@ FAR v1.0 Stable has been recorded as the canonical methodology layer of Project 
 
 FARO v1.0 Stable has been recorded as the canonical operational layer of Project FAR.
 
-FARM Phase 1 architecture audit is complete.
+FARM Phase 1 architecture audit and Phase 2 architecture stabilization are complete.
 
-Active development now moves to FARM Phase 2 architecture stabilization.
+Active development now moves to FARM Phase 3 methodology audit.
 
 ---
 
@@ -40,15 +40,19 @@ Status: Stable
 
 Status: Complete
 
-Phase 1 found that FARM is justified only as a narrow meta-framework for routing requirements, classifying defects, coordinating cross-framework integration, and preserving stable-layer boundaries.
+---
+
+### FARM Phase 2 — Architecture Stabilization
+
+Status: Complete
 
 ---
 
 ## Active Focus
 
-### FARM Phase 2 — Architecture Stabilization
+### FARM Phase 3 — Methodology Audit
 
-The active target is creating and testing the minimum viable FARM architecture.
+The active target is testing whether FARM's routing, classification, change-control, and integration-record methods are executable and non-duplicative.
 
 ---
 
@@ -60,8 +64,8 @@ The current project order is:
 2. FAR v1.0 Stable recorded.
 3. FARO v1.0 Stable recorded.
 4. FARM Phase 1 architecture audit completed.
-5. FARM Phase 2 architecture stabilization underway.
-6. Use worked examples to expose concrete downstream requirements.
+5. FARM Phase 2 architecture stabilization completed.
+6. FARM Phase 3 methodology audit underway.
 7. Modify stable layers only through formal review when a concrete defect or requirement is identified.
 
 ---
@@ -82,17 +86,16 @@ Effective immediately:
 
 ## Next Milestone
 
-### FARM Phase 2 — Architecture Stabilization Complete
+### FARM Phase 3 — Methodology Audit Complete
 
 Initial objectives:
 
-- create minimum viable FARM architecture documents;
+- test requirement routing;
+- test defect classification;
+- test change-control gates;
+- test integration-record reconstructibility;
 - verify FARM remains distinct from FARO and project governance;
-- define requirement routing;
-- define defect classification;
-- define change control;
-- define integration records;
-- define FARM v1.0 criteria.
+- prepare FARM for final consistency audit.
 
 ---
 
