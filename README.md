@@ -12,12 +12,14 @@ FAR v1.0 Stable has been recorded as the canonical methodology layer of Project 
 
 FARO v1.0 Stable has been recorded as the canonical operational layer of Project FAR.
 
-Active development now shifts to post-v1.0 integration and worked examples.
+FARM v1.0 Stable has been recorded as the canonical meta-framework coordination layer of Project FAR.
+
+Active development now shifts to worked examples and downstream validation.
 
 Future FARE mathematical work is requirement-driven:
 
-- no new MDEFs unless FAR, FARO, or FARA requires them;
-- new theorems only when they justify or extend FAR, FARO, or FARA;
+- no new MDEFs unless FAR, FARO, FARA, or FARM requires them;
+- new theorems only when they justify or extend FAR, FARO, FARA, or FARM;
 - existing mathematical definitions change only through formal review.
 
 See:
@@ -26,13 +28,14 @@ See:
 - `docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`
 - `docs/milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md`
 - `docs/milestones/FAR-MILESTONE-004-FARO-v1.0-Stable.md`
+- `docs/milestones/FARM-v1.0-Stable.md`
 
 ## Navigation
 
 - `docs/` — project-level architecture, roadmap, status, changelog, decision log, style guide, and canonical map.
 - `foundations/` — motivation, assumptions, primitive foundations, representations, and foundational investigations.
 - `theory/` — canonical definitions, axioms, semantics, operators, notation, theorems, proofs, and consistency material.
-- `frameworks/` — framework-specific material for FAR, FARA, and FARO.
+- `frameworks/` — framework-specific material for FAR, FARA, FARO, and FARM.
 - `methodology/` — proof standards, validation, falsification, and comparison methodology.
 - `examples/` — worked examples of Project FAR usage.
 - `research/` — exploratory literature, notes, comparisons, bibliography, and open problems.
@@ -49,14 +52,16 @@ See:
 5. `docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`
 6. `docs/milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md`
 7. `docs/milestones/FAR-MILESTONE-004-FARO-v1.0-Stable.md`
-8. `foundations/README.md`
-9. `theory/README.md`
-10. `frameworks/FARA/README.md`
-11. `frameworks/FAR/README.md`
-12. `frameworks/FARO/README.md`
-13. `methodology/README.md`
-14. `research/README.md`
+8. `docs/milestones/FARM-v1.0-Stable.md`
+9. `foundations/README.md`
+10. `theory/README.md`
+11. `frameworks/FARA/README.md`
+12. `frameworks/FAR/README.md`
+13. `frameworks/FARO/README.md`
+14. `frameworks/FARM/README.md`
+15. `methodology/README.md`
+16. `research/README.md`
 
 ## Core Principle
 
-Canonical theory and accepted framework definitions live in `foundations/`, `theory/`, and `frameworks`. Exploratory or provisional work lives in `research/`. Superseded but meaningful material lives in `archive/`.
+Canonical theory and accepted framework definitions live in `foundations/`, `theory/`, and `frameworks`. Exploratory or provisional work lives in `research`. Superseded but meaningful material lives in `archive/`.
