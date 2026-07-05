@@ -1,87 +1,93 @@
-# Auditing
+# FARO Auditing
 
 ## Purpose
 
-This document defines auditing within the Foundational Analysis of Reasoning Operations (FARO).
+This document defines auditing within FARO.
 
-Auditing evaluates whether a reasoning process satisfies the standards of structured, explicit, and auditable reasoning established by Project FAR.
+Auditing checks whether a FAR investigation record satisfies FAR validation requirements and operational audit criteria.
 
-It does not determine the truth of a conclusion or the admissibility of candidates.
+Auditing does not determine truth or replace FAR methodology.
+
+---
+
+## Operation Category
+
+Primary category: Audit.
 
 ---
 
 ## Definition
 
-An **audit** is the systematic examination of a recorded reasoning process to determine whether it satisfies explicitly defined audit criteria.
+An audit is the systematic examination of a recorded FAR investigation to determine whether it satisfies explicitly defined audit criteria.
 
-The audit evaluates the reasoning process itself rather than its conclusions.
+The audit evaluates the investigation record and its artifacts rather than asserting that the resolution is true.
 
 ---
 
-## Objective
+## Required Inputs
 
-The objective of auditing is to assess the integrity, completeness, and reproducibility of a reasoning process.
+Typical audit inputs include:
 
-An audit determines whether another investigator can understand, reconstruct, and evaluate the recorded reasoning.
+- investigation record;
+- FAR workflow artifacts;
+- reasoning state records;
+- transition signatures or trace artifacts;
+- admissibility records where applicable;
+- resolution rule and resolution or closure status;
+- revision records where applicable.
 
 ---
 
 ## Audit Criteria
 
-A reasoning process may be audited with respect to:
+A FARO audit may check:
 
-- Explicitness
-- Completeness
-- Traceability
-- Reconstructibility
-- Internal Consistency
-- Documentation
-
-Additional audit criteria may be introduced when appropriate for a particular investigation.
-
----
-
-## Audit Procedure
-
-A typical audit consists of the following steps.
-
-1. Identify the investigation.
-2. Examine the recorded representations.
-3. Verify the representational structure.
-4. Verify the stated interpretation.
-5. Verify the selected reasoning calculus.
-6. Examine the recorded reasoning states.
-7. Verify the recorded transition signatures.
-8. Examine the resulting Admissibility Structure (Ω).
-9. Verify the application of the resolution rule.
-10. Document any deficiencies, inconsistencies, or omissions.
+- explicitness;
+- artifact completeness;
+- workflow completion;
+- optional-stage justification;
+- revision-record adequacy;
+- closure-status adequacy;
+- traceability;
+- reconstructibility;
+- boundary compliance.
 
 ---
 
-## Result
+## Procedure
 
-An audit produces an explicit record describing the extent to which the reasoning process satisfies the selected audit criteria.
+A typical audit:
 
-An audit evaluates the quality and integrity of the recorded reasoning process.
-
-It does not determine whether the resulting resolution is true or correct.
-
----
-
-## Relationship to Other Components
-
-Auditing operates upon investigations conducted using FAR and represented using FARA.
-
-Auditing evaluates the reasoning record without modifying the investigation itself.
+1. identifies the investigation;
+2. verifies required artifacts;
+3. verifies workflow stage treatment;
+4. checks optional-stage justifications;
+5. checks reasoning trace artifacts;
+6. checks admissibility records where applicable;
+7. checks resolution rule and closure status;
+8. records defects, omissions, inconsistencies, or insufficiencies;
+9. produces an audit report.
 
 ---
 
-## Research Status
+## Outputs
 
-Current research investigates:
+An audit produces an explicit audit record or audit report.
 
-- automated auditing,
-- audit completeness,
-- audit metrics,
-- reproducibility measures,
-- and formal audit procedures.
+The report should identify passed checks, failed checks, incomplete checks, and boundary notes.
+
+---
+
+## Failure Modes
+
+An audit may return incomplete if required input artifacts are missing.
+
+An audit may return invalid if the investigation cannot be reconstructed.
+
+---
+
+## Boundary Notes
+
+Auditing operates downstream of FAR v1.0 Stable.
+
+It does not redefine FAR validation requirements, FARA architecture, or FARE mathematics.
