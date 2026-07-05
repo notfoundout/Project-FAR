@@ -402,6 +402,104 @@ Defines criteria required before FARO v1.0 Stable.
 
 ---
 
+# FARM
+
+## FARM Architecture
+
+Canonical Location:
+
+`frameworks/FARM/architecture.md`
+
+Purpose:
+
+Defines FARM's meta-framework coordination role.
+
+---
+
+## FARM Dependency Graph
+
+Canonical Location:
+
+`frameworks/FARM/dependency-graph.md`
+
+Purpose:
+
+Records FARM document-maintenance dependencies.
+
+---
+
+## FARM Design Principles
+
+Canonical Location:
+
+`frameworks/FARM/design-principles.md`
+
+Purpose:
+
+Defines FARM design constraints.
+
+---
+
+## FARM Requirement Routing
+
+Canonical Location:
+
+`frameworks/FARM/requirement-routing.md`
+
+Purpose:
+
+Defines how downstream requirements are routed to framework layers.
+
+---
+
+## FARM Defect Classification
+
+Canonical Location:
+
+`frameworks/FARM/defect-classification.md`
+
+Purpose:
+
+Defines defect classes, statuses, and routing support.
+
+---
+
+## FARM Change Control
+
+Canonical Location:
+
+`frameworks/FARM/change-control.md`
+
+Purpose:
+
+Defines gates for proposed changes to stable layers.
+
+---
+
+## FARM Integration Record
+
+Canonical Location:
+
+`frameworks/FARM/integration-record.md`
+
+Purpose:
+
+Defines records used to preserve cross-framework decisions.
+
+---
+
+## FARM v1.0 Criteria
+
+Canonical Location:
+
+`frameworks/FARM/FARM-v1.0-criteria.md`
+
+Purpose:
+
+Defines criteria required before FARM v1.0 Stable.
+
+---
+
 # Theory
 
 ## Shared Definitions
