@@ -10,7 +10,9 @@ FARE Mathematics v0.1 is frozen as the current stable mathematical foundation.
 
 FAR v1.0 Stable has been recorded as the canonical methodology layer of Project FAR.
 
-Active development now shifts to FARO v1.0 planning and development.
+FARO v1.0 Stable has been recorded as the canonical operational layer of Project FAR.
+
+Active development now shifts to post-v1.0 integration and worked examples.
 
 Future FARE mathematical work is requirement-driven:
 
@@ -23,6 +25,7 @@ See:
 - `docs/project-status.md`
 - `docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`
 - `docs/milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md`
+- `docs/milestones/FAR-MILESTONE-004-FARO-v1.0-Stable.md`
 
 ## Navigation
 
@@ -45,13 +48,14 @@ See:
 4. `docs/project-status.md`
 5. `docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`
 6. `docs/milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md`
-7. `foundations/README.md`
-8. `theory/README.md`
-9. `frameworks/FARA/README.md`
-10. `frameworks/FAR/README.md`
-11. `frameworks/FARO/README.md`
-12. `methodology/README.md`
-13. `research/README.md`
+7. `docs/milestones/FAR-MILESTONE-004-FARO-v1.0-Stable.md`
+8. `foundations/README.md`
+9. `theory/README.md`
+10. `frameworks/FARA/README.md`
+11. `frameworks/FAR/README.md`
+12. `frameworks/FARO/README.md`
+13. `methodology/README.md`
+14. `research/README.md`
 
 ## Core Principle
 
