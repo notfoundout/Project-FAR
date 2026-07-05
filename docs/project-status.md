@@ -8,9 +8,9 @@ FAR v1.0 Stable has been recorded as the canonical methodology layer of Project 
 
 FARO v1.0 Stable has been recorded as the canonical operational layer of Project FAR.
 
-FARM Phase 1 architecture audit and Phase 2 architecture stabilization are complete.
+FARM Phase 1 architecture audit, Phase 2 architecture stabilization, Phase 3 methodology audit, and Phase 4 consistency audit are complete.
 
-Active development now moves to FARM Phase 3 methodology audit.
+Active development now moves to recording the FARM v1.0 Stable milestone.
 
 ---
 
@@ -48,11 +48,25 @@ Status: Complete
 
 ---
 
-## Active Focus
-
 ### FARM Phase 3 — Methodology Audit
 
-The active target is testing whether FARM's routing, classification, change-control, and integration-record methods are executable and non-duplicative.
+Status: Complete
+
+---
+
+### FARM Phase 4 — Consistency Audit
+
+Status: Complete
+
+Phase 4 found no remaining consistency blocker before a FARM v1.0 Stable milestone PR.
+
+---
+
+## Active Focus
+
+### FARM v1.0 Stable Freeze
+
+The active target is recording FARM v1.0 Stable as the canonical meta-framework coordination layer of Project FAR.
 
 ---
 
@@ -65,8 +79,10 @@ The current project order is:
 3. FARO v1.0 Stable recorded.
 4. FARM Phase 1 architecture audit completed.
 5. FARM Phase 2 architecture stabilization completed.
-6. FARM Phase 3 methodology audit underway.
-7. Modify stable layers only through formal review when a concrete defect or requirement is identified.
+6. FARM Phase 3 methodology audit completed.
+7. FARM Phase 4 consistency audit completed.
+8. Record FARM v1.0 Stable.
+9. Modify stable layers only through formal review when a concrete defect or requirement is identified.
 
 ---
 
@@ -86,16 +102,14 @@ Effective immediately:
 
 ## Next Milestone
 
-### FARM Phase 3 — Methodology Audit Complete
+### FARM v1.0 Stable
 
 Initial objectives:
 
-- test requirement routing;
-- test defect classification;
-- test change-control gates;
-- test integration-record reconstructibility;
-- verify FARM remains distinct from FARO and project governance;
-- prepare FARM for final consistency audit.
+- record stable FARM components;
+- record FARM boundary rules;
+- record FARM change policy;
+- define next project focus after FARM v1.0 Stable.
 
 ---
 
