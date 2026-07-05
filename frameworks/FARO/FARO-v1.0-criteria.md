@@ -22,7 +22,7 @@ It does not mean every possible operation has been defined.
 
 `architecture.md` shall define FARO's operational architecture.
 
-Status: required.
+Status: verified by Phase 7 architecture stabilization.
 
 ---
 
@@ -30,7 +30,7 @@ Status: required.
 
 `dependency-graph.md` shall define FARO document-maintenance order.
 
-Status: required.
+Status: verified by Phase 7 architecture stabilization.
 
 ---
 
@@ -38,7 +38,7 @@ Status: required.
 
 `design-principles.md` shall define FARO design constraints.
 
-Status: required.
+Status: verified by Phase 7 architecture stabilization.
 
 ---
 
@@ -46,7 +46,7 @@ Status: required.
 
 `operation-taxonomy.md` shall define FARO operation categories.
 
-Status: required.
+Status: verified by Phase 7 architecture stabilization.
 
 ---
 
@@ -54,7 +54,7 @@ Status: required.
 
 `operation-interface-standard.md` shall define required fields for canonical FARO operations.
 
-Status: required.
+Status: verified by Phase 7 architecture stabilization.
 
 ---
 
@@ -69,7 +69,7 @@ The following documents shall exist:
 - `reporting.md`;
 - `operational-evaluation.md`.
 
-Status: required.
+Status: verified by Phase 7 architecture stabilization.
 
 ---
 
@@ -77,7 +77,7 @@ Status: required.
 
 FARO shall operationalize FAR v1.0 Stable without redefining FAR methodology.
 
-Status: required.
+Status: verified by Phase 7 architecture stabilization.
 
 ---
 
@@ -85,7 +85,7 @@ Status: required.
 
 FARO shall operate over FARA representations without redefining FARA architecture.
 
-Status: required.
+Status: verified by Phase 7 architecture stabilization.
 
 ---
 
@@ -93,7 +93,7 @@ Status: required.
 
 FARO shall not expand FARE unless a specific mathematical requirement is recorded and reviewed.
 
-Status: required.
+Status: verified by Phase 7 architecture stabilization.
 
 ---
 
@@ -101,11 +101,19 @@ Status: required.
 
 Canonical operations shall follow `operation-interface-standard.md`.
 
-Status: required.
+Status: architecture-level requirement verified by Phase 7; operation-level enforcement remains for later audits.
 
 ---
 
-### 11. Audit Records Present
+### 11. Methodology Audit Complete
+
+FARO methodology shall be audited for procedural sufficiency, failure modes, output reconstructibility, and operation traceability.
+
+Status: required for Phase 8.
+
+---
+
+### 12. Audit Records Present
 
 FARO architecture, stabilization, methodology, and consistency audits shall be recorded before v1.0 Stable.
 
@@ -117,23 +125,24 @@ Status: required.
 
 Before FARO v1.0 Stable, verify:
 
-- [ ] architecture document exists;
-- [ ] dependency graph exists;
-- [ ] design principles exist;
-- [ ] operation taxonomy exists;
-- [ ] operation interface standard exists;
-- [ ] core operation category documents exist;
-- [ ] README delegates to canonical documents;
-- [ ] canonical map is updated;
-- [ ] no FARO document redefines FAR;
-- [ ] no FARO document redefines FARA;
-- [ ] no FARO document expands FARE without review;
-- [ ] operation categories are non-overlapping enough for maintenance;
-- [ ] Phase 7 stabilization audit is complete;
+- [x] architecture document exists;
+- [x] dependency graph exists;
+- [x] design principles exist;
+- [x] operation taxonomy exists;
+- [x] operation interface standard exists;
+- [x] core operation category documents exist;
+- [x] README delegates to canonical documents;
+- [x] canonical map is updated;
+- [x] no FARO document redefines FAR;
+- [x] no FARO document redefines FARA;
+- [x] no FARO document expands FARE without review;
+- [x] operation categories are non-overlapping enough for maintenance;
+- [x] Phase 7 stabilization audit is complete;
+- [ ] Phase 8 methodology audit is complete;
 - [ ] final FARO consistency audit is complete.
 
 ---
 
 ## Notes
 
-FARO v1.0 Stable should be declared only after architecture stabilization and consistency audit are complete.
+FARO v1.0 Stable should be declared only after methodology and consistency audits are complete.
