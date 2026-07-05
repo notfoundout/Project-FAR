@@ -2,13 +2,15 @@
 
 ## Current Status
 
-Project FAR has completed its first stable FARE mathematics milestone.
+The initial Project FAR framework stack is stabilized for navigation and downstream validation.
 
-FAR v1.0 Stable has been recorded as the canonical methodology layer of Project FAR.
-
-FARO v1.0 Stable has been recorded as the canonical operational layer of Project FAR.
-
-FARM v1.0 Stable has been recorded as the canonical meta-framework coordination layer of Project FAR.
+| Framework | Role | Status |
+|---|---|---|
+| FARA | Representation | Stable |
+| FAR | Methodology | Stable |
+| FARO | Operations | Stable |
+| FARE | Mathematics | Frozen, requirement-driven |
+| FARM | Meta-framework coordination | Stable |
 
 Active development now moves to concrete worked examples and downstream requirement validation.
 
@@ -16,29 +18,45 @@ Active development now moves to concrete worked examples and downstream requirem
 
 ## Completed Milestones
 
+### FARA — Representation
+
+Status: Stable architecture layer.
+
+FARA provides the representational architecture used by the rest of Project FAR. No separate FARA milestone file is currently present.
+
+---
+
 ### FARE Mathematics v0.1
 
-Status: Frozen
+Status: Frozen.
 
 FARE Mathematics v0.1 is requirement-driven. It shall not expand unless FAR, FARO, FARA, or FARM requires mathematical support.
+
+Milestone: [`milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`](milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md)
 
 ---
 
 ### FAR v1.0 Stable
 
-Status: Stable
+Status: Stable.
+
+Milestone: [`milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md`](milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md)
 
 ---
 
 ### FARO v1.0 Stable
 
-Status: Stable
+Status: Stable.
+
+Milestone: [`milestones/FAR-MILESTONE-004-FARO-v1.0-Stable.md`](milestones/FAR-MILESTONE-004-FARO-v1.0-Stable.md)
 
 ---
 
 ### FARM v1.0 Stable
 
-Status: Stable
+Status: Stable.
+
+Milestone: [`milestones/FARM-v1.0-Stable.md`](milestones/FARM-v1.0-Stable.md)
 
 Stable components:
 
@@ -66,13 +84,15 @@ The active target is validating Project FAR through concrete artifact use.
 
 The current project order is:
 
-1. FARE Mathematics v0.1 frozen.
-2. FAR v1.0 Stable recorded.
-3. FARO v1.0 Stable recorded.
-4. FARM v1.0 Stable recorded.
-5. Build canonical worked examples.
-6. Route downstream requirements only when examples expose concrete needs.
-7. Modify stable layers only through formal review when a concrete defect or requirement is identified.
+1. FARA stable representational architecture recognized.
+2. FARE Mathematics v0.1 frozen.
+3. FAR v1.0 Stable recorded.
+4. FARO v1.0 Stable recorded.
+5. FARM v1.0 Stable recorded.
+6. Framework navigation normalized.
+7. Build canonical worked examples.
+8. Route downstream requirements only when examples expose concrete needs.
+9. Modify stable layers only through formal review when a concrete defect or requirement is identified.
 
 ---
 
@@ -80,6 +100,7 @@ The current project order is:
 
 Effective immediately:
 
+- FARA shall not be modified without an explicit representational defect, inconsistency, or downstream requirement.
 - No new FARE mathematical definitions shall be introduced unless required by FAR, FARO, FARA, or FARM.
 - New FARE theorems shall be introduced only when they justify or extend FAR, FARO, FARA, or FARM.
 - Existing FARE mathematical definitions require formal review before modification.
@@ -102,6 +123,15 @@ Initial objectives:
 - create FARO audit and comparison examples;
 - create FARM integration records from concrete examples;
 - use examples to validate the framework stack.
+
+---
+
+## Related Documents
+
+- [Root README](../README.md)
+- [Canonical map](CANONICAL_MAP.md)
+- [Post-v1.0 repository audit](audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md)
+- [Framework navigation normalization audit](audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md)
 
 ---
 
