@@ -258,19 +258,79 @@ Defines criteria required before FAR v1.0 Stable.
 
 # FARO
 
-## Comparison
+## FARO Architecture
 
 Canonical Location:
 
-`frameworks/FARO/comparison.md`
+`frameworks/FARO/architecture.md`
 
 Purpose:
 
-Defines comparison between reasoning processes.
+Defines the high-level FARO operational architecture.
 
 ---
 
-## Auditing
+## FARO Dependency Graph
+
+Canonical Location:
+
+`frameworks/FARO/dependency-graph.md`
+
+Purpose:
+
+Records FARO document-maintenance dependencies.
+
+---
+
+## FARO Design Principles
+
+Canonical Location:
+
+`frameworks/FARO/design-principles.md`
+
+Purpose:
+
+Defines FARO design constraints.
+
+---
+
+## FARO Operation Taxonomy
+
+Canonical Location:
+
+`frameworks/FARO/operation-taxonomy.md`
+
+Purpose:
+
+Defines FARO operation categories.
+
+---
+
+## FARO Operation Interface Standard
+
+Canonical Location:
+
+`frameworks/FARO/operation-interface-standard.md`
+
+Purpose:
+
+Defines the required structure for canonical FARO operation specifications.
+
+---
+
+## FARO Execution
+
+Canonical Location:
+
+`frameworks/FARO/execution.md`
+
+Purpose:
+
+Defines execution operations.
+
+---
+
+## FARO Auditing
 
 Canonical Location:
 
@@ -278,11 +338,23 @@ Canonical Location:
 
 Purpose:
 
-Defines auditing of reasoning processes.
+Defines audit operations over FAR investigations.
 
 ---
 
-## Disagreement Analysis
+## FARO Comparison
+
+Canonical Location:
+
+`frameworks/FARO/comparison.md`
+
+Purpose:
+
+Defines comparison operations.
+
+---
+
+## FARO Disagreement Analysis
 
 Canonical Location:
 
@@ -290,7 +362,43 @@ Canonical Location:
 
 Purpose:
 
-Defines methods for analyzing disagreement between reasoning processes.
+Defines disagreement analysis operations.
+
+---
+
+## FARO Reporting
+
+Canonical Location:
+
+`frameworks/FARO/reporting.md`
+
+Purpose:
+
+Defines reporting operations.
+
+---
+
+## FARO Operational Evaluation
+
+Canonical Location:
+
+`frameworks/FARO/operational-evaluation.md`
+
+Purpose:
+
+Defines operational evaluation over FAR investigation artifacts.
+
+---
+
+## FARO v1.0 Criteria
+
+Canonical Location:
+
+`frameworks/FARO/FARO-v1.0-criteria.md`
+
+Purpose:
+
+Defines criteria required before FARO v1.0 Stable.
 
 ---
 
