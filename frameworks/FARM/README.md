@@ -2,21 +2,23 @@
 
 ## Purpose
 
-FARM is the next planned framework component of Project FAR.
+FARM is the candidate meta-framework component of Project FAR.
 
 Working name: **Foundational Analysis of Reasoning Meta-framework**.
 
-FARM should govern post-v1.0 integration across stable framework layers.
+FARM governs post-v1.0 integration across stable framework layers only if it remains narrow and non-duplicative.
 
-It should not redefine FARA, FAR, FARO, or FARE.
+It shall not redefine FARA, FAR, FARO, or FARE.
 
 ---
 
 ## Current Status
 
-FARM is in initial planning.
+FARM Phase 1 architecture audit is complete.
 
-It is not stable.
+FARM Phase 2 architecture stabilization is initiated.
+
+FARM is not stable.
 
 ---
 
@@ -28,21 +30,21 @@ Project FAR currently has:
 - FAR v1.0 Stable recorded;
 - FARO v1.0 Stable recorded.
 
-FARM should begin only as a meta-level coordination layer over the stable components.
+FARM begins as a meta-level coordination layer over the stable components.
 
 ---
 
-## Initial Scope Hypothesis
+## Confirmed Narrow Scope
 
 FARM may define methods for:
 
 - coordinating framework layers;
-- managing cross-framework dependencies;
+- routing cross-framework requirements;
 - recording integration requirements;
 - governing post-v1.0 revisions;
 - classifying downstream defects;
-- routing requirements to FARA, FAR, FARO, or FARE;
-- preserving stable-layer boundaries during future development.
+- preserving stable-layer boundaries during future development;
+- managing worked-example feedback.
 
 ---
 
@@ -54,10 +56,12 @@ FARM shall not:
 - redefine FAR methodology;
 - redefine FARO operations;
 - expand FARE mathematics without a specific reviewed requirement;
+- perform FARO audits;
+- replace project status or milestone documents;
 - treat meta-governance as a reason to alter stable framework content.
 
 ---
 
-## Initial Development Rule
+## Next Step
 
-FARM must begin with an architecture audit before canonical documents are declared stable.
+FARM Phase 2 should create the minimum viable architecture documents and test whether FARM remains distinct from FARO and ordinary project governance.
