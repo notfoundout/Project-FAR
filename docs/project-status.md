@@ -8,9 +8,9 @@ FAR v1.0 Stable has been recorded as the canonical methodology layer of Project 
 
 FARO v1.0 Stable has been recorded as the canonical operational layer of Project FAR.
 
-FARM Phase 1 architecture audit, Phase 2 architecture stabilization, Phase 3 methodology audit, and Phase 4 consistency audit are complete.
+FARM v1.0 Stable has been recorded as the canonical meta-framework coordination layer of Project FAR.
 
-Active development now moves to recording the FARM v1.0 Stable milestone.
+Active development now moves to concrete worked examples and downstream requirement validation.
 
 ---
 
@@ -36,37 +36,29 @@ Status: Stable
 
 ---
 
-### FARM Phase 1 — Architecture Audit
+### FARM v1.0 Stable
 
-Status: Complete
+Status: Stable
 
----
+Stable components:
 
-### FARM Phase 2 — Architecture Stabilization
-
-Status: Complete
-
----
-
-### FARM Phase 3 — Methodology Audit
-
-Status: Complete
-
----
-
-### FARM Phase 4 — Consistency Audit
-
-Status: Complete
-
-Phase 4 found no remaining consistency blocker before a FARM v1.0 Stable milestone PR.
+- FARM architecture;
+- FARM dependency graph;
+- FARM design principles;
+- FARM requirement routing;
+- FARM defect classification;
+- FARM change control;
+- FARM integration record;
+- FARM v1.0 criteria;
+- FARM Phase 1 through Phase 4 audit records.
 
 ---
 
 ## Active Focus
 
-### FARM v1.0 Stable Freeze
+### Worked Examples and Downstream Validation
 
-The active target is recording FARM v1.0 Stable as the canonical meta-framework coordination layer of Project FAR.
+The active target is validating Project FAR through concrete artifact use.
 
 ---
 
@@ -77,12 +69,10 @@ The current project order is:
 1. FARE Mathematics v0.1 frozen.
 2. FAR v1.0 Stable recorded.
 3. FARO v1.0 Stable recorded.
-4. FARM Phase 1 architecture audit completed.
-5. FARM Phase 2 architecture stabilization completed.
-6. FARM Phase 3 methodology audit completed.
-7. FARM Phase 4 consistency audit completed.
-8. Record FARM v1.0 Stable.
-9. Modify stable layers only through formal review when a concrete defect or requirement is identified.
+4. FARM v1.0 Stable recorded.
+5. Build canonical worked examples.
+6. Route downstream requirements only when examples expose concrete needs.
+7. Modify stable layers only through formal review when a concrete defect or requirement is identified.
 
 ---
 
@@ -96,20 +86,22 @@ Effective immediately:
 - Draft theorems are not stable components and shall not be cited as accepted dependencies.
 - FAR v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
 - FARO v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
-- FARM shall not redefine stable framework layers.
+- FARM v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
+- No new FARM primitives shall be introduced without a demonstrated cross-framework requirement.
+- FARM shall not expand into operational behavior, investigation methodology, representational architecture, or mathematics.
 
 ---
 
 ## Next Milestone
 
-### FARM v1.0 Stable
+### Post-v1.0 Worked Examples
 
 Initial objectives:
 
-- record stable FARM components;
-- record FARM boundary rules;
-- record FARM change policy;
-- define next project focus after FARM v1.0 Stable.
+- create canonical FAR investigation examples;
+- create FARO audit and comparison examples;
+- create FARM integration records from concrete examples;
+- use examples to validate the framework stack.
 
 ---
 
