@@ -42,6 +42,6 @@ It must prove that it has responsibilities not already handled by FAR, FARO, FAR
 
 ## Initial Objective
 
-Complete FARM Phase 10 — Architecture Audit.
+Complete FARM Phase 1 — Architecture Audit.
 
 The audit must decide whether FARM should proceed as a formal framework layer.

@@ -8,7 +8,9 @@ FAR v1.0 Stable has been recorded as the canonical methodology layer of Project 
 
 FARO v1.0 Stable has been recorded as the canonical operational layer of Project FAR.
 
-Active development now moves to FARM planning and post-v1.0 integration.
+FARM Phase 1 architecture audit is complete.
+
+Active development now moves to FARM Phase 2 architecture stabilization.
 
 ---
 
@@ -34,11 +36,19 @@ Status: Stable
 
 ---
 
+### FARM Phase 1 — Architecture Audit
+
+Status: Complete
+
+Phase 1 found that FARM is justified only as a narrow meta-framework for routing requirements, classifying defects, coordinating cross-framework integration, and preserving stable-layer boundaries.
+
+---
+
 ## Active Focus
 
-### FARM Phase 10 — Architecture Audit
+### FARM Phase 2 — Architecture Stabilization
 
-The active target is determining whether FARM should exist as a formal meta-framework layer and, if so, what minimum architecture it requires.
+The active target is creating and testing the minimum viable FARM architecture.
 
 ---
 
@@ -49,8 +59,8 @@ The current project order is:
 1. FARE Mathematics v0.1 frozen.
 2. FAR v1.0 Stable recorded.
 3. FARO v1.0 Stable recorded.
-4. Initiate FARM architecture audit.
-5. Build FARM only if the audit proves its distinct role.
+4. FARM Phase 1 architecture audit completed.
+5. FARM Phase 2 architecture stabilization underway.
 6. Use worked examples to expose concrete downstream requirements.
 7. Modify stable layers only through formal review when a concrete defect or requirement is identified.
 
@@ -72,16 +82,17 @@ Effective immediately:
 
 ## Next Milestone
 
-### FARM Phase 10 — Architecture Audit Complete
+### FARM Phase 2 — Architecture Stabilization Complete
 
 Initial objectives:
 
-- define the FARM problem statement;
-- determine whether FARM is distinct from project governance;
-- determine whether FARM is distinct from FARO;
-- identify permitted and prohibited FARM responsibilities;
-- identify the minimum viable FARM architecture;
-- decide whether FARM should proceed to stabilization.
+- create minimum viable FARM architecture documents;
+- verify FARM remains distinct from FARO and project governance;
+- define requirement routing;
+- define defect classification;
+- define change control;
+- define integration records;
+- define FARM v1.0 criteria.
 
 ---
 
