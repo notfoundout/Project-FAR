@@ -6,9 +6,9 @@ Project FAR has completed its first stable FARE mathematics milestone.
 
 FAR v1.0 Stable has been recorded as the canonical methodology layer of Project FAR.
 
-FARO Phase 6 architecture audit, Phase 7 architecture stabilization, Phase 8 methodology audit, and Phase 9 consistency audit are complete.
+FARO v1.0 Stable has been recorded as the canonical operational layer of Project FAR.
 
-Active development now moves to recording the FARO v1.0 Stable milestone.
+Active development now moves to post-v1.0 integration and worked examples.
 
 ---
 
@@ -28,37 +28,33 @@ Status: Stable
 
 ---
 
-### FARO Phase 6 — Architecture Audit
+### FARO v1.0 Stable
 
-Status: Complete
+Status: Stable
 
----
+Stable components:
 
-### FARO Phase 7 — Architecture Stabilization
-
-Status: Complete
-
----
-
-### FARO Phase 8 — Methodology Audit
-
-Status: Complete
-
----
-
-### FARO Phase 9 — Consistency Audit
-
-Status: Complete
-
-Phase 9 found no remaining consistency blocker before a FARO v1.0 Stable milestone PR.
+- FARO architecture;
+- FARO dependency graph;
+- FARO design principles;
+- FARO operation taxonomy;
+- FARO operation interface standard;
+- execution operations;
+- audit operations;
+- comparison operations;
+- disagreement analysis operations;
+- reporting operations;
+- operational evaluation;
+- FARO v1.0 criteria;
+- FARO Phase 6 through Phase 9 audit records.
 
 ---
 
 ## Active Focus
 
-### FARO v1.0 Stable Freeze
+### Post-v1.0 Integration and Worked Examples
 
-The active target is recording FARO v1.0 Stable as the canonical operational layer of Project FAR.
+The active target is validating Project FAR through concrete artifact use.
 
 ---
 
@@ -68,11 +64,10 @@ The current project order is:
 
 1. FARE Mathematics v0.1 frozen.
 2. FAR v1.0 Stable recorded.
-3. FARO Phase 6 architecture audit completed.
-4. FARO Phase 7 architecture stabilization completed.
-5. FARO Phase 8 methodology audit completed.
-6. FARO Phase 9 consistency audit completed.
-7. Record FARO v1.0 Stable.
+3. FARO v1.0 Stable recorded.
+4. Develop canonical worked examples.
+5. Use worked examples to expose any downstream requirements.
+6. Modify FAR, FARO, FARA, or FARE only through formal review when a concrete defect or requirement is identified.
 
 ---
 
@@ -84,21 +79,22 @@ Effective immediately:
 - New FARE theorems shall be introduced only when they justify or extend FAR, FARO, or FARA.
 - Existing FARE mathematical definitions require formal review before modification.
 - Draft theorems are not stable components and shall not be cited as accepted dependencies.
-- FARO shall not redefine FAR primitives. It shall operationalize FAR after FAR v1.0 Stable.
 - FAR v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
+- FARO v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
 
 ---
 
 ## Next Milestone
 
-### FARO v1.0 Stable
+### Post-v1.0 Worked Examples
 
 Initial objectives:
 
-- record stable FARO components;
-- record FARO boundary rules;
-- record post-v1.0 change policy;
-- define next project focus after FARO v1.0 Stable.
+- create canonical FAR investigation examples;
+- create FARO audit examples;
+- create FARO comparison examples;
+- create FARO disagreement analysis examples;
+- use examples to validate the framework through concrete artifact use.
 
 ---
 
