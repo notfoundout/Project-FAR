@@ -2,11 +2,11 @@
 
 ## Purpose
 
-FARM is the candidate meta-framework component of Project FAR.
+FARM is the canonical meta-framework component of Project FAR.
 
 Working name: **Foundational Analysis of Reasoning Meta-framework**.
 
-FARM governs post-v1.0 integration across stable framework layers only if it remains narrow and non-duplicative.
+FARM handles post-v1.0 integration across stable framework layers while remaining narrow and non-duplicative.
 
 It shall not redefine FARA, FAR, FARO, or FARE.
 
@@ -14,13 +14,9 @@ It shall not redefine FARA, FAR, FARO, or FARE.
 
 ## Current Status
 
-FARM Phase 1 architecture audit is complete.
+FARM v1.0 Stable has been recorded.
 
-FARM Phase 2 architecture stabilization is complete.
-
-FARM Phase 3 methodology audit is initiated.
-
-FARM is not stable.
+FARM Phase 1 through Phase 4 are complete.
 
 ---
 
@@ -45,6 +41,6 @@ FARM shall not perform FARO audits or replace project status and milestone docum
 
 ---
 
-## Next Step
+## Change Policy
 
-FARM Phase 3 should audit whether requirement routing, defect classification, change control, and integration records function as executable meta-framework methods.
+Stable FARM documents require formal review before modification.
