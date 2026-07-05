@@ -8,7 +8,7 @@ FAR v1.0 Stable has been recorded as the canonical methodology layer of Project 
 
 FARO v1.0 Stable has been recorded as the canonical operational layer of Project FAR.
 
-Active development now moves to post-v1.0 integration and worked examples.
+Active development now moves to FARM planning and post-v1.0 integration.
 
 ---
 
@@ -18,7 +18,7 @@ Active development now moves to post-v1.0 integration and worked examples.
 
 Status: Frozen
 
-FARE Mathematics v0.1 is requirement-driven. It shall not expand unless FAR, FARO, or FARA requires mathematical support.
+FARE Mathematics v0.1 is requirement-driven. It shall not expand unless FAR, FARO, FARA, or FARM requires mathematical support.
 
 ---
 
@@ -32,29 +32,13 @@ Status: Stable
 
 Status: Stable
 
-Stable components:
-
-- FARO architecture;
-- FARO dependency graph;
-- FARO design principles;
-- FARO operation taxonomy;
-- FARO operation interface standard;
-- execution operations;
-- audit operations;
-- comparison operations;
-- disagreement analysis operations;
-- reporting operations;
-- operational evaluation;
-- FARO v1.0 criteria;
-- FARO Phase 6 through Phase 9 audit records.
-
 ---
 
 ## Active Focus
 
-### Post-v1.0 Integration and Worked Examples
+### FARM Phase 10 — Architecture Audit
 
-The active target is validating Project FAR through concrete artifact use.
+The active target is determining whether FARM should exist as a formal meta-framework layer and, if so, what minimum architecture it requires.
 
 ---
 
@@ -65,9 +49,10 @@ The current project order is:
 1. FARE Mathematics v0.1 frozen.
 2. FAR v1.0 Stable recorded.
 3. FARO v1.0 Stable recorded.
-4. Develop canonical worked examples.
-5. Use worked examples to expose any downstream requirements.
-6. Modify FAR, FARO, FARA, or FARE only through formal review when a concrete defect or requirement is identified.
+4. Initiate FARM architecture audit.
+5. Build FARM only if the audit proves its distinct role.
+6. Use worked examples to expose concrete downstream requirements.
+7. Modify stable layers only through formal review when a concrete defect or requirement is identified.
 
 ---
 
@@ -75,26 +60,28 @@ The current project order is:
 
 Effective immediately:
 
-- No new FARE mathematical definitions shall be introduced unless required by FAR, FARO, or FARA.
-- New FARE theorems shall be introduced only when they justify or extend FAR, FARO, or FARA.
+- No new FARE mathematical definitions shall be introduced unless required by FAR, FARO, FARA, or FARM.
+- New FARE theorems shall be introduced only when they justify or extend FAR, FARO, FARA, or FARM.
 - Existing FARE mathematical definitions require formal review before modification.
 - Draft theorems are not stable components and shall not be cited as accepted dependencies.
 - FAR v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
 - FARO v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
+- FARM shall not redefine stable framework layers.
 
 ---
 
 ## Next Milestone
 
-### Post-v1.0 Worked Examples
+### FARM Phase 10 — Architecture Audit Complete
 
 Initial objectives:
 
-- create canonical FAR investigation examples;
-- create FARO audit examples;
-- create FARO comparison examples;
-- create FARO disagreement analysis examples;
-- use examples to validate the framework through concrete artifact use.
+- define the FARM problem statement;
+- determine whether FARM is distinct from project governance;
+- determine whether FARM is distinct from FARO;
+- identify permitted and prohibited FARM responsibilities;
+- identify the minimum viable FARM architecture;
+- decide whether FARM should proceed to stabilization.
 
 ---
 
