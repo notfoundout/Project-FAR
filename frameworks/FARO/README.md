@@ -4,157 +4,80 @@
 
 FARO (Foundational Analysis of Reasoning Operations) defines the operational layer of Project FAR.
 
-FARO operationalizes stable FAR methodology without redefining FAR, FARA, or FARE.
-
-Where FARA defines how reasoning is represented and FAR defines how investigations are methodologically conducted, FARO defines how FAR investigation artifacts are executed, audited, compared, reported, and operationally evaluated.
+FARO operationalizes FAR v1.0 Stable without redefining FAR, FARA, or FARE.
 
 ---
 
-# Current Status
+## Current Status
 
-FARO is entering v1.0 planning after the FAR v1.0 Stable milestone.
+FARO has completed Phase 6 architecture audit and has entered Phase 7 architecture stabilization.
 
-FARO development shall remain downstream of stable FAR.
-
----
-
-# Relationship to Project FAR
-
-Project FAR consists of complementary framework components supported by shared foundations and theory.
-
-## FARA
-
-The representational architecture.
-
-Defines the formal objects used to represent reasoning.
+FARO is not yet v1.0 Stable.
 
 ---
 
-## FAR
+## Canonical Documents
 
-The investigation methodology.
-
-Defines the methods for conducting structured reasoning investigations.
-
-FAR v1.0 Stable is the canonical methodology target that FARO operationalizes.
-
----
-
-## FARO
-
-The operational framework.
-
-Defines admissible operations performed over FAR investigation artifacts and FARA representations.
-
----
-
-## FARE
-
-The mathematical evaluation layer.
-
-FARE Mathematics v0.1 remains frozen and requirement-driven.
-
-FARO shall not expand FARE unless operational development exposes a specific mathematical need.
+- `architecture.md` — Defines the high-level FARO operational architecture.
+- `dependency-graph.md` — Records FARO document-maintenance dependencies.
+- `design-principles.md` — Defines FARO design constraints.
+- `operation-taxonomy.md` — Defines FARO operation categories.
+- `operation-interface-standard.md` — Defines required operation specification fields.
+- `execution.md` — Defines execution operations.
+- `auditing.md` — Defines audit operations.
+- `comparison.md` — Defines comparison operations.
+- `disagreement-analysis.md` — Defines disagreement analysis operations.
+- `reporting.md` — Defines reporting operations.
+- `operational-evaluation.md` — Defines operational evaluation.
+- `FARO-v1.0-criteria.md` — Defines criteria required before FARO v1.0 Stable.
 
 ---
 
-# Boundary Rules
+## Boundary Rules
 
-FARO may:
+FARO may operationalize FAR.
 
-- execute FAR investigation procedures;
-- audit completed FAR investigations;
-- compare investigations;
-- detect missing artifacts;
-- check workflow completion;
-- analyze disagreement;
-- generate reports;
-- automate FAR validation checks.
+FARO shall not redefine FAR methodology.
 
-FARO shall not:
+FARO may operate over FARA representations.
 
-- introduce new FAR primitives;
-- redefine FAR methodology;
-- redefine FARA architecture;
-- modify FARE mathematics without a specific requirement;
-- treat operational convenience as a reason to alter canonical FAR structure.
+FARO shall not redefine FARA architecture.
+
+FARO may expose FARE mathematical needs.
+
+FARO shall not expand FARE without a specific requirement and formal review.
 
 ---
 
-# Initial FARO v1.0 Planning Objectives
+## Operation Categories
 
-The next stage of development should define:
+FARO recognizes six primary operation categories:
 
-- FARO scope;
-- operational responsibilities;
-- required inputs and outputs;
-- audit procedures over FAR investigations;
-- comparison procedures over FAR investigations;
-- reporting format;
-- operational validation boundaries;
-- dependency relation to FAR v1.0 Stable.
+- Execution;
+- Audit;
+- Comparison;
+- Disagreement Analysis;
+- Reporting;
+- Operational Evaluation.
 
----
-
-# Design Principles
-
-Every FARO operation should satisfy the following principles.
-
-- Operate upon explicit FAR/FARA artifacts.
-- Preserve FAR methodology.
-- Preserve FARA architecture.
-- Produce reproducible operational outputs.
-- Specify required inputs.
-- Specify produced outputs.
-- State assumptions explicitly.
-- Remain traceable to FAR v1.0 Stable.
+The canonical taxonomy is maintained in `operation-taxonomy.md`.
 
 ---
 
-# Categories of Operations
+## Relationship to Project FAR
 
-Operations are organized into the following categories.
+```text
+FARA -> FAR v1.0 Stable -> FARO
+```
 
-## Execution
+FARA supplies representation.
 
-Operations that help carry out FAR investigation procedures.
+FAR supplies methodology.
 
----
-
-## Audit
-
-Operations that check FAR investigation artifacts against FAR validation requirements.
+FARO supplies operation.
 
 ---
 
-## Comparison
+## Notes
 
-Operations that compare two or more FAR investigations or reasoning artifacts.
-
----
-
-## Disagreement Analysis
-
-Operations that identify and classify disagreement between investigations.
-
----
-
-## Reporting
-
-Operations that produce structured reports about investigations, audits, comparisons, or disagreements.
-
----
-
-## Operational Evaluation
-
-Operations that assess reasoning artifacts according to explicitly defined FAR-grounded criteria.
-
----
-
-# Operational Independence
-
-Operations do not alter the theoretical definitions or stable methodology of Project FAR.
-
-They operate upon representations and investigation artifacts already defined by the framework.
-
-Accordingly, FARO extends the practical capabilities of Project FAR without modifying its theoretical foundations.
+FARO development should proceed by stabilizing architecture before declaring individual operations canonical.

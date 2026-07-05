@@ -6,7 +6,9 @@ Project FAR has completed its first stable FARE mathematics milestone.
 
 FAR v1.0 Stable has been recorded as the canonical methodology layer of Project FAR.
 
-Active development now shifts to FARO v1.0 planning and development.
+FARO Phase 6 architecture audit is complete.
+
+Active development now moves to FARO Phase 7 architecture stabilization.
 
 ---
 
@@ -27,31 +29,7 @@ Stable components:
 - Proof library structure
 - Validation rules
 
-FARE Mathematics v0.1 is now requirement-driven. It shall not expand unless FAR requires mathematical support.
-
----
-
-### FAR Phase 1 — Canonical Audit
-
-Status: Complete
-
----
-
-### FAR Phase 2 — Structural Audit
-
-Status: Complete
-
----
-
-### FAR Phase 3 — Methodology Audit
-
-Status: Complete
-
----
-
-### FAR Phase 4 — Consistency Audit
-
-Status: Complete
+FARE Mathematics v0.1 is now requirement-driven. It shall not expand unless FAR, FARO, or FARA requires mathematical support.
 
 ---
 
@@ -74,13 +52,19 @@ Stable components:
 
 ---
 
+### FARO Phase 6 — Architecture Audit
+
+Status: Complete
+
+Phase 6 established the initial FARO architecture document set and identified the architecture stabilization path.
+
+---
+
 ## Active Focus
 
-### FARO v1.0 Planning
+### FARO Phase 7 — Architecture Stabilization
 
-The next development target is FARO v1.0 planning and development.
-
-FARO should operationalize FAR without redefining FAR methodology or FARA architecture.
+The active target is stabilizing the FARO architecture before deeper operation development.
 
 ---
 
@@ -88,11 +72,11 @@ FARO should operationalize FAR without redefining FAR methodology or FARA archit
 
 The current project order is:
 
-1. Freeze FARE Mathematics v0.1.
-2. Stabilize FAR.
-3. Record FAR v1.0 Stable.
-4. Begin FARO v1.0 planning and development.
-5. Develop FARA or FARE further only when later requirements demand it.
+1. FARE Mathematics v0.1 frozen.
+2. FAR v1.0 Stable recorded.
+3. FARO Phase 6 architecture audit completed.
+4. FARO Phase 7 architecture stabilization underway.
+5. FARO v1.0 Stable only after later methodology and consistency audits.
 
 ---
 
@@ -111,16 +95,16 @@ Effective immediately:
 
 ## Next Milestone
 
-### FARO v1.0 Planning
+### FARO Phase 7 — Architecture Stabilization Complete
 
 Initial objectives:
 
-- define FARO scope;
-- define FARO operational responsibilities;
-- define audit procedures over FAR investigations;
-- define comparison procedures over FAR investigations;
-- define reporting format;
-- preserve FAR/FARA/FARE boundaries.
+- verify the FARO architecture document set;
+- eliminate redundant operational categories;
+- confirm operation interface requirements;
+- verify README and canonical map synchronization;
+- preserve FAR/FARA/FARE boundaries;
+- prepare FARO for later methodology and consistency audits.
 
 ---
 

@@ -1,26 +1,38 @@
-# Disagreement Analysis
+# FARO Disagreement Analysis
 
 ## Purpose
 
-This document defines disagreement analysis within the Foundational Analysis of Reasoning Operations (FARO).
+This document defines disagreement analysis within FARO.
 
-Disagreement analysis identifies the explicit causes of disagreement between two or more reasoning processes.
+Disagreement analysis identifies and explains the explicit causes of divergence between two or more FAR investigations or reasoning artifacts.
 
-It does not determine which reasoning process is correct.
+It does not determine which investigation is correct.
+
+---
+
+## Operation Category
+
+Primary category: Disagreement Analysis.
 
 ---
 
 ## Definition
 
-**Disagreement analysis** is the systematic identification and explanation of the differences that cause two or more reasoning processes to produce different admissibility classifications or different resolutions.
+Disagreement analysis is the systematic identification and explanation of differences that cause investigations to produce different admissibility classifications, resolution rules, resolutions, or closure statuses.
 
 ---
 
-## Objective
+## Required Inputs
 
-The objective of disagreement analysis is to locate, describe, and explain every point at which reasoning processes diverge.
+Typical inputs include:
 
-Disagreements should be reduced to explicit differences rather than treated as unexplained conflicts.
+- two or more investigation records;
+- comparison report or aligned artifact set;
+- relevant workflow artifacts;
+- interpretations;
+- reasoning calculi;
+- admissibility records;
+- resolution records or closure statuses.
 
 ---
 
@@ -28,57 +40,46 @@ Disagreements should be reduced to explicit differences rather than treated as u
 
 Disagreement may arise from differences in:
 
-- Representations
-- Representational Structures
-- Interpretations
-- Investigations
-- Reasoning Calculi
-- Reasoning States
-- Transition Signatures
-- Candidates
-- Admissibility Structures (Ω)
-- Resolution Rules
-
-A single disagreement may originate from one or more of these sources.
-
----
-
-## Analysis Procedure
-
-A typical disagreement analysis consists of the following steps.
-
-1. Identify the reasoning processes under examination.
-2. Establish the common assumptions shared by the investigations.
-3. Locate the earliest point of divergence.
-4. Identify the architectural component responsible for the divergence.
-5. Trace the consequences of the divergence through subsequent reasoning.
-6. Determine whether the divergence affects admissibility, resolution, or both.
-7. Record the complete disagreement structure.
+- investigation objectives;
+- representations;
+- representational structures;
+- interpretations;
+- reasoning calculi;
+- reasoning states;
+- transition signatures;
+- candidate generation;
+- admissibility classification;
+- resolution rules;
+- revision history;
+- closure status.
 
 ---
 
-## Result
+## Procedure
 
-Disagreement analysis produces an explicit explanation of why different reasoning processes produced different outcomes.
+A typical disagreement analysis:
 
-The explanation identifies the source and propagation of disagreement without assigning correctness to any reasoning process.
+1. identifies the investigations under examination;
+2. identifies shared artifacts and assumptions;
+3. aligns comparable stages or artifacts;
+4. locates the earliest relevant divergence;
+5. identifies the component responsible for divergence;
+6. traces the effect through later artifacts;
+7. determines whether divergence affects admissibility, resolution, closure, or reconstructibility;
+8. produces a disagreement report.
 
 ---
 
-## Relationship to Other Components
+## Outputs
 
-Disagreement analysis depends upon reasoning processes represented using FARA and conducted using FAR.
+Disagreement analysis produces an explicit disagreement report.
 
-It complements comparison and auditing by explaining the causes of divergence rather than merely describing differences or evaluating procedural integrity.
+The report identifies divergence sources, propagation, affected artifacts, and unresolved comparison limits.
 
 ---
 
-## Research Status
+## Boundary Notes
 
-Current research investigates:
+Disagreement analysis explains divergence.
 
-- disagreement localization,
-- disagreement propagation,
-- disagreement taxonomy,
-- disagreement metrics,
-- and automated disagreement analysis.
+It does not assign truth, redefine FAR methodology, redefine FARA architecture, or expand FARE mathematics.
