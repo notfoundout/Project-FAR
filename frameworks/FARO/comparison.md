@@ -1,97 +1,83 @@
-# Comparison
+# FARO Comparison
 
 ## Purpose
 
-This document defines comparison within the Foundational Analysis of Reasoning Operations (FARO).
+This document defines comparison within FARO.
 
-Comparison identifies similarities and differences between reasoning processes represented within the Foundational Architecture of Reasoning Analysis (FARA).
+Comparison identifies similarities and differences between FAR investigations or FARA reasoning artifacts according to explicit criteria.
 
-It does not determine admissibility or the correctness of conclusions.
+Comparison is descriptive unless paired with explicit operational evaluation criteria.
+
+---
+
+## Operation Category
+
+Primary category: Comparison.
 
 ---
 
 ## Definition
 
-Comparison is the systematic identification of similarities and differences between two or more reasoning processes according to explicitly specified criteria.
+Comparison is the systematic identification of similarities and differences between two or more investigation records or reasoning artifacts.
 
-The objects being compared and the comparison criteria shall be identified before comparison begins.
-
----
-
-## Objective
-
-The objective of comparison is to identify where reasoning processes agree, differ, or diverge.
-
-Comparison provides descriptive analysis rather than evaluation.
+The compared objects and comparison criteria shall be identified before comparison begins.
 
 ---
 
-## Levels of Comparison
+## Required Inputs
 
-Comparison may be performed at multiple levels, including:
+Typical comparison inputs include:
 
-- Representations
-- Representational Structures
-- Interpretations
-- Investigations
-- Reasoning Calculi
-- Reasoning States
-- Transition Signatures
-- Candidates
-- Admissibility Structures (Ω)
-- Resolutions
-
-The comparison procedure remains independent of the level being examined.
+- two or more investigation records or reasoning artifacts;
+- comparison level;
+- comparison criteria;
+- relevant FAR/FARA artifact references.
 
 ---
 
-## Comparison Criteria
+## Comparison Levels
 
-Reasoning processes may be compared with respect to:
+Comparison may occur at the level of:
 
-- Structure
-- Semantics
-- Transformations
-- Admissibility
-- Resolution
-- Completeness
-- Explicitness
-- Traceability
-
-Additional criteria may be introduced when required by a particular investigation.
-
----
-
-## Result
-
-Comparison produces an explicit description of the similarities and differences identified between the reasoning processes.
-
-Comparison does not determine:
-
-- which reasoning process is preferable,
-- whether either reasoning process is correct,
-- or whether a particular conclusion is true.
-
-Those questions require additional analysis.
+- investigations;
+- representations;
+- representational structures;
+- interpretations;
+- reasoning calculi;
+- reasoning states;
+- transition signatures;
+- candidate sets;
+- Admissibility Structures (Ω);
+- resolution rules;
+- resolutions or closure statuses;
+- revision records.
 
 ---
 
-## Relationship to Other Components
+## Procedure
 
-Comparison operates upon reasoning processes represented using FARA.
+A typical comparison:
 
-The methodology for conducting investigations is defined by FAR.
-
-Comparison therefore depends upon both FARA and FAR while remaining independent of any particular reasoning calculus.
+1. identifies the compared artifacts;
+2. identifies comparison level and criteria;
+3. aligns comparable components;
+4. records similarities;
+5. records differences;
+6. identifies non-comparable components;
+7. produces a comparison report.
 
 ---
 
-## Research Status
+## Outputs
 
-Current research investigates:
+Comparison produces an explicit comparison report.
 
-- structural equivalence,
-- semantic equivalence,
-- comparison metrics,
-- comparison automation,
-- and framework-independent comparison methods.
+The report identifies similarities, differences, non-comparable artifacts, and criteria used.
+
+---
+
+## Boundary Notes
+
+Comparison does not determine which investigation is correct.
+
+Comparison does not redefine FAR methodology, FARA architecture, or FARE mathematics.
