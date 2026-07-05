@@ -6,78 +6,98 @@
 
 ## Purpose
 
-This directory defines the methodology of the Foundational Analysis of Reasoning (FAR).
+FAR defines the investigation methodology layer of Project FAR.
 
-FAR provides a structured methodology for conducting investigations within the architectural framework established by the Foundational Architecture of Reasoning Analysis (FARA).
+It provides a structured method for conducting reasoning investigations using the representational architecture defined by [FARA](../FARA/README.md).
 
-Unlike FARA, which defines the architecture of structured reasoning, FAR defines how that architecture is applied during an investigation.
-
-FAR does not introduce new primitives.
+FAR does not introduce new FARA primitives.
 
 ---
 
 ## Current Status
 
-FAR has completed Phase 4 consistency audit and is eligible for a FAR v1.0 Stable freeze after review and merge of the audit branch.
+FAR v1.0 Stable has been recorded.
 
-FARO development should begin only after FAR v1.0 Stable is formally recorded.
-
----
-
-## Canonical Source Rule
-
-`workflow.md` is the canonical source for the ordered stages of a FAR investigation.
-
-`methodology.md` describes the methodological principles governing that workflow.
-
-`application.md` describes how the methodology is applied across domains.
+Future FAR changes should be driven by concrete downstream requirements, worked examples, or validated methodological deficiencies.
 
 ---
 
-## Candidate Generation Placement
+## Framework Role
 
-Candidate generation is part of Stage 6 — Perform Reasoning.
+FAR owns investigation methodology.
 
-Candidate admissibility classification occurs in Stage 7 through the Admissibility Structure (Ω).
-
-Candidate generation is not a separate universal FAR workflow stage.
+It defines how reasoning investigations are conducted, recorded, validated, revised, and closed.
 
 ---
 
-## Delegation to FARA
+## Relationship to Other Frameworks
 
-FAR uses architectural concepts defined by FARA, including:
-
-- reasoning states;
-- transition signatures;
-- the Admissibility Structure (Ω);
-- resolution rules;
-- resolution executions;
-- resolutions.
-
-FAR specifies when and how these concepts are used during an investigation.
-
-FAR does not redefine them.
+- [FARA](../FARA/README.md) supplies representational architecture.
+- [FARO](../FARO/README.md) operationalizes FAR investigations.
+- [FARE](../FARE/README.md) provides requirement-driven mathematical evaluation support.
+- [FARM](../FARM/README.md) coordinates cross-framework requirements without redefining FAR.
 
 ---
 
-## Contents
+## Canonical Documents
 
-- `workflow.md` — Canonical source for the stages of a FAR investigation.
-- `methodology.md` — Defines the principles governing FAR investigation practice.
-- `application.md` — Describes how FAR is applied across domains.
-- `dependency-graph.md` — Records FAR document and concept dependency order.
-- `design-principles.md` — Records governing design principles for FAR.
-- `faro-boundary.md` — Defines the boundary between FAR and future FARO.
-- `example-standard.md` — Defines the required structure for canonical FAR examples.
-- `investigation-validation.md` — Defines methodological validation checks for completed FAR investigations.
-- `FAR-v1.0-criteria.md` — Defines the criteria required before FAR v1.0 Stable.
+- [`workflow.md`](workflow.md) — Canonical source for the stages of a FAR investigation.
+- [`methodology.md`](methodology.md) — Defines methodological principles governing FAR investigations.
+- [`application.md`](application.md) — Describes how FAR is applied across domains.
+- [`dependency-graph.md`](dependency-graph.md) — Records FAR document and concept dependency order.
+- [`design-principles.md`](design-principles.md) — Records governing design principles for FAR.
+- [`faro-boundary.md`](faro-boundary.md) — Defines the boundary between FAR and FARO.
+- [`example-standard.md`](example-standard.md) — Defines the required structure for canonical FAR examples.
+- [`investigation-validation.md`](investigation-validation.md) — Defines validation checks for completed FAR investigations.
+- [`FAR-v1.0-criteria.md`](FAR-v1.0-criteria.md) — Defines criteria required before FAR v1.0 Stable.
 
 ---
 
-## Related Directories
+## Audit History
 
-- `frameworks/FARA/` — Foundational architecture.
-- `frameworks/FARO/` — Future operational layer, downstream of stable FAR.
-- `theory/` — Formal definitions, axioms, propositions, conjectures, theorems, and proofs.
-- `examples/` — Complete worked investigations.
+- [`../../docs/audits/FAR-PHASE-1-CANONICAL-AUDIT.md`](../../docs/audits/FAR-PHASE-1-CANONICAL-AUDIT.md)
+- [`../../docs/audits/FAR-PHASE-2-STRUCTURAL-AUDIT.md`](../../docs/audits/FAR-PHASE-2-STRUCTURAL-AUDIT.md)
+- [`../../docs/audits/FAR-PHASE-3-METHODOLOGY-AUDIT.md`](../../docs/audits/FAR-PHASE-3-METHODOLOGY-AUDIT.md)
+- [`../../docs/audits/FAR-PHASE-4-CONSISTENCY-AUDIT.md`](../../docs/audits/FAR-PHASE-4-CONSISTENCY-AUDIT.md)
+- [`../../docs/audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md`](../../docs/audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md)
+
+---
+
+## Milestones
+
+- [`../../docs/milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md`](../../docs/milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md)
+
+---
+
+## Current Development Policy
+
+Do not expand FAR speculatively.
+
+Modify FAR only when a downstream requirement, concrete worked example, or validated methodological defect requires it.
+
+---
+
+## Boundary Rules
+
+FAR owns investigation methodology.
+
+It does not define representational architecture, operational procedures, mathematical evaluation, or meta-framework governance.
+
+Candidate generation remains part of Stage 6 — Perform Reasoning. Candidate admissibility classification occurs in Stage 7 through the Admissibility Structure.
+
+---
+
+## Next Steps
+
+Use canonical worked investigations to test whether the stable FAR methodology is sufficient.
+
+---
+
+## Related Documents
+
+- [Project status](../../docs/project-status.md)
+- [Canonical map](../../docs/CANONICAL_MAP.md)
+- [FARA README](../FARA/README.md)
+- [FARO README](../FARO/README.md)
+- [FARE README](../FARE/README.md)
+- [FARM README](../FARM/README.md)
