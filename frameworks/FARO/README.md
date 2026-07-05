@@ -10,9 +10,9 @@ FARO operationalizes FAR v1.0 Stable without redefining FAR, FARA, or FARE.
 
 ## Current Status
 
-FARO has completed Phase 6 architecture audit and has entered Phase 7 architecture stabilization.
+FARO has completed Phase 9 consistency audit and is eligible for a dedicated FARO v1.0 Stable milestone PR.
 
-FARO is not yet v1.0 Stable.
+FARO is not formally v1.0 Stable until that milestone is recorded.
 
 ---
 
@@ -80,4 +80,4 @@ FARO supplies operation.
 
 ## Notes
 
-FARO development should proceed by stabilizing architecture before declaring individual operations canonical.
+FARO v1.0 Stable should be recorded through a dedicated milestone after the Phase 9 consistency audit is reviewed and merged.
