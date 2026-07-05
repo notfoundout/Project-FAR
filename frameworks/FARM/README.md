@@ -16,52 +16,35 @@ It shall not redefine FARA, FAR, FARO, or FARE.
 
 FARM Phase 1 architecture audit is complete.
 
-FARM Phase 2 architecture stabilization is initiated.
+FARM Phase 2 architecture stabilization is complete.
+
+FARM Phase 3 methodology audit is initiated.
 
 FARM is not stable.
 
 ---
 
-## Starting Point
+## Canonical Documents
 
-Project FAR currently has:
-
-- FARE Mathematics v0.1 frozen;
-- FAR v1.0 Stable recorded;
-- FARO v1.0 Stable recorded.
-
-FARM begins as a meta-level coordination layer over the stable components.
-
----
-
-## Confirmed Narrow Scope
-
-FARM may define methods for:
-
-- coordinating framework layers;
-- routing cross-framework requirements;
-- recording integration requirements;
-- governing post-v1.0 revisions;
-- classifying downstream defects;
-- preserving stable-layer boundaries during future development;
-- managing worked-example feedback.
+- `architecture.md` — Defines FARM's meta-framework role.
+- `dependency-graph.md` — Records FARM document-maintenance dependencies.
+- `design-principles.md` — Defines FARM design constraints.
+- `requirement-routing.md` — Defines routing of downstream requirements.
+- `defect-classification.md` — Defines defect classes and statuses.
+- `change-control.md` — Defines gates for stable-layer changes.
+- `integration-record.md` — Defines cross-framework integration records.
+- `FARM-v1.0-criteria.md` — Defines criteria required before FARM v1.0 Stable.
 
 ---
 
 ## Boundary Rules
 
-FARM shall not:
+FARM shall not redefine FARA, FAR, FARO, or FARE.
 
-- redefine FARA architecture;
-- redefine FAR methodology;
-- redefine FARO operations;
-- expand FARE mathematics without a specific reviewed requirement;
-- perform FARO audits;
-- replace project status or milestone documents;
-- treat meta-governance as a reason to alter stable framework content.
+FARM shall not perform FARO audits or replace project status and milestone documents.
 
 ---
 
 ## Next Step
 
-FARM Phase 2 should create the minimum viable architecture documents and test whether FARM remains distinct from FARO and ordinary project governance.
+FARM Phase 3 should audit whether requirement routing, defect classification, change control, and integration records function as executable meta-framework methods.
