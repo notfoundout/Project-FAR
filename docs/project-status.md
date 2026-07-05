@@ -6,9 +6,9 @@ Project FAR has completed its first stable FARE mathematics milestone.
 
 FAR v1.0 Stable has been recorded as the canonical methodology layer of Project FAR.
 
-FARO Phase 6 architecture audit is complete.
+FARO Phase 6 architecture audit and Phase 7 architecture stabilization are complete.
 
-Active development now moves to FARO Phase 7 architecture stabilization.
+Active development now moves to FARO Phase 8 methodology audit.
 
 ---
 
@@ -56,15 +56,21 @@ Stable components:
 
 Status: Complete
 
-Phase 6 established the initial FARO architecture document set and identified the architecture stabilization path.
+---
+
+### FARO Phase 7 — Architecture Stabilization
+
+Status: Complete
+
+Phase 7 verified the FARO architecture document set, operation taxonomy, operation interface standard, category documents, README delegation, canonical map synchronization, and FAR/FARA/FARE boundaries.
 
 ---
 
 ## Active Focus
 
-### FARO Phase 7 — Architecture Stabilization
+### FARO Phase 8 — Methodology Audit
 
-The active target is stabilizing the FARO architecture before deeper operation development.
+The active target is testing whether FARO's operation categories function as executable, auditable, comparable, reportable methods over FAR v1.0 artifacts.
 
 ---
 
@@ -75,8 +81,9 @@ The current project order is:
 1. FARE Mathematics v0.1 frozen.
 2. FAR v1.0 Stable recorded.
 3. FARO Phase 6 architecture audit completed.
-4. FARO Phase 7 architecture stabilization underway.
-5. FARO v1.0 Stable only after later methodology and consistency audits.
+4. FARO Phase 7 architecture stabilization completed.
+5. FARO Phase 8 methodology audit underway.
+6. FARO v1.0 Stable only after final consistency audit.
 
 ---
 
@@ -95,16 +102,17 @@ Effective immediately:
 
 ## Next Milestone
 
-### FARO Phase 7 — Architecture Stabilization Complete
+### FARO Phase 8 — Methodology Audit Complete
 
 Initial objectives:
 
-- verify the FARO architecture document set;
-- eliminate redundant operational categories;
-- confirm operation interface requirements;
-- verify README and canonical map synchronization;
+- verify procedural sufficiency;
+- test operation inputs and outputs;
+- examine failure modes;
+- verify output reconstructibility;
+- test operation traceability to FAR v1.0 artifacts;
 - preserve FAR/FARA/FARE boundaries;
-- prepare FARO for later methodology and consistency audits.
+- prepare FARO for final consistency audit.
 
 ---
 
