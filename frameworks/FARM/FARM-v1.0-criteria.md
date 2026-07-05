@@ -22,7 +22,7 @@ It does not mean all future integration requirements are known.
 
 `architecture.md` shall define FARM's meta-framework role.
 
-Status: required.
+Status: verified by Phase 2 architecture stabilization.
 
 ---
 
@@ -30,7 +30,7 @@ Status: required.
 
 `dependency-graph.md` shall define FARM document-maintenance order.
 
-Status: required.
+Status: verified by Phase 2 architecture stabilization.
 
 ---
 
@@ -38,7 +38,7 @@ Status: required.
 
 `design-principles.md` shall define FARM constraints.
 
-Status: required.
+Status: verified by Phase 2 architecture stabilization.
 
 ---
 
@@ -46,7 +46,7 @@ Status: required.
 
 `requirement-routing.md` shall define how requirements are routed to framework layers.
 
-Status: required.
+Status: verified by Phase 3 methodology audit.
 
 ---
 
@@ -54,7 +54,7 @@ Status: required.
 
 `defect-classification.md` shall define defect classes and statuses.
 
-Status: required.
+Status: verified by Phase 3 methodology audit.
 
 ---
 
@@ -62,7 +62,7 @@ Status: required.
 
 `change-control.md` shall define stable-layer change gates.
 
-Status: required.
+Status: verified by Phase 3 methodology audit.
 
 ---
 
@@ -70,7 +70,7 @@ Status: required.
 
 `integration-record.md` shall define cross-framework integration records.
 
-Status: required.
+Status: verified by Phase 3 methodology audit.
 
 ---
 
@@ -78,23 +78,31 @@ Status: required.
 
 FARM shall not redefine FARA, FAR, FARO, or FARE.
 
-Status: required.
+Status: verified by Phase 3 methodology audit.
 
 ---
 
-### 9. Methodology Audit Complete
+### 9. Canonical Map Coverage
+
+`docs/CANONICAL_MAP.md` shall include FARM canonical document entries.
+
+Status: verified by Phase 3 methodology audit.
+
+---
+
+### 10. Methodology Audit Complete
 
 FARM methodology shall be audited for procedural sufficiency.
 
-Status: required.
+Status: verified by Phase 3 methodology audit.
 
 ---
 
-### 10. Consistency Audit Complete
+### 11. Consistency Audit Complete
 
 FARM shall pass a final consistency audit before v1.0 Stable.
 
-Status: required.
+Status: required for Phase 4.
 
 ---
 
@@ -102,22 +110,23 @@ Status: required.
 
 Before FARM v1.0 Stable, verify:
 
-- [ ] architecture document exists;
-- [ ] dependency graph exists;
-- [ ] design principles exist;
-- [ ] requirement routing document exists;
-- [ ] defect classification document exists;
-- [ ] change control document exists;
-- [ ] integration record document exists;
-- [ ] FARM remains distinct from FARO;
-- [ ] FARM remains distinct from project governance;
-- [ ] FARM does not redefine stable framework layers;
-- [ ] Phase 2 architecture stabilization is complete;
-- [ ] methodology audit is complete;
+- [x] architecture document exists;
+- [x] dependency graph exists;
+- [x] design principles exist;
+- [x] requirement routing document exists;
+- [x] defect classification document exists;
+- [x] change control document exists;
+- [x] integration record document exists;
+- [x] FARM remains distinct from FARO;
+- [x] FARM remains distinct from project governance;
+- [x] FARM does not redefine stable framework layers;
+- [x] canonical map includes FARM entries;
+- [x] Phase 2 architecture stabilization is complete;
+- [x] methodology audit is complete;
 - [ ] consistency audit is complete.
 
 ---
 
 ## Notes
 
-FARM v1.0 Stable should be declared only after architecture stabilization, methodology audit, and consistency audit are complete.
+FARM v1.0 Stable should be declared only after Phase 4 consistency audit is complete.
