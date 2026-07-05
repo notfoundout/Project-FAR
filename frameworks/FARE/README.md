@@ -1,153 +1,96 @@
 # FARE
 
-## Formal Architecture of Reasoning Evaluation
+**Formal Architecture of Reasoning Evaluation**
 
 ---
 
-# Purpose
+## Purpose
 
-FARE defines the formal architecture governing the evaluation of reasoning.
+FARE defines the mathematical and formal evaluation support layer of Project FAR.
 
-Where:
-
-- FARA defines representational architecture;
-- FARO defines operational reasoning;
-- FARE defines how reasoning outcomes are formally assessed.
-
-FARM is not assumed as an existing dependency of FARE in this repository state.
-
-If FARM is later formalized, FARE may be reviewed for possible generalization or import of shared methodological concepts.
+It supports evaluation of reasoning outputs, assessment structures, assessment relationships, and evaluation processes when another framework creates a concrete requirement for mathematical support.
 
 ---
 
-# Scope
+## Current Status
 
-FARE investigates:
+FARE Mathematics v0.1 is frozen and requirement-driven.
 
-- evaluation;
-- assessment;
-- assessment properties;
-- assessment relationships;
-- assessment lifecycle;
-- assessment graphs;
-- reliability;
-- reproducibility;
-- validity;
-- justification;
-- admissibility;
-- completeness;
-- robustness;
-- consistency;
-- confidence;
-- revision.
+No new FARE mathematics should be introduced unless FARA, FAR, FARO, or FARM exposes a specific reviewed requirement.
 
 ---
 
-# Canonical Definition Sources
+## Framework Role
 
-FARE terminology is governed by the canonical definition documents in:
+FARE owns mathematics and formal evaluation support.
 
-`frameworks/FARE/definitions/`
-
-Current canonical definition files:
-
-- `evaluation-definitions.md`
-- `assessment-definitions.md`
-- `relationship-definitions.md`
-- `graph-definitions.md`
-
-Investigations discover concepts.
-
-Definitions formalize concepts.
-
-Proofs establish consequences of definitions.
-
-Audits verify consistency across the framework.
+FARE is intentionally different from FARA, FAR, FARO, and FARM. It should not be forced to contain governance, methodology, or operation documents merely for symmetry.
 
 ---
 
-# Internal Architecture
+## Relationship to Other Frameworks
 
-FARE currently separates into the following architectural areas:
-
-```text
-Evaluation Theory
-├── Evaluation
-├── Evaluation Objects
-├── Evaluation Criteria
-├── Evaluation Conditions
-├── Comparison
-└── Assessment
-
-Assessment Theory
-├── Structure
-├── Identity
-├── Equivalence
-├── Properties
-└── Confidence
-
-Relationship Theory
-├── Dependency
-├── Support
-├── Conflict
-└── Refinement
-
-Lifecycle Theory
-├── Status
-├── State Transitions
-├── History
-└── Versioning
-
-Graph Theory
-├── Assessment Graphs
-├── Dependency Subgraphs
-├── Conflict Subgraphs
-├── Weak Dependency Components
-└── Strong Dependency Components
-
-Proof Theory
-└── Formal consequences of canonical definitions
-```
+- [FARA](../FARA/README.md) supplies representational objects that may be evaluated.
+- [FAR](../FAR/README.md) supplies investigation methodology whose artifacts may be evaluated.
+- [FARO](../FARO/README.md) supplies operational artifacts whose outputs may require evaluation.
+- [FARM](../FARM/README.md) may route requirements to FARE but does not expand FARE mathematics by itself.
 
 ---
 
-# Objectives
+## Canonical Documents
 
-FARE seeks to answer questions including:
-
-- What is evaluation?
-- What is an assessment?
-- What makes an assessment valid?
-- What makes an evaluation reliable?
-- How should proofs be evaluated?
-- How should investigations be evaluated?
-- How should frameworks be evaluated?
-- When should assessments be revised?
-- What distinguishes reliable evaluation from unreliable evaluation?
+- [`specification.md`](specification.md) — Defines the high-level FARE specification.
+- [`mathematics/README.md`](mathematics/README.md) — Entry point for FARE Mathematics v0.1.
+- [`mathematics/notation.md`](mathematics/notation.md) — Defines notation used by FARE mathematics.
+- [`mathematics/proof-policy.md`](mathematics/proof-policy.md) — Defines proof governance for FARE mathematics.
+- [`mathematics/theorem-index.md`](mathematics/theorem-index.md) — Indexes FARE mathematical theorem records.
+- [`definitions/`](definitions/) — Contains FARE definition documents.
+- [`audits/`](audits/) — Contains FARE audit records.
 
 ---
 
-# Relationship to Other Frameworks
+## Audit History
 
-FARA provides the architectural objects that may be evaluated.
-
-FARO provides the operational processes whose outputs may be evaluated.
-
-FARE evaluates reasoning outputs, assessment structures, assessment relationships, and evaluation processes.
-
-FARE remains self-contained unless a dependency upon another framework is explicitly stated.
+- [`../../docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`](../../docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md)
+- [`../../docs/audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md`](../../docs/audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md)
 
 ---
 
-# Current Status
+## Milestones
 
-Canonicalization / Formalization
+- [`../../docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`](../../docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md)
 
-FARE is architecturally coherent but still under formal refinement.
+---
 
-Known active refinement areas:
+## Current Development Policy
 
-- graph-theoretic precision;
-- proof normalization;
-- support theory;
-- lifecycle and relationship classification.
+FARE remains frozen and requirement-driven.
+
+Do not add new definitions, theorems, or mathematical machinery unless a concrete downstream requirement is recorded and reviewed.
+
+---
+
+## Boundary Rules
+
+FARE owns mathematics and formal evaluation support.
+
+It does not define representational architecture, investigation methodology, operational procedures, or meta-framework governance.
+
+FARM may route a mathematical requirement to FARE, but routing does not authorize expansion.
+
+---
+
+## Next Steps
+
+Use worked examples to test whether FARE Mathematics v0.1 is sufficient for downstream evaluation needs.
+
+---
+
+## Related Documents
+
+- [Project status](../../docs/project-status.md)
+- [Canonical map](../../docs/CANONICAL_MAP.md)
+- [FARA README](../FARA/README.md)
+- [FAR README](../FAR/README.md)
+- [FARO README](../FARO/README.md)
+- [FARM README](../FARM/README.md)
