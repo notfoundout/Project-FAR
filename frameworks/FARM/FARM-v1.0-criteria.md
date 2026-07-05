@@ -102,13 +102,11 @@ Status: verified.
 
 FARM shall pass a final consistency audit before v1.0 Stable.
 
-Status: verified by Phase 4 consistency audit.
+Status: verified.
 
 ---
 
 ## Completion Checklist
-
-Before FARM v1.0 Stable, verify:
 
 - [x] architecture document exists;
 - [x] dependency graph exists;
@@ -129,4 +127,4 @@ Before FARM v1.0 Stable, verify:
 
 ## Notes
 
-FARM is eligible for a dedicated v1.0 Stable milestone PR after the Phase 4 audit branch is reviewed and merged.
+FARM v1.0 Stable is recorded by the FARM stable milestone.
