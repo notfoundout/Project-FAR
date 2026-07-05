@@ -6,9 +6,9 @@ Project FAR has completed its first stable FARE mathematics milestone.
 
 FAR v1.0 Stable has been recorded as the canonical methodology layer of Project FAR.
 
-FARO Phase 6 architecture audit, Phase 7 architecture stabilization, and Phase 8 methodology audit are complete.
+FARO Phase 6 architecture audit, Phase 7 architecture stabilization, Phase 8 methodology audit, and Phase 9 consistency audit are complete.
 
-Active development now moves to FARO Phase 9 consistency audit.
+Active development now moves to recording the FARO v1.0 Stable milestone.
 
 ---
 
@@ -44,15 +44,21 @@ Status: Complete
 
 Status: Complete
 
-Phase 8 verified procedural sufficiency, operation inputs and outputs, failure modes, output reconstructibility, operation traceability, and framework boundaries.
+---
+
+### FARO Phase 9 — Consistency Audit
+
+Status: Complete
+
+Phase 9 found no remaining consistency blocker before a FARO v1.0 Stable milestone PR.
 
 ---
 
 ## Active Focus
 
-### FARO Phase 9 — Consistency Audit
+### FARO v1.0 Stable Freeze
 
-The active target is final consistency review before any FARO v1.0 Stable milestone.
+The active target is recording FARO v1.0 Stable as the canonical operational layer of Project FAR.
 
 ---
 
@@ -65,8 +71,8 @@ The current project order is:
 3. FARO Phase 6 architecture audit completed.
 4. FARO Phase 7 architecture stabilization completed.
 5. FARO Phase 8 methodology audit completed.
-6. FARO Phase 9 consistency audit underway.
-7. FARO v1.0 Stable only if Phase 9 passes.
+6. FARO Phase 9 consistency audit completed.
+7. Record FARO v1.0 Stable.
 
 ---
 
@@ -85,16 +91,14 @@ Effective immediately:
 
 ## Next Milestone
 
-### FARO Phase 9 — Consistency Audit Complete
+### FARO v1.0 Stable
 
 Initial objectives:
 
-- check terminology;
-- check document synchronization;
-- check operation category consistency;
-- check interface consistency;
-- check boundary preservation;
-- check FARO v1.0 criteria alignment.
+- record stable FARO components;
+- record FARO boundary rules;
+- record post-v1.0 change policy;
+- define next project focus after FARO v1.0 Stable.
 
 ---
 
