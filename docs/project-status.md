@@ -4,9 +4,9 @@
 
 Project FAR has completed its first stable FARE mathematics milestone.
 
-FAR has completed Phase 4 consistency audit and is eligible for FAR v1.0 Stable freeze after review and merge of the audit branch.
+FAR v1.0 Stable has been recorded as the canonical methodology layer of Project FAR.
 
-FARO development should begin only after the FAR v1.0 Stable milestone is formally recorded.
+Active development now shifts to FARO v1.0 planning and development.
 
 ---
 
@@ -55,13 +55,32 @@ Status: Complete
 
 ---
 
+### FAR v1.0 Stable
+
+Status: Stable
+
+Stable components:
+
+- FAR workflow;
+- FAR methodology;
+- FAR application guidance;
+- FAR dependency graph;
+- FAR design principles;
+- FARO boundary;
+- FAR example standard;
+- FAR investigation validation;
+- FAR v1.0 criteria;
+- FAR Phase 1 through Phase 4 audit records.
+
+---
+
 ## Active Focus
 
-### FAR v1.0 Stable Freeze
+### FARO v1.0 Planning
 
-The next development target is recording the FAR v1.0 Stable milestone.
+The next development target is FARO v1.0 planning and development.
 
-This should occur only after the Phase 4 audit changes are reviewed and merged.
+FARO should operationalize FAR without redefining FAR methodology or FARA architecture.
 
 ---
 
@@ -72,7 +91,7 @@ The current project order is:
 1. Freeze FARE Mathematics v0.1.
 2. Stabilize FAR.
 3. Record FAR v1.0 Stable.
-4. Begin FARO once FAR v1.0 Stable is recorded.
+4. Begin FARO v1.0 planning and development.
 5. Develop FARA or FARE further only when later requirements demand it.
 
 ---
@@ -81,27 +100,27 @@ The current project order is:
 
 Effective immediately:
 
-- No new FARE mathematical definitions shall be introduced unless required by FAR.
-- New FARE theorems shall be introduced only when they justify or extend FAR.
+- No new FARE mathematical definitions shall be introduced unless required by FAR, FARO, or FARA.
+- New FARE theorems shall be introduced only when they justify or extend FAR, FARO, or FARA.
 - Existing FARE mathematical definitions require formal review before modification.
 - Draft theorems are not stable components and shall not be cited as accepted dependencies.
-- FARO shall not redefine FAR primitives. It shall operationalize FAR after FAR is stable.
+- FARO shall not redefine FAR primitives. It shall operationalize FAR after FAR v1.0 Stable.
+- FAR v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
 
 ---
 
 ## Next Milestone
 
-### FAR v1.0 Stable
+### FARO v1.0 Planning
 
-Completion criteria:
+Initial objectives:
 
-- stable canonical definitions;
-- stable dependency graph;
-- stable methodology;
-- no unresolved circular definitions;
-- clear separation between FAR, FARO, FARA, and FARE;
-- explicit integration points with FARE Mathematics v0.1;
-- Phase 4 consistency audit completed with no blockers.
+- define FARO scope;
+- define FARO operational responsibilities;
+- define audit procedures over FAR investigations;
+- define comparison procedures over FAR investigations;
+- define reporting format;
+- preserve FAR/FARA/FARE boundaries.
 
 ---
 

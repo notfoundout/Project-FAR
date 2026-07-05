@@ -2,33 +2,25 @@
 
 ## Purpose
 
-FARO (Foundational Analysis of Reasoning Operations) defines the operations that may be performed upon reasoning representations constructed using the Project FAR architecture.
+FARO (Foundational Analysis of Reasoning Operations) defines the operational layer of Project FAR.
 
-Where FARA defines how reasoning is represented, FARO defines how those representations are manipulated, analyzed, evaluated, transformed, and compared.
+FARO operationalizes stable FAR methodology without redefining FAR, FARA, or FARE.
 
-Accordingly, FARO constitutes the operational layer of Project FAR.
+Where FARA defines how reasoning is represented and FAR defines how investigations are methodologically conducted, FARO defines how FAR investigation artifacts are executed, audited, compared, reported, and operationally evaluated.
 
 ---
 
-# Objective
+# Current Status
 
-The objective of FARO is to provide a complete operational framework for reasoning analysis.
+FARO is entering v1.0 planning after the FAR v1.0 Stable milestone.
 
-Every FARO operation shall act upon explicit reasoning representations without altering the underlying theoretical architecture.
+FARO development shall remain downstream of stable FAR.
 
 ---
 
 # Relationship to Project FAR
 
-Project FAR consists of three complementary framework components supported by shared foundations and theory.
-
-## FAR
-
-The investigation methodology.
-
-Defines the methods for conducting structured reasoning investigations.
-
----
+Project FAR consists of complementary framework components supported by shared foundations and theory.
 
 ## FARA
 
@@ -38,11 +30,69 @@ Defines the formal objects used to represent reasoning.
 
 ---
 
+## FAR
+
+The investigation methodology.
+
+Defines the methods for conducting structured reasoning investigations.
+
+FAR v1.0 Stable is the canonical methodology target that FARO operationalizes.
+
+---
+
 ## FARO
 
 The operational framework.
 
-Defines the admissible operations that may be performed upon FARA representations.
+Defines admissible operations performed over FAR investigation artifacts and FARA representations.
+
+---
+
+## FARE
+
+The mathematical evaluation layer.
+
+FARE Mathematics v0.1 remains frozen and requirement-driven.
+
+FARO shall not expand FARE unless operational development exposes a specific mathematical need.
+
+---
+
+# Boundary Rules
+
+FARO may:
+
+- execute FAR investigation procedures;
+- audit completed FAR investigations;
+- compare investigations;
+- detect missing artifacts;
+- check workflow completion;
+- analyze disagreement;
+- generate reports;
+- automate FAR validation checks.
+
+FARO shall not:
+
+- introduce new FAR primitives;
+- redefine FAR methodology;
+- redefine FARA architecture;
+- modify FARE mathematics without a specific requirement;
+- treat operational convenience as a reason to alter canonical FAR structure.
+
+---
+
+# Initial FARO v1.0 Planning Objectives
+
+The next stage of development should define:
+
+- FARO scope;
+- operational responsibilities;
+- required inputs and outputs;
+- audit procedures over FAR investigations;
+- comparison procedures over FAR investigations;
+- reporting format;
+- operational validation boundaries;
+- dependency relation to FAR v1.0 Stable.
 
 ---
 
@@ -50,12 +100,14 @@ Defines the admissible operations that may be performed upon FARA representation
 
 Every FARO operation should satisfy the following principles.
 
-- Operate upon explicit representations.
-- Preserve formal rigor.
-- Produce reproducible results.
+- Operate upon explicit FAR/FARA artifacts.
+- Preserve FAR methodology.
+- Preserve FARA architecture.
+- Produce reproducible operational outputs.
 - Specify required inputs.
 - Specify produced outputs.
-- State any assumptions explicitly.
+- State assumptions explicitly.
+- Remain traceable to FAR v1.0 Stable.
 
 ---
 
@@ -63,60 +115,46 @@ Every FARO operation should satisfy the following principles.
 
 Operations are organized into the following categories.
 
-## Construction
+## Execution
 
-Operations that create representations.
-
----
-
-## Analysis
-
-Operations that extract information from representations.
+Operations that help carry out FAR investigation procedures.
 
 ---
 
-## Verification
+## Audit
 
-Operations that determine whether specified properties hold.
-
----
-
-## Transformation
-
-Operations that modify representations while preserving specified properties.
+Operations that check FAR investigation artifacts against FAR validation requirements.
 
 ---
 
 ## Comparison
 
-Operations that compare two or more representations.
+Operations that compare two or more FAR investigations or reasoning artifacts.
 
 ---
 
-## Classification
+## Disagreement Analysis
 
-Operations that assign representations to formally defined categories.
+Operations that identify and classify disagreement between investigations.
 
 ---
 
-## Evaluation
+## Reporting
 
-Operations that assess reasoning according to explicitly defined criteria.
+Operations that produce structured reports about investigations, audits, comparisons, or disagreements.
+
+---
+
+## Operational Evaluation
+
+Operations that assess reasoning artifacts according to explicitly defined FAR-grounded criteria.
 
 ---
 
 # Operational Independence
 
-Operations do not alter the theoretical definitions of Project FAR.
+Operations do not alter the theoretical definitions or stable methodology of Project FAR.
 
-Instead, they operate upon representations already defined by the framework.
+They operate upon representations and investigation artifacts already defined by the framework.
 
 Accordingly, FARO extends the practical capabilities of Project FAR without modifying its theoretical foundations.
-
----
-
-# Current Status
-
-The operational framework is under active development.
-
-Individual operations are specified in separate documents.

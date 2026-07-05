@@ -8,18 +8,21 @@ This repository is organized as the Version 1.0 canonical architecture for the p
 
 FARE Mathematics v0.1 is frozen as the current stable mathematical foundation.
 
-Active development has shifted back to the FAR core framework.
+FAR v1.0 Stable has been recorded as the canonical methodology layer of Project FAR.
+
+Active development now shifts to FARO v1.0 planning and development.
 
 Future FARE mathematical work is requirement-driven:
 
-- no new MDEFs unless FAR requires them;
-- new theorems only when they justify or extend FAR;
+- no new MDEFs unless FAR, FARO, or FARA requires them;
+- new theorems only when they justify or extend FAR, FARO, or FARA;
 - existing mathematical definitions change only through formal review.
 
 See:
 
 - `docs/project-status.md`
 - `docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`
+- `docs/milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md`
 
 ## Navigation
 
@@ -41,14 +44,15 @@ See:
 3. `docs/CANONICAL_MAP.md`
 4. `docs/project-status.md`
 5. `docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`
-6. `foundations/README.md`
-7. `theory/README.md`
-8. `frameworks/FARA/README.md`
-9. `frameworks/FAR/README.md`
-10. `frameworks/FARO/README.md`
-11. `methodology/README.md`
-12. `research/README.md`
+6. `docs/milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md`
+7. `foundations/README.md`
+8. `theory/README.md`
+9. `frameworks/FARA/README.md`
+10. `frameworks/FAR/README.md`
+11. `frameworks/FARO/README.md`
+12. `methodology/README.md`
+13. `research/README.md`
 
 ## Core Principle
 
-Canonical theory and accepted framework definitions live in `foundations/`, `theory/`, and `frameworks/`. Exploratory or provisional work lives in `research/`. Superseded but meaningful material lives in `archive/`.
+Canonical theory and accepted framework definitions live in `foundations/`, `theory/`, and `frameworks`. Exploratory or provisional work lives in `research/`. Superseded but meaningful material lives in `archive/`.
