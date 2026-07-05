@@ -1,3 +1,0 @@
-# FARM Milestone
-
-Status: Achieved
