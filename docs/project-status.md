@@ -8,9 +8,9 @@ FAR v1.0 Stable has been recorded as the canonical methodology layer of Project 
 
 FARO v1.0 Stable has been recorded as the canonical operational layer of Project FAR.
 
-FARM Phase 1 architecture audit and Phase 2 architecture stabilization are complete.
+FARM Phase 1 architecture audit, Phase 2 architecture stabilization, and Phase 3 methodology audit are complete.
 
-Active development now moves to FARM Phase 3 methodology audit.
+Active development now moves to FARM Phase 4 consistency audit.
 
 ---
 
@@ -48,11 +48,19 @@ Status: Complete
 
 ---
 
-## Active Focus
-
 ### FARM Phase 3 — Methodology Audit
 
-The active target is testing whether FARM's routing, classification, change-control, and integration-record methods are executable and non-duplicative.
+Status: Complete
+
+Phase 3 verified requirement routing, defect classification, change-control gates, integration-record reconstructibility, FARM boundary preservation, and canonical map discoverability.
+
+---
+
+## Active Focus
+
+### FARM Phase 4 — Consistency Audit
+
+The active target is final FARM consistency review before any FARM v1.0 Stable milestone.
 
 ---
 
@@ -65,8 +73,9 @@ The current project order is:
 3. FARO v1.0 Stable recorded.
 4. FARM Phase 1 architecture audit completed.
 5. FARM Phase 2 architecture stabilization completed.
-6. FARM Phase 3 methodology audit underway.
-7. Modify stable layers only through formal review when a concrete defect or requirement is identified.
+6. FARM Phase 3 methodology audit completed.
+7. FARM Phase 4 consistency audit underway.
+8. Modify stable layers only through formal review when a concrete defect or requirement is identified.
 
 ---
 
@@ -86,16 +95,16 @@ Effective immediately:
 
 ## Next Milestone
 
-### FARM Phase 3 — Methodology Audit Complete
+### FARM Phase 4 — Consistency Audit Complete
 
 Initial objectives:
 
-- test requirement routing;
-- test defect classification;
-- test change-control gates;
-- test integration-record reconstructibility;
-- verify FARM remains distinct from FARO and project governance;
-- prepare FARM for final consistency audit.
+- check FARM terminology;
+- check FARM document synchronization;
+- check canonical map consistency;
+- check routing, defect, change-control, and integration-record consistency;
+- check boundary preservation;
+- check FARM v1.0 criteria alignment.
 
 ---
 
