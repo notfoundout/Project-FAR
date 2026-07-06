@@ -1,0 +1,73 @@
+investigation: Test whether legal reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Legal reasoning
+  far_primitives:
+    Investigation: Determine whether a legal conclusion follows from facts, rules, and authorities.
+    Representation: facts, authorities, legal standards, and holdings
+    Representational Structure: support, hierarchy, and distinguishing relations
+    Interpretation: jurisdictional and textual interpretation
+    Reasoning Calculus: legal inference, precedent, and rule-application standards
+  verdict: extends FAR
+
+representations:
+  - id: rule
+    kind: norm
+    content: If condition C is satisfied, legal result R follows.
+    statement:
+      kind: conditional
+      subject: condition C
+      predicate: implies legal result R
+      scope: legal fixture
+      claim: If C is satisfied, R follows under the rule.
+  - id: fact
+    kind: fact
+    content: Condition C is satisfied.
+    statement:
+      kind: claim
+      subject: condition C
+      predicate: is satisfied
+      scope: legal fixture
+      claim: C is satisfied by the facts.
+  - id: holding
+    kind: conclusion
+    content: Legal result R follows.
+    statement:
+      kind: claim
+      subject: legal result R
+      predicate: follows from the rule and facts
+      scope: legal fixture
+      claim: R follows from the rule and facts.
+
+relations:
+  - id: rel1
+    type: supports
+    source: rule
+    target: holding
+  - id: rel2
+    type: supports
+    source: fact
+    target: holding
+
+interpretations:
+  - representation: rule
+    meaning: A legal norm interpreted within a jurisdiction.
+  - representation: fact
+    meaning: A fact pattern accepted for the argument.
+  - representation: holding
+    meaning: A legal conclusion under the stated rule.
+
+rules:
+  - id: rule-application
+    name: legal rule application
+    inputs: [rule, fact]
+    output: holding
+    condition: Apply a legal rule to a fact pattern.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: rule-application
+    target: state1
+    status: draft
+    order: 1
