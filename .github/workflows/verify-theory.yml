@@ -46,5 +46,8 @@ jobs:
       - name: Run FAR reasoning engine example
         run: python tools/reasoning_engine.py examples/far/syllogism.far.yaml
 
-      - name: Check T-003 proof object
-        run: python tools/check_proof_object.py theory/proof-objects/T-003.proof.yaml
+      - name: Check all proof objects
+        run: |
+          for proof in theory/proof-objects/T-*.proof.yaml; do
+            python tools/check_proof_object.py "$proof"
+          done
