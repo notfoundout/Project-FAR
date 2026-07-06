@@ -1,0 +1,73 @@
+investigation: Test whether deontic logic maps into FAR primitives.
+
+reasoning_system:
+  system: Deontic logic
+  far_primitives:
+    Investigation: Determine whether obligation and permission reasoning can be represented as explicit normative reasoning.
+    Representation: obligations, permissions, prohibitions, actions, and normative contexts
+    Representational Structure: normative support and conflict relations
+    Interpretation: deontic interpretation relative to a normative system
+    Reasoning Calculus: deontic inference and conflict-resolution rules
+  verdict: extends FAR
+
+representations:
+  - id: obligation
+    kind: norm
+    content: It is obligatory that action A be performed.
+    statement:
+      kind: claim
+      subject: action A
+      predicate: is obligatory
+      scope: deontic logic fixture
+      claim: Action A is obligatory.
+  - id: applicability
+    kind: fact
+    content: The norm governing A applies in context C.
+    statement:
+      kind: claim
+      subject: norm governing A
+      predicate: applies in context C
+      scope: deontic logic fixture
+      claim: The obligation norm applies in context C.
+  - id: conclusion
+    kind: conclusion
+    content: Agent should perform A in context C.
+    statement:
+      kind: claim
+      subject: agent in context C
+      predicate: should perform action A
+      scope: deontic logic fixture
+      claim: The agent should perform A in context C.
+
+relations:
+  - id: rel1
+    type: supports
+    source: obligation
+    target: conclusion
+  - id: rel2
+    type: supports
+    source: applicability
+    target: conclusion
+
+interpretations:
+  - representation: obligation
+    meaning: A normative operator applied to an action.
+  - representation: applicability
+    meaning: Contextual activation of the norm.
+  - representation: conclusion
+    meaning: A practical deontic conclusion under the active norm.
+
+rules:
+  - id: obligation-application
+    name: obligation application
+    inputs: [obligation, applicability]
+    output: conclusion
+    condition: Apply an active obligation to the relevant agent and context.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: obligation-application
+    target: state1
+    status: draft
+    order: 1
