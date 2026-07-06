@@ -15,6 +15,15 @@ This repository is organized as the Version 1.0 canonical architecture for the p
 
 ---
 
+
+## v0.2.0 Release Status
+
+Project FAR v0.2.0 is the first evidence-bearing milestone for the repository's machine-readable fixture, validation, and falsification workflow. The release documentation exists in [`docs/releases/project-far-v0.2.0.md`](docs/releases/project-far-v0.2.0.md), and the GitHub Release body is maintained in [`docs/releases/github-release-v0.2.0.md`](docs/releases/github-release-v0.2.0.md).
+
+The v0.2.0 baseline evidence report exists at [`docs/reports/project-far-v0.2.0-baseline-evidence.md`](docs/reports/project-far-v0.2.0-baseline-evidence.md), and the v0.2.0 theory freeze note exists at [`docs/releases/project-far-v0.2.0-theory-freeze.md`](docs/releases/project-far-v0.2.0-theory-freeze.md). The GitHub Release for `v0.2.0` should be created from the contents of [`docs/releases/github-release-v0.2.0.md`](docs/releases/github-release-v0.2.0.md).
+
+---
+
 ## Current Development Status
 
 The current framework stack is:
