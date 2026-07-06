@@ -1,0 +1,31 @@
+axioms:
+  - id: A1
+    title: Explicit Representation
+    status: Established
+    source: theory/axioms/axioms.md
+    scope: scoped Project FAR reasoning processes
+    dependencies: [D-REP]
+  - id: A2
+    title: Representational Organization
+    status: Established
+    source: theory/axioms/axioms.md
+    scope: participating collections of representations in reasoning processes
+    dependencies: [D-REP, D-STRUCT]
+  - id: A3
+    title: Interpretation
+    status: Established
+    source: theory/axioms/axioms.md
+    scope: participating representations in reasoning processes
+    dependencies: [D-REP, D-INT, D-INV]
+  - id: A4
+    title: Investigation
+    status: Established
+    source: theory/axioms/axioms.md
+    scope: scoped Project FAR reasoning processes
+    dependencies: [D-INV]
+  - id: A5
+    title: Reasoning Calculus
+    status: Established
+    source: theory/axioms/axioms.md
+    scope: scoped Project FAR reasoning processes and admissible transitions
+    dependencies: [D-CALC]
