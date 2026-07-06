@@ -43,6 +43,13 @@ KNOWN_STATUSES = {"Draft", "Proposed", "Verified", "Established", "Deprecated"}
 BASE_DEPENDENCIES = {"derived-concept-registry", "canonical-notation", "definition-policy", "FAR-model-theory"}
 CANONICAL_SYMBOLS = ["I", "Rep", "S", "Int", "C", "T"]
 CANONICAL_SPECIAL_SYMBOLS = ["⊨", "≡sem", "≡str", "≡Q", "NF"]
+ALLOWED_STATEMENT_KINDS = {
+    "universal", "existential", "definitional", "definition",
+    "conditional", "equivalence", "preservation", "construction",
+    "validation", "classification", "meta", "claim", "semantic",
+    "registry", "conjunction", "theorem", "proposition", "lemma", "axiom",
+}
+
 ALLOWED_PROOF_STEP_RULES = {
     "definition_unfolding",
     "axiom_application",
@@ -59,6 +66,35 @@ ALLOWED_PROOF_STEP_RULES = {
 class VerificationError(Exception):
     pass
 
+
+
+def validate_statement_value(value: Any, location: str) -> str:
+    if isinstance(value, str):
+        if not value.strip():
+            raise VerificationError(f"{location} statement must be nonempty")
+        return value
+    if not isinstance(value, dict):
+        raise VerificationError(f"{location} statement must be prose or a mapping")
+    kind = str(value.get("kind", "")).strip()
+    claim = str(value.get("claim", "")).strip()
+    if not kind:
+        raise VerificationError(f"{location} statement missing kind")
+    if kind not in ALLOWED_STATEMENT_KINDS:
+        raise VerificationError(f"{location} statement has invalid kind: {kind}")
+    if not claim:
+        raise VerificationError(f"{location} statement missing claim")
+    for field in ("subject", "predicate", "scope"):
+        if field in value and not isinstance(value[field], str):
+            raise VerificationError(f"{location} statement {field} must be a string when present")
+    return claim
+
+
+def statement_text(value: Any) -> str:
+    if isinstance(value, str):
+        return value
+    if isinstance(value, dict):
+        return str(value.get("claim", ""))
+    return ""
 
 def read_text(path: Path) -> str:
     if not path.exists():
@@ -161,6 +197,8 @@ def validate_required_fields(items: List[Dict[str, Any]], required: Set[str], pr
             raise VerificationError(f"dependencies must be a list for {item_id}")
         if "aliases" in item and not isinstance(item["aliases"], list):
             raise VerificationError(f"aliases must be a list for {item_id}")
+        if "statement" in item:
+            validate_statement_value(item["statement"], f"metadata {item_id}")
 
 
 def validate_source_files(items: List[Dict[str, Any]], source_key: str = "source") -> None:
@@ -329,14 +367,12 @@ def validate_required_proof_objects(theorems: List[Dict[str, Any]]) -> None:
             for input_id in step.get("inputs", []):
                 if str(input_id) not in available:
                     raise VerificationError(f"Proof object {theorem_id} step {step_id} references unavailable input: {input_id}")
-            statement = str(step.get("statement", ""))
-            if not statement:
-                raise VerificationError(f"Proof object {theorem_id} step {step_id} has no statement")
+            statement = validate_statement_value(step.get("statement", ""), f"Proof object {theorem_id} step {step_id}")
             if not step.get("justification"):
                 raise VerificationError(f"Proof object {theorem_id} step {step_id} has no justification")
             step_statements.add(statement)
             available.add(step_id)
-        if str(data.get("conclusion", "")) not in step_statements:
+        if statement_text(data.get("conclusion", "")) not in step_statements:
             raise VerificationError(f"Proof object {theorem_id} conclusion does not match a proof step statement")
 
 

@@ -1,0 +1,58 @@
+investigation: Test whether Bayesian reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Bayesian reasoning
+  far_primitives:
+    Investigation: Determine whether a Bayesian reasoning episode has explicit FAR structure.
+    Representation: probability assignments
+    Representational Structure: support and dependency relations among represented items
+    Interpretation: probabilistic meaning
+    Reasoning Calculus: Bayesian update standards
+  verdict: fits FAR
+
+representations:
+  - id: r1
+    kind: premise
+    content: Initial Bayesian reasoning input.
+    statement:
+      kind: claim
+      subject: Bayesian reasoning input
+      predicate: maps to representation
+      scope: Project FAR fixture
+      claim: The initial Bayesian reasoning input maps to a FAR representation.
+  - id: r2
+    kind: conclusion
+    content: Candidate Bayesian reasoning output.
+    statement:
+      kind: claim
+      subject: Bayesian reasoning output
+      predicate: follows by fixture standard
+      scope: Project FAR fixture
+      claim: The candidate Bayesian reasoning output follows by the fixture inference standard.
+
+relations:
+  - id: rel1
+    type: supports
+    source: r1
+    target: r2
+
+interpretations:
+  - representation: r1
+    meaning: probabilistic meaning
+  - representation: r2
+    meaning: Output interpreted under Bayesian reasoning standards.
+
+rules:
+  - id: rule1
+    name: fixture inference standard
+    inputs: [r1]
+    output: r2
+    condition: Apply Bayesian update standards.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: rule1
+    target: state1
+    status: draft
+    order: 1

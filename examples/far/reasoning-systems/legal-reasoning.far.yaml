@@ -1,0 +1,58 @@
+investigation: Test whether Legal reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Legal reasoning
+  far_primitives:
+    Investigation: Determine whether a Legal reasoning episode has explicit FAR structure.
+    Representation: facts, authorities, and holdings
+    Representational Structure: support and dependency relations among represented items
+    Interpretation: jurisdictional interpretation
+    Reasoning Calculus: legal inference standards
+  verdict: extends FAR
+
+representations:
+  - id: r1
+    kind: premise
+    content: Initial Legal reasoning input.
+    statement:
+      kind: claim
+      subject: Legal reasoning input
+      predicate: maps to representation
+      scope: Project FAR fixture
+      claim: The initial Legal reasoning input maps to a FAR representation.
+  - id: r2
+    kind: conclusion
+    content: Candidate Legal reasoning output.
+    statement:
+      kind: claim
+      subject: Legal reasoning output
+      predicate: follows by fixture standard
+      scope: Project FAR fixture
+      claim: The candidate Legal reasoning output follows by the fixture inference standard.
+
+relations:
+  - id: rel1
+    type: supports
+    source: r1
+    target: r2
+
+interpretations:
+  - representation: r1
+    meaning: jurisdictional interpretation
+  - representation: r2
+    meaning: Output interpreted under Legal reasoning standards.
+
+rules:
+  - id: rule1
+    name: fixture inference standard
+    inputs: [r1]
+    output: r2
+    condition: Apply legal inference standards.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: rule1
+    target: state1
+    status: draft
+    order: 1
