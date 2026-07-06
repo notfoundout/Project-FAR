@@ -34,7 +34,10 @@ GENERATED_AXIOM_INDEX = METADATA_DIR / "generated-axiom-index.md"
 REQUIRED_THEOREM_FIELDS = {"id", "title", "status", "proof", "scope", "dependencies", "derived_concepts"}
 REQUIRED_RESULT_FIELDS = {"id", "title", "status", "source", "scope", "dependencies"}
 REQUIRED_PROOF_OBJECT_FIELDS = {"id", "theorem", "status", "premises", "steps", "conclusion"}
-REQUIRED_PROOF_OBJECT_THEOREMS = {"T-001", "T-002", "T-003", "T-004", "T-005", "T-006"}
+REQUIRED_PROOF_OBJECT_THEOREMS = {
+    "T-001", "T-002", "T-003", "T-004", "T-005", "T-006",
+    "T-007", "T-008", "T-009", "T-010",
+}
 KNOWN_STATUSES = {"Draft", "Proposed", "Verified", "Established", "Deprecated"}
 BASE_DEPENDENCIES = {"derived-concept-registry", "canonical-notation", "definition-policy", "FAR-model-theory"}
 CANONICAL_SYMBOLS = ["I", "Rep", "S", "Int", "C", "T"]

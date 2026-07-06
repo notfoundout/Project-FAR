@@ -1,0 +1,48 @@
+id: PO-T-007
+
+theorem: T-007
+
+status: draft
+
+premises:
+  - id: p1
+    source: T-007 statement
+    statement: Let R be a scoped explicit reasoning process.
+  - id: p2
+    source: T-003
+    statement: R admits a FAR representation <I, Rep, S, Int, C, T>.
+  - id: p3
+    source: T-006
+    statement: Every registered non-primitive concept in Project FAR is constructible from the primitive architecture P.
+  - id: p4
+    source: primitive architecture
+    statement: P = {Investigation, Representation, Representational Structure, Interpretation, Reasoning Calculus}.
+
+steps:
+  - id: s1
+    rule: prior_theorem
+    inputs: [p1, p2]
+    statement: R has a FAR representation <I, Rep, S, Int, C, T>.
+    justification: Applies the Representation Theorem to the arbitrary scoped explicit reasoning process R.
+  - id: s2
+    rule: definition_unfolding
+    inputs: [s1, p4]
+    statement: I, Rep, S, Int, and C are primitive components or direct instances of primitive components in P.
+    justification: The first five components correspond to Investigation, Representation, Representational Structure, Interpretation, and Reasoning Calculus.
+  - id: s3
+    rule: prior_theorem
+    inputs: [p3]
+    statement: T and every registered derived object required by the FAR representation are constructible from P.
+    justification: By T-006, registered derived concepts are constructible from the primitive architecture by finite definitional substitution.
+  - id: s4
+    rule: conjunction_intro
+    inputs: [s2, s3]
+    statement: Every required component of the FAR representation of R is either primitive or constructible from primitives.
+    justification: Combines direct primitive components with registered derived components.
+  - id: s5
+    rule: universal_instantiation
+    inputs: [p1, s4]
+    statement: The primitive architecture is complete for constructing the objects required to represent any scoped explicit reasoning process.
+    justification: Since R was arbitrary, the construction generalizes to every scoped explicit reasoning process.
+
+conclusion: The primitive architecture is complete for constructing the objects required to represent any scoped explicit reasoning process.
