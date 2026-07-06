@@ -11,7 +11,7 @@ import argparse
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Set
+from typing import Any, Dict, Iterable, List, Optional, Set
 
 ROOT = Path(__file__).resolve().parents[1]
 METADATA_DIR = ROOT / "theory" / "metadata"
@@ -184,7 +184,16 @@ def validate_catalog_consistency(theorems: List[Dict[str, Any]], propositions: L
         raise VerificationError(f"Lemma metadata ids missing from source files: {lemma_metadata_without_source}")
 
 
-def validate_dependencies(theorems: List[Dict[str, Any]], propositions: List[Dict[str, Any]], lemmas: List[Dict[str, Any]]) -> Dict[str, Set[str]]:
+def validate_dependencies(
+    theorems: List[Dict[str, Any]],
+    propositions: Optional[List[Dict[str, Any]]] = None,
+    lemmas: Optional[List[Dict[str, Any]]] = None,
+) -> Dict[str, Set[str]]:
+    if propositions is None:
+        propositions = load_propositions()
+    if lemmas is None:
+        lemmas = load_lemmas()
+
     theorem_ids = {item["id"] for item in theorems}
     proposition_ids = {item["id"] for item in propositions}
     lemma_ids = {item["id"] for item in lemmas}
