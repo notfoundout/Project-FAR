@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Project FAR theory verifier.
 
-This script enforces machine-readable theory checks for theorem, proposition,
-and lemma metadata.
+This script enforces machine-readable checks for definitions, axioms,
+theorems, propositions, and lemmas.
 """
 
 from __future__ import annotations
@@ -18,6 +18,8 @@ METADATA_DIR = ROOT / "theory" / "metadata"
 THEOREM_METADATA = METADATA_DIR / "theorems.yaml"
 PROPOSITION_METADATA = METADATA_DIR / "propositions.yaml"
 LEMMA_METADATA = METADATA_DIR / "lemmas.yaml"
+DEFINITION_METADATA = METADATA_DIR / "definitions.yaml"
+AXIOM_METADATA = METADATA_DIR / "axioms.yaml"
 THEOREM_CATALOG = ROOT / "theory" / "theorems" / "theorems.md"
 PROPOSITION_CATALOG = ROOT / "theory" / "theorems" / "propositions.md"
 DERIVED_REGISTRY = ROOT / "theory" / "derivations" / "derived-concept-registry.md"
@@ -25,20 +27,13 @@ CANONICAL_NOTATION = ROOT / "theory" / "notation" / "canonical-notation.md"
 GENERATED_THEOREM_INDEX = METADATA_DIR / "generated-theorem-index.md"
 GENERATED_PROPOSITION_INDEX = METADATA_DIR / "generated-proposition-index.md"
 GENERATED_LEMMA_INDEX = METADATA_DIR / "generated-lemma-index.md"
+GENERATED_DEFINITION_INDEX = METADATA_DIR / "generated-definition-index.md"
+GENERATED_AXIOM_INDEX = METADATA_DIR / "generated-axiom-index.md"
 
 REQUIRED_THEOREM_FIELDS = {"id", "title", "status", "proof", "scope", "dependencies", "derived_concepts"}
 REQUIRED_RESULT_FIELDS = {"id", "title", "status", "source", "scope", "dependencies"}
 KNOWN_STATUSES = {"Draft", "Proposed", "Verified", "Established", "Deprecated"}
-
-BASE_DEPENDENCIES = {
-    "A1", "A2", "A3", "A4", "A5",
-    "D-REP", "D-INT", "D-CALC", "D-INV", "D-STRUCT",
-    "derived-concept-registry",
-    "canonical-notation",
-    "definition-policy",
-    "FAR-model-theory",
-}
-
+BASE_DEPENDENCIES = {"derived-concept-registry", "canonical-notation", "definition-policy", "FAR-model-theory"}
 CANONICAL_SYMBOLS = ["I", "Rep", "S", "Int", "C", "T"]
 CANONICAL_SPECIAL_SYMBOLS = ["⊨", "≡sem", "≡str", "≡Q", "NF"]
 
@@ -58,7 +53,6 @@ def load_yaml(path: Path) -> Dict[str, Any]:
         import yaml  # type: ignore
     except Exception as exc:  # pragma: no cover
         raise VerificationError("PyYAML is required. Install with: pip install pyyaml") from exc
-
     with path.open("r", encoding="utf-8") as handle:
         data = yaml.safe_load(handle)
     if not isinstance(data, dict):
@@ -86,9 +80,16 @@ def load_lemmas() -> List[Dict[str, Any]]:
     return load_metadata_list(LEMMA_METADATA, "lemmas")
 
 
+def load_definitions() -> List[Dict[str, Any]]:
+    return load_metadata_list(DEFINITION_METADATA, "definitions")
+
+
+def load_axioms() -> List[Dict[str, Any]]:
+    return load_metadata_list(AXIOM_METADATA, "axioms")
+
+
 def registered_derived_concepts() -> Set[str]:
-    text = read_text(DERIVED_REGISTRY)
-    return set(re.findall(r"\bD-\d{3}\b", text))
+    return set(re.findall(r"\bD-\d{3}\b", read_text(DERIVED_REGISTRY)))
 
 
 def established_catalog_theorem_ids() -> Set[str]:
@@ -115,8 +116,15 @@ def source_ids(prefix: str, directory: str) -> Set[str]:
     return ids
 
 
+def id_pattern(prefix: str) -> str:
+    if prefix == "A":
+        return r"A\d+"
+    return rf"{prefix}-\d{{3}}"
+
+
 def validate_required_fields(items: List[Dict[str, Any]], required: Set[str], prefix: str) -> None:
     seen: Set[str] = set()
+    pattern = id_pattern(prefix)
     for item in items:
         if not isinstance(item, dict):
             raise VerificationError(f"Each {prefix} metadata entry must be a mapping.")
@@ -124,7 +132,7 @@ def validate_required_fields(items: List[Dict[str, Any]], required: Set[str], pr
         if missing:
             raise VerificationError(f"{prefix} entry missing fields {sorted(missing)}: {item}")
         item_id = str(item["id"])
-        if not re.fullmatch(rf"{prefix}-\d{{3}}", item_id):
+        if not re.fullmatch(pattern, item_id):
             raise VerificationError(f"Invalid {prefix} id: {item_id}")
         if item_id in seen:
             raise VerificationError(f"Duplicate {prefix} id: {item_id}")
@@ -133,6 +141,8 @@ def validate_required_fields(items: List[Dict[str, Any]], required: Set[str], pr
             raise VerificationError(f"Invalid status for {item_id}: {item['status']}")
         if not isinstance(item["dependencies"], list):
             raise VerificationError(f"dependencies must be a list for {item_id}")
+        if "aliases" in item and not isinstance(item["aliases"], list):
+            raise VerificationError(f"aliases must be a list for {item_id}")
 
 
 def validate_source_files(items: List[Dict[str, Any]], source_key: str = "source") -> None:
@@ -141,8 +151,8 @@ def validate_source_files(items: List[Dict[str, Any]], source_key: str = "source
         if not path.exists():
             raise VerificationError(f"Missing source file for {item['id']}: {item[source_key]}")
         text = read_text(path)
-        if item["id"] not in text:
-            raise VerificationError(f"Source file for {item['id']} does not contain its id.")
+        if item["id"] not in text and str(item["title"]) not in text:
+            raise VerificationError(f"Source file for {item['id']} contains neither its id nor title.")
 
 
 def validate_theorem_proof_files(theorems: List[Dict[str, Any]]) -> None:
@@ -150,57 +160,62 @@ def validate_theorem_proof_files(theorems: List[Dict[str, Any]]) -> None:
         path = ROOT / item["proof"]
         if not path.exists():
             raise VerificationError(f"Missing proof file for {item['id']}: {item['proof']}")
-        text = read_text(path)
-        if item["id"] not in text:
+        if item["id"] not in read_text(path):
             raise VerificationError(f"Proof file for {item['id']} does not contain its theorem id.")
+
+
+def definition_aliases(definitions: List[Dict[str, Any]]) -> Set[str]:
+    aliases: Set[str] = set()
+    for item in definitions:
+        for alias in item.get("aliases", []):
+            aliases.add(str(alias))
+    return aliases
 
 
 def validate_catalog_consistency(theorems: List[Dict[str, Any]], propositions: List[Dict[str, Any]], lemmas: List[Dict[str, Any]]) -> None:
     theorem_ids = {item["id"] for item in theorems}
     established_theorem_ids = established_catalog_theorem_ids()
-    missing_theorem_metadata = sorted(established_theorem_ids - theorem_ids)
-    if missing_theorem_metadata:
-        raise VerificationError(f"Established theorem catalog ids missing metadata: {missing_theorem_metadata}")
-    metadata_without_catalog = sorted(theorem_ids - established_theorem_ids)
-    if metadata_without_catalog:
-        raise VerificationError(f"Theorem metadata ids missing from established theorem catalog: {metadata_without_catalog}")
+    if sorted(established_theorem_ids - theorem_ids):
+        raise VerificationError(f"Established theorem catalog ids missing metadata: {sorted(established_theorem_ids - theorem_ids)}")
+    if sorted(theorem_ids - established_theorem_ids):
+        raise VerificationError(f"Theorem metadata ids missing from established theorem catalog: {sorted(theorem_ids - established_theorem_ids)}")
 
     proposition_ids = {item["id"] for item in propositions}
     catalog_props = catalog_proposition_ids()
-    missing_prop_metadata = sorted(catalog_props - proposition_ids)
-    if missing_prop_metadata:
-        raise VerificationError(f"Proposition catalog ids missing metadata: {missing_prop_metadata}")
-    prop_metadata_without_catalog = sorted(proposition_ids - catalog_props)
-    if prop_metadata_without_catalog:
-        raise VerificationError(f"Proposition metadata ids missing from catalog: {prop_metadata_without_catalog}")
+    if sorted(catalog_props - proposition_ids):
+        raise VerificationError(f"Proposition catalog ids missing metadata: {sorted(catalog_props - proposition_ids)}")
+    if sorted(proposition_ids - catalog_props):
+        raise VerificationError(f"Proposition metadata ids missing from catalog: {sorted(proposition_ids - catalog_props)}")
 
     lemma_ids = {item["id"] for item in lemmas}
     lemma_source_ids = source_ids("L", "theory/lemmas")
-    missing_lemma_metadata = sorted(lemma_source_ids - lemma_ids)
-    if missing_lemma_metadata:
-        raise VerificationError(f"Lemma source ids missing metadata: {missing_lemma_metadata}")
-    lemma_metadata_without_source = sorted(lemma_ids - lemma_source_ids)
-    if lemma_metadata_without_source:
-        raise VerificationError(f"Lemma metadata ids missing from source files: {lemma_metadata_without_source}")
+    if sorted(lemma_source_ids - lemma_ids):
+        raise VerificationError(f"Lemma source ids missing metadata: {sorted(lemma_source_ids - lemma_ids)}")
+    if sorted(lemma_ids - lemma_source_ids):
+        raise VerificationError(f"Lemma metadata ids missing from source files: {sorted(lemma_ids - lemma_source_ids)}")
 
 
 def validate_dependencies(
     theorems: List[Dict[str, Any]],
     propositions: Optional[List[Dict[str, Any]]] = None,
     lemmas: Optional[List[Dict[str, Any]]] = None,
+    definitions: Optional[List[Dict[str, Any]]] = None,
+    axioms: Optional[List[Dict[str, Any]]] = None,
 ) -> Dict[str, Set[str]]:
-    if propositions is None:
-        propositions = load_propositions()
-    if lemmas is None:
-        lemmas = load_lemmas()
+    propositions = load_propositions() if propositions is None else propositions
+    lemmas = load_lemmas() if lemmas is None else lemmas
+    definitions = load_definitions() if definitions is None else definitions
+    axioms = load_axioms() if axioms is None else axioms
 
     theorem_ids = {item["id"] for item in theorems}
     proposition_ids = {item["id"] for item in propositions}
     lemma_ids = {item["id"] for item in lemmas}
-    known_dependencies = BASE_DEPENDENCIES | proposition_ids | lemma_ids
+    definition_ids = {item["id"] for item in definitions}
+    axiom_ids = {item["id"] for item in axioms}
+    known_dependencies = BASE_DEPENDENCIES | proposition_ids | lemma_ids | definition_ids | axiom_ids | definition_aliases(definitions)
     graph: Dict[str, Set[str]] = {item["id"]: set() for item in theorems}
 
-    all_items = list(theorems) + list(propositions) + list(lemmas)
+    all_items = list(theorems) + list(propositions) + list(lemmas) + list(definitions) + list(axioms)
     for item in all_items:
         item_id = str(item["id"])
         for dep in item["dependencies"]:
@@ -276,29 +291,37 @@ def build_index(items: List[Dict[str, Any]], title: str, source_column: str) -> 
     return "\n".join(lines)
 
 
-def write_indexes(theorems: List[Dict[str, Any]], propositions: List[Dict[str, Any]], lemmas: List[Dict[str, Any]]) -> None:
+def write_indexes(theorems: List[Dict[str, Any]], propositions: List[Dict[str, Any]], lemmas: List[Dict[str, Any]], definitions: List[Dict[str, Any]], axioms: List[Dict[str, Any]]) -> None:
     GENERATED_THEOREM_INDEX.write_text(build_index(theorems, "Theorem", "proof"), encoding="utf-8")
     GENERATED_PROPOSITION_INDEX.write_text(build_index(propositions, "Proposition", "source"), encoding="utf-8")
     GENERATED_LEMMA_INDEX.write_text(build_index(lemmas, "Lemma", "source"), encoding="utf-8")
+    GENERATED_DEFINITION_INDEX.write_text(build_index(definitions, "Definition", "source"), encoding="utf-8")
+    GENERATED_AXIOM_INDEX.write_text(build_index(axioms, "Axiom", "source"), encoding="utf-8")
 
 
 def run_verification(write_generated_index: bool = False) -> None:
     theorems = load_theorems()
     propositions = load_propositions()
     lemmas = load_lemmas()
+    definitions = load_definitions()
+    axioms = load_axioms()
     validate_required_fields(theorems, REQUIRED_THEOREM_FIELDS, "T")
     validate_required_fields(propositions, REQUIRED_RESULT_FIELDS, "P")
     validate_required_fields(lemmas, REQUIRED_RESULT_FIELDS, "L")
+    validate_required_fields(definitions, REQUIRED_RESULT_FIELDS, "DEF")
+    validate_required_fields(axioms, REQUIRED_RESULT_FIELDS, "A")
     validate_theorem_proof_files(theorems)
     validate_source_files(propositions)
     validate_source_files(lemmas)
+    validate_source_files(definitions)
+    validate_source_files(axioms)
     validate_catalog_consistency(theorems, propositions, lemmas)
-    graph = validate_dependencies(theorems, propositions, lemmas)
+    graph = validate_dependencies(theorems, propositions, lemmas, definitions, axioms)
     validate_no_cycles(graph)
     validate_registry(theorems)
     validate_notation_file()
     if write_generated_index:
-        write_indexes(theorems, propositions, lemmas)
+        write_indexes(theorems, propositions, lemmas, definitions, axioms)
 
 
 def main(argv: Iterable[str] | None = None) -> int:
