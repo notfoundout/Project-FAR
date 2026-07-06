@@ -36,6 +36,21 @@ If the case lacks inspectable representations, transitions, or rules, it may fal
 
 ---
 
+## Registry Resolution
+
+The required follow-up concepts for these hard cases are now registered in `theory/derivations/derived-concept-registry.md`:
+
+- `D-027` — Semantic Instability;
+- `D-028` — Guarded Self-Reference;
+- `D-029` — Paraconsistent Calculus;
+- `D-030` — Non-Explosive Inference;
+- `D-031` — Explicit-Reasoning Scope Boundary;
+- `D-032` — Opaque Assertion.
+
+These registry additions convert the provisional analysis into formal FAR machinery without adding a new primitive.
+
+---
+
 ## Candidate 1 — Paradoxical Reasoning
 
 Fixture: `examples/far/reasoning-systems/paradox.far.yaml`
@@ -59,7 +74,7 @@ The stress point is semantic stability. FAR's ordinary satisfaction vocabulary m
 
 This does not yet force a new primitive. The primitive `Interpretation` already carries semantic assignment. The primitive `Reasoning Calculus` already carries admissible transition rules. A paradox-handling policy can be modeled as a specific interpretation/calculus pair.
 
-What FAR needs is not a new primitive, but a registered derived concept for semantic-instability handling.
+What FAR needs is not a new primitive, but registered derived concepts for semantic-instability handling.
 
 ### Decision
 
@@ -67,14 +82,13 @@ Classification: `conservative extension`
 
 Reason: paradox requires a specialized semantic policy, not a new primitive beyond representation, interpretation, and calculus.
 
-### Required Follow-Up
+### Registry Resolution
 
-Add derived concepts for:
+Handled by:
 
-- semantic instability;
-- guarded self-reference;
-- paraconsistent or non-bivalent interpretation;
-- paradox-handling calculus.
+- `D-027` — Semantic Instability;
+- `D-028` — Guarded Self-Reference;
+- `D-029` — Paraconsistent Calculus, where a paradox is handled through a non-classical calculus.
 
 ---
 
@@ -110,14 +124,12 @@ Classification: `conservative extension`
 
 Reason: non-explosive inconsistency can be represented as a calculus-level constraint.
 
-### Required Follow-Up
+### Registry Resolution
 
-Add derived concepts for:
+Handled by:
 
-- contradiction relation;
-- explosive inference;
-- non-explosive inference;
-- paraconsistent calculus policy.
+- `D-029` — Paraconsistent Calculus;
+- `D-030` — Non-Explosive Inference.
 
 ---
 
@@ -151,25 +163,22 @@ Classification: `outside FAR scope`
 
 Reason: without accessible representations, rules, or transitions, the case is not explicit reasoning under FAR's current scope.
 
-### Required Follow-Up
+### Registry Resolution
 
-Add a scope rule distinguishing:
+Handled by:
 
-- explicit reasoning;
-- opaque assertion;
-- testimony;
-- black-box output;
-- post-hoc rationalization.
+- `D-031` — Explicit-Reasoning Scope Boundary;
+- `D-032` — Opaque Assertion.
 
 ---
 
 ## Summary Table
 
-| Fixture | Prior Harness Classification | Analysis Decision | Breaks FAR Primitives? | Required Action |
+| Fixture | Prior Harness Classification | Analysis Decision | Breaks FAR Primitives? | Registry Resolution |
 |---|---|---|---|---|
-| paradox | candidate counterexample | conservative extension | no | add semantic-instability derived concepts |
-| inconsistent calculus | candidate counterexample | conservative extension | no | add paraconsistent-calculus derived concepts |
-| opaque oracle reasoning | candidate counterexample | outside FAR scope | no | add explicit-reasoning scope rule |
+| paradox | candidate counterexample | conservative extension | no | D-027, D-028, D-029 |
+| inconsistent calculus | candidate counterexample | conservative extension | no | D-029, D-030 |
+| opaque oracle reasoning | candidate counterexample | outside FAR scope | no | D-031, D-032 |
 
 ## Current Result
 
