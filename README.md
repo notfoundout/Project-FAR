@@ -1,5 +1,8 @@
 # Project FAR
 
+[![Release](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases/tag/v0.1.0)
+[![Verify Theory](https://github.com/notfoundout/Project-FAR/actions/workflows/verify-theory.yml/badge.svg)](https://github.com/notfoundout/Project-FAR/actions/workflows/verify-theory.yml)
+
 Project FAR is a foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
 
 This repository is organized as the Version 1.0 canonical architecture for the project. Each document has one canonical location; superseded material is retained in [`archive/`](archive/) when it is meaningful and not an exact duplicate.
@@ -25,6 +28,12 @@ Future FARE mathematical work is requirement-driven:
 - no new MDEFs unless FAR, FARO, FARA, or FARM requires them;
 - new theorems only when they justify or extend FAR, FARO, FARA, or FARM;
 - existing mathematical definitions change only through formal review.
+
+---
+
+## Releases
+
+- [`v0.1.0 — Initial Public Release`](https://github.com/notfoundout/Project-FAR/releases/tag/v0.1.0)
 
 ---
 
