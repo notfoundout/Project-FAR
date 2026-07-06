@@ -75,6 +75,31 @@ These are not derived in the current theory.
 
 ---
 
+# Hard-Case Derived Concepts
+
+These concepts were added after candidate-counterexample analysis in `theory/falsification/candidate-counterexample-analysis.md`.
+
+| ID | Concept | Derivation |
+|---|---|---|
+| D-027 | Semantic Instability | Condition where D-021 cannot assign a stable status under a selected PR-004/PR-005 pair; derived from PR-004, PR-005, D-001, and D-021 |
+| D-028 | Guarded Self-Reference | Self-reference represented as an explicit D-003 reference relation constrained by PR-005 to avoid unbounded collapse; derived from PR-002, PR-003, PR-005, and D-027 |
+| D-029 | Paraconsistent Calculus | Reasoning Calculus policy permitting controlled inference from inconsistent representation sets without automatic explosion; derived from PR-005, D-003, D-004, and D-006 |
+| D-030 | Non-Explosive Inference | Transformation rule or admissibility policy that blocks arbitrary conclusions from contradiction; derived from D-005, D-006, and D-029 |
+| D-031 | Explicit-Reasoning Scope Boundary | Boundary condition requiring accessible representations, structures, interpretations, and calculus-governed transitions before FAR treats a process as explicit reasoning; derived from PR-001 through PR-005 and D-012 |
+| D-032 | Opaque Assertion | Representation of a conclusion without accessible derivation, transition signature, or calculus-governed trace; derived from PR-002, D-012 absence, and D-031 |
+
+---
+
+# Hard-Case Analysis Links
+
+| Hard Case | Registry Concepts | Analysis Result |
+|---|---|---|
+| Paradoxical reasoning | D-027, D-028 | Conservative extension: requires semantic-instability handling, not a new primitive |
+| Inconsistent calculus | D-029, D-030 | Conservative extension: contradiction handling is calculus policy |
+| Opaque oracle reasoning | D-031, D-032 | Outside FAR scope unless hidden transitions become explicit |
+
+---
+
 # Registry Rule
 
 A theorem may claim primitive sufficiency only for concepts listed in this registry or for concepts added later with an explicit derivation path.
@@ -89,6 +114,6 @@ If a term appears in Project FAR but does not appear in this registry, one of th
 
 # Current Sufficiency Result
 
-The current registry supports T-006 for D-001 through D-026.
+The current registry supports T-006 for D-001 through D-032.
 
 T-006 should not be read as covering unregistered future concepts.
