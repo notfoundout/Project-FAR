@@ -1,0 +1,73 @@
+investigation: Test whether classical logic maps into FAR primitives.
+
+reasoning_system:
+  system: Classical logic
+  far_primitives:
+    Investigation: Determine whether a classical-logic proof has explicit FAR structure.
+    Representation: truth-valued formulas
+    Representational Structure: formula-dependency and consequence relations
+    Interpretation: truth-functional interpretation
+    Reasoning Calculus: deductive inference rules
+  verdict: fits FAR
+
+representations:
+  - id: p
+    kind: premise
+    content: P
+    statement:
+      kind: claim
+      subject: P
+      predicate: is an explicit premise
+      scope: classical logic fixture
+      claim: P is an explicit classical-logic premise.
+  - id: pq
+    kind: premise
+    content: P -> Q
+    statement:
+      kind: conditional
+      subject: P
+      predicate: implies Q
+      scope: classical logic fixture
+      claim: If P holds, then Q follows.
+  - id: q
+    kind: conclusion
+    content: Q
+    statement:
+      kind: claim
+      subject: Q
+      predicate: follows by modus ponens
+      scope: classical logic fixture
+      claim: Q follows from P and P -> Q.
+
+relations:
+  - id: rel1
+    type: supports
+    source: p
+    target: q
+  - id: rel2
+    type: supports
+    source: pq
+    target: q
+
+interpretations:
+  - representation: p
+    meaning: P is true in the relevant valuation.
+  - representation: pq
+    meaning: The conditional from P to Q is true in the relevant valuation.
+  - representation: q
+    meaning: Q is derived as a classical consequence.
+
+rules:
+  - id: mp
+    name: modus ponens
+    inputs: [p, pq]
+    output: q
+    condition: Apply P -> Q and P.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: mp
+    target: state1
+    status: admissible
+    order: 1
