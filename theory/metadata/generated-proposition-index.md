@@ -12,3 +12,4 @@ This file is generated from machine-readable metadata.
 | P-006 | Syntax/Semantics Separation | Established | `theory/proofs/P-001-first-propositions.md` | structural and semantic equivalence claims |
 | P-007 | Trace/Process Distinction | Established | `theory/proofs/P-001-first-propositions.md` | reasoning traces and represented reasoning processes |
 | P-008 | Resolution Dependence | Established | `theory/proofs/P-001-first-propositions.md` | resolution execution under a reasoning calculus |
+| P-009 | Representation Structure Independence | Proposed | `theory/theorems/propositions.md` | representation and representational structure pairwise independence |

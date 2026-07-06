@@ -1,540 +1,1208 @@
 definitions:
-  - id: DEF-001
-    title: Object
-    status: Established
-    source: theory/definitions/definitions.md
+- id: DEF-001
+  title: Object
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: foundational vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Object
+    predicate: is defined
     scope: foundational vocabulary
-    dependencies: []
-  - id: DEF-002
-    title: Property
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Object is defined within foundational vocabulary.
+- id: DEF-002
+  title: Property
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: foundational vocabulary
+  dependencies:
+  - DEF-001
+  statement:
+    kind: definition
+    subject: Property
+    predicate: is defined
     scope: foundational vocabulary
-    dependencies: [DEF-001]
-  - id: DEF-003
-    title: Relation
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Property is defined within foundational vocabulary.
+- id: DEF-003
+  title: Relation
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: foundational vocabulary
+  dependencies:
+  - DEF-001
+  statement:
+    kind: definition
+    subject: Relation
+    predicate: is defined
     scope: foundational vocabulary
-    dependencies: [DEF-001]
-  - id: DEF-004
-    title: Structure
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Relation is defined within foundational vocabulary.
+- id: DEF-004
+  title: Structure
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: foundational vocabulary
+  dependencies:
+  - DEF-001
+  - DEF-003
+  statement:
+    kind: definition
+    subject: Structure
+    predicate: is defined
     scope: foundational vocabulary
-    dependencies: [DEF-001, DEF-003]
-  - id: DEF-005
-    title: Component
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Structure is defined within foundational vocabulary.
+- id: DEF-005
+  title: Component
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: foundational vocabulary
+  dependencies:
+  - DEF-001
+  - DEF-004
+  statement:
+    kind: definition
+    subject: Component
+    predicate: is defined
     scope: foundational vocabulary
-    dependencies: [DEF-001, DEF-004]
-  - id: DEF-006
-    title: System
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Component is defined within foundational vocabulary.
+- id: DEF-006
+  title: System
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: foundational vocabulary
+  dependencies:
+  - DEF-001
+  - DEF-004
+  statement:
+    kind: definition
+    subject: System
+    predicate: is defined
     scope: foundational vocabulary
-    dependencies: [DEF-001, DEF-004]
-  - id: DEF-007
-    title: Class
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: System is defined within foundational vocabulary.
+- id: DEF-007
+  title: Class
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: foundational vocabulary
+  dependencies:
+  - DEF-001
+  statement:
+    kind: definition
+    subject: Class
+    predicate: is defined
     scope: foundational vocabulary
-    dependencies: [DEF-001]
-  - id: DEF-008
-    title: Domain
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Class is defined within foundational vocabulary.
+- id: DEF-008
+  title: Domain
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: foundational vocabulary
+  dependencies:
+  - DEF-001
+  statement:
+    kind: definition
+    subject: Domain
+    predicate: is defined
     scope: foundational vocabulary
-    dependencies: [DEF-001]
-  - id: DEF-009
-    title: Model
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Domain is defined within foundational vocabulary.
+- id: DEF-009
+  title: Model
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: framework vocabulary
+  dependencies:
+  - DEF-001
+  statement:
+    kind: definition
+    subject: Model
+    predicate: is defined
     scope: framework vocabulary
-    dependencies: [DEF-001]
-  - id: DEF-010
-    title: Framework
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Model is defined within framework vocabulary.
+- id: DEF-010
+  title: Framework
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: framework vocabulary
+  dependencies:
+  - DEF-003
+  statement:
+    kind: definition
+    subject: Framework
+    predicate: is defined
     scope: framework vocabulary
-    dependencies: [DEF-003]
-  - id: DEF-011
-    title: Theory
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Framework is defined within framework vocabulary.
+- id: DEF-011
+  title: Theory
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: framework vocabulary
+  dependencies:
+  - DEF-008
+  statement:
+    kind: definition
+    subject: Theory
+    predicate: is defined
     scope: framework vocabulary
-    dependencies: [DEF-008]
-  - id: DEF-012
-    title: Architecture
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Theory is defined within framework vocabulary.
+- id: DEF-012
+  title: Architecture
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: framework vocabulary
+  dependencies:
+  - DEF-001
+  - DEF-003
+  statement:
+    kind: definition
+    subject: Architecture
+    predicate: is defined
     scope: framework vocabulary
-    dependencies: [DEF-001, DEF-003]
-  - id: DEF-013
-    title: Ontology
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Architecture is defined within framework vocabulary.
+- id: DEF-013
+  title: Ontology
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: framework vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Ontology
+    predicate: is defined
     scope: framework vocabulary
-    dependencies: []
-  - id: DEF-014
-    title: Syntax
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Ontology is defined within framework vocabulary.
+- id: DEF-014
+  title: Syntax
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: framework vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Syntax
+    predicate: is defined
     scope: framework vocabulary
-    dependencies: []
-  - id: DEF-015
-    title: Semantics
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Syntax is defined within framework vocabulary.
+- id: DEF-015
+  title: Semantics
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: framework vocabulary
+  dependencies:
+  - DEF-030
+  statement:
+    kind: definition
+    subject: Semantics
+    predicate: is defined
     scope: framework vocabulary
-    dependencies: [DEF-030]
-  - id: DEF-016
-    title: Scope
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Semantics is defined within framework vocabulary.
+- id: DEF-016
+  title: Scope
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: framework vocabulary
+  dependencies:
+  - DEF-008
+  statement:
+    kind: definition
+    subject: Scope
+    predicate: is defined
     scope: framework vocabulary
-    dependencies: [DEF-008]
-  - id: DEF-017
-    title: Universal
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Scope is defined within framework vocabulary.
+- id: DEF-017
+  title: Universal
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: formal vocabulary
+  dependencies:
+  - DEF-008
+  statement:
+    kind: definition
+    subject: Universal
+    predicate: is defined
     scope: formal vocabulary
-    dependencies: [DEF-008]
-  - id: DEF-018
-    title: Universal Architecture
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Universal is defined within formal vocabulary.
+- id: DEF-018
+  title: Universal Architecture
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: formal vocabulary
+  dependencies:
+  - DEF-012
+  - DEF-016
+  statement:
+    kind: definition
+    subject: Universal Architecture
+    predicate: is defined
     scope: formal vocabulary
-    dependencies: [DEF-012, DEF-016]
-  - id: DEF-019
-    title: Minimal
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Universal Architecture is defined within formal vocabulary.
+- id: DEF-019
+  title: Minimal
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: formal vocabulary
+  dependencies:
+  - DEF-004
+  - DEF-016
+  statement:
+    kind: definition
+    subject: Minimal
+    predicate: is defined
     scope: formal vocabulary
-    dependencies: [DEF-004, DEF-016]
-  - id: DEF-020
-    title: Candidate Primitive
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Minimal is defined within formal vocabulary.
+- id: DEF-020
+  title: Candidate Primitive
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: formal vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Candidate Primitive
+    predicate: is defined
     scope: formal vocabulary
-    dependencies: []
-  - id: DEF-021
-    title: Established Primitive
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Candidate Primitive is defined within formal vocabulary.
+- id: DEF-021
+  title: Established Primitive
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: formal vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Established Primitive
+    predicate: is defined
     scope: formal vocabulary
-    dependencies: []
-  - id: DEF-022
-    title: Derived Concept
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Established Primitive is defined within formal vocabulary.
+- id: DEF-022
+  title: Derived Concept
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: formal vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Derived Concept
+    predicate: is defined
     scope: formal vocabulary
-    dependencies: []
-  - id: DEF-023
-    title: Reduction
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Derived Concept is defined within formal vocabulary.
+- id: DEF-023
+  title: Reduction
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: formal vocabulary
+  dependencies:
+  - DEF-016
+  statement:
+    kind: definition
+    subject: Reduction
+    predicate: is defined
     scope: formal vocabulary
-    dependencies: [DEF-016]
-  - id: DEF-024
-    title: Independence
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Reduction is defined within formal vocabulary.
+- id: DEF-024
+  title: Independence
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: formal vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Independence
+    predicate: is defined
     scope: formal vocabulary
-    dependencies: []
-  - id: DEF-025
-    title: Equivalence
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Independence is defined within formal vocabulary.
+- id: DEF-025
+  title: Equivalence
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: formal vocabulary
+  dependencies:
+  - DEF-003
+  statement:
+    kind: definition
+    subject: Equivalence
+    predicate: is defined
     scope: formal vocabulary
-    dependencies: [DEF-003]
-  - id: DEF-026
-    title: Expressive Power
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Equivalence is defined within formal vocabulary.
+- id: DEF-026
+  title: Expressive Power
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: formal vocabulary
+  dependencies:
+  - DEF-010
+  - DEF-016
+  statement:
+    kind: definition
+    subject: Expressive Power
+    predicate: is defined
     scope: formal vocabulary
-    dependencies: [DEF-010, DEF-016]
-  - id: DEF-027
-    title: Representation
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Expressive Power is defined within formal vocabulary.
+- id: DEF-027
+  title: Representation
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  aliases:
+  - D-REP
+  dependencies:
+  - DEF-001
+  statement:
+    kind: definition
+    subject: Representation
+    predicate: is defined
     scope: representational vocabulary
-    aliases: [D-REP]
-    dependencies: [DEF-001]
-  - id: DEF-028
-    title: Represented Object
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Representation is defined within representational vocabulary.
+- id: DEF-028
+  title: Represented Object
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-001
+  - DEF-027
+  statement:
+    kind: definition
+    subject: Represented Object
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-001, DEF-027]
-  - id: DEF-029
-    title: Representational Structure
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Represented Object is defined within representational vocabulary.
+- id: DEF-029
+  title: Representational Structure
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  aliases:
+  - D-STRUCT
+  dependencies:
+  - DEF-003
+  - DEF-004
+  - DEF-027
+  statement:
+    kind: definition
+    subject: Representational Structure
+    predicate: is defined
     scope: representational vocabulary
-    aliases: [D-STRUCT]
-    dependencies: [DEF-003, DEF-004, DEF-027]
-  - id: DEF-030
-    title: Interpretation
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Representational Structure is defined within representational vocabulary.
+- id: DEF-030
+  title: Interpretation
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  aliases:
+  - D-INT
+  dependencies:
+  - DEF-027
+  statement:
+    kind: definition
+    subject: Interpretation
+    predicate: is defined
     scope: representational vocabulary
-    aliases: [D-INT]
-    dependencies: [DEF-027]
-  - id: DEF-031
-    title: Semantic Content
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Interpretation is defined within representational vocabulary.
+- id: DEF-031
+  title: Semantic Content
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-030
+  statement:
+    kind: definition
+    subject: Semantic Content
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-030]
-  - id: DEF-032
-    title: Structural Equivalence
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Semantic Content is defined within representational vocabulary.
+- id: DEF-032
+  title: Structural Equivalence
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-025
+  - DEF-029
+  statement:
+    kind: definition
+    subject: Structural Equivalence
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-025, DEF-029]
-  - id: DEF-033
-    title: Semantic Equivalence
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Structural Equivalence is defined within representational vocabulary.
+- id: DEF-033
+  title: Semantic Equivalence
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-025
+  - DEF-030
+  - DEF-031
+  statement:
+    kind: definition
+    subject: Semantic Equivalence
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-025, DEF-030, DEF-031]
-  - id: DEF-034
-    title: Representation Mapping
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Semantic Equivalence is defined within representational vocabulary.
+- id: DEF-034
+  title: Representation Mapping
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-029
+  statement:
+    kind: definition
+    subject: Representation Mapping
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-027, DEF-029]
-  - id: DEF-035
-    title: Representation Transformation
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Representation Mapping is defined within representational vocabulary.
+- id: DEF-035
+  title: Representation Transformation
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-029
+  - DEF-034
+  statement:
+    kind: definition
+    subject: Representation Transformation
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-029, DEF-034]
-  - id: DEF-036
-    title: Representation Invariance
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Representation Transformation is defined within representational vocabulary.
+- id: DEF-036
+  title: Representation Invariance
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-034
+  statement:
+    kind: definition
+    subject: Representation Invariance
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-034]
-  - id: DEF-037
-    title: Representation Fidelity
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Representation Invariance is defined within representational vocabulary.
+- id: DEF-037
+  title: Representation Fidelity
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-028
+  - DEF-030
+  statement:
+    kind: definition
+    subject: Representation Fidelity
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-027, DEF-028, DEF-030]
-  - id: DEF-038
-    title: Representation Completeness
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Representation Fidelity is defined within representational vocabulary.
+- id: DEF-038
+  title: Representation Completeness
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-016
+  - DEF-030
+  statement:
+    kind: definition
+    subject: Representation Completeness
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-027, DEF-016, DEF-030]
-  - id: DEF-039
-    title: Representation Consistency
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Representation Completeness is defined within representational vocabulary.
+- id: DEF-039
+  title: Representation Consistency
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-029
+  statement:
+    kind: definition
+    subject: Representation Consistency
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-027, DEF-029]
-  - id: DEF-040
-    title: Representational Independence
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Representation Consistency is defined within representational vocabulary.
+- id: DEF-040
+  title: Representational Independence
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: representational vocabulary
+  dependencies:
+  - DEF-024
+  - DEF-027
+  statement:
+    kind: definition
+    subject: Representational Independence
+    predicate: is defined
     scope: representational vocabulary
-    dependencies: [DEF-024, DEF-027]
-  - id: DEF-041
-    title: Investigation
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Representational Independence is defined within representational vocabulary.
+- id: DEF-041
+  title: Investigation
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  aliases:
+  - D-INV
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Investigation
+    predicate: is defined
     scope: reasoning vocabulary
-    aliases: [D-INV]
-    dependencies: []
-  - id: DEF-042
-    title: Investigation State
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Investigation is defined within reasoning vocabulary.
+- id: DEF-042
+  title: Investigation State
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-041
+  statement:
+    kind: definition
+    subject: Investigation State
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-041]
-  - id: DEF-043
-    title: Investigation Record
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Investigation State is defined within reasoning vocabulary.
+- id: DEF-043
+  title: Investigation Record
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-041
+  statement:
+    kind: definition
+    subject: Investigation Record
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-027, DEF-041]
-  - id: DEF-044
-    title: Reasoning
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Investigation Record is defined within reasoning vocabulary.
+- id: DEF-044
+  title: Reasoning
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-041
+  statement:
+    kind: definition
+    subject: Reasoning
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-027, DEF-041]
-  - id: DEF-045
-    title: Reasoning Process
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Reasoning is defined within reasoning vocabulary.
+- id: DEF-045
+  title: Reasoning Process
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-041
+  - DEF-044
+  statement:
+    kind: definition
+    subject: Reasoning Process
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-041, DEF-044]
-  - id: DEF-046
-    title: Reasoning Calculus
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Reasoning Process is defined within reasoning vocabulary.
+- id: DEF-046
+  title: Reasoning Calculus
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  aliases:
+  - D-CALC
+  dependencies:
+  - DEF-041
+  statement:
+    kind: definition
+    subject: Reasoning Calculus
+    predicate: is defined
     scope: reasoning vocabulary
-    aliases: [D-CALC]
-    dependencies: [DEF-041]
-  - id: DEF-047
-    title: State
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Reasoning Calculus is defined within reasoning vocabulary.
+- id: DEF-047
+  title: State
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-001
+  - DEF-016
+  statement:
+    kind: definition
+    subject: State
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-001, DEF-016]
-  - id: DEF-048
-    title: Reasoning State
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: State is defined within reasoning vocabulary.
+- id: DEF-048
+  title: Reasoning State
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-041
+  - DEF-045
+  - DEF-047
+  statement:
+    kind: definition
+    subject: Reasoning State
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-041, DEF-045, DEF-047]
-  - id: DEF-049
-    title: Reasoning State Representation
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Reasoning State is defined within reasoning vocabulary.
+- id: DEF-049
+  title: Reasoning State Representation
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-048
+  statement:
+    kind: definition
+    subject: Reasoning State Representation
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-027, DEF-048]
-  - id: DEF-050
-    title: Reasoning State Record
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Reasoning State Representation is defined within reasoning vocabulary.
+- id: DEF-050
+  title: Reasoning State Record
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-049
+  statement:
+    kind: definition
+    subject: Reasoning State Record
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-027, DEF-049]
-  - id: DEF-051
-    title: Transformation Rule
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Reasoning State Record is defined within reasoning vocabulary.
+- id: DEF-051
+  title: Transformation Rule
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-027
+  statement:
+    kind: definition
+    subject: Transformation Rule
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-027]
-  - id: DEF-052
-    title: Transformation Execution
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Transformation Rule is defined within reasoning vocabulary.
+- id: DEF-052
+  title: Transformation Execution
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-045
+  - DEF-051
+  statement:
+    kind: definition
+    subject: Transformation Execution
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-045, DEF-051]
-  - id: DEF-053
-    title: Transformation Result
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Transformation Execution is defined within reasoning vocabulary.
+- id: DEF-053
+  title: Transformation Result
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-052
+  statement:
+    kind: definition
+    subject: Transformation Result
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-027, DEF-052]
-  - id: DEF-054
-    title: Transition Signature
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Transformation Result is defined within reasoning vocabulary.
+- id: DEF-054
+  title: Transition Signature
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-049
+  - DEF-052
+  statement:
+    kind: definition
+    subject: Transition Signature
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-027, DEF-049, DEF-052]
-  - id: DEF-055
-    title: Reasoning Trace
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Transition Signature is defined within reasoning vocabulary.
+- id: DEF-055
+  title: Reasoning Trace
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: reasoning vocabulary
+  dependencies:
+  - DEF-045
+  - DEF-054
+  statement:
+    kind: definition
+    subject: Reasoning Trace
+    predicate: is defined
     scope: reasoning vocabulary
-    dependencies: [DEF-045, DEF-054]
-  - id: DEF-056
-    title: Candidate
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Reasoning Trace is defined within reasoning vocabulary.
+- id: DEF-056
+  title: Candidate
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: decision vocabulary
+  dependencies:
+  - DEF-001
+  - DEF-041
+  statement:
+    kind: definition
+    subject: Candidate
+    predicate: is defined
     scope: decision vocabulary
-    dependencies: [DEF-001, DEF-041]
-  - id: DEF-057
-    title: Criterion
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Candidate is defined within decision vocabulary.
+- id: DEF-057
+  title: Criterion
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: decision vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Criterion
+    predicate: is defined
     scope: decision vocabulary
-    dependencies: []
-  - id: DEF-058
-    title: Classification
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Criterion is defined within decision vocabulary.
+- id: DEF-058
+  title: Classification
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: decision vocabulary
+  dependencies:
+  - DEF-001
+  - DEF-057
+  statement:
+    kind: definition
+    subject: Classification
+    predicate: is defined
     scope: decision vocabulary
-    dependencies: [DEF-001, DEF-057]
-  - id: DEF-059
-    title: Admissibility
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Classification is defined within decision vocabulary.
+- id: DEF-059
+  title: Admissibility
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: decision vocabulary
+  dependencies:
+  - DEF-041
+  - DEF-046
+  - DEF-057
+  statement:
+    kind: definition
+    subject: Admissibility
+    predicate: is defined
     scope: decision vocabulary
-    dependencies: [DEF-041, DEF-046, DEF-057]
-  - id: DEF-060
-    title: Admissibility Classification
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Admissibility is defined within decision vocabulary.
+- id: DEF-060
+  title: Admissibility Classification
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: decision vocabulary
+  dependencies:
+  - DEF-056
+  - DEF-058
+  - DEF-059
+  statement:
+    kind: definition
+    subject: Admissibility Classification
+    predicate: is defined
     scope: decision vocabulary
-    dependencies: [DEF-056, DEF-058, DEF-059]
-  - id: DEF-061
-    title: Admissibility Structure (Ω)
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Admissibility Classification is defined within decision vocabulary.
+- id: DEF-061
+  title: Admissibility Structure (Ω)
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: decision vocabulary
+  dependencies:
+  - DEF-041
+  - DEF-060
+  statement:
+    kind: definition
+    subject: Admissibility Structure (Ω)
+    predicate: is defined
     scope: decision vocabulary
-    dependencies: [DEF-041, DEF-060]
-  - id: DEF-062
-    title: Resolution Rule
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Admissibility Structure (Ω) is defined within decision vocabulary.
+- id: DEF-062
+  title: Resolution Rule
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: decision vocabulary
+  dependencies:
+  - DEF-061
+  statement:
+    kind: definition
+    subject: Resolution Rule
+    predicate: is defined
     scope: decision vocabulary
-    dependencies: [DEF-061]
-  - id: DEF-063
-    title: Resolution Execution
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Resolution Rule is defined within decision vocabulary.
+- id: DEF-063
+  title: Resolution Execution
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: decision vocabulary
+  dependencies:
+  - DEF-061
+  - DEF-062
+  statement:
+    kind: definition
+    subject: Resolution Execution
+    predicate: is defined
     scope: decision vocabulary
-    dependencies: [DEF-061, DEF-062]
-  - id: DEF-064
-    title: Resolution
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Resolution Execution is defined within decision vocabulary.
+- id: DEF-064
+  title: Resolution
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: decision vocabulary
+  dependencies:
+  - DEF-056
+  - DEF-063
+  statement:
+    kind: definition
+    subject: Resolution
+    predicate: is defined
     scope: decision vocabulary
-    dependencies: [DEF-056, DEF-063]
-  - id: DEF-065
-    title: Definition
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Resolution is defined within decision vocabulary.
+- id: DEF-065
+  title: Definition
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: meta vocabulary
+  dependencies:
+  - DEF-010
+  statement:
+    kind: definition
+    subject: Definition
+    predicate: is defined
     scope: meta vocabulary
-    dependencies: [DEF-010]
-  - id: DEF-066
-    title: Principle
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Definition is defined within meta vocabulary.
+- id: DEF-066
+  title: Principle
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: meta vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Principle
+    predicate: is defined
     scope: meta vocabulary
-    dependencies: []
-  - id: DEF-067
-    title: Axiom
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Principle is defined within meta vocabulary.
+- id: DEF-067
+  title: Axiom
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: meta vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Axiom
+    predicate: is defined
     scope: meta vocabulary
-    dependencies: []
-  - id: DEF-068
-    title: Proposition
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Axiom is defined within meta vocabulary.
+- id: DEF-068
+  title: Proposition
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: meta vocabulary
+  dependencies: []
+  statement:
+    kind: definition
+    subject: Proposition
+    predicate: is defined
     scope: meta vocabulary
-    dependencies: []
-  - id: DEF-069
-    title: Conjecture
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Proposition is defined within meta vocabulary.
+- id: DEF-069
+  title: Conjecture
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: meta vocabulary
+  dependencies:
+  - DEF-068
+  statement:
+    kind: definition
+    subject: Conjecture
+    predicate: is defined
     scope: meta vocabulary
-    dependencies: [DEF-068]
-  - id: DEF-070
-    title: Lemma
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Conjecture is defined within meta vocabulary.
+- id: DEF-070
+  title: Lemma
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: meta vocabulary
+  dependencies:
+  - DEF-068
+  statement:
+    kind: definition
+    subject: Lemma
+    predicate: is defined
     scope: meta vocabulary
-    dependencies: [DEF-068]
-  - id: DEF-071
-    title: Theorem
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Lemma is defined within meta vocabulary.
+- id: DEF-071
+  title: Theorem
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: meta vocabulary
+  dependencies:
+  - DEF-068
+  - DEF-073
+  statement:
+    kind: definition
+    subject: Theorem
+    predicate: is defined
     scope: meta vocabulary
-    dependencies: [DEF-068, DEF-073]
-  - id: DEF-072
-    title: Corollary
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Theorem is defined within meta vocabulary.
+- id: DEF-072
+  title: Corollary
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: meta vocabulary
+  dependencies:
+  - DEF-071
+  statement:
+    kind: definition
+    subject: Corollary
+    predicate: is defined
     scope: meta vocabulary
-    dependencies: [DEF-071]
-  - id: DEF-073
-    title: Proof
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Corollary is defined within meta vocabulary.
+- id: DEF-073
+  title: Proof
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: meta vocabulary
+  dependencies:
+  - DEF-046
+  - DEF-068
+  statement:
+    kind: definition
+    subject: Proof
+    predicate: is defined
     scope: meta vocabulary
-    dependencies: [DEF-046, DEF-068]
-  - id: DEF-074
-    title: Refutation
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Proof is defined within meta vocabulary.
+- id: DEF-074
+  title: Refutation
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: meta vocabulary
+  dependencies:
+  - DEF-068
+  statement:
+    kind: definition
+    subject: Refutation
+    predicate: is defined
     scope: meta vocabulary
-    dependencies: [DEF-068]
-  - id: DEF-075
-    title: Claim
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Refutation is defined within meta vocabulary.
+- id: DEF-075
+  title: Claim
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: evidence vocabulary
+  dependencies:
+  - DEF-041
+  - DEF-068
+  statement:
+    kind: definition
+    subject: Claim
+    predicate: is defined
     scope: evidence vocabulary
-    dependencies: [DEF-041, DEF-068]
-  - id: DEF-076
-    title: Claim Type
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Claim is defined within evidence vocabulary.
+- id: DEF-076
+  title: Claim Type
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: evidence vocabulary
+  dependencies:
+  - DEF-075
+  statement:
+    kind: definition
+    subject: Claim Type
+    predicate: is defined
     scope: evidence vocabulary
-    dependencies: [DEF-075]
-  - id: DEF-077
-    title: Evidence
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Claim Type is defined within evidence vocabulary.
+- id: DEF-077
+  title: Evidence
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: evidence vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-041
+  - DEF-075
+  statement:
+    kind: definition
+    subject: Evidence
+    predicate: is defined
     scope: evidence vocabulary
-    dependencies: [DEF-027, DEF-041, DEF-075]
-  - id: DEF-078
-    title: Observation
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Evidence is defined within evidence vocabulary.
+- id: DEF-078
+  title: Observation
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: evidence vocabulary
+  dependencies:
+  - DEF-027
+  statement:
+    kind: definition
+    subject: Observation
+    predicate: is defined
     scope: evidence vocabulary
-    dependencies: [DEF-027]
-  - id: DEF-079
-    title: Assumption
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Observation is defined within evidence vocabulary.
+- id: DEF-079
+  title: Assumption
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: evidence vocabulary
+  dependencies:
+  - DEF-041
+  - DEF-075
+  statement:
+    kind: definition
+    subject: Assumption
+    predicate: is defined
     scope: evidence vocabulary
-    dependencies: [DEF-041, DEF-075]
-  - id: DEF-080
-    title: Hypothesis
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Assumption is defined within evidence vocabulary.
+- id: DEF-080
+  title: Hypothesis
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: evidence vocabulary
+  dependencies:
+  - DEF-075
+  statement:
+    kind: definition
+    subject: Hypothesis
+    predicate: is defined
     scope: evidence vocabulary
-    dependencies: [DEF-075]
-  - id: DEF-081
-    title: Explanation
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Hypothesis is defined within evidence vocabulary.
+- id: DEF-081
+  title: Explanation
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: evidence vocabulary
+  dependencies:
+  - DEF-027
+  - DEF-075
+  - DEF-079
+  statement:
+    kind: definition
+    subject: Explanation
+    predicate: is defined
     scope: evidence vocabulary
-    dependencies: [DEF-027, DEF-075, DEF-079]
-  - id: DEF-082
-    title: Prediction
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Explanation is defined within evidence vocabulary.
+- id: DEF-082
+  title: Prediction
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: evidence vocabulary
+  dependencies:
+  - DEF-075
+  statement:
+    kind: definition
+    subject: Prediction
+    predicate: is defined
     scope: evidence vocabulary
-    dependencies: [DEF-075]
-  - id: DEF-083
-    title: Counterexample
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Prediction is defined within evidence vocabulary.
+- id: DEF-083
+  title: Counterexample
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: evidence vocabulary
+  dependencies:
+  - DEF-001
+  - DEF-075
+  statement:
+    kind: definition
+    subject: Counterexample
+    predicate: is defined
     scope: evidence vocabulary
-    dependencies: [DEF-001, DEF-075]
-  - id: DEF-084
-    title: Artifact
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Counterexample is defined within evidence vocabulary.
+- id: DEF-084
+  title: Artifact
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: methodology vocabulary
+  dependencies:
+  - DEF-027
+  statement:
+    kind: definition
+    subject: Artifact
+    predicate: is defined
     scope: methodology vocabulary
-    dependencies: [DEF-027]
-  - id: DEF-085
-    title: Audit
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Artifact is defined within methodology vocabulary.
+- id: DEF-085
+  title: Audit
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: methodology vocabulary
+  dependencies:
+  - DEF-084
+  statement:
+    kind: definition
+    subject: Audit
+    predicate: is defined
     scope: methodology vocabulary
-    dependencies: [DEF-084]
-  - id: DEF-086
-    title: Grounding Investigation
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Audit is defined within methodology vocabulary.
+- id: DEF-086
+  title: Grounding Investigation
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: methodology vocabulary
+  dependencies:
+  - DEF-041
+  statement:
+    kind: definition
+    subject: Grounding Investigation
+    predicate: is defined
     scope: methodology vocabulary
-    dependencies: [DEF-041]
-  - id: DEF-087
-    title: Knowledge Object
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Grounding Investigation is defined within methodology vocabulary.
+- id: DEF-087
+  title: Knowledge Object
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: methodology vocabulary
+  dependencies:
+  - DEF-084
+  statement:
+    kind: definition
+    subject: Knowledge Object
+    predicate: is defined
     scope: methodology vocabulary
-    dependencies: [DEF-084]
-  - id: DEF-088
-    title: Traceability
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Knowledge Object is defined within methodology vocabulary.
+- id: DEF-088
+  title: Traceability
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: methodology vocabulary
+  dependencies:
+  - DEF-084
+  statement:
+    kind: definition
+    subject: Traceability
+    predicate: is defined
     scope: methodology vocabulary
-    dependencies: [DEF-084]
-  - id: DEF-089
-    title: Revision
-    status: Established
-    source: theory/definitions/definitions.md
+    claim: Traceability is defined within methodology vocabulary.
+- id: DEF-089
+  title: Revision
+  status: Established
+  source: theory/definitions/definitions.md
+  scope: methodology vocabulary
+  dependencies:
+  - DEF-084
+  statement:
+    kind: definition
+    subject: Revision
+    predicate: is defined
     scope: methodology vocabulary
-    dependencies: [DEF-084]
+    claim: Revision is defined within methodology vocabulary.

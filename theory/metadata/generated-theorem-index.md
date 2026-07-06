@@ -1,6 +1,6 @@
 # Generated Theorem Index
 
-This file is generated from `theory/metadata/theorems.yaml`.
+This file is generated from machine-readable metadata.
 
 | ID | Title | Status | Proof | Scope |
 |---|---|---|---|---|
