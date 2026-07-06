@@ -1,0 +1,53 @@
+investigation: Determine whether Socrates is mortal from the supplied premises.
+
+representations:
+  - id: r1
+    kind: premise
+    content: All humans are mortal.
+  - id: r2
+    kind: premise
+    content: Socrates is human.
+  - id: r3
+    kind: conclusion
+    content: Socrates is mortal.
+
+relations:
+  - id: rel1
+    type: supports
+    source: r1
+    target: r3
+  - id: rel2
+    type: supports
+    source: r2
+    target: r3
+  - id: rel3
+    type: depends_on
+    source: r3
+    target: r1
+  - id: rel4
+    type: depends_on
+    source: r3
+    target: r2
+
+interpretations:
+  - representation: r1
+    meaning: For every x, if Human(x), then Mortal(x).
+  - representation: r2
+    meaning: Human(Socrates).
+  - representation: r3
+    meaning: Mortal(Socrates).
+
+rules:
+  - id: rule1
+    name: universal instantiation and modus ponens
+    inputs: [r1, r2]
+    output: r3
+    condition: If all humans are mortal and Socrates is human, infer Socrates is mortal.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: rule1
+    target: state1
+    status: admissible
+    order: 1
