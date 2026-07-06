@@ -1,0 +1,59 @@
+proof_object_schema:
+  version: 0.1
+  required_fields:
+    - id
+    - theorem
+    - status
+    - premises
+    - steps
+    - conclusion
+  fields:
+    id:
+      type: string
+      description: Stable proof-object identifier.
+    theorem:
+      type: string
+      description: The theorem identifier proved by this object.
+    status:
+      type: enum
+      values: [draft, proposed, verified, established, deprecated]
+    premises:
+      type: list
+      item_fields:
+        - id
+        - source
+        - statement
+    steps:
+      type: list
+      item_fields:
+        - id
+        - rule
+        - inputs
+        - statement
+        - justification
+    conclusion:
+      type: string
+      description: Final statement established by the proof object.
+  step_rules:
+    definition_unfolding:
+      description: Replace a defined term with its registered definition.
+    axiom_application:
+      description: Apply an accepted Project FAR axiom.
+    prior_theorem:
+      description: Apply an established theorem.
+    lemma_application:
+      description: Apply an established lemma.
+    modus_ponens:
+      description: From P and P -> Q, infer Q.
+    conjunction_intro:
+      description: From P and Q, infer P and Q.
+    universal_instantiation:
+      description: Instantiate a universal statement for a specific object.
+    registry_substitution:
+      description: Substitute a derived concept by its registry construction.
+    semantic_preservation:
+      description: Preserve semantic content under an interpretation-preserving mapping.
+  validation_notes:
+    - This schema is structural, not yet a full proof assistant.
+    - A proof checker can verify references, step order, rule names, and dependency availability.
+    - Logical validity of arbitrary natural-language statements remains outside v0.4 scope.
