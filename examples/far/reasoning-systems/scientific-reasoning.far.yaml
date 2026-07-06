@@ -1,0 +1,73 @@
+investigation: Test whether scientific reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Scientific reasoning
+  far_primitives:
+    Investigation: Determine whether evidence confirms, disconfirms, or revises a hypothesis.
+    Representation: hypotheses, observations, measurements, and models
+    Representational Structure: evidential support and conflict relations
+    Interpretation: empirical interpretation under measurement standards
+    Reasoning Calculus: testing, revision, and explanatory standards
+  verdict: extends FAR
+
+representations:
+  - id: hypothesis
+    kind: hypothesis
+    content: H predicts observation O.
+    statement:
+      kind: conditional
+      subject: hypothesis H
+      predicate: predicts observation O
+      scope: scientific fixture
+      claim: If H is correct, O should be observed.
+  - id: observation
+    kind: observation
+    content: O is observed.
+    statement:
+      kind: claim
+      subject: observation O
+      predicate: is recorded
+      scope: scientific fixture
+      claim: Observation O is recorded.
+  - id: assessment
+    kind: conclusion
+    content: O supports H under the test design.
+    statement:
+      kind: claim
+      subject: observation O
+      predicate: supports hypothesis H under the test design
+      scope: scientific fixture
+      claim: O supports H under the declared test design.
+
+relations:
+  - id: rel1
+    type: supports
+    source: hypothesis
+    target: assessment
+  - id: rel2
+    type: supports
+    source: observation
+    target: assessment
+
+interpretations:
+  - representation: hypothesis
+    meaning: A testable empirical claim.
+  - representation: observation
+    meaning: A recorded measurement or observation.
+  - representation: assessment
+    meaning: An evidential assessment under a specified test design.
+
+rules:
+  - id: empirical-test
+    name: empirical test assessment
+    inputs: [hypothesis, observation]
+    output: assessment
+    condition: Compare predicted and observed result under the declared test design.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: empirical-test
+    target: state1
+    status: draft
+    order: 1
