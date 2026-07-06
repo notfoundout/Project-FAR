@@ -197,10 +197,11 @@ def validate_rule_pattern(
         if not (
             has_source_kind(input_ids, lineage, r"DEF-\d{3}")
             or has_source_kind(input_ids, lineage, r"D-(?:\d{3}|REP|INT|CALC|INV|STRUCT)")
+            or has_source_kind(input_ids, lineage, r"T-\d{3}")
             or has_source_id(input_ids, lineage, DEFINITIONAL_BASE_SOURCES)
             or has_rule(input_ids, rule_lineage, "definition_unfolding")
         ):
-            errors.append(f"step {step_id} definition_unfolding requires a definition, definition alias, definitional base source, or prior definitional step")
+            errors.append(f"step {step_id} definition_unfolding requires a definition, definition alias, theorem statement/context, definitional base source, or prior definitional step")
 
     elif rule == "axiom_application":
         if not has_source_kind(input_ids, lineage, r"A\d+"):
