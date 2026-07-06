@@ -9,6 +9,12 @@ This repository is organized as the Version 1.0 canonical architecture for the p
 
 ---
 
+## Latest Release
+
+**Project FAR v0.2.0** — a release milestone for machine-readable proof infrastructure, theorem metadata, reasoning-system fixtures, falsification evidence, counterexample analysis, and hard-case derived concepts. See the canonical release document: [`docs/releases/project-far-v0.2.0.md`](docs/releases/project-far-v0.2.0.md).
+
+---
+
 ## Current Development Status
 
 The current framework stack is:
