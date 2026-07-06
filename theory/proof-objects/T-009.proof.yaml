@@ -7,39 +7,39 @@ status: draft
 premises:
   - id: p1
     source: T-009 statement
-    statement: Let FAR(R) = <I, Rep, S, Int, C, T> be a finite scoped FAR representation with supplied ordering, labeling, and redundancy-removal rules.
+    statement: "Let FAR(R) = <I, Rep, S, Int, C, T> be a finite scoped FAR representation with supplied ordering, labeling, and redundancy-removal rules."
   - id: p2
     source: L-007
-    statement: Finite normalization terminates under terminating normalization steps.
+    statement: "Finite normalization terminates under terminating normalization steps."
   - id: p3
     source: T-003
-    statement: FAR(R) supplies the required FAR representation components.
+    statement: "FAR(R) supplies the required FAR representation components."
 
 steps:
   - id: s1
     rule: prior_theorem
     inputs: [p1, p3]
-    statement: FAR(R) contains the components to be normalized: I, Rep, S, Int, C, and T.
-    justification: Applies the Representation Theorem to identify the tuple components subject to normal-form construction.
+    statement: "FAR(R) contains the components to be normalized: I, Rep, S, Int, C, and T."
+    justification: "Applies the Representation Theorem to identify the tuple components subject to normal-form construction."
   - id: s2
     rule: lemma_application
     inputs: [p1, p2]
-    statement: Redundancy removal, canonical labeling, structural sorting, semantic-label replacement, rule labeling, and transition rewriting each terminate for finite FAR(R).
-    justification: By finite normalization termination, each supplied terminating normalization step over a finite representation terminates.
+    statement: "Redundancy removal, canonical labeling, structural sorting, semantic-label replacement, rule labeling, and transition rewriting each terminate for finite FAR(R)."
+    justification: "By finite normalization termination, each supplied terminating normalization step over a finite representation terminates."
   - id: s3
     rule: definition_unfolding
     inputs: [s1, s2]
-    statement: The normalization procedure constructs NF(R) by applying the supplied rules to Rep, S, Int, C, and T.
-    justification: Unfolds the normal-form construction over the finite tuple components.
+    statement: "The normalization procedure constructs NF(R) by applying the supplied rules to Rep, S, Int, C, and T."
+    justification: "Unfolds the normal-form construction over the finite tuple components."
   - id: s4
     rule: conjunction_intro
     inputs: [s2, s3]
-    statement: NF(R) is produced after finitely many normalization steps and preserves the required representational, structural, semantic, calculative, and trace information.
-    justification: Combines termination of each step with the stated preservation targets of the normalization procedure.
+    statement: "NF(R) is produced after finitely many normalization steps and preserves the required representational, structural, semantic, calculative, and trace information."
+    justification: "Combines termination of each step with the stated preservation targets of the normalization procedure."
   - id: s5
     rule: universal_instantiation
     inputs: [p1, s4]
-    statement: Every finite scoped FAR representation admits a canonical normal form once ordering, labeling, and redundancy-removal rules are supplied.
-    justification: Since FAR(R) was arbitrary under the stated finiteness and rule-supply conditions, the result generalizes to every such representation.
+    statement: "Every finite scoped FAR representation admits a canonical normal form once ordering, labeling, and redundancy-removal rules are supplied."
+    justification: "Since FAR(R) was arbitrary under the stated finiteness and rule-supply conditions, the result generalizes to every such representation."
 
-conclusion: Every finite scoped FAR representation admits a canonical normal form once ordering, labeling, and redundancy-removal rules are supplied.
+conclusion: "Every finite scoped FAR representation admits a canonical normal form once ordering, labeling, and redundancy-removal rules are supplied."
