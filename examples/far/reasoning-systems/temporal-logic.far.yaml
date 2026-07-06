@@ -1,0 +1,73 @@
+investigation: Test whether temporal logic maps into FAR primitives.
+
+reasoning_system:
+  system: Temporal logic
+  far_primitives:
+    Investigation: Determine whether time-indexed reasoning can be represented inside FAR.
+    Representation: temporal formulas, moments, paths, and temporal operators
+    Representational Structure: ordering relation over times or states
+    Interpretation: truth over ordered temporal positions
+    Reasoning Calculus: temporal transition and operator rules
+  verdict: extends FAR
+
+representations:
+  - id: now
+    kind: premise
+    content: P holds now.
+    statement:
+      kind: claim
+      subject: P
+      predicate: holds at time t0
+      scope: temporal logic fixture
+      claim: P holds at the current time.
+  - id: next-rule
+    kind: rule-schema
+    content: If P holds now and the next transition preserves P, then next P holds.
+    statement:
+      kind: conditional
+      subject: P at t0
+      predicate: implies P at next time under preservation
+      scope: temporal logic fixture
+      claim: If P is preserved by the next transition, P holds at the next time.
+  - id: next
+    kind: conclusion
+    content: Next P holds.
+    statement:
+      kind: claim
+      subject: P
+      predicate: holds at time t1
+      scope: temporal logic fixture
+      claim: P holds at the next time.
+
+relations:
+  - id: rel1
+    type: supports
+    source: now
+    target: next
+  - id: rel2
+    type: supports
+    source: next-rule
+    target: next
+
+interpretations:
+  - representation: now
+    meaning: A proposition evaluated at a current temporal index.
+  - representation: next-rule
+    meaning: A temporal transition rule from one index to the next.
+  - representation: next
+    meaning: A proposition evaluated at the successor temporal index.
+
+rules:
+  - id: next-introduction
+    name: next-time introduction
+    inputs: [now, next-rule]
+    output: next
+    condition: Apply a temporal successor rule.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: next-introduction
+    target: state1
+    status: draft
+    order: 1
