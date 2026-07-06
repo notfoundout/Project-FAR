@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Strict structural proof-object checker for Project FAR YAML proof objects."""
+"""Strict structural and rule-pattern checker for Project FAR YAML proof objects."""
 
 from __future__ import annotations
 
@@ -24,6 +24,7 @@ SPECIAL_CONTEXT_SOURCES = {
     "primitive architecture",
     "induction principle over registry depth",
 }
+DEFINITIONAL_BASE_SOURCES = BASE_DEPENDENCIES | SPECIAL_CONTEXT_SOURCES
 
 ALLOWED_RULES = {
     "definition_unfolding",
@@ -44,6 +45,7 @@ STOP_WORDS = {
     "a", "an", "and", "are", "as", "be", "by", "for", "from", "if", "in", "is", "it", "its",
     "let", "of", "or", "that", "the", "then", "this", "to", "under", "when", "with",
 }
+SEMANTIC_TERMS = {"semantic", "semantics", "meaning", "interpretation", "interpreted", "equivalence", "content"}
 
 
 def load_yaml(path: Path) -> Dict[str, Any]:
@@ -154,13 +156,93 @@ def validate_premise_sources(
             errors.append(f"premise {pid} source is not resolvable: {source}")
             continue
         for source_id in ids:
-            if source_id.startswith("D-") and source_id in registered_d:
+            if source_id.startswith("D-") and (source_id in registered_d or source_id in index):
                 continue
             if source_id not in index and source_id not in BASE_DEPENDENCIES:
                 errors.append(f"premise {pid} source id does not exist: {source_id}")
                 continue
             if re.fullmatch(r"[TPL]-\d{3}", source_id) and source_id not in declared:
                 errors.append(f"premise {pid} cites undeclared theorem/proposition/lemma dependency: {source_id}")
+
+
+def has_source_kind(input_ids: List[str], lineage: Dict[str, Set[str]], pattern: str) -> bool:
+    return any(any(re.fullmatch(pattern, source_id) for source_id in lineage.get(input_id, set())) for input_id in input_ids)
+
+
+def has_source_id(input_ids: List[str], lineage: Dict[str, Set[str]], allowed: Set[str]) -> bool:
+    return any(bool(lineage.get(input_id, set()) & allowed) for input_id in input_ids)
+
+
+def has_rule(input_ids: List[str], rule_lineage: Dict[str, Set[str]], rule: str) -> bool:
+    return any(rule in rule_lineage.get(input_id, set()) for input_id in input_ids)
+
+
+def input_text(input_ids: List[str], statements: Dict[str, str]) -> str:
+    return " ".join(statements.get(input_id, "") for input_id in input_ids).lower()
+
+
+def validate_rule_pattern(
+    step_id: str,
+    rule: str,
+    input_ids: List[str],
+    lineage: Dict[str, Set[str]],
+    rule_lineage: Dict[str, Set[str]],
+    statements: Dict[str, str],
+    errors: List[str],
+) -> None:
+    if rule == "definition_unfolding":
+        if not input_ids:
+            errors.append(f"step {step_id} definition_unfolding requires at least one input")
+            return
+        if not (
+            has_source_kind(input_ids, lineage, r"DEF-\d{3}")
+            or has_source_kind(input_ids, lineage, r"D-(?:\d{3}|REP|INT|CALC|INV|STRUCT)")
+            or has_source_kind(input_ids, lineage, r"T-\d{3}")
+            or has_source_id(input_ids, lineage, DEFINITIONAL_BASE_SOURCES)
+            or has_rule(input_ids, rule_lineage, "definition_unfolding")
+        ):
+            errors.append(f"step {step_id} definition_unfolding requires a definition, definition alias, theorem statement/context, definitional base source, or prior definitional step")
+
+    elif rule == "axiom_application":
+        if not has_source_kind(input_ids, lineage, r"A\d+"):
+            errors.append(f"step {step_id} axiom_application requires an axiom-bearing input")
+
+    elif rule == "prior_theorem":
+        if not has_source_kind(input_ids, lineage, r"T-\d{3}"):
+            errors.append(f"step {step_id} prior_theorem requires a theorem-bearing input")
+
+    elif rule == "lemma_application":
+        if not has_source_kind(input_ids, lineage, r"L-\d{3}"):
+            errors.append(f"step {step_id} lemma_application requires a lemma-bearing input")
+
+    elif rule == "conjunction_intro":
+        if len(input_ids) < 2:
+            errors.append(f"step {step_id} conjunction_intro requires at least two inputs")
+
+    elif rule == "universal_instantiation":
+        if not input_ids:
+            errors.append(f"step {step_id} universal_instantiation requires at least one scoped or universal input")
+
+    elif rule == "semantic_preservation":
+        semantic_text = input_text(input_ids, statements)
+        if not (
+            has_source_id(input_ids, lineage, {"T-004", "DEF-031", "DEF-033", "D-INT"})
+            or has_rule(input_ids, rule_lineage, "semantic_preservation")
+            or any(term in semantic_text for term in SEMANTIC_TERMS)
+        ):
+            errors.append(f"step {step_id} semantic_preservation requires semantic content, interpretation, equivalence, or T-004/DEF-031/DEF-033 input")
+
+    elif rule == "registry_substitution":
+        if not (
+            has_source_id(input_ids, lineage, {"derived-concept-registry", "T-006"})
+            or has_source_kind(input_ids, lineage, r"D-\d{3}")
+            or has_rule(input_ids, rule_lineage, "registry_substitution")
+        ):
+            errors.append(f"step {step_id} registry_substitution requires registry, registered derived concept, T-006, or prior registry-substitution input")
+
+    elif rule == "modus_ponens":
+        if len(input_ids) < 2:
+            errors.append(f"step {step_id} modus_ponens requires at least two inputs")
 
 
 def check_proof_object(path: Path) -> List[str]:
@@ -195,6 +277,10 @@ def check_proof_object(path: Path) -> List[str]:
         steps = []
 
     premise_ids: Set[str] = set()
+    lineage: Dict[str, Set[str]] = {}
+    rule_lineage: Dict[str, Set[str]] = {}
+    statements: Dict[str, str] = {}
+
     for premise in premises:
         if not isinstance(premise, dict):
             errors.append("premise must be a mapping")
@@ -205,8 +291,16 @@ def check_proof_object(path: Path) -> List[str]:
         if pid in premise_ids:
             errors.append(f"duplicate premise id: {pid}")
         premise_ids.add(pid)
-        if not premise.get("statement"):
+        statement = str(premise.get("statement", ""))
+        if not statement:
             errors.append(f"premise {pid} missing statement")
+        source = str(premise.get("source", "")).strip()
+        ids = source_ids(source)
+        if source in BASE_DEPENDENCIES or source in SPECIAL_CONTEXT_SOURCES:
+            ids.add(source)
+        lineage[pid] = ids
+        rule_lineage[pid] = set()
+        statements[pid] = statement
 
     if theorem_id:
         validate_premise_sources(theorem_id, [p for p in premises if isinstance(p, dict)], index, errors)
@@ -232,14 +326,17 @@ def check_proof_object(path: Path) -> List[str]:
         if rule not in ALLOWED_RULES:
             errors.append(f"step {sid} uses unknown rule: {rule}")
 
-        inputs = step.get("inputs", [])
-        if not isinstance(inputs, list):
+        raw_inputs = step.get("inputs", [])
+        if not isinstance(raw_inputs, list):
             errors.append(f"step {sid} inputs must be a list")
-            inputs = []
+            raw_inputs = []
+        inputs = [str(inp) for inp in raw_inputs]
         for inp in inputs:
-            inp = str(inp)
             if inp not in available:
                 errors.append(f"step {sid} references unavailable input: {inp}")
+
+        if rule in ALLOWED_RULES and all(inp in available for inp in inputs):
+            validate_rule_pattern(sid, rule, inputs, lineage, rule_lineage, statements, errors)
 
         statement = str(step.get("statement", ""))
         if not statement:
@@ -249,6 +346,14 @@ def check_proof_object(path: Path) -> List[str]:
         if not step.get("justification"):
             errors.append(f"step {sid} missing justification")
 
+        step_source_ids: Set[str] = set()
+        step_rules: Set[str] = {rule} if rule in ALLOWED_RULES else set()
+        for inp in inputs:
+            step_source_ids |= lineage.get(inp, set())
+            step_rules |= rule_lineage.get(inp, set())
+        lineage[sid] = step_source_ids
+        rule_lineage[sid] = step_rules
+        statements[sid] = statement
         available.add(sid)
 
     conclusion = str(data.get("conclusion", ""))
