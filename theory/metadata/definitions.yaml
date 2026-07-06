@@ -1,0 +1,540 @@
+definitions:
+  - id: DEF-001
+    title: Object
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: foundational vocabulary
+    dependencies: []
+  - id: DEF-002
+    title: Property
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: foundational vocabulary
+    dependencies: [DEF-001]
+  - id: DEF-003
+    title: Relation
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: foundational vocabulary
+    dependencies: [DEF-001]
+  - id: DEF-004
+    title: Structure
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: foundational vocabulary
+    dependencies: [DEF-001, DEF-003]
+  - id: DEF-005
+    title: Component
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: foundational vocabulary
+    dependencies: [DEF-001, DEF-004]
+  - id: DEF-006
+    title: System
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: foundational vocabulary
+    dependencies: [DEF-001, DEF-004]
+  - id: DEF-007
+    title: Class
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: foundational vocabulary
+    dependencies: [DEF-001]
+  - id: DEF-008
+    title: Domain
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: foundational vocabulary
+    dependencies: [DEF-001]
+  - id: DEF-009
+    title: Model
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: framework vocabulary
+    dependencies: [DEF-001]
+  - id: DEF-010
+    title: Framework
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: framework vocabulary
+    dependencies: [DEF-003]
+  - id: DEF-011
+    title: Theory
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: framework vocabulary
+    dependencies: [DEF-008]
+  - id: DEF-012
+    title: Architecture
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: framework vocabulary
+    dependencies: [DEF-001, DEF-003]
+  - id: DEF-013
+    title: Ontology
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: framework vocabulary
+    dependencies: []
+  - id: DEF-014
+    title: Syntax
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: framework vocabulary
+    dependencies: []
+  - id: DEF-015
+    title: Semantics
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: framework vocabulary
+    dependencies: [DEF-030]
+  - id: DEF-016
+    title: Scope
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: framework vocabulary
+    dependencies: [DEF-008]
+  - id: DEF-017
+    title: Universal
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: formal vocabulary
+    dependencies: [DEF-008]
+  - id: DEF-018
+    title: Universal Architecture
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: formal vocabulary
+    dependencies: [DEF-012, DEF-016]
+  - id: DEF-019
+    title: Minimal
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: formal vocabulary
+    dependencies: [DEF-004, DEF-016]
+  - id: DEF-020
+    title: Candidate Primitive
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: formal vocabulary
+    dependencies: []
+  - id: DEF-021
+    title: Established Primitive
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: formal vocabulary
+    dependencies: []
+  - id: DEF-022
+    title: Derived Concept
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: formal vocabulary
+    dependencies: []
+  - id: DEF-023
+    title: Reduction
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: formal vocabulary
+    dependencies: [DEF-016]
+  - id: DEF-024
+    title: Independence
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: formal vocabulary
+    dependencies: []
+  - id: DEF-025
+    title: Equivalence
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: formal vocabulary
+    dependencies: [DEF-003]
+  - id: DEF-026
+    title: Expressive Power
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: formal vocabulary
+    dependencies: [DEF-010, DEF-016]
+  - id: DEF-027
+    title: Representation
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    aliases: [D-REP]
+    dependencies: [DEF-001]
+  - id: DEF-028
+    title: Represented Object
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-001, DEF-027]
+  - id: DEF-029
+    title: Representational Structure
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    aliases: [D-STRUCT]
+    dependencies: [DEF-003, DEF-004, DEF-027]
+  - id: DEF-030
+    title: Interpretation
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    aliases: [D-INT]
+    dependencies: [DEF-027]
+  - id: DEF-031
+    title: Semantic Content
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-030]
+  - id: DEF-032
+    title: Structural Equivalence
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-025, DEF-029]
+  - id: DEF-033
+    title: Semantic Equivalence
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-025, DEF-030, DEF-031]
+  - id: DEF-034
+    title: Representation Mapping
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-027, DEF-029]
+  - id: DEF-035
+    title: Representation Transformation
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-029, DEF-034]
+  - id: DEF-036
+    title: Representation Invariance
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-034]
+  - id: DEF-037
+    title: Representation Fidelity
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-027, DEF-028, DEF-030]
+  - id: DEF-038
+    title: Representation Completeness
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-027, DEF-016, DEF-030]
+  - id: DEF-039
+    title: Representation Consistency
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-027, DEF-029]
+  - id: DEF-040
+    title: Representational Independence
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: representational vocabulary
+    dependencies: [DEF-024, DEF-027]
+  - id: DEF-041
+    title: Investigation
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    aliases: [D-INV]
+    dependencies: []
+  - id: DEF-042
+    title: Investigation State
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-041]
+  - id: DEF-043
+    title: Investigation Record
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-027, DEF-041]
+  - id: DEF-044
+    title: Reasoning
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-027, DEF-041]
+  - id: DEF-045
+    title: Reasoning Process
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-041, DEF-044]
+  - id: DEF-046
+    title: Reasoning Calculus
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    aliases: [D-CALC]
+    dependencies: [DEF-041]
+  - id: DEF-047
+    title: State
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-001, DEF-016]
+  - id: DEF-048
+    title: Reasoning State
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-041, DEF-045, DEF-047]
+  - id: DEF-049
+    title: Reasoning State Representation
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-027, DEF-048]
+  - id: DEF-050
+    title: Reasoning State Record
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-027, DEF-049]
+  - id: DEF-051
+    title: Transformation Rule
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-027]
+  - id: DEF-052
+    title: Transformation Execution
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-045, DEF-051]
+  - id: DEF-053
+    title: Transformation Result
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-027, DEF-052]
+  - id: DEF-054
+    title: Transition Signature
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-027, DEF-049, DEF-052]
+  - id: DEF-055
+    title: Reasoning Trace
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: reasoning vocabulary
+    dependencies: [DEF-045, DEF-054]
+  - id: DEF-056
+    title: Candidate
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: decision vocabulary
+    dependencies: [DEF-001, DEF-041]
+  - id: DEF-057
+    title: Criterion
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: decision vocabulary
+    dependencies: []
+  - id: DEF-058
+    title: Classification
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: decision vocabulary
+    dependencies: [DEF-001, DEF-057]
+  - id: DEF-059
+    title: Admissibility
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: decision vocabulary
+    dependencies: [DEF-041, DEF-046, DEF-057]
+  - id: DEF-060
+    title: Admissibility Classification
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: decision vocabulary
+    dependencies: [DEF-056, DEF-058, DEF-059]
+  - id: DEF-061
+    title: Admissibility Structure (Ω)
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: decision vocabulary
+    dependencies: [DEF-041, DEF-060]
+  - id: DEF-062
+    title: Resolution Rule
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: decision vocabulary
+    dependencies: [DEF-061]
+  - id: DEF-063
+    title: Resolution Execution
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: decision vocabulary
+    dependencies: [DEF-061, DEF-062]
+  - id: DEF-064
+    title: Resolution
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: decision vocabulary
+    dependencies: [DEF-056, DEF-063]
+  - id: DEF-065
+    title: Definition
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: meta vocabulary
+    dependencies: [DEF-010]
+  - id: DEF-066
+    title: Principle
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: meta vocabulary
+    dependencies: []
+  - id: DEF-067
+    title: Axiom
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: meta vocabulary
+    dependencies: []
+  - id: DEF-068
+    title: Proposition
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: meta vocabulary
+    dependencies: []
+  - id: DEF-069
+    title: Conjecture
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: meta vocabulary
+    dependencies: [DEF-068]
+  - id: DEF-070
+    title: Lemma
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: meta vocabulary
+    dependencies: [DEF-068]
+  - id: DEF-071
+    title: Theorem
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: meta vocabulary
+    dependencies: [DEF-068, DEF-073]
+  - id: DEF-072
+    title: Corollary
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: meta vocabulary
+    dependencies: [DEF-071]
+  - id: DEF-073
+    title: Proof
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: meta vocabulary
+    dependencies: [DEF-046, DEF-068]
+  - id: DEF-074
+    title: Refutation
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: meta vocabulary
+    dependencies: [DEF-068]
+  - id: DEF-075
+    title: Claim
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: evidence vocabulary
+    dependencies: [DEF-041, DEF-068]
+  - id: DEF-076
+    title: Claim Type
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: evidence vocabulary
+    dependencies: [DEF-075]
+  - id: DEF-077
+    title: Evidence
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: evidence vocabulary
+    dependencies: [DEF-027, DEF-041, DEF-075]
+  - id: DEF-078
+    title: Observation
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: evidence vocabulary
+    dependencies: [DEF-027]
+  - id: DEF-079
+    title: Assumption
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: evidence vocabulary
+    dependencies: [DEF-041, DEF-075]
+  - id: DEF-080
+    title: Hypothesis
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: evidence vocabulary
+    dependencies: [DEF-075]
+  - id: DEF-081
+    title: Explanation
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: evidence vocabulary
+    dependencies: [DEF-027, DEF-075, DEF-079]
+  - id: DEF-082
+    title: Prediction
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: evidence vocabulary
+    dependencies: [DEF-075]
+  - id: DEF-083
+    title: Counterexample
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: evidence vocabulary
+    dependencies: [DEF-001, DEF-075]
+  - id: DEF-084
+    title: Artifact
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: methodology vocabulary
+    dependencies: [DEF-027]
+  - id: DEF-085
+    title: Audit
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: methodology vocabulary
+    dependencies: [DEF-084]
+  - id: DEF-086
+    title: Grounding Investigation
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: methodology vocabulary
+    dependencies: [DEF-041]
+  - id: DEF-087
+    title: Knowledge Object
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: methodology vocabulary
+    dependencies: [DEF-084]
+  - id: DEF-088
+    title: Traceability
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: methodology vocabulary
+    dependencies: [DEF-084]
+  - id: DEF-089
+    title: Revision
+    status: Established
+    source: theory/definitions/definitions.md
+    scope: methodology vocabulary
+    dependencies: [DEF-084]
