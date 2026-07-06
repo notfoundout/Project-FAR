@@ -1,0 +1,53 @@
+id: PO-T-008
+
+theorem: T-008
+
+status: draft
+
+premises:
+  - id: p1
+    source: T-008 statement
+    statement: Let A and B be canonical FAR representations of the same scoped reasoning process R.
+  - id: p2
+    source: L-006
+    statement: Canonical FAR representations of the same scoped reasoning process admit canonical role pairing.
+  - id: p3
+    source: T-003
+    statement: R admits FAR representations with the required components <I, Rep, S, Int, C, T>.
+  - id: p4
+    source: T-004
+    statement: Interpretation-preserving representation mappings preserve semantic content.
+
+steps:
+  - id: s1
+    rule: prior_theorem
+    inputs: [p1, p2]
+    statement: Each required role in A corresponds to exactly one required role in B.
+    justification: Applies canonical role pairing to canonical representations of the same scoped reasoning process.
+  - id: s2
+    rule: definition_unfolding
+    inputs: [p1, p3]
+    statement: The paired roles preserve investigation role, structural relation, calculus-governed admissibility, and trace order.
+    justification: Both A and B represent the same scoped reasoning process through the same required FAR components.
+  - id: s3
+    rule: prior_theorem
+    inputs: [p4]
+    statement: If the role pairing preserves interpretation, then it preserves semantic content.
+    justification: Applies semantic preservation to the interpretation-preserving role mapping.
+  - id: s4
+    rule: conjunction_intro
+    inputs: [s1, s2]
+    statement: The role pairing between A and B is total, one-to-one, onto, and preserves structural and trace roles.
+    justification: Combines canonical pairing with preservation of the represented process structure.
+  - id: s5
+    rule: conjunction_intro
+    inputs: [s4, s3]
+    statement: The role pairing between A and B preserves required roles, structure, trace order, and semantic content.
+    justification: Adds semantic preservation to the canonical structural role pairing.
+  - id: s6
+    rule: definition_unfolding
+    inputs: [s5]
+    statement: A and B are equivalent up to meaning-preserving renaming.
+    justification: Equivalence up to meaning-preserving renaming follows from total role pairing plus preservation of structure, trace order, and semantic content.
+
+conclusion: A and B are equivalent up to meaning-preserving renaming.
