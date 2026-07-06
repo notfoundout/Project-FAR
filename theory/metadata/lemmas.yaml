@@ -1,49 +1,126 @@
 lemmas:
-  - id: L-001
-    title: Representation Necessity
-    status: Established
-    source: theory/lemmas/core-lemmas.md
+- id: L-001
+  title: Representation Necessity
+  status: Established
+  source: theory/lemmas/core-lemmas.md
+  scope: scoped FAR reasoning satisfying Axiom 1
+  dependencies:
+  - A1
+  - D-REP
+  statement:
+    kind: lemma
+    subject: Representation Necessity
+    predicate: holds
     scope: scoped FAR reasoning satisfying Axiom 1
-    dependencies: [A1, D-REP]
-  - id: L-002
-    title: Structure Necessity
-    status: Established
-    source: theory/lemmas/core-lemmas.md
+    claim: Representation Necessity holds within scoped FAR reasoning satisfying Axiom
+      1.
+- id: L-002
+  title: Structure Necessity
+  status: Established
+  source: theory/lemmas/core-lemmas.md
+  scope: participating representation collections satisfying Axiom 2
+  dependencies:
+  - A2
+  - D-STRUCT
+  statement:
+    kind: lemma
+    subject: Structure Necessity
+    predicate: holds
     scope: participating representation collections satisfying Axiom 2
-    dependencies: [A2, D-STRUCT]
-  - id: L-003
-    title: Interpretation Necessity
-    status: Established
-    source: theory/lemmas/core-lemmas.md
+    claim: Structure Necessity holds within participating representation collections
+      satisfying Axiom 2.
+- id: L-003
+  title: Interpretation Necessity
+  status: Established
+  source: theory/lemmas/core-lemmas.md
+  scope: participating representations satisfying Axiom 3
+  dependencies:
+  - A3
+  - D-INT
+  statement:
+    kind: lemma
+    subject: Interpretation Necessity
+    predicate: holds
     scope: participating representations satisfying Axiom 3
-    dependencies: [A3, D-INT]
-  - id: L-004
-    title: Investigation Necessity
-    status: Established
-    source: theory/lemmas/core-lemmas.md
+    claim: Interpretation Necessity holds within participating representations satisfying
+      Axiom 3.
+- id: L-004
+  title: Investigation Necessity
+  status: Established
+  source: theory/lemmas/core-lemmas.md
+  scope: scoped reasoning processes satisfying Axiom 4
+  dependencies:
+  - A4
+  - D-INV
+  statement:
+    kind: lemma
+    subject: Investigation Necessity
+    predicate: holds
     scope: scoped reasoning processes satisfying Axiom 4
-    dependencies: [A4, D-INV]
-  - id: L-005
-    title: Calculus Necessity
-    status: Established
-    source: theory/lemmas/core-lemmas.md
+    claim: Investigation Necessity holds within scoped reasoning processes satisfying
+      Axiom 4.
+- id: L-005
+  title: Calculus Necessity
+  status: Established
+  source: theory/lemmas/core-lemmas.md
+  scope: scoped reasoning processes satisfying Axiom 5
+  dependencies:
+  - A5
+  - D-CALC
+  statement:
+    kind: lemma
+    subject: Calculus Necessity
+    predicate: holds
     scope: scoped reasoning processes satisfying Axiom 5
-    dependencies: [A5, D-CALC]
-  - id: L-006
-    title: Canonical Role Pairing
-    status: Established
-    source: theory/lemmas/core-lemmas.md
+    claim: Calculus Necessity holds within scoped reasoning processes satisfying Axiom
+      5.
+- id: L-006
+  title: Canonical Role Pairing
+  status: Established
+  source: theory/lemmas/core-lemmas.md
+  scope: canonical FAR representations of the same scoped reasoning process
+  dependencies:
+  - D-REP
+  - D-STRUCT
+  - D-INT
+  - D-CALC
+  statement:
+    kind: lemma
+    subject: Canonical Role Pairing
+    predicate: holds
     scope: canonical FAR representations of the same scoped reasoning process
-    dependencies: [D-REP, D-STRUCT, D-INT, D-CALC]
-  - id: L-007
-    title: Finite Normalization Termination
-    status: Established
-    source: theory/lemmas/core-lemmas.md
+    claim: Canonical Role Pairing holds within canonical FAR representations of the
+      same scoped reasoning process.
+- id: L-007
+  title: Finite Normalization Termination
+  status: Established
+  source: theory/lemmas/core-lemmas.md
+  scope: finite FAR representations under terminating normalization steps
+  dependencies:
+  - D-REP
+  - D-STRUCT
+  - D-INT
+  - D-CALC
+  statement:
+    kind: lemma
+    subject: Finite Normalization Termination
+    predicate: holds
     scope: finite FAR representations under terminating normalization steps
-    dependencies: [D-REP, D-STRUCT, D-INT, D-CALC]
-  - id: L-008
-    title: Transition Signature Construction
-    status: Established
-    source: theory/lemmas/core-lemmas.md
+    claim: Finite Normalization Termination holds within finite FAR representations
+      under terminating normalization steps.
+- id: L-008
+  title: Transition Signature Construction
+  status: Established
+  source: theory/lemmas/core-lemmas.md
+  scope: explicit admissible transitions with source, target, rule, and status
+  dependencies:
+  - D-REP
+  - D-STRUCT
+  - D-CALC
+  statement:
+    kind: lemma
+    subject: Transition Signature Construction
+    predicate: holds
     scope: explicit admissible transitions with source, target, rule, and status
-    dependencies: [D-REP, D-STRUCT, D-CALC]
+    claim: Transition Signature Construction holds within explicit admissible transitions
+      with source, target, rule, and status.

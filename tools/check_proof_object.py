@@ -46,6 +46,8 @@ STOP_WORDS = {
     "let", "of", "or", "that", "the", "then", "this", "to", "under", "when", "with",
 }
 SEMANTIC_TERMS = {"semantic", "semantics", "meaning", "interpretation", "interpreted", "equivalence", "content"}
+CONDITIONAL_TERMS = {"if", "then", "implies", "imply", "whenever", "condition", "conditional", "=>", "→"}
+ANTECEDENT_TERMS = {"is", "are", "holds", "given", "let", "for", "every", "condition", "satisfying"}
 
 
 def load_yaml(path: Path) -> Dict[str, Any]:
@@ -80,6 +82,57 @@ def metadata_index() -> Dict[str, Dict[str, Any]]:
                 index[str(alias)] = item
     return index
 
+
+
+def metadata_kind(item_id: str, item: Dict[str, Any]) -> str:
+    statement = item.get("statement") if isinstance(item, dict) else None
+    if isinstance(statement, dict) and statement.get("kind"):
+        return str(statement["kind"])
+    if re.fullmatch(r"T-\d{3}", item_id):
+        return "theorem"
+    if re.fullmatch(r"P-\d{3}", item_id):
+        return "proposition"
+    if re.fullmatch(r"L-\d{3}", item_id):
+        return "lemma"
+    if re.fullmatch(r"DEF-\d{3}", item_id):
+        return "definition"
+    if re.fullmatch(r"A\d+", item_id):
+        return "axiom"
+    return "unknown"
+
+
+def statement_object_text(item: Dict[str, Any]) -> str:
+    statement = item.get("statement") if isinstance(item, dict) else None
+    if not isinstance(statement, dict):
+        return ""
+    parts = [statement.get(field, "") for field in ("subject", "predicate", "scope", "claim")]
+    return " ".join(str(part) for part in parts if part)
+
+
+def source_items(input_ids: List[str], lineage: Dict[str, Set[str]], index: Dict[str, Dict[str, Any]], pattern: str) -> List[tuple[str, Dict[str, Any]]]:
+    items: List[tuple[str, Dict[str, Any]]] = []
+    for input_id in input_ids:
+        for source_id in sorted(lineage.get(input_id, set())):
+            if re.fullmatch(pattern, source_id) and source_id in index:
+                items.append((source_id, index[source_id]))
+    return items
+
+
+def warn_on_weak_statement_alignment(step_id: str, rule: str, step_text: str, sources: List[tuple[str, Dict[str, Any]]], warnings: List[str]) -> None:
+    if not step_text:
+        return
+    for source_id, item in sources:
+        meta_text = statement_object_text(item)
+        if meta_text and not conclusion_aligns_with_statement(step_text, meta_text):
+            warnings.append(f"step {step_id} {rule} has weak semantic overlap with {source_id} metadata statement")
+
+
+def has_conditional_like_input(input_ids: List[str], statements: Dict[str, str]) -> bool:
+    return any(any(term in statements.get(input_id, "").lower() for term in CONDITIONAL_TERMS) for input_id in input_ids)
+
+
+def has_antecedent_like_input(input_ids: List[str], statements: Dict[str, str]) -> bool:
+    return any(any(term in statements.get(input_id, "").lower() for term in ANTECEDENT_TERMS) for input_id in input_ids)
 
 def registered_derived_concepts() -> Set[str]:
     if not DERIVED_REGISTRY.exists():
@@ -189,6 +242,9 @@ def validate_rule_pattern(
     rule_lineage: Dict[str, Set[str]],
     statements: Dict[str, str],
     errors: List[str],
+    warnings: List[str],
+    index: Dict[str, Dict[str, Any]],
+    step_statement: str = "",
 ) -> None:
     if rule == "definition_unfolding":
         if not input_ids:
@@ -204,16 +260,22 @@ def validate_rule_pattern(
             errors.append(f"step {step_id} definition_unfolding requires a definition, definition alias, theorem statement/context, definitional base source, or prior definitional step")
 
     elif rule == "axiom_application":
-        if not has_source_kind(input_ids, lineage, r"A\d+"):
+        sources = source_items(input_ids, lineage, index, r"A\d+")
+        if not sources:
             errors.append(f"step {step_id} axiom_application requires an axiom-bearing input")
+        warn_on_weak_statement_alignment(step_id, rule, step_statement, sources, warnings)
 
     elif rule == "prior_theorem":
-        if not has_source_kind(input_ids, lineage, r"T-\d{3}"):
+        sources = source_items(input_ids, lineage, index, r"T-\d{3}")
+        if not sources:
             errors.append(f"step {step_id} prior_theorem requires a theorem-bearing input")
+        warn_on_weak_statement_alignment(step_id, rule, step_statement, sources, warnings)
 
     elif rule == "lemma_application":
-        if not has_source_kind(input_ids, lineage, r"L-\d{3}"):
+        sources = source_items(input_ids, lineage, index, r"L-\d{3}")
+        if not sources:
             errors.append(f"step {step_id} lemma_application requires a lemma-bearing input")
+        warn_on_weak_statement_alignment(step_id, rule, step_statement, sources, warnings)
 
     elif rule == "conjunction_intro":
         if len(input_ids) < 2:
@@ -243,10 +305,15 @@ def validate_rule_pattern(
     elif rule == "modus_ponens":
         if len(input_ids) < 2:
             errors.append(f"step {step_id} modus_ponens requires at least two inputs")
+        elif not has_conditional_like_input(input_ids, statements):
+            errors.append(f"step {step_id} modus_ponens requires at least one conditional-like input")
+        elif not has_antecedent_like_input(input_ids, statements):
+            errors.append(f"step {step_id} modus_ponens requires at least one antecedent-like input")
 
 
 def check_proof_object(path: Path) -> List[str]:
     errors: List[str] = []
+    warnings: List[str] = []
     try:
         data = load_yaml(path)
     except Exception as exc:
@@ -336,7 +403,7 @@ def check_proof_object(path: Path) -> List[str]:
                 errors.append(f"step {sid} references unavailable input: {inp}")
 
         if rule in ALLOWED_RULES and all(inp in available for inp in inputs):
-            validate_rule_pattern(sid, rule, inputs, lineage, rule_lineage, statements, errors)
+            validate_rule_pattern(sid, rule, inputs, lineage, rule_lineage, statements, errors, warnings, index, str(step.get("statement", "")))
 
         statement = str(step.get("statement", ""))
         if not statement:
@@ -366,7 +433,7 @@ def check_proof_object(path: Path) -> List[str]:
         elif not conclusion_aligns_with_statement(conclusion, statement):
             errors.append(f"conclusion does not align with theorem {theorem_id} Statement section")
 
-    return errors
+    return errors + [f"WARNING: {warning}" for warning in warnings]
 
 
 def main() -> int:
@@ -375,12 +442,18 @@ def main() -> int:
     args = parser.parse_args()
 
     errors = check_proof_object(args.path)
-    if errors:
+    hard_errors = [error for error in errors if not error.startswith("WARNING:")]
+    warnings = [error for error in errors if error.startswith("WARNING:")]
+    if hard_errors:
         print("PROOF OBJECT CHECK FAILED")
-        for error in errors:
+        for error in hard_errors:
             print(f"- {error}")
+        for warning in warnings:
+            print(f"- {warning}")
         return 1
     print("PROOF OBJECT CHECK PASSED")
+    for warning in warnings:
+        print(f"- {warning}")
     return 0
 
 
