@@ -1,0 +1,90 @@
+id: PO-T-002
+
+theorem: T-002
+
+status: draft
+
+premises:
+  - id: p1
+    source: T-002 statement
+    statement: P = {Investigation, Representation, Representational Structure, Interpretation, Reasoning Calculus} is the current Project FAR primitive architecture.
+  - id: p2
+    source: T-002 proof method
+    statement: If a countermodel contains the other four primitives but lacks p and fails to express a scoped reasoning process, then p is not derivable from the other four under the current framework.
+  - id: p3
+    source: T-001
+    statement: P is minimal relative to the current Project FAR scope, definitions, and axioms.
+  - id: p4
+    source: L-001
+    statement: Representation is necessary for scoped FAR reasoning satisfying Axiom 1.
+  - id: p5
+    source: L-002
+    statement: Representational Structure is necessary for participating representation collections satisfying Axiom 2.
+  - id: p6
+    source: L-003
+    statement: Interpretation is necessary for participating representations satisfying Axiom 3.
+  - id: p7
+    source: L-004
+    statement: Investigation is necessary for scoped reasoning processes satisfying Axiom 4.
+  - id: p8
+    source: L-005
+    statement: Reasoning Calculus is necessary for scoped reasoning processes satisfying Axiom 5.
+
+steps:
+  - id: s1
+    rule: prior_theorem
+    inputs: [p3]
+    statement: Each primitive in P is required for the current Project FAR objective.
+    justification: T-001 establishes that removing any primitive in P reduces expressive power relative to the stated objective.
+  - id: s2
+    rule: lemma_application
+    inputs: [p2, p4]
+    statement: Representation is not derivable from the other four primitives under the current framework.
+    justification: A structure with the other four primitives but no representations lacks explicit distinguishable objects for interpretation, structure, or calculus to operate on.
+  - id: s3
+    rule: lemma_application
+    inputs: [p2, p5]
+    statement: Representational Structure is not derivable from the other four primitives under the current framework.
+    justification: A structure with representations, investigation, interpretation, and calculus but no explicitly specified relations cannot express dependency, ordering, support, contradiction, or transition structure.
+  - id: s4
+    rule: lemma_application
+    inputs: [p2, p6]
+    statement: Interpretation is not derivable from the other four primitives under the current framework.
+    justification: A structure with representations, representational structure, investigation, and calculus but no mapping to meanings cannot determine semantic role or content.
+  - id: s5
+    rule: lemma_application
+    inputs: [p2, p7]
+    statement: Investigation is not derivable from the other four primitives under the current framework.
+    justification: A structure with representations, representational structure, interpretation, and calculus but no investigation lacks the objective and governing conditions of reasoning.
+  - id: s6
+    rule: lemma_application
+    inputs: [p2, p8]
+    statement: Reasoning Calculus is not derivable from the other four primitives under the current framework.
+    justification: A structure with investigation, representations, representational structure, and interpretation but no calculus cannot distinguish admissible from inadmissible transitions.
+  - id: s7
+    rule: conjunction_intro
+    inputs: [s2, s3]
+    statement: Representation and Representational Structure are each not derivable from the other four primitives under the current framework.
+    justification: Conjoins the first two countermodel results.
+  - id: s8
+    rule: conjunction_intro
+    inputs: [s4, s5]
+    statement: Interpretation and Investigation are each not derivable from the other four primitives under the current framework.
+    justification: Conjoins the third and fourth countermodel results.
+  - id: s9
+    rule: conjunction_intro
+    inputs: [s7, s8]
+    statement: Representation, Representational Structure, Interpretation, and Investigation are each not derivable from the other four primitives under the current framework.
+    justification: Conjoins the first four primitive independence results.
+  - id: s10
+    rule: conjunction_intro
+    inputs: [s9, s6]
+    statement: None of the five primitives is derivable from the other four without loss of expressive power under the current framework.
+    justification: Adds Reasoning Calculus to cover all five primitives in P.
+  - id: s11
+    rule: definition_unfolding
+    inputs: [p1, s10]
+    statement: The current primitive architecture is mutually independent relative to the present reduction standard.
+    justification: Mutual independence follows because each primitive resists derivation from the remaining primitives under the stated countermodel test.
+
+conclusion: The current primitive architecture is mutually independent relative to the present reduction standard.
