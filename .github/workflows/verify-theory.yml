@@ -53,6 +53,11 @@ jobs:
             python tools/reasoning_engine.py --json "$example" >/tmp/far-proof-trace.json
           done
 
+      - name: Evaluate reasoning-system fixtures
+        run: |
+          python tools/evaluate_reasoning_systems.py
+          python tools/evaluate_reasoning_systems.py --json >/tmp/far-reasoning-system-results.json
+
       - name: Check all proof objects
         run: |
           for proof in theory/proof-objects/T-*.proof.yaml; do
