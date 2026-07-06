@@ -1,0 +1,64 @@
+investigation: Test whether Analogical reasoning maps into Project FAR primitives.
+
+reasoning_system:
+  system: Analogical reasoning
+  far_primitives:
+    Investigation: Determine whether an explicit Analogical reasoning episode has FAR structure.
+    Representation: source and target cases
+    Representational Structure: dependency and support relations among represented items
+    Interpretation: similarity interpretation
+    Reasoning Calculus: analogy transfer rule
+  cleanly_maps:
+    - explicit reasoning items can be represented
+    - dependencies can be encoded as FAR relations
+  requires_assumptions:
+    - fixture abstracts away domain-specific notation
+  not_yet_represented: []
+  verdict: fits FAR
+
+representations:
+  - id: r1
+    kind: premise
+    content: Initial Analogical reasoning input.
+    statement:
+      kind: claim
+      subject: Analogical reasoning input
+      predicate: is represented
+      scope: Project FAR fixture
+      claim: The initial Analogical reasoning input is represented as a FAR representation.
+  - id: r2
+    kind: conclusion
+    content: Candidate Analogical reasoning output.
+    statement:
+      kind: claim
+      subject: Analogical reasoning output
+      predicate: is derived
+      scope: Project FAR fixture
+      claim: The candidate Analogical reasoning output is derived under the fixture calculus.
+
+relations:
+  - id: rel1
+    type: supports
+    source: r1
+    target: r2
+
+interpretations:
+  - representation: r1
+    meaning: similarity interpretation
+  - representation: r2
+    meaning: Output interpreted under Analogical reasoning semantics.
+
+rules:
+  - id: rule1
+    name: fixture transition
+    inputs: [r1]
+    output: r2
+    condition: Apply the fixture's reasoning calculus.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: rule1
+    target: state1
+    status: draft
+    order: 1

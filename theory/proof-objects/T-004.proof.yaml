@@ -1,48 +1,71 @@
 id: PO-T-004
-
 theorem: T-004
-
 status: draft
-
 premises:
-  - id: p1
-    source: T-004 statement
-    statement: Let M be a representation mapping from source representational structure S1 to target representational structure S2.
-  - id: p2
-    source: T-004 condition
-    statement: For every representation r in the domain of M, Int1(r) = Int2(M(r)).
-  - id: p3
-    source: DEF-031
-    statement: Semantic content is the meaning assigned to a representation under a specified interpretation.
-  - id: p4
-    source: DEF-033
-    statement: Semantic equivalence holds when representations have the same semantic content under the relevant interpretations.
-
+- id: p1
+  source: T-004 statement
+  statement: Let M be a representation mapping from source representational structure
+    S1 to target representational structure S2.
+- id: p2
+  source: T-004 condition
+  statement: For every representation r in the domain of M, Int1(r) = Int2(M(r)).
+- id: p3
+  source: DEF-031
+  statement: Semantic content is the meaning assigned to a representation under a
+    specified interpretation.
+- id: p4
+  source: DEF-033
+  statement: Semantic equivalence holds when representations have the same semantic
+    content under the relevant interpretations.
 steps:
-  - id: s1
-    rule: definition_unfolding
-    inputs: [p3]
-    statement: SemanticContent(Int1, r) is the meaning assigned to r under Int1.
-    justification: Unfolds the definition of semantic content for the source representation.
-  - id: s2
-    rule: definition_unfolding
-    inputs: [p3]
-    statement: SemanticContent(Int2, M(r)) is the meaning assigned to M(r) under Int2.
-    justification: Unfolds the definition of semantic content for the target representation.
-  - id: s3
-    rule: semantic_preservation
-    inputs: [p2, s1, s2]
-    statement: For every mapped representation r, SemanticContent(Int1, r) = SemanticContent(Int2, M(r)).
-    justification: If the interpretations assign identical meaning before and after mapping, then the semantic content before and after mapping is identical.
-  - id: s4
-    rule: definition_unfolding
-    inputs: [p4, s3]
-    statement: For every mapped representation r, r and M(r) are semantically equivalent under the paired interpretations.
-    justification: Semantic equivalence follows from equality of semantic content under the relevant interpretations.
-  - id: s5
-    rule: universal_instantiation
-    inputs: [p1, s3, s4]
-    statement: M preserves semantic content.
-    justification: Since the semantic-content equality holds for every mapped representation in the domain of M, the mapping preserves semantic content.
-
+- id: s1
+  rule: definition_unfolding
+  inputs:
+  - p3
+  statement:
+    kind: claim
+    claim: SemanticContent(Int1, r) is the meaning assigned to r under Int1.
+  justification: Unfolds the definition of semantic content for the source representation.
+- id: s2
+  rule: definition_unfolding
+  inputs:
+  - p3
+  statement:
+    kind: claim
+    claim: SemanticContent(Int2, M(r)) is the meaning assigned to M(r) under Int2.
+  justification: Unfolds the definition of semantic content for the target representation.
+- id: s3
+  rule: semantic_preservation
+  inputs:
+  - p2
+  - s1
+  - s2
+  statement:
+    kind: universal
+    claim: For every mapped representation r, SemanticContent(Int1, r) = SemanticContent(Int2,
+      M(r)).
+  justification: If the interpretations assign identical meaning before and after
+    mapping, then the semantic content before and after mapping is identical.
+- id: s4
+  rule: definition_unfolding
+  inputs:
+  - p4
+  - s3
+  statement:
+    kind: universal
+    claim: For every mapped representation r, r and M(r) are semantically equivalent
+      under the paired interpretations.
+  justification: Semantic equivalence follows from equality of semantic content under
+    the relevant interpretations.
+- id: s5
+  rule: universal_instantiation
+  inputs:
+  - p1
+  - s3
+  - s4
+  statement:
+    kind: claim
+    claim: M preserves semantic content.
+  justification: Since the semantic-content equality holds for every mapped representation
+    in the domain of M, the mapping preserves semantic content.
 conclusion: M preserves semantic content.

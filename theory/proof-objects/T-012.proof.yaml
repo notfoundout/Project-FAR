@@ -1,48 +1,72 @@
 id: PO-T-012
-
 theorem: T-012
-
 status: draft
-
 premises:
-  - id: p1
-    source: T-012 statement
-    statement: "Let A and B be FAR models and let Q be a specified preservation profile."
-  - id: p2
-    source: FAR-model-theory
-    statement: "A preservation profile Q is a finite set of selected structural, semantic, calculative, trace, and investigation-relative properties."
-  - id: p3
-    source: FAR-model-theory
-    statement: "A and B are Q-equivalent exactly when every property in Q holds in A exactly when the corresponding property holds in B."
-  - id: p4
-    source: T-004
-    statement: "Semantic content is preserved under interpretation-preserving mappings."
-
+- id: p1
+  source: T-012 statement
+  statement: Let A and B be FAR models and let Q be a specified preservation profile.
+- id: p2
+  source: FAR-model-theory
+  statement: A preservation profile Q is a finite set of selected structural, semantic,
+    calculative, trace, and investigation-relative properties.
+- id: p3
+  source: FAR-model-theory
+  statement: A and B are Q-equivalent exactly when every property in Q holds in A
+    exactly when the corresponding property holds in B.
+- id: p4
+  source: T-004
+  statement: Semantic content is preserved under interpretation-preserving mappings.
 steps:
-  - id: s1
-    rule: definition_unfolding
-    inputs: [p3]
-    statement: "If A is Q-equivalent to B, then every property in Q is preserved between A and B."
-    justification: "This is the forward direction of the definition of Q-equivalence."
-  - id: s2
-    rule: definition_unfolding
-    inputs: [p2, p3]
-    statement: "If every property in Q is preserved between A and B, then A is Q-equivalent to B."
-    justification: "This is the reverse direction of the definition of preservation-profile equivalence."
-  - id: s3
-    rule: prior_theorem
-    inputs: [p4]
-    statement: "Semantic preservation is one eligible preservation property when Q includes semantic content."
-    justification: "T-004 supplies the semantic-preservation case inside a preservation profile."
-  - id: s4
-    rule: conjunction_intro
-    inputs: [s1, s2]
-    statement: "A and B are Q-equivalent if and only if every property in Q is preserved between them."
-    justification: "Combines the forward and reverse definitional directions."
-  - id: s5
-    rule: universal_instantiation
-    inputs: [p1, s4]
-    statement: "Two FAR models are equivalent relative to a preservation profile Q if and only if every property in Q is preserved between them."
-    justification: "Since A, B, and Q were arbitrary under the stated model-theoretic conditions, the equivalence generalizes."
-
-conclusion: "Two FAR models are equivalent relative to a preservation profile Q if and only if every property in Q is preserved between them."
+- id: s1
+  rule: definition_unfolding
+  inputs:
+  - p3
+  statement:
+    kind: claim
+    claim: If A is Q-equivalent to B, then every property in Q is preserved between
+      A and B.
+  justification: This is the forward direction of the definition of Q-equivalence.
+- id: s2
+  rule: definition_unfolding
+  inputs:
+  - p2
+  - p3
+  statement:
+    kind: claim
+    claim: If every property in Q is preserved between A and B, then A is Q-equivalent
+      to B.
+  justification: This is the reverse direction of the definition of preservation-profile
+    equivalence.
+- id: s3
+  rule: prior_theorem
+  inputs:
+  - p4
+  statement:
+    kind: claim
+    claim: Semantic preservation is one eligible preservation property when Q includes
+      semantic content.
+  justification: T-004 supplies the semantic-preservation case inside a preservation
+    profile.
+- id: s4
+  rule: conjunction_intro
+  inputs:
+  - s1
+  - s2
+  statement:
+    kind: claim
+    claim: A and B are Q-equivalent if and only if every property in Q is preserved
+      between them.
+  justification: Combines the forward and reverse definitional directions.
+- id: s5
+  rule: universal_instantiation
+  inputs:
+  - p1
+  - s4
+  statement:
+    kind: claim
+    claim: Two FAR models are equivalent relative to a preservation profile Q if and
+      only if every property in Q is preserved between them.
+  justification: Since A, B, and Q were arbitrary under the stated model-theoretic
+    conditions, the equivalence generalizes.
+conclusion: Two FAR models are equivalent relative to a preservation profile Q if
+  and only if every property in Q is preserved between them.

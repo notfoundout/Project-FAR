@@ -40,11 +40,18 @@ jobs:
       - name: Generate theorem index smoke test
         run: python tools/generate_theorem_index.py
 
-      - name: Parse FAR YAML example
-        run: python tools/parse_far.py examples/far/syllogism.far.yaml
+      - name: Parse FAR YAML examples
+        run: |
+          find examples/far -name '*.far.yaml' -print | sort | while read -r example; do
+            python tools/parse_far.py "$example"
+          done
 
-      - name: Run FAR reasoning engine example
-        run: python tools/reasoning_engine.py examples/far/syllogism.far.yaml
+      - name: Run FAR reasoning engine examples
+        run: |
+          find examples/far -name '*.far.yaml' -print | sort | while read -r example; do
+            python tools/reasoning_engine.py "$example"
+            python tools/reasoning_engine.py --json "$example" >/tmp/far-proof-trace.json
+          done
 
       - name: Check all proof objects
         run: |

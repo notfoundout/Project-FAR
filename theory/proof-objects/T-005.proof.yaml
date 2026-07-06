@@ -1,61 +1,100 @@
 id: PO-T-005
-
 theorem: T-005
-
 status: draft
-
 premises:
-  - id: p1
-    source: T-005 statement
-    statement: Let R be a scoped reasoning process and let e be an explicitly specified admissible reasoning transition occurring in R.
-  - id: p2
-    source: DEF-046
-    statement: A reasoning calculus specifies admissible transformations, inference rules, admissibility criteria, and resolution procedures.
-  - id: p3
-    source: DEF-052
-    statement: A transformation execution is the application of a transformation rule during a reasoning process.
-  - id: p4
-    source: DEF-054
-    statement: A transition signature is a representation describing a transformation execution between reasoning state representations.
-  - id: p5
-    source: T-003
-    statement: Every reasoning process within the stated Project FAR scope admits a FAR representation.
-
+- id: p1
+  source: T-005 statement
+  statement: Let R be a scoped reasoning process and let e be an explicitly specified
+    admissible reasoning transition occurring in R.
+- id: p2
+  source: DEF-046
+  statement: A reasoning calculus specifies admissible transformations, inference
+    rules, admissibility criteria, and resolution procedures.
+- id: p3
+  source: DEF-052
+  statement: A transformation execution is the application of a transformation rule
+    during a reasoning process.
+- id: p4
+  source: DEF-054
+  statement: A transition signature is a representation describing a transformation
+    execution between reasoning state representations.
+- id: p5
+  source: T-003
+  statement: Every reasoning process within the stated Project FAR scope admits a
+    FAR representation.
 steps:
-  - id: s1
-    rule: prior_theorem
-    inputs: [p1, p5]
-    statement: R admits a FAR representation.
-    justification: By T-003, every scoped reasoning process in the Project FAR scope admits a FAR representation.
-  - id: s2
-    rule: definition_unfolding
-    inputs: [p1, p2]
-    statement: Since e is admissible, e occurs under the applicable reasoning calculus of R.
-    justification: Admissibility is determined by the reasoning calculus governing the scoped reasoning process.
-  - id: s3
-    rule: definition_unfolding
-    inputs: [p1, p3]
-    statement: e is representable as a transformation execution during R.
-    justification: An explicitly specified admissible transition is an application of a transformation rule during the reasoning process.
-  - id: s4
-    rule: definition_unfolding
-    inputs: [p4, s3]
-    statement: e can be described by a transition signature between reasoning state representations.
-    justification: By definition, transition signatures represent transformation executions between reasoning state representations.
-  - id: s5
-    rule: conjunction_intro
-    inputs: [s1, s2]
-    statement: R is FAR-representable and e occurs under R's applicable reasoning calculus.
-    justification: Conjoins FAR representability of R with calculus-governed admissibility of e.
-  - id: s6
-    rule: conjunction_intro
-    inputs: [s5, s4]
-    statement: e can be represented in FAR by a transition signature.
-    justification: The FAR representation supplies the representational setting, while the transition-signature definition supplies the representation of the explicitly specified transition.
-  - id: s7
-    rule: universal_instantiation
-    inputs: [p1, s6]
-    statement: Every explicitly specified admissible reasoning transition within a scoped reasoning process can be represented in FAR by a transition signature.
-    justification: Since e was arbitrary, the result generalizes to every explicitly specified admissible transition satisfying the scope conditions.
-
-conclusion: Every explicitly specified admissible reasoning transition within a scoped reasoning process can be represented in FAR by a transition signature.
+- id: s1
+  rule: prior_theorem
+  inputs:
+  - p1
+  - p5
+  statement:
+    kind: claim
+    claim: R admits a FAR representation.
+  justification: By T-003, every scoped reasoning process in the Project FAR scope
+    admits a FAR representation.
+- id: s2
+  rule: definition_unfolding
+  inputs:
+  - p1
+  - p2
+  statement:
+    kind: claim
+    claim: Since e is admissible, e occurs under the applicable reasoning calculus
+      of R.
+  justification: Admissibility is determined by the reasoning calculus governing the
+    scoped reasoning process.
+- id: s3
+  rule: definition_unfolding
+  inputs:
+  - p1
+  - p3
+  statement:
+    kind: claim
+    claim: e is representable as a transformation execution during R.
+  justification: An explicitly specified admissible transition is an application of
+    a transformation rule during the reasoning process.
+- id: s4
+  rule: definition_unfolding
+  inputs:
+  - p4
+  - s3
+  statement:
+    kind: claim
+    claim: e can be described by a transition signature between reasoning state representations.
+  justification: By definition, transition signatures represent transformation executions
+    between reasoning state representations.
+- id: s5
+  rule: conjunction_intro
+  inputs:
+  - s1
+  - s2
+  statement:
+    kind: claim
+    claim: R is FAR-representable and e occurs under R's applicable reasoning calculus.
+  justification: Conjoins FAR representability of R with calculus-governed admissibility
+    of e.
+- id: s6
+  rule: conjunction_intro
+  inputs:
+  - s5
+  - s4
+  statement:
+    kind: claim
+    claim: e can be represented in FAR by a transition signature.
+  justification: The FAR representation supplies the representational setting, while
+    the transition-signature definition supplies the representation of the explicitly
+    specified transition.
+- id: s7
+  rule: universal_instantiation
+  inputs:
+  - p1
+  - s6
+  statement:
+    kind: universal
+    claim: Every explicitly specified admissible reasoning transition within a scoped
+      reasoning process can be represented in FAR by a transition signature.
+  justification: Since e was arbitrary, the result generalizes to every explicitly
+    specified admissible transition satisfying the scope conditions.
+conclusion: Every explicitly specified admissible reasoning transition within a scoped
+  reasoning process can be represented in FAR by a transition signature.

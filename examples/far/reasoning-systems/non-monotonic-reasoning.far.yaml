@@ -1,0 +1,64 @@
+investigation: Test whether Non-monotonic reasoning maps into Project FAR primitives.
+
+reasoning_system:
+  system: Non-monotonic reasoning
+  far_primitives:
+    Investigation: Determine whether an explicit Non-monotonic reasoning episode has FAR structure.
+    Representation: defaults, exceptions, and conclusions
+    Representational Structure: dependency and support relations among represented items
+    Interpretation: defeasible interpretation
+    Reasoning Calculus: non-monotonic update rules
+  cleanly_maps:
+    - explicit reasoning items can be represented
+    - dependencies can be encoded as FAR relations
+  requires_assumptions:
+    - fixture abstracts away domain-specific notation
+  not_yet_represented: []
+  verdict: extends FAR
+
+representations:
+  - id: r1
+    kind: premise
+    content: Initial Non-monotonic reasoning input.
+    statement:
+      kind: claim
+      subject: Non-monotonic reasoning input
+      predicate: is represented
+      scope: Project FAR fixture
+      claim: The initial Non-monotonic reasoning input is represented as a FAR representation.
+  - id: r2
+    kind: conclusion
+    content: Candidate Non-monotonic reasoning output.
+    statement:
+      kind: claim
+      subject: Non-monotonic reasoning output
+      predicate: is derived
+      scope: Project FAR fixture
+      claim: The candidate Non-monotonic reasoning output is derived under the fixture calculus.
+
+relations:
+  - id: rel1
+    type: supports
+    source: r1
+    target: r2
+
+interpretations:
+  - representation: r1
+    meaning: defeasible interpretation
+  - representation: r2
+    meaning: Output interpreted under Non-monotonic reasoning semantics.
+
+rules:
+  - id: rule1
+    name: fixture transition
+    inputs: [r1]
+    output: r2
+    condition: Apply the fixture's reasoning calculus.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: rule1
+    target: state1
+    status: draft
+    order: 1

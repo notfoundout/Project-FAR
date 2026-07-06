@@ -1,0 +1,64 @@
+investigation: Test whether First-order logic maps into Project FAR primitives.
+
+reasoning_system:
+  system: First-order logic
+  far_primitives:
+    Investigation: Determine whether an explicit First-order logic episode has FAR structure.
+    Representation: quantified formulas
+    Representational Structure: dependency and support relations among represented items
+    Interpretation: models and variable assignments
+    Reasoning Calculus: first-order derivation rules
+  cleanly_maps:
+    - explicit reasoning items can be represented
+    - dependencies can be encoded as FAR relations
+  requires_assumptions:
+    - fixture abstracts away domain-specific notation
+  not_yet_represented: []
+  verdict: fits FAR
+
+representations:
+  - id: r1
+    kind: premise
+    content: Initial First-order logic input.
+    statement:
+      kind: claim
+      subject: First-order logic input
+      predicate: is represented
+      scope: Project FAR fixture
+      claim: The initial First-order logic input is represented as a FAR representation.
+  - id: r2
+    kind: conclusion
+    content: Candidate First-order logic output.
+    statement:
+      kind: claim
+      subject: First-order logic output
+      predicate: is derived
+      scope: Project FAR fixture
+      claim: The candidate First-order logic output is derived under the fixture calculus.
+
+relations:
+  - id: rel1
+    type: supports
+    source: r1
+    target: r2
+
+interpretations:
+  - representation: r1
+    meaning: models and variable assignments
+  - representation: r2
+    meaning: Output interpreted under First-order logic semantics.
+
+rules:
+  - id: rule1
+    name: fixture transition
+    inputs: [r1]
+    output: r2
+    condition: Apply the fixture's reasoning calculus.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: rule1
+    target: state1
+    status: draft
+    order: 1

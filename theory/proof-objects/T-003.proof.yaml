@@ -1,100 +1,167 @@
 id: PO-T-003
-
 theorem: T-003
-
 status: draft
-
 premises:
-  - id: p1
-    source: T-003 statement
-    statement: Let R be an arbitrary reasoning process within the stated Project FAR scope.
-  - id: p2
-    source: A4
-    statement: Every reasoning process occurs within exactly one investigation.
-  - id: p3
-    source: A1
-    statement: Every scoped reasoning process admits one or more explicit representations.
-  - id: p4
-    source: A2
-    statement: Every collection of representations participating in reasoning possesses a representational structure.
-  - id: p5
-    source: A3
-    statement: Every representation participating in reasoning is interpreted within an investigation.
-  - id: p6
-    source: A5
-    statement: Every reasoning process proceeds according to a reasoning calculus governing admissible reasoning transitions.
-  - id: p7
-    source: definitions
-    statement: A FAR representation has the tuple form <I, Rep, S, Int, C, T>.
-  - id: p8
-    source: definitions
-    statement: A reasoning trace T records ordered transition signatures when such transition executions are specified.
-
+- id: p1
+  source: T-003 statement
+  statement: Let R be an arbitrary reasoning process within the stated Project FAR
+    scope.
+- id: p2
+  source: A4
+  statement: Every reasoning process occurs within exactly one investigation.
+- id: p3
+  source: A1
+  statement: Every scoped reasoning process admits one or more explicit representations.
+- id: p4
+  source: A2
+  statement: Every collection of representations participating in reasoning possesses
+    a representational structure.
+- id: p5
+  source: A3
+  statement: Every representation participating in reasoning is interpreted within
+    an investigation.
+- id: p6
+  source: A5
+  statement: Every reasoning process proceeds according to a reasoning calculus governing
+    admissible reasoning transitions.
+- id: p7
+  source: definitions
+  statement: A FAR representation has the tuple form <I, Rep, S, Int, C, T>.
+- id: p8
+  source: definitions
+  statement: A reasoning trace T records ordered transition signatures when such transition
+    executions are specified.
 steps:
-  - id: s1
-    rule: axiom_application
-    inputs: [p1, p2]
-    statement: R occurs within exactly one investigation I.
-    justification: By Axiom 4, any scoped reasoning process occurs within exactly one investigation; name that investigation I.
-  - id: s2
-    rule: axiom_application
-    inputs: [p1, p3]
-    statement: R admits a collection Rep of explicit representations participating in R.
-    justification: By Axiom 1, R admits one or more explicit representations; collect the participating representations as Rep.
-  - id: s3
-    rule: axiom_application
-    inputs: [s2, p4]
-    statement: Rep possesses a representational structure S.
-    justification: By Axiom 2, the collection of participating representations has a representational structure; name it S.
-  - id: s4
-    rule: axiom_application
-    inputs: [s1, s2, p5]
-    statement: There exists an interpretation Int assigning semantic content to representations in Rep within I.
-    justification: By Axiom 3, every participating representation is interpreted within the investigation; name the interpretation Int.
-  - id: s5
-    rule: axiom_application
-    inputs: [p1, p6]
-    statement: R proceeds according to a reasoning calculus C governing its admissible reasoning transitions.
-    justification: By Axiom 5, R has a governing reasoning calculus; name it C.
-  - id: s6
-    rule: definition_unfolding
-    inputs: [p8]
-    statement: If R has specified transition executions, there exists a reasoning trace T recording their ordered transition signatures; otherwise T may be empty or partial.
-    justification: By the definition of reasoning trace, T records ordered transition signatures when specified and may remain empty or partial when the dynamic sequence is not specified.
-  - id: s7
-    rule: conjunction_intro
-    inputs: [s1, s2]
-    statement: R has I and Rep.
-    justification: Conjoins the investigation and representation components.
-  - id: s8
-    rule: conjunction_intro
-    inputs: [s3, s4]
-    statement: R has S and Int.
-    justification: Conjoins the representational structure and interpretation components.
-  - id: s9
-    rule: conjunction_intro
-    inputs: [s5, s6]
-    statement: R has C and T.
-    justification: Conjoins the reasoning calculus and reasoning trace components.
-  - id: s10
-    rule: conjunction_intro
-    inputs: [s7, s8]
-    statement: R has I, Rep, S, and Int.
-    justification: Conjoins the first four FAR representation components.
-  - id: s11
-    rule: conjunction_intro
-    inputs: [s10, s9]
-    statement: R has I, Rep, S, Int, C, and T.
-    justification: Conjoins all six FAR representation components.
-  - id: s12
-    rule: definition_unfolding
-    inputs: [p7, s11]
-    statement: There exists a tuple FAR(R) = <I, Rep, S, Int, C, T>.
-    justification: By the tuple definition of FAR representation, the existence of all six components yields FAR(R).
-  - id: s13
-    rule: universal_instantiation
-    inputs: [p1, s12]
-    statement: Every reasoning process within the stated Project FAR scope admits a FAR representation.
-    justification: Since R was arbitrary within the stated Project FAR scope, the construction generalizes to every such reasoning process.
-
-conclusion: Every reasoning process within the stated Project FAR scope admits a FAR representation.
+- id: s1
+  rule: axiom_application
+  inputs:
+  - p1
+  - p2
+  statement:
+    kind: claim
+    claim: R occurs within exactly one investigation I.
+  justification: By Axiom 4, any scoped reasoning process occurs within exactly one
+    investigation; name that investigation I.
+- id: s2
+  rule: axiom_application
+  inputs:
+  - p1
+  - p3
+  statement:
+    kind: claim
+    claim: R admits a collection Rep of explicit representations participating in
+      R.
+  justification: By Axiom 1, R admits one or more explicit representations; collect
+    the participating representations as Rep.
+- id: s3
+  rule: axiom_application
+  inputs:
+  - s2
+  - p4
+  statement:
+    kind: claim
+    claim: Rep possesses a representational structure S.
+  justification: By Axiom 2, the collection of participating representations has a
+    representational structure; name it S.
+- id: s4
+  rule: axiom_application
+  inputs:
+  - s1
+  - s2
+  - p5
+  statement:
+    kind: claim
+    claim: There exists an interpretation Int assigning semantic content to representations
+      in Rep within I.
+  justification: By Axiom 3, every participating representation is interpreted within
+    the investigation; name the interpretation Int.
+- id: s5
+  rule: axiom_application
+  inputs:
+  - p1
+  - p6
+  statement:
+    kind: claim
+    claim: R proceeds according to a reasoning calculus C governing its admissible
+      reasoning transitions.
+  justification: By Axiom 5, R has a governing reasoning calculus; name it C.
+- id: s6
+  rule: definition_unfolding
+  inputs:
+  - p8
+  statement:
+    kind: claim
+    claim: If R has specified transition executions, there exists a reasoning trace
+      T recording their ordered transition signatures; otherwise T may be empty or
+      partial.
+  justification: By the definition of reasoning trace, T records ordered transition
+    signatures when specified and may remain empty or partial when the dynamic sequence
+    is not specified.
+- id: s7
+  rule: conjunction_intro
+  inputs:
+  - s1
+  - s2
+  statement:
+    kind: claim
+    claim: R has I and Rep.
+  justification: Conjoins the investigation and representation components.
+- id: s8
+  rule: conjunction_intro
+  inputs:
+  - s3
+  - s4
+  statement:
+    kind: claim
+    claim: R has S and Int.
+  justification: Conjoins the representational structure and interpretation components.
+- id: s9
+  rule: conjunction_intro
+  inputs:
+  - s5
+  - s6
+  statement:
+    kind: claim
+    claim: R has C and T.
+  justification: Conjoins the reasoning calculus and reasoning trace components.
+- id: s10
+  rule: conjunction_intro
+  inputs:
+  - s7
+  - s8
+  statement:
+    kind: claim
+    claim: R has I, Rep, S, and Int.
+  justification: Conjoins the first four FAR representation components.
+- id: s11
+  rule: conjunction_intro
+  inputs:
+  - s10
+  - s9
+  statement:
+    kind: claim
+    claim: R has I, Rep, S, Int, C, and T.
+  justification: Conjoins all six FAR representation components.
+- id: s12
+  rule: definition_unfolding
+  inputs:
+  - p7
+  - s11
+  statement:
+    kind: claim
+    claim: There exists a tuple FAR(R) = <I, Rep, S, Int, C, T>.
+  justification: By the tuple definition of FAR representation, the existence of all
+    six components yields FAR(R).
+- id: s13
+  rule: universal_instantiation
+  inputs:
+  - p1
+  - s12
+  statement:
+    kind: universal
+    claim: Every reasoning process within the stated Project FAR scope admits a FAR
+      representation.
+  justification: Since R was arbitrary within the stated Project FAR scope, the construction
+    generalizes to every such reasoning process.
+conclusion: Every reasoning process within the stated Project FAR scope admits a FAR
+  representation.

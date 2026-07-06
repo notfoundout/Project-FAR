@@ -1,48 +1,65 @@
 id: PO-T-013
-
 theorem: T-013
-
 status: draft
-
 premises:
-  - id: p1
-    source: T-013 statement
-    statement: "Let F be a FAR representation with reasoning calculus C."
-  - id: p2
-    source: T-013 marking rule
-    statement: "F marks a transition t admissible only if C permits t."
-  - id: p3
-    source: DEF-046
-    statement: "A reasoning calculus governs admissible reasoning transitions."
-  - id: p4
-    source: T-005
-    statement: "Explicitly specified admissible reasoning transitions can be represented in FAR by transition signatures."
-
+- id: p1
+  source: T-013 statement
+  statement: Let F be a FAR representation with reasoning calculus C.
+- id: p2
+  source: T-013 marking rule
+  statement: F marks a transition t admissible only if C permits t.
+- id: p3
+  source: DEF-046
+  statement: A reasoning calculus governs admissible reasoning transitions.
+- id: p4
+  source: T-005
+  statement: Explicitly specified admissible reasoning transitions can be represented
+    in FAR by transition signatures.
 steps:
-  - id: s1
-    rule: definition_unfolding
-    inputs: [p1, p3]
-    statement: "C is the supplied target calculus governing admissibility for F."
-    justification: "Unfolds the role of the reasoning calculus in the FAR representation."
-  - id: s2
-    rule: definition_unfolding
-    inputs: [p2]
-    statement: "For any transition t, if F marks t admissible, then C permits t."
-    justification: "This is the admissibility marking rule stated for F."
-  - id: s3
-    rule: prior_theorem
-    inputs: [p4]
-    statement: "Marked admissible transitions can be represented as transition signatures."
-    justification: "By T-005, explicitly specified admissible transitions are representable in FAR."
-  - id: s4
-    rule: universal_instantiation
-    inputs: [s2, s3]
-    statement: "Every transition marked admissible in F is admissible under C."
-    justification: "Since the arbitrary marked transition is permitted by C, all marked transitions are admissible under C."
-  - id: s5
-    rule: definition_unfolding
-    inputs: [s1, s4]
-    statement: "F is sound relative to C."
-    justification: "A FAR representation is sound relative to C when every transition it marks admissible is admissible under C."
-
-conclusion: "F is sound relative to C."
+- id: s1
+  rule: definition_unfolding
+  inputs:
+  - p1
+  - p3
+  statement:
+    kind: claim
+    claim: C is the supplied target calculus governing admissibility for F.
+  justification: Unfolds the role of the reasoning calculus in the FAR representation.
+- id: s2
+  rule: definition_unfolding
+  inputs:
+  - p2
+  statement:
+    kind: claim
+    claim: For any transition t, if F marks t admissible, then C permits t.
+  justification: This is the admissibility marking rule stated for F.
+- id: s3
+  rule: prior_theorem
+  inputs:
+  - p4
+  statement:
+    kind: claim
+    claim: Marked admissible transitions can be represented as transition signatures.
+  justification: By T-005, explicitly specified admissible transitions are representable
+    in FAR.
+- id: s4
+  rule: universal_instantiation
+  inputs:
+  - s2
+  - s3
+  statement:
+    kind: universal
+    claim: Every transition marked admissible in F is admissible under C.
+  justification: Since the arbitrary marked transition is permitted by C, all marked
+    transitions are admissible under C.
+- id: s5
+  rule: definition_unfolding
+  inputs:
+  - s1
+  - s4
+  statement:
+    kind: claim
+    claim: F is sound relative to C.
+  justification: A FAR representation is sound relative to C when every transition
+    it marks admissible is admissible under C.
+conclusion: F is sound relative to C.

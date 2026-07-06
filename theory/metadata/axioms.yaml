@@ -1,31 +1,72 @@
 axioms:
-  - id: A1
-    title: Explicit Representation
-    status: Established
-    source: theory/axioms/axioms.md
+- id: A1
+  title: Explicit Representation
+  status: Established
+  source: theory/axioms/axioms.md
+  scope: scoped Project FAR reasoning processes
+  dependencies:
+  - D-REP
+  statement:
+    kind: axiom
+    subject: Explicit Representation
+    predicate: holds
     scope: scoped Project FAR reasoning processes
-    dependencies: [D-REP]
-  - id: A2
-    title: Representational Organization
-    status: Established
-    source: theory/axioms/axioms.md
+    claim: Explicit Representation holds within scoped Project FAR reasoning processes.
+- id: A2
+  title: Representational Organization
+  status: Established
+  source: theory/axioms/axioms.md
+  scope: participating collections of representations in reasoning processes
+  dependencies:
+  - D-REP
+  - D-STRUCT
+  statement:
+    kind: axiom
+    subject: Representational Organization
+    predicate: holds
     scope: participating collections of representations in reasoning processes
-    dependencies: [D-REP, D-STRUCT]
-  - id: A3
-    title: Interpretation
-    status: Established
-    source: theory/axioms/axioms.md
+    claim: Representational Organization holds within participating collections of
+      representations in reasoning processes.
+- id: A3
+  title: Interpretation
+  status: Established
+  source: theory/axioms/axioms.md
+  scope: participating representations in reasoning processes
+  dependencies:
+  - D-REP
+  - D-INT
+  - D-INV
+  statement:
+    kind: axiom
+    subject: Interpretation
+    predicate: holds
     scope: participating representations in reasoning processes
-    dependencies: [D-REP, D-INT, D-INV]
-  - id: A4
-    title: Investigation
-    status: Established
-    source: theory/axioms/axioms.md
+    claim: Interpretation holds within participating representations in reasoning
+      processes.
+- id: A4
+  title: Investigation
+  status: Established
+  source: theory/axioms/axioms.md
+  scope: scoped Project FAR reasoning processes
+  dependencies:
+  - D-INV
+  statement:
+    kind: axiom
+    subject: Investigation
+    predicate: holds
     scope: scoped Project FAR reasoning processes
-    dependencies: [D-INV]
-  - id: A5
-    title: Reasoning Calculus
-    status: Established
-    source: theory/axioms/axioms.md
+    claim: Investigation holds within scoped Project FAR reasoning processes.
+- id: A5
+  title: Reasoning Calculus
+  status: Established
+  source: theory/axioms/axioms.md
+  scope: scoped Project FAR reasoning processes and admissible transitions
+  dependencies:
+  - D-CALC
+  statement:
+    kind: axiom
+    subject: Reasoning Calculus
+    predicate: holds
     scope: scoped Project FAR reasoning processes and admissible transitions
-    dependencies: [D-CALC]
+    claim: Reasoning Calculus holds within scoped Project FAR reasoning processes
+      and admissible transitions.

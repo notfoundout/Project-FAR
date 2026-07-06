@@ -1,0 +1,64 @@
+investigation: Test whether Classical logic maps into Project FAR primitives.
+
+reasoning_system:
+  system: Classical logic
+  far_primitives:
+    Investigation: Determine whether an explicit Classical logic episode has FAR structure.
+    Representation: truth-valued formulas
+    Representational Structure: dependency and support relations among represented items
+    Interpretation: logical entailment and truth assignments
+    Reasoning Calculus: deductive inference rules
+  cleanly_maps:
+    - explicit reasoning items can be represented
+    - dependencies can be encoded as FAR relations
+  requires_assumptions:
+    - fixture abstracts away domain-specific notation
+  not_yet_represented: []
+  verdict: fits FAR
+
+representations:
+  - id: r1
+    kind: premise
+    content: Initial Classical logic input.
+    statement:
+      kind: claim
+      subject: Classical logic input
+      predicate: is represented
+      scope: Project FAR fixture
+      claim: The initial Classical logic input is represented as a FAR representation.
+  - id: r2
+    kind: conclusion
+    content: Candidate Classical logic output.
+    statement:
+      kind: claim
+      subject: Classical logic output
+      predicate: is derived
+      scope: Project FAR fixture
+      claim: The candidate Classical logic output is derived under the fixture calculus.
+
+relations:
+  - id: rel1
+    type: supports
+    source: r1
+    target: r2
+
+interpretations:
+  - representation: r1
+    meaning: logical entailment and truth assignments
+  - representation: r2
+    meaning: Output interpreted under Classical logic semantics.
+
+rules:
+  - id: rule1
+    name: fixture transition
+    inputs: [r1]
+    output: r2
+    condition: Apply the fixture's reasoning calculus.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: rule1
+    target: state1
+    status: draft
+    order: 1

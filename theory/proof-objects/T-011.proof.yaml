@@ -1,53 +1,85 @@
 id: PO-T-011
-
 theorem: T-011
-
 status: draft
-
 premises:
-  - id: p1
-    source: T-011 statement
-    statement: "Let Core be the established Project FAR theory and let E be an extension of Core."
-  - id: p2
-    source: T-011 assumptions
-    statement: "E introduces no new primitive, every new term is defined from existing primitives or established derived concepts, E alters no canonical definition, E alters no established axiom, and E alters no established theorem dependency."
-  - id: p3
-    source: T-006
-    statement: "Every registered non-primitive concept in Project FAR is constructible from the primitive architecture."
-  - id: p4
-    source: definition-policy
-    statement: "A definitionally conservative extension preserves prior established results when it only adds definitions grounded in the existing core and does not alter prior dependencies."
-
+- id: p1
+  source: T-011 statement
+  statement: Let Core be the established Project FAR theory and let E be an extension
+    of Core.
+- id: p2
+  source: T-011 assumptions
+  statement: E introduces no new primitive, every new term is defined from existing
+    primitives or established derived concepts, E alters no canonical definition,
+    E alters no established axiom, and E alters no established theorem dependency.
+- id: p3
+  source: T-006
+  statement: Every registered non-primitive concept in Project FAR is constructible
+    from the primitive architecture.
+- id: p4
+  source: definition-policy
+  statement: A definitionally conservative extension preserves prior established results
+    when it only adds definitions grounded in the existing core and does not alter
+    prior dependencies.
 steps:
-  - id: s1
-    rule: definition_unfolding
-    inputs: [p1, p2]
-    statement: "Every new term introduced by E is definable from Core primitives or established derived concepts."
-    justification: "This follows directly from the stated extension assumptions."
-  - id: s2
-    rule: prior_theorem
-    inputs: [s1, p3]
-    statement: "Every new term introduced by E is constructible from the established primitive architecture."
-    justification: "By T-006, registered derived concepts are constructible from primitives, so terms defined from them remain primitive-grounded."
-  - id: s3
-    rule: definition_unfolding
-    inputs: [p2]
-    statement: "Canonical definitions, established axioms, and established theorem dependencies in Core remain unchanged under E."
-    justification: "This is the no-alteration condition in the theorem assumptions."
-  - id: s4
-    rule: definition_unfolding
-    inputs: [s2, s3, p4]
-    statement: "Every established theorem of Core keeps its original proof dependencies under E."
-    justification: "A conservative extension adds grounded definitions without changing the dependencies used by existing core proofs."
-  - id: s5
-    rule: universal_instantiation
-    inputs: [s4]
-    statement: "Every established core theorem remains valid under E."
-    justification: "Since the choice of core theorem was arbitrary and its proof dependencies remain unchanged, the result generalizes to all established core theorems."
-  - id: s6
-    rule: definition_unfolding
-    inputs: [p4, s5]
-    statement: "E is conservative over Core."
-    justification: "An extension is conservative over Core when every established core theorem remains valid after adding the extension."
-
-conclusion: "E is conservative over Core."
+- id: s1
+  rule: definition_unfolding
+  inputs:
+  - p1
+  - p2
+  statement:
+    kind: universal
+    claim: Every new term introduced by E is definable from Core primitives or established
+      derived concepts.
+  justification: This follows directly from the stated extension assumptions.
+- id: s2
+  rule: prior_theorem
+  inputs:
+  - s1
+  - p3
+  statement:
+    kind: universal
+    claim: Every new term introduced by E is constructible from the established primitive
+      architecture.
+  justification: By T-006, registered derived concepts are constructible from primitives,
+    so terms defined from them remain primitive-grounded.
+- id: s3
+  rule: definition_unfolding
+  inputs:
+  - p2
+  statement:
+    kind: claim
+    claim: Canonical definitions, established axioms, and established theorem dependencies
+      in Core remain unchanged under E.
+  justification: This is the no-alteration condition in the theorem assumptions.
+- id: s4
+  rule: definition_unfolding
+  inputs:
+  - s2
+  - s3
+  - p4
+  statement:
+    kind: universal
+    claim: Every established theorem of Core keeps its original proof dependencies
+      under E.
+  justification: A conservative extension adds grounded definitions without changing
+    the dependencies used by existing core proofs.
+- id: s5
+  rule: universal_instantiation
+  inputs:
+  - s4
+  statement:
+    kind: universal
+    claim: Every established core theorem remains valid under E.
+  justification: Since the choice of core theorem was arbitrary and its proof dependencies
+    remain unchanged, the result generalizes to all established core theorems.
+- id: s6
+  rule: definition_unfolding
+  inputs:
+  - p4
+  - s5
+  statement:
+    kind: claim
+    claim: E is conservative over Core.
+  justification: An extension is conservative over Core when every established core
+    theorem remains valid after adding the extension.
+conclusion: E is conservative over Core.

@@ -1,0 +1,64 @@
+investigation: Test whether Scientific reasoning maps into Project FAR primitives.
+
+reasoning_system:
+  system: Scientific reasoning
+  far_primitives:
+    Investigation: Determine whether an explicit Scientific reasoning episode has FAR structure.
+    Representation: hypotheses, observations, and models
+    Representational Structure: dependency and support relations among represented items
+    Interpretation: empirical interpretation
+    Reasoning Calculus: methodological testing transitions
+  cleanly_maps:
+    - explicit reasoning items can be represented
+    - dependencies can be encoded as FAR relations
+  requires_assumptions:
+    - fixture abstracts away domain-specific notation
+  not_yet_represented: []
+  verdict: extends FAR
+
+representations:
+  - id: r1
+    kind: premise
+    content: Initial Scientific reasoning input.
+    statement:
+      kind: claim
+      subject: Scientific reasoning input
+      predicate: is represented
+      scope: Project FAR fixture
+      claim: The initial Scientific reasoning input is represented as a FAR representation.
+  - id: r2
+    kind: conclusion
+    content: Candidate Scientific reasoning output.
+    statement:
+      kind: claim
+      subject: Scientific reasoning output
+      predicate: is derived
+      scope: Project FAR fixture
+      claim: The candidate Scientific reasoning output is derived under the fixture calculus.
+
+relations:
+  - id: rel1
+    type: supports
+    source: r1
+    target: r2
+
+interpretations:
+  - representation: r1
+    meaning: empirical interpretation
+  - representation: r2
+    meaning: Output interpreted under Scientific reasoning semantics.
+
+rules:
+  - id: rule1
+    name: fixture transition
+    inputs: [r1]
+    output: r2
+    condition: Apply the fixture's reasoning calculus.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: rule1
+    target: state1
+    status: draft
+    order: 1

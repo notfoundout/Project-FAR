@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Prototype reasoning engine for machine-readable FAR objects."""
+"""Prototype reasoning engine for FIR-style Project FAR objects."""
 
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 from parse_far import load_far_yaml
@@ -12,23 +13,34 @@ from parse_far import load_far_yaml
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run prototype FAR reasoning-engine diagnostics")
     parser.add_argument("path", type=Path)
+    parser.add_argument("--json", action="store_true", help="emit the machine-readable proof trace as JSON")
     args = parser.parse_args()
 
-    far = load_far_yaml(args.path)
-    errors = far.validate_well_formed()
+    try:
+        far = load_far_yaml(args.path)
+        errors = far.validate_well_formed()
+    except Exception as exc:
+        print("REASONING ENGINE FAILED: object is not well-formed")
+        print(f"- {exc}")
+        return 1
     if errors:
         print("REASONING ENGINE FAILED: object is not well-formed")
         for error in errors:
             print(f"- {error}")
         return 1
 
-    cycles = far.detect_cycles()
-    derivation_tree = far.derivation_tree()
+    trace = far.proof_trace()
+    if args.json:
+        print(json.dumps(trace, indent=2, sort_keys=True))
+        return 0
+
+    cycles = trace["cycles"]
+    derivation_tree = trace["derivation_tree"]
 
     print("REASONING ENGINE REPORT")
     print(f"investigation: {far.investigation}")
     print(f"representations: {len(far.representations)}")
-    print(f"dependency edges: {len(far.dependency_edges())}")
+    print(f"dependency edges: {len(trace['dependency_edges'])}")
     print(f"cycles: {len(cycles)}")
 
     if cycles:
@@ -39,20 +51,20 @@ def main() -> int:
     print("derivation tree:")
     for node in derivation_tree:
         print(
-            f"- {node['order']}: {node['transition']} "
+            f"- {node['order']}: {node['id']} "
             f"[{node['status']}] via {node['rule']} "
             f"from {node['source']} to {node['target']}"
         )
 
-    admissible = [t for t in far.transitions.values() if t.status == "admissible"]
-    unresolved = [t for t in far.transitions.values() if t.status == "unresolved"]
-    inadmissible = [t for t in far.transitions.values() if t.status == "inadmissible"]
+    statuses = {"admissible": 0, "unresolved": 0, "inadmissible": 0, "draft": 0}
+    for transition in far.transitions.values():
+        statuses[transition.status] = statuses.get(transition.status, 0) + 1
 
     print("transition summary:")
-    print(f"- admissible: {len(admissible)}")
-    print(f"- unresolved: {len(unresolved)}")
-    print(f"- inadmissible: {len(inadmissible)}")
+    for status in ["admissible", "unresolved", "inadmissible", "draft"]:
+        print(f"- {status}: {statuses.get(status, 0)}")
 
+    print("machine-readable proof trace: available with --json")
     return 0
 
 

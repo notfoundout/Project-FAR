@@ -1,85 +1,144 @@
 id: PO-T-001
-
 theorem: T-001
-
 status: draft
-
 premises:
-  - id: p1
-    source: T-001 statement
-    statement: P = {Investigation, Representation, Representational Structure, Interpretation, Reasoning Calculus} is the current Project FAR primitive architecture.
-  - id: p2
-    source: T-001 objective
-    statement: The objective is representation of every reasoning process within the stated Project FAR scope.
-  - id: p3
-    source: L-001
-    statement: Representation is necessary for scoped FAR reasoning satisfying Axiom 1.
-  - id: p4
-    source: L-002
-    statement: Representational Structure is necessary for participating representation collections satisfying Axiom 2.
-  - id: p5
-    source: L-003
-    statement: Interpretation is necessary for participating representations satisfying Axiom 3.
-  - id: p6
-    source: L-004
-    statement: Investigation is necessary for scoped reasoning processes satisfying Axiom 4.
-  - id: p7
-    source: L-005
-    statement: Reasoning Calculus is necessary for scoped reasoning processes satisfying Axiom 5.
-  - id: p8
-    source: DEF-019
-    statement: A structure is minimal with respect to an objective if removing any required component reduces expressive power relative to that objective.
-
+- id: p1
+  source: T-001 statement
+  statement: P = {Investigation, Representation, Representational Structure, Interpretation,
+    Reasoning Calculus} is the current Project FAR primitive architecture.
+- id: p2
+  source: T-001 objective
+  statement: The objective is representation of every reasoning process within the
+    stated Project FAR scope.
+- id: p3
+  source: L-001
+  statement: Representation is necessary for scoped FAR reasoning satisfying Axiom
+    1.
+- id: p4
+  source: L-002
+  statement: Representational Structure is necessary for participating representation
+    collections satisfying Axiom 2.
+- id: p5
+  source: L-003
+  statement: Interpretation is necessary for participating representations satisfying
+    Axiom 3.
+- id: p6
+  source: L-004
+  statement: Investigation is necessary for scoped reasoning processes satisfying
+    Axiom 4.
+- id: p7
+  source: L-005
+  statement: Reasoning Calculus is necessary for scoped reasoning processes satisfying
+    Axiom 5.
+- id: p8
+  source: DEF-019
+  statement: A structure is minimal with respect to an objective if removing any required
+    component reduces expressive power relative to that objective.
 steps:
-  - id: s1
-    rule: lemma_application
-    inputs: [p3]
-    statement: Removing Representation reduces expressive power relative to the Project FAR objective.
-    justification: By L-001, omitting Representation removes the explicit objects by which scoped reasoning becomes analyzable.
-  - id: s2
-    rule: lemma_application
-    inputs: [p4]
-    statement: Removing Representational Structure reduces expressive power relative to the Project FAR objective.
-    justification: By L-002, omitting Representational Structure removes the organization required among participating representations.
-  - id: s3
-    rule: lemma_application
-    inputs: [p5]
-    statement: Removing Interpretation reduces expressive power relative to the Project FAR objective.
-    justification: By L-003, omitting Interpretation removes semantic assignment for participating representations.
-  - id: s4
-    rule: lemma_application
-    inputs: [p6]
-    statement: Removing Investigation reduces expressive power relative to the Project FAR objective.
-    justification: By L-004, omitting Investigation removes the objective-relative context of scoped reasoning.
-  - id: s5
-    rule: lemma_application
-    inputs: [p7]
-    statement: Removing Reasoning Calculus reduces expressive power relative to the Project FAR objective.
-    justification: By L-005, omitting Reasoning Calculus removes the rules governing admissible reasoning transitions.
-  - id: s6
-    rule: conjunction_intro
-    inputs: [s1, s2]
-    statement: Removing Representation and removing Representational Structure each reduce expressive power relative to the Project FAR objective.
-    justification: Conjoins the first two primitive-removal results.
-  - id: s7
-    rule: conjunction_intro
-    inputs: [s3, s4]
-    statement: Removing Interpretation and removing Investigation each reduce expressive power relative to the Project FAR objective.
-    justification: Conjoins the third and fourth primitive-removal results.
-  - id: s8
-    rule: conjunction_intro
-    inputs: [s6, s7]
-    statement: Removing Representation, Representational Structure, Interpretation, and Investigation each reduces expressive power relative to the Project FAR objective.
-    justification: Conjoins prior primitive-removal results.
-  - id: s9
-    rule: conjunction_intro
-    inputs: [s8, s5]
-    statement: For every p in P, removing p reduces expressive power relative to the Project FAR objective.
-    justification: Adds the Reasoning Calculus removal result to cover every primitive in P.
-  - id: s10
-    rule: definition_unfolding
-    inputs: [p1, p2, p8, s9]
-    statement: P is minimal relative to the current Project FAR scope, definitions, and axioms.
-    justification: By the definition of minimality, if every primitive removal reduces expressive power relative to the stated objective, the primitive architecture is minimal relative to that objective.
-
-conclusion: P is minimal relative to the current Project FAR scope, definitions, and axioms.
+- id: s1
+  rule: lemma_application
+  inputs:
+  - p3
+  statement:
+    kind: claim
+    claim: Removing Representation reduces expressive power relative to the Project
+      FAR objective.
+  justification: By L-001, omitting Representation removes the explicit objects by
+    which scoped reasoning becomes analyzable.
+- id: s2
+  rule: lemma_application
+  inputs:
+  - p4
+  statement:
+    kind: claim
+    claim: Removing Representational Structure reduces expressive power relative to
+      the Project FAR objective.
+  justification: By L-002, omitting Representational Structure removes the organization
+    required among participating representations.
+- id: s3
+  rule: lemma_application
+  inputs:
+  - p5
+  statement:
+    kind: claim
+    claim: Removing Interpretation reduces expressive power relative to the Project
+      FAR objective.
+  justification: By L-003, omitting Interpretation removes semantic assignment for
+    participating representations.
+- id: s4
+  rule: lemma_application
+  inputs:
+  - p6
+  statement:
+    kind: claim
+    claim: Removing Investigation reduces expressive power relative to the Project
+      FAR objective.
+  justification: By L-004, omitting Investigation removes the objective-relative context
+    of scoped reasoning.
+- id: s5
+  rule: lemma_application
+  inputs:
+  - p7
+  statement:
+    kind: claim
+    claim: Removing Reasoning Calculus reduces expressive power relative to the Project
+      FAR objective.
+  justification: By L-005, omitting Reasoning Calculus removes the rules governing
+    admissible reasoning transitions.
+- id: s6
+  rule: conjunction_intro
+  inputs:
+  - s1
+  - s2
+  statement:
+    kind: claim
+    claim: Removing Representation and removing Representational Structure each reduce
+      expressive power relative to the Project FAR objective.
+  justification: Conjoins the first two primitive-removal results.
+- id: s7
+  rule: conjunction_intro
+  inputs:
+  - s3
+  - s4
+  statement:
+    kind: claim
+    claim: Removing Interpretation and removing Investigation each reduce expressive
+      power relative to the Project FAR objective.
+  justification: Conjoins the third and fourth primitive-removal results.
+- id: s8
+  rule: conjunction_intro
+  inputs:
+  - s6
+  - s7
+  statement:
+    kind: claim
+    claim: Removing Representation, Representational Structure, Interpretation, and
+      Investigation each reduces expressive power relative to the Project FAR objective.
+  justification: Conjoins prior primitive-removal results.
+- id: s9
+  rule: conjunction_intro
+  inputs:
+  - s8
+  - s5
+  statement:
+    kind: universal
+    claim: For every p in P, removing p reduces expressive power relative to the Project
+      FAR objective.
+  justification: Adds the Reasoning Calculus removal result to cover every primitive
+    in P.
+- id: s10
+  rule: definition_unfolding
+  inputs:
+  - p1
+  - p2
+  - p8
+  - s9
+  statement:
+    kind: claim
+    claim: P is minimal relative to the current Project FAR scope, definitions, and
+      axioms.
+  justification: By the definition of minimality, if every primitive removal reduces
+    expressive power relative to the stated objective, the primitive architecture
+    is minimal relative to that objective.
+conclusion: P is minimal relative to the current Project FAR scope, definitions, and
+  axioms.
