@@ -35,8 +35,9 @@ REQUIRED_THEOREM_FIELDS = {"id", "title", "status", "proof", "scope", "dependenc
 REQUIRED_RESULT_FIELDS = {"id", "title", "status", "source", "scope", "dependencies"}
 REQUIRED_PROOF_OBJECT_FIELDS = {"id", "theorem", "status", "premises", "steps", "conclusion"}
 REQUIRED_PROOF_OBJECT_THEOREMS = {
-    "T-001", "T-002", "T-003", "T-004", "T-005", "T-006",
-    "T-007", "T-008", "T-009", "T-010",
+    "T-001", "T-002", "T-003", "T-004", "T-005",
+    "T-006", "T-007", "T-008", "T-009", "T-010",
+    "T-011", "T-012", "T-013", "T-014", "T-015",
 }
 KNOWN_STATUSES = {"Draft", "Proposed", "Verified", "Established", "Deprecated"}
 BASE_DEPENDENCIES = {"derived-concept-registry", "canonical-notation", "definition-policy", "FAR-model-theory"}
