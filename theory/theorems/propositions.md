@@ -4,125 +4,88 @@
 
 This document records the formal propositions of Project FAR.
 
-A proposition is a formal statement derived from the canonical definitions, established derived concepts, axioms, and previously established results.
-
-Unlike axioms, propositions require justification.
-
-Unlike theorems, propositions establish intermediate results that contribute to the development of the formal theory.
-
----
-
-# Proposition Lifecycle
-
-Every proposition progresses through the following stages.
-
-1. Proposed
-2. Verified
-3. Established
-
-Only established propositions may be used as dependencies for subsequent propositions and theorems.
-
----
-
-# Proposition Format
-
-Every proposition should contain the following sections.
-
-## Identifier
-
-A unique identifier of the form:
-
-```text
-P-NAME
-```
-
----
-
-## Statement
-
-The formal claim.
-
----
-
-## Dependencies
-
-Every definition, derived concept, axiom, proposition, and theorem upon which the proposition depends.
-
----
-
-## Justification
-
-The reasoning supporting the proposition.
-
----
-
-## Status
-
-One of:
-
-- Proposed
-- Verified
-- Established
-
----
-
-## Notes
-
-Optional observations.
-
----
-
-# Proposed Propositions
-
-## P-REPRESENTATION-STRUCTURE-INDEPENDENCE
-
-### Statement
-
-Representational Structure is not derivable from Representation alone.
-
-### Dependencies
-
-#### Definitions
-
-- Representation
-- Representational Structure
-- Reduction
-- Independence
-
-#### Verification
-
-- VR-REPRESENTATIONAL-STRUCTURE
-
-### Justification
-
-Current verification has failed to derive Representational Structure solely from Representation.
-
-Counterexample analysis demonstrates that identical representations may possess different representational structures.
-
-Accordingly, no successful reduction has presently been established.
-
-### Status
-
-Proposed
-
-### Notes
-
-Formal proof pending.
+A proposition is an intermediate result derived from canonical definitions, axioms, established derived concepts, or prior results.
 
 ---
 
 # Established Propositions
 
-None.
+The first established propositions are proved in:
+
+`../proofs/P-001-first-propositions.md`
 
 ---
 
-# Research Status
+## P-001 — Representation Requirement
 
-Project FAR has entered the proposition development phase.
+Every reasoning process within Project FAR has at least one explicit representation.
 
-At present, propositions are introduced only after successful verification.
+Status: Established.
 
-They become established only after successful formal proof.
+---
 
-Accordingly, the established proposition set is presently empty.
+## P-002 — Structural Requirement
+
+Every scoped reasoning process involving more than one representation requires a representational structure.
+
+Status: Established.
+
+---
+
+## P-003 — Semantic Relativity
+
+Semantic content is not determined by representation alone.
+
+Status: Established.
+
+---
+
+## P-004 — Investigation Relativity
+
+Admissibility, candidate status, and resolution are investigation-relative.
+
+Status: Established.
+
+---
+
+## P-005 — Calculus Relativity of Admissibility
+
+Admissibility is determined by the applicable reasoning calculus rather than by representation alone.
+
+Status: Established.
+
+---
+
+## P-006 — Syntax/Semantics Separation
+
+Structural equivalence does not imply semantic equivalence.
+
+Status: Established.
+
+---
+
+## P-007 — Trace/Process Distinction
+
+A reasoning trace is not identical to the reasoning process it represents.
+
+Status: Established.
+
+---
+
+## P-008 — Resolution Dependence
+
+A resolution depends on an admissibility structure and a resolution rule.
+
+Status: Established.
+
+---
+
+# Proposed Propositions
+
+## P-009 — Representation Structure Independence
+
+Representational Structure is not derivable from Representation alone.
+
+Status: Proposed.
+
+Notes: This is partially supported by T-002 but remains separately listed because it may need a narrower proof over the representation/structure pair alone.
