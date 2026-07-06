@@ -13,7 +13,7 @@ reasoning_system:
 representations:
   - id: context
     kind: premise
-    content: Context Gamma contains x : A.
+    content: "Context Gamma contains x : A."
     statement:
       kind: claim
       subject: context Gamma
@@ -22,16 +22,16 @@ representations:
       claim: Context Gamma contains x of type A.
   - id: rule
     kind: rule-schema
-    content: From Gamma contains x : A, derive Gamma proves x : A.
+    content: "From Gamma contains x : A, derive Gamma proves x : A."
     statement:
       kind: conditional
-      subject: context membership x : A
-      predicate: implies typing judgment x : A
+      subject: "context membership x : A"
+      predicate: "implies typing judgment x : A"
       scope: type theory fixture
       claim: If x has type A in the context, the typing judgment follows.
   - id: judgment
     kind: conclusion
-    content: Gamma proves x : A.
+    content: "Gamma proves x : A."
     statement:
       kind: claim
       subject: term x
