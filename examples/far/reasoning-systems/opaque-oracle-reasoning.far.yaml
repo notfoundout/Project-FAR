@@ -1,0 +1,73 @@
+investigation: Test whether opaque intuition or oracle reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Opaque intuition or oracle reasoning
+  far_primitives:
+    Investigation: Determine whether a conclusion asserted by an inaccessible source counts as explicit reasoning.
+    Representation: oracle output, absence of derivation, and acceptance act
+    Representational Structure: unsupported assertion relation
+    Interpretation: opaque or inaccessible interpretation
+    Reasoning Calculus: unavailable or non-inspectable transition standards
+  verdict: falsifies FAR
+
+representations:
+  - id: oracle-output
+    kind: assertion
+    content: Oracle says conclusion C.
+    statement:
+      kind: claim
+      subject: oracle
+      predicate: asserts conclusion C
+      scope: opaque oracle fixture
+      claim: The oracle asserts conclusion C.
+  - id: missing-derivation
+    kind: gap
+    content: No explicit derivation, rule, or transition is accessible.
+    statement:
+      kind: claim
+      subject: derivation
+      predicate: is inaccessible
+      scope: opaque oracle fixture
+      claim: No explicit derivation is accessible.
+  - id: assessment
+    kind: conclusion
+    content: Opaque oracle reasoning is a candidate counterexample unless classified as non-explicit reasoning.
+    statement:
+      kind: claim
+      subject: opaque oracle reasoning
+      predicate: is a candidate counterexample or outside FAR scope
+      scope: opaque oracle fixture
+      claim: Opaque oracle reasoning is a candidate counterexample unless it is outside explicit reasoning.
+
+relations:
+  - id: rel1
+    type: supports
+    source: oracle-output
+    target: assessment
+  - id: rel2
+    type: supports
+    source: missing-derivation
+    target: assessment
+
+interpretations:
+  - representation: oracle-output
+    meaning: A conclusion supplied without inspectable reasoning.
+  - representation: missing-derivation
+    meaning: Absence of explicit transition information.
+  - representation: assessment
+    meaning: A candidate counterexample if opaque assertion is treated as reasoning.
+
+rules:
+  - id: opacity-test
+    name: opaque oracle test
+    inputs: [oracle-output, missing-derivation]
+    output: assessment
+    condition: Treat inaccessible reasoning structure as a candidate counterexample unless excluded from explicit reasoning.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: opacity-test
+    target: state1
+    status: draft
+    order: 1
