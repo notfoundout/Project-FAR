@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 import re
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Set
+from typing import Any, Dict, Iterable, List, Set, Tuple
 
 import yaml
 
@@ -18,6 +18,7 @@ LEMMA_METADATA = METADATA_DIR / "lemmas.yaml"
 DEFINITION_METADATA = METADATA_DIR / "definitions.yaml"
 AXIOM_METADATA = METADATA_DIR / "axioms.yaml"
 DERIVED_REGISTRY = ROOT / "theory" / "derivations" / "derived-concept-registry.md"
+
 BASE_DEPENDENCIES = {"derived-concept-registry", "canonical-notation", "definition-policy", "FAR-model-theory"}
 SPECIAL_CONTEXT_SOURCES = {
     "definitions",
@@ -26,7 +27,23 @@ SPECIAL_CONTEXT_SOURCES = {
 }
 DEFINITIONAL_BASE_SOURCES = BASE_DEPENDENCIES | SPECIAL_CONTEXT_SOURCES
 
-ALLOWED_STATEMENT_KINDS = {"claim", "universal", "existential", "definition", "conditional", "conjunction", "semantic", "registry", "equivalence"}
+ALLOWED_STATEMENT_KINDS = {
+    "claim",
+    "universal",
+    "existential",
+    "definition",
+    "definitional",
+    "conditional",
+    "conjunction",
+    "semantic",
+    "registry",
+    "equivalence",
+    "preservation",
+    "construction",
+    "validation",
+    "classification",
+    "meta",
+}
 
 ALLOWED_RULES = {
     "definition_unfolding",
@@ -85,7 +102,6 @@ def metadata_index() -> Dict[str, Dict[str, Any]]:
     return index
 
 
-
 def metadata_kind(item_id: str, item: Dict[str, Any]) -> str:
     statement = item.get("statement") if isinstance(item, dict) else None
     if isinstance(statement, dict) and statement.get("kind"):
@@ -138,8 +154,8 @@ def statement_object_text(item: Dict[str, Any]) -> str:
     return statement_text(item.get("statement") if isinstance(item, dict) else None)
 
 
-def source_items(input_ids: List[str], lineage: Dict[str, Set[str]], index: Dict[str, Dict[str, Any]], pattern: str) -> List[tuple[str, Dict[str, Any]]]:
-    items: List[tuple[str, Dict[str, Any]]] = []
+def source_items(input_ids: List[str], lineage: Dict[str, Set[str]], index: Dict[str, Dict[str, Any]], pattern: str) -> List[Tuple[str, Dict[str, Any]]]:
+    items: List[Tuple[str, Dict[str, Any]]] = []
     for input_id in input_ids:
         for source_id in sorted(lineage.get(input_id, set())):
             if re.fullmatch(pattern, source_id) and source_id in index:
@@ -147,7 +163,7 @@ def source_items(input_ids: List[str], lineage: Dict[str, Set[str]], index: Dict
     return items
 
 
-def warn_on_weak_statement_alignment(step_id: str, rule: str, step_text: str, sources: List[tuple[str, Dict[str, Any]]], warnings: List[str]) -> None:
+def warn_on_weak_statement_alignment(step_id: str, rule: str, step_text: str, sources: List[Tuple[str, Dict[str, Any]]], warnings: List[str]) -> None:
     if not step_text:
         return
     for source_id, item in sources:
@@ -156,12 +172,28 @@ def warn_on_weak_statement_alignment(step_id: str, rule: str, step_text: str, so
             warnings.append(f"step {step_id} {rule} has weak semantic overlap with {source_id} metadata statement")
 
 
+def contains_term(text: str, term: str) -> bool:
+    """Match symbolic terms literally and word terms on token boundaries."""
+    lowered = text.lower()
+    lowered_term = term.lower()
+    if lowered_term in {"=>", "→"}:
+        return lowered_term in lowered
+    return re.search(rf"\b{re.escape(lowered_term)}\b", lowered) is not None
+
+
 def has_conditional_like_input(input_ids: List[str], statements: Dict[str, str]) -> bool:
-    return any(any(term in statements.get(input_id, "").lower() for term in CONDITIONAL_TERMS) for input_id in input_ids)
+    return any(
+        any(contains_term(statements.get(input_id, ""), term) for term in CONDITIONAL_TERMS)
+        for input_id in input_ids
+    )
 
 
 def has_antecedent_like_input(input_ids: List[str], statements: Dict[str, str]) -> bool:
-    return any(any(term in statements.get(input_id, "").lower() for term in ANTECEDENT_TERMS) for input_id in input_ids)
+    return any(
+        any(contains_term(statements.get(input_id, ""), term) for term in ANTECEDENT_TERMS)
+        for input_id in input_ids
+    )
+
 
 def registered_derived_concepts() -> Set[str]:
     if not DERIVED_REGISTRY.exists():
@@ -219,12 +251,7 @@ def declared_dependency_ids(theorem_id: str, index: Dict[str, Dict[str, Any]]) -
     return deps
 
 
-def validate_premise_sources(
-    theorem_id: str,
-    premises: Iterable[Dict[str, Any]],
-    index: Dict[str, Dict[str, Any]],
-    errors: List[str],
-) -> None:
+def validate_premise_sources(theorem_id: str, premises: Iterable[Dict[str, Any]], index: Dict[str, Dict[str, Any]], errors: List[str]) -> None:
     declared = declared_dependency_ids(theorem_id, index)
     registered_d = registered_derived_concepts()
     for premise in premises:
@@ -319,7 +346,7 @@ def validate_rule_pattern(
         if not (
             has_source_id(input_ids, lineage, {"T-004", "DEF-031", "DEF-033", "D-INT"})
             or has_rule(input_ids, rule_lineage, "semantic_preservation")
-            or any(term in semantic_text for term in SEMANTIC_TERMS)
+            or any(contains_term(semantic_text, term) for term in SEMANTIC_TERMS)
         ):
             errors.append(f"step {step_id} semantic_preservation requires semantic content, interpretation, equivalence, or T-004/DEF-031/DEF-033 input")
 
