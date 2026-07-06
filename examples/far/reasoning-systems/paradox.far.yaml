@@ -1,0 +1,73 @@
+investigation: Test whether paradoxical reasoning strains FAR primitives.
+
+reasoning_system:
+  system: Paradoxical reasoning
+  far_primitives:
+    Investigation: Determine whether a paradox can be represented without selecting a stable interpretation.
+    Representation: paradox-generating sentence, truth-status assignment, and contradiction marker
+    Representational Structure: mutually defeating semantic dependencies
+    Interpretation: unstable semantic interpretation
+    Reasoning Calculus: paraconsistent, dialetheic, or rejection-based handling standards
+  verdict: falsifies FAR
+
+representations:
+  - id: liar
+    kind: claim
+    content: This sentence is false.
+    statement:
+      kind: meta
+      subject: liar sentence
+      predicate: denies its own truth status
+      scope: paradox fixture
+      claim: The liar sentence denies its own truth status.
+  - id: contradiction
+    kind: conflict
+    content: Assigning true or false generates contradiction under ordinary bivalence.
+    statement:
+      kind: claim
+      subject: bivalent truth assignment
+      predicate: generates contradiction
+      scope: paradox fixture
+      claim: A bivalent truth assignment generates contradiction.
+  - id: assessment
+    kind: conclusion
+    content: This is a candidate counterexample unless FAR can model unstable interpretation without adding a new primitive.
+    statement:
+      kind: claim
+      subject: paradoxical reasoning
+      predicate: is a candidate counterexample
+      scope: paradox fixture
+      claim: Paradoxical reasoning is a candidate counterexample for FAR.
+
+relations:
+  - id: rel1
+    type: supports
+    source: liar
+    target: contradiction
+  - id: rel2
+    type: supports
+    source: contradiction
+    target: assessment
+
+interpretations:
+  - representation: liar
+    meaning: A self-referential truth-status claim.
+  - representation: contradiction
+    meaning: A failed stable assignment under ordinary bivalence.
+  - representation: assessment
+    meaning: A candidate counterexample pending a stronger account of unstable interpretation.
+
+rules:
+  - id: paradox-test
+    name: paradox stress test
+    inputs: [liar, contradiction]
+    output: assessment
+    condition: Treat unresolved semantic instability as a candidate counterexample.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: paradox-test
+    target: state1
+    status: draft
+    order: 1
