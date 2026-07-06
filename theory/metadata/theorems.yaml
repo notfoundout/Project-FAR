@@ -1,0 +1,106 @@
+theorems:
+  - id: T-001
+    title: Conditional Primitive Minimality
+    status: Established
+    proof: theory/proofs/T-001-primitive-minimality.md
+    scope: current Project FAR scope, definitions, and axioms
+    dependencies: [L-001, L-002, L-003, L-004, L-005]
+    derived_concepts: []
+  - id: T-002
+    title: Conditional Primitive Independence
+    status: Established
+    proof: theory/proofs/T-002-primitive-independence.md
+    scope: current Project FAR reduction standard
+    dependencies: [T-001, L-001, L-002, L-003, L-004, L-005]
+    derived_concepts: []
+  - id: T-003
+    title: Representation Theorem
+    status: Established
+    proof: theory/proofs/T-003-representation-theorem.md
+    scope: scoped explicit reasoning processes
+    dependencies: [A1, A2, A3, A4, A5, P-001, P-002, P-003, P-004, P-005]
+    derived_concepts: [D-019]
+  - id: T-004
+    title: Semantic Preservation Theorem
+    status: Established
+    proof: theory/proofs/T-004-semantic-preservation.md
+    scope: interpretation-preserving representation mappings
+    dependencies: [D-REP, D-INT, P-003, P-006]
+    derived_concepts: [D-001, D-016, D-017]
+  - id: T-005
+    title: Transition Completeness Theorem
+    status: Established
+    proof: theory/proofs/T-005-transition-completeness.md
+    scope: explicitly specified admissible reasoning transitions
+    dependencies: [D-CALC, L-008, T-003]
+    derived_concepts: [D-011, D-012]
+  - id: T-006
+    title: Primitive Sufficiency Theorem
+    status: Established
+    proof: theory/proofs/T-006-primitive-sufficiency.md
+    scope: registered derived concepts
+    dependencies: [derived-concept-registry, canonical-notation]
+    derived_concepts: [D-001, D-002, D-003, D-004, D-005, D-006, D-007, D-008, D-009, D-010, D-011, D-012, D-013, D-014, D-015, D-016, D-017, D-018, D-019, D-020, D-021, D-022, D-023, D-024, D-025, D-026]
+  - id: T-007
+    title: Primitive Completeness Theorem
+    status: Established
+    proof: theory/proofs/T-007-primitive-completeness.md
+    scope: scoped explicit reasoning processes
+    dependencies: [T-003, T-006]
+    derived_concepts: [D-019]
+  - id: T-008
+    title: Canonical Representation Equivalence
+    status: Established
+    proof: theory/proofs/T-008-canonical-representation-equivalence.md
+    scope: canonical FAR representations
+    dependencies: [L-006, T-003, T-004]
+    derived_concepts: [D-017, D-024]
+  - id: T-009
+    title: Canonical Normal Form Theorem
+    status: Established
+    proof: theory/proofs/T-009-canonical-normal-form.md
+    scope: finite scoped FAR representations with explicit ordering rules
+    dependencies: [L-007, T-003]
+    derived_concepts: [D-024, D-025]
+  - id: T-010
+    title: Reconstruction Theorem
+    status: Established
+    proof: theory/proofs/T-010-reconstruction-theorem.md
+    scope: complete FAR representations
+    dependencies: [T-003, T-004, T-005, T-009]
+    derived_concepts: [D-017, D-019, D-025]
+  - id: T-011
+    title: Conservative Extension Theorem
+    status: Established
+    proof: theory/proofs/T-011-conservative-extension.md
+    scope: definitionally conservative FAR extensions
+    dependencies: [T-006, definition-policy]
+    derived_concepts: [D-026]
+  - id: T-012
+    title: FAR Model Equivalence Theorem
+    status: Established
+    proof: theory/proofs/T-012-model-equivalence.md
+    scope: specified preservation profiles
+    dependencies: [FAR-model-theory, T-004]
+    derived_concepts: [D-020, D-021, D-022, D-023]
+  - id: T-013
+    title: Relative Soundness Theorem
+    status: Established
+    proof: theory/proofs/T-013-soundness.md
+    scope: supplied target calculi
+    dependencies: [D-CALC, T-005]
+    derived_concepts: [D-006]
+  - id: T-014
+    title: Relative Completeness Theorem
+    status: Established
+    proof: theory/proofs/T-014-relative-completeness.md
+    scope: supplied target calculi and explicit transition domains
+    dependencies: [D-CALC, T-005]
+    derived_concepts: [D-011]
+  - id: T-015
+    title: Explicit Reasoning Meta-Theorem
+    status: Established
+    proof: theory/proofs/T-015-explicit-reasoning-meta-theorem.md
+    scope: explicit reasoning systems satisfying Project FAR scope assumptions
+    dependencies: [T-003, T-007, FAR-model-theory]
+    derived_concepts: [D-019, D-020]
