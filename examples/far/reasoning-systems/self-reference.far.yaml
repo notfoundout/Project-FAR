@@ -1,0 +1,77 @@
+investigation: Test whether self-referential reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Self-reference
+  far_primitives:
+    Investigation: Determine whether a represented claim can refer to its own status without breaking explicit representation.
+    Representation: self-referential statements and status claims
+    Representational Structure: reference and dependency relations among represented items
+    Interpretation: fixed-point or indexed semantic interpretation
+    Reasoning Calculus: guarded self-reference and circularity-control standards
+  verdict: extends FAR
+
+representations:
+  - id: statement
+    kind: claim
+    content: This represented statement refers to its own evaluation status.
+    statement:
+      kind: meta
+      subject: statement
+      predicate: refers to its own evaluation status
+      scope: self-reference fixture
+      claim: This represented statement refers to its own evaluation status.
+  - id: guard
+    kind: constraint
+    content: Self-reference is interpreted through an explicit guard or index.
+    statement:
+      kind: claim
+      subject: self-reference guard
+      predicate: indexes the self-reference relation
+      scope: self-reference fixture
+      claim: The self-reference relation is guarded by an explicit index.
+  - id: assessment
+    kind: conclusion
+    content: Self-reference is representable when the reference relation is explicit and guarded.
+    statement:
+      kind: claim
+      subject: guarded self-reference
+      predicate: is representable as explicit reasoning
+      scope: self-reference fixture
+      claim: Guarded self-reference is representable as explicit reasoning.
+
+relations:
+  - id: rel1
+    type: depends_on
+    source: statement
+    target: statement
+  - id: rel2
+    type: supports
+    source: guard
+    target: assessment
+  - id: rel3
+    type: supports
+    source: statement
+    target: assessment
+
+interpretations:
+  - representation: statement
+    meaning: A statement whose content includes reference to its own evaluation status.
+  - representation: guard
+    meaning: A device for preventing unbounded semantic collapse.
+  - representation: assessment
+    meaning: A provisional FAR classification of guarded self-reference.
+
+rules:
+  - id: guarded-reference
+    name: guarded self-reference assessment
+    inputs: [statement, guard]
+    output: assessment
+    condition: Permit self-reference only when the reference relation is explicit and guarded.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: guarded-reference
+    target: state1
+    status: draft
+    order: 1
