@@ -1,21 +1,8 @@
 #!/usr/bin/env python3
 """Project FAR theory verifier.
 
-This script enforces the first machine-readable theory checks:
-
-- every theorem in metadata has required fields;
-- every theorem proof file exists;
-- every established theorem listed in the catalog has a proof file;
-- every established theorem has metadata;
-- dependencies resolve to known identifiers or known canonical resources;
-- theorem dependency graph has no cycles;
-- no theorem depends on itself;
-- derived concepts listed in metadata are registered;
-- proof files use canonical notation references when required;
-- a generated theorem index can be written from metadata.
-
-The checks are intentionally conservative. A failing check means the repository
-needs correction or the verifier needs an explicit whitelist entry.
+This script enforces machine-readable theory checks for theorem, proposition,
+and lemma metadata.
 """
 
 from __future__ import annotations
@@ -27,22 +14,25 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Set
 
 ROOT = Path(__file__).resolve().parents[1]
-THEOREM_METADATA = ROOT / "theory" / "metadata" / "theorems.yaml"
+METADATA_DIR = ROOT / "theory" / "metadata"
+THEOREM_METADATA = METADATA_DIR / "theorems.yaml"
+PROPOSITION_METADATA = METADATA_DIR / "propositions.yaml"
+LEMMA_METADATA = METADATA_DIR / "lemmas.yaml"
 THEOREM_CATALOG = ROOT / "theory" / "theorems" / "theorems.md"
+PROPOSITION_CATALOG = ROOT / "theory" / "theorems" / "propositions.md"
 DERIVED_REGISTRY = ROOT / "theory" / "derivations" / "derived-concept-registry.md"
 CANONICAL_NOTATION = ROOT / "theory" / "notation" / "canonical-notation.md"
-GENERATED_INDEX = ROOT / "theory" / "metadata" / "generated-theorem-index.md"
+GENERATED_THEOREM_INDEX = METADATA_DIR / "generated-theorem-index.md"
+GENERATED_PROPOSITION_INDEX = METADATA_DIR / "generated-proposition-index.md"
+GENERATED_LEMMA_INDEX = METADATA_DIR / "generated-lemma-index.md"
 
 REQUIRED_THEOREM_FIELDS = {"id", "title", "status", "proof", "scope", "dependencies", "derived_concepts"}
+REQUIRED_RESULT_FIELDS = {"id", "title", "status", "source", "scope", "dependencies"}
 KNOWN_STATUSES = {"Draft", "Proposed", "Verified", "Established", "Deprecated"}
 
-# Canonical non-file dependencies. These are intentionally explicit; adding to
-# this list is a theory-governance decision, not a shortcut.
-KNOWN_DEPENDENCIES = {
+BASE_DEPENDENCIES = {
     "A1", "A2", "A3", "A4", "A5",
     "D-REP", "D-INT", "D-CALC", "D-INV", "D-STRUCT",
-    "P-001", "P-002", "P-003", "P-004", "P-005", "P-006", "P-007", "P-008",
-    "L-001", "L-002", "L-003", "L-004", "L-005", "L-006", "L-007", "L-008",
     "derived-concept-registry",
     "canonical-notation",
     "definition-policy",
@@ -72,16 +62,28 @@ def load_yaml(path: Path) -> Dict[str, Any]:
     with path.open("r", encoding="utf-8") as handle:
         data = yaml.safe_load(handle)
     if not isinstance(data, dict):
-        raise VerificationError("Theorem metadata must parse to a mapping.")
+        raise VerificationError(f"{path.relative_to(ROOT)} must parse to a mapping.")
     return data
 
 
+def load_metadata_list(path: Path, key: str) -> List[Dict[str, Any]]:
+    data = load_yaml(path)
+    items = data.get(key)
+    if not isinstance(items, list):
+        raise VerificationError(f"{path.relative_to(ROOT)} must contain a '{key}' list.")
+    return items
+
+
 def load_theorems() -> List[Dict[str, Any]]:
-    data = load_yaml(THEOREM_METADATA)
-    theorems = data.get("theorems")
-    if not isinstance(theorems, list):
-        raise VerificationError("theory/metadata/theorems.yaml must contain a 'theorems' list.")
-    return theorems
+    return load_metadata_list(THEOREM_METADATA, "theorems")
+
+
+def load_propositions() -> List[Dict[str, Any]]:
+    return load_metadata_list(PROPOSITION_METADATA, "propositions")
+
+
+def load_lemmas() -> List[Dict[str, Any]]:
+    return load_metadata_list(LEMMA_METADATA, "lemmas")
 
 
 def registered_derived_concepts() -> Set[str]:
@@ -90,106 +92,119 @@ def registered_derived_concepts() -> Set[str]:
 
 
 def established_catalog_theorem_ids() -> Set[str]:
-    """Return theorem IDs only from the Established Theorems section.
-
-    The theorem catalog also contains planned research targets, such as T-016.
-    Planned theorem IDs should not be required to have proof files or established
-    metadata. This parser intentionally ignores everything after the Planned
-    Theorems heading.
-    """
-
     text = read_text(THEOREM_CATALOG)
     established_start = text.find("# Established Theorems")
     if established_start == -1:
         raise VerificationError("The theorem catalog is missing '# Established Theorems'.")
-
     planned_start = text.find("# Planned Theorems", established_start)
-    if planned_start == -1:
-        section = text[established_start:]
-    else:
-        section = text[established_start:planned_start]
-
+    section = text[established_start:] if planned_start == -1 else text[established_start:planned_start]
     return set(re.findall(r"\bT-\d{3}\b", section))
 
 
-def proof_theorem_ids() -> Set[str]:
-    proof_dir = ROOT / "theory" / "proofs"
+def catalog_proposition_ids() -> Set[str]:
+    return set(re.findall(r"\bP-\d{3}\b", read_text(PROPOSITION_CATALOG)))
+
+
+def source_ids(prefix: str, directory: str) -> Set[str]:
+    source_dir = ROOT / directory
     ids: Set[str] = set()
-    if not proof_dir.exists():
+    if not source_dir.exists():
         return ids
-    for path in proof_dir.glob("T-*.md"):
-        match = re.match(r"(T-\d{3})", path.name)
-        if match:
-            ids.add(match.group(1))
+    for path in source_dir.glob("*.md"):
+        ids.update(re.findall(rf"\b{prefix}-\d{{3}}\b", read_text(path)))
     return ids
 
 
-def validate_required_fields(theorems: List[Dict[str, Any]]) -> None:
+def validate_required_fields(items: List[Dict[str, Any]], required: Set[str], prefix: str) -> None:
     seen: Set[str] = set()
-    for item in theorems:
+    for item in items:
         if not isinstance(item, dict):
-            raise VerificationError("Each theorem metadata entry must be a mapping.")
-        missing = REQUIRED_THEOREM_FIELDS - set(item)
+            raise VerificationError(f"Each {prefix} metadata entry must be a mapping.")
+        missing = required - set(item)
         if missing:
-            raise VerificationError(f"Theorem entry missing fields {sorted(missing)}: {item}")
-        theorem_id = item["id"]
-        if not re.fullmatch(r"T-\d{3}", str(theorem_id)):
-            raise VerificationError(f"Invalid theorem id: {theorem_id}")
-        if theorem_id in seen:
-            raise VerificationError(f"Duplicate theorem id: {theorem_id}")
-        seen.add(theorem_id)
+            raise VerificationError(f"{prefix} entry missing fields {sorted(missing)}: {item}")
+        item_id = str(item["id"])
+        if not re.fullmatch(rf"{prefix}-\d{{3}}", item_id):
+            raise VerificationError(f"Invalid {prefix} id: {item_id}")
+        if item_id in seen:
+            raise VerificationError(f"Duplicate {prefix} id: {item_id}")
+        seen.add(item_id)
         if item["status"] not in KNOWN_STATUSES:
-            raise VerificationError(f"Invalid status for {theorem_id}: {item['status']}")
+            raise VerificationError(f"Invalid status for {item_id}: {item['status']}")
         if not isinstance(item["dependencies"], list):
-            raise VerificationError(f"dependencies must be a list for {theorem_id}")
-        if not isinstance(item["derived_concepts"], list):
-            raise VerificationError(f"derived_concepts must be a list for {theorem_id}")
+            raise VerificationError(f"dependencies must be a list for {item_id}")
 
 
-def validate_proof_files(theorems: List[Dict[str, Any]]) -> None:
+def validate_source_files(items: List[Dict[str, Any]], source_key: str = "source") -> None:
+    for item in items:
+        path = ROOT / item[source_key]
+        if not path.exists():
+            raise VerificationError(f"Missing source file for {item['id']}: {item[source_key]}")
+        text = read_text(path)
+        if item["id"] not in text:
+            raise VerificationError(f"Source file for {item['id']} does not contain its id.")
+
+
+def validate_theorem_proof_files(theorems: List[Dict[str, Any]]) -> None:
     for item in theorems:
-        proof_path = ROOT / item["proof"]
-        if not proof_path.exists():
+        path = ROOT / item["proof"]
+        if not path.exists():
             raise VerificationError(f"Missing proof file for {item['id']}: {item['proof']}")
-        proof_text = read_text(proof_path)
-        if item["id"] not in proof_text:
+        text = read_text(path)
+        if item["id"] not in text:
             raise VerificationError(f"Proof file for {item['id']} does not contain its theorem id.")
 
 
-def validate_catalog_consistency(theorems: List[Dict[str, Any]]) -> None:
-    metadata_ids = {item["id"] for item in theorems}
-    established_catalog_ids = established_catalog_theorem_ids()
-    proof_ids = proof_theorem_ids()
-
-    missing_metadata = sorted(established_catalog_ids - metadata_ids)
-    if missing_metadata:
-        raise VerificationError(f"Established theorem catalog ids missing metadata: {missing_metadata}")
-
-    missing_proofs = sorted(established_catalog_ids - proof_ids)
-    if missing_proofs:
-        raise VerificationError(f"Established theorem catalog ids missing proof files: {missing_proofs}")
-
-    metadata_without_catalog = sorted(metadata_ids - established_catalog_ids)
-    if metadata_without_catalog:
-        raise VerificationError(f"Metadata theorem ids missing from established theorem catalog: {metadata_without_catalog}")
-
-
-def validate_dependencies(theorems: List[Dict[str, Any]]) -> Dict[str, Set[str]]:
+def validate_catalog_consistency(theorems: List[Dict[str, Any]], propositions: List[Dict[str, Any]], lemmas: List[Dict[str, Any]]) -> None:
     theorem_ids = {item["id"] for item in theorems}
+    established_theorem_ids = established_catalog_theorem_ids()
+    missing_theorem_metadata = sorted(established_theorem_ids - theorem_ids)
+    if missing_theorem_metadata:
+        raise VerificationError(f"Established theorem catalog ids missing metadata: {missing_theorem_metadata}")
+    metadata_without_catalog = sorted(theorem_ids - established_theorem_ids)
+    if metadata_without_catalog:
+        raise VerificationError(f"Theorem metadata ids missing from established theorem catalog: {metadata_without_catalog}")
+
+    proposition_ids = {item["id"] for item in propositions}
+    catalog_props = catalog_proposition_ids()
+    missing_prop_metadata = sorted(catalog_props - proposition_ids)
+    if missing_prop_metadata:
+        raise VerificationError(f"Proposition catalog ids missing metadata: {missing_prop_metadata}")
+    prop_metadata_without_catalog = sorted(proposition_ids - catalog_props)
+    if prop_metadata_without_catalog:
+        raise VerificationError(f"Proposition metadata ids missing from catalog: {prop_metadata_without_catalog}")
+
+    lemma_ids = {item["id"] for item in lemmas}
+    lemma_source_ids = source_ids("L", "theory/lemmas")
+    missing_lemma_metadata = sorted(lemma_source_ids - lemma_ids)
+    if missing_lemma_metadata:
+        raise VerificationError(f"Lemma source ids missing metadata: {missing_lemma_metadata}")
+    lemma_metadata_without_source = sorted(lemma_ids - lemma_source_ids)
+    if lemma_metadata_without_source:
+        raise VerificationError(f"Lemma metadata ids missing from source files: {lemma_metadata_without_source}")
+
+
+def validate_dependencies(theorems: List[Dict[str, Any]], propositions: List[Dict[str, Any]], lemmas: List[Dict[str, Any]]) -> Dict[str, Set[str]]:
+    theorem_ids = {item["id"] for item in theorems}
+    proposition_ids = {item["id"] for item in propositions}
+    lemma_ids = {item["id"] for item in lemmas}
+    known_dependencies = BASE_DEPENDENCIES | proposition_ids | lemma_ids
     graph: Dict[str, Set[str]] = {item["id"]: set() for item in theorems}
 
-    for item in theorems:
-        theorem_id = item["id"]
+    all_items = list(theorems) + list(propositions) + list(lemmas)
+    for item in all_items:
+        item_id = str(item["id"])
         for dep in item["dependencies"]:
             dep = str(dep)
-            if dep == theorem_id:
-                raise VerificationError(f"{theorem_id} directly depends on itself.")
+            if dep == item_id:
+                raise VerificationError(f"{item_id} directly depends on itself.")
             if re.fullmatch(r"T-\d{3}", dep):
                 if dep not in theorem_ids:
-                    raise VerificationError(f"{theorem_id} depends on unknown theorem {dep}.")
-                graph[theorem_id].add(dep)
-            elif dep not in KNOWN_DEPENDENCIES:
-                raise VerificationError(f"{theorem_id} has unresolved dependency: {dep}")
+                    raise VerificationError(f"{item_id} depends on unknown theorem {dep}.")
+                if item_id in graph:
+                    graph[item_id].add(dep)
+            elif dep not in known_dependencies:
+                raise VerificationError(f"{item_id} has unresolved dependency: {dep}")
     return graph
 
 
@@ -236,43 +251,50 @@ def validate_notation_file() -> None:
             raise VerificationError(f"Canonical notation is missing special symbol: {symbol}")
 
 
-def build_index(theorems: List[Dict[str, Any]]) -> str:
+def build_index(items: List[Dict[str, Any]], title: str, source_column: str) -> str:
     lines = [
-        "# Generated Theorem Index",
+        f"# Generated {title} Index",
         "",
-        "This file is generated from `theory/metadata/theorems.yaml`.",
+        "This file is generated from machine-readable metadata.",
         "",
-        "| ID | Title | Status | Proof | Scope |",
+        f"| ID | Title | Status | {source_column.title()} | Scope |",
         "|---|---|---|---|---|",
     ]
-    for item in sorted(theorems, key=lambda x: x["id"]):
-        lines.append(
-            f"| {item['id']} | {item['title']} | {item['status']} | `{item['proof']}` | {item['scope']} |"
-        )
+    for item in sorted(items, key=lambda x: x["id"]):
+        source = item.get("proof") or item.get("source")
+        lines.append(f"| {item['id']} | {item['title']} | {item['status']} | `{source}` | {item['scope']} |")
     lines.append("")
     return "\n".join(lines)
 
 
-def write_index(theorems: List[Dict[str, Any]]) -> None:
-    GENERATED_INDEX.write_text(build_index(theorems), encoding="utf-8")
+def write_indexes(theorems: List[Dict[str, Any]], propositions: List[Dict[str, Any]], lemmas: List[Dict[str, Any]]) -> None:
+    GENERATED_THEOREM_INDEX.write_text(build_index(theorems, "Theorem", "proof"), encoding="utf-8")
+    GENERATED_PROPOSITION_INDEX.write_text(build_index(propositions, "Proposition", "source"), encoding="utf-8")
+    GENERATED_LEMMA_INDEX.write_text(build_index(lemmas, "Lemma", "source"), encoding="utf-8")
 
 
 def run_verification(write_generated_index: bool = False) -> None:
     theorems = load_theorems()
-    validate_required_fields(theorems)
-    validate_proof_files(theorems)
-    validate_catalog_consistency(theorems)
-    graph = validate_dependencies(theorems)
+    propositions = load_propositions()
+    lemmas = load_lemmas()
+    validate_required_fields(theorems, REQUIRED_THEOREM_FIELDS, "T")
+    validate_required_fields(propositions, REQUIRED_RESULT_FIELDS, "P")
+    validate_required_fields(lemmas, REQUIRED_RESULT_FIELDS, "L")
+    validate_theorem_proof_files(theorems)
+    validate_source_files(propositions)
+    validate_source_files(lemmas)
+    validate_catalog_consistency(theorems, propositions, lemmas)
+    graph = validate_dependencies(theorems, propositions, lemmas)
     validate_no_cycles(graph)
     validate_registry(theorems)
     validate_notation_file()
     if write_generated_index:
-        write_index(theorems)
+        write_indexes(theorems, propositions, lemmas)
 
 
 def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Verify Project FAR theory metadata and proof structure.")
-    parser.add_argument("--write-index", action="store_true", help="write generated theorem index")
+    parser.add_argument("--write-index", action="store_true", help="write generated metadata indexes")
     args = parser.parse_args(list(argv) if argv is not None else None)
 
     try:
@@ -283,7 +305,7 @@ def main(argv: Iterable[str] | None = None) -> int:
 
     print("VERIFY THEORY PASSED")
     if args.write_index:
-        print(f"Wrote {GENERATED_INDEX.relative_to(ROOT)}")
+        print("Wrote generated metadata indexes")
     return 0
 
 
