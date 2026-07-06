@@ -2,7 +2,7 @@
 """Project FAR theory verifier.
 
 This script enforces machine-readable checks for definitions, axioms,
-theorems, propositions, and lemmas.
+theorems, propositions, lemmas, and phased proof-object adoption.
 """
 
 from __future__ import annotations
@@ -15,6 +15,7 @@ from typing import Any, Dict, Iterable, List, Optional, Set
 
 ROOT = Path(__file__).resolve().parents[1]
 METADATA_DIR = ROOT / "theory" / "metadata"
+PROOF_OBJECTS_DIR = ROOT / "theory" / "proof-objects"
 THEOREM_METADATA = METADATA_DIR / "theorems.yaml"
 PROPOSITION_METADATA = METADATA_DIR / "propositions.yaml"
 LEMMA_METADATA = METADATA_DIR / "lemmas.yaml"
@@ -32,10 +33,23 @@ GENERATED_AXIOM_INDEX = METADATA_DIR / "generated-axiom-index.md"
 
 REQUIRED_THEOREM_FIELDS = {"id", "title", "status", "proof", "scope", "dependencies", "derived_concepts"}
 REQUIRED_RESULT_FIELDS = {"id", "title", "status", "source", "scope", "dependencies"}
+REQUIRED_PROOF_OBJECT_FIELDS = {"id", "theorem", "status", "premises", "steps", "conclusion"}
+REQUIRED_PROOF_OBJECT_THEOREMS = {"T-001"}
 KNOWN_STATUSES = {"Draft", "Proposed", "Verified", "Established", "Deprecated"}
 BASE_DEPENDENCIES = {"derived-concept-registry", "canonical-notation", "definition-policy", "FAR-model-theory"}
 CANONICAL_SYMBOLS = ["I", "Rep", "S", "Int", "C", "T"]
 CANONICAL_SPECIAL_SYMBOLS = ["⊨", "≡sem", "≡str", "≡Q", "NF"]
+ALLOWED_PROOF_STEP_RULES = {
+    "definition_unfolding",
+    "axiom_application",
+    "prior_theorem",
+    "lemma_application",
+    "modus_ponens",
+    "conjunction_intro",
+    "universal_instantiation",
+    "registry_substitution",
+    "semantic_preservation",
+}
 
 
 class VerificationError(Exception):
@@ -275,6 +289,53 @@ def validate_notation_file() -> None:
             raise VerificationError(f"Canonical notation is missing special symbol: {symbol}")
 
 
+def validate_required_proof_objects(theorems: List[Dict[str, Any]]) -> None:
+    theorem_ids = {str(item["id"]) for item in theorems}
+    for theorem_id in sorted(REQUIRED_PROOF_OBJECT_THEOREMS):
+        if theorem_id not in theorem_ids:
+            raise VerificationError(f"Required proof object theorem is not in theorem metadata: {theorem_id}")
+        path = PROOF_OBJECTS_DIR / f"{theorem_id}.proof.yaml"
+        if not path.exists():
+            raise VerificationError(f"Missing required proof object: {path.relative_to(ROOT)}")
+        data = load_yaml(path)
+        missing = REQUIRED_PROOF_OBJECT_FIELDS - set(data)
+        if missing:
+            raise VerificationError(f"Proof object {theorem_id} missing fields: {sorted(missing)}")
+        if str(data.get("theorem")) != theorem_id:
+            raise VerificationError(f"Proof object {theorem_id} has mismatched theorem field: {data.get('theorem')}")
+        premises = data.get("premises", [])
+        steps = data.get("steps", [])
+        if not isinstance(premises, list) or not isinstance(steps, list):
+            raise VerificationError(f"Proof object {theorem_id} premises and steps must be lists")
+        available = {str(premise.get("id")) for premise in premises if isinstance(premise, dict)}
+        if len(available) != len(premises):
+            raise VerificationError(f"Proof object {theorem_id} has duplicate or invalid premise ids")
+        step_statements: Set[str] = set()
+        for step in steps:
+            if not isinstance(step, dict):
+                raise VerificationError(f"Proof object {theorem_id} contains a non-mapping proof step")
+            step_id = str(step.get("id", ""))
+            if not step_id:
+                raise VerificationError(f"Proof object {theorem_id} has a step without an id")
+            if step_id in available:
+                raise VerificationError(f"Proof object {theorem_id} reuses proof id: {step_id}")
+            rule = str(step.get("rule", ""))
+            if rule not in ALLOWED_PROOF_STEP_RULES:
+                raise VerificationError(f"Proof object {theorem_id} step {step_id} uses unknown rule: {rule}")
+            for input_id in step.get("inputs", []):
+                if str(input_id) not in available:
+                    raise VerificationError(f"Proof object {theorem_id} step {step_id} references unavailable input: {input_id}")
+            statement = str(step.get("statement", ""))
+            if not statement:
+                raise VerificationError(f"Proof object {theorem_id} step {step_id} has no statement")
+            if not step.get("justification"):
+                raise VerificationError(f"Proof object {theorem_id} step {step_id} has no justification")
+            step_statements.add(statement)
+            available.add(step_id)
+        if str(data.get("conclusion", "")) not in step_statements:
+            raise VerificationError(f"Proof object {theorem_id} conclusion does not match a proof step statement")
+
+
 def build_index(items: List[Dict[str, Any]], title: str, source_column: str) -> str:
     lines = [
         f"# Generated {title} Index",
@@ -320,6 +381,7 @@ def run_verification(write_generated_index: bool = False) -> None:
     validate_no_cycles(graph)
     validate_registry(theorems)
     validate_notation_file()
+    validate_required_proof_objects(theorems)
     if write_generated_index:
         write_indexes(theorems, propositions, lemmas, definitions, axioms)
 
