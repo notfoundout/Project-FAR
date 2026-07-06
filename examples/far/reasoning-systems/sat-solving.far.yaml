@@ -1,0 +1,73 @@
+investigation: Test whether SAT solving maps into FAR primitives.
+
+reasoning_system:
+  system: SAT solving
+  far_primitives:
+    Investigation: Determine whether satisfiability search and certificate checking can be represented in FAR.
+    Representation: Boolean formulas, assignments, clauses, conflicts, and certificates
+    Representational Structure: clause-variable incidence and search dependency relations
+    Interpretation: Boolean valuation semantics
+    Reasoning Calculus: DPLL, CDCL, resolution, or certificate-checking rules
+  verdict: fits FAR
+
+representations:
+  - id: formula
+    kind: premise
+    content: Formula F is in conjunctive normal form.
+    statement:
+      kind: claim
+      subject: Boolean formula F
+      predicate: is in conjunctive normal form
+      scope: SAT solving fixture
+      claim: Formula F is in conjunctive normal form.
+  - id: assignment
+    kind: candidate
+    content: Assignment A satisfies every clause in F.
+    statement:
+      kind: claim
+      subject: assignment A
+      predicate: satisfies every clause in F
+      scope: SAT solving fixture
+      claim: Assignment A satisfies every clause in F.
+  - id: conclusion
+    kind: conclusion
+    content: F is satisfiable.
+    statement:
+      kind: claim
+      subject: formula F
+      predicate: is satisfiable
+      scope: SAT solving fixture
+      claim: Formula F is satisfiable.
+
+relations:
+  - id: rel1
+    type: supports
+    source: formula
+    target: conclusion
+  - id: rel2
+    type: supports
+    source: assignment
+    target: conclusion
+
+interpretations:
+  - representation: formula
+    meaning: A Boolean constraint system.
+  - representation: assignment
+    meaning: A valuation candidate.
+  - representation: conclusion
+    meaning: A satisfiability classification under Boolean semantics.
+
+rules:
+  - id: assignment-check
+    name: assignment satisfaction check
+    inputs: [formula, assignment]
+    output: conclusion
+    condition: Verify that a valuation satisfies every clause.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: assignment-check
+    target: state1
+    status: draft
+    order: 1
