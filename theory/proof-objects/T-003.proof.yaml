@@ -1,0 +1,56 @@
+id: PO-T-003
+
+theorem: T-003
+
+status: draft
+
+premises:
+  - id: p1
+    source: A4
+    statement: Every scoped reasoning process occurs within an investigation.
+  - id: p2
+    source: A1
+    statement: Every scoped reasoning process admits explicit representations.
+  - id: p3
+    source: A2
+    statement: Participating representations possess representational structure.
+  - id: p4
+    source: A3
+    statement: Participating representations are interpreted within an investigation.
+  - id: p5
+    source: A5
+    statement: Every scoped reasoning process proceeds according to a reasoning calculus.
+
+steps:
+  - id: s1
+    rule: axiom_application
+    inputs: [p1]
+    statement: Let I be the investigation for R.
+    justification: Applied A4 to arbitrary scoped reasoning process R.
+  - id: s2
+    rule: axiom_application
+    inputs: [p2]
+    statement: Let Rep be the explicit representations for R.
+    justification: Applied A1 to R.
+  - id: s3
+    rule: axiom_application
+    inputs: [p3]
+    statement: Let S be the representational structure over Rep.
+    justification: Applied A2 to Rep.
+  - id: s4
+    rule: axiom_application
+    inputs: [p4]
+    statement: Let Int be the interpretation of Rep within I.
+    justification: Applied A3 to representations in R.
+  - id: s5
+    rule: axiom_application
+    inputs: [p5]
+    statement: Let C be the reasoning calculus governing R.
+    justification: Applied A5 to R.
+  - id: s6
+    rule: definition_unfolding
+    inputs: [s1, s2, s3, s4, s5]
+    statement: FAR(R) = <I, Rep, S, Int, C, T> exists for R.
+    justification: Constructed the FAR tuple using the components supplied by the axioms and optional trace T.
+
+conclusion: FAR(R) = <I, Rep, S, Int, C, T> exists for R.
