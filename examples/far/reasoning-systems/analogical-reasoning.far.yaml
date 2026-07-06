@@ -1,0 +1,73 @@
+investigation: Test whether analogical reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Analogical reasoning
+  far_primitives:
+    Investigation: Determine whether a target case should inherit a conclusion from a source case.
+    Representation: source case, target case, shared features, and transferred conclusion
+    Representational Structure: similarity and difference relations
+    Interpretation: similarity interpretation
+    Reasoning Calculus: analogy transfer standards
+  verdict: fits FAR
+
+representations:
+  - id: source
+    kind: case
+    content: Source case S has features F and result R.
+    statement:
+      kind: claim
+      subject: source case S
+      predicate: has features F and result R
+      scope: analogical fixture
+      claim: Source case S has features F and result R.
+  - id: target
+    kind: case
+    content: Target case T has relevantly similar features F.
+    statement:
+      kind: claim
+      subject: target case T
+      predicate: has relevantly similar features F
+      scope: analogical fixture
+      claim: Target case T has relevantly similar features F.
+  - id: transfer
+    kind: conclusion
+    content: Result R is provisionally transferred to T.
+    statement:
+      kind: claim
+      subject: target case T
+      predicate: provisionally inherits result R
+      scope: analogical fixture
+      claim: Result R is provisionally transferred to T.
+
+relations:
+  - id: rel1
+    type: supports
+    source: source
+    target: transfer
+  - id: rel2
+    type: supports
+    source: target
+    target: transfer
+
+interpretations:
+  - representation: source
+    meaning: The source case supplies a candidate pattern.
+  - representation: target
+    meaning: The target case is compared against the source.
+  - representation: transfer
+    meaning: The analogical conclusion is provisional and similarity-dependent.
+
+rules:
+  - id: analogy-transfer
+    name: analogical transfer
+    inputs: [source, target]
+    output: transfer
+    condition: Transfer a result when relevant similarity is sufficient and defeaters are absent.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: analogy-transfer
+    target: state1
+    status: draft
+    order: 1

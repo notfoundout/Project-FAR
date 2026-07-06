@@ -1,0 +1,73 @@
+investigation: Test whether non-monotonic reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Non-monotonic reasoning
+  far_primitives:
+    Investigation: Determine whether a default conclusion survives new information.
+    Representation: defaults, facts, exceptions, and defeasible conclusions
+    Representational Structure: support, exception, and defeat relations
+    Interpretation: defeasible interpretation
+    Reasoning Calculus: non-monotonic transition standards
+  verdict: extends FAR
+
+representations:
+  - id: default
+    kind: default
+    content: Birds normally fly.
+    statement:
+      kind: claim
+      subject: birds
+      predicate: normally fly
+      scope: non-monotonic fixture
+      claim: Birds normally fly.
+  - id: fact
+    kind: fact
+    content: Tweety is a bird.
+    statement:
+      kind: claim
+      subject: Tweety
+      predicate: is a bird
+      scope: non-monotonic fixture
+      claim: Tweety is a bird.
+  - id: conclusion
+    kind: conclusion
+    content: Tweety flies unless defeated.
+    statement:
+      kind: claim
+      subject: Tweety
+      predicate: flies unless defeated
+      scope: non-monotonic fixture
+      claim: Tweety flies unless an exception defeats the default.
+
+relations:
+  - id: rel1
+    type: supports
+    source: default
+    target: conclusion
+  - id: rel2
+    type: supports
+    source: fact
+    target: conclusion
+
+interpretations:
+  - representation: default
+    meaning: A defeasible generalization.
+  - representation: fact
+    meaning: A specific fact activating the default.
+  - representation: conclusion
+    meaning: A defeasible conclusion subject to later revision.
+
+rules:
+  - id: default-application
+    name: default application
+    inputs: [default, fact]
+    output: conclusion
+    condition: Apply the default while no exception is represented.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: default-application
+    target: state1
+    status: draft
+    order: 1
