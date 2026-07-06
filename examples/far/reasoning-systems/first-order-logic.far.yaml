@@ -1,0 +1,73 @@
+investigation: Test whether first-order logic maps into FAR primitives.
+
+reasoning_system:
+  system: First-order logic
+  far_primitives:
+    Investigation: Determine whether a quantified proof has explicit FAR structure.
+    Representation: quantified formulas, variables, predicates, and instances
+    Representational Structure: quantifier-scope and dependency relations
+    Interpretation: model and assignment semantics
+    Reasoning Calculus: first-order instantiation and inference rules
+  verdict: fits FAR
+
+representations:
+  - id: universal
+    kind: premise
+    content: For all x, Human(x) -> Mortal(x)
+    statement:
+      kind: universal
+      subject: humans
+      predicate: are mortal
+      scope: first-order logic fixture
+      claim: Every human is mortal.
+  - id: instance
+    kind: premise
+    content: Human(Socrates)
+    statement:
+      kind: claim
+      subject: Socrates
+      predicate: is human
+      scope: first-order logic fixture
+      claim: Socrates is human.
+  - id: conclusion
+    kind: conclusion
+    content: Mortal(Socrates)
+    statement:
+      kind: claim
+      subject: Socrates
+      predicate: is mortal
+      scope: first-order logic fixture
+      claim: Socrates is mortal.
+
+relations:
+  - id: rel1
+    type: supports
+    source: universal
+    target: conclusion
+  - id: rel2
+    type: supports
+    source: instance
+    target: conclusion
+
+interpretations:
+  - representation: universal
+    meaning: A universally quantified formula interpreted over a domain.
+  - representation: instance
+    meaning: A predicate assignment to a named individual.
+  - representation: conclusion
+    meaning: An instantiated consequence under the model interpretation.
+
+rules:
+  - id: ui-mp
+    name: universal instantiation plus modus ponens
+    inputs: [universal, instance]
+    output: conclusion
+    condition: Instantiate the universal formula at Socrates and apply the conditional.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: ui-mp
+    target: state1
+    status: admissible
+    order: 1
