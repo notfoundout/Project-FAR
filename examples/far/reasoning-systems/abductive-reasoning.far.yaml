@@ -1,0 +1,73 @@
+investigation: Test whether abductive reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Abductive reasoning
+  far_primitives:
+    Investigation: Determine which hypothesis best explains an observation.
+    Representation: observations, candidate explanations, and explanatory virtues
+    Representational Structure: explanatory support and competition relations
+    Interpretation: explanatory interpretation
+    Reasoning Calculus: best-explanation standards
+  verdict: fits FAR
+
+representations:
+  - id: observation
+    kind: observation
+    content: Observation O occurs.
+    statement:
+      kind: claim
+      subject: observation O
+      predicate: occurs
+      scope: abductive fixture
+      claim: O occurs.
+  - id: hypothesis
+    kind: hypothesis
+    content: Hypothesis H would explain O.
+    statement:
+      kind: claim
+      subject: hypothesis H
+      predicate: explains observation O
+      scope: abductive fixture
+      claim: H would explain O.
+  - id: selection
+    kind: conclusion
+    content: H is selected as the best current explanation.
+    statement:
+      kind: claim
+      subject: hypothesis H
+      predicate: is selected as the best current explanation
+      scope: abductive fixture
+      claim: H is selected as the best current explanation of O.
+
+relations:
+  - id: rel1
+    type: supports
+    source: observation
+    target: selection
+  - id: rel2
+    type: supports
+    source: hypothesis
+    target: selection
+
+interpretations:
+  - representation: observation
+    meaning: A phenomenon requiring explanation.
+  - representation: hypothesis
+    meaning: A candidate explanation.
+  - representation: selection
+    meaning: A provisional best-explanation judgment.
+
+rules:
+  - id: best-explanation
+    name: inference to best explanation
+    inputs: [observation, hypothesis]
+    output: selection
+    condition: Compare explanatory fit and select the strongest available candidate.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: best-explanation
+    target: state1
+    status: draft
+    order: 1
