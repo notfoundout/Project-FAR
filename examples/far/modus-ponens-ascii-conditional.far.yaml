@@ -1,0 +1,45 @@
+investigation: Test ASCII conditional parsing for modus ponens fixtures.
+
+representations:
+  - id: p
+    kind: premise
+    content: P
+  - id: pq
+    kind: premise
+    content: P -> Q
+  - id: q
+    kind: conclusion
+    content: Q
+
+relations:
+  - id: rel1
+    type: supports
+    source: p
+    target: q
+  - id: rel2
+    type: supports
+    source: pq
+    target: q
+
+interpretations:
+  - representation: p
+    meaning: antecedent P
+  - representation: pq
+    meaning: ASCII conditional from P to Q
+  - representation: q
+    meaning: consequent Q
+
+rules:
+  - id: mp
+    name: modus ponens fixture
+    inputs: [p, pq]
+    output: q
+    condition: Apply P -> Q and P.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: mp
+    target: state1
+    status: admissible
+    order: 1
