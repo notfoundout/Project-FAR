@@ -47,3 +47,9 @@ propositions:
     source: theory/proofs/P-001-first-propositions.md
     scope: resolution execution under a reasoning calculus
     dependencies: [D-CALC, D-STRUCT]
+  - id: P-009
+    title: Representation Structure Independence
+    status: Proposed
+    source: theory/theorems/propositions.md
+    scope: representation and representational structure pairwise independence
+    dependencies: [T-002, D-REP, D-STRUCT]
