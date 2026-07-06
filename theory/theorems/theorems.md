@@ -25,53 +25,25 @@ Theorems must reference:
 
 ## T-001 — Conditional Primitive Minimality
 
-### Statement
+The current primitive architecture is minimal relative to the current Project FAR scope, definitions, and axioms.
 
-The current primitive architecture:
+Proof: `../proofs/T-001-primitive-minimality.md`
 
-```text
-{ Investigation, Representation, Representational Structure, Interpretation, Reasoning Calculus }
-```
-
-is minimal relative to the current Project FAR scope, definitions, and axioms.
-
-### Proof
-
-`../proofs/T-001-primitive-minimality.md`
-
-### Status
-
-Established, conditional.
-
-### Limitation
-
-This does not prove that no future lower-level theory can reduce the primitive set. It proves that deletion of any current primitive reduces expressive power under the current framework.
+Status: Established, conditional.
 
 ---
 
 ## T-002 — Conditional Primitive Independence
 
-### Statement
-
 No current primitive is derivable from the other four without loss of expressive power under the current Project FAR reduction standard.
 
-### Proof
+Proof: `../proofs/T-002-primitive-independence.md`
 
-`../proofs/T-002-primitive-independence.md`
-
-### Status
-
-Established, conditional.
-
-### Limitation
-
-This is framework-relative independence, not absolute metaphysical irreducibility.
+Status: Established, conditional.
 
 ---
 
 ## T-003 — Representation Theorem
-
-### Statement
 
 Every reasoning process within the stated scope of Project FAR admits a FAR representation of the form:
 
@@ -79,76 +51,152 @@ Every reasoning process within the stated scope of Project FAR admits a FAR repr
 <I, Rep, S, Int, C, T>
 ```
 
-### Proof
+Proof: `../proofs/T-003-representation-theorem.md`
 
-`../proofs/T-003-representation-theorem.md`
-
-### Status
-
-Established within Project FAR scope.
-
-### Limitation
-
-This applies only to explicit reasoning processes satisfying the scope criterion.
+Status: Established within Project FAR scope.
 
 ---
 
 ## T-004 — Semantic Preservation Theorem
 
-### Statement
-
 Every interpretation-preserving representation mapping preserves semantic content.
 
-### Proof
+Proof: `../proofs/T-004-semantic-preservation.md`
 
-`../proofs/T-004-semantic-preservation.md`
-
-### Status
-
-Established.
-
-### Limitation
-
-This gives a sufficient condition for semantic preservation, not a necessary condition.
+Status: Established.
 
 ---
 
 ## T-005 — Transition Completeness Theorem
 
-### Statement
-
 Every explicitly specified admissible reasoning transition within a scoped reasoning process can be represented by a transition signature.
 
-### Proof
+Proof: `../proofs/T-005-transition-completeness.md`
 
-`../proofs/T-005-transition-completeness.md`
+Status: Established within scope.
 
-### Status
+---
 
-Established within scope.
+## T-006 — Primitive Sufficiency Theorem
 
-### Limitation
+Every current non-primitive concept in Project FAR is constructible from the primitive architecture.
 
-This does not cover hidden or unspecified transitions unless reconstructed and made explicit.
+Proof: `../proofs/T-006-primitive-sufficiency.md`
+
+Status: Established relative to the current derivation registry and canonical definitions.
+
+---
+
+## T-007 — Primitive Completeness Theorem
+
+The primitive architecture is complete for constructing the objects required to represent any scoped explicit reasoning process.
+
+Proof: `../proofs/T-007-primitive-completeness.md`
+
+Status: Established relative to scoped explicit reasoning processes.
+
+---
+
+## T-008 — Canonical Representation Equivalence
+
+Any two canonical FAR representations of the same scoped reasoning process are equivalent up to meaning-preserving renaming.
+
+Proof: `../proofs/T-008-canonical-representation-equivalence.md`
+
+Status: Established for canonical FAR representations.
+
+---
+
+## T-009 — Canonical Normal Form Theorem
+
+Every finite scoped FAR representation admits a canonical normal form once ordering, labeling, and redundancy-removal rules are supplied.
+
+Proof: `../proofs/T-009-canonical-normal-form.md`
+
+Status: Established for finite scoped FAR representations with explicit ordering rules.
+
+---
+
+## T-010 — Reconstruction Theorem
+
+Given a complete FAR representation, the represented reasoning process can be reconstructed up to semantic equivalence.
+
+Proof: `../proofs/T-010-reconstruction-theorem.md`
+
+Status: Established up to semantic equivalence for complete FAR representations.
+
+---
+
+## T-011 — Conservative Extension Theorem
+
+If an extension introduces no new primitive, alters no canonical definition, and changes no established axiom or theorem dependency, then it is conservative over the established core theory.
+
+Proof: `../proofs/T-011-conservative-extension.md`
+
+Status: Established for definitionally conservative FAR extensions.
+
+---
+
+## T-012 — FAR Model Equivalence Theorem
+
+Two FAR models are equivalent relative to a preservation profile if and only if every property in that profile is preserved between them.
+
+Proof: `../proofs/T-012-model-equivalence.md`
+
+Status: Established relative to a specified preservation profile.
+
+---
+
+## T-013 — Relative Soundness Theorem
+
+If a FAR representation marks a transition as admissible only when that transition is admissible under the supplied target calculus, then the FAR representation is sound relative to that calculus.
+
+Proof: `../proofs/T-013-soundness.md`
+
+Status: Established relative to a supplied target calculus.
+
+---
+
+## T-014 — Relative Completeness Theorem
+
+If a FAR representation includes a transition signature for every transition permitted by the supplied calculus within a specified transition domain, then the representation is complete relative to that calculus and domain.
+
+Proof: `../proofs/T-014-relative-completeness.md`
+
+Status: Established relative to a supplied target calculus and explicit transition domain.
+
+---
+
+## T-015 — Explicit Reasoning Meta-Theorem
+
+Every explicit reasoning system satisfying Project FAR scope assumptions is representable as a FAR model.
+
+Proof: `../proofs/T-015-explicit-reasoning-meta-theorem.md`
+
+Status: Established for explicit reasoning systems satisfying Project FAR scope assumptions.
 
 ---
 
 # Planned Theorems
 
-## T-006 — FAR Model Homomorphism Preservation
+## T-016 — Model Homomorphism Preservation
 
 Demonstrate which properties are preserved under structure-preserving mappings between FAR models.
 
 Status: Research.
 
-## T-007 — Conservative Extension
+---
 
-Define and prove conditions under which a new FAR subsystem extends the canonical theory without altering established results.
+## T-017 — Compression without Semantic Loss
+
+Define when two FAR representations can be compressed without loss of specified semantic or structural content.
 
 Status: Research.
 
-## T-008 — Model Compression
+---
 
-Define when two FAR representations can be compressed without loss of specified semantic or structural content.
+## T-018 — Dependency Graph Acyclicity Conditions
+
+Identify conditions under which a FAR dependency graph is acyclic, cyclic, or fixed-point dependent.
 
 Status: Research.
