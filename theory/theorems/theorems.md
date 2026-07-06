@@ -2,146 +2,153 @@
 
 ## Purpose
 
-This document records the established theorems of Project FAR.
+This document records the theorem catalog of Project FAR.
 
-A theorem is a formal result proved from the canonical definitions, established derived concepts, axioms, and previously established propositions.
+A theorem is a formal result proved from the canonical definitions, axioms, established propositions, and previously established theorems.
 
-Theorems represent the highest level of the formal theory.
+Theorems are always scope-relative. A theorem marked Established is established only relative to the dependencies and limitations recorded in its corresponding proof document.
+
+---
 
 ## Canonical Prerequisites
 
-Theorems must reference the current canonical definitions in `../definitions/definitions.md`, current canonical axioms in `../axioms/axioms.md`, and any previously established propositions or theorems before introducing a new theorem.
+Theorems must reference:
 
----
-
-
-# Theorem Lifecycle
-
-Every theorem progresses through the following stages.
-
-1. Proposed
-2. Verified
-3. Established
-
-Only established theorems should be regarded as part of the canonical theory.
-
----
-
-# Theorem Format
-
-Every theorem should contain the following sections.
-
-## Identifier
-
-A unique identifier of the form:
-
-```text
-T-NAME
-```
-
----
-
-## Statement
-
-The formal claim.
-
----
-
-## Dependencies
-
-Every definition, derived concept, axiom, proposition, and theorem upon which the theorem depends.
-
----
-
-## Proof
-
-A reference to the corresponding proof document located within the `theory/proofs/` directory.
-
----
-
-## Status
-
-One of:
-
-- Proposed
-- Verified
-- Established
-
----
-
-## Notes
-
-Optional observations.
-
----
-
-# Planned Theorems
-
-The following theorems represent major long-term research objectives.
-
-## T-MINIMAL-PRIMITIVE-ARCHITECTURE
-
-**Objective**
-
-Demonstrate that the primitive architecture of FARA is minimal by proving that no primitive concept is derivable from the remaining primitive concepts.
-
-**Status**
-
-Research
-
----
-
-## T-SUFFICIENCY-OF-PRIMITIVE-ARCHITECTURE
-
-**Objective**
-
-Demonstrate that every non-primitive concept within Project FAR is derivable from the primitive architecture.
-
-**Status**
-
-Research
-
----
-
-## T-EXPRESSIVE-SUFFICIENCY
-
-**Objective**
-
-Demonstrate that the primitive architecture preserves the expressive power required to represent every reasoning process within the stated scope of Project FAR.
-
-**Status**
-
-Research
-
----
-
-## T-REPRESENTATION-THEOREM
-
-**Objective**
-
-Demonstrate that every reasoning process within the stated scope of Project FAR admits a representation within FARA.
-
-**Status**
-
-Research
+- current canonical definitions in `../definitions/definitions.md`;
+- current canonical axioms in `../axioms/axioms.md`;
+- applicable semantic scope in `../semantics/scope.md`;
+- any previously established propositions or theorems.
 
 ---
 
 # Established Theorems
 
-None.
+## T-001 — Conditional Primitive Minimality
+
+### Statement
+
+The current primitive architecture:
+
+```text
+{ Investigation, Representation, Representational Structure, Interpretation, Reasoning Calculus }
+```
+
+is minimal relative to the current Project FAR scope, definitions, and axioms.
+
+### Proof
+
+`../proofs/T-001-primitive-minimality.md`
+
+### Status
+
+Established, conditional.
+
+### Limitation
+
+This does not prove that no future lower-level theory can reduce the primitive set. It proves that deletion of any current primitive reduces expressive power under the current framework.
 
 ---
 
-# Research Status
+## T-002 — Conditional Primitive Independence
 
-Project FAR has not yet established any formal theorems.
+### Statement
 
-Current research is focused on:
+No current primitive is derivable from the other four without loss of expressive power under the current Project FAR reduction standard.
 
-- deriving non-primitive concepts;
-- verifying primitive independence;
-- establishing propositions; and
-- developing formal proofs.
+### Proof
 
-Theorems will be introduced only after a sufficient body of established propositions has been developed.
+`../proofs/T-002-primitive-independence.md`
+
+### Status
+
+Established, conditional.
+
+### Limitation
+
+This is framework-relative independence, not absolute metaphysical irreducibility.
+
+---
+
+## T-003 — Representation Theorem
+
+### Statement
+
+Every reasoning process within the stated scope of Project FAR admits a FAR representation of the form:
+
+```text
+<I, Rep, S, Int, C, T>
+```
+
+### Proof
+
+`../proofs/T-003-representation-theorem.md`
+
+### Status
+
+Established within Project FAR scope.
+
+### Limitation
+
+This applies only to explicit reasoning processes satisfying the scope criterion.
+
+---
+
+## T-004 — Semantic Preservation Theorem
+
+### Statement
+
+Every interpretation-preserving representation mapping preserves semantic content.
+
+### Proof
+
+`../proofs/T-004-semantic-preservation.md`
+
+### Status
+
+Established.
+
+### Limitation
+
+This gives a sufficient condition for semantic preservation, not a necessary condition.
+
+---
+
+## T-005 — Transition Completeness Theorem
+
+### Statement
+
+Every explicitly specified admissible reasoning transition within a scoped reasoning process can be represented by a transition signature.
+
+### Proof
+
+`../proofs/T-005-transition-completeness.md`
+
+### Status
+
+Established within scope.
+
+### Limitation
+
+This does not cover hidden or unspecified transitions unless reconstructed and made explicit.
+
+---
+
+# Planned Theorems
+
+## T-006 — FAR Model Homomorphism Preservation
+
+Demonstrate which properties are preserved under structure-preserving mappings between FAR models.
+
+Status: Research.
+
+## T-007 — Conservative Extension
+
+Define and prove conditions under which a new FAR subsystem extends the canonical theory without altering established results.
+
+Status: Research.
+
+## T-008 — Model Compression
+
+Define when two FAR representations can be compressed without loss of specified semantic or structural content.
+
+Status: Research.
