@@ -5,7 +5,7 @@ This script enforces the first machine-readable theory checks:
 
 - every theorem in metadata has required fields;
 - every theorem proof file exists;
-- every theorem listed in the catalog has a proof file;
+- every established theorem listed in the catalog has a proof file;
 - every established theorem has metadata;
 - dependencies resolve to known identifiers or known canonical resources;
 - theorem dependency graph has no cycles;
@@ -21,11 +21,10 @@ needs correction or the verifier needs an explicit whitelist entry.
 from __future__ import annotations
 
 import argparse
-import os
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Set, Tuple
+from typing import Any, Dict, Iterable, List, Set
 
 ROOT = Path(__file__).resolve().parents[1]
 THEOREM_METADATA = ROOT / "theory" / "metadata" / "theorems.yaml"
@@ -90,9 +89,27 @@ def registered_derived_concepts() -> Set[str]:
     return set(re.findall(r"\bD-\d{3}\b", text))
 
 
-def catalog_theorem_ids() -> Set[str]:
+def established_catalog_theorem_ids() -> Set[str]:
+    """Return theorem IDs only from the Established Theorems section.
+
+    The theorem catalog also contains planned research targets, such as T-016.
+    Planned theorem IDs should not be required to have proof files or established
+    metadata. This parser intentionally ignores everything after the Planned
+    Theorems heading.
+    """
+
     text = read_text(THEOREM_CATALOG)
-    return set(re.findall(r"\bT-\d{3}\b", text))
+    established_start = text.find("# Established Theorems")
+    if established_start == -1:
+        raise VerificationError("The theorem catalog is missing '# Established Theorems'.")
+
+    planned_start = text.find("# Planned Theorems", established_start)
+    if planned_start == -1:
+        section = text[established_start:]
+    else:
+        section = text[established_start:planned_start]
+
+    return set(re.findall(r"\bT-\d{3}\b", section))
 
 
 def proof_theorem_ids() -> Set[str]:
@@ -141,20 +158,20 @@ def validate_proof_files(theorems: List[Dict[str, Any]]) -> None:
 
 def validate_catalog_consistency(theorems: List[Dict[str, Any]]) -> None:
     metadata_ids = {item["id"] for item in theorems}
-    catalog_ids = catalog_theorem_ids()
+    established_catalog_ids = established_catalog_theorem_ids()
     proof_ids = proof_theorem_ids()
 
-    missing_metadata = sorted(catalog_ids - metadata_ids)
+    missing_metadata = sorted(established_catalog_ids - metadata_ids)
     if missing_metadata:
-        raise VerificationError(f"Theorem catalog ids missing metadata: {missing_metadata}")
+        raise VerificationError(f"Established theorem catalog ids missing metadata: {missing_metadata}")
 
-    missing_proofs = sorted(catalog_ids - proof_ids)
+    missing_proofs = sorted(established_catalog_ids - proof_ids)
     if missing_proofs:
-        raise VerificationError(f"Theorem catalog ids missing proof files: {missing_proofs}")
+        raise VerificationError(f"Established theorem catalog ids missing proof files: {missing_proofs}")
 
-    metadata_without_catalog = sorted(metadata_ids - catalog_ids)
+    metadata_without_catalog = sorted(metadata_ids - established_catalog_ids)
     if metadata_without_catalog:
-        raise VerificationError(f"Metadata theorem ids missing from catalog: {metadata_without_catalog}")
+        raise VerificationError(f"Metadata theorem ids missing from established theorem catalog: {metadata_without_catalog}")
 
 
 def validate_dependencies(theorems: List[Dict[str, Any]]) -> Dict[str, Set[str]]:
