@@ -1,0 +1,120 @@
+# Primitive sufficiency evidence registry for Project FAR v0.3.0.
+# Source baseline: v0.2.0 reasoning-system fixture evaluation summary.
+entries:
+  - id: PS-001
+    system: Classical logic
+    fixture: examples/far/reasoning-systems/classical-logic.far.yaml
+    classification: fits FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.2.0 baseline carried forward
+    notes: Primitive mapping completed in the v0.2.0 fixture; no separate primitive-sufficiency analysis has been performed.
+  - id: PS-002
+    system: First-order logic
+    fixture: examples/far/reasoning-systems/first-order-logic.far.yaml
+    classification: fits FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.2.0 baseline carried forward
+    notes: Primitive mapping completed in the v0.2.0 fixture; quantification-specific sufficiency remains to be analyzed.
+  - id: PS-003
+    system: Bayesian reasoning
+    fixture: examples/far/reasoning-systems/bayesian-reasoning.far.yaml
+    classification: fits FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.2.0 baseline carried forward
+    notes: Primitive mapping completed in the v0.2.0 fixture; probabilistic update sufficiency remains to be analyzed.
+  - id: PS-004
+    system: Scientific reasoning
+    fixture: examples/far/reasoning-systems/scientific-reasoning.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.2.0 baseline carried forward
+    notes: v0.2.0 classified the fixture as extending FAR; its extension requirements remain unresolved for v0.3.0.
+  - id: PS-005
+    system: Legal reasoning
+    fixture: examples/far/reasoning-systems/legal-reasoning.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.2.0 baseline carried forward
+    notes: v0.2.0 classified the fixture as extending FAR; authority and precedent handling remain unresolved for primitive sufficiency.
+  - id: PS-006
+    system: Abductive reasoning
+    fixture: examples/far/reasoning-systems/abductive-reasoning.far.yaml
+    classification: fits FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.2.0 baseline carried forward
+    notes: Primitive mapping completed in the v0.2.0 fixture; best-explanation selection remains to be analyzed.
+  - id: PS-007
+    system: Analogical reasoning
+    fixture: examples/far/reasoning-systems/analogical-reasoning.far.yaml
+    classification: fits FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.2.0 baseline carried forward
+    notes: Primitive mapping completed in the v0.2.0 fixture; analogy mapping criteria remain to be analyzed.
+  - id: PS-008
+    system: Non-monotonic reasoning
+    fixture: examples/far/reasoning-systems/non-monotonic-reasoning.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.2.0 baseline carried forward
+    notes: v0.2.0 classified the fixture as extending FAR; defeasibility policy remains unresolved for primitive sufficiency.
+  - id: PS-009
+    system: Self-reference
+    fixture: examples/far/reasoning-systems/self-reference.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.2.0 baseline carried forward
+    notes: v0.2.0 detected a dependency cycle; cycle semantics remain unresolved for primitive sufficiency.
+  - id: PS-010
+    system: Paradoxical reasoning
+    fixture: examples/far/reasoning-systems/paradox.far.yaml
+    classification: candidate counterexample
+    analysis_status: conservative extension
+    registry_resolution: conservative extension
+    confidence: provisional
+    review_status: analyzed in v0.2.0 baseline
+    notes: v0.2.0 resolved the candidate as requiring a specialized semantic policy rather than a sixth primitive.
+  - id: PS-011
+    system: Inconsistent calculus
+    fixture: examples/far/reasoning-systems/inconsistent-calculus.far.yaml
+    classification: candidate counterexample
+    analysis_status: conservative extension
+    registry_resolution: conservative extension
+    confidence: provisional
+    review_status: analyzed in v0.2.0 baseline
+    notes: v0.2.0 resolved non-explosive inconsistency as representable by a calculus policy rather than a sixth primitive.
+  - id: PS-012
+    system: Infinite reasoning
+    fixture: examples/far/reasoning-systems/infinite-reasoning.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.2.0 baseline carried forward
+    notes: v0.2.0 classified the fixture as extending FAR; finitary representation of infinite processes remains unresolved.
+  - id: PS-013
+    system: Opaque intuition or oracle reasoning
+    fixture: examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml
+    classification: candidate counterexample
+    analysis_status: outside FAR scope
+    registry_resolution: outside scope
+    confidence: provisional
+    review_status: analyzed in v0.2.0 baseline
+    notes: v0.2.0 resolved inaccessible oracle process as outside current FAR scope unless the hidden process is made explicit.
