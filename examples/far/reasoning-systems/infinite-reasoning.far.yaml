@@ -1,0 +1,73 @@
+investigation: Test whether infinite reasoning processes map into FAR primitives.
+
+reasoning_system:
+  system: Infinite reasoning
+  far_primitives:
+    Investigation: Determine whether reasoning with indefinitely extensible derivation can be represented by finite FAR fixtures plus a generation rule.
+    Representation: base case, successor rule, finite prefixes, and limit target
+    Representational Structure: successor and prefix-dependency relations
+    Interpretation: schematic interpretation of indefinitely extensible derivation
+    Reasoning Calculus: induction, coinduction, or limit-rule standards
+  verdict: extends FAR
+
+representations:
+  - id: base
+    kind: premise
+    content: Derivation step 0 exists.
+    statement:
+      kind: claim
+      subject: derivation step 0
+      predicate: exists
+      scope: infinite reasoning fixture
+      claim: Derivation step 0 exists.
+  - id: successor
+    kind: rule-schema
+    content: If derivation step n exists, derivation step n+1 exists.
+    statement:
+      kind: conditional
+      subject: derivation step n
+      predicate: implies derivation step n+1
+      scope: infinite reasoning fixture
+      claim: If step n exists, step n+1 exists.
+  - id: prefix
+    kind: conclusion
+    content: Any finite prefix is representable by repeated rule application.
+    statement:
+      kind: claim
+      subject: finite derivation prefix
+      predicate: is representable
+      scope: infinite reasoning fixture
+      claim: Any finite prefix is representable by repeated rule application.
+
+relations:
+  - id: rel1
+    type: supports
+    source: base
+    target: prefix
+  - id: rel2
+    type: supports
+    source: successor
+    target: prefix
+
+interpretations:
+  - representation: base
+    meaning: A finite starting point.
+  - representation: successor
+    meaning: A schematic generator for unbounded continuation.
+  - representation: prefix
+    meaning: A finite approximation to an infinite derivation.
+
+rules:
+  - id: prefix-generation
+    name: finite prefix generation
+    inputs: [base, successor]
+    output: prefix
+    condition: Generate any finite prefix without requiring an actually completed infinity.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: prefix-generation
+    target: state1
+    status: draft
+    order: 1
