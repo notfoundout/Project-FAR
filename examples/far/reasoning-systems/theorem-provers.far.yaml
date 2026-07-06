@@ -1,0 +1,73 @@
+investigation: Test whether theorem-prover reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Theorem provers
+  far_primitives:
+    Investigation: Determine whether mechanically checked theorem-prover derivations can be represented in FAR.
+    Representation: goals, tactics, proof states, lemmas, and proof certificates
+    Representational Structure: proof-state dependency graph
+    Interpretation: formal semantics of the object logic
+    Reasoning Calculus: kernel-checked inference rules
+  verdict: fits FAR
+
+representations:
+  - id: goal
+    kind: goal
+    content: Prove theorem T.
+    statement:
+      kind: claim
+      subject: theorem T
+      predicate: is the active proof goal
+      scope: theorem prover fixture
+      claim: Theorem T is the active proof goal.
+  - id: tactic
+    kind: transformation
+    content: Apply tactic k to reduce T to subgoal S.
+    statement:
+      kind: claim
+      subject: tactic k
+      predicate: reduces theorem T to subgoal S
+      scope: theorem prover fixture
+      claim: Tactic k reduces T to subgoal S.
+  - id: certificate
+    kind: conclusion
+    content: Kernel accepts the proof certificate for T.
+    statement:
+      kind: validation
+      subject: proof certificate for T
+      predicate: is accepted by the kernel
+      scope: theorem prover fixture
+      claim: The kernel accepts the proof certificate for T.
+
+relations:
+  - id: rel1
+    type: supports
+    source: goal
+    target: certificate
+  - id: rel2
+    type: supports
+    source: tactic
+    target: certificate
+
+interpretations:
+  - representation: goal
+    meaning: A formal theorem target inside an object logic.
+  - representation: tactic
+    meaning: A proof-state transformation whose output must be kernel-checkable.
+  - representation: certificate
+    meaning: A machine-checkable derivation accepted by the trusted kernel.
+
+rules:
+  - id: kernel-check
+    name: kernel proof checking
+    inputs: [goal, tactic]
+    output: certificate
+    condition: Accept only proof-state transitions validated by kernel rules.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: kernel-check
+    target: state1
+    status: draft
+    order: 1
