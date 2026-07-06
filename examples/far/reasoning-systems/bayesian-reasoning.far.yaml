@@ -1,0 +1,73 @@
+investigation: Test whether Bayesian reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Bayesian reasoning
+  far_primitives:
+    Investigation: Determine how evidence changes a probability assignment.
+    Representation: priors, likelihoods, evidence, and posterior probabilities
+    Representational Structure: probabilistic dependency relations
+    Interpretation: probabilistic meaning over hypotheses and evidence
+    Reasoning Calculus: Bayesian update standards
+  verdict: fits FAR
+
+representations:
+  - id: prior
+    kind: premise
+    content: P(H) = 0.5
+    statement:
+      kind: claim
+      subject: hypothesis H
+      predicate: has prior probability 0.5
+      scope: Bayesian fixture
+      claim: Hypothesis H has prior probability 0.5.
+  - id: evidence
+    kind: observation
+    content: Evidence E is observed.
+    statement:
+      kind: claim
+      subject: evidence E
+      predicate: is observed
+      scope: Bayesian fixture
+      claim: Evidence E is observed.
+  - id: posterior
+    kind: conclusion
+    content: P(H | E) is updated by Bayes rule.
+    statement:
+      kind: claim
+      subject: hypothesis H given evidence E
+      predicate: receives an updated posterior probability
+      scope: Bayesian fixture
+      claim: The posterior probability of H is updated after E.
+
+relations:
+  - id: rel1
+    type: supports
+    source: prior
+    target: posterior
+  - id: rel2
+    type: supports
+    source: evidence
+    target: posterior
+
+interpretations:
+  - representation: prior
+    meaning: A prior credence assigned before observing E.
+  - representation: evidence
+    meaning: New observed information.
+  - representation: posterior
+    meaning: A revised credence after conditionalization.
+
+rules:
+  - id: bayes-update
+    name: Bayesian update
+    inputs: [prior, evidence]
+    output: posterior
+    condition: Apply Bayes rule or conditionalization.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: bayes-update
+    target: state1
+    status: draft
+    order: 1
