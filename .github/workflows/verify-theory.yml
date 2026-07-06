@@ -58,6 +58,9 @@ jobs:
           python tools/evaluate_reasoning_systems.py
           python tools/evaluate_reasoning_systems.py --json >/tmp/far-reasoning-system-results.json
 
+      - name: Evaluate primitive sufficiency
+        run: python tools/evaluate_primitive_sufficiency.py
+
       - name: Check all proof objects
         run: |
           for proof in theory/proof-objects/T-*.proof.yaml; do
