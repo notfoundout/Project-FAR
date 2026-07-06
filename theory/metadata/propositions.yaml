@@ -1,0 +1,49 @@
+propositions:
+  - id: P-001
+    title: Representation Requirement
+    status: Established
+    source: theory/proofs/P-001-first-propositions.md
+    scope: scoped Project FAR reasoning processes
+    dependencies: [A1, D-REP]
+  - id: P-002
+    title: Structural Requirement
+    status: Established
+    source: theory/proofs/P-001-first-propositions.md
+    scope: scoped reasoning processes involving more than one representation
+    dependencies: [A2, D-REP, D-STRUCT]
+  - id: P-003
+    title: Semantic Relativity
+    status: Established
+    source: theory/proofs/P-001-first-propositions.md
+    scope: representations under interpretations
+    dependencies: [D-REP, D-INT]
+  - id: P-004
+    title: Investigation Relativity
+    status: Established
+    source: theory/proofs/P-001-first-propositions.md
+    scope: investigation-relative statuses
+    dependencies: [D-INV, D-INT, D-CALC]
+  - id: P-005
+    title: Calculus Relativity of Admissibility
+    status: Established
+    source: theory/proofs/P-001-first-propositions.md
+    scope: admissibility under a supplied calculus
+    dependencies: [D-CALC, D-INV]
+  - id: P-006
+    title: Syntax/Semantics Separation
+    status: Established
+    source: theory/proofs/P-001-first-propositions.md
+    scope: structural and semantic equivalence claims
+    dependencies: [D-STRUCT, D-INT, P-003]
+  - id: P-007
+    title: Trace/Process Distinction
+    status: Established
+    source: theory/proofs/P-001-first-propositions.md
+    scope: reasoning traces and represented reasoning processes
+    dependencies: [D-REP, D-STRUCT, D-CALC]
+  - id: P-008
+    title: Resolution Dependence
+    status: Established
+    source: theory/proofs/P-001-first-propositions.md
+    scope: resolution execution under a reasoning calculus
+    dependencies: [D-CALC, D-STRUCT]
