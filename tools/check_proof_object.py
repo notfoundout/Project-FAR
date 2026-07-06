@@ -46,7 +46,7 @@ STOP_WORDS = {
     "let", "of", "or", "that", "the", "then", "this", "to", "under", "when", "with",
 }
 SEMANTIC_TERMS = {"semantic", "semantics", "meaning", "interpretation", "interpreted", "equivalence", "content"}
-CONDITIONAL_TERMS = {"if", "then", "implies", "imply", "whenever", "condition", "conditional", "=>", "→"}
+CONDITIONAL_TERMS = {"if", "then", "implies", "imply", "whenever", "condition", "conditional", "=>", "->", "→"}
 ANTECEDENT_TERMS = {"is", "are", "holds", "given", "let", "for", "every", "condition", "satisfying"}
 ALLOWED_STATEMENT_KINDS = {
     "universal", "existential", "definitional", "definition", "conditional",
@@ -56,11 +56,10 @@ ALLOWED_STATEMENT_KINDS = {
 }
 
 
-
 def contains_term(text: str, term: str) -> bool:
     lowered = text.lower()
     lowered_term = term.lower()
-    if lowered_term in {"=>", "→"}:
+    if lowered_term in {"=>", "->", "→"}:
         return lowered_term in lowered
     return re.search(rf"\b{re.escape(lowered_term)}\b", lowered) is not None
 
@@ -69,7 +68,7 @@ def statement_text(value: Any) -> str:
     if isinstance(value, str):
         return value
     if isinstance(value, dict):
-        parts = [value.get(field, "") for field in ("subject", "predicate", "scope", "claim")]
+        parts = [value.get(field, "") for field in ("kind", "subject", "predicate", "scope", "claim")]
         return " ".join(str(part) for part in parts if part)
     return ""
 
@@ -93,7 +92,7 @@ def validate_statement_value(value: Any, location: str, errors: List[str]) -> st
     for field in ("subject", "predicate", "scope"):
         if field in value and not isinstance(value[field], str):
             errors.append(f"{location} statement {field} must be a string when present")
-    return claim
+    return statement_text(value)
 
 
 def metadata_statement_text(item: Dict[str, Any]) -> str:
@@ -118,6 +117,7 @@ def warn_on_weak_metadata_alignment(step_id: str, rule: str, step_statement: str
 
 def has_vocabulary(input_ids: List[str], statements: Dict[str, str], terms: Set[str]) -> bool:
     return any(contains_term(statements.get(input_id, ""), term) for input_id in input_ids for term in terms)
+
 
 def load_yaml(path: Path) -> Dict[str, Any]:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
