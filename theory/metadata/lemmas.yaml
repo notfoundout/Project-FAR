@@ -1,0 +1,49 @@
+lemmas:
+  - id: L-001
+    title: Representation Necessity
+    status: Established
+    source: theory/lemmas/core-lemmas.md
+    scope: scoped FAR reasoning satisfying Axiom 1
+    dependencies: [A1, D-REP]
+  - id: L-002
+    title: Structure Necessity
+    status: Established
+    source: theory/lemmas/core-lemmas.md
+    scope: participating representation collections satisfying Axiom 2
+    dependencies: [A2, D-STRUCT]
+  - id: L-003
+    title: Interpretation Necessity
+    status: Established
+    source: theory/lemmas/core-lemmas.md
+    scope: participating representations satisfying Axiom 3
+    dependencies: [A3, D-INT]
+  - id: L-004
+    title: Investigation Necessity
+    status: Established
+    source: theory/lemmas/core-lemmas.md
+    scope: scoped reasoning processes satisfying Axiom 4
+    dependencies: [A4, D-INV]
+  - id: L-005
+    title: Calculus Necessity
+    status: Established
+    source: theory/lemmas/core-lemmas.md
+    scope: scoped reasoning processes satisfying Axiom 5
+    dependencies: [A5, D-CALC]
+  - id: L-006
+    title: Canonical Role Pairing
+    status: Established
+    source: theory/lemmas/core-lemmas.md
+    scope: canonical FAR representations of the same scoped reasoning process
+    dependencies: [D-REP, D-STRUCT, D-INT, D-CALC]
+  - id: L-007
+    title: Finite Normalization Termination
+    status: Established
+    source: theory/lemmas/core-lemmas.md
+    scope: finite FAR representations under terminating normalization steps
+    dependencies: [D-REP, D-STRUCT, D-INT, D-CALC]
+  - id: L-008
+    title: Transition Signature Construction
+    status: Established
+    source: theory/lemmas/core-lemmas.md
+    scope: explicit admissible transitions with source, target, rule, and status
+    dependencies: [D-REP, D-STRUCT, D-CALC]
