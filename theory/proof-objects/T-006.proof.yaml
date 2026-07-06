@@ -1,0 +1,53 @@
+id: PO-T-006
+
+theorem: T-006
+
+status: draft
+
+premises:
+  - id: p1
+    source: T-006 statement
+    statement: Let d be an arbitrary concept in RegisteredDerivedConcepts.
+  - id: p2
+    source: derived-concept-registry
+    statement: Every registered derived concept has a finite derivation path from primitives in P or from previously registered derived concepts.
+  - id: p3
+    source: T-006 primitive architecture
+    statement: P = {Investigation, Representation, Representational Structure, Interpretation, Reasoning Calculus}.
+  - id: p4
+    source: induction principle over registry depth
+    statement: If every concept at registry depth n or lower is constructible from P, then any concept at depth n + 1 deriving from those concepts is constructible from P by substitution.
+
+steps:
+  - id: s1
+    rule: definition_unfolding
+    inputs: [p1, p2]
+    statement: d has a finite registry derivation path from P or from previously registered derived concepts.
+    justification: Unfolds the registry rule for an arbitrary registered derived concept d.
+  - id: s2
+    rule: definition_unfolding
+    inputs: [p2, p3]
+    statement: If d is first-level, then d is constructible directly from one or more primitives in P.
+    justification: A first-level registered concept has a derivation path directly from primitives in P.
+  - id: s3
+    rule: definition_unfolding
+    inputs: [p4]
+    statement: If d has registry depth n + 1 and its prior derived dependencies are constructible from P, then d is constructible from P by finite definitional substitution.
+    justification: The induction step substitutes each prior primitive construction into the derivation path for d.
+  - id: s4
+    rule: conjunction_intro
+    inputs: [s2, s3]
+    statement: Every registered derived concept is constructible from P at the base registry level and at each successor registry depth.
+    justification: Combines the base case and induction step over registry depth.
+  - id: s5
+    rule: universal_instantiation
+    inputs: [p1, s1, s4]
+    statement: Every d in RegisteredDerivedConcepts is constructible from P by finite definitional substitution.
+    justification: Since d was arbitrary and the registry derivation is finite, the induction over registry depth covers every registered derived concept.
+  - id: s6
+    rule: definition_unfolding
+    inputs: [s5]
+    statement: Every registered non-primitive concept in Project FAR is constructible from the primitive architecture.
+    justification: RegisteredDerivedConcepts is the covered set of registered non-primitive concepts under the registry-relative theorem statement.
+
+conclusion: Every registered non-primitive concept in Project FAR is constructible from the primitive architecture.
