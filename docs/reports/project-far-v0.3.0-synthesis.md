@@ -152,12 +152,37 @@ The adversarial suite currently stands as follows:
 
 This assessment is provisional and limited to the current corpus, registries, and analysis artifacts.
 
+## Cross-Domain Audit Results
+
+The cross-domain audit found broad consistency across analyzed classifications. Modal, temporal, dynamic, and hybrid cases are consistently treated as indexed or transition-oriented conservative extensions. SAT solving and theorem provers are consistently treated as fitting FAR because their current evidence is explicit, auditable, and machine-checkable. Type theory and intuitionistic logic are consistently treated as conservative proof/admissibility disciplines. Borderline clusters remain documented for Bayesian/probabilistic/fuzzy reasoning, self-reference/paradox/reflection, and legal/deontic reasoning where related systems have different analysis depth.
+
+## Primitive Independence Summary
+
+The v0.3.0 independence analysis records all five primitives as provisionally independent under current repository evidence:
+
+| Primitive | Independence Status | Main Removal Failure |
+|---|---|---|
+| Investigation | independent | Loss of reasoning-episode scope and provenance boundary. |
+| Representation | independent | Loss of explicit content for structure, interpretation, and calculus. |
+| Representational Structure | independent | Loss of relations among represented items. |
+| Interpretation | independent | Loss of domain meaning, satisfaction, semantic, normative, or probabilistic assignment. |
+| Reasoning Calculus | independent | Loss of admissible transformation, inference, update, and transition rules. |
+
+## Minimality Summary
+
+The minimality analysis classifies each primitive as `currently necessary`. Candidate reductions and mergers are not accepted because they collapse distinctions used throughout the v0.3.0 evaluation: content versus relation, relation versus meaning, meaning versus admissible transformation, and scoped investigation versus represented material. The current evidence supports provisional non-redundancy, not a final proof of minimality.
+
+## Internal Consistency Summary
+
+The internal consistency report records machine-supported validation for theorem dependency checks, proof-object validation through the theory verifier, registry validation, circularity checks, notation checks, theorem-index generation, reasoning-system fixture evaluation, primitive-sufficiency evaluation, adversarial-suite evaluation, evaluation/reporting consistency checks, FAR example parsing, and reasoning-engine smoke tests. Cross-domain consistency, independence, and minimality are documented as manual reviews rather than machine proofs.
+
+## Final v0.3.0 Conclusion
+
+No analyzed case currently establishes the need for a sixth primitive. Each primitive currently appears independently necessary under the repository's evaluations. Minimality is provisionally supported but not formally proven. The result remains subject to future falsification.
+
+Project FAR v0.3.0 is therefore ready to freeze as an internal primitive-sufficiency evaluation baseline, not as a proof that FAR is universal.
+
 ## Limitations
 
 The corpus is finite. Coverage is incomplete. Future reasoning systems may exhibit pressures not present in the current fixtures or adversarial suite. Future falsification remains possible, especially around self-modifying calculi, opaque automation, infinite processes, and currently unresolved carried-forward systems. Several analyses remain unresolved rather than rejected, so absence of a sixth primitive in the current evidence is not proof of final sufficiency.
 
-## Conclusions
-
-Project FAR v0.3.0 produced the first comprehensive synthesis of the evidence gathered so far. Project FAR now possesses formal theory, machine-readable metadata, proof infrastructure, reasoning-engine support, an evidence registry, an adversarial methodology, and primitive sufficiency evaluation.
-
-The result is not a proof that the hypothesis is universally true. It is a provisional evidence assessment: current analyzed cases are compatible with the five-primitive architecture, while unresolved pressures remain open for future work.

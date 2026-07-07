@@ -1,44 +1,54 @@
 # Project FAR v0.3.0
 
-# Highlights
+## Highlights
 
-- First comprehensive Project FAR synthesis report: [Project FAR v0.3.0 Synthesis Report](../reports/project-far-v0.3.0-synthesis.md).
-- Updated primitive sufficiency report: [Primitive Sufficiency Evaluation Report](../reports/primitive-sufficiency-report.md).
-- Release overview: [Project FAR v0.3.0](project-far-v0.3.0.md).
+Project FAR v0.3.0 completes the internal primitive-sufficiency evaluation baseline for the current five-primitive architecture.
 
-# Theory
+Highlights include:
 
-No primitive, definition, axiom, theorem, or proof-object changes are included. The release summarizes existing theory and derived-concept evidence only.
+- 23 reasoning systems summarized;
+- 14 adversarial tests summarized;
+- cross-domain consistency audit;
+- primitive independence analysis;
+- primitive minimality analysis;
+- internal consistency report;
+- final v0.3.0 release and theory-freeze documentation.
 
-# Evaluation
+## What Changed
 
-- 23 reasoning systems summarized.
-- Expanded v0.3.0 fixture analysis synthesized.
-- Candidate counterexamples summarized without reclassifying them beyond the current registries.
+- Added cross-domain consistency evaluation and report.
+- Added primitive independence analysis.
+- Added primitive minimality analysis.
+- Added internal consistency reporting.
+- Updated primitive-sufficiency and synthesis reports with final v0.3.0 status.
+- Added a lightweight evaluation/reporting consistency checker.
+- Added final release documentation and v0.3.0 freeze note.
 
-# Evidence
+## Evaluation
 
-- Evidence registry status summarized.
-- Pressure registry status summarized.
-- 14 adversarial tests summarized.
-- Current candidate primitive failure count: 0.
+The current registry summarizes 23 reasoning systems. Analyzed systems either fit FAR, require conservative extensions, remain unresolved, or fall outside current scope. No analyzed case currently establishes the need for a sixth primitive.
 
-# Tooling
+The adversarial suite summarizes 14 tests: 3 resolved by existing primitives, 10 conservative extensions, 1 unresolved pressure, and 0 candidate primitive failures.
 
-No parser, reasoning-engine, metadata, or CI changes are included. Validation uses existing tools only.
+## Evidence Status
 
-# Remaining Challenges
+The current evidence supports provisional primitive sufficiency and provisional non-redundancy for the five primitives. It does not prove FAR universal, does not formally prove primitive independence, and does not formally prove minimality.
 
-- Ten unresolved reasoning-system cases remain in the evidence registry.
-- One unresolved adversarial pressure remains: self-modifying reasoning.
-- Future reasoning systems may still falsify the current primitive-sufficiency hypothesis.
+## Internal Consistency
 
-# Breaking Changes
+Validation covers theory verification, dependency checks, registry checks, notation checks, circularity checks, theorem-index generation, reasoning-system evaluation, primitive-sufficiency evaluation, adversarial-suite evaluation, evaluation/reporting consistency, FAR example parsing, and reasoning-engine smoke tests.
+
+## Breaking Changes
 
 None.
 
-# Next Steps
+## Known Limitations
 
-- Continue focused v0.4.0 analysis of unresolved cases.
-- Evaluate self-modifying reasoning against conservative transition policies.
-- Expand adversarial coverage without introducing unsupported theory.
+- Ten reasoning-system cases remain unresolved.
+- Self-modifying reasoning remains an unresolved adversarial pressure.
+- Independence and minimality are provisional, not formal proofs.
+- Future systems may falsify current conclusions.
+
+## Next Steps
+
+v0.4.0 should treat v0.3.0 as the internal validation baseline before external validation. Future work should resolve remaining pressures, deepen self-modifying reasoning analysis, and avoid silently rewriting v0.3.0 conclusions.
