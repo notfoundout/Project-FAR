@@ -1,5 +1,5 @@
 # Project FAR v0.4.0 external validation registry.
-# Initial hard-system batch.
+# External validation batches 1 and 2.
 entries:
   - id: EV-001
     system: Higher-order logic
@@ -81,3 +81,83 @@ entries:
     confidence: provisional
     review_status: initial v0.4.0 analysis
     notes: Program-indexed modalities require indexed interpretation and transition semantics within existing primitives.
+  - id: EV-011
+    system: SMT solving
+    domain: automated reasoning
+    report: theory/evaluation/external-systems/smt-solving.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: SMT extends SAT with background theories; this stresses Interpretation and Reasoning Calculus but does not indicate a new primitive.
+  - id: EV-012
+    system: Hoare logic
+    domain: program verification
+    report: theory/evaluation/external-systems/hoare-logic.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Program-state semantics and invariants require domain-specific structure and calculus.
+  - id: EV-013
+    system: Linear logic
+    domain: logic
+    report: theory/evaluation/external-systems/linear-logic.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Resource-sensitive reasoning requires specialized structural rules and calculus policy.
+  - id: EV-014
+    system: Relevance logic
+    domain: logic
+    report: theory/evaluation/external-systems/relevance-logic.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Relevance constraints are admissibility policies encoded by structure and calculus.
+  - id: EV-015
+    system: Probabilistic programming
+    domain: probabilistic modeling
+    report: theory/evaluation/external-systems/probabilistic-programming.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Hybrid program and probability semantics require conservative extensions but no sixth primitive.
+  - id: EV-016
+    system: Reinforcement-learning planning
+    domain: AI planning
+    report: theory/evaluation/external-systems/reinforcement-learning-planning.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Planning under reward and transition uncertainty requires decision-theoretic calculus.
+  - id: EV-017
+    system: Multi-agent reasoning
+    domain: AI and epistemic logic
+    report: theory/evaluation/external-systems/multi-agent-reasoning.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Agent-indexed context and interaction semantics require indexed structure and interpretation.
+  - id: EV-018
+    system: Argumentation frameworks
+    domain: argumentation theory
+    report: theory/evaluation/external-systems/argumentation-frameworks.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Graph-governed admissibility is representable through structure, interpretation, and calculus.
+  - id: EV-019
+    system: Constraint solving
+    domain: automated reasoning
+    report: theory/evaluation/external-systems/constraint-solving.md
+    classification: fits FAR
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Explicit variables, domains, constraints, assignments, and solver transitions map directly to FAR.
+  - id: EV-020
+    system: Scientific hypothesis testing
+    domain: science and statistics
+    report: theory/evaluation/external-systems/scientific-hypothesis-testing.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Statistical interpretation and evidential decision rules are conservative extensions of Interpretation and Reasoning Calculus.
