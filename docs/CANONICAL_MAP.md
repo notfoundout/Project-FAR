@@ -1,5 +1,7 @@
 # Canonical Map
 
+
+- [`docs/maintenance/repository-health-checks.md`](maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
 ## Purpose
 
 This document identifies the canonical location of major Project FAR concepts and framework documents.

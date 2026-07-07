@@ -73,3 +73,26 @@ Reference any relevant documents.
 - [ ] Documentation updated.
 - [ ] Examples updated (if necessary).
 - [ ] Validation updated (if necessary).
+
+---
+
+## Validation
+
+- [ ] `python tools/repo_health_check.py --fast` passes
+- [ ] Internal links pass
+- [ ] Math displays render
+- [ ] Release docs are consistent if release-facing files changed
+- [ ] No broken image or math-display links were introduced
+- [ ] No orphaned documentation was introduced unless intentional
+- [ ] No theory meaning changed unless explicitly intended
+- [ ] No primitives, axioms, theorem statements, proof objects, parser behavior, reasoning-engine behavior, or metadata schemas changed unless explicitly intended
+
+## Scope
+
+Describe whether this PR is:
+- theory
+- tooling
+- docs
+- evaluation
+- release
+- cleanup

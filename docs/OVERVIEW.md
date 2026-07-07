@@ -1,5 +1,7 @@
 # Overview
 
+
+- [`docs/maintenance/repository-health-checks.md`](maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
 ## Purpose
 
 This document provides an overview of Project FAR.
