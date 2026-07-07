@@ -37,6 +37,9 @@ jobs:
       - name: Check circularity
         run: python tools/check_circularity.py
 
+      - name: Check internal links
+        run: python tools/check_internal_links.py
+
       - name: Generate theorem index smoke test
         run: python tools/generate_theorem_index.py
 

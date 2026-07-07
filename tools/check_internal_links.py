@@ -11,8 +11,10 @@ ROOT = Path(__file__).resolve().parents[1]
 SUFFIXES = {".md", ".yaml", ".yml"}
 SKIP_DIRS = {".git", ".github"}
 MARKDOWN_LINK = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
+MARKDOWN_IMAGE = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
 HTML_LINK = re.compile(r"(?:href|src)=[\"']([^\"']+)[\"']")
-YAML_PATH = re.compile(r"(?:^|\s)([A-Za-z0-9_.-]+/[A-Za-z0-9_./-]+)")
+YAML_KEY_VALUE = re.compile(r"^\s*-?\s*([A-Za-z0-9_.-]+)\s*:\s*(.+?)\s*$")
+PATH_WITH_EXTENSION = re.compile(r"(?<![A-Za-z0-9_./-])([A-Za-z0-9_./-]+\.(?:md|png|svg|pdf|tex|jpg|jpeg|gif))(?![A-Za-z0-9_./-])")
 
 
 def is_external(link: str) -> bool:
@@ -21,7 +23,7 @@ def is_external(link: str) -> bool:
 
 
 def clean_link(link: str) -> str:
-    link = link.strip()
+    link = link.strip().strip('"\'')
     if link.startswith("<") and link.endswith(">"):
         link = link[1:-1]
     return link.split("#", 1)[0].split("?", 1)[0]
@@ -38,13 +40,40 @@ def iter_files() -> list[Path]:
     return sorted(files)
 
 
+def extract_yaml_links(line: str) -> list[str]:
+    match = YAML_KEY_VALUE.match(line)
+    if not match:
+        return []
+    key, value = match.groups()
+    value = value.split(" #", 1)[0].strip().rstrip(",")
+    if not value or value in {"[]", "{}"}:
+        return []
+    links: list[str] = []
+    links.extend(match.group(1) for match in PATH_WITH_EXTENSION.finditer(value))
+    # Preserve order while avoiding duplicate reports from key/value matches.
+    return list(dict.fromkeys(links))
+
+
 def extract_links(path: Path, line: str) -> list[str]:
     links: list[str] = []
-    for pattern in (MARKDOWN_LINK, HTML_LINK):
+    for pattern in (MARKDOWN_IMAGE, MARKDOWN_LINK, HTML_LINK):
         links.extend(match.group(1) for match in pattern.finditer(line))
     if path.suffix.lower() in {".yaml", ".yml"}:
-        links.extend(match.group(1).rstrip(",.;)]}") for match in YAML_PATH.finditer(line))
+        links.extend(extract_yaml_links(line))
     return links
+
+
+def resolve_target(path: Path, link: str) -> Path:
+    decoded = unquote(link)
+    if decoded.startswith("/"):
+        return ROOT / decoded.lstrip("/")
+    relative_target = (path.parent / decoded).resolve()
+    if relative_target.exists():
+        return relative_target
+    root_target = (ROOT / decoded).resolve()
+    if root_target.exists():
+        return root_target
+    return relative_target
 
 
 def check() -> list[str]:
@@ -59,7 +88,7 @@ def check() -> list[str]:
                 link = clean_link(raw)
                 if not link or is_external(link):
                     continue
-                target = ROOT / link.lstrip("/") if link.startswith("/") else (path.parent / unquote(link)).resolve()
+                target = resolve_target(path, link)
                 try:
                     rel_target = target.relative_to(ROOT)
                 except ValueError:
@@ -75,6 +104,7 @@ def main() -> int:
         print("INTERNAL LINK CHECK FAILED")
         for item in broken:
             print(f"- {item}")
+        print(f"Broken links: {len(broken)}")
         return 1
     print("INTERNAL LINK CHECK PASSED")
     return 0
