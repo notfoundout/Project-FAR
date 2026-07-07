@@ -1,0 +1,83 @@
+# Project FAR v0.4.0 external validation registry.
+# Initial hard-system batch.
+entries:
+  - id: EV-001
+    system: Higher-order logic
+    domain: logic
+    report: theory/evaluation/external-systems/higher-order-logic.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: initial v0.4.0 analysis
+    notes: Higher-order quantification maps to representations, indexed interpretation, and calculus policy; no sixth primitive is currently indicated.
+  - id: EV-002
+    system: Lean
+    domain: formal verification
+    report: theory/evaluation/external-systems/lean.md
+    classification: fits FAR
+    confidence: provisional
+    review_status: initial v0.4.0 analysis
+    notes: Kernel-checked terms, goals, contexts, tactics, and proof objects map directly to FAR reasoning artifacts.
+  - id: EV-003
+    system: Coq
+    domain: formal verification
+    report: theory/evaluation/external-systems/coq.md
+    classification: fits FAR
+    confidence: provisional
+    review_status: initial v0.4.0 analysis
+    notes: Calculus-governed proof construction and kernel validation map directly to FAR primitives.
+  - id: EV-004
+    system: ZFC set theory
+    domain: mathematics
+    report: theory/evaluation/external-systems/zfc.md
+    classification: fits FAR
+    confidence: provisional
+    review_status: initial v0.4.0 analysis
+    notes: First-order axiomatic set theory maps through formulas, models, axioms, and derivation rules.
+  - id: EV-005
+    system: Type theory
+    domain: logic and foundations
+    report: theory/evaluation/external-systems/type-theory.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: initial v0.4.0 analysis
+    notes: Dependent contexts, judgments, and construction semantics require domain-specific interpretation and calculus but no new primitive.
+  - id: EV-006
+    system: Category theory
+    domain: mathematics
+    report: theory/evaluation/external-systems/category-theory.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: initial v0.4.0 analysis
+    notes: Diagrammatic structure and universal properties require specialized representational structure and interpretation.
+  - id: EV-007
+    system: Bayesian inference
+    domain: probability and science
+    report: theory/evaluation/external-systems/bayesian-inference.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: initial v0.4.0 analysis
+    notes: Probability assignments and update rules require quantitative interpretation and calculus policy.
+  - id: EV-008
+    system: SAT/CDCL solving
+    domain: automated reasoning
+    report: theory/evaluation/external-systems/sat-cdcl.md
+    classification: fits FAR
+    confidence: provisional
+    review_status: initial v0.4.0 analysis
+    notes: Clauses, assignments, implication graphs, learned clauses, and certificates map directly to explicit FAR reasoning traces.
+  - id: EV-009
+    system: AGM belief revision
+    domain: epistemic logic
+    report: theory/evaluation/external-systems/agm-belief-revision.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: initial v0.4.0 analysis
+    notes: Belief states and revision postulates require a state-transition calculus but no new primitive.
+  - id: EV-010
+    system: Dynamic logic
+    domain: logic and programs
+    report: theory/evaluation/external-systems/dynamic-logic.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: initial v0.4.0 analysis
+    notes: Program-indexed modalities require indexed interpretation and transition semantics within existing primitives.
