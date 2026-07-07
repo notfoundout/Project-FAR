@@ -121,90 +121,90 @@ entries:
   - id: PS-014
     system: Modal logic
     fixture: examples/far/reasoning-systems/modal-logic.far.yaml
-    classification: extends FAR
-    analysis_status: not analyzed
-    registry_resolution: unresolved
-    confidence: provisional
-    review_status: v0.3.0 expanded fixture added
-    notes: World-indexed semantics and accessibility relations require sufficiency analysis.
+    classification: conservative extension
+    analysis_status: analyzed
+    registry_resolution: conservative extension
+    confidence: medium
+    review_status: analyzed in v0.3.0 expanded fixture analysis
+    notes: World-indexed semantics are represented by indexed interpretation plus accessibility structure; no sixth primitive indicated.
   - id: PS-015
     system: Temporal logic
     fixture: examples/far/reasoning-systems/temporal-logic.far.yaml
-    classification: extends FAR
-    analysis_status: not analyzed
-    registry_resolution: unresolved
-    confidence: provisional
-    review_status: v0.3.0 expanded fixture added
-    notes: Temporal indexing and path semantics require sufficiency analysis.
+    classification: conservative extension
+    analysis_status: analyzed
+    registry_resolution: conservative extension
+    confidence: medium
+    review_status: analyzed in v0.3.0 expanded fixture analysis
+    notes: Temporal positions and path semantics are indexed interpretation and ordered representational structure.
   - id: PS-016
     system: Deontic logic
     fixture: examples/far/reasoning-systems/deontic-logic.far.yaml
-    classification: extends FAR
-    analysis_status: not analyzed
-    registry_resolution: unresolved
-    confidence: provisional
-    review_status: v0.3.0 expanded fixture added
-    notes: Norm conflicts, permissions, obligations, and contrary-to-duty cases require sufficiency analysis.
+    classification: conservative extension
+    analysis_status: analyzed
+    registry_resolution: conservative extension
+    confidence: medium
+    review_status: analyzed in v0.3.0 expanded fixture analysis
+    notes: Obligation, permission, and conflict handling require normative interpretation and conflict calculus, not a sixth primitive.
   - id: PS-017
     system: Intuitionistic logic
     fixture: examples/far/reasoning-systems/intuitionistic-logic.far.yaml
-    classification: extends FAR
-    analysis_status: not analyzed
-    registry_resolution: unresolved
-    confidence: provisional
-    review_status: v0.3.0 expanded fixture added
-    notes: Constructive proof standards and rejection of unrestricted excluded middle require sufficiency analysis.
+    classification: conservative extension
+    analysis_status: analyzed
+    registry_resolution: conservative extension
+    confidence: medium
+    review_status: analyzed in v0.3.0 expanded fixture analysis
+    notes: Constructive proof standards are admissibility constraints in the reasoning calculus over proof representations.
   - id: PS-018
     system: Fuzzy logic
     fixture: examples/far/reasoning-systems/fuzzy-logic.far.yaml
-    classification: extends FAR
-    analysis_status: not analyzed
-    registry_resolution: unresolved
-    confidence: provisional
-    review_status: v0.3.0 expanded fixture added
-    notes: Degree-valued interpretation and threshold calculus require sufficiency analysis.
+    classification: conservative extension
+    analysis_status: analyzed
+    registry_resolution: conservative extension
+    confidence: medium
+    review_status: analyzed in v0.3.0 expanded fixture analysis
+    notes: Degree-valued truth is an interpretation policy with threshold or t-norm calculus; no primitive counterexample found.
   - id: PS-019
     system: Causal reasoning
     fixture: examples/far/reasoning-systems/causal-reasoning.far.yaml
-    classification: extends FAR
-    analysis_status: not analyzed
-    registry_resolution: unresolved
-    confidence: provisional
-    review_status: v0.3.0 expanded fixture added
-    notes: Intervention semantics and causal graph structure require sufficiency analysis.
+    classification: conservative extension
+    analysis_status: analyzed
+    registry_resolution: conservative extension
+    confidence: medium
+    review_status: analyzed in v0.3.0 expanded fixture analysis
+    notes: Causal graphs and interventions require structured counterfactual/update rules, representable as structure plus calculus.
   - id: PS-020
     system: Type theory
     fixture: examples/far/reasoning-systems/type-theory.far.yaml
-    classification: extends FAR
-    analysis_status: not analyzed
-    registry_resolution: unresolved
-    confidence: provisional
-    review_status: v0.3.0 expanded fixture added
-    notes: Context-sensitive judgments, terms, types, and proof objects require sufficiency analysis.
+    classification: conservative extension
+    analysis_status: analyzed
+    registry_resolution: conservative extension
+    confidence: medium
+    review_status: analyzed in v0.3.0 expanded fixture analysis
+    notes: Judgments, contexts, and derivations are explicit representations governed by typing calculus.
   - id: PS-021
     system: Theorem provers
     fixture: examples/far/reasoning-systems/theorem-provers.far.yaml
     classification: fits FAR
-    analysis_status: not analyzed
-    registry_resolution: unresolved
-    confidence: provisional
-    review_status: v0.3.0 expanded fixture added
-    notes: Kernel-checked proof traces appear to map directly, but proof assistant variation requires analysis.
+    analysis_status: analyzed
+    registry_resolution: fits FAR
+    confidence: high
+    review_status: analyzed in v0.3.0 expanded fixture analysis
+    notes: Kernel-checked proof traces directly instantiate representations, proof-state structure, interpretation, and calculus.
   - id: PS-022
     system: SAT solving
     fixture: examples/far/reasoning-systems/sat-solving.far.yaml
     classification: fits FAR
-    analysis_status: not analyzed
-    registry_resolution: unresolved
-    confidence: provisional
-    review_status: v0.3.0 expanded fixture added
-    notes: Boolean valuation and certificate checking appear to map directly, but solver-search traces require analysis.
+    analysis_status: analyzed
+    registry_resolution: fits FAR
+    confidence: high
+    review_status: analyzed in v0.3.0 expanded fixture analysis
+    notes: Formula valuation, clause structure, assignment checking, and certificates directly instantiate FAR primitives.
   - id: PS-023
     system: Category-theoretic reasoning
     fixture: examples/far/reasoning-systems/category-theoretic-reasoning.far.yaml
-    classification: extends FAR
-    analysis_status: not analyzed
-    registry_resolution: unresolved
-    confidence: provisional
-    review_status: v0.3.0 expanded fixture added
-    notes: Diagrammatic structure, morphism composition, and universal properties require sufficiency analysis.
+    classification: conservative extension
+    analysis_status: analyzed
+    registry_resolution: conservative extension
+    confidence: medium
+    review_status: analyzed in v0.3.0 expanded fixture analysis
+    notes: Objects, morphisms, diagrams, and universal properties are representational structures plus categorical interpretation and calculus.

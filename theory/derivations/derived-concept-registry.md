@@ -90,6 +90,16 @@ These concepts were added after candidate-counterexample analysis in `theory/fal
 
 ---
 
+# Expanded-Fixture Derived Concepts
+
+These concepts were added after v0.3.0 expanded fixture analysis in `theory/evaluation/expanded-fixture-analysis.md`. They record recurring pressure points that appear across multiple reasoning systems while remaining constructible from the five primitives.
+
+| ID | Concept | Definition | Derivation Path | Dependency Chain | Affected Reasoning Systems |
+|---|---|---|---|---|---|
+| D-033 | Indexed Interpretation | Interpretation policy that evaluates a representation relative to an explicit index such as world, time, path, context, degree, or model point. | PR-004 applied to PR-002 under PR-003 index relations within PR-001; admissibility and transitions remain governed by PR-005. | PR-002 → PR-003 → PR-004, with D-001 and D-021 when satisfaction is evaluated at an index. | Modal Logic; Temporal Logic; Deontic Logic; Intuitionistic Logic; Fuzzy Logic; Type Theory |
+| D-034 | Constraint Transition System | Structured collection of constraints plus calculus-governed transformations that search, update, propagate, compose, or check admissible states. | PR-003 organizes constraint relations over PR-002 representations; PR-005 supplies transition rules; D-004, D-005, D-009, D-011, and D-012 record states and traces. | PR-002 → PR-003 → D-004; PR-005 → D-005 → D-009 → D-011 → D-012. | SAT Solving; Causal Reasoning; Type Theory; Theorem Provers; Category-Theoretic Reasoning |
+| D-035 | Modalized Admissibility | Admissibility judgment whose status depends on an explicit mode, norm, construction state, accessibility relation, or valuation degree rather than a single unindexed truth status. | D-006 evaluated under D-033 and selected PR-005 rules; no new primitive is added because the variation is carried by interpretation indices and calculus criteria. | D-033 → D-006, with PR-005 and D-021 for satisfaction-relative status. | Modal Logic; Temporal Logic; Deontic Logic; Intuitionistic Logic; Fuzzy Logic |
+
 # Hard-Case Analysis Links
 
 | Hard Case | Registry Concepts | Analysis Result |
@@ -114,6 +124,6 @@ If a term appears in Project FAR but does not appear in this registry, one of th
 
 # Current Sufficiency Result
 
-The current registry supports T-006 for D-001 through D-032.
+The current registry supports T-006 for D-001 through D-035.
 
 T-006 should not be read as covering unregistered future concepts.
