@@ -1,0 +1,141 @@
+tests:
+  - id: ADV-001
+    title: Higher-order Logic
+    reasoning_system: Higher-order Logic
+    hypothesis: Higher-order quantification may require representation of predicates over predicates without adding primitives.
+    primitive_under_pressure: Representation
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-002
+    title: Reflective Reasoning
+    reasoning_system: Reflective Reasoning
+    hypothesis: Reasoning about a reasoning process may stress interpretation and self-reference handling.
+    primitive_under_pressure: Interpretation
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-003
+    title: Self-Modifying Reasoning
+    reasoning_system: Self-Modifying Reasoning
+    hypothesis: Reasoning that changes its own rules may stress reasoning-calculus representation.
+    primitive_under_pressure: Reasoning Calculus
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-004
+    title: Probabilistic Programming
+    reasoning_system: Probabilistic Programming
+    hypothesis: Programs with probabilistic inference may stress representation of stochastic dependencies and execution traces.
+    primitive_under_pressure: Representational Structure
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-005
+    title: Belief Revision
+    reasoning_system: Belief Revision
+    hypothesis: Revision under new information may stress transitions between representations and calculi.
+    primitive_under_pressure: Reasoning Calculus
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-006
+    title: Argumentation Frameworks
+    reasoning_system: Argumentation Frameworks
+    hypothesis: Attack, defense, and acceptability relations may stress relational structure.
+    primitive_under_pressure: Representational Structure
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-007
+    title: Multi-Agent Reasoning
+    reasoning_system: Multi-Agent Reasoning
+    hypothesis: Interacting agents with distinct beliefs and goals may stress investigation boundaries.
+    primitive_under_pressure: Investigation
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-008
+    title: Interactive Theorem Proving
+    reasoning_system: Interactive Theorem Proving
+    hypothesis: Human-guided proof construction may stress the boundary between explicit reasoning and external intervention.
+    primitive_under_pressure: Investigation
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-009
+    title: Meta-Reasoning
+    reasoning_system: Meta-Reasoning
+    hypothesis: Reasoning about reasoning standards may stress interpretation and calculus layering.
+    primitive_under_pressure: Interpretation
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-010
+    title: Learning Systems
+    reasoning_system: Learning Systems
+    hypothesis: Model adaptation from data may stress whether learned updates are explicit reasoning.
+    primitive_under_pressure: Reasoning Calculus
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-011
+    title: Quantum Logic
+    reasoning_system: Quantum Logic
+    hypothesis: Non-classical lattice structure may stress representational structure.
+    primitive_under_pressure: Representational Structure
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-012
+    title: Dynamic Logic
+    reasoning_system: Dynamic Logic
+    hypothesis: Modal reasoning about programs and state changes may stress calculus and transition representation.
+    primitive_under_pressure: Reasoning Calculus
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-013
+    title: Hybrid Logic
+    reasoning_system: Hybrid Logic
+    hypothesis: Named worlds and satisfaction operators may stress interpretation across indexed contexts.
+    primitive_under_pressure: Interpretation
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
+  - id: ADV-014
+    title: Description Logic
+    reasoning_system: Description Logic
+    hypothesis: Concept-role structures and subsumption reasoning may stress representation and structure.
+    primitive_under_pressure: Representation
+    expected_outcome: pending analysis
+    observed_outcome: pending analysis
+    current_status: pending analysis
+    confidence: unknown
+    notes: Initial adversarial entry; no classification or conclusion has been made.
