@@ -60,3 +60,12 @@ Project FAR is guided by the following objectives.
 Project FAR remains an active research program.
 
 The architecture, methodology, comparative framework, and formal theory continue to undergo refinement, validation, and formalization.
+
+
+## Self-Advancement Planning
+
+- [Planning overview](planning/README.md)
+- [Generated project status](reports/project-status-generated.md)
+- [Research gap report](reports/research-gap-report.md)
+- [Next actions](planning/next-actions.md)
+- [Planner maintenance](maintenance/self-advancement-planner.md)
