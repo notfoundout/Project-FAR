@@ -1,5 +1,5 @@
 # Project FAR v0.4.0 external validation registry.
-# Initial hard-system batch.
+# External validation batches 1 and 2.
 entries:
   - id: EV-001
     system: Higher-order logic
@@ -81,3 +81,83 @@ entries:
     confidence: provisional
     review_status: initial v0.4.0 analysis
     notes: Program-indexed modalities require indexed interpretation and transition semantics within existing primitives.
+  - id: EV-011
+    system: SMT solving
+    domain: automated reasoning
+    report: theory/evaluation/external-systems/smt-solving.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Background theory solvers extend interpretation and calculus beyond SAT/CDCL without indicating a sixth primitive.
+  - id: EV-012
+    system: Hoare logic
+    domain: program verification
+    report: theory/evaluation/external-systems/hoare-logic.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Program-state semantics and invariant rules are conservative extensions of interpretation and reasoning calculus.
+  - id: EV-013
+    system: Linear logic
+    domain: logic
+    report: theory/evaluation/external-systems/linear-logic.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Resource-sensitive assumptions require structural and calculus policy, not a new primitive.
+  - id: EV-014
+    system: Relevance logic
+    domain: logic
+    report: theory/evaluation/external-systems/relevance-logic.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Relevance constraints are represented as dependency structure and admissibility rules.
+  - id: EV-015
+    system: Probabilistic programming
+    domain: probability and programming languages
+    report: theory/evaluation/external-systems/probabilistic-programming.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Program trace semantics and approximate probabilistic inference extend interpretation and calculus.
+  - id: EV-016
+    system: Reinforcement-learning planning
+    domain: AI planning
+    report: theory/evaluation/external-systems/reinforcement-learning-planning.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Value estimation, policy evaluation, and planning require quantitative temporal calculus but no sixth primitive.
+  - id: EV-017
+    system: Multi-agent reasoning
+    domain: AI and game theory
+    report: theory/evaluation/external-systems/multi-agent-reasoning.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Agent-indexed context and interaction structure extend representation structure and interpretation.
+  - id: EV-018
+    system: Argumentation frameworks
+    domain: defeasible reasoning
+    report: theory/evaluation/external-systems/argumentation-frameworks.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Attack/support graph semantics are conservative structural and calculational extensions.
+  - id: EV-019
+    system: Constraint solving
+    domain: automated reasoning
+    report: theory/evaluation/external-systems/constraint-solving.md
+    classification: fits FAR
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Variables, domains, constraints, propagators, and solutions map directly when solver transitions are explicit.
+  - id: EV-020
+    system: Scientific hypothesis testing
+    domain: science and statistics
+    report: theory/evaluation/external-systems/scientific-hypothesis-testing.md
+    classification: conservative extension
+    confidence: provisional
+    review_status: v0.4.0 batch 2 analysis
+    notes: Statistical interpretation and evidential decision rules are conservative extensions of interpretation and reasoning calculus.
