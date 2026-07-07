@@ -1,0 +1,51 @@
+primitives:
+  - primitive: Investigation
+    reasoning_systems_stressing_it:
+      - Multi-Agent Reasoning
+      - Interactive Theorem Proving
+    recurring_pressure_points:
+      - Boundaries between one investigation and interacting investigations.
+      - Boundary between explicit reasoning and external intervention.
+    derived_concepts_involved: []
+    current_assessment: pending analysis
+    confidence: unknown
+  - primitive: Representation
+    reasoning_systems_stressing_it:
+      - Higher-order Logic
+      - Description Logic
+    recurring_pressure_points:
+      - Representing predicates, concepts, roles, and higher-order objects without primitive expansion.
+    derived_concepts_involved: []
+    current_assessment: pending analysis
+    confidence: unknown
+  - primitive: Representational Structure
+    reasoning_systems_stressing_it:
+      - Probabilistic Programming
+      - Argumentation Frameworks
+      - Quantum Logic
+    recurring_pressure_points:
+      - Non-trivial dependency, attack-defense, and non-classical structural relations.
+    derived_concepts_involved: []
+    current_assessment: pending analysis
+    confidence: unknown
+  - primitive: Interpretation
+    reasoning_systems_stressing_it:
+      - Reflective Reasoning
+      - Meta-Reasoning
+      - Hybrid Logic
+    recurring_pressure_points:
+      - Interpreting reasoning about reasoning and indexed semantic contexts.
+    derived_concepts_involved: []
+    current_assessment: pending analysis
+    confidence: unknown
+  - primitive: Reasoning Calculus
+    reasoning_systems_stressing_it:
+      - Self-Modifying Reasoning
+      - Belief Revision
+      - Learning Systems
+      - Dynamic Logic
+    recurring_pressure_points:
+      - Rule change, revision policy, learning update, and program-transition reasoning.
+    derived_concepts_involved: []
+    current_assessment: pending analysis
+    confidence: unknown
