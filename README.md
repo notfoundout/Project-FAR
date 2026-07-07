@@ -11,7 +11,7 @@ This repository is organized as the Version 1.0 canonical architecture for the p
 
 ## Latest Release
 
-**Project FAR v0.2.0** — a release milestone for machine-readable proof infrastructure, theorem metadata, reasoning-system fixtures, falsification evidence, counterexample analysis, and hard-case derived concepts. See the canonical release document: [`docs/releases/project-far-v0.2.0.md`](docs/releases/project-far-v0.2.0.md).
+**Project FAR v0.3.0** evaluates primitive sufficiency across the current reasoning-system corpus and adversarial suite. It expands and analyzes the reasoning-system corpus, adds adversarial evaluation, and adds independence, minimality, and consistency analysis. See the canonical release document: [`docs/releases/project-far-v0.3.0.md`](docs/releases/project-far-v0.3.0.md).
 
 ---
 

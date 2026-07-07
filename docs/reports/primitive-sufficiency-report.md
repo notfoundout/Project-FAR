@@ -60,3 +60,23 @@ Status: Regenerated from `theory/evaluation/evidence-registry.yaml`, `theory/fal
 ## Current Conclusion
 
 The v0.3.0 evidence strengthens, but does not prove, the provisional primitive-sufficiency hypothesis. Current registries record 23 reasoning systems, 14 adversarial tests, 10 unresolved reasoning-system cases, 1 unresolved adversarial pressure, and 0 candidate primitive failures. No analyzed case currently requires a sixth primitive. Conservative extensions remain domain-specific policies, semantics, structures, or derived concepts expressible through the five primitives.
+
+## Cross-Domain Consistency Status
+
+The v0.3.0 cross-domain audit finds no direct classification contradiction among analyzed systems. Similar analyzed pressures are treated similarly: indexed or transition semantics are conservative extensions, explicit proof/SAT artifacts fit FAR, and opaque oracle reasoning remains outside current scope. Borderline cases remain documented where related systems have different analysis depth.
+
+## Primitive Independence Status
+
+The v0.3.0 independence analysis records all five primitives as currently `independent` in the repository-grounded sense that removing any one primitive creates a recurring failure mode not fully replaced by the other four. This is not a formal independence proof.
+
+## Minimality Status
+
+The v0.3.0 minimality analysis classifies each primitive as `currently necessary`. The current evidence supports provisional non-redundancy, not a final proof of minimality.
+
+## Internal Consistency Status
+
+The internal consistency report records machine checks for theorem dependencies, proof-object validation through the theory verifier, registry validation, circularity, notation, reasoning-system evaluation, primitive-sufficiency evaluation, adversarial-suite status, evaluation consistency, example parsing, and reasoning-engine smoke tests. Manual review is recorded for cross-domain consistency, independence, and minimality.
+
+## v0.3.0 Completion Status
+
+Project FAR v0.3.0 is ready to freeze as an internal primitive-sufficiency evaluation baseline. The freeze does not prove universal sufficiency. It records that no analyzed case currently establishes the need for a sixth primitive, that one adversarial pressure remains unresolved, and that future falsification remains possible.
