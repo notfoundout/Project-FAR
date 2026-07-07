@@ -1,5 +1,7 @@
 # Project FAR Status
 
+
+- [`docs/maintenance/repository-health-checks.md`](maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
 ## Current Status
 
 Project FAR has completed the v0.3.0 internal-validation milestone. The current baseline includes formal theory, machine-readable metadata, proof-object infrastructure, reasoning-system fixtures, primitive-sufficiency evaluation, adversarial evaluation, cross-domain consistency analysis, primitive independence analysis, minimality analysis, and synthesis reporting.

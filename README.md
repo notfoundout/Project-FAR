@@ -51,6 +51,7 @@ Future FARE mathematical work is requirement-driven:
 
 ## Primary Navigation
 
+- [`docs/maintenance/repository-health-checks.md`](docs/maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
 - [`docs/project-status.md`](docs/project-status.md) — Current project status and governance.
 - [`docs/CANONICAL_MAP.md`](docs/CANONICAL_MAP.md) — Linked canonical-location index.
 - [`docs/audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md`](docs/audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md) — Post-v1.0 repository audit.
