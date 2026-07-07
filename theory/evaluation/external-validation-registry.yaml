@@ -88,7 +88,7 @@ entries:
     classification: conservative extension
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
-    notes: SMT extends SAT with background theories; this stresses Interpretation and Reasoning Calculus but does not indicate a new primitive.
+    notes: Background theory solvers extend interpretation and calculus beyond SAT/CDCL without indicating a sixth primitive.
   - id: EV-012
     system: Hoare logic
     domain: program verification
@@ -96,7 +96,7 @@ entries:
     classification: conservative extension
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
-    notes: Program-state semantics and invariants require domain-specific structure and calculus.
+    notes: Program-state semantics and invariant rules are conservative extensions of interpretation and reasoning calculus.
   - id: EV-013
     system: Linear logic
     domain: logic
@@ -104,7 +104,7 @@ entries:
     classification: conservative extension
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
-    notes: Resource-sensitive reasoning requires specialized structural rules and calculus policy.
+    notes: Resource-sensitive assumptions require structural and calculus policy, not a new primitive.
   - id: EV-014
     system: Relevance logic
     domain: logic
@@ -112,15 +112,15 @@ entries:
     classification: conservative extension
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
-    notes: Relevance constraints are admissibility policies encoded by structure and calculus.
+    notes: Relevance constraints are represented as dependency structure and admissibility rules.
   - id: EV-015
     system: Probabilistic programming
-    domain: probabilistic modeling
+    domain: probability and programming languages
     report: theory/evaluation/external-systems/probabilistic-programming.md
     classification: conservative extension
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
-    notes: Hybrid program and probability semantics require conservative extensions but no sixth primitive.
+    notes: Program trace semantics and approximate probabilistic inference extend interpretation and calculus.
   - id: EV-016
     system: Reinforcement-learning planning
     domain: AI planning
@@ -128,23 +128,23 @@ entries:
     classification: conservative extension
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
-    notes: Planning under reward and transition uncertainty requires decision-theoretic calculus.
+    notes: Value estimation, policy evaluation, and planning require quantitative temporal calculus but no sixth primitive.
   - id: EV-017
     system: Multi-agent reasoning
-    domain: AI and epistemic logic
+    domain: AI and game theory
     report: theory/evaluation/external-systems/multi-agent-reasoning.md
     classification: conservative extension
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
-    notes: Agent-indexed context and interaction semantics require indexed structure and interpretation.
+    notes: Agent-indexed context and interaction structure extend representation structure and interpretation.
   - id: EV-018
     system: Argumentation frameworks
-    domain: argumentation theory
+    domain: defeasible reasoning
     report: theory/evaluation/external-systems/argumentation-frameworks.md
     classification: conservative extension
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
-    notes: Graph-governed admissibility is representable through structure, interpretation, and calculus.
+    notes: Attack/support graph semantics are conservative structural and calculational extensions.
   - id: EV-019
     system: Constraint solving
     domain: automated reasoning
@@ -152,7 +152,7 @@ entries:
     classification: fits FAR
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
-    notes: Explicit variables, domains, constraints, assignments, and solver transitions map directly to FAR.
+    notes: Variables, domains, constraints, propagators, and solutions map directly when solver transitions are explicit.
   - id: EV-020
     system: Scientific hypothesis testing
     domain: science and statistics
@@ -160,4 +160,4 @@ entries:
     classification: conservative extension
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
-    notes: Statistical interpretation and evidential decision rules are conservative extensions of Interpretation and Reasoning Calculus.
+    notes: Statistical interpretation and evidential decision rules are conservative extensions of interpretation and reasoning calculus.
