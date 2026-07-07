@@ -2,7 +2,7 @@
 
 ## Current Status
 
-The initial Project FAR framework stack is stabilized for navigation and downstream validation.
+Project FAR has completed the v0.3.0 internal-validation milestone. The current baseline includes formal theory, machine-readable metadata, proof-object infrastructure, reasoning-system fixtures, primitive-sufficiency evaluation, adversarial evaluation, cross-domain consistency analysis, primitive independence analysis, minimality analysis, and synthesis reporting.
 
 | Framework | Role | Status |
 |---|---|---|
@@ -12,11 +12,41 @@ The initial Project FAR framework stack is stabilized for navigation and downstr
 | FARE | Mathematics | Frozen, requirement-driven |
 | FARM | Meta-framework coordination | Stable |
 
-Active development now moves to concrete worked examples and downstream requirement validation.
+Active development now moves toward external validation against reasoning systems and arguments not designed for Project FAR.
+
+---
+
+## Latest Release
+
+### Project FAR v0.3.0 — Internal Validation
+
+Status: Current release baseline.
+
+Release document: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md)
+
+Synthesis report: [`reports/project-far-v0.3.0-synthesis.md`](reports/project-far-v0.3.0-synthesis.md)
+
+Theory freeze: [`releases/project-far-v0.3.0-theory-freeze.md`](releases/project-far-v0.3.0-theory-freeze.md)
 
 ---
 
 ## Completed Milestones
+
+### Project FAR v0.3.0 Internal Validation
+
+Status: Complete.
+
+v0.3.0 evaluates primitive sufficiency across the internal corpus, expanded reasoning-system fixtures, and adversarial test suite. Current repository-grounded analysis finds no analyzed case requiring a sixth primitive, while keeping the conclusion provisional and subject to future falsification.
+
+---
+
+### Project FAR v0.2.0 Evidence Framework
+
+Status: Complete.
+
+v0.2.0 introduced the evidence-bearing infrastructure: machine-readable theory, structured proof objects, proof-step semantics, reasoning-engine traces, falsification harness, counterexample fixtures, and hard-case derived concepts.
+
+---
 
 ### FARA — Representation
 
@@ -74,9 +104,9 @@ Stable components:
 
 ## Active Focus
 
-### Worked Examples and Downstream Validation
+### External Validation Preparation
 
-The active target is validating Project FAR through concrete artifact use.
+The active target is validating Project FAR against external reasoning systems, arguments, and formal practices not constructed for FAR. v0.4.0 work should treat v0.3.0 as the internal-validation baseline.
 
 ---
 
@@ -90,9 +120,10 @@ The current project order is:
 4. FARO v1.0 Stable recorded.
 5. FARM v1.0 Stable recorded.
 6. Framework navigation normalized.
-7. Build canonical worked examples.
-8. Route downstream requirements only when examples expose concrete needs.
-9. Modify stable layers only through formal review when a concrete defect or requirement is identified.
+7. v0.2.0 evidence framework completed.
+8. v0.3.0 internal-validation baseline completed.
+9. Begin v0.4.0 external validation without silently rewriting v0.3.0 results.
+10. Modify stable layers only through formal review when a concrete defect or requirement is identified.
 
 ---
 
@@ -107,22 +138,23 @@ Effective immediately:
 - Draft theorems are not stable components and shall not be cited as accepted dependencies.
 - FAR v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
 - FARO v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
-- FARM v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
-- No new FARM primitives shall be introduced without a demonstrated cross-framework requirement.
+- FARM v1.0 documents shall not be modified without an explicit cross-framework requirement.
 - FARM shall not expand into operational behavior, investigation methodology, representational architecture, or mathematics.
+- v0.3.0 results are the current internal-validation baseline and should not be silently rewritten by later external-validation work.
 
 ---
 
 ## Next Milestone
 
-### Post-v1.0 Worked Examples
+### v0.4.0 External Validation
 
 Initial objectives:
 
-- create canonical FAR investigation examples;
-- create FARO audit and comparison examples;
-- create FARM integration records from concrete examples;
-- use examples to validate the framework stack.
+- define external-validation methodology;
+- evaluate reasoning systems not designed for FAR;
+- separate internal fixture evidence from external evidence;
+- identify recurring external pressure points;
+- preserve v0.3.0 as the internal-validation baseline.
 
 ---
 
@@ -130,6 +162,8 @@ Initial objectives:
 
 - [Root README](../README.md)
 - [Canonical map](CANONICAL_MAP.md)
+- [v0.3.0 release](releases/project-far-v0.3.0.md)
+- [v0.3.0 synthesis report](reports/project-far-v0.3.0-synthesis.md)
 - [Post-v1.0 repository audit](audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md)
 - [Framework navigation normalization audit](audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md)
 
