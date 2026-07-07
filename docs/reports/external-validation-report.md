@@ -24,10 +24,10 @@ This report applies Project FAR as an instrument to external reasoning systems t
 | EV-012 | Hoare logic | Program verification | conservative extension | [`hoare-logic.md`](../../theory/evaluation/external-systems/hoare-logic.md) |
 | EV-013 | Linear logic | Logic | conservative extension | [`linear-logic.md`](../../theory/evaluation/external-systems/linear-logic.md) |
 | EV-014 | Relevance logic | Logic | conservative extension | [`relevance-logic.md`](../../theory/evaluation/external-systems/relevance-logic.md) |
-| EV-015 | Probabilistic programming | Probabilistic modeling | conservative extension | [`probabilistic-programming.md`](../../theory/evaluation/external-systems/probabilistic-programming.md) |
+| EV-015 | Probabilistic programming | Probability and programming languages | conservative extension | [`probabilistic-programming.md`](../../theory/evaluation/external-systems/probabilistic-programming.md) |
 | EV-016 | Reinforcement-learning planning | AI planning | conservative extension | [`reinforcement-learning-planning.md`](../../theory/evaluation/external-systems/reinforcement-learning-planning.md) |
-| EV-017 | Multi-agent reasoning | AI and epistemic logic | conservative extension | [`multi-agent-reasoning.md`](../../theory/evaluation/external-systems/multi-agent-reasoning.md) |
-| EV-018 | Argumentation frameworks | Argumentation theory | conservative extension | [`argumentation-frameworks.md`](../../theory/evaluation/external-systems/argumentation-frameworks.md) |
+| EV-017 | Multi-agent reasoning | AI and game theory | conservative extension | [`multi-agent-reasoning.md`](../../theory/evaluation/external-systems/multi-agent-reasoning.md) |
+| EV-018 | Argumentation frameworks | Defeasible reasoning | conservative extension | [`argumentation-frameworks.md`](../../theory/evaluation/external-systems/argumentation-frameworks.md) |
 | EV-019 | Constraint solving | Automated reasoning | fits FAR | [`constraint-solving.md`](../../theory/evaluation/external-systems/constraint-solving.md) |
 | EV-020 | Scientific hypothesis testing | Science and statistics | conservative extension | [`scientific-hypothesis-testing.md`](../../theory/evaluation/external-systems/scientific-hypothesis-testing.md) |
 
@@ -41,26 +41,24 @@ This report applies Project FAR as an instrument to external reasoning systems t
 | Outside scope | 0 |
 | Candidate primitive failure | 0 |
 
-## Primitive Pressure Summary
+## Recurring Pressure Clusters
 
-| Pressure Point | Systems | Current Assessment |
+| Pressure Cluster | Systems | Current Assessment |
 |---|---|---|
-| Higher-order or dependent interpretation | Higher-order logic, type theory, Lean, Coq | Handled by Interpretation plus Reasoning Calculus; conservative where domain machinery is required. |
-| Machine-checked proof validation | Lean, Coq, SAT/CDCL, SMT, constraint solving | Fits FAR directly when proof artifacts, constraints, or certificates are explicit. |
-| Structural and diagrammatic reasoning | Category theory, argumentation frameworks | Requires specialized Representational Structure but not a new primitive. |
-| Quantitative uncertainty | Bayesian inference, probabilistic programming, reinforcement-learning planning, scientific hypothesis testing | Requires probabilistic, statistical, or decision-theoretic Interpretation and update calculus. |
-| State revision and transition | AGM belief revision, dynamic logic, Hoare logic, reinforcement-learning planning | Requires state-transition structure and calculus policy. |
-| Resource or relevance-sensitive admissibility | Linear logic, relevance logic | Requires calculus-level admissibility restrictions. |
-| Agent-indexed context | Multi-agent reasoning | Requires indexed structure and interpretation. |
+| Background or domain-specific theories | SMT solving, Hoare logic, dynamic logic | Specialized interpretation and calculus, not a new primitive. |
+| Resource or relevance constraints | Linear logic, relevance logic | Specialized representational structure and admissibility policy. |
+| Probabilistic or quantitative inference | Bayesian inference, probabilistic programming, reinforcement-learning planning, scientific hypothesis testing | Quantitative interpretation and update calculus. |
+| Agent-indexed or interaction structure | Multi-agent reasoning, argumentation frameworks | Indexed representational structure, graph semantics, and calculus-governed admissibility. |
+| Machine-checkable derivation | Lean, Coq, SAT/CDCL, constraint solving | Fits FAR when artifacts and transitions are explicit. |
 
 ## Current Evidence Status
 
-The first two external validation batches do not establish any candidate primitive failure. Five systems map directly to FAR, and fifteen require conservative extensions. The conservative extensions place recurring pressure on Interpretation, Representational Structure, and Reasoning Calculus, but none currently requires a primitive outside the five FAR primitives.
+Across twenty external systems, no candidate primitive failure has been identified. Five systems currently fit FAR directly. Fifteen require conservative extensions, mainly in Interpretation, Representational Structure, and Reasoning Calculus. No external batch 2 system currently requires a sixth primitive.
 
 ## Limits
 
-This is a finite and provisional external corpus. The current result does not prove universal primitive sufficiency. It shows only that the first twenty external systems evaluated have not produced a sixth-primitive requirement.
+This remains a finite and provisional external corpus. The result does not prove universal primitive sufficiency. It does show that the first two external validation batches have not produced a sixth-primitive requirement.
 
 ## Next Work
 
-Future batches should evaluate graph search, planning systems, model checking, Hoare-style variants, lambda calculus, natural deduction systems, sequent calculi, legal interpretation, common-law reasoning, and informal scientific explanation.
+Future batches should evaluate graph search, planning systems, Hoare-logic variants, model checking, lambda calculus, relevance/substructural variants, epistemic logic, decision theory, and real published arguments rather than only formal systems.
