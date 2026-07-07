@@ -1,141 +1,183 @@
 tests:
-  - id: ADV-001
-    title: Higher-order Logic
-    reasoning_system: Higher-order Logic
-    hypothesis: Higher-order quantification may require representation of predicates over predicates without adding primitives.
-    primitive_under_pressure: Representation
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-002
-    title: Reflective Reasoning
-    reasoning_system: Reflective Reasoning
-    hypothesis: Reasoning about a reasoning process may stress interpretation and self-reference handling.
-    primitive_under_pressure: Interpretation
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-003
-    title: Self-Modifying Reasoning
-    reasoning_system: Self-Modifying Reasoning
-    hypothesis: Reasoning that changes its own rules may stress reasoning-calculus representation.
-    primitive_under_pressure: Reasoning Calculus
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-004
-    title: Probabilistic Programming
-    reasoning_system: Probabilistic Programming
-    hypothesis: Programs with probabilistic inference may stress representation of stochastic dependencies and execution traces.
-    primitive_under_pressure: Representational Structure
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-005
-    title: Belief Revision
-    reasoning_system: Belief Revision
-    hypothesis: Revision under new information may stress transitions between representations and calculi.
-    primitive_under_pressure: Reasoning Calculus
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-006
-    title: Argumentation Frameworks
-    reasoning_system: Argumentation Frameworks
-    hypothesis: Attack, defense, and acceptability relations may stress relational structure.
-    primitive_under_pressure: Representational Structure
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-007
-    title: Multi-Agent Reasoning
-    reasoning_system: Multi-Agent Reasoning
-    hypothesis: Interacting agents with distinct beliefs and goals may stress investigation boundaries.
-    primitive_under_pressure: Investigation
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-008
-    title: Interactive Theorem Proving
-    reasoning_system: Interactive Theorem Proving
-    hypothesis: Human-guided proof construction may stress the boundary between explicit reasoning and external intervention.
-    primitive_under_pressure: Investigation
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-009
-    title: Meta-Reasoning
-    reasoning_system: Meta-Reasoning
-    hypothesis: Reasoning about reasoning standards may stress interpretation and calculus layering.
-    primitive_under_pressure: Interpretation
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-010
-    title: Learning Systems
-    reasoning_system: Learning Systems
-    hypothesis: Model adaptation from data may stress whether learned updates are explicit reasoning.
-    primitive_under_pressure: Reasoning Calculus
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-011
-    title: Quantum Logic
-    reasoning_system: Quantum Logic
-    hypothesis: Non-classical lattice structure may stress representational structure.
-    primitive_under_pressure: Representational Structure
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-012
-    title: Dynamic Logic
-    reasoning_system: Dynamic Logic
-    hypothesis: Modal reasoning about programs and state changes may stress calculus and transition representation.
-    primitive_under_pressure: Reasoning Calculus
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-013
-    title: Hybrid Logic
-    reasoning_system: Hybrid Logic
-    hypothesis: Named worlds and satisfaction operators may stress interpretation across indexed contexts.
-    primitive_under_pressure: Interpretation
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
-  - id: ADV-014
-    title: Description Logic
-    reasoning_system: Description Logic
-    hypothesis: Concept-role structures and subsumption reasoning may stress representation and structure.
-    primitive_under_pressure: Representation
-    expected_outcome: pending analysis
-    observed_outcome: pending analysis
-    current_status: pending analysis
-    confidence: unknown
-    notes: Initial adversarial entry; no classification or conclusion has been made.
+- id: ADV-001
+  title: Higher-order Logic
+  reasoning_system: Higher-order Logic
+  hypothesis: Higher-order quantification may require representation of predicates
+    over predicates without adding primitives.
+  primitive_under_pressure: Representation
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Representation directly admits predicates and predicate-level
+    objects as represented content; higher-order typing is structural detail rather
+    than a new primitive.
+  current_status: resolved by existing primitive
+  confidence: high
+  notes: 'Canonical analysis: resolved by existing primitive. Remaining open question:
+    Track whether impredicative encodings require repository-specific derived constraints.'
+- id: ADV-002
+  title: Reflective Reasoning
+  reasoning_system: Reflective Reasoning
+  hypothesis: Reasoning about a reasoning process may stress interpretation and self-reference
+    handling.
+  primitive_under_pressure: Interpretation
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Reflective reasoning is representable as an interpreted object-level
+    reasoning trace, but sound handling of self-reference requires a reflection policy.
+  current_status: conservative extension
+  confidence: medium
+  notes: 'Canonical analysis: conservative extension. Remaining open question: Specify
+    reflection policy boundaries for circular or self-endorsing interpretations.'
+- id: ADV-003
+  title: Self-Modifying Reasoning
+  reasoning_system: Self-Modifying Reasoning
+  hypothesis: Reasoning that changes its own rules may stress reasoning-calculus representation.
+  primitive_under_pressure: Reasoning Calculus
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Rule mutation can be represented as transitions between calculi,
+    but the repository lacks enough machinery for self-directed calculus replacement
+    and stability criteria.
+  current_status: unresolved pressure
+  confidence: medium
+  notes: 'Canonical analysis: unresolved pressure. Remaining open question: Determine
+    whether self-modifying calculi need only transition policies or expose deeper
+    primitive pressure.'
+- id: ADV-004
+  title: Probabilistic Programming
+  reasoning_system: Probabilistic Programming
+  hypothesis: Programs with probabilistic inference may stress representation of stochastic
+    dependencies and execution traces.
+  primitive_under_pressure: Representational Structure
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Stochastic traces and dependencies fit representational structures,
+    while probability kernels and conditioning rules are domain-specific extensions.
+  current_status: conservative extension
+  confidence: high
+  notes: 'Canonical analysis: conservative extension. Remaining open question: Formalize
+    probabilistic trace structures and inference-policy constraints if promoted.'
+- id: ADV-005
+  title: Belief Revision
+  reasoning_system: Belief Revision
+  hypothesis: Revision under new information may stress transitions between representations
+    and calculi.
+  primitive_under_pressure: Reasoning Calculus
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Belief revision is representable as calculus-governed transition
+    between representations, but revision postulates are domain-specific rules.
+  current_status: conservative extension
+  confidence: high
+  notes: 'Canonical analysis: conservative extension. Remaining open question: Identify
+    minimal revision policies needed for conflicting evidence.'
+- id: ADV-006
+  title: Argumentation Frameworks
+  reasoning_system: Argumentation Frameworks
+  hypothesis: Attack, defense, and acceptability relations may stress relational structure.
+  primitive_under_pressure: Representational Structure
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Attack, defense, and acceptability are relational representational
+    structures directly expressible without primitive expansion.
+  current_status: resolved by existing primitive
+  confidence: high
+  notes: 'Canonical analysis: resolved by existing primitive. Remaining open question:
+    Assess only whether particular semantics introduce conservative policies.'
+- id: ADV-007
+  title: Multi-Agent Reasoning
+  reasoning_system: Multi-Agent Reasoning
+  hypothesis: Interacting agents with distinct beliefs and goals may stress investigation
+    boundaries.
+  primitive_under_pressure: Investigation
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Multiple agents can be represented as coordinated investigations,
+    but boundaries among agents require explicit scoping policy.
+  current_status: conservative extension
+  confidence: medium
+  notes: 'Canonical analysis: conservative extension. Remaining open question: Define
+    when interacting investigations merge, nest, or remain separate.'
+- id: ADV-008
+  title: Interactive Theorem Proving
+  reasoning_system: Interactive Theorem Proving
+  hypothesis: Human-guided proof construction may stress the boundary between explicit
+    reasoning and external intervention.
+  primitive_under_pressure: Investigation
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Interactive proof work fits investigation plus reasoning calculus,
+    but needs a provenance policy separating explicit reasoning from external intervention.
+  current_status: conservative extension
+  confidence: medium
+  notes: 'Canonical analysis: conservative extension. Remaining open question: Clarify
+    treatment of human choices, tactics, and oracle-like steps.'
+- id: ADV-009
+  title: Meta-Reasoning
+  reasoning_system: Meta-Reasoning
+  hypothesis: Reasoning about reasoning standards may stress interpretation and calculus
+    layering.
+  primitive_under_pressure: Interpretation
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Meta-reasoning can be represented by interpreted calculi over
+    reasoning standards, but layering requires a meta-interpretation discipline.
+  current_status: conservative extension
+  confidence: medium
+  notes: 'Canonical analysis: conservative extension. Remaining open question: State
+    anti-collapse conditions for object/meta-level interpretation.'
+- id: ADV-010
+  title: Learning Systems
+  reasoning_system: Learning Systems
+  hypothesis: Model adaptation from data may stress whether learned updates are explicit
+    reasoning.
+  primitive_under_pressure: Reasoning Calculus
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Learning updates can be represented as data-conditioned calculus
+    or representation changes, but require learning-specific update semantics.
+  current_status: conservative extension
+  confidence: medium
+  notes: 'Canonical analysis: conservative extension. Remaining open question: Decide
+    when non-explicit training dynamics count as reasoning evidence.'
+- id: ADV-011
+  title: Quantum Logic
+  reasoning_system: Quantum Logic
+  hypothesis: Non-classical lattice structure may stress representational structure.
+  primitive_under_pressure: Representational Structure
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Quantum logic uses non-classical lattice structure that fits representational
+    structure, with orthomodular semantics as a conservative domain extension.
+  current_status: conservative extension
+  confidence: high
+  notes: 'Canonical analysis: conservative extension. Remaining open question: Document
+    which quantum-logical semantics are assumed when evaluating inference.'
+- id: ADV-012
+  title: Dynamic Logic
+  reasoning_system: Dynamic Logic
+  hypothesis: Modal reasoning about programs and state changes may stress calculus
+    and transition representation.
+  primitive_under_pressure: Reasoning Calculus
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Dynamic logic is representable as program-indexed transition reasoning,
+    but needs transition semantics as a conservative calculus extension.
+  current_status: conservative extension
+  confidence: high
+  notes: 'Canonical analysis: conservative extension. Remaining open question: Specify
+    the minimal transition semantics used for program modalities.'
+- id: ADV-013
+  title: Hybrid Logic
+  reasoning_system: Hybrid Logic
+  hypothesis: Named worlds and satisfaction operators may stress interpretation across
+    indexed contexts.
+  primitive_under_pressure: Interpretation
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Named worlds and satisfaction operators fit interpretation over
+    indexed contexts, but require an index-management policy.
+  current_status: conservative extension
+  confidence: high
+  notes: 'Canonical analysis: conservative extension. Remaining open question: Clarify
+    cross-world interpretation and satisfaction-at operators.'
+- id: ADV-014
+  title: Description Logic
+  reasoning_system: Description Logic
+  hypothesis: Concept-role structures and subsumption reasoning may stress representation
+    and structure.
+  primitive_under_pressure: Representation
+  expected_outcome: classification under adversarial primitive-sufficiency standard
+  observed_outcome: Concepts, roles, individuals, and subsumption are representable
+    objects and relations handled by Representation plus structure.
+  current_status: resolved by existing primitive
+  confidence: high
+  notes: 'Canonical analysis: resolved by existing primitive. Remaining open question:
+    Additional description-logic family features may need conservative semantic policies.'

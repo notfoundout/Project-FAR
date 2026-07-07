@@ -1,44 +1,75 @@
 primitives:
   - primitive: Investigation
+    number_of_tests_stressing_it: 2
     reasoning_systems_stressing_it:
       - Multi-Agent Reasoning
       - Interactive Theorem Proving
     recurring_pressure_points:
       - Boundaries between one investigation and interacting investigations.
       - Boundary between explicit reasoning and external intervention.
-    derived_concepts_involved: []
-    current_assessment: pending analysis
-    confidence: unknown
+      - "Cross-system pressure: boundary/provenance discipline appears in Multi-Agent Reasoning and Interactive Theorem Proving."
+    resolved_cases: []
+    conservative_extensions:
+      - ADV-007: multi-agent scoping policy for interacting investigations.
+      - ADV-008: provenance policy for human-guided or externally supplied proof steps.
+    unresolved_pressures: []
+    candidate_primitive_failures: []
+    current_assessment: Investigation remains provisionally sufficient for this batch; pressures require conservative scoping and provenance policies rather than a sixth primitive.
+    confidence: medium
   - primitive: Representation
+    number_of_tests_stressing_it: 2
     reasoning_systems_stressing_it:
       - Higher-order Logic
       - Description Logic
     recurring_pressure_points:
-      - Representing predicates, concepts, roles, and higher-order objects without primitive expansion.
-    derived_concepts_involved: []
-    current_assessment: pending analysis
-    confidence: unknown
+      - Representing predicates, concepts, roles, individuals, and higher-order objects without primitive expansion.
+      - "Cross-system pressure: typed or role-indexed entities recur in Higher-order Logic and Description Logic."
+    resolved_cases:
+      - ADV-001: higher-order predicates are represented content.
+      - ADV-014: concepts, roles, individuals, and subsumption are represented objects and relations.
+    conservative_extensions: []
+    unresolved_pressures: []
+    candidate_primitive_failures: []
+    current_assessment: Representation directly handles the analyzed pressure cases; no primitive-level counterexample is established.
+    confidence: high
   - primitive: Representational Structure
+    number_of_tests_stressing_it: 3
     reasoning_systems_stressing_it:
       - Probabilistic Programming
       - Argumentation Frameworks
       - Quantum Logic
     recurring_pressure_points:
-      - Non-trivial dependency, attack-defense, and non-classical structural relations.
-    derived_concepts_involved: []
-    current_assessment: pending analysis
-    confidence: unknown
+      - Non-trivial dependency, attack-defense, acceptability, and non-classical structural relations.
+      - "Cross-system pressure: non-classical or domain-specific relations appear in probabilistic, argumentation, and quantum settings."
+    resolved_cases:
+      - ADV-006: attack-defense and acceptability relations are relational structures.
+    conservative_extensions:
+      - ADV-004: stochastic trace and conditioning semantics.
+      - ADV-011: orthomodular or quantum-logical semantic policy.
+    unresolved_pressures: []
+    candidate_primitive_failures: []
+    current_assessment: Representational Structure remains provisionally sufficient; some domains need conservative semantic structure but not a new primitive.
+    confidence: high
   - primitive: Interpretation
+    number_of_tests_stressing_it: 3
     reasoning_systems_stressing_it:
       - Reflective Reasoning
       - Meta-Reasoning
       - Hybrid Logic
     recurring_pressure_points:
       - Interpreting reasoning about reasoning and indexed semantic contexts.
-    derived_concepts_involved: []
-    current_assessment: pending analysis
-    confidence: unknown
+      - "Cross-system pressure: object/meta-level or indexed-context discipline appears in Reflective Reasoning, Meta-Reasoning, and Hybrid Logic."
+    resolved_cases: []
+    conservative_extensions:
+      - ADV-002: reflection policy for interpreted reasoning traces.
+      - ADV-009: meta-interpretation discipline for reasoning standards.
+      - ADV-013: index-management policy for named worlds and satisfaction operators.
+    unresolved_pressures: []
+    candidate_primitive_failures: []
+    current_assessment: Interpretation remains provisionally sufficient, with recurring need for conservative policies that prevent level or context collapse.
+    confidence: medium
   - primitive: Reasoning Calculus
+    number_of_tests_stressing_it: 4
     reasoning_systems_stressing_it:
       - Self-Modifying Reasoning
       - Belief Revision
@@ -46,6 +77,14 @@ primitives:
       - Dynamic Logic
     recurring_pressure_points:
       - Rule change, revision policy, learning update, and program-transition reasoning.
-    derived_concepts_involved: []
-    current_assessment: pending analysis
-    confidence: unknown
+      - "Cross-system pressure: transitions between rules or states recur in Self-Modifying Reasoning, Belief Revision, Learning Systems, and Dynamic Logic."
+    resolved_cases: []
+    conservative_extensions:
+      - ADV-005: belief-revision postulates and revision policies.
+      - ADV-010: learning-specific update semantics.
+      - ADV-012: program-transition semantics for modalities.
+    unresolved_pressures:
+      - ADV-003: self-directed calculus replacement and stability criteria remain under-specified.
+    candidate_primitive_failures: []
+    current_assessment: Reasoning Calculus has the strongest remaining pressure. The self-modifying case is unresolved but has not established that conservative transition policies are insufficient.
+    confidence: medium
