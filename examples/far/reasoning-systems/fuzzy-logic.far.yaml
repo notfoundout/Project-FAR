@@ -1,0 +1,73 @@
+investigation: Test whether fuzzy logic maps into FAR primitives.
+
+reasoning_system:
+  system: Fuzzy logic
+  far_primitives:
+    Investigation: Determine whether degree-valued truth reasoning can be represented in FAR.
+    Representation: propositions with truth degrees, membership functions, and thresholds
+    Representational Structure: degree-preserving support relations
+    Interpretation: many-valued or degree-valued interpretation
+    Reasoning Calculus: fuzzy inference and aggregation rules
+  verdict: extends FAR
+
+representations:
+  - id: degree
+    kind: premise
+    content: The truth degree of P is 0.8.
+    statement:
+      kind: claim
+      subject: P
+      predicate: has truth degree 0.8
+      scope: fuzzy logic fixture
+      claim: P has truth degree 0.8.
+  - id: threshold
+    kind: constraint
+    content: Claims with degree at least 0.7 are accepted for this investigation.
+    statement:
+      kind: claim
+      subject: acceptance threshold
+      predicate: is 0.7
+      scope: fuzzy logic fixture
+      claim: The acceptance threshold is 0.7.
+  - id: conclusion
+    kind: conclusion
+    content: P is accepted above threshold.
+    statement:
+      kind: claim
+      subject: P
+      predicate: is accepted above threshold
+      scope: fuzzy logic fixture
+      claim: P is accepted because its degree exceeds the threshold.
+
+relations:
+  - id: rel1
+    type: supports
+    source: degree
+    target: conclusion
+  - id: rel2
+    type: supports
+    source: threshold
+    target: conclusion
+
+interpretations:
+  - representation: degree
+    meaning: A proposition evaluated with a degree rather than a bivalent status.
+  - representation: threshold
+    meaning: A calculus-level acceptance standard.
+  - representation: conclusion
+    meaning: A threshold-based acceptance result.
+
+rules:
+  - id: threshold-acceptance
+    name: fuzzy threshold acceptance
+    inputs: [degree, threshold]
+    output: conclusion
+    condition: Accept when a truth degree meets or exceeds the investigation threshold.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: threshold-acceptance
+    target: state1
+    status: draft
+    order: 1

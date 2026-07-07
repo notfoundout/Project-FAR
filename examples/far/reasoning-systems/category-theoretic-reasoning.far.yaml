@@ -1,0 +1,73 @@
+investigation: Test whether category-theoretic reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Category-theoretic reasoning
+  far_primitives:
+    Investigation: Determine whether reasoning by objects, morphisms, diagrams, and universal properties can be represented in FAR.
+    Representation: objects, morphisms, diagrams, commutativity claims, and universal properties
+    Representational Structure: diagrammatic structure and composition relations
+    Interpretation: categorical semantics over objects and arrows
+    Reasoning Calculus: diagram chase, composition, and universal-property rules
+  verdict: extends FAR
+
+representations:
+  - id: diagram
+    kind: structure
+    content: Diagram D commutes.
+    statement:
+      kind: claim
+      subject: diagram D
+      predicate: commutes
+      scope: category-theoretic fixture
+      claim: Diagram D commutes.
+  - id: universal-property
+    kind: premise
+    content: Object U satisfies universal property P.
+    statement:
+      kind: claim
+      subject: object U
+      predicate: satisfies universal property P
+      scope: category-theoretic fixture
+      claim: Object U satisfies universal property P.
+  - id: conclusion
+    kind: conclusion
+    content: The required morphism exists uniquely.
+    statement:
+      kind: existential
+      subject: required morphism
+      predicate: exists uniquely
+      scope: category-theoretic fixture
+      claim: The required morphism exists uniquely.
+
+relations:
+  - id: rel1
+    type: supports
+    source: diagram
+    target: conclusion
+  - id: rel2
+    type: supports
+    source: universal-property
+    target: conclusion
+
+interpretations:
+  - representation: diagram
+    meaning: A structural representation of objects and morphisms.
+  - representation: universal-property
+    meaning: A categorical condition determining a unique morphism.
+  - representation: conclusion
+    meaning: A morphism-existence result under categorical semantics.
+
+rules:
+  - id: universal-property-application
+    name: universal property application
+    inputs: [diagram, universal-property]
+    output: conclusion
+    condition: Use the universal property and diagrammatic structure to derive unique existence.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: universal-property-application
+    target: state1
+    status: draft
+    order: 1

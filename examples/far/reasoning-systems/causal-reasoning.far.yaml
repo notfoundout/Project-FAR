@@ -1,0 +1,73 @@
+investigation: Test whether causal reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Causal reasoning
+  far_primitives:
+    Investigation: Determine whether cause-effect reasoning can be represented as explicit intervention-sensitive structure.
+    Representation: variables, interventions, causal claims, and observed effects
+    Representational Structure: directed causal graph and intervention relations
+    Interpretation: causal-model interpretation
+    Reasoning Calculus: do-calculus or intervention-based inference standards
+  verdict: extends FAR
+
+representations:
+  - id: cause
+    kind: premise
+    content: Intervention do(X) changes Y.
+    statement:
+      kind: claim
+      subject: intervention do(X)
+      predicate: changes Y
+      scope: causal reasoning fixture
+      claim: Intervening on X changes Y.
+  - id: graph
+    kind: structure
+    content: X is a parent of Y in the causal graph.
+    statement:
+      kind: claim
+      subject: X
+      predicate: is a causal parent of Y
+      scope: causal reasoning fixture
+      claim: X is a causal parent of Y.
+  - id: conclusion
+    kind: conclusion
+    content: X is a cause of Y under the model.
+    statement:
+      kind: claim
+      subject: X
+      predicate: is a cause of Y under the model
+      scope: causal reasoning fixture
+      claim: X is a cause of Y under the model.
+
+relations:
+  - id: rel1
+    type: supports
+    source: cause
+    target: conclusion
+  - id: rel2
+    type: supports
+    source: graph
+    target: conclusion
+
+interpretations:
+  - representation: cause
+    meaning: An intervention-sensitive causal claim.
+  - representation: graph
+    meaning: A structural causal relation.
+  - representation: conclusion
+    meaning: A causal classification under the represented model.
+
+rules:
+  - id: causal-classification
+    name: causal classification
+    inputs: [cause, graph]
+    output: conclusion
+    condition: Classify causation using intervention and graph structure.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: causal-classification
+    target: state1
+    status: draft
+    order: 1

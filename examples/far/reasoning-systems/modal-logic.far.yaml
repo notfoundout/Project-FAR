@@ -1,0 +1,73 @@
+investigation: Test whether modal logic maps into FAR primitives.
+
+reasoning_system:
+  system: Modal logic
+  far_primitives:
+    Investigation: Determine whether necessity and possibility reasoning can be represented as structured reasoning over accessible worlds.
+    Representation: modal formulas, worlds, accessibility relations, and modal claims
+    Representational Structure: world-indexed accessibility structure
+    Interpretation: Kripke-style modal interpretation
+    Reasoning Calculus: modal inference standards over accessibility relations
+  verdict: extends FAR
+
+representations:
+  - id: necessity
+    kind: premise
+    content: Necessarily P.
+    statement:
+      kind: claim
+      subject: P
+      predicate: holds in all accessible worlds
+      scope: modal logic fixture
+      claim: P holds in all accessible worlds.
+  - id: accessibility
+    kind: structure
+    content: World w accesses world v.
+    statement:
+      kind: claim
+      subject: accessibility relation
+      predicate: connects w to v
+      scope: modal logic fixture
+      claim: World w accesses world v.
+  - id: conclusion
+    kind: conclusion
+    content: P holds at accessible world v.
+    statement:
+      kind: claim
+      subject: P at v
+      predicate: follows from necessity at w
+      scope: modal logic fixture
+      claim: P holds at accessible world v.
+
+relations:
+  - id: rel1
+    type: supports
+    source: necessity
+    target: conclusion
+  - id: rel2
+    type: supports
+    source: accessibility
+    target: conclusion
+
+interpretations:
+  - representation: necessity
+    meaning: Necessity is interpreted over all worlds accessible from the current world.
+  - representation: accessibility
+    meaning: The modal frame relation controlling which worlds are relevant.
+  - representation: conclusion
+    meaning: A world-indexed consequence of modal necessity.
+
+rules:
+  - id: modal-instantiation
+    name: modal instantiation
+    inputs: [necessity, accessibility]
+    output: conclusion
+    condition: Instantiate a necessary claim at an accessible world.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: modal-instantiation
+    target: state1
+    status: draft
+    order: 1

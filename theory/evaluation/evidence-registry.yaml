@@ -118,3 +118,93 @@ entries:
     confidence: provisional
     review_status: analyzed in v0.2.0 baseline
     notes: v0.2.0 resolved inaccessible oracle process as outside current FAR scope unless the hidden process is made explicit.
+  - id: PS-014
+    system: Modal logic
+    fixture: examples/far/reasoning-systems/modal-logic.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.3.0 expanded fixture added
+    notes: World-indexed semantics and accessibility relations require sufficiency analysis.
+  - id: PS-015
+    system: Temporal logic
+    fixture: examples/far/reasoning-systems/temporal-logic.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.3.0 expanded fixture added
+    notes: Temporal indexing and path semantics require sufficiency analysis.
+  - id: PS-016
+    system: Deontic logic
+    fixture: examples/far/reasoning-systems/deontic-logic.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.3.0 expanded fixture added
+    notes: Norm conflicts, permissions, obligations, and contrary-to-duty cases require sufficiency analysis.
+  - id: PS-017
+    system: Intuitionistic logic
+    fixture: examples/far/reasoning-systems/intuitionistic-logic.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.3.0 expanded fixture added
+    notes: Constructive proof standards and rejection of unrestricted excluded middle require sufficiency analysis.
+  - id: PS-018
+    system: Fuzzy logic
+    fixture: examples/far/reasoning-systems/fuzzy-logic.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.3.0 expanded fixture added
+    notes: Degree-valued interpretation and threshold calculus require sufficiency analysis.
+  - id: PS-019
+    system: Causal reasoning
+    fixture: examples/far/reasoning-systems/causal-reasoning.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.3.0 expanded fixture added
+    notes: Intervention semantics and causal graph structure require sufficiency analysis.
+  - id: PS-020
+    system: Type theory
+    fixture: examples/far/reasoning-systems/type-theory.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.3.0 expanded fixture added
+    notes: Context-sensitive judgments, terms, types, and proof objects require sufficiency analysis.
+  - id: PS-021
+    system: Theorem provers
+    fixture: examples/far/reasoning-systems/theorem-provers.far.yaml
+    classification: fits FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.3.0 expanded fixture added
+    notes: Kernel-checked proof traces appear to map directly, but proof assistant variation requires analysis.
+  - id: PS-022
+    system: SAT solving
+    fixture: examples/far/reasoning-systems/sat-solving.far.yaml
+    classification: fits FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.3.0 expanded fixture added
+    notes: Boolean valuation and certificate checking appear to map directly, but solver-search traces require analysis.
+  - id: PS-023
+    system: Category-theoretic reasoning
+    fixture: examples/far/reasoning-systems/category-theoretic-reasoning.far.yaml
+    classification: extends FAR
+    analysis_status: not analyzed
+    registry_resolution: unresolved
+    confidence: provisional
+    review_status: v0.3.0 expanded fixture added
+    notes: Diagrammatic structure, morphism composition, and universal properties require sufficiency analysis.

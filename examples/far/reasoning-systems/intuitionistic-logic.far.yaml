@@ -1,0 +1,73 @@
+investigation: Test whether intuitionistic logic maps into FAR primitives.
+
+reasoning_system:
+  system: Intuitionistic logic
+  far_primitives:
+    Investigation: Determine whether constructive proof standards can be represented as explicit reasoning.
+    Representation: propositions, constructions, proof objects, and constructive consequences
+    Representational Structure: constructive dependency relations
+    Interpretation: proof-as-construction interpretation
+    Reasoning Calculus: intuitionistic inference rules without unrestricted excluded middle
+  verdict: extends FAR
+
+representations:
+  - id: construction
+    kind: premise
+    content: A construction of P is available.
+    statement:
+      kind: claim
+      subject: construction of P
+      predicate: is available
+      scope: intuitionistic logic fixture
+      claim: A construction proving P is available.
+  - id: implication
+    kind: premise
+    content: A construction transforming P into Q is available.
+    statement:
+      kind: conditional
+      subject: construction of P
+      predicate: transforms into construction of Q
+      scope: intuitionistic logic fixture
+      claim: A construction of P can be transformed into a construction of Q.
+  - id: conclusion
+    kind: conclusion
+    content: A construction of Q is available.
+    statement:
+      kind: claim
+      subject: construction of Q
+      predicate: is available
+      scope: intuitionistic logic fixture
+      claim: A construction proving Q is available.
+
+relations:
+  - id: rel1
+    type: supports
+    source: construction
+    target: conclusion
+  - id: rel2
+    type: supports
+    source: implication
+    target: conclusion
+
+interpretations:
+  - representation: construction
+    meaning: A proof object witnessing P.
+  - representation: implication
+    meaning: A constructive transformation from P evidence to Q evidence.
+  - representation: conclusion
+    meaning: A proof object witnessing Q.
+
+rules:
+  - id: constructive-application
+    name: constructive implication application
+    inputs: [construction, implication]
+    output: conclusion
+    condition: Apply a constructive transformation to a proof object.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: constructive-application
+    target: state1
+    status: draft
+    order: 1

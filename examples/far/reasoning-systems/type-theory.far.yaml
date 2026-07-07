@@ -1,0 +1,73 @@
+investigation: Test whether type-theoretic reasoning maps into FAR primitives.
+
+reasoning_system:
+  system: Type theory
+  far_primitives:
+    Investigation: Determine whether judgments about terms and types can be represented as explicit FAR reasoning.
+    Representation: terms, types, contexts, judgments, and derivations
+    Representational Structure: context-extension and typing-dependency relations
+    Interpretation: propositions-as-types or type-assignment interpretation
+    Reasoning Calculus: typing rules and construction rules
+  verdict: extends FAR
+
+representations:
+  - id: context
+    kind: premise
+    content: "Context Gamma contains x : A."
+    statement:
+      kind: claim
+      subject: context Gamma
+      predicate: contains x of type A
+      scope: type theory fixture
+      claim: Context Gamma contains x of type A.
+  - id: rule
+    kind: rule-schema
+    content: "From Gamma contains x : A, derive Gamma proves x : A."
+    statement:
+      kind: conditional
+      subject: "context membership x : A"
+      predicate: "implies typing judgment x : A"
+      scope: type theory fixture
+      claim: If x has type A in the context, the typing judgment follows.
+  - id: judgment
+    kind: conclusion
+    content: "Gamma proves x : A."
+    statement:
+      kind: claim
+      subject: term x
+      predicate: has type A under Gamma
+      scope: type theory fixture
+      claim: Gamma proves x has type A.
+
+relations:
+  - id: rel1
+    type: supports
+    source: context
+    target: judgment
+  - id: rel2
+    type: supports
+    source: rule
+    target: judgment
+
+interpretations:
+  - representation: context
+    meaning: A typing context containing assumptions.
+  - representation: rule
+    meaning: A typing rule connecting context membership to judgment derivability.
+  - representation: judgment
+    meaning: A type assignment derivable under the context.
+
+rules:
+  - id: variable-rule
+    name: variable typing rule
+    inputs: [context, rule]
+    output: judgment
+    condition: Apply the variable rule in the typing context.
+
+transitions:
+  - id: t1
+    source: state0
+    rule: variable-rule
+    target: state1
+    status: draft
+    order: 1
