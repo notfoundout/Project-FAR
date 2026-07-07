@@ -1,6 +1,6 @@
 # Project FAR
 
-[![Release](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases/tag/v0.1.0)
+[![Release](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases/tag/v0.3.0)
 [![Verify Theory](https://github.com/notfoundout/Project-FAR/actions/workflows/verify-theory.yml/badge.svg)](https://github.com/notfoundout/Project-FAR/actions/workflows/verify-theory.yml)
 
 Project FAR is a foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
@@ -11,16 +11,11 @@ This repository is organized as the Version 1.0 canonical architecture for the p
 
 ## Latest Release
 
-**Project FAR v0.3.0** evaluates primitive sufficiency across the current reasoning-system corpus and adversarial suite. It expands and analyzes the reasoning-system corpus, adds adversarial evaluation, and adds independence, minimality, and consistency analysis. See the canonical release document: [`docs/releases/project-far-v0.3.0.md`](docs/releases/project-far-v0.3.0.md).
+**Project FAR v0.3.0** is the current internal-validation milestone. It evaluates primitive sufficiency across the reasoning-system corpus and adversarial suite, adds cross-domain consistency analysis, and records provisional independence and minimality analysis for the five FAR primitives.
 
----
+Canonical release document: [`docs/releases/project-far-v0.3.0.md`](docs/releases/project-far-v0.3.0.md)
 
-
-## v0.2.0 Release Status
-
-Project FAR v0.2.0 is the first evidence-bearing milestone for the repository's machine-readable fixture, validation, and falsification workflow. The release documentation exists in [`docs/releases/project-far-v0.2.0.md`](docs/releases/project-far-v0.2.0.md), and the GitHub Release body is maintained in [`docs/releases/github-release-v0.2.0.md`](docs/releases/github-release-v0.2.0.md).
-
-The v0.2.0 baseline evidence report exists at [`docs/reports/project-far-v0.2.0-baseline-evidence.md`](docs/reports/project-far-v0.2.0-baseline-evidence.md), and the v0.2.0 theory freeze note exists at [`docs/releases/project-far-v0.2.0-theory-freeze.md`](docs/releases/project-far-v0.2.0-theory-freeze.md). The GitHub Release for `v0.2.0` should be created from the contents of [`docs/releases/github-release-v0.2.0.md`](docs/releases/github-release-v0.2.0.md).
+Synthesis report: [`docs/reports/project-far-v0.3.0-synthesis.md`](docs/reports/project-far-v0.3.0-synthesis.md)
 
 ---
 
@@ -36,7 +31,7 @@ The current framework stack is:
 | FARE | Mathematics | Frozen, requirement-driven | [`frameworks/FARE/README.md`](frameworks/FARE/README.md) |
 | FARM | Meta-framework coordination | Stable | [`frameworks/FARM/README.md`](frameworks/FARM/README.md) |
 
-Active development now shifts to worked examples and downstream validation.
+Current development is preparing for external validation after the v0.3.0 internal-validation baseline.
 
 Future FARE mathematical work is requirement-driven:
 
@@ -48,6 +43,8 @@ Future FARE mathematical work is requirement-driven:
 
 ## Releases
 
+- [`v0.3.0 — Internal Validation Release`](https://github.com/notfoundout/Project-FAR/releases/tag/v0.3.0)
+- [`v0.2.0 — Evidence Framework Release`](https://github.com/notfoundout/Project-FAR/releases/tag/v0.2.0)
 - [`v0.1.0 — Initial Public Release`](https://github.com/notfoundout/Project-FAR/releases/tag/v0.1.0)
 
 ---
