@@ -124,3 +124,12 @@ Each concept should have one canonical source. Other documents should link to th
 - [Root README](../README.md)
 - [Post-v1.0 repository audit](audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md)
 - [Framework navigation normalization audit](audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md)
+
+
+## Self-Advancement Planning
+
+- [Planning overview](planning/README.md)
+- [Generated project status](reports/project-status-generated.md)
+- [Research gap report](reports/research-gap-report.md)
+- [Next actions](planning/next-actions.md)
+- [Planner maintenance](maintenance/self-advancement-planner.md)

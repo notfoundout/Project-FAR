@@ -92,3 +92,12 @@ Before release:
 ```bash
 make health
 ```
+
+
+## Related Planning Tools
+
+- [Planning overview](../planning/README.md)
+- [Generated project status](../reports/project-status-generated.md)
+- [Research gap report](../reports/research-gap-report.md)
+- [Next actions](../planning/next-actions.md)
+- [Self-advancement planner maintenance](self-advancement-planner.md)

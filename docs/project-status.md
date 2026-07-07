@@ -176,3 +176,12 @@ Initial objectives:
 This status document is a governance document.
 
 It records development focus and milestone boundaries, not mathematical content.
+
+
+## Self-Advancement Planning
+
+- [Planning overview](planning/README.md)
+- [Generated project status](reports/project-status-generated.md)
+- [Research gap report](reports/research-gap-report.md)
+- [Next actions](planning/next-actions.md)
+- [Planner maintenance](maintenance/self-advancement-planner.md)

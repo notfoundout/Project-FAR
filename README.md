@@ -101,3 +101,12 @@ Future FARE mathematical work is requirement-driven:
 ## Core Principle
 
 Canonical theory and accepted framework definitions live in [`foundations/`](foundations/), [`theory/`](theory/), and [`frameworks/`](frameworks/). Exploratory or provisional work lives in [`research/`](research/). Superseded but meaningful material lives in [`archive/`](archive/).
+
+
+## Self-Advancement Planning
+
+- [Planning overview](docs/planning/README.md)
+- [Generated project status](docs/reports/project-status-generated.md)
+- [Research gap report](docs/reports/research-gap-report.md)
+- [Next actions](docs/planning/next-actions.md)
+- [Planner maintenance](docs/maintenance/self-advancement-planner.md)
