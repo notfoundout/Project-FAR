@@ -1,6 +1,6 @@
 # Project FAR
 
-[![Release](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases/tag/v0.3.0)
+[![Release](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases/tag/v0.3.1)
 [![Verify Theory](https://github.com/notfoundout/Project-FAR/actions/workflows/verify-theory.yml/badge.svg)](https://github.com/notfoundout/Project-FAR/actions/workflows/verify-theory.yml)
 
 Project FAR is a foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
@@ -11,7 +11,7 @@ This root README is the canonical Project FAR command center: the single entry p
 
 ## Repository Status
 
-- Current release: [docs/releases/project-far-v0.3.0.md](docs/releases/project-far-v0.3.0.md)
+- Current release: [docs/releases/project-far-v0.3.1.md](docs/releases/project-far-v0.3.1.md)
 - Current project phase: v0.4 external validation preparation
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
