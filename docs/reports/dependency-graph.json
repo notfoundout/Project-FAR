@@ -1,0 +1,10 @@
+{
+  "metadata": {
+    "schema": "project-far-dependency-graph-v0.4",
+    "source_registry": "theory/dependencies/dependency-registry.yaml",
+    "node_count": 30,
+    "edge_count": 21
+  },
+  "nodes": [],
+  "edges": []
+}
