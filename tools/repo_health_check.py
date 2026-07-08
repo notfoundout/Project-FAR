@@ -8,7 +8,7 @@ parser=argparse.ArgumentParser(); g=parser.add_mutually_exclusive_group(); g.add
 full=args.full
 checks=[]
 def add(name, cmd, required=True): checks.append((name,cmd,required))
-for tool in ['verify_theory.py','check_dependencies.py','check_registry.py','check_notation.py','check_circularity.py','generate_theorem_index.py','check_repository_hygiene.py','check_math_rendering.py','check_markdown_hygiene.py','check_release_consistency.py','check_internal_links.py']:
+for tool in ['verify_theory.py','check_dependencies.py','check_dependency_registry.py','check_registry.py','check_notation.py','check_circularity.py','generate_theorem_index.py','check_repository_hygiene.py','check_math_rendering.py','check_markdown_hygiene.py','check_release_consistency.py','check_internal_links.py']:
     if (ROOT/'tools'/tool).exists(): add(tool, [sys.executable, f'tools/{tool}'])
 if full:
     for tool in ['evaluate_reasoning_systems.py','evaluate_primitive_sufficiency.py','run_adversarial_suite.py','check_evaluation_consistency.py']:
