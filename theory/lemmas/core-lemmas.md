@@ -58,11 +58,11 @@ Axiom 4 requires every reasoning process within the stated Project FAR scope to 
 
 ### Statement
 
-A scoped reasoning process cannot satisfy Project FAR Axiom 5 without a reasoning calculus.
+No scoped reasoning process satisfies Project FAR Axiom 5 unless it proceeds according to a reasoning calculus governing its admissible reasoning transitions.
 
 ### Proof
 
-Axiom 5 requires every reasoning process to proceed according to a reasoning calculus. Assume a reasoning process has no calculus. Then Axiom 5 is not satisfied. Therefore reasoning calculus is necessary.
+Axiom 5 requires every reasoning process within the stated Project FAR scope to proceed according to a reasoning calculus governing its admissible reasoning transitions. Assume a scoped reasoning process does not proceed according to such a reasoning calculus. Then the process fails the condition imposed by Axiom 5. Therefore no scoped reasoning process satisfies Axiom 5 unless it proceeds according to a reasoning calculus governing its admissible reasoning transitions.
 
 ---
 
