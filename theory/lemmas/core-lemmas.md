@@ -22,11 +22,11 @@ Axiom 1 requires every scoped reasoning process to admit one or more explicit re
 
 ### Statement
 
-A collection of participating representations cannot satisfy Project FAR Axiom 2 without representational structure.
+No participating collection of representations satisfies Project FAR Axiom 2 unless it possesses representational structure.
 
 ### Proof
 
-Axiom 2 requires every participating collection of representations to possess representational structure. Assume such a collection lacks representational structure. Then it fails Axiom 2. Therefore representational structure is necessary for any participating representation collection.
+Axiom 2 requires every collection of representations participating in a reasoning process to possess a representational structure. Assume a participating collection of representations lacks representational structure. Then the collection fails the condition imposed by Axiom 2. Therefore a participating collection of representations satisfies Axiom 2 only if it possesses representational structure.
 
 ---
 
