@@ -1,0 +1,220 @@
+registry_id: project-far-dependency-registry-v0.4
+schema: theory/dependencies/dependency-schema.yaml
+status: provisional
+scope: repository-structure-only
+notes: >-
+  Initial seed dependencies are limited to high-confidence repository-structure
+  relationships visible in files, Make targets, generated reports, workflows,
+  release documents, and proof-object filenames. This registry does not infer
+  controversial semantic dependencies.
+dependencies:
+  - id: DEP-0001
+    source: theory/proof-objects/T-001.proof.yaml
+    source_type: proof_object
+    target: theory/theorems/theorems.md
+    target_type: theorem
+    relationship: depends_on
+    confidence: high
+    status: accepted
+    evidence: proof object filename T-001 and theorem catalog file exist in repository.
+    notes: Structural proof-object-to-theorem-catalog dependency only.
+  - id: DEP-0002
+    source: theory/proof-objects/T-002.proof.yaml
+    source_type: proof_object
+    target: theory/theorems/theorems.md
+    target_type: theorem
+    relationship: depends_on
+    confidence: high
+    status: accepted
+    evidence: proof object filename T-002 and theorem catalog file exist in repository.
+    notes: Structural proof-object-to-theorem-catalog dependency only.
+  - id: DEP-0003
+    source: theory/proof-objects/T-003.proof.yaml
+    source_type: proof_object
+    target: theory/theorems/theorems.md
+    target_type: theorem
+    relationship: depends_on
+    confidence: high
+    status: accepted
+    evidence: proof object filename T-003 and theorem catalog file exist in repository.
+    notes: Structural proof-object-to-theorem-catalog dependency only.
+  - id: DEP-0004
+    source: theory/proof-objects/T-004.proof.yaml
+    source_type: proof_object
+    target: theory/theorems/theorems.md
+    target_type: theorem
+    relationship: depends_on
+    confidence: high
+    status: accepted
+    evidence: proof object filename T-004 and theorem catalog file exist in repository.
+    notes: Structural proof-object-to-theorem-catalog dependency only.
+  - id: DEP-0005
+    source: theory/proof-objects/T-005.proof.yaml
+    source_type: proof_object
+    target: theory/theorems/theorems.md
+    target_type: theorem
+    relationship: depends_on
+    confidence: high
+    status: accepted
+    evidence: proof object filename T-005 and theorem catalog file exist in repository.
+    notes: Structural proof-object-to-theorem-catalog dependency only.
+  - id: DEP-0006
+    source: docs/reports/primitive-sufficiency-report.md
+    source_type: report
+    target: theory/evaluation/evidence-registry.yaml
+    target_type: registry
+    relationship: references
+    confidence: high
+    status: accepted
+    evidence: Primitive sufficiency report summarizes evidence registry counts and classifications.
+    notes: Report-to-registry reference only.
+  - id: DEP-0007
+    source: docs/reports/adversarial-evaluation-report.md
+    source_type: report
+    target: theory/falsification/adversarial-test-suite.yaml
+    target_type: registry
+    relationship: references
+    confidence: high
+    status: accepted
+    evidence: Adversarial evaluation report summarizes adversarial test suite content.
+    notes: Report-to-registry reference only.
+  - id: DEP-0008
+    source: docs/reports/release-readiness-report.md
+    source_type: report
+    target: docs/reports/research-gap-report.md
+    target_type: report
+    relationship: references
+    confidence: high
+    status: generated
+    evidence: Release readiness report includes research-gap status and links to research-gap report.
+    notes: Generated report reference.
+  - id: DEP-0009
+    source: README.md
+    source_type: document
+    target: docs/reports/project-status-generated.md
+    target_type: report
+    relationship: references
+    confidence: high
+    status: generated
+    evidence: README Command Center links to Project Status.
+    notes: Generated dashboard navigation reference.
+  - id: DEP-0010
+    source: README.md
+    source_type: document
+    target: docs/reports/research-gap-report.md
+    target_type: report
+    relationship: references
+    confidence: high
+    status: generated
+    evidence: README Command Center links to Research Gap Report.
+    notes: Generated dashboard navigation reference.
+  - id: DEP-0011
+    source: tools/project_status_report.py
+    source_type: tool
+    target: docs/reports/project-status-generated.md
+    target_type: report
+    relationship: generates
+    confidence: high
+    status: accepted
+    evidence: Tool defines OUT as docs/reports/project-status-generated.md.
+    notes: Explicit tool output path.
+  - id: DEP-0012
+    source: tools/detect_research_gaps.py
+    source_type: tool
+    target: docs/reports/research-gap-report.md
+    target_type: report
+    relationship: generates
+    confidence: high
+    status: accepted
+    evidence: Tool writes docs/reports/research-gap-report.md.
+    notes: Explicit generated report path.
+  - id: DEP-0013
+    source: tools/generate_next_tasks.py
+    source_type: tool
+    target: docs/planning/next-actions.md
+    target_type: document
+    relationship: generates
+    confidence: high
+    status: accepted
+    evidence: Tool writes docs/planning/next-actions.md.
+    notes: Explicit planner artifact path.
+  - id: DEP-0014
+    source: tools/dashboard_metrics.py
+    source_type: tool
+    target: docs/planning/dashboard-metrics.md
+    target_type: document
+    relationship: generates
+    confidence: high
+    status: accepted
+    evidence: Tool defines OUT as docs/planning/dashboard-metrics.md.
+    notes: Explicit metrics artifact path.
+  - id: DEP-0015
+    source: tools/update_readme_dashboard.py
+    source_type: tool
+    target: README.md
+    target_type: document
+    relationship: generates
+    confidence: high
+    status: accepted
+    evidence: Tool defines README and updates the generated dashboard block.
+    notes: Explicit dashboard update path.
+  - id: DEP-0016
+    source: .github/workflows/repository-health.yml
+    source_type: workflow
+    target: Makefile
+    target_type: tool
+    relationship: uses
+    confidence: high
+    status: accepted
+    evidence: Workflow invokes make health-fast.
+    notes: Workflow-to-Makefile usage.
+  - id: DEP-0017
+    source: .github/workflows/regenerate-dashboard.yml
+    source_type: workflow
+    target: Makefile
+    target_type: tool
+    relationship: uses
+    confidence: high
+    status: accepted
+    evidence: Workflow invokes make dashboard.
+    notes: Workflow-to-Makefile usage.
+  - id: DEP-0018
+    source: .github/workflows/release-readiness.yml
+    source_type: workflow
+    target: tools/release_readiness_report.py
+    target_type: tool
+    relationship: uses
+    confidence: high
+    status: accepted
+    evidence: Workflow invokes python tools/release_readiness_report.py.
+    notes: Workflow-to-tool usage.
+  - id: DEP-0019
+    source: .github/workflows/repository-maintenance.yml
+    source_type: workflow
+    target: Makefile
+    target_type: tool
+    relationship: uses
+    confidence: high
+    status: accepted
+    evidence: Workflow invokes make health-fast and make dashboard.
+    notes: Workflow-to-Makefile usage.
+  - id: DEP-0020
+    source: docs/releases/project-far-v0.3.1.md
+    source_type: release
+    target: docs/releases/github-release-v0.3.1.md
+    target_type: release
+    relationship: documents
+    confidence: high
+    status: accepted
+    evidence: v0.3.1 release document and GitHub release notes describe the same maintenance release.
+    notes: Release-document to release-notes relationship.
+  - id: DEP-0021
+    source: docs/releases/project-far-v0.3.1.md
+    source_type: release
+    target: docs/releases/project-far-v0.3.0.md
+    target_type: release
+    relationship: documents
+    confidence: high
+    status: accepted
+    evidence: v0.3.1 explicitly preserves the v0.3.0 internal-validation baseline.
+    notes: Maintenance-release relationship to prior baseline.
