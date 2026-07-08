@@ -15,7 +15,7 @@ This root README is the canonical Project FAR command center: the single entry p
 - Current project phase: v0.4 external validation preparation
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
-- Last dashboard generation time: 2026-07-08T14:41:12+00:00
+- Last dashboard generation time: 2026-07-08T16:26:56+00:00
 
 ## Repository Alerts
 
@@ -51,7 +51,7 @@ Trend data is not yet available because no prior generated snapshot is stored.
 | External reasoning systems | 20 | not available | not available |
 | Conservative extensions | 33 | not available | not available |
 | Candidate primitive failures | 0 | not available | not available |
-| Open gaps | 91 | not available | not available |
+| Open gaps | 93 | not available | not available |
 
 ## Top Priority Tasks
 
@@ -97,7 +97,7 @@ Trend data is not yet available because no prior generated snapshot is stored.
 | Critical | 0 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
 | High | 1 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
 | Medium | 55 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
-| Low | 35 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| Low | 37 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
 
 ## Repository Navigation
 
@@ -116,6 +116,7 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - [Planning](docs/planning/README.md)
 - [Repository Index](docs/planning/repository-index.md)
 - [Dependency Report](docs/reports/dependency-report.md)
+- [Theory Impact Report](docs/reports/theory-impact-report.md)
 - [Dependency Graph JSON](docs/reports/dependency-graph.json)
 - [Dependency Graph Mermaid](docs/reports/dependency-graph.mmd)
 - [Dependency Registry](theory/dependencies/dependency-registry.yaml)

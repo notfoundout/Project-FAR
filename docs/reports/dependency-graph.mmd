@@ -1,14 +1,69 @@
 flowchart TD
   %% Generated from theory/dependencies/dependency-registry.yaml
-  README_md["README.md"]
-  project_status["docs/reports/project-status-generated.md"]
-  research_gaps["docs/reports/research-gap-report.md"]
-  dependency_registry["theory/dependencies/dependency-registry.yaml"]
-  dependency_report["docs/reports/dependency-report.md"]
-  dependency_graph_json["docs/reports/dependency-graph.json"]
-  dependency_graph_mmd["docs/reports/dependency-graph.mmd"]
-  README_md -- "references" --> project_status
-  README_md -- "references" --> research_gaps
-  dependency_report -- "generated_from" --> dependency_registry
-  dependency_graph_json -- "generated_from" --> dependency_registry
-  dependency_graph_mmd -- "generated_from" --> dependency_registry
+  subgraph type_document[document]
+    README_md["README.md"]
+    docs_planning_dashboard_metrics_md["docs/planning/dashboard-metrics.md"]
+    docs_planning_next_actions_md["docs/planning/next-actions.md"]
+  end
+  subgraph type_proof_object[proof_object]
+    theory_proof_objects_T_001_proof_yaml["theory/proof-objects/T-001.proof.yaml"]
+    theory_proof_objects_T_002_proof_yaml["theory/proof-objects/T-002.proof.yaml"]
+    theory_proof_objects_T_003_proof_yaml["theory/proof-objects/T-003.proof.yaml"]
+    theory_proof_objects_T_004_proof_yaml["theory/proof-objects/T-004.proof.yaml"]
+    theory_proof_objects_T_005_proof_yaml["theory/proof-objects/T-005.proof.yaml"]
+  end
+  subgraph type_registry[registry]
+    theory_evaluation_evidence_registry_yaml["theory/evaluation/evidence-registry.yaml"]
+    theory_falsification_adversarial_test_suite_yaml["theory/falsification/adversarial-test-suite.yaml"]
+  end
+  subgraph type_release[release]
+    docs_releases_github_release_v0_3_1_md["docs/releases/github-release-v0.3.1.md"]
+    docs_releases_project_far_v0_3_0_md["docs/releases/project-far-v0.3.0.md"]
+    docs_releases_project_far_v0_3_1_md["docs/releases/project-far-v0.3.1.md"]
+  end
+  subgraph type_report[report]
+    docs_reports_adversarial_evaluation_report_md["docs/reports/adversarial-evaluation-report.md"]
+    docs_reports_primitive_sufficiency_report_md["docs/reports/primitive-sufficiency-report.md"]
+    docs_reports_project_status_generated_md["docs/reports/project-status-generated.md"]
+    docs_reports_release_readiness_report_md["docs/reports/release-readiness-report.md"]
+    docs_reports_research_gap_report_md["docs/reports/research-gap-report.md"]
+  end
+  subgraph type_theorem[theorem]
+    theory_theorems_theorems_md["theory/theorems/theorems.md"]
+  end
+  subgraph type_tool[tool]
+    Makefile["Makefile"]
+    tools_dashboard_metrics_py["tools/dashboard_metrics.py"]
+    tools_detect_research_gaps_py["tools/detect_research_gaps.py"]
+    tools_generate_next_tasks_py["tools/generate_next_tasks.py"]
+    tools_project_status_report_py["tools/project_status_report.py"]
+    tools_release_readiness_report_py["tools/release_readiness_report.py"]
+    tools_update_readme_dashboard_py["tools/update_readme_dashboard.py"]
+  end
+  subgraph type_workflow[workflow]
+    _github_workflows_regenerate_dashboard_yml[".github/workflows/regenerate-dashboard.yml"]
+    _github_workflows_release_readiness_yml[".github/workflows/release-readiness.yml"]
+    _github_workflows_repository_health_yml[".github/workflows/repository-health.yml"]
+    _github_workflows_repository_maintenance_yml[".github/workflows/repository-maintenance.yml"]
+  end
+  theory_proof_objects_T_001_proof_yaml -- "depends_on" --> theory_theorems_theorems_md
+  theory_proof_objects_T_002_proof_yaml -- "depends_on" --> theory_theorems_theorems_md
+  theory_proof_objects_T_003_proof_yaml -- "depends_on" --> theory_theorems_theorems_md
+  theory_proof_objects_T_004_proof_yaml -- "depends_on" --> theory_theorems_theorems_md
+  theory_proof_objects_T_005_proof_yaml -- "depends_on" --> theory_theorems_theorems_md
+  docs_reports_primitive_sufficiency_report_md -- "references" --> theory_evaluation_evidence_registry_yaml
+  docs_reports_adversarial_evaluation_report_md -- "references" --> theory_falsification_adversarial_test_suite_yaml
+  docs_reports_release_readiness_report_md -- "references" --> docs_reports_research_gap_report_md
+  README_md -- "references" --> docs_reports_project_status_generated_md
+  README_md -- "references" --> docs_reports_research_gap_report_md
+  tools_project_status_report_py -- "generates" --> docs_reports_project_status_generated_md
+  tools_detect_research_gaps_py -- "generates" --> docs_reports_research_gap_report_md
+  tools_generate_next_tasks_py -- "generates" --> docs_planning_next_actions_md
+  tools_dashboard_metrics_py -- "generates" --> docs_planning_dashboard_metrics_md
+  tools_update_readme_dashboard_py -- "generates" --> README_md
+  _github_workflows_repository_health_yml -- "uses" --> Makefile
+  _github_workflows_regenerate_dashboard_yml -- "uses" --> Makefile
+  _github_workflows_release_readiness_yml -- "uses" --> tools_release_readiness_report_py
+  _github_workflows_repository_maintenance_yml -- "uses" --> Makefile
+  docs_releases_project_far_v0_3_1_md -- "documents" --> docs_releases_github_release_v0_3_1_md
+  docs_releases_project_far_v0_3_1_md -- "documents" --> docs_releases_project_far_v0_3_0_md

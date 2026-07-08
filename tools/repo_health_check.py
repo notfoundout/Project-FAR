@@ -11,6 +11,7 @@ def add(name, cmd, required=True): checks.append((name,cmd,required))
 for tool in ['verify_theory.py','check_dependencies.py','check_dependency_registry.py','check_registry.py','check_notation.py','check_circularity.py','generate_theorem_index.py','check_repository_hygiene.py','check_math_rendering.py','check_markdown_hygiene.py','check_release_consistency.py','check_internal_links.py']:
     if (ROOT/'tools'/tool).exists(): add(tool, [sys.executable, f'tools/{tool}'])
 if full:
+    add('theory_impact_analyzer.py', [sys.executable,'tools/theory_impact_analyzer.py'])
     for tool in ['evaluate_reasoning_systems.py','evaluate_primitive_sufficiency.py','run_adversarial_suite.py','check_evaluation_consistency.py']:
         if (ROOT/'tools'/tool).exists(): add(tool, [sys.executable, f'tools/{tool}'])
     add('check_orphaned_docs.py', [sys.executable,'tools/check_orphaned_docs.py'], required=False)

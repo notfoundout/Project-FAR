@@ -4,9 +4,9 @@ from __future__ import annotations
 from pathlib import Path
 import re, subprocess, sys
 ROOT=Path(__file__).resolve().parents[1]
-CMDS=[['python','tools/project_status_report.py'],['python','tools/detect_research_gaps.py'],['python','tools/generate_next_tasks.py'],['python','tools/generate_dependency_report.py'],['python','tools/generate_dependency_graph.py'],['python','tools/dashboard_metrics.py'],['python','tools/update_readme_dashboard.py']]
+CMDS=[['python','tools/project_status_report.py'],['python','tools/detect_research_gaps.py'],['python','tools/generate_next_tasks.py'],['python','tools/generate_dependency_report.py'],['python','tools/generate_dependency_graph.py'],['python','tools/theory_impact_analyzer.py'],['python','tools/dashboard_metrics.py'],['python','tools/update_readme_dashboard.py']]
 OPTIONAL_HEALTH=['python','tools/repo_health_check.py','--fast']
-GEN=[ROOT/'README.md',ROOT/'docs/planning/dashboard-metrics.md',ROOT/'docs/planning/repository-index.md',ROOT/'docs/reports/project-status-generated.md',ROOT/'docs/reports/research-gap-report.md',ROOT/'docs/planning/next-actions.md',ROOT/'docs/reports/dependency-report.md',ROOT/'docs/reports/dependency-graph.json',ROOT/'docs/reports/dependency-graph.mmd']
+GEN=[ROOT/'README.md',ROOT/'docs/planning/dashboard-metrics.md',ROOT/'docs/planning/repository-index.md',ROOT/'docs/reports/project-status-generated.md',ROOT/'docs/reports/research-gap-report.md',ROOT/'docs/planning/next-actions.md',ROOT/'docs/reports/dependency-report.md',ROOT/'docs/reports/dependency-graph.json',ROOT/'docs/reports/dependency-graph.mmd',ROOT/'docs/reports/theory-impact-report.md']
 def run(cmd):
     r=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True)
     print(r.stdout,end='');
