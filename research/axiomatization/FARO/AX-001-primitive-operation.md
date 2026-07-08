@@ -34,7 +34,21 @@ Can operation be defined without presupposing operation?
 
 # Dependencies
 
-- FARO-001 through FARO-026
+Logical dependencies:
+
+- `research/methodology/primitive-identification.md` — supplies the primitive-identification criteria used to evaluate operation as a primitive candidate.
+- `research/discovery/FARO/FARO-026-reducibility-of-operation.md` — supplies the direct repository reduction evidence for operation.
+
+Informative dependencies:
+
+- `frameworks/FARO/theory/definitions.md` — provides current FARO terminology, including the accepted FARO definition of operation, but AX-001 evaluates primitive candidacy rather than adopting that definition as proof.
+- `research/discovery/FARO/FARO-001-operational-necessity.md` through `research/discovery/FARO/FARO-025-operational-versus-architectural-constraints.md` — provide the research chain summarized by FARO-026 and explain why reducibility of operation became the active question. They are not direct logical dependencies of AX-001 except through FARO-026.
+
+Historical dependencies:
+
+- None identified.
+
+Dependency audit note: AX-001 previously listed `FARO-001 through FARO-026`. The validation audit found that this overstated direct logical dependence. FARO-026 is the direct logical dependency for operation reducibility; FARO-001 through FARO-025 remain informative background because FARO-026 depends on and summarizes that chain.
 
 ---
 
