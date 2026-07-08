@@ -10,11 +10,11 @@ This document breaks major Project FAR proofs into smaller reusable lemmas.
 
 ### Statement
 
-A scoped reasoning process cannot satisfy Project FAR Axiom 1 without at least one representation.
+For any scoped reasoning process, satisfaction of Project FAR Axiom 1 requires the existence, for Project FAR evaluation, of at least one explicit representation admitted for that process.
 
 ### Proof
 
-Axiom 1 requires every scoped reasoning process to admit one or more explicit representations. Assume a scoped reasoning process has no representation. Then it does not admit one or more explicit representations. This contradicts Axiom 1. Therefore representation is necessary for scoped FAR reasoning.
+Axiom 1 requires every scoped reasoning process to admit one or more explicit representations. Assume a scoped reasoning process satisfies the Axiom 1 requirement while no explicit representation is admitted for that process for Project FAR evaluation. Then the process does not admit one or more explicit representations, contradicting Axiom 1. Therefore satisfaction of Axiom 1 requires at least one explicit representation admitted for that process.
 
 ---
 
