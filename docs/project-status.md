@@ -1,5 +1,6 @@
 # Project FAR Status
 
+The root [README Command Center](../README.md) is the canonical entry point for current repository status and generated planning reports.
 
 - [`docs/maintenance/repository-health-checks.md`](maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
 ## Current Status

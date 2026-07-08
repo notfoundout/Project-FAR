@@ -1,5 +1,6 @@
 # Project FAR Self-Advancement Planner
 
+The root [README Command Center](../../README.md) is the canonical entry point for Project FAR planning; this page is a secondary planning index.
 The self-advancement planner is an advisory reporting system. It inspects existing registries and reports, summarizes the current repository status, detects research gaps, and drafts recommended next tasks for human approval.
 
 The planner may recommend theory work, but it does not authorize theory changes.

@@ -1,5 +1,6 @@
 # Overview
 
+The root [README Command Center](../README.md) is the canonical entry point for repository status, planning, and navigation.
 
 - [`docs/maintenance/repository-health-checks.md`](maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
 ## Purpose

@@ -4,8 +4,8 @@ from __future__ import annotations
 from pathlib import Path
 import re, subprocess, sys
 ROOT=Path(__file__).resolve().parents[1]
-CMDS=[['python','tools/project_status_report.py'],['python','tools/detect_research_gaps.py'],['python','tools/generate_next_tasks.py']]
-GEN=[ROOT/'docs/reports/project-status-generated.md',ROOT/'docs/reports/research-gap-report.md',ROOT/'docs/planning/next-actions.md']
+CMDS=[['python','tools/project_status_report.py'],['python','tools/detect_research_gaps.py'],['python','tools/generate_next_tasks.py'],['python','tools/update_readme_dashboard.py']]
+GEN=[ROOT/'docs/reports/project-status-generated.md',ROOT/'docs/reports/research-gap-report.md',ROOT/'docs/planning/next-actions.md',ROOT/'README.md',ROOT/'docs/planning/repository-index.md']
 def run(cmd):
     r=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True)
     print(r.stdout,end='');
@@ -13,7 +13,7 @@ def run(cmd):
     return r.returncode
 def count_gaps():
     p=ROOT/'docs/reports/research-gap-report.md'
-    return sum(1 for l in p.read_text(encoding='utf-8').splitlines() if l.startswith('| GAP-')) if p.exists() else 0
+    return sum(1 for l in p.read_text(encoding='utf-8').splitlines() if l.startswith('| ') and 'GAP-' in l) if p.exists() else 0
 def tasks():
     p=ROOT/'docs/planning/next-actions.md'
     if not p.exists(): return []

@@ -1,5 +1,6 @@
 # Canonical Map
 
+The root [README Command Center](../README.md) is the canonical repository entry point and links to this canonical map.
 
 - [`docs/maintenance/repository-health-checks.md`](maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
 ## Purpose
