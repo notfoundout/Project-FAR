@@ -29,9 +29,23 @@ for name,cmd,required in checks:
     if cp.stdout: print(cp.stdout.rstrip())
     if cp.returncode==0: print(f'PASS {name}')
     elif required:
-        print(f'FAIL {name} (exit {cp.returncode})'); failures.append(name)
+        print(f'FAIL {name} (exit {cp.returncode})'); failures.append((name,cmd,cp.returncode,cp.stdout or ''))
     else:
-        print(f'WARN {name} (exit {cp.returncode})'); warnings.append(name)
+        print(f'WARN {name} (exit {cp.returncode})'); warnings.append((name,cmd,cp.returncode,cp.stdout or ''))
 print('\nRepository health summary:')
 print(f'passed: {len(checks)-len(failures)-len(warnings)} warnings: {len(warnings)} failures: {len(failures)}')
+if warnings:
+    print('warning checks:')
+    for name,cmd,code,output in warnings:
+        print(f'- {name}')
+if failures:
+    print('failed checks:')
+    for name,cmd,code,output in failures:
+        print(f'- name: {name}')
+        print(f'  command: {" ".join(cmd)}')
+        print(f'  exit code: {code}')
+        print('  last 30 output lines:')
+        lines=output.rstrip().splitlines()[-30:]
+        for line in lines:
+            print(f'    {line}')
 if failures: raise SystemExit(1)

@@ -24,3 +24,7 @@ gaps:
 
 plan:
 	python tools/self_advancement_plan.py
+
+
+dashboard:
+	python tools/self_advancement_plan.py

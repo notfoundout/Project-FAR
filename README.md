@@ -5,108 +5,153 @@
 
 Project FAR is a foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
 
-This repository is organized as the Version 1.0 canonical architecture for the project. Each document has one canonical location; superseded material is retained in [`archive/`](archive/) when it is meaningful and not an exact duplicate.
+This root README is the canonical Project FAR command center: the single entry point for repository status, health, evidence, planning, and navigation. Only the generated dashboard block below is automatically regenerated; content outside the block is manually maintained.
 
----
+<!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
-## Latest Release
+## Repository Status
 
-**Project FAR v0.3.0** is the current internal-validation milestone. It evaluates primitive sufficiency across the reasoning-system corpus and adversarial suite, adds cross-domain consistency analysis, and records provisional independence and minimality analysis for the five FAR primitives.
+- Current release: [docs/releases/project-far-v0.4.md](docs/releases/project-far-v0.4.md)
+- Current project phase: External validation preparation
+- Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
+- Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
+- Last dashboard generation time: 2026-07-08T04:12:59+00:00
 
-Canonical release document: [`docs/releases/project-far-v0.3.0.md`](docs/releases/project-far-v0.3.0.md)
+## Repository Alerts
 
-Synthesis report: [`docs/reports/project-far-v0.3.0-synthesis.md`](docs/reports/project-far-v0.3.0-synthesis.md)
+| Alert | Status | Source |
+|---|---:|---|
+| Repository Health | PASS | [docs/maintenance/repository-health-checks.md](docs/maintenance/repository-health-checks.md) |
+| Critical Issues | 0 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| High Priority Gaps | 1 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| Planner Status | CURRENT | [docs/planning/next-actions.md](docs/planning/next-actions.md) |
+| CI Status | See workflows | [Repository Health workflow](.github/workflows/repo-health.yml) |
 
----
+## Evidence Snapshot
 
-## Current Development Status
+| Metric | Current | Source |
+|---|---:|---|
+| Internal reasoning systems | 23 | [theory/evaluation/evidence-registry.yaml](theory/evaluation/evidence-registry.yaml) |
+| External reasoning systems | 20 | [theory/evaluation/external-validation-registry.yaml](theory/evaluation/external-validation-registry.yaml) |
+| Adversarial tests | 14 | [theory/falsification/adversarial-test-suite.yaml](theory/falsification/adversarial-test-suite.yaml) |
+| Counterexample fixtures | 1 | [tests](tests) |
+| Candidate primitive failures | 0 | [theory/falsification/primitive-pressure-registry.yaml](theory/falsification/primitive-pressure-registry.yaml) |
+| Conservative extensions | 33 | [theory/falsification/primitive-pressure-registry.yaml](theory/falsification/primitive-pressure-registry.yaml) |
+| Fits FAR | 12 | [theory/evaluation/evidence-registry.yaml](theory/evaluation/evidence-registry.yaml) |
+| Unresolved cases | 12 | [docs/reports/project-status-generated.md](docs/reports/project-status-generated.md) |
 
-The current framework stack is:
+## Progress Summary
 
-| Framework | Role | Status | Entry Point |
-|---|---|---|---|
-| FARA | Representation | Stable | [`frameworks/FARA/README.md`](frameworks/FARA/README.md) |
-| FAR | Methodology | Stable | [`frameworks/FAR/README.md`](frameworks/FAR/README.md) |
-| FARO | Operations | Stable | [`frameworks/FARO/README.md`](frameworks/FARO/README.md) |
-| FARE | Mathematics | Frozen, requirement-driven | [`frameworks/FARE/README.md`](frameworks/FARE/README.md) |
-| FARM | Meta-framework coordination | Stable | [`frameworks/FARM/README.md`](frameworks/FARM/README.md) |
+Trend data is not yet available because no prior generated snapshot is stored.
 
-Current development is preparing for external validation after the v0.3.0 internal-validation baseline.
+| Metric | Current | Previous | Change |
+|---|---:|---:|---:|
+| Internal reasoning systems | 23 | not available | not available |
+| External reasoning systems | 20 | not available | not available |
+| Conservative extensions | 33 | not available | not available |
+| Candidate primitive failures | 0 | not available | not available |
+| Open gaps | 90 | not available | not available |
 
-Future FARE mathematical work is requirement-driven:
+## Top Priority Tasks
 
-- no new MDEFs unless FAR, FARO, FARA, or FARM requires them;
-- new theorems only when they justify or extend FAR, FARO, FARA, or FARM;
-- existing mathematical definitions change only through formal review.
+### TASK-045: Review unresolved primitive pressure at `Reasoning Calculus`
+- Source gap: [GAP-045](docs/reports/research-gap-report.md#gap-045)
+- Affected files:
+  - `Reasoning Calculus`
+- Suggested branch: `codex/review-unresolved-primitive-pressure-gap-045`
+- Suggested PR title: `Review unresolved primitive pressure (GAP-045)`
 
----
+### TASK-001: Review unresolved case at `PS-001`
+- Source gap: [GAP-001](docs/reports/research-gap-report.md#gap-001)
+- Affected files:
+  - `PS-001`
+- Suggested branch: `codex/review-unresolved-case-gap-001`
+- Suggested PR title: `Review unresolved case (GAP-001)`
 
-## Releases
+### TASK-002: Review provisional system at `PS-001`
+- Source gap: [GAP-002](docs/reports/research-gap-report.md#gap-002)
+- Affected files:
+  - `PS-001`
+- Suggested branch: `codex/review-provisional-system-gap-002`
+- Suggested PR title: `Review provisional system (GAP-002)`
 
-- [`v0.3.0 — Internal Validation Release`](https://github.com/notfoundout/Project-FAR/releases/tag/v0.3.0)
-- [`v0.2.0 — Evidence Framework Release`](https://github.com/notfoundout/Project-FAR/releases/tag/v0.2.0)
-- [`v0.1.0 — Initial Public Release`](https://github.com/notfoundout/Project-FAR/releases/tag/v0.1.0)
+### TASK-003: Review unresolved case at `PS-002`
+- Source gap: [GAP-003](docs/reports/research-gap-report.md#gap-003)
+- Affected files:
+  - `PS-002`
+- Suggested branch: `codex/review-unresolved-case-gap-003`
+- Suggested PR title: `Review unresolved case (GAP-003)`
 
----
+### TASK-004: Review provisional system at `PS-002`
+- Source gap: [GAP-004](docs/reports/research-gap-report.md#gap-004)
+- Affected files:
+  - `PS-002`
+- Suggested branch: `codex/review-provisional-system-gap-004`
+- Suggested PR title: `Review provisional system (GAP-004)`
 
-## Primary Navigation
+## Research Gap Summary
 
-- [`docs/maintenance/repository-health-checks.md`](docs/maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
-- [`docs/project-status.md`](docs/project-status.md) — Current project status and governance.
-- [`docs/CANONICAL_MAP.md`](docs/CANONICAL_MAP.md) — Linked canonical-location index.
-- [`docs/audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md`](docs/audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md) — Post-v1.0 repository audit.
-- [`docs/audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md`](docs/audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md) — Framework navigation audit.
-
----
-
-## Milestones
-
-- [`docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`](docs/milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md)
-- [`docs/milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md`](docs/milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md)
-- [`docs/milestones/FAR-MILESTONE-004-FARO-v1.0-Stable.md`](docs/milestones/FAR-MILESTONE-004-FARO-v1.0-Stable.md)
-- [`docs/milestones/FARM-v1.0-Stable.md`](docs/milestones/FARM-v1.0-Stable.md)
-
----
+| Severity | Count | Source |
+|---|---:|---|
+| Critical | 0 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| High | 1 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| Medium | 55 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| Low | 34 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
 
 ## Repository Navigation
 
-- [`docs/`](docs/) — Project-level architecture, roadmap, status, changelog, decision log, style guide, canonical map, audits, and milestones.
-- [`foundations/`](foundations/) — Motivation, assumptions, primitive foundations, representations, and foundational investigations.
-- [`theory/`](theory/) — Canonical definitions, axioms, semantics, operators, notation, theorems, proofs, and consistency material.
-- [`frameworks/`](frameworks/) — Framework-specific material for FARA, FAR, FARE, FARO, and FARM.
-- [`methodology/`](methodology/) — Proof standards, validation, falsification, and comparison methodology.
-- [`examples/`](examples/) — Worked examples of Project FAR usage.
-- [`research/`](research/) — Exploratory literature, notes, comparisons, bibliography, and open problems.
-- [`tests/`](tests/) — Counterexamples, simulations, edge cases, and regression material.
-- [`papers/`](papers/) — Paper drafts and publication-oriented writing.
-- [`archive/`](archive/) — Meaningful superseded material retained for historical context.
+- [Project Status](docs/reports/project-status-generated.md)
+- [Research Gap Report](docs/reports/research-gap-report.md)
+- [Next Actions](docs/planning/next-actions.md)
+- [Dashboard Metrics](docs/planning/dashboard-metrics.md)
+- [External Validation](docs/reports/external-validation-report.md)
+- [Primitive Sufficiency](docs/reports/primitive-sufficiency-report.md)
+- [Evidence Registry](theory/evaluation/evidence-registry.yaml)
+- [External Validation Registry](theory/evaluation/external-validation-registry.yaml)
+- [Primitive Pressure Registry](theory/falsification/primitive-pressure-registry.yaml)
+- [Adversarial Test Suite](theory/falsification/adversarial-test-suite.yaml)
+- [Releases](docs/releases)
+- [Maintenance](docs/maintenance)
+- [Planning](docs/planning/README.md)
+- [Repository Index](docs/planning/repository-index.md)
 
----
+## Current Roadmap
 
-## Recommended Reading Order
+- Current phase: External validation preparation
+- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation
+- In-progress work: Repository Automation
+- Planned work: Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor
 
-1. [`docs/OVERVIEW.md`](docs/OVERVIEW.md)
-2. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
-3. [`docs/CANONICAL_MAP.md`](docs/CANONICAL_MAP.md)
-4. [`docs/project-status.md`](docs/project-status.md)
-5. [`frameworks/FARA/README.md`](frameworks/FARA/README.md)
-6. [`frameworks/FAR/README.md`](frameworks/FAR/README.md)
-7. [`frameworks/FARO/README.md`](frameworks/FARO/README.md)
-8. [`frameworks/FARE/README.md`](frameworks/FARE/README.md)
-9. [`frameworks/FARM/README.md`](frameworks/FARM/README.md)
-10. [`examples/`](examples/)
+## Command Center
 
----
+### Local Commands
 
-## Core Principle
+```bash
+make dashboard
+make health-fast
+make health
+make docs-check
+make plan
+```
 
-Canonical theory and accepted framework definitions live in [`foundations/`](foundations/), [`theory/`](theory/), and [`frameworks/`](frameworks/). Exploratory or provisional work lives in [`research/`](research/). Superseded but meaningful material lives in [`archive/`](archive/).
+### GitHub Actions
 
+- Repository Health: [repo-health.yml](.github/workflows/repo-health.yml)
+- Regenerate Dashboard: [project-planning.yml](.github/workflows/project-planning.yml)
+- Release Readiness: `release-readiness.yml` (planned)
+- Repository Maintenance: `repository-maintenance.yml` (planned)
 
-## Self-Advancement Planning
+## Typical Workflow
 
-- [Planning overview](docs/planning/README.md)
-- [Generated project status](docs/reports/project-status-generated.md)
-- [Research gap report](docs/reports/research-gap-report.md)
-- [Next actions](docs/planning/next-actions.md)
-- [Planner maintenance](docs/maintenance/self-advancement-planner.md)
+1. `make health-fast`
+2. `make dashboard`
+3. Open README
+4. Choose top task
+5. Open source gap
+6. Open affected files
+7. Copy generated Codex prompt
+8. Implement
+9. Run health
+10. Merge
+
+<!-- END GENERATED PROJECT FAR DASHBOARD -->
