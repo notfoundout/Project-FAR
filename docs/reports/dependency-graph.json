@@ -5,6 +5,296 @@
     "node_count": 30,
     "edge_count": 21
   },
-  "nodes": [],
-  "edges": []
+  "nodes": [
+    {
+      "id": ".github/workflows/regenerate-dashboard.yml",
+      "type": "workflow"
+    },
+    {
+      "id": ".github/workflows/release-readiness.yml",
+      "type": "workflow"
+    },
+    {
+      "id": ".github/workflows/repository-health.yml",
+      "type": "workflow"
+    },
+    {
+      "id": ".github/workflows/repository-maintenance.yml",
+      "type": "workflow"
+    },
+    {
+      "id": "Makefile",
+      "type": "tool"
+    },
+    {
+      "id": "README.md",
+      "type": "document"
+    },
+    {
+      "id": "docs/planning/dashboard-metrics.md",
+      "type": "document"
+    },
+    {
+      "id": "docs/planning/next-actions.md",
+      "type": "document"
+    },
+    {
+      "id": "docs/releases/github-release-v0.3.1.md",
+      "type": "release"
+    },
+    {
+      "id": "docs/releases/project-far-v0.3.0.md",
+      "type": "release"
+    },
+    {
+      "id": "docs/releases/project-far-v0.3.1.md",
+      "type": "release"
+    },
+    {
+      "id": "docs/reports/adversarial-evaluation-report.md",
+      "type": "report"
+    },
+    {
+      "id": "docs/reports/primitive-sufficiency-report.md",
+      "type": "report"
+    },
+    {
+      "id": "docs/reports/project-status-generated.md",
+      "type": "report"
+    },
+    {
+      "id": "docs/reports/release-readiness-report.md",
+      "type": "report"
+    },
+    {
+      "id": "docs/reports/research-gap-report.md",
+      "type": "report"
+    },
+    {
+      "id": "theory/evaluation/evidence-registry.yaml",
+      "type": "registry"
+    },
+    {
+      "id": "theory/falsification/adversarial-test-suite.yaml",
+      "type": "registry"
+    },
+    {
+      "id": "theory/proof-objects/T-001.proof.yaml",
+      "type": "proof_object"
+    },
+    {
+      "id": "theory/proof-objects/T-002.proof.yaml",
+      "type": "proof_object"
+    },
+    {
+      "id": "theory/proof-objects/T-003.proof.yaml",
+      "type": "proof_object"
+    },
+    {
+      "id": "theory/proof-objects/T-004.proof.yaml",
+      "type": "proof_object"
+    },
+    {
+      "id": "theory/proof-objects/T-005.proof.yaml",
+      "type": "proof_object"
+    },
+    {
+      "id": "theory/theorems/theorems.md",
+      "type": "theorem"
+    },
+    {
+      "id": "tools/dashboard_metrics.py",
+      "type": "tool"
+    },
+    {
+      "id": "tools/detect_research_gaps.py",
+      "type": "tool"
+    },
+    {
+      "id": "tools/generate_next_tasks.py",
+      "type": "tool"
+    },
+    {
+      "id": "tools/project_status_report.py",
+      "type": "tool"
+    },
+    {
+      "id": "tools/release_readiness_report.py",
+      "type": "tool"
+    },
+    {
+      "id": "tools/update_readme_dashboard.py",
+      "type": "tool"
+    }
+  ],
+  "edges": [
+    {
+      "id": "DEP-0001",
+      "source": "theory/proof-objects/T-001.proof.yaml",
+      "target": "theory/theorems/theorems.md",
+      "relationship": "depends_on",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0002",
+      "source": "theory/proof-objects/T-002.proof.yaml",
+      "target": "theory/theorems/theorems.md",
+      "relationship": "depends_on",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0003",
+      "source": "theory/proof-objects/T-003.proof.yaml",
+      "target": "theory/theorems/theorems.md",
+      "relationship": "depends_on",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0004",
+      "source": "theory/proof-objects/T-004.proof.yaml",
+      "target": "theory/theorems/theorems.md",
+      "relationship": "depends_on",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0005",
+      "source": "theory/proof-objects/T-005.proof.yaml",
+      "target": "theory/theorems/theorems.md",
+      "relationship": "depends_on",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0006",
+      "source": "docs/reports/primitive-sufficiency-report.md",
+      "target": "theory/evaluation/evidence-registry.yaml",
+      "relationship": "references",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0007",
+      "source": "docs/reports/adversarial-evaluation-report.md",
+      "target": "theory/falsification/adversarial-test-suite.yaml",
+      "relationship": "references",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0008",
+      "source": "docs/reports/release-readiness-report.md",
+      "target": "docs/reports/research-gap-report.md",
+      "relationship": "references",
+      "confidence": "high",
+      "status": "generated"
+    },
+    {
+      "id": "DEP-0009",
+      "source": "README.md",
+      "target": "docs/reports/project-status-generated.md",
+      "relationship": "references",
+      "confidence": "high",
+      "status": "generated"
+    },
+    {
+      "id": "DEP-0010",
+      "source": "README.md",
+      "target": "docs/reports/research-gap-report.md",
+      "relationship": "references",
+      "confidence": "high",
+      "status": "generated"
+    },
+    {
+      "id": "DEP-0011",
+      "source": "tools/project_status_report.py",
+      "target": "docs/reports/project-status-generated.md",
+      "relationship": "generates",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0012",
+      "source": "tools/detect_research_gaps.py",
+      "target": "docs/reports/research-gap-report.md",
+      "relationship": "generates",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0013",
+      "source": "tools/generate_next_tasks.py",
+      "target": "docs/planning/next-actions.md",
+      "relationship": "generates",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0014",
+      "source": "tools/dashboard_metrics.py",
+      "target": "docs/planning/dashboard-metrics.md",
+      "relationship": "generates",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0015",
+      "source": "tools/update_readme_dashboard.py",
+      "target": "README.md",
+      "relationship": "generates",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0016",
+      "source": ".github/workflows/repository-health.yml",
+      "target": "Makefile",
+      "relationship": "uses",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0017",
+      "source": ".github/workflows/regenerate-dashboard.yml",
+      "target": "Makefile",
+      "relationship": "uses",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0018",
+      "source": ".github/workflows/release-readiness.yml",
+      "target": "tools/release_readiness_report.py",
+      "relationship": "uses",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0019",
+      "source": ".github/workflows/repository-maintenance.yml",
+      "target": "Makefile",
+      "relationship": "uses",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0020",
+      "source": "docs/releases/project-far-v0.3.1.md",
+      "target": "docs/releases/github-release-v0.3.1.md",
+      "relationship": "documents",
+      "confidence": "high",
+      "status": "accepted"
+    },
+    {
+      "id": "DEP-0021",
+      "source": "docs/releases/project-far-v0.3.1.md",
+      "target": "docs/releases/project-far-v0.3.0.md",
+      "relationship": "documents",
+      "confidence": "high",
+      "status": "accepted"
+    }
+  ]
 }

@@ -48,5 +48,30 @@
       "Documentation coverage": 591,
       "Health-check availability": 1
     }
+  },
+  {
+    "generated_at": "2026-07-08T16:26:56+00:00",
+    "metrics": {
+      "Markdown files": 597,
+      "Theory files": 135,
+      "Python tools": 37,
+      "Reports": 18,
+      "Registries": 8,
+      "Proof objects": 15,
+      "Examples": 33,
+      "Maintenance documents": 5,
+      "Releases": 14,
+      "Internal evaluations": 23,
+      "External evaluations": 20,
+      "Adversarial fixtures": 14,
+      "Counterexample fixtures": 1,
+      "Candidate primitive failures": 0,
+      "Conservative extensions": 33,
+      "Fits FAR": 12,
+      "Unresolved cases": 12,
+      "Unresolved gaps": 93,
+      "Documentation coverage": 597,
+      "Health-check availability": 1
+    }
   }
 ]
