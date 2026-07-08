@@ -1,0 +1,28 @@
+name: Repository Health
+
+on:
+  workflow_dispatch:
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: python -m pip install pyyaml
+      - name: Run health-fast
+        run: |
+          start=$(date +%s)
+          set +e
+          make health-fast 2>&1 | tee repository-health-summary.txt
+          status=${PIPESTATUS[0]}
+          end=$(date +%s)
+          echo "execution_time_seconds=$((end-start))" >> "$GITHUB_STEP_SUMMARY"
+          echo "## Repository Health" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$status" -eq 0 ]; then echo "PASS" >> "$GITHUB_STEP_SUMMARY"; else echo "FAIL" >> "$GITHUB_STEP_SUMMARY"; fi
+          echo "## Validation Summary" >> "$GITHUB_STEP_SUMMARY"
+          tail -n 80 repository-health-summary.txt >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
