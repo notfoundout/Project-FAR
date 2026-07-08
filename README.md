@@ -15,7 +15,7 @@ This root README is the canonical Project FAR command center: the single entry p
 - Current project phase: External validation preparation
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
-- Last dashboard generation time: 2026-07-08T03:23:13+00:00
+- Last dashboard generation time: 2026-07-08T04:12:59+00:00
 
 ## Repository Alerts
 
@@ -103,6 +103,7 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - [Project Status](docs/reports/project-status-generated.md)
 - [Research Gap Report](docs/reports/research-gap-report.md)
 - [Next Actions](docs/planning/next-actions.md)
+- [Dashboard Metrics](docs/planning/dashboard-metrics.md)
 - [External Validation](docs/reports/external-validation-report.md)
 - [Primitive Sufficiency](docs/reports/primitive-sufficiency-report.md)
 - [Evidence Registry](theory/evaluation/evidence-registry.yaml)
@@ -137,8 +138,8 @@ make plan
 
 - Repository Health: [repo-health.yml](.github/workflows/repo-health.yml)
 - Regenerate Dashboard: [project-planning.yml](.github/workflows/project-planning.yml)
-- Release Readiness: `release-readiness.yml` (not present)
-- Repository Maintenance: `repository-maintenance.yml` (not present)
+- Release Readiness: `release-readiness.yml` (planned)
+- Repository Maintenance: `repository-maintenance.yml` (planned)
 
 ## Typical Workflow
 
@@ -146,10 +147,11 @@ make plan
 2. `make dashboard`
 3. Open README
 4. Choose top task
-5. Open linked files
-6. Copy generated Codex prompt
-7. Implement
-8. Run health
-9. Merge
+5. Open source gap
+6. Open affected files
+7. Copy generated Codex prompt
+8. Implement
+9. Run health
+10. Merge
 
 <!-- END GENERATED PROJECT FAR DASHBOARD -->
