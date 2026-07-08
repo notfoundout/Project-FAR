@@ -115,6 +115,11 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - [Maintenance](docs/maintenance)
 - [Planning](docs/planning/README.md)
 - [Repository Index](docs/planning/repository-index.md)
+- [Dependency Report](docs/reports/dependency-report.md)
+- [Dependency Graph JSON](docs/reports/dependency-graph.json)
+- [Dependency Graph Mermaid](docs/reports/dependency-graph.mmd)
+- [Dependency Registry](theory/dependencies/dependency-registry.yaml)
+- [Dependency Schema](theory/dependencies/dependency-schema.yaml)
 
 ## Current Roadmap
 

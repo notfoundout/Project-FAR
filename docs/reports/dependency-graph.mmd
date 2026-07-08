@@ -1,0 +1,14 @@
+flowchart TD
+  %% Generated from theory/dependencies/dependency-registry.yaml
+  README_md["README.md"]
+  project_status["docs/reports/project-status-generated.md"]
+  research_gaps["docs/reports/research-gap-report.md"]
+  dependency_registry["theory/dependencies/dependency-registry.yaml"]
+  dependency_report["docs/reports/dependency-report.md"]
+  dependency_graph_json["docs/reports/dependency-graph.json"]
+  dependency_graph_mmd["docs/reports/dependency-graph.mmd"]
+  README_md -- "references" --> project_status
+  README_md -- "references" --> research_gaps
+  dependency_report -- "generated_from" --> dependency_registry
+  dependency_graph_json -- "generated_from" --> dependency_registry
+  dependency_graph_mmd -- "generated_from" --> dependency_registry

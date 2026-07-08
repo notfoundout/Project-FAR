@@ -38,7 +38,7 @@ jobs:
             exit 0
           fi
           git status --short >> "$GITHUB_STEP_SUMMARY"
-          git add README.md docs/planning docs/reports/project-status-generated.md docs/reports/research-gap-report.md
+          git add README.md docs/planning docs/reports/project-status-generated.md docs/reports/research-gap-report.md docs/reports/dependency-report.md docs/reports/dependency-graph.json docs/reports/dependency-graph.mmd
           git commit -m "Regenerate Project FAR dashboard artifacts"
           git push || echo "push_failed=true" >> "$GITHUB_OUTPUT"
           echo "changed=true" >> "$GITHUB_OUTPUT"

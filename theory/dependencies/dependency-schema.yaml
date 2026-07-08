@@ -1,0 +1,101 @@
+schema_id: project-far-dependency-record-v0.4
+status: provisional
+purpose: >-
+  Machine-readable dependency records for repository-level dependency
+  infrastructure. The schema records explicit, evidence-backed repository
+  relationships and does not authorize semantic inference about Project FAR
+  theory content.
+record:
+  required_fields:
+    - id
+    - source
+    - source_type
+    - target
+    - target_type
+    - relationship
+    - confidence
+    - status
+    - evidence
+    - notes
+  fields:
+    id:
+      type: string
+      description: Unique stable dependency identifier.
+    source:
+      type: string
+      description: Source node identifier or repository path.
+    source_type:
+      type: enum
+      allowed_values:
+        - primitive
+        - definition
+        - axiom
+        - lemma
+        - theorem
+        - proof_object
+        - framework
+        - report
+        - registry
+        - tool
+        - document
+        - release
+        - example
+        - test
+        - workflow
+    target:
+      type: string
+      description: Target node identifier or repository path.
+    target_type:
+      type: enum
+      allowed_values:
+        - primitive
+        - definition
+        - axiom
+        - lemma
+        - theorem
+        - proof_object
+        - framework
+        - report
+        - registry
+        - tool
+        - document
+        - release
+        - example
+        - test
+        - workflow
+    relationship:
+      type: enum
+      allowed_values:
+        - depends_on
+        - derives_from
+        - references
+        - validates
+        - falsifies
+        - extends
+        - contradicts
+        - implements
+        - requires
+        - documents
+        - generates
+        - checks
+        - uses
+    confidence:
+      type: enum
+      allowed_values:
+        - high
+        - medium
+        - low
+    status:
+      type: enum
+      allowed_values:
+        - accepted
+        - provisional
+        - generated
+        - needs_review
+        - deprecated
+    evidence:
+      type: string
+      description: Repository-local evidence for the dependency.
+    notes:
+      type: string
+      description: Cautious explanation, including self-dependency justification when applicable.
