@@ -1,0 +1,28 @@
+name: Release Readiness
+
+on:
+  workflow_dispatch:
+
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: python -m pip install pyyaml
+      - name: Generate release-readiness report
+        run: |
+          start=$(date +%s)
+          make health
+          make dashboard
+          python tools/release_readiness_report.py
+          end=$(date +%s)
+          echo "execution_time_seconds=$((end-start))" >> "$GITHUB_STEP_SUMMARY"
+          cat docs/reports/release-readiness-report.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-readiness-report
+          path: docs/reports/release-readiness-report.md

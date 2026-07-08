@@ -28,3 +28,6 @@ plan:
 
 dashboard:
 	python tools/self_advancement_plan.py
+
+release-readiness:
+	python tools/release_readiness_report.py

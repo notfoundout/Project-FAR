@@ -3,13 +3,16 @@
 from __future__ import annotations
 
 from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
+import json
 import yaml
 
 from report_link_utils import markdown_link
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'docs/planning/dashboard-metrics.md'
+HISTORY = ROOT / 'docs/planning/dashboard-metrics-history.json'
 EVIDENCE = ROOT / 'theory/evaluation/evidence-registry.yaml'
 EXTERNAL = ROOT / 'theory/evaluation/external-validation-registry.yaml'
 ADVERSARIAL = ROOT / 'theory/falsification/adversarial-test-suite.yaml'
@@ -76,38 +79,78 @@ def collect_metrics() -> list[tuple[str, int, Path | str]]:
     return [
         ('Markdown files', sum(1 for path in files if path.suffix.lower() == '.md'), ROOT),
         ('Theory files', sum(1 for path in files if 'theory' in path.relative_to(ROOT).parts), ROOT / 'theory'),
+        ('Python tools', sum(1 for path in files if path.suffix == '.py' and 'tools' in path.relative_to(ROOT).parts), ROOT / 'tools'),
         ('Reports', sum(1 for path in files if 'reports' in path.relative_to(ROOT).parts), ROOT / 'docs/reports'),
         ('Registries', sum(1 for path in files if 'registry' in path.name.lower()), ROOT / 'theory'),
         ('Proof objects', len(list((ROOT / 'theory/proof-objects').glob('T-*.proof.yaml'))), ROOT / 'theory/proof-objects'),
         ('Examples', sum(1 for path in files if 'examples' in path.relative_to(ROOT).parts), ROOT / 'examples'),
+        ('Maintenance documents', sum(1 for path in files if 'maintenance' in path.relative_to(ROOT).parts), ROOT / 'docs/maintenance'),
+        ('Releases', sum(1 for path in files if 'releases' in path.relative_to(ROOT).parts), ROOT / 'docs/releases'),
         ('Internal evaluations', len(evidence), EVIDENCE),
         ('External evaluations', len(external), EXTERNAL),
-        ('Adversarial tests', len(adversarial), ADVERSARIAL),
+        ('Adversarial fixtures', len(adversarial), ADVERSARIAL),
         ('Counterexample fixtures', len(list((ROOT / 'tests/counterexamples').glob('*'))) if (ROOT / 'tests/counterexamples').exists() else len(list((ROOT / 'tests').glob('*counter*'))) if (ROOT / 'tests').exists() else 0, ROOT / 'tests'),
         ('Candidate primitive failures', candidate_failures, PRESSURE),
         ('Conservative extensions', conservative_extensions, PRESSURE),
         ('Fits FAR', fits_far, EVIDENCE),
         ('Unresolved cases', unresolved, GAPS),
-        ('Open gaps', sum(gaps.values()), GAPS),
+        ('Unresolved gaps', sum(gaps.values()), GAPS),
+        ('Documentation coverage', sum(1 for path in files if path.suffix.lower() == '.md'), ROOT / 'docs'),
         ('Health-check availability', 1 if (ROOT / 'tools/repo_health_check.py').exists() else 0, ROOT / 'tools/repo_health_check.py'),
     ]
 
 
+
+def load_history() -> list[dict]:
+    if not HISTORY.exists():
+        return []
+    try:
+        data = json.loads(HISTORY.read_text(encoding='utf-8'))
+    except json.JSONDecodeError:
+        return []
+    return data if isinstance(data, list) else []
+
+
+def write_history(snapshot: dict[str, int]) -> None:
+    history = load_history()
+    history.append({'generated_at': datetime.now(timezone.utc).replace(microsecond=0).isoformat(), 'metrics': snapshot})
+    HISTORY.write_text(json.dumps(history[-25:], indent=2) + '\n', encoding='utf-8')
+
+
+def previous_snapshot(history: list[dict]) -> dict[str, int] | None:
+    if not history:
+        return None
+    metrics = history[-1].get('metrics')
+    return metrics if isinstance(metrics, dict) else None
+
+
+def change(current: int, previous: int | None) -> str:
+    if previous is None:
+        return 'not initialized'
+    delta = current - previous
+    return f'{delta:+d}'
+
 def main() -> int:
     OUT.parent.mkdir(parents=True, exist_ok=True)
+    collected = collect_metrics()
+    snapshot = {name: value for name, value, source in collected}
+    previous = previous_snapshot(load_history())
+    write_history(snapshot)
     lines = [
         '# Dashboard Metrics',
         '',
         f'Navigation: {markdown_link("README.md", OUT, "README Command Center")} | {markdown_link("docs/reports/project-status-generated.md", OUT, "Project Status")} | {markdown_link("docs/reports/research-gap-report.md", OUT, "Research Gaps")} | {markdown_link("docs/planning/next-actions.md", OUT, "Next Actions")}',
         '',
-        '| Metric | Current | Source |',
-        '|---|---:|---|',
+        '| Metric | Current | Previous | Change | Source |',
+        '|---|---:|---:|---:|---|',
     ]
-    for name, value, source in collect_metrics():
-        lines.append(f'| {name} | {value} | {markdown_link(source, OUT)} |')
+    for name, value, source in collected:
+        prev = None if previous is None else previous.get(name)
+        prev_display = 'not initialized' if prev is None else prev
+        lines.append(f'| {name} | {value} | {prev_display} | {change(value, prev)} | {markdown_link(source, OUT)} |')
     lines += [
         '',
-        'Trend data is not initialized. Future planner runs may compare current, previous, and change values once historical snapshots exist.',
+        ('Trend tracking has not yet been initialized.' if previous is None else f'Trend tracking compares the current snapshot with {HISTORY.name}.'),
         '',
         f'Navigation: {markdown_link("README.md", OUT, "README Command Center")} | {markdown_link("docs/reports/project-status-generated.md", OUT, "Project Status")} | {markdown_link("docs/reports/research-gap-report.md", OUT, "Research Gaps")} | {markdown_link("docs/planning/next-actions.md", OUT, "Next Actions")}',
         '',

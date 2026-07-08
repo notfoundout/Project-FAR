@@ -1,0 +1,52 @@
+[
+  {
+    "generated_at": "2026-07-08T14:00:57+00:00",
+    "metrics": {
+      "Markdown files": 590,
+      "Theory files": 133,
+      "Python tools": 32,
+      "Reports": 13,
+      "Registries": 6,
+      "Proof objects": 15,
+      "Examples": 33,
+      "Maintenance documents": 3,
+      "Releases": 12,
+      "Internal evaluations": 23,
+      "External evaluations": 20,
+      "Adversarial fixtures": 14,
+      "Counterexample fixtures": 1,
+      "Candidate primitive failures": 0,
+      "Conservative extensions": 33,
+      "Fits FAR": 12,
+      "Unresolved cases": 12,
+      "Unresolved gaps": 90,
+      "Documentation coverage": 590,
+      "Health-check availability": 1
+    }
+  },
+  {
+    "generated_at": "2026-07-08T14:02:32+00:00",
+    "metrics": {
+      "Markdown files": 591,
+      "Theory files": 133,
+      "Python tools": 32,
+      "Reports": 14,
+      "Registries": 6,
+      "Proof objects": 15,
+      "Examples": 33,
+      "Maintenance documents": 3,
+      "Releases": 12,
+      "Internal evaluations": 23,
+      "External evaluations": 20,
+      "Adversarial fixtures": 14,
+      "Counterexample fixtures": 1,
+      "Candidate primitive failures": 0,
+      "Conservative extensions": 33,
+      "Fits FAR": 12,
+      "Unresolved cases": 12,
+      "Unresolved gaps": 91,
+      "Documentation coverage": 591,
+      "Health-check availability": 1
+    }
+  }
+]

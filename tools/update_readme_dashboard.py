@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import re, yaml
 from report_link_utils import markdown_link, relative_href, slugify_heading
+from repository_alerts import compute_alerts
 
 ROOT=Path(__file__).resolve().parents[1]
 README=ROOT/'README.md'
@@ -70,7 +71,7 @@ def metrics():
     cons=sum(1 for x in ev+ex if 'conservative extension' in str(x.get('classification','')).lower()) + sum(len(p.get('conservative_extensions') or []) for p in pressure)
     fits=sum(1 for x in ev+ex if 'fits far' in str(x.get('classification','')).lower())
     unresolved=sum(1 for x in ev+ex+adv if 'unresolved' in str(x).lower()) + sum(len(p.get('unresolved_pressures') or []) for p in pressure)
-    return ev,ex,adv,pressure, {'Internal reasoning systems':len(ev),'External reasoning systems':len(ex),'Adversarial tests':len(adv),'Counterexample fixtures':len(list((ROOT/'tests/counterexamples').glob('*'))) if (ROOT/'tests/counterexamples').exists() else len(list((ROOT/'tests').glob('*counter*'))) if (ROOT/'tests').exists() else 0,'Candidate primitive failures':failures,'Conservative extensions':cons,'Fits FAR':fits,'Unresolved cases':unresolved}
+    return ev,ex,adv,pressure, {'Internal reasoning systems':len(ev),'External reasoning systems':len(ex),'Adversarial fixtures':len(adv),'Counterexample fixtures':len(list((ROOT/'tests/counterexamples').glob('*'))) if (ROOT/'tests/counterexamples').exists() else len(list((ROOT/'tests').glob('*counter*'))) if (ROOT/'tests').exists() else 0,'Candidate primitive failures':failures,'Conservative extensions':cons,'Fits FAR':fits,'Unresolved cases':unresolved}
 def workflow(name):
     p=ROOT/'.github/workflows'/name
     return link(p, p.name) if p.exists() else f'`{name}` (planned)'
@@ -106,13 +107,16 @@ def generate_index():
     INDEX.parent.mkdir(parents=True,exist_ok=True); INDEX.write_text('\n'.join(lines),encoding='utf-8')
 def block():
     generate_index(); ev,ex,adv,pressure,m=metrics(); gaps=gap_counts(); rel=count_release()
-    health='PASS'; planner='CURRENT'; ci='See workflows'
+    health='PASS'; planner='CURRENT'; ci='Manual workflows available'
     critical=gaps.get('Critical',0); high=gaps.get('High',0)
+    alerts=compute_alerts(health, ci)
     lines=[BEGIN,'','## Repository Status','',f'- Current release: {link(rel) if rel else "unknown"}',f'- Current project phase: External validation preparation',f'- Repository health status: {health} ({link("docs/maintenance/repository-health-checks.md","health checks")})',f'- Planner status: {planner} ({link("tools/self_advancement_plan.py","planner")})',f'- Last dashboard generation time: {datetime.now(timezone.utc).replace(microsecond=0).isoformat()}','',
-    '## Repository Alerts','', '| Alert | Status | Source |','|---|---:|---|',f'| Repository Health | {health} | {link("docs/maintenance/repository-health-checks.md")} |',f'| Critical Issues | {critical} | {link(GAPS)} |',f'| High Priority Gaps | {high} | {link(GAPS)} |',f'| Planner Status | {planner} | {link(NEXT)} |',f'| CI Status | {ci} | {link(".github/workflows/repo-health.yml","Repository Health workflow")} |']
+    '## Repository Alerts','', '| Alert | Status | Source |','|---|---:|---|']
+    for alert in alerts:
+        lines.append(f"| {alert['category']} | {alert['status']} | {link(alert['source'])} |")
     if not critical and not high: lines.append('\nNo active repository alerts exist.')
     lines += ['','## Evidence Snapshot','', '| Metric | Current | Source |','|---|---:|---|']
-    src={'Internal reasoning systems':REG['evidence'],'External reasoning systems':REG['external'],'Adversarial tests':REG['adversarial'],'Counterexample fixtures':'tests','Candidate primitive failures':REG['pressure'],'Conservative extensions':REG['pressure'],'Fits FAR':REG['evidence'],'Unresolved cases':STATUS}
+    src={'Internal reasoning systems':REG['evidence'],'External reasoning systems':REG['external'],'Adversarial fixtures':REG['adversarial'],'Counterexample fixtures':'tests','Candidate primitive failures':REG['pressure'],'Conservative extensions':REG['pressure'],'Fits FAR':REG['evidence'],'Unresolved cases':STATUS}
     for k,v in m.items(): lines.append(f'| {k} | {v} | {link(src[k])} |')
     lines += ['','## Progress Summary','','Trend data is not yet available because no prior generated snapshot is stored.','', '| Metric | Current | Previous | Change |','|---|---:|---:|---:|']
     for k in ['Internal reasoning systems','External reasoning systems','Conservative extensions','Candidate primitive failures']:
@@ -126,7 +130,7 @@ def block():
     nav=[('Project Status',STATUS),('Research Gap Report',GAPS),('Next Actions',NEXT),('Dashboard Metrics',METRICS),('External Validation','docs/reports/external-validation-report.md'),('Primitive Sufficiency','docs/reports/primitive-sufficiency-report.md'),('Evidence Registry',REG['evidence']),('External Validation Registry',REG['external']),('Primitive Pressure Registry',REG['pressure']),('Adversarial Test Suite',REG['adversarial']),('Releases','docs/releases'),('Maintenance','docs/maintenance'),('Planning','docs/planning/README.md'),('Repository Index',INDEX)]
     lines += ['','## Repository Navigation','']+[f'- {link(p,label)}' for label,p in nav]
     lines += ['','## Current Roadmap','',f'- Current phase: External validation preparation','- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation','- In-progress work: Repository Automation','- Planned work: Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor','',
-    '## Command Center','','### Local Commands','','```bash\nmake dashboard\nmake health-fast\nmake health\nmake docs-check\nmake plan\n```','','### GitHub Actions','',f'- Repository Health: {workflow("repo-health.yml")}',f'- Regenerate Dashboard: {workflow("project-planning.yml")}',f'- Release Readiness: {workflow("release-readiness.yml")}',f'- Repository Maintenance: {workflow("repository-maintenance.yml")}','',
+    '## Command Center','','### Local Commands','','```bash\nmake dashboard\nmake health-fast\nmake health\nmake docs-check\nmake plan\n```','','### GitHub Actions','',f'- Repository Health: {workflow("repository-health.yml")}',f'- Regenerate Dashboard: {workflow("regenerate-dashboard.yml")}',f'- Release Readiness: {workflow("release-readiness.yml")}',f'- Repository Maintenance: {workflow("repository-maintenance.yml")}','',
     '## Typical Workflow','','1. `make health-fast`','2. `make dashboard`','3. Open README','4. Choose top task','5. Open source gap','6. Open affected files','7. Copy generated Codex prompt','8. Implement','9. Run health','10. Merge','',END]
     return '\n'.join(lines)+'\n'
 def main():

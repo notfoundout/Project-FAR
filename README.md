@@ -15,17 +15,18 @@ This root README is the canonical Project FAR command center: the single entry p
 - Current project phase: External validation preparation
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
-- Last dashboard generation time: 2026-07-08T04:12:59+00:00
+- Last dashboard generation time: 2026-07-08T14:02:32+00:00
 
 ## Repository Alerts
 
 | Alert | Status | Source |
 |---|---:|---|
-| Repository Health | PASS | [docs/maintenance/repository-health-checks.md](docs/maintenance/repository-health-checks.md) |
 | Critical Issues | 0 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
-| High Priority Gaps | 1 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| High Priority Issues | 1 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| Repository Health | PASS | [docs/maintenance/repository-health-checks.md](docs/maintenance/repository-health-checks.md) |
 | Planner Status | CURRENT | [docs/planning/next-actions.md](docs/planning/next-actions.md) |
-| CI Status | See workflows | [Repository Health workflow](.github/workflows/repo-health.yml) |
+| CI Status | Manual workflows available | [.github/workflows/repository-health.yml](.github/workflows/repository-health.yml) |
+| Release Readiness | AVAILABLE | [docs/reports/release-readiness-report.md](docs/reports/release-readiness-report.md) |
 
 ## Evidence Snapshot
 
@@ -33,7 +34,7 @@ This root README is the canonical Project FAR command center: the single entry p
 |---|---:|---|
 | Internal reasoning systems | 23 | [theory/evaluation/evidence-registry.yaml](theory/evaluation/evidence-registry.yaml) |
 | External reasoning systems | 20 | [theory/evaluation/external-validation-registry.yaml](theory/evaluation/external-validation-registry.yaml) |
-| Adversarial tests | 14 | [theory/falsification/adversarial-test-suite.yaml](theory/falsification/adversarial-test-suite.yaml) |
+| Adversarial fixtures | 14 | [theory/falsification/adversarial-test-suite.yaml](theory/falsification/adversarial-test-suite.yaml) |
 | Counterexample fixtures | 1 | [tests](tests) |
 | Candidate primitive failures | 0 | [theory/falsification/primitive-pressure-registry.yaml](theory/falsification/primitive-pressure-registry.yaml) |
 | Conservative extensions | 33 | [theory/falsification/primitive-pressure-registry.yaml](theory/falsification/primitive-pressure-registry.yaml) |
@@ -50,7 +51,7 @@ Trend data is not yet available because no prior generated snapshot is stored.
 | External reasoning systems | 20 | not available | not available |
 | Conservative extensions | 33 | not available | not available |
 | Candidate primitive failures | 0 | not available | not available |
-| Open gaps | 90 | not available | not available |
+| Open gaps | 91 | not available | not available |
 
 ## Top Priority Tasks
 
@@ -96,7 +97,7 @@ Trend data is not yet available because no prior generated snapshot is stored.
 | Critical | 0 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
 | High | 1 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
 | Medium | 55 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
-| Low | 34 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| Low | 35 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
 
 ## Repository Navigation
 
@@ -136,10 +137,10 @@ make plan
 
 ### GitHub Actions
 
-- Repository Health: [repo-health.yml](.github/workflows/repo-health.yml)
-- Regenerate Dashboard: [project-planning.yml](.github/workflows/project-planning.yml)
-- Release Readiness: `release-readiness.yml` (planned)
-- Repository Maintenance: `repository-maintenance.yml` (planned)
+- Repository Health: [repository-health.yml](.github/workflows/repository-health.yml)
+- Regenerate Dashboard: [regenerate-dashboard.yml](.github/workflows/regenerate-dashboard.yml)
+- Release Readiness: [release-readiness.yml](.github/workflows/release-readiness.yml)
+- Repository Maintenance: [repository-maintenance.yml](.github/workflows/repository-maintenance.yml)
 
 ## Typical Workflow
 
