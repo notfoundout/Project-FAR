@@ -72,7 +72,7 @@ def main():
     for base in REPORT_DIRS:
         for p in sorted(base.rglob('*.md')):
             rel=str(p.relative_to(ROOT))
-            if rel in {'docs/reports/project-status-generated.md','docs/reports/research-gap-report.md','docs/planning/next-actions.md'}:
+            if rel in {'docs/reports/project-status-generated.md','docs/reports/research-gap-report.md','docs/planning/next-actions.md','docs/planning/dashboard-metrics.md','docs/planning/repository-index.md'}:
                 continue
             text=p.read_text(encoding='utf-8', errors='ignore')
             match_line=next((i for i,line in enumerate(text.splitlines(),1) if pat.search(line)), None)
