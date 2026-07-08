@@ -4,8 +4,8 @@ from __future__ import annotations
 from pathlib import Path
 import re, subprocess, sys
 ROOT=Path(__file__).resolve().parents[1]
-CMDS=[['python','tools/project_status_report.py'],['python','tools/detect_research_gaps.py'],['python','tools/generate_next_tasks.py'],['python','tools/update_readme_dashboard.py']]
-GEN=[ROOT/'docs/reports/project-status-generated.md',ROOT/'docs/reports/research-gap-report.md',ROOT/'docs/planning/next-actions.md',ROOT/'README.md',ROOT/'docs/planning/repository-index.md']
+CMDS=[['python','tools/project_status_report.py'],['python','tools/detect_research_gaps.py'],['python','tools/generate_next_tasks.py'],['python','tools/dashboard_metrics.py'],['python','tools/update_readme_dashboard.py']]
+GEN=[ROOT/'README.md',ROOT/'docs/planning/dashboard-metrics.md',ROOT/'docs/planning/repository-index.md',ROOT/'docs/reports/project-status-generated.md',ROOT/'docs/reports/research-gap-report.md',ROOT/'docs/planning/next-actions.md']
 def run(cmd):
     r=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True)
     print(r.stdout,end='');
@@ -26,11 +26,14 @@ def main():
     if missing:
         print('Missing generated files: '+', '.join(missing), file=sys.stderr); return 2
     ts=tasks()
-    print('\nGenerated files:')
+    print('\nPROJECT FAR PLANNING COMPLETE\n')
+    print('Generated files:')
     for p in GEN: print(f"- {p.relative_to(ROOT)}")
     print(f"Gaps found: {count_gaps()}")
     print(f"Recommended tasks: {len(ts)}")
     print('Top 3 next actions:')
     for tid,title in ts[:3]: print(f"- {tid}: {title}")
+    print('\nRun: make health-fast')
+    print('Open: README.md')
     return 0
 if __name__=='__main__': raise SystemExit(main())
