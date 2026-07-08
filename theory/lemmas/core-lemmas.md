@@ -46,11 +46,11 @@ Axiom 3 requires every representation participating in a reasoning process to be
 
 ### Statement
 
-A scoped reasoning process cannot satisfy Project FAR Axiom 4 without an investigation.
+No scoped reasoning process satisfies Project FAR Axiom 4 unless it occurs within exactly one investigation.
 
 ### Proof
 
-Axiom 4 requires every reasoning process to occur within exactly one investigation. Assume a reasoning process has no investigation. Then it does not occur within exactly one investigation. This contradicts Axiom 4. Therefore investigation is necessary.
+Axiom 4 requires every reasoning process within the stated Project FAR scope to occur within exactly one investigation. Assume a scoped reasoning process does not occur within exactly one investigation. Then the process fails the condition imposed by Axiom 4. Therefore no scoped reasoning process satisfies Axiom 4 unless it occurs within exactly one investigation.
 
 ---
 
