@@ -34,3 +34,9 @@ Future contributors should design tests by:
 8. proposing a new primitive only after the primitive failure standard is satisfied.
 
 New tests should prefer explicit, reproducible artifacts over narrative claims. They should not modify primitives, definitions, axioms, theorems, proof objects, parsers, reasoning engines, CI, or metadata schemas.
+
+## Isolation Classification for Future Validation
+
+Future validation reports must report evaluator independence using the canonical [Isolation Classification Doctrine](../doctrine/isolation-classification.md). The classification records the independence of the validation process only; it does not measure mathematical correctness and does not replace logical evaluation.
+
+Beginning with L-002, future validations should include the required `Isolation Classification` reporting fields defined by the doctrine. Previous reports should not be rewritten or retroactively relabeled merely to apply the doctrine.
