@@ -60,11 +60,19 @@ Operation.
 
 # Working Characterization
 
-An operation is an executable act performed within a reasoning process.
+Operation is the primitive unit-type for reasoning-relevant transformation, preservation, inspection, relation, constraint, or determination of reasoning conditions.
+
+An operation-token is an instance of such a unit when it participates functionally in a reasoning process, rather than merely occurring during the same time interval.
 
 This is not yet a formal definition.
 
 It is a provisional characterization used to test whether a non-circular definition is possible.
+
+Operation alone does not supply normativity, semantics, validity, or warrant.
+
+Reasoning is distinguished from arbitrary manipulation by admissibility under reasoning-relevant constraints supplied by the surrounding theory, not by bare Operation alone.
+
+Revision note: This wording applies the prior evidence recorded in `docs/reports/foundation-validation-report.md`, `docs/reports/ax001-circularity-investigation.md`, `docs/reports/ax001-primitive-candidate-adjudication.md`, `docs/reports/appendices/ax001-p1-raw.md`, and `docs/reports/appendices/ax001-c1-raw.md`; it retains Operation as the AX-001 candidate primitive while avoiding operation-adjacent reducers such as executable act, performed, and act upon.
 
 ---
 
