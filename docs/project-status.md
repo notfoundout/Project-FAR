@@ -3,9 +3,12 @@
 The root [README Command Center](../README.md) is the canonical entry point for current repository status and generated planning reports.
 
 - [`docs/maintenance/repository-health-checks.md`](maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
+
 ## Current Status
 
-Project FAR has completed the v0.3.0 internal-validation milestone. The current baseline includes formal theory, machine-readable metadata, proof-object infrastructure, reasoning-system fixtures, primitive-sufficiency evaluation, adversarial evaluation, cross-domain consistency analysis, primitive independence analysis, minimality analysis, and synthesis reporting.
+Project FAR has completed the v0.3.1 maintenance baseline. The current baseline includes the v0.3.0 internal-validation milestone plus repository command-center, automation, release-readiness, dashboard metrics, generated planning reports, repository-index, and health-diagnostic improvements.
+
+The v0.3.1 release does not change FAR primitives, definitions, axioms, theorem statements, proof objects, parser behavior, reasoning-engine behavior, metadata schemas, or evaluation conclusions.
 
 | Framework | Role | Status |
 |---|---|---|
@@ -15,25 +18,33 @@ Project FAR has completed the v0.3.0 internal-validation milestone. The current 
 | FARE | Mathematics | Frozen, requirement-driven |
 | FARM | Meta-framework coordination | Stable |
 
-Active development now moves toward external validation against reasoning systems and arguments not designed for Project FAR.
+Active development now moves toward v0.4 analytical infrastructure: dependency graphs, impact analysis, semantic consistency auditing, repository knowledge graphs, and richer evidence instrumentation.
 
 ---
 
 ## Latest Release
 
-### Project FAR v0.3.0 — Internal Validation
+### Project FAR v0.3.1 — Repository Maturity and Automation
 
-Status: Current release baseline.
+Status: Current maintenance release baseline.
 
-Release document: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md)
+Release document: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md)
 
-Synthesis report: [`reports/project-far-v0.3.0-synthesis.md`](reports/project-far-v0.3.0-synthesis.md)
+GitHub release notes: [`releases/github-release-v0.3.1.md`](releases/github-release-v0.3.1.md)
 
-Theory freeze: [`releases/project-far-v0.3.0-theory-freeze.md`](releases/project-far-v0.3.0-theory-freeze.md)
+Prior internal-validation release: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md)
 
 ---
 
 ## Completed Milestones
+
+### Project FAR v0.3.1 Repository Maturity and Automation
+
+Status: Complete after release publication.
+
+v0.3.1 packages repository maturity work around the v0.3.0 baseline: README command center, dashboard generation, repository index, dashboard metrics, improved health diagnostics, GitHub Actions, release-readiness reporting, and repository automation documentation.
+
+---
 
 ### Project FAR v0.3.0 Internal Validation
 
@@ -107,9 +118,9 @@ Stable components:
 
 ## Active Focus
 
-### External Validation Preparation
+### v0.4 Analytical Infrastructure
 
-The active target is validating Project FAR against external reasoning systems, arguments, and formal practices not constructed for FAR. v0.4.0 work should treat v0.3.0 as the internal-validation baseline.
+The active target is making Project FAR more capable of explaining its own internal structure. v0.4 should treat v0.3.1 as the operational baseline and focus on dependency graphs, impact analysis, semantic consistency auditing, repository knowledge graphs, and evidence visualization.
 
 ---
 
@@ -118,71 +129,7 @@ The active target is validating Project FAR against external reasoning systems, 
 The current project order is:
 
 1. FARA stable representational architecture recognized.
-2. FARE Mathematics v0.1 frozen.
-3. FAR v1.0 Stable recorded.
-4. FARO v1.0 Stable recorded.
-5. FARM v1.0 Stable recorded.
-6. Framework navigation normalized.
-7. v0.2.0 evidence framework completed.
-8. v0.3.0 internal-validation baseline completed.
-9. Begin v0.4.0 external validation without silently rewriting v0.3.0 results.
-10. Modify stable layers only through formal review when a concrete defect or requirement is identified.
-
----
-
-## Governance Rules
-
-Effective immediately:
-
-- FARA shall not be modified without an explicit representational defect, inconsistency, or downstream requirement.
-- No new FARE mathematical definitions shall be introduced unless required by FAR, FARO, FARA, or FARM.
-- New FARE theorems shall be introduced only when they justify or extend FAR, FARO, FARA, or FARM.
-- Existing FARE mathematical definitions require formal review before modification.
-- Draft theorems are not stable components and shall not be cited as accepted dependencies.
-- FAR v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
-- FARO v1.0 documents shall not be modified without an explicit defect, inconsistency, or downstream requirement.
-- FARM v1.0 documents shall not be modified without an explicit cross-framework requirement.
-- FARM shall not expand into operational behavior, investigation methodology, representational architecture, or mathematics.
-- v0.3.0 results are the current internal-validation baseline and should not be silently rewritten by later external-validation work.
-
----
-
-## Next Milestone
-
-### v0.4.0 External Validation
-
-Initial objectives:
-
-- define external-validation methodology;
-- evaluate reasoning systems not designed for FAR;
-- separate internal fixture evidence from external evidence;
-- identify recurring external pressure points;
-- preserve v0.3.0 as the internal-validation baseline.
-
----
-
-## Related Documents
-
-- [Root README](../README.md)
-- [Canonical map](CANONICAL_MAP.md)
-- [v0.3.0 release](releases/project-far-v0.3.0.md)
-- [v0.3.0 synthesis report](reports/project-far-v0.3.0-synthesis.md)
-- [Post-v1.0 repository audit](audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md)
-- [Framework navigation normalization audit](audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md)
-
----
-
-## Notes
-
-This status document is a governance document.
-
-It records development focus and milestone boundaries, not mathematical content.
-
-
-## Self-Advancement Planning
-
-- [Planning overview](planning/README.md)
-- [Generated project status](reports/project-status-generated.md)
-- [Research gap report](reports/research-gap-report.md)
-- [Next actions](planning/next-actions.md)
-- [Planner maintenance](maintenance/self-advancement-planner.md)
+2. FAR / FARO / FARM stable layers maintained.
+3. v0.3.0 internal validation baseline preserved.
+4. v0.3.1 repository maturity baseline published.
+5. v0.4 analytical infrastructure begins from that baseline.
