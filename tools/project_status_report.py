@@ -35,7 +35,7 @@ def entries(data):
 def latest_release():
     versions = []
     for p in (ROOT / "docs/releases").glob("project-far-v*.md"):
-        m = re.search(r"v(\d+(?:\.\d+)*)", p.name)
+        m = re.search(r"v(\d+\.\d+\.\d+)", p.name)
         if m:
             versions.append((tuple(int(x) for x in m.group(1).split(".")), m.group(0), p))
     return max(versions)[2] if versions else None

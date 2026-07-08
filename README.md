@@ -11,11 +11,11 @@ This root README is the canonical Project FAR command center: the single entry p
 
 ## Repository Status
 
-- Current release: [docs/releases/project-far-v0.4.md](docs/releases/project-far-v0.4.md)
-- Current project phase: External validation preparation
+- Current release: [docs/releases/project-far-v0.3.0.md](docs/releases/project-far-v0.3.0.md)
+- Current project phase: v0.4 external validation preparation
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
-- Last dashboard generation time: 2026-07-08T14:02:32+00:00
+- Last dashboard generation time: 2026-07-08T14:41:12+00:00
 
 ## Repository Alerts
 
@@ -118,7 +118,7 @@ Trend data is not yet available because no prior generated snapshot is stored.
 
 ## Current Roadmap
 
-- Current phase: External validation preparation
+- Current phase: v0.4 external validation preparation
 - Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation
 - In-progress work: Repository Automation
 - Planned work: Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor

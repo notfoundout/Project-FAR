@@ -113,6 +113,8 @@ def load_history() -> list[dict]:
 
 def write_history(snapshot: dict[str, int]) -> None:
     history = load_history()
+    if history and history[-1].get('metrics') == snapshot:
+        return
     history.append({'generated_at': datetime.now(timezone.utc).replace(microsecond=0).isoformat(), 'metrics': snapshot})
     HISTORY.write_text(json.dumps(history[-25:], indent=2) + '\n', encoding='utf-8')
 
