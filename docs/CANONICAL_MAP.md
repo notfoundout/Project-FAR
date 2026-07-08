@@ -55,6 +55,7 @@ Each concept should have one canonical source. Other documents should link to th
 | FARO Boundary | [`../frameworks/FAR/faro-boundary.md`](../frameworks/FAR/faro-boundary.md) | Defines the FAR/FARO boundary. |
 | Example Standard | [`../frameworks/FAR/example-standard.md`](../frameworks/FAR/example-standard.md) | Defines canonical FAR example requirements. |
 | Investigation Validation | [`../frameworks/FAR/investigation-validation.md`](../frameworks/FAR/investigation-validation.md) | Defines validation checks for completed investigations. |
+| Isolation Classification Doctrine | [`doctrine/isolation-classification.md`](doctrine/isolation-classification.md) | Defines evaluator-independence classes for validation evidence. |
 | FAR v1.0 Criteria | [`../frameworks/FAR/FAR-v1.0-criteria.md`](../frameworks/FAR/FAR-v1.0-criteria.md) | Defines criteria for FAR v1.0 Stable. |
 
 ---
