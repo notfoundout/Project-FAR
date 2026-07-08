@@ -34,11 +34,11 @@ Axiom 2 requires every collection of representations participating in a reasonin
 
 ### Statement
 
-A participating representation cannot satisfy Project FAR Axiom 3 without interpretation.
+No participating representation satisfies Project FAR Axiom 3 unless it is interpreted within an investigation.
 
 ### Proof
 
-Axiom 3 requires every participating representation to be interpreted within an investigation. Assume a participating representation has no interpretation. Then Axiom 3 is not satisfied. Therefore interpretation is necessary.
+Axiom 3 requires every representation participating in a reasoning process to be interpreted within an investigation. Assume a participating representation is not interpreted within an investigation. Then the condition imposed by Axiom 3 is not satisfied for that representation. Therefore no participating representation satisfies Axiom 3 unless it is interpreted within an investigation.
 
 ---
 
