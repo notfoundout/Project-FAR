@@ -20,7 +20,7 @@ This report uses cautious language and does not authorize theory changes.
 
 ## Current Release Baseline
 
-- Latest release document detected: [docs/releases/project-far-v0.4.md](../releases/project-far-v0.4.md)
+- Latest release document detected: [docs/releases/project-far-v0.3.0.md](../releases/project-far-v0.3.0.md)
 
 ## Evaluation Counts
 

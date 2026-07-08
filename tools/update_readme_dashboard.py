@@ -3,6 +3,7 @@
 from __future__ import annotations
 from collections import Counter
 from datetime import datetime, timezone
+import json
 from pathlib import Path
 import re, yaml
 from report_link_utils import markdown_link, relative_href, slugify_heading
@@ -32,7 +33,7 @@ def link(p,label=None): return markdown_link(p, OUT, label)
 def count_release():
     vals=[]
     for p in (ROOT/'docs/releases').glob('project-far-v*.md'):
-        m=re.search(r'v(\d+(?:\.\d+)*)',p.name)
+        m=re.search(r'v(\d+\.\d+\.\d+)',p.name)
         if m: vals.append((tuple(map(int,m.group(1).split('.'))),p))
     return max(vals)[1] if vals else None
 def gap_counts():
@@ -105,12 +106,25 @@ def generate_index():
             seen.add(f); lines.append(f'- {markdown_link(f, INDEX)}')
         lines.append('')
     INDEX.parent.mkdir(parents=True,exist_ok=True); INDEX.write_text('\n'.join(lines),encoding='utf-8')
+def dashboard_generation_time():
+    history = ROOT/'docs/planning/dashboard-metrics-history.json'
+    if history.exists():
+        try:
+            data=json.loads(history.read_text(encoding='utf-8'))
+        except json.JSONDecodeError:
+            data=[]
+        if isinstance(data, list) and data and isinstance(data[-1], dict):
+            value=data[-1].get('generated_at')
+            if value:
+                return value
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
 def block():
     generate_index(); ev,ex,adv,pressure,m=metrics(); gaps=gap_counts(); rel=count_release()
     health='PASS'; planner='CURRENT'; ci='Manual workflows available'
     critical=gaps.get('Critical',0); high=gaps.get('High',0)
     alerts=compute_alerts(health, ci)
-    lines=[BEGIN,'','## Repository Status','',f'- Current release: {link(rel) if rel else "unknown"}',f'- Current project phase: External validation preparation',f'- Repository health status: {health} ({link("docs/maintenance/repository-health-checks.md","health checks")})',f'- Planner status: {planner} ({link("tools/self_advancement_plan.py","planner")})',f'- Last dashboard generation time: {datetime.now(timezone.utc).replace(microsecond=0).isoformat()}','',
+    lines=[BEGIN,'','## Repository Status','',f'- Current release: {link(rel) if rel else "unknown"}',f'- Current project phase: v0.4 external validation preparation',f'- Repository health status: {health} ({link("docs/maintenance/repository-health-checks.md","health checks")})',f'- Planner status: {planner} ({link("tools/self_advancement_plan.py","planner")})',f'- Last dashboard generation time: {dashboard_generation_time()}','',
     '## Repository Alerts','', '| Alert | Status | Source |','|---|---:|---|']
     for alert in alerts:
         lines.append(f"| {alert['category']} | {alert['status']} | {link(alert['source'])} |")
@@ -129,7 +143,7 @@ def block():
     for sev in ['Critical','High','Medium','Low']: lines.append(f'| {sev} | {gaps.get(sev,0)} | {link(GAPS)} |')
     nav=[('Project Status',STATUS),('Research Gap Report',GAPS),('Next Actions',NEXT),('Dashboard Metrics',METRICS),('External Validation','docs/reports/external-validation-report.md'),('Primitive Sufficiency','docs/reports/primitive-sufficiency-report.md'),('Evidence Registry',REG['evidence']),('External Validation Registry',REG['external']),('Primitive Pressure Registry',REG['pressure']),('Adversarial Test Suite',REG['adversarial']),('Releases','docs/releases'),('Maintenance','docs/maintenance'),('Planning','docs/planning/README.md'),('Repository Index',INDEX)]
     lines += ['','## Repository Navigation','']+[f'- {link(p,label)}' for label,p in nav]
-    lines += ['','## Current Roadmap','',f'- Current phase: External validation preparation','- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation','- In-progress work: Repository Automation','- Planned work: Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor','',
+    lines += ['','## Current Roadmap','',f'- Current phase: v0.4 external validation preparation','- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation','- In-progress work: Repository Automation','- Planned work: Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor','',
     '## Command Center','','### Local Commands','','```bash\nmake dashboard\nmake health-fast\nmake health\nmake docs-check\nmake plan\n```','','### GitHub Actions','',f'- Repository Health: {workflow("repository-health.yml")}',f'- Regenerate Dashboard: {workflow("regenerate-dashboard.yml")}',f'- Release Readiness: {workflow("release-readiness.yml")}',f'- Repository Maintenance: {workflow("repository-maintenance.yml")}','',
     '## Typical Workflow','','1. `make health-fast`','2. `make dashboard`','3. Open README','4. Choose top task','5. Open source gap','6. Open affected files','7. Copy generated Codex prompt','8. Implement','9. Run health','10. Merge','',END]
     return '\n'.join(lines)+'\n'

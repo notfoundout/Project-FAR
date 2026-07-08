@@ -138,6 +138,32 @@ Prepare mature portions of Project FAR for public dissemination.
 
 ---
 
+---
+
+# Release Track
+
+## Current Release
+
+v0.3.0 is the current release baseline. The v0.3.0 milestone is complete and is documented in [`docs/releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
+
+## Current Phase
+
+v0.4 is the current development phase. Its objective is external validation preparation and execution against reasoning systems, arguments, and practices not constructed for FAR.
+
+## Completed v0.3 Milestones
+
+- v0.3.0 internal validation baseline: complete.
+- Primitive-sufficiency evaluation: complete for the analyzed internal corpus.
+- Dashboard, planning, repository-health, and release-readiness automation: complete for the v0.3 release checkpoint.
+- Release documentation and GitHub release notes: complete.
+
+## v0.4 Objectives
+
+- Preserve v0.3.0 as the internal-validation baseline.
+- Execute external validation without silently rewriting v0.3 conclusions.
+- Separate external evidence from internal fixture evidence.
+- Identify recurring external pressure points.
+
 # Long-Term Goal
 
 Establish Project FAR as a rigorous, minimal, universal framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning within its stated scope.
