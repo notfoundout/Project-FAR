@@ -10,11 +10,11 @@ Established relative to the current definitions and axioms.
 
 ### Statement
 
-Every reasoning process within Project FAR has at least one explicit representation.
+Every scoped reasoning process satisfying Project FAR Axiom 1 admits, for Project FAR evaluation, at least one explicit representation.
 
 ### Proof
 
-This follows immediately from Axiom 1.
+Project FAR Axiom 1 requires every reasoning process within the stated Project FAR scope to admit one or more explicit representations. Assume a scoped reasoning process satisfies Axiom 1. Then that process admits, for Project FAR evaluation, at least one explicit representation. Therefore every scoped reasoning process satisfying Project FAR Axiom 1 admits, for Project FAR evaluation, at least one explicit representation.
 
 ---
 
