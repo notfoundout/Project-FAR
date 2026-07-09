@@ -13,7 +13,7 @@ This file is generated from machine-readable metadata.
 | T-007 | Primitive Completeness Theorem | Established | `theory/proofs/T-007-primitive-completeness.md` | scoped explicit reasoning processes |
 | T-008 | Canonical Representation Equivalence | Established | `theory/proofs/T-008-canonical-representation-equivalence.md` | canonical FAR representations |
 | T-009 | Canonical Normal Form Theorem | Established | `theory/proofs/T-009-canonical-normal-form.md` | finite scoped FAR representations with explicit, total, preservation-respecting, terminating normalization rules |
-| T-010 | Reconstruction Theorem | Established | `theory/proofs/T-010-reconstruction-theorem.md` | complete FAR representations |
+| T-010 | Reconstruction Theorem | Established | `theory/proofs/T-010-reconstruction-theorem.md` | FAR representations complete relative to a reconstruction objective, scope, and specified interpretation |
 | T-011 | Conservative Extension Theorem | Established | `theory/proofs/T-011-conservative-extension.md` | definitionally conservative FAR extensions |
 | T-012 | FAR Model Equivalence Theorem | Established | `theory/proofs/T-012-model-equivalence.md` | specified preservation profiles |
 | T-013 | Relative Soundness Theorem | Established | `theory/proofs/T-013-soundness.md` | supplied target calculi |

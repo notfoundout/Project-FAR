@@ -119,11 +119,11 @@ Status: Established in revised conditional form for finite scoped FAR representa
 
 ## T-010 — Reconstruction Theorem
 
-Given a complete FAR representation, the represented reasoning process can be reconstructed up to semantic equivalence.
+Given a FAR representation that is complete relative to a reconstruction objective, scope, and specified interpretation, the explicitly represented reasoning process can be reconstructed from its represented initial state, structural relations, interpretation assignments, calculus rules, and ordered transition trace up to semantic equivalence under that specified interpretation.
 
 Proof: `../proofs/T-010-reconstruction-theorem.md`
 
-Status: Established up to semantic equivalence for complete FAR representations.
+Status: Established in revised objective-relative form for complete FAR representations.
 
 ---
 

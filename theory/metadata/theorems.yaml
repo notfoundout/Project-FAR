@@ -209,12 +209,12 @@ theorems:
   title: Reconstruction Theorem
   status: Established
   proof: theory/proofs/T-010-reconstruction-theorem.md
-  scope: complete FAR representations
+  scope: FAR representations complete relative to a reconstruction objective, scope,
+    and specified interpretation
   dependencies:
   - T-003
   - T-004
-  - T-005
-  - T-009
+  - P-007
   derived_concepts:
   - D-017
   - D-019
@@ -223,8 +223,10 @@ theorems:
     kind: theorem
     subject: Reconstruction Theorem
     predicate: holds
-    scope: complete FAR representations
-    claim: Reconstruction Theorem holds within complete FAR representations.
+    scope: FAR representations complete relative to a reconstruction objective, scope,
+      and specified interpretation
+    claim: Reconstruction Theorem holds for FAR representations complete relative
+      to a reconstruction objective, scope, and specified interpretation.
 - id: T-011
   title: Conservative Extension Theorem
   status: Established

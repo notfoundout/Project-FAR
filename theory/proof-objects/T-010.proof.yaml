@@ -7,7 +7,7 @@ status: draft
 premises:
   - id: p1
     source: T-010 statement
-    statement: Let F = <I, Rep, S, Int, C, T> be a complete FAR representation of a scoped reasoning process.
+    statement: Let F = <I, Rep, S, Int, C, T> be a FAR representation that is complete relative to a reconstruction objective, scope, and specified interpretation.
   - id: p2
     source: T-003
     statement: The tuple components I, Rep, S, Int, C, and T represent the investigation, representations, structure, interpretation, calculus, and trace of the reasoning process.
@@ -15,11 +15,11 @@ premises:
     source: T-004
     statement: Semantic content is preserved under interpretation-preserving representation mappings.
   - id: p4
-    source: T-005
-    statement: Explicitly specified admissible reasoning transitions are represented by transition signatures.
+    source: P-007
+    statement: A reasoning trace is not identical to the reasoning process it represents.
   - id: p5
-    source: T-009
-    statement: Finite scoped FAR representations admit canonical normal form under supplied normalization rules.
+    source: Representation Completeness
+    statement: Completeness is relative to an objective, a scope, and an interpretation.
 
 steps:
   - id: s1
@@ -28,34 +28,29 @@ steps:
     statement: F supplies the objective-relative context, explicit participating objects, structure, interpretation, calculus, and trace of the represented reasoning process.
     justification: Applies the Representation Theorem to the complete FAR tuple F.
   - id: s2
-    rule: prior_theorem
-    inputs: [p4]
-    statement: The transition trace T can be read as ordered transition signatures governed by C.
-    justification: By transition completeness, explicitly specified admissible transitions are represented by transition signatures.
+    rule: definition_unfolding
+    inputs: [p1, p5]
+    statement: F contains every representation, structural relation, interpretation assignment, calculus rule, transition signature, and represented initial state required by the reconstruction objective, scope, and specified interpretation.
+    justification: Unfolds objective-relative representation completeness for the reconstruction objective.
   - id: s3
     rule: definition_unfolding
     inputs: [s1, s2]
-    statement: The represented reasoning process can be reconstructed by starting from the initial state and applying each transition signature in T under C while consulting S and Int.
-    justification: Unfolds reconstruction from complete tuple components and ordered transition signatures.
+    statement: The explicitly represented reasoning process can be reconstructed by starting from the represented initial state or initial representation set and reading or applying each transition signature in T under C while consulting S and Int.
+    justification: Unfolds reconstruction from complete tuple components and the ordered trace.
   - id: s4
     rule: prior_theorem
     inputs: [p3]
-    statement: Reconstruction preserves semantic content up to semantic equivalence when interpretation is preserved.
+    statement: Reconstruction preserves semantic content up to semantic equivalence under the specified interpretation when the reconstruction mapping preserves Int.
     justification: Applies semantic preservation to the interpretation-preserving reconstruction mapping.
   - id: s5
-    rule: prior_theorem
-    inputs: [p5]
-    statement: Canonical normal form can support comparison of the reconstructed process with the represented process when normalization rules are supplied.
-    justification: Applies canonical normal form to finite scoped FAR representations.
+    rule: prior_proposition
+    inputs: [p4]
+    statement: The reconstruction is limited to the explicitly represented reasoning process and does not identify the reasoning trace with unrepresented process events.
+    justification: Applies the trace/process distinction to avoid reconstructing private, hidden, or otherwise unrepresented features.
   - id: s6
     rule: conjunction_intro
-    inputs: [s3, s4]
-    statement: The represented reasoning process can be reconstructed from F while preserving explicit semantic and structural features up to semantic equivalence.
-    justification: Combines reconstruction from complete tuple components with semantic preservation.
-  - id: s7
-    rule: conjunction_intro
-    inputs: [s6, s5]
-    statement: The original reasoning process is reconstructible from F up to semantic equivalence.
-    justification: Adds canonical comparison support to the reconstructed semantic and structural process.
+    inputs: [s3, s4, s5]
+    statement: The explicitly represented reasoning process can be reconstructed from F while preserving explicit semantic and structural features up to semantic equivalence under the specified interpretation.
+    justification: Combines reconstruction from complete tuple components with semantic preservation and the trace/process limitation.
 
-conclusion: The original reasoning process is reconstructible from F up to semantic equivalence.
+conclusion: Given a FAR representation that is complete relative to a reconstruction objective, scope, and specified interpretation, the explicitly represented reasoning process can be reconstructed from its represented initial state, structural relations, interpretation assignments, calculus rules, and ordered transition trace up to semantic equivalence under that specified interpretation.
