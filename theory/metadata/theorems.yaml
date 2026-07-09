@@ -178,7 +178,6 @@ theorems:
   scope: canonical FAR representations
   dependencies:
   - L-006
-  - T-003
   - T-004
   derived_concepts:
   - D-017

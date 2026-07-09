@@ -8,7 +8,7 @@ Established for canonical FAR representations.
 
 ## Statement
 
-Any two canonical FAR representations of the same scoped reasoning process are equivalent up to meaning-preserving renaming.
+Any two canonical FAR representations of the same scoped reasoning process under the same required role inventory are equivalent up to meaning-preserving renaming.
 
 ---
 
@@ -33,11 +33,11 @@ B = <I2, Rep2, S2, Int2, C2, T2>
 
 ## Proof
 
-Let `A` and `B` be canonical FAR representations of the same scoped reasoning process `R`.
+Let `A` and `B` be canonical FAR representations of the same scoped reasoning process `R` under the same required role inventory.
 
 Because both are canonical, neither omits a required representation and neither adds a redundant representation.
 
-Each representation in `A` therefore fills one required role in `R`. Each representation in `B` fills the same set of required roles in `R`.
+Each representation in `A` therefore fills one required role in the shared required role inventory for `R`. Each representation in `B` fills the same required role inventory for `R`.
 
 Pair each representation in `A` with the representation in `B` that fills the same role.
 

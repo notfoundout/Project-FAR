@@ -99,7 +99,7 @@ Status: Established relative to scoped explicit reasoning processes.
 
 ## T-008 — Canonical Representation Equivalence
 
-Any two canonical FAR representations of the same scoped reasoning process are equivalent up to meaning-preserving renaming.
+Any two canonical FAR representations of the same scoped reasoning process under the same required role inventory are equivalent up to meaning-preserving renaming.
 
 Proof: `../proofs/T-008-canonical-representation-equivalence.md`
 
