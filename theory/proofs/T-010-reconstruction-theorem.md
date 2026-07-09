@@ -2,25 +2,25 @@
 
 ## Status
 
-Established up to semantic equivalence for complete FAR representations.
+Established in revised objective-relative form for complete FAR representations.
 
 ---
 
 ## Statement
 
-Given a complete FAR representation:
+Given a FAR representation:
 
 ```text
 <I, Rep, S, Int, C, T>
 ```
 
-the represented reasoning process can be reconstructed up to semantic equivalence.
+that is complete relative to a reconstruction objective, scope, and specified interpretation, the explicitly represented reasoning process can be reconstructed from its represented initial state, structural relations, interpretation assignments, calculus rules, and ordered transition trace up to semantic equivalence under that specified interpretation.
 
 ---
 
 ## Proof
 
-Assume `F = <I, Rep, S, Int, C, T>` is a complete FAR representation of a scoped reasoning process.
+Assume `F = <I, Rep, S, Int, C, T>` is a FAR representation of a scoped explicit reasoning process, and assume `F` is complete relative to a reconstruction objective, scope, and specified interpretation.
 
 `I` supplies the objective-relative context of the reasoning process.
 
@@ -28,22 +28,24 @@ Assume `F = <I, Rep, S, Int, C, T>` is a complete FAR representation of a scoped
 
 `S` supplies the structural relations among those objects.
 
-`Int` supplies semantic content for each representation relative to `I`.
+`Int` supplies semantic content for each representation relative to the specified interpretation.
 
 `C` supplies the rules governing admissible transformations.
 
-`T` supplies the ordered transition signatures showing how the process moves from state to state.
+`T` supplies the ordered transition signatures showing how the represented process moves from state to state.
 
-To reconstruct the process, begin with the initial state identified by `T` or, if `T` is empty, by the initial representation set specified by the investigation. Then apply each transition signature in order. At each step, use `C` to identify the governing rule, `S` to identify structural dependencies, and `Int` to preserve semantic content.
+To reconstruct the explicitly represented process, begin with the represented initial state or initial representation set required by the reconstruction objective. Then read or apply each transition signature in order. At each step, use `C` to identify the governing rule, `S` to identify structural dependencies, and `Int` to preserve semantic content under the specified interpretation.
 
-Because `F` is complete, no required representation, structural relation, interpretation assignment, calculus rule, or transition signature is missing.
+Because `F` is complete relative to the reconstruction objective, scope, and specified interpretation, no representation, structural relation, interpretation assignment, calculus rule, transition signature, or represented initial state required for that objective is missing.
 
-The reconstructed process therefore preserves all explicit semantic and structural features of the represented process.
+The reconstruction mapping is interpretation-preserving by construction because it uses the supplied `Int` assignments as the semantic reference for every reconstructed representation and transition step. By semantic preservation, the reconstructed process preserves semantic content under the specified interpretation.
 
-Therefore the original reasoning process is reconstructible from `F` up to semantic equivalence.
+The reconstructed process therefore preserves all explicit semantic and structural features required by the reconstruction objective.
+
+Therefore the explicitly represented reasoning process is reconstructible from `F` up to semantic equivalence under the specified interpretation.
 
 ---
 
 ## Limitation
 
-The theorem does not reconstruct private psychological events, unstated intentions, or hidden cognitive causes unless those are explicitly represented.
+The theorem does not reconstruct private psychological events, unstated intentions, hidden cognitive causes, or any other unrepresented feature. Completeness is objective-relative, scope-relative, and interpretation-relative rather than absolute.

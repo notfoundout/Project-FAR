@@ -140,7 +140,7 @@ Depends on: L-007.
 
 ## T-010 — Reconstruction Theorem
 
-Depends on: T-003, T-004, T-005, T-009.
+Depends on: T-003, T-004, P-007.
 
 ## T-011 — Conservative Extension Theorem
 
