@@ -7,25 +7,22 @@ status: draft
 premises:
   - id: p1
     source: T-009 statement
-    statement: "Let FAR(R) = <I, Rep, S, Int, C, T> be a finite scoped FAR representation with supplied ordering, labeling, and redundancy-removal rules."
+    statement: "Let FAR(R) = <I, Rep, S, Int, C, T> be a finite scoped FAR representation with supplied normalization rules for ordering, labeling, and redundancy removal that are explicit, total on the representation's finite components, preserve required FAR information, and whose steps strictly decrease a finite unresolved-item measure without introducing any new unresolved item."
   - id: p2
     source: L-007
-    statement: "Finite normalization terminates under terminating normalization steps."
-  - id: p3
-    source: T-003
-    statement: "FAR(R) supplies the required FAR representation components."
+    statement: "A normalization procedure over a finite FAR representation terminates if each normalization step strictly decreases a finite unresolved-item measure for ordering, labeling, and redundancy and introduces no new unresolved item."
 
 steps:
   - id: s1
-    rule: prior_theorem
-    inputs: [p1, p3]
+    rule: definition_unfolding
+    inputs: [p1]
     statement: "FAR(R) contains the components to be normalized: I, Rep, S, Int, C, and T."
-    justification: "Applies the Representation Theorem to identify the tuple components subject to normal-form construction."
+    justification: "Unfolds the supplied FAR representation tuple in the T-009 premise."
   - id: s2
     rule: lemma_application
     inputs: [p1, p2]
-    statement: "Redundancy removal, canonical labeling, structural sorting, semantic-label replacement, rule labeling, and transition rewriting each terminate for finite FAR(R)."
-    justification: "By finite normalization termination, each supplied terminating normalization step over a finite representation terminates."
+    statement: "Redundancy removal, canonical labeling, structural sorting, semantic-label replacement, rule labeling, and transition rewriting terminate for finite FAR(R) under the supplied measure-decreasing no-new-unresolved-item normalization rules."
+    justification: "By L-007, the supplied normalization procedure over a finite FAR representation terminates under the finite-measure and no-new-unresolved-item conditions."
   - id: s3
     rule: definition_unfolding
     inputs: [s1, s2]
@@ -39,7 +36,7 @@ steps:
   - id: s5
     rule: universal_instantiation
     inputs: [p1, s4]
-    statement: "Every finite scoped FAR representation admits a canonical normal form once ordering, labeling, and redundancy-removal rules are supplied."
+    statement: "Every finite scoped FAR representation admits a canonical normal form when supplied normalization rules for ordering, labeling, and redundancy removal are explicit, total on the representation's finite components, preserve required FAR information, and each normalization step strictly decreases a finite unresolved-item measure without introducing any new unresolved item."
     justification: "Since FAR(R) was arbitrary under the stated finiteness and rule-supply conditions, the result generalizes to every such representation."
 
-conclusion: "Every finite scoped FAR representation admits a canonical normal form once ordering, labeling, and redundancy-removal rules are supplied."
+conclusion: "Every finite scoped FAR representation admits a canonical normal form when supplied normalization rules for ordering, labeling, and redundancy removal are explicit, total on the representation's finite components, preserve required FAR information, and each normalization step strictly decreases a finite unresolved-item measure without introducing any new unresolved item."

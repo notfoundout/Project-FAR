@@ -109,11 +109,11 @@ Status: Established for canonical FAR representations.
 
 ## T-009 — Canonical Normal Form Theorem
 
-Every finite scoped FAR representation admits a canonical normal form once ordering, labeling, and redundancy-removal rules are supplied.
+Every finite scoped FAR representation admits a canonical normal form when supplied normalization rules for ordering, labeling, and redundancy removal are explicit, total on the representation's finite components, preserve required FAR information, and each normalization step strictly decreases a finite unresolved-item measure without introducing any new unresolved item.
 
 Proof: `../proofs/T-009-canonical-normal-form.md`
 
-Status: Established for finite scoped FAR representations with explicit ordering rules.
+Status: Established in revised conditional form for finite scoped FAR representations with explicit, total, preservation-respecting, terminating normalization rules.
 
 ---
 
