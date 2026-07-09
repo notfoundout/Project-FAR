@@ -160,7 +160,7 @@ Depends on: D-CALC.
 
 ## T-015 — Explicit Reasoning Meta-Theorem
 
-Depends on: T-003, T-007, FAR model theory.
+Depends on: T-003, FAR model theory.
 
 ---
 

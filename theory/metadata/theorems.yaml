@@ -300,7 +300,6 @@ theorems:
   scope: explicit reasoning systems satisfying Project FAR scope assumptions
   dependencies:
   - T-003
-  - T-007
   - FAR-model-theory
   derived_concepts:
   - D-019
