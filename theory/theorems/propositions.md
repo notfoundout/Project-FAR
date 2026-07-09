@@ -26,7 +26,7 @@ Status: Established.
 
 ## P-002 — Structural Requirement
 
-Every scoped reasoning process involving more than one representation requires a representational structure.
+Every scoped reasoning process satisfying Project FAR Axiom 2 and involving a participating collection of more than one representation has, for Project FAR evaluation, a representational structure.
 
 Status: Established.
 
