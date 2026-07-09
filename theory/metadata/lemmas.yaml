@@ -112,15 +112,15 @@ lemmas:
   title: Transition Signature Construction
   status: Established
   source: theory/lemmas/core-lemmas.md
-  scope: explicit admissible transitions with source, target, rule, and status
+  scope: explicit admissible transitions with source and target reasoning state representations, governing transformation rule, and admissibility status
   dependencies:
   - D-REP
-  - D-STRUCT
   - D-CALC
   statement:
     kind: lemma
     subject: Transition Signature Construction
     predicate: holds
-    scope: explicit admissible transitions with source, target, rule, and status
+    scope: explicit admissible transitions with source and target reasoning state representations, governing transformation rule, and admissibility status
     claim: Transition Signature Construction holds within explicit admissible transitions
-      with source, target, rule, and status.
+      with source and target reasoning state representations, governing transformation
+      rule, and admissibility status.
