@@ -137,7 +137,7 @@ def source_ids(prefix: str, directory: str) -> Set[str]:
 
 def id_pattern(prefix: str) -> str:
     if prefix == "A":
-        return r"A\d+"
+        return r"(?:A\d+|AX-\d{3})"
     return rf"{prefix}-\d{{3}}"
 
 
