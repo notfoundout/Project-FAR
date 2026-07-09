@@ -2,7 +2,7 @@ id: PO-T-002
 
 theorem: T-002
 
-status: draft
+status: accepted
 
 premises:
   - id: p1
