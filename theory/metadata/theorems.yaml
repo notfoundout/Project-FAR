@@ -22,7 +22,7 @@ theorems:
   title: Conditional Primitive Independence
   status: Established
   proof: theory/proofs/T-002-primitive-independence.md
-  scope: current Project FAR reduction standard
+  scope: current Project FAR deletion-only reduction standard
   dependencies:
   - T-001
   - L-001
@@ -35,9 +35,9 @@ theorems:
     kind: theorem
     subject: Conditional Primitive Independence
     predicate: holds
-    scope: current Project FAR reduction standard
-    claim: Conditional Primitive Independence holds within current Project FAR reduction
-      standard.
+    scope: current Project FAR deletion-only reduction standard
+    claim: Conditional Primitive Independence holds within current Project FAR deletion-only
+      reduction standard.
 - id: T-003
   title: Representation Theorem
   status: Established

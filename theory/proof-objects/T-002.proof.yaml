@@ -10,10 +10,10 @@ premises:
     statement: P = {Investigation, Representation, Representational Structure, Interpretation, Reasoning Calculus} is the current Project FAR primitive architecture.
   - id: p2
     source: T-002 proof method
-    statement: If a countermodel contains the other four primitives but lacks p and fails to express a scoped reasoning process, then p is not derivable from the other four under the current framework.
+    statement: If a deletion test case contains the other four primitives but lacks p and fails to express a scoped reasoning process unless p or an accepted replacement is reintroduced, then p is not eliminable in favor of the other four under the current deletion-only reduction standard.
   - id: p3
     source: T-001
-    statement: P is minimal relative to the current Project FAR scope, definitions, and axioms.
+    statement: P is minimal relative to the current Project FAR scope, definitions, axioms, and deletion-only compression standard.
   - id: p4
     source: L-001
     statement: Representation is necessary for scoped FAR reasoning satisfying Axiom 1.
@@ -34,57 +34,57 @@ steps:
   - id: s1
     rule: prior_theorem
     inputs: [p3]
-    statement: Each primitive in P is required for the current Project FAR objective.
-    justification: T-001 establishes that removing any primitive in P reduces expressive power relative to the stated objective.
+    statement: Each primitive in P is required for the current Project FAR objective under deletion-only compression.
+    justification: T-001 establishes that removing any primitive in P without supplying an accepted replacement reduces expressive power relative to the stated objective.
   - id: s2
     rule: lemma_application
     inputs: [p2, p4]
-    statement: Representation is not derivable from the other four primitives under the current framework.
+    statement: Representation is not eliminable in favor of the other four primitives under the current deletion-only reduction standard.
     justification: A structure with the other four primitives but no representations lacks explicit distinguishable objects for interpretation, structure, or calculus to operate on.
   - id: s3
     rule: lemma_application
     inputs: [p2, p5]
-    statement: Representational Structure is not derivable from the other four primitives under the current framework.
+    statement: Representational Structure is not eliminable in favor of the other four primitives under the current deletion-only reduction standard.
     justification: A structure with representations, investigation, interpretation, and calculus but no explicitly specified relations cannot express dependency, ordering, support, contradiction, or transition structure.
   - id: s4
     rule: lemma_application
     inputs: [p2, p6]
-    statement: Interpretation is not derivable from the other four primitives under the current framework.
+    statement: Interpretation is not eliminable in favor of the other four primitives under the current deletion-only reduction standard.
     justification: A structure with representations, representational structure, investigation, and calculus but no mapping to meanings cannot determine semantic role or content.
   - id: s5
     rule: lemma_application
     inputs: [p2, p7]
-    statement: Investigation is not derivable from the other four primitives under the current framework.
+    statement: Investigation is not eliminable in favor of the other four primitives under the current deletion-only reduction standard.
     justification: A structure with representations, representational structure, interpretation, and calculus but no investigation lacks the objective and governing conditions of reasoning.
   - id: s6
     rule: lemma_application
     inputs: [p2, p8]
-    statement: Reasoning Calculus is not derivable from the other four primitives under the current framework.
+    statement: Reasoning Calculus is not eliminable in favor of the other four primitives under the current deletion-only reduction standard.
     justification: A structure with investigation, representations, representational structure, and interpretation but no calculus cannot distinguish admissible from inadmissible transitions.
   - id: s7
     rule: conjunction_intro
     inputs: [s2, s3]
-    statement: Representation and Representational Structure are each not derivable from the other four primitives under the current framework.
-    justification: Conjoins the first two countermodel results.
+    statement: Representation and Representational Structure are each not eliminable in favor of the other four primitives under the current deletion-only reduction standard.
+    justification: Conjoins the first two deletion-test results.
   - id: s8
     rule: conjunction_intro
     inputs: [s4, s5]
-    statement: Interpretation and Investigation are each not derivable from the other four primitives under the current framework.
-    justification: Conjoins the third and fourth countermodel results.
+    statement: Interpretation and Investigation are each not eliminable in favor of the other four primitives under the current deletion-only reduction standard.
+    justification: Conjoins the third and fourth deletion-test results.
   - id: s9
     rule: conjunction_intro
     inputs: [s7, s8]
-    statement: Representation, Representational Structure, Interpretation, and Investigation are each not derivable from the other four primitives under the current framework.
+    statement: Representation, Representational Structure, Interpretation, and Investigation are each not eliminable in favor of the other four primitives under the current deletion-only reduction standard.
     justification: Conjoins the first four primitive independence results.
   - id: s10
     rule: conjunction_intro
     inputs: [s9, s6]
-    statement: None of the five primitives is derivable from the other four without loss of expressive power under the current framework.
+    statement: None of the five primitives is eliminable in favor of the other four without loss of expressive power under the current deletion-only reduction standard.
     justification: Adds Reasoning Calculus to cover all five primitives in P.
   - id: s11
     rule: definition_unfolding
     inputs: [p1, s10]
-    statement: The current primitive architecture is mutually independent relative to the present reduction standard.
-    justification: Mutual independence follows because each primitive resists derivation from the remaining primitives under the stated countermodel test.
+    statement: The current primitive architecture is deletion-independent relative to the present reduction standard.
+    justification: Deletion-independence follows because each primitive resists deletion in favor of the remaining primitives under the stated deletion test.
 
-conclusion: The current primitive architecture is mutually independent relative to the present reduction standard.
+conclusion: The current primitive architecture is deletion-independent relative to the present reduction standard.
