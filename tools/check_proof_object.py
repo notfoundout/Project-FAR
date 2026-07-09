@@ -30,6 +30,7 @@ ALLOWED_RULES = {
     "definition_unfolding",
     "axiom_application",
     "prior_theorem",
+    "prior_proposition",
     "lemma_application",
     "modus_ponens",
     "conjunction_intro",
@@ -287,6 +288,12 @@ def validate_rule_pattern(
         sources = source_items(input_ids, lineage, index, r"T-\d{3}")
         if not sources:
             errors.append(f"step {step_id} prior_theorem requires a theorem-bearing input")
+        warn_on_weak_metadata_alignment(step_id, rule, step_statement, sources, warnings)
+
+    elif rule == "prior_proposition":
+        sources = source_items(input_ids, lineage, index, r"P-\d{3}")
+        if not sources:
+            errors.append(f"step {step_id} prior_proposition requires a proposition-bearing input")
         warn_on_weak_metadata_alignment(step_id, rule, step_statement, sources, warnings)
 
     elif rule == "lemma_application":

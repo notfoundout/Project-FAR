@@ -47,6 +47,7 @@ ALLOWED_PROOF_STEP_RULES = {
     "definition_unfolding",
     "axiom_application",
     "prior_theorem",
+    "prior_proposition",
     "lemma_application",
     "modus_ponens",
     "conjunction_intro",
