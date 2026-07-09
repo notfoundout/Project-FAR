@@ -1,4 +1,20 @@
 axioms:
+- id: AX-001
+  title: Primitive Operation Foundation Evidence
+  status: Established
+  source: research/axiomatization/FARO/AX-001-primitive-operation.md
+  scope: FARO primitive-operation foundation evidence accepted for Phase 1 foundation work
+  dependencies: []
+  validation_evidence:
+  - docs/reports/ax001-validation-report.md
+  - docs/reports/ax001-stability-review.md
+  - docs/reports/ax001-wording-revision-report.md
+  statement:
+    kind: axiom
+    subject: Operation
+    predicate: is retained as the AX-001 candidate primitive foundation evidence
+    scope: FARO primitive-operation foundation evidence accepted for Phase 1 foundation work
+    claim: AX-001 retains Operation as the candidate primitive using the accepted revised working characterization and records its provisional limits without changing the AX-001 mathematics.
 - id: A1
   title: Explicit Representation
   status: Established

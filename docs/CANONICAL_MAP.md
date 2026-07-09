@@ -116,6 +116,8 @@ Each concept should have one canonical source. Other documents should link to th
 |---|---|---|
 | Shared Definitions | [`../theory/definitions/definitions.md`](../theory/definitions/definitions.md) | Provides canonical shared definitions. |
 | Axioms | [`../theory/axioms/axioms.md`](../theory/axioms/axioms.md) | Defines foundational assumptions. |
+| Axiom metadata | [`../theory/metadata/axioms.yaml`](../theory/metadata/axioms.yaml) | Registers canonical machine-readable axiom records, including AX-001 and A1 through A5. |
+| AX-001 | [`../research/axiomatization/FARO/AX-001-primitive-operation.md`](../research/axiomatization/FARO/AX-001-primitive-operation.md) | Provides the canonical primitive-operation foundation artifact registered by metadata. |
 | Propositions | [`../theory/theorems/propositions.md`](../theory/theorems/propositions.md) | Records intermediate formal results. |
 
 ---
