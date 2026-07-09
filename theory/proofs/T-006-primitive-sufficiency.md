@@ -25,8 +25,11 @@ For every d in RegisteredDerivedConcepts, d is constructible from P by finite de
 ## Dependencies
 
 - `theory/derivations/derived-concept-registry.md`
-- `theory/notation/canonical-notation.md`
-- Canonical primitive definitions
+- D-INV — Investigation
+- D-REP — Representation
+- D-STRUCT — Representational Structure
+- D-INT — Interpretation
+- D-CALC — Reasoning Calculus
 
 ---
 

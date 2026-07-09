@@ -108,7 +108,11 @@ theorems:
   scope: registered derived concepts
   dependencies:
   - derived-concept-registry
-  - canonical-notation
+  - D-INV
+  - D-REP
+  - D-STRUCT
+  - D-INT
+  - D-CALC
   derived_concepts:
   - D-001
   - D-002
@@ -136,6 +140,15 @@ theorems:
   - D-024
   - D-025
   - D-026
+  - D-027
+  - D-028
+  - D-029
+  - D-030
+  - D-031
+  - D-032
+  - D-033
+  - D-034
+  - D-035
   statement:
     kind: theorem
     subject: Primitive Sufficiency Theorem
