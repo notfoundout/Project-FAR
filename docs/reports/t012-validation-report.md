@@ -104,6 +104,6 @@ ACCEPT IN REVISED FORM
 
 These questions are downstream or future-work matters and do not block T-012 validation.
 
-# Next Artifact Readiness
+# Phase 1 Step 1 Status
 
-T-013 dependency-readiness may begin after this T-012 validation PR is reviewed and merged. T-013 may consume T-012 only in the revised merge-state form: T-012 is a definitional theorem depending logically on FAR model theory, not on T-004.
+Phase 1, Step 1 is complete for T-012 once this PR is reviewed and merged. Phase 1, Step 2 repository health verification may begin after merge. T-012 may be consumed only in the revised merge-state form: T-012 is a definitional theorem depending logically on FAR model theory, not on T-004.
