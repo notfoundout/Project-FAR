@@ -284,7 +284,6 @@ theorems:
   scope: supplied target calculi and explicit transition domains
   dependencies:
   - D-CALC
-  - T-005
   derived_concepts:
   - D-011
   statement:

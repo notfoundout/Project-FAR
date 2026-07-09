@@ -156,7 +156,7 @@ Depends on: D-CALC.
 
 ## T-014 — Relative Completeness Theorem
 
-Depends on: D-CALC, T-005.
+Depends on: D-CALC.
 
 ## T-015 — Explicit Reasoning Meta-Theorem
 

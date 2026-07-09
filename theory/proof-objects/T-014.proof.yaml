@@ -14,9 +14,6 @@ premises:
   - id: p3
     source: DEF-054
     statement: "A transition signature represents a transformation execution between reasoning state representations."
-  - id: p4
-    source: T-005
-    statement: "Explicitly specified admissible reasoning transitions can be represented in FAR by transition signatures."
 
 steps:
   - id: s1
@@ -25,23 +22,18 @@ steps:
     statement: "For any transition t in D permitted by C, F contains a transition signature for t."
     justification: "This restates the explicit relative-completeness assumption over the arbitrary transition domain D."
   - id: s2
-    rule: prior_theorem
-    inputs: [p4]
-    statement: "A C-permitted transition in D can be represented in FAR by a transition signature when explicitly specified."
-    justification: "Applies transition completeness to permitted transitions inside the explicit transition domain."
-  - id: s3
     rule: definition_unfolding
     inputs: [p3, s1]
     statement: "Every C-permitted transition in D is represented in F."
     justification: "If F contains a transition signature for each permitted transition, then each such transition is represented in F."
-  - id: s4
+  - id: s3
     rule: universal_instantiation
-    inputs: [p1, s3]
+    inputs: [p1, s2]
     statement: "F represents every transition permitted by C in D."
     justification: "Since the permitted transition in D was arbitrary, the result applies to all C-permitted transitions in D."
-  - id: s5
+  - id: s4
     rule: definition_unfolding
-    inputs: [p1, s4]
+    inputs: [p1, s3]
     statement: "F is complete relative to C and D."
     justification: "A FAR representation is complete relative to a calculus and transition domain when it represents every transition permitted by that calculus in that domain."
 
