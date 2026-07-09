@@ -94,8 +94,8 @@ A finite FAR representation has a finite unresolved-item measure for ordering, l
 
 ### Statement
 
-Every explicit admissible transition can be represented as a transition signature when source state, target state, rule, and admissibility status are specified.
+Every explicit admissible transition can be represented by a transition signature when source reasoning state representation, target reasoning state representation, governing transformation rule, and admissibility status are specified.
 
 ### Proof
 
-A transition signature is defined as a representation of a transformation execution between reasoning states. If source state, target state, rule, and admissibility status are specified, then all required components of the signature are present. Therefore the transition can be represented as a transition signature.
+A transition signature is defined as a representation describing a transformation execution between reasoning state representations. If the source reasoning state representation, target reasoning state representation, governing transformation rule, and admissibility status are specified, then all required components of the signature are present. Therefore the transition can be represented by a transition signature.

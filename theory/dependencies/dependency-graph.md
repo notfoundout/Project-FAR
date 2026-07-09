@@ -96,7 +96,7 @@ Depends on: D-REP, D-STRUCT, D-INT, D-CALC.
 
 ## L-008 — Transition Signature Construction
 
-Depends on: D-REP, D-STRUCT, D-CALC.
+Depends on: D-REP, D-CALC.
 
 ---
 
