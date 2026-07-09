@@ -82,11 +82,11 @@ Canonical FAR representations omit no required role and include no redundant req
 
 ### Statement
 
-A normalization procedure over a finite FAR representation terminates when each normalization step strictly reduces unresolved ordering, labeling, or redundancy.
+A normalization procedure over a finite FAR representation terminates if each normalization step strictly decreases a finite unresolved-item measure for ordering, labeling, and redundancy and introduces no new unresolved item.
 
 ### Proof
 
-A finite FAR representation contains finitely many representations, relations, semantic assignments, rules, and transition signatures. Each normalization step resolves or removes at least one unresolved item. Since the unresolved set is finite and no step increases it, the procedure terminates.
+A finite FAR representation has a finite unresolved-item measure for ordering, labeling, and redundancy. Assume each normalization step strictly decreases that measure and introduces no new unresolved item. The measure is a natural-number-valued quantity and therefore cannot decrease strictly forever. Therefore the normalization procedure terminates.
 
 ---
 
