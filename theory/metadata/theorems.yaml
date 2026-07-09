@@ -192,10 +192,9 @@ theorems:
   title: Canonical Normal Form Theorem
   status: Established
   proof: theory/proofs/T-009-canonical-normal-form.md
-  scope: finite scoped FAR representations with explicit ordering rules
+  scope: finite scoped FAR representations with explicit, total, preservation-respecting, terminating normalization rules
   dependencies:
   - L-007
-  - T-003
   derived_concepts:
   - D-024
   - D-025
@@ -203,9 +202,9 @@ theorems:
     kind: theorem
     subject: Canonical Normal Form Theorem
     predicate: holds
-    scope: finite scoped FAR representations with explicit ordering rules
+    scope: finite scoped FAR representations with explicit, total, preservation-respecting, terminating normalization rules
     claim: Canonical Normal Form Theorem holds within finite scoped FAR representations
-      with explicit ordering rules.
+      with explicit, total, preservation-respecting, terminating normalization rules.
 - id: T-010
   title: Reconstruction Theorem
   status: Established

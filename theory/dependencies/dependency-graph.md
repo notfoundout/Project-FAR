@@ -136,7 +136,7 @@ Depends on: L-006, T-004.
 
 ## T-009 — Canonical Normal Form Theorem
 
-Depends on: L-007, T-003.
+Depends on: L-007.
 
 ## T-010 — Reconstruction Theorem
 
