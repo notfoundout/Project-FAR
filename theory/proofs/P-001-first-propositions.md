@@ -22,11 +22,11 @@ Project FAR Axiom 1 requires every reasoning process within the stated Project F
 
 ### Statement
 
-Every scoped reasoning process involving more than one representation requires a representational structure.
+Every scoped reasoning process satisfying Project FAR Axiom 2 and involving a participating collection of more than one representation has, for Project FAR evaluation, a representational structure.
 
 ### Proof
 
-By Axiom 2, every collection of representations participating in a reasoning process possesses a representational structure. A collection with more than one representation is a collection of representations. Therefore it possesses a representational structure.
+By Axiom 2, every collection of representations participating in a reasoning process possesses a representational structure. Assume a scoped reasoning process satisfies Project FAR Axiom 2 and involves a participating collection of more than one representation. That collection is a collection of representations participating in a reasoning process, so it possesses a representational structure for Project FAR evaluation.
 
 ---
 
