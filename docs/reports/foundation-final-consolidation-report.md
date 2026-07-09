@@ -8,7 +8,9 @@ This PR does not perform theorem validation, does not create new mathematics, an
 
 Final status: **FOUNDATION INCONSISTENT**.
 
-The inconsistency is artifact-completeness inconsistency, not a newly discovered mathematical contradiction. The repository contains accepted metadata and proof artifacts for the foundation, and the dependency tooling passes, but several accepted foundation items do not have the complete validation-artifact set required by the consolidation objective.
+The inconsistency is a validation artifact mismatch, not a newly discovered mathematical contradiction. The repository contains accepted metadata and proof artifacts for the foundation, and the dependency tooling passes, but several accepted foundation items do not have the complete validation-artifact set required by the consolidation objective.
+
+This repair pass found no metadata mismatch, dependency graph mismatch, proof object mismatch, theorem/proof wording mismatch, internal link/documentation mismatch, or generated index mismatch. Because the only demonstrated inconsistency is missing validation evidence, this pass does not fabricate replacement validation reports or blind appendices; doing so would create new validation artifacts without the required execution provenance.
 
 ## Repository Consistency Audit
 
@@ -24,6 +26,20 @@ Scope audited:
 Repository-wide automated checks passed for documentation validation, internal links, dependency registry consistency, generated dependency graph consistency, generated dependency report consistency, theorem index generation, markdown hygiene, and whitespace diff checks. Markdown hygiene produced many pre-existing duplicate-heading warnings but exited successfully.
 
 Branch-start limitation: this container has no configured `origin` remote and no local `main` branch. The requested `git fetch origin main` and checkout from `main` could not be completed. The consolidation branch was therefore created from the repository state available in the container.
+
+## Inconsistency Classification
+
+Every item marked foundation inconsistent in this report was reclassified under the requested inconsistency taxonomy.
+
+| Item | Classification | Repair disposition | Remaining blocker |
+| --- | --- | --- | --- |
+| P-006 | Validation artifact mismatch | Not repaired in this pass because no dedicated validation report, blind formalization appendix, or blind adversarial appendix exists to synchronize without creating new validation evidence. | Missing dedicated validation report, blind formalization appendix, blind adversarial appendix, and explicit isolation classification artifact. |
+| P-007 | Validation artifact mismatch | Not repaired in this pass because no dedicated validation report, blind formalization appendix, or blind adversarial appendix exists to synchronize without creating new validation evidence. | Missing dedicated validation report, blind formalization appendix, blind adversarial appendix, and explicit isolation classification artifact. |
+| P-008 | Validation artifact mismatch | Not repaired in this pass because no dedicated validation report, blind formalization appendix, or blind adversarial appendix exists to synchronize without creating new validation evidence. | Missing dedicated validation report, blind formalization appendix, blind adversarial appendix, and explicit isolation classification artifact. |
+| T-003 | Validation artifact mismatch | Not repaired in this pass because no dedicated validation report, blind formalization appendix, or blind adversarial appendix exists to synchronize without creating new validation evidence. | Missing dedicated validation report, blind formalization appendix, blind adversarial appendix, and explicit isolation classification artifact. |
+| T-007 | Validation artifact mismatch | Not repaired in this pass because no dedicated validation report, blind formalization appendix, or blind adversarial appendix exists to synchronize without creating new validation evidence. | Missing dedicated validation report, blind formalization appendix, blind adversarial appendix, and explicit isolation classification artifact. |
+
+No item was classified as a metadata mismatch, dependency graph mismatch, proof object mismatch, theorem/proof wording mismatch, internal link/documentation mismatch, or generated index mismatch.
 
 ## Metadata Audit
 
@@ -110,7 +126,7 @@ Pre-existing non-blocking warnings:
 
 ## Files Changed
 
-- `docs/reports/foundation-final-consolidation-report.md` was added to record the final consolidation audit, validation results, remaining artifact-completeness inconsistency, and final foundation status.
+- `docs/reports/foundation-final-consolidation-report.md` was updated to classify the demonstrated foundation inconsistencies, record that they are validation artifact mismatches, and preserve the remaining blocker list without creating new validation evidence.
 
 ## Remaining Non-Blocking Issues
 
