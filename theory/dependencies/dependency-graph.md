@@ -132,7 +132,7 @@ Depends on: T-003, T-006.
 
 ## T-008 — Canonical Representation Equivalence
 
-Depends on: L-006, T-003, T-004.
+Depends on: L-006, T-004.
 
 ## T-009 — Canonical Normal Form Theorem
 

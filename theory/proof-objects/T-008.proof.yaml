@@ -7,13 +7,10 @@ status: draft
 premises:
   - id: p1
     source: T-008 statement
-    statement: Let A and B be canonical FAR representations of the same scoped reasoning process R.
+    statement: Let A and B be canonical FAR representations of the same scoped reasoning process R under the same required role inventory.
   - id: p2
     source: L-006
-    statement: Canonical FAR representations of the same scoped reasoning process admit canonical role pairing.
-  - id: p3
-    source: T-003
-    statement: R admits FAR representations with the required components <I, Rep, S, Int, C, T>.
+    statement: Canonical FAR representations of the same scoped reasoning process under the same required role inventory admit canonical role pairing.
   - id: p4
     source: T-004
     statement: Interpretation-preserving representation mappings preserve semantic content.
@@ -26,7 +23,7 @@ steps:
     justification: Applies canonical role pairing to canonical representations of the same scoped reasoning process.
   - id: s2
     rule: definition_unfolding
-    inputs: [p1, p3]
+    inputs: [p1]
     statement: The paired roles preserve investigation role, structural relation, calculus-governed admissibility, and trace order.
     justification: Both A and B represent the same scoped reasoning process through the same required FAR components.
   - id: s3
