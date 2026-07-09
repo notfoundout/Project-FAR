@@ -5,7 +5,7 @@ This file is generated from machine-readable metadata.
 | ID | Title | Status | Proof | Scope |
 |---|---|---|---|---|
 | T-001 | Conditional Primitive Minimality | Established | `theory/proofs/T-001-primitive-minimality.md` | current Project FAR scope, definitions, and axioms |
-| T-002 | Conditional Primitive Independence | Established | `theory/proofs/T-002-primitive-independence.md` | current Project FAR reduction standard |
+| T-002 | Conditional Primitive Independence | Established | `theory/proofs/T-002-primitive-independence.md` | current Project FAR deletion-only reduction standard |
 | T-003 | Representation Theorem | Established | `theory/proofs/T-003-representation-theorem.md` | scoped explicit reasoning processes |
 | T-004 | Semantic Preservation Theorem | Established | `theory/proofs/T-004-semantic-preservation.md` | interpretation-preserving representation mappings |
 | T-005 | Transition Completeness Theorem | Established | `theory/proofs/T-005-transition-completeness.md` | explicitly specified admissible reasoning transitions |

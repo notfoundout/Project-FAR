@@ -41,6 +41,8 @@ proof_object_schema:
       description: Apply an accepted Project FAR axiom.
     prior_theorem:
       description: Apply an established theorem.
+    prior_proposition:
+      description: Apply an established proposition.
     lemma_application:
       description: Apply an established lemma.
     modus_ponens:

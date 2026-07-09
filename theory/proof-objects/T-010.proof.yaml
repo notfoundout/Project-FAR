@@ -18,7 +18,7 @@ premises:
     source: P-007
     statement: A reasoning trace is not identical to the reasoning process it represents.
   - id: p5
-    source: Representation Completeness
+    source: DEF-038
     statement: Completeness is relative to an objective, a scope, and an interpretation.
 
 steps:
@@ -50,7 +50,7 @@ steps:
   - id: s6
     rule: conjunction_intro
     inputs: [s3, s4, s5]
-    statement: The explicitly represented reasoning process can be reconstructed from F while preserving explicit semantic and structural features up to semantic equivalence under the specified interpretation.
+    statement: Given a FAR representation that is complete relative to a reconstruction objective, scope, and specified interpretation, the explicitly represented reasoning process can be reconstructed from its represented initial state, structural relations, interpretation assignments, calculus rules, and ordered transition trace up to semantic equivalence under that specified interpretation.
     justification: Combines reconstruction from complete tuple components with semantic preservation and the trace/process limitation.
 
 conclusion: Given a FAR representation that is complete relative to a reconstruction objective, scope, and specified interpretation, the explicitly represented reasoning process can be reconstructed from its represented initial state, structural relations, interpretation assignments, calculus rules, and ordered transition trace up to semantic equivalence under that specified interpretation.
