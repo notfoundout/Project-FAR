@@ -152,7 +152,7 @@ Depends on: FAR model theory.
 
 ## T-013 — Relative Soundness Theorem
 
-Depends on: D-CALC, T-005.
+Depends on: D-CALC.
 
 ## T-014 — Relative Completeness Theorem
 
