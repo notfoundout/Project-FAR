@@ -68,10 +68,9 @@ theorems:
   proof: theory/proofs/T-004-semantic-preservation.md
   scope: interpretation-preserving representation mappings
   dependencies:
-  - D-REP
-  - D-INT
-  - P-003
-  - P-006
+  - DEF-030
+  - DEF-031
+  - DEF-034
   derived_concepts:
   - D-001
   - D-016

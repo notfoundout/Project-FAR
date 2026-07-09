@@ -116,7 +116,7 @@ Depends on: A1, A2, A3, A4, A5, P-001, P-002, P-003, P-004, P-005.
 
 ## T-004 — Semantic Preservation Theorem
 
-Depends on: D-REP, D-INT, P-003, P-006.
+Depends on: DEF-030, DEF-031, DEF-034.
 
 ## T-005 — Transition Completeness Theorem
 

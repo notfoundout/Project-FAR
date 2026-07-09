@@ -32,10 +32,19 @@ SemanticContent(Int1, r) = SemanticContent(Int2, M(r))
 
 ## Dependencies
 
+### Logically Required
+
 - Representation Mapping
 - Interpretation
 - Semantic Content
+
+### Informative
+
 - Semantic Equivalence
+
+### Historical
+
+- None
 
 ---
 
@@ -46,8 +55,6 @@ By definition, semantic content is the meaning assigned to a representation unde
 Assume `M` is interpretation-preserving. Then for every source representation `r`, the meaning assigned to `r` under `Int1` is identical to the meaning assigned to `M(r)` under `Int2`.
 
 Therefore, for every mapped representation, the semantic content before mapping equals the semantic content after mapping.
-
-By definition of semantic equivalence, `r` and `M(r)` are semantically equivalent under the paired interpretations.
 
 Therefore `M` preserves semantic content.
 
