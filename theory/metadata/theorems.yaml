@@ -251,7 +251,6 @@ theorems:
   scope: specified preservation profiles
   dependencies:
   - FAR-model-theory
-  - T-004
   derived_concepts:
   - D-020
   - D-021

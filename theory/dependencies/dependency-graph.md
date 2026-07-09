@@ -148,7 +148,7 @@ Depends on: T-006 and the definition policy.
 
 ## T-012 — FAR Model Equivalence Theorem
 
-Depends on: FAR model theory, T-004.
+Depends on: FAR model theory.
 
 ## T-013 — Relative Soundness Theorem
 
