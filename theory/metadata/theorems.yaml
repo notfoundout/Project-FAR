@@ -269,7 +269,6 @@ theorems:
   scope: supplied target calculi
   dependencies:
   - D-CALC
-  - T-005
   derived_concepts:
   - D-006
   statement:

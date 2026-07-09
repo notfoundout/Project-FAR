@@ -2,7 +2,7 @@ id: PO-T-013
 
 theorem: T-013
 
-status: draft
+status: accepted
 
 premises:
   - id: p1
@@ -15,8 +15,8 @@ premises:
     source: DEF-046
     statement: "A reasoning calculus governs admissible reasoning transitions."
   - id: p4
-    source: T-005
-    statement: "Explicitly specified admissible reasoning transitions can be represented in FAR by transition signatures."
+    source: D-006
+    statement: "Admissibility is satisfaction of criteria supplied by a Reasoning Calculus within an Investigation."
 
 steps:
   - id: s1
@@ -30,15 +30,15 @@ steps:
     statement: "For any transition t, if F marks t admissible, then C permits t."
     justification: "This is the admissibility marking rule stated for F."
   - id: s3
-    rule: prior_theorem
-    inputs: [p4]
-    statement: "Marked admissible transitions can be represented as transition signatures."
-    justification: "By T-005, explicitly specified admissible transitions are representable in FAR."
+    rule: definition_unfolding
+    inputs: [p4, s2]
+    statement: "If C permits t, then t satisfies the admissibility criteria supplied by C."
+    justification: "Unfolds admissibility relative to a reasoning calculus."
   - id: s4
     rule: universal_instantiation
     inputs: [s2, s3]
     statement: "Every transition marked admissible in F is admissible under C."
-    justification: "Since the arbitrary marked transition is permitted by C, all marked transitions are admissible under C."
+    justification: "For arbitrary t, F marking t admissible implies C permits t, which is admissibility under C."
   - id: s5
     rule: definition_unfolding
     inputs: [s1, s4]
