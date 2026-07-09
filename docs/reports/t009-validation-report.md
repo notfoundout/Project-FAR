@@ -2,9 +2,13 @@
 
 This report validates only T-009, Canonical Normal Form Theorem, under the accepted Project FAR foundation. T-010 and downstream theorems were not validated.
 
-Final recommendation: REVISE.
+Original validation finding: REVISE.
 
-T-009 changed: yes. The original statement overclaimed because it said supplied ordering, labeling, and redundancy-removal rules suffice, while accepted L-007 supports termination only under a finite unresolved-item measure that strictly decreases and introduces no new unresolved item. Blind review also found that canonicity requires total rules and preservation of required FAR information. T-009 was therefore revised to the strongest evidence-supported conditional formulation.
+PR-applied resolution: this PR applies the required revision to T-009.
+
+Final recommendation: ACCEPT IN REVISED FORM.
+
+T-009 changed: yes. The original statement overclaimed because it said supplied ordering, labeling, and redundancy-removal rules suffice, while accepted L-007 supports termination only under a finite unresolved-item measure that strictly decreases and introduces no new unresolved item. Blind review also found that canonicity requires total rules and preservation of required FAR information. The revised T-009 formulation in this PR resolves that blocking issue by adopting the strongest evidence-supported conditional formulation.
 
 # Prior Foundation
 
@@ -63,7 +67,7 @@ Repository comparison found that the prior T-009 proof intended a conditional no
 
 Repository comparison also found dependency inflation. T-003 was declared in metadata, dependency graph, and proof object, but T-009 starts from a finite scoped FAR representation. Therefore T-003 is informative background rather than a logical dependency.
 
-The theorem proof, theorem summary, theorem metadata, proof object, dependency graph, and generated theorem index were updated only to reflect the revised T-009 formulation and dependency correction.
+The theorem proof, theorem summary, theorem metadata, proof object, dependency graph, and generated theorem index were updated only to reflect the revised T-009 formulation and dependency correction. Those PR-applied updates resolve the original REVISE finding for merge-state purposes.
 
 # Doctrine Evaluation
 
@@ -73,7 +77,7 @@ The theorem proof, theorem summary, theorem metadata, proof object, dependency g
 | Principle of Necessity | Passed. The only content changes were required by validation evidence: T-009 conditional wording and removal of inflated T-003 dependency declarations. |
 | No downstream validation | Passed. T-010 and downstream theorems were not validated. |
 | Dependency discipline | Passed. Every declared dependency was classified as Logically Required, Informative, or Historical. |
-| Revision only if evidence demonstrates superior formulation | Passed. The revision directly addresses the overclaim found by both blind exercises. |
+| Revision only if evidence demonstrates superior formulation | Passed. The revision directly addresses the overclaim found by both blind exercises, and the revised formulation is the merge-state recommendation. |
 | Preserve accepted foundation | Passed. Accepted upstream artifacts were consumed as evidence and not modified. |
 | No doctrine or architecture modification | Passed. No doctrine, architecture, automation, dashboards, primitives, axioms, propositions, or new theorems were changed or created. |
 
@@ -89,7 +93,9 @@ The theorem proof, theorem summary, theorem metadata, proof object, dependency g
 - [x] Performed Repository Comparison.
 - [x] Performed Doctrine Evaluation.
 - [x] Revised only because evidence demonstrated a superior formulation.
-- [x] Produced Final Recommendation.
+- [x] Preserved the original REVISE finding.
+- [x] Applied the required revision in this PR.
+- [x] Produced final merge-state recommendation: ACCEPT IN REVISED FORM.
 - [x] Classified every declared dependency as Logically Required, Informative, or Historical.
 - [x] Removed inflated T-003 dependency declarations only where required.
 - [x] Did not modify unrelated dependency records.
@@ -109,13 +115,15 @@ T-009 wording changes:
 
 # Final Recommendation
 
-REVISE
+ACCEPT IN REVISED FORM
+
+The original T-009 formulation received a REVISE finding. This PR applies the required revision by replacing the overbroad formulation with the evidence-supported conditional formulation and by removing the inflated T-003 dependency declarations. Therefore the final merge-state recommendation is ACCEPT IN REVISED FORM.
 
 # Remaining Open Questions
 
 1. Whether future repository policy should represent derived vocabulary dependencies D-024 and D-025 as graph-level dependencies rather than theorem metadata derived concepts remains outside this validation.
-2. Whether T-010 requires adjustment after T-009's revised conditional formulation is not evaluated here because the stopping rule applies after a REVISE recommendation.
+2. Whether T-010 requires adjustment after T-009's revised conditional formulation remains unevaluated here because T-010 is outside this PR.
 
 # Next Artifact Readiness
 
-T-010 may not begin in this PR. Because T-009 receives REVISE, the stopping rule requires stopping immediately after this validation and not beginning T-010.
+T-010 must not begin inside this PR. After this PR is reviewed and merged, T-010 may begin from the revised T-009 foundation because the PR-applied revision resolves the original blocking issue and the final merge-state recommendation is ACCEPT IN REVISED FORM.
