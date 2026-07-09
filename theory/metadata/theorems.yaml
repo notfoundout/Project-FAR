@@ -231,7 +231,7 @@ theorems:
   title: Conservative Extension Theorem
   status: Established
   proof: theory/proofs/T-011-conservative-extension.md
-  scope: definitionally conservative FAR extensions
+  scope: proof-preserving definitionally conservative FAR extensions
   dependencies:
   - T-006
   - definition-policy
@@ -241,8 +241,8 @@ theorems:
     kind: theorem
     subject: Conservative Extension Theorem
     predicate: holds
-    scope: definitionally conservative FAR extensions
-    claim: Conservative Extension Theorem holds within definitionally conservative
+    scope: proof-preserving definitionally conservative FAR extensions
+    claim: Conservative Extension Theorem holds within proof-preserving definitionally conservative
       FAR extensions.
 - id: T-012
   title: FAR Model Equivalence Theorem

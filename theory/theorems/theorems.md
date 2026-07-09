@@ -129,11 +129,11 @@ Status: Established in revised objective-relative form for complete FAR represen
 
 ## T-011 — Conservative Extension Theorem
 
-If an extension introduces no new primitive, alters no canonical definition, and changes no established axiom or theorem dependency, then it is conservative over the established core theory.
+If an extension introduces no new primitive, adds only terms or machinery definable from existing primitives or established derived concepts, alters no canonical definition, changes no established axiom or theorem statement, and changes no established theorem dependency, then every established core theorem retains its original proof under the extension. In this proof-preservation sense, the extension is conservative over the established core theory.
 
 Proof: `../proofs/T-011-conservative-extension.md`
 
-Status: Established for definitionally conservative FAR extensions.
+Status: Established in revised definitionally conservative form.
 
 ---
 

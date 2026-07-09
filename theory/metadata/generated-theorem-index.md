@@ -14,7 +14,7 @@ This file is generated from machine-readable metadata.
 | T-008 | Canonical Representation Equivalence | Established | `theory/proofs/T-008-canonical-representation-equivalence.md` | canonical FAR representations |
 | T-009 | Canonical Normal Form Theorem | Established | `theory/proofs/T-009-canonical-normal-form.md` | finite scoped FAR representations with explicit, total, preservation-respecting, terminating normalization rules |
 | T-010 | Reconstruction Theorem | Established | `theory/proofs/T-010-reconstruction-theorem.md` | FAR representations complete relative to a reconstruction objective, scope, and specified interpretation |
-| T-011 | Conservative Extension Theorem | Established | `theory/proofs/T-011-conservative-extension.md` | definitionally conservative FAR extensions |
+| T-011 | Conservative Extension Theorem | Established | `theory/proofs/T-011-conservative-extension.md` | proof-preserving definitionally conservative FAR extensions |
 | T-012 | FAR Model Equivalence Theorem | Established | `theory/proofs/T-012-model-equivalence.md` | specified preservation profiles |
 | T-013 | Relative Soundness Theorem | Established | `theory/proofs/T-013-soundness.md` | supplied target calculi |
 | T-014 | Relative Completeness Theorem | Established | `theory/proofs/T-014-relative-completeness.md` | supplied target calculi and explicit transition domains |
