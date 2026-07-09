@@ -131,11 +131,11 @@ Reason: T-006 does not depend on T-011.
 
 ## T-012 — FAR Model Equivalence Theorem
 
-Dependencies: FAR model theory, T-004.
+Dependencies: FAR model theory.
 
 Result: Pass.
 
-Reason: T-004 does not depend on T-012.
+Reason: FAR model theory is definitional background and no theorem-cycle dependency is declared for T-012.
 
 ---
 
