@@ -70,11 +70,11 @@ Axiom 5 requires every reasoning process within the stated Project FAR scope to 
 
 ### Statement
 
-If two canonical FAR representations represent the same scoped reasoning process, then each required role in one has exactly one counterpart in the other.
+If two canonical FAR representations represent the same scoped reasoning process under the same required role inventory, then each required role in one representation has exactly one counterpart in the other.
 
 ### Proof
 
-Canonical representations omit no required role and include no redundant role. If both represent the same scoped reasoning process, they contain the same required role inventory. Therefore each required role in the first representation has exactly one counterpart in the second.
+Canonical FAR representations omit no required role and include no redundant required role relative to their required role inventory. If two canonical FAR representations represent the same scoped reasoning process under the same required role inventory, then both contain exactly that required role inventory. Therefore each required role in the first representation has exactly one counterpart in the second.
 
 ---
 
