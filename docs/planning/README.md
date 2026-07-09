@@ -5,6 +5,12 @@ The self-advancement planner is an advisory reporting system. It inspects existi
 
 The planner may recommend theory work, but it does not authorize theory changes.
 
+## Current Foundation Checkpoint
+
+The strict validation pass from AX-001 through T-001 is consolidated in [Foundation Validation Consolidation](../reports/foundation-validation-consolidation.md).
+
+That consolidation is a navigation and status artifact only. It does not modify theory content or authorize automatic promotion.
+
 ## What It Does
 
 - Reads machine-readable evaluation and falsification registries.
