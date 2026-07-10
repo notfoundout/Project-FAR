@@ -6,6 +6,7 @@ from .external_models import *
 from .normalization import *
 from .parser import *
 from .serialization import *
+from .graph_engine import *
 from .ir import *
 
 __all__ = [name for name in globals() if not name.startswith("_")]
