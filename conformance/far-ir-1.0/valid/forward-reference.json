@@ -1,0 +1,38 @@
+{
+  "assumptions": [
+    {
+      "id": "A-forward",
+      "kind": "assumption",
+      "statement": "assumption"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C-forward",
+      "kind": "claim",
+      "statement": "claim"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "D-forward",
+      "kind": "dependency",
+      "relation": "depends_on",
+      "source_ref": {
+        "expected_kind": "claim",
+        "identifier": "C-forward"
+      },
+      "target_ref": {
+        "expected_kind": "assumption",
+        "identifier": "A-forward"
+      }
+    }
+  ],
+  "format_version": "far-ir/1.0",
+  "id": "DOC-forward",
+  "investigation": {
+    "id": "INV-forward",
+    "kind": "investigation",
+    "question": "Forward?"
+  }
+}

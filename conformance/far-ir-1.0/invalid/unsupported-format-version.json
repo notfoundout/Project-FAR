@@ -1,0 +1,47 @@
+{
+  "format_version": "far-ir/9.9",
+  "id": "DOC-minimal",
+  "investigation": {
+    "id": "INV-min",
+    "kind": "investigation",
+    "question": "What is recorded?",
+    "source": {
+      "source": "fixture",
+      "line": 1
+    }
+  },
+  "claims": [
+    {
+      "id": "C-min",
+      "kind": "claim",
+      "statement": "A claim is recorded."
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "A-min",
+      "kind": "assumption",
+      "statement": "An assumption is recorded."
+    }
+  ],
+  "reasoning_steps": [
+    {
+      "id": "RS-min",
+      "kind": "reasoning_step",
+      "order": 1,
+      "premises": [
+        {
+          "identifier": "A-min",
+          "expected_kind": "assumption"
+        }
+      ],
+      "conclusions": [
+        {
+          "identifier": "C-min",
+          "expected_kind": "claim"
+        }
+      ],
+      "rationale": "The step records the relation without resolving it."
+    }
+  ]
+}

@@ -164,21 +164,37 @@ def _edge_pairs(graph: ReasoningGraph, kinds: set[GraphEdgeKind] | None = None) 
 
 def detect_cycles(graph: ReasoningGraph) -> tuple[tuple[str, ...], ...]:
     adj: dict[str, list[str]] = defaultdict(list)
-    for s, t in _edge_pairs(graph, {GraphEdgeKind.DEPENDS_ON}): adj[s].append(t)
-    for k in adj: adj[k].sort()
+    for s, t in _edge_pairs(graph, {GraphEdgeKind.DEPENDS_ON}):
+        adj[s].append(t)
+    for key in adj:
+        adj[key].sort()
     cycles: set[tuple[str, ...]] = set()
-    def canon(c: list[str]) -> tuple[str, ...]:
-        cyc = c[:-1]
-        rotations = [tuple(cyc[i:]+cyc[:i]) for i in range(len(cyc))]
-        r = min(rotations)
-        return r + (r[0],)
-    def dfs(node: str, path: list[str]):
-        for nxt in adj.get(node, []):
-            if nxt in path:
+
+    def canon(cycle: list[str]) -> tuple[str, ...]:
+        body = cycle[:-1]
+        rotations = [tuple(body[i:] + body[:i]) for i in range(len(body))]
+        first = min(rotations)
+        return first + (first[0],)
+
+    for start in sorted(adj):
+        stack: list[tuple[str, int]] = [(start, 0)]
+        path: list[str] = [start]
+        in_path = {start}
+        while stack:
+            node, index = stack[-1]
+            neighbors = adj.get(node, [])
+            if index >= len(neighbors):
+                stack.pop()
+                in_path.remove(path.pop())
+                continue
+            nxt = neighbors[index]
+            stack[-1] = (node, index + 1)
+            if nxt in in_path:
                 cycles.add(canon(path[path.index(nxt):] + [nxt]))
-            else:
-                dfs(nxt, path+[nxt])
-    for node in sorted(adj): dfs(node, [node])
+                continue
+            path.append(nxt)
+            in_path.add(nxt)
+            stack.append((nxt, 0))
     return tuple(sorted(cycles))
 
 def compute_reachability(graph: ReasoningGraph) -> ReachabilityResult:

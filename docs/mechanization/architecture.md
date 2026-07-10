@@ -68,3 +68,7 @@ Prompt 3 extends the mechanization package with parser, normalization, and seria
 Prompt 4 extends the package with `graph_engine.py`. The graph engine depends on canonical IR records and diagnostics, constructs executable reasoning graphs, resolves typed references, validates dependencies, computes reachability, detects cycles, and reports graph statistics. It does not implement proof verification, CLI behavior, storage, APIs, or arbitrary operation execution.
 
 Prompt 5 adds `cli.py` and the `far` executable entrypoint. The CLI depends on the parser, normalization, serialization, graph engine, and diagnostic modules. It does not add proof verification, automated reasoning, REST API, or persistent storage.
+
+# Phase 3 Completion Layer
+
+Prompt 6 adds the conformance, packaging, security-review, and completion-audit layer without changing the Prompt 1 canonical IR boundary. The executable conformance runner lives in `mechanization/far_mechanization/conformance.py` and consumes the same parser, serializer, graph engine, and CLI surfaces documented for Prompts 1–5.

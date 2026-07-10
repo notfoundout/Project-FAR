@@ -1,0 +1,212 @@
+{
+  "edges": [
+    {
+      "id": "edge:cites:EV-all:REP-all",
+      "kind": "cites",
+      "source": "EV-all",
+      "target": "REP-all"
+    },
+    {
+      "id": "edge:depends_on:C-all:A-all",
+      "kind": "depends_on",
+      "source": "C-all",
+      "target": "A-all"
+    },
+    {
+      "id": "edge:depends_on:PRF-all:A-all",
+      "kind": "depends_on",
+      "source": "PRF-all",
+      "target": "A-all"
+    },
+    {
+      "id": "edge:depends_on:RS-001:A-all",
+      "kind": "depends_on",
+      "source": "RS-001",
+      "target": "A-all"
+    },
+    {
+      "id": "edge:derives:PRF-all:C-all",
+      "kind": "derives",
+      "source": "PRF-all",
+      "target": "C-all"
+    },
+    {
+      "id": "edge:derives:RS-001:C-all",
+      "kind": "derives",
+      "source": "RS-001",
+      "target": "C-all"
+    },
+    {
+      "id": "edge:interprets:INT-all:REP-all",
+      "kind": "interprets",
+      "source": "INT-all",
+      "target": "REP-all"
+    },
+    {
+      "id": "edge:records:DEP-all:A-all",
+      "kind": "records",
+      "source": "DEP-all",
+      "target": "A-all"
+    },
+    {
+      "id": "edge:records:DEP-all:C-all",
+      "kind": "records",
+      "source": "DEP-all",
+      "target": "C-all"
+    },
+    {
+      "id": "edge:records:PRF-all:RS-001",
+      "kind": "records",
+      "source": "PRF-all",
+      "target": "RS-001"
+    },
+    {
+      "id": "edge:records:RS-001:OP-all",
+      "kind": "records",
+      "source": "RS-001",
+      "target": "OP-all"
+    },
+    {
+      "id": "edge:records:STR-all:REP-all",
+      "kind": "records",
+      "source": "STR-all",
+      "target": "REP-all"
+    },
+    {
+      "id": "edge:scopes:INV-all:A-all",
+      "kind": "scopes",
+      "source": "INV-all",
+      "target": "A-all"
+    },
+    {
+      "id": "edge:scopes:INV-all:C-all",
+      "kind": "scopes",
+      "source": "INV-all",
+      "target": "C-all"
+    },
+    {
+      "id": "edge:scopes:INV-all:DEP-all",
+      "kind": "scopes",
+      "source": "INV-all",
+      "target": "DEP-all"
+    },
+    {
+      "id": "edge:scopes:INV-all:EV-all",
+      "kind": "scopes",
+      "source": "INV-all",
+      "target": "EV-all"
+    },
+    {
+      "id": "edge:scopes:INV-all:INT-all",
+      "kind": "scopes",
+      "source": "INV-all",
+      "target": "INT-all"
+    },
+    {
+      "id": "edge:scopes:INV-all:OP-all",
+      "kind": "scopes",
+      "source": "INV-all",
+      "target": "OP-all"
+    },
+    {
+      "id": "edge:scopes:INV-all:PRF-all",
+      "kind": "scopes",
+      "source": "INV-all",
+      "target": "PRF-all"
+    },
+    {
+      "id": "edge:scopes:INV-all:REP-all",
+      "kind": "scopes",
+      "source": "INV-all",
+      "target": "REP-all"
+    },
+    {
+      "id": "edge:scopes:INV-all:RS-001",
+      "kind": "scopes",
+      "source": "INV-all",
+      "target": "RS-001"
+    },
+    {
+      "id": "edge:scopes:INV-all:STR-all",
+      "kind": "scopes",
+      "source": "INV-all",
+      "target": "STR-all"
+    },
+    {
+      "id": "edge:supports:PRF-all:EV-all",
+      "kind": "supports",
+      "source": "PRF-all",
+      "target": "EV-all"
+    },
+    {
+      "id": "edge:transforms:OP-all:A-all",
+      "kind": "transforms",
+      "source": "OP-all",
+      "target": "A-all"
+    },
+    {
+      "id": "edge:transforms:OP-all:C-all",
+      "kind": "transforms",
+      "source": "OP-all",
+      "target": "C-all"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "A-all",
+      "kind": "assumption"
+    },
+    {
+      "id": "C-all",
+      "kind": "claim"
+    },
+    {
+      "id": "DEP-all",
+      "kind": "dependency"
+    },
+    {
+      "id": "EV-all",
+      "kind": "evidence"
+    },
+    {
+      "id": "INT-all",
+      "kind": "interpretation"
+    },
+    {
+      "id": "INV-all",
+      "kind": "investigation"
+    },
+    {
+      "id": "OP-all",
+      "kind": "operation"
+    },
+    {
+      "id": "PRF-all",
+      "kind": "proof"
+    },
+    {
+      "id": "REP-all",
+      "kind": "representation"
+    },
+    {
+      "id": "RS-001",
+      "kind": "reasoning_step"
+    },
+    {
+      "id": "STR-all",
+      "kind": "structure"
+    }
+  ],
+  "statistics": {
+    "component_count": 1,
+    "cycle_count": 0,
+    "dependency_count": 3,
+    "diagnostic_count": 0,
+    "edge_count": 25,
+    "node_count": 11,
+    "orphan_count": 0,
+    "reachable_count": 11,
+    "root_count": 1,
+    "unreachable_count": 0
+  }
+}

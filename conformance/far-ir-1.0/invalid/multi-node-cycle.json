@@ -1,0 +1,98 @@
+{
+  "assumptions": [
+    {
+      "id": "A-min",
+      "kind": "assumption",
+      "statement": "An assumption is recorded."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "kind": "claim",
+      "statement": "1"
+    },
+    {
+      "id": "C2",
+      "kind": "claim",
+      "statement": "2"
+    },
+    {
+      "id": "C3",
+      "kind": "claim",
+      "statement": "3"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "D1",
+      "kind": "dependency",
+      "relation": "depends_on",
+      "source_ref": {
+        "expected_kind": "claim",
+        "identifier": "C1"
+      },
+      "target_ref": {
+        "expected_kind": "claim",
+        "identifier": "C2"
+      }
+    },
+    {
+      "id": "D2",
+      "kind": "dependency",
+      "relation": "depends_on",
+      "source_ref": {
+        "expected_kind": "claim",
+        "identifier": "C2"
+      },
+      "target_ref": {
+        "expected_kind": "claim",
+        "identifier": "C3"
+      }
+    },
+    {
+      "id": "D3",
+      "kind": "dependency",
+      "relation": "depends_on",
+      "source_ref": {
+        "expected_kind": "claim",
+        "identifier": "C3"
+      },
+      "target_ref": {
+        "expected_kind": "claim",
+        "identifier": "C1"
+      }
+    }
+  ],
+  "format_version": "far-ir/1.0",
+  "id": "DOC-minimal",
+  "investigation": {
+    "id": "INV-min",
+    "kind": "investigation",
+    "question": "What is recorded?",
+    "source": {
+      "line": 1,
+      "source": "fixture"
+    }
+  },
+  "reasoning_steps": [
+    {
+      "conclusions": [
+        {
+          "expected_kind": "claim",
+          "identifier": "C-min"
+        }
+      ],
+      "id": "RS-min",
+      "kind": "reasoning_step",
+      "order": 1,
+      "premises": [
+        {
+          "expected_kind": "assumption",
+          "identifier": "A-min"
+        }
+      ],
+      "rationale": "The step records the relation without resolving it."
+    }
+  ]
+}

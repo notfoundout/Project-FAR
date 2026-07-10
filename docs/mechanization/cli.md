@@ -41,3 +41,5 @@ Use `--output json` for machine-readable command output. `far export --kind grap
 # Deferred Features
 
 Proof verification, automated reasoning, REST API, persistent storage, and arbitrary operation execution remain deferred.
+
+The Prompt 6 completion layer also exposes `far conformance`, which runs the versioned `far-ir/1.0` conformance suite and supports text or JSON output.

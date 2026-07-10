@@ -11,11 +11,12 @@ import yaml
 from .diagnostics import Diagnostic, DiagnosticSeverity, SourceLocation, DiagnosticCode
 from .external_models import FORMAT_VERSION, ExternalFARDocument
 from .graph_engine import build_graph, compute_reachability, graph_statistics, resolve_references, validate_dependencies, validate_graph
+from .conformance import run_conformance
 from .parser import ParseResult, parse_document, parse_file
 from .serialization import serialize_json, serialize_yaml, external_to_data
 from .normalization import normalize_ir_document
 
-CLI_VERSION = "0.5.0"
+CLI_VERSION = "0.6.0"
 FOUNDATION_VERSION = "v1.0"
 IR_VERSION = "far-ir/1.0"
 
@@ -206,9 +207,20 @@ def _inspect(args: argparse.Namespace) -> tuple[int, str, str]:
 
 def _version(args: argparse.Namespace) -> tuple[int, str, str]:
     cfg = _effective(args)
-    data = {"foundation_version": FOUNDATION_VERSION, "ir_version": IR_VERSION, "schema_version": FORMAT_VERSION, "cli_version": CLI_VERSION}
+    from . import __version__ as package_version
+    data = {"foundation_version": FOUNDATION_VERSION, "ir_version": IR_VERSION, "schema_version": FORMAT_VERSION, "package_version": package_version, "cli_version": CLI_VERSION}
     if cfg.output == "json": return 0, json.dumps(data, indent=2, sort_keys=True) + "\n", ""
     return 0, "\n".join(f"{k}: {v}" for k, v in data.items()) + "\n", ""
+
+def _conformance(args: argparse.Namespace) -> tuple[int, str, str]:
+    result = run_conformance(getattr(args, "manifest", None) or None)
+    if args.output == "json":
+        out = json.dumps({"suite": result.suite, "passed": result.passed, "failed": result.failed, "total": result.total, "success": result.success, "results": [asdict(r) for r in result.results]}, indent=2, sort_keys=True) + "\n"
+    else:
+        lines = [f"Conformance suite {result.suite}: {result.passed}/{result.total} passed"]
+        lines.extend(("PASS" if r.passed else "FAIL") + f" {r.case_id}" for r in result.results)
+        out = "\n".join(lines) + "\n"
+    return (0 if result.success else 1), out, ""
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="far", description="Project FAR mechanization CLI")
@@ -230,6 +242,7 @@ def build_parser() -> argparse.ArgumentParser:
     add_file(sub.add_parser("stats", help="print graph statistics")).set_defaults(func=_stats)
     e=add_file(sub.add_parser("export", help="export normalized document or graph")); e.add_argument("--kind", choices=["json","yaml","graph-json"], default="json"); e.add_argument("--output-file"); e.set_defaults(func=_export)
     i=add_file(sub.add_parser("inspect", help="inspect an identifier")); i.add_argument("identifier"); i.set_defaults(func=_inspect)
+    c=add_common(sub.add_parser("conformance", help="run far-ir/1.0 conformance suite")); c.add_argument("--manifest"); c.set_defaults(func=_conformance)
     add_common(sub.add_parser("version", help="show versions")).set_defaults(func=_version)
     sub.add_parser("help", help="show help").set_defaults(func=lambda args: (0, p.format_help(), ""))
     return p
