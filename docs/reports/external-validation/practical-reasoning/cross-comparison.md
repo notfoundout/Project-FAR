@@ -1,0 +1,18 @@
+# Cross-Domain Comparison
+
+| Dimension | Legal reasoning | Historical reasoning | Intelligence analysis | Public-policy reasoning |
+|---|---|---|---|---|
+| Evidence type | Judicial opinion, constitutional text, precedent, record facts | Chronology, diplomatic documents, historical synthesis | Indicators, source reports, official reviews, later evidence | Statistical data, empirical studies, model projections |
+| Role of authority | Constitutive for legal rule status but not logical truth | Secondary authority organizes evidence but does not settle causation | Official review is authoritative for public evaluation but not omniscient | CBO and BLS provide authoritative estimates/data, not value judgments |
+| Causal versus rule-based inference | Primarily rule-based with interpretive judgment | Primarily causal and counterfactual | Hypothesis-based causal/probabilistic inference | Causal plus evaluative tradeoff inference |
+| Uncertainty | Interpretive and precedential uncertainty | Causal weighting and counterfactual uncertainty | Source reliability, collection gaps, confidence calibration | Parameter, external-validity, and normative uncertainty |
+| Hidden assumptions | Equality theory, relevance of social meaning, precedent treatment | Causal standard, actor intention model, counterfactual baseline | Priors from past WMD history, deception assumptions, absence-of-evidence meaning | Labor-market model, welfare weights, affected population, enforcement |
+| Counterfactual dependence | Low to moderate; mostly doctrinal alternatives | High; necessary and contributing causes depend on counterfactuals | High; competing hypotheses depend on missing evidence and deception scenarios | High; policy alternatives and projected outcomes are counterfactual |
+| Normative premises | Constitutional equality and judicial role | Usually indirect, in causal responsibility judgments | Tradecraft norms for evidence, confidence, and warning | Direct policy values and distributional priorities |
+| Competing explanations | Formal equality versus inherent inequality; originalist versus living/evolving interpretation | Trigger, structural, decision-centered, and overdetermination models | Active WMD, residual capability, no program, concealment, source error, groupthink | Disemployment, monopsony, retention/productivity, price pass-through, adaptation |
+| Confidence calibration | High for holding; conditional for interpretive reconstruction | High for chronology; moderate/low for causal weights | High for official failure finding; conditional for source-level diagnosis | Conditional on proposal and model |
+| Adversarial robustness | FAR exposes premises but cannot choose constitutional theory | FAR exposes causal assumptions but cannot end historiography | FAR exposes inferential gaps and alternatives | FAR exposes tradeoffs but cannot choose welfare weights |
+| Where FAR adds structure | Separates authority, facts, precedent, interpretation, conclusion | Separates chronology, mechanism, cause type, counterfactual | Separates indicators, reliability, hypotheses, confidence | Separates positive evidence, causal model, distributional effects, norms |
+| Where FAR does not determine substantive answer | Constitutional meaning and legitimacy | Final causal responsibility | Ground truth and policy decision | Optimal policy or universal effect |
+
+Across all four domains, FAR succeeds as a disciplined reconstruction framework rather than a domain oracle. The recurring pattern is conditional representability: FAR can make dependencies visible only after domain rules, evidentiary standards, causal models, and normative premises are supplied.
