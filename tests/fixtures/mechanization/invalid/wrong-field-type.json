@@ -1,0 +1,28 @@
+{
+  "format_version": "far-ir/1.0",
+  "id": "DOC-minimal",
+  "investigation": {
+    "id": "INV-min",
+    "kind": "investigation",
+    "question": "What is recorded?",
+    "source": {
+      "source": "fixture",
+      "line": 1
+    }
+  },
+  "claims": [
+    {
+      "id": "C-min",
+      "kind": "claim",
+      "statement": "A claim is recorded."
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "A-min",
+      "kind": "assumption",
+      "statement": "An assumption is recorded."
+    }
+  ],
+  "reasoning_steps": "not-array"
+}
