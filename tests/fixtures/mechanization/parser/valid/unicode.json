@@ -1,0 +1,1 @@
+{"format_version":"far-ir/1.0","id":"DOC-unicode","investigation":{"id":"INV-unicode","kind":"investigation","question":"Unicode?"},"claims":[{"id":"C-unicode","kind":"claim","statement":"π and café are preserved."}]}

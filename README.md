@@ -162,3 +162,26 @@ make plan
 10. Merge
 
 <!-- END GENERATED PROJECT FAR DASHBOARD -->
+
+## Mechanization MVP
+
+Phase 3 mechanization provides an executable MVP for the `far-ir/1.0` interchange format. It includes a canonical Python IR, JSON/YAML parsing, deterministic normalization and serialization, graph construction and dependency validation, structured diagnostics, a CLI, and a versioned conformance suite.
+
+Install dependencies and the local package:
+
+```bash
+python -m pip install -r requirements.txt
+python -m pip install -e .
+```
+
+Minimal CLI workflow:
+
+```bash
+far version
+far validate examples/mechanization/minimal-investigation.json
+far normalize examples/mechanization/minimal-investigation.json
+far graph examples/mechanization/minimal-investigation.json
+python -m mechanization.far_mechanization.conformance
+```
+
+The MVP intentionally defers proof verification, automated reasoning, operation execution, REST APIs, persistent storage, web interfaces, plugin systems, production hardening, and independent external implementation.

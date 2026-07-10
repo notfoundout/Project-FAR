@@ -1,0 +1,198 @@
+{
+  "assumptions": [
+    {
+      "id": "A-all",
+      "kind": "assumption",
+      "statement": "assumption"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C-all",
+      "kind": "claim",
+      "statement": "claim"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "DEP-all",
+      "kind": "dependency",
+      "relation": "depends_on",
+      "source_ref": {
+        "expected_kind": "claim",
+        "identifier": "C-all"
+      },
+      "target_ref": {
+        "expected_kind": "assumption",
+        "identifier": "A-all"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "cites": [
+        {
+          "expected_kind": "representation",
+          "identifier": "REP-all"
+        }
+      ],
+      "description": "evidence",
+      "id": "EV-all",
+      "kind": "evidence"
+    }
+  ],
+  "format_version": "far-ir/1.0",
+  "graph": {
+    "edges": [
+      {
+        "id": "GE-all",
+        "kind": "supports",
+        "source_ref": {
+          "expected_kind": "assumption",
+          "identifier": "A-all"
+        },
+        "target_ref": {
+          "expected_kind": "claim",
+          "identifier": "C-all"
+        }
+      }
+    ],
+    "metadata": {
+      "graph": "data only"
+    },
+    "nodes": [
+      {
+        "id": "A-all",
+        "kind": "assumption"
+      },
+      {
+        "id": "C-all",
+        "kind": "claim"
+      }
+    ]
+  },
+  "id": "DOC-all",
+  "interpretations": [
+    {
+      "id": "INT-all",
+      "kind": "interpretation",
+      "meaning": "meaning",
+      "representation": {
+        "expected_kind": "representation",
+        "identifier": "REP-all"
+      }
+    }
+  ],
+  "investigation": {
+    "id": "INV-all",
+    "kind": "investigation",
+    "question": "Can all object kinds be represented?",
+    "scope": "Prompt 2 fixture"
+  },
+  "metadata": {
+    "order": [
+      1,
+      2
+    ],
+    "suite": "mechanization"
+  },
+  "operations": [
+    {
+      "description": "operation",
+      "id": "OP-all",
+      "inputs": [
+        {
+          "expected_kind": "assumption",
+          "identifier": "A-all"
+        }
+      ],
+      "kind": "operation",
+      "outputs": [
+        {
+          "expected_kind": "claim",
+          "identifier": "C-all"
+        }
+      ]
+    }
+  ],
+  "proofs": [
+    {
+      "assumptions": [
+        {
+          "expected_kind": "assumption",
+          "identifier": "A-all"
+        }
+      ],
+      "claim": {
+        "expected_kind": "claim",
+        "identifier": "C-all"
+      },
+      "evidence": [
+        {
+          "expected_kind": "evidence",
+          "identifier": "EV-all"
+        }
+      ],
+      "id": "PRF-all",
+      "kind": "proof",
+      "steps": [
+        {
+          "expected_kind": "reasoning_step",
+          "identifier": "RS-001"
+        }
+      ]
+    }
+  ],
+  "reasoning_steps": [
+    {
+      "conclusions": [
+        {
+          "expected_kind": "claim",
+          "identifier": "C-all"
+        }
+      ],
+      "id": "RS-001",
+      "kind": "reasoning_step",
+      "operation": {
+        "expected_kind": "operation",
+        "identifier": "OP-all"
+      },
+      "order": 1,
+      "premises": [
+        {
+          "expected_kind": "assumption",
+          "identifier": "A-all"
+        }
+      ],
+      "rationale": "ordered rationale"
+    }
+  ],
+  "representations": [
+    {
+      "content": "representation content",
+      "id": "REP-all",
+      "kind": "representation",
+      "metadata": {
+        "m": true
+      }
+    }
+  ],
+  "source": {
+    "column": 1,
+    "line": 1,
+    "source": "fixture"
+  },
+  "structures": [
+    {
+      "description": "structure",
+      "id": "STR-all",
+      "kind": "structure",
+      "representations": [
+        {
+          "expected_kind": "representation",
+          "identifier": "REP-all"
+        }
+      ]
+    }
+  ]
+}

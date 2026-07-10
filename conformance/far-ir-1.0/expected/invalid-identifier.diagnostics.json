@@ -1,0 +1,26 @@
+[
+  {
+    "code": "FAR-EXT-006",
+    "details": {
+      "path": [
+        "id"
+      ],
+      "schema_path": [
+        "properties",
+        "id",
+        "$ref",
+        "pattern"
+      ]
+    },
+    "message": "string does not match pattern",
+    "related_identifier": null,
+    "severity": "error",
+    "source": {
+      "column": null,
+      "end_column": null,
+      "end_line": null,
+      "line": null,
+      "source": "/workspace/Project-FAR/conformance/far-ir-1.0/invalid/invalid-identifier.json"
+    }
+  }
+]

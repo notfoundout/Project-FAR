@@ -1,0 +1,25 @@
+{
+  "claims": [
+    {
+      "id": "C-unicode",
+      "kind": "claim",
+      "statement": "Café π ✓"
+    }
+  ],
+  "extensions": {
+    "far.demo": {
+      "emoji": "✓"
+    }
+  },
+  "format_version": "far-ir/1.0",
+  "id": "DOC-unicode",
+  "investigation": {
+    "id": "INV-unicode",
+    "kind": "investigation",
+    "question": "Unicode π ✓?"
+  },
+  "metadata": {
+    "a": "α",
+    "z": "Ω"
+  }
+}

@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+"""Project FAR command-line entrypoint."""
+from mechanization.far_mechanization.cli import main
+raise SystemExit(main())

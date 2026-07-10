@@ -20,6 +20,7 @@ class GraphNodeKind(StrEnum):
     EVIDENCE = "evidence"
     OPERATION = "operation"
     REASONING_STEP = "reasoning_step"
+    DEPENDENCY = "dependency"
     PROOF = "proof"
 
 

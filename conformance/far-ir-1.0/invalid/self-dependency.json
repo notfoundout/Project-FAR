@@ -1,0 +1,62 @@
+{
+  "assumptions": [
+    {
+      "id": "A-min",
+      "kind": "assumption",
+      "statement": "An assumption is recorded."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C-self",
+      "kind": "claim",
+      "statement": "self"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "D-self",
+      "kind": "dependency",
+      "relation": "depends_on",
+      "source_ref": {
+        "expected_kind": "claim",
+        "identifier": "C-self"
+      },
+      "target_ref": {
+        "expected_kind": "claim",
+        "identifier": "C-self"
+      }
+    }
+  ],
+  "format_version": "far-ir/1.0",
+  "id": "DOC-minimal",
+  "investigation": {
+    "id": "INV-min",
+    "kind": "investigation",
+    "question": "What is recorded?",
+    "source": {
+      "line": 1,
+      "source": "fixture"
+    }
+  },
+  "reasoning_steps": [
+    {
+      "conclusions": [
+        {
+          "expected_kind": "claim",
+          "identifier": "C-min"
+        }
+      ],
+      "id": "RS-min",
+      "kind": "reasoning_step",
+      "order": 1,
+      "premises": [
+        {
+          "expected_kind": "assumption",
+          "identifier": "A-min"
+        }
+      ],
+      "rationale": "The step records the relation without resolving it."
+    }
+  ]
+}

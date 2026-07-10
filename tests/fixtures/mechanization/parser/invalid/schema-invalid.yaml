@@ -1,0 +1,6 @@
+format_version: far-ir/1.0
+id: bad id
+investigation:
+  id: INV
+  kind: investigation
+  question: Bad identifier at root.

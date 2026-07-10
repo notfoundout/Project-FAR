@@ -64,3 +64,11 @@ The IR uses Python dataclasses, tuples, enums, and immutable metadata mappings. 
 # Deferred Semantics
 
 Phase 3 Prompt 1 defers parser semantics, normalization, serialization, schemas, graph validation, dependency validation, reference resolution, proof checking, CLI behavior, API behavior, storage, and execution.
+
+# External Model Boundary
+
+The canonical IR remains storage-independent. Phase 3 Prompt 2 adds typed external models and a `far-ir/1.0` JSON/YAML interchange contract outside the IR. External models may validate JSON-shaped input and preserve extension fields; canonical IR records do not depend on JSON Schema, YAML, parsers, or serializers. Conversion between the external model and canonical IR is deterministic for supported lossless fields, while parser and serialization behavior remains deferred.
+
+# Graph Engine Boundary
+
+Prompt 4 consumes canonical IR documents to construct and validate executable reasoning graphs. The graph engine resolves references and validates dependency graph structure, but it does not alter canonical IR semantics, verify proofs, execute operations, or introduce new mathematics.

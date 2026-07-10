@@ -1,0 +1,6 @@
+format_version: far-ir/9.9
+id: DOC-bad-version
+investigation:
+  id: INV-bad-version
+  kind: investigation
+  question: Bad version?
