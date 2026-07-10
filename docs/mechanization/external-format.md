@@ -61,3 +61,5 @@ Examples are provided in `examples/mechanization/minimal-investigation.json` and
 # Deferred Features
 
 Parser pipeline, YAML parsing, normalization, serialization, reference resolution, graph validation, dependency-cycle checks, proof verification, CLI, API, storage, and execution engine behavior remain deferred.
+
+Prompt 3 implements JSON and YAML parsing and deterministic serialization for this contract. YAML remains the same semantic model as JSON and is loaded with safe YAML APIs.

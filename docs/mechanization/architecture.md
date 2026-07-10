@@ -62,3 +62,5 @@ This prompt deliberately does not implement parsers, graph validation algorithms
 # Architecture Decision Summary
 
 The implementation reuses repository naming from accepted FAR artifacts and existing Python practice. It introduces an executable package because the existing `tools/` code is parser-oriented and YAML-coupled. The new IR is immutable, diagnostic-oriented, storage-independent, and minimal enough to support later Phase 3 prompts without claiming that later work is complete.
+
+Prompt 3 extends the mechanization package with parser, normalization, and serialization modules. These modules depend on the Prompt 1 canonical IR and Prompt 2 external models; the IR remains independent of JSON, YAML, schema validation, and file I/O.
