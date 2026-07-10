@@ -5,16 +5,23 @@ import yaml
 from common_health import ROOT, iter_files, rel
 errors=[]; registry_ids=defaultdict(list); proof_ids=defaultdict(list); adversarial_ids=defaultdict(list)
 REGISTRY_NAMES=('registry','adversarial')
+INTENTIONALLY_MALFORMED_YAML={
+    'conformance/far-ir-1.0/invalid/malformed.yaml',
+    'tests/fixtures/mechanization/parser/invalid/malformed.yaml',
+}
 
 def resolve_ref(p, v):
     cands=[(p.parent/v).resolve(), (ROOT/v).resolve()]
     return any(c.exists() for c in cands)
 
 for p in iter_files({'.yaml','.yml'}):
+    relative=rel(p)
     try:
         data=yaml.safe_load(p.read_text(encoding='utf-8'))
     except Exception as e:
-        errors.append(f'{rel(p)}: invalid YAML: {e}'); continue
+        if relative in INTENTIONALLY_MALFORMED_YAML:
+            continue
+        errors.append(f'{relative}: invalid YAML: {e}'); continue
     if isinstance(data, dict) and isinstance(data.get('id'), (str,int)):
         if 'proof-objects' in p.parts and p.name.startswith('T-'):
             proof_ids[str(data['id'])].append(p)
@@ -23,13 +30,13 @@ for p in iter_files({'.yaml','.yml'}):
     def walk(x, parent_key=''):
         if isinstance(x, dict):
             if any(n in p.name for n in REGISTRY_NAMES) and isinstance(x.get('id'), (str,int)):
-                key=(rel(p), str(x['id']))
+                key=(relative, str(x['id']))
                 registry_ids[str(x['id'])].append(p)
             for k,v in x.items():
                 kl=str(k).lower()
                 if isinstance(v,str) and (kl.endswith('path') or kl.endswith('file') or kl in {'path','file','fixture','report','source'}):
                     if not v.startswith(('http://','https://')) and ('/' in v or '.' in v) and not resolve_ref(p, v):
-                        errors.append(f'{rel(p)}: referenced path missing: {v}')
+                        errors.append(f'{relative}: referenced path missing: {v}')
                 walk(v, kl)
         elif isinstance(x, list):
             for v in x: walk(v, parent_key)
