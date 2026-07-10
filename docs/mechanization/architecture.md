@@ -66,3 +66,5 @@ The implementation reuses repository naming from accepted FAR artifacts and exis
 Prompt 3 extends the mechanization package with parser, normalization, and serialization modules. These modules depend on the Prompt 1 canonical IR and Prompt 2 external models; the IR remains independent of JSON, YAML, schema validation, and file I/O.
 
 Prompt 4 extends the package with `graph_engine.py`. The graph engine depends on canonical IR records and diagnostics, constructs executable reasoning graphs, resolves typed references, validates dependencies, computes reachability, detects cycles, and reports graph statistics. It does not implement proof verification, CLI behavior, storage, APIs, or arbitrary operation execution.
+
+Prompt 5 adds `cli.py` and the `far` executable entrypoint. The CLI depends on the parser, normalization, serialization, graph engine, and diagnostic modules. It does not add proof verification, automated reasoning, REST API, or persistent storage.
