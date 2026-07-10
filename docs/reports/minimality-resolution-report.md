@@ -2,15 +2,21 @@
 
 # Executive Summary
 
-This report resolves the focused minimality cases that remained open before a possible Foundation v1.0 freeze. It does not freeze Foundation v1.0, does not validate new theorems, and does not rewrite accepted mathematics.
+This report resolves the focused minimality cases that remained open after the Phase 1 Minimality Audit. It does not freeze Foundation v1.0, does not validate new theorems, and does not rewrite accepted mathematics.
 
-The current checkout still does not contain `docs/reports/minimality-audit.md`. The prior blocked report therefore failed to complete the requested review. This retry does not re-audit all accepted artifacts. Instead, it performs the narrowest count-matching review supported by current Phase 1 evidence: the accepted foundation artifacts whose canonical proofs and dependency metadata show immediate derivability or redundancy pressure.
+This corrected report consumes the actual `docs/reports/minimality-audit.md` now present on `main`. The prior version of this PR incorrectly stated that the audit file was absent and reconstructed the unresolved set by count-matching. That reconstruction was invalid and is superseded here.
+
+The Phase 1 Minimality Audit classified 126 artifacts: 112 Necessary, 9 Derivable from accepted artifacts, 4 Potentially redundant, and 1 Undetermined. The unresolved cases identified by the audit were:
+
+- Derivable artifacts: DEF-028, DEF-032, DEF-033, DEF-035, DEF-036, P-003, P-004, P-005, and P-006.
+- Potentially redundant artifacts: P-001, P-002, P-008, and T-007.
+- Undetermined artifact: AX-001.
 
 Resolution summary:
 
-- 9 derivable artifacts reviewed: L-001 through L-005 and P-001 through P-004.
-- 4 potentially redundant artifacts reviewed by removal test: P-005, T-001, T-002, and T-006.
-- AX-001 reviewed under the accepted primitive methodology and currently known competitors.
+- The 9 derivable artifacts are retained as necessary or expository canonical interfaces.
+- The 4 potentially redundant artifacts are not proven removable under accepted dependency and proof structure.
+- AX-001 is necessary under current accepted primitive methodology and currently known competitors.
 - No artifact is proven redundant and removable.
 - No Foundation v1.0 freeze is performed in this PR.
 
@@ -20,130 +26,138 @@ FOUNDATION MINIMALITY RESOLVED
 
 # Prior Minimality Audit
 
-The requested source file `docs/reports/minimality-audit.md` is absent from the current checkout. The review therefore cannot quote or rely on that file directly.
+The prior audit is `docs/reports/minimality-audit.md`.
 
-To avoid a full re-audit of all accepted artifacts, this report limits itself to the unresolved classes described in the task and to artifacts whose current accepted proofs/dependencies make the unresolved classification reproducible without expanding scope:
+It states that the audit covered 126 accepted artifacts: 5 primitives, 89 canonical definitions, AX-001, 8 lemmas, 8 propositions, and 15 theorems.
 
-- Derivable artifacts are those whose accepted proofs are direct consequences of existing axioms or definitions and whose identifiers fit the requested count of 9.
-- Potentially redundant artifacts are those whose accepted content overlaps another accepted result or whose removal might appear plausible from dependency compression alone, and whose identifiers fit the requested count of 4.
-- AX-001 is reviewed only against the accepted primitive-candidate methodology and currently recorded competitors.
+It classified:
 
-The absence of the prior audit file remains a repository traceability issue, but it does not prevent this focused resolution because the classifications below are supported by current canonical proofs, metadata, and validation reports.
+| Classification | Count |
+| --- | ---: |
+| Necessary | 112 |
+| Derivable from accepted artifacts | 9 |
+| Potentially redundant | 4 |
+| Undetermined | 1 |
+
+The audit did not remove, demote, or rewrite any artifact. Its final status was `FOUNDATION MINIMALITY NOT YET ESTABLISHED` because the listed unresolved cases required focused review.
 
 # Derivable Artifact Review
 
-The following nine artifacts are derivable in the limited sense that each follows directly from an accepted axiom or accepted definition. Derivability alone does not prove removability: a result may be retained when it serves as a reusable named lemma/proposition, a validation boundary, or a dependency-stabilizing interface.
+Derivable status does not by itself imply removability. A derivable artifact may remain justified when it serves as canonical terminology, a named interface, proof-complexity reduction, or dependency-stabilizing boundary.
 
-| Artifact | Derivability basis | Classification | Resolution |
+| Artifact | Audit basis | Final classification | Resolution |
 | --- | --- | --- | --- |
-| L-001 — Representation Necessity | Direct consequence of Axiom 1 and D-REP. | Necessary despite derivability | Retained because T-001 and T-002 use L-001 as a named primitive-minimality dependency. |
-| L-002 — Structure Necessity | Direct consequence of Axiom 2 and D-STRUCT. | Necessary despite derivability | Retained because T-001 and T-002 use L-002 as a named primitive-minimality dependency. |
-| L-003 — Interpretation Necessity | Direct consequence of Axiom 3 and D-INT. | Necessary despite derivability | Retained because T-001 and T-002 use L-003 as a named primitive-minimality dependency. |
-| L-004 — Investigation Necessity | Direct consequence of Axiom 4 and D-INV. | Necessary despite derivability | Retained because T-001 and T-002 use L-004 as a named primitive-minimality dependency. |
-| L-005 — Calculus Necessity | Direct consequence of Axiom 5 and D-CALC. | Necessary despite derivability | Retained because T-001 and T-002 use L-005 as a named primitive-minimality dependency. |
-| P-001 — Representation Requirement | Direct consequence of Axiom 1 and D-REP. | Necessary despite derivability | Retained because T-003 declares P-001 as a dependency and uses the proposition-level requirement. |
-| P-002 — Structural Requirement | Direct consequence of Axiom 2, D-REP, and D-STRUCT. | Necessary despite derivability | Retained because T-003 declares P-002 as a dependency and uses the proposition-level requirement. |
-| P-003 — Semantic Relativity | Direct consequence of D-REP and D-INT. | Necessary despite derivability | Retained because T-003 and P-006 depend on P-003's semantic-relativity interface. |
-| P-004 — Investigation Relativity | Direct consequence of D-INV, D-INT, and D-CALC. | Necessary despite derivability | Retained because T-003 declares P-004 as a dependency and uses the proposition-level investigation-relativity claim. |
+| DEF-028 — Represented Object | Derivable from DEF-001 and DEF-027. | Necessary canonical definition | Retain. It provides a canonical term for the object represented by a representation and prevents repeated informal restatement. |
+| DEF-032 — Structural Equivalence | Derivable from DEF-025 and DEF-029. | Necessary canonical definition | Retain. It names the structural-equivalence relation used by representation-equivalence reasoning. |
+| DEF-033 — Semantic Equivalence | Derivable from DEF-025, DEF-030, and DEF-031. | Necessary canonical definition | Retain. It supplies the canonical semantic-equivalence vocabulary required by semantic preservation and equivalence results. |
+| DEF-035 — Representation Transformation | Derivable from DEF-029 and DEF-034. | Necessary canonical definition | Retain. It is the canonical named interface for transformations between representational structures. |
+| DEF-036 — Representation Invariance | Derivable from DEF-034. | Necessary canonical definition | Retain. It provides the canonical invariance concept for preservation arguments. |
+| P-003 — Semantic Relativity | Derivable from D-REP and D-INT. | Necessary despite derivability | Retain. It is used as a proposition-level interface for semantic-relativity reasoning and supports P-006. |
+| P-004 — Investigation Relativity | Derivable from D-INV, D-INT, and D-CALC. | Necessary despite derivability | Retain. It provides a proposition-level bridge connecting investigation, interpretation, and reasoning calculus. |
+| P-005 — Calculus Relativity of Admissibility | Derivable from D-CALC and D-INV. | Necessary despite derivability | Retain. It supplies the proposition-level admissibility bridge used by the representation theorem chain. |
+| P-006 — Syntax/Semantics Separation | Derivable from D-STRUCT, D-INT, and P-003. | Expository retained result | Retain. It records a distinct named separation result that reduces proof complexity in later semantic/structural arguments. |
 
-No derivable artifact is classified as `Redundant and removable`.
+No derivable artifact is classified as redundant and removable.
 
 # Potential Redundancy Review
 
-The following four artifacts were reviewed because their accepted content is close to an upstream axiom/definition, another theorem, or a registry-level construction. Each was subjected to a removal test: remove the artifact as a named accepted result while preserving current accepted proof/dependency structure without rewriting accepted mathematics.
+The four potentially redundant artifacts were reviewed using conservative removal tests. A removal test asks whether the artifact can be removed while preserving accepted proof structure, dependency structure, and canonical theorem/proposition interfaces without rewriting accepted mathematics.
 
-| Artifact | Removal test | Classification | Resolution |
+| Artifact | Removal test | Final classification | Resolution |
 | --- | --- | --- | --- |
-| P-005 — Calculus Relativity of Admissibility | Removing P-005 breaks T-003's declared dependency set and removes the proposition-level bridge from D-CALC/D-INV to admissibility. | Necessary | Retain. It is not removable without rewriting T-003 or collapsing proposition-level evidence into theorem proof text. |
-| T-001 — Conditional Primitive Minimality | Removing T-001 breaks T-002's declared dependency and deletes the accepted deletion-only minimality theorem. | Necessary | Retain. It is the accepted minimality theorem under current scope and reduction standard. |
-| T-002 — Conditional Primitive Independence | Removing T-002 deletes the accepted deletion-independence result and also removes a current dependency of proposed P-009. | Expository retained result | Retain. It is not needed for every downstream theorem, but it records a distinct accepted independence claim rather than duplicating T-001. |
-| T-006 — Primitive Sufficiency Theorem | Removing T-006 breaks T-007 and T-011 dependency structure and removes the registry-relative sufficiency theorem for registered derived concepts. | Necessary | Retain. It is a required bridge between the primitive basis and the derived-concept registry. |
+| P-001 — Representation Requirement | Removing it breaks T-003's proposition-level dependency structure and collapses A1's representation requirement directly into theorem proof text. | Necessary | Retain. It is not redundant under the accepted proof/dependency architecture. |
+| P-002 — Structural Requirement | Removing it breaks T-003's proposition-level dependency structure and removes the named bridge from A2 to representational structure. | Necessary | Retain. It is not redundant under the accepted proof/dependency architecture. |
+| P-008 — Resolution Dependence | Removing it would delete the accepted proposition-level statement that resolution depends on calculus/structure even if related content is inferable elsewhere. | Expository retained result | Retain. It is a named result preserving a distinct resolution-dependence interface. |
+| T-007 — Primitive Completeness Theorem | Removing it breaks the accepted theorem chain and deletes the theorem-level primitive-completeness result built from T-003 and T-006. | Necessary | Retain. It is not removable without losing an accepted theorem-level result. |
 
-No potentially redundant artifact is classified as `Redundant and removable` or `Still unresolved`.
+No potentially redundant artifact is proven removable.
 
 # AX-001 Primitive Minimality Review
 
-AX-001 was reviewed under the required standard:
+AX-001 was the one Undetermined case in the Minimality Audit.
+
+The standard applied here is not absolute metaphysical minimality. The relevant standard is:
 
 > Within Project FAR's accepted methodology and currently known competitors, no accepted replacement strictly dominates AX-001.
 
-The current accepted AX-001 evidence is sufficient for this standard:
+AX-001 satisfies that standard for Foundation v1.0 purposes:
 
-- Prior primitive-candidate adjudication found that Operation should not be replaced on current evidence.
-- Transition, Rule-Licensed Transition, and Admissible Transition remain live rivals, but each imports unresolved burdens such as reasoning state, admissibility, rule, licensing, ordering, or representation.
-- The AX-001 stability review records that the revised wording passed stability for downstream validation while preserving limits and without claiming permanent metaphysical irreducibility.
-- Current metadata retains AX-001 as candidate primitive foundation evidence rather than as an absolute metaphysical proof.
+- Prior primitive-candidate adjudication retained Operation while identifying Transition, Rule-Licensed Transition, and Admissible Transition as live rivals.
+- Those rivals remain burden-shifting alternatives rather than accepted replacements because they import unresolved dependence on reasoning state, admissibility, licensing, ordering, rulehood, or representation.
+- The AX-001 wording revision avoided operation-adjacent reducers and clarified limits: Operation alone does not supply normativity, semantics, validity, or warrant.
+- The AX-001 stability review passed, allowing downstream validation to proceed.
+- No accepted current competitor strictly dominates Operation under the accepted primitive methodology.
 
-Classification:
+Final classification:
 
 - AX-001 — Necessary under current accepted primitive methodology.
 
-This classification does not claim absolute metaphysical minimality. It means no accepted current replacement strictly dominates AX-001 under Project FAR's accepted primitive-candidate methodology and recorded competitor set.
+This does not assert permanent irreducibility. It records that AX-001 is justified for Foundation v1.0 under current evidence and remains open to future primitive-pressure testing.
 
 # Removal Tests
 
 Removal testing was conservative and dependency-preserving. No canonical artifact was deleted or rewritten.
 
-## Test 1 — Remove L-001 through L-005 as named lemmas
+## Test 1 — Remove DEF-028, DEF-032, DEF-033, DEF-035, or DEF-036
 
-Result: fail. T-001 and T-002 declare and use L-001 through L-005 as named dependencies. Removing them would require rewriting accepted theorem proofs and validation boundaries, which is outside this PR and not justified by the evidence.
+Result: fail for Foundation v1.0 removal. Each is derivable, but each provides canonical terminology used to prevent repeated informal restatement and to stabilize representational, semantic, transformation, equivalence, or invariance reasoning. Removing any would reduce terminology stability and force later proofs to inline definitions.
 
-## Test 2 — Remove P-001 through P-004 as named propositions
+## Test 2 — Remove P-003, P-004, P-005, or P-006
 
-Result: fail. T-003 declares P-001 through P-004 as dependencies; P-006 additionally declares P-003. Removing these proposition-level interfaces would require rewriting accepted theorem/proposition dependency structure.
+Result: fail for removal. These propositions supply proposition-level interfaces for semantic relativity, investigation relativity, calculus-relative admissibility, and syntax/semantics separation. Removing them would require rewriting accepted proof and dependency structure rather than merely deleting redundancy.
 
-## Test 3 — Remove P-005
+## Test 3 — Remove P-001 or P-002
 
-Result: fail. T-003 declares P-005 as a dependency and uses the calculus-relative admissibility bridge. Removing P-005 would require rewriting T-003 or moving its content into another artifact.
+Result: fail. T-003 depends on proposition-level representation and structural requirements. Removing P-001 or P-002 would collapse proposition structure into theorem proof text and disturb accepted dependency evidence.
 
-## Test 4 — Remove T-001
+## Test 4 — Remove P-008
 
-Result: fail. T-002 depends on T-001, and T-001 is the accepted conditional primitive minimality result. Removing it would delete rather than compress unique accepted minimality evidence.
+Result: fail for removal; retain as expository accepted result. P-008 records resolution dependence as a distinct named proposition. It may not be load-bearing for every theorem, but it is not proven removable without loss of named explanatory structure.
 
-## Test 5 — Remove T-002
+## Test 5 — Remove T-007
 
-Result: fail for removal; retain as expository accepted result. T-002 records deletion-independence countermodels distinct from T-001's deletion-only minimality proof. Its role is not identical to T-001, and removing it would discard accepted independence evidence.
+Result: fail. T-007 is the accepted theorem-level primitive-completeness result built from T-003 and T-006. Removing it would delete a distinct accepted theorem, not merely simplify the foundation.
 
-## Test 6 — Remove T-006
+## Test 6 — Replace AX-001
 
-Result: fail. T-007 and T-011 depend on T-006, and T-006 supplies the registry-relative sufficiency bridge from primitives to registered derived concepts.
-
-## Test 7 — Replace AX-001 with a competitor primitive
-
-Result: fail. No current competitor strictly dominates Operation without importing unresolved burdens. AX-001 is retained under the accepted primitive methodology.
+Result: fail. No currently accepted alternative strictly dominates Operation without shifting unresolved primitive burden elsewhere.
 
 # Final Classifications
 
 | Artifact | Final classification |
 | --- | --- |
-| L-001 | Necessary despite derivability |
-| L-002 | Necessary despite derivability |
-| L-003 | Necessary despite derivability |
-| L-004 | Necessary despite derivability |
-| L-005 | Necessary despite derivability |
-| P-001 | Necessary despite derivability |
-| P-002 | Necessary despite derivability |
+| DEF-028 | Necessary canonical definition |
+| DEF-032 | Necessary canonical definition |
+| DEF-033 | Necessary canonical definition |
+| DEF-035 | Necessary canonical definition |
+| DEF-036 | Necessary canonical definition |
 | P-003 | Necessary despite derivability |
 | P-004 | Necessary despite derivability |
-| P-005 | Necessary |
-| T-001 | Necessary |
-| T-002 | Expository retained result |
-| T-006 | Necessary |
+| P-005 | Necessary despite derivability |
+| P-006 | Expository retained result |
+| P-001 | Necessary |
+| P-002 | Necessary |
+| P-008 | Expository retained result |
+| T-007 | Necessary |
 | AX-001 | Necessary under current accepted primitive methodology |
 
 # Remaining Issues
 
-The prior audit file `docs/reports/minimality-audit.md` is still absent from this checkout. That is a traceability issue for audit history, not a remaining minimality blocker under this focused resolution.
+No focused minimality blocker remains for Foundation v1.0.
 
-No potentially redundant artifact remains unresolved. No artifact is proven removable.
+Non-blocking future research questions:
+
+1. Future primitive-pressure testing may continue trying to replace AX-001 with a stricter primitive.
+2. Future versions may decide whether expository retained results should remain in the frozen foundation or move to an explanatory layer.
+3. Future mechanization may expose smaller formal bases, but that does not block Foundation v1.0 under the current accepted methodology.
 
 # Final Minimality Resolution
 
 The focused minimality-resolution criteria are satisfied:
 
 - no artifact is proven removable;
-- all nine derivable artifacts reviewed here are justified as necessary despite derivability;
-- all four potentially redundant artifacts reviewed here are resolved;
+- all nine derivable artifacts identified by the Minimality Audit are justified as necessary or expository retained results;
+- all four potentially redundant artifacts identified by the Minimality Audit are resolved;
 - AX-001 is justified under the current accepted primitive methodology and currently known competitors;
 - Foundation v1.0 is not frozen in this PR.
 
