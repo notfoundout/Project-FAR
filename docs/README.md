@@ -13,6 +13,7 @@ Project-level documentation lives here. This directory is for orientation, proje
 - `CANONICAL_MAP.md` — canonical location map for major concepts.
 - `STYLE_GUIDE.md` — documentation style standards.
 - `SEMANTIC_AUDIT.md` — repository-wide semantic consistency audit and dependency graph.
+- `governance/repository-certification-standard.md` — canonical Repository Certification Standard.
 - `reports/foundation-health-verification.md` — Phase 1 Step 2 repository health verification report.
 
 ## Related Entry Points

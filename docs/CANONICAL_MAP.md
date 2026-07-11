@@ -18,6 +18,7 @@ Each concept should have one canonical source. Other documents should link to th
 | Project FAR | [`OVERVIEW.md`](OVERVIEW.md) | Provides the project overview. |
 | Architecture | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Describes the repository architecture. |
 | Project Status | [`project-status.md`](project-status.md) | Records current governance and milestone status. |
+| Repository Certification Standard | [`governance/repository-certification-standard.md`](governance/repository-certification-standard.md) | Defines repository certification governance, protected boundaries, criteria, and completion rules. |
 | Mission | [`../foundations/motivation/mission.md`](../foundations/motivation/mission.md) | Defines the project mission. |
 | Philosophy | [`../foundations/motivation/philosophy.md`](../foundations/motivation/philosophy.md) | Defines guiding philosophical principles. |
 | Scope | [`../foundations/assumptions/scope.md`](../foundations/assumptions/scope.md) | Defines project scope and limits. |
