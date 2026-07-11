@@ -24,3 +24,4 @@ Project-level documentation lives here. This directory is for orientation, proje
 - `../frameworks/` — FAR, FARA, and FARO framework material.
 - `../methodology/README.md` — proof, validation, falsification, and comparison methodology.
 - `../research/README.md` — exploratory research index.
+- [Repository Certification Inventory Audit](audits/repository-certification-inventory-audit.md) - Prompt 2 baseline inventory, classification, metrics, findings, and architecture map.

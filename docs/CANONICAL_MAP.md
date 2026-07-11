@@ -138,3 +138,4 @@ Each concept should have one canonical source. Other documents should link to th
 - [Research gap report](reports/research-gap-report.md)
 - [Next actions](planning/next-actions.md)
 - [Planner maintenance](maintenance/self-advancement-planner.md)
+- Repository Certification Inventory Audit: `docs/audits/repository-certification-inventory-audit.md` is the canonical Prompt 2 baseline for artifact classification, repository metrics, directory responsibility findings, and canonical source audit findings.
