@@ -27,3 +27,4 @@ Project-level documentation lives here. This directory is for orientation, proje
 - [Repository Certification Inventory Audit](audits/repository-certification-inventory-audit.md) - Prompt 2 baseline inventory, classification, metrics, findings, and architecture map.
 - [Canonical Vocabulary Index](glossary/canonical-vocabulary-index.md) - Prompt 3 glossary and authoritative vocabulary index by reference to canonical definitions.
 - [Semantic Certification Report](audits/semantic-certification-report.md) - Prompt 3 semantic, terminology, glossary, reachability, and canonical-home certification report.
+- [Repository Architecture Certification Report](audits/repository-architecture-certification-report.md) - Prompt 4 architecture certification, report-root policy, reference-document policy, navigation, and discoverability report.
