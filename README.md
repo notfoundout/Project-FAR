@@ -7,6 +7,14 @@ Project FAR is a foundational framework for representing, analyzing, and compari
 
 This root README is the canonical Project FAR command center: the single entry point for repository status, health, evidence, planning, and navigation. Only the generated dashboard block below is automatically regenerated; content outside the block is manually maintained.
 
+## Central Research Program
+
+Project FAR's primary objective is to determine whether every reasoning process necessarily instantiates a common underlying structure and, if so, whether that structure is universal and minimal.
+
+The project does not assume that a universal structure exists, nor that FAR is that structure. The Foundation, theory, mechanization, validation work, and future implementations are instruments for evaluating the question rather than presupposing its answer.
+
+**[Read the Central Research Program](docs/governance/central-research-program.md)**
+
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
@@ -87,8 +95,8 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - Source gap: [GAP-004](docs/reports/research-gap-report.md#gap-004)
 - Affected files:
   - `PS-002`
-- Suggested branch: `maintenance/review-provisional-system-gap-004`
-- Suggested PR title: `Review provisional system (GAP-004)`
+- Suggested branch: `maintenance/review-unresolved-case-gap-004`
+- Suggested PR title: `Review unresolved case (GAP-004)`
 
 ## Research Gap Summary
 
@@ -176,7 +184,6 @@ make plan
 - Repository compliance enforcement report: [docs/audits/repository-compliance-enforcement-report.md](docs/audits/repository-compliance-enforcement-report.md).
 - Independent repository certification audit: [docs/audits/independent-repository-certification-audit.md](docs/audits/independent-repository-certification-audit.md).
 - Repository certification status: [docs/certification/repository-certification-status.md](docs/certification/repository-certification-status.md).
-
 
 ## Mechanization MVP
 
