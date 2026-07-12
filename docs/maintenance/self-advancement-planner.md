@@ -6,7 +6,7 @@ The Project FAR self-advancement planner is an advisory workflow for surfacing r
 
 1. `tools/project_status_report.py` reads selected registries and reports, then writes `docs/reports/project-status-generated.md`.
 2. `tools/detect_research_gaps.py` scans registries and documentation for unresolved, provisional, missing, stale, or underrepresented items, then writes `docs/reports/research-gap-report.md`.
-3. `tools/generate_next_tasks.py` turns the gap report into ranked advisory tasks and ready-to-copy Codex prompts in `docs/planning/next-actions.md`.
+3. `tools/generate_next_tasks.py` turns the gap report into ranked advisory tasks and ready-to-copy task briefs in `docs/planning/next-actions.md`.
 4. `tools/self_advancement_plan.py` runs all three tools and prints a concise summary.
 
 ## Gap Severity
@@ -20,9 +20,9 @@ The Project FAR self-advancement planner is an advisory workflow for surfacing r
 
 Tasks are ranked by severity first, then by gap identifier. The generator intentionally keeps recommendations cautious and scoped to review, documentation, or planning unless a human authorizes more.
 
-## Reviewing Codex Prompts
+## Reviewing Maintainer Task Briefs
 
-Before using a generated prompt, confirm that:
+Before using a generated task brief, confirm that:
 
 - The branch and allowed files are appropriate.
 - Forbidden theory files remain protected.
@@ -38,6 +38,6 @@ Planner output is advisory, not authoritative. It can contain false positives, s
 - Do not treat generated reports as evidence by themselves.
 - Prefer registry and report sources over planner summaries.
 - Review repeated recommendations for drift before copying them into new work.
-- Keep generated prompts constrained and reversible.
+- Keep generated task briefs constrained and reversible.
 
 **Warning:** Do not auto-merge planner-generated theory changes. All theory changes require human review.

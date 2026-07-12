@@ -16,7 +16,7 @@ That consolidation is a navigation and status artifact only. It does not modify 
 - Reads machine-readable evaluation and falsification registries.
 - Summarizes current status in `docs/reports/project-status-generated.md`.
 - Detects possible gaps in `docs/reports/research-gap-report.md`.
-- Generates advisory next actions and Codex prompts in `docs/planning/next-actions.md`.
+- Generates advisory next actions and task briefs in `docs/planning/next-actions.md`.
 
 ## What It Does Not Do
 

@@ -59,35 +59,35 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - Source gap: [GAP-045](docs/reports/research-gap-report.md#gap-045)
 - Affected files:
   - `Reasoning Calculus`
-- Suggested branch: `codex/review-unresolved-primitive-pressure-gap-045`
+- Suggested branch: `maintenance/review-unresolved-primitive-pressure-gap-045`
 - Suggested PR title: `Review unresolved primitive pressure (GAP-045)`
 
 ### TASK-001: Review unresolved case at `PS-001`
 - Source gap: [GAP-001](docs/reports/research-gap-report.md#gap-001)
 - Affected files:
   - `PS-001`
-- Suggested branch: `codex/review-unresolved-case-gap-001`
+- Suggested branch: `maintenance/review-unresolved-case-gap-001`
 - Suggested PR title: `Review unresolved case (GAP-001)`
 
 ### TASK-002: Review provisional system at `PS-001`
 - Source gap: [GAP-002](docs/reports/research-gap-report.md#gap-002)
 - Affected files:
   - `PS-001`
-- Suggested branch: `codex/review-provisional-system-gap-002`
+- Suggested branch: `maintenance/review-provisional-system-gap-002`
 - Suggested PR title: `Review provisional system (GAP-002)`
 
 ### TASK-003: Review unresolved case at `PS-002`
 - Source gap: [GAP-003](docs/reports/research-gap-report.md#gap-003)
 - Affected files:
   - `PS-002`
-- Suggested branch: `codex/review-unresolved-case-gap-003`
+- Suggested branch: `maintenance/review-unresolved-case-gap-003`
 - Suggested PR title: `Review unresolved case (GAP-003)`
 
 ### TASK-004: Review provisional system at `PS-002`
 - Source gap: [GAP-004](docs/reports/research-gap-report.md#gap-004)
 - Affected files:
   - `PS-002`
-- Suggested branch: `codex/review-provisional-system-gap-004`
+- Suggested branch: `maintenance/review-provisional-system-gap-004`
 - Suggested PR title: `Review provisional system (GAP-004)`
 
 ## Research Gap Summary
@@ -156,12 +156,27 @@ make plan
 4. Choose top task
 5. Open source gap
 6. Open affected files
-7. Copy generated Codex prompt
+7. Copy generated task brief
 8. Implement
 9. Run health
 10. Merge
 
 <!-- END GENERATED PROJECT FAR DASHBOARD -->
+
+## Certification and Architecture Navigation
+
+- Repository certification governance: [docs/governance/repository-certification-standard.md](docs/governance/repository-certification-standard.md).
+- Repository certification inventory baseline: [docs/audits/repository-certification-inventory-audit.md](docs/audits/repository-certification-inventory-audit.md).
+- Semantic certification and terminology baseline: [docs/audits/semantic-certification-report.md](docs/audits/semantic-certification-report.md).
+- Canonical vocabulary index: [docs/glossary/canonical-vocabulary-index.md](docs/glossary/canonical-vocabulary-index.md).
+- Repository architecture certification and report-root policy: [docs/audits/repository-architecture-certification-report.md](docs/audits/repository-architecture-certification-report.md).
+- Repository Certification Index: [docs/certification/README.md](docs/certification/README.md).
+- Repository Domain Registry: [docs/architecture/repository-domain-registry.md](docs/architecture/repository-domain-registry.md).
+- Documentation standardization report: [docs/audits/documentation-standardization-report.md](docs/audits/documentation-standardization-report.md).
+- Repository compliance enforcement report: [docs/audits/repository-compliance-enforcement-report.md](docs/audits/repository-compliance-enforcement-report.md).
+- Independent repository certification audit: [docs/audits/independent-repository-certification-audit.md](docs/audits/independent-repository-certification-audit.md).
+- Repository certification status: [docs/certification/repository-certification-status.md](docs/certification/repository-certification-status.md).
+
 
 ## Mechanization MVP
 

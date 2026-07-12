@@ -18,6 +18,7 @@ Each concept should have one canonical source. Other documents should link to th
 | Project FAR | [`OVERVIEW.md`](OVERVIEW.md) | Provides the project overview. |
 | Architecture | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Describes the repository architecture. |
 | Project Status | [`project-status.md`](project-status.md) | Records current governance and milestone status. |
+| Repository Certification Standard | [`governance/repository-certification-standard.md`](governance/repository-certification-standard.md) | Defines repository certification governance, protected boundaries, criteria, and completion rules. |
 | Mission | [`../foundations/motivation/mission.md`](../foundations/motivation/mission.md) | Defines the project mission. |
 | Philosophy | [`../foundations/motivation/philosophy.md`](../foundations/motivation/philosophy.md) | Defines guiding philosophical principles. |
 | Scope | [`../foundations/assumptions/scope.md`](../foundations/assumptions/scope.md) | Defines project scope and limits. |
@@ -137,3 +138,13 @@ Each concept should have one canonical source. Other documents should link to th
 - [Research gap report](reports/research-gap-report.md)
 - [Next actions](planning/next-actions.md)
 - [Planner maintenance](maintenance/self-advancement-planner.md)
+- Repository Certification Inventory Audit: `docs/audits/repository-certification-inventory-audit.md` is the canonical inventory baseline for artifact classification, repository metrics, directory responsibility findings, and canonical source audit findings.
+- Canonical Vocabulary Index: `docs/glossary/canonical-vocabulary-index.md` is the canonical semantic certification glossary and vocabulary discovery index; it references canonical definitions without redefining protected mathematical content.
+- Semantic Certification Report: `docs/audits/semantic-certification-report.md` is the canonical semantic certification semantic certification, terminology, glossary consistency, dependency matrix, reachability, and canonical-home report.
+- Repository Architecture Certification Report: `docs/audits/repository-architecture-certification-report.md` is the canonical architecture certification repository architecture certification, report-root policy, reference-document policy, navigation, and discoverability report.
+- Repository Certification Index: `docs/certification/README.md` is the canonical documentation standardization navigation hub for Repository Certification artifacts from the standardization phases.
+- Repository Domain Registry: `docs/architecture/repository-domain-registry.md` is the canonical documentation standardization registry for repository domains, responsibilities, roots, owners, and allowed artifact classes.
+- Documentation Standardization Report: `docs/audits/documentation-standardization-report.md` is the canonical documentation standardization documentation structure, metadata, accessibility, navigation, and cross-document consistency report.
+- Repository Compliance Enforcement Report: `docs/audits/repository-compliance-enforcement-report.md` is the canonical compliance enforcement compliance enforcement, automation coverage, regression prevention, and final finding disposition report.
+- Independent Repository Certification Audit: `docs/audits/independent-repository-certification-audit.md` is the canonical certification matrix, governance consistency, integrity, regression, and automation verification audit.
+- Repository Certification Status: `docs/certification/repository-certification-status.md` is the canonical repository certification decision, evidence matrix, repository integrity summary, and maintenance readiness assessment.
