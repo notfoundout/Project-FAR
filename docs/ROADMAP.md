@@ -8,6 +8,19 @@ It identifies the major phases of the project, their objectives, and their curre
 
 Unlike the formal theory, this document serves as a project management and planning resource.
 
+## Governing Research Direction
+
+The [Central Research Program](governance/central-research-program.md) governs future major work.
+
+Project FAR exists to determine whether reasoning instantiates a common underlying structure and, if so, whether that structure is universal and minimal. Roadmap work must therefore be classified as one of:
+
+- core research advancing existence, universality, necessity, minimality, or boundary analysis;
+- supporting engineering enabling reproducible research;
+- maintenance preserving repository and implementation integrity;
+- applications demonstrating or testing bounded use cases.
+
+Completion of infrastructure, validation, or mechanization does not by itself resolve the central research question.
+
 ---
 
 # Phase I — Repository Architecture
@@ -100,17 +113,20 @@ Current completion state is recorded in `PROJECT_STATUS.md`.
 
 ## Objective
 
-Continue developing the theoretical foundations of Project FAR.
+Evaluate the central hypothesis under the [Central Research Program](governance/central-research-program.md).
 
 ### Areas of Research
 
-- Primitive reduction
-- Architectural minimality
-- Independence proofs
-- Expressive power
-- Universality
-- Alternative formulations
-- Open questions
+- existence of a common reasoning structure
+- universality across reasoning processes
+- primitive and assumption necessity
+- architectural and semantic minimality
+- counterexample construction
+- boundary identification
+- competing simpler structures
+- expressive power
+- alternative formulations
+- unresolved uncertainty
 
 ### Status
 
@@ -166,4 +182,6 @@ v0.4 is the current development phase. Its objective is external validation prep
 
 # Long-Term Goal
 
-Establish Project FAR as a rigorous, minimal, universal framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning within its stated scope.
+Reach the strongest justified conclusion about whether a common structure of reasoning exists, whether FAR captures it within an explicitly justified scope, whether every retained component is necessary, and whether any simpler competing structure has equal expressive power.
+
+Project success is measured by answering that question rigorously, not by forcing confirmation of FAR.
