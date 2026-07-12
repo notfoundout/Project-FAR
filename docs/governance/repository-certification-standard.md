@@ -1,7 +1,7 @@
 # Repository Certification Standard
 
 Version: 1.0
-Status: Canonical Governance Standard
+Status: Frozen Canonical Governance Standard
 
 ---
 
@@ -21,9 +21,12 @@ This standard governs repository quality, repository organization, repository do
 
 This standard does not authorize changes to protected mathematical or doctrinal artifacts.
 
+Version 1.0 is frozen. Future revisions require an explicit new version rather
+than silent modification.
+
 ## Role in Project FAR
 
-This document is the governing specification for the Repository Certification program. Later Repository Certification work and corrective actions must comply with this standard. If a later action would conflict with this standard, the action must stop until governance is clarified.
+This document is the governing specification for repository certification. Repository maintenance and corrective actions must comply with this standard. If an action would conflict with this standard, the action must stop until governance is clarified.
 
 ## Dependencies
 

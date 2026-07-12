@@ -6,15 +6,15 @@ This audit independently evaluates whether Project FAR satisfies the Repository 
 
 ## Why?
 
-certification preparation produced governance, inventory, semantic certification, architecture policy, documentation standardization, and enforcement automation. independent audit reviews the repository as an independent certification board would: evidence first, prior conclusions secondary, and no assumption that previous certification results are correct.
+Repository certification includes governance, inventory, semantic certification, architecture policy, documentation standardization, and enforcement automation. The independent audit reviews the repository as an independent certification board would: evidence first, prior conclusions secondary, and no assumption that previous certification results are correct.
 
 ## Scope
 
-This audit evaluates certification criteria, governance consistency, canonical source behavior, repository walkthrough discoverability, reference compliance, documentation sampling, automation effectiveness, regression prevention, repository integrity, and final finding disposition. It does not certify Project FAR; final certification is reserved for the final certification phase.
+This audit evaluates certification criteria, governance consistency, canonical source behavior, repository walkthrough discoverability, reference compliance, documentation sampling, automation effectiveness, regression prevention, repository integrity, and final finding disposition. It evaluates certification evidence; the certification decision is recorded in the Repository Certification Status.
 
 ## Role in Project FAR
 
-This is the canonical independent audit independent Repository Certification audit for repository certification.
+This is the canonical independent Repository Certification audit.
 
 ## Dependencies
 
@@ -26,7 +26,7 @@ This is the canonical independent audit independent Repository Certification aud
 
 ## Dependents
 
-- final certification.
+- Repository Certification Status.
 - Future repository-maintenance certification reviews.
 
 ## Design Rationale
@@ -35,7 +35,7 @@ The audit is intentionally evidence-based and does not add a new standard. It ch
 
 ## Protected Boundary Confirmation
 
-independent audit did not modify primitives, canonical definitions, axioms, lemmas, propositions, theorems, accepted proof objects, accepted mathematical dependency metadata, accepted doctrine, or Foundation v1.0.
+The independent audit did not modify primitives, canonical definitions, axioms, lemmas, propositions, theorems, accepted proof objects, accepted mathematical dependency metadata, accepted doctrine, or Foundation v1.0.
 
 ## Independent Certification Summary
 
@@ -66,7 +66,7 @@ independent audit did not modify primitives, canonical definitions, axioms, lemm
 | Discoverability | Pass | New-contributor walkthrough reached Foundation, Theory, Mechanization, Governance, Certification, Glossary, Architecture, Roadmap, and validation tools from repository entry points. | Major domains are reachable without repository history. | None. |
 | Verifiability | Pass | Certification compliance automation now runs in docs validation and health checks. | Key certification navigation and registry rules are executable checks. | None. |
 | Consistency | Pass | Governance consistency report found no contradictory certification, architecture, index, glossary, or enforcement policies. | The artifacts differ by role and do not compete for the same canonical source. | None. |
-| Accessibility | Conditional Pass | Indexes and registry improve explanation and routing without rewriting canonical definitions. | Accessibility layer is sufficient for certification navigation, but broader reader-facing examples remain future work. | Future Enhancement: the final certification phase/maintenance may expand explanatory examples without changing definitions. |
+| Accessibility | Conditional Pass | Indexes and registry improve explanation and routing without rewriting canonical definitions. | Accessibility layer is sufficient for certification navigation, but broader reader-facing examples remain future work. | Future Enhancement: repository maintenance may expand explanatory examples without changing definitions. |
 | Evolvability | Pass | `tools/check_certification_compliance.py` prevents key certification regressions and can be extended with additional stable rules. | The repository now has lightweight regression enforcement. | None. |
 
 ## Governance Consistency Report
@@ -158,11 +158,11 @@ Randomly sampled domains confirm that each sampled area has one canonical source
 
 | Integrity question | Finding | Result |
 |---|---|---|
-| Accidental duplication introduced by certification preparation? | Certification artifacts have distinct roles; no competing certification standard was created. | Pass |
+| Accidental duplication from certification maintenance? | Certification artifacts have distinct roles; no competing certification standard was created. | Pass |
 | Conflicting canonical homes? | Canonical map, Certification Index, and Domain Registry agree for sampled domains. | Pass |
 | Conflicting repository policies? | Governance consistency report found no contradictions. | Pass |
 | Contradictory governance? | Research Execution Charter remains governing execution policy; Repository Certification Standard governs certification quality. | Pass |
-| Repository drift introduced? | New automation enforces certification navigation and registry presence. | Pass |
+| Repository drift from certification maintenance? | Automation enforces certification navigation and registry presence. | Pass |
 
 ## Final Certification Findings Update
 
@@ -177,6 +177,6 @@ Randomly sampled domains confirm that each sampled area has one canonical source
 | Full reference-document tagging. | Future Enhancement | Requires careful per-document review. |
 | Automated terminology linting. | Future Enhancement | Requires stable machine-readable vocabulary policy. |
 
-## the final certification phase Completion Status
+## Audit Completion Status
 
-independent audit is complete when this audit, Certification Index updates, navigation updates, automation updates, and validation results are committed. the final certification phase is ready to proceed after review; final certification has not been issued by independent audit.
+The independent audit is complete when this audit, Certification Index updates, navigation updates, automation updates, and validation results are committed. Certification status is recorded separately in the Repository Certification Status.

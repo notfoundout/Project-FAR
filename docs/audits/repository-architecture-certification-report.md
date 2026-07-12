@@ -1,20 +1,27 @@
 # Repository Architecture Certification Report
 
+Version: 1.0
+Status: Frozen Canonical Architecture Policy
+
 ## Purpose
 
-This report resolves the architecture certification repository-architecture findings for the Repository Certification program.
+This report records the repository architecture policy for Project FAR.
 
 ## Why?
 
-inventory identified broad directory responsibilities and duplicate architectural/report locations; semantic certification deferred report-root policy and document-section normalization. This report resolves architecture, canonical-home, report-root, reference-document, navigation, and discoverability policy without changing accepted mathematics.
+The inventory identified broad directory responsibilities and duplicate architectural/report locations; semantic certification identified report-root policy and document-section normalization. This report resolves architecture, canonical-home, report-root, reference-document, navigation, and discoverability policy without changing accepted mathematics.
 
 ## Scope
 
 This report governs repository organization, documentation navigation, report roots, canonical locations, and reference-document behavior. It does not govern mathematical content or theorem dependency metadata.
 
+The report-root policy and reference-document policy recorded here are frozen
+at version 1.0. Future policy revisions require an explicit new version rather
+than silent modification.
+
 ## Role in Project FAR
 
-This is the canonical architecture certification architecture certification artifact for the active `standardization/repository-certification` branch and certification review `Repository Standardization and Certification`.
+This is the canonical repository architecture certification artifact.
 
 ## Dependencies
 
@@ -27,17 +34,17 @@ This is the canonical architecture certification architecture certification arti
 
 ## Dependents
 
-- Later Repository Certification work.
-- Final Repository Certification report.
+- Repository Certification Status.
+- Repository Certification Status.
 - Future documentation, style, accessibility, release, and cross-repository consistency audits.
 
 ## Design Rationale
 
-The repository architecture should reveal Project FAR's conceptual ownership without requiring historical knowledge. architecture certification therefore resolves policy and navigation first, avoids protected mathematical edits, and records deferred physical moves only when moving files would be cleanup rather than architectural certification.
+The repository architecture should reveal Project FAR's conceptual ownership without requiring historical knowledge. The architecture certification resolves policy and navigation first, avoids protected mathematical edits, and records deferred physical moves only when moving files would be cleanup rather than architectural certification.
 
 ## Protected Boundary Confirmation
 
-architecture certification did not modify primitives, canonical definitions, axioms, lemmas, propositions, theorems, accepted proof objects, accepted mathematical dependency metadata, accepted doctrine, or Foundation v1.0. Any future architecture change requiring such a modification is a Certification Failure and must be reclassified as Foundation Revision, Theory Revision, or Research Investigation.
+Architecture certification did not modify primitives, canonical definitions, axioms, lemmas, propositions, theorems, accepted proof objects, accepted mathematical dependency metadata, accepted doctrine, or Foundation v1.0. Any future architecture change requiring such a modification is a Certification Failure and must be reclassified as Foundation Revision, Theory Revision, or Research Investigation.
 
 ## Architecture Certification Summary
 
@@ -139,7 +146,7 @@ Every listed directory has one primary responsibility. Nested directories inheri
 
 ## Report Root Policy
 
-1. `docs/reports/` is the canonical root for active Project FAR reports, including validation reports, generated status reports, release-completion status reports, health reports, external-validation reports, and appendices.
+1. `docs/reports/` is the canonical root for active Project FAR reports, including validation reports, generated status reports, release-readiness reports, health reports, external-validation reports, and appendices.
 2. `docs/audits/` is the canonical root for repository-certification, architecture, semantic, inventory, framework-normalization, and similar audit reports.
 3. `reports/` is a legacy transitional reference root for repository-level historical assessment documents. It may remain while historically valuable, but new active reports must not be added there.
 4. `archive/` is the canonical root for superseded material that is no longer current and should not be treated as active guidance.

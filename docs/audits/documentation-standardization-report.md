@@ -2,11 +2,11 @@
 
 ## Purpose
 
-This report records documentation standardization documentation standardization for the Repository Certification program.
+This report records repository documentation standardization for Project FAR.
 
 ## Why?
 
-the initial certification phases established certification governance, repository inventory, semantic certification, and architecture policy. documentation standardization resolves the remaining documentation findings by standardizing navigation, document metadata expectations, reference-document compliance, domain registry ownership, accessibility coverage, and cross-document consistency without rewriting protected mathematics.
+Repository certification established certification governance, repository inventory, semantic certification, and architecture policy. Documentation standardization resolves the remaining documentation findings by standardizing navigation, document metadata expectations, reference-document compliance, domain registry ownership, accessibility coverage, and cross-document consistency without rewriting protected mathematics.
 
 ## Scope
 
@@ -14,7 +14,7 @@ This report covers major-document structure, writing style, metadata, accessibil
 
 ## Role in Project FAR
 
-This report is the canonical documentation standardization documentation standardization artifact for the repository certification branch.
+This report is the canonical documentation standardization artifact.
 
 ## Dependencies
 
@@ -27,18 +27,18 @@ This report is the canonical documentation standardization documentation standar
 
 ## Dependents
 
-- compliance enforcement style standardization.
-- independent audit accessibility layer.
-- final certification.
+- Repository Compliance Enforcement Report.
+- Independent Repository Certification Audit.
+- Repository Certification Status.
 - Future documentation and release consistency work.
 
 ## Design Rationale
 
-documentation standardization standardizes by adding authoritative navigation and compliance records rather than mechanically inserting boilerplate into every small file. This follows the certification standard rule that major canonical documents need a standard opening structure while avoiding documentation inflation.
+Documentation standardization proceeds by adding authoritative navigation and compliance records rather than mechanically inserting boilerplate into every small file. This follows the certification standard rule that major canonical documents need a standard opening structure while avoiding documentation inflation.
 
 ## Protected Boundary Confirmation
 
-documentation standardization did not modify any protected mathematical artifact or Foundation v1.0. Explanatory and navigational documentation changed; canonical mathematical content did not.
+Documentation standardization did not modify any protected mathematical artifact or Foundation v1.0. Explanatory and navigational documentation changed; canonical mathematical content did not.
 
 ## Documentation Standardization Summary
 
@@ -83,13 +83,13 @@ documentation standardization did not modify any protected mathematical artifact
 
 ## Metadata Compliance Report
 
-| Metadata field | Implementation |
+| Metadata field | Repository policy |
 |---|---|
 | Canonical status | Recorded for each certification artifact in the Certification Index. |
 | Audience | Expressed through Purpose, Scope, Role, and Dependents sections. |
 | Certification phase | Recorded for each certification artifact in the Certification Index. |
 | Version | Not duplicated; existing versioned release/governance documents retain their own version fields. |
-| Last major review | Not introduced as a manual timestamp to avoid stale metadata. Certification phase is used as review context. |
+| Last major review | Use repository status rather than manual timestamps to avoid stale metadata. |
 | Classification | Domain Registry records allowed artifact classes; Certification Index records artifact roles. |
 
 ## Accessibility Coverage Report
@@ -139,7 +139,7 @@ documentation standardization did not modify any protected mathematical artifact
 
 ## Documentation Minimality Decisions
 
-documentation standardization did not add boilerplate to every small document. It standardized major certification documentation, introduced one certification navigation hub, and introduced one domain registry. Existing small indexes remain concise because adding full standard sections to every small file would reduce readability and violate the instruction to avoid unnecessary repetition.
+documentation standardization did not add boilerplate to every small document. It standardized major certification documentation, maintains one certification navigation hub, and maintains one domain registry. Existing small indexes remain concise because adding full standard sections to every small file would reduce readability and violate the instruction to avoid unnecessary repetition.
 
 ## Certification Findings Update
 

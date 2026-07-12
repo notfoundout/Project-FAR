@@ -145,7 +145,7 @@ def block():
     lines += ['','## Repository Navigation','']+[f'- {link(p,label)}' for label,p in nav]
     lines += ['','## Current Roadmap','',f'- Current phase: v0.4 external validation preparation','- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation','- In-progress work: Repository Automation','- Planned work: Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor','',
     '## Command Center','','### Local Commands','','```bash\nmake dashboard\nmake health-fast\nmake health\nmake docs-check\nmake plan\n```','','### GitHub Actions','',f'- Repository Health: {workflow("repository-health.yml")}',f'- Regenerate Dashboard: {workflow("regenerate-dashboard.yml")}',f'- Release Readiness: {workflow("release-readiness.yml")}',f'- Repository Maintenance: {workflow("repository-maintenance.yml")}','',
-    '## Typical Workflow','','1. `make health-fast`','2. `make dashboard`','3. Open README','4. Choose top task','5. Open source gap','6. Open affected files','7. Copy generated Codex prompt','8. Implement','9. Run health','10. Merge','',END]
+    '## Typical Workflow','','1. `make health-fast`','2. `make dashboard`','3. Open README','4. Choose top task','5. Open source gap','6. Open affected files','7. Copy generated task brief','8. Implement','9. Run health','10. Merge','',END]
     return '\n'.join(lines)+'\n'
 def main():
     text=README.read_text(encoding='utf-8') if README.exists() else '# Project FAR\n\n'

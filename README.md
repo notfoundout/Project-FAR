@@ -26,7 +26,7 @@ This root README is the canonical Project FAR command center: the single entry p
 | Repository Health | PASS | [docs/maintenance/repository-health-checks.md](docs/maintenance/repository-health-checks.md) |
 | Planner Status | CURRENT | [docs/planning/next-actions.md](docs/planning/next-actions.md) |
 | CI Status | Manual workflows available | [.github/workflows/repository-health.yml](.github/workflows/repository-health.yml) |
-| Release Completion Status | AVAILABLE | [docs/reports/release-readiness-report.md](docs/reports/release-readiness-report.md) |
+| Release Readiness | AVAILABLE | [docs/reports/release-readiness-report.md](docs/reports/release-readiness-report.md) |
 
 ## Evidence Snapshot
 
@@ -59,35 +59,35 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - Source gap: [GAP-045](docs/reports/research-gap-report.md#gap-045)
 - Affected files:
   - `Reasoning Calculus`
-- Suggested branch: `codex/review-unresolved-primitive-pressure-gap-045`
+- Suggested branch: `maintenance/review-unresolved-primitive-pressure-gap-045`
 - Suggested PR title: `Review unresolved primitive pressure (GAP-045)`
 
 ### TASK-001: Review unresolved case at `PS-001`
 - Source gap: [GAP-001](docs/reports/research-gap-report.md#gap-001)
 - Affected files:
   - `PS-001`
-- Suggested branch: `codex/review-unresolved-case-gap-001`
+- Suggested branch: `maintenance/review-unresolved-case-gap-001`
 - Suggested PR title: `Review unresolved case (GAP-001)`
 
 ### TASK-002: Review provisional system at `PS-001`
 - Source gap: [GAP-002](docs/reports/research-gap-report.md#gap-002)
 - Affected files:
   - `PS-001`
-- Suggested branch: `codex/review-provisional-system-gap-002`
+- Suggested branch: `maintenance/review-provisional-system-gap-002`
 - Suggested PR title: `Review provisional system (GAP-002)`
 
 ### TASK-003: Review unresolved case at `PS-002`
 - Source gap: [GAP-003](docs/reports/research-gap-report.md#gap-003)
 - Affected files:
   - `PS-002`
-- Suggested branch: `codex/review-unresolved-case-gap-003`
+- Suggested branch: `maintenance/review-unresolved-case-gap-003`
 - Suggested PR title: `Review unresolved case (GAP-003)`
 
 ### TASK-004: Review provisional system at `PS-002`
 - Source gap: [GAP-004](docs/reports/research-gap-report.md#gap-004)
 - Affected files:
   - `PS-002`
-- Suggested branch: `codex/review-provisional-system-gap-004`
+- Suggested branch: `maintenance/review-provisional-system-gap-004`
 - Suggested PR title: `Review provisional system (GAP-004)`
 
 ## Research Gap Summary
@@ -145,7 +145,7 @@ make plan
 
 - Repository Health: [repository-health.yml](.github/workflows/repository-health.yml)
 - Regenerate Dashboard: [regenerate-dashboard.yml](.github/workflows/regenerate-dashboard.yml)
-- Release Completion Status: [release-readiness.yml](.github/workflows/release-readiness.yml)
+- Release Readiness: [release-readiness.yml](.github/workflows/release-readiness.yml)
 - Repository Maintenance: [repository-maintenance.yml](.github/workflows/repository-maintenance.yml)
 
 ## Typical Workflow
@@ -156,7 +156,7 @@ make plan
 4. Choose top task
 5. Open source gap
 6. Open affected files
-7. Copy generated automation instructions
+7. Copy generated task brief
 8. Implement
 9. Run health
 10. Merge
@@ -175,7 +175,7 @@ make plan
 - Documentation standardization report: [docs/audits/documentation-standardization-report.md](docs/audits/documentation-standardization-report.md).
 - Repository compliance enforcement report: [docs/audits/repository-compliance-enforcement-report.md](docs/audits/repository-compliance-enforcement-report.md).
 - Independent repository certification audit: [docs/audits/independent-repository-certification-audit.md](docs/audits/independent-repository-certification-audit.md).
-- Final repository certification report: [docs/certification/final-repository-certification-report.md](docs/certification/final-repository-certification-report.md).
+- Repository certification status: [docs/certification/repository-certification-status.md](docs/certification/repository-certification-status.md).
 
 
 ## Mechanization MVP

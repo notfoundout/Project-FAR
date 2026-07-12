@@ -2,11 +2,11 @@
 
 ## Purpose
 
-This report records compliance enforcement enforcement of the Repository Certification Standard.
+This report records compliance enforcement for the Repository Certification Standard.
 
 ## Why?
 
-the standardization phases defined the standard, inventory, semantic baseline, architecture policy, documentation standardization, Certification Index, and Repository Domain Registry. compliance enforcement converts those documents into repository behavior by resolving navigational, metadata, reference, and regression-prevention gaps that can be fixed without changing protected mathematics.
+Repository certification defines the standard, inventory, semantic baseline, architecture policy, documentation standardization, Certification Index, and Repository Domain Registry. Compliance enforcement converts those documents into repository behavior by resolving navigational, metadata, reference, and regression-prevention gaps that can be fixed without changing protected mathematics.
 
 ## Scope
 
@@ -14,7 +14,7 @@ This report covers repository compliance enforcement, certification finding disp
 
 ## Role in Project FAR
 
-This is the canonical compliance enforcement enforcement artifact for the Repository Certification program.
+This is the canonical repository compliance enforcement artifact.
 
 ## Dependencies
 
@@ -26,18 +26,18 @@ This is the canonical compliance enforcement enforcement artifact for the Reposi
 
 ## Dependents
 
-- independent audit accessibility layer.
-- final certification.
+- Independent Repository Certification Audit.
+- Repository Certification Status.
 - `tools/check_certification_compliance.py` regression checks.
 - Future repository maintenance.
 
 ## Design Rationale
 
-The enforcement step adds lightweight automation and targeted navigation updates rather than broad rewrites. This prevents future regressions in certification discoverability and domain registration while respecting the protected boundary.
+Enforcement adds lightweight automation and targeted navigation updates rather than broad rewrites. This prevents future regressions in certification discoverability and domain registration while respecting the protected boundary.
 
 ## Protected Boundary Confirmation
 
-compliance enforcement did not modify primitives, canonical definitions, axioms, lemmas, propositions, theorems, accepted proof objects, accepted mathematical dependency metadata, accepted doctrine, or Foundation v1.0.
+Compliance enforcement did not modify primitives, canonical definitions, axioms, lemmas, propositions, theorems, accepted proof objects, accepted mathematical dependency metadata, accepted doctrine, or Foundation v1.0.
 
 ## Repository Compliance Summary
 

@@ -1,16 +1,22 @@
 # Repository Domain Registry
 
+Version: 1.0
+Status: Frozen Canonical Registry
+
 ## Purpose
 
 This registry defines the authoritative top-level repository domains for Project FAR.
 
 ## Why?
 
-architecture certification resolved repository architecture policy. documentation standardization requires an architectural registry so documentation, tooling, audits, examples, reports, and future cleanup work use the same domain names, responsibilities, canonical roots, and allowed artifact classes.
+Architecture certification resolved repository architecture policy. Documentation standardization requires an architectural registry so documentation, tooling, audits, examples, reports, and future cleanup work use the same domain names, responsibilities, canonical roots, and allowed artifact classes.
 
 ## Scope
 
 This registry covers top-level repository domains and major documentation child domains. It does not modify the content of any domain and does not change mathematical meaning.
+
+Version 1.0 is frozen. Future domain-registry revisions require an explicit
+new version rather than silent modification.
 
 ## Role in Project FAR
 
@@ -25,8 +31,8 @@ The registry is the canonical architectural reference for repository-domain owne
 ## Dependents
 
 - Documentation Standardization Report.
-- Later Repository Certification work.
-- Future repository cleanup, release consistency, and cross-repository consistency work.
+- Repository Certification Status.
+- Future repository maintenance, release consistency, and cross-repository consistency work.
 
 ## Design Rationale
 

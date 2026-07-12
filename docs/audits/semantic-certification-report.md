@@ -70,9 +70,9 @@ Semantic overlap is found only when one canonical concept may replace another in
 | --- | --- | --- |
 | Every indexed canonical concept appears in the glossary index | 96 entries present | Canonical |
 | Every glossary term points to exactly one canonical definition location | 96 of 96 | Canonical |
-| Duplicate glossary entries | None introduced in the new index | Canonical |
-| Conflicting glossary entries | None introduced; entries are references only | Canonical |
-| Orphan glossary entries | None introduced; each row has a canonical home | Canonical |
+| Duplicate glossary entries | None present in the index | Canonical |
+| Conflicting glossary entries | None present; entries are references only | Canonical |
+| Orphan glossary entries | None present; each row has a canonical home | Canonical |
 | Undefined terminology | Deferred where framework audits already identify graph terminology gaps | Deferred |
 
 ## Concept Reachability Report
