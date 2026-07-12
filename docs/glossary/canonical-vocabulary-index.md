@@ -1,13 +1,13 @@
 # Canonical Vocabulary Index
 
-Status: Prompt 3 Semantic Certification Baseline
+Status: semantic certification Semantic Certification Baseline
 Canonical source role: This index is the repository glossary and vocabulary index for certification terminology. It points to canonical definitions; it does not redefine protected mathematical content.
 
 ## Purpose
 Provide one discoverable glossary row per canonical concept so repository readers can identify the canonical name, definition location, home, classification, aliases, deprecated terms, status, purpose, and notes.
 
 ## Why?
-Prompt 3 requires canonical vocabulary without altering accepted definitions. This index centralizes vocabulary discovery by reference rather than duplicating canonical mathematical definitions.
+semantic certification requires canonical vocabulary without altering accepted definitions. This index centralizes vocabulary discovery by reference rather than duplicating canonical mathematical definitions.
 
 ## Scope
 Canonical Project FAR concepts discoverable from the current canonical definition document and certification governance/navigation artifacts.
@@ -16,10 +16,10 @@ Canonical Project FAR concepts discoverable from the current canonical definitio
 This document is an explanatory glossary and vocabulary index. Canonical definitions remain at their listed definition locations.
 
 ## Dependencies
-Depends on `theory/definitions/definitions.md`, `docs/CANONICAL_MAP.md`, `docs/governance/repository-certification-standard.md`, and the Prompt 2 inventory audit.
+Depends on `theory/definitions/definitions.md`, `docs/CANONICAL_MAP.md`, `docs/governance/repository-certification-standard.md`, and the inventory audit audit.
 
 ## Dependents
-Later certification prompts, documentation normalization, terminology checks, accessibility material, and repository navigation updates.
+Later certification work, documentation normalization, terminology checks, accessibility material, and repository navigation updates.
 
 ## Design Rationale
 A reference-based glossary satisfies the one-canonical-source rule by linking to definitions rather than restating mathematical meaning.

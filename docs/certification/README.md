@@ -2,19 +2,19 @@
 
 ## Purpose
 
-This index is the canonical navigation hub for the Repository Certification campaign.
+This index is the canonical navigation hub for Repository Certification.
 
 ## Why?
 
-Repository Certification now spans governance, inventory, semantic certification, architecture certification, and documentation standardization artifacts. A single index prevents contributors from treating any one report as an isolated or competing source of certification authority.
+Repository Certification spans governance, inventory, semantic certification, architecture certification, documentation standardization, compliance enforcement, independent audit, and final certification evidence. A single index prevents contributors from treating any report as an isolated or competing source of certification authority.
 
 ## Scope
 
-This index covers certification artifacts introduced during Prompts 1 through 5. It does not certify the repository, change accepted mathematics, or replace the final certification report.
+This index covers certification artifacts that define, evaluate, enforce, and finalize repository certification. It does not change accepted mathematics or replace artifact-specific reports.
 
 ## Role in Project FAR
 
-This document connects Repository Certification governance, audit baselines, corrective reports, and readiness claims so later prompts can continue from the same branch and draft PR without recreating prior audits.
+This document connects Repository Certification governance, audit baselines, corrective reports, enforcement tooling, independent review, and final certification status.
 
 ## Dependencies
 
@@ -27,44 +27,45 @@ This document connects Repository Certification governance, audit baselines, cor
 - [Repository Domain Registry](../architecture/repository-domain-registry.md)
 - [Repository Compliance Enforcement Report](../audits/repository-compliance-enforcement-report.md)
 - [Independent Repository Certification Audit](../audits/independent-repository-certification-audit.md)
+- [Final Repository Certification Report](final-repository-certification-report.md)
 
 ## Dependents
 
-- Prompt 6 style standardization.
-- Prompt 7 accessibility layer.
-- Prompt 8 final certification.
-- Future repository-maintenance work that needs to find certification evidence.
+- Repository maintenance.
+- Future release reviews.
+- Long-term certification regression checks.
 
 ## Design Rationale
 
-The index is separate from the reports because it is navigational, not evidentiary. Each artifact retains its own canonical content while this document records how the artifacts relate.
+The index is navigational rather than evidentiary. Each artifact retains its own canonical content while this document records how the artifacts relate.
 
 ## Certification Artifact Registry
 
-| Artifact | Purpose | Scope | Canonical status | Prompt introduced | Dependencies | Dependents |
+| Artifact | Purpose | Scope | Canonical status | Certification stage | Dependencies | Dependents |
 |---|---|---|---|---|---|---|
-| [Repository Certification Standard](../governance/repository-certification-standard.md) | Defines certification governance, protected boundaries, criteria, and completion rules. | Repository Certification governance. | Canonical governance standard. | Prompt 1 | Research Execution Charter. | All certification prompts and final certification. |
-| [Repository Certification Inventory Audit](../audits/repository-certification-inventory-audit.md) | Records the repository inventory baseline, classifications, metrics, and findings. | Repository-wide inventory and classification baseline. | Canonical Prompt 2 baseline. | Prompt 2 | Repository Certification Standard. | Semantic, architecture, documentation, style, accessibility, release, and final audits. |
-| [Semantic Certification Report](../audits/semantic-certification-report.md) | Records semantic, terminology, glossary, dependency-matrix, reachability, and canonical-home resolutions. | Semantic certification and terminology consistency. | Canonical Prompt 3 report. | Prompt 3 | Prompt 1 standard and Prompt 2 inventory. | Documentation, style, accessibility, and final certification. |
-| [Canonical Vocabulary Index](../glossary/canonical-vocabulary-index.md) | Provides vocabulary discovery by reference to canonical definition locations. | Glossary/navigation layer only. | Canonical vocabulary index; not a definition source. | Prompt 3 | Protected canonical definitions and semantic certification report. | Documentation, accessibility, and final certification. |
-| [Repository Architecture Certification Report](../audits/repository-architecture-certification-report.md) | Records repository architecture policy, report-root policy, reference-document policy, navigation, and discoverability results. | Repository architecture and documentation placement policy. | Canonical Prompt 4 report. | Prompt 4 | Prompt 2 and Prompt 3 reports. | Documentation, style, accessibility, release, and final certification. |
-| [Documentation Standardization Report](../audits/documentation-standardization-report.md) | Records Prompt 5 documentation structure, metadata, style, accessibility, and cross-document consistency results. | Major-document standardization and documentation navigation. | Canonical Prompt 5 report. | Prompt 5 | Prompts 1-4 artifacts and repository domain registry. | Style, accessibility, release, cross-repository, and final certification. |
-| [Repository Domain Registry](../architecture/repository-domain-registry.md) | Defines top-level repository domains, responsibilities, owners, roots, child domains, and allowed artifact classes. | Repository architectural registry. | Canonical domain registry. | Prompt 5 | Prompt 4 architecture certification report. | Documentation, style, accessibility, repository architecture maintenance, and final certification. |
-| [Repository Certification Index](README.md) | Provides the canonical navigation hub for certification artifacts and prompt continuity. | Repository Certification navigation. | Canonical certification index. | Prompt 5; updated Prompt 6 | Prompts 1-6 certification artifacts. | Later prompts, final certification, and regression checks. |
-| [Repository Compliance Enforcement Report](../audits/repository-compliance-enforcement-report.md) | Records Prompt 6 compliance enforcement, automation coverage, regression prevention, and final finding dispositions. | Repository compliance enforcement. | Canonical Prompt 6 report. | Prompt 6 | Prompts 1-5 artifacts, Certification Index, and Domain Registry. | Accessibility, final certification, and future regression checks. |
-| [Independent Repository Certification Audit](../audits/independent-repository-certification-audit.md) | Independently verifies certification criteria, governance consistency, canonical source behavior, walkthrough discoverability, automation effectiveness, regression protection, and final finding disposition. | Independent repository certification audit. | Canonical Prompt 7 audit; not final certification. | Prompt 7 | Prompts 1-6 certification artifacts and certification automation. | Prompt 8 final certification. |
+| [Repository Certification Standard](../governance/repository-certification-standard.md) | Defines certification governance, protected boundaries, criteria, and completion rules. | Repository Certification governance. | Canonical governance standard. | Standard | Research Execution Charter. | All certification work and final certification. |
+| [Repository Certification Inventory Audit](../audits/repository-certification-inventory-audit.md) | Records the repository inventory baseline, classifications, metrics, and findings. | Repository-wide inventory and classification baseline. | Canonical inventory baseline. | Inventory | Repository Certification Standard. | Semantic, architecture, documentation, style, accessibility, release, and final audits. |
+| [Semantic Certification Report](../audits/semantic-certification-report.md) | Records semantic, terminology, glossary, dependency-matrix, reachability, and canonical-home resolutions. | Semantic certification and terminology consistency. | Canonical semantic certification report. | Semantic certification | Repository Certification Standard and inventory audit. | Documentation, accessibility, and final certification. |
+| [Canonical Vocabulary Index](../glossary/canonical-vocabulary-index.md) | Provides vocabulary discovery by reference to canonical definition locations. | Glossary/navigation layer only. | Canonical vocabulary index; not a definition source. | Semantic certification | Protected canonical definitions and semantic certification report. | Documentation, accessibility, and final certification. |
+| [Repository Architecture Certification Report](../audits/repository-architecture-certification-report.md) | Records repository architecture policy, report-root policy, reference-document policy, navigation, and discoverability results. | Repository architecture and documentation placement policy. | Canonical architecture certification report. | Architecture certification | Inventory and semantic certification reports. | Documentation, release, and final certification. |
+| [Documentation Standardization Report](../audits/documentation-standardization-report.md) | Records documentation structure, metadata, style, accessibility, and cross-document consistency results. | Major-document standardization and documentation navigation. | Canonical documentation standardization report. | Documentation standardization | Earlier certification artifacts and repository domain registry. | Accessibility, release, cross-repository, and final certification. |
+| [Repository Domain Registry](../architecture/repository-domain-registry.md) | Defines top-level repository domains, responsibilities, owners, roots, child domains, and allowed artifact classes. | Repository architectural registry. | Canonical domain registry. | Documentation standardization | Architecture certification report. | Repository architecture maintenance and final certification. |
+| [Repository Certification Index](README.md) | Provides the canonical navigation hub for certification artifacts and certification continuity. | Repository Certification navigation. | Canonical certification index. | Documentation standardization; updated during enforcement | Certification artifacts. | Maintenance, final certification, and regression checks. |
+| [Repository Compliance Enforcement Report](../audits/repository-compliance-enforcement-report.md) | Records compliance enforcement, automation coverage, regression prevention, and final finding dispositions. | Repository compliance enforcement. | Canonical compliance enforcement report. | Compliance enforcement | Certification artifacts, Certification Index, and Domain Registry. | Final certification and future regression checks. |
+| [Independent Repository Certification Audit](../audits/independent-repository-certification-audit.md) | Independently verifies certification criteria, governance consistency, canonical source behavior, walkthrough discoverability, automation effectiveness, regression protection, and finding disposition. | Independent repository certification audit. | Canonical independent audit; not final certification. | Independent audit | Certification artifacts and certification automation. | Final certification. |
+| [Final Repository Certification Report](final-repository-certification-report.md) | Records the final repository certification decision, evidence matrix, integrity summary, automation summary, regression summary, residual exceptions, and merge readiness assessment. | Final repository certification. | Canonical final certification report. | Final certification | Certification artifacts and validation results. | Future release reviews and maintenance. |
 
 ## Index Statistics
 
 | Metric | Count |
 |---|---:|
-| Certification artifacts indexed | 10 |
-| Prompts represented | 7 |
+| Certification artifacts indexed | 11 |
+| Certification stages represented | 8 |
 | Governance artifacts | 1 |
-| Audit/certification reports | 6 |
+| Audit/certification reports | 7 |
 | Navigation/index artifacts | 3 |
 | Protected mathematical artifacts changed by this index | 0 |
 
 ## Usage Rule
 
-When a later prompt needs certification context, start here, then follow the artifact-specific link. Do not copy canonical findings out of their source reports unless the copied text is explicitly marked as an excerpt or summary.
+When certification or maintenance work needs context, start here, then follow the artifact-specific link. Do not copy canonical findings out of their source reports unless the copied text is explicitly marked as an excerpt or summary.

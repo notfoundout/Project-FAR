@@ -2,11 +2,11 @@
 
 ## Purpose
 
-This report resolves the Prompt 4 repository-architecture findings for the Repository Certification campaign.
+This report resolves the architecture certification repository-architecture findings for the Repository Certification program.
 
 ## Why?
 
-Prompt 2 identified broad directory responsibilities and duplicate architectural/report locations; Prompt 3 deferred report-root policy and document-section normalization. This report resolves architecture, canonical-home, report-root, reference-document, navigation, and discoverability policy without changing accepted mathematics.
+inventory identified broad directory responsibilities and duplicate architectural/report locations; semantic certification deferred report-root policy and document-section normalization. This report resolves architecture, canonical-home, report-root, reference-document, navigation, and discoverability policy without changing accepted mathematics.
 
 ## Scope
 
@@ -14,7 +14,7 @@ This report governs repository organization, documentation navigation, report ro
 
 ## Role in Project FAR
 
-This is the canonical Prompt 4 architecture certification artifact for the active `standardization/repository-certification` branch and draft PR `Repository Standardization and Certification`.
+This is the canonical architecture certification architecture certification artifact for the active `standardization/repository-certification` branch and certification review `Repository Standardization and Certification`.
 
 ## Dependencies
 
@@ -27,23 +27,23 @@ This is the canonical Prompt 4 architecture certification artifact for the activ
 
 ## Dependents
 
-- Later Repository Certification prompts.
+- Later Repository Certification work.
 - Final Repository Certification report.
 - Future documentation, style, accessibility, release, and cross-repository consistency audits.
 
 ## Design Rationale
 
-The repository architecture should reveal Project FAR's conceptual ownership without requiring historical knowledge. Prompt 4 therefore resolves policy and navigation first, avoids protected mathematical edits, and records deferred physical moves only when moving files would be cleanup rather than architectural certification.
+The repository architecture should reveal Project FAR's conceptual ownership without requiring historical knowledge. architecture certification therefore resolves policy and navigation first, avoids protected mathematical edits, and records deferred physical moves only when moving files would be cleanup rather than architectural certification.
 
 ## Protected Boundary Confirmation
 
-Prompt 4 did not modify primitives, canonical definitions, axioms, lemmas, propositions, theorems, accepted proof objects, accepted mathematical dependency metadata, accepted doctrine, or Foundation v1.0. Any future architecture change requiring such a modification is a Certification Failure and must be reclassified as Foundation Revision, Theory Revision, or Research Investigation.
+architecture certification did not modify primitives, canonical definitions, axioms, lemmas, propositions, theorems, accepted proof objects, accepted mathematical dependency metadata, accepted doctrine, or Foundation v1.0. Any future architecture change requiring such a modification is a Certification Failure and must be reclassified as Foundation Revision, Theory Revision, or Research Investigation.
 
 ## Architecture Certification Summary
 
 | Item | Result |
 |---|---|
-| Total tracked artifacts after Prompt 4 | 992 |
+| Total tracked artifacts after architecture certification | 992 |
 | Top-level repository domains | 18 |
 | Top-level domains with documented responsibility | 18 |
 | Canonical report root | `docs/reports/` |
@@ -128,9 +128,9 @@ Every listed directory has one primary responsibility. Nested directories inheri
 
 ## Canonical Location Report
 
-| Finding from Prompts 2-3 | Disposition | Canonical location | Non-canonical treatment |
+| Finding from inventory and semantic certification phases | Disposition | Canonical location | Non-canonical treatment |
 |---|---|---|---|
-| Duplicate architecture descriptions | Reference | `docs/ARCHITECTURE.md` and this Prompt 4 report for certification-specific architecture policy | Scoped architecture files remain references/specializations and must not redefine repository-wide architecture. |
+| Duplicate architecture descriptions | Reference | `docs/ARCHITECTURE.md` and this architecture certification report for certification-specific architecture policy | Scoped architecture files remain references/specializations and must not redefine repository-wide architecture. |
 | Duplicate roadmap locations | Reference | `docs/ROADMAP.md` | `docs/roadmap/`, `docs/planning/`, generated status, and release roadmaps are scoped planning/reference views. |
 | Duplicate planning locations | Reference | `docs/planning/README.md` for planning navigation; `docs/ROADMAP.md` for project roadmap | Planning documents must link to roadmap/status sources rather than duplicate canonical roadmap claims. |
 | Duplicate governance locations | Canonical | `docs/governance/` | Governance references elsewhere must point to `docs/governance/` and not restate rules except as excerpts or explanations. |
@@ -139,12 +139,12 @@ Every listed directory has one primary responsibility. Nested directories inheri
 
 ## Report Root Policy
 
-1. `docs/reports/` is the canonical root for active Project FAR reports, including validation reports, generated status reports, release-readiness reports, health reports, external-validation reports, and appendices.
+1. `docs/reports/` is the canonical root for active Project FAR reports, including validation reports, generated status reports, release-completion status reports, health reports, external-validation reports, and appendices.
 2. `docs/audits/` is the canonical root for repository-certification, architecture, semantic, inventory, framework-normalization, and similar audit reports.
 3. `reports/` is a legacy transitional reference root for repository-level historical assessment documents. It may remain while historically valuable, but new active reports must not be added there.
 4. `archive/` is the canonical root for superseded material that is no longer current and should not be treated as active guidance.
 5. Generated report artifacts may live under `docs/reports/` only when the path is documented as generated or generated-facing.
-6. Moving historical reports is deferred unless a later cleanup prompt determines that movement improves coherence without losing history or breaking references.
+6. Moving historical reports is deferred unless a later cleanup work determines that movement improves coherence without losing history or breaking references.
 
 ## Reference Document Policy
 
@@ -163,11 +163,11 @@ Violation of this policy is an Improvement Opportunity unless it creates conflic
 
 Navigation was updated so a new contributor can discover Foundation, Theory, Mechanization, Governance, Roadmap, Glossary, Certification, reports, and architecture from `README.md`, `docs/README.md`, and `docs/CANONICAL_MAP.md` without repository search.
 
-| Entry point | Navigation responsibility | Prompt 4 result |
+| Entry point | Navigation responsibility | architecture certification result |
 |---|---|---|
 | `README.md` | Canonical command center. | Added certification and architecture navigation. |
 | `docs/README.md` | Documentation index. | Added architecture certification report. |
-| `docs/CANONICAL_MAP.md` | Canonical concept-location map. | Added Prompt 4 canonical architecture/report policy entry. |
+| `docs/CANONICAL_MAP.md` | Canonical concept-location map. | Added architecture certification canonical architecture/report policy entry. |
 | `docs/ARCHITECTURE.md` | Repository-wide architecture. | Remains canonical architecture description; this report references it. |
 | `docs/glossary/canonical-vocabulary-index.md` | Vocabulary discovery. | Remains reachable from documentation index and canonical map. |
 
@@ -186,7 +186,7 @@ Navigation was updated so a new contributor can discover Foundation, Theory, Mec
 
 ## Artifact Placement Audit
 
-| Placement issue | Disposition | Action in Prompt 4 |
+| Placement issue | Disposition | Action in architecture certification |
 |---|---|---|
 | Active reports split across `docs/reports/`, `docs/audits/`, and `reports/` | Reference | Policy resolves roots; no file move required for certification. |
 | Architecture support files under `docs/architecture/` while repository architecture lives at `docs/ARCHITECTURE.md` | Reference | Scoped architecture support remains reference material. |
@@ -196,15 +196,15 @@ Navigation was updated so a new contributor can discover Foundation, Theory, Mec
 
 ## Repository Minimality Decisions
 
-No directory was deleted or physically reorganized in Prompt 4 because the unresolved architectural problem was ambiguous canonical policy, not proven duplicate content requiring removal. The minimal certification action is to document canonical roots and reference behavior, then defer physical moves to cleanup prompts only when evidence shows movement improves coherence without losing history.
+No directory was deleted or physically reorganized in architecture certification because the unresolved architectural problem was ambiguous canonical policy, not proven duplicate content requiring removal. The minimal certification action is to document canonical roots and reference behavior, then defer physical moves to cleanup works only when evidence shows movement improves coherence without losing history.
 
 ## Concept Reachability Preservation
 
-Prompt 4 did not rename or move canonical concepts. Reachability from README, documentation index, canonical map, architecture documentation, and glossary is preserved. Certification and architecture-policy reachability is improved by adding direct links from root and documentation navigation.
+architecture certification did not rename or move canonical concepts. Reachability from README, documentation index, canonical map, architecture documentation, and glossary is preserved. Certification and architecture-policy reachability is improved by adding direct links from root and documentation navigation.
 
 ## Certification Findings Update
 
-| Finding | Class | Disposition | Status after Prompt 4 |
+| Finding | Class | Disposition | Status after architecture certification |
 |---|---|---|---|
 | Report-root ambiguity | Certification Failure | Reference | Resolved by report-root policy. |
 | Duplicate architecture descriptions | Improvement Opportunity | Reference | Resolved by canonical architecture/reference policy. |
@@ -212,8 +212,8 @@ Prompt 4 did not rename or move canonical concepts. Reachability from README, do
 | Duplicate governance descriptions | Improvement Opportunity | Canonical | Resolved: `docs/governance/` is canonical governance root. |
 | Duplicate dependency descriptions | Improvement Opportunity | Reference | Resolved: accepted mathematical dependency metadata remains in `theory/dependencies/dependency-registry.yaml`. |
 | Root `reports/` legacy location | Improvement Opportunity | Reference | Resolved as transitional reference root; later movement may be considered. |
-| Missing standard document sections in existing documents | Improvement Opportunity | Deferred | Remains deferred to Prompt 5 documentation standardization. |
+| Missing standard document sections in existing documents | Improvement Opportunity | Deferred | Remains deferred to documentation standardization documentation standardization. |
 
-## Prompt 5 Readiness
+## documentation standardization Completion Status
 
-Prompt 4 is complete when this report, repository navigation, and canonical map updates are committed and validation passes or records only pre-existing warnings. Prompt 5 may begin after review because repository architecture policy is resolved without protected mathematical changes.
+architecture certification is complete when this report, repository navigation, and canonical map updates are committed and validation passes or records only pre-existing warnings. documentation standardization is ready to proceed after review because repository architecture policy is resolved without protected mathematical changes.

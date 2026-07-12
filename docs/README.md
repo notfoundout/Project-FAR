@@ -24,12 +24,13 @@ Project-level documentation lives here. This directory is for orientation, proje
 - `../frameworks/` — FAR, FARA, and FARO framework material.
 - `../methodology/README.md` — proof, validation, falsification, and comparison methodology.
 - `../research/README.md` — exploratory research index.
-- [Repository Certification Inventory Audit](audits/repository-certification-inventory-audit.md) - Prompt 2 baseline inventory, classification, metrics, findings, and architecture map.
-- [Canonical Vocabulary Index](glossary/canonical-vocabulary-index.md) - Prompt 3 glossary and authoritative vocabulary index by reference to canonical definitions.
-- [Semantic Certification Report](audits/semantic-certification-report.md) - Prompt 3 semantic, terminology, glossary, reachability, and canonical-home certification report.
-- [Repository Architecture Certification Report](audits/repository-architecture-certification-report.md) - Prompt 4 architecture certification, report-root policy, reference-document policy, navigation, and discoverability report.
-- [Repository Certification Index](certification/README.md) - Prompt 5 navigation hub for all Repository Certification artifacts.
-- [Repository Domain Registry](architecture/repository-domain-registry.md) - Prompt 5 authoritative registry for repository domains, responsibilities, roots, owners, and allowed artifact classes.
-- [Documentation Standardization Report](audits/documentation-standardization-report.md) - Prompt 5 documentation structure, metadata, accessibility, navigation, and consistency report.
-- [Repository Compliance Enforcement Report](audits/repository-compliance-enforcement-report.md) - Prompt 6 compliance enforcement, automation coverage, regression prevention, and findings update.
-- [Independent Repository Certification Audit](audits/independent-repository-certification-audit.md) - Prompt 7 independent certification matrix, governance consistency, integrity, regression, and automation verification audit.
+- [Repository Certification Inventory Audit](audits/repository-certification-inventory-audit.md) - inventory baseline inventory, classification, metrics, findings, and architecture map.
+- [Canonical Vocabulary Index](glossary/canonical-vocabulary-index.md) - semantic certification glossary and authoritative vocabulary index by reference to canonical definitions.
+- [Semantic Certification Report](audits/semantic-certification-report.md) - semantic certification semantic, terminology, glossary, reachability, and canonical-home certification report.
+- [Repository Architecture Certification Report](audits/repository-architecture-certification-report.md) - architecture certification architecture certification, report-root policy, reference-document policy, navigation, and discoverability report.
+- [Repository Certification Index](certification/README.md) - documentation standardization navigation hub for all Repository Certification artifacts.
+- [Repository Domain Registry](architecture/repository-domain-registry.md) - documentation standardization authoritative registry for repository domains, responsibilities, roots, owners, and allowed artifact classes.
+- [Documentation Standardization Report](audits/documentation-standardization-report.md) - documentation standardization documentation structure, metadata, accessibility, navigation, and consistency report.
+- [Repository Compliance Enforcement Report](audits/repository-compliance-enforcement-report.md) - compliance enforcement compliance enforcement, automation coverage, regression prevention, and findings update.
+- [Independent Repository Certification Audit](audits/independent-repository-certification-audit.md) - independent audit independent certification matrix, governance consistency, integrity, regression, and automation verification audit.
+- [Final Repository Certification Report](certification/final-repository-certification-report.md) - final certification decision, evidence matrix, repository integrity summary, and merge readiness assessment.

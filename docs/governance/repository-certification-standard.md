@@ -23,7 +23,7 @@ This standard does not authorize changes to protected mathematical or doctrinal 
 
 ## Role in Project FAR
 
-This document is the governing specification for the Repository Certification campaign. Later Repository Certification prompts and corrective actions must comply with this standard. If a later action would conflict with this standard, the action must stop until governance is clarified.
+This document is the governing specification for the Repository Certification program. Later Repository Certification work and corrective actions must comply with this standard. If a later action would conflict with this standard, the action must stop until governance is clarified.
 
 ## Dependencies
 
@@ -33,7 +33,7 @@ This document is the governing specification for the Repository Certification ca
 
 ## Dependents
 
-- Repository Certification campaign audits.
+- Repository Certification program audits.
 - Repository Certification corrective actions.
 - Repository Certification final report.
 - Future repository-quality governance unless superseded by an explicitly accepted higher-authority standard.
@@ -292,9 +292,9 @@ Repository Certification does not:
 - introduce unrelated features;
 - optimize algorithms unless required for certification validation.
 
-## Campaign Structure
+## Program Structure
 
-The Repository Certification campaign contains the following placeholder campaigns. Prompt 1 defines them only and does not perform them.
+The Repository Certification program contains the following placeholder programs. certification standard defines them only and does not perform them.
 
 1. Semantic Minimality
 2. Terminology
@@ -307,7 +307,7 @@ The Repository Certification campaign contains the following placeholder campaig
 9. Release Consistency
 10. Cross-Repository Consistency
 
-Each campaign must produce:
+Each program must produce:
 
 - findings;
 - corrective actions;
@@ -335,4 +335,4 @@ The final Repository Certification report may conclude only with one of:
 - PROJECT FAR REPOSITORY CERTIFIED
 - PROJECT FAR REPOSITORY CERTIFICATION FAILED
 
-Prompt 1 does not issue certification.
+certification standard does not issue certification.

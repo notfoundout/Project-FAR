@@ -6,7 +6,7 @@ This registry defines the authoritative top-level repository domains for Project
 
 ## Why?
 
-Prompt 4 resolved repository architecture policy. Prompt 5 requires an architectural registry so documentation, tooling, audits, examples, reports, and future cleanup work use the same domain names, responsibilities, canonical roots, and allowed artifact classes.
+architecture certification resolved repository architecture policy. documentation standardization requires an architectural registry so documentation, tooling, audits, examples, reports, and future cleanup work use the same domain names, responsibilities, canonical roots, and allowed artifact classes.
 
 ## Scope
 
@@ -25,12 +25,12 @@ The registry is the canonical architectural reference for repository-domain owne
 ## Dependents
 
 - Documentation Standardization Report.
-- Later Repository Certification prompts.
+- Later Repository Certification work.
 - Future repository cleanup, release consistency, and cross-repository consistency work.
 
 ## Design Rationale
 
-The registry records observed repository domains rather than imposing a new structure. It chooses explicit responsibility statements over physical reorganization because Prompt 4 found policy ambiguity, not a protected-content requirement to move files.
+The registry records observed repository domains rather than imposing a new structure. It chooses explicit responsibility statements over physical reorganization because architecture certification found policy ambiguity, not a protected-content requirement to move files.
 
 ## Domain Registry Statistics
 

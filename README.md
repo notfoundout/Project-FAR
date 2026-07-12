@@ -26,7 +26,7 @@ This root README is the canonical Project FAR command center: the single entry p
 | Repository Health | PASS | [docs/maintenance/repository-health-checks.md](docs/maintenance/repository-health-checks.md) |
 | Planner Status | CURRENT | [docs/planning/next-actions.md](docs/planning/next-actions.md) |
 | CI Status | Manual workflows available | [.github/workflows/repository-health.yml](.github/workflows/repository-health.yml) |
-| Release Readiness | AVAILABLE | [docs/reports/release-readiness-report.md](docs/reports/release-readiness-report.md) |
+| Release Completion Status | AVAILABLE | [docs/reports/release-readiness-report.md](docs/reports/release-readiness-report.md) |
 
 ## Evidence Snapshot
 
@@ -145,7 +145,7 @@ make plan
 
 - Repository Health: [repository-health.yml](.github/workflows/repository-health.yml)
 - Regenerate Dashboard: [regenerate-dashboard.yml](.github/workflows/regenerate-dashboard.yml)
-- Release Readiness: [release-readiness.yml](.github/workflows/release-readiness.yml)
+- Release Completion Status: [release-readiness.yml](.github/workflows/release-readiness.yml)
 - Repository Maintenance: [repository-maintenance.yml](.github/workflows/repository-maintenance.yml)
 
 ## Typical Workflow
@@ -156,7 +156,7 @@ make plan
 4. Choose top task
 5. Open source gap
 6. Open affected files
-7. Copy generated Codex prompt
+7. Copy generated automation instructions
 8. Implement
 9. Run health
 10. Merge
@@ -175,6 +175,7 @@ make plan
 - Documentation standardization report: [docs/audits/documentation-standardization-report.md](docs/audits/documentation-standardization-report.md).
 - Repository compliance enforcement report: [docs/audits/repository-compliance-enforcement-report.md](docs/audits/repository-compliance-enforcement-report.md).
 - Independent repository certification audit: [docs/audits/independent-repository-certification-audit.md](docs/audits/independent-repository-certification-audit.md).
+- Final repository certification report: [docs/certification/final-repository-certification-report.md](docs/certification/final-repository-certification-report.md).
 
 
 ## Mechanization MVP

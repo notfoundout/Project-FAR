@@ -2,11 +2,11 @@
 
 ## Purpose
 
-This report records Prompt 6 enforcement of the Repository Certification Standard.
+This report records compliance enforcement enforcement of the Repository Certification Standard.
 
 ## Why?
 
-Prompts 1-5 defined the standard, inventory, semantic baseline, architecture policy, documentation standardization, Certification Index, and Repository Domain Registry. Prompt 6 converts those documents into repository behavior by resolving navigational, metadata, reference, and regression-prevention gaps that can be fixed without changing protected mathematics.
+the standardization phases defined the standard, inventory, semantic baseline, architecture policy, documentation standardization, Certification Index, and Repository Domain Registry. compliance enforcement converts those documents into repository behavior by resolving navigational, metadata, reference, and regression-prevention gaps that can be fixed without changing protected mathematics.
 
 ## Scope
 
@@ -14,7 +14,7 @@ This report covers repository compliance enforcement, certification finding disp
 
 ## Role in Project FAR
 
-This is the canonical Prompt 6 enforcement artifact for the Repository Certification campaign.
+This is the canonical compliance enforcement enforcement artifact for the Repository Certification program.
 
 ## Dependencies
 
@@ -26,8 +26,8 @@ This is the canonical Prompt 6 enforcement artifact for the Repository Certifica
 
 ## Dependents
 
-- Prompt 7 accessibility layer.
-- Prompt 8 final certification.
+- independent audit accessibility layer.
+- final certification.
 - `tools/check_certification_compliance.py` regression checks.
 - Future repository maintenance.
 
@@ -37,16 +37,16 @@ The enforcement step adds lightweight automation and targeted navigation updates
 
 ## Protected Boundary Confirmation
 
-Prompt 6 did not modify primitives, canonical definitions, axioms, lemmas, propositions, theorems, accepted proof objects, accepted mathematical dependency metadata, accepted doctrine, or Foundation v1.0.
+compliance enforcement did not modify primitives, canonical definitions, axioms, lemmas, propositions, theorems, accepted proof objects, accepted mathematical dependency metadata, accepted doctrine, or Foundation v1.0.
 
 ## Repository Compliance Summary
 
 | Area | Enforcement action | Status |
 |---|---|---|
-| Certification navigation | Updated root README, docs README, canonical map, and Certification Index to include Prompt 6. | Resolved |
+| Certification navigation | Updated root README, docs README, canonical map, and Certification Index to include compliance enforcement. | Resolved |
 | Certification artifact coverage | Added automation that requires all certification artifacts to exist and be referenced from required navigation files. | Resolved |
 | Domain Registry compliance | Added automation that requires registered top-level and documentation child roots to exist. | Resolved |
-| Document standard compliance | Added automation for new major Prompt 5/6 documents to contain the required standard sections. | Resolved |
+| Document standard compliance | Added automation for new major documentation standardization/6 documents to contain the required standard sections. | Resolved |
 | Reference document compliance | Verified certification references point to canonical sources rather than redefining them. | Resolved |
 | Metadata enforcement | Certification Index and Domain Registry remain the canonical metadata sources. | Resolved |
 | Protected mathematical content | No protected artifact changed. | Resolved |
@@ -55,19 +55,19 @@ Prompt 6 did not modify primitives, canonical definitions, axioms, lemmas, propo
 
 | Finding | Prior class | Enforcement action | Final status |
 |---|---|---|---|
-| Certification artifacts could become undiscoverable after Prompt 5. | Improvement Opportunity | Added Certification Index references and automated navigation coverage. | Resolved |
+| Certification artifacts could become undiscoverable after documentation standardization. | Improvement Opportunity | Added Certification Index references and automated navigation coverage. | Resolved |
 | Repository Domain Registry could drift from repository roots. | Improvement Opportunity | Added automated existence checks for registered roots. | Resolved |
-| Prompt 5 metadata fields were documentation-only. | Improvement Opportunity | Added Certification Index and Domain Registry checks to validation. | Resolved |
-| New major certification documents could omit the standard opening structure. | Improvement Opportunity | Added standard-section enforcement for major Prompt 5/6 certification documents. | Resolved |
+| documentation standardization metadata fields were documentation-only. | Improvement Opportunity | Added Certification Index and Domain Registry checks to validation. | Resolved |
+| New major certification documents could omit the standard opening structure. | Improvement Opportunity | Added standard-section enforcement for major documentation standardization/6 certification documents. | Resolved |
 | Certification validation was not part of documentation validation. | Improvement Opportunity | Added `check_certification_compliance.py` to `validate_docs.py`. | Resolved |
-| Cross-document report-root ambiguity could regress through navigation. | Improvement Opportunity | Certification navigation now routes through the Prompt 4 report-root policy and Prompt 6 checks. | Resolved |
+| Cross-document report-root ambiguity could regress through navigation. | Improvement Opportunity | Certification navigation now routes through the architecture certification report-root policy and compliance enforcement checks. | Resolved |
 
 ## Protected Boundary Exceptions
 
 | Item | Justification | Final status |
 |---|---|---|
-| Pre-existing duplicate heading anchors inside protected or research-heavy mathematical documents | Fixing these would require broad edits to protected or historically sensitive mathematical/research documents and is outside Prompt 6's non-mathematical enforcement scope. | Protected Boundary Exception |
-| Pre-existing orphan-document warnings for protected, research, appendix, and historical materials | Many warnings involve historical/protected/research material whose movement or rewrites require later review; Prompt 6 prevents new certification-navigation regressions instead. | Protected Boundary Exception |
+| Pre-existing duplicate heading anchors inside protected or research-heavy mathematical documents | Fixing these would require broad edits to protected or historically sensitive mathematical/research documents and is outside compliance enforcement's non-mathematical enforcement scope. | Protected Boundary Exception |
+| Pre-existing orphan-document warnings for protected, research, appendix, and historical materials | Many warnings involve historical/protected/research material whose movement or rewrites require later review; compliance enforcement prevents new certification-navigation regressions instead. | Protected Boundary Exception |
 
 ## Future Enhancements
 
@@ -91,7 +91,7 @@ Prompt 6 did not modify primitives, canonical definitions, axioms, lemmas, propo
 | One Canonical Source Rule for certification artifacts | Certification Index coverage and canonical map navigation. | Enforced for certification artifacts. |
 | Reference Document Policy | Certification artifacts are checked through required navigation and source references; broader tagging remains future enhancement. | Partially automated; policy documented. |
 | Repository Domain Registry | Registered roots must exist and appear in the registry. | Enforced. |
-| Document Standard | New major Prompt 5/6 certification documents must contain standard sections. | Enforced. |
+| Document Standard | New major documentation standardization/6 certification documents must contain standard sections. | Enforced. |
 | Canonical terminology | Certification artifacts continue to reference the vocabulary index; full terminology linting remains future enhancement. | Partially automated. |
 
 ## Repository Compliance Statistics
@@ -110,8 +110,8 @@ Prompt 6 did not modify primitives, canonical definitions, axioms, lemmas, propo
 
 ## Certification Findings Update
 
-All Prompt 6 certification findings now use one of the required final statuses: Resolved, Protected Boundary Exception, or Future Enhancement. No finding remains in an unclassified pending state.
+All compliance enforcement certification findings now use one of the required final statuses: Resolved, Protected Boundary Exception, or Future Enhancement. No finding remains in an unclassified pending state.
 
-## Prompt 7 Readiness
+## independent audit Completion Status
 
-Prompt 6 is complete when the enforcement report, Certification Index updates, navigation updates, automation, and validation results are committed. Prompt 7 may begin after review.
+compliance enforcement is complete when the enforcement report, Certification Index updates, navigation updates, automation, and validation results are committed. independent audit is ready to proceed after review.

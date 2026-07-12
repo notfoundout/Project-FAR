@@ -16,6 +16,7 @@ CERTIFICATION_ARTIFACTS = [
     "docs/architecture/repository-domain-registry.md",
     "docs/audits/repository-compliance-enforcement-report.md",
     "docs/audits/independent-repository-certification-audit.md",
+    "docs/certification/final-repository-certification-report.md",
 ]
 
 NAVIGATION_FILES = [
@@ -97,7 +98,7 @@ for nav in NAVIGATION_FILES:
     for artifact in CERTIFICATION_ARTIFACTS:
         if nav == artifact:
             continue
-        if artifact not in text and artifact.replace("docs/", "") not in text:
+        if artifact not in text and artifact.replace("docs/", "") not in text and Path(artifact).name not in text:
             errors.append(f"{nav}: missing navigation reference to {artifact}")
 
 for root in DOMAIN_ROOTS + DOCUMENTATION_CHILD_ROOTS:
@@ -110,6 +111,7 @@ for artifact in [
     "docs/architecture/repository-domain-registry.md",
     "docs/audits/repository-compliance-enforcement-report.md",
     "docs/audits/independent-repository-certification-audit.md",
+    "docs/certification/final-repository-certification-report.md",
 ]:
     if not exists(artifact):
         continue
