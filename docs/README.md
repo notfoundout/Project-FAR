@@ -13,6 +13,7 @@ Project-level documentation lives here. This directory is for orientation, proje
 - `CANONICAL_MAP.md` — canonical location map for major concepts.
 - `STYLE_GUIDE.md` — documentation style standards.
 - `SEMANTIC_AUDIT.md` — repository-wide semantic consistency audit and dependency graph.
+- `governance/central-research-program.md` — authoritative central research question, research objectives, evidence standard, and completion criteria.
 - `governance/repository-certification-standard.md` — canonical Repository Certification Standard.
 - `reports/foundation-health-verification.md` — Phase 1 Step 2 repository health verification report.
 
@@ -24,6 +25,7 @@ Project-level documentation lives here. This directory is for orientation, proje
 - `../frameworks/` — FAR, FARA, and FARO framework material.
 - `../methodology/README.md` — proof, validation, falsification, and comparison methodology.
 - `../research/README.md` — exploratory research index.
+- [Central Research Program](governance/central-research-program.md) - governing research question and standards for evaluating existence, universality, necessity, and minimality.
 - [Repository Certification Inventory Audit](audits/repository-certification-inventory-audit.md) - inventory baseline, classification, metrics, findings, and architecture map.
 - [Canonical Vocabulary Index](glossary/canonical-vocabulary-index.md) - semantic certification glossary and authoritative vocabulary index by reference to canonical definitions.
 - [Semantic Certification Report](audits/semantic-certification-report.md) - semantic, terminology, glossary, reachability, and canonical-home certification report.
