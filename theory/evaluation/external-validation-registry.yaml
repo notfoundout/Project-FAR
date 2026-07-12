@@ -193,3 +193,43 @@ entries:
     confidence: moderate
     review_status: provisional investigation using v0.4.1 template
     notes: Explicit documented inquiry appears representable, but the general family has unknown operational, dependency, and information preservation without subtype-specific evidence.
+  - id: EV-025
+    system: Large Language Model reasoning
+    domain: artificial intelligence
+    report: theory/evaluation/external-system-investigations/large-language-model-reasoning.md
+    classification: unresolved
+    confidence: moderate
+    review_status: provisional investigation using v0.4.1 template
+    notes: Visible prompt-output episodes are partially representable, but semantic, operational, dependency, and information preservation remain unknown for ordinary proprietary or under-instrumented LLMs.
+  - id: EV-026
+    system: Agentic AI reasoning
+    domain: artificial intelligence
+    report: theory/evaluation/external-system-investigations/agentic-ai-reasoning.md
+    classification: unresolved
+    confidence: moderate
+    review_status: provisional investigation using v0.4.1 template
+    notes: Documented agent traces are structurally representable, but mutable tools, hidden policies, and incomplete run artifacts leave preservation unresolved for ordinary agent runs.
+  - id: EV-027
+    system: Human expert reasoning
+    domain: cognition
+    report: theory/evaluation/external-system-investigations/human-expert-reasoning.md
+    classification: unresolved
+    confidence: moderate
+    review_status: provisional investigation using v0.4.1 template
+    notes: Documented expert tasks are partially representable, but tacit knowledge, protocol limits, and unrecoverable experiential dependencies leave faithful operational preservation unresolved.
+  - id: EV-028
+    system: Legal reasoning
+    domain: law
+    report: theory/evaluation/external-system-investigations/legal-reasoning.md
+    classification: conservative extension
+    confidence: moderate to high
+    review_status: provisional investigation using v0.4.1 template
+    notes: Documented legal analysis is representable with conservative machinery for jurisdiction, authority hierarchy, defeasibility, standards, and time-indexed sources.
+  - id: EV-029
+    system: Analogical reasoning
+    domain: cognition and AI
+    report: theory/evaluation/external-system-investigations/analogical-reasoning.md
+    classification: unresolved
+    confidence: moderate
+    review_status: provisional investigation using v0.4.1 template
+    notes: Explicit structure-mapping cases are representable, but broad analogy remains unresolved due to relevance criteria, feature selection, and creative generation limits.

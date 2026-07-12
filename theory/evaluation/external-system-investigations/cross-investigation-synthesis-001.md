@@ -9,7 +9,12 @@ This synthesis covers the external-system investigations completed in this pull 
 - Classical Propositional Logic;
 - First-Order Predicate Logic;
 - Bayesian Reasoning;
-- Scientific Method.
+- Scientific Method;
+- Large Language Model Reasoning;
+- Agentic AI Reasoning;
+- Human Expert Reasoning;
+- Legal Reasoning;
+- Analogical Reasoning.
 
 The synthesis does not include older external-system reports except as background. It does not claim universality, necessity, or minimality.
 
@@ -105,3 +110,90 @@ No direct contradiction was found, but minimality lacks sufficient evidence beca
 ### 6. Based only on the investigations completed so far, which allowable conclusion is currently best supported?
 
 The best-supported conclusion is provisional external-validation support with unresolved scope limitations: several explicit reasoning systems are representable without a candidate sixth primitive, but the evidence does not justify a universal, necessary, or minimality claim.
+
+
+## Comparative Analysis After Adversarial Investigation Batch
+
+The second batch deliberately targeted systems most likely to expose limits: opaque machine learning, dynamic tool-using agents, tacit human expertise, institutional legal reasoning, and underdetermined analogy. The accumulated classifications are now: three `fits FAR`-style formal systems in the broader registry background, two `fits FAR` investigations in this PR, three `conservative extension` or extension-pressure investigations in this PR, and four `unresolved` investigations in this PR. No `candidate primitive failure` has been found in this PR.
+
+### Components Required by Every Investigated Reasoning System
+
+Every completed PR investigation required, at minimum, Investigation, Representation, Representational Structure, Interpretation, and Reasoning Calculus for the scoped target. FARA state-transition components were required whenever the investigation objective included procedure replay, update, proof trace, agent loop, expert protocol, legal reasoning sequence, or analogy mapping process.
+
+### Components Never Required Across All Completed Investigations
+
+No FAR primitive was unused across all completed investigations. No FARA component was shown to be globally unnecessary, although static descriptions can sometimes omit transition details when operational preservation is outside the scope. This is not minimality evidence sufficient for acceptance because no ablation proof or primitive-elimination experiment was performed.
+
+### Recurring Preservation Failures
+
+No formal preservation failure became a candidate primitive failure. Recurring `unknown` preservation results occurred in operational, dependency, and information preservation for LLM reasoning, agentic AI, human expert reasoning, scientific method, and analogical reasoning. These failures were caused by inaccessible internals, mutable external dependencies, underdocumented procedures, tacit cognition, or underspecified relevance criteria.
+
+### Recurring Conservative Extensions
+
+Recurring conservative extensions include quantitative probability policy, empirical-study protocol policy, model/run provenance, tool and environment schemas, memory policies, jurisdiction and authority hierarchy, defeasible argument status, standards of review, source-target mapping constraints, similarity metrics, and relevance criteria. These extend interpretation, representational structure, reasoning calculus, admissibility, and resolution rules rather than indicating a sixth primitive.
+
+### Recurring Ambiguities
+
+Recurring ambiguities are broad-family scope, accessibility of hidden processes, sufficiency of replay artifacts, distinction between generated explanation and actual process, treatment of tacit knowledge, mutable external dependencies, and objective criteria for discretionary or relevance-sensitive judgments.
+
+### Recurring Methodological Weaknesses in the Adversarial Batch
+
+No methodology defect requiring modification was discovered. The methodology repeatedly forced uncertainty to be recorded as `unknown`, `unresolved`, or `outside scope` instead of allowing ad hoc reinterpretation. The main execution burden is that high-risk systems require artifact bundles richer than ordinary publications or logs often provide.
+
+### Candidate Reductions
+
+No candidate reduction is currently supported. The adversarial batch reinforced the separation between syntax and semantics, output and process, process and dependency provenance, and representation and faithful representation.
+
+### Candidate Missing Primitives After the Adversarial Batch
+
+No candidate missing primitive is currently supported. The strongest pressures are not new primitive types but evidence-access and domain-policy requirements. A future candidate primitive failure would need an explicit in-scope reasoning process that cannot be represented as investigation, representation, structure, interpretation, calculus, or conservative extension of those roles.
+
+### Strongest Evidence Supporting Universality
+
+The strongest support remains successful preservation of formal logic systems and conservative-extension mappings for Bayesian and legal reasoning. The adversarial batch adds limited support by showing that even complex institutional and interactive systems have visible artifacts naturally mapped to existing components when sufficiently documented.
+
+### Strongest Evidence Contradicting Universality
+
+The strongest contradictory evidence is not a primitive failure but a major evidential limitation: LLMs, agentic AI, human expertise, scientific practice, and analogy often cannot be faithfully preserved from ordinary evidence because crucial process, dependency, or information artifacts are inaccessible or under-specified. This contradicts any claim that the current evidence establishes universality.
+
+### Strongest Evidence Supporting Necessity
+
+Across all completed investigations, every FAR primitive recurs. Interpretation and Reasoning Calculus are especially necessary in practice because syntax-only encodings fail for logic semantics, probabilistic updating, scientific inference, LLM outputs, legal authority, and analogy relevance. Representational Structure is repeatedly required for dependency, binding, context, authority hierarchy, and source-target mapping.
+
+### Strongest Evidence Contradicting Necessity
+
+No direct contradiction of component necessity was found, but necessity remains unproved because recurrence in cases is not ablation. Some FARA components may be derived or optional for static-only investigations and require targeted reduction tests.
+
+### Strongest Evidence Supporting Minimality
+
+Only weak practical support exists: no FAR primitive has been globally unused, and several attempted reductions to output-only, syntax-only, rule-only, or explanation-only mappings failed preservation review.
+
+### Strongest Evidence Contradicting Minimality
+
+The evidence contradicts any strong minimality claim because no ablation, independence proof, or primitive-elimination experiment has been completed in this PR. Conservative extensions also raise the question whether some operational machinery should be treated as reusable derived concepts rather than primitive-level requirements.
+
+## Updated Evidence-Limited Answers
+
+### Updated Answer 1 — Evidence Supporting the Universality Hypothesis
+
+The PR evidence supports scoped representability for explicit formal systems and conservative-extension representability for several complex domains, especially Bayesian and legal reasoning. The adversarial investigations show no candidate sixth primitive despite testing opaque, interactive, tacit, normative, and analogical systems.
+
+### Updated Answer 2 — Evidence Contradicting the Universality Hypothesis
+
+No in-scope candidate primitive failure was discovered. The main contradiction is evidential: several important reasoning systems cannot yet be faithfully preserved from available artifacts, so the current evidence does not establish universality and leaves broad classes unresolved.
+
+### Updated Answer 3 — Evidence Supporting Minimality
+
+Only weak operational evidence supports minimality: all FAR primitives recur, and reductions to mere syntax, output, or explanation fail preservation checks in multiple investigations. This is not sufficient for a minimality claim.
+
+### Updated Answer 4 — Evidence Contradicting Minimality
+
+Minimality is contradicted as an accepted conclusion by absence of direct ablation or primitive-independence evidence. No completed investigation proves that every component is globally irreducible.
+
+### Updated Answer 5 — Remaining Unresolved Questions
+
+Highest expected-value unresolved questions are: open-weight instrumented LLM replay, fully logged agent benchmark replay, protocol-rich expert reasoning with process tracing, subtype-specific scientific-method investigations, SME-style computational analogy, automated theorem proving under the v0.4.1 template, knowledge graph reasoning, and explicit primitive-ablation studies across completed reports.
+
+### Updated Answer 6 — Best-Supported Allowable Conclusion
+
+The best-supported allowable conclusion remains provisional external-validation support with substantial unresolved scope limitations. The evidence supports continued investigation of FAR/FARA as a candidate structure for explicit reasoning, but it does not justify universal, necessary, or minimality acceptance.
