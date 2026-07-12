@@ -76,9 +76,24 @@ Each evaluated system must answer:
 8. Is it unresolved?
 9. Does it suggest a sixth primitive?
 
+## Claim Separation
+
+External investigations must keep the following claims distinct:
+
+- `syntactic encoding`: a target item can be written down in FAR/FARA notation or stored as content;
+- `representability`: target objects, relations, interpretation policies, and transformations can be mapped to FAR/FARA roles;
+- `faithful representation`: the mapping preserves the explicitly scoped target properties required for the investigation objective;
+- `operational equivalence`: target procedures and FAR/FARA transformations produce corresponding transition results under stated inputs, rules, and success criteria;
+- `explanatory adequacy`: the representation explains the target reasoning process at the level of abstraction claimed by the investigation;
+- `universality`: every member of a stated domain is representable;
+- `necessity`: a component is required for the stated representation objective;
+- `minimality`: no required component can be removed without losing expressive power relative to the stated objective.
+
+No claim in this list entails any later claim. In particular, syntactic encoding is not evidence of faithful representation, representation success is not evidence of universality, universality is not evidence of necessity, and necessity does not establish minimality without separate primitive evaluation or ablation.
+
 ## Preservation Review
 
-The evaluation must distinguish the following preservation claims:
+The evaluation must distinguish the following preservation claims and evaluate each against an explicitly stated preservation target, evidence source, and pass/fail/unknown criterion:
 
 - representation fidelity: whether the FAR/FARA representation records the target system without ad hoc reshaping;
 - semantic preservation: whether meaning, truth conditions, validity standards, or other semantics are preserved or explicitly scoped;
@@ -87,11 +102,21 @@ The evaluation must distinguish the following preservation claims:
 - dependency preservation: whether source dependencies and internal dependencies are explicit;
 - information preservation: whether the mapping loses information relevant to the target reasoning process.
 
+A preservation claim passes only when the report identifies the target property, the source evidence for that property, the FAR/FARA element preserving it, and either a correspondence argument, trace comparison, reconstruction check, or explicit equivalence criterion. A preservation claim is `unknown` when evidence or criteria are insufficient. A preservation claim fails when a target property required by the investigation objective is lost, changed, or represented only by evaluator stipulation.
+
 A failure in any preservation dimension must be classified as a limitation, unresolved issue, conservative extension pressure, outside-scope reason, or candidate primitive failure according to the classification rules below.
 
 ## Classification Rules
 
-Use exactly one classification per system.
+Use exactly one classification per system. Apply the following deterministic precedence when multiple classifications appear plausible:
+
+1. `outside scope` when inclusion criteria fail or the reasoning process is inaccessible;
+2. `candidate primitive failure` when the primitive failure standard is satisfied for an in-scope system;
+3. `unresolved` when required evidence, preservation criteria, or extension status cannot be decided;
+4. `conservative extension` when all failures are expressible as domain-specific machinery over existing primitives;
+5. `fits FAR` only when all required preservation claims pass without domain-specific extension machinery.
+
+The precedence rule prevents a single investigation from selecting the most favorable label when a case satisfies several descriptions.
 
 ### `fits FAR`
 
@@ -115,7 +140,8 @@ Use this only when analysis shows that the reasoning is explicit and cannot be r
 
 ## Counterexample Classification
 
-Potential counterexamples must be classified as one of:
+Potential counterexamples must be classified as one of the categories below. If more than one category appears applicable, apply this precedence: `outside scope`, `candidate primitive failure`, `unresolved`, `conservative extension pressure`, `not a counterexample`. Record the losing plausible categories in the justification.
+
 
 - `not a counterexample`: the case maps under existing primitives without unresolved pressure;
 - `conservative extension pressure`: the case requires domain-specific interpretation, structure, calculus, or derived concepts but no new primitive;
@@ -135,7 +161,9 @@ An investigation may strengthen or weaken evidence relevant to universality, nec
 
 ## Evidence Standard
 
-A candidate primitive failure requires a specific missing capability. Difficulty, complexity, unfamiliar notation, or domain-specific semantics are not enough.
+Investigators must describe the target system before selecting a FAR/FARA mapping and must not redefine the target system, the investigation scope, FAR, or FARA after observing pressure points except by opening a separate revision or defect process.
+
+A candidate primitive failure requires a specific missing capability, an in-scope explicit reasoning process, and an explanation of why the missing capability cannot be represented through existing primitives, accepted derived concepts, or conservative extension machinery. Difficulty, complexity, unfamiliar notation, domain-specific semantics, or inability to find a convenient mapping are not enough.
 
 A conservative extension is not a failure of primitive sufficiency. It means the system needs additional machinery expressible within the current primitive architecture.
 

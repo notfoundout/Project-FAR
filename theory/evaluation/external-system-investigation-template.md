@@ -8,7 +8,7 @@ State the objective of the investigation and the external reasoning system being
 
 ## Independent System Description
 
-Describe the target reasoning system before mapping it to FAR/FARA.
+Describe the target reasoning system before mapping it to FAR/FARA. Do not revise this description to improve fit after the mapping is attempted; later corrections must be recorded as evidence corrections or scope revisions.
 
 Record:
 
@@ -23,7 +23,22 @@ List every evaluator assumption used in the investigation.
 
 ## Source Evidence
 
-Identify the sources used to describe the target system. Record whether each source is primary, secondary, implementation evidence, example evidence, or evaluator reconstruction.
+Identify the sources used to describe the target system. Record whether each source is primary, secondary, implementation evidence, example evidence, or evaluator reconstruction. For each source, record enough citation, version, date, excerpt location, or artifact identifier for a later investigator to retrieve the same evidence when available.
+
+## Claim Separation
+
+For this investigation, state the criteria used to distinguish:
+
+- syntactic encoding;
+- representability;
+- faithful representation;
+- operational equivalence;
+- explanatory adequacy;
+- universality;
+- necessity;
+- minimality.
+
+Record which claims are being made and which are not being made.
 
 ## FAR/FARA Representation
 
@@ -45,27 +60,27 @@ Identify the sources used to describe the target system. Record whether each sou
 
 ### Representation Fidelity
 
-State whether the representation records the target system without ad hoc reshaping.
+State whether the representation records the target system without ad hoc reshaping. Identify the preservation target, source evidence, FAR/FARA preserving element, evaluation procedure, result (`pass`, `fail`, or `unknown`), and justification.
 
 ### Semantic Preservation
 
-State what semantics, meanings, truth conditions, validity standards, or interpretation policies are preserved, scoped, or lost.
+Identify the preservation target, source evidence, FAR/FARA preserving element, evaluation procedure, result (`pass`, `fail`, or `unknown`), and justification. State what semantics, meanings, truth conditions, validity standards, or interpretation policies are preserved, scoped, or lost.
 
 ### Structural Preservation
 
-State what object structure, relation structure, ordering, context, dependency, or topology is preserved, scoped, or lost.
+Identify the preservation target, source evidence, FAR/FARA preserving element, evaluation procedure, result (`pass`, `fail`, or `unknown`), and justification. State what object structure, relation structure, ordering, context, dependency, or topology is preserved, scoped, or lost.
 
 ### Operational Preservation
 
-State what rules, transitions, updates, proof steps, calculations, or procedures are preserved, scoped, or lost.
+Identify the preservation target, source evidence, FAR/FARA preserving element, evaluation procedure, result (`pass`, `fail`, or `unknown`), and justification. State what rules, transitions, updates, proof steps, calculations, or procedures are preserved, scoped, or lost.
 
 ### Dependency Preservation
 
-State whether source dependencies and internal dependencies are explicit and preserved.
+Identify the preservation target, source evidence, FAR/FARA preserving element, evaluation procedure, result (`pass`, `fail`, or `unknown`), and justification. State whether source dependencies and internal dependencies are explicit and preserved.
 
 ### Information Preservation
 
-State whether the mapping loses information relevant to the target reasoning process.
+Identify the preservation target, source evidence, FAR/FARA preserving element, evaluation procedure, result (`pass`, `fail`, or `unknown`), and justification. State whether the mapping loses information relevant to the target reasoning process.
 
 ## Required FAR/FARA Components
 
@@ -85,7 +100,8 @@ List potential counterexamples, stress cases, or pressure points.
 
 ## Counterexample Classification
 
-Classify each potential counterexample as one of:
+Classify each potential counterexample as one of the categories below. If multiple categories appear plausible, apply this precedence: `outside scope`, `candidate primitive failure`, `unresolved`, `conservative extension pressure`, `not a counterexample`. Record any lower-precedence plausible categories in the justification.
+
 
 - `not a counterexample`;
 - `conservative extension pressure`;
@@ -105,7 +121,7 @@ Use exactly one system classification:
 
 ## Justification
 
-Explain why the classification follows from the mapping, preservation review, and counterexample classification.
+Explain why the classification follows from the mapping, preservation review, counterexample classification, and classification precedence rule.
 
 ## Limitations
 
