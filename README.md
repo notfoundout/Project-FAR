@@ -173,6 +173,7 @@ make plan
 - Repository Certification Index: [docs/certification/README.md](docs/certification/README.md).
 - Repository Domain Registry: [docs/architecture/repository-domain-registry.md](docs/architecture/repository-domain-registry.md).
 - Documentation standardization report: [docs/audits/documentation-standardization-report.md](docs/audits/documentation-standardization-report.md).
+- Repository compliance enforcement report: [docs/audits/repository-compliance-enforcement-report.md](docs/audits/repository-compliance-enforcement-report.md).
 
 
 ## Mechanization MVP

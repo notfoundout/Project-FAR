@@ -25,6 +25,7 @@ This document connects Repository Certification governance, audit baselines, cor
 - [Repository Architecture Certification Report](../audits/repository-architecture-certification-report.md)
 - [Documentation Standardization Report](../audits/documentation-standardization-report.md)
 - [Repository Domain Registry](../architecture/repository-domain-registry.md)
+- [Repository Compliance Enforcement Report](../audits/repository-compliance-enforcement-report.md)
 
 ## Dependents
 
@@ -48,16 +49,18 @@ The index is separate from the reports because it is navigational, not evidentia
 | [Repository Architecture Certification Report](../audits/repository-architecture-certification-report.md) | Records repository architecture policy, report-root policy, reference-document policy, navigation, and discoverability results. | Repository architecture and documentation placement policy. | Canonical Prompt 4 report. | Prompt 4 | Prompt 2 and Prompt 3 reports. | Documentation, style, accessibility, release, and final certification. |
 | [Documentation Standardization Report](../audits/documentation-standardization-report.md) | Records Prompt 5 documentation structure, metadata, style, accessibility, and cross-document consistency results. | Major-document standardization and documentation navigation. | Canonical Prompt 5 report. | Prompt 5 | Prompts 1-4 artifacts and repository domain registry. | Style, accessibility, release, cross-repository, and final certification. |
 | [Repository Domain Registry](../architecture/repository-domain-registry.md) | Defines top-level repository domains, responsibilities, owners, roots, child domains, and allowed artifact classes. | Repository architectural registry. | Canonical domain registry. | Prompt 5 | Prompt 4 architecture certification report. | Documentation, style, accessibility, repository architecture maintenance, and final certification. |
+| [Repository Certification Index](README.md) | Provides the canonical navigation hub for certification artifacts and prompt continuity. | Repository Certification navigation. | Canonical certification index. | Prompt 5; updated Prompt 6 | Prompts 1-6 certification artifacts. | Later prompts, final certification, and regression checks. |
+| [Repository Compliance Enforcement Report](../audits/repository-compliance-enforcement-report.md) | Records Prompt 6 compliance enforcement, automation coverage, regression prevention, and final finding dispositions. | Repository compliance enforcement. | Canonical Prompt 6 report. | Prompt 6 | Prompts 1-5 artifacts, Certification Index, and Domain Registry. | Accessibility, final certification, and future regression checks. |
 
 ## Index Statistics
 
 | Metric | Count |
 |---|---:|
-| Certification artifacts indexed | 7 |
-| Prompts represented | 5 |
+| Certification artifacts indexed | 9 |
+| Prompts represented | 6 |
 | Governance artifacts | 1 |
-| Audit/certification reports | 4 |
-| Navigation/index artifacts | 2 |
+| Audit/certification reports | 5 |
+| Navigation/index artifacts | 3 |
 | Protected mathematical artifacts changed by this index | 0 |
 
 ## Usage Rule

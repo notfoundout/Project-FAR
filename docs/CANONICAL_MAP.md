@@ -145,3 +145,4 @@ Each concept should have one canonical source. Other documents should link to th
 - Repository Certification Index: `docs/certification/README.md` is the canonical Prompt 5 navigation hub for Repository Certification artifacts from Prompts 1-5.
 - Repository Domain Registry: `docs/architecture/repository-domain-registry.md` is the canonical Prompt 5 registry for repository domains, responsibilities, roots, owners, and allowed artifact classes.
 - Documentation Standardization Report: `docs/audits/documentation-standardization-report.md` is the canonical Prompt 5 documentation structure, metadata, accessibility, navigation, and cross-document consistency report.
+- Repository Compliance Enforcement Report: `docs/audits/repository-compliance-enforcement-report.md` is the canonical Prompt 6 compliance enforcement, automation coverage, regression prevention, and final finding disposition report.

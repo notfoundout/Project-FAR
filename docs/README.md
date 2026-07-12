@@ -31,3 +31,4 @@ Project-level documentation lives here. This directory is for orientation, proje
 - [Repository Certification Index](certification/README.md) - Prompt 5 navigation hub for all Repository Certification artifacts.
 - [Repository Domain Registry](architecture/repository-domain-registry.md) - Prompt 5 authoritative registry for repository domains, responsibilities, roots, owners, and allowed artifact classes.
 - [Documentation Standardization Report](audits/documentation-standardization-report.md) - Prompt 5 documentation structure, metadata, accessibility, navigation, and consistency report.
+- [Repository Compliance Enforcement Report](audits/repository-compliance-enforcement-report.md) - Prompt 6 compliance enforcement, automation coverage, regression prevention, and findings update.

@@ -37,9 +37,9 @@ The registry records observed repository domains rather than imposing a new stru
 | Metric | Count |
 |---|---:|
 | Top-level domains registered | 18 |
-| Documentation child domains registered | 14 |
-| Domains with one documented responsibility | 32 |
-| Domains whose canonical root equals their filesystem root | 32 |
+| Documentation child domains registered | 15 |
+| Domains with one documented responsibility | 33 |
+| Domains whose canonical root equals their filesystem root | 33 |
 | Protected mathematical domains | 2 |
 
 ## Top-Level Repository Domains
