@@ -161,3 +161,75 @@ entries:
     confidence: provisional
     review_status: v0.4.0 batch 2 analysis
     notes: Statistical interpretation and evidential decision rules are conservative extensions of interpretation and reasoning calculus.
+  - id: EV-021
+    system: Classical propositional logic
+    domain: logic
+    report: theory/evaluation/external-system-investigations/classical-propositional-logic.md
+    classification: fits FAR
+    confidence: high
+    review_status: provisional investigation using v0.4.1 template
+    notes: Truth-functional formulas, valuations, semantics, and proof or truth-table calculi map directly for the scoped bivalent system.
+  - id: EV-022
+    system: First-order predicate logic
+    domain: logic
+    report: theory/evaluation/external-system-investigations/first-order-predicate-logic.md
+    classification: fits FAR
+    confidence: high
+    review_status: provisional investigation using v0.4.1 template
+    notes: Terms, formulas, quantifier binding, models, assignments, consequence, and derivation rules map directly for ordinary first-order logic.
+  - id: EV-023
+    system: Bayesian reasoning
+    domain: probability and science
+    report: theory/evaluation/external-system-investigations/bayesian-reasoning.md
+    classification: conservative extension
+    confidence: moderate to high
+    review_status: provisional investigation using v0.4.1 template
+    notes: Explicit Bayesian models require quantitative probability interpretation, update calculus, model assumptions, and approximation diagnostics.
+  - id: EV-024
+    system: Scientific method
+    domain: science
+    report: theory/evaluation/external-system-investigations/scientific-method.md
+    classification: unresolved
+    confidence: moderate
+    review_status: provisional investigation using v0.4.1 template
+    notes: Explicit documented inquiry appears representable, but the general family has unknown operational, dependency, and information preservation without subtype-specific evidence.
+  - id: EV-025
+    system: Large Language Model reasoning
+    domain: artificial intelligence
+    report: theory/evaluation/external-system-investigations/large-language-model-reasoning.md
+    classification: unresolved
+    confidence: moderate
+    review_status: provisional investigation using v0.4.1 template
+    notes: Visible prompt-output episodes are partially representable, but semantic, operational, dependency, and information preservation remain unknown for ordinary proprietary or under-instrumented LLMs.
+  - id: EV-026
+    system: Agentic AI reasoning
+    domain: artificial intelligence
+    report: theory/evaluation/external-system-investigations/agentic-ai-reasoning.md
+    classification: unresolved
+    confidence: moderate
+    review_status: provisional investigation using v0.4.1 template
+    notes: Documented agent traces are structurally representable, but mutable tools, hidden policies, and incomplete run artifacts leave preservation unresolved for ordinary agent runs.
+  - id: EV-027
+    system: Human expert reasoning
+    domain: cognition
+    report: theory/evaluation/external-system-investigations/human-expert-reasoning.md
+    classification: unresolved
+    confidence: moderate
+    review_status: provisional investigation using v0.4.1 template
+    notes: Documented expert tasks are partially representable, but tacit knowledge, protocol limits, and unrecoverable experiential dependencies leave faithful operational preservation unresolved.
+  - id: EV-028
+    system: Legal reasoning
+    domain: law
+    report: theory/evaluation/external-system-investigations/legal-reasoning.md
+    classification: conservative extension
+    confidence: moderate to high
+    review_status: provisional investigation using v0.4.1 template
+    notes: Documented legal analysis is representable with conservative machinery for jurisdiction, authority hierarchy, defeasibility, standards, and time-indexed sources.
+  - id: EV-029
+    system: Analogical reasoning
+    domain: cognition and AI
+    report: theory/evaluation/external-system-investigations/analogical-reasoning.md
+    classification: unresolved
+    confidence: moderate
+    review_status: provisional investigation using v0.4.1 template
+    notes: Explicit structure-mapping cases are representable, but broad analogy remains unresolved due to relevance criteria, feature selection, and creative generation limits.
