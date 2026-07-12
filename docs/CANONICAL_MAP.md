@@ -16,6 +16,7 @@ Each concept should have one canonical source. Other documents should link to th
 | Concept | Canonical Location | Purpose |
 |---|---|---|
 | Project FAR | [`OVERVIEW.md`](OVERVIEW.md) | Provides the project overview. |
+| Central Research Program | [`governance/central-research-program.md`](governance/central-research-program.md) | Defines the central research question, research objectives, evidence standard, counterexample policy, and completion criteria. |
 | Architecture | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Describes the repository architecture. |
 | Project Status | [`project-status.md`](project-status.md) | Records current governance and milestone status. |
 | Repository Certification Standard | [`governance/repository-certification-standard.md`](governance/repository-certification-standard.md) | Defines repository certification governance, protected boundaries, criteria, and completion rules. |
@@ -125,11 +126,12 @@ Each concept should have one canonical source. Other documents should link to th
 
 ## Related Documents
 
+- [Central Research Program](governance/central-research-program.md)
+- [Project roadmap](ROADMAP.md)
 - [Project status](project-status.md)
 - [Root README](../README.md)
 - [Post-v1.0 repository audit](audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md)
 - [Framework navigation normalization audit](audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md)
-
 
 ## Self-Advancement Planning
 
