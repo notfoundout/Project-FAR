@@ -15,6 +15,7 @@ CERTIFICATION_ARTIFACTS = [
     "docs/certification/README.md",
     "docs/architecture/repository-domain-registry.md",
     "docs/audits/repository-compliance-enforcement-report.md",
+    "docs/audits/independent-repository-certification-audit.md",
 ]
 
 NAVIGATION_FILES = [
@@ -108,6 +109,7 @@ for artifact in [
     "docs/certification/README.md",
     "docs/architecture/repository-domain-registry.md",
     "docs/audits/repository-compliance-enforcement-report.md",
+    "docs/audits/independent-repository-certification-audit.md",
 ]:
     if not exists(artifact):
         continue

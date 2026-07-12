@@ -26,6 +26,7 @@ This document connects Repository Certification governance, audit baselines, cor
 - [Documentation Standardization Report](../audits/documentation-standardization-report.md)
 - [Repository Domain Registry](../architecture/repository-domain-registry.md)
 - [Repository Compliance Enforcement Report](../audits/repository-compliance-enforcement-report.md)
+- [Independent Repository Certification Audit](../audits/independent-repository-certification-audit.md)
 
 ## Dependents
 
@@ -51,15 +52,16 @@ The index is separate from the reports because it is navigational, not evidentia
 | [Repository Domain Registry](../architecture/repository-domain-registry.md) | Defines top-level repository domains, responsibilities, owners, roots, child domains, and allowed artifact classes. | Repository architectural registry. | Canonical domain registry. | Prompt 5 | Prompt 4 architecture certification report. | Documentation, style, accessibility, repository architecture maintenance, and final certification. |
 | [Repository Certification Index](README.md) | Provides the canonical navigation hub for certification artifacts and prompt continuity. | Repository Certification navigation. | Canonical certification index. | Prompt 5; updated Prompt 6 | Prompts 1-6 certification artifacts. | Later prompts, final certification, and regression checks. |
 | [Repository Compliance Enforcement Report](../audits/repository-compliance-enforcement-report.md) | Records Prompt 6 compliance enforcement, automation coverage, regression prevention, and final finding dispositions. | Repository compliance enforcement. | Canonical Prompt 6 report. | Prompt 6 | Prompts 1-5 artifacts, Certification Index, and Domain Registry. | Accessibility, final certification, and future regression checks. |
+| [Independent Repository Certification Audit](../audits/independent-repository-certification-audit.md) | Independently verifies certification criteria, governance consistency, canonical source behavior, walkthrough discoverability, automation effectiveness, regression protection, and final finding disposition. | Independent repository certification audit. | Canonical Prompt 7 audit; not final certification. | Prompt 7 | Prompts 1-6 certification artifacts and certification automation. | Prompt 8 final certification. |
 
 ## Index Statistics
 
 | Metric | Count |
 |---|---:|
-| Certification artifacts indexed | 9 |
-| Prompts represented | 6 |
+| Certification artifacts indexed | 10 |
+| Prompts represented | 7 |
 | Governance artifacts | 1 |
-| Audit/certification reports | 5 |
+| Audit/certification reports | 6 |
 | Navigation/index artifacts | 3 |
 | Protected mathematical artifacts changed by this index | 0 |
 
