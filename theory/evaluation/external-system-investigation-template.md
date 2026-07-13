@@ -2,6 +2,8 @@
 
 Status: <draft | provisional | reviewed>
 
+Template authority: Provisional preliminary external-validation template; not a Comparative Representation Protocol v1.0 instrument. This template must not be used to register blinded comparative experiments, primitive ablations, Pareto cost comparisons, or claims of comparative distinctiveness, reproducible structural constraint, local necessity, relative economy, minimality, or universality. Use `comparative-representation/protocol-v1.0.md` and the schemas under `comparative-representation/schemas/` for Version 1.0 comparative experiments.
+
 ## Purpose
 
 State the objective of the investigation and the external reasoning system being evaluated.

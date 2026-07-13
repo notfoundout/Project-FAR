@@ -150,3 +150,8 @@ Each concept should have one canonical source. Other documents should link to th
 - Repository Compliance Enforcement Report: `docs/audits/repository-compliance-enforcement-report.md` is the canonical compliance enforcement compliance enforcement, automation coverage, regression prevention, and final finding disposition report.
 - Independent Repository Certification Audit: `docs/audits/independent-repository-certification-audit.md` is the canonical certification matrix, governance consistency, integrity, regression, and automation verification audit.
 - Repository Certification Status: `docs/certification/repository-certification-status.md` is the canonical repository certification decision, evidence matrix, repository integrity summary, and maintenance readiness assessment.
+## Comparative Representation Evaluation Authority
+
+- Preliminary external validation: `theory/evaluation/external-validation-methodology.md` and `theory/evaluation/external-validation-registry.yaml` are the canonical preliminary external-validation methodology and registry. They preserve historical EV-001 through EV-029 evidence for scoped mapping and pressure identification only.
+- Canonical comparative evaluation: `theory/evaluation/comparative-representation/protocol-v1.0.md` is the sole canonical source for Comparative Representation Protocol v1.0, including protocol versioning and comparative-result interpretation.
+- Comparative experiment registration: `theory/evaluation/comparative-representation/experiment-registry.json` is the canonical registry for blinded comparative representation experiments. Legacy external-validation reports must not be reclassified as CRP v1.0 experiments.

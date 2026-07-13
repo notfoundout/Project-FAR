@@ -36,3 +36,8 @@ Project-level documentation lives here. This directory is for orientation, proje
 - [Repository Compliance Enforcement Report](audits/repository-compliance-enforcement-report.md) - compliance enforcement, automation coverage, regression prevention, and findings update.
 - [Independent Repository Certification Audit](audits/independent-repository-certification-audit.md) - certification matrix, governance consistency, integrity, regression, and automation verification audit.
 - [Repository Certification Status](certification/repository-certification-status.md) - certification decision, evidence matrix, repository integrity summary, and maintenance readiness assessment.
+## Evaluation Methodology Navigation
+
+- Preliminary external validation: `../theory/evaluation/external-validation-methodology.md`.
+- Comparative representation protocol: `../theory/evaluation/comparative-representation/protocol-v1.0.md`.
+- Comparative experiment registry: `../theory/evaluation/comparative-representation/experiment-registry.json`.

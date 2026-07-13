@@ -1,0 +1,20 @@
+{
+  "registry_id": "comparative-representation-experiments",
+  "status": "Accepted",
+  "canonical_protocol": "theory/evaluation/comparative-representation/protocol-v1.0.md",
+  "entries": [
+    {
+      "id": "CRE-001",
+      "title": "Comparative Representation Experiment 1: Reflective Discrete Rule-Transition System",
+      "protocol_version": "CRP-1.0",
+      "scenario_version": "CRE-001-SCENARIO-1.0",
+      "vocabulary_version": "CRE-001-VOCABULARIES-1.0",
+      "instruction_version": "CRE-001-INSTRUCTIONS-1.0",
+      "canonicalization_version": "CRP-1.0-CANONICALIZATION",
+      "adjudication_version": "CRP-1.0-ADJUDICATION",
+      "status": "Registered; not executed",
+      "experiment_directory": "theory/evaluation/comparative-representation/experiments/CRE-001",
+      "legacy_external_validation": false
+    }
+  ]
+}

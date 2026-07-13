@@ -185,3 +185,6 @@ v0.4 is the current development phase. Its objective is external validation prep
 Reach the strongest justified conclusion about whether a common structure of reasoning exists, whether FAR captures it within an explicitly justified scope, whether every retained component is necessary, and whether any simpler competing structure has equal expressive power.
 
 Project success is measured by answering that question rigorously, not by forcing confirmation of FAR.
+## Comparative Representation Evaluation Roadmap
+
+Comparative Representation Protocol v1.0 is registered under `theory/evaluation/comparative-representation/protocol-v1.0.md`. The next research step is CRE-001 execution after evaluator-facing materials are frozen and assignments are isolated. Experiment 1 has not yet been executed, and legacy external-validation evidence remains preliminary rather than comparative.

@@ -241,3 +241,6 @@ The current repository establishes that:
 These results establish readiness for systematic investigation. They do not answer the central research question.
 
 Future major work should therefore be evaluated by its contribution to determining whether FAR captures a universal and minimal structure of reasoning, where its boundaries lie, and whether a simpler competing structure can account for the same phenomena.
+## Comparative Representation Evaluation Governance
+
+The central research program distinguishes preliminary external validation from blinded comparative representation evaluation. Preliminary external validation may describe systems, map FAR/FARA roles, and identify pressure points. Comparative Representation Protocol v1.0 governs claims about comparative distinctiveness, reproducibility, local necessity, relative economy, and Pareto interpretation. CRE-001 is registered but not executed.

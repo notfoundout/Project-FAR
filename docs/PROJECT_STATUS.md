@@ -182,3 +182,7 @@ Future work should primarily consist of developing the mathematical theory rathe
 # Last Updated
 
 June 2026
+
+## Comparative Representation Protocol Status
+
+Comparative Representation Protocol v1.0 is the accepted canonical methodology for future blinded, preregistered comparative tests of representational vocabularies. This status does not modify foundational theory or accepted doctrine. Legacy external validation remains preserved as preliminary exploratory evidence and is superseded only for stronger comparative claims.
