@@ -1,0 +1,52 @@
+{
+  "fixture_notice": "Synthetic validator fixture only; not an evaluator mapping; not experimental data.",
+  "experiment": "CRE-001",
+  "assignment_identifier": "CRE-001-E01",
+  "evaluator_identifier": "CRE-001-EVALUATOR-FIXTURE01",
+  "submission_identifier": "CRE-001-SYNTHETIC-MISSING-FIELD-FIXTURE.JSON",
+  "cir_submission": {
+    "experiment": "CRE-001",
+    "assignment_identifier": "CRE-001-E01",
+    "vocabulary_version": "CRE-001-VOCAB-B-1.0",
+    "components": [
+      {
+        "component_id": "C1",
+        "cir_section": "state variables",
+        "component_type": "synthetic",
+        "formal_content": "synthetic",
+        "origin": "derived",
+        "supporting_source": "fixture",
+        "preservation_role": "synthetic",
+        "canonicalization_status": "synthetic",
+        "clause_identifiers": [
+          "CL1"
+        ]
+      }
+    ],
+    "semantic_clause_records": [
+      {
+        "clause_id": "CL1",
+        "clause_type": "typed declaration",
+        "atomic_content": "synthetic",
+        "component_id": "C1",
+        "origin": "derived",
+        "semantic_duplicate_of": null,
+        "canonicalization_note": "synthetic"
+      }
+    ],
+    "preservation_vector": {
+      "p_s": "Pass",
+      "p_m": "Pass",
+      "p_o": "Pass",
+      "p_d": "Pass",
+      "p_i": "Pass",
+      "p_h": "Pass"
+    },
+    "provenance_record_identifier": "CRE-001-PROV-FIXTURE01"
+  },
+  "provenance": {
+    "provenance_record_identifier": "CRE-001-PROV-FIXTURE01",
+    "operator_or_evaluator": "synthetic-validator-fixture",
+    "created_at": "2026-07-13T00:00:00Z"
+  }
+}

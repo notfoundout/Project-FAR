@@ -1,0 +1,32 @@
+{
+  "artifact_id": "CRE-001-EXECUTION-STATUS-1.0",
+  "experiment_identifier": "CRE-001",
+  "baseline_commit_sha": "5a01f6b776d4d565bd65314c8524ec3d7eefc3bb",
+  "project_release": "v0.4.0",
+  "protocol_version": "CRP-1.0",
+  "scenario_version": "CRE-001-SCENARIO-1.0",
+  "vocabulary_versions": [
+    "CRE-001-VOCAB-A-1.0",
+    "CRE-001-VOCAB-B-1.0",
+    "CRE-001-VOCAB-C-1.0"
+  ],
+  "evaluator_instruction_version": "CRE-001-INSTRUCTIONS-1.0",
+  "canonicalization_version": "CRP-1.0-CANONICALIZATION",
+  "adjudication_version": "CRP-1.0-ADJUDICATION",
+  "current_stage": "execution initialized; pre-exposure operations in progress",
+  "package_integrity_state": "verified",
+  "assignment_state": "nine anonymous assignments initialized; not distributed",
+  "calibration_completed_count": 0,
+  "evaluator_exposure_state": false,
+  "mappings_collected_count": 0,
+  "adjudication_state": "incomplete",
+  "comparative_results_state": "absent",
+  "hypothesis_decision_state": "none",
+  "created_at": "2026-07-13T04:56:10Z",
+  "updated_at": "2026-07-13T04:56:10Z",
+  "provenance_identifiers": {
+    "operator": "automated-agent:gpt-5.5",
+    "integrity_record": "CRE-001-EXECUTION-INTEGRITY-VERIFICATION-1.0",
+    "assignment_key": "CRE-001-INTERNAL-ASSIGNMENT-KEY-1.0"
+  }
+}

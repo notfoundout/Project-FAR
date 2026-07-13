@@ -22,7 +22,17 @@
       "package_manifest": "theory/evaluation/comparative-representation/experiments/CRE-001/package-manifest.json",
       "evaluator_exposure": false,
       "mappings_collected": false,
-      "comparative_results_generated": false
+      "comparative_results_generated": false,
+      "execution_workspace": "theory/evaluation/comparative-representation/experiments/CRE-001/execution",
+      "execution_workspace_initialized": true,
+      "baseline_commit_sha": "5a01f6b776d4d565bd65314c8524ec3d7eefc3bb",
+      "package_integrity_verified": true,
+      "assignments_initialized": true,
+      "evaluator_packet_manifests_prepared": true,
+      "mappings_collected_count": 0,
+      "adjudication_complete": false,
+      "comparative_results_status": "absent",
+      "experiment_complete": false
     }
   ]
 }
