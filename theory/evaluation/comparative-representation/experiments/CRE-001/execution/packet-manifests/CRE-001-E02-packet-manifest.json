@@ -1,0 +1,52 @@
+{
+  "artifact_id": "CRE-001-E02-PACKET-MANIFEST-1.0",
+  "experiment": "CRE-001",
+  "assignment_identifier": "CRE-001-E02",
+  "status": "prepared; not distributed; no evaluator exposure",
+  "created_at": "2026-07-13T04:56:10Z",
+  "operator_provenance": "automated-agent:gpt-5.5",
+  "permitted_materials": [
+    {
+      "role": "frozen scenario",
+      "path": "theory/evaluation/comparative-representation/experiments/CRE-001/scenario/scenario-v1.0.json",
+      "version": "CRE-001-SCENARIO-1.0"
+    },
+    {
+      "role": "assigned anonymous vocabulary package",
+      "path": "anonymous-vocabulary-package-for-CRE-001-E02",
+      "version": "withheld in evaluator-facing manifest"
+    },
+    {
+      "role": "frozen evaluator instructions",
+      "path": "theory/evaluation/comparative-representation/experiments/CRE-001/evaluator-instructions/evaluator-instructions-v1.0.md",
+      "version": "CRE-001-INSTRUCTIONS-1.0"
+    },
+    {
+      "role": "calibration prerequisite",
+      "path": "theory/evaluation/comparative-representation/experiments/CRE-001/calibration/calibration-exercise-v1.0.md",
+      "version": "CRE-001-CALIBRATION-1.0"
+    },
+    {
+      "role": "mapping submission template",
+      "path": "theory/evaluation/comparative-representation/experiments/CRE-001/submissions/mapping-submission-template.json",
+      "version": "CRE-001-MAPPING-SUBMISSION-TEMPLATE-1.0"
+    },
+    {
+      "role": "CIR submission template",
+      "path": "theory/evaluation/comparative-representation/experiments/CRE-001/submissions/cir-submission-template.json",
+      "version": "CRE-001-CIR-SUBMISSION-TEMPLATE-1.0"
+    },
+    {
+      "role": "provenance requirements",
+      "path": "theory/evaluation/comparative-representation/experiments/CRE-001/provenance/provenance-record.template.json",
+      "version": "CRE-001-PROVENANCE-RECORD-TEMPLATE-1.0"
+    }
+  ],
+  "completion_checklist": [
+    "Complete calibration before packet distribution.",
+    "Complete mapping submission template without adding undeclared assumptions.",
+    "Complete CIR template if required by administration.",
+    "Attach complete provenance record.",
+    "Do not include other assignment information or vocabulary identities."
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "artifact_id": "CRE-001-INTERNAL-ASSIGNMENT-KEY-1.0",
+  "experiment": "CRE-001",
+  "visibility": "internal operational record; not evaluator-facing",
+  "randomization_algorithm": "Python random.Random(seed).shuffle over three copies each of Vocabulary A, Vocabulary B, and Vocabulary C",
+  "seed_material": "CRE-001|5a01f6b776d4d565bd65314c8524ec3d7eefc3bb|assignment-randomization-v1",
+  "seed_sha256": "a98862dd39ac80bc1ab310516bd479f8c46c354bc3caddeb2132b78692e1bf02",
+  "created_at": "2026-07-13T04:56:10Z",
+  "operator_provenance": "automated-agent:gpt-5.5",
+  "assignments": [
+    {
+      "assignment_identifier": "CRE-001-E01",
+      "assigned_vocabulary": "Vocabulary B",
+      "assigned_vocabulary_version": "CRE-001-VOCAB-B-1.0",
+      "assigned_vocabulary_path": "vocabularies/vocabulary-B.md",
+      "created_at": "2026-07-13T04:56:10Z",
+      "operator_provenance": "automated-agent:gpt-5.5"
+    },
+    {
+      "assignment_identifier": "CRE-001-E02",
+      "assigned_vocabulary": "Vocabulary C",
+      "assigned_vocabulary_version": "CRE-001-VOCAB-C-1.0",
+      "assigned_vocabulary_path": "vocabularies/vocabulary-C.md",
+      "created_at": "2026-07-13T04:56:10Z",
+      "operator_provenance": "automated-agent:gpt-5.5"
+    },
+    {
+      "assignment_identifier": "CRE-001-E03",
+      "assigned_vocabulary": "Vocabulary C",
+      "assigned_vocabulary_version": "CRE-001-VOCAB-C-1.0",
+      "assigned_vocabulary_path": "vocabularies/vocabulary-C.md",
+      "created_at": "2026-07-13T04:56:10Z",
+      "operator_provenance": "automated-agent:gpt-5.5"
+    },
+    {
+      "assignment_identifier": "CRE-001-E04",
+      "assigned_vocabulary": "Vocabulary A",
+      "assigned_vocabulary_version": "CRE-001-VOCAB-A-1.0",
+      "assigned_vocabulary_path": "vocabularies/vocabulary-A.md",
+      "created_at": "2026-07-13T04:56:10Z",
+      "operator_provenance": "automated-agent:gpt-5.5"
+    },
+    {
+      "assignment_identifier": "CRE-001-E05",
+      "assigned_vocabulary": "Vocabulary B",
+      "assigned_vocabulary_version": "CRE-001-VOCAB-B-1.0",
+      "assigned_vocabulary_path": "vocabularies/vocabulary-B.md",
+      "created_at": "2026-07-13T04:56:10Z",
+      "operator_provenance": "automated-agent:gpt-5.5"
+    },
+    {
+      "assignment_identifier": "CRE-001-E06",
+      "assigned_vocabulary": "Vocabulary B",
+      "assigned_vocabulary_version": "CRE-001-VOCAB-B-1.0",
+      "assigned_vocabulary_path": "vocabularies/vocabulary-B.md",
+      "created_at": "2026-07-13T04:56:10Z",
+      "operator_provenance": "automated-agent:gpt-5.5"
+    },
+    {
+      "assignment_identifier": "CRE-001-E07",
+      "assigned_vocabulary": "Vocabulary C",
+      "assigned_vocabulary_version": "CRE-001-VOCAB-C-1.0",
+      "assigned_vocabulary_path": "vocabularies/vocabulary-C.md",
+      "created_at": "2026-07-13T04:56:10Z",
+      "operator_provenance": "automated-agent:gpt-5.5"
+    },
+    {
+      "assignment_identifier": "CRE-001-E08",
+      "assigned_vocabulary": "Vocabulary A",
+      "assigned_vocabulary_version": "CRE-001-VOCAB-A-1.0",
+      "assigned_vocabulary_path": "vocabularies/vocabulary-A.md",
+      "created_at": "2026-07-13T04:56:10Z",
+      "operator_provenance": "automated-agent:gpt-5.5"
+    },
+    {
+      "assignment_identifier": "CRE-001-E09",
+      "assigned_vocabulary": "Vocabulary A",
+      "assigned_vocabulary_version": "CRE-001-VOCAB-A-1.0",
+      "assigned_vocabulary_path": "vocabularies/vocabulary-A.md",
+      "created_at": "2026-07-13T04:56:10Z",
+      "operator_provenance": "automated-agent:gpt-5.5"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "artifact_id": "CRE-001-EXECUTION-INTEGRITY-VERIFICATION-1.0",
+  "experiment": "CRE-001",
+  "created_at": "2026-07-13T04:56:10Z",
+  "baseline_commit_sha": "5a01f6b776d4d565bd65314c8524ec3d7eefc3bb",
+  "package_manifest": "theory/evaluation/comparative-representation/experiments/CRE-001/package-manifest.json",
+  "hash_algorithm": "SHA-256",
+  "verification_status": "passed",
+  "operator_provenance": "automated-agent:gpt-5.5",
+  "files": [
+    {
+      "path": "README.md",
+      "expected_sha256": "bced59614fb69675ae30928909b7ec971187b9d720995d7dd3a0ef00a42dcc24",
+      "actual_sha256": "bced59614fb69675ae30928909b7ec971187b9d720995d7dd3a0ef00a42dcc24",
+      "match": true
+    },
+    {
+      "path": "adjudication/adjudication-worksheet.md",
+      "expected_sha256": "ab5aef9d2e5a98c62a6dd33ad379750cfe64364f34fe2d25a8aecee6b2468a6d",
+      "actual_sha256": "ab5aef9d2e5a98c62a6dd33ad379750cfe64364f34fe2d25a8aecee6b2468a6d",
+      "match": true
+    },
+    {
+      "path": "adjudication/aggregation-worksheet.template.json",
+      "expected_sha256": "7fb837b8241310df3d545c55c28047d181409515ffab8f9d0503afe42d5b3ac9",
+      "actual_sha256": "7fb837b8241310df3d545c55c28047d181409515ffab8f9d0503afe42d5b3ac9",
+      "match": true
+    },
+    {
+      "path": "adjudication/disagreement-log.template.json",
+      "expected_sha256": "bdf324b49060ce64445f99a94c36d4bf152f5165397e82a940084af3205ab099",
+      "actual_sha256": "bdf324b49060ce64445f99a94c36d4bf152f5165397e82a940084af3205ab099",
+      "match": true
+    },
+    {
+      "path": "adjudication/equivalence-worksheet.template.json",
+      "expected_sha256": "dd715635ed672166440f6f9fc682637e673ff79b3bc0f8fec8eb342800809dc4",
+      "actual_sha256": "dd715635ed672166440f6f9fc682637e673ff79b3bc0f8fec8eb342800809dc4",
+      "match": true
+    },
+    {
+      "path": "adjudication/pareto-worksheet.template.json",
+      "expected_sha256": "5d0b21d3bcb2186b4d0e8134b6c7e125d2d88f37298b68191b47eca4a5bc7352",
+      "actual_sha256": "5d0b21d3bcb2186b4d0e8134b6c7e125d2d88f37298b68191b47eca4a5bc7352",
+      "match": true
+    },
+    {
+      "path": "adjudication/preservation-worksheet.template.json",
+      "expected_sha256": "dce7a569613c4a15c519071a123106529d063329dc109f0329a54cbe1123e000",
+      "actual_sha256": "dce7a569613c4a15c519071a123106529d063329dc109f0329a54cbe1123e000",
+      "match": true
+    },
+    {
+      "path": "calibration/calibration-exercise-v1.0.md",
+      "expected_sha256": "7f1c2f06004b18a14cd56e3a54e5334d376b9904ee73f4ecd1184b314135ecff",
+      "actual_sha256": "7f1c2f06004b18a14cd56e3a54e5334d376b9904ee73f4ecd1184b314135ecff",
+      "match": true
+    },
+    {
+      "path": "calibration/evaluator-eligibility-record.template.json",
+      "expected_sha256": "71ff933988428cbafaabc20a8bcec49e0b85e4058a02303eb26c733c2f9b9313",
+      "actual_sha256": "71ff933988428cbafaabc20a8bcec49e0b85e4058a02303eb26c733c2f9b9313",
+      "match": true
+    },
+    {
+      "path": "evaluator-instructions/evaluator-instructions-v1.0.md",
+      "expected_sha256": "5bdcbffec56c11507b44da93088bcf125438378e43bd06ec6c6f7cb675385754",
+      "actual_sha256": "5bdcbffec56c11507b44da93088bcf125438378e43bd06ec6c6f7cb675385754",
+      "match": true
+    },
+    {
+      "path": "execution-checklist.md",
+      "expected_sha256": "45b926d452bc7456d88f8b9fb7e443de07de7d2e23cb12c0f7b18a93b327542d",
+      "actual_sha256": "45b926d452bc7456d88f8b9fb7e443de07de7d2e23cb12c0f7b18a93b327542d",
+      "match": true
+    },
+    {
+      "path": "provenance/provenance-record.template.json",
+      "expected_sha256": "3aef03a3c4f6558bd9bf1bdc7e81a0be6c03f3fde052e01fef7bd4c90ad6d168",
+      "actual_sha256": "3aef03a3c4f6558bd9bf1bdc7e81a0be6c03f3fde052e01fef7bd4c90ad6d168",
+      "match": true
+    },
+    {
+      "path": "scenario/scenario-v1.0.json",
+      "expected_sha256": "9db7c1349f804bc9b2b1738a5821a71da97f352c9e5b8a274382feffe1ca20d1",
+      "actual_sha256": "9db7c1349f804bc9b2b1738a5821a71da97f352c9e5b8a274382feffe1ca20d1",
+      "match": true
+    },
+    {
+      "path": "scenario/scenario-v1.0.md",
+      "expected_sha256": "787186684591e12ddc2195592407c024d2ce31ad65388beadbe135992de98462",
+      "actual_sha256": "787186684591e12ddc2195592407c024d2ce31ad65388beadbe135992de98462",
+      "match": true
+    },
+    {
+      "path": "submissions/cir-submission-template.json",
+      "expected_sha256": "df712e6edd9eefa47a14cd813a40d79161b48a632738d7b15d3b3ea56c59b221",
+      "actual_sha256": "df712e6edd9eefa47a14cd813a40d79161b48a632738d7b15d3b3ea56c59b221",
+      "match": true
+    },
+    {
+      "path": "submissions/mapping-submission-template.json",
+      "expected_sha256": "f23f7f14302806a3fccbafa870f54372c9d1047d3548faad525dbcdbe0765d1b",
+      "actual_sha256": "f23f7f14302806a3fccbafa870f54372c9d1047d3548faad525dbcdbe0765d1b",
+      "match": true
+    },
+    {
+      "path": "vocabularies/vocabulary-A.md",
+      "expected_sha256": "7be45d53d2b4cd0dc0ad48938fde1e4212771f9ca0f644d9a00ac27e77a4a185",
+      "actual_sha256": "7be45d53d2b4cd0dc0ad48938fde1e4212771f9ca0f644d9a00ac27e77a4a185",
+      "match": true
+    },
+    {
+      "path": "vocabularies/vocabulary-B.md",
+      "expected_sha256": "5ac7a9ec38e8aac9fe366bfa38b93ecb8447d33eef5fafdbdc19237efc42e5e4",
+      "actual_sha256": "5ac7a9ec38e8aac9fe366bfa38b93ecb8447d33eef5fafdbdc19237efc42e5e4",
+      "match": true
+    },
+    {
+      "path": "vocabularies/vocabulary-C.md",
+      "expected_sha256": "c921196ad3e8149fa9a6e3aa9ed2e37d3ec71d08f6d6bdd85ee89b65f8f590e3",
+      "actual_sha256": "c921196ad3e8149fa9a6e3aa9ed2e37d3ec71d08f6d6bdd85ee89b65f8f590e3",
+      "match": true
+    },
+    {
+      "path": "vocabularies/vocabulary-packages.json",
+      "expected_sha256": "c591723c6687cbfe2329c1dbf728950a7e94cc6f91d1594b0c7b78c383f10a67",
+      "actual_sha256": "c591723c6687cbfe2329c1dbf728950a7e94cc6f91d1594b0c7b78c383f10a67",
+      "match": true
+    }
+  ]
+}

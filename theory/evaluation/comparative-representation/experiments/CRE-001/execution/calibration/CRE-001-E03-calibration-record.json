@@ -1,0 +1,16 @@
+{
+  "artifact_id": "CRE-001-E03-CALIBRATION-ADMINISTRATION-RECORD-1.0",
+  "experiment": "CRE-001",
+  "assignment_identifier": "CRE-001-E03",
+  "evaluator_identifier": null,
+  "calibration_version": "CRE-001-CALIBRATION-1.0",
+  "administration_timestamp": null,
+  "submitted_response_reference": null,
+  "score": null,
+  "pass_fail_result": null,
+  "scorer_identifier": null,
+  "eligibility_decision": null,
+  "exclusion_reason": null,
+  "created_at": "2026-07-13T04:56:10Z",
+  "status": "prepared; not administered"
+}

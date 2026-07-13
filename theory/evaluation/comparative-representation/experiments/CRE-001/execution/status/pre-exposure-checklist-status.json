@@ -1,0 +1,29 @@
+{
+  "artifact_id": "CRE-001-OPERATIONAL-PRE-EXPOSURE-CHECKLIST-1.0",
+  "experiment": "CRE-001",
+  "created_at": "2026-07-13T04:56:10Z",
+  "completed_items": [
+    "repository baseline verified from checked-out contents",
+    "protocol version verified",
+    "release baseline verified from docs/PROJECT_STATUS.md and docs/releases/project-far-v0.4.0.md",
+    "frozen package hashes verified",
+    "assignment randomization completed",
+    "assignment identifiers created",
+    "evaluator packet manifests prepared",
+    "provenance identifiers assigned"
+  ],
+  "incomplete_items": [
+    "evaluator recruited",
+    "evaluator identity verified",
+    "evaluator competence confirmed",
+    "calibration administered",
+    "calibration passed",
+    "evaluator isolation confirmed",
+    "packet distributed",
+    "evaluator exposed",
+    "mapping received"
+  ],
+  "evaluator_exposure": false,
+  "mappings_collected_count": 0,
+  "comparative_results_generated": false
+}

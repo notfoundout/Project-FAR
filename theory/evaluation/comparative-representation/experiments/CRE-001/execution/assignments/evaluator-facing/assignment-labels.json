@@ -1,0 +1,22 @@
+{
+  "artifact_id": "CRE-001-EVALUATOR-FACING-ASSIGNMENT-LABELS-1.0",
+  "experiment": "CRE-001",
+  "visibility": "evaluator-facing labels only; vocabulary identities withheld",
+  "created_at": "2026-07-13T04:56:10Z",
+  "assignment_identifiers": [
+    "CRE-001-E01",
+    "CRE-001-E02",
+    "CRE-001-E03",
+    "CRE-001-E04",
+    "CRE-001-E05",
+    "CRE-001-E06",
+    "CRE-001-E07",
+    "CRE-001-E08",
+    "CRE-001-E09"
+  ],
+  "constraints": [
+    "Do not reveal target-vocabulary identity.",
+    "Do not reveal baseline-vocabulary identity.",
+    "Do not reveal expected outcomes, other assignments, previous mapping results, or CRP rationale beyond frozen evaluator instructions."
+  ]
+}
