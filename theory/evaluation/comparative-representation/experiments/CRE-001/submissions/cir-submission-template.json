@@ -1,0 +1,43 @@
+{
+  "artifact_id": "CRE-001-CIR-SUBMISSION-TEMPLATE-1.0",
+  "status": "Template; no CIR submitted",
+  "protocol_version": "CRP-1.0",
+  "experiment": "CRE-001",
+  "scenario_version": "CRE-001-SCENARIO-1.0",
+  "vocabulary_version": "PENDING-ASSIGNMENT",
+  "canonicalization_version": "CRP-1.0-CANONICALIZATION",
+  "components": [
+    {
+      "component_id": "PENDING",
+      "cir_section": "primitive categories used | derived construct declarations | state variables | relation declarations | transition schemas | admissibility conditions | historical constraints | status-transition rules | termination conditions | preservation vector | observable outputs",
+      "component_type": "PENDING",
+      "formal_content": "PENDING",
+      "origin": "scenario | vocabulary | derived",
+      "supporting_source": "PENDING",
+      "preservation_role": "PENDING",
+      "canonicalization_status": "PENDING",
+      "clause_identifiers": ["PENDING"]
+    }
+  ],
+  "semantic_clause_records": [
+    {
+      "clause_id": "PENDING",
+      "clause_type": "typed declaration | condition | permitted transition | prohibited transition | state update | status update | dependency requirement | historical constraint | termination condition | observable-output requirement",
+      "atomic_content": "PENDING",
+      "component_id": "PENDING",
+      "origin": "scenario | vocabulary | derived",
+      "semantic_duplicate_of": null,
+      "canonicalization_note": "PENDING"
+    }
+  ],
+  "preservation_vector": {
+    "p_s": "Pass | Partial | Fail | Unknown",
+    "p_m": "Pass | Partial | Fail | Unknown",
+    "p_o": "Pass | Partial | Fail | Unknown",
+    "p_d": "Pass | Partial | Fail | Unknown",
+    "p_i": "Pass | Partial | Fail | Unknown",
+    "p_h": "Pass | Partial | Fail | Unknown"
+  },
+  "observable_outputs": [],
+  "provenance_record_identifier": "PENDING"
+}

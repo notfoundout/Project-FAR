@@ -1,6 +1,6 @@
 # Project FAR
 
-[![Release](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases/tag/v0.3.1)
+[![Release](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases/tag/v0.4.0)
 [![Verify Theory](https://github.com/notfoundout/Project-FAR/actions/workflows/verify-theory.yml/badge.svg)](https://github.com/notfoundout/Project-FAR/actions/workflows/verify-theory.yml)
 
 Project FAR is a foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
@@ -19,8 +19,8 @@ The project does not assume that a universal structure exists, nor that FAR is t
 
 ## Repository Status
 
-- Current release: [docs/releases/project-far-v0.3.1.md](docs/releases/project-far-v0.3.1.md)
-- Current project phase: v0.4 external validation preparation
+- Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
+- Current project phase: post-v0.4.0 CRE-001 preparation
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 - Last dashboard generation time: 2026-07-08T16:26:56+00:00
@@ -41,7 +41,7 @@ The project does not assume that a universal structure exists, nor that FAR is t
 | Metric | Current | Source |
 |---|---:|---|
 | Internal reasoning systems | 23 | [theory/evaluation/evidence-registry.yaml](theory/evaluation/evidence-registry.yaml) |
-| External reasoning systems | 20 | [theory/evaluation/external-validation-registry.yaml](theory/evaluation/external-validation-registry.yaml) |
+| External reasoning systems | 29 | [theory/evaluation/external-validation-registry.yaml](theory/evaluation/external-validation-registry.yaml) |
 | Adversarial fixtures | 14 | [theory/falsification/adversarial-test-suite.yaml](theory/falsification/adversarial-test-suite.yaml) |
 | Counterexample fixtures | 1 | [tests](tests) |
 | Candidate primitive failures | 0 | [theory/falsification/primitive-pressure-registry.yaml](theory/falsification/primitive-pressure-registry.yaml) |
@@ -56,7 +56,7 @@ Trend data is not yet available because no prior generated snapshot is stored.
 | Metric | Current | Previous | Change |
 |---|---:|---:|---:|
 | Internal reasoning systems | 23 | not available | not available |
-| External reasoning systems | 20 | not available | not available |
+| External reasoning systems | 29 | not available | not available |
 | Conservative extensions | 33 | not available | not available |
 | Candidate primitive failures | 0 | not available | not available |
 | Open gaps | 93 | not available | not available |
@@ -132,10 +132,10 @@ Trend data is not yet available because no prior generated snapshot is stored.
 
 ## Current Roadmap
 
-- Current phase: v0.4 external validation preparation
-- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation
-- In-progress work: Repository Automation
-- Planned work: Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor
+- Current phase: post-v0.4.0 CRE-001 preparation
+- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation; CRP v1.0 registration; CRE-001 execution package
+- In-progress work: CRE-001 pre-exposure operations
+- Planned work: CRE-001 evaluator recruitment and execution; Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor
 
 ## Command Center
 

@@ -1,0 +1,96 @@
+{
+  "artifact_id": "CRE-001-PACKAGE-MANIFEST-1.0",
+  "status": "Prepared; not executed",
+  "protocol_version": "CRP-1.0",
+  "experiment": "CRE-001",
+  "scenario_version": "CRE-001-SCENARIO-1.0",
+  "vocabulary_version": "CRE-001-VOCABULARIES-1.0",
+  "instruction_version": "CRE-001-INSTRUCTIONS-1.0",
+  "canonicalization_version": "CRP-1.0-CANONICALIZATION",
+  "adjudication_version": "CRP-1.0-ADJUDICATION",
+  "hash_algorithm": "SHA-256",
+  "hash_scope": "All CRE-001 execution-package files except package-manifest.json",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "bced59614fb69675ae30928909b7ec971187b9d720995d7dd3a0ef00a42dcc24"
+    },
+    {
+      "path": "adjudication/adjudication-worksheet.md",
+      "sha256": "ab5aef9d2e5a98c62a6dd33ad379750cfe64364f34fe2d25a8aecee6b2468a6d"
+    },
+    {
+      "path": "adjudication/aggregation-worksheet.template.json",
+      "sha256": "7fb837b8241310df3d545c55c28047d181409515ffab8f9d0503afe42d5b3ac9"
+    },
+    {
+      "path": "adjudication/disagreement-log.template.json",
+      "sha256": "bdf324b49060ce64445f99a94c36d4bf152f5165397e82a940084af3205ab099"
+    },
+    {
+      "path": "adjudication/equivalence-worksheet.template.json",
+      "sha256": "dd715635ed672166440f6f9fc682637e673ff79b3bc0f8fec8eb342800809dc4"
+    },
+    {
+      "path": "adjudication/pareto-worksheet.template.json",
+      "sha256": "5d0b21d3bcb2186b4d0e8134b6c7e125d2d88f37298b68191b47eca4a5bc7352"
+    },
+    {
+      "path": "adjudication/preservation-worksheet.template.json",
+      "sha256": "dce7a569613c4a15c519071a123106529d063329dc109f0329a54cbe1123e000"
+    },
+    {
+      "path": "calibration/calibration-exercise-v1.0.md",
+      "sha256": "7f1c2f06004b18a14cd56e3a54e5334d376b9904ee73f4ecd1184b314135ecff"
+    },
+    {
+      "path": "calibration/evaluator-eligibility-record.template.json",
+      "sha256": "71ff933988428cbafaabc20a8bcec49e0b85e4058a02303eb26c733c2f9b9313"
+    },
+    {
+      "path": "evaluator-instructions/evaluator-instructions-v1.0.md",
+      "sha256": "5bdcbffec56c11507b44da93088bcf125438378e43bd06ec6c6f7cb675385754"
+    },
+    {
+      "path": "execution-checklist.md",
+      "sha256": "45b926d452bc7456d88f8b9fb7e443de07de7d2e23cb12c0f7b18a93b327542d"
+    },
+    {
+      "path": "provenance/provenance-record.template.json",
+      "sha256": "3aef03a3c4f6558bd9bf1bdc7e81a0be6c03f3fde052e01fef7bd4c90ad6d168"
+    },
+    {
+      "path": "scenario/scenario-v1.0.json",
+      "sha256": "9db7c1349f804bc9b2b1738a5821a71da97f352c9e5b8a274382feffe1ca20d1"
+    },
+    {
+      "path": "scenario/scenario-v1.0.md",
+      "sha256": "787186684591e12ddc2195592407c024d2ce31ad65388beadbe135992de98462"
+    },
+    {
+      "path": "submissions/cir-submission-template.json",
+      "sha256": "df712e6edd9eefa47a14cd813a40d79161b48a632738d7b15d3b3ea56c59b221"
+    },
+    {
+      "path": "submissions/mapping-submission-template.json",
+      "sha256": "f23f7f14302806a3fccbafa870f54372c9d1047d3548faad525dbcdbe0765d1b"
+    },
+    {
+      "path": "vocabularies/vocabulary-A.md",
+      "sha256": "7be45d53d2b4cd0dc0ad48938fde1e4212771f9ca0f644d9a00ac27e77a4a185"
+    },
+    {
+      "path": "vocabularies/vocabulary-B.md",
+      "sha256": "5ac7a9ec38e8aac9fe366bfa38b93ecb8447d33eef5fafdbdc19237efc42e5e4"
+    },
+    {
+      "path": "vocabularies/vocabulary-C.md",
+      "sha256": "c921196ad3e8149fa9a6e3aa9ed2e37d3ec71d08f6d6bdd85ee89b65f8f590e3"
+    },
+    {
+      "path": "vocabularies/vocabulary-packages.json",
+      "sha256": "c591723c6687cbfe2329c1dbf728950a7e94cc6f91d1594b0c7b78c383f10a67"
+    }
+  ],
+  "execution_status": "No evaluator exposure, mappings, adjudication, ablation, aggregation, or comparative results recorded"
+}

@@ -1,0 +1,146 @@
+{
+  "artifact_id": "CRE-001-SCENARIO-1.0",
+  "status": "Frozen input; not executed",
+  "protocol_version": "CRP-1.0",
+  "experiment": "CRE-001",
+  "title": "Reflective Discrete Rule-Transition System",
+  "initial_state": {
+    "state_id": "S0",
+    "propositions": {
+      "p_ready": true,
+      "p_token": true,
+      "p_checked": false,
+      "p_accepted": false,
+      "p_rejected": false,
+      "p_rule_modified": false,
+      "p_halted": false
+    },
+    "active_rules": [
+      "R_check",
+      "R_accept",
+      "R_reject",
+      "R_modify",
+      "R_halt"
+    ],
+    "inactive_rules": [],
+    "transition_history": []
+  },
+  "propositions": [
+    "p_ready",
+    "p_token",
+    "p_checked",
+    "p_accepted",
+    "p_rejected",
+    "p_rule_modified",
+    "p_halted"
+  ],
+  "rules": [
+    {
+      "id": "R_check",
+      "permits": "T_check",
+      "preconditions": [
+        "p_ready=true",
+        "p_token=true",
+        "p_checked=false"
+      ],
+      "updates": [
+        "p_checked=true",
+        "append T_check to history"
+      ]
+    },
+    {
+      "id": "R_accept",
+      "permits": "T_accept",
+      "preconditions": [
+        "p_checked=true",
+        "p_rejected=false",
+        "R_accept active"
+      ],
+      "updates": [
+        "p_accepted=true",
+        "append T_accept to history"
+      ]
+    },
+    {
+      "id": "R_reject",
+      "permits": "T_reject",
+      "preconditions": [
+        "p_checked=true",
+        "p_accepted=false",
+        "R_reject active"
+      ],
+      "updates": [
+        "p_rejected=true",
+        "append T_reject to history"
+      ]
+    },
+    {
+      "id": "R_modify",
+      "permits": "T_disable_reject",
+      "preconditions": [
+        "p_checked=true",
+        "p_accepted=false",
+        "p_rejected=false",
+        "R_modify active"
+      ],
+      "updates": [
+        "R_reject inactive",
+        "p_rule_modified=true",
+        "append T_disable_reject to history"
+      ]
+    },
+    {
+      "id": "R_halt",
+      "permits": "T_halt",
+      "preconditions": [
+        "p_accepted=true or p_rejected=true"
+      ],
+      "updates": [
+        "p_halted=true",
+        "append T_halt to history"
+      ]
+    }
+  ],
+  "permitted_transitions": [
+    "T_check",
+    "T_accept",
+    "T_reject",
+    "T_disable_reject",
+    "T_halt"
+  ],
+  "prohibited_transitions": [
+    "accept_and_reject_same_run",
+    "rule_status_change_except_T_disable_reject",
+    "history_removal_or_rewrite",
+    "transition_after_halt",
+    "T_reject_after_R_reject_inactive",
+    "accept_reject_modify_before_checked"
+  ],
+  "stopping_condition": "p_halted=true",
+  "observable_outputs": [
+    "final status",
+    "final rule statuses",
+    "ordered transition history",
+    "rule modification occurred",
+    "prohibited transition occurred"
+  ],
+  "success_criteria": [
+    "preserve propositions",
+    "preserve rule statuses",
+    "preserve permitted transitions",
+    "preserve prohibited transitions",
+    "preserve rule modification",
+    "preserve historical dependencies",
+    "preserve stopping condition",
+    "preserve observable outputs"
+  ],
+  "failure_criteria": [
+    "permits prohibited transition",
+    "omits rule-modification history",
+    "collapses accepted and rejected",
+    "cannot represent rule activation status",
+    "cannot express stopping condition",
+    "changes scenario dynamics",
+    "leaves required preservation dimension Unknown"
+  ]
+}

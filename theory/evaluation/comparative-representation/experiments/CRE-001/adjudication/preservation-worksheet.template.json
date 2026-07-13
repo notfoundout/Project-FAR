@@ -1,0 +1,18 @@
+{
+  "artifact_id": "CRE-001-PRESERVATION-WORKSHEET-TEMPLATE-1.0",
+  "status": "Template; no preservation judgments recorded",
+  "protocol_version": "CRP-1.0",
+  "experiment": "CRE-001",
+  "mapping_identifier": "PENDING",
+  "preservation_vector": {
+    "p_s": {"value": "Pass | Partial | Fail | Unknown", "justification": "PENDING"},
+    "p_m": {"value": "Pass | Partial | Fail | Unknown", "justification": "PENDING"},
+    "p_o": {"value": "Pass | Partial | Fail | Unknown", "justification": "PENDING"},
+    "p_d": {"value": "Pass | Partial | Fail | Unknown", "justification": "PENDING"},
+    "p_i": {"value": "Pass | Partial | Fail | Unknown", "justification": "PENDING"},
+    "p_h": {"value": "Pass | Partial | Fail | Unknown", "justification": "PENDING"}
+  },
+  "failure_criteria_triggered": [],
+  "required_unknown_properties": [],
+  "existential_sufficiency_supported": null
+}

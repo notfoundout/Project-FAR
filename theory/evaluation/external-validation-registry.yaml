@@ -1,5 +1,8 @@
 # Project FAR v0.4.0 external validation registry.
 # External validation batches 1 and 2.
+# Status: Provisional preliminary external-validation evidence.
+# Supersession: Comparative Representation Protocol v1.0 governs comparative distinctiveness, reproducibility, local necessity, and relative economy claims.
+# Registry separation: entries EV-001 through EV-029 are preserved and are not Version 1.0 comparative experiments.
 entries:
   - id: EV-001
     system: Higher-order logic

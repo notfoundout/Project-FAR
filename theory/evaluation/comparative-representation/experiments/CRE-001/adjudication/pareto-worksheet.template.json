@@ -1,0 +1,23 @@
+{
+  "artifact_id": "CRE-001-PARETO-WORKSHEET-TEMPLATE-1.0",
+  "status": "Template; no Pareto judgments recorded",
+  "protocol_version": "CRP-1.0",
+  "experiment": "CRE-001",
+  "comparisons": [
+    {
+      "comparison_id": "PENDING",
+      "vocabulary_1": "PENDING",
+      "vocabulary_2": "PENDING",
+      "preservation_no_worse_on_comparable_dimensions": null,
+      "unknown_blocks_dominance": null,
+      "A_used_no_greater": null,
+      "A_required_no_greater": null,
+      "D_no_greater": null,
+      "O_no_greater": null,
+      "L_no_greater": null,
+      "strict_material_advantage_present": null,
+      "dominance_result": "PENDING",
+      "justification": "PENDING"
+    }
+  ]
+}

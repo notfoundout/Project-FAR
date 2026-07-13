@@ -6,9 +6,9 @@ The root [README Command Center](../README.md) is the canonical entry point for 
 
 ## Current Status
 
-Project FAR has completed the v0.3.1 maintenance baseline. The current baseline includes the v0.3.0 internal-validation milestone plus repository command-center, automation, release-readiness, dashboard metrics, generated planning reports, repository-index, and health-diagnostic improvements.
+Project FAR has completed the v0.4.0 external-validation milestone. The current baseline includes the v0.3.0 internal-validation milestone, the v0.3.1 repository-maturity maintenance release, preliminary external validation EV-001 through EV-029, frozen CRP v1.0 methodology, and a registered but unexecuted CRE-001 execution package.
 
-The v0.3.1 release does not change FAR primitives, definitions, axioms, theorem statements, proof objects, parser behavior, reasoning-engine behavior, metadata schemas, or evaluation conclusions.
+The v0.4.0 release does not change FAR primitives, definitions, axioms, theorem statements, proof objects, parser behavior, reasoning-engine behavior, metadata schemas, or accepted doctrine.
 
 | Framework | Role | Status |
 |---|---|---|
@@ -18,25 +18,33 @@ The v0.3.1 release does not change FAR primitives, definitions, axioms, theorem 
 | FARE | Mathematics | Frozen, requirement-driven |
 | FARM | Meta-framework coordination | Stable |
 
-Active development now moves toward v0.4 analytical infrastructure: dependency graphs, impact analysis, semantic consistency auditing, repository knowledge graphs, and richer evidence instrumentation.
+Active development now moves toward controlled CRE-001 pre-exposure operations under frozen CRP v1.0, while preserving external validation as preliminary evidence.
 
 ---
 
 ## Latest Release
 
-### Project FAR v0.3.1 — Repository Maturity and Automation
+### Project FAR v0.4.0 — External Validation and Comparative Methodology
 
-Status: Current maintenance release baseline.
+Status: Current release baseline.
 
-Release document: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md)
+Release document: [`releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md)
 
-GitHub release notes: [`releases/github-release-v0.3.1.md`](releases/github-release-v0.3.1.md)
+Prior maintenance release: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md)
 
 Prior internal-validation release: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md)
 
 ---
 
 ## Completed Milestones
+
+### Project FAR v0.4.0 External Validation and Comparative Methodology
+
+Status: Complete.
+
+v0.4.0 completes the historical external-validation milestone and additionally registers frozen CRP v1.0 plus unexecuted CRE-001 preparation artifacts.
+
+---
 
 ### Project FAR v0.3.1 Repository Maturity and Automation
 
@@ -118,9 +126,9 @@ Stable components:
 
 ## Active Focus
 
-### v0.4 Analytical Infrastructure
+### Post-v0.4.0 CRE-001 Preparation
 
-The active target is making Project FAR more capable of explaining its own internal structure. v0.4 should treat v0.3.1 as the operational baseline and focus on dependency graphs, impact analysis, semantic consistency auditing, repository knowledge graphs, and evidence visualization.
+The active target is completing operational prerequisites for CRE-001 execution under frozen CRP v1.0. The experiment remains unexecuted until evaluator recruitment, calibration, randomized assignment, provenance assignment, isolation confirmation, and pre-exposure hash verification are complete.
 
 ---
 
@@ -132,4 +140,5 @@ The current project order is:
 2. FAR / FARO / FARM stable layers maintained.
 3. v0.3.0 internal validation baseline preserved.
 4. v0.3.1 repository maturity baseline published.
-5. v0.4 analytical infrastructure begins from that baseline.
+5. v0.4.0 external validation completes and preserves EV-001 through EV-029 as preliminary evidence.
+6. CRP v1.0 is frozen and CRE-001 is registered but unexecuted.

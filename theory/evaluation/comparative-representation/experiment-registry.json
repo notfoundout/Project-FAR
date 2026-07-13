@@ -1,0 +1,28 @@
+{
+  "registry_id": "comparative-representation-experiments",
+  "status": "Accepted",
+  "canonical_protocol": "theory/evaluation/comparative-representation/protocol-v1.0.md",
+  "entries": [
+    {
+      "id": "CRE-001",
+      "title": "Comparative Representation Experiment 1: Reflective Discrete Rule-Transition System",
+      "protocol_version": "CRP-1.0",
+      "scenario_version": "CRE-001-SCENARIO-1.0",
+      "vocabulary_version": "CRE-001-VOCABULARIES-1.0",
+      "instruction_version": "CRE-001-INSTRUCTIONS-1.0",
+      "canonicalization_version": "CRP-1.0-CANONICALIZATION",
+      "adjudication_version": "CRP-1.0-ADJUDICATION",
+      "status": "Registered; not executed",
+      "experiment_directory": "theory/evaluation/comparative-representation/experiments/CRE-001",
+      "legacy_external_validation": false,
+      "execution_package_status": "Prepared; not executed",
+      "scenario_package": "theory/evaluation/comparative-representation/experiments/CRE-001/scenario/scenario-v1.0.json",
+      "vocabulary_package_manifest": "theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-packages.json",
+      "evaluator_instruction_package": "theory/evaluation/comparative-representation/experiments/CRE-001/evaluator-instructions/evaluator-instructions-v1.0.md",
+      "package_manifest": "theory/evaluation/comparative-representation/experiments/CRE-001/package-manifest.json",
+      "evaluator_exposure": false,
+      "mappings_collected": false,
+      "comparative_results_generated": false
+    }
+  ]
+}

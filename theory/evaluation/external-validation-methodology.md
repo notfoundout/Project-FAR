@@ -1,12 +1,19 @@
 # External Validation Methodology
 
-Status: v0.4.1 investigation-evaluation protocol.
+Status: Provisional preliminary external-validation methodology; superseded for comparative representation claims by `comparative-representation/protocol-v1.0.md`.
 
 ## Purpose
 
 External validation tests Project FAR against reasoning systems that were not designed for FAR. The objective is to use the existing FAR instrument rather than add new primitives or reshape the target systems to make them fit.
 
 This methodology distinguishes internal fixtures from external systems. Internal fixtures show that FAR can represent curated examples. External validation asks whether independently established reasoning systems can be mapped without introducing a sixth primitive.
+
+
+## Comparative-Claims Supersession Notice
+
+This methodology remains the canonical preliminary external-validation methodology for system description, scoped FAR/FARA mapping, preliminary preservation analysis, candidate-counterexample identification, and exploratory evidence collection. It is historical and preliminary evidence for comparative purposes. It is not sufficient methodology for establishing comparative distinctiveness, reproducible structural constraint, local necessity, relative economy, minimality, universality, or superiority over weaker vocabularies.
+
+Successful FAR/FARA mapping under this methodology is not comparative evidence. Comparative Representation Protocol v1.0 (`comparative-representation/protocol-v1.0.md`) governs future claims about distinctiveness, reproducibility, local necessity, relative economy, Pareto dominance, and comparative-result interpretation. Legacy reports retain their original evidence status and must not be retroactively presented as Version 1.0 experiments.
 
 ## Relationship to Other Methodologies
 

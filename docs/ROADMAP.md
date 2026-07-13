@@ -160,11 +160,11 @@ Prepare mature portions of Project FAR for public dissemination.
 
 ## Current Release
 
-v0.3.0 is the current release baseline. The v0.3.0 milestone is complete and is documented in [`docs/releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
+v0.4.0 is the current release baseline. The v0.4.0 milestone is complete and is documented in [`docs/releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md). The previous v0.3.0 internal-validation baseline remains documented in [`docs/releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
 
 ## Current Phase
 
-v0.4 is the current development phase. Its objective is external validation preparation and execution against reasoning systems, arguments, and practices not constructed for FAR.
+Post-v0.4.0 work is the next development phase. Its objective is controlled preparation for CRE-001 execution under frozen CRP v1.0, without redefining the historical v0.4.0 milestone.
 
 ## Completed v0.3 Milestones
 
@@ -175,13 +175,26 @@ v0.4 is the current development phase. Its objective is external validation prep
 
 ## v0.4 Objectives
 
+Status: ✅ Complete as v0.4.0.
+
+The historical v0.4.0 objectives are preserved:
+
 - Preserve v0.3.0 as the internal-validation baseline.
 - Execute external validation without silently rewriting v0.3 conclusions.
 - Separate external evidence from internal fixture evidence.
 - Identify recurring external pressure points.
+
+Completed v0.4.0 work also exceeded the original milestone by adopting CRP v1.0 as the frozen canonical methodology for future comparative representation studies and registering CRE-001 without executing it.
+
+## Next Development Milestone
+
+Prepare and then execute CRE-001 only after evaluator recruitment, calibration, randomized assignment, provenance assignment, isolation confirmation, and pre-exposure hash verification are complete. This next milestone must not silently modify CRP v1.0 or treat unexecuted CRE-001 artifacts as comparative results.
 
 # Long-Term Goal
 
 Reach the strongest justified conclusion about whether a common structure of reasoning exists, whether FAR captures it within an explicitly justified scope, whether every retained component is necessary, and whether any simpler competing structure has equal expressive power.
 
 Project success is measured by answering that question rigorously, not by forcing confirmation of FAR.
+## Comparative Representation Evaluation Roadmap
+
+Comparative Representation Protocol v1.0 is registered and frozen under `theory/evaluation/comparative-representation/protocol-v1.0.md`. CRE-001 is registered with a complete execution package but has not yet been executed, and legacy external-validation evidence remains preliminary rather than comparative.

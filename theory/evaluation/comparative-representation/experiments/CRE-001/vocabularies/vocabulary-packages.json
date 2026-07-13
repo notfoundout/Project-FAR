@@ -1,0 +1,15 @@
+{
+  "artifact_id": "CRE-001-VOCABULARIES-1.0",
+  "status": "Frozen evaluator-facing vocabulary packages; not assigned",
+  "protocol_version": "CRP-1.0",
+  "experiment": "CRE-001",
+  "randomization_supported": true,
+  "target_identity_disclosed": false,
+  "packages": [
+    {"label": "Vocabulary A", "version": "CRE-001-VOCAB-A-1.0", "path": "vocabularies/vocabulary-A.md"},
+    {"label": "Vocabulary B", "version": "CRE-001-VOCAB-B-1.0", "path": "vocabularies/vocabulary-B.md"},
+    {"label": "Vocabulary C", "version": "CRE-001-VOCAB-C-1.0", "path": "vocabularies/vocabulary-C.md"}
+  ],
+  "assignment_status": "No evaluator assignments generated",
+  "results_status": "No mappings collected and no comparative results generated"
+}

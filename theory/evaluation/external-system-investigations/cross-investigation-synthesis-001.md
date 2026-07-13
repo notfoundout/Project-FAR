@@ -1,6 +1,6 @@
 # Cross-Investigation Synthesis 001
 
-Status: provisional
+Status: provisional; preliminary external-validation synthesis, superseded for comparative representation claims by `../comparative-representation/protocol-v1.0.md`
 
 ## Scope
 
@@ -16,7 +16,7 @@ This synthesis covers the external-system investigations completed in this pull 
 - Legal Reasoning;
 - Analogical Reasoning.
 
-The synthesis does not include older external-system reports except as background. It does not claim universality, necessity, or minimality.
+The synthesis does not include older external-system reports except as background. It does not claim universality, necessity, or minimality. It also does not establish comparative distinctiveness, reproducible structural constraint, local necessity, relative economy, or superiority over weaker vocabularies because the investigations were not blinded independent comparative evaluations under Comparative Representation Protocol v1.0.
 
 ## Recurring FAR/FARA Components
 
