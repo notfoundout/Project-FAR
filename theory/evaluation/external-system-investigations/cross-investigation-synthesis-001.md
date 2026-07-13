@@ -20,7 +20,7 @@ The synthesis does not include older external-system reports except as backgroun
 
 ## Recurring FAR/FARA Components
 
-All nine scoped v0.4.1 investigations required Investigation, Representation, Representational Structure, Interpretation, and Reasoning Calculus for their target mappings. FARA operational components were used when procedure, update, proof, inquiry trace, agent loop, expert protocol, legal sequence, or analogy mapping process was included.
+All nine scoped EV-021 through EV-029 investigations required Investigation, Representation, Representational Structure, Interpretation, and Reasoning Calculus for their target mappings. FARA operational components were used when procedure, update, proof, inquiry trace, agent loop, expert protocol, legal sequence, or analogy mapping process was included.
 
 Recurring mappings:
 

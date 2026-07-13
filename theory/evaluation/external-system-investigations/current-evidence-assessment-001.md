@@ -8,26 +8,30 @@ This assessment reviews the completed external-validation evidence available in 
 
 - the external validation registry, containing EV-001 through EV-029;
 - the v0.4.0 batch reports for EV-001 through EV-020 under `theory/evaluation/external-systems/`;
-- the v0.4.1 investigation reports for EV-021 through EV-029 under `theory/evaluation/external-system-investigations/`;
+- the reports for EV-021 through EV-029 under `theory/evaluation/external-system-investigations/`, conducted under the expanded external-system investigation template;
 - Cross-Investigation Synthesis 001;
 - the external validation methodology and investigation template;
 - the canonical proof standard, research doctrine, isolation doctrine, and research execution charter.
 
 The review did not treat methodology compliance as correctness. It looked for overclaiming, hidden FAR/FARA assumptions, unsupported mappings, inconsistent preservation analysis, contradictions, bias, reproducibility weakness, and conclusions stronger than the methodology permits.
 
+The reviewed EV-001 through EV-029 corpus remains legacy external validation evidence: preliminary compatibility evidence, scoped FAR/FARA mappings, preservation-pressure evidence, candidate-counterexample scanning, exploratory evidence, and external pressure identification. It is not a set of blinded comparative experiments and is not sufficient evidence for comparative superiority, reproducible sufficiency, primitive necessity, minimality, universality, or uniqueness.
+
+Comparative Representation Protocol v1.0 remains the canonical methodology for future claims about comparative representational performance, reproducibility, relative representation economy, structural agreement, local necessity through ablation, and comparative constraint. This assessment does not retroactively convert EV-001 through EV-029 into CRP experiments. CRE-001 is treated as registered, frozen, prepared for execution, not executed, not yet evaluator-exposed, and without collected mappings or comparative results; it is therefore a future high-information test rather than evidence already obtained.
+
 ## Investigation Classifications and Evidence Quality
 
 | Corpus | Count | Classifications | Evidence quality |
 |---|---:|---|---|
-| EV-001 through EV-020 | 20 | 5 `fits FAR`; 15 `conservative extension`; 0 `unresolved`; 0 `candidate primitive failure` | Provisional. Useful as broad pressure scanning, but the reports predate the v0.4.1 preservation template and therefore provide weaker preservation evidence than EV-021 through EV-029. |
+| EV-001 through EV-020 | 20 | 5 `fits FAR`; 15 `conservative extension`; 0 `unresolved`; 0 `candidate primitive failure` | Provisional. Useful as broad pressure scanning, but the reports predate the expanded preservation template and therefore provide weaker preservation evidence than EV-021 through EV-029. |
 | EV-021 through EV-029 | 9 | 2 `fits FAR`; 3 `conservative extension`; 4 `unresolved`; 0 `candidate primitive failure` | Stronger within stated scopes because the reports explicitly separate preservation dimensions, limitations, and universality/necessity/minimality implications. |
 | Total registry corpus | 29 | 7 `fits FAR`; 18 `conservative extension`; 4 `unresolved`; 0 `candidate primitive failure` | Positive but finite evidence for scoped representability; insufficient evidence for universality, necessity, or minimality. |
 
-The registry classifications are internally consistent with the completed reports at the reviewed level of detail. The main evidence-quality distinction is methodological: EV-001 through EV-020 are less reproducible as preservation evidence because they lack the full v0.4.1 preservation record required of later investigations.
+The registry classifications are internally consistent with the completed reports at the reviewed level of detail. The main evidence-quality distinction is methodological: EV-001 through EV-020 are less reproducible as preservation evidence because they lack the full preservation record used by the later external-validation batch.
 
 ## Defects Found and Corrections Made
 
-The audit found one synthesis defect: the first synthesis section said “All four investigations” even though the stated scope lists nine investigations. That wording understated the reviewed batch and could mislead later readers about recurrence counts. Cross-Investigation Synthesis 001 was corrected to refer to all nine scoped investigations and to distinguish the older registry background from the v0.4.1 batch.
+The audit found one synthesis defect: the first synthesis section said “All four investigations” even though the stated scope lists nine investigations. That wording understated the reviewed batch and could mislead later readers about recurrence counts. Cross-Investigation Synthesis 001 was corrected to refer to all nine scoped investigations and to distinguish the older registry background from the later external-validation batch.
 
 No completed investigation required reclassification. No candidate primitive failure was discovered. No methodological defect prevented this evidence assessment, so the methodology itself was not modified.
 
@@ -35,7 +39,7 @@ No completed investigation required reclassification. No candidate primitive fai
 
 ### Components Required by Every Investigated System
 
-Across the completed corpus, every successful or partially successful representation used the five FAR roles: Investigation, Representation, Representational Structure, Interpretation, and Reasoning Calculus. The later v0.4.1 investigations also repeatedly used FARA state-transition vocabulary when a proof, update, inquiry, agent loop, expert protocol, legal sequence, or analogy process was in scope.
+Across the completed corpus, every successful or partially successful representation used the five FAR roles: Investigation, Representation, Representational Structure, Interpretation, and Reasoning Calculus. The later external-validation batch also repeatedly used FARA state-transition vocabulary when a proof, update, inquiry, agent loop, expert protocol, legal sequence, or analogy process was in scope.
 
 ### Components Never Required
 
@@ -78,7 +82,7 @@ Dependency preservation pressure recurs when source reliability, background theo
 
 ### Methodological Strengths
 
-The v0.4.1 methodology forced claim separation, preservation-dimension review, explicit limitations, deterministic classification precedence, and separation of representability from universality, necessity, and minimality.
+The expanded external-system investigation template forced claim separation, preservation-dimension review, explicit limitations, deterministic classification precedence, and separation of representability from universality, necessity, and minimality.
 
 ### Methodological Weaknesses
 
@@ -115,7 +119,7 @@ The strongest pressure is the recurrence of unresolved preservation in systems w
 
 ## Universality Assessment
 
-Universality is not established. The evidence supports scoped representability for explicit and sufficiently documented reasoning systems, plus conservative-extension representability for several complex domains. Four v0.4.1 investigations remain unresolved, and older investigations do not meet the later preservation-record standard.
+Universality is not established. The evidence supports scoped representability for explicit and sufficiently documented reasoning systems, plus conservative-extension representability for several complex domains. Four EV-021 through EV-029 investigations remain unresolved, and older investigations do not meet the later preservation-record standard.
 
 ## Necessity Assessment
 
@@ -162,7 +166,7 @@ The smallest high-information next tests are:
 | Necessity | Primitive-ablation replay across one direct-fit formal system and one conservative-extension system, removing one FAR role at a time and recording preservation loss. | Directly tests necessity instead of inferring it from recurrence. |
 | Minimality | Formal independence or elimination proof obligation for each FAR primitive under a fixed representation target. | Minimality requires proof or ablation, not more examples. |
 | Scope boundaries | Controlled documentation-threshold test on one unresolved system, comparing output-only, log-level, and fully instrumented artifact bundles. | Identifies whether unresolved status is caused by the system or by evidence access. |
-| Representation fidelity | Reconstruction check by an independent reviewer using only the recorded source evidence and FAR/FARA mapping for one v0.4.1 investigation. | Tests faithful reconstructibility without expanding the corpus. |
-| Cross-investigator reliability | Blind duplicate classification of one existing investigation under the v0.4.1 template, with discrepancies recorded before reconciliation. | Tests reviewer variance directly. |
+| Representation fidelity | Reconstruction check by an independent reviewer using only the recorded source evidence and FAR/FARA mapping for one EV-021 through EV-029 investigation. | Tests faithful reconstructibility without expanding the corpus. |
+| Cross-investigator reliability | Blind duplicate classification of one existing investigation under the expanded external-system investigation template, with discrepancies recorded before reconciliation. | Tests reviewer variance directly. |
 
 These tests should precede any broad new domain campaign unless a specific discovered issue requires an additional external-system investigation.
