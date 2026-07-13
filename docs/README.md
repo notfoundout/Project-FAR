@@ -41,3 +41,10 @@ Project-level documentation lives here. This directory is for orientation, proje
 - Preliminary external validation: `../theory/evaluation/external-validation-methodology.md`.
 - Comparative representation protocol: `../theory/evaluation/comparative-representation/protocol-v1.0.md`.
 - Comparative experiment registry: `../theory/evaluation/comparative-representation/experiment-registry.json`.
+
+
+## Release Navigation
+
+- Current release: [`releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md).
+- Previous maintenance release: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md).
+- Internal-validation baseline: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).

@@ -150,6 +150,12 @@ Each concept should have one canonical source. Other documents should link to th
 - Repository Compliance Enforcement Report: `docs/audits/repository-compliance-enforcement-report.md` is the canonical compliance enforcement compliance enforcement, automation coverage, regression prevention, and final finding disposition report.
 - Independent Repository Certification Audit: `docs/audits/independent-repository-certification-audit.md` is the canonical certification matrix, governance consistency, integrity, regression, and automation verification audit.
 - Repository Certification Status: `docs/certification/repository-certification-status.md` is the canonical repository certification decision, evidence matrix, repository integrity summary, and maintenance readiness assessment.
+## Release Navigation
+
+- Current Project FAR release: [`releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md).
+- Previous maintenance release: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md).
+- Internal-validation baseline release: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
+
 ## Comparative Representation Evaluation Authority
 
 - Preliminary external validation: `theory/evaluation/external-validation-methodology.md` and `theory/evaluation/external-validation-registry.yaml` are the canonical preliminary external-validation methodology and registry. They preserve historical EV-001 through EV-029 evidence for scoped mapping and pressure identification only.

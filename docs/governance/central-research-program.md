@@ -41,7 +41,7 @@ This document depends on:
 - Foundation v1.0;
 - the canonical Project FAR definitions;
 - repository governance;
-- completed external-validation evidence;
+- completed v0.4.0 preliminary external-validation evidence;
 - the mechanization MVP;
 - repository certification.
 
@@ -184,7 +184,7 @@ Mechanization strengthens confidence in internal coherence and executability. It
 
 External validation tests FAR against reasoning systems, arguments, and practices not constructed for FAR. It provides bounded evidence concerning representational reach, domain-specific assumptions, recurring pressure points, and possible limitations.
 
-External validation does not prove universal applicability. Each case remains conditional on its reconstruction, evidence, and scope.
+External validation does not prove universal applicability. Each case remains conditional on its reconstruction, evidence, and scope. As of v0.4.0, CRP v1.0 governs future blinded comparative claims about representational vocabularies; CRE-001 is registered but unexecuted.
 
 ## Work Admission Standard
 
