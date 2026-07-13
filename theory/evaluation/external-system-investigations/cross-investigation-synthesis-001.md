@@ -20,7 +20,7 @@ The synthesis does not include older external-system reports except as backgroun
 
 ## Recurring FAR/FARA Components
 
-All four investigations required Investigation, Representation, Representational Structure, Interpretation, and Reasoning Calculus. All four also used FARA operational components when procedure, update, proof, or inquiry trace was included.
+All nine scoped v0.4.1 investigations required Investigation, Representation, Representational Structure, Interpretation, and Reasoning Calculus for their target mappings. FARA operational components were used when procedure, update, proof, inquiry trace, agent loop, expert protocol, legal sequence, or analogy mapping process was included.
 
 Recurring mappings:
 
@@ -36,7 +36,7 @@ No FAR primitive was never required in this batch. No FARA component was categor
 
 ## Repeated Preservation Failures
 
-No preservation dimension failed for classical propositional logic or first-order predicate logic. Bayesian reasoning passed for explicit exact or sufficiently specified approximate models, while opaque approximate claims were outside scope. Scientific method produced repeated `unknown` preservation results at the general-family level, especially for operational preservation, dependency preservation, and information preservation.
+No preservation dimension failed for classical propositional logic or first-order predicate logic. Bayesian reasoning passed for explicit exact or sufficiently specified approximate models, while opaque approximate claims were outside scope. Legal reasoning was classified as a conservative extension. Scientific method, Large Language Model reasoning, Agentic AI reasoning, Human Expert reasoning, and Analogical reasoning produced `unknown` preservation results in one or more dimensions, especially operational preservation, dependency preservation, and information preservation.
 
 ## Repeated Ambiguities
 
@@ -109,7 +109,7 @@ No direct contradiction was found, but minimality lacks sufficient evidence beca
 
 ### 6. Based only on the investigations completed so far, which allowable conclusion is currently best supported?
 
-The best-supported conclusion is provisional external-validation support with unresolved scope limitations: several explicit reasoning systems are representable without a candidate sixth primitive, but the evidence does not justify a universal, necessary, or minimality claim.
+The best-supported allowable conclusion is that available evidence remains insufficient for universality, necessity, or minimality acceptance: several explicit reasoning systems are representable without a candidate sixth primitive, but unresolved preservation and absent ablation evidence prevent a stronger conclusion.
 
 
 ## Comparative Analysis After Adversarial Investigation Batch
@@ -192,8 +192,8 @@ Minimality is contradicted as an accepted conclusion by absence of direct ablati
 
 ### Updated Answer 5 — Remaining Unresolved Questions
 
-Highest expected-value unresolved questions are: open-weight instrumented LLM replay, fully logged agent benchmark replay, protocol-rich expert reasoning with process tracing, subtype-specific scientific-method investigations, SME-style computational analogy, automated theorem proving under the v0.4.1 template, knowledge graph reasoning, and explicit primitive-ablation studies across completed reports.
+Highest expected-value unresolved questions are: primitive-ablation replay across one direct-fit and one conservative-extension case; controlled documentation-threshold testing on one unresolved case; formal independence or elimination proof obligations for each FAR primitive; blind duplicate classification of one existing investigation; and, only where these tests cannot resolve the issue, a targeted instrumented replay such as open-weight LLM or fully logged agent reasoning.
 
 ### Updated Answer 6 — Best-Supported Allowable Conclusion
 
-The best-supported allowable conclusion remains provisional external-validation support with substantial unresolved scope limitations. The evidence supports continued investigation of FAR/FARA as a candidate structure for explicit reasoning, but it does not justify universal, necessary, or minimality acceptance.
+The best-supported allowable conclusion remains that available evidence is insufficient. The evidence supports continued investigation of FAR/FARA as a candidate structure for explicit reasoning, but it does not justify universal, necessary, or minimality acceptance.
