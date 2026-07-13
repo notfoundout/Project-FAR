@@ -14,7 +14,15 @@
       "adjudication_version": "CRP-1.0-ADJUDICATION",
       "status": "Registered; not executed",
       "experiment_directory": "theory/evaluation/comparative-representation/experiments/CRE-001",
-      "legacy_external_validation": false
+      "legacy_external_validation": false,
+      "execution_package_status": "Prepared; not executed",
+      "scenario_package": "theory/evaluation/comparative-representation/experiments/CRE-001/scenario/scenario-v1.0.json",
+      "vocabulary_package_manifest": "theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-packages.json",
+      "evaluator_instruction_package": "theory/evaluation/comparative-representation/experiments/CRE-001/evaluator-instructions/evaluator-instructions-v1.0.md",
+      "package_manifest": "theory/evaluation/comparative-representation/experiments/CRE-001/package-manifest.json",
+      "evaluator_exposure": false,
+      "mappings_collected": false,
+      "comparative_results_generated": false
     }
   ]
 }

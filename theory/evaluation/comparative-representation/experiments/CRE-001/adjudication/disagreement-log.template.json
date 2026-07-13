@@ -1,0 +1,18 @@
+{
+  "artifact_id": "CRE-001-DISAGREEMENT-LOG-TEMPLATE-1.0",
+  "status": "Template; no disagreements recorded",
+  "protocol_version": "CRP-1.0",
+  "experiment": "CRE-001",
+  "adjudication_version": "CRP-1.0-ADJUDICATION",
+  "records": [
+    {
+      "record_id": "PENDING",
+      "disputed_component": "PENDING",
+      "governing_rule": "PENDING",
+      "original_judgments": [],
+      "final_resolution": "PENDING",
+      "consensus_status": "PENDING",
+      "third_adjudicator_involvement": false
+    }
+  ]
+}

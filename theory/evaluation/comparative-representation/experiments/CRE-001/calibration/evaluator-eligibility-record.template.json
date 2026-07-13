@@ -1,0 +1,28 @@
+{
+  "artifact_id": "CRE-001-EVALUATOR-ELIGIBILITY-RECORD-TEMPLATE-1.0",
+  "status": "Template; no evaluator data recorded",
+  "protocol_version": "CRP-1.0",
+  "experiment": "CRE-001",
+  "calibration_version": "CRE-001-CALIBRATION-1.0",
+  "evaluator_identifier": "EVALUATOR-ID-PENDING",
+  "formal_specification_competence_confirmed": null,
+  "methodological_familiarity_confirmed": null,
+  "independence_from_protocol_development_confirmed": null,
+  "independence_from_vocabulary_development_confirmed": null,
+  "information_isolation_confirmed": null,
+  "calibration_completed": null,
+  "calibration_score": {
+    "entities": null,
+    "relations": null,
+    "state_variables": null,
+    "transitions": null,
+    "prohibited_transitions": null,
+    "rule_modification_or_queue_adjustment": null,
+    "dependency_history": null,
+    "fixed_output_format": null
+  },
+  "eligibility_decision": "Pending",
+  "exclusion_reason_if_any": null,
+  "recorded_by": "PENDING",
+  "recorded_at": "PENDING"
+}

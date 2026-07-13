@@ -1,0 +1,17 @@
+{
+  "artifact_id": "CRE-001-AGGREGATION-WORKSHEET-TEMPLATE-1.0",
+  "status": "Template; no aggregation performed",
+  "protocol_version": "CRP-1.0",
+  "experiment": "CRE-001",
+  "vocabulary_identifier": "PENDING",
+  "mapping_level_observations_retained": true,
+  "S_V": "PENDING",
+  "P_V": "PENDING",
+  "G_v": "PENDING",
+  "G_s": "PENDING",
+  "V_V": {"median_A_used": "PENDING", "median_A_required": "PENDING"},
+  "R_V": {"median_D": "PENDING", "median_O": "PENDING", "median_L": "PENDING"},
+  "ranges": {"D": "PENDING", "O": "PENDING", "L": "PENDING"},
+  "ablation_majority_results": [],
+  "best_mapping_selected_as_vocabulary_result": false
+}

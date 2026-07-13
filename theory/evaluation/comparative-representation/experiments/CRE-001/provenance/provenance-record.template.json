@@ -1,0 +1,19 @@
+{
+  "artifact_id": "CRE-001-PROVENANCE-RECORD-TEMPLATE-1.0",
+  "status": "Template; no execution provenance recorded",
+  "protocol_version": "CRP-1.0",
+  "scenario_version": "CRE-001-SCENARIO-1.0",
+  "vocabulary_version": "PENDING-ASSIGNMENT",
+  "evaluator_instructions_version": "CRE-001-INSTRUCTIONS-1.0",
+  "canonicalization_version": "CRP-1.0-CANONICALIZATION",
+  "adjudication_version": "CRP-1.0-ADJUDICATION",
+  "experiment_identifier": "CRE-001",
+  "evaluator_identifier": "PENDING",
+  "assignment_identifier": "PENDING",
+  "created_timestamp": "PENDING",
+  "submitted_timestamp": "PENDING",
+  "software_or_model_version": "PENDING_OR_NOT_APPLICABLE",
+  "ablation_condition": "primary_mapping | ablation:PENDING | not_applicable",
+  "adjudicator_identifiers": [],
+  "registered_clarifications": []
+}
