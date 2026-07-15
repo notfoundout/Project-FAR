@@ -20,11 +20,14 @@ jobs:
             echo "RAW_SHA256=$(sha256sum "$RAW" | awk '{print $1}')"
             echo "RAW_BYTES=$(wc -c < "$RAW" | tr -d ' ')"
           } | tee cre001-pilot-checksum.txt
-          python -m json.tool "$RAW" >/dev/null
-      - name: Upload checksum result
+          python -m json.tool "$RAW" >/dev/null 2>cre001-pilot-json-error.txt || true
+      - name: Upload checksum and raw artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cre001-pilot-checksum
-          path: cre001-pilot-checksum.txt
+          name: cre001-pilot-debug
+          path: |
+            cre001-pilot-checksum.txt
+            cre001-pilot-json-error.txt
+            theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1/CRE-001-E01-claude-sonnet-medium-pilot-v1.raw.json
           if-no-files-found: error
