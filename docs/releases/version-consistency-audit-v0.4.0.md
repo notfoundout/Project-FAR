@@ -24,7 +24,7 @@ Authoritative release document: [`project-far-v0.4.0.md`](project-far-v0.4.0.md)
 The audit reviewed release and milestone identifiers appearing in:
 
 - root README release badge, generated dashboard block, roadmap summary, and release navigation;
-- `docs/PROJECT_STATUS.md`;
+- `docs/project-status.md`;
 - `docs/project-status.md`;
 - `docs/ROADMAP.md`;
 - `docs/CANONICAL_MAP.md`;

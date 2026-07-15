@@ -244,35 +244,62 @@ class FARObject:
                 edges.append((rel.source, rel.target, rel.type))
         return edges
 
-    def detect_cycles(self) -> List[List[str]]:
-        graph: Dict[str, List[str]] = {rep_id: [] for rep_id in self.representations}
-        for source, target, _ in self.dependency_edges():
+    def dependency_graph(self) -> Dict[str, List[str]]:
+        graph: Dict[str, List[str]] = {rep_id: [] for rep_id in sorted(self.representations)}
+        for source, target, _ in sorted(self.dependency_edges()):
             graph.setdefault(source, []).append(target)
+        for node in graph:
+            graph[node] = sorted(graph[node])
+        return graph
 
+    def dependency_diagnostics(self) -> List[str]:
+        diagnostics: List[str] = []
+        for source, target, edge_type in self.dependency_edges():
+            if source not in self.representations:
+                diagnostics.append(f"dependency edge {edge_type} references unknown source representation {source}")
+            if target not in self.representations:
+                diagnostics.append(f"dependency edge {edge_type} references unknown target representation {target}")
+        for transition in self.transitions.values():
+            if transition.rule not in self.rules:
+                diagnostics.append(f"transition {transition.id} references unknown rule {transition.rule}")
+        return sorted(set(diagnostics))
+
+    def detect_cycles(self) -> List[List[str]]:
+        graph = self.dependency_graph()
         cycles: List[List[str]] = []
-        visiting: Set[str] = set()
+        active: Set[str] = set()
         visited: Set[str] = set()
         path: List[str] = []
+        emitted: Set[Tuple[str, ...]] = set()
+
+        def canonical_cycle(cycle: List[str]) -> Tuple[str, ...]:
+            body = cycle[:-1]
+            rotations = [tuple(body[i:] + body[:i]) for i in range(len(body))]
+            best = min(rotations)
+            return best + (best[0],)
 
         def visit(node: str) -> None:
-            if node in visiting:
-                index = path.index(node) if node in path else 0
-                cycles.append(path[index:] + [node])
+            if node in active:
+                index = path.index(node)
+                cycle = path[index:] + [node]
+                key = canonical_cycle(cycle)
+                if key not in emitted:
+                    emitted.add(key)
+                    cycles.append(list(key))
                 return
             if node in visited:
                 return
-            visiting.add(node)
+            active.add(node)
             path.append(node)
             for nxt in graph.get(node, []):
                 visit(nxt)
             path.pop()
-            visiting.remove(node)
+            active.remove(node)
             visited.add(node)
 
-        for node in graph:
+        for node in sorted(graph):
             visit(node)
-
-        return cycles
+        return sorted(cycles)
 
     def derivation_tree(self) -> List[Dict[str, Any]]:
         return [transition.to_fir() for transition in sorted(self.transitions.values(), key=lambda item: item.order)]
@@ -286,6 +313,7 @@ class FARObject:
                 for source, target, edge_type in self.dependency_edges()
             ],
             "cycles": self.detect_cycles(),
+            "diagnostics": self.dependency_diagnostics(),
             "derivation_tree": self.derivation_tree(),
         }
         if self.reasoning_system:
