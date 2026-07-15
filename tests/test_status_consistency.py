@@ -17,24 +17,24 @@ class StatusConsistencyTests(unittest.TestCase):
     def rec(self, cls, title, status, ident=None):
         return csc.StatusRecord("fixture.md", cls, 1, 1, ident, title, status, csc.normalize_status(status))
 
-    def test_similarity_matches_primitive_minimality_and_independence(self):
+    def test_scoped_conditional_titles_do_not_match_broad_investigations(self):
         resolved_min = self.rec("theorem", "Conditional Primitive Minimality", "Established, conditional", "T-001")
         research_min = self.rec("investigation", "Primitive Minimality", "Research", "VI-002")
         resolved_ind = self.rec("theorem", "Conditional Primitive Independence", "Established, conditional", "T-002")
         research_ind = self.rec("investigation", "Primitive Independence", "Research", "VI-003")
         findings = csc.find_contradictions([resolved_min, research_min, resolved_ind, research_ind])
-        pairs = {(f["a"].title, f["b"].title) for f in findings}
-        self.assertIn(("Conditional Primitive Minimality", "Primitive Minimality"), pairs)
-        self.assertIn(("Conditional Primitive Independence", "Primitive Independence"), pairs)
+        self.assertEqual(findings, [])
+        self.assertIsNone(csc.match_reason(resolved_min, research_min))
+        self.assertIsNone(csc.match_reason(resolved_ind, research_ind))
 
     def test_unrelated_titles_sharing_only_primitive_do_not_match(self):
         a = self.rec("theorem", "Primitive Minimality", "Established")
         b = self.rec("open_question", "Primitive Weather Forecast", "Active")
         self.assertIsNone(csc.match_reason(a, b))
 
-    def test_conditional_established_versus_research_is_contradiction(self):
-        a = self.rec("theorem", "Primitive Independence", "Established (conditional)")
-        b = self.rec("open_question", "Primitive Independence", "Research")
+    def test_conditional_established_versus_same_scoped_research_is_contradiction(self):
+        a = self.rec("theorem", "Conditional Primitive Independence", "Established (conditional)")
+        b = self.rec("open_question", "Conditional Primitive Independence", "Research")
         findings = csc.find_contradictions([a, b])
         self.assertEqual(len(findings), 1)
         self.assertEqual(a.normalized_status, "established conditional")
