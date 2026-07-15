@@ -1,0 +1,20 @@
+name: CRE-001 Pilot Checksum
+
+on:
+  pull_request:
+    paths:
+      - 'theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/**'
+      - '.github/workflows/cre001-pilot-checksum.yml'
+
+jobs:
+  checksum:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate and checksum raw pilot artifact
+        run: |
+          RAW='theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1/CRE-001-E01-claude-sonnet-medium-pilot-v1.raw.json'
+          python -m json.tool "$RAW" >/dev/null
+          echo "RAW_SHA256=$(sha256sum "$RAW" | awk '{print $1}')"
+          echo "RAW_BYTES=$(wc -c < "$RAW" | tr -d ' ')"
