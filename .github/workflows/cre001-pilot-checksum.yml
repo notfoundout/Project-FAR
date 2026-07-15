@@ -25,6 +25,7 @@ jobs:
           from pathlib import Path
           import hashlib
           import json
+          import textwrap
 
           root = Path.cwd()
           record = root / 'theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1'
@@ -36,7 +37,7 @@ jobs:
           try:
               json.loads(text)
           except json.JSONDecodeError as exc:
-              obj, boundary = json.JSONDecoder().raw_decode(text)
+              _, boundary = json.JSONDecoder().raw_decode(text)
               tail = text[boundary:]
               if exc.msg != 'Extra data' or not tail.startswith(',"evaluator_self_audit"') or text[boundary - 1] != '}':
                   raise
@@ -49,16 +50,18 @@ jobs:
           byte_count = len(payload)
 
           metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
-          metadata['raw_artifact_path'] = str(raw.relative_to(root))
-          metadata['raw_artifact_checksum_algorithm'] = 'SHA-256'
-          metadata['raw_artifact_checksum_sha256'] = digest
-          metadata['raw_artifact_byte_count'] = byte_count
-          metadata['raw_artifact_preservation_status'] = 'complete; exact raw evaluator JSON preserved immutably'
-          metadata['raw_artifact_immutable'] = True
-          metadata['raw_preservation_pending'] = False
-          metadata['canonical_ingestion_eligibility'] = False
-          metadata['next_action'] = 'evaluator correction pass'
-          metadata['evaluator_rerun_status'] = 'not rerun'
+          metadata.update({
+              'raw_artifact_path': str(raw.relative_to(root)),
+              'raw_artifact_checksum_algorithm': 'SHA-256',
+              'raw_artifact_checksum_sha256': digest,
+              'raw_artifact_byte_count': byte_count,
+              'raw_artifact_preservation_status': 'complete; exact raw evaluator JSON preserved immutably',
+              'raw_artifact_immutable': True,
+              'raw_preservation_pending': False,
+              'canonical_ingestion_eligibility': False,
+              'next_action': 'evaluator correction pass',
+              'evaluator_rerun_status': 'not rerun',
+          })
           metadata['noncanonical_reasons'] = [
               item for item in metadata.get('noncanonical_reasons', [])
               if item != 'raw evaluator JSON not yet preserved in this repository update'
@@ -66,13 +69,10 @@ jobs:
           metadata_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
 
           review = review_path.read_text(encoding='utf-8')
-          old = '''## Raw artifact preservation status
-
-          The raw evaluator output was not present in the repository checkout available to this review and was not included as a byte-preservable JSON artifact in the task context. Therefore this review does not create, normalize, repair, or substitute a raw evaluator JSON artifact.
-
-          Required next action before immutable raw preservation can be complete: add the exact evaluator JSON byte-for-byte, except unavoidable final newline normalization, as `CRE-001-E01-claude-sonnet-medium-pilot-v1.raw.json` in this pilot-artifact record, then record its checksum in the adjacent metadata file.
-          '''
-          new = f'''## Raw artifact preservation status
+          start = review.index('## Raw artifact preservation status')
+          end = review.index('## Administrative status')
+          section = textwrap.dedent(f'''\
+          ## Raw artifact preservation status
 
           The exact raw evaluator output is preserved immutably at `{raw.relative_to(root)}`.
 
@@ -83,10 +83,9 @@ jobs:
           - The raw artifact remains noncanonical and ineligible for canonical ingestion.
           - Evaluator correction remains required.
           - Claude has not been rerun.
-          '''
-          if old not in review:
-              raise SystemExit('expected pending-preservation section not found')
-          review = review.replace(old, new)
+
+          ''')
+          review = review[:start] + section + review[end:]
           review = review.replace(
               'and raw evaluator preservation is pending until exact raw JSON is supplied.',
               'the exact raw evaluator output is preserved immutably; and it remains excluded from canonical CRE-001 processing.'
@@ -95,20 +94,19 @@ jobs:
 
           test_path = root / 'tests/regressions/test_cre001_pilot_artifact.py'
           test_path.parent.mkdir(parents=True, exist_ok=True)
-          test_path.write_text('''from __future__ import annotations
+          test_path.write_text(textwrap.dedent('''\
+          from __future__ import annotations
 
           import hashlib
           import json
           import unittest
           from pathlib import Path
 
-
           ROOT = Path(__file__).resolve().parents[2]
           RECORD = ROOT / "theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1"
           RAW = RECORD / "CRE-001-E01-claude-sonnet-medium-pilot-v1.raw.json"
           META = RECORD / "CRE-001-E01-claude-sonnet-medium-pilot-v1-review.metadata.json"
           REVIEW = RECORD / "CRE-001-E01-claude-sonnet-medium-pilot-v1-review.md"
-
 
           class Cre001PilotArtifactTests(unittest.TestCase):
               def setUp(self) -> None:
@@ -159,17 +157,15 @@ jobs:
                           if path.is_file():
                               self.assertNotIn(needle, path.read_text(encoding="utf-8", errors="ignore"), str(path))
 
-
           if __name__ == "__main__":
               unittest.main()
-          '''.replace('          ', ''), encoding='utf-8')
+          '''), encoding='utf-8')
 
           print(f'RAW_SHA256={digest}')
           print(f'RAW_BYTES={byte_count}')
           PY
 
           rm -f .github/workflows/cre001-pilot-checksum.yml
-
           python -m json.tool theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1/CRE-001-E01-claude-sonnet-medium-pilot-v1.raw.json >/dev/null
           python -m json.tool theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1/CRE-001-E01-claude-sonnet-medium-pilot-v1-review.metadata.json >/dev/null
           make test
