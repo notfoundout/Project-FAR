@@ -31,3 +31,9 @@ dashboard:
 
 release-readiness:
 	python tools/release_readiness_report.py
+
+test:
+	python tools/run_tests.py
+
+test-fast:
+	python tools/run_tests.py --fast

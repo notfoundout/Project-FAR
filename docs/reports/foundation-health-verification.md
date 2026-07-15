@@ -25,7 +25,7 @@ The `Makefile` repository health targets were present and were executed:
 
 # Verify Theory Status
 
-The locally reproducible checks from `.github/workflows/verify-theory.yml` were executed without performing intellectual theorem validation beyond the workflow's existing structural/tooling checks.
+The locally reproducible checks from `.github/workflows/repo-health.yml` were executed without performing intellectual theorem validation beyond the workflow's existing structural/tooling checks.
 
 Executed Verify Theory workflow checks:
 

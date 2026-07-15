@@ -46,13 +46,24 @@ The current formulation of FARA is universal within its explicitly defined scope
 
 Validation Investigation VI-001 established cross-domain representation.
 
-Validation Investigation VI-004 evaluated expressive power.
+Validation Investigation VI-004 is evaluating expressive power.
 
-Validation Investigation VI-005 investigated expressive boundaries.
+Validation Investigation VI-005 is investigating expressive boundaries.
 
-Validation Investigation VI-007 evaluated architectural sufficiency.
+Validation Investigation VI-007 is evaluating architectural sufficiency.
 
 Universality can be investigated only after those investigations have been completed.
+
+## Prerequisite and Sequencing Note
+
+Current prerequisite statuses:
+
+- VI-001 Cross-Domain Representation: Completed.
+- VI-004 Expressive Power: Research.
+- VI-005 Expressive Boundaries: Research.
+- VI-007 Architectural Sufficiency: Research.
+
+Substantive universality evaluation is blocked until all stated prerequisites are complete. The working hypothesis may be recorded before evaluation, but it must not be treated as supported or established while VI-004, VI-005, and VI-007 remain incomplete.
 
 ---
 

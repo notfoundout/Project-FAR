@@ -12,15 +12,9 @@ NEXT = ROOT / 'docs/planning/next-actions.md'
 
 
 def gap_counts() -> Counter:
-    counts = Counter()
-    if not GAPS.exists():
-        return counts
-    for line in GAPS.read_text(encoding='utf-8').splitlines():
-        if line.startswith('| ') and 'GAP-' in line:
-            parts = [p.strip() for p in line.strip('|').split('|')]
-            if len(parts) > 3:
-                counts[parts[3].title()] += 1
-    return counts
+    from detect_research_gaps import detect_gaps
+
+    return Counter(str(gap.get('severity', '')).title() for gap in detect_gaps())
 
 
 def git_changed(path: Path | None = None) -> bool:

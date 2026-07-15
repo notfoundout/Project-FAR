@@ -142,3 +142,25 @@ The current project order is:
 4. v0.3.1 repository maturity baseline published.
 5. v0.4.0 external validation completes and preserves EV-001 through EV-029 as preliminary evidence.
 6. CRP v1.0 is frozen and CRE-001 is registered but unexecuted.
+
+---
+
+## Canonical Maturity Dimensions
+
+This lowercase path, `docs/project-status.md`, is the canonical case-stable project-level status document. Generated status summaries, release-readiness reports, framework README files, milestone records, theorem catalogs, validation investigations, and open-question lists remain subordinate or domain-specific status sources.
+
+| Dimension | Current maturity | Notes |
+|---|---|---|
+| Repository maturity | Mature for documentation, governance, repository-health automation, preliminary external-system evaluation records, and comparative-study preparation. | This does not imply research completion. |
+| Framework maturity | FARA, FAR, FARO, and FARM are stable framework layers; FARE Mathematics v0.1 is frozen and requirement-driven. | Framework stability does not imply universality or comparative superiority. |
+| Implementation maturity | Prototype/mechanization support is limited to IR loading, validation, graph construction, trace inspection, selected transition summaries, and structural proof-object validation. | General semantic inference and general calculus execution remain unsupported. |
+| Proof-assurance maturity | Canonical theorem records are established only at their stated scope and assurance level. Current proof objects are structurally checked, not machine-verified formal proofs. | Assurance metadata is authoritative in `theory/metadata/theorems.yaml`. |
+| Empirical-validation maturity | EV-001 through EV-029 are preliminary external-system evaluations, not independent validation. CRE-001 is registered but unexecuted. | Independent validation requires isolated evaluators under a preregistered protocol. |
+| Release maturity | v0.4.0 is the current release baseline. | Release maturity does not strengthen theorem or validation claims. |
+
+## Preserved Unique Notes from Prior Status File
+
+- Status and maturity labels in this document describe project maturity only. They do not assign Charter artifact status.
+- Current research remains focused on preserving preliminary v0.4.0 external-system evaluation evidence while preparing future CRP v1.0 comparative execution.
+- Central research questions remain open: common reasoning structure, universality, primitive and assumption necessity, architectural and semantic minimality, counterexample construction, boundary identification, competing simpler structures, expressive power, alternative formulations, and unresolved uncertainty.
+- Current priorities are preserving preliminary evidence, maintaining CRP v1.0 as frozen methodology, completing operational prerequisites before evaluator recruitment, and keeping certification, compatibility mapping, blinded comparative evaluation, and independent external review distinct.

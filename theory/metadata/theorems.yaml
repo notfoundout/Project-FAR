@@ -18,6 +18,14 @@ theorems:
     scope: current Project FAR scope, definitions, and axioms
     claim: Conditional Primitive Minimality holds within current Project FAR scope,
       definitions, and axioms.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: conditional
+  assumptions:
+  - current Project FAR scope, definitions, and axioms
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-002
   title: Conditional Primitive Independence
   status: Established
@@ -38,6 +46,14 @@ theorems:
     scope: current Project FAR deletion-only reduction standard
     claim: Conditional Primitive Independence holds within current Project FAR deletion-only
       reduction standard.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: conditional
+  assumptions:
+  - current Project FAR deletion-only reduction standard
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-003
   title: Representation Theorem
   status: Established
@@ -62,6 +78,14 @@ theorems:
     predicate: holds
     scope: scoped explicit reasoning processes
     claim: Representation Theorem holds within scoped explicit reasoning processes.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: structural
+  assumptions:
+  - scoped explicit reasoning processes
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-004
   title: Semantic Preservation Theorem
   status: Established
@@ -82,6 +106,14 @@ theorems:
     scope: interpretation-preserving representation mappings
     claim: Semantic Preservation Theorem holds within interpretation-preserving representation
       mappings.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: definitional
+  assumptions:
+  - interpretation-preserving representation mappings
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-005
   title: Transition Completeness Theorem
   status: Established
@@ -101,6 +133,14 @@ theorems:
     scope: explicitly specified admissible reasoning transitions
     claim: Transition Completeness Theorem holds within explicitly specified admissible
       reasoning transitions.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: conditional
+  assumptions:
+  - explicitly specified admissible reasoning transitions
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-006
   title: Primitive Sufficiency Theorem
   status: Established
@@ -155,6 +195,14 @@ theorems:
     predicate: holds
     scope: registered derived concepts
     claim: Primitive Sufficiency Theorem holds within registered derived concepts.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: structural
+  assumptions:
+  - registered derived concepts
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-007
   title: Primitive Completeness Theorem
   status: Established
@@ -171,6 +219,14 @@ theorems:
     predicate: holds
     scope: scoped explicit reasoning processes
     claim: Primitive Completeness Theorem holds within scoped explicit reasoning processes.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: structural
+  assumptions:
+  - scoped explicit reasoning processes
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-008
   title: Canonical Representation Equivalence
   status: Established
@@ -188,11 +244,20 @@ theorems:
     predicate: holds
     scope: canonical FAR representations
     claim: Canonical Representation Equivalence holds within canonical FAR representations.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: structural
+  assumptions:
+  - canonical FAR representations
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-009
   title: Canonical Normal Form Theorem
   status: Established
   proof: theory/proofs/T-009-canonical-normal-form.md
-  scope: finite scoped FAR representations with explicit, total, preservation-respecting, terminating normalization rules
+  scope: finite scoped FAR representations with explicit, total, preservation-respecting,
+    terminating normalization rules
   dependencies:
   - L-007
   derived_concepts:
@@ -202,9 +267,19 @@ theorems:
     kind: theorem
     subject: Canonical Normal Form Theorem
     predicate: holds
-    scope: finite scoped FAR representations with explicit, total, preservation-respecting, terminating normalization rules
+    scope: finite scoped FAR representations with explicit, total, preservation-respecting,
+      terminating normalization rules
     claim: Canonical Normal Form Theorem holds within finite scoped FAR representations
       with explicit, total, preservation-respecting, terminating normalization rules.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: structural
+  assumptions:
+  - finite scoped FAR representations with explicit, total, preservation-respecting,
+    terminating normalization rules
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-010
   title: Reconstruction Theorem
   status: Established
@@ -227,6 +302,15 @@ theorems:
       and specified interpretation
     claim: Reconstruction Theorem holds for FAR representations complete relative
       to a reconstruction objective, scope, and specified interpretation.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: conditional
+  assumptions:
+  - FAR representations complete relative to a reconstruction objective, scope, and
+    specified interpretation
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-011
   title: Conservative Extension Theorem
   status: Established
@@ -242,8 +326,16 @@ theorems:
     subject: Conservative Extension Theorem
     predicate: holds
     scope: proof-preserving definitionally conservative FAR extensions
-    claim: Conservative Extension Theorem holds within proof-preserving definitionally conservative
-      FAR extensions.
+    claim: Conservative Extension Theorem holds within proof-preserving definitionally
+      conservative FAR extensions.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: definitional
+  assumptions:
+  - proof-preserving definitionally conservative FAR extensions
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-012
   title: FAR Model Equivalence Theorem
   status: Established
@@ -262,6 +354,14 @@ theorems:
     predicate: holds
     scope: specified preservation profiles
     claim: FAR Model Equivalence Theorem holds within specified preservation profiles.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: conditional
+  assumptions:
+  - specified preservation profiles
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-013
   title: Relative Soundness Theorem
   status: Established
@@ -277,6 +377,14 @@ theorems:
     predicate: holds
     scope: supplied target calculi
     claim: Relative Soundness Theorem holds within supplied target calculi.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: conditional
+  assumptions:
+  - supplied target calculi
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-014
   title: Relative Completeness Theorem
   status: Established
@@ -293,6 +401,14 @@ theorems:
     scope: supplied target calculi and explicit transition domains
     claim: Relative Completeness Theorem holds within supplied target calculi and
       explicit transition domains.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: conditional
+  assumptions:
+  - supplied target calculi and explicit transition domains
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.
 - id: T-015
   title: Explicit Reasoning Meta-Theorem
   status: Established
@@ -311,3 +427,11 @@ theorems:
     scope: explicit reasoning systems satisfying Project FAR scope assumptions
     claim: Explicit Reasoning Meta-Theorem holds within explicit reasoning systems
       satisfying Project FAR scope assumptions.
+  assurance_level: semantically_constrained_proof_object
+  review_status: internal_structural_review
+  theorem_category: structural
+  assumptions:
+  - explicit reasoning systems satisfying Project FAR scope assumptions
+  counterexample_condition: A counterexample must violate the theorem under its recorded
+    scope and assumptions; definition-relative theorems are challenged by showing
+    a mismatch between definition and claimed unfolding.

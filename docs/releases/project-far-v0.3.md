@@ -29,7 +29,7 @@ The initial automation layer consists of:
 - `tools/check_registry.py`
 - `tools/check_notation.py`
 - `tools/check_circularity.py`
-- `.github/workflows/verify-theory.yml`
+- `.github/workflows/repo-health.yml`
 - `requirements.txt`
 
 ---

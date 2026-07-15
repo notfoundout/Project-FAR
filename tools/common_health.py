@@ -1,5 +1,5 @@
 from __future__ import annotations
-import os, re, subprocess, sys
+import os, re, subprocess, sys, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,5 +44,23 @@ def markdown_links(text: str):
         for m in LINK_RE.finditer(line):
             yield i, m.group(3).strip(), bool(m.group(1)), m.group(2)
 
-def run(cmd, cwd=ROOT):
-    return subprocess.run(cmd, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+DEFAULT_HEALTH_TIMEOUT_SECONDS = int(os.environ.get("PROJECT_FAR_HEALTH_TIMEOUT", "120"))
+
+def run(cmd, cwd=ROOT, timeout: int | float | None = DEFAULT_HEALTH_TIMEOUT_SECONDS):
+    start = time.monotonic()
+    try:
+        return subprocess.run(cmd, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout)
+    except subprocess.TimeoutExpired as exc:
+        elapsed = time.monotonic() - start
+        stdout = exc.stdout or ""
+        stderr = exc.stderr or ""
+        if isinstance(stdout, bytes):
+            stdout = stdout.decode(errors="replace")
+        if isinstance(stderr, bytes):
+            stderr = stderr.decode(errors="replace")
+        output = stdout + stderr
+        message = (
+            f"TIMEOUT after {timeout} seconds (elapsed {elapsed:.1f}s): {' '.join(map(str, cmd))}\n"
+            f"{output}"
+        )
+        return subprocess.CompletedProcess(cmd, 124, message, "")

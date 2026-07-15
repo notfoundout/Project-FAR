@@ -1,32 +1,42 @@
 name: Repository Maintenance
-
 on:
-  workflow_dispatch:
-
+  workflow_dispatch: null
 jobs:
   maintenance:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-      - name: Install dependencies
-        run: python -m pip install pyyaml
-      - name: One-click repository maintenance
-        run: |
-          start=$(date +%s)
-          echo "# Repository Maintenance Summary" > maintenance-summary.md
-          echo "## Repository Health" >> maintenance-summary.md
-          make health-fast 2>&1 | tee -a maintenance-summary.md
-          echo "## Dashboard Regeneration" >> maintenance-summary.md
-          make dashboard 2>&1 | tee -a maintenance-summary.md
-          echo "## Release Readiness" >> maintenance-summary.md
-          python tools/release_readiness_report.py 2>&1 | tee -a maintenance-summary.md
-          end=$(date +%s)
-          echo "execution_time_seconds=$((end-start))" >> "$GITHUB_STEP_SUMMARY"
-          cat maintenance-summary.md >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: repository-maintenance-summary
-          path: docs/reports/release-readiness-report.md
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: 3.x
+    - name: Install dependencies
+      run: python -m pip install pyyaml
+    - name: One-click repository maintenance
+      run: 'start=$(date +%s)
+
+        echo "# Repository Maintenance Summary" > maintenance-summary.md
+
+        echo "## Repository Health" >> maintenance-summary.md
+
+        make health-fast 2>&1 | tee -a maintenance-summary.md
+
+        echo "## Dashboard Regeneration" >> maintenance-summary.md
+
+        make dashboard 2>&1 | tee -a maintenance-summary.md
+
+        echo "## Release Readiness" >> maintenance-summary.md
+
+        python tools/release_readiness_report.py 2>&1 | tee -a maintenance-summary.md
+
+        end=$(date +%s)
+
+        echo "execution_time_seconds=$((end-start))" >> "$GITHUB_STEP_SUMMARY"
+
+        cat maintenance-summary.md >> "$GITHUB_STEP_SUMMARY"
+
+        '
+    - uses: actions/upload-artifact@v4
+      with:
+        name: repository-maintenance-summary
+        path: docs/reports/release-readiness-report.md
+    timeout-minutes: 30

@@ -1,20 +1,19 @@
 name: Repository Health
-
 on:
-  pull_request:
+  pull_request: null
   push:
     branches:
-      - main
-
+    - main
 jobs:
   repo-health:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Run fast repository health check
-        run: python tools/repo_health_check.py --fast
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Run canonical fast repository health check
+      run: python tools/repo_health_check.py --fast
+    timeout-minutes: 30
