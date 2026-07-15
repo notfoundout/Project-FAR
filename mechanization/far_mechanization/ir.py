@@ -139,7 +139,7 @@ class ReasoningStep(_IRObject):
     required_text_fields = ("rationale",)
 
     def validate(self) -> tuple[Diagnostic, ...]:
-        diagnostics = list(super().validate())
+        diagnostics = list(_IRObject.validate(self))
         if self.order < 0:
             diagnostics.append(Diagnostic(DiagnosticCode.INVALID_INTERNAL_OBJECT_SHAPE, DiagnosticSeverity.ERROR, "reasoning step order must be non-negative", related_identifier=str(self.identifier)))
         return tuple(diagnostics)

@@ -31,3 +31,6 @@ dashboard:
 
 release-readiness:
 	python tools/release_readiness_report.py
+
+test:
+	python -m unittest discover -s tests/mechanization -p "test_*.py"

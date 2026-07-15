@@ -6,25 +6,25 @@ This advisory report is the canonical Project FAR release checklist. It never pu
 
 | Metric | Current | Source |
 |---|---:|---|
-| Markdown files | 591 | [.](../..) |
-| Theory files | 133 | [theory](../../theory) |
-| Python tools | 32 | [tools](../../tools) |
-| Reports | 14 | [docs/reports](.) |
-| Registries | 6 | [theory](../../theory) |
+| Markdown files | 819 | [.](../..) |
+| Theory files | 215 | [theory](../../theory) |
+| Python tools | 39 | [tools](../../tools) |
+| Reports | 179 | [docs/reports](.) |
+| Registries | 10 | [theory](../../theory) |
 | Proof objects | 15 | [theory/proof-objects](../../theory/proof-objects) |
-| Examples | 33 | [examples](../../examples) |
-| Maintenance documents | 3 | [docs/maintenance](../maintenance) |
-| Releases | 12 | [docs/releases](../releases) |
+| Examples | 43 | [examples](../../examples) |
+| Maintenance documents | 5 | [docs/maintenance](../maintenance) |
+| Releases | 17 | [docs/releases](../releases) |
 | Internal evaluations | 23 | [theory/evaluation/evidence-registry.yaml](../../theory/evaluation/evidence-registry.yaml) |
-| External evaluations | 20 | [theory/evaluation/external-validation-registry.yaml](../../theory/evaluation/external-validation-registry.yaml) |
+| External evaluations | 29 | [theory/evaluation/external-validation-registry.yaml](../../theory/evaluation/external-validation-registry.yaml) |
 | Adversarial fixtures | 14 | [theory/falsification/adversarial-test-suite.yaml](../../theory/falsification/adversarial-test-suite.yaml) |
 | Counterexample fixtures | 1 | [tests](../../tests) |
 | Candidate primitive failures | 0 | [theory/falsification/primitive-pressure-registry.yaml](../../theory/falsification/primitive-pressure-registry.yaml) |
-| Conservative extensions | 33 | [theory/falsification/primitive-pressure-registry.yaml](../../theory/falsification/primitive-pressure-registry.yaml) |
-| Fits FAR | 12 | [theory/evaluation/evidence-registry.yaml](../../theory/evaluation/evidence-registry.yaml) |
-| Unresolved cases | 12 | [docs/reports/research-gap-report.md](research-gap-report.md) |
-| Unresolved gaps | 91 | [docs/reports/research-gap-report.md](research-gap-report.md) |
-| Documentation coverage | 591 | [docs](..) |
+| Conservative extensions | 35 | [theory/falsification/primitive-pressure-registry.yaml](../../theory/falsification/primitive-pressure-registry.yaml) |
+| Fits FAR | 14 | [theory/evaluation/evidence-registry.yaml](../../theory/evaluation/evidence-registry.yaml) |
+| Unresolved cases | 17 | [docs/reports/research-gap-report.md](research-gap-report.md) |
+| Unresolved gaps | 156 | [docs/reports/research-gap-report.md](research-gap-report.md) |
+| Documentation coverage | 819 | [docs](..) |
 | Health-check availability | 1 | [tools/repo_health_check.py](../../tools/repo_health_check.py) |
 
 ## Validation Results
@@ -39,14 +39,14 @@ This advisory report is the canonical Project FAR release checklist. It never pu
 | Registry Validation | PASS | [tools/check_registry.py](../../tools/check_registry.py) |
 | Critical Research Gaps | 0 | [docs/reports/research-gap-report.md](research-gap-report.md) |
 | Candidate Primitive Failures | 0 | [theory/falsification/primitive-pressure-registry.yaml](../../theory/falsification/primitive-pressure-registry.yaml) |
-| Documentation Completeness | 591 | [docs](..) |
+| Documentation Completeness | 819 | [docs](..) |
 | Planner Freshness | PASS | [docs/planning/next-actions.md](../planning/next-actions.md) |
 
 ## Documentation Status
 
-- Markdown files: 591
-- Reports: 14
-- Maintenance documents: 3
+- Markdown files: 819
+- Reports: 179
+- Maintenance documents: 5
 
 ## Planning Status
 
@@ -85,6 +85,12 @@ READY WITH WARNINGS
 <details><summary>Health output excerpt</summary>
 
 ```text
+- WARNING: step s5 lemma_application has weak semantic overlap with L-004 metadata statement
+- WARNING: step s6 lemma_application has weak semantic overlap with L-005 metadata statement
+PASS proof object theory/proof-objects/T-002.proof.yaml
+
+==> proof object theory/proof-objects/T-003.proof.yaml: /root/.pyenv/versions/3.14.4/bin/python tools/check_proof_object.py theory/proof-objects/T-003.proof.yaml
+PROOF OBJECT CHECK PASSED
 - WARNING: step s2 axiom_application has weak semantic overlap with A1 metadata statement
 - WARNING: step s3 axiom_application has weak semantic overlap with A1 metadata statement
 - WARNING: step s3 axiom_application has weak semantic overlap with A2 metadata statement
@@ -122,8 +128,6 @@ PASS proof object theory/proof-objects/T-008.proof.yaml
 
 ==> proof object theory/proof-objects/T-009.proof.yaml: /root/.pyenv/versions/3.14.4/bin/python tools/check_proof_object.py theory/proof-objects/T-009.proof.yaml
 PROOF OBJECT CHECK PASSED
-- WARNING: step s1 prior_theorem has weak semantic overlap with T-009 metadata statement
-- WARNING: step s1 prior_theorem has weak semantic overlap with T-003 metadata statement
 - WARNING: step s2 lemma_application has weak semantic overlap with L-007 metadata statement
 PASS proof object theory/proof-objects/T-009.proof.yaml
 
@@ -131,9 +135,8 @@ PASS proof object theory/proof-objects/T-009.proof.yaml
 PROOF OBJECT CHECK PASSED
 - WARNING: step s1 prior_theorem has weak semantic overlap with T-010 metadata statement
 - WARNING: step s1 prior_theorem has weak semantic overlap with T-003 metadata statement
-- WARNING: step s2 prior_theorem has weak semantic overlap with T-005 metadata statement
 - WARNING: step s4 prior_theorem has weak semantic overlap with T-004 metadata statement
-- WARNING: step s5 prior_theorem has weak semantic overlap with T-009 metadata statement
+- WARNING: step s5 prior_proposition has weak semantic overlap with P-007 metadata statement
 PASS proof object theory/proof-objects/T-010.proof.yaml
 
 ==> proof object theory/proof-objects/T-011.proof.yaml: /root/.pyenv/versions/3.14.4/bin/python tools/check_proof_object.py theory/proof-objects/T-011.proof.yaml
@@ -144,7 +147,6 @@ PASS proof object theory/proof-objects/T-011.proof.yaml
 
 ==> proof object theory/proof-objects/T-012.proof.yaml: /root/.pyenv/versions/3.14.4/bin/python tools/check_proof_object.py theory/proof-objects/T-012.proof.yaml
 PROOF OBJECT CHECK PASSED
-- WARNING: step s3 prior_theorem has weak semantic overlap with T-004 metadata statement
 PASS proof object theory/proof-objects/T-012.proof.yaml
 
 ==> proof object theory/proof-objects/T-013.proof.yaml: /root/.pyenv/versions/3.14.4/bin/python tools/check_proof_object.py theory/proof-objects/T-013.proof.yaml
@@ -159,12 +161,10 @@ PASS proof object theory/proof-objects/T-014.proof.yaml
 PROOF OBJECT CHECK PASSED
 - WARNING: step s2 prior_theorem has weak semantic overlap with T-015 metadata statement
 - WARNING: step s2 prior_theorem has weak semantic overlap with T-003 metadata statement
-- WARNING: step s3 prior_theorem has weak semantic overlap with T-007 metadata statement
-- WARNING: step s3 prior_theorem has weak semantic overlap with T-015 metadata statement
 PASS proof object theory/proof-objects/T-015.proof.yaml
 
 Repository health summary:
-passed: 102 warnings: 0 failures: 0
+passed: 105 warnings: 0 failures: 0
 ```
 
 </details>
