@@ -16,10 +16,10 @@ No Project FAR theorem statement, proposition, axiom, lemma, or mathematical cla
 ## Workflow identified
 
 - Workflow: `Verify Theory`
-- Workflow file: `.github/workflows/verify-theory.yml`
+- Workflow file: `.github/workflows/repo-health.yml`
 - Branch under repair: `codex/fix-verify-theory-main`
 - GitHub Actions run access: the workspace has no configured `origin` remote and no `gh` CLI; direct `git ls-remote https://github.com/notfoundout/Project-FAR.git` was blocked by the environment with `CONNECT tunnel failed, response 403`. Therefore the failing GitHub Actions run could not be opened directly from this container.
-- Reproduction source used: the current main snapshot available in the workspace, starting at commit `893700d` (`Validate T-011 (#119)`), and the exact commands declared by `.github/workflows/verify-theory.yml`.
+- Reproduction source used: the current main snapshot available in the workspace, starting at commit `893700d` (`Validate T-011 (#119)`), and the exact commands declared by `.github/workflows/repo-health.yml`.
 
 ## Failing jobs
 

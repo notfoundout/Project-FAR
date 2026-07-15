@@ -1,0 +1,11 @@
+capabilities:
+  ir_loading: implemented_and_tested
+  validation: implemented_and_tested
+  graph_construction: implemented_and_tested
+  proof_trace_inspection: implemented_and_tested
+  transition_summary: implemented_and_tested
+  narrow_transition_execution: implemented_but_experimental
+  semantic_inference: unsupported
+  general_calculus_execution: unsupported
+  machine_verified_formal_proof: unsupported
+  structural_proof_object_validation: implemented_and_tested

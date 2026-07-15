@@ -25,21 +25,21 @@ Theorems must reference:
 
 ## T-001 — Conditional Primitive Minimality
 
-The current primitive architecture is minimal relative to the current Project FAR scope, definitions, and axioms.
+The current primitive architecture is minimal only relative to the current Project FAR definitions, axioms, primitive basis, and deletion-only reduction standard. This does not establish global minimality, uniqueness of the primitive set, minimality across all possible vocabularies, minimality under arbitrary lower-level reconstructions, or empirical/comparative superiority.
 
 Proof: `../proofs/T-001-primitive-minimality.md`
 
-Status: Established, conditional.
+Status: Established (Conditional).
 
 ---
 
 ## T-002 — Conditional Primitive Independence
 
-No current primitive is derivable from the other four without loss of expressive power under the current Project FAR reduction standard.
+No current theorem primitive is derivable from the other theorem primitives without loss of expressive power under the current Project FAR definitions and deletion-only reduction standard. This does not establish absolute independence, independence under every reconstruction, independence from future lower-level theories, global irreducibility, or empirical/comparative superiority.
 
 Proof: `../proofs/T-002-primitive-independence.md`
 
-Status: Established, conditional.
+Status: Established (Conditional).
 
 ---
 

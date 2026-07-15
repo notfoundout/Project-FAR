@@ -5,7 +5,7 @@
   "completed_items": [
     "repository baseline verified from checked-out contents",
     "protocol version verified",
-    "release baseline verified from docs/PROJECT_STATUS.md and docs/releases/project-far-v0.4.0.md",
+    "release baseline verified from docs/project-status.md and docs/releases/project-far-v0.4.0.md",
     "frozen package hashes verified",
     "assignment randomization completed",
     "assignment identifiers created",

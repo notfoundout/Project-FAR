@@ -31,7 +31,7 @@ GENERATED_LEMMA_INDEX = METADATA_DIR / "generated-lemma-index.md"
 GENERATED_DEFINITION_INDEX = METADATA_DIR / "generated-definition-index.md"
 GENERATED_AXIOM_INDEX = METADATA_DIR / "generated-axiom-index.md"
 
-REQUIRED_THEOREM_FIELDS = {"id", "title", "status", "proof", "scope", "dependencies", "derived_concepts"}
+REQUIRED_THEOREM_FIELDS = {"id", "title", "status", "proof", "scope", "dependencies", "derived_concepts", "assurance_level", "review_status", "theorem_category", "assumptions", "counterexample_condition"}
 REQUIRED_RESULT_FIELDS = {"id", "title", "status", "source", "scope", "dependencies"}
 REQUIRED_PROOF_OBJECT_FIELDS = {"id", "theorem", "status", "premises", "steps", "conclusion"}
 REQUIRED_PROOF_OBJECT_THEOREMS = {
@@ -39,7 +39,9 @@ REQUIRED_PROOF_OBJECT_THEOREMS = {
     "T-006", "T-007", "T-008", "T-009", "T-010",
     "T-011", "T-012", "T-013", "T-014", "T-015",
 }
-KNOWN_STATUSES = {"Draft", "Proposed", "Verified", "Established", "Deprecated"}
+KNOWN_STATUSES = {"Draft", "Proposed", "Verified", "Established", "Established (Conditional)", "Deprecated"}
+ALLOWED_ASSURANCE_LEVELS = {"narrative_argument", "structurally_checked_proof_object", "semantically_constrained_proof_object", "machine_verified_formal_proof", "independently_reviewed_proof"}
+ALLOWED_THEOREM_CATEGORIES = {"definitional", "structural", "conditional", "substantive", "empirical"}
 BASE_DEPENDENCIES = {"derived-concept-registry", "canonical-notation", "definition-policy", "FAR-model-theory"}
 CANONICAL_SYMBOLS = ["I", "Rep", "S", "Int", "C", "T"]
 CANONICAL_SPECIAL_SYMBOLS = ["⊨", "≡sem", "≡str", "≡Q", "NF"]
@@ -160,6 +162,15 @@ def validate_required_fields(items: List[Dict[str, Any]], required: Set[str], pr
             raise VerificationError(f"Invalid status for {item_id}: {item['status']}")
         if not isinstance(item["dependencies"], list):
             raise VerificationError(f"dependencies must be a list for {item_id}")
+        if prefix == "T":
+            if item.get("assurance_level") not in ALLOWED_ASSURANCE_LEVELS:
+                raise VerificationError(f"Invalid assurance_level for {item_id}: {item.get('assurance_level')}")
+            if item.get("theorem_category") not in ALLOWED_THEOREM_CATEGORIES:
+                raise VerificationError(f"Invalid theorem_category for {item_id}: {item.get('theorem_category')}")
+            if item.get("assurance_level") == "machine_verified_formal_proof":
+                raise VerificationError(f"{item_id} claims machine_verified_formal_proof, which is not supported by current structural proof-object tooling")
+            if not isinstance(item.get("assumptions"), list):
+                raise VerificationError(f"assumptions must be a list for {item_id}")
         if "aliases" in item and not isinstance(item["aliases"], list):
             raise VerificationError(f"aliases must be a list for {item_id}")
 
@@ -347,12 +358,12 @@ def build_index(items: List[Dict[str, Any]], title: str, source_column: str) -> 
         "",
         "This file is generated from machine-readable metadata.",
         "",
-        f"| ID | Title | Status | {source_column.title()} | Scope |",
-        "|---|---|---|---|---|",
+        f"| ID | Title | Status | {source_column.title()} | Scope | Category | Assurance |",
+        "|---|---|---|---|---|---|---|",
     ]
     for item in sorted(items, key=lambda x: x["id"]):
         source = item.get("proof") or item.get("source")
-        lines.append(f"| {item['id']} | {item['title']} | {item['status']} | `{source}` | {item['scope']} |")
+        lines.append(f"| {item['id']} | {item['title']} | {item['status']} | `{source}` | {item['scope']} | {item.get('theorem_category', 'n/a')} | {item.get('assurance_level', 'n/a')} |")
     lines.append("")
     return "\n".join(lines)
 

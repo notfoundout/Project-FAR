@@ -56,6 +56,14 @@ Independent evidence must therefore be produced.
 
 ---
 
+
+
+## Relationship to T-002
+
+T-002 establishes a conditional deletion-independence result under its stated assumptions. VI-003 remains incomplete because its broader reconstruction, re-execution, counterexample-minimization, and equivalent-reconstruction criteria have not all been satisfied.
+
+---
+
 # Candidate Primitive Basis
 
 - Object

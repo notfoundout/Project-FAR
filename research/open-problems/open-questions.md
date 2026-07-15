@@ -20,21 +20,43 @@ Can one or more candidate primitive concepts be derived from simpler concepts wi
 
 ---
 
-## Primitive Independence
+## Conditional Primitive Minimality
 
-Are the current candidate primitive concepts mutually independent?
+Does T-001 establish primitive minimality under the current Project FAR definitions and axioms, the current theorem primitive basis, and the deletion-only reduction standard?
 
-**Status:** Active
+**Status:** Resolved (Conditional)
+
+T-001 establishes minimality only under the current Project FAR definitions and axioms, the current theorem primitive basis, and the deletion-only reduction standard. This does not establish global minimality.
 
 ---
 
-## Primitive Minimality
+## Global Primitive Minimality
 
-Is the current collection of candidate primitive concepts minimal?
-
-Would removing any primitive reduce the expressive power of the architecture?
+Is the primitive basis minimal across alternative vocabularies, under non-deletion reductions, under lower-level reconstructions, or under comparative representational evaluation?
 
 **Status:** Active
+
+The original question of whether the current collection of candidate primitive concepts is minimal remains open at global scope. CRE-001 and later alternative-vocabulary work may provide relevant evidence, but CRE-001 alone would not prove global minimality.
+
+---
+
+## Conditional Primitive Independence
+
+Does T-002 establish deletion-independence under its stated Project FAR definitions and deletion-only reduction standard?
+
+**Status:** Resolved (Conditional)
+
+T-002 establishes deletion-independence under its stated scope and assumptions. This does not establish global independence.
+
+---
+
+## Global Primitive Independence
+
+Do the primitives remain independent under arbitrary equivalent reconstruction, alternative formal bases, lower-level ontologies, broader reduction standards, or completed VI-003 execution?
+
+**Status:** Active
+
+The original question of whether the current candidate primitive concepts are mutually independent remains open at global scope.
 
 ---
 
@@ -136,9 +158,9 @@ Can every structured, explicit, and auditable reasoning process be represented w
 
 ---
 
-## OP-2
+## OP-2 — Global Primitive Independence
 
-Are the current candidate primitive concepts mutually independent?
+Do the current candidate primitive concepts remain mutually independent under arbitrary equivalent reconstruction, alternative formal bases, lower-level ontologies, broader reduction standards, or completed VI-003 execution?
 
 **Status:** Open
 

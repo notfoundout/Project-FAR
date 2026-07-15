@@ -85,7 +85,7 @@ Evaluate the applicability of Project FAR across existing reasoning frameworks.
 
 ### Status
 
-Current completion state is recorded in `PROJECT_STATUS.md`.
+Current completion state is recorded in `project-status.md`.
 
 ---
 
@@ -105,7 +105,7 @@ Demonstrate Project FAR through complete worked investigations.
 
 ### Status
 
-Current completion state is recorded in `PROJECT_STATUS.md`.
+Current completion state is recorded in `project-status.md`.
 
 ---
 
