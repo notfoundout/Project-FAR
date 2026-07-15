@@ -39,7 +39,7 @@ REQUIRED_PROOF_OBJECT_THEOREMS = {
     "T-006", "T-007", "T-008", "T-009", "T-010",
     "T-011", "T-012", "T-013", "T-014", "T-015",
 }
-KNOWN_STATUSES = {"Draft", "Proposed", "Verified", "Established", "Deprecated"}
+KNOWN_STATUSES = {"Draft", "Proposed", "Verified", "Established", "Established (Conditional)", "Deprecated"}
 ALLOWED_ASSURANCE_LEVELS = {"narrative_argument", "structurally_checked_proof_object", "semantically_constrained_proof_object", "machine_verified_formal_proof", "independently_reviewed_proof"}
 ALLOWED_THEOREM_CATEGORIES = {"definitional", "structural", "conditional", "substantive", "empirical"}
 BASE_DEPENDENCIES = {"derived-concept-registry", "canonical-notation", "definition-policy", "FAR-model-theory"}
