@@ -63,40 +63,16 @@ Trend data is not yet available because no prior generated snapshot is stored.
 
 ## Top Priority Tasks
 
-### TASK-045: Review unresolved primitive pressure at `Reasoning Calculus`
-- Source gap: [GAP-045](docs/reports/research-gap-report.md#gap-045)
-- Affected files:
-  - `Reasoning Calculus`
-- Suggested branch: `maintenance/review-unresolved-primitive-pressure-gap-045`
-- Suggested PR title: `Review unresolved primitive pressure (GAP-045)`
+1. Finalize and verify the scoped status resolution for minimality and independence.
+2. Complete CRE-001 operational prerequisites.
+3. Recruit eligible independent evaluators.
+4. Execute CRE-001 under the frozen protocol.
+5. Preserve all successful, failed, partial, and divergent mappings.
+6. Analyze results using the preregistered decision rules.
+7. Update theorem and investigation statuses only after evidence warrants it.
+8. Prepare independent replication.
 
-### TASK-001: Review unresolved case at `PS-001`
-- Source gap: [GAP-001](docs/reports/research-gap-report.md#gap-001)
-- Affected files:
-  - `PS-001`
-- Suggested branch: `maintenance/review-unresolved-case-gap-001`
-- Suggested PR title: `Review unresolved case (GAP-001)`
-
-### TASK-002: Review provisional system at `PS-001`
-- Source gap: [GAP-002](docs/reports/research-gap-report.md#gap-002)
-- Affected files:
-  - `PS-001`
-- Suggested branch: `maintenance/review-provisional-system-gap-002`
-- Suggested PR title: `Review provisional system (GAP-002)`
-
-### TASK-003: Review unresolved case at `PS-002`
-- Source gap: [GAP-003](docs/reports/research-gap-report.md#gap-003)
-- Affected files:
-  - `PS-002`
-- Suggested branch: `maintenance/review-unresolved-case-gap-003`
-- Suggested PR title: `Review unresolved case (GAP-003)`
-
-### TASK-004: Review provisional system at `PS-002`
-- Source gap: [GAP-004](docs/reports/research-gap-report.md#gap-004)
-- Affected files:
-  - `PS-002`
-- Suggested branch: `maintenance/review-unresolved-case-gap-004`
-- Suggested PR title: `Review unresolved case (GAP-004)`
+Current status boundaries: T-001 and T-002 are conditionally established only at their stated scope; VI-002 and VI-003 remain Research; global primitive minimality, global primitive independence, universality, future independent validation, and machine-verified formal proof are not established and current structural checks are not machine-verified formal proof; CRE-001 remains unexecuted.
 
 ## Research Gap Summary
 

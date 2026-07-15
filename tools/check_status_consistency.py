@@ -77,6 +77,24 @@ def title_similarity(a: str, b: str) -> float:
     return len(ta & tb) / math.sqrt(len(ta) * len(tb))
 
 
+
+def title_scope(title: str) -> str:
+    tokens = title_tokens(title)
+    if "global" in tokens:
+        return "global"
+    if "conditional" in tokens:
+        return "conditional"
+    return "broad"
+
+
+def scope_compatible_for_fallback(a: StatusRecord, b: StatusRecord) -> bool:
+    scopes = {title_scope(a.title), title_scope(b.title)}
+    if "conditional" in scopes and scopes != {"conditional"}:
+        return False
+    if "global" in scopes and scopes != {"global"}:
+        return False
+    return True
+
 def _record(path: Path, cls: str, line: int, title: str, status: str | None, explicit_id: str | None = None) -> StatusRecord:
     return StatusRecord(str(path.relative_to(ROOT)) if path.is_absolute() and path.is_relative_to(ROOT) else str(path), cls, line, line, explicit_id, title.strip(), status.strip() if status else None, normalize_status(status))
 
@@ -156,7 +174,7 @@ def match_reason(a: StatusRecord, b: StatusRecord) -> tuple[str, float] | None:
     if re.sub(r"\s+", " ", a.title.lower()).strip() == re.sub(r"\s+", " ", b.title.lower()).strip():
         return ("exact-title", 1.0)
     score = title_similarity(a.title, b.title)
-    if score >= SIMILARITY_THRESHOLD:
+    if score >= SIMILARITY_THRESHOLD and scope_compatible_for_fallback(a, b):
         return ("fallback-title-similarity", score)
     return None
 

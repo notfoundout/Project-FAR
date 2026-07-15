@@ -18,7 +18,7 @@ The v0.4.0 release does not change FAR primitives, definitions, axioms, theorem 
 | FARE | Mathematics | Frozen, requirement-driven |
 | FARM | Meta-framework coordination | Stable |
 
-Active development now moves toward controlled CRE-001 pre-exposure operations under frozen CRP v1.0, while preserving external validation as preliminary evidence.
+Active development now moves toward controlled CRE-001 pre-exposure operations under frozen CRP v1.0, while preserving external validation as preliminary evidence. T-001 and T-002 are conditionally established only at their recorded scope and assurance level; VI-002 and VI-003 remain active broader research investigations, and global primitive minimality, global primitive independence, universality, CRE-001 execution, comparative superiority, and future independent validation remain unresolved or unexecuted as applicable.
 
 ---
 
@@ -128,7 +128,7 @@ Stable components:
 
 ### Post-v0.4.0 CRE-001 Preparation
 
-The active target is completing operational prerequisites for CRE-001 execution under frozen CRP v1.0. The experiment remains unexecuted until evaluator recruitment, calibration, randomized assignment, provenance assignment, isolation confirmation, and pre-exposure hash verification are complete.
+The active target is completing operational prerequisites for CRE-001 execution under frozen CRP v1.0. The experiment remains unexecuted until evaluator recruitment, calibration, randomized assignment, provenance assignment, isolation confirmation, and pre-exposure hash verification are complete. Minimality and independence status work is scoped: conditional theorem results are preserved, while broader VI-002/VI-003 and global questions remain active.
 
 ---
 
