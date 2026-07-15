@@ -225,7 +225,7 @@ Future investigations may establish a valid reduction.
 
 | Primitive | Status | Classification |
 |-----------|:------:|----------------|
-| Object | Completed | Independent (Provisional) |
+| Object | Scoped reduction study completed | Independent (Provisional) |
 | Property | Pending | — |
 | Relation | Pending | — |
 | Representation | Pending | — |
@@ -262,7 +262,7 @@ Each investigation should be conducted independently using the methodology defin
 
 Research
 
-Completed Reduction Investigations:
+Scoped Reduction Work Completed:
 
 - Reduction Investigation 1 — Object
 
@@ -1342,12 +1342,16 @@ Future work should focus on:
 
 # Research Status
 
-Completed
+Research
 
-Overall Result:
+Scoped Result:
 
-**PASS (Provisional)**
+The current reduction study supports a provisional local result under the current Project FAR primitive basis and deletion-only standard. Global minimality remains unresolved.
 
-No successful reduction of the current candidate primitive basis was established.
+- Local/conditional result: supported.
+- Full investigation: active.
+- Global minimality: unresolved.
+
+No successful reduction of the current candidate primitive basis was established within the completed scoped reduction work.
 
 
