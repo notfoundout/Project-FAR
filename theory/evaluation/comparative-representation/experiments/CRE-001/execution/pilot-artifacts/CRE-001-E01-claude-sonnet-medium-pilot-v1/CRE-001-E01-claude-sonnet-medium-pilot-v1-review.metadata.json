@@ -1,0 +1,78 @@
+{
+  "artifact_id": "CRE-001-E01-CLAUDE-SONNET-MEDIUM-PILOT-V1-REVIEW-METADATA",
+  "status": "Preserved review complete; correction required; noncanonical",
+  "experiment": "CRE-001",
+  "assignment": "CRE-001-E01",
+  "evaluator": "CRE-001-EVALUATOR-CLAUDE-SONNET-MEDIUM-01",
+  "submission": "CRE-001-SUBMISSION-E01-CLAUDE-SONNET-MEDIUM-01",
+  "pilot_type": "single-prompt isolated AI evaluator pilot",
+  "canonical_cre_001_primary_mapping": false,
+  "raw_artifact_path": null,
+  "raw_artifact_checksum_sha256": null,
+  "raw_artifact_preservation_status": "pending exact raw evaluator JSON; no substitute raw artifact created",
+  "review_artifact_path": "theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1/CRE-001-E01-claude-sonnet-medium-pilot-v1-review.md",
+  "reviewer_status": "independent internal-validity review; unadjudicated",
+  "canonical_ingestion_eligibility": false,
+  "review_types": [
+    "preservation review",
+    "complexity review"
+  ],
+  "next_action": "evaluator correction pass after exact raw-output preservation",
+  "finding_identifiers": [
+    {
+      "id": "A",
+      "severity": "correction_required",
+      "summary": "Incorrect CIR clause references"
+    },
+    {
+      "id": "B",
+      "severity": "correction_required",
+      "summary": "Invalid or unsupported clause count"
+    },
+    {
+      "id": "C",
+      "severity": "correction_required",
+      "summary": "Derived-construct indispensability not demonstrated"
+    },
+    {
+      "id": "D",
+      "severity": "correction_required",
+      "summary": "Prohibited-transition occurrence underrepresented"
+    },
+    {
+      "id": "E",
+      "severity": "correction_required",
+      "summary": "Unterminated-output semantics incomplete"
+    },
+    {
+      "id": "F",
+      "severity": "correction_required",
+      "summary": "Repeatability of T_disable_reject unresolved"
+    },
+    {
+      "id": "G",
+      "severity": "correction_required",
+      "summary": "Acceptance-after-modification branch not explicitly represented"
+    },
+    {
+      "id": "H",
+      "severity": "correction_required",
+      "summary": "Preservation result overstated"
+    },
+    {
+      "id": "I",
+      "severity": "minor_calibration_assumption",
+      "summary": "Calibration includes interpretive additions"
+    }
+  ],
+  "noncanonical_reasons": [
+    "pilot output",
+    "not an official canonical CRE-001 primary mapping",
+    "calibration was self-assessed",
+    "calibration and experimental materials were exposed in one prompt",
+    "unadjudicated",
+    "correction required",
+    "raw evaluator JSON not yet preserved in this repository update"
+  ],
+  "evaluator_rerun_status": "not rerun"
+}
