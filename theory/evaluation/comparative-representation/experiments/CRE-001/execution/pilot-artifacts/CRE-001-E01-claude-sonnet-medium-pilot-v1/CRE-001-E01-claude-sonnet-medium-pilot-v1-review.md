@@ -10,9 +10,15 @@ Canonical CRE-001 primary mapping: false.
 
 ## Raw artifact preservation status
 
-The raw evaluator output was not present in the repository checkout available to this review and was not included as a byte-preservable JSON artifact in the task context. Therefore this review does not create, normalize, repair, or substitute a raw evaluator JSON artifact.
+The exact raw evaluator output is preserved immutably at `theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1/CRE-001-E01-claude-sonnet-medium-pilot-v1.raw.json`.
 
-Required next action before immutable raw preservation can be complete: add the exact evaluator JSON byte-for-byte, except unavoidable final newline normalization, as `CRE-001-E01-claude-sonnet-medium-pilot-v1.raw.json` in this pilot-artifact record, then record its checksum in the adjacent metadata file.
+- Checksum algorithm: SHA-256.
+- SHA-256: `3ea8846dec773869f1be0523c2b10e7e604cbb88dfd5b60c7def812b54cdea54`.
+- Byte count: `65270`.
+- The review remains separate and does not modify the evaluator's submitted values or conclusions.
+- The raw artifact remains noncanonical and ineligible for canonical ingestion.
+- Evaluator correction remains required.
+- Claude has not been rerun.
 
 ## Administrative status
 
@@ -141,7 +147,7 @@ These are minor calibration assumptions, not fatal defects.
 
 ## Noncanonical status rationale
 
-This pilot is noncanonical because it was a single-prompt isolated AI evaluator pilot, not an official primary mapping; calibration was self-assessed; calibration and experimental materials were exposed together; the output is unadjudicated; correction is required; canonical CRE-001 primary mapping is false; and raw evaluator preservation is pending until exact raw JSON is supplied.
+This pilot is noncanonical because it was a single-prompt isolated AI evaluator pilot, not an official primary mapping; calibration was self-assessed; calibration and experimental materials were exposed together; the output is unadjudicated; correction is required; canonical CRE-001 primary mapping is false; the exact raw evaluator output is preserved immutably; and it remains excluded from canonical CRE-001 processing.
 
 ## Next action
 

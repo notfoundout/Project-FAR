@@ -7,9 +7,9 @@
   "submission": "CRE-001-SUBMISSION-E01-CLAUDE-SONNET-MEDIUM-01",
   "pilot_type": "single-prompt isolated AI evaluator pilot",
   "canonical_cre_001_primary_mapping": false,
-  "raw_artifact_path": null,
-  "raw_artifact_checksum_sha256": null,
-  "raw_artifact_preservation_status": "pending exact raw evaluator JSON; no substitute raw artifact created",
+  "raw_artifact_path": "theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1/CRE-001-E01-claude-sonnet-medium-pilot-v1.raw.json",
+  "raw_artifact_checksum_sha256": "3ea8846dec773869f1be0523c2b10e7e604cbb88dfd5b60c7def812b54cdea54",
+  "raw_artifact_preservation_status": "complete; exact raw evaluator JSON preserved immutably",
   "review_artifact_path": "theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1/CRE-001-E01-claude-sonnet-medium-pilot-v1-review.md",
   "reviewer_status": "independent internal-validity review; unadjudicated",
   "canonical_ingestion_eligibility": false,
@@ -17,7 +17,7 @@
     "preservation review",
     "complexity review"
   ],
-  "next_action": "evaluator correction pass after exact raw-output preservation",
+  "next_action": "evaluator correction pass",
   "finding_identifiers": [
     {
       "id": "A",
@@ -71,8 +71,11 @@
     "calibration was self-assessed",
     "calibration and experimental materials were exposed in one prompt",
     "unadjudicated",
-    "correction required",
-    "raw evaluator JSON not yet preserved in this repository update"
+    "correction required"
   ],
-  "evaluator_rerun_status": "not rerun"
+  "evaluator_rerun_status": "not rerun",
+  "raw_artifact_checksum_algorithm": "SHA-256",
+  "raw_artifact_byte_count": 65270,
+  "raw_artifact_immutable": true,
+  "raw_preservation_pending": false
 }
