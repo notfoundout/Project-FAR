@@ -12,10 +12,19 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Validate and checksum raw pilot artifact
+      - name: Measure raw pilot artifact
         run: |
           RAW='theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1/CRE-001-E01-claude-sonnet-medium-pilot-v1.raw.json'
           test -f "$RAW"
-          echo "RAW_SHA256=$(sha256sum "$RAW" | awk '{print $1}')"
-          echo "RAW_BYTES=$(wc -c < "$RAW" | tr -d ' ')"
+          {
+            echo "RAW_SHA256=$(sha256sum "$RAW" | awk '{print $1}')"
+            echo "RAW_BYTES=$(wc -c < "$RAW" | tr -d ' ')"
+          } | tee cre001-pilot-checksum.txt
           python -m json.tool "$RAW" >/dev/null
+      - name: Upload checksum result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cre001-pilot-checksum
+          path: cre001-pilot-checksum.txt
+          if-no-files-found: error
