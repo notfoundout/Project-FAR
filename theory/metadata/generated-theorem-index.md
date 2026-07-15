@@ -4,8 +4,8 @@ This file is generated from machine-readable metadata.
 
 | ID | Title | Status | Proof | Scope | Category | Assurance |
 |---|---|---|---|---|---|---|
-| T-001 | Conditional Primitive Minimality | Established | `theory/proofs/T-001-primitive-minimality.md` | current Project FAR scope, definitions, and axioms | conditional | semantically_constrained_proof_object |
-| T-002 | Conditional Primitive Independence | Established | `theory/proofs/T-002-primitive-independence.md` | current Project FAR deletion-only reduction standard | conditional | semantically_constrained_proof_object |
+| T-001 | Conditional Primitive Minimality | Established (Conditional) | `theory/proofs/T-001-primitive-minimality.md` | current Project FAR definitions, axioms, primitive basis, and deletion-only reduction standard | conditional | semantically_constrained_proof_object |
+| T-002 | Conditional Primitive Independence | Established (Conditional) | `theory/proofs/T-002-primitive-independence.md` | current Project FAR definitions and deletion-only reduction standard | conditional | semantically_constrained_proof_object |
 | T-003 | Representation Theorem | Established | `theory/proofs/T-003-representation-theorem.md` | scoped explicit reasoning processes | structural | semantically_constrained_proof_object |
 | T-004 | Semantic Preservation Theorem | Established | `theory/proofs/T-004-semantic-preservation.md` | interpretation-preserving representation mappings | definitional | semantically_constrained_proof_object |
 | T-005 | Transition Completeness Theorem | Established | `theory/proofs/T-005-transition-completeness.md` | explicitly specified admissible reasoning transitions | conditional | semantically_constrained_proof_object |
