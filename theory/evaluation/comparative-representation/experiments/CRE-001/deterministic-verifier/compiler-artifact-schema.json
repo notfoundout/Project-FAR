@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/cre001-vocabulary-compiler-artifact-v1.json",
+  "title": "CRE-001 vocabulary compiler artifact v1",
+  "type": "object",
+  "required": [
+    "artifact_format", "experiment_identifier", "scenario_identifier", "scenario_version",
+    "vocabulary_identifier", "vocabulary_version", "vocabulary_source_path", "vocabulary_source_sha256",
+    "compiler_identifier", "compiler_version", "compiler_source_path", "compilation_status",
+    "supplied_primitive_categories", "primitive_categories_used", "declared_derived_constructs",
+    "translation_rules", "assumptions", "unresolved_ambiguities", "unsupported_scenario_elements",
+    "provenance", "deterministic_generation_metadata"
+  ],
+  "properties": {
+    "artifact_format": {"const": "cre001-vocabulary-compiler-artifact-v1"},
+    "experiment_identifier": {"const": "CRE-001"},
+    "scenario_identifier": {"type": "string"},
+    "scenario_version": {"type": "string"},
+    "vocabulary_identifier": {"type": "string"},
+    "vocabulary_version": {"type": "string"},
+    "vocabulary_source_path": {"type": "string"},
+    "vocabulary_source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "compiler_identifier": {"type": "string"},
+    "compiler_version": {"type": "string"},
+    "compiler_source_path": {"type": "string"},
+    "compiler_source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "compilation_status": {"enum": ["complete", "partial", "failed"]},
+    "supplied_primitive_categories": {"type": "array", "items": {"type": "string"}},
+    "primitive_categories_used": {"type": "array", "items": {"type": "string"}},
+    "declared_derived_constructs": {"type": "array"},
+    "translation_rules": {"type": "array", "items": {"type": "string"}},
+    "assumptions": {"type": "array", "items": {"type": "string"}},
+    "unresolved_ambiguities": {"type": "array"},
+    "unsupported_scenario_elements": {"type": "array"},
+    "generated_execution_model": {"type": ["object", "null"]},
+    "provenance": {"type": "object"},
+    "deterministic_generation_metadata": {"type": "object"},
+    "complexity": {"type": "object"}
+  },
+  "additionalProperties": true
+}

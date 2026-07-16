@@ -1,0 +1,103 @@
+{
+  "artifact_id": "CRE-001-VOCABULARY-INVENTORY-1.0",
+  "discovery_rule": "Only packages listed in vocabularies/vocabulary-packages.json with frozen evaluator-facing source files are eligible. Pilot artifacts, controls, corrections, deprecated/superseded artifacts, and generated reports are excluded.",
+  "excluded_classes": [
+    "control fixtures",
+    "pilot mappings",
+    "evaluator corrections",
+    "deprecated artifacts",
+    "superseded vocabularies",
+    "generated reports"
+  ],
+  "experiment": "CRE-001",
+  "vocabularies": [
+    {
+      "allowed_composition_or_derivation_rules": [
+        "Derived constructs must record declaration, role, supplied category, preservation requirement, necessity, and provenance; may not alter the scenario or introduce unstated domain rules."
+      ],
+      "eligibility_basis": "Listed in frozen vocabulary-packages.json and source file status is frozen evaluator-facing package.",
+      "eligible_for_cre001_comparison": true,
+      "exclusions_or_restrictions": [
+        "Use only supplied primitive vocabulary terms plus declared derived machinery.",
+        "Do not alter or simplify the frozen scenario.",
+        "Do not discuss other vocabularies or prior results in evaluator-facing mapping."
+      ],
+      "frozen_status": "Frozen evaluator-facing package",
+      "label": "Vocabulary A",
+      "official_definitions": {
+        "Object": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "Relation": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "Transformation": "an explicit change, update, transition, rule application, or state modification applied to objects and relations."
+      },
+      "primitive_categories": [
+        "Object",
+        "Relation",
+        "Transformation"
+      ],
+      "source_path": "theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-A.md",
+      "source_sha256": "7be45d53d2b4cd0dc0ad48938fde1e4212771f9ca0f644d9a00ac27e77a4a185",
+      "vocabulary_identifier": "CRE-001-VOCAB-A-1.0",
+      "vocabulary_version": "CRE-001-VOCAB-A-1.0"
+    },
+    {
+      "allowed_composition_or_derivation_rules": [
+        "Derived constructs must record declaration, role, supplied category, preservation requirement, necessity, and provenance; may not alter the scenario or introduce unstated domain rules."
+      ],
+      "eligibility_basis": "Listed in frozen vocabulary-packages.json and source file status is frozen evaluator-facing package.",
+      "eligible_for_cre001_comparison": true,
+      "exclusions_or_restrictions": [
+        "Use only supplied primitive vocabulary terms plus declared derived machinery.",
+        "Do not alter or simplify the frozen scenario.",
+        "Do not discuss other vocabularies or prior results in evaluator-facing mapping."
+      ],
+      "frozen_status": "Frozen evaluator-facing package",
+      "label": "Vocabulary B",
+      "official_definitions": {
+        "Label": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "State": "a complete or partial assignment of values, statuses, records, or conditions at a discrete point in the system history.",
+        "Transition": "an explicit movement from one state to another, including any update, rule application, status change, or history extension."
+      },
+      "primitive_categories": [
+        "State",
+        "Transition",
+        "Label"
+      ],
+      "source_path": "theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-B.md",
+      "source_sha256": "5ac7a9ec38e8aac9fe366bfa38b93ecb8447d33eef5fafdbdc19237efc42e5e4",
+      "vocabulary_identifier": "CRE-001-VOCAB-B-1.0",
+      "vocabulary_version": "CRE-001-VOCAB-B-1.0"
+    },
+    {
+      "allowed_composition_or_derivation_rules": [
+        "Derived constructs must record declaration, role, supplied category, preservation requirement, necessity, and provenance; may not alter the scenario or introduce unstated domain rules."
+      ],
+      "eligibility_basis": "Listed in frozen vocabulary-packages.json and source file status is frozen evaluator-facing package.",
+      "eligible_for_cre001_comparison": true,
+      "exclusions_or_restrictions": [
+        "Use only supplied primitive vocabulary terms plus declared derived machinery.",
+        "Do not alter or simplify the frozen scenario.",
+        "Do not discuss other vocabularies or prior results in evaluator-facing mapping."
+      ],
+      "frozen_status": "Frozen evaluator-facing package",
+      "label": "Vocabulary C",
+      "official_definitions": {
+        "Calculus": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "Interpretation": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+        "Investigation": "the bounded task or question that fixes what must be represented and preserved for the mapping.",
+        "Representation": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "Representational Structure": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure."
+      },
+      "primitive_categories": [
+        "Representation",
+        "Representational Structure",
+        "Interpretation",
+        "Investigation",
+        "Calculus"
+      ],
+      "source_path": "theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-C.md",
+      "source_sha256": "c921196ad3e8149fa9a6e3aa9ed2e37d3ec71d08f6d6bdd85ee89b65f8f590e3",
+      "vocabulary_identifier": "CRE-001-VOCAB-C-1.0",
+      "vocabulary_version": "CRE-001-VOCAB-C-1.0"
+    }
+  ]
+}

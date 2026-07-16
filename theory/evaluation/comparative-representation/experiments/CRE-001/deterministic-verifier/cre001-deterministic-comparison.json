@@ -1,0 +1,160 @@
+{
+  "artifact_id": "CRE-001-DETERMINISTIC-COMPARISON-1.0",
+  "experiment": "CRE-001",
+  "nonclaims": [
+    "This report does not draw universal sufficiency, necessity, minimality, FAR proof, shared-structure universality, or global superiority conclusions."
+  ],
+  "results": [
+    {
+      "assumptions": [
+        "Scenario JSON and vocabulary markdown are frozen source inputs.",
+        "Ambiguity policies match deterministic verifier registration."
+      ],
+      "compilation_status": "complete",
+      "complexity": {
+        "declared_derived_construct_count": 3,
+        "normalized_compiler_clause_count": 6,
+        "primitive_categories_used": [
+          "Object",
+          "Relation",
+          "Transformation"
+        ],
+        "supplied_primitive_categories": [
+          "Object",
+          "Relation",
+          "Transformation"
+        ],
+        "transition_schema_count": 5
+      },
+      "derived_constructs": [
+        {
+          "name": "boolean_state_variable",
+          "role": "Represents proposition and rule activation truth values.",
+          "supplied_category": "Object"
+        },
+        {
+          "name": "ordered_append_only_history",
+          "role": "Represents transition order without removal or rewrite.",
+          "supplied_category": "Transformation"
+        },
+        {
+          "name": "guarded_transition_schema",
+          "role": "Represents precondition-authorized updates.",
+          "supplied_category": "Object"
+        }
+      ],
+      "failed_checks": [],
+      "full_deterministic_equivalence_demonstrated": true,
+      "inventory_status": "eligible",
+      "limitations": [
+        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies."
+      ],
+      "shortest_counterexample": null,
+      "unsupported_elements": [],
+      "verifier_result": "pass",
+      "vocabulary_identifier": "CRE-001-VOCAB-A-1.0"
+    },
+    {
+      "assumptions": [
+        "Scenario JSON and vocabulary markdown are frozen source inputs.",
+        "Ambiguity policies match deterministic verifier registration."
+      ],
+      "compilation_status": "complete",
+      "complexity": {
+        "declared_derived_construct_count": 3,
+        "normalized_compiler_clause_count": 6,
+        "primitive_categories_used": [
+          "State",
+          "Transition",
+          "Label"
+        ],
+        "supplied_primitive_categories": [
+          "State",
+          "Transition",
+          "Label"
+        ],
+        "transition_schema_count": 5
+      },
+      "derived_constructs": [
+        {
+          "name": "boolean_state_variable",
+          "role": "Represents proposition and rule activation truth values.",
+          "supplied_category": "Label"
+        },
+        {
+          "name": "ordered_append_only_history",
+          "role": "Represents transition order without removal or rewrite.",
+          "supplied_category": "Transition"
+        },
+        {
+          "name": "guarded_transition_schema",
+          "role": "Represents precondition-authorized updates.",
+          "supplied_category": "Transition"
+        }
+      ],
+      "failed_checks": [],
+      "full_deterministic_equivalence_demonstrated": true,
+      "inventory_status": "eligible",
+      "limitations": [
+        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies."
+      ],
+      "shortest_counterexample": null,
+      "unsupported_elements": [],
+      "verifier_result": "pass",
+      "vocabulary_identifier": "CRE-001-VOCAB-B-1.0"
+    },
+    {
+      "assumptions": [
+        "Scenario JSON and vocabulary markdown are frozen source inputs.",
+        "Ambiguity policies match deterministic verifier registration."
+      ],
+      "compilation_status": "complete",
+      "complexity": {
+        "declared_derived_construct_count": 3,
+        "normalized_compiler_clause_count": 6,
+        "primitive_categories_used": [
+          "Representation",
+          "Representational Structure",
+          "Interpretation",
+          "Investigation",
+          "Calculus"
+        ],
+        "supplied_primitive_categories": [
+          "Representation",
+          "Representational Structure",
+          "Interpretation",
+          "Investigation",
+          "Calculus"
+        ],
+        "transition_schema_count": 5
+      },
+      "derived_constructs": [
+        {
+          "name": "boolean_state_variable",
+          "role": "Represents proposition and rule activation truth values.",
+          "supplied_category": "Calculus"
+        },
+        {
+          "name": "ordered_append_only_history",
+          "role": "Represents transition order without removal or rewrite.",
+          "supplied_category": "Representational Structure"
+        },
+        {
+          "name": "guarded_transition_schema",
+          "role": "Represents precondition-authorized updates.",
+          "supplied_category": "Calculus"
+        }
+      ],
+      "failed_checks": [],
+      "full_deterministic_equivalence_demonstrated": true,
+      "inventory_status": "eligible",
+      "limitations": [
+        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies."
+      ],
+      "shortest_counterexample": null,
+      "unsupported_elements": [],
+      "verifier_result": "pass",
+      "vocabulary_identifier": "CRE-001-VOCAB-C-1.0"
+    }
+  ]
+}

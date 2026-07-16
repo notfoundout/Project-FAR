@@ -37,3 +37,6 @@ test:
 
 test-fast:
 	python tools/run_tests.py --fast
+
+cre001-deterministic:
+	python tools/cre001_compile_vocabularies.py --write --check
