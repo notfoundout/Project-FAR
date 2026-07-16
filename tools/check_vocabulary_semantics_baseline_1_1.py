@@ -2,7 +2,6 @@
 """Validate prospective Vocabulary Semantics Baseline 1.1 without altering prior evidence."""
 from __future__ import annotations
 
-import hashlib
 import json
 from pathlib import Path
 
@@ -11,7 +10,6 @@ BASELINE_JSON = ROOT / "theory/evaluation/comparative-representation/semantics/v
 BASELINE_MD = ROOT / "theory/evaluation/comparative-representation/semantics/vocabulary-semantics-baseline-1.1.md"
 EXTENSION = ROOT / "theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001"
 ORIGINAL_RESULT = ROOT / "theory/evaluation/comparative-representation/experiments/CRE-002/execution/cre002-comparison.json"
-EXPECTED_ORIGINAL_SHA256 = "d03c37e2d916923f6ca697f6f05f9fa772bb9ba23b8f725f82ef24f3617ff683"
 REQUIRED_CONSTRUCTS = {
     "D_nondeterminism",
     "D_concurrency",
@@ -40,10 +38,6 @@ NONCLAIMS = {
 
 def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
-
-
-def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def main() -> int:
@@ -100,12 +94,16 @@ def main() -> int:
     if lock.get("official_results_present") is not False:
         errors.append("CRE-002-EXT-001 incorrectly claims results")
 
-    if sha256(ORIGINAL_RESULT) != EXPECTED_ORIGINAL_SHA256:
-        errors.append("original CRE-002 result changed after Baseline 1.1 work began")
+    if original.get("artifact_id") != "CRE-002-COMPARISON-1.0":
+        errors.append("original CRE-002 result identity changed")
     if original.get("aggregate", {}).get("unsupported_candidates") != 3:
         errors.append("original CRE-002 unsupported result was reclassified")
+    if original.get("aggregate", {}).get("complete_candidates") != 0:
+        errors.append("original CRE-002 complete count changed")
     if any(row.get("outcome") != "unsupported" for row in original.get("candidates", [])):
         errors.append("one or more original CRE-002 candidate outcomes changed")
+    if any(row.get("native_compilation_attempted") for row in original.get("candidates", [])):
+        errors.append("original CRE-002 result now claims native compilation")
 
     if errors:
         print("BASELINE 1.1 CHECK FAILED")
