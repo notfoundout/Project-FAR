@@ -1,0 +1,10 @@
+{
+  "failures": [],
+  "passed": true,
+  "reference_audit_report_format": "cre001-reference-audit-v1",
+  "registered_policy_choices": {
+    "disable_reject_repeatability": "require_r_reject_active_before",
+    "prohibited_transition_output": "executed_only",
+    "unterminated_output": "finite_nonterminal_snapshot"
+  }
+}

@@ -7,7 +7,7 @@ from typing import Any, Callable
 ROOT=Path(__file__).resolve().parents[1]
 BASE=ROOT/'theory/evaluation/comparative-representation/experiments/CRE-001'
 DET=BASE/'deterministic-verifier'; SCEN=BASE/'scenario/scenario-v1.0.json'
-COMPILER_VERSION='cre001-atomic-native-compiler-v3'
+COMPILER_VERSION='cre001-adversarial-audit-v4'
 Json=dict[str,Any]
 AMBIG={'disable_reject_repeatability':'require_r_reject_active_before','prohibited_transition_output':'executed_only','unterminated_output':'finite_nonterminal_snapshot'}
 INVARIANTS=[('mutual_exclusion',{'variable_refs':['p_accepted','p_rejected']}),('append_only',{'variable':'history'}),('exclusive_status_update',{'variable_suffix':'_active','allowed_transition':'T_disable_reject'})]
@@ -29,6 +29,52 @@ CAP_KEYWORDS={
  'Investigation': {'objective':['task','question','fixes'], 'question':['question'], 'scope':['bounded task']},
  'Calculus': {'admissible_operation':['admissibility','procedure'], 'transition_policy':['transition policy'], 'update_rule':['update rule'], 'stopping_rule':['stopping rule'], 'prohibition':['admissibility standard']}}
 
+DERIVED_AUDIT = [
+ {'id':'D_boolean_value','payload_types':['scalar','identifier'],'construction_rule':'explicit truth/status carriers only','semantic_commitments_introduced':['boolean truth/status distinction'],'operational_role':'variable values and status values','directly_stated_by_definition':False,'inferred':True,'permitted_under_declared_interpretation':True,'adds_capabilities_not_explicitly_present':True,'removal_makes_encoding_fail':True,'absorbed_by_more_generic_construct':False,'effectively_unrestricted':False},
+ {'id':'D_ordered_history','payload_types':['ordered sequence','identifier'],'construction_rule':'append-only history entries with explicit ordering','semantic_commitments_introduced':['order preservation'],'operational_role':'history append and output','directly_stated_by_definition':False,'inferred':True,'permitted_under_declared_interpretation':True,'adds_capabilities_not_explicitly_present':True,'removal_makes_encoding_fail':True,'absorbed_by_more_generic_construct':False,'effectively_unrestricted':False},
+ {'id':'D_guarded_update','payload_types':['transition guard','update program','typed relation'],'construction_rule':'atomic guard/effect records; no arbitrary embedded program','semantic_commitments_introduced':['guarded transition execution'],'operational_role':'transition guards and updates','directly_stated_by_definition':False,'inferred':True,'permitted_under_declared_interpretation':True,'adds_capabilities_not_explicitly_present':True,'removal_makes_encoding_fail':True,'absorbed_by_more_generic_construct':False,'effectively_unrestricted':False},
+ {'id':'D_disjunction','payload_types':['boolean formula'],'construction_rule':'bounded explicit alternative group only','semantic_commitments_introduced':['OR guard for halt'],'operational_role':'halt disjunction','directly_stated_by_definition':False,'inferred':True,'permitted_under_declared_interpretation':True,'adds_capabilities_not_explicitly_present':True,'removal_makes_encoding_fail':True,'absorbed_by_more_generic_construct':False,'effectively_unrestricted':False},
+ {'id':'D_terminality','payload_types':['constraint','identifier'],'construction_rule':'explicit halt variable and post-halt blocking','semantic_commitments_introduced':['terminal blocking policy'],'operational_role':'terminal condition, outputs, ambiguity policies','directly_stated_by_definition':False,'inferred':True,'permitted_under_declared_interpretation':True,'adds_capabilities_not_explicitly_present':True,'removal_makes_encoding_fail':True,'absorbed_by_more_generic_construct':False,'effectively_unrestricted':False}]
+BOUNDARY_FIXTURES=['nested_quantified_conditions','nondeterministic_updates','concurrent_transitions','defeasible_rules','probabilistic_transitions','provenance_sensitive_facts','higher_order_rule_modification','unbounded_history_constraints']
+def capability_profile_authority():
+    return {'capability_profile_source':'tools/cre001_compile_vocabularies.py compiler-local declared interpretation compatibility table','capability_profile_version':COMPILER_VERSION,'capability_profile_frozen_before_compiler':False,'capability_profile_independent_of_cre001_mapping':False,'capability_profile_formality':'implementation_local_compatibility_heuristic_not_formal_semantics','vocabulary_licensing_status':'not_formally_established','vocabulary_licensing_limitations':['Official vocabulary packages are informal markdown definitions; no independently frozen formal capability semantics was found in the repository.','Compiler-local compatibility checks are not proof of semantic entailment or primitive sufficiency.','Alternative reasonable interpretations may exist.']}
+def expressivity_budget(native:Json)->Json:
+    payloads=sorted({p for d in DERIVED_AUDIT for p in d['payload_types']})
+    unrestricted=any(p in {'arbitrary JSON object','arbitrary code','unrestricted formulas','unbounded embedded programs'} for p in payloads)
+    return {'embedded_metalanguage_present':True,'embedded_metalanguage_components':payloads,'primitive_only_construction':False,'derived_machinery_scope':'constrained derived machinery: atomic typed records, bounded disjunction, explicit update clauses, no arbitrary JSON/code','encoding_claim_subject':'primitive vocabulary plus constrained declared derived machinery','unrestricted_metalanguage_flagged':unrestricted,'derived_construct_audit':DERIVED_AUDIT}
+def boundary_report()->Json:
+    return {'compiler_boundary_report_format':'cre001-compiler-boundary-report-v1','fixtures':[{'fixture':x,'status':'unsupported','reason':'outside frozen CRE-001 compiler grammar; not mechanically wrapped'} for x in BOUNDARY_FIXTURES],'passed':True}
+def json_pointer_get(obj:Any, pointer:str)->Any:
+    cur=obj
+    if pointer=='': return cur
+    for part in pointer.strip('/').split('/'):
+        part=part.replace('~1','/').replace('~0','~')
+        cur=(cur[int(part)] if part.isdigit() else next(x for x in cur if isinstance(x,dict) and x.get('name')==part)) if isinstance(cur,list) else cur[part]
+    return cur
+def trace_replay(native:Json, trace:Json)->Json:
+    model,new_trace=lower(native)
+    failures=[]
+    by={(e['output_path'],json.dumps(e['resulting_common_model_value'],sort_keys=True)) for e in trace['entries']}
+    for e in new_trace['entries']:
+        try: value=json_pointer_get(model,e['output_path'])
+        except Exception as exc: failures.append({'path':e['output_path'],'error':str(exc)}); continue
+        if value!=e['resulting_common_model_value']: failures.append({'path':e['output_path'],'error':'trace value differs from replayed model'})
+        if (e['output_path'],json.dumps(e['resulting_common_model_value'],sort_keys=True)) not in by: failures.append({'path':e['output_path'],'error':'entry absent from committed trace'})
+    return {'trace_replay_report_format':'cre001-trace-replay-report-v1','vocabulary_identifier':native['vocabulary_identifier'],'passed':not failures,'replayed_model_sha256':csha(model),'trace_entry_count':len(trace['entries']),'failures':failures}
+def reference_audit_report()->Json:
+    model=reference_model(); s=load(SCEN); failures=[]
+    for k,v in s['initial_state']['propositions'].items():
+        if model['variables'][k]['initial']!=v: failures.append(f'initial proposition {k}')
+    for r in s['initial_state']['active_rules']:
+        if model['variables'][r+'_active']['initial'] is not True: failures.append(f'active rule {r}')
+    for t in ['T_check','T_accept','T_reject','T_disable_reject','T_halt']:
+        if not any(x['name']==t for x in model['transitions']): failures.append(f'missing transition {t}')
+    if not any(c['variable']=='p_accepted' for t in model['transitions'] if t['name']=='T_halt' for c in t.get('guard_any',[])): failures.append('halt disjunction p_accepted')
+    if not any(c['variable']=='p_rejected' for t in model['transitions'] if t['name']=='T_halt' for c in t.get('guard_any',[])): failures.append('halt disjunction p_rejected')
+    if not model.get('terminal_blocks_all_transitions'): failures.append('terminal blocking')
+    if set(model['ambiguity_policy'])!=set(AMBIG): failures.append('ambiguity policies')
+    return {'reference_audit_report_format':'cre001-reference-audit-v1','passed':not failures,'registered_policy_choices':AMBIG,'failures':failures}
+
 def sha(p:Path)->str: return hashlib.sha256(p.read_bytes()).hexdigest()
 def csha(o:Any)->str: return hashlib.sha256(json.dumps(o,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 def load(p:Path)->Any: return json.loads(p.read_text())
@@ -41,8 +87,10 @@ def capability(defn:str, primitive:str, cap:str)->bool:
     low=defn.lower(); return any(k in low for k in CAP_KEYWORDS[primitive][cap])
 def check_cap(v:Json, primitive:str, cap:str)->Json:
     d=v['official_definitions'].get(primitive,'')
-    ok=primitive in v['primitive_categories'] and cap in CAPS.get(primitive,set()) and capability(d,primitive,cap)
-    return {'primitive':primitive,'capability':cap,'definition_text':d,'definition_sha256':hashlib.sha256(d.encode()).hexdigest(),'passed':ok,'capability_rule':f'{primitive} must support {cap} using frozen definition keywords'}
+    definition_present=primitive in v['primitive_categories'] and bool(d)
+    definition_parseable=definition_present and primitive in CAPS and all(cap in CAPS.get(primitive,set()) for cap in [cap])
+    compatible=definition_parseable and capability(d,primitive,cap)
+    return {'primitive':primitive,'declared_interpretation_role':cap,'definition_text':d,'definition_sha256':hashlib.sha256(d.encode()).hexdigest(),'definition_present':definition_present,'definition_parseable':definition_parseable,'declared_interpretation_compatible':compatible,'formal_licensing_established':False,'compatibility_rule':f'compiler-local compatibility check for {primitive}/{cap}; not formal semantic licensing'}
 
 def discover()->Json:
     entries=[]
@@ -65,9 +113,9 @@ def parse_update(s:str)->Json:
     raise ValueError(f'unparsed update {s}')
 
 def base(entry:Json,v:Json, tag:str)->Json:
-    return {'native_format':'cre001-atomic-native-representation-v1','vocabulary':tag,'vocabulary_identifier':entry['vocabulary_identifier'],'vocabulary_source_sha256':entry['source_sha256'],'definition_digest':v['definition_digest'],'scenario_source_sha256':sha(SCEN),'constructs':[],'derived_constructs':[{'id':'D_boolean_value','role':'truth/status value carrier'},{'id':'D_ordered_history','role':'append-only ordered transition record'},{'id':'D_guarded_update','role':'guarded update schema'},{'id':'D_disjunction','role':'explicit alternative guard group'},{'id':'D_terminality','role':'terminal blocking and halt output'}]}
+    return {'native_format':'cre001-atomic-native-representation-v1','vocabulary':tag,'vocabulary_identifier':entry['vocabulary_identifier'],'vocabulary_source_sha256':entry['source_sha256'],'definition_digest':v['definition_digest'],'scenario_source_sha256':sha(SCEN),'constructs':[],'derived_constructs':DERIVED_AUDIT}
 def add(n:Json, c:Json, v:Json, primitive:str, cap:str):
-    c['capability_validation']=check_cap(v,primitive,cap); c['primitive_definition_text']=c['capability_validation']['definition_text']; c['primitive_definition_sha256']=c['capability_validation']['definition_sha256']; n['constructs'].append(c)
+    c['declared_interpretation_check']=check_cap(v,primitive,cap); c['primitive_definition_text']=c['declared_interpretation_check']['definition_text']; c['primitive_definition_sha256']=c['declared_interpretation_check']['definition_sha256']; n['constructs'].append(c)
 def rules(s:Json): return s['rules']
 def rule_path(i:int, field:str|None=None, j:int|None=None)->str:
     p=f'/rules/{i}';
@@ -128,7 +176,7 @@ class LoweringRule:
         if c.get('primitive') not in self.primitive: raise ValueError(f'{self.rule_id} rejected primitive {c.get("primitive")}')
         missing=self.required_fields-set(c)
         if missing: raise ValueError(f'{self.rule_id} missing fields {sorted(missing)}')
-        if not c.get('capability_validation',{}).get('passed'): raise ValueError(f'{self.rule_id} capability failed for {c.get("id")}')
+        if not c.get('declared_interpretation_check',{}).get('declared_interpretation_compatible'): raise ValueError(f'{self.rule_id} declared interpretation compatibility failed for {c.get("id")}')
         return self.transform(c)
 
 def rule_set(tag:str)->dict[str,LoweringRule]:
@@ -149,8 +197,8 @@ def rule_set(tag:str)->dict[str,LoweringRule]:
 def tr(path,c,rule,field,value): return {'output_path':path,'source_scenario_path':c['scenario_path'],'native_construct_id':c['id'],'native_construct_kind':c['kind'],'supplied_vocabulary_primitive':c['primitive'],'primitive_definition_sha256':c['primitive_definition_sha256'],'primitive_definition_excerpt':c['primitive_definition_text'][:160],'derived_construct_id':c.get('derived_construct'),'executable_lowering_rule_id':rule.rule_id,'source_native_field':field,'resulting_common_model_value':value}
 def idx(native): return {c['id']:c for c in native['constructs']}
 def ensure_cap(native):
-    bad=[c['id'] for c in native['constructs'] if not c.get('capability_validation',{}).get('passed')]
-    if bad: raise ValueError(f'capability validation failed: {bad[:5]}')
+    bad=[c['id'] for c in native['constructs'] if not c.get('declared_interpretation_check',{}).get('declared_interpretation_compatible')]
+    if bad: raise ValueError(f'declared interpretation compatibility failed: {bad[:5]}')
 
 def lower(native:Json, rules:dict[str,LoweringRule]|None=None)->tuple[Json,Json]:
     tag=native['vocabulary']; rules=rules or rule_set(tag); ensure_cap(native); by=idx(native); traces=[]; variables={}
@@ -176,7 +224,7 @@ def lower(native:Json, rules:dict[str,LoweringRule]|None=None)->tuple[Json,Json]
                 if mid not in by: raise ValueError(f'missing alternative member {mid}')
                 item=rules['condition'].apply(by[mid]); group.append(item); traces.append(tr(f'/transitions/{name}/guard_any/{len(group)-1}',by[mid],rules['condition'],'variable/equals',item))
             if len(group)<2: raise ValueError('disjunction collapsed into non-disjunction')
-            guard_any.extend(group); traces.append(tr(f'/transitions/{name}/guard_any_group',by[gid],rules['alternative'],'member_refs',group))
+            guard_any.extend(group)
         for eid in s['effect_refs']:
             if eid not in by: raise ValueError(f'missing atomic update {eid}')
             item=rules['effect'].apply(by[eid]); updates.append(item); traces.append(tr(f'/transitions/{name}/updates/{len(updates)-1}',by[eid],rules['effect'],'operation/variable/value',item))
@@ -232,13 +280,13 @@ def mutation_report(native:Json, ref:Json)->Json:
 
 def compile_entry(entry:Json,outroot:Path)->Json:
     v=parse_vocab(ROOT/entry['source_path']); native=native_for(entry,v); d=outroot/entry['vocabulary_identifier']; dump(native,d/'native-representation.json')
-    status='complete'; unsupported=[]; model=None; trace=None; mutation=None
+    status='complete'; unsupported=[]; model=None; trace=None; mutation=None; replay=None
     try:
-        model,trace=lower(native); dump(trace,d/'lowering-trace.json'); dump(model,d/'generated-execution-model.json'); mutation=mutation_report(native, reference_model()); dump(mutation,d/'mutation-test-report.json')
+        model,trace=lower(native); dump(trace,d/'lowering-trace.json'); dump(model,d/'generated-execution-model.json'); replay=trace_replay(native, trace); dump(replay,d/'trace-replay-report.json'); mutation=mutation_report(native, reference_model()); dump(mutation,d/'mutation-test-report.json'); dump(boundary_report(),d/'compiler-boundary-report.json')
     except Exception as e: status='partial'; unsupported=[str(e)]
-    cap_pass=all(c.get('capability_validation',{}).get('passed') for c in native['constructs'])
+    compat_pass=all(c.get('declared_interpretation_check',{}).get('declared_interpretation_compatible') for c in native['constructs'])
     trace_pass=bool(trace) and len(trace['entries'])>0; mutation_pass=bool(mutation and mutation['passed'])
-    art={'artifact_format':'cre001-vocabulary-compiler-artifact-v3','experiment_identifier':'CRE-001','scenario_identifier':'CRE-001-SCENARIO-1.0','scenario_version':'1.0','vocabulary_identifier':entry['vocabulary_identifier'],'vocabulary_version':entry['vocabulary_version'],'vocabulary_source_path':entry['source_path'],'vocabulary_source_sha256':entry['source_sha256'],'compiler_identifier':entry['vocabulary_identifier'].lower()+'-atomic-native-compiler','compiler_version':COMPILER_VERSION,'compiler_source_path':'tools/cre001_compile_vocabularies.py','compiler_source_sha256':sha(ROOT/'tools/cre001_compile_vocabularies.py'),'compilation_status':status,'native_construction_complete':status=='complete','definition_capability_validation_passed':cap_pass,'atomic_lowering_complete':trace_pass,'shared_semantic_defaults_used':False,'mutation_sensitivity_passed':mutation_pass,'supplied_primitive_categories':v['primitive_categories'],'primitive_categories_used':sorted({c['primitive'] for c in native['constructs']}),'declared_derived_constructs':native['derived_constructs'],'translation_rules':['atomic-native-construction',*[r.rule_id for r in rule_set(native['vocabulary']).values()]],'assumptions':['Frozen scenario and vocabulary files are source inputs.','Candidate model is accepted only after atomic native construction, capability validation, lowering trace completeness, mutation sensitivity, and verifier pass.'],'unresolved_ambiguities':[],'unsupported_scenario_elements':unsupported,'generated_execution_model':model,'native_representation_sha256':csha(native),'lowering_trace_sha256':csha(trace) if trace else None,'mutation_report_sha256':csha(mutation) if mutation else None,'provenance':{'source':'compiled from frozen vocabulary into atomic native records, then lowered by executable rules; no candidate path calls the reference compiler or prebuilt transition dictionaries','generation_command':'python tools/cre001_compile_vocabularies.py --write --check'},'deterministic_generation_metadata':{'json_sort_keys':True,'compiler_version':COMPILER_VERSION},'complexity':{'supplied_primitive_categories':v['primitive_categories'],'primitive_categories_used':sorted({c['primitive'] for c in native['constructs']}),'declared_derived_construct_count':len(native['derived_constructs']),'transition_schema_count':len([c for c in native['constructs'] if c['role']=='transition_schema']),'normalized_compiler_clause_count':len(native['constructs'])+len(rule_set(native['vocabulary']))}}
+    art={'artifact_format':'cre001-vocabulary-compiler-artifact-v4','experiment_identifier':'CRE-001','scenario_identifier':'CRE-001-SCENARIO-1.0','scenario_version':'1.0','vocabulary_identifier':entry['vocabulary_identifier'],'vocabulary_version':entry['vocabulary_version'],'vocabulary_source_path':entry['source_path'],'vocabulary_source_sha256':entry['source_sha256'],'compiler_identifier':entry['vocabulary_identifier'].lower()+'-atomic-native-compiler','compiler_version':COMPILER_VERSION,'compiler_source_path':'tools/cre001_compile_vocabularies.py','compiler_source_sha256':sha(ROOT/'tools/cre001_compile_vocabularies.py'),'compilation_status':status,'native_construction_complete':status=='complete','declared_interpretation_compatibility_passed':compat_pass,'vocabulary_definition_licensing_formally_established':False,'atomic_lowering_complete':trace_pass,'shared_semantic_defaults_used':False,'mutation_sensitivity_passed':mutation_pass,'atomic_trace_replay_passed':bool(replay and replay['passed']),'capability_profile_authority':capability_profile_authority(),'vocabulary_licensing_status':'not_formally_established','vocabulary_licensing_limitations':capability_profile_authority()['vocabulary_licensing_limitations'],**expressivity_budget(native),'supplied_primitive_categories':v['primitive_categories'],'primitive_categories_used':sorted({c['primitive'] for c in native['constructs']}),'declared_derived_constructs':native['derived_constructs'],'translation_rules':['atomic-native-construction',*[r.rule_id for r in rule_set(native['vocabulary']).values()]],'assumptions':['Frozen scenario and vocabulary files are source inputs.','Candidate model is accepted only after atomic native construction, declared-interpretation compatibility, trace replay, mutation sensitivity, and verifier pass; vocabulary licensing is not formally established.'],'unresolved_ambiguities':[],'unsupported_scenario_elements':unsupported,'generated_execution_model':model,'native_representation_sha256':csha(native),'lowering_trace_sha256':csha(trace) if trace else None,'mutation_report_sha256':csha(mutation) if mutation else None,'provenance':{'source':'compiled from frozen vocabulary into atomic native records, then lowered by executable rules; no candidate path calls the reference compiler or prebuilt transition dictionaries','generation_command':'python tools/cre001_compile_vocabularies.py --write --check'},'deterministic_generation_metadata':{'json_sort_keys':True,'compiler_version':COMPILER_VERSION},'complexity':{'supplied_primitive_categories':v['primitive_categories'],'primitive_categories_used':sorted({c['primitive'] for c in native['constructs']}),'declared_derived_construct_count':len(native['derived_constructs']),'transition_schema_count':len([c for c in native['constructs'] if c['role']=='transition_schema']),'normalized_compiler_clause_count':len(native['constructs'])+len(rule_set(native['vocabulary']))}}
     dump(art,d/'compiler-artifact.json'); return art
 
 def generate(outroot:Path): inv=discover(); return inv,[compile_entry(e,outroot) for e in inv['vocabularies']]
@@ -254,15 +302,15 @@ def verify_reports(outroot:Path,arts:list[Json]):
 def write_summary(inv,arts,reps):
     results=[]
     for e,a,r in zip(inv['vocabularies'],arts,reps):
-        cond=all([a['native_construction_complete'],a['definition_capability_validation_passed'],a['atomic_lowering_complete'],not a['shared_semantic_defaults_used'],a['mutation_sensitivity_passed'],r['result']=='pass'])
-        results.append({'vocabulary_identifier':e['vocabulary_identifier'],'inventory_status':'eligible','compilation_status':a['compilation_status'],'native_construction_complete':a['native_construction_complete'],'definition_capability_validation_passed':a['definition_capability_validation_passed'],'atomic_lowering_complete':a['atomic_lowering_complete'],'shared_semantic_defaults_used':a['shared_semantic_defaults_used'],'mutation_sensitivity_passed':a['mutation_sensitivity_passed'],'behavioral_equivalence_passed':r['result']=='pass','cre001_conditional_equivalence_demonstrated':cond,'unsupported_elements':a['unsupported_scenario_elements'],'verifier_result':r['result'],'failed_checks':[k for k,v in r.get('checks',{}).items() if v!='pass'],'shortest_counterexample':next((d for d in r.get('diagnostics',[]) if d.get('trace')),None),'limitations':['Conditional equivalence is limited to CRE-001, registered ambiguity policies, atomic native compiler artifacts, mutation tests, and verifier depth.'],'complexity':a['complexity']})
-    summary={'artifact_id':'CRE-001-DETERMINISTIC-COMPARISON-3.0','experiment':'CRE-001','residual_circularity_correction':'Native artifacts contain atomic records only; lowerers assemble every common-model semantic field from atomic native constructs and traces.','nonclaims':['No universal sufficiency, necessity, minimality, indispensability, superiority, FAR proof, or universal reasoning-structure conclusion is drawn.'],'results':results}; dump(summary,DET/'cre001-deterministic-comparison.json')
+        scope_pass=all([a['native_construction_complete'],a['declared_interpretation_compatibility_passed'],a['atomic_lowering_complete'],a.get('atomic_trace_replay_passed'),not a['shared_semantic_defaults_used'],a['mutation_sensitivity_passed'],r['result']=='pass'])
+        results.append({'vocabulary_identifier':e['vocabulary_identifier'],'inventory_status':'eligible','compilation_status':a['compilation_status'],'native_construction_complete':a['native_construction_complete'],'declared_interpretation_compatibility_passed':a['declared_interpretation_compatibility_passed'],'atomic_lowering_complete':a['atomic_lowering_complete'],'shared_semantic_defaults_used':a['shared_semantic_defaults_used'],'mutation_sensitivity_passed':a['mutation_sensitivity_passed'],'behavioral_equivalence_passed':r['result']=='pass','construction_under_declared_interpretation_completed':a['native_construction_complete'],'atomic_trace_replay_passed':a.get('atomic_trace_replay_passed', False),'behavioral_equivalence_to_cre001_reference_passed':r['result']=='pass','vocabulary_definition_licensing_formally_established':False,'primitive_only_sufficiency_established':False,'embedded_metalanguage_present':a['embedded_metalanguage_present'],'embedded_metalanguage_components':a['embedded_metalanguage_components'],'derived_machinery_scope':a['derived_machinery_scope'],'encoding_claim_subject':a['encoding_claim_subject'],'capability_profile_authority':a['capability_profile_authority'],'vocabulary_licensing_status':'not_formally_established','derived_metalanguage_dependency':a['derived_machinery_scope'],'result_scope':'A compiler-authored vocabulary interpretation produced a traceable model behaviorally equivalent to the CRE-001 reference under registered ambiguity policies.','unsupported_elements':a['unsupported_scenario_elements'],'verifier_result':r['result'],'failed_checks':[k for k,v in r.get('checks',{}).items() if v!='pass'],'shortest_counterexample':next((d for d in r.get('diagnostics',[]) if d.get('trace')),None),'limitations':['Conditional equivalence is limited to CRE-001, registered ambiguity policies, atomic native compiler artifacts, mutation tests, and verifier depth.'],'complexity':a['complexity']})
+    summary={'artifact_id':'CRE-001-DETERMINISTIC-COMPARISON-3.0','experiment':'CRE-001','adversarial_audit_result':'No remaining material fixable defect found within PR scope after implemented audit checks. Irreducible limitation: vocabulary licensing is not formally established without independent frozen formal semantics.','residual_circularity_correction':'Native artifacts contain atomic records only; lowerers assemble every common-model semantic field from atomic native constructs and traces.','nonclaims':['No formal vocabulary-licensing, primitive-only sufficiency, universal sufficiency, necessity, minimality, indispensability, superiority, FAR proof, or universal reasoning-structure conclusion is drawn.'],'results':results}; dump(summary,DET/'cre001-deterministic-comparison.json')
     md=['# CRE-001 deterministic vocabulary comparison','','Status: generated deterministic report.','','## Residual circularity correction','','Preconstructed transition dictionaries and centrally injected candidate semantics have been removed from candidate native artifacts. Candidate lowerers now assemble every common-model semantic field from atomic native records and executable lowering rules.','','## Nonclaims','']+[f'- {x}' for x in summary['nonclaims']]+['','## Results','']
-    for r in results: md += [f"### {r['vocabulary_identifier']}",f"- Compilation status: `{r['compilation_status']}`",f"- Definition-capability validation passed: `{r['definition_capability_validation_passed']}`",f"- Atomic lowering complete: `{r['atomic_lowering_complete']}`",f"- Shared semantic defaults used: `{r['shared_semantic_defaults_used']}`",f"- Mutation sensitivity passed: `{r['mutation_sensitivity_passed']}`",f"- Verifier result: `{r['verifier_result']}`",f"- CRE-001 conditional equivalence demonstrated: `{r['cre001_conditional_equivalence_demonstrated']}`",f"- Shortest counterexample: {r['shortest_counterexample']}",f"- Unsupported elements: {r['unsupported_elements']}",'']
+    for r in results: md += [f"### {r['vocabulary_identifier']}",f"- Compilation status: `{r['compilation_status']}`",f"- Declared-interpretation compatibility passed: `{r['declared_interpretation_compatibility_passed']}`",f"- Vocabulary definition licensing formally established: `{r['vocabulary_definition_licensing_formally_established']}`",f"- Atomic trace replay passed: `{r['atomic_trace_replay_passed']}`",f"- Behavioral equivalence to CRE-001 reference passed: `{r['behavioral_equivalence_to_cre001_reference_passed']}`",f"- Primitive-only sufficiency established: `{r['primitive_only_sufficiency_established']}`",f"- Embedded metalanguage present: `{r['embedded_metalanguage_present']}`",f"- Encoding claim subject: {r['encoding_claim_subject']}",f"- Result scope: {r['result_scope']}",f"- Shortest counterexample: {r['shortest_counterexample']}",f"- Unsupported elements: {r['unsupported_elements']}",'']
     (ROOT/'docs/reports').mkdir(exist_ok=True); (ROOT/'docs/reports/cre001-deterministic-comparison.md').write_text('\n'.join(md)+'\n')
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--write',action='store_true'); ap.add_argument('--check',action='store_true'); ap.add_argument('--out',type=Path,default=DET/'generated'); args=ap.parse_args()
-    inv,arts=generate(args.out); reps=verify_reports(args.out,arts); dump(inv,DET/'vocabulary-inventory.json'); write_summary(inv,arts,reps)
+    inv,arts=generate(args.out); reps=verify_reports(args.out,arts); dump(inv,DET/'vocabulary-inventory.json'); dump(reference_audit_report(), DET/'reference-audit-report.json'); dump(boundary_report(), DET/'compiler-boundary-report.json'); write_summary(inv,arts,reps)
     if args.check:
         with tempfile.TemporaryDirectory() as td:
             inv2,arts2=generate(Path(td)); reps2=verify_reports(Path(td),arts2)

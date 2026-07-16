@@ -640,28 +640,6 @@
       "supplied_vocabulary_primitive": "Relation"
     },
     {
-      "derived_construct_id": "D_disjunction",
-      "executable_lowering_rule_id": "A-alternative-atomic",
-      "native_construct_id": "ALT_T_halt_0",
-      "native_construct_kind": "alternative_group_relation",
-      "output_path": "/transitions/T_halt/guard_any_group",
-      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
-      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
-      "resulting_common_model_value": [
-        {
-          "equals": true,
-          "variable": "p_accepted"
-        },
-        {
-          "equals": true,
-          "variable": "p_rejected"
-        }
-      ],
-      "source_native_field": "member_refs",
-      "source_scenario_path": "/rules/4/preconditions/0",
-      "supplied_vocabulary_primitive": "Relation"
-    },
-    {
       "derived_construct_id": "D_guarded_update",
       "executable_lowering_rule_id": "A-effect-atomic",
       "native_construct_id": "EFF_T_halt_0",
@@ -1014,7 +992,7 @@
       "supplied_vocabulary_primitive": "Relation"
     }
   ],
-  "native_sha256": "2063ce04cb76864d6d55381f0b320e6f8fb91f9cc2164d67eb14bca85daa7cc1",
+  "native_sha256": "55c45ec114f42c6766b9181fb8187b29a0d5649524ad85596a28622a3b2d98f1",
   "trace_format": "cre001-atomic-lowering-trace-v1",
   "vocabulary_identifier": "CRE-001-VOCAB-A-1.0"
 }

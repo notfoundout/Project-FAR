@@ -1,12 +1,15 @@
 {
   "constructs": [
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -20,12 +23,15 @@
       "value": true
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -39,12 +45,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -58,12 +67,15 @@
       "value": "active"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -77,12 +89,15 @@
       "value": "inactive"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -97,12 +112,15 @@
       "value_ref": "VAL_true"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -117,12 +135,15 @@
       "value": true
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -137,12 +158,15 @@
       "value_ref": "VAL_true"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -157,12 +181,15 @@
       "value": true
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -177,12 +204,15 @@
       "value_ref": "VAL_false"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -197,12 +227,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -217,12 +250,15 @@
       "value_ref": "VAL_false"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -237,12 +273,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -257,12 +296,15 @@
       "value_ref": "VAL_false"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -277,12 +319,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -297,12 +342,15 @@
       "value_ref": "VAL_false"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -317,12 +365,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -337,12 +388,15 @@
       "value_ref": "VAL_false"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -357,12 +411,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -376,12 +433,15 @@
       "scenario_path": "/initial_state/active_rules"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -397,12 +457,15 @@
       "variable": "R_check_active"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -416,12 +479,15 @@
       "scenario_path": "/initial_state/active_rules"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -437,12 +503,15 @@
       "variable": "R_accept_active"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -456,12 +525,15 @@
       "scenario_path": "/initial_state/active_rules"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -477,12 +549,15 @@
       "variable": "R_reject_active"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -496,12 +571,15 @@
       "scenario_path": "/initial_state/active_rules"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -517,12 +595,15 @@
       "variable": "R_modify_active"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -536,12 +617,15 @@
       "scenario_path": "/initial_state/active_rules"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_boolean_value",
@@ -557,12 +641,15 @@
       "variable": "R_halt_active"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_ordered_history",
@@ -577,12 +664,15 @@
     },
     {
       "blocks_all": true,
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_terminality",
@@ -597,12 +687,15 @@
       "variable": "p_halted"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "id": "TNAME_T_check",
@@ -615,12 +708,15 @@
       "scenario_path": "/rules/0/permits"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "id": "AUTH_R_check_T_check",
@@ -634,12 +730,15 @@
       "transition_ref": "TNAME_T_check"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -655,12 +754,15 @@
       "variable": "p_ready"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -676,12 +778,15 @@
       "variable": "p_token"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -697,12 +802,15 @@
       "variable": "p_checked"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -718,12 +826,15 @@
       "variable": "R_check_active"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -741,12 +852,15 @@
       "variable": "p_checked"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -764,12 +878,15 @@
       "variable": "history"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_ordered_history",
@@ -786,12 +903,15 @@
     {
       "alternative_group_refs": [],
       "authorization_ref": "AUTH_R_check_T_check",
-      "capability_validation": {
-        "capability": "update",
-        "capability_rule": "Transition must support update using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Transition/update; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
         "definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Transition"
       },
       "derived_construct": "D_guarded_update",
@@ -815,12 +935,15 @@
       "scenario_path": "/rules/0"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "id": "TNAME_T_accept",
@@ -833,12 +956,15 @@
       "scenario_path": "/rules/1/permits"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "id": "AUTH_R_accept_T_accept",
@@ -852,12 +978,15 @@
       "transition_ref": "TNAME_T_accept"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -873,12 +1002,15 @@
       "variable": "p_checked"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -894,12 +1026,15 @@
       "variable": "p_rejected"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -915,12 +1050,15 @@
       "variable": "R_accept_active"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -938,12 +1076,15 @@
       "variable": "p_accepted"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -961,12 +1102,15 @@
       "variable": "history"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_ordered_history",
@@ -983,12 +1127,15 @@
     {
       "alternative_group_refs": [],
       "authorization_ref": "AUTH_R_accept_T_accept",
-      "capability_validation": {
-        "capability": "update",
-        "capability_rule": "Transition must support update using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Transition/update; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
         "definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Transition"
       },
       "derived_construct": "D_guarded_update",
@@ -1011,12 +1158,15 @@
       "scenario_path": "/rules/1"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "id": "TNAME_T_reject",
@@ -1029,12 +1179,15 @@
       "scenario_path": "/rules/2/permits"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "id": "AUTH_R_reject_T_reject",
@@ -1048,12 +1201,15 @@
       "transition_ref": "TNAME_T_reject"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1069,12 +1225,15 @@
       "variable": "p_checked"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1090,12 +1249,15 @@
       "variable": "p_accepted"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1111,12 +1273,15 @@
       "variable": "R_reject_active"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1134,12 +1299,15 @@
       "variable": "p_rejected"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1157,12 +1325,15 @@
       "variable": "history"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_ordered_history",
@@ -1179,12 +1350,15 @@
     {
       "alternative_group_refs": [],
       "authorization_ref": "AUTH_R_reject_T_reject",
-      "capability_validation": {
-        "capability": "update",
-        "capability_rule": "Transition must support update using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Transition/update; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
         "definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Transition"
       },
       "derived_construct": "D_guarded_update",
@@ -1207,12 +1381,15 @@
       "scenario_path": "/rules/2"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "id": "TNAME_T_disable_reject",
@@ -1225,12 +1402,15 @@
       "scenario_path": "/rules/3/permits"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "id": "AUTH_R_modify_T_disable_reject",
@@ -1244,12 +1424,15 @@
       "transition_ref": "TNAME_T_disable_reject"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1265,12 +1448,15 @@
       "variable": "p_checked"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1286,12 +1472,15 @@
       "variable": "p_accepted"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1307,12 +1496,15 @@
       "variable": "p_rejected"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1328,12 +1520,15 @@
       "variable": "R_modify_active"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1349,12 +1544,15 @@
       "variable": "R_reject_active"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1372,12 +1570,15 @@
       "variable": "R_reject_active"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1395,12 +1596,15 @@
       "variable": "p_rule_modified"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1418,12 +1622,15 @@
       "variable": "history"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_ordered_history",
@@ -1440,12 +1647,15 @@
     {
       "alternative_group_refs": [],
       "authorization_ref": "AUTH_R_modify_T_disable_reject",
-      "capability_validation": {
-        "capability": "update",
-        "capability_rule": "Transition must support update using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Transition/update; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
         "definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Transition"
       },
       "derived_construct": "D_guarded_update",
@@ -1471,12 +1681,15 @@
       "scenario_path": "/rules/3"
     },
     {
-      "capability_validation": {
-        "capability": "value",
-        "capability_rule": "Label must support value using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/value; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "value",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "id": "TNAME_T_halt",
@@ -1489,12 +1702,15 @@
       "scenario_path": "/rules/4/permits"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "id": "AUTH_R_halt_T_halt",
@@ -1508,12 +1724,15 @@
       "transition_ref": "TNAME_T_halt"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1529,12 +1748,15 @@
       "variable": "p_accepted"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1550,12 +1772,15 @@
       "variable": "p_rejected"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_disjunction",
@@ -1572,12 +1797,15 @@
       "scenario_path": "/rules/4/preconditions/0"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1593,12 +1821,15 @@
       "variable": "R_halt_active"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1614,12 +1845,15 @@
       "variable": "p_halted"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1637,12 +1871,15 @@
       "variable": "p_halted"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1660,12 +1897,15 @@
       "variable": "history"
     },
     {
-      "capability_validation": {
-        "capability": "condition",
-        "capability_rule": "Label must support condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_ordered_history",
@@ -1684,12 +1924,15 @@
         "ALT_T_halt_0"
       ],
       "authorization_ref": "AUTH_R_halt_T_halt",
-      "capability_validation": {
-        "capability": "update",
-        "capability_rule": "Transition must support update using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Transition/update; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
         "definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Transition"
       },
       "derived_construct": "D_guarded_update",
@@ -1711,12 +1954,15 @@
       "scenario_path": "/rules/4"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1730,12 +1976,15 @@
       "value": "accept_and_reject_same_run"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1749,12 +1998,15 @@
       "value": "rule_status_change_except_T_disable_reject"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1768,12 +2020,15 @@
       "value": "history_removal_or_rewrite"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1787,12 +2042,15 @@
       "value": "transition_after_halt"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1806,12 +2064,15 @@
       "value": "T_reject_after_R_reject_inactive"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1825,12 +2086,15 @@
       "value": "accept_reject_modify_before_checked"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_terminality",
@@ -1851,12 +2115,15 @@
       "scenario_path": "/observable_outputs"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_terminality",
@@ -1879,12 +2146,15 @@
       "scenario_path": "/observable_outputs"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_terminality",
@@ -1901,12 +2171,15 @@
       "scenario_path": "/observable_outputs"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_terminality",
@@ -1923,12 +2196,15 @@
       "scenario_path": "/observable_outputs"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_terminality",
@@ -1945,12 +2221,15 @@
       "scenario_path": "/observable_outputs"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1968,12 +2247,15 @@
       ]
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -1989,12 +2271,15 @@
     },
     {
       "allowed_transition": "T_disable_reject",
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_guarded_update",
@@ -2009,12 +2294,15 @@
       "variable_suffix": "_active"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_terminality",
@@ -2029,12 +2317,15 @@
       "value": "require_r_reject_active_before"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_terminality",
@@ -2049,12 +2340,15 @@
       "value": "executed_only"
     },
     {
-      "capability_validation": {
-        "capability": "status",
-        "capability_rule": "Label must support status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Label/status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
         "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Label"
       },
       "derived_construct": "D_terminality",
@@ -2072,24 +2366,99 @@
   "definition_digest": "5ac7a9ec38e8aac9fe366bfa38b93ecb8447d33eef5fafdbdc19237efc42e5e4",
   "derived_constructs": [
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit truth/status carriers only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_boolean_value",
-      "role": "truth/status value carrier"
+      "inferred": true,
+      "operational_role": "variable values and status values",
+      "payload_types": [
+        "scalar",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "boolean truth/status distinction"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "append-only history entries with explicit ordering",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_ordered_history",
-      "role": "append-only ordered transition record"
+      "inferred": true,
+      "operational_role": "history append and output",
+      "payload_types": [
+        "ordered sequence",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "order preservation"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "atomic guard/effect records; no arbitrary embedded program",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_guarded_update",
-      "role": "guarded update schema"
+      "inferred": true,
+      "operational_role": "transition guards and updates",
+      "payload_types": [
+        "transition guard",
+        "update program",
+        "typed relation"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "guarded transition execution"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "bounded explicit alternative group only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_disjunction",
-      "role": "explicit alternative guard group"
+      "inferred": true,
+      "operational_role": "halt disjunction",
+      "payload_types": [
+        "boolean formula"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "OR guard for halt"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit halt variable and post-halt blocking",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_terminality",
-      "role": "terminal blocking and halt output"
+      "inferred": true,
+      "operational_role": "terminal condition, outputs, ambiguity policies",
+      "payload_types": [
+        "constraint",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "terminal blocking policy"
+      ]
     }
   ],
   "native_format": "cre001-atomic-native-representation-v1",

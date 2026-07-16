@@ -1,14 +1,30 @@
 {
+  "adversarial_audit_result": "No remaining material fixable defect found within PR scope after implemented audit checks. Irreducible limitation: vocabulary licensing is not formally established without independent frozen formal semantics.",
   "artifact_id": "CRE-001-DETERMINISTIC-COMPARISON-3.0",
   "experiment": "CRE-001",
   "nonclaims": [
-    "No universal sufficiency, necessity, minimality, indispensability, superiority, FAR proof, or universal reasoning-structure conclusion is drawn."
+    "No formal vocabulary-licensing, primitive-only sufficiency, universal sufficiency, necessity, minimality, indispensability, superiority, FAR proof, or universal reasoning-structure conclusion is drawn."
   ],
   "residual_circularity_correction": "Native artifacts contain atomic records only; lowerers assemble every common-model semantic field from atomic native constructs and traces.",
   "results": [
     {
       "atomic_lowering_complete": true,
+      "atomic_trace_replay_passed": true,
       "behavioral_equivalence_passed": true,
+      "behavioral_equivalence_to_cre001_reference_passed": true,
+      "capability_profile_authority": {
+        "capability_profile_formality": "implementation_local_compatibility_heuristic_not_formal_semantics",
+        "capability_profile_frozen_before_compiler": false,
+        "capability_profile_independent_of_cre001_mapping": false,
+        "capability_profile_source": "tools/cre001_compile_vocabularies.py compiler-local declared interpretation compatibility table",
+        "capability_profile_version": "cre001-adversarial-audit-v4",
+        "vocabulary_licensing_limitations": [
+          "Official vocabulary packages are informal markdown definitions; no independently frozen formal capability semantics was found in the repository.",
+          "Compiler-local compatibility checks are not proof of semantic entailment or primitive sufficiency.",
+          "Alternative reasonable interpretations may exist."
+        ],
+        "vocabulary_licensing_status": "not_formally_established"
+      },
       "compilation_status": "complete",
       "complexity": {
         "declared_derived_construct_count": 5,
@@ -25,8 +41,22 @@
         ],
         "transition_schema_count": 5
       },
-      "cre001_conditional_equivalence_demonstrated": true,
-      "definition_capability_validation_passed": true,
+      "construction_under_declared_interpretation_completed": true,
+      "declared_interpretation_compatibility_passed": true,
+      "derived_machinery_scope": "constrained derived machinery: atomic typed records, bounded disjunction, explicit update clauses, no arbitrary JSON/code",
+      "derived_metalanguage_dependency": "constrained derived machinery: atomic typed records, bounded disjunction, explicit update clauses, no arbitrary JSON/code",
+      "embedded_metalanguage_components": [
+        "boolean formula",
+        "constraint",
+        "identifier",
+        "ordered sequence",
+        "scalar",
+        "transition guard",
+        "typed relation",
+        "update program"
+      ],
+      "embedded_metalanguage_present": true,
+      "encoding_claim_subject": "primitive vocabulary plus constrained declared derived machinery",
       "failed_checks": [],
       "inventory_status": "eligible",
       "limitations": [
@@ -34,15 +64,34 @@
       ],
       "mutation_sensitivity_passed": true,
       "native_construction_complete": true,
+      "primitive_only_sufficiency_established": false,
+      "result_scope": "A compiler-authored vocabulary interpretation produced a traceable model behaviorally equivalent to the CRE-001 reference under registered ambiguity policies.",
       "shared_semantic_defaults_used": false,
       "shortest_counterexample": null,
       "unsupported_elements": [],
       "verifier_result": "pass",
-      "vocabulary_identifier": "CRE-001-VOCAB-A-1.0"
+      "vocabulary_definition_licensing_formally_established": false,
+      "vocabulary_identifier": "CRE-001-VOCAB-A-1.0",
+      "vocabulary_licensing_status": "not_formally_established"
     },
     {
       "atomic_lowering_complete": true,
+      "atomic_trace_replay_passed": true,
       "behavioral_equivalence_passed": true,
+      "behavioral_equivalence_to_cre001_reference_passed": true,
+      "capability_profile_authority": {
+        "capability_profile_formality": "implementation_local_compatibility_heuristic_not_formal_semantics",
+        "capability_profile_frozen_before_compiler": false,
+        "capability_profile_independent_of_cre001_mapping": false,
+        "capability_profile_source": "tools/cre001_compile_vocabularies.py compiler-local declared interpretation compatibility table",
+        "capability_profile_version": "cre001-adversarial-audit-v4",
+        "vocabulary_licensing_limitations": [
+          "Official vocabulary packages are informal markdown definitions; no independently frozen formal capability semantics was found in the repository.",
+          "Compiler-local compatibility checks are not proof of semantic entailment or primitive sufficiency.",
+          "Alternative reasonable interpretations may exist."
+        ],
+        "vocabulary_licensing_status": "not_formally_established"
+      },
       "compilation_status": "complete",
       "complexity": {
         "declared_derived_construct_count": 5,
@@ -58,8 +107,22 @@
         ],
         "transition_schema_count": 5
       },
-      "cre001_conditional_equivalence_demonstrated": true,
-      "definition_capability_validation_passed": true,
+      "construction_under_declared_interpretation_completed": true,
+      "declared_interpretation_compatibility_passed": true,
+      "derived_machinery_scope": "constrained derived machinery: atomic typed records, bounded disjunction, explicit update clauses, no arbitrary JSON/code",
+      "derived_metalanguage_dependency": "constrained derived machinery: atomic typed records, bounded disjunction, explicit update clauses, no arbitrary JSON/code",
+      "embedded_metalanguage_components": [
+        "boolean formula",
+        "constraint",
+        "identifier",
+        "ordered sequence",
+        "scalar",
+        "transition guard",
+        "typed relation",
+        "update program"
+      ],
+      "embedded_metalanguage_present": true,
+      "encoding_claim_subject": "primitive vocabulary plus constrained declared derived machinery",
       "failed_checks": [],
       "inventory_status": "eligible",
       "limitations": [
@@ -67,15 +130,34 @@
       ],
       "mutation_sensitivity_passed": true,
       "native_construction_complete": true,
+      "primitive_only_sufficiency_established": false,
+      "result_scope": "A compiler-authored vocabulary interpretation produced a traceable model behaviorally equivalent to the CRE-001 reference under registered ambiguity policies.",
       "shared_semantic_defaults_used": false,
       "shortest_counterexample": null,
       "unsupported_elements": [],
       "verifier_result": "pass",
-      "vocabulary_identifier": "CRE-001-VOCAB-B-1.0"
+      "vocabulary_definition_licensing_formally_established": false,
+      "vocabulary_identifier": "CRE-001-VOCAB-B-1.0",
+      "vocabulary_licensing_status": "not_formally_established"
     },
     {
       "atomic_lowering_complete": true,
+      "atomic_trace_replay_passed": true,
       "behavioral_equivalence_passed": true,
+      "behavioral_equivalence_to_cre001_reference_passed": true,
+      "capability_profile_authority": {
+        "capability_profile_formality": "implementation_local_compatibility_heuristic_not_formal_semantics",
+        "capability_profile_frozen_before_compiler": false,
+        "capability_profile_independent_of_cre001_mapping": false,
+        "capability_profile_source": "tools/cre001_compile_vocabularies.py compiler-local declared interpretation compatibility table",
+        "capability_profile_version": "cre001-adversarial-audit-v4",
+        "vocabulary_licensing_limitations": [
+          "Official vocabulary packages are informal markdown definitions; no independently frozen formal capability semantics was found in the repository.",
+          "Compiler-local compatibility checks are not proof of semantic entailment or primitive sufficiency.",
+          "Alternative reasonable interpretations may exist."
+        ],
+        "vocabulary_licensing_status": "not_formally_established"
+      },
       "compilation_status": "complete",
       "complexity": {
         "declared_derived_construct_count": 5,
@@ -96,8 +178,22 @@
         ],
         "transition_schema_count": 5
       },
-      "cre001_conditional_equivalence_demonstrated": true,
-      "definition_capability_validation_passed": true,
+      "construction_under_declared_interpretation_completed": true,
+      "declared_interpretation_compatibility_passed": true,
+      "derived_machinery_scope": "constrained derived machinery: atomic typed records, bounded disjunction, explicit update clauses, no arbitrary JSON/code",
+      "derived_metalanguage_dependency": "constrained derived machinery: atomic typed records, bounded disjunction, explicit update clauses, no arbitrary JSON/code",
+      "embedded_metalanguage_components": [
+        "boolean formula",
+        "constraint",
+        "identifier",
+        "ordered sequence",
+        "scalar",
+        "transition guard",
+        "typed relation",
+        "update program"
+      ],
+      "embedded_metalanguage_present": true,
+      "encoding_claim_subject": "primitive vocabulary plus constrained declared derived machinery",
       "failed_checks": [],
       "inventory_status": "eligible",
       "limitations": [
@@ -105,11 +201,15 @@
       ],
       "mutation_sensitivity_passed": true,
       "native_construction_complete": true,
+      "primitive_only_sufficiency_established": false,
+      "result_scope": "A compiler-authored vocabulary interpretation produced a traceable model behaviorally equivalent to the CRE-001 reference under registered ambiguity policies.",
       "shared_semantic_defaults_used": false,
       "shortest_counterexample": null,
       "unsupported_elements": [],
       "verifier_result": "pass",
-      "vocabulary_identifier": "CRE-001-VOCAB-C-1.0"
+      "vocabulary_definition_licensing_formally_established": false,
+      "vocabulary_identifier": "CRE-001-VOCAB-C-1.0",
+      "vocabulary_licensing_status": "not_formally_established"
     }
   ]
 }

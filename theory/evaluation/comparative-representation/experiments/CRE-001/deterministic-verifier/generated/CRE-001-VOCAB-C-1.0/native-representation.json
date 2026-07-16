@@ -1,12 +1,15 @@
 {
   "constructs": [
     {
-      "capability_validation": {
-        "capability": "objective",
-        "capability_rule": "Investigation must support objective using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Investigation/objective; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "objective",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "7831e040f7160d2d4b2016dd5bc471c75c64bbda7c2af0f10ab3681093c3791f",
         "definition_text": "the bounded task or question that fixes what must be represented and preserved for the mapping.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Investigation"
       },
       "id": "INVESTIGATION_CRE001",
@@ -19,12 +22,15 @@
       "value": "preserve CRE-001 commitments"
     },
     {
-      "capability_validation": {
-        "capability": "truth_condition",
-        "capability_rule": "Interpretation must support truth_condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Interpretation/truth_condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "truth_condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
         "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Interpretation"
       },
       "derived_construct": "D_boolean_value",
@@ -38,12 +44,15 @@
       "value": true
     },
     {
-      "capability_validation": {
-        "capability": "truth_condition",
-        "capability_rule": "Interpretation must support truth_condition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Interpretation/truth_condition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "truth_condition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
         "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Interpretation"
       },
       "derived_construct": "D_boolean_value",
@@ -57,12 +66,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -76,12 +88,15 @@
       "value": "active"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -95,12 +110,15 @@
       "value": "inactive"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -115,12 +133,15 @@
       "value_ref": "VAL_true"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -135,12 +156,15 @@
       "value": true
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -155,12 +179,15 @@
       "value_ref": "VAL_true"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -175,12 +202,15 @@
       "value": true
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -195,12 +225,15 @@
       "value_ref": "VAL_false"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -215,12 +248,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -235,12 +271,15 @@
       "value_ref": "VAL_false"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -255,12 +294,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -275,12 +317,15 @@
       "value_ref": "VAL_false"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -295,12 +340,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -315,12 +363,15 @@
       "value_ref": "VAL_false"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -335,12 +386,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -355,12 +409,15 @@
       "value_ref": "VAL_false"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -375,12 +432,15 @@
       "value": false
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -394,12 +454,15 @@
       "scenario_path": "/initial_state/active_rules"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -415,12 +478,15 @@
       "variable": "R_check_active"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -434,12 +500,15 @@
       "scenario_path": "/initial_state/active_rules"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -455,12 +524,15 @@
       "variable": "R_accept_active"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -474,12 +546,15 @@
       "scenario_path": "/initial_state/active_rules"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -495,12 +570,15 @@
       "variable": "R_reject_active"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -514,12 +592,15 @@
       "scenario_path": "/initial_state/active_rules"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -535,12 +616,15 @@
       "variable": "R_modify_active"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "derived_construct": "D_boolean_value",
@@ -554,12 +638,15 @@
       "scenario_path": "/initial_state/active_rules"
     },
     {
-      "capability_validation": {
-        "capability": "rule_status",
-        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/rule_status; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "rule_status",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_boolean_value",
@@ -575,12 +662,15 @@
       "variable": "R_halt_active"
     },
     {
-      "capability_validation": {
-        "capability": "history_structure",
-        "capability_rule": "Representational Structure must support history_structure using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/history_structure; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "history_structure",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_ordered_history",
@@ -595,12 +685,15 @@
     },
     {
       "blocks_all": true,
-      "capability_validation": {
-        "capability": "stopping_rule",
-        "capability_rule": "Calculus must support stopping_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/stopping_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "stopping_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_terminality",
@@ -615,12 +708,15 @@
       "variable": "p_halted"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "id": "TNAME_T_check",
@@ -633,12 +729,15 @@
       "scenario_path": "/rules/0/permits"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "id": "AUTH_R_check_T_check",
@@ -652,12 +751,15 @@
       "transition_ref": "TNAME_T_check"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -673,12 +775,15 @@
       "variable": "p_ready"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -694,12 +799,15 @@
       "variable": "p_token"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -715,12 +823,15 @@
       "variable": "p_checked"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -736,12 +847,15 @@
       "variable": "R_check_active"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -759,12 +873,15 @@
       "variable": "p_checked"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -782,12 +899,15 @@
       "variable": "history"
     },
     {
-      "capability_validation": {
-        "capability": "ordering",
-        "capability_rule": "Representational Structure must support ordering using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/ordering; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "ordering",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_ordered_history",
@@ -804,12 +924,15 @@
     {
       "alternative_group_refs": [],
       "authorization_ref": "AUTH_R_check_T_check",
-      "capability_validation": {
-        "capability": "transition_policy",
-        "capability_rule": "Calculus must support transition_policy using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/transition_policy; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "transition_policy",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -833,12 +956,15 @@
       "scenario_path": "/rules/0"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "id": "TNAME_T_accept",
@@ -851,12 +977,15 @@
       "scenario_path": "/rules/1/permits"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "id": "AUTH_R_accept_T_accept",
@@ -870,12 +999,15 @@
       "transition_ref": "TNAME_T_accept"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -891,12 +1023,15 @@
       "variable": "p_checked"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -912,12 +1047,15 @@
       "variable": "p_rejected"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -933,12 +1071,15 @@
       "variable": "R_accept_active"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -956,12 +1097,15 @@
       "variable": "p_accepted"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -979,12 +1123,15 @@
       "variable": "history"
     },
     {
-      "capability_validation": {
-        "capability": "ordering",
-        "capability_rule": "Representational Structure must support ordering using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/ordering; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "ordering",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_ordered_history",
@@ -1001,12 +1148,15 @@
     {
       "alternative_group_refs": [],
       "authorization_ref": "AUTH_R_accept_T_accept",
-      "capability_validation": {
-        "capability": "transition_policy",
-        "capability_rule": "Calculus must support transition_policy using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/transition_policy; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "transition_policy",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1029,12 +1179,15 @@
       "scenario_path": "/rules/1"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "id": "TNAME_T_reject",
@@ -1047,12 +1200,15 @@
       "scenario_path": "/rules/2/permits"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "id": "AUTH_R_reject_T_reject",
@@ -1066,12 +1222,15 @@
       "transition_ref": "TNAME_T_reject"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1087,12 +1246,15 @@
       "variable": "p_checked"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1108,12 +1270,15 @@
       "variable": "p_accepted"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1129,12 +1294,15 @@
       "variable": "R_reject_active"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1152,12 +1320,15 @@
       "variable": "p_rejected"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1175,12 +1346,15 @@
       "variable": "history"
     },
     {
-      "capability_validation": {
-        "capability": "ordering",
-        "capability_rule": "Representational Structure must support ordering using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/ordering; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "ordering",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_ordered_history",
@@ -1197,12 +1371,15 @@
     {
       "alternative_group_refs": [],
       "authorization_ref": "AUTH_R_reject_T_reject",
-      "capability_validation": {
-        "capability": "transition_policy",
-        "capability_rule": "Calculus must support transition_policy using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/transition_policy; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "transition_policy",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1225,12 +1402,15 @@
       "scenario_path": "/rules/2"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "id": "TNAME_T_disable_reject",
@@ -1243,12 +1423,15 @@
       "scenario_path": "/rules/3/permits"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "id": "AUTH_R_modify_T_disable_reject",
@@ -1262,12 +1445,15 @@
       "transition_ref": "TNAME_T_disable_reject"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1283,12 +1469,15 @@
       "variable": "p_checked"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1304,12 +1493,15 @@
       "variable": "p_accepted"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1325,12 +1517,15 @@
       "variable": "p_rejected"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1346,12 +1541,15 @@
       "variable": "R_modify_active"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1367,12 +1565,15 @@
       "variable": "R_reject_active"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1390,12 +1591,15 @@
       "variable": "R_reject_active"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1413,12 +1617,15 @@
       "variable": "p_rule_modified"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1436,12 +1643,15 @@
       "variable": "history"
     },
     {
-      "capability_validation": {
-        "capability": "ordering",
-        "capability_rule": "Representational Structure must support ordering using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/ordering; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "ordering",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_ordered_history",
@@ -1458,12 +1668,15 @@
     {
       "alternative_group_refs": [],
       "authorization_ref": "AUTH_R_modify_T_disable_reject",
-      "capability_validation": {
-        "capability": "transition_policy",
-        "capability_rule": "Calculus must support transition_policy using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/transition_policy; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "transition_policy",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1489,12 +1702,15 @@
       "scenario_path": "/rules/3"
     },
     {
-      "capability_validation": {
-        "capability": "represented_item",
-        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representation/represented_item; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "represented_item",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
         "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representation"
       },
       "id": "TNAME_T_halt",
@@ -1507,12 +1723,15 @@
       "scenario_path": "/rules/4/permits"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "id": "AUTH_R_halt_T_halt",
@@ -1526,12 +1745,15 @@
       "transition_ref": "TNAME_T_halt"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1547,12 +1769,15 @@
       "variable": "p_accepted"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1568,12 +1793,15 @@
       "variable": "p_rejected"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_disjunction",
@@ -1590,12 +1818,15 @@
       "scenario_path": "/rules/4/preconditions/0"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1611,12 +1842,15 @@
       "variable": "R_halt_active"
     },
     {
-      "capability_validation": {
-        "capability": "admissible_operation",
-        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/admissible_operation; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "admissible_operation",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1632,12 +1866,15 @@
       "variable": "p_halted"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1655,12 +1892,15 @@
       "variable": "p_halted"
     },
     {
-      "capability_validation": {
-        "capability": "update_rule",
-        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/update_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "update_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1678,12 +1918,15 @@
       "variable": "history"
     },
     {
-      "capability_validation": {
-        "capability": "ordering",
-        "capability_rule": "Representational Structure must support ordering using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Representational Structure/ordering; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "ordering",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
         "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Representational Structure"
       },
       "derived_construct": "D_ordered_history",
@@ -1702,12 +1945,15 @@
         "ALT_T_halt_0"
       ],
       "authorization_ref": "AUTH_R_halt_T_halt",
-      "capability_validation": {
-        "capability": "transition_policy",
-        "capability_rule": "Calculus must support transition_policy using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/transition_policy; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "transition_policy",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1729,12 +1975,15 @@
       "scenario_path": "/rules/4"
     },
     {
-      "capability_validation": {
-        "capability": "prohibition",
-        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/prohibition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "prohibition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1748,12 +1997,15 @@
       "value": "accept_and_reject_same_run"
     },
     {
-      "capability_validation": {
-        "capability": "prohibition",
-        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/prohibition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "prohibition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1767,12 +2019,15 @@
       "value": "rule_status_change_except_T_disable_reject"
     },
     {
-      "capability_validation": {
-        "capability": "prohibition",
-        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/prohibition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "prohibition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1786,12 +2041,15 @@
       "value": "history_removal_or_rewrite"
     },
     {
-      "capability_validation": {
-        "capability": "prohibition",
-        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/prohibition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "prohibition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1805,12 +2063,15 @@
       "value": "transition_after_halt"
     },
     {
-      "capability_validation": {
-        "capability": "prohibition",
-        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/prohibition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "prohibition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1824,12 +2085,15 @@
       "value": "T_reject_after_R_reject_inactive"
     },
     {
-      "capability_validation": {
-        "capability": "prohibition",
-        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/prohibition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "prohibition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1843,12 +2107,15 @@
       "value": "accept_reject_modify_before_checked"
     },
     {
-      "capability_validation": {
-        "capability": "output_meaning",
-        "capability_rule": "Interpretation must support output_meaning using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Interpretation/output_meaning; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "output_meaning",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
         "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Interpretation"
       },
       "derived_construct": "D_terminality",
@@ -1869,12 +2136,15 @@
       "scenario_path": "/observable_outputs"
     },
     {
-      "capability_validation": {
-        "capability": "output_meaning",
-        "capability_rule": "Interpretation must support output_meaning using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Interpretation/output_meaning; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "output_meaning",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
         "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Interpretation"
       },
       "derived_construct": "D_terminality",
@@ -1897,12 +2167,15 @@
       "scenario_path": "/observable_outputs"
     },
     {
-      "capability_validation": {
-        "capability": "output_meaning",
-        "capability_rule": "Interpretation must support output_meaning using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Interpretation/output_meaning; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "output_meaning",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
         "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Interpretation"
       },
       "derived_construct": "D_terminality",
@@ -1919,12 +2192,15 @@
       "scenario_path": "/observable_outputs"
     },
     {
-      "capability_validation": {
-        "capability": "output_meaning",
-        "capability_rule": "Interpretation must support output_meaning using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Interpretation/output_meaning; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "output_meaning",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
         "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Interpretation"
       },
       "derived_construct": "D_terminality",
@@ -1941,12 +2217,15 @@
       "scenario_path": "/observable_outputs"
     },
     {
-      "capability_validation": {
-        "capability": "output_meaning",
-        "capability_rule": "Interpretation must support output_meaning using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Interpretation/output_meaning; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "output_meaning",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
         "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Interpretation"
       },
       "derived_construct": "D_terminality",
@@ -1963,12 +2242,15 @@
       "scenario_path": "/observable_outputs"
     },
     {
-      "capability_validation": {
-        "capability": "prohibition",
-        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/prohibition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "prohibition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -1986,12 +2268,15 @@
       ]
     },
     {
-      "capability_validation": {
-        "capability": "prohibition",
-        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/prohibition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "prohibition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -2007,12 +2292,15 @@
     },
     {
       "allowed_transition": "T_disable_reject",
-      "capability_validation": {
-        "capability": "prohibition",
-        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/prohibition; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "prohibition",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_guarded_update",
@@ -2027,12 +2315,15 @@
       "variable_suffix": "_active"
     },
     {
-      "capability_validation": {
-        "capability": "stopping_rule",
-        "capability_rule": "Calculus must support stopping_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/stopping_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "stopping_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_terminality",
@@ -2047,12 +2338,15 @@
       "value": "require_r_reject_active_before"
     },
     {
-      "capability_validation": {
-        "capability": "stopping_rule",
-        "capability_rule": "Calculus must support stopping_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/stopping_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "stopping_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_terminality",
@@ -2067,12 +2361,15 @@
       "value": "executed_only"
     },
     {
-      "capability_validation": {
-        "capability": "stopping_rule",
-        "capability_rule": "Calculus must support stopping_rule using frozen definition keywords",
+      "declared_interpretation_check": {
+        "compatibility_rule": "compiler-local compatibility check for Calculus/stopping_rule; not formal semantic licensing",
+        "declared_interpretation_compatible": true,
+        "declared_interpretation_role": "stopping_rule",
+        "definition_parseable": true,
+        "definition_present": true,
         "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
         "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-        "passed": true,
+        "formal_licensing_established": false,
         "primitive": "Calculus"
       },
       "derived_construct": "D_terminality",
@@ -2090,24 +2387,99 @@
   "definition_digest": "c921196ad3e8149fa9a6e3aa9ed2e37d3ec71d08f6d6bdd85ee89b65f8f590e3",
   "derived_constructs": [
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit truth/status carriers only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_boolean_value",
-      "role": "truth/status value carrier"
+      "inferred": true,
+      "operational_role": "variable values and status values",
+      "payload_types": [
+        "scalar",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "boolean truth/status distinction"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "append-only history entries with explicit ordering",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_ordered_history",
-      "role": "append-only ordered transition record"
+      "inferred": true,
+      "operational_role": "history append and output",
+      "payload_types": [
+        "ordered sequence",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "order preservation"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "atomic guard/effect records; no arbitrary embedded program",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_guarded_update",
-      "role": "guarded update schema"
+      "inferred": true,
+      "operational_role": "transition guards and updates",
+      "payload_types": [
+        "transition guard",
+        "update program",
+        "typed relation"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "guarded transition execution"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "bounded explicit alternative group only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_disjunction",
-      "role": "explicit alternative guard group"
+      "inferred": true,
+      "operational_role": "halt disjunction",
+      "payload_types": [
+        "boolean formula"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "OR guard for halt"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit halt variable and post-halt blocking",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_terminality",
-      "role": "terminal blocking and halt output"
+      "inferred": true,
+      "operational_role": "terminal condition, outputs, ambiguity policies",
+      "payload_types": [
+        "constraint",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "terminal blocking policy"
+      ]
     }
   ],
   "native_format": "cre001-atomic-native-representation-v1",

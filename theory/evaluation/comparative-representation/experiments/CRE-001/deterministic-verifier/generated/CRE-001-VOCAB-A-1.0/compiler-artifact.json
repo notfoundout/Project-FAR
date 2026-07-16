@@ -1,15 +1,29 @@
 {
-  "artifact_format": "cre001-vocabulary-compiler-artifact-v3",
+  "artifact_format": "cre001-vocabulary-compiler-artifact-v4",
   "assumptions": [
     "Frozen scenario and vocabulary files are source inputs.",
-    "Candidate model is accepted only after atomic native construction, capability validation, lowering trace completeness, mutation sensitivity, and verifier pass."
+    "Candidate model is accepted only after atomic native construction, declared-interpretation compatibility, trace replay, mutation sensitivity, and verifier pass; vocabulary licensing is not formally established."
   ],
   "atomic_lowering_complete": true,
+  "atomic_trace_replay_passed": true,
+  "capability_profile_authority": {
+    "capability_profile_formality": "implementation_local_compatibility_heuristic_not_formal_semantics",
+    "capability_profile_frozen_before_compiler": false,
+    "capability_profile_independent_of_cre001_mapping": false,
+    "capability_profile_source": "tools/cre001_compile_vocabularies.py compiler-local declared interpretation compatibility table",
+    "capability_profile_version": "cre001-adversarial-audit-v4",
+    "vocabulary_licensing_limitations": [
+      "Official vocabulary packages are informal markdown definitions; no independently frozen formal capability semantics was found in the repository.",
+      "Compiler-local compatibility checks are not proof of semantic entailment or primitive sufficiency.",
+      "Alternative reasonable interpretations may exist."
+    ],
+    "vocabulary_licensing_status": "not_formally_established"
+  },
   "compilation_status": "complete",
   "compiler_identifier": "cre-001-vocab-a-1.0-atomic-native-compiler",
   "compiler_source_path": "tools/cre001_compile_vocabularies.py",
-  "compiler_source_sha256": "46a6602aaa07b468d2e792ed196358fe4f18c146cb7cba50973825ec6a7b26d4",
-  "compiler_version": "cre001-atomic-native-compiler-v3",
+  "compiler_source_sha256": "f29f0da5323f68eaaee65e11159af3fce922b17cbad1799d2622298dae058df5",
+  "compiler_version": "cre001-adversarial-audit-v4",
   "complexity": {
     "declared_derived_construct_count": 5,
     "normalized_compiler_clause_count": 107,
@@ -27,31 +41,216 @@
   },
   "declared_derived_constructs": [
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit truth/status carriers only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_boolean_value",
-      "role": "truth/status value carrier"
+      "inferred": true,
+      "operational_role": "variable values and status values",
+      "payload_types": [
+        "scalar",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "boolean truth/status distinction"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "append-only history entries with explicit ordering",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_ordered_history",
-      "role": "append-only ordered transition record"
+      "inferred": true,
+      "operational_role": "history append and output",
+      "payload_types": [
+        "ordered sequence",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "order preservation"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "atomic guard/effect records; no arbitrary embedded program",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_guarded_update",
-      "role": "guarded update schema"
+      "inferred": true,
+      "operational_role": "transition guards and updates",
+      "payload_types": [
+        "transition guard",
+        "update program",
+        "typed relation"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "guarded transition execution"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "bounded explicit alternative group only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_disjunction",
-      "role": "explicit alternative guard group"
+      "inferred": true,
+      "operational_role": "halt disjunction",
+      "payload_types": [
+        "boolean formula"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "OR guard for halt"
+      ]
     },
     {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit halt variable and post-halt blocking",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
       "id": "D_terminality",
-      "role": "terminal blocking and halt output"
+      "inferred": true,
+      "operational_role": "terminal condition, outputs, ambiguity policies",
+      "payload_types": [
+        "constraint",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "terminal blocking policy"
+      ]
     }
   ],
-  "definition_capability_validation_passed": true,
+  "declared_interpretation_compatibility_passed": true,
+  "derived_construct_audit": [
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit truth/status carriers only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_boolean_value",
+      "inferred": true,
+      "operational_role": "variable values and status values",
+      "payload_types": [
+        "scalar",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "boolean truth/status distinction"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "append-only history entries with explicit ordering",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_ordered_history",
+      "inferred": true,
+      "operational_role": "history append and output",
+      "payload_types": [
+        "ordered sequence",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "order preservation"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "atomic guard/effect records; no arbitrary embedded program",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_guarded_update",
+      "inferred": true,
+      "operational_role": "transition guards and updates",
+      "payload_types": [
+        "transition guard",
+        "update program",
+        "typed relation"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "guarded transition execution"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "bounded explicit alternative group only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_disjunction",
+      "inferred": true,
+      "operational_role": "halt disjunction",
+      "payload_types": [
+        "boolean formula"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "OR guard for halt"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit halt variable and post-halt blocking",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_terminality",
+      "inferred": true,
+      "operational_role": "terminal condition, outputs, ambiguity policies",
+      "payload_types": [
+        "constraint",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "terminal blocking policy"
+      ]
+    }
+  ],
+  "derived_machinery_scope": "constrained derived machinery: atomic typed records, bounded disjunction, explicit update clauses, no arbitrary JSON/code",
   "deterministic_generation_metadata": {
-    "compiler_version": "cre001-atomic-native-compiler-v3",
+    "compiler_version": "cre001-adversarial-audit-v4",
     "json_sort_keys": true
   },
+  "embedded_metalanguage_components": [
+    "boolean formula",
+    "constraint",
+    "identifier",
+    "ordered sequence",
+    "scalar",
+    "transition guard",
+    "typed relation",
+    "update program"
+  ],
+  "embedded_metalanguage_present": true,
+  "encoding_claim_subject": "primitive vocabulary plus constrained declared derived machinery",
   "experiment_identifier": "CRE-001",
   "generated_execution_model": {
     "ambiguity_policy": {
@@ -346,16 +545,17 @@
       }
     }
   },
-  "lowering_trace_sha256": "e10fd4948a460c51da6bc933c23d5959b11bc2ca00c9434335b1e20c9f93055b",
+  "lowering_trace_sha256": "38928b102309e3100d507939b201ac5bcd2e5a773dabed1f623a838a542bd6c9",
   "mutation_report_sha256": "e1ad2baf3aee22dd7927e4e16d1174b5b9411d8d688d175c87e98f84db0f2125",
   "mutation_sensitivity_passed": true,
   "native_construction_complete": true,
-  "native_representation_sha256": "2063ce04cb76864d6d55381f0b320e6f8fb91f9cc2164d67eb14bca85daa7cc1",
+  "native_representation_sha256": "55c45ec114f42c6766b9181fb8187b29a0d5649524ad85596a28622a3b2d98f1",
   "primitive_categories_used": [
     "Object",
     "Relation",
     "Transformation"
   ],
+  "primitive_only_construction": false,
   "provenance": {
     "generation_command": "python tools/cre001_compile_vocabularies.py --write --check",
     "source": "compiled from frozen vocabulary into atomic native records, then lowered by executable rules; no candidate path calls the reference compiler or prebuilt transition dictionaries"
@@ -381,8 +581,16 @@
     "A-ambiguity-atomic"
   ],
   "unresolved_ambiguities": [],
+  "unrestricted_metalanguage_flagged": false,
   "unsupported_scenario_elements": [],
+  "vocabulary_definition_licensing_formally_established": false,
   "vocabulary_identifier": "CRE-001-VOCAB-A-1.0",
+  "vocabulary_licensing_limitations": [
+    "Official vocabulary packages are informal markdown definitions; no independently frozen formal capability semantics was found in the repository.",
+    "Compiler-local compatibility checks are not proof of semantic entailment or primitive sufficiency.",
+    "Alternative reasonable interpretations may exist."
+  ],
+  "vocabulary_licensing_status": "not_formally_established",
   "vocabulary_source_path": "theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-A.md",
   "vocabulary_source_sha256": "7be45d53d2b4cd0dc0ad48938fde1e4212771f9ca0f644d9a00ac27e77a4a185",
   "vocabulary_version": "CRE-001-VOCAB-A-1.0"

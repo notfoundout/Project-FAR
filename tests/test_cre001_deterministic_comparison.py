@@ -34,7 +34,7 @@ class Cre001ComparisonTests(unittest.TestCase):
     def test_complete_atomic_lowering_and_verification(self):
         ref=COMP.reference_model()
         for v in self.entries():
-            art=COMP.compile_entry(v,Path(tempfile.mkdtemp())); self.assertEqual(art['compilation_status'],'complete'); self.assertTrue(art['definition_capability_validation_passed']); self.assertTrue(art['atomic_lowering_complete']); self.assertFalse(art['shared_semantic_defaults_used']); self.assertTrue(art['mutation_sensitivity_passed']); self.assertEqual(VER.verify(ref,art['generated_execution_model'])['result'],'pass')
+            art=COMP.compile_entry(v,Path(tempfile.mkdtemp())); self.assertEqual(art['compilation_status'],'complete'); self.assertTrue(art['declared_interpretation_compatibility_passed']); self.assertTrue(art['atomic_lowering_complete']); self.assertFalse(art['shared_semantic_defaults_used']); self.assertTrue(art['mutation_sensitivity_passed']); self.assertEqual(VER.verify(ref,art['generated_execution_model'])['result'],'pass')
     def test_missing_atomic_guard_update_terminal_output_ambiguity_failures(self):
         removals=[('guard_all_condition','missing atomic precondition'),('atomic_update','missing atomic update'),('terminal_blocking','terminal blocking'),('output','output'),('ambiguity_policy','ambiguity')]
         for role,_ in removals:
@@ -68,8 +68,25 @@ class Cre001ComparisonTests(unittest.TestCase):
     def test_three_native_representations_distinct_and_no_shared_defaults_reported(self):
         kinds=[{c['kind'] for c in n['constructs']} for n in self.all_natives()]; self.assertEqual(len({tuple(sorted(k)) for k in kinds}),3)
         summary=json.loads((DET/'cre001-deterministic-comparison.json').read_text())
-        for r in summary['results']: self.assertFalse(r['shared_semantic_defaults_used']); self.assertTrue(r['mutation_sensitivity_passed']); self.assertIn('cre001_conditional_equivalence_demonstrated',r)
+        for r in summary['results']: self.assertFalse(r['shared_semantic_defaults_used']); self.assertTrue(r['mutation_sensitivity_passed']); self.assertFalse(r['vocabulary_definition_licensing_formally_established']); self.assertTrue(r['atomic_trace_replay_passed']); self.assertEqual(r['vocabulary_licensing_status'],'not_formally_established')
     def test_committed_mutation_reports_pass(self):
         for e in self.entries():
             rep=json.loads((DET/'generated'/e['vocabulary_identifier']/'mutation-test-report.json').read_text()); self.assertTrue(rep['passed']); self.assertGreaterEqual(len(rep['cases']),11); self.assertTrue(all(c['detected'] for c in rep['cases']))
+
+    def test_audit_reports_reference_boundary_and_trace_replay(self):
+        self.assertTrue(json.loads((DET/'reference-audit-report.json').read_text())['passed'])
+        self.assertTrue(json.loads((DET/'compiler-boundary-report.json').read_text())['passed'])
+        for e in self.entries():
+            d=DET/'generated'/e['vocabulary_identifier']
+            self.assertTrue(json.loads((d/'trace-replay-report.json').read_text())['passed'])
+            self.assertTrue(json.loads((d/'compiler-boundary-report.json').read_text())['passed'])
+    def test_result_language_and_capability_authority_are_narrow(self):
+        summary=json.loads((DET/'cre001-deterministic-comparison.json').read_text())
+        self.assertNotIn('cre001_conditional_equivalence_demonstrated', json.dumps(summary))
+        for r in summary['results']:
+            self.assertFalse(r['primitive_only_sufficiency_established'])
+            self.assertFalse(r['vocabulary_definition_licensing_formally_established'])
+            self.assertTrue(r['embedded_metalanguage_present'])
+            self.assertIn('compiler-authored vocabulary interpretation', r['result_scope'])
+            self.assertEqual(r['capability_profile_authority']['capability_profile_frozen_before_compiler'], False)
 if __name__=='__main__': unittest.main()

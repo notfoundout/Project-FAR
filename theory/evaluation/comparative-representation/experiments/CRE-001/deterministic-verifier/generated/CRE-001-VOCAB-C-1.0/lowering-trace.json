@@ -640,28 +640,6 @@
       "supplied_vocabulary_primitive": "Calculus"
     },
     {
-      "derived_construct_id": "D_disjunction",
-      "executable_lowering_rule_id": "C-alternative-atomic",
-      "native_construct_id": "ALT_T_halt_0",
-      "native_construct_kind": "halt_disjunction_calculus",
-      "output_path": "/transitions/T_halt/guard_any_group",
-      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
-      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
-      "resulting_common_model_value": [
-        {
-          "equals": true,
-          "variable": "p_accepted"
-        },
-        {
-          "equals": true,
-          "variable": "p_rejected"
-        }
-      ],
-      "source_native_field": "member_refs",
-      "source_scenario_path": "/rules/4/preconditions/0",
-      "supplied_vocabulary_primitive": "Calculus"
-    },
-    {
       "derived_construct_id": "D_guarded_update",
       "executable_lowering_rule_id": "C-effect-atomic",
       "native_construct_id": "EFF_T_halt_0",
@@ -1014,7 +992,7 @@
       "supplied_vocabulary_primitive": "Calculus"
     }
   ],
-  "native_sha256": "119747ea0f3dc3144e57c7dbe71780c0a44542b9ae559696ea022b9894c0d071",
+  "native_sha256": "94de59fd37e8c0a83e72f062f2aa605499e0007723969c1c9e03c2774966809a",
   "trace_format": "cre001-atomic-lowering-trace-v1",
   "vocabulary_identifier": "CRE-001-VOCAB-C-1.0"
 }

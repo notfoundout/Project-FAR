@@ -4,7 +4,7 @@
   "additionalProperties": true,
   "properties": {
     "artifact_format": {
-      "const": "cre001-vocabulary-compiler-artifact-v3"
+      "const": "cre001-vocabulary-compiler-artifact-v4"
     },
     "assumptions": {
       "items": {
@@ -122,6 +122,6 @@
     "native_representation_sha256",
     "lowering_trace_sha256"
   ],
-  "title": "CRE-001 vocabulary compiler artifact v3",
+  "title": "CRE-001 vocabulary compiler artifact v4",
   "type": "object"
 }

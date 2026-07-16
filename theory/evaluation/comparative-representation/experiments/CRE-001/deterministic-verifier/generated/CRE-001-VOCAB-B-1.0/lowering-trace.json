@@ -640,28 +640,6 @@
       "supplied_vocabulary_primitive": "Label"
     },
     {
-      "derived_construct_id": "D_disjunction",
-      "executable_lowering_rule_id": "B-alternative-atomic",
-      "native_construct_id": "ALT_T_halt_0",
-      "native_construct_kind": "disjunction_group_label",
-      "output_path": "/transitions/T_halt/guard_any_group",
-      "primitive_definition_excerpt": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
-      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
-      "resulting_common_model_value": [
-        {
-          "equals": true,
-          "variable": "p_accepted"
-        },
-        {
-          "equals": true,
-          "variable": "p_rejected"
-        }
-      ],
-      "source_native_field": "member_refs",
-      "source_scenario_path": "/rules/4/preconditions/0",
-      "supplied_vocabulary_primitive": "Label"
-    },
-    {
       "derived_construct_id": "D_guarded_update",
       "executable_lowering_rule_id": "B-effect-atomic",
       "native_construct_id": "EFF_T_halt_0",
@@ -1014,7 +992,7 @@
       "supplied_vocabulary_primitive": "Label"
     }
   ],
-  "native_sha256": "e72b5bf25aaf2acee21ea1dd60ba4e83aeb83f83f9a0cd2d6ba7ed6e964a7ab4",
+  "native_sha256": "6f4f3fe794dfa93c8354cc83574f002de53207a2bc59f269180c321cd68db5d1",
   "trace_format": "cre001-atomic-lowering-trace-v1",
   "vocabulary_identifier": "CRE-001-VOCAB-B-1.0"
 }
