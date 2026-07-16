@@ -86,9 +86,9 @@ def main() -> int:
             errors.append(f"manifest omits immutable scientific file {rel}")
     if "execution-lock.json" in manifest_paths:
         errors.append("mutable execution control must not be listed as an immutable scientific file")
-    controls = {entry.get("path") for entry in manifest.get("administrative_controls", [])}
+    controls = {entry.get("path") for entry in manifest.get("mutable_administrative_controls", [])}
     if "execution-lock.json" not in controls:
-        errors.append("manifest omits execution-lock.json from administrative controls")
+        errors.append("manifest omits execution-lock.json from mutable administrative controls")
 
     combined = "\n".join((BASE / rel).read_text(encoding="utf-8") for rel in ["README.md", "preregistration.md"])
     for claim in NONCLAIMS:
