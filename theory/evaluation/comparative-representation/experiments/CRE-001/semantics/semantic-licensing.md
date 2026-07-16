@@ -1,0 +1,30 @@
+# CRE-001 Semantic Licensing
+
+## Status Vocabulary
+
+- **Supported**: established for frozen CRE-001 vocabulary-semantics scope by explicit source definitions and this specification.
+- **Unsupported**: not established and not licensed by this specification.
+- **Unknown**: not determined by available repository evidence.
+- **Assumed**: required CRE-001-scoped assumption recorded explicitly.
+- **Implementation-specific**: property of the deterministic compiler/verifier artifacts, not primitive semantics.
+
+## CRE-001-VOCAB-A-1.0
+| Primitive | Alone licenses | Cannot license | Additional assumptions for stronger claims |
+|---|---|---|---|
+| Object | unit individuation; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
+| Relation | explicit typed connection among Objects; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
+| Transformation | explicit operation on Objects/Relations; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
+## CRE-001-VOCAB-B-1.0
+| Primitive | Alone licenses | Cannot license | Additional assumptions for stronger claims |
+|---|---|---|---|
+| State | discrete configuration snapshot; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
+| Transition | movement/update between States; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
+| Label | attached marker or identifier; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
+## CRE-001-VOCAB-C-1.0
+| Primitive | Alone licenses | Cannot license | Additional assumptions for stronger claims |
+|---|---|---|---|
+| Representation | explicit represented item; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
+| Representational Structure | explicit organization over representations; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
+| Interpretation | meaning/status/truth/output policy; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
+| Investigation | bounded preservation task; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
+| Calculus | rule-governed transition/judgment procedure; explicit CRE-001-scoped representation when provenance and role are recorded | unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims | Explicit derived machinery, CRE-001 scenario scope, registered ambiguity policies, and independent evidence before any stronger claim. |
