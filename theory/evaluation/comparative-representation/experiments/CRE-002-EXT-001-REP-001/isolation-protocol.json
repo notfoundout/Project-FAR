@@ -1,0 +1,41 @@
+{
+  "protocol_id": "CRE-002-EXT-001-REP-001-ISOLATION-1.0",
+  "minimum_implementation_teams": 2,
+  "minimum_verifier_teams": 1,
+  "team_separation": {
+    "shared_personnel_permitted": false,
+    "shared_candidate_repository_permitted": false,
+    "shared_candidate_source_permitted": false,
+    "cross_team_encoding_discussion_before_freeze": false,
+    "verifier_personnel_may_build_candidates": false
+  },
+  "permitted_materials": [
+    "frozen CRE-002-EXT-001 scientific package",
+    "Vocabulary Semantics Baseline 1.1",
+    "official vocabulary definitions",
+    "neutral submission schemas",
+    "neutral conformance tests"
+  ],
+  "prohibited_materials_before_submission_freeze": [
+    "parent compiler or execution source",
+    "parent native representations",
+    "parent lowering traces",
+    "parent generated execution models",
+    "parent mutation implementations or reports",
+    "parent verifier source or hidden reference artifacts",
+    "parent result counts, digests, counterexamples, or candidate outcomes",
+    "encoding guidance from parent implementers"
+  ],
+  "required_attestations": [
+    "personnel identity and role",
+    "repository and environment identity",
+    "materials-access declaration",
+    "prohibited-exposure declaration",
+    "communication-isolation declaration",
+    "dependency and toolchain manifest",
+    "submission checksum manifest"
+  ],
+  "contamination_rule": "Any verified prohibited exposure before submission freeze excludes the affected submission from primary aggregation. The submission remains reported as contaminated.",
+  "uncertain_exposure_rule": "Materially uncertain exposure yields inconclusive eligibility until adjudicated; uncertainty is not silently treated as clean.",
+  "correction_rule": "Corrections must be separately versioned and preserve the original submission unchanged."
+}
