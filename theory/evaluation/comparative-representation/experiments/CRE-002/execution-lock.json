@@ -1,19 +1,25 @@
 {
   "lock_id": "CRE-002-EXECUTION-LOCK-1.0",
-  "execution_permitted": false,
-  "reason": "Preregistration package is merged; checksum lock and a separate reviewed unlock PR are still required.",
-  "unlock_requirements": [
-    "preregistration package merged to main",
-    "package manifest contains final SHA-256 checksums",
-    "repository health passes on merged main",
-    "separate reviewed PR changes execution_permitted to true",
-    "no vocabulary-specific CRE-002 compiler or mapping exists before unlock"
+  "execution_permitted": true,
+  "authorization_type": "separately reviewed post-checksum unlock",
+  "reason": "The prospective preregistration is merged, the six immutable scientific package files are checksum-locked, repository health passed, and no vocabulary-specific CRE-002 compiler, mapping, verifier result, or scientific result existed before authorization.",
+  "authorization_evidence": {
+    "preregistration_merge_commit": "a2c46a72b0fe145fd4835973d799531222f1edd8",
+    "checksum_lock_merge_commit": "f1d086480ae39c91d05a1381f4c3915e682ce439",
+    "checksum_lock_id": "CRE-002-CHECKSUM-LOCK-1.0",
+    "repository_health_before_unlock": "passed",
+    "pre_unlock_result_artifacts_present": false
+  },
+  "permitted_after_unlock": [
+    "author vocabulary-specific native CRE-002 representations",
+    "author vocabulary-specific lowering rules",
+    "run official compilers and verifiers",
+    "record complete, partial, unsupported, or error outcomes under the frozen decision rules"
   ],
-  "prohibited_before_unlock": [
-    "official compiler runs",
-    "official evaluator mappings",
-    "official verifier results",
-    "vocabulary pass or fail claims",
-    "scientific aggregation"
+  "still_prohibited": [
+    "editing frozen scenario, preregistration, ambiguity policies, or decision rules in response to execution outcomes",
+    "silent semantic invention or unrestricted hidden metalanguage",
+    "superiority or ranking claims",
+    "universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, FAR proof, or universal reasoning-structure claims"
   ]
 }
