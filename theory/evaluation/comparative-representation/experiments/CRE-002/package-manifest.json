@@ -1,6 +1,6 @@
 {
   "package_id": "CRE-002-PACKAGE-1.0",
-  "status": "preregistered-checksum-locked-execution-authorized",
+  "status": "execution-authorized",
   "protocol": "CRP-1.0 with CRE-002 prospective deterministic extension",
   "semantic_authority": {
     "name": "Vocabulary Semantics Baseline 1.0",
@@ -21,9 +21,19 @@
     {"path": "ambiguity-policies.json", "sha256": "766a64f0ca48af6bbb9f0c532a557c73925dc717c1a45f1c1a476fa1cdc2a61e", "byte_count": 1915},
     {"path": "decision-rules.json", "sha256": "1a4adca94f5597de0519d758153978e1f56dee71fcdf4e54e8f3166f1a7e64b0", "byte_count": 1976}
   ],
-  "mutable_administrative_controls": [
+  "administrative_controls": [
     {
       "path": "execution-lock.json",
+      "review_required_for_change": true,
+      "excluded_from_immutable_checksum_set": true
+    },
+    {
+      "path": "execution-unlock-audit.json",
+      "review_required_for_change": true,
+      "excluded_from_immutable_checksum_set": true
+    },
+    {
+      "path": "checksum-lock.json",
       "review_required_for_change": true,
       "excluded_from_immutable_checksum_set": true
     }
