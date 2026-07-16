@@ -62,7 +62,7 @@ structure Trace where
 structure FARRepresentation (R : ReasoningProcess) where
   I : Investigation
   Rep : List Representation
-  repNonempty : Rep.Nonempty
+  repNonempty : Rep ≠ []
   S : RepresentationalStructure Rep
   Int : Interpretation I Rep
   C : ReasoningCalculus
@@ -88,7 +88,7 @@ structure T003Premises (scope : Scope) where
     (R : ReasoningProcess) → scope.contains R → List Representation
   representationsNonempty :
     (R : ReasoningProcess) → (h : scope.contains R) →
-      (representations R h).Nonempty
+      representations R h ≠ []
   representationStructure :
     (R : ReasoningProcess) → (h : scope.contains R) →
       RepresentationalStructure (representations R h)
@@ -149,6 +149,6 @@ theorem constructed_trace_is_empty_iff
     (hScope : scope.contains R) :
     (constructFARRepresentation scope premises R hScope).T.transitions = [] ↔
       R.specifiedTransitions = [] := by
-  rfl
+  simp [constructFARRepresentation, traceOf]
 
 end FAR
