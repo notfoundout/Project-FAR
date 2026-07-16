@@ -23,6 +23,13 @@ jobs:
       - name: Compile FARCore
         run: lean mechanization/lean/FARCore.lean
       - name: Compile independent process semantics
-        run: lean mechanization/lean/ProcessSemantics.lean
+        run: lean mechanization/lean/ProcessSemantics.lean >process-semantics.log 2>&1
+      - name: Upload ProcessSemantics diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: process-semantics-compiler-output
+          path: process-semantics.log
+          if-no-files-found: warn
       - name: Check T-003 alignment and process semantics
         run: python -m unittest tests.test_t003_lean_alignment tests.test_process_semantics
