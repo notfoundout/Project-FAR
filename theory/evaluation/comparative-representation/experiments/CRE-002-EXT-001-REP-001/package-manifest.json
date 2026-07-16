@@ -20,7 +20,7 @@
     "team-registration-schema.json",
     "team-registry.json"
   ],
-  "checksum_state": "locked-historical-record-retained",
+  "checksum_state": "locked",
   "team_registration_authorized": false,
   "execution_authorized": false,
   "compiler_implementation_authorized": false,
