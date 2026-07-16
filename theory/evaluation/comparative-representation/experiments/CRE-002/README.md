@@ -1,6 +1,6 @@
 # CRE-002: Prospective Multi-Pressure Reasoning System
 
-Status: Preregistered package under review; execution prohibited until package lock
+Status: Preregistered package merged; execution prohibited until checksum lock and separate unlock review
 Protocol: CRP-1.0 with CRE-002 prospective deterministic extension
 Semantic authority: Vocabulary Semantics Baseline 1.0
 Scenario: CRE-002-SCENARIO-1.0
