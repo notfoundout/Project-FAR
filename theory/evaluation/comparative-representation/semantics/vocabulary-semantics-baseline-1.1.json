@@ -1,0 +1,107 @@
+{
+  "artifact_id": "VOCABULARY-SEMANTICS-BASELINE-1.1",
+  "status": "prospective-draft-for-freeze",
+  "supersedes_for_future_experiments": "VOCABULARY-SEMANTICS-BASELINE-1.0",
+  "does_not_modify": [
+    "VOCABULARY-SEMANTICS-BASELINE-1.0",
+    "CRE-002-COMPARISON-1.0",
+    "the original CRE-002 unsupported outcomes"
+  ],
+  "chronology": {
+    "created_after": "CRE-002 prospective semantic-licensing comparison",
+    "reason_created": "CRE-002 exposed five commitments not explicitly licensed by Baseline 1.0",
+    "first_eligible_experiment": "CRE-002-EXT-001 after independent preregistration, checksum lock, review, and execution unlock",
+    "not_retrospective_evidence_for": ["CRE-001", "CRE-002"],
+    "cannot_reclassify": "any previously recorded CRE-002 candidate outcome"
+  },
+  "scope": {
+    "bounded": true,
+    "finite_identifiers_required": true,
+    "finite_state_required": true,
+    "unbounded_semantics_forbidden": true,
+    "primitive_only_claim": false,
+    "claim_subject": "official vocabulary primitives plus the explicitly declared derived constructs in this baseline"
+  },
+  "derived_constructs": [
+    {
+      "identifier": "D_nondeterminism",
+      "classification": "derived",
+      "formal_definition": "A finite, explicitly enumerated set of alternative outcomes attached to one transition point. Exactly one listed alternative is selected per firing; no probability distribution, hidden choice rule, fairness rule, or unlisted outcome is licensed.",
+      "required_fields": ["choice_id", "finite_alternatives", "selection_point", "outcome_updates"],
+      "operational_constraints": ["alternatives are nonempty and finite", "each outcome update is explicit", "selection creates no extra state beyond the selected recorded outcome"],
+      "forbidden_imports": ["probability", "randomness assumptions", "fairness", "unbounded branching", "implicit alternatives"]
+    },
+    {
+      "identifier": "D_concurrency",
+      "classification": "derived",
+      "formal_definition": "A bounded interleaving semantics over a finite set of atomic transitions. Concurrent eligibility permits multiple next transitions, but each execution step applies exactly one complete atomic transition; simultaneous writes and continuous time are not licensed.",
+      "required_fields": ["interleaving_id", "atomic_transition_ids", "shared_state_fields", "conflict_policy"],
+      "operational_constraints": ["finite transition set", "one atomic transition per step", "all shared-state effects explicit", "history records execution order"],
+      "forbidden_imports": ["true simultaneity", "unbounded processes", "distributed clocks", "implicit race resolution", "continuous time"]
+    },
+    {
+      "identifier": "D_priority",
+      "classification": "derived",
+      "formal_definition": "A finite defeasible ordering among explicitly identified applicable rules. A higher-priority applicable rule may defeat a lower-priority conflicting rule only for the current state and only when the registered conflict predicate holds.",
+      "required_fields": ["priority_id", "higher_rule", "lower_rule", "conflict_predicate", "scope"],
+      "operational_constraints": ["priority relation is finite", "defeat is state-local", "nonconflicting lower rules remain eligible", "defeat is observable"],
+      "forbidden_imports": ["global preference semantics", "unstated tie breaking", "moral or normative authority", "unbounded priority chains"]
+    },
+    {
+      "identifier": "D_provenance",
+      "classification": "derived",
+      "formal_definition": "A finite evidence record binding a claim value to an explicit source identifier and reliability label. Guards may inspect the exact recorded tuple; no source credibility, truth, or causal authority beyond the registered label is inferred.",
+      "required_fields": ["claim", "value", "source_id", "reliability_label", "record_position"],
+      "operational_constraints": ["records are explicit and ordered", "guard matching is exact", "updates append rather than rewrite prior evidence"],
+      "forbidden_imports": ["implicit trust", "Bayesian inference", "source identity inference", "unrecorded evidence", "causal interpretation"]
+    },
+    {
+      "identifier": "D_rule_modification",
+      "classification": "derived",
+      "formal_definition": "A bounded transition whose explicit effect changes the active status or registered parameter of an identified rule. The permitted modification targets, operation count, before-state requirements, and later admissibility effects are all finite and explicit.",
+      "required_fields": ["modification_id", "authorizing_rule", "target_rule", "before_status", "after_status", "maximum_firings"],
+      "operational_constraints": ["finite target set", "bounded firing count", "before and after status recorded", "history append required", "later rule eligibility reads the modified status"],
+      "forbidden_imports": ["self-modifying compiler code", "unbounded rule creation", "arbitrary code execution", "implicit rule deletion", "higher-order modification beyond registered targets"]
+    }
+  ],
+  "vocabulary_licensing": {
+    "CRE-001-VOCAB-A-1.0": {
+      "primitive_basis": ["Object", "Relation", "Transformation"],
+      "licensed_derived_constructs": ["D_nondeterminism", "D_concurrency", "D_priority", "D_provenance", "D_rule_modification"],
+      "construction_rule": "Objects identify states, rules, evidence and alternatives; Relations encode finite guards, provenance, priority, conflicts and ordering; Transformations encode atomic transitions and bounded rule-status updates.",
+      "limitation": "Licensing applies only when every required field and operational constraint of the selected derived construct is explicitly represented."
+    },
+    "CRE-001-VOCAB-B-1.0": {
+      "primitive_basis": ["State", "Transition", "Label"],
+      "licensed_derived_constructs": ["D_nondeterminism", "D_concurrency", "D_priority", "D_provenance", "D_rule_modification"],
+      "construction_rule": "States hold bounded assignments; Transitions encode atomic moves and rule-status updates; Labels encode finite alternatives, provenance tuples, priority/conflict guards and ordered-history markers.",
+      "limitation": "Labels may not function as unrestricted payload containers; each label must use a registered finite schema."
+    },
+    "CRE-001-VOCAB-C-1.0": {
+      "primitive_basis": ["Representation", "Representational Structure", "Interpretation", "Investigation", "Calculus"],
+      "licensed_derived_constructs": ["D_nondeterminism", "D_concurrency", "D_priority", "D_provenance", "D_rule_modification"],
+      "construction_rule": "Representations identify values, rules and evidence; Representational Structures record finite organization and order; Interpretations assign registered meanings; the Investigation fixes scope; Calculus records atomic eligibility, updates, defeasible priority and bounded modification.",
+      "limitation": "Calculus is restricted to the explicitly registered finite operations and cannot import a general-purpose programming language."
+    }
+  },
+  "freeze_requirements": [
+    "machine-readable and human-readable definitions agree",
+    "all five constructs have positive examples and non-examples",
+    "all three vocabulary licensing records are complete",
+    "regression checker passes",
+    "CRE-002 original result remains byte-for-byte unchanged",
+    "CRE-002-EXT-001 execution remains locked"
+  ],
+  "nonclaims": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "independence",
+    "superiority",
+    "FAR proof",
+    "universal structure of reasoning",
+    "retrospective validation of CRE-002",
+    "behavioral success in CRE-002-EXT-001"
+  ]
+}

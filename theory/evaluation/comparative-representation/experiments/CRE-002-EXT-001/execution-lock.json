@@ -1,0 +1,21 @@
+{
+  "experiment": "CRE-002-EXT-001",
+  "status": "preregistration-required",
+  "execution_permitted": false,
+  "compiler_implementation_permitted": false,
+  "official_results_present": false,
+  "semantic_authority": "VOCABULARY-SEMANTICS-BASELINE-1.1",
+  "authorization_requirements": [
+    "Baseline 1.1 merged and checksum locked",
+    "extension preregistration completed",
+    "extension scientific package checksum locked",
+    "separate reviewed execution-unlock pull request merged"
+  ],
+  "preserves_original_result": "CRE-002-COMPARISON-1.0",
+  "prohibited_actions": [
+    "retroactively alter CRE-002 outcomes",
+    "reuse CRE-002 as though untouched",
+    "compile candidates before preregistration",
+    "generate scientific conclusions before execution authorization"
+  ]
+}
