@@ -87,10 +87,22 @@ def main() -> int:
     if baseline.get("scope", {}).get("primitive_only_claim") is not False:
         errors.append("Baseline 1.1 must not make a primitive-only claim")
 
-    if lock.get("execution_permitted") is not False:
-        errors.append("CRE-002-EXT-001 execution is not locked")
-    if lock.get("compiler_implementation_permitted") is not False:
-        errors.append("CRE-002-EXT-001 compiler implementation is not locked")
+    execution = lock.get("execution_permitted")
+    compiler = lock.get("compiler_implementation_permitted")
+    if execution != compiler or execution not in {True, False}:
+        errors.append("CRE-002-EXT-001 authorization fields are inconsistent")
+    if execution is True:
+        audit_path = EXTENSION / "execution-unlock-audit.json"
+        if not audit_path.is_file():
+            errors.append("authorized CRE-002-EXT-001 lacks execution unlock audit")
+        else:
+            audit = load(audit_path)
+            if audit.get("authorization_type") != "separate-reviewed-pull-request":
+                errors.append("CRE-002-EXT-001 unlock was not separately reviewed")
+            if audit.get("immutable_scientific_files_modified") is not False:
+                errors.append("CRE-002-EXT-001 unlock altered frozen scientific files")
+            if audit.get("preserved_prior_result") != "CRE-002-COMPARISON-1.0":
+                errors.append("CRE-002-EXT-001 unlock does not preserve the original result")
     if lock.get("official_results_present") is not False:
         errors.append("CRE-002-EXT-001 incorrectly claims results")
 
