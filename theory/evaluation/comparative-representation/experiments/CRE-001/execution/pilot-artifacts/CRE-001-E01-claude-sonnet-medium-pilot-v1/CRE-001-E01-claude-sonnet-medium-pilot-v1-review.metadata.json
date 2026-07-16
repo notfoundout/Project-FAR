@@ -1,11 +1,13 @@
 {
   "artifact_id": "CRE-001-E01-CLAUDE-SONNET-MEDIUM-PILOT-V1-REVIEW-METADATA",
-  "status": "Preserved review complete; correction required; noncanonical",
+  "status": "Preserved review complete; pilot concluded; noncanonical",
   "experiment": "CRE-001",
   "assignment": "CRE-001-E01",
   "evaluator": "CRE-001-EVALUATOR-CLAUDE-SONNET-MEDIUM-01",
   "submission": "CRE-001-SUBMISSION-E01-CLAUDE-SONNET-MEDIUM-01",
   "pilot_type": "single-prompt isolated AI evaluator pilot",
+  "pilot_track_status": "concluded",
+  "pilot_track_disposition": "superseded by deterministic verification",
   "canonical_cre_001_primary_mapping": false,
   "raw_artifact_path": "theory/evaluation/comparative-representation/experiments/CRE-001/execution/pilot-artifacts/CRE-001-E01-claude-sonnet-medium-pilot-v1/CRE-001-E01-claude-sonnet-medium-pilot-v1.raw.json",
   "raw_artifact_checksum_sha256": "3ea8846dec773869f1be0523c2b10e7e604cbb88dfd5b60c7def812b54cdea54",
@@ -17,7 +19,7 @@
     "preservation review",
     "complexity review"
   ],
-  "next_action": "evaluator correction pass",
+  "next_action": "build deterministic CRE-001 verifier",
   "finding_identifiers": [
     {
       "id": "A",
@@ -73,7 +75,8 @@
     "unadjudicated",
     "correction required"
   ],
-  "evaluator_rerun_status": "not rerun",
+  "evaluator_rerun_status": "not rerun; correction loop intentionally stopped",
+  "superseding_workstream": "deterministic CRE-001 execution-model verification",
   "raw_artifact_checksum_algorithm": "SHA-256",
   "raw_artifact_byte_count": 65270,
   "raw_artifact_immutable": true,
