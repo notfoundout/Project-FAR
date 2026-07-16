@@ -1,6 +1,7 @@
 {
   "audit_id": "CRE-002-EXECUTION-UNLOCK-AUDIT-1.0",
-  "status": "authorization-proposed",
+  "authorization_status": "authorized",
+  "status": "execution-authorized",
   "preregistration_merge_commit": "a2c46a72b0fe145fd4835973d799531222f1edd8",
   "checksum_lock_merge_commit": "f1d086480ae39c91d05a1381f4c3915e682ce439",
   "immutable_package_lock_verified": true,
