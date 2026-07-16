@@ -12,7 +12,8 @@ LOCK=SEM/'semantic-regression-lock.json'
 DOCS=['formal-semantics.md','primitive-semantics.md','derived-machinery-audit.md','semantic-licensing.md','semantic-overlap-analysis.md','semantic-regression.md','methodological-limitations.md','expressivity-audit.md']
 REQUIRED_STATUSES=['Supported','Unsupported','Unknown','Assumed','Implementation-specific']
 REQUIRED_CHRONOLOGY=['formalized after completion of deterministic CRE-001','informed by lessons learned during CRE-001','frozen for future experiments beginning with CRE-002','not independent evidence supporting CRE-001','cannot be used as retrospective validation of CRE-001','CRE-001 demonstrates only that compiler-authored declared interpretations successfully compiled, lowered, and verified under the registered deterministic reference']
-NONCLAIMS=['formal vocabulary licensing','primitive sufficiency','universal sufficiency','necessity','minimality','independence','superiority','FAR proof','universal reasoning structure']
+NONCLAIMS=['formal vocabulary licensing','primitive sufficiency','universal sufficiency','necessity','minimality','independence','superiority','universal reasoning structure']
+GLOBAL_NONCLAIMS=['FAR proof']
 EXPECTED_DERIVED={'D_boolean_value','D_ordered_history','D_guarded_update','D_disjunction','D_terminality'}
 FORBIDDEN_RETRO_PATTERNS=[
     'replaces compiler-authored interpretation as the semantic authority',
@@ -36,6 +37,10 @@ def main()->int:
     spec=load(SPEC); lock=load(LOCK)
     if sha(SPEC)!=lock.get('semantic_specification_sha256'):
         fail(messages,'semantic specification hash differs from semantic-regression-lock.json')
+    spec_text=json.dumps(spec,sort_keys=True).lower()
+    for claim in GLOBAL_NONCLAIMS:
+        if claim.lower() not in spec_text:
+            fail(messages,f'semantic specification does not preserve global nonclaim {claim}')
     chronology=spec.get('chronology',{})
     if 'CRE-002' not in json.dumps(chronology): fail(messages,'semantic specification does not mark CRE-002 as first prospective authority')
     if chronology.get('not_retrospective_validation_of')!='CRE-001': fail(messages,'semantic specification does not forbid retrospective CRE-001 validation')
