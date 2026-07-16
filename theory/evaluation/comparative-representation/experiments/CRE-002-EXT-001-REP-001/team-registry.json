@@ -1,0 +1,19 @@
+{
+  "registry_id": "CRE-002-EXT-001-REP-001-TEAM-REGISTRY-1.0",
+  "experiment_id": "CRE-002-EXT-001-REP-001",
+  "status": "registration-open-no-eligible-teams",
+  "registration_authorized": true,
+  "teams": [],
+  "eligibility_summary": {
+    "eligible_implementation_teams": 0,
+    "eligible_verifier_teams": 0,
+    "covered_vocabularies": []
+  },
+  "minimum_requirements_met": false,
+  "execution_unlock_eligible": false,
+  "blocking_reasons": [
+    "No implementation team registrations have been submitted.",
+    "No independent verifier team registration has been submitted.",
+    "No vocabulary has an eligible isolated implementation team."
+  ]
+}
