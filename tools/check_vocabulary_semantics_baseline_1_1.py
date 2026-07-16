@@ -10,30 +10,9 @@ BASELINE_JSON = ROOT / "theory/evaluation/comparative-representation/semantics/v
 BASELINE_MD = ROOT / "theory/evaluation/comparative-representation/semantics/vocabulary-semantics-baseline-1.1.md"
 EXTENSION = ROOT / "theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001"
 ORIGINAL_RESULT = ROOT / "theory/evaluation/comparative-representation/experiments/CRE-002/execution/cre002-comparison.json"
-REQUIRED_CONSTRUCTS = {
-    "D_nondeterminism",
-    "D_concurrency",
-    "D_priority",
-    "D_provenance",
-    "D_rule_modification",
-}
-VOCABS = {
-    "CRE-001-VOCAB-A-1.0",
-    "CRE-001-VOCAB-B-1.0",
-    "CRE-001-VOCAB-C-1.0",
-}
-NONCLAIMS = {
-    "universal sufficiency",
-    "primitive-only sufficiency",
-    "necessity",
-    "minimality",
-    "independence",
-    "superiority",
-    "FAR proof",
-    "universal structure of reasoning",
-    "retrospective validation of CRE-002",
-    "behavioral success in CRE-002-EXT-001",
-}
+REQUIRED_CONSTRUCTS = {"D_nondeterminism", "D_concurrency", "D_priority", "D_provenance", "D_rule_modification"}
+VOCABS = {"CRE-001-VOCAB-A-1.0", "CRE-001-VOCAB-B-1.0", "CRE-001-VOCAB-C-1.0"}
+NONCLAIMS = {"universal sufficiency", "primitive-only sufficiency", "necessity", "minimality", "independence", "superiority", "FAR proof", "universal structure of reasoning", "retrospective validation of CRE-002", "behavioral success in CRE-002-EXT-001"}
 
 
 def load(path: Path) -> dict:
@@ -42,86 +21,63 @@ def load(path: Path) -> dict:
 
 def main() -> int:
     errors: list[str] = []
-    for path in [BASELINE_JSON, BASELINE_MD, EXTENSION / "README.md", EXTENSION / "execution-lock.json", ORIGINAL_RESULT]:
+    required = [BASELINE_JSON, BASELINE_MD, EXTENSION / "README.md", EXTENSION / "execution-lock.json", ORIGINAL_RESULT]
+    for path in required:
         if not path.is_file():
             errors.append(f"missing {path.relative_to(ROOT)}")
     if errors:
-        print("BASELINE 1.1 CHECK FAILED")
-        print("\n".join(errors))
+        print("BASELINE 1.1 CHECK FAILED\n" + "\n".join(errors))
         return 1
 
-    baseline = load(BASELINE_JSON)
-    lock = load(EXTENSION / "execution-lock.json")
-    original = load(ORIGINAL_RESULT)
-
-    if baseline.get("artifact_id") != "VOCABULARY-SEMANTICS-BASELINE-1.1":
-        errors.append("wrong Baseline 1.1 artifact identifier")
+    baseline, lock, original = load(BASELINE_JSON), load(EXTENSION / "execution-lock.json"), load(ORIGINAL_RESULT)
+    if baseline.get("artifact_id") != "VOCABULARY-SEMANTICS-BASELINE-1.1": errors.append("wrong Baseline 1.1 artifact identifier")
     chronology = baseline.get("chronology", {})
-    if chronology.get("cannot_reclassify") != "any previously recorded CRE-002 candidate outcome":
-        errors.append("Baseline 1.1 does not preserve CRE-002 outcome finality")
-    if "CRE-002" not in chronology.get("not_retrospective_evidence_for", []):
-        errors.append("Baseline 1.1 omits the non-retrospective CRE-002 boundary")
+    if chronology.get("cannot_reclassify") != "any previously recorded CRE-002 candidate outcome": errors.append("Baseline 1.1 does not preserve CRE-002 outcome finality")
+    if "CRE-002" not in chronology.get("not_retrospective_evidence_for", []): errors.append("Baseline 1.1 omits the non-retrospective CRE-002 boundary")
 
     constructs = {item.get("identifier") for item in baseline.get("derived_constructs", [])}
-    if constructs != REQUIRED_CONSTRUCTS:
-        errors.append(f"derived construct set mismatch: {sorted(constructs)}")
+    if constructs != REQUIRED_CONSTRUCTS: errors.append(f"derived construct set mismatch: {sorted(constructs)}")
     for item in baseline.get("derived_constructs", []):
-        if item.get("classification") != "derived":
-            errors.append(f"{item.get('identifier')} is not classified as derived")
-        if not item.get("formal_definition") or not item.get("required_fields"):
-            errors.append(f"{item.get('identifier')} lacks a complete definition")
-        if not item.get("operational_constraints") or not item.get("forbidden_imports"):
-            errors.append(f"{item.get('identifier')} lacks boundary constraints")
+        if item.get("classification") != "derived": errors.append(f"{item.get('identifier')} is not classified as derived")
+        if not item.get("formal_definition") or not item.get("required_fields"): errors.append(f"{item.get('identifier')} lacks a complete definition")
+        if not item.get("operational_constraints") or not item.get("forbidden_imports"): errors.append(f"{item.get('identifier')} lacks boundary constraints")
 
     licensing = baseline.get("vocabulary_licensing", {})
-    if set(licensing) != VOCABS:
-        errors.append("vocabulary licensing coverage is incomplete")
+    if set(licensing) != VOCABS: errors.append("vocabulary licensing coverage is incomplete")
     for vocab, record in licensing.items():
-        if set(record.get("licensed_derived_constructs", [])) != REQUIRED_CONSTRUCTS:
-            errors.append(f"{vocab} does not explicitly license all five derived constructs")
-        if not record.get("construction_rule") or not record.get("limitation"):
-            errors.append(f"{vocab} lacks construction or limitation text")
+        if set(record.get("licensed_derived_constructs", [])) != REQUIRED_CONSTRUCTS: errors.append(f"{vocab} does not explicitly license all five derived constructs")
+        if not record.get("construction_rule") or not record.get("limitation"): errors.append(f"{vocab} lacks construction or limitation text")
+    if not NONCLAIMS.issubset(set(baseline.get("nonclaims", []))): errors.append("Baseline 1.1 omits required nonclaims")
+    if baseline.get("scope", {}).get("primitive_only_claim") is not False: errors.append("Baseline 1.1 must not make a primitive-only claim")
 
-    if not NONCLAIMS.issubset(set(baseline.get("nonclaims", []))):
-        errors.append("Baseline 1.1 omits required nonclaims")
-    if baseline.get("scope", {}).get("primitive_only_claim") is not False:
-        errors.append("Baseline 1.1 must not make a primitive-only claim")
-
-    if lock.get("official_results_present") is not False:
-        errors.append("CRE-002-EXT-001 incorrectly claims results")
+    audit_path = EXTENSION / "execution-unlock-audit.json"
     if lock.get("execution_permitted") is True or lock.get("compiler_implementation_permitted") is True:
-        audit_path = EXTENSION / "execution-unlock-audit.json"
-        if not audit_path.is_file():
-            errors.append("CRE-002-EXT-001 authorization lacks an execution-unlock audit")
+        if not audit_path.is_file(): errors.append("CRE-002-EXT-001 authorization lacks an execution-unlock audit")
         else:
             audit = load(audit_path)
-            if lock.get("authorization_status") != "authorized" or lock.get("status") != "execution-authorized":
-                errors.append("CRE-002-EXT-001 authorization fields are inconsistent")
-            if lock.get("execution_permitted") is not True or lock.get("compiler_implementation_permitted") is not True:
-                errors.append("CRE-002-EXT-001 authorization is only partially enabled")
-            if audit.get("authorization_status") != "authorized":
-                errors.append("CRE-002-EXT-001 execution-unlock audit is not authorized")
-            if audit.get("immutable_package_lock_verified") is not True:
-                errors.append("CRE-002-EXT-001 execution-unlock audit does not verify the scientific lock")
-            if audit.get("scientific_results_created_by_unlock") is not False:
-                errors.append("CRE-002-EXT-001 unlock improperly creates scientific results")
+            if lock.get("authorization_status") != "authorized" or lock.get("status") not in {"execution-authorized", "execution-complete"}: errors.append("CRE-002-EXT-001 authorization fields are inconsistent")
+            if lock.get("execution_permitted") is not True or lock.get("compiler_implementation_permitted") is not True: errors.append("CRE-002-EXT-001 authorization is only partially enabled")
+            if audit.get("authorization_status") != "authorized": errors.append("CRE-002-EXT-001 execution-unlock audit is not authorized")
+            if audit.get("immutable_package_lock_verified") is not True: errors.append("CRE-002-EXT-001 execution-unlock audit does not verify the scientific lock")
+            if audit.get("scientific_results_created_by_unlock") is not False: errors.append("CRE-002-EXT-001 unlock improperly creates scientific results")
     elif lock.get("execution_permitted") is not False or lock.get("compiler_implementation_permitted") is not False:
         errors.append("CRE-002-EXT-001 pre-authorization state is inconsistent")
 
-    if original.get("artifact_id") != "CRE-002-COMPARISON-1.0":
-        errors.append("original CRE-002 result identity changed")
-    if original.get("aggregate", {}).get("unsupported_candidates") != 3:
-        errors.append("original CRE-002 unsupported result was reclassified")
-    if original.get("aggregate", {}).get("complete_candidates") != 0:
-        errors.append("original CRE-002 complete count changed")
-    if any(row.get("outcome") != "unsupported" for row in original.get("candidates", [])):
-        errors.append("one or more original CRE-002 candidate outcomes changed")
-    if any(row.get("native_compilation_attempted") for row in original.get("candidates", [])):
-        errors.append("original CRE-002 result now claims native compilation")
+    if lock.get("official_results_present") is True:
+        if lock.get("status") != "execution-complete": errors.append("official result requires execution-complete status")
+        for name in ["execution/cre002-ext001-comparison.json", "execution/execution-report.md", "execution/reference-behavior.json"]:
+            if not (EXTENSION / name).is_file(): errors.append(f"missing CRE-002-EXT-001 result {name}")
+    elif lock.get("status") == "execution-complete":
+        errors.append("execution-complete status requires official results")
+
+    if original.get("artifact_id") != "CRE-002-COMPARISON-1.0": errors.append("original CRE-002 result identity changed")
+    if original.get("aggregate", {}).get("unsupported_candidates") != 3: errors.append("original CRE-002 unsupported result was reclassified")
+    if original.get("aggregate", {}).get("complete_candidates") != 0: errors.append("original CRE-002 complete count changed")
+    if any(row.get("outcome") != "unsupported" for row in original.get("candidates", [])): errors.append("one or more original CRE-002 candidate outcomes changed")
+    if any(row.get("native_compilation_attempted") for row in original.get("candidates", [])): errors.append("original CRE-002 result now claims native compilation")
 
     if errors:
-        print("BASELINE 1.1 CHECK FAILED")
-        print("\n".join(errors))
+        print("BASELINE 1.1 CHECK FAILED\n" + "\n".join(errors))
         return 1
     print("BASELINE 1.1 CHECK PASSED")
     return 0
