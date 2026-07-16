@@ -1,357 +1,2072 @@
 {
   "constructs": [
     {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "S_initial_complete",
-      "kind": "complete_state",
-      "labels": [
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_p_ready",
-          "kind": "proposition_value_label",
-          "name": "p_ready",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/propositions/p_ready",
-          "value": true
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_p_token",
-          "kind": "proposition_value_label",
-          "name": "p_token",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/propositions/p_token",
-          "value": true
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_p_checked",
-          "kind": "proposition_value_label",
-          "name": "p_checked",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/propositions/p_checked",
-          "value": false
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_p_accepted",
-          "kind": "proposition_value_label",
-          "name": "p_accepted",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/propositions/p_accepted",
-          "value": false
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_p_rejected",
-          "kind": "proposition_value_label",
-          "name": "p_rejected",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/propositions/p_rejected",
-          "value": false
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_p_rule_modified",
-          "kind": "proposition_value_label",
-          "name": "p_rule_modified",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/propositions/p_rule_modified",
-          "value": false
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_p_halted",
-          "kind": "proposition_value_label",
-          "name": "p_halted",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/propositions/p_halted",
-          "value": false
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_R_check_active",
-          "kind": "rule_status_label",
-          "name": "R_check_active",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/active_rules",
-          "value": true
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_R_accept_active",
-          "kind": "rule_status_label",
-          "name": "R_accept_active",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/active_rules",
-          "value": true
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_R_reject_active",
-          "kind": "rule_status_label",
-          "name": "R_reject_active",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/active_rules",
-          "value": true
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_R_modify_active",
-          "kind": "rule_status_label",
-          "name": "R_modify_active",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/active_rules",
-          "value": true
-        },
-        {
-          "derived_construct": "D_boolean_value",
-          "id": "L_R_halt_active",
-          "kind": "rule_status_label",
-          "name": "R_halt_active",
-          "primitive": "Label",
-          "scenario_path": "/initial_state/active_rules",
-          "value": true
-        }
-      ],
-      "primitive": "State",
-      "scenario_path": "/initial_state"
+      "id": "VAL_true",
+      "kind": "truth_value_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "truth_value",
+      "scenario_path": "/initial_state/propositions",
+      "value": true
     },
     {
-      "derived_construct": "D_ordered_history",
-      "id": "L_history_empty",
-      "kind": "history_label",
-      "name": "history",
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "VAL_false",
+      "kind": "truth_value_label",
       "primitive": "Label",
-      "scenario_path": "/initial_state/transition_history",
-      "value": []
-    },
-    {
-      "derived_construct": "D_terminality",
-      "id": "L_terminal",
-      "kind": "terminal_label",
-      "name": "p_halted",
-      "primitive": "Label",
-      "scenario_path": "/stopping_condition",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "truth_value",
+      "scenario_path": "/initial_state/propositions",
       "value": false
     },
     {
-      "derived_construct": "D_terminality",
-      "id": "L_outputs",
-      "kind": "output_recovery_labels",
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUS_active",
+      "kind": "status_label",
       "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "rule_status_value",
+      "scenario_path": "/initial_state/active_rules",
+      "value": "active"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUS_inactive",
+      "kind": "status_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "rule_status_value",
+      "scenario_path": "/initial_state/active_rules",
+      "value": "inactive"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_ready",
+      "kind": "proposition_value_label",
+      "name": "p_ready",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_ready",
+      "value_ref": "VAL_true"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_ready",
+      "kind": "current_value_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_ready",
+      "target_ref": "PROP_p_ready",
+      "value": true
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_token",
+      "kind": "proposition_value_label",
+      "name": "p_token",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_token",
+      "value_ref": "VAL_true"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_token",
+      "kind": "current_value_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_token",
+      "target_ref": "PROP_p_token",
+      "value": true
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_checked",
+      "kind": "proposition_value_label",
+      "name": "p_checked",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_checked",
+      "value_ref": "VAL_false"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_checked",
+      "kind": "current_value_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_checked",
+      "target_ref": "PROP_p_checked",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_accepted",
+      "kind": "proposition_value_label",
+      "name": "p_accepted",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_accepted",
+      "value_ref": "VAL_false"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_accepted",
+      "kind": "current_value_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_accepted",
+      "target_ref": "PROP_p_accepted",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_rejected",
+      "kind": "proposition_value_label",
+      "name": "p_rejected",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_rejected",
+      "value_ref": "VAL_false"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_rejected",
+      "kind": "current_value_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_rejected",
+      "target_ref": "PROP_p_rejected",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_rule_modified",
+      "kind": "proposition_value_label",
+      "name": "p_rule_modified",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_rule_modified",
+      "value_ref": "VAL_false"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_rule_modified",
+      "kind": "current_value_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_rule_modified",
+      "target_ref": "PROP_p_rule_modified",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_halted",
+      "kind": "proposition_value_label",
+      "name": "p_halted",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_halted",
+      "value_ref": "VAL_false"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_halted",
+      "kind": "current_value_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_halted",
+      "target_ref": "PROP_p_halted",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_check",
+      "kind": "rule_status_label",
+      "name": "R_check",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_check",
+      "kind": "rule_status_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_check",
+      "value": true,
+      "variable": "R_check_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_accept",
+      "kind": "rule_status_label",
+      "name": "R_accept",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_accept",
+      "kind": "rule_status_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_accept",
+      "value": true,
+      "variable": "R_accept_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_reject",
+      "kind": "rule_status_label",
+      "name": "R_reject",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_reject",
+      "kind": "rule_status_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_reject",
+      "value": true,
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_modify",
+      "kind": "rule_status_label",
+      "name": "R_modify",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_modify",
+      "kind": "rule_status_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_modify",
+      "value": true,
+      "variable": "R_modify_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_halt",
+      "kind": "rule_status_label",
+      "name": "R_halt",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_halt",
+      "kind": "rule_status_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_halt",
+      "value": true,
+      "variable": "R_halt_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_ordered_history",
+      "id": "HISTORY",
+      "initial": [],
+      "kind": "history_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "history",
+      "scenario_path": "/initial_state/transition_history"
+    },
+    {
+      "blocks_all": true,
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_terminality",
+      "id": "TERMINAL_BLOCKING",
+      "kind": "terminal_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "terminal_blocking",
+      "scenario_path": "/stopping_condition",
+      "value": true,
+      "variable": "p_halted"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "id": "TNAME_T_check",
+      "kind": "transition_name_label",
+      "name": "T_check",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "transition_name",
+      "scenario_path": "/rules/0/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "id": "AUTH_R_check_T_check",
+      "kind": "authorization_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_check",
+      "scenario_path": "/rules/0",
+      "transition_ref": "TNAME_T_check"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_check_0",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/0",
+      "source_text": "p_ready=true",
+      "variable": "p_ready"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_check_1",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/1",
+      "source_text": "p_token=true",
+      "variable": "p_token"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_check_2",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/2",
+      "source_text": "p_checked=false",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_check_3",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/3",
+      "source_text": "R_check active",
+      "variable": "R_check_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_check_0",
+      "kind": "update_label",
+      "operation": "set",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/0/updates/0",
+      "source_text": "p_checked=true",
+      "value": true,
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_check_1",
+      "kind": "update_label",
+      "operation": "append",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/0/updates/1",
+      "source_text": "append T_check to history",
+      "value": "T_check",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_check_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_check_1",
+      "kind": "ordering_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/0/updates/1"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_check_T_check",
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transition must support update using frozen definition keywords",
+        "definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
+        "definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
+        "passed": true,
+        "primitive": "Transition"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_check_0",
+        "EFF_T_check_1"
+      ],
+      "id": "SCHEMA_T_check",
+      "kind": "transition_construct",
+      "name_ref": "TNAME_T_check",
+      "precondition_refs": [
+        "PRE_T_check_0",
+        "PRE_T_check_1",
+        "PRE_T_check_2",
+        "PRE_T_check_3"
+      ],
+      "primitive": "Transition",
+      "primitive_definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
+      "primitive_definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/0"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "id": "TNAME_T_accept",
+      "kind": "transition_name_label",
+      "name": "T_accept",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "transition_name",
+      "scenario_path": "/rules/1/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "id": "AUTH_R_accept_T_accept",
+      "kind": "authorization_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_accept",
+      "scenario_path": "/rules/1",
+      "transition_ref": "TNAME_T_accept"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_accept_0",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/1/preconditions/0",
+      "source_text": "p_checked=true",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_accept_1",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/1/preconditions/1",
+      "source_text": "p_rejected=false",
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_accept_2",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/1/preconditions/2",
+      "source_text": "R_accept active",
+      "variable": "R_accept_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_accept_0",
+      "kind": "update_label",
+      "operation": "set",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/1/updates/0",
+      "source_text": "p_accepted=true",
+      "value": true,
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_accept_1",
+      "kind": "update_label",
+      "operation": "append",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/1/updates/1",
+      "source_text": "append T_accept to history",
+      "value": "T_accept",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_accept_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_accept_1",
+      "kind": "ordering_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/1/updates/1"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_accept_T_accept",
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transition must support update using frozen definition keywords",
+        "definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
+        "definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
+        "passed": true,
+        "primitive": "Transition"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_accept_0",
+        "EFF_T_accept_1"
+      ],
+      "id": "SCHEMA_T_accept",
+      "kind": "transition_construct",
+      "name_ref": "TNAME_T_accept",
+      "precondition_refs": [
+        "PRE_T_accept_0",
+        "PRE_T_accept_1",
+        "PRE_T_accept_2"
+      ],
+      "primitive": "Transition",
+      "primitive_definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
+      "primitive_definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/1"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "id": "TNAME_T_reject",
+      "kind": "transition_name_label",
+      "name": "T_reject",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "transition_name",
+      "scenario_path": "/rules/2/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "id": "AUTH_R_reject_T_reject",
+      "kind": "authorization_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_reject",
+      "scenario_path": "/rules/2",
+      "transition_ref": "TNAME_T_reject"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_reject_0",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/2/preconditions/0",
+      "source_text": "p_checked=true",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_reject_1",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/2/preconditions/1",
+      "source_text": "p_accepted=false",
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_reject_2",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/2/preconditions/2",
+      "source_text": "R_reject active",
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_reject_0",
+      "kind": "update_label",
+      "operation": "set",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/2/updates/0",
+      "source_text": "p_rejected=true",
+      "value": true,
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_reject_1",
+      "kind": "update_label",
+      "operation": "append",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/2/updates/1",
+      "source_text": "append T_reject to history",
+      "value": "T_reject",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_reject_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_reject_1",
+      "kind": "ordering_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/2/updates/1"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_reject_T_reject",
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transition must support update using frozen definition keywords",
+        "definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
+        "definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
+        "passed": true,
+        "primitive": "Transition"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_reject_0",
+        "EFF_T_reject_1"
+      ],
+      "id": "SCHEMA_T_reject",
+      "kind": "transition_construct",
+      "name_ref": "TNAME_T_reject",
+      "precondition_refs": [
+        "PRE_T_reject_0",
+        "PRE_T_reject_1",
+        "PRE_T_reject_2"
+      ],
+      "primitive": "Transition",
+      "primitive_definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
+      "primitive_definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/2"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "id": "TNAME_T_disable_reject",
+      "kind": "transition_name_label",
+      "name": "T_disable_reject",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "transition_name",
+      "scenario_path": "/rules/3/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "id": "AUTH_R_modify_T_disable_reject",
+      "kind": "authorization_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_modify",
+      "scenario_path": "/rules/3",
+      "transition_ref": "TNAME_T_disable_reject"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_disable_reject_0",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/0",
+      "source_text": "p_checked=true",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_disable_reject_1",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/1",
+      "source_text": "p_accepted=false",
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_disable_reject_2",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/2",
+      "source_text": "p_rejected=false",
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_disable_reject_3",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/3",
+      "source_text": "R_modify active",
+      "variable": "R_modify_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_disable_reject_4",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/4",
+      "source_text": "R_reject active",
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": true,
+      "id": "EFF_T_disable_reject_0",
+      "kind": "update_label",
+      "operation": "set",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/3/updates/0",
+      "source_text": "R_reject inactive",
+      "value": false,
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_disable_reject_1",
+      "kind": "update_label",
+      "operation": "set",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/3/updates/1",
+      "source_text": "p_rule_modified=true",
+      "value": true,
+      "variable": "p_rule_modified"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_disable_reject_2",
+      "kind": "update_label",
+      "operation": "append",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/3/updates/2",
+      "source_text": "append T_disable_reject to history",
+      "value": "T_disable_reject",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_disable_reject_2",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_disable_reject_2",
+      "kind": "ordering_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/3/updates/2"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_modify_T_disable_reject",
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transition must support update using frozen definition keywords",
+        "definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
+        "definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
+        "passed": true,
+        "primitive": "Transition"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_disable_reject_0",
+        "EFF_T_disable_reject_1",
+        "EFF_T_disable_reject_2"
+      ],
+      "id": "SCHEMA_T_disable_reject",
+      "kind": "transition_construct",
+      "name_ref": "TNAME_T_disable_reject",
+      "precondition_refs": [
+        "PRE_T_disable_reject_0",
+        "PRE_T_disable_reject_1",
+        "PRE_T_disable_reject_2",
+        "PRE_T_disable_reject_3",
+        "PRE_T_disable_reject_4"
+      ],
+      "primitive": "Transition",
+      "primitive_definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
+      "primitive_definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/3"
+    },
+    {
+      "capability_validation": {
+        "capability": "value",
+        "capability_rule": "Label must support value using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "id": "TNAME_T_halt",
+      "kind": "transition_name_label",
+      "name": "T_halt",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "transition_name",
+      "scenario_path": "/rules/4/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "id": "AUTH_R_halt_T_halt",
+      "kind": "authorization_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_halt",
+      "scenario_path": "/rules/4",
+      "transition_ref": "TNAME_T_halt"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_halt_0_0",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_alternative",
+      "scenario_path": "/rules/4/preconditions/0",
+      "source_text": "p_accepted=true",
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_halt_0_1",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_alternative",
+      "scenario_path": "/rules/4/preconditions/0",
+      "source_text": "p_rejected=true",
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_disjunction",
+      "id": "ALT_T_halt_0",
+      "kind": "disjunction_group_label",
+      "member_refs": [
+        "PRE_T_halt_0_0",
+        "PRE_T_halt_0_1"
+      ],
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_any_group",
+      "scenario_path": "/rules/4/preconditions/0"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_halt_1",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/4/preconditions/1",
+      "source_text": "R_halt active",
+      "variable": "R_halt_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_halt_2",
+      "kind": "precondition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/4/preconditions/2",
+      "source_text": "p_halted=false",
+      "variable": "p_halted"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_halt_0",
+      "kind": "update_label",
+      "operation": "set",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/4/updates/0",
+      "source_text": "p_halted=true",
+      "value": true,
+      "variable": "p_halted"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_halt_1",
+      "kind": "update_label",
+      "operation": "append",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/4/updates/1",
+      "source_text": "append T_halt to history",
+      "value": "T_halt",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Label must support condition using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_halt_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_halt_1",
+      "kind": "ordering_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/4/updates/1"
+    },
+    {
+      "alternative_group_refs": [
+        "ALT_T_halt_0"
+      ],
+      "authorization_ref": "AUTH_R_halt_T_halt",
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transition must support update using frozen definition keywords",
+        "definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
+        "definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
+        "passed": true,
+        "primitive": "Transition"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_halt_0",
+        "EFF_T_halt_1"
+      ],
+      "id": "SCHEMA_T_halt",
+      "kind": "transition_construct",
+      "name_ref": "TNAME_T_halt",
+      "precondition_refs": [
+        "PRE_T_halt_1",
+        "PRE_T_halt_2"
+      ],
+      "primitive": "Transition",
+      "primitive_definition_sha256": "e043c2f2f35a7a164f9d73578af0f23244a7db1cf5ace38d5d6a55243cc65ff0",
+      "primitive_definition_text": "an explicit movement from one state to another, including any update, rule application, status change, or history extension.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/4"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_0",
+      "kind": "prohibition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/0",
+      "value": "accept_and_reject_same_run"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_1",
+      "kind": "prohibition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/1",
+      "value": "rule_status_change_except_T_disable_reject"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_2",
+      "kind": "prohibition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/2",
+      "value": "history_removal_or_rewrite"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_3",
+      "kind": "prohibition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/3",
+      "value": "transition_after_halt"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_4",
+      "kind": "prohibition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/4",
+      "value": "T_reject_after_R_reject_inactive"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_5",
+      "kind": "prohibition_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/5",
+      "value": "accept_reject_modify_before_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_final_status",
+      "kind": "output_recovery_label",
+      "kind_value": "status",
+      "name": "final_status",
+      "output_variable_ref": null,
+      "output_variable_refs": [
+        "p_accepted",
+        "p_rejected",
+        "p_halted"
+      ],
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "output",
       "scenario_path": "/observable_outputs"
     },
     {
-      "derived_construct": "D_guarded_update",
-      "id": "L_prohibitions",
-      "kind": "prohibition_labels",
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_rule_statuses",
+      "kind": "output_recovery_label",
+      "kind_value": "status",
+      "name": "rule_statuses",
+      "output_variable_ref": null,
+      "output_variable_refs": [
+        "R_check_active",
+        "R_accept_active",
+        "R_reject_active",
+        "R_modify_active",
+        "R_halt_active"
+      ],
       "primitive": "Label",
-      "scenario_path": "/prohibited_transitions"
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
     },
     {
-      "derived_construct": "D_guarded_update",
-      "id": "GT_T_check",
-      "kind": "guarded_transition",
-      "primitive": "Transition",
-      "scenario_path": "/rules/T_check",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_ready"
-          },
-          {
-            "equals": true,
-            "variable": "p_token"
-          },
-          {
-            "equals": false,
-            "variable": "p_checked"
-          },
-          {
-            "equals": true,
-            "variable": "R_check_active"
-          }
-        ],
-        "name": "T_check",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_checked"
-          },
-          {
-            "operation": "append",
-            "value": "T_check",
-            "variable": "history"
-          }
-        ]
-      }
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_ordered_history",
+      "kind": "output_recovery_label",
+      "kind_value": "variable",
+      "name": "ordered_history",
+      "output_variable_ref": "history",
+      "output_variable_refs": null,
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
     },
     {
-      "derived_construct": "D_guarded_update",
-      "id": "GT_T_accept",
-      "kind": "guarded_transition",
-      "primitive": "Transition",
-      "scenario_path": "/rules/T_accept",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_checked"
-          },
-          {
-            "equals": false,
-            "variable": "p_rejected"
-          },
-          {
-            "equals": true,
-            "variable": "R_accept_active"
-          }
-        ],
-        "name": "T_accept",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_accepted"
-          },
-          {
-            "operation": "append",
-            "value": "T_accept",
-            "variable": "history"
-          }
-        ]
-      }
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_rule_modification_occurred",
+      "kind": "output_recovery_label",
+      "kind_value": "variable",
+      "name": "rule_modification_occurred",
+      "output_variable_ref": "p_rule_modified",
+      "output_variable_refs": null,
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
     },
     {
-      "derived_construct": "D_guarded_update",
-      "id": "GT_T_reject",
-      "kind": "guarded_transition",
-      "primitive": "Transition",
-      "scenario_path": "/rules/T_reject",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_checked"
-          },
-          {
-            "equals": false,
-            "variable": "p_accepted"
-          },
-          {
-            "equals": true,
-            "variable": "R_reject_active"
-          }
-        ],
-        "name": "T_reject",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_rejected"
-          },
-          {
-            "operation": "append",
-            "value": "T_reject",
-            "variable": "history"
-          }
-        ]
-      }
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_prohibited_transition_occurred",
+      "kind": "output_recovery_label",
+      "kind_value": "variable",
+      "name": "prohibited_transition_occurred",
+      "output_variable_ref": "prohibited_transition_occurred",
+      "output_variable_refs": null,
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
     },
     {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
       "derived_construct": "D_guarded_update",
-      "id": "GT_T_disable_reject",
-      "kind": "guarded_transition",
-      "primitive": "Transition",
-      "scenario_path": "/rules/T_disable_reject",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_checked"
-          },
-          {
-            "equals": false,
-            "variable": "p_accepted"
-          },
-          {
-            "equals": false,
-            "variable": "p_rejected"
-          },
-          {
-            "equals": true,
-            "variable": "R_modify_active"
-          },
-          {
-            "equals": true,
-            "variable": "R_reject_active"
-          }
-        ],
-        "name": "T_disable_reject",
-        "updates": [
-          {
-            "from": true,
-            "operation": "set",
-            "value": false,
-            "variable": "R_reject_active"
-          },
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_rule_modified"
-          },
-          {
-            "operation": "append",
-            "value": "T_disable_reject",
-            "variable": "history"
-          }
-        ]
-      }
+      "id": "INVARIANT_mutual_exclusion",
+      "invariant_kind": "mutual_exclusion",
+      "kind": "invariant_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "invariant",
+      "scenario_path": "/prohibited_transitions",
+      "variable_refs": [
+        "p_accepted",
+        "p_rejected"
+      ]
     },
     {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
       "derived_construct": "D_guarded_update",
-      "id": "GT_T_halt",
-      "kind": "guarded_transition",
-      "primitive": "Transition",
-      "scenario_path": "/rules/T_halt",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "R_halt_active"
-          },
-          {
-            "equals": false,
-            "variable": "p_halted"
-          }
-        ],
-        "guard_any": [
-          {
-            "equals": true,
-            "variable": "p_accepted"
-          },
-          {
-            "equals": true,
-            "variable": "p_rejected"
-          }
-        ],
-        "name": "T_halt",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_halted"
-          },
-          {
-            "operation": "append",
-            "value": "T_halt",
-            "variable": "history"
-          }
-        ]
-      }
+      "id": "INVARIANT_append_only",
+      "invariant_kind": "append_only",
+      "kind": "invariant_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "invariant",
+      "scenario_path": "/prohibited_transitions",
+      "variable": "history"
+    },
+    {
+      "allowed_transition": "T_disable_reject",
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "INVARIANT_exclusive_status_update",
+      "invariant_kind": "exclusive_status_update",
+      "kind": "invariant_label",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "invariant",
+      "scenario_path": "/prohibited_transitions",
+      "variable_suffix": "_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_terminality",
+      "id": "AMBIG_disable_reject_repeatability",
+      "kind": "ambiguity_policy_label",
+      "name": "disable_reject_repeatability",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "ambiguity_policy",
+      "scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "value": "require_r_reject_active_before"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_terminality",
+      "id": "AMBIG_prohibited_transition_output",
+      "kind": "ambiguity_policy_label",
+      "name": "prohibited_transition_output",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "ambiguity_policy",
+      "scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "value": "executed_only"
+    },
+    {
+      "capability_validation": {
+        "capability": "status",
+        "capability_rule": "Label must support status using frozen definition keywords",
+        "definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+        "definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+        "passed": true,
+        "primitive": "Label"
+      },
+      "derived_construct": "D_terminality",
+      "id": "AMBIG_unterminated_output",
+      "kind": "ambiguity_policy_label",
+      "name": "unterminated_output",
+      "primitive": "Label",
+      "primitive_definition_sha256": "9797a4b3537d132220611acb3f3a433fdf37229a779b1c01b76c827c56e4519b",
+      "primitive_definition_text": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item.",
+      "role": "ambiguity_policy",
+      "scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "value": "finite_nonterminal_snapshot"
     }
   ],
   "definition_digest": "5ac7a9ec38e8aac9fe366bfa38b93ecb8447d33eef5fafdbdc19237efc42e5e4",
@@ -369,11 +2084,15 @@
       "role": "guarded update schema"
     },
     {
+      "id": "D_disjunction",
+      "role": "explicit alternative guard group"
+    },
+    {
       "id": "D_terminality",
       "role": "terminal blocking and halt output"
     }
   ],
-  "native_format": "cre001-native-representation-v1",
+  "native_format": "cre001-atomic-native-representation-v1",
   "scenario_source_sha256": "9db7c1349f804bc9b2b1738a5821a71da97f352c9e5b8a274382feffe1ca20d1",
   "vocabulary": "B",
   "vocabulary_identifier": "CRE-001-VOCAB-B-1.0",

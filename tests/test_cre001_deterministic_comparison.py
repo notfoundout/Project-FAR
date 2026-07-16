@@ -9,66 +9,67 @@ VER=loadmod('cre001_verifier', ROOT/'tools/cre001_verifier.py')
 DET=ROOT/'theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier'
 class Cre001ComparisonTests(unittest.TestCase):
     def entries(self): return COMP.discover()['vocabularies']
-    def natives(self): return [json.loads((DET/'generated'/e['vocabulary_identifier']/'native-representation.json').read_text()) for e in self.entries()]
+    def native(self, i=0): return json.loads((DET/'generated'/self.entries()[i]['vocabulary_identifier']/'native-representation.json').read_text())
+    def all_natives(self): return [self.native(i) for i in range(3)]
     def test_inventory_discovers_only_official_frozen_vocabularies(self):
-        inv=COMP.discover(); ids=[v['vocabulary_identifier'] for v in inv['vocabularies']]
-        self.assertEqual(ids,['CRE-001-VOCAB-A-1.0','CRE-001-VOCAB-B-1.0','CRE-001-VOCAB-C-1.0'])
-        self.assertIn('pilot mappings', inv['excluded_classes']); self.assertIn('control fixtures', inv['excluded_classes'])
+        inv=COMP.discover(); self.assertEqual([v['vocabulary_identifier'] for v in inv['vocabularies']],['CRE-001-VOCAB-A-1.0','CRE-001-VOCAB-B-1.0','CRE-001-VOCAB-C-1.0']); self.assertIn('pilot mappings',inv['excluded_classes']); self.assertIn('control fixtures',inv['excluded_classes'])
     def test_source_checksums_match(self):
         for v in self.entries(): self.assertEqual(v['source_sha256'], hashlib.sha256((ROOT/v['source_path']).read_bytes()).hexdigest())
-    def test_compiler_output_is_deterministic_and_regenerates_committed(self):
+    def test_deterministic_regeneration_matches_committed(self):
         with tempfile.TemporaryDirectory() as a, tempfile.TemporaryDirectory() as b:
             _,arts1=COMP.generate(Path(a)); _,arts2=COMP.generate(Path(b)); self.assertEqual(arts1,arts2)
             committed=[json.loads((DET/'generated'/x['vocabulary_identifier']/'compiler-artifact.json').read_text()) for x in self.entries()]
             self.assertEqual(arts1,committed)
-    def test_complete_native_compilation_lowering_and_verification(self):
-        ref=COMP.scenario_reference_model()
+    def test_candidate_compilers_do_not_call_reference_or_prebuilt_transition_helpers(self):
+        src=(ROOT/'tools/cre001_compile_vocabularies.py').read_text(); self.assertNotIn('transition_specs',src); self.assertNotIn('assemble_execution_model',src); self.assertNotIn("DET/'reference-model.json'",src)
+        for art_path in (DET/'generated').glob('*/compiler-artifact.json'): self.assertIn('atomic native records',json.loads(art_path.read_text())['provenance']['source'])
+    def test_native_artifacts_contain_no_ready_made_common_model_fragments(self):
+        forbidden={'transition','guard','guard_any','updates','outputs','invariants','ambiguity_policy','variables'}
+        for native in self.all_natives():
+            def walk(x):
+                if isinstance(x,dict):
+                    self.assertTrue(forbidden.isdisjoint(x.keys())); [walk(v) for v in x.values()]
+                elif isinstance(x,list): [walk(v) for v in x]
+            walk(native)
+    def test_complete_atomic_lowering_and_verification(self):
+        ref=COMP.reference_model()
         for v in self.entries():
-            art=COMP.compile_entry(v, Path(tempfile.mkdtemp()))
-            self.assertEqual(art['compilation_status'],'complete')
-            self.assertEqual(VER.verify(ref, art['generated_execution_model'])['result'],'pass')
-            self.assertIsNotNone(art['native_representation_sha256']); self.assertIsNotNone(art['lowering_trace_sha256'])
-    def test_no_candidate_directly_calls_or_copies_reference_model(self):
-        source=(ROOT/'tools/cre001_compile_vocabularies.py').read_text()
-        self.assertNotIn('load(REF', source); self.assertNotIn("DET/'reference-model.json'", source)
-        self.assertNotIn('model_from_scenario()', source)
-        for art_path in (DET/'generated').glob('*/compiler-artifact.json'):
-            art=json.loads(art_path.read_text()); self.assertIn('native representation', art['provenance']['source'])
-    def test_removing_required_native_construct_causes_lowering_failure(self):
-        native=self.natives()[0]; native['constructs']=[c for c in native['constructs'] if c['id']!='O_history']
-        with self.assertRaises(ValueError): COMP.lower(native)
-    def test_removing_lowering_rule_causes_failure(self):
-        native=self.natives()[1]; rules=copy.deepcopy(COMP.LOWERING_RULES['B']); del rules['transition']
-        with self.assertRaises(KeyError): COMP.lower(native,rules)
-    def test_changed_or_empty_vocabulary_definition_invalidates_native_compilation(self):
-        e=copy.deepcopy(self.entries()[0]); old=COMP.parse_vocab
-        COMP.parse_vocab=lambda p:{'identifier':e['vocabulary_identifier'],'primitive_categories':['Object','Relation','Transformation'],'official_definitions':{'Object':'x','Relation':'y','Transformation':'z'},'definition_digest':'bad','text':''}
+            art=COMP.compile_entry(v,Path(tempfile.mkdtemp())); self.assertEqual(art['compilation_status'],'complete'); self.assertTrue(art['definition_capability_validation_passed']); self.assertTrue(art['atomic_lowering_complete']); self.assertFalse(art['shared_semantic_defaults_used']); self.assertTrue(art['mutation_sensitivity_passed']); self.assertEqual(VER.verify(ref,art['generated_execution_model'])['result'],'pass')
+    def test_missing_atomic_guard_update_terminal_output_ambiguity_failures(self):
+        removals=[('guard_all_condition','missing atomic precondition'),('atomic_update','missing atomic update'),('terminal_blocking','terminal blocking'),('output','output'),('ambiguity_policy','ambiguity')]
+        for role,_ in removals:
+            n=self.native(); c=next(x for x in n['constructs'] if x['role']==role); n['constructs'].remove(c)
+            with self.assertRaises(Exception): COMP.lower(n)
+    def test_guard_and_update_mutations_change_output_and_fail_verifier(self):
+        ref=COMP.reference_model()
+        for role,field in [('guard_all_condition','equals'),('atomic_update','value')]:
+            n=self.native(); c=next(x for x in n['constructs'] if x['role']==role and isinstance(x.get(field),bool)); c[field]=not c[field]
+            model,_=COMP.lower(n); self.assertNotEqual(VER.verify(ref,model)['result'],'pass')
+    def test_swap_a_native_into_b_lowerer_and_definition_contract_fail(self):
+        n=self.native(0); rules=COMP.rule_set('B')
+        with self.assertRaises(Exception): COMP.lower(n,rules)
+        e=copy.deepcopy(self.entries()[0]); old=COMP.parse_vocab; long='x '*100
+        COMP.parse_vocab=lambda p:{'identifier':e['vocabulary_identifier'],'primitive_categories':['Object','Relation','Transformation'],'official_definitions':{'Object':long,'Relation':long,'Transformation':long},'definition_digest':'bad','text':long}
         try: self.assertEqual(COMP.compile_entry(e,Path(tempfile.mkdtemp()))['compilation_status'],'partial')
         finally: COMP.parse_vocab=old
-    def test_swapping_vocabulary_a_native_into_b_lowerer_fails(self):
-        native=self.natives()[0]; swapped=copy.deepcopy(native); swapped['vocabulary']='B'
-        with self.assertRaises(ValueError): COMP.lower(swapped)
-    def test_every_execution_model_field_has_complete_lowering_trace(self):
+    def test_lowering_rule_removal_and_semantic_mutation_detected(self):
+        n=self.native(); rules=COMP.rule_set('A'); del rules['condition']
+        with self.assertRaises(KeyError): COMP.lower(n,rules)
+        rules=COMP.rule_set('A'); old=rules['effect']; rules['effect']=COMP.LoweringRule(old.rule_id,old.accepted_kinds,old.primitive,old.required_fields,old.output_type,lambda c:{'variable':c['variable'],'operation':c['operation'],'value':'MUTATED'})
+        with self.assertRaises(Exception): COMP.lower(n,rules)
+    def test_every_atomic_common_model_field_has_trace_and_not_generic_container(self):
         for e in self.entries():
-            model=json.loads((DET/'generated'/e['vocabulary_identifier']/'generated-execution-model.json').read_text())
-            trace=json.loads((DET/'generated'/e['vocabulary_identifier']/'lowering-trace.json').read_text())
-            paths={x['output_path'] for x in trace['entries']}
-            required={f'/variables/{k}' for k in model['variables']}|{f"/transitions/{t['name']}" for t in model['transitions']}|{'/terminal_condition','/terminal_blocks_all_transitions','/invariants','/outputs','/ambiguity_policy'}
-            self.assertTrue(required <= paths)
-            for entry in trace['entries']:
-                for key in ['source_scenario_path','native_construct_identifier','supplied_vocabulary_primitive','derived_construct_identifier','lowering_rule_identifier']:
-                    self.assertTrue(entry.get(key))
-    def test_three_native_representations_are_structurally_distinct(self):
-        kinds=[{c['kind'] for c in n['constructs']} for n in self.natives()]
-        self.assertEqual(len({tuple(sorted(k)) for k in kinds}),3)
-    def test_behavior_accepted_only_after_native_construction_and_lowering(self):
-        for n in self.natives():
-            model,trace=COMP.lower(n); self.assertEqual(VER.verify(COMP.scenario_reference_model(),model)['result'],'pass'); self.assertGreater(len(trace['entries']),0)
-    def test_verifier_regressions_and_nonclaims(self):
-        ref=COMP.scenario_reference_model(); c=copy.deepcopy(ref); c['transitions'][0]['guard'].pop(); self.assertIn('guard_mismatch',{d['code'] for d in VER.verify(ref,c)['diagnostics']})
-        c=copy.deepcopy(ref); c['outputs'].pop('ordered_history'); self.assertIn('output_mismatch',{d['code'] for d in VER.verify(ref,c)['diagnostics']})
-        text=json.dumps(json.loads((DET/'cre001-deterministic-comparison.json').read_text())).lower(); self.assertIn('does not draw universal sufficiency',text); self.assertNotIn(' is necessary',text)
-    def test_manual_generated_edit_detected(self):
-        with tempfile.TemporaryDirectory() as td:
-            _,arts=COMP.generate(Path(td)); edited=copy.deepcopy(arts[0]); edited['assumptions'].append('manual edit'); self.assertNotEqual(arts[0],edited)
+            model=json.loads((DET/'generated'/e['vocabulary_identifier']/'generated-execution-model.json').read_text()); trace=json.loads((DET/'generated'/e['vocabulary_identifier']/'lowering-trace.json').read_text()); paths={x['output_path'] for x in trace['entries']}
+            required={f'/variables/{k}' for k in model['variables']}|{f"/transitions/{t['name']}/name" for t in model['transitions']}|{f"/transitions/{t['name']}/guard/{i}" for t in model['transitions'] for i,_ in enumerate(t.get('guard',[]))}|{f"/transitions/{t['name']}/guard_any/{i}" for t in model['transitions'] for i,_ in enumerate(t.get('guard_any',[]))}|{f"/transitions/{t['name']}/updates/{i}" for t in model['transitions'] for i,_ in enumerate(t.get('updates',[]))}|{'/terminal_condition','/terminal_blocks_all_transitions'}|{f'/invariants/{i}' for i,_ in enumerate(model['invariants'])}|{f'/outputs/{k}' for k in model['outputs']}|{f'/ambiguity_policy/{k}' for k in model['ambiguity_policy']}
+            self.assertTrue(required<=paths)
+            for t in trace['entries']:
+                self.assertNotRegex(t['output_path'],r'^/transitions/[^/]+$')
+                for k in ['source_scenario_path','native_construct_id','native_construct_kind','supplied_vocabulary_primitive','primitive_definition_sha256','executable_lowering_rule_id','source_native_field','resulting_common_model_value']: self.assertIn(k,t)
+    def test_three_native_representations_distinct_and_no_shared_defaults_reported(self):
+        kinds=[{c['kind'] for c in n['constructs']} for n in self.all_natives()]; self.assertEqual(len({tuple(sorted(k)) for k in kinds}),3)
+        summary=json.loads((DET/'cre001-deterministic-comparison.json').read_text())
+        for r in summary['results']: self.assertFalse(r['shared_semantic_defaults_used']); self.assertTrue(r['mutation_sensitivity_passed']); self.assertIn('cre001_conditional_equivalence_demonstrated',r)
+    def test_committed_mutation_reports_pass(self):
+        for e in self.entries():
+            rep=json.loads((DET/'generated'/e['vocabulary_identifier']/'mutation-test-report.json').read_text()); self.assertTrue(rep['passed']); self.assertGreaterEqual(len(rep['cases']),11); self.assertTrue(all(c['detected'] for c in rep['cases']))
 if __name__=='__main__': unittest.main()

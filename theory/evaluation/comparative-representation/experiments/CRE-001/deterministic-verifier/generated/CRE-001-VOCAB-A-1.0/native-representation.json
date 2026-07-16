@@ -1,332 +1,2072 @@
 {
   "constructs": [
     {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_p_ready",
-      "kind": "proposition_object",
+      "id": "VAL_true",
+      "kind": "truth_value_object",
       "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "truth_value",
+      "scenario_path": "/initial_state/propositions",
+      "value": true
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "VAL_false",
+      "kind": "truth_value_object",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "truth_value",
+      "scenario_path": "/initial_state/propositions",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUS_active",
+      "kind": "status_object",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "rule_status_value",
+      "scenario_path": "/initial_state/active_rules",
+      "value": "active"
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUS_inactive",
+      "kind": "status_object",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "rule_status_value",
+      "scenario_path": "/initial_state/active_rules",
+      "value": "inactive"
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_ready",
+      "kind": "proposition_object",
+      "name": "p_ready",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "proposition",
       "scenario_path": "/initial_state/propositions/p_ready",
-      "value_object": "V_true"
+      "value_ref": "VAL_true"
     },
     {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_p_token",
+      "id": "CUR_p_ready",
+      "kind": "current_value_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_ready",
+      "target_ref": "PROP_p_ready",
+      "value": true
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_token",
       "kind": "proposition_object",
+      "name": "p_token",
       "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "proposition",
       "scenario_path": "/initial_state/propositions/p_token",
-      "value_object": "V_true"
+      "value_ref": "VAL_true"
     },
     {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_p_checked",
+      "id": "CUR_p_token",
+      "kind": "current_value_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_token",
+      "target_ref": "PROP_p_token",
+      "value": true
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_checked",
       "kind": "proposition_object",
+      "name": "p_checked",
       "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "proposition",
       "scenario_path": "/initial_state/propositions/p_checked",
-      "value_object": "V_false"
+      "value_ref": "VAL_false"
     },
     {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_p_accepted",
+      "id": "CUR_p_checked",
+      "kind": "current_value_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_checked",
+      "target_ref": "PROP_p_checked",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_accepted",
       "kind": "proposition_object",
+      "name": "p_accepted",
       "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "proposition",
       "scenario_path": "/initial_state/propositions/p_accepted",
-      "value_object": "V_false"
+      "value_ref": "VAL_false"
     },
     {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_p_rejected",
+      "id": "CUR_p_accepted",
+      "kind": "current_value_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_accepted",
+      "target_ref": "PROP_p_accepted",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_rejected",
       "kind": "proposition_object",
+      "name": "p_rejected",
       "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "proposition",
       "scenario_path": "/initial_state/propositions/p_rejected",
-      "value_object": "V_false"
+      "value_ref": "VAL_false"
     },
     {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_p_rule_modified",
+      "id": "CUR_p_rejected",
+      "kind": "current_value_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_rejected",
+      "target_ref": "PROP_p_rejected",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_rule_modified",
       "kind": "proposition_object",
+      "name": "p_rule_modified",
       "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "proposition",
       "scenario_path": "/initial_state/propositions/p_rule_modified",
-      "value_object": "V_false"
+      "value_ref": "VAL_false"
     },
     {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_p_halted",
+      "id": "CUR_p_rule_modified",
+      "kind": "current_value_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_rule_modified",
+      "target_ref": "PROP_p_rule_modified",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_halted",
       "kind": "proposition_object",
+      "name": "p_halted",
       "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "proposition",
       "scenario_path": "/initial_state/propositions/p_halted",
-      "value_object": "V_false"
+      "value_ref": "VAL_false"
     },
     {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_R_check",
-      "kind": "rule_object",
-      "primitive": "Object",
-      "scenario_path": "/initial_state/active_rules",
-      "status_relation": "REL_R_check_active"
+      "id": "CUR_p_halted",
+      "kind": "current_value_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_halted",
+      "target_ref": "PROP_p_halted",
+      "value": false
     },
     {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_R_accept",
+      "id": "RULE_R_check",
       "kind": "rule_object",
+      "name": "R_check",
       "primitive": "Object",
-      "scenario_path": "/initial_state/active_rules",
-      "status_relation": "REL_R_accept_active"
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
     },
     {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_R_reject",
-      "kind": "rule_object",
-      "primitive": "Object",
+      "id": "STATUSREL_R_check",
+      "kind": "status_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_rule_status",
       "scenario_path": "/initial_state/active_rules",
-      "status_relation": "REL_R_reject_active"
+      "target_ref": "RULE_R_check",
+      "value": true,
+      "variable": "R_check_active"
     },
     {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_R_modify",
+      "id": "RULE_R_accept",
       "kind": "rule_object",
+      "name": "R_accept",
       "primitive": "Object",
-      "scenario_path": "/initial_state/active_rules",
-      "status_relation": "REL_R_modify_active"
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
     },
     {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "O_R_halt",
-      "kind": "rule_object",
-      "primitive": "Object",
+      "id": "STATUSREL_R_accept",
+      "kind": "status_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_rule_status",
       "scenario_path": "/initial_state/active_rules",
-      "status_relation": "REL_R_halt_active"
+      "target_ref": "RULE_R_accept",
+      "value": true,
+      "variable": "R_accept_active"
     },
     {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_reject",
+      "kind": "rule_object",
+      "name": "R_reject",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_reject",
+      "kind": "status_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_reject",
+      "value": true,
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_modify",
+      "kind": "rule_object",
+      "name": "R_modify",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_modify",
+      "kind": "status_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_modify",
+      "value": true,
+      "variable": "R_modify_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_halt",
+      "kind": "rule_object",
+      "name": "R_halt",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_halt",
+      "kind": "status_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_halt",
+      "value": true,
+      "variable": "R_halt_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
       "derived_construct": "D_ordered_history",
-      "id": "O_history",
-      "kind": "ordered_history_representation",
+      "id": "HISTORY",
+      "initial": [],
+      "kind": "ordered_history_object",
       "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "history",
       "scenario_path": "/initial_state/transition_history"
     },
     {
+      "blocks_all": true,
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_terminality",
-      "id": "REL_terminality",
+      "id": "TERMINAL_BLOCKING",
       "kind": "terminality_relation",
       "primitive": "Relation",
-      "scenario_path": "/stopping_condition"
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "terminal_blocking",
+      "scenario_path": "/stopping_condition",
+      "value": true,
+      "variable": "p_halted"
     },
     {
-      "derived_construct": "D_terminality",
-      "id": "REL_outputs",
-      "kind": "output_relations",
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "id": "TNAME_T_check",
+      "kind": "transition_name_object",
+      "name": "T_check",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "transition_name",
+      "scenario_path": "/rules/0/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "authorization",
+        "capability_rule": "Relation must support authorization using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "id": "AUTH_R_check_T_check",
+      "kind": "authorization_relation",
       "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_check",
+      "scenario_path": "/rules/0",
+      "transition_ref": "TNAME_T_check"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_check_0",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/0",
+      "source_text": "p_ready=true",
+      "variable": "p_ready"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_check_1",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/1",
+      "source_text": "p_token=true",
+      "variable": "p_token"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_check_2",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/2",
+      "source_text": "p_checked=false",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_check_3",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/3",
+      "source_text": "R_check active",
+      "variable": "R_check_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_check_0",
+      "kind": "atomic_effect_record",
+      "operation": "set",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/0/updates/0",
+      "source_text": "p_checked=true",
+      "value": true,
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_check_1",
+      "kind": "atomic_effect_record",
+      "operation": "append",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/0/updates/1",
+      "source_text": "append T_check to history",
+      "value": "T_check",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_check_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_check_1",
+      "kind": "ordering_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/0/updates/1"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_check_T_check",
+      "capability_validation": {
+        "capability": "transition",
+        "capability_rule": "Transformation must support transition using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_check_0",
+        "EFF_T_check_1"
+      ],
+      "id": "SCHEMA_T_check",
+      "kind": "transformation_schema",
+      "name_ref": "TNAME_T_check",
+      "precondition_refs": [
+        "PRE_T_check_0",
+        "PRE_T_check_1",
+        "PRE_T_check_2",
+        "PRE_T_check_3"
+      ],
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/0"
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "id": "TNAME_T_accept",
+      "kind": "transition_name_object",
+      "name": "T_accept",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "transition_name",
+      "scenario_path": "/rules/1/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "authorization",
+        "capability_rule": "Relation must support authorization using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "id": "AUTH_R_accept_T_accept",
+      "kind": "authorization_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_accept",
+      "scenario_path": "/rules/1",
+      "transition_ref": "TNAME_T_accept"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_accept_0",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/1/preconditions/0",
+      "source_text": "p_checked=true",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_accept_1",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/1/preconditions/1",
+      "source_text": "p_rejected=false",
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_accept_2",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/1/preconditions/2",
+      "source_text": "R_accept active",
+      "variable": "R_accept_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_accept_0",
+      "kind": "atomic_effect_record",
+      "operation": "set",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/1/updates/0",
+      "source_text": "p_accepted=true",
+      "value": true,
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_accept_1",
+      "kind": "atomic_effect_record",
+      "operation": "append",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/1/updates/1",
+      "source_text": "append T_accept to history",
+      "value": "T_accept",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_accept_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_accept_1",
+      "kind": "ordering_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/1/updates/1"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_accept_T_accept",
+      "capability_validation": {
+        "capability": "transition",
+        "capability_rule": "Transformation must support transition using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_accept_0",
+        "EFF_T_accept_1"
+      ],
+      "id": "SCHEMA_T_accept",
+      "kind": "transformation_schema",
+      "name_ref": "TNAME_T_accept",
+      "precondition_refs": [
+        "PRE_T_accept_0",
+        "PRE_T_accept_1",
+        "PRE_T_accept_2"
+      ],
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/1"
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "id": "TNAME_T_reject",
+      "kind": "transition_name_object",
+      "name": "T_reject",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "transition_name",
+      "scenario_path": "/rules/2/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "authorization",
+        "capability_rule": "Relation must support authorization using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "id": "AUTH_R_reject_T_reject",
+      "kind": "authorization_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_reject",
+      "scenario_path": "/rules/2",
+      "transition_ref": "TNAME_T_reject"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_reject_0",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/2/preconditions/0",
+      "source_text": "p_checked=true",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_reject_1",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/2/preconditions/1",
+      "source_text": "p_accepted=false",
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_reject_2",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/2/preconditions/2",
+      "source_text": "R_reject active",
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_reject_0",
+      "kind": "atomic_effect_record",
+      "operation": "set",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/2/updates/0",
+      "source_text": "p_rejected=true",
+      "value": true,
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_reject_1",
+      "kind": "atomic_effect_record",
+      "operation": "append",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/2/updates/1",
+      "source_text": "append T_reject to history",
+      "value": "T_reject",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_reject_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_reject_1",
+      "kind": "ordering_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/2/updates/1"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_reject_T_reject",
+      "capability_validation": {
+        "capability": "transition",
+        "capability_rule": "Transformation must support transition using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_reject_0",
+        "EFF_T_reject_1"
+      ],
+      "id": "SCHEMA_T_reject",
+      "kind": "transformation_schema",
+      "name_ref": "TNAME_T_reject",
+      "precondition_refs": [
+        "PRE_T_reject_0",
+        "PRE_T_reject_1",
+        "PRE_T_reject_2"
+      ],
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/2"
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "id": "TNAME_T_disable_reject",
+      "kind": "transition_name_object",
+      "name": "T_disable_reject",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "transition_name",
+      "scenario_path": "/rules/3/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "authorization",
+        "capability_rule": "Relation must support authorization using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "id": "AUTH_R_modify_T_disable_reject",
+      "kind": "authorization_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_modify",
+      "scenario_path": "/rules/3",
+      "transition_ref": "TNAME_T_disable_reject"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_disable_reject_0",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/0",
+      "source_text": "p_checked=true",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_disable_reject_1",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/1",
+      "source_text": "p_accepted=false",
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_disable_reject_2",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/2",
+      "source_text": "p_rejected=false",
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_disable_reject_3",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/3",
+      "source_text": "R_modify active",
+      "variable": "R_modify_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_disable_reject_4",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/4",
+      "source_text": "R_reject active",
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": true,
+      "id": "EFF_T_disable_reject_0",
+      "kind": "atomic_effect_record",
+      "operation": "set",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/3/updates/0",
+      "source_text": "R_reject inactive",
+      "value": false,
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_disable_reject_1",
+      "kind": "atomic_effect_record",
+      "operation": "set",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/3/updates/1",
+      "source_text": "p_rule_modified=true",
+      "value": true,
+      "variable": "p_rule_modified"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_disable_reject_2",
+      "kind": "atomic_effect_record",
+      "operation": "append",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/3/updates/2",
+      "source_text": "append T_disable_reject to history",
+      "value": "T_disable_reject",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_disable_reject_2",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_disable_reject_2",
+      "kind": "ordering_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/3/updates/2"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_modify_T_disable_reject",
+      "capability_validation": {
+        "capability": "transition",
+        "capability_rule": "Transformation must support transition using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_disable_reject_0",
+        "EFF_T_disable_reject_1",
+        "EFF_T_disable_reject_2"
+      ],
+      "id": "SCHEMA_T_disable_reject",
+      "kind": "transformation_schema",
+      "name_ref": "TNAME_T_disable_reject",
+      "precondition_refs": [
+        "PRE_T_disable_reject_0",
+        "PRE_T_disable_reject_1",
+        "PRE_T_disable_reject_2",
+        "PRE_T_disable_reject_3",
+        "PRE_T_disable_reject_4"
+      ],
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/3"
+    },
+    {
+      "capability_validation": {
+        "capability": "identify",
+        "capability_rule": "Object must support identify using frozen definition keywords",
+        "definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+        "definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+        "passed": true,
+        "primitive": "Object"
+      },
+      "id": "TNAME_T_halt",
+      "kind": "transition_name_object",
+      "name": "T_halt",
+      "primitive": "Object",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "primitive_definition_text": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "role": "transition_name",
+      "scenario_path": "/rules/4/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "authorization",
+        "capability_rule": "Relation must support authorization using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "id": "AUTH_R_halt_T_halt",
+      "kind": "authorization_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_halt",
+      "scenario_path": "/rules/4",
+      "transition_ref": "TNAME_T_halt"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_halt_0_0",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_alternative",
+      "scenario_path": "/rules/4/preconditions/0",
+      "source_text": "p_accepted=true",
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_halt_0_1",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_alternative",
+      "scenario_path": "/rules/4/preconditions/0",
+      "source_text": "p_rejected=true",
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_disjunction",
+      "id": "ALT_T_halt_0",
+      "kind": "alternative_group_relation",
+      "member_refs": [
+        "PRE_T_halt_0_0",
+        "PRE_T_halt_0_1"
+      ],
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_any_group",
+      "scenario_path": "/rules/4/preconditions/0"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_halt_1",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/4/preconditions/1",
+      "source_text": "R_halt active",
+      "variable": "R_halt_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_halt_2",
+      "kind": "condition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/4/preconditions/2",
+      "source_text": "p_halted=false",
+      "variable": "p_halted"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_halt_0",
+      "kind": "atomic_effect_record",
+      "operation": "set",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/4/updates/0",
+      "source_text": "p_halted=true",
+      "value": true,
+      "variable": "p_halted"
+    },
+    {
+      "capability_validation": {
+        "capability": "update",
+        "capability_rule": "Transformation must support update using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_halt_1",
+      "kind": "atomic_effect_record",
+      "operation": "append",
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/4/updates/1",
+      "source_text": "append T_halt to history",
+      "value": "T_halt",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "condition",
+        "capability_rule": "Relation must support condition using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_halt_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_halt_1",
+      "kind": "ordering_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/4/updates/1"
+    },
+    {
+      "alternative_group_refs": [
+        "ALT_T_halt_0"
+      ],
+      "authorization_ref": "AUTH_R_halt_T_halt",
+      "capability_validation": {
+        "capability": "transition",
+        "capability_rule": "Transformation must support transition using frozen definition keywords",
+        "definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+        "definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+        "passed": true,
+        "primitive": "Transformation"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_halt_0",
+        "EFF_T_halt_1"
+      ],
+      "id": "SCHEMA_T_halt",
+      "kind": "transformation_schema",
+      "name_ref": "TNAME_T_halt",
+      "precondition_refs": [
+        "PRE_T_halt_1",
+        "PRE_T_halt_2"
+      ],
+      "primitive": "Transformation",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "primitive_definition_text": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/4"
+    },
+    {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_0",
+      "kind": "prohibition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/0",
+      "value": "accept_and_reject_same_run"
+    },
+    {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_1",
+      "kind": "prohibition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/1",
+      "value": "rule_status_change_except_T_disable_reject"
+    },
+    {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_2",
+      "kind": "prohibition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/2",
+      "value": "history_removal_or_rewrite"
+    },
+    {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_3",
+      "kind": "prohibition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/3",
+      "value": "transition_after_halt"
+    },
+    {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_4",
+      "kind": "prohibition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/4",
+      "value": "T_reject_after_R_reject_inactive"
+    },
+    {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_5",
+      "kind": "prohibition_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/5",
+      "value": "accept_reject_modify_before_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_final_status",
+      "kind": "output_relation",
+      "kind_value": "status",
+      "name": "final_status",
+      "output_variable_ref": null,
+      "output_variable_refs": [
+        "p_accepted",
+        "p_rejected",
+        "p_halted"
+      ],
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "output",
       "scenario_path": "/observable_outputs"
     },
     {
-      "derived_construct": "D_guarded_update",
-      "id": "REL_prohibitions",
-      "kind": "prohibition_relations",
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_rule_statuses",
+      "kind": "output_relation",
+      "kind_value": "status",
+      "name": "rule_statuses",
+      "output_variable_ref": null,
+      "output_variable_refs": [
+        "R_check_active",
+        "R_accept_active",
+        "R_reject_active",
+        "R_modify_active",
+        "R_halt_active"
+      ],
       "primitive": "Relation",
-      "scenario_path": "/prohibited_transitions"
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
     },
     {
-      "derived_construct": "D_guarded_update",
-      "id": "TR_T_check",
-      "kind": "transformation_schema",
-      "primitive": "Transformation",
-      "scenario_path": "/rules/T_check",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_ready"
-          },
-          {
-            "equals": true,
-            "variable": "p_token"
-          },
-          {
-            "equals": false,
-            "variable": "p_checked"
-          },
-          {
-            "equals": true,
-            "variable": "R_check_active"
-          }
-        ],
-        "name": "T_check",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_checked"
-          },
-          {
-            "operation": "append",
-            "value": "T_check",
-            "variable": "history"
-          }
-        ]
-      }
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_ordered_history",
+      "kind": "output_relation",
+      "kind_value": "variable",
+      "name": "ordered_history",
+      "output_variable_ref": "history",
+      "output_variable_refs": null,
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
     },
     {
-      "derived_construct": "D_guarded_update",
-      "id": "TR_T_accept",
-      "kind": "transformation_schema",
-      "primitive": "Transformation",
-      "scenario_path": "/rules/T_accept",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_checked"
-          },
-          {
-            "equals": false,
-            "variable": "p_rejected"
-          },
-          {
-            "equals": true,
-            "variable": "R_accept_active"
-          }
-        ],
-        "name": "T_accept",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_accepted"
-          },
-          {
-            "operation": "append",
-            "value": "T_accept",
-            "variable": "history"
-          }
-        ]
-      }
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_rule_modification_occurred",
+      "kind": "output_relation",
+      "kind_value": "variable",
+      "name": "rule_modification_occurred",
+      "output_variable_ref": "p_rule_modified",
+      "output_variable_refs": null,
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
     },
     {
-      "derived_construct": "D_guarded_update",
-      "id": "TR_T_reject",
-      "kind": "transformation_schema",
-      "primitive": "Transformation",
-      "scenario_path": "/rules/T_reject",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_checked"
-          },
-          {
-            "equals": false,
-            "variable": "p_accepted"
-          },
-          {
-            "equals": true,
-            "variable": "R_reject_active"
-          }
-        ],
-        "name": "T_reject",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_rejected"
-          },
-          {
-            "operation": "append",
-            "value": "T_reject",
-            "variable": "history"
-          }
-        ]
-      }
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_prohibited_transition_occurred",
+      "kind": "output_relation",
+      "kind_value": "variable",
+      "name": "prohibited_transition_occurred",
+      "output_variable_ref": "prohibited_transition_occurred",
+      "output_variable_refs": null,
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
     },
     {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_guarded_update",
-      "id": "TR_T_disable_reject",
-      "kind": "transformation_schema",
-      "primitive": "Transformation",
-      "scenario_path": "/rules/T_disable_reject",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_checked"
-          },
-          {
-            "equals": false,
-            "variable": "p_accepted"
-          },
-          {
-            "equals": false,
-            "variable": "p_rejected"
-          },
-          {
-            "equals": true,
-            "variable": "R_modify_active"
-          },
-          {
-            "equals": true,
-            "variable": "R_reject_active"
-          }
-        ],
-        "name": "T_disable_reject",
-        "updates": [
-          {
-            "from": true,
-            "operation": "set",
-            "value": false,
-            "variable": "R_reject_active"
-          },
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_rule_modified"
-          },
-          {
-            "operation": "append",
-            "value": "T_disable_reject",
-            "variable": "history"
-          }
-        ]
-      }
+      "id": "INVARIANT_mutual_exclusion",
+      "invariant_kind": "mutual_exclusion",
+      "kind": "invariant_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "invariant",
+      "scenario_path": "/prohibited_transitions",
+      "variable_refs": [
+        "p_accepted",
+        "p_rejected"
+      ]
     },
     {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
       "derived_construct": "D_guarded_update",
-      "id": "TR_T_halt",
-      "kind": "transformation_schema",
-      "primitive": "Transformation",
-      "scenario_path": "/rules/T_halt",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "R_halt_active"
-          },
-          {
-            "equals": false,
-            "variable": "p_halted"
-          }
-        ],
-        "guard_any": [
-          {
-            "equals": true,
-            "variable": "p_accepted"
-          },
-          {
-            "equals": true,
-            "variable": "p_rejected"
-          }
-        ],
-        "name": "T_halt",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_halted"
-          },
-          {
-            "operation": "append",
-            "value": "T_halt",
-            "variable": "history"
-          }
-        ]
-      }
+      "id": "INVARIANT_append_only",
+      "invariant_kind": "append_only",
+      "kind": "invariant_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "invariant",
+      "scenario_path": "/prohibited_transitions",
+      "variable": "history"
+    },
+    {
+      "allowed_transition": "T_disable_reject",
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "INVARIANT_exclusive_status_update",
+      "invariant_kind": "exclusive_status_update",
+      "kind": "invariant_relation",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "invariant",
+      "scenario_path": "/prohibited_transitions",
+      "variable_suffix": "_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "AMBIG_disable_reject_repeatability",
+      "kind": "ambiguity_policy_record",
+      "name": "disable_reject_repeatability",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "ambiguity_policy",
+      "scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "value": "require_r_reject_active_before"
+    },
+    {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "AMBIG_prohibited_transition_output",
+      "kind": "ambiguity_policy_record",
+      "name": "prohibited_transition_output",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "ambiguity_policy",
+      "scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "value": "executed_only"
+    },
+    {
+      "capability_validation": {
+        "capability": "constraint",
+        "capability_rule": "Relation must support constraint using frozen definition keywords",
+        "definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+        "definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+        "passed": true,
+        "primitive": "Relation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "AMBIG_unterminated_output",
+      "kind": "ambiguity_policy_record",
+      "name": "unterminated_output",
+      "primitive": "Relation",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "primitive_definition_text": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "role": "ambiguity_policy",
+      "scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "value": "finite_nonterminal_snapshot"
     }
   ],
   "definition_digest": "7be45d53d2b4cd0dc0ad48938fde1e4212771f9ca0f644d9a00ac27e77a4a185",
@@ -344,11 +2084,15 @@
       "role": "guarded update schema"
     },
     {
+      "id": "D_disjunction",
+      "role": "explicit alternative guard group"
+    },
+    {
       "id": "D_terminality",
       "role": "terminal blocking and halt output"
     }
   ],
-  "native_format": "cre001-native-representation-v1",
+  "native_format": "cre001-atomic-native-representation-v1",
   "scenario_source_sha256": "9db7c1349f804bc9b2b1738a5821a71da97f352c9e5b8a274382feffe1ca20d1",
   "vocabulary": "A",
   "vocabulary_identifier": "CRE-001-VOCAB-A-1.0",

@@ -1,20 +1,20 @@
 {
-  "artifact_format": "cre001-vocabulary-compiler-artifact-v2",
+  "artifact_format": "cre001-vocabulary-compiler-artifact-v3",
   "assumptions": [
-    "Scenario JSON and vocabulary markdown are frozen source inputs.",
-    "Candidate model is accepted only after vocabulary-native construction and traced lowering."
+    "Frozen scenario and vocabulary files are source inputs.",
+    "Candidate model is accepted only after atomic native construction, capability validation, lowering trace completeness, mutation sensitivity, and verifier pass."
   ],
+  "atomic_lowering_complete": true,
   "compilation_status": "complete",
-  "compiler_identifier": "cre-001-vocab-b-1.0-native-compiler",
+  "compiler_identifier": "cre-001-vocab-b-1.0-atomic-native-compiler",
   "compiler_source_path": "tools/cre001_compile_vocabularies.py",
-  "compiler_source_sha256": "1d45f671bd23e3bb2fc309ca76c9cd413e41835939519ab77f61cdc1ce6d5eac",
-  "compiler_version": "cre001-native-vocabulary-compiler-v2",
+  "compiler_source_sha256": "46a6602aaa07b468d2e792ed196358fe4f18c146cb7cba50973825ec6a7b26d4",
+  "compiler_version": "cre001-atomic-native-compiler-v3",
   "complexity": {
-    "declared_derived_construct_count": 4,
-    "normalized_compiler_clause_count": 14,
+    "declared_derived_construct_count": 5,
+    "normalized_compiler_clause_count": 107,
     "primitive_categories_used": [
       "Label",
-      "State",
       "Transition"
     ],
     "supplied_primitive_categories": [
@@ -38,12 +38,17 @@
       "role": "guarded update schema"
     },
     {
+      "id": "D_disjunction",
+      "role": "explicit alternative guard group"
+    },
+    {
       "id": "D_terminality",
       "role": "terminal blocking and halt output"
     }
   ],
+  "definition_capability_validation_passed": true,
   "deterministic_generation_metadata": {
-    "compiler_version": "cre001-native-vocabulary-compiler-v2",
+    "compiler_version": "cre001-atomic-native-compiler-v3",
     "json_sort_keys": true
   },
   "experiment_identifier": "CRE-001",
@@ -72,7 +77,7 @@
         "variable_suffix": "_active"
       }
     ],
-    "model_id": "CRE-001-VOCAB-B-1.0-LOWERED-V1",
+    "model_id": "CRE-001-VOCAB-B-1.0-LOWERED-ATOMIC-V1",
     "outputs": {
       "final_status": {
         "kind": "status",
@@ -340,30 +345,38 @@
       }
     }
   },
-  "lowering_trace_sha256": "4cf761b0c62635144bdd75a4ae5ca3c2cb0df3154ae61186bc8ed9703052249f",
-  "native_representation_sha256": "5fd3e0b9fa9956e33dcb22f10b00bf11258051ae6d542bbd842a73f5cfd82f7c",
+  "lowering_trace_sha256": "fc84e1273c36172b1fa87756f9121bbdf3563ddc41f87f8ceb84a1d2db4fa5ef",
+  "mutation_report_sha256": "57fc385c06370f3f02fc17138342ae44c1524081277aef3b89738b8feeb42870",
+  "mutation_sensitivity_passed": true,
+  "native_construction_complete": true,
+  "native_representation_sha256": "e72b5bf25aaf2acee21ea1dd60ba4e83aeb83f83f9a0cd2d6ba7ed6e964a7ab4",
   "primitive_categories_used": [
     "Label",
-    "State",
     "Transition"
   ],
   "provenance": {
     "generation_command": "python tools/cre001_compile_vocabularies.py --write --check",
-    "source": "compiled from frozen vocabulary into native representation, then lowered with traced rules; reference-model.json is not read by compiler"
+    "source": "compiled from frozen vocabulary into atomic native records, then lowered by executable rules; no candidate path calls the reference compiler or prebuilt transition dictionaries"
   },
   "scenario_identifier": "CRE-001-SCENARIO-1.0",
   "scenario_version": "1.0",
+  "shared_semantic_defaults_used": false,
   "supplied_primitive_categories": [
     "State",
     "Transition",
     "Label"
   ],
   "translation_rules": [
-    "B-native-construction-from-frozen-scenario",
-    "B-LR-variable-from-state-label",
-    "B-LR-transition-from-guarded-transition",
-    "B-LR-terminal-label",
-    "B-LR-output-recovery-label"
+    "atomic-native-construction",
+    "B-variable-atomic",
+    "B-condition-atomic",
+    "B-alternative-atomic",
+    "B-effect-atomic",
+    "B-schema-atomic",
+    "B-terminal-atomic",
+    "B-output-atomic",
+    "B-invariant-atomic",
+    "B-ambiguity-atomic"
   ],
   "unresolved_ambiguities": [],
   "unsupported_scenario_elements": [],

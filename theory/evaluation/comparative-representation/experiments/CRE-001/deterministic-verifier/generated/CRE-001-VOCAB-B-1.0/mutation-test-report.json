@@ -1,0 +1,530 @@
+{
+  "cases": [
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "variable_mismatch",
+          "details": {
+            "candidate": {
+              "initial": false,
+              "type": "boolean"
+            },
+            "reference": {
+              "initial": true,
+              "type": "boolean"
+            }
+          },
+          "message": "variable p_ready differs",
+          "trace": []
+        },
+        {
+          "code": "enabled_set_mismatch",
+          "details": {
+            "candidate_enabled": [],
+            "candidate_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [],
+              "p_accepted": false,
+              "p_checked": false,
+              "p_halted": false,
+              "p_ready": false,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            },
+            "reference_enabled": [
+              "T_check"
+            ],
+            "reference_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [],
+              "p_accepted": false,
+              "p_checked": false,
+              "p_halted": false,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            }
+          },
+          "message": "enabled transitions diverge",
+          "trace": []
+        }
+      ],
+      "mutation": "proposition_initial"
+    },
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "variable_mismatch",
+          "details": {
+            "candidate": {
+              "initial": false,
+              "type": "boolean"
+            },
+            "reference": {
+              "initial": true,
+              "type": "boolean"
+            }
+          },
+          "message": "variable R_check_active differs",
+          "trace": []
+        },
+        {
+          "code": "enabled_set_mismatch",
+          "details": {
+            "candidate_enabled": [],
+            "candidate_state": {
+              "R_accept_active": true,
+              "R_check_active": false,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [],
+              "p_accepted": false,
+              "p_checked": false,
+              "p_halted": false,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            },
+            "reference_enabled": [
+              "T_check"
+            ],
+            "reference_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [],
+              "p_accepted": false,
+              "p_checked": false,
+              "p_halted": false,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            }
+          },
+          "message": "enabled transitions diverge",
+          "trace": []
+        }
+      ],
+      "mutation": "rule_active_status"
+    },
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "guard_mismatch",
+          "details": {
+            "candidate": {
+              "all": [
+                {
+                  "equals": false,
+                  "variable": "p_ready"
+                },
+                {
+                  "equals": true,
+                  "variable": "p_token"
+                },
+                {
+                  "equals": false,
+                  "variable": "p_checked"
+                },
+                {
+                  "equals": true,
+                  "variable": "R_check_active"
+                }
+              ],
+              "any": []
+            },
+            "reference": {
+              "all": [
+                {
+                  "equals": true,
+                  "variable": "p_ready"
+                },
+                {
+                  "equals": true,
+                  "variable": "p_token"
+                },
+                {
+                  "equals": false,
+                  "variable": "p_checked"
+                },
+                {
+                  "equals": true,
+                  "variable": "R_check_active"
+                }
+              ],
+              "any": []
+            }
+          },
+          "message": "guard differs for T_check",
+          "trace": []
+        },
+        {
+          "code": "enabled_set_mismatch",
+          "details": {
+            "candidate_enabled": [],
+            "candidate_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [],
+              "p_accepted": false,
+              "p_checked": false,
+              "p_halted": false,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            },
+            "reference_enabled": [
+              "T_check"
+            ],
+            "reference_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [],
+              "p_accepted": false,
+              "p_checked": false,
+              "p_halted": false,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            }
+          },
+          "message": "enabled transitions diverge",
+          "trace": []
+        }
+      ],
+      "mutation": "guard_condition"
+    },
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "update_mismatch",
+          "details": {
+            "candidate": [
+              {
+                "operation": "set",
+                "value": false,
+                "variable": "p_checked"
+              },
+              {
+                "operation": "append",
+                "value": "T_check",
+                "variable": "history"
+              }
+            ],
+            "reference": [
+              {
+                "operation": "set",
+                "value": true,
+                "variable": "p_checked"
+              },
+              {
+                "operation": "append",
+                "value": "T_check",
+                "variable": "history"
+              }
+            ]
+          },
+          "message": "updates differ for T_check",
+          "trace": []
+        },
+        {
+          "code": "post_state_mismatch",
+          "details": {
+            "candidate_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [
+                "T_check"
+              ],
+              "p_accepted": false,
+              "p_checked": false,
+              "p_halted": false,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            },
+            "reference_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [
+                "T_check"
+              ],
+              "p_accepted": false,
+              "p_checked": true,
+              "p_halted": false,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            }
+          },
+          "message": "state diverges after T_check",
+          "trace": [
+            "T_check"
+          ]
+        }
+      ],
+      "mutation": "update_value"
+    },
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "update_mismatch",
+          "details": {
+            "candidate": [
+              {
+                "operation": "set",
+                "value": true,
+                "variable": "p_checked"
+              },
+              {
+                "operation": "append",
+                "value": "WRONG",
+                "variable": "history"
+              }
+            ],
+            "reference": [
+              {
+                "operation": "set",
+                "value": true,
+                "variable": "p_checked"
+              },
+              {
+                "operation": "append",
+                "value": "T_check",
+                "variable": "history"
+              }
+            ]
+          },
+          "message": "updates differ for T_check",
+          "trace": []
+        },
+        {
+          "code": "post_state_mismatch",
+          "details": {
+            "candidate_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [
+                "WRONG"
+              ],
+              "p_accepted": false,
+              "p_checked": true,
+              "p_halted": false,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            },
+            "reference_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [
+                "T_check"
+              ],
+              "p_accepted": false,
+              "p_checked": true,
+              "p_halted": false,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            }
+          },
+          "message": "state diverges after T_check",
+          "trace": [
+            "T_check"
+          ]
+        }
+      ],
+      "mutation": "history_append"
+    },
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "lowering_failure",
+          "message": "disjunction collapsed into non-disjunction"
+        }
+      ],
+      "mutation": "halt_disjunction"
+    },
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "lowering_failure",
+          "message": "rule-status modification cannot be reconstructed"
+        }
+      ],
+      "mutation": "reject_deactivation"
+    },
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "terminal_policy_mismatch",
+          "details": {
+            "candidate": false,
+            "reference": true
+          },
+          "message": "terminal_blocks_all_transitions differs",
+          "trace": []
+        },
+        {
+          "code": "enabled_set_mismatch",
+          "details": {
+            "candidate_enabled": [
+              "T_accept"
+            ],
+            "candidate_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [
+                "T_check",
+                "T_accept",
+                "T_halt"
+              ],
+              "p_accepted": true,
+              "p_checked": true,
+              "p_halted": true,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            },
+            "reference_enabled": [],
+            "reference_state": {
+              "R_accept_active": true,
+              "R_check_active": true,
+              "R_halt_active": true,
+              "R_modify_active": true,
+              "R_reject_active": true,
+              "history": [
+                "T_check",
+                "T_accept",
+                "T_halt"
+              ],
+              "p_accepted": true,
+              "p_checked": true,
+              "p_halted": true,
+              "p_ready": true,
+              "p_rejected": false,
+              "p_rule_modified": false,
+              "p_token": true,
+              "prohibited_transition_occurred": false
+            }
+          },
+          "message": "enabled transitions diverge",
+          "trace": [
+            "T_check",
+            "T_accept",
+            "T_halt"
+          ]
+        }
+      ],
+      "mutation": "terminal_blocking"
+    },
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "lowering_failure",
+          "message": "invariants cannot be reconstructed"
+        }
+      ],
+      "mutation": "invariant"
+    },
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "lowering_failure",
+          "message": "output cannot be recovered"
+        }
+      ],
+      "mutation": "output"
+    },
+    {
+      "detected": true,
+      "diagnostics": [
+        {
+          "code": "ambiguity_policy_mismatch",
+          "details": {
+            "candidate": {
+              "disable_reject_repeatability": "changed",
+              "prohibited_transition_output": "executed_only",
+              "unterminated_output": "finite_nonterminal_snapshot"
+            },
+            "reference": {
+              "disable_reject_repeatability": "require_r_reject_active_before",
+              "prohibited_transition_output": "executed_only",
+              "unterminated_output": "finite_nonterminal_snapshot"
+            }
+          },
+          "message": "ambiguity_policy differs",
+          "trace": []
+        }
+      ],
+      "mutation": "ambiguity_policy"
+    }
+  ],
+  "mutation_report_format": "cre001-mutation-report-v1",
+  "passed": true,
+  "vocabulary_identifier": "CRE-001-VOCAB-B-1.0"
+}

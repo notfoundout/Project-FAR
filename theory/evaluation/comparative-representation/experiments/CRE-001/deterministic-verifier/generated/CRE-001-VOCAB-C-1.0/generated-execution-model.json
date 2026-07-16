@@ -23,7 +23,7 @@
       "variable_suffix": "_active"
     }
   ],
-  "model_id": "CRE-001-VOCAB-C-1.0-LOWERED-V1",
+  "model_id": "CRE-001-VOCAB-C-1.0-LOWERED-ATOMIC-V1",
   "outputs": {
     "final_status": {
       "kind": "status",

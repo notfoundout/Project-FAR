@@ -1,37 +1,158 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://project-far.local/schemas/cre001-native-representation-v1.json",
-  "title": "CRE-001 vocabulary-native representation tagged union v1",
-  "type": "object",
-  "required": ["native_format", "vocabulary", "vocabulary_identifier", "constructs", "derived_constructs"],
-  "properties": {
-    "native_format": {"const": "cre001-native-representation-v1"},
-    "vocabulary": {"enum": ["A", "B", "C"]},
-    "vocabulary_identifier": {"type": "string"},
-    "vocabulary_source_sha256": {"type": "string"},
-    "definition_digest": {"type": "string"},
-    "scenario_source_sha256": {"type": "string"},
-    "derived_constructs": {"type": "array", "items": {"type": "object", "required": ["id", "role"]}},
-    "constructs": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["id", "kind", "primitive", "scenario_path"],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "allOf": [
+    {
+      "if": {
         "properties": {
-          "id": {"type": "string"},
-          "kind": {"type": "string"},
-          "primitive": {"enum": ["Object", "Relation", "Transformation", "State", "Transition", "Label", "Representation", "Representational Structure", "Interpretation", "Investigation", "Calculus"]},
-          "scenario_path": {"type": "string"},
-          "derived_construct": {"type": "string"}
-        },
-        "additionalProperties": true
+          "vocabulary": {
+            "const": "A"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "constructs": {
+            "contains": {
+              "properties": {
+                "kind": {
+                  "const": "transformation_schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "vocabulary": {
+            "const": "B"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "constructs": {
+            "contains": {
+              "properties": {
+                "kind": {
+                  "const": "complete_state"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "vocabulary": {
+            "const": "C"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "constructs": {
+            "contains": {
+              "properties": {
+                "kind": {
+                  "const": "admissible_transition_calculus"
+                }
+              }
+            }
+          }
+        }
       }
     }
-  },
-  "allOf": [
-    {"if": {"properties": {"vocabulary": {"const": "A"}}}, "then": {"properties": {"constructs": {"contains": {"properties": {"kind": {"const": "transformation_schema"}}}}}}},
-    {"if": {"properties": {"vocabulary": {"const": "B"}}}, "then": {"properties": {"constructs": {"contains": {"properties": {"kind": {"const": "complete_state"}}}}}}},
-    {"if": {"properties": {"vocabulary": {"const": "C"}}}, "then": {"properties": {"constructs": {"contains": {"properties": {"kind": {"const": "admissible_transition_calculus"}}}}}}}
   ],
-  "additionalProperties": true
+  "properties": {
+    "constructs": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "derived_construct": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "primitive": {
+            "enum": [
+              "Object",
+              "Relation",
+              "Transformation",
+              "State",
+              "Transition",
+              "Label",
+              "Representation",
+              "Representational Structure",
+              "Interpretation",
+              "Investigation",
+              "Calculus"
+            ]
+          },
+          "scenario_path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "primitive",
+          "scenario_path"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "definition_digest": {
+      "type": "string"
+    },
+    "derived_constructs": {
+      "items": {
+        "required": [
+          "id",
+          "role"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "native_format": {
+      "const": "cre001-atomic-native-representation-v1"
+    },
+    "scenario_source_sha256": {
+      "type": "string"
+    },
+    "vocabulary": {
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "vocabulary_identifier": {
+      "type": "string"
+    },
+    "vocabulary_source_sha256": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "native_format",
+    "vocabulary",
+    "vocabulary_identifier",
+    "constructs",
+    "derived_constructs"
+  ],
+  "title": "CRE-001 atomic vocabulary-native representation tagged union v1",
+  "type": "object"
 }

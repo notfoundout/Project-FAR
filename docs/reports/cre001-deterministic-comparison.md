@@ -2,40 +2,46 @@
 
 Status: generated deterministic report.
 
-## Circularity correction
+## Residual circularity correction
 
-The previous implementation produced candidate models by calling the same scenario-to-execution-model construction used as the verification reference. This report is regenerated after replacing that path with vocabulary-native representations and traced lowerers.
+Preconstructed transition dictionaries and centrally injected candidate semantics have been removed from candidate native artifacts. Candidate lowerers now assemble every common-model semantic field from atomic native records and executable lowering rules.
 
 ## Nonclaims
 
-- This report does not draw universal sufficiency, necessity, minimality, FAR proof, shared-structure universality, or global superiority conclusions.
+- No universal sufficiency, necessity, minimality, indispensability, superiority, FAR proof, or universal reasoning-structure conclusion is drawn.
 
 ## Results
 
 ### CRE-001-VOCAB-A-1.0
 - Compilation status: `complete`
+- Definition-capability validation passed: `True`
+- Atomic lowering complete: `True`
+- Shared semantic defaults used: `False`
+- Mutation sensitivity passed: `True`
 - Verifier result: `pass`
-- Full deterministic equivalence demonstrated: `True`
-- Failed checks: []
+- CRE-001 conditional equivalence demonstrated: `True`
 - Shortest counterexample: None
 - Unsupported elements: []
-- Limitations: Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies and complete lowering trace.
 
 ### CRE-001-VOCAB-B-1.0
 - Compilation status: `complete`
+- Definition-capability validation passed: `True`
+- Atomic lowering complete: `True`
+- Shared semantic defaults used: `False`
+- Mutation sensitivity passed: `True`
 - Verifier result: `pass`
-- Full deterministic equivalence demonstrated: `True`
-- Failed checks: []
+- CRE-001 conditional equivalence demonstrated: `True`
 - Shortest counterexample: None
 - Unsupported elements: []
-- Limitations: Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies and complete lowering trace.
 
 ### CRE-001-VOCAB-C-1.0
 - Compilation status: `complete`
+- Definition-capability validation passed: `True`
+- Atomic lowering complete: `True`
+- Shared semantic defaults used: `False`
+- Mutation sensitivity passed: `True`
 - Verifier result: `pass`
-- Full deterministic equivalence demonstrated: `True`
-- Failed checks: []
+- CRE-001 conditional equivalence demonstrated: `True`
 - Shortest counterexample: None
 - Unsupported elements: []
-- Limitations: Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies and complete lowering trace.
 

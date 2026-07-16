@@ -1,5 +1,5 @@
 {
-  "candidate_sha256": "3a1c42dbd579bea2b86f4efe91d40a272e1b76618ebf75095f5a2554f2ee39c5",
+  "candidate_sha256": "62e1e8737fb02b8bc803ff09d2b2f7936d23e71acef5fc23c35523583caaf566",
   "checks": {
     "ambiguity_policy": "pass",
     "historical": "pass",
@@ -9,7 +9,7 @@
   },
   "diagnostics": [],
   "max_depth": 12,
-  "reference_sha256": "cf63c22e6623405a1caf20be70c77120afe18b247a53bb114a04663b7e797794",
+  "reference_sha256": "0e473b4619e77a7eb799b188bde37b47587a76166440950f32e5a8f04f8375dc",
   "result": "pass",
   "verifier": "cre001-deterministic-verifier-v1",
   "verifier_version": "cre001-deterministic-verifier-v1"

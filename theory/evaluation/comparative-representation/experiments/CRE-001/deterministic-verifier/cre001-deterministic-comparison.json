@@ -1,20 +1,18 @@
 {
-  "artifact_id": "CRE-001-DETERMINISTIC-COMPARISON-2.0",
-  "circularity_correction": "Candidate execution models are produced only by vocabulary-native construction followed by traced lowering; no candidate compiler directly returns the scenario reference model.",
+  "artifact_id": "CRE-001-DETERMINISTIC-COMPARISON-3.0",
   "experiment": "CRE-001",
   "nonclaims": [
-    "This report does not draw universal sufficiency, necessity, minimality, FAR proof, shared-structure universality, or global superiority conclusions."
+    "No universal sufficiency, necessity, minimality, indispensability, superiority, FAR proof, or universal reasoning-structure conclusion is drawn."
   ],
+  "residual_circularity_correction": "Native artifacts contain atomic records only; lowerers assemble every common-model semantic field from atomic native constructs and traces.",
   "results": [
     {
-      "assumptions": [
-        "Scenario JSON and vocabulary markdown are frozen source inputs.",
-        "Candidate model is accepted only after vocabulary-native construction and traced lowering."
-      ],
+      "atomic_lowering_complete": true,
+      "behavioral_equivalence_passed": true,
       "compilation_status": "complete",
       "complexity": {
-        "declared_derived_construct_count": 4,
-        "normalized_compiler_clause_count": 25,
+        "declared_derived_construct_count": 5,
+        "normalized_compiler_clause_count": 107,
         "primitive_categories_used": [
           "Object",
           "Relation",
@@ -27,47 +25,30 @@
         ],
         "transition_schema_count": 5
       },
-      "derived_constructs": [
-        {
-          "id": "D_boolean_value",
-          "role": "truth/status value carrier"
-        },
-        {
-          "id": "D_ordered_history",
-          "role": "append-only ordered transition record"
-        },
-        {
-          "id": "D_guarded_update",
-          "role": "guarded update schema"
-        },
-        {
-          "id": "D_terminality",
-          "role": "terminal blocking and halt output"
-        }
-      ],
+      "cre001_conditional_equivalence_demonstrated": true,
+      "definition_capability_validation_passed": true,
       "failed_checks": [],
-      "full_deterministic_equivalence_demonstrated": true,
       "inventory_status": "eligible",
       "limitations": [
-        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies and complete lowering trace."
+        "Conditional equivalence is limited to CRE-001, registered ambiguity policies, atomic native compiler artifacts, mutation tests, and verifier depth."
       ],
+      "mutation_sensitivity_passed": true,
+      "native_construction_complete": true,
+      "shared_semantic_defaults_used": false,
       "shortest_counterexample": null,
       "unsupported_elements": [],
       "verifier_result": "pass",
       "vocabulary_identifier": "CRE-001-VOCAB-A-1.0"
     },
     {
-      "assumptions": [
-        "Scenario JSON and vocabulary markdown are frozen source inputs.",
-        "Candidate model is accepted only after vocabulary-native construction and traced lowering."
-      ],
+      "atomic_lowering_complete": true,
+      "behavioral_equivalence_passed": true,
       "compilation_status": "complete",
       "complexity": {
-        "declared_derived_construct_count": 4,
-        "normalized_compiler_clause_count": 14,
+        "declared_derived_construct_count": 5,
+        "normalized_compiler_clause_count": 107,
         "primitive_categories_used": [
           "Label",
-          "State",
           "Transition"
         ],
         "supplied_primitive_categories": [
@@ -77,44 +58,28 @@
         ],
         "transition_schema_count": 5
       },
-      "derived_constructs": [
-        {
-          "id": "D_boolean_value",
-          "role": "truth/status value carrier"
-        },
-        {
-          "id": "D_ordered_history",
-          "role": "append-only ordered transition record"
-        },
-        {
-          "id": "D_guarded_update",
-          "role": "guarded update schema"
-        },
-        {
-          "id": "D_terminality",
-          "role": "terminal blocking and halt output"
-        }
-      ],
+      "cre001_conditional_equivalence_demonstrated": true,
+      "definition_capability_validation_passed": true,
       "failed_checks": [],
-      "full_deterministic_equivalence_demonstrated": true,
       "inventory_status": "eligible",
       "limitations": [
-        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies and complete lowering trace."
+        "Conditional equivalence is limited to CRE-001, registered ambiguity policies, atomic native compiler artifacts, mutation tests, and verifier depth."
       ],
+      "mutation_sensitivity_passed": true,
+      "native_construction_complete": true,
+      "shared_semantic_defaults_used": false,
       "shortest_counterexample": null,
       "unsupported_elements": [],
       "verifier_result": "pass",
       "vocabulary_identifier": "CRE-001-VOCAB-B-1.0"
     },
     {
-      "assumptions": [
-        "Scenario JSON and vocabulary markdown are frozen source inputs.",
-        "Candidate model is accepted only after vocabulary-native construction and traced lowering."
-      ],
+      "atomic_lowering_complete": true,
+      "behavioral_equivalence_passed": true,
       "compilation_status": "complete",
       "complexity": {
-        "declared_derived_construct_count": 4,
-        "normalized_compiler_clause_count": 25,
+        "declared_derived_construct_count": 5,
+        "normalized_compiler_clause_count": 108,
         "primitive_categories_used": [
           "Calculus",
           "Interpretation",
@@ -131,30 +96,16 @@
         ],
         "transition_schema_count": 5
       },
-      "derived_constructs": [
-        {
-          "id": "D_boolean_value",
-          "role": "truth/status value carrier"
-        },
-        {
-          "id": "D_ordered_history",
-          "role": "append-only ordered transition record"
-        },
-        {
-          "id": "D_guarded_update",
-          "role": "guarded update schema"
-        },
-        {
-          "id": "D_terminality",
-          "role": "terminal blocking and halt output"
-        }
-      ],
+      "cre001_conditional_equivalence_demonstrated": true,
+      "definition_capability_validation_passed": true,
       "failed_checks": [],
-      "full_deterministic_equivalence_demonstrated": true,
       "inventory_status": "eligible",
       "limitations": [
-        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies and complete lowering trace."
+        "Conditional equivalence is limited to CRE-001, registered ambiguity policies, atomic native compiler artifacts, mutation tests, and verifier depth."
       ],
+      "mutation_sensitivity_passed": true,
+      "native_construction_complete": true,
+      "shared_semantic_defaults_used": false,
       "shortest_counterexample": null,
       "unsupported_elements": [],
       "verifier_result": "pass",

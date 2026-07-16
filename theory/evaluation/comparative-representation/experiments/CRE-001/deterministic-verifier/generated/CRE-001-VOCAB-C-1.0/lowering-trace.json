@@ -1,199 +1,1020 @@
 {
   "entries": [
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "R_p_ready",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "CUR_p_ready",
+      "native_construct_kind": "state_composition_structure",
       "output_path": "/variables/p_ready",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/propositions/p_ready",
-      "supplied_vocabulary_primitive": "Representation"
+      "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "R_p_token",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "CUR_p_token",
+      "native_construct_kind": "state_composition_structure",
       "output_path": "/variables/p_token",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/propositions/p_token",
-      "supplied_vocabulary_primitive": "Representation"
+      "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "R_p_checked",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "CUR_p_checked",
+      "native_construct_kind": "state_composition_structure",
       "output_path": "/variables/p_checked",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/propositions/p_checked",
-      "supplied_vocabulary_primitive": "Representation"
+      "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "R_p_accepted",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "CUR_p_accepted",
+      "native_construct_kind": "state_composition_structure",
       "output_path": "/variables/p_accepted",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/propositions/p_accepted",
-      "supplied_vocabulary_primitive": "Representation"
+      "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "R_p_rejected",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "CUR_p_rejected",
+      "native_construct_kind": "state_composition_structure",
       "output_path": "/variables/p_rejected",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/propositions/p_rejected",
-      "supplied_vocabulary_primitive": "Representation"
+      "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "R_p_rule_modified",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "CUR_p_rule_modified",
+      "native_construct_kind": "state_composition_structure",
       "output_path": "/variables/p_rule_modified",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/propositions/p_rule_modified",
-      "supplied_vocabulary_primitive": "Representation"
+      "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "R_p_halted",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "CUR_p_halted",
+      "native_construct_kind": "state_composition_structure",
       "output_path": "/variables/p_halted",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/propositions/p_halted",
-      "supplied_vocabulary_primitive": "Representation"
+      "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "RS_R_check_status",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "STATUSREL_R_check",
+      "native_construct_kind": "rule_status_structure",
       "output_path": "/variables/R_check_active",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/active_rules",
       "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "RS_R_accept_status",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "STATUSREL_R_accept",
+      "native_construct_kind": "rule_status_structure",
       "output_path": "/variables/R_accept_active",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/active_rules",
       "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "RS_R_reject_status",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "STATUSREL_R_reject",
+      "native_construct_kind": "rule_status_structure",
       "output_path": "/variables/R_reject_active",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/active_rules",
       "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "RS_R_modify_status",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "STATUSREL_R_modify",
+      "native_construct_kind": "rule_status_structure",
       "output_path": "/variables/R_modify_active",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/active_rules",
       "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "RS_R_halt_status",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "STATUSREL_R_halt",
+      "native_construct_kind": "rule_status_structure",
       "output_path": "/variables/R_halt_active",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/active_rules",
       "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "CALC_prohibitions",
-      "output_path": "/variables/prohibited_transition_occurred",
-      "source_scenario_path": "/prohibited_transitions",
-      "supplied_vocabulary_primitive": "Calculus"
-    },
-    {
-      "derived_construct_identifier": "D_ordered_history",
-      "lowering_rule_identifier": "C-LR-variable-from-representation-structure",
-      "native_construct_identifier": "RS_history",
+      "derived_construct_id": "D_ordered_history",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "HISTORY",
+      "native_construct_kind": "history_structure",
       "output_path": "/variables/history",
+      "primitive_definition_excerpt": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history struct",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "resulting_common_model_value": {
+        "initial": [],
+        "type": "history"
+      },
+      "source_native_field": "initial",
       "source_scenario_path": "/initial_state/transition_history",
       "supplied_vocabulary_primitive": "Representational Structure"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "C-LR-transition-from-calculus",
-      "native_construct_identifier": "CALC_T_accept",
-      "output_path": "/transitions/T_accept",
-      "source_scenario_path": "/rules/T_accept",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-variable-atomic",
+      "native_construct_id": "PROHIB_0",
+      "native_construct_kind": "prohibition_calculus",
+      "output_path": "/variables/prohibited_transition_occurred",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/prohibited_transitions/0",
       "supplied_vocabulary_primitive": "Calculus"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "C-LR-transition-from-calculus",
-      "native_construct_identifier": "CALC_T_check",
-      "output_path": "/transitions/T_check",
-      "source_scenario_path": "/rules/T_check",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_accept_0",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_accept/guard/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_checked"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/1/preconditions/0",
       "supplied_vocabulary_primitive": "Calculus"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "C-LR-transition-from-calculus",
-      "native_construct_identifier": "CALC_T_disable_reject",
-      "output_path": "/transitions/T_disable_reject",
-      "source_scenario_path": "/rules/T_disable_reject",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_accept_1",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_accept/guard/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_rejected"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/1/preconditions/1",
       "supplied_vocabulary_primitive": "Calculus"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "C-LR-transition-from-calculus",
-      "native_construct_identifier": "CALC_T_halt",
-      "output_path": "/transitions/T_halt",
-      "source_scenario_path": "/rules/T_halt",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_accept_2",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_accept/guard/2",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_accept_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/1/preconditions/2",
       "supplied_vocabulary_primitive": "Calculus"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "C-LR-transition-from-calculus",
-      "native_construct_identifier": "CALC_T_reject",
-      "output_path": "/transitions/T_reject",
-      "source_scenario_path": "/rules/T_reject",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_accept_0",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_accept/updates/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "operation": "set",
+        "value": true,
+        "variable": "p_accepted"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/1/updates/0",
       "supplied_vocabulary_primitive": "Calculus"
     },
     {
-      "derived_construct_identifier": "D_terminality",
-      "lowering_rule_identifier": "C-LR-terminal-interpretation",
-      "native_construct_identifier": "INT_outputs",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_accept_1",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_accept/updates/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "operation": "append",
+        "value": "T_accept",
+        "variable": "history"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/1/updates/1",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": null,
+      "executable_lowering_rule_id": "C-schema-atomic",
+      "native_construct_id": "TNAME_T_accept",
+      "native_construct_kind": "transition_representation",
+      "output_path": "/transitions/T_accept/name",
+      "primitive_definition_excerpt": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "resulting_common_model_value": "T_accept",
+      "source_native_field": "name",
+      "source_scenario_path": "/rules/1/permits",
+      "supplied_vocabulary_primitive": "Representation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_check_0",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_check/guard/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_ready"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/0/preconditions/0",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_check_1",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_check/guard/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_token"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/0/preconditions/1",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_check_2",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_check/guard/2",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_checked"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/0/preconditions/2",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_check_3",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_check/guard/3",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_check_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/0/preconditions/3",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_check_0",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_check/updates/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "operation": "set",
+        "value": true,
+        "variable": "p_checked"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/0/updates/0",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_check_1",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_check/updates/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "operation": "append",
+        "value": "T_check",
+        "variable": "history"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/0/updates/1",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": null,
+      "executable_lowering_rule_id": "C-schema-atomic",
+      "native_construct_id": "TNAME_T_check",
+      "native_construct_kind": "transition_representation",
+      "output_path": "/transitions/T_check/name",
+      "primitive_definition_excerpt": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "resulting_common_model_value": "T_check",
+      "source_native_field": "name",
+      "source_scenario_path": "/rules/0/permits",
+      "supplied_vocabulary_primitive": "Representation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_disable_reject_0",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_disable_reject/guard/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_checked"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/3/preconditions/0",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_disable_reject_1",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_disable_reject/guard/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_accepted"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/3/preconditions/1",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_disable_reject_2",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_disable_reject/guard/2",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_rejected"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/3/preconditions/2",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_disable_reject_3",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_disable_reject/guard/3",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_modify_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/3/preconditions/3",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_disable_reject_4",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_disable_reject/guard/4",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_reject_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/3/preconditions/4",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_disable_reject_0",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_disable_reject/updates/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "from": true,
+        "operation": "set",
+        "value": false,
+        "variable": "R_reject_active"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/3/updates/0",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_disable_reject_1",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_disable_reject/updates/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "operation": "set",
+        "value": true,
+        "variable": "p_rule_modified"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/3/updates/1",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_disable_reject_2",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_disable_reject/updates/2",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "operation": "append",
+        "value": "T_disable_reject",
+        "variable": "history"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/3/updates/2",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": null,
+      "executable_lowering_rule_id": "C-schema-atomic",
+      "native_construct_id": "TNAME_T_disable_reject",
+      "native_construct_kind": "transition_representation",
+      "output_path": "/transitions/T_disable_reject/name",
+      "primitive_definition_excerpt": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "resulting_common_model_value": "T_disable_reject",
+      "source_native_field": "name",
+      "source_scenario_path": "/rules/3/permits",
+      "supplied_vocabulary_primitive": "Representation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_halt_1",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_halt/guard/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_halt_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/4/preconditions/1",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_halt_2",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_halt/guard/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_halted"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/4/preconditions/2",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_halt_0_0",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_halt/guard_any/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_accepted"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/4/preconditions/0",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_halt_0_1",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_halt/guard_any/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_rejected"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/4/preconditions/0",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_disjunction",
+      "executable_lowering_rule_id": "C-alternative-atomic",
+      "native_construct_id": "ALT_T_halt_0",
+      "native_construct_kind": "halt_disjunction_calculus",
+      "output_path": "/transitions/T_halt/guard_any_group",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": [
+        {
+          "equals": true,
+          "variable": "p_accepted"
+        },
+        {
+          "equals": true,
+          "variable": "p_rejected"
+        }
+      ],
+      "source_native_field": "member_refs",
+      "source_scenario_path": "/rules/4/preconditions/0",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_halt_0",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_halt/updates/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "operation": "set",
+        "value": true,
+        "variable": "p_halted"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/4/updates/0",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_halt_1",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_halt/updates/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "operation": "append",
+        "value": "T_halt",
+        "variable": "history"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/4/updates/1",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": null,
+      "executable_lowering_rule_id": "C-schema-atomic",
+      "native_construct_id": "TNAME_T_halt",
+      "native_construct_kind": "transition_representation",
+      "output_path": "/transitions/T_halt/name",
+      "primitive_definition_excerpt": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "resulting_common_model_value": "T_halt",
+      "source_native_field": "name",
+      "source_scenario_path": "/rules/4/permits",
+      "supplied_vocabulary_primitive": "Representation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_reject_0",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_reject/guard/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_checked"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/2/preconditions/0",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_reject_1",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_reject/guard/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_accepted"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/2/preconditions/1",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-condition-atomic",
+      "native_construct_id": "PRE_T_reject_2",
+      "native_construct_kind": "atomic_precondition_calculus",
+      "output_path": "/transitions/T_reject/guard/2",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_reject_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/2/preconditions/2",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_reject_0",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_reject/updates/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "operation": "set",
+        "value": true,
+        "variable": "p_rejected"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/2/updates/0",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-effect-atomic",
+      "native_construct_id": "EFF_T_reject_1",
+      "native_construct_kind": "atomic_update_calculus",
+      "output_path": "/transitions/T_reject/updates/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "operation": "append",
+        "value": "T_reject",
+        "variable": "history"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/2/updates/1",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": null,
+      "executable_lowering_rule_id": "C-schema-atomic",
+      "native_construct_id": "TNAME_T_reject",
+      "native_construct_kind": "transition_representation",
+      "output_path": "/transitions/T_reject/name",
+      "primitive_definition_excerpt": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "resulting_common_model_value": "T_reject",
+      "source_native_field": "name",
+      "source_scenario_path": "/rules/2/permits",
+      "supplied_vocabulary_primitive": "Representation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "C-terminal-atomic",
+      "native_construct_id": "TERMINAL_BLOCKING",
+      "native_construct_kind": "terminal_configuration_structure",
       "output_path": "/terminal_condition",
-      "source_scenario_path": "/observable_outputs",
-      "supplied_vocabulary_primitive": "Interpretation"
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_halted"
+      },
+      "source_native_field": "variable/value",
+      "source_scenario_path": "/stopping_condition",
+      "supplied_vocabulary_primitive": "Calculus"
     },
     {
-      "derived_construct_identifier": "D_terminality",
-      "lowering_rule_identifier": "C-LR-terminal-interpretation",
-      "native_construct_identifier": "INT_outputs",
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "C-terminal-atomic",
+      "native_construct_id": "TERMINAL_BLOCKING",
+      "native_construct_kind": "terminal_configuration_structure",
       "output_path": "/terminal_blocks_all_transitions",
-      "source_scenario_path": "/observable_outputs",
-      "supplied_vocabulary_primitive": "Interpretation"
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": true,
+      "source_native_field": "blocks_all",
+      "source_scenario_path": "/stopping_condition",
+      "supplied_vocabulary_primitive": "Calculus"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "C-LR-terminal-interpretation",
-      "native_construct_identifier": "CALC_prohibitions",
-      "output_path": "/invariants",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-invariant-atomic",
+      "native_construct_id": "INVARIANT_mutual_exclusion",
+      "native_construct_kind": "invariant_calculus",
+      "output_path": "/invariants/0",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "kind": "mutual_exclusion",
+        "variables": [
+          "p_accepted",
+          "p_rejected"
+        ]
+      },
+      "source_native_field": "invariant_kind",
       "source_scenario_path": "/prohibited_transitions",
       "supplied_vocabulary_primitive": "Calculus"
     },
     {
-      "derived_construct_identifier": "D_terminality",
-      "lowering_rule_identifier": "C-LR-output-interpretation",
-      "native_construct_identifier": "INT_outputs",
-      "output_path": "/outputs",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-invariant-atomic",
+      "native_construct_id": "INVARIANT_append_only",
+      "native_construct_kind": "invariant_calculus",
+      "output_path": "/invariants/1",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "kind": "append_only",
+        "variable": "history"
+      },
+      "source_native_field": "invariant_kind",
+      "source_scenario_path": "/prohibited_transitions",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "C-invariant-atomic",
+      "native_construct_id": "INVARIANT_exclusive_status_update",
+      "native_construct_kind": "invariant_calculus",
+      "output_path": "/invariants/2",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": {
+        "allowed_transition": "T_disable_reject",
+        "kind": "exclusive_status_update",
+        "variable_suffix": "_active"
+      },
+      "source_native_field": "invariant_kind",
+      "source_scenario_path": "/prohibited_transitions",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "C-output-atomic",
+      "native_construct_id": "OUTPUT_final_status",
+      "native_construct_kind": "output_structure",
+      "output_path": "/outputs/final_status",
+      "primitive_definition_excerpt": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "resulting_common_model_value": {
+        "kind": "status",
+        "variables": [
+          "p_accepted",
+          "p_rejected",
+          "p_halted"
+        ]
+      },
+      "source_native_field": "name/kind",
       "source_scenario_path": "/observable_outputs",
       "supplied_vocabulary_primitive": "Interpretation"
     },
     {
-      "derived_construct_identifier": "D_terminality",
-      "lowering_rule_identifier": "C-LR-terminal-interpretation",
-      "native_construct_identifier": "INT_outputs",
-      "output_path": "/ambiguity_policy",
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "C-output-atomic",
+      "native_construct_id": "OUTPUT_ordered_history",
+      "native_construct_kind": "output_structure",
+      "output_path": "/outputs/ordered_history",
+      "primitive_definition_excerpt": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "resulting_common_model_value": {
+        "kind": "variable",
+        "variable": "history"
+      },
+      "source_native_field": "name/kind",
       "source_scenario_path": "/observable_outputs",
       "supplied_vocabulary_primitive": "Interpretation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "C-output-atomic",
+      "native_construct_id": "OUTPUT_prohibited_transition_occurred",
+      "native_construct_kind": "output_structure",
+      "output_path": "/outputs/prohibited_transition_occurred",
+      "primitive_definition_excerpt": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "resulting_common_model_value": {
+        "kind": "variable",
+        "variable": "prohibited_transition_occurred"
+      },
+      "source_native_field": "name/kind",
+      "source_scenario_path": "/observable_outputs",
+      "supplied_vocabulary_primitive": "Interpretation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "C-output-atomic",
+      "native_construct_id": "OUTPUT_rule_modification_occurred",
+      "native_construct_kind": "output_structure",
+      "output_path": "/outputs/rule_modification_occurred",
+      "primitive_definition_excerpt": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "resulting_common_model_value": {
+        "kind": "variable",
+        "variable": "p_rule_modified"
+      },
+      "source_native_field": "name/kind",
+      "source_scenario_path": "/observable_outputs",
+      "supplied_vocabulary_primitive": "Interpretation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "C-output-atomic",
+      "native_construct_id": "OUTPUT_rule_statuses",
+      "native_construct_kind": "output_structure",
+      "output_path": "/outputs/rule_statuses",
+      "primitive_definition_excerpt": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "resulting_common_model_value": {
+        "kind": "status",
+        "variables": [
+          "R_check_active",
+          "R_accept_active",
+          "R_reject_active",
+          "R_modify_active",
+          "R_halt_active"
+        ]
+      },
+      "source_native_field": "name/kind",
+      "source_scenario_path": "/observable_outputs",
+      "supplied_vocabulary_primitive": "Interpretation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "C-ambiguity-atomic",
+      "native_construct_id": "AMBIG_disable_reject_repeatability",
+      "native_construct_kind": "ambiguity_policy_calculus",
+      "output_path": "/ambiguity_policy/disable_reject_repeatability",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": "require_r_reject_active_before",
+      "source_native_field": "name/value",
+      "source_scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "C-ambiguity-atomic",
+      "native_construct_id": "AMBIG_prohibited_transition_output",
+      "native_construct_kind": "ambiguity_policy_calculus",
+      "output_path": "/ambiguity_policy/prohibited_transition_output",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": "executed_only",
+      "source_native_field": "name/value",
+      "source_scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "supplied_vocabulary_primitive": "Calculus"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "C-ambiguity-atomic",
+      "native_construct_id": "AMBIG_unterminated_output",
+      "native_construct_kind": "ambiguity_policy_calculus",
+      "output_path": "/ambiguity_policy/unterminated_output",
+      "primitive_definition_excerpt": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "resulting_common_model_value": "finite_nonterminal_snapshot",
+      "source_native_field": "name/value",
+      "source_scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "supplied_vocabulary_primitive": "Calculus"
     }
   ],
-  "native_sha256": "ffd3eef777c61e1b7e6343e49a7243865356ba87a8a8105306b3e90503ea8bfe",
-  "trace_format": "cre001-lowering-trace-v1",
+  "native_sha256": "119747ea0f3dc3144e57c7dbe71780c0a44542b9ae559696ea022b9894c0d071",
+  "trace_format": "cre001-atomic-lowering-trace-v1",
   "vocabulary_identifier": "CRE-001-VOCAB-C-1.0"
 }

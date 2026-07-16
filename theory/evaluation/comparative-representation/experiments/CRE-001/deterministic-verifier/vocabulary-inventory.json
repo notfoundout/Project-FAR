@@ -1,6 +1,6 @@
 {
   "artifact_id": "CRE-001-VOCABULARY-INVENTORY-1.0",
-  "discovery_rule": "Only packages listed in vocabularies/vocabulary-packages.json with frozen evaluator-facing source files are eligible. Pilot artifacts, controls, corrections, deprecated/superseded artifacts, and generated reports are excluded.",
+  "discovery_rule": "Only frozen packages listed in vocabulary-packages.json are eligible; pilots, controls, evaluator corrections, deprecated/superseded artifacts, and generated reports are excluded.",
   "excluded_classes": [
     "control fixtures",
     "pilot mappings",
@@ -15,12 +15,10 @@
       "allowed_composition_or_derivation_rules": [
         "Derived constructs must record declaration, role, supplied category, preservation requirement, necessity, and provenance; may not alter the scenario or introduce unstated domain rules."
       ],
-      "eligibility_basis": "Listed in frozen vocabulary-packages.json and source file status is frozen evaluator-facing package.",
       "eligible_for_cre001_comparison": true,
       "exclusions_or_restrictions": [
         "Use only supplied primitive vocabulary terms plus declared derived machinery.",
-        "Do not alter or simplify the frozen scenario.",
-        "Do not discuss other vocabularies or prior results in evaluator-facing mapping."
+        "Do not alter or simplify the frozen scenario."
       ],
       "frozen_status": "Frozen evaluator-facing package",
       "label": "Vocabulary A",
@@ -43,12 +41,10 @@
       "allowed_composition_or_derivation_rules": [
         "Derived constructs must record declaration, role, supplied category, preservation requirement, necessity, and provenance; may not alter the scenario or introduce unstated domain rules."
       ],
-      "eligibility_basis": "Listed in frozen vocabulary-packages.json and source file status is frozen evaluator-facing package.",
       "eligible_for_cre001_comparison": true,
       "exclusions_or_restrictions": [
         "Use only supplied primitive vocabulary terms plus declared derived machinery.",
-        "Do not alter or simplify the frozen scenario.",
-        "Do not discuss other vocabularies or prior results in evaluator-facing mapping."
+        "Do not alter or simplify the frozen scenario."
       ],
       "frozen_status": "Frozen evaluator-facing package",
       "label": "Vocabulary B",
@@ -71,12 +67,10 @@
       "allowed_composition_or_derivation_rules": [
         "Derived constructs must record declaration, role, supplied category, preservation requirement, necessity, and provenance; may not alter the scenario or introduce unstated domain rules."
       ],
-      "eligibility_basis": "Listed in frozen vocabulary-packages.json and source file status is frozen evaluator-facing package.",
       "eligible_for_cre001_comparison": true,
       "exclusions_or_restrictions": [
         "Use only supplied primitive vocabulary terms plus declared derived machinery.",
-        "Do not alter or simplify the frozen scenario.",
-        "Do not discuss other vocabularies or prior results in evaluator-facing mapping."
+        "Do not alter or simplify the frozen scenario."
       ],
       "frozen_status": "Frozen evaluator-facing package",
       "label": "Vocabulary C",

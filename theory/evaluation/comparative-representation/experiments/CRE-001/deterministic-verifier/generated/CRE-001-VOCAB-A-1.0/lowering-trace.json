@@ -1,199 +1,1020 @@
 {
   "entries": [
     {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_p_ready",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "CUR_p_ready",
+      "native_construct_kind": "current_value_relation",
       "output_path": "/variables/p_ready",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
       "source_scenario_path": "/initial_state/propositions/p_ready",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_p_token",
-      "output_path": "/variables/p_token",
-      "source_scenario_path": "/initial_state/propositions/p_token",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_p_checked",
-      "output_path": "/variables/p_checked",
-      "source_scenario_path": "/initial_state/propositions/p_checked",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_p_accepted",
-      "output_path": "/variables/p_accepted",
-      "source_scenario_path": "/initial_state/propositions/p_accepted",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_p_rejected",
-      "output_path": "/variables/p_rejected",
-      "source_scenario_path": "/initial_state/propositions/p_rejected",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_p_rule_modified",
-      "output_path": "/variables/p_rule_modified",
-      "source_scenario_path": "/initial_state/propositions/p_rule_modified",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_p_halted",
-      "output_path": "/variables/p_halted",
-      "source_scenario_path": "/initial_state/propositions/p_halted",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_R_check",
-      "output_path": "/variables/R_check_active",
-      "source_scenario_path": "/initial_state/active_rules",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_R_accept",
-      "output_path": "/variables/R_accept_active",
-      "source_scenario_path": "/initial_state/active_rules",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_R_reject",
-      "output_path": "/variables/R_reject_active",
-      "source_scenario_path": "/initial_state/active_rules",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_R_modify",
-      "output_path": "/variables/R_modify_active",
-      "source_scenario_path": "/initial_state/active_rules",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_boolean_value",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_R_halt",
-      "output_path": "/variables/R_halt_active",
-      "source_scenario_path": "/initial_state/active_rules",
-      "supplied_vocabulary_primitive": "Object"
-    },
-    {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "REL_prohibitions",
-      "output_path": "/variables/prohibited_transition_occurred",
-      "source_scenario_path": "/prohibited_transitions",
       "supplied_vocabulary_primitive": "Relation"
     },
     {
-      "derived_construct_identifier": "D_ordered_history",
-      "lowering_rule_identifier": "A-LR-variable-from-object-or-relation",
-      "native_construct_identifier": "O_history",
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "CUR_p_token",
+      "native_construct_kind": "current_value_relation",
+      "output_path": "/variables/p_token",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/propositions/p_token",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "CUR_p_checked",
+      "native_construct_kind": "current_value_relation",
+      "output_path": "/variables/p_checked",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/propositions/p_checked",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "CUR_p_accepted",
+      "native_construct_kind": "current_value_relation",
+      "output_path": "/variables/p_accepted",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/propositions/p_accepted",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "CUR_p_rejected",
+      "native_construct_kind": "current_value_relation",
+      "output_path": "/variables/p_rejected",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/propositions/p_rejected",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "CUR_p_rule_modified",
+      "native_construct_kind": "current_value_relation",
+      "output_path": "/variables/p_rule_modified",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/propositions/p_rule_modified",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "CUR_p_halted",
+      "native_construct_kind": "current_value_relation",
+      "output_path": "/variables/p_halted",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/propositions/p_halted",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "STATUSREL_R_check",
+      "native_construct_kind": "status_relation",
+      "output_path": "/variables/R_check_active",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/active_rules",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "STATUSREL_R_accept",
+      "native_construct_kind": "status_relation",
+      "output_path": "/variables/R_accept_active",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/active_rules",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "STATUSREL_R_reject",
+      "native_construct_kind": "status_relation",
+      "output_path": "/variables/R_reject_active",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/active_rules",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "STATUSREL_R_modify",
+      "native_construct_kind": "status_relation",
+      "output_path": "/variables/R_modify_active",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/active_rules",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_boolean_value",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "STATUSREL_R_halt",
+      "native_construct_kind": "status_relation",
+      "output_path": "/variables/R_halt_active",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/initial_state/active_rules",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_ordered_history",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "HISTORY",
+      "native_construct_kind": "ordered_history_object",
       "output_path": "/variables/history",
+      "primitive_definition_excerpt": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "resulting_common_model_value": {
+        "initial": [],
+        "type": "history"
+      },
+      "source_native_field": "initial",
       "source_scenario_path": "/initial_state/transition_history",
       "supplied_vocabulary_primitive": "Object"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "A-LR-transition-from-transformation",
-      "native_construct_identifier": "TR_T_accept",
-      "output_path": "/transitions/T_accept",
-      "source_scenario_path": "/rules/T_accept",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-variable-atomic",
+      "native_construct_id": "PROHIB_0",
+      "native_construct_kind": "prohibition_relation",
+      "output_path": "/variables/prohibited_transition_occurred",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "source_native_field": "value",
+      "source_scenario_path": "/prohibited_transitions/0",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_accept_0",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_accept/guard/0",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_checked"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/1/preconditions/0",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_accept_1",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_accept/guard/1",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_rejected"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/1/preconditions/1",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_accept_2",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_accept/guard/2",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_accept_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/1/preconditions/2",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_accept_0",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_accept/updates/0",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "operation": "set",
+        "value": true,
+        "variable": "p_accepted"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/1/updates/0",
       "supplied_vocabulary_primitive": "Transformation"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "A-LR-transition-from-transformation",
-      "native_construct_identifier": "TR_T_check",
-      "output_path": "/transitions/T_check",
-      "source_scenario_path": "/rules/T_check",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_accept_1",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_accept/updates/1",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "operation": "append",
+        "value": "T_accept",
+        "variable": "history"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/1/updates/1",
       "supplied_vocabulary_primitive": "Transformation"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "A-LR-transition-from-transformation",
-      "native_construct_identifier": "TR_T_disable_reject",
-      "output_path": "/transitions/T_disable_reject",
-      "source_scenario_path": "/rules/T_disable_reject",
+      "derived_construct_id": null,
+      "executable_lowering_rule_id": "A-schema-atomic",
+      "native_construct_id": "TNAME_T_accept",
+      "native_construct_kind": "transition_name_object",
+      "output_path": "/transitions/T_accept/name",
+      "primitive_definition_excerpt": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "resulting_common_model_value": "T_accept",
+      "source_native_field": "name",
+      "source_scenario_path": "/rules/1/permits",
+      "supplied_vocabulary_primitive": "Object"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_check_0",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_check/guard/0",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_ready"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/0/preconditions/0",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_check_1",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_check/guard/1",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_token"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/0/preconditions/1",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_check_2",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_check/guard/2",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_checked"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/0/preconditions/2",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_check_3",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_check/guard/3",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_check_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/0/preconditions/3",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_check_0",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_check/updates/0",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "operation": "set",
+        "value": true,
+        "variable": "p_checked"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/0/updates/0",
       "supplied_vocabulary_primitive": "Transformation"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "A-LR-transition-from-transformation",
-      "native_construct_identifier": "TR_T_halt",
-      "output_path": "/transitions/T_halt",
-      "source_scenario_path": "/rules/T_halt",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_check_1",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_check/updates/1",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "operation": "append",
+        "value": "T_check",
+        "variable": "history"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/0/updates/1",
       "supplied_vocabulary_primitive": "Transformation"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "A-LR-transition-from-transformation",
-      "native_construct_identifier": "TR_T_reject",
-      "output_path": "/transitions/T_reject",
-      "source_scenario_path": "/rules/T_reject",
+      "derived_construct_id": null,
+      "executable_lowering_rule_id": "A-schema-atomic",
+      "native_construct_id": "TNAME_T_check",
+      "native_construct_kind": "transition_name_object",
+      "output_path": "/transitions/T_check/name",
+      "primitive_definition_excerpt": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "resulting_common_model_value": "T_check",
+      "source_native_field": "name",
+      "source_scenario_path": "/rules/0/permits",
+      "supplied_vocabulary_primitive": "Object"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_disable_reject_0",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_disable_reject/guard/0",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_checked"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/3/preconditions/0",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_disable_reject_1",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_disable_reject/guard/1",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_accepted"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/3/preconditions/1",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_disable_reject_2",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_disable_reject/guard/2",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_rejected"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/3/preconditions/2",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_disable_reject_3",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_disable_reject/guard/3",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_modify_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/3/preconditions/3",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_disable_reject_4",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_disable_reject/guard/4",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_reject_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/3/preconditions/4",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_disable_reject_0",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_disable_reject/updates/0",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "from": true,
+        "operation": "set",
+        "value": false,
+        "variable": "R_reject_active"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/3/updates/0",
       "supplied_vocabulary_primitive": "Transformation"
     },
     {
-      "derived_construct_identifier": "D_terminality",
-      "lowering_rule_identifier": "A-LR-terminality-relation",
-      "native_construct_identifier": "REL_terminality",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_disable_reject_1",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_disable_reject/updates/1",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "operation": "set",
+        "value": true,
+        "variable": "p_rule_modified"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/3/updates/1",
+      "supplied_vocabulary_primitive": "Transformation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_disable_reject_2",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_disable_reject/updates/2",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "operation": "append",
+        "value": "T_disable_reject",
+        "variable": "history"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/3/updates/2",
+      "supplied_vocabulary_primitive": "Transformation"
+    },
+    {
+      "derived_construct_id": null,
+      "executable_lowering_rule_id": "A-schema-atomic",
+      "native_construct_id": "TNAME_T_disable_reject",
+      "native_construct_kind": "transition_name_object",
+      "output_path": "/transitions/T_disable_reject/name",
+      "primitive_definition_excerpt": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "resulting_common_model_value": "T_disable_reject",
+      "source_native_field": "name",
+      "source_scenario_path": "/rules/3/permits",
+      "supplied_vocabulary_primitive": "Object"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_halt_1",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_halt/guard/0",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_halt_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/4/preconditions/1",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_halt_2",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_halt/guard/1",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_halted"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/4/preconditions/2",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_halt_0_0",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_halt/guard_any/0",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_accepted"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/4/preconditions/0",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_halt_0_1",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_halt/guard_any/1",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_rejected"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/4/preconditions/0",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_disjunction",
+      "executable_lowering_rule_id": "A-alternative-atomic",
+      "native_construct_id": "ALT_T_halt_0",
+      "native_construct_kind": "alternative_group_relation",
+      "output_path": "/transitions/T_halt/guard_any_group",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": [
+        {
+          "equals": true,
+          "variable": "p_accepted"
+        },
+        {
+          "equals": true,
+          "variable": "p_rejected"
+        }
+      ],
+      "source_native_field": "member_refs",
+      "source_scenario_path": "/rules/4/preconditions/0",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_halt_0",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_halt/updates/0",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "operation": "set",
+        "value": true,
+        "variable": "p_halted"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/4/updates/0",
+      "supplied_vocabulary_primitive": "Transformation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_halt_1",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_halt/updates/1",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "operation": "append",
+        "value": "T_halt",
+        "variable": "history"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/4/updates/1",
+      "supplied_vocabulary_primitive": "Transformation"
+    },
+    {
+      "derived_construct_id": null,
+      "executable_lowering_rule_id": "A-schema-atomic",
+      "native_construct_id": "TNAME_T_halt",
+      "native_construct_kind": "transition_name_object",
+      "output_path": "/transitions/T_halt/name",
+      "primitive_definition_excerpt": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "resulting_common_model_value": "T_halt",
+      "source_native_field": "name",
+      "source_scenario_path": "/rules/4/permits",
+      "supplied_vocabulary_primitive": "Object"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_reject_0",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_reject/guard/0",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_checked"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/2/preconditions/0",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_reject_1",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_reject/guard/1",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": false,
+        "variable": "p_accepted"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/2/preconditions/1",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-condition-atomic",
+      "native_construct_id": "PRE_T_reject_2",
+      "native_construct_kind": "condition_relation",
+      "output_path": "/transitions/T_reject/guard/2",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "R_reject_active"
+      },
+      "source_native_field": "variable/equals",
+      "source_scenario_path": "/rules/2/preconditions/2",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_reject_0",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_reject/updates/0",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "operation": "set",
+        "value": true,
+        "variable": "p_rejected"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/2/updates/0",
+      "supplied_vocabulary_primitive": "Transformation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-effect-atomic",
+      "native_construct_id": "EFF_T_reject_1",
+      "native_construct_kind": "atomic_effect_record",
+      "output_path": "/transitions/T_reject/updates/1",
+      "primitive_definition_excerpt": "an explicit change, update, transition, rule application, or state modification applied to objects and relations.",
+      "primitive_definition_sha256": "67836ce457d194490966fbe4a1dc67b7e8453430ffca99c4f47fad88fc7ad2de",
+      "resulting_common_model_value": {
+        "operation": "append",
+        "value": "T_reject",
+        "variable": "history"
+      },
+      "source_native_field": "operation/variable/value",
+      "source_scenario_path": "/rules/2/updates/1",
+      "supplied_vocabulary_primitive": "Transformation"
+    },
+    {
+      "derived_construct_id": null,
+      "executable_lowering_rule_id": "A-schema-atomic",
+      "native_construct_id": "TNAME_T_reject",
+      "native_construct_kind": "transition_name_object",
+      "output_path": "/transitions/T_reject/name",
+      "primitive_definition_excerpt": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation.",
+      "primitive_definition_sha256": "472a22ef0cd388e85f0db39e3ee83a26ef106c800c5189915bb2e8fce1f0484f",
+      "resulting_common_model_value": "T_reject",
+      "source_native_field": "name",
+      "source_scenario_path": "/rules/2/permits",
+      "supplied_vocabulary_primitive": "Object"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "A-terminal-atomic",
+      "native_construct_id": "TERMINAL_BLOCKING",
+      "native_construct_kind": "terminality_relation",
       "output_path": "/terminal_condition",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "equals": true,
+        "variable": "p_halted"
+      },
+      "source_native_field": "variable/value",
       "source_scenario_path": "/stopping_condition",
       "supplied_vocabulary_primitive": "Relation"
     },
     {
-      "derived_construct_identifier": "D_terminality",
-      "lowering_rule_identifier": "A-LR-terminality-relation",
-      "native_construct_identifier": "REL_terminality",
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "A-terminal-atomic",
+      "native_construct_id": "TERMINAL_BLOCKING",
+      "native_construct_kind": "terminality_relation",
       "output_path": "/terminal_blocks_all_transitions",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": true,
+      "source_native_field": "blocks_all",
       "source_scenario_path": "/stopping_condition",
       "supplied_vocabulary_primitive": "Relation"
     },
     {
-      "derived_construct_identifier": "D_guarded_update",
-      "lowering_rule_identifier": "A-LR-terminality-relation",
-      "native_construct_identifier": "REL_prohibitions",
-      "output_path": "/invariants",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-invariant-atomic",
+      "native_construct_id": "INVARIANT_mutual_exclusion",
+      "native_construct_kind": "invariant_relation",
+      "output_path": "/invariants/0",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "kind": "mutual_exclusion",
+        "variables": [
+          "p_accepted",
+          "p_rejected"
+        ]
+      },
+      "source_native_field": "invariant_kind",
       "source_scenario_path": "/prohibited_transitions",
       "supplied_vocabulary_primitive": "Relation"
     },
     {
-      "derived_construct_identifier": "D_terminality",
-      "lowering_rule_identifier": "A-LR-output-relation",
-      "native_construct_identifier": "REL_outputs",
-      "output_path": "/outputs",
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-invariant-atomic",
+      "native_construct_id": "INVARIANT_append_only",
+      "native_construct_kind": "invariant_relation",
+      "output_path": "/invariants/1",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "kind": "append_only",
+        "variable": "history"
+      },
+      "source_native_field": "invariant_kind",
+      "source_scenario_path": "/prohibited_transitions",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_guarded_update",
+      "executable_lowering_rule_id": "A-invariant-atomic",
+      "native_construct_id": "INVARIANT_exclusive_status_update",
+      "native_construct_kind": "invariant_relation",
+      "output_path": "/invariants/2",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "allowed_transition": "T_disable_reject",
+        "kind": "exclusive_status_update",
+        "variable_suffix": "_active"
+      },
+      "source_native_field": "invariant_kind",
+      "source_scenario_path": "/prohibited_transitions",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "A-output-atomic",
+      "native_construct_id": "OUTPUT_final_status",
+      "native_construct_kind": "output_relation",
+      "output_path": "/outputs/final_status",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "kind": "status",
+        "variables": [
+          "p_accepted",
+          "p_rejected",
+          "p_halted"
+        ]
+      },
+      "source_native_field": "name/kind",
       "source_scenario_path": "/observable_outputs",
       "supplied_vocabulary_primitive": "Relation"
     },
     {
-      "derived_construct_identifier": "D_terminality",
-      "lowering_rule_identifier": "A-LR-terminality-relation",
-      "native_construct_identifier": "REL_terminality",
-      "output_path": "/ambiguity_policy",
-      "source_scenario_path": "/stopping_condition",
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "A-output-atomic",
+      "native_construct_id": "OUTPUT_ordered_history",
+      "native_construct_kind": "output_relation",
+      "output_path": "/outputs/ordered_history",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "kind": "variable",
+        "variable": "history"
+      },
+      "source_native_field": "name/kind",
+      "source_scenario_path": "/observable_outputs",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "A-output-atomic",
+      "native_construct_id": "OUTPUT_prohibited_transition_occurred",
+      "native_construct_kind": "output_relation",
+      "output_path": "/outputs/prohibited_transition_occurred",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "kind": "variable",
+        "variable": "prohibited_transition_occurred"
+      },
+      "source_native_field": "name/kind",
+      "source_scenario_path": "/observable_outputs",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "A-output-atomic",
+      "native_construct_id": "OUTPUT_rule_modification_occurred",
+      "native_construct_kind": "output_relation",
+      "output_path": "/outputs/rule_modification_occurred",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "kind": "variable",
+        "variable": "p_rule_modified"
+      },
+      "source_native_field": "name/kind",
+      "source_scenario_path": "/observable_outputs",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "A-output-atomic",
+      "native_construct_id": "OUTPUT_rule_statuses",
+      "native_construct_kind": "output_relation",
+      "output_path": "/outputs/rule_statuses",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": {
+        "kind": "status",
+        "variables": [
+          "R_check_active",
+          "R_accept_active",
+          "R_reject_active",
+          "R_modify_active",
+          "R_halt_active"
+        ]
+      },
+      "source_native_field": "name/kind",
+      "source_scenario_path": "/observable_outputs",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "A-ambiguity-atomic",
+      "native_construct_id": "AMBIG_disable_reject_repeatability",
+      "native_construct_kind": "ambiguity_policy_record",
+      "output_path": "/ambiguity_policy/disable_reject_repeatability",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": "require_r_reject_active_before",
+      "source_native_field": "name/value",
+      "source_scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "A-ambiguity-atomic",
+      "native_construct_id": "AMBIG_prohibited_transition_output",
+      "native_construct_kind": "ambiguity_policy_record",
+      "output_path": "/ambiguity_policy/prohibited_transition_output",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": "executed_only",
+      "source_native_field": "name/value",
+      "source_scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "supplied_vocabulary_primitive": "Relation"
+    },
+    {
+      "derived_construct_id": "D_terminality",
+      "executable_lowering_rule_id": "A-ambiguity-atomic",
+      "native_construct_id": "AMBIG_unterminated_output",
+      "native_construct_kind": "ambiguity_policy_record",
+      "output_path": "/ambiguity_policy/unterminated_output",
+      "primitive_definition_excerpt": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects.",
+      "primitive_definition_sha256": "f6c63602bfb366ecff74e07afe645bccb6c6d505ed3741c8d9aa7d9a8c65a7c4",
+      "resulting_common_model_value": "finite_nonterminal_snapshot",
+      "source_native_field": "name/value",
+      "source_scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
       "supplied_vocabulary_primitive": "Relation"
     }
   ],
-  "native_sha256": "2fc866341cb622137ed8920fa8f61e5ff15ad1b9ad9d88f7bd07727739c7f6db",
-  "trace_format": "cre001-lowering-trace-v1",
+  "native_sha256": "2063ce04cb76864d6d55381f0b320e6f8fb91f9cc2164d67eb14bca85daa7cc1",
+  "trace_format": "cre001-atomic-lowering-trace-v1",
   "vocabulary_identifier": "CRE-001-VOCAB-A-1.0"
 }

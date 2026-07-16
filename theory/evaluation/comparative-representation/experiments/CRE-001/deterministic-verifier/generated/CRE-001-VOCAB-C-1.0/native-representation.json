@@ -1,345 +1,2090 @@
 {
   "constructs": [
     {
-      "derived_construct": "D_terminality",
-      "id": "I_cre001_objective",
+      "capability_validation": {
+        "capability": "objective",
+        "capability_rule": "Investigation must support objective using frozen definition keywords",
+        "definition_sha256": "7831e040f7160d2d4b2016dd5bc471c75c64bbda7c2af0f10ab3681093c3791f",
+        "definition_text": "the bounded task or question that fixes what must be represented and preserved for the mapping.",
+        "passed": true,
+        "primitive": "Investigation"
+      },
+      "id": "INVESTIGATION_CRE001",
       "kind": "investigation_objective",
-      "objective": "preserve CRE-001 transition behavior and outputs",
       "primitive": "Investigation",
-      "scenario_path": "/success_criteria"
+      "primitive_definition_sha256": "7831e040f7160d2d4b2016dd5bc471c75c64bbda7c2af0f10ab3681093c3791f",
+      "primitive_definition_text": "the bounded task or question that fixes what must be represented and preserved for the mapping.",
+      "role": "objective",
+      "scenario_path": "/success_criteria",
+      "value": "preserve CRE-001 commitments"
     },
     {
+      "capability_validation": {
+        "capability": "truth_condition",
+        "capability_rule": "Interpretation must support truth_condition using frozen definition keywords",
+        "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+        "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+        "passed": true,
+        "primitive": "Interpretation"
+      },
       "derived_construct": "D_boolean_value",
-      "id": "R_p_ready",
-      "initial": true,
-      "kind": "scenario_representation",
-      "meaning": "p_ready",
-      "primitive": "Representation",
-      "scenario_path": "/initial_state/propositions/p_ready"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "R_p_token",
-      "initial": true,
-      "kind": "scenario_representation",
-      "meaning": "p_token",
-      "primitive": "Representation",
-      "scenario_path": "/initial_state/propositions/p_token"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "R_p_checked",
-      "initial": false,
-      "kind": "scenario_representation",
-      "meaning": "p_checked",
-      "primitive": "Representation",
-      "scenario_path": "/initial_state/propositions/p_checked"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "R_p_accepted",
-      "initial": false,
-      "kind": "scenario_representation",
-      "meaning": "p_accepted",
-      "primitive": "Representation",
-      "scenario_path": "/initial_state/propositions/p_accepted"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "R_p_rejected",
-      "initial": false,
-      "kind": "scenario_representation",
-      "meaning": "p_rejected",
-      "primitive": "Representation",
-      "scenario_path": "/initial_state/propositions/p_rejected"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "R_p_rule_modified",
-      "initial": false,
-      "kind": "scenario_representation",
-      "meaning": "p_rule_modified",
-      "primitive": "Representation",
-      "scenario_path": "/initial_state/propositions/p_rule_modified"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "R_p_halted",
-      "initial": false,
-      "kind": "scenario_representation",
-      "meaning": "p_halted",
-      "primitive": "Representation",
-      "scenario_path": "/initial_state/propositions/p_halted"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "RS_R_check_status",
-      "initial": true,
-      "kind": "rule_status_structure",
-      "meaning": "R_check_active",
-      "primitive": "Representational Structure",
-      "scenario_path": "/initial_state/active_rules"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "RS_R_accept_status",
-      "initial": true,
-      "kind": "rule_status_structure",
-      "meaning": "R_accept_active",
-      "primitive": "Representational Structure",
-      "scenario_path": "/initial_state/active_rules"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "RS_R_reject_status",
-      "initial": true,
-      "kind": "rule_status_structure",
-      "meaning": "R_reject_active",
-      "primitive": "Representational Structure",
-      "scenario_path": "/initial_state/active_rules"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "RS_R_modify_status",
-      "initial": true,
-      "kind": "rule_status_structure",
-      "meaning": "R_modify_active",
-      "primitive": "Representational Structure",
-      "scenario_path": "/initial_state/active_rules"
-    },
-    {
-      "derived_construct": "D_boolean_value",
-      "id": "RS_R_halt_status",
-      "initial": true,
-      "kind": "rule_status_structure",
-      "meaning": "R_halt_active",
-      "primitive": "Representational Structure",
-      "scenario_path": "/initial_state/active_rules"
-    },
-    {
-      "derived_construct": "D_terminality",
-      "id": "INT_outputs",
-      "kind": "meaning_assignment",
+      "id": "VAL_true",
+      "kind": "truth_value_interpretation",
       "primitive": "Interpretation",
-      "scenario_path": "/observable_outputs"
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "primitive_definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "role": "truth_value",
+      "scenario_path": "/initial_state/propositions",
+      "value": true
     },
     {
+      "capability_validation": {
+        "capability": "truth_condition",
+        "capability_rule": "Interpretation must support truth_condition using frozen definition keywords",
+        "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+        "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+        "passed": true,
+        "primitive": "Interpretation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "VAL_false",
+      "kind": "truth_value_interpretation",
+      "primitive": "Interpretation",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "primitive_definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "role": "truth_value",
+      "scenario_path": "/initial_state/propositions",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUS_active",
+      "kind": "status_representation",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "rule_status_value",
+      "scenario_path": "/initial_state/active_rules",
+      "value": "active"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUS_inactive",
+      "kind": "status_representation",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "rule_status_value",
+      "scenario_path": "/initial_state/active_rules",
+      "value": "inactive"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_ready",
+      "kind": "proposition_representation",
+      "name": "p_ready",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_ready",
+      "value_ref": "VAL_true"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_ready",
+      "kind": "state_composition_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_ready",
+      "target_ref": "PROP_p_ready",
+      "value": true
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_token",
+      "kind": "proposition_representation",
+      "name": "p_token",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_token",
+      "value_ref": "VAL_true"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_token",
+      "kind": "state_composition_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_token",
+      "target_ref": "PROP_p_token",
+      "value": true
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_checked",
+      "kind": "proposition_representation",
+      "name": "p_checked",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_checked",
+      "value_ref": "VAL_false"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_checked",
+      "kind": "state_composition_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_checked",
+      "target_ref": "PROP_p_checked",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_accepted",
+      "kind": "proposition_representation",
+      "name": "p_accepted",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_accepted",
+      "value_ref": "VAL_false"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_accepted",
+      "kind": "state_composition_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_accepted",
+      "target_ref": "PROP_p_accepted",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_rejected",
+      "kind": "proposition_representation",
+      "name": "p_rejected",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_rejected",
+      "value_ref": "VAL_false"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_rejected",
+      "kind": "state_composition_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_rejected",
+      "target_ref": "PROP_p_rejected",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_rule_modified",
+      "kind": "proposition_representation",
+      "name": "p_rule_modified",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_rule_modified",
+      "value_ref": "VAL_false"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_rule_modified",
+      "kind": "state_composition_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_rule_modified",
+      "target_ref": "PROP_p_rule_modified",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "PROP_p_halted",
+      "kind": "proposition_representation",
+      "name": "p_halted",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "proposition",
+      "scenario_path": "/initial_state/propositions/p_halted",
+      "value_ref": "VAL_false"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "CUR_p_halted",
+      "kind": "state_composition_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_value",
+      "scenario_path": "/initial_state/propositions/p_halted",
+      "target_ref": "PROP_p_halted",
+      "value": false
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_check",
+      "kind": "rule_representation",
+      "name": "R_check",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_check",
+      "kind": "rule_status_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_check",
+      "value": true,
+      "variable": "R_check_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_accept",
+      "kind": "rule_representation",
+      "name": "R_accept",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_accept",
+      "kind": "rule_status_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_accept",
+      "value": true,
+      "variable": "R_accept_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_reject",
+      "kind": "rule_representation",
+      "name": "R_reject",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_reject",
+      "kind": "rule_status_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_reject",
+      "value": true,
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_modify",
+      "kind": "rule_representation",
+      "name": "R_modify",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_modify",
+      "kind": "rule_status_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_modify",
+      "value": true,
+      "variable": "R_modify_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "RULE_R_halt",
+      "kind": "rule_representation",
+      "name": "R_halt",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "rule",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "capability_validation": {
+        "capability": "rule_status",
+        "capability_rule": "Representational Structure must support rule_status using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_boolean_value",
+      "id": "STATUSREL_R_halt",
+      "kind": "rule_status_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "initial_rule_status",
+      "scenario_path": "/initial_state/active_rules",
+      "target_ref": "RULE_R_halt",
+      "value": true,
+      "variable": "R_halt_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "history_structure",
+        "capability_rule": "Representational Structure must support history_structure using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
       "derived_construct": "D_ordered_history",
-      "id": "RS_history",
+      "id": "HISTORY",
+      "initial": [],
       "kind": "history_structure",
       "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "history",
       "scenario_path": "/initial_state/transition_history"
     },
     {
+      "blocks_all": true,
+      "capability_validation": {
+        "capability": "stopping_rule",
+        "capability_rule": "Calculus must support stopping_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_terminality",
+      "id": "TERMINAL_BLOCKING",
+      "kind": "terminal_configuration_structure",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "terminal_blocking",
+      "scenario_path": "/stopping_condition",
+      "value": true,
+      "variable": "p_halted"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "id": "TNAME_T_check",
+      "kind": "transition_representation",
+      "name": "T_check",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "transition_name",
+      "scenario_path": "/rules/0/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "id": "AUTH_R_check_T_check",
+      "kind": "authorization_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_check",
+      "scenario_path": "/rules/0",
+      "transition_ref": "TNAME_T_check"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
       "derived_construct": "D_guarded_update",
-      "id": "CALC_prohibitions",
+      "equals": true,
+      "id": "PRE_T_check_0",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/0",
+      "source_text": "p_ready=true",
+      "variable": "p_ready"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_check_1",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/1",
+      "source_text": "p_token=true",
+      "variable": "p_token"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_check_2",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/2",
+      "source_text": "p_checked=false",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_check_3",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/0/preconditions/3",
+      "source_text": "R_check active",
+      "variable": "R_check_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_check_0",
+      "kind": "atomic_update_calculus",
+      "operation": "set",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/0/updates/0",
+      "source_text": "p_checked=true",
+      "value": true,
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_check_1",
+      "kind": "atomic_update_calculus",
+      "operation": "append",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/0/updates/1",
+      "source_text": "append T_check to history",
+      "value": "T_check",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "ordering",
+        "capability_rule": "Representational Structure must support ordering using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_check_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_check_1",
+      "kind": "ordering_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/0/updates/1"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_check_T_check",
+      "capability_validation": {
+        "capability": "transition_policy",
+        "capability_rule": "Calculus must support transition_policy using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_check_0",
+        "EFF_T_check_1"
+      ],
+      "id": "SCHEMA_T_check",
+      "kind": "transition_schema_calculus",
+      "name_ref": "TNAME_T_check",
+      "precondition_refs": [
+        "PRE_T_check_0",
+        "PRE_T_check_1",
+        "PRE_T_check_2",
+        "PRE_T_check_3"
+      ],
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/0"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "id": "TNAME_T_accept",
+      "kind": "transition_representation",
+      "name": "T_accept",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "transition_name",
+      "scenario_path": "/rules/1/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "id": "AUTH_R_accept_T_accept",
+      "kind": "authorization_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_accept",
+      "scenario_path": "/rules/1",
+      "transition_ref": "TNAME_T_accept"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_accept_0",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/1/preconditions/0",
+      "source_text": "p_checked=true",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_accept_1",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/1/preconditions/1",
+      "source_text": "p_rejected=false",
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_accept_2",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/1/preconditions/2",
+      "source_text": "R_accept active",
+      "variable": "R_accept_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_accept_0",
+      "kind": "atomic_update_calculus",
+      "operation": "set",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/1/updates/0",
+      "source_text": "p_accepted=true",
+      "value": true,
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_accept_1",
+      "kind": "atomic_update_calculus",
+      "operation": "append",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/1/updates/1",
+      "source_text": "append T_accept to history",
+      "value": "T_accept",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "ordering",
+        "capability_rule": "Representational Structure must support ordering using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_accept_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_accept_1",
+      "kind": "ordering_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/1/updates/1"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_accept_T_accept",
+      "capability_validation": {
+        "capability": "transition_policy",
+        "capability_rule": "Calculus must support transition_policy using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_accept_0",
+        "EFF_T_accept_1"
+      ],
+      "id": "SCHEMA_T_accept",
+      "kind": "transition_schema_calculus",
+      "name_ref": "TNAME_T_accept",
+      "precondition_refs": [
+        "PRE_T_accept_0",
+        "PRE_T_accept_1",
+        "PRE_T_accept_2"
+      ],
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/1"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "id": "TNAME_T_reject",
+      "kind": "transition_representation",
+      "name": "T_reject",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "transition_name",
+      "scenario_path": "/rules/2/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "id": "AUTH_R_reject_T_reject",
+      "kind": "authorization_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_reject",
+      "scenario_path": "/rules/2",
+      "transition_ref": "TNAME_T_reject"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_reject_0",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/2/preconditions/0",
+      "source_text": "p_checked=true",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_reject_1",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/2/preconditions/1",
+      "source_text": "p_accepted=false",
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_reject_2",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/2/preconditions/2",
+      "source_text": "R_reject active",
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_reject_0",
+      "kind": "atomic_update_calculus",
+      "operation": "set",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/2/updates/0",
+      "source_text": "p_rejected=true",
+      "value": true,
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_reject_1",
+      "kind": "atomic_update_calculus",
+      "operation": "append",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/2/updates/1",
+      "source_text": "append T_reject to history",
+      "value": "T_reject",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "ordering",
+        "capability_rule": "Representational Structure must support ordering using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_reject_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_reject_1",
+      "kind": "ordering_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/2/updates/1"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_reject_T_reject",
+      "capability_validation": {
+        "capability": "transition_policy",
+        "capability_rule": "Calculus must support transition_policy using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_reject_0",
+        "EFF_T_reject_1"
+      ],
+      "id": "SCHEMA_T_reject",
+      "kind": "transition_schema_calculus",
+      "name_ref": "TNAME_T_reject",
+      "precondition_refs": [
+        "PRE_T_reject_0",
+        "PRE_T_reject_1",
+        "PRE_T_reject_2"
+      ],
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/2"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "id": "TNAME_T_disable_reject",
+      "kind": "transition_representation",
+      "name": "T_disable_reject",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "transition_name",
+      "scenario_path": "/rules/3/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "id": "AUTH_R_modify_T_disable_reject",
+      "kind": "authorization_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_modify",
+      "scenario_path": "/rules/3",
+      "transition_ref": "TNAME_T_disable_reject"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_disable_reject_0",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/0",
+      "source_text": "p_checked=true",
+      "variable": "p_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_disable_reject_1",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/1",
+      "source_text": "p_accepted=false",
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_disable_reject_2",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/2",
+      "source_text": "p_rejected=false",
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_disable_reject_3",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/3",
+      "source_text": "R_modify active",
+      "variable": "R_modify_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_disable_reject_4",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/3/preconditions/4",
+      "source_text": "R_reject active",
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": true,
+      "id": "EFF_T_disable_reject_0",
+      "kind": "atomic_update_calculus",
+      "operation": "set",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/3/updates/0",
+      "source_text": "R_reject inactive",
+      "value": false,
+      "variable": "R_reject_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_disable_reject_1",
+      "kind": "atomic_update_calculus",
+      "operation": "set",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/3/updates/1",
+      "source_text": "p_rule_modified=true",
+      "value": true,
+      "variable": "p_rule_modified"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_disable_reject_2",
+      "kind": "atomic_update_calculus",
+      "operation": "append",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/3/updates/2",
+      "source_text": "append T_disable_reject to history",
+      "value": "T_disable_reject",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "ordering",
+        "capability_rule": "Representational Structure must support ordering using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_disable_reject_2",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_disable_reject_2",
+      "kind": "ordering_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/3/updates/2"
+    },
+    {
+      "alternative_group_refs": [],
+      "authorization_ref": "AUTH_R_modify_T_disable_reject",
+      "capability_validation": {
+        "capability": "transition_policy",
+        "capability_rule": "Calculus must support transition_policy using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_disable_reject_0",
+        "EFF_T_disable_reject_1",
+        "EFF_T_disable_reject_2"
+      ],
+      "id": "SCHEMA_T_disable_reject",
+      "kind": "transition_schema_calculus",
+      "name_ref": "TNAME_T_disable_reject",
+      "precondition_refs": [
+        "PRE_T_disable_reject_0",
+        "PRE_T_disable_reject_1",
+        "PRE_T_disable_reject_2",
+        "PRE_T_disable_reject_3",
+        "PRE_T_disable_reject_4"
+      ],
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/3"
+    },
+    {
+      "capability_validation": {
+        "capability": "represented_item",
+        "capability_rule": "Representation must support represented_item using frozen definition keywords",
+        "definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+        "definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+        "passed": true,
+        "primitive": "Representation"
+      },
+      "id": "TNAME_T_halt",
+      "kind": "transition_representation",
+      "name": "T_halt",
+      "primitive": "Representation",
+      "primitive_definition_sha256": "cc628138a2301f378f4678b0a40a68019b038b4cb288016464f5fa9b1e41040f",
+      "primitive_definition_text": "an explicit represented item, proposition, rule, state element, transition record, or output record.",
+      "role": "transition_name",
+      "scenario_path": "/rules/4/permits"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "id": "AUTH_R_halt_T_halt",
+      "kind": "authorization_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "authorization",
+      "rule_ref": "RULE_R_halt",
+      "scenario_path": "/rules/4",
+      "transition_ref": "TNAME_T_halt"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_halt_0_0",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_alternative",
+      "scenario_path": "/rules/4/preconditions/0",
+      "source_text": "p_accepted=true",
+      "variable": "p_accepted"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_halt_0_1",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_alternative",
+      "scenario_path": "/rules/4/preconditions/0",
+      "source_text": "p_rejected=true",
+      "variable": "p_rejected"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_disjunction",
+      "id": "ALT_T_halt_0",
+      "kind": "halt_disjunction_calculus",
+      "member_refs": [
+        "PRE_T_halt_0_0",
+        "PRE_T_halt_0_1"
+      ],
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_any_group",
+      "scenario_path": "/rules/4/preconditions/0"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": true,
+      "id": "PRE_T_halt_1",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/4/preconditions/1",
+      "source_text": "R_halt active",
+      "variable": "R_halt_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "admissible_operation",
+        "capability_rule": "Calculus must support admissible_operation using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "equals": false,
+      "id": "PRE_T_halt_2",
+      "kind": "atomic_precondition_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "guard_all_condition",
+      "scenario_path": "/rules/4/preconditions/2",
+      "source_text": "p_halted=false",
+      "variable": "p_halted"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_halt_0",
+      "kind": "atomic_update_calculus",
+      "operation": "set",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/4/updates/0",
+      "source_text": "p_halted=true",
+      "value": true,
+      "variable": "p_halted"
+    },
+    {
+      "capability_validation": {
+        "capability": "update_rule",
+        "capability_rule": "Calculus must support update_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "from": null,
+      "id": "EFF_T_halt_1",
+      "kind": "atomic_update_calculus",
+      "operation": "append",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "atomic_update",
+      "scenario_path": "/rules/4/updates/1",
+      "source_text": "append T_halt to history",
+      "value": "T_halt",
+      "variable": "history"
+    },
+    {
+      "capability_validation": {
+        "capability": "ordering",
+        "capability_rule": "Representational Structure must support ordering using frozen definition keywords",
+        "definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+        "definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+        "passed": true,
+        "primitive": "Representational Structure"
+      },
+      "derived_construct": "D_ordered_history",
+      "effect_ref": "EFF_T_halt_1",
+      "history_ref": "HISTORY",
+      "id": "ORDER_T_halt_1",
+      "kind": "ordering_structure",
+      "primitive": "Representational Structure",
+      "primitive_definition_sha256": "8bfb0b8065494f66b97169fb4f340f3df3440df10592ee9473201d28dd1976f7",
+      "primitive_definition_text": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure.",
+      "role": "history_append_order",
+      "scenario_path": "/rules/4/updates/1"
+    },
+    {
+      "alternative_group_refs": [
+        "ALT_T_halt_0"
+      ],
+      "authorization_ref": "AUTH_R_halt_T_halt",
+      "capability_validation": {
+        "capability": "transition_policy",
+        "capability_rule": "Calculus must support transition_policy using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "effect_refs": [
+        "EFF_T_halt_0",
+        "EFF_T_halt_1"
+      ],
+      "id": "SCHEMA_T_halt",
+      "kind": "transition_schema_calculus",
+      "name_ref": "TNAME_T_halt",
+      "precondition_refs": [
+        "PRE_T_halt_1",
+        "PRE_T_halt_2"
+      ],
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "transition_schema",
+      "scenario_path": "/rules/4"
+    },
+    {
+      "capability_validation": {
+        "capability": "prohibition",
+        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "PROHIB_0",
       "kind": "prohibition_calculus",
       "primitive": "Calculus",
-      "scenario_path": "/prohibited_transitions"
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/0",
+      "value": "accept_and_reject_same_run"
     },
     {
+      "capability_validation": {
+        "capability": "prohibition",
+        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
       "derived_construct": "D_guarded_update",
-      "id": "CALC_T_check",
-      "kind": "admissible_transition_calculus",
+      "id": "PROHIB_1",
+      "kind": "prohibition_calculus",
       "primitive": "Calculus",
-      "scenario_path": "/rules/T_check",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_ready"
-          },
-          {
-            "equals": true,
-            "variable": "p_token"
-          },
-          {
-            "equals": false,
-            "variable": "p_checked"
-          },
-          {
-            "equals": true,
-            "variable": "R_check_active"
-          }
-        ],
-        "name": "T_check",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_checked"
-          },
-          {
-            "operation": "append",
-            "value": "T_check",
-            "variable": "history"
-          }
-        ]
-      }
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/1",
+      "value": "rule_status_change_except_T_disable_reject"
     },
     {
+      "capability_validation": {
+        "capability": "prohibition",
+        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
       "derived_construct": "D_guarded_update",
-      "id": "CALC_T_accept",
-      "kind": "admissible_transition_calculus",
+      "id": "PROHIB_2",
+      "kind": "prohibition_calculus",
       "primitive": "Calculus",
-      "scenario_path": "/rules/T_accept",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_checked"
-          },
-          {
-            "equals": false,
-            "variable": "p_rejected"
-          },
-          {
-            "equals": true,
-            "variable": "R_accept_active"
-          }
-        ],
-        "name": "T_accept",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_accepted"
-          },
-          {
-            "operation": "append",
-            "value": "T_accept",
-            "variable": "history"
-          }
-        ]
-      }
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/2",
+      "value": "history_removal_or_rewrite"
     },
     {
+      "capability_validation": {
+        "capability": "prohibition",
+        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
       "derived_construct": "D_guarded_update",
-      "id": "CALC_T_reject",
-      "kind": "admissible_transition_calculus",
+      "id": "PROHIB_3",
+      "kind": "prohibition_calculus",
       "primitive": "Calculus",
-      "scenario_path": "/rules/T_reject",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_checked"
-          },
-          {
-            "equals": false,
-            "variable": "p_accepted"
-          },
-          {
-            "equals": true,
-            "variable": "R_reject_active"
-          }
-        ],
-        "name": "T_reject",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_rejected"
-          },
-          {
-            "operation": "append",
-            "value": "T_reject",
-            "variable": "history"
-          }
-        ]
-      }
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/3",
+      "value": "transition_after_halt"
     },
     {
+      "capability_validation": {
+        "capability": "prohibition",
+        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
       "derived_construct": "D_guarded_update",
-      "id": "CALC_T_disable_reject",
-      "kind": "admissible_transition_calculus",
+      "id": "PROHIB_4",
+      "kind": "prohibition_calculus",
       "primitive": "Calculus",
-      "scenario_path": "/rules/T_disable_reject",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "p_checked"
-          },
-          {
-            "equals": false,
-            "variable": "p_accepted"
-          },
-          {
-            "equals": false,
-            "variable": "p_rejected"
-          },
-          {
-            "equals": true,
-            "variable": "R_modify_active"
-          },
-          {
-            "equals": true,
-            "variable": "R_reject_active"
-          }
-        ],
-        "name": "T_disable_reject",
-        "updates": [
-          {
-            "from": true,
-            "operation": "set",
-            "value": false,
-            "variable": "R_reject_active"
-          },
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_rule_modified"
-          },
-          {
-            "operation": "append",
-            "value": "T_disable_reject",
-            "variable": "history"
-          }
-        ]
-      }
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/4",
+      "value": "T_reject_after_R_reject_inactive"
     },
     {
+      "capability_validation": {
+        "capability": "prohibition",
+        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
       "derived_construct": "D_guarded_update",
-      "id": "CALC_T_halt",
-      "kind": "admissible_transition_calculus",
+      "id": "PROHIB_5",
+      "kind": "prohibition_calculus",
       "primitive": "Calculus",
-      "scenario_path": "/rules/T_halt",
-      "transition": {
-        "guard": [
-          {
-            "equals": true,
-            "variable": "R_halt_active"
-          },
-          {
-            "equals": false,
-            "variable": "p_halted"
-          }
-        ],
-        "guard_any": [
-          {
-            "equals": true,
-            "variable": "p_accepted"
-          },
-          {
-            "equals": true,
-            "variable": "p_rejected"
-          }
-        ],
-        "name": "T_halt",
-        "updates": [
-          {
-            "operation": "set",
-            "value": true,
-            "variable": "p_halted"
-          },
-          {
-            "operation": "append",
-            "value": "T_halt",
-            "variable": "history"
-          }
-        ]
-      }
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "prohibition",
+      "scenario_path": "/prohibited_transitions/5",
+      "value": "accept_reject_modify_before_checked"
+    },
+    {
+      "capability_validation": {
+        "capability": "output_meaning",
+        "capability_rule": "Interpretation must support output_meaning using frozen definition keywords",
+        "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+        "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+        "passed": true,
+        "primitive": "Interpretation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_final_status",
+      "kind": "output_structure",
+      "kind_value": "status",
+      "name": "final_status",
+      "output_variable_ref": null,
+      "output_variable_refs": [
+        "p_accepted",
+        "p_rejected",
+        "p_halted"
+      ],
+      "primitive": "Interpretation",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "primitive_definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
+    },
+    {
+      "capability_validation": {
+        "capability": "output_meaning",
+        "capability_rule": "Interpretation must support output_meaning using frozen definition keywords",
+        "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+        "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+        "passed": true,
+        "primitive": "Interpretation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_rule_statuses",
+      "kind": "output_structure",
+      "kind_value": "status",
+      "name": "rule_statuses",
+      "output_variable_ref": null,
+      "output_variable_refs": [
+        "R_check_active",
+        "R_accept_active",
+        "R_reject_active",
+        "R_modify_active",
+        "R_halt_active"
+      ],
+      "primitive": "Interpretation",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "primitive_definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
+    },
+    {
+      "capability_validation": {
+        "capability": "output_meaning",
+        "capability_rule": "Interpretation must support output_meaning using frozen definition keywords",
+        "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+        "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+        "passed": true,
+        "primitive": "Interpretation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_ordered_history",
+      "kind": "output_structure",
+      "kind_value": "variable",
+      "name": "ordered_history",
+      "output_variable_ref": "history",
+      "output_variable_refs": null,
+      "primitive": "Interpretation",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "primitive_definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
+    },
+    {
+      "capability_validation": {
+        "capability": "output_meaning",
+        "capability_rule": "Interpretation must support output_meaning using frozen definition keywords",
+        "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+        "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+        "passed": true,
+        "primitive": "Interpretation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_rule_modification_occurred",
+      "kind": "output_structure",
+      "kind_value": "variable",
+      "name": "rule_modification_occurred",
+      "output_variable_ref": "p_rule_modified",
+      "output_variable_refs": null,
+      "primitive": "Interpretation",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "primitive_definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
+    },
+    {
+      "capability_validation": {
+        "capability": "output_meaning",
+        "capability_rule": "Interpretation must support output_meaning using frozen definition keywords",
+        "definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+        "definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+        "passed": true,
+        "primitive": "Interpretation"
+      },
+      "derived_construct": "D_terminality",
+      "id": "OUTPUT_prohibited_transition_occurred",
+      "kind": "output_structure",
+      "kind_value": "variable",
+      "name": "prohibited_transition_occurred",
+      "output_variable_ref": "prohibited_transition_occurred",
+      "output_variable_refs": null,
+      "primitive": "Interpretation",
+      "primitive_definition_sha256": "14878dd90fe9d23fdb47a12d7a2979f66779ee57cf39fd61df528c7eae673586",
+      "primitive_definition_text": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning.",
+      "role": "output",
+      "scenario_path": "/observable_outputs"
+    },
+    {
+      "capability_validation": {
+        "capability": "prohibition",
+        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "INVARIANT_mutual_exclusion",
+      "invariant_kind": "mutual_exclusion",
+      "kind": "invariant_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "invariant",
+      "scenario_path": "/prohibited_transitions",
+      "variable_refs": [
+        "p_accepted",
+        "p_rejected"
+      ]
+    },
+    {
+      "capability_validation": {
+        "capability": "prohibition",
+        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "INVARIANT_append_only",
+      "invariant_kind": "append_only",
+      "kind": "invariant_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "invariant",
+      "scenario_path": "/prohibited_transitions",
+      "variable": "history"
+    },
+    {
+      "allowed_transition": "T_disable_reject",
+      "capability_validation": {
+        "capability": "prohibition",
+        "capability_rule": "Calculus must support prohibition using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_guarded_update",
+      "id": "INVARIANT_exclusive_status_update",
+      "invariant_kind": "exclusive_status_update",
+      "kind": "invariant_calculus",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "invariant",
+      "scenario_path": "/prohibited_transitions",
+      "variable_suffix": "_active"
+    },
+    {
+      "capability_validation": {
+        "capability": "stopping_rule",
+        "capability_rule": "Calculus must support stopping_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_terminality",
+      "id": "AMBIG_disable_reject_repeatability",
+      "kind": "ambiguity_policy_calculus",
+      "name": "disable_reject_repeatability",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "ambiguity_policy",
+      "scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "value": "require_r_reject_active_before"
+    },
+    {
+      "capability_validation": {
+        "capability": "stopping_rule",
+        "capability_rule": "Calculus must support stopping_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_terminality",
+      "id": "AMBIG_prohibited_transition_output",
+      "kind": "ambiguity_policy_calculus",
+      "name": "prohibited_transition_output",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "ambiguity_policy",
+      "scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "value": "executed_only"
+    },
+    {
+      "capability_validation": {
+        "capability": "stopping_rule",
+        "capability_rule": "Calculus must support stopping_rule using frozen definition keywords",
+        "definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+        "definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+        "passed": true,
+        "primitive": "Calculus"
+      },
+      "derived_construct": "D_terminality",
+      "id": "AMBIG_unterminated_output",
+      "kind": "ambiguity_policy_calculus",
+      "name": "unterminated_output",
+      "primitive": "Calculus",
+      "primitive_definition_sha256": "175db21f3c992943a52b1f55df45b1a5c62736987ceadfddbaf58f1b13bf7570",
+      "primitive_definition_text": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions.",
+      "role": "ambiguity_policy",
+      "scenario_path": "/deterministic-verifier/README.md#registered-ambiguity-policies",
+      "value": "finite_nonterminal_snapshot"
     }
   ],
   "definition_digest": "c921196ad3e8149fa9a6e3aa9ed2e37d3ec71d08f6d6bdd85ee89b65f8f590e3",
@@ -357,11 +2102,15 @@
       "role": "guarded update schema"
     },
     {
+      "id": "D_disjunction",
+      "role": "explicit alternative guard group"
+    },
+    {
       "id": "D_terminality",
       "role": "terminal blocking and halt output"
     }
   ],
-  "native_format": "cre001-native-representation-v1",
+  "native_format": "cre001-atomic-native-representation-v1",
   "scenario_source_sha256": "9db7c1349f804bc9b2b1738a5821a71da97f352c9e5b8a274382feffe1ca20d1",
   "vocabulary": "C",
   "vocabulary_identifier": "CRE-001-VOCAB-C-1.0",
