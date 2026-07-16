@@ -75,17 +75,19 @@ This report uses cautious language and does not authorize theory changes.
 - **Interpretation**: 3 stressing tests; unresolved pressures: 0; assessment: Interpretation remains provisionally sufficient, with recurring need for conservative policies that prevent level or context collapse.
 - **Reasoning Calculus**: 4 stressing tests; unresolved pressures: 1; assessment: Reasoning Calculus has the strongest remaining pressure. The self-modifying case is unresolved but has not established that conservative transition policies are insufficient.
 
-## Deterministic CRE-001 Status
+## Comparative Representation Status
 
-Completed: deterministic CRE-001 implementation; vocabulary-native compilation; executable lowering; deterministic verification; replayable lowering traces; mutation testing; adversarial compiler audit; repository integration.
+CRE-001: deterministic comparison complete at its registered retrospective scope under compiler-authored declared interpretations.
 
-Prospective baseline: Vocabulary Semantics Baseline 1.0 is frozen for CRE-002 and later; it is not independent evidence supporting CRE-001 and cannot retrospectively validate CRE-001.
+CRE-002: prospective semantic-licensing result complete under Baseline 1.0; all three candidates remain unsupported because the five required capability classes were not licensed.
 
-Not established by CRE-001: formal vocabulary licensing; primitive sufficiency; universal sufficiency; necessity; minimality; independence; superiority; FAR proof; universal reasoning structure.
+CRE-002-EXT-001: prospective bounded execution complete under Baseline 1.1; all three candidates are complete for the registered scenario, ambiguity policies, derived machinery, and verifier conditions.
+
+The extension does not rank the vocabularies and does not retroactively alter CRE-002.
 
 ## Current Evidence Conclusion
 
-CRE-001 demonstrates only that compiler-authored declared interpretations successfully compiled, lowered, and verified under the registered deterministic reference. Vocabulary Semantics Baseline 1.0 was formalized after deterministic CRE-001 and is prospective for CRE-002 and later only. CRE-001 does not establish formal vocabulary licensing, primitive sufficiency, universal sufficiency, necessity, minimality, independence, superiority, FAR proof, or universal reasoning structure.
+CRE-002-EXT-001 establishes a prospective bounded result under Vocabulary Semantics Baseline 1.1: all three official vocabularies supported licensed vocabulary-native constructions that replayed, regenerated, mutation-tested, and behaviorally matched the registered 73-state reference graph with required outputs preserved. The result depends on five explicitly licensed derived constructs and nine ambiguity policies. It does not establish primitive-only or universal sufficiency, necessity, minimality, independence, superiority, FAR proof, universal reasoning structure, or independent replication. The original CRE-002 result remains unsupported under Baseline 1.0 and is not retroactively changed.
 
 ## Relevant Reports
 
@@ -94,6 +96,9 @@ CRE-001 demonstrates only that compiler-authored declared interpretations succes
 - [docs/reports/project-far-v0.3.0-synthesis.md](project-far-v0.3.0-synthesis.md)
 - [theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/README.md](../../theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/README.md)
 - [theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/cre001-deterministic-comparison.json](../../theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/cre001-deterministic-comparison.json)
+- [theory/evaluation/comparative-representation/experiments/CRE-002/execution/cre002-comparison.json](../../theory/evaluation/comparative-representation/experiments/CRE-002/execution/cre002-comparison.json)
+- [theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001/execution/cre002-ext001-comparison.json](../../theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001/execution/cre002-ext001-comparison.json)
+- [docs/reports/cre002-ext001-evidence-analysis.md](cre002-ext001-evidence-analysis.md)
 
 ## Navigation
 
