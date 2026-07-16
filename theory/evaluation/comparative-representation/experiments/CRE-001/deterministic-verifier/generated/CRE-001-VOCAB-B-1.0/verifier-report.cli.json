@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "ambiguity_policy": "pass",
+    "historical": "pass",
+    "information": "pass",
+    "operational": "pass",
+    "structural": "pass"
+  },
+  "diagnostics": [],
+  "max_depth": 12,
+  "result": "pass",
+  "verifier": "cre001-deterministic-verifier-v1"
+}

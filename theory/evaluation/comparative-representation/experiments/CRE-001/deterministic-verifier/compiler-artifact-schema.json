@@ -1,0 +1,127 @@
+{
+  "$id": "https://project-far.local/schemas/cre001-vocabulary-compiler-artifact-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "artifact_format": {
+      "const": "cre001-vocabulary-compiler-artifact-v4"
+    },
+    "assumptions": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "compilation_status": {
+      "enum": [
+        "complete",
+        "partial",
+        "failed"
+      ]
+    },
+    "compiler_identifier": {
+      "type": "string"
+    },
+    "compiler_source_path": {
+      "type": "string"
+    },
+    "compiler_source_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "compiler_version": {
+      "type": "string"
+    },
+    "complexity": {
+      "type": "object"
+    },
+    "declared_derived_constructs": {
+      "type": "array"
+    },
+    "deterministic_generation_metadata": {
+      "type": "object"
+    },
+    "experiment_identifier": {
+      "const": "CRE-001"
+    },
+    "generated_execution_model": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "primitive_categories_used": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "scenario_identifier": {
+      "type": "string"
+    },
+    "scenario_version": {
+      "type": "string"
+    },
+    "supplied_primitive_categories": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "translation_rules": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "unresolved_ambiguities": {
+      "type": "array"
+    },
+    "unsupported_scenario_elements": {
+      "type": "array"
+    },
+    "vocabulary_identifier": {
+      "type": "string"
+    },
+    "vocabulary_source_path": {
+      "type": "string"
+    },
+    "vocabulary_source_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "vocabulary_version": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "artifact_format",
+    "experiment_identifier",
+    "scenario_identifier",
+    "scenario_version",
+    "vocabulary_identifier",
+    "vocabulary_version",
+    "vocabulary_source_path",
+    "vocabulary_source_sha256",
+    "compiler_identifier",
+    "compiler_version",
+    "compiler_source_path",
+    "compilation_status",
+    "supplied_primitive_categories",
+    "primitive_categories_used",
+    "declared_derived_constructs",
+    "translation_rules",
+    "assumptions",
+    "unresolved_ambiguities",
+    "unsupported_scenario_elements",
+    "provenance",
+    "deterministic_generation_metadata",
+    "native_representation_sha256",
+    "lowering_trace_sha256"
+  ],
+  "title": "CRE-001 vocabulary compiler artifact v4",
+  "type": "object"
+}

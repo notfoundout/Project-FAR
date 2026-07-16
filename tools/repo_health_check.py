@@ -29,6 +29,7 @@ def main() -> int:
             if tool == 'check_status_consistency.py': cmd.append('--report-only')
             add(tool, cmd)
     if full:
+        add('cre001 deterministic', [sys.executable, 'tools/cre001_compile_vocabularies.py', '--write', '--check'])
         add('theory_impact_analyzer.py', [sys.executable,'tools/theory_impact_analyzer.py'])
         for tool in ['evaluate_reasoning_systems.py','evaluate_primitive_sufficiency.py','run_adversarial_suite.py','check_evaluation_consistency.py']:
             if (ROOT/'tools'/tool).exists(): add(tool, [sys.executable, f'tools/{tool}'])

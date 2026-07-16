@@ -1,0 +1,8 @@
+{
+  "failures": [],
+  "passed": true,
+  "replayed_model_sha256": "90790ae35bdc273aaef0c8072bb3bb6bef510061272964d466dec7d33cdedab4",
+  "trace_entry_count": 62,
+  "trace_replay_report_format": "cre001-trace-replay-report-v1",
+  "vocabulary_identifier": "CRE-001-VOCAB-C-1.0"
+}

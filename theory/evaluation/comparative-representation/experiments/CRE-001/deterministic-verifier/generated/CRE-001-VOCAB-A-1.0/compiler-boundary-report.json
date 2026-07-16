@@ -1,0 +1,46 @@
+{
+  "compiler_boundary_report_format": "cre001-compiler-boundary-report-v1",
+  "fixtures": [
+    {
+      "fixture": "nested_quantified_conditions",
+      "reason": "outside frozen CRE-001 compiler grammar; not mechanically wrapped",
+      "status": "unsupported"
+    },
+    {
+      "fixture": "nondeterministic_updates",
+      "reason": "outside frozen CRE-001 compiler grammar; not mechanically wrapped",
+      "status": "unsupported"
+    },
+    {
+      "fixture": "concurrent_transitions",
+      "reason": "outside frozen CRE-001 compiler grammar; not mechanically wrapped",
+      "status": "unsupported"
+    },
+    {
+      "fixture": "defeasible_rules",
+      "reason": "outside frozen CRE-001 compiler grammar; not mechanically wrapped",
+      "status": "unsupported"
+    },
+    {
+      "fixture": "probabilistic_transitions",
+      "reason": "outside frozen CRE-001 compiler grammar; not mechanically wrapped",
+      "status": "unsupported"
+    },
+    {
+      "fixture": "provenance_sensitive_facts",
+      "reason": "outside frozen CRE-001 compiler grammar; not mechanically wrapped",
+      "status": "unsupported"
+    },
+    {
+      "fixture": "higher_order_rule_modification",
+      "reason": "outside frozen CRE-001 compiler grammar; not mechanically wrapped",
+      "status": "unsupported"
+    },
+    {
+      "fixture": "unbounded_history_constraints",
+      "reason": "outside frozen CRE-001 compiler grammar; not mechanically wrapped",
+      "status": "unsupported"
+    }
+  ],
+  "passed": true
+}

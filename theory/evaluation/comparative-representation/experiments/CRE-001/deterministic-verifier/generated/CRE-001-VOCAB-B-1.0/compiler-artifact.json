@@ -1,0 +1,595 @@
+{
+  "artifact_format": "cre001-vocabulary-compiler-artifact-v4",
+  "assumptions": [
+    "Frozen scenario and vocabulary files are source inputs.",
+    "Candidate model is accepted only after atomic native construction, declared-interpretation compatibility, trace replay, mutation sensitivity, and verifier pass; vocabulary licensing is not formally established."
+  ],
+  "atomic_lowering_complete": true,
+  "atomic_trace_replay_passed": true,
+  "capability_profile_authority": {
+    "capability_profile_formality": "implementation_local_compatibility_heuristic_not_formal_semantics",
+    "capability_profile_frozen_before_compiler": false,
+    "capability_profile_independent_of_cre001_mapping": false,
+    "capability_profile_source": "tools/cre001_compile_vocabularies.py compiler-local declared interpretation compatibility table",
+    "capability_profile_version": "cre001-adversarial-audit-v4",
+    "vocabulary_licensing_limitations": [
+      "Official vocabulary packages are informal markdown definitions; no independently frozen formal capability semantics was found in the repository.",
+      "Compiler-local compatibility checks are not proof of semantic entailment or primitive sufficiency.",
+      "Alternative reasonable interpretations may exist."
+    ],
+    "vocabulary_licensing_status": "not_formally_established"
+  },
+  "compilation_status": "complete",
+  "compiler_identifier": "cre-001-vocab-b-1.0-atomic-native-compiler",
+  "compiler_source_path": "tools/cre001_compile_vocabularies.py",
+  "compiler_source_sha256": "f29f0da5323f68eaaee65e11159af3fce922b17cbad1799d2622298dae058df5",
+  "compiler_version": "cre001-adversarial-audit-v4",
+  "complexity": {
+    "declared_derived_construct_count": 5,
+    "normalized_compiler_clause_count": 107,
+    "primitive_categories_used": [
+      "Label",
+      "Transition"
+    ],
+    "supplied_primitive_categories": [
+      "State",
+      "Transition",
+      "Label"
+    ],
+    "transition_schema_count": 5
+  },
+  "declared_derived_constructs": [
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit truth/status carriers only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_boolean_value",
+      "inferred": true,
+      "operational_role": "variable values and status values",
+      "payload_types": [
+        "scalar",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "boolean truth/status distinction"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "append-only history entries with explicit ordering",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_ordered_history",
+      "inferred": true,
+      "operational_role": "history append and output",
+      "payload_types": [
+        "ordered sequence",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "order preservation"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "atomic guard/effect records; no arbitrary embedded program",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_guarded_update",
+      "inferred": true,
+      "operational_role": "transition guards and updates",
+      "payload_types": [
+        "transition guard",
+        "update program",
+        "typed relation"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "guarded transition execution"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "bounded explicit alternative group only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_disjunction",
+      "inferred": true,
+      "operational_role": "halt disjunction",
+      "payload_types": [
+        "boolean formula"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "OR guard for halt"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit halt variable and post-halt blocking",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_terminality",
+      "inferred": true,
+      "operational_role": "terminal condition, outputs, ambiguity policies",
+      "payload_types": [
+        "constraint",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "terminal blocking policy"
+      ]
+    }
+  ],
+  "declared_interpretation_compatibility_passed": true,
+  "derived_construct_audit": [
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit truth/status carriers only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_boolean_value",
+      "inferred": true,
+      "operational_role": "variable values and status values",
+      "payload_types": [
+        "scalar",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "boolean truth/status distinction"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "append-only history entries with explicit ordering",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_ordered_history",
+      "inferred": true,
+      "operational_role": "history append and output",
+      "payload_types": [
+        "ordered sequence",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "order preservation"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "atomic guard/effect records; no arbitrary embedded program",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_guarded_update",
+      "inferred": true,
+      "operational_role": "transition guards and updates",
+      "payload_types": [
+        "transition guard",
+        "update program",
+        "typed relation"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "guarded transition execution"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "bounded explicit alternative group only",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_disjunction",
+      "inferred": true,
+      "operational_role": "halt disjunction",
+      "payload_types": [
+        "boolean formula"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "OR guard for halt"
+      ]
+    },
+    {
+      "absorbed_by_more_generic_construct": false,
+      "adds_capabilities_not_explicitly_present": true,
+      "construction_rule": "explicit halt variable and post-halt blocking",
+      "directly_stated_by_definition": false,
+      "effectively_unrestricted": false,
+      "id": "D_terminality",
+      "inferred": true,
+      "operational_role": "terminal condition, outputs, ambiguity policies",
+      "payload_types": [
+        "constraint",
+        "identifier"
+      ],
+      "permitted_under_declared_interpretation": true,
+      "removal_makes_encoding_fail": true,
+      "semantic_commitments_introduced": [
+        "terminal blocking policy"
+      ]
+    }
+  ],
+  "derived_machinery_scope": "constrained derived machinery: atomic typed records, bounded disjunction, explicit update clauses, no arbitrary JSON/code",
+  "deterministic_generation_metadata": {
+    "compiler_version": "cre001-adversarial-audit-v4",
+    "json_sort_keys": true
+  },
+  "embedded_metalanguage_components": [
+    "boolean formula",
+    "constraint",
+    "identifier",
+    "ordered sequence",
+    "scalar",
+    "transition guard",
+    "typed relation",
+    "update program"
+  ],
+  "embedded_metalanguage_present": true,
+  "encoding_claim_subject": "primitive vocabulary plus constrained declared derived machinery",
+  "experiment_identifier": "CRE-001",
+  "generated_execution_model": {
+    "ambiguity_policy": {
+      "disable_reject_repeatability": "require_r_reject_active_before",
+      "prohibited_transition_output": "executed_only",
+      "unterminated_output": "finite_nonterminal_snapshot"
+    },
+    "format": "cre001-execution-model-v1",
+    "invariants": [
+      {
+        "kind": "mutual_exclusion",
+        "variables": [
+          "p_accepted",
+          "p_rejected"
+        ]
+      },
+      {
+        "kind": "append_only",
+        "variable": "history"
+      },
+      {
+        "allowed_transition": "T_disable_reject",
+        "kind": "exclusive_status_update",
+        "variable_suffix": "_active"
+      }
+    ],
+    "model_id": "CRE-001-VOCAB-B-1.0-LOWERED-ATOMIC-V1",
+    "outputs": {
+      "final_status": {
+        "kind": "status",
+        "variables": [
+          "p_accepted",
+          "p_rejected",
+          "p_halted"
+        ]
+      },
+      "ordered_history": {
+        "kind": "variable",
+        "variable": "history"
+      },
+      "prohibited_transition_occurred": {
+        "kind": "variable",
+        "variable": "prohibited_transition_occurred"
+      },
+      "rule_modification_occurred": {
+        "kind": "variable",
+        "variable": "p_rule_modified"
+      },
+      "rule_statuses": {
+        "kind": "status",
+        "variables": [
+          "R_check_active",
+          "R_accept_active",
+          "R_reject_active",
+          "R_modify_active",
+          "R_halt_active"
+        ]
+      }
+    },
+    "terminal_blocks_all_transitions": true,
+    "terminal_condition": {
+      "equals": true,
+      "variable": "p_halted"
+    },
+    "transitions": [
+      {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_checked"
+          },
+          {
+            "equals": false,
+            "variable": "p_rejected"
+          },
+          {
+            "equals": true,
+            "variable": "R_accept_active"
+          }
+        ],
+        "name": "T_accept",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_accepted"
+          },
+          {
+            "operation": "append",
+            "value": "T_accept",
+            "variable": "history"
+          }
+        ]
+      },
+      {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_ready"
+          },
+          {
+            "equals": true,
+            "variable": "p_token"
+          },
+          {
+            "equals": false,
+            "variable": "p_checked"
+          },
+          {
+            "equals": true,
+            "variable": "R_check_active"
+          }
+        ],
+        "name": "T_check",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_checked"
+          },
+          {
+            "operation": "append",
+            "value": "T_check",
+            "variable": "history"
+          }
+        ]
+      },
+      {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_checked"
+          },
+          {
+            "equals": false,
+            "variable": "p_accepted"
+          },
+          {
+            "equals": false,
+            "variable": "p_rejected"
+          },
+          {
+            "equals": true,
+            "variable": "R_modify_active"
+          },
+          {
+            "equals": true,
+            "variable": "R_reject_active"
+          }
+        ],
+        "name": "T_disable_reject",
+        "updates": [
+          {
+            "from": true,
+            "operation": "set",
+            "value": false,
+            "variable": "R_reject_active"
+          },
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_rule_modified"
+          },
+          {
+            "operation": "append",
+            "value": "T_disable_reject",
+            "variable": "history"
+          }
+        ]
+      },
+      {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "R_halt_active"
+          },
+          {
+            "equals": false,
+            "variable": "p_halted"
+          }
+        ],
+        "guard_any": [
+          {
+            "equals": true,
+            "variable": "p_accepted"
+          },
+          {
+            "equals": true,
+            "variable": "p_rejected"
+          }
+        ],
+        "name": "T_halt",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_halted"
+          },
+          {
+            "operation": "append",
+            "value": "T_halt",
+            "variable": "history"
+          }
+        ]
+      },
+      {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_checked"
+          },
+          {
+            "equals": false,
+            "variable": "p_accepted"
+          },
+          {
+            "equals": true,
+            "variable": "R_reject_active"
+          }
+        ],
+        "name": "T_reject",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_rejected"
+          },
+          {
+            "operation": "append",
+            "value": "T_reject",
+            "variable": "history"
+          }
+        ]
+      }
+    ],
+    "variables": {
+      "R_accept_active": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "R_check_active": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "R_halt_active": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "R_modify_active": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "R_reject_active": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "history": {
+        "initial": [],
+        "type": "history"
+      },
+      "p_accepted": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "p_checked": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "p_halted": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "p_ready": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "p_rejected": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "p_rule_modified": {
+        "initial": false,
+        "type": "boolean"
+      },
+      "p_token": {
+        "initial": true,
+        "type": "boolean"
+      },
+      "prohibited_transition_occurred": {
+        "initial": false,
+        "type": "boolean"
+      }
+    }
+  },
+  "lowering_trace_sha256": "addb6a1637a76f1ff86c551b8318d6dd52c0cec59f089f8099f8dc5fb4f7538a",
+  "mutation_report_sha256": "57fc385c06370f3f02fc17138342ae44c1524081277aef3b89738b8feeb42870",
+  "mutation_sensitivity_passed": true,
+  "native_construction_complete": true,
+  "native_representation_sha256": "6f4f3fe794dfa93c8354cc83574f002de53207a2bc59f269180c321cd68db5d1",
+  "primitive_categories_used": [
+    "Label",
+    "Transition"
+  ],
+  "primitive_only_construction": false,
+  "provenance": {
+    "generation_command": "python tools/cre001_compile_vocabularies.py --write --check",
+    "source": "compiled from frozen vocabulary into atomic native records, then lowered by executable rules; no candidate path calls the reference compiler or prebuilt transition dictionaries"
+  },
+  "scenario_identifier": "CRE-001-SCENARIO-1.0",
+  "scenario_version": "1.0",
+  "shared_semantic_defaults_used": false,
+  "supplied_primitive_categories": [
+    "State",
+    "Transition",
+    "Label"
+  ],
+  "translation_rules": [
+    "atomic-native-construction",
+    "B-variable-atomic",
+    "B-condition-atomic",
+    "B-alternative-atomic",
+    "B-effect-atomic",
+    "B-schema-atomic",
+    "B-terminal-atomic",
+    "B-output-atomic",
+    "B-invariant-atomic",
+    "B-ambiguity-atomic"
+  ],
+  "unresolved_ambiguities": [],
+  "unrestricted_metalanguage_flagged": false,
+  "unsupported_scenario_elements": [],
+  "vocabulary_definition_licensing_formally_established": false,
+  "vocabulary_identifier": "CRE-001-VOCAB-B-1.0",
+  "vocabulary_licensing_limitations": [
+    "Official vocabulary packages are informal markdown definitions; no independently frozen formal capability semantics was found in the repository.",
+    "Compiler-local compatibility checks are not proof of semantic entailment or primitive sufficiency.",
+    "Alternative reasonable interpretations may exist."
+  ],
+  "vocabulary_licensing_status": "not_formally_established",
+  "vocabulary_source_path": "theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-B.md",
+  "vocabulary_source_sha256": "5ac7a9ec38e8aac9fe366bfa38b93ecb8447d33eef5fafdbdc19237efc42e5e4",
+  "vocabulary_version": "CRE-001-VOCAB-B-1.0"
+}

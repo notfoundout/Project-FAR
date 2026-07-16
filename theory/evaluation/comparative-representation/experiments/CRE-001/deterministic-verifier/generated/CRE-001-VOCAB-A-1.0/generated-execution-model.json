@@ -1,0 +1,293 @@
+{
+  "ambiguity_policy": {
+    "disable_reject_repeatability": "require_r_reject_active_before",
+    "prohibited_transition_output": "executed_only",
+    "unterminated_output": "finite_nonterminal_snapshot"
+  },
+  "format": "cre001-execution-model-v1",
+  "invariants": [
+    {
+      "kind": "mutual_exclusion",
+      "variables": [
+        "p_accepted",
+        "p_rejected"
+      ]
+    },
+    {
+      "kind": "append_only",
+      "variable": "history"
+    },
+    {
+      "allowed_transition": "T_disable_reject",
+      "kind": "exclusive_status_update",
+      "variable_suffix": "_active"
+    }
+  ],
+  "model_id": "CRE-001-VOCAB-A-1.0-LOWERED-ATOMIC-V1",
+  "outputs": {
+    "final_status": {
+      "kind": "status",
+      "variables": [
+        "p_accepted",
+        "p_rejected",
+        "p_halted"
+      ]
+    },
+    "ordered_history": {
+      "kind": "variable",
+      "variable": "history"
+    },
+    "prohibited_transition_occurred": {
+      "kind": "variable",
+      "variable": "prohibited_transition_occurred"
+    },
+    "rule_modification_occurred": {
+      "kind": "variable",
+      "variable": "p_rule_modified"
+    },
+    "rule_statuses": {
+      "kind": "status",
+      "variables": [
+        "R_check_active",
+        "R_accept_active",
+        "R_reject_active",
+        "R_modify_active",
+        "R_halt_active"
+      ]
+    }
+  },
+  "terminal_blocks_all_transitions": true,
+  "terminal_condition": {
+    "equals": true,
+    "variable": "p_halted"
+  },
+  "transitions": [
+    {
+      "guard": [
+        {
+          "equals": true,
+          "variable": "p_checked"
+        },
+        {
+          "equals": false,
+          "variable": "p_rejected"
+        },
+        {
+          "equals": true,
+          "variable": "R_accept_active"
+        }
+      ],
+      "name": "T_accept",
+      "updates": [
+        {
+          "operation": "set",
+          "value": true,
+          "variable": "p_accepted"
+        },
+        {
+          "operation": "append",
+          "value": "T_accept",
+          "variable": "history"
+        }
+      ]
+    },
+    {
+      "guard": [
+        {
+          "equals": true,
+          "variable": "p_ready"
+        },
+        {
+          "equals": true,
+          "variable": "p_token"
+        },
+        {
+          "equals": false,
+          "variable": "p_checked"
+        },
+        {
+          "equals": true,
+          "variable": "R_check_active"
+        }
+      ],
+      "name": "T_check",
+      "updates": [
+        {
+          "operation": "set",
+          "value": true,
+          "variable": "p_checked"
+        },
+        {
+          "operation": "append",
+          "value": "T_check",
+          "variable": "history"
+        }
+      ]
+    },
+    {
+      "guard": [
+        {
+          "equals": true,
+          "variable": "p_checked"
+        },
+        {
+          "equals": false,
+          "variable": "p_accepted"
+        },
+        {
+          "equals": false,
+          "variable": "p_rejected"
+        },
+        {
+          "equals": true,
+          "variable": "R_modify_active"
+        },
+        {
+          "equals": true,
+          "variable": "R_reject_active"
+        }
+      ],
+      "name": "T_disable_reject",
+      "updates": [
+        {
+          "from": true,
+          "operation": "set",
+          "value": false,
+          "variable": "R_reject_active"
+        },
+        {
+          "operation": "set",
+          "value": true,
+          "variable": "p_rule_modified"
+        },
+        {
+          "operation": "append",
+          "value": "T_disable_reject",
+          "variable": "history"
+        }
+      ]
+    },
+    {
+      "guard": [
+        {
+          "equals": true,
+          "variable": "R_halt_active"
+        },
+        {
+          "equals": false,
+          "variable": "p_halted"
+        }
+      ],
+      "guard_any": [
+        {
+          "equals": true,
+          "variable": "p_accepted"
+        },
+        {
+          "equals": true,
+          "variable": "p_rejected"
+        }
+      ],
+      "name": "T_halt",
+      "updates": [
+        {
+          "operation": "set",
+          "value": true,
+          "variable": "p_halted"
+        },
+        {
+          "operation": "append",
+          "value": "T_halt",
+          "variable": "history"
+        }
+      ]
+    },
+    {
+      "guard": [
+        {
+          "equals": true,
+          "variable": "p_checked"
+        },
+        {
+          "equals": false,
+          "variable": "p_accepted"
+        },
+        {
+          "equals": true,
+          "variable": "R_reject_active"
+        }
+      ],
+      "name": "T_reject",
+      "updates": [
+        {
+          "operation": "set",
+          "value": true,
+          "variable": "p_rejected"
+        },
+        {
+          "operation": "append",
+          "value": "T_reject",
+          "variable": "history"
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "R_accept_active": {
+      "initial": true,
+      "type": "boolean"
+    },
+    "R_check_active": {
+      "initial": true,
+      "type": "boolean"
+    },
+    "R_halt_active": {
+      "initial": true,
+      "type": "boolean"
+    },
+    "R_modify_active": {
+      "initial": true,
+      "type": "boolean"
+    },
+    "R_reject_active": {
+      "initial": true,
+      "type": "boolean"
+    },
+    "history": {
+      "initial": [],
+      "type": "history"
+    },
+    "p_accepted": {
+      "initial": false,
+      "type": "boolean"
+    },
+    "p_checked": {
+      "initial": false,
+      "type": "boolean"
+    },
+    "p_halted": {
+      "initial": false,
+      "type": "boolean"
+    },
+    "p_ready": {
+      "initial": true,
+      "type": "boolean"
+    },
+    "p_rejected": {
+      "initial": false,
+      "type": "boolean"
+    },
+    "p_rule_modified": {
+      "initial": false,
+      "type": "boolean"
+    },
+    "p_token": {
+      "initial": true,
+      "type": "boolean"
+    },
+    "prohibited_transition_occurred": {
+      "initial": false,
+      "type": "boolean"
+    }
+  }
+}
