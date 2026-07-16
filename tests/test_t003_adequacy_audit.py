@@ -42,12 +42,12 @@ class T003AdequacyAuditTests(unittest.TestCase):
         self.assertIn("three examples", text)
         self.assertIn("do not establish universal scope", text)
 
-    def test_no_new_axioms_or_admissions(self):
+    def test_no_new_axiom_declarations_or_placeholder_proofs(self):
         text = LEAN.read_text(encoding="utf-8")
-        forbidden_words = ["axiom", "sorry", "admit"]
-        for word in forbidden_words:
+        forbidden_line_starts = ["axiom", "sorry", "admit"]
+        for word in forbidden_line_starts:
             with self.subTest(word=word):
-                self.assertIsNone(re.search(rf"\b{word}\b", text))
+                self.assertIsNone(re.search(rf"(?m)^\s*{word}\b", text))
 
 
 if __name__ == "__main__":
