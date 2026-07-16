@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import unittest
 from pathlib import Path
 
@@ -43,10 +44,10 @@ class T003AdequacyAuditTests(unittest.TestCase):
 
     def test_no_new_axioms_or_admissions(self):
         text = LEAN.read_text(encoding="utf-8")
-        forbidden = ["axiom ", "sorry", "admit"]
-        for token in forbidden:
-            with self.subTest(token=token):
-                self.assertNotIn(token, text)
+        forbidden_words = ["axiom", "sorry", "admit"]
+        for word in forbidden_words:
+            with self.subTest(word=word):
+                self.assertIsNone(re.search(rf"\b{word}\b", text))
 
 
 if __name__ == "__main__":
