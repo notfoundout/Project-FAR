@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,8 +35,17 @@ def main() -> int:
         fail('contaminated outcome missing')
     if 'inconclusive' not in rules.get('submission_outcomes', {}):
         fail('inconclusive outcome missing')
-    if manifest.get('checksum_state') != 'pending':
-        fail('checksum state must be pending')
+    checksum_state = manifest.get('checksum_state')
+    if checksum_state not in {'pending', 'locked'}:
+        fail('checksum state must be pending or locked')
+    if checksum_state == 'locked':
+        if not (PKG / 'checksum-lock.json').is_file():
+            fail('locked package requires checksum-lock.json')
+        subprocess.run(
+            [sys.executable, 'tools/check_cre002_ext001_rep001_checksums.py'],
+            cwd=ROOT,
+            check=True,
+        )
     for key in ('execution_authorized','compiler_implementation_authorized','official_results_present'):
         if manifest.get(key) is not False:
             fail(f'manifest {key} must be false')
