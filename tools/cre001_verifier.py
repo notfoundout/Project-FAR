@@ -118,7 +118,7 @@ def transition_map(model: Json) -> dict[str, Json]:
 def compare_schema(reference: Json, candidate: Json) -> list[Diagnostic]:
     diagnostics: list[Diagnostic] = []
     ref_variables = reference["variables"]
-    cand_variables = candidate["variables"]
+    cand_variables = candidate.get("variables", {})
     for name in sorted(set(ref_variables) - set(cand_variables)):
         diagnostics.append(Diagnostic("missing_variable", f"candidate is missing variable {name}", details={"variable": name}))
     for name in sorted(set(cand_variables) - set(ref_variables)):
@@ -127,7 +127,7 @@ def compare_schema(reference: Json, candidate: Json) -> list[Diagnostic]:
         if ref_variables[name] != cand_variables[name]:
             diagnostics.append(Diagnostic("variable_mismatch", f"variable {name} differs", details={"reference": ref_variables[name], "candidate": cand_variables[name]}))
     ref_transitions = transition_map(reference)
-    cand_transitions = transition_map(candidate)
+    cand_transitions = transition_map(candidate) if isinstance(candidate.get("transitions"), list) else {}
     for name in sorted(set(ref_transitions) - set(cand_transitions)):
         diagnostics.append(Diagnostic("missing_transition", f"candidate is missing transition {name}", details={"transition": name}))
     for name in sorted(set(cand_transitions) - set(ref_transitions)):
@@ -139,11 +139,7 @@ def compare_schema(reference: Json, candidate: Json) -> list[Diagnostic]:
             diagnostics.append(Diagnostic("guard_mismatch", f"guard differs for {name}", details={"reference": {"all": ref_transition.get("guard", []), "any": ref_transition.get("guard_any", [])}, "candidate": {"all": cand_transition.get("guard", []), "any": cand_transition.get("guard_any", [])}}))
         if ref_transition.get("updates", []) != cand_transition.get("updates", []):
             diagnostics.append(Diagnostic("update_mismatch", f"updates differ for {name}", details={"reference": ref_transition.get("updates", []), "candidate": cand_transition.get("updates", [])}))
-    defaults = {
-        "terminal_blocks_all_transitions": True,
-        "invariants": [],
-        "ambiguity_policy": {},
-    }
+    defaults = {"terminal_blocks_all_transitions": True, "invariants": [], "ambiguity_policy": {}}
     for field, code in (("terminal_condition", "terminal_condition_mismatch"), ("terminal_blocks_all_transitions", "terminal_policy_mismatch"), ("outputs", "output_mismatch"), ("invariants", "invariant_mismatch"), ("ambiguity_policy", "ambiguity_policy_mismatch")):
         ref_value = reference.get(field, defaults.get(field, {}))
         cand_value = candidate.get(field, defaults.get(field, {}))
@@ -191,13 +187,19 @@ def shortest_behavioral_counterexample(reference: Json, candidate: Json, max_dep
 
 def verify(reference: Json, candidate: Json, max_depth: int = 12) -> Json:
     validate_model(reference)
-    validate_model(candidate)
     diagnostics = compare_schema(reference, candidate)
-    counterexample = shortest_behavioral_counterexample(reference, candidate, max_depth=max_depth)
-    if counterexample is not None:
-        diagnostics.append(counterexample)
+    candidate_valid = True
+    try:
+        validate_model(candidate)
+    except ValueError as exc:
+        candidate_valid = False
+        diagnostics.append(Diagnostic("candidate_model_invalid", str(exc)))
+    if candidate_valid:
+        counterexample = shortest_behavioral_counterexample(reference, candidate, max_depth=max_depth)
+        if counterexample is not None:
+            diagnostics.append(counterexample)
     categories = {
-        "structural": not any(item.code in {"missing_variable", "extra_variable", "variable_mismatch", "missing_transition", "extra_transition"} for item in diagnostics),
+        "structural": not any(item.code in {"missing_variable", "extra_variable", "variable_mismatch", "missing_transition", "extra_transition", "candidate_model_invalid"} for item in diagnostics),
         "operational": not any(item.code in {"guard_mismatch", "update_mismatch", "terminal_condition_mismatch", "terminal_policy_mismatch", "enabled_set_mismatch", "post_state_mismatch", "candidate_execution_error"} for item in diagnostics),
         "historical": not any(item.code in {"update_mismatch", "post_state_mismatch", "invariant_mismatch"} for item in diagnostics),
         "information": not any(item.code == "output_mismatch" for item in diagnostics),
