@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "CRE-002-EXT-001-REP-001-OUTPUT-SCHEMA-1.0",
+  "type": "object",
+  "required": ["replication_id", "teams", "submissions", "verifier", "aggregation", "claim_boundary"],
+  "properties": {
+    "replication_id": {"const": "CRE-002-EXT-001-REP-001"},
+    "teams": {"type": "array", "minItems": 2},
+    "submissions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["submission_id", "team_id", "vocabulary_id", "eligibility", "contamination_status", "gate_results", "outcome", "checksums"],
+        "properties": {
+          "submission_id": {"type": "string"},
+          "team_id": {"type": "string"},
+          "vocabulary_id": {"enum": ["CRE-001-VOCAB-A-1.0", "CRE-001-VOCAB-B-1.0", "CRE-001-VOCAB-C-1.0"]},
+          "eligibility": {"enum": ["eligible", "ineligible", "unresolved"]},
+          "contamination_status": {"enum": ["clean", "contaminated", "uncertain"]},
+          "gate_results": {"type": "object"},
+          "outcome": {"enum": ["complete", "partial", "failed", "contaminated", "inconclusive"]},
+          "checksums": {"type": "object"},
+          "shortest_counterexample": {}
+        }
+      }
+    },
+    "verifier": {
+      "type": "object",
+      "required": ["team_id", "independence_audit", "reference_reconstruction", "submission_results"]
+    },
+    "aggregation": {
+      "type": "object",
+      "required": ["reported_submission_count", "counted_submission_ids", "excluded_submissions", "vocabulary_results", "overall_result"]
+    },
+    "claim_boundary": {
+      "type": "object",
+      "required": ["supported", "unsupported"]
+    }
+  },
+  "additionalProperties": true
+}
