@@ -1,12 +1,14 @@
 {
   "experiment": "CRE-002-EXT-001",
   "authorization_status": "authorized",
-  "status": "execution-authorized",
+  "status": "execution-complete",
   "execution_permitted": true,
   "compiler_implementation_permitted": true,
-  "official_results_present": false,
+  "official_results_present": true,
   "semantic_authority": "VOCABULARY-SEMANTICS-BASELINE-1.1",
   "authorization_audit": "execution-unlock-audit.json",
+  "official_result": "execution/cre002-ext001-comparison.json",
+  "execution_report": "execution/execution-report.md",
   "authorization_requirements_satisfied": [
     "Baseline 1.1 merged",
     "extension preregistration merged",
