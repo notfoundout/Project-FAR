@@ -1,26 +1,35 @@
-# CRE-001 Formal Vocabulary Semantics
+# Vocabulary Semantics Baseline 1.0
 
 
 ## Status Vocabulary
 
-- **Supported**: established for frozen CRE-001 vocabulary-semantics scope by explicit source definitions and this specification.
+- **Supported**: prospectively frozen for CRE-002 and later experiments by explicit baseline definitions and this specification.
 - **Unsupported**: not established and not licensed by this specification.
 - **Unknown**: not determined by available repository evidence.
 - **Assumed**: required CRE-001-scoped assumption recorded explicitly.
 - **Implementation-specific**: property of the deterministic compiler/verifier artifacts, not primitive semantics.
 
+## Chronology and Prospective Authority
+
+- Vocabulary Semantics Baseline 1.0 was formalized after completion of deterministic CRE-001.
+- It was informed by lessons learned during CRE-001.
+- It is frozen for future experiments beginning with CRE-002.
+- It is not independent evidence supporting CRE-001.
+- It cannot be used as retrospective validation of CRE-001.
+- CRE-001 demonstrates only that compiler-authored declared interpretations successfully compiled, lowered, and verified under the registered deterministic reference.
+
 
 ## Scope
 
-This document freezes formal semantics for the official CRE-001 vocabulary primitives. It replaces compiler-authored interpretation as the semantic authority for vocabulary licensing. It does not modify deterministic results, compiler behavior, verifier behavior, or FAR theory.
+This document records Vocabulary Semantics Baseline 1.0 for the official vocabulary primitives. It is a prospective baseline for CRE-002 and later experiments. It does not retroactively validate CRE-001, does not license CRE-001 results, and does not modify deterministic results, compiler behavior, verifier behavior, or FAR theory.
 
 ## Supported
 
-- Frozen primitive semantic specifications for Vocabulary A, B, and C.
+- Prospective primitive semantic specifications for Vocabulary A, B, and C, frozen as Baseline 1.0 for CRE-002 and later experiments.
 
 - Explicit derived-machinery classifications.
 
-- CRE-001-scoped semantic licensing tables.
+- Prospective semantic licensing tables for future experiments beginning with CRE-002.
 
 ## Unsupported
 
@@ -52,7 +61,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: unit individuation; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -66,7 +75,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Object used with recorded role in CRE-001 mapping
 
@@ -82,7 +91,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: explicit typed connection among Objects; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -96,7 +105,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Relation used with recorded role in CRE-001 mapping
 
@@ -112,7 +121,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: explicit operation on Objects/Relations; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -126,7 +135,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Transformation used with recorded role in CRE-001 mapping
 
@@ -144,7 +153,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: discrete configuration snapshot; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -158,7 +167,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: State used with recorded role in CRE-001 mapping
 
@@ -174,7 +183,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: movement/update between States; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -188,7 +197,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Transition used with recorded role in CRE-001 mapping
 
@@ -204,7 +213,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: attached marker or identifier; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -218,7 +227,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Label used with recorded role in CRE-001 mapping
 
@@ -236,7 +245,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: explicit represented item; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -250,7 +259,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Representation used with recorded role in CRE-001 mapping
 
@@ -266,7 +275,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: explicit organization over representations; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -280,7 +289,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Representational Structure used with recorded role in CRE-001 mapping
 
@@ -296,7 +305,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: meaning/status/truth/output policy; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -310,7 +319,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Interpretation used with recorded role in CRE-001 mapping
 
@@ -326,7 +335,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: bounded preservation task; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -340,7 +349,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Investigation used with recorded role in CRE-001 mapping
 
@@ -356,7 +365,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Permitted commitments: rule-governed transition/judgment procedure; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -370,7 +379,7 @@ This document freezes formal semantics for the official CRE-001 vocabulary primi
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Calculus used with recorded role in CRE-001 mapping
 

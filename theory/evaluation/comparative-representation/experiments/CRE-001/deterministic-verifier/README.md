@@ -69,4 +69,4 @@ It does not establish:
 - comparative superiority;
 - universality of FAR or any vocabulary.
 
-The remaining limitation is semantic licensing: compiler-local compatibility checks and generated artifacts do not constitute independently frozen formal vocabulary semantics. Passing results do not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or formally licensed vocabulary semantics.
+The remaining limitation is scope: the frozen vocabulary semantics are CRE-001-scoped and do not make compiler-local compatibility checks into evidence for non-CRE-001 adequacy. Passing results do not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or non-CRE-001 vocabulary-semantics adequacy.

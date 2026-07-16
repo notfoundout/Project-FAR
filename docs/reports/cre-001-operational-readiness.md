@@ -6,8 +6,8 @@ CRE-001 has a registered execution package and a merged deterministic implementa
 
 ## Preserved Limitations
 
-The result is limited to CRE-001, registered ambiguity policies, compiler-local vocabulary interpretations, generated artifacts, mutation tests, and verifier depth. It does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, formally licensed vocabulary semantics, or prospective independent replication.
+The result is limited to CRE-001, registered ambiguity policies, compiler-local vocabulary interpretations, generated artifacts, mutation tests, and verifier depth. It does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, non-CRE-001 vocabulary-semantics adequacy, or prospective independent replication.
 
 ## Next Required Research Direction
 
-The next priority is to freeze independent formal semantics for each official vocabulary, design and preregister CRE-002, execute CRE-002 prospectively, analyze prospective evidence, and pursue independent replication.
+The next priority is to maintain the frozen official vocabulary semantics, design and preregister CRE-002, execute CRE-002 prospectively, analyze prospective evidence, and pursue independent replication.

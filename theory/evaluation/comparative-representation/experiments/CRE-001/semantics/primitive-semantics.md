@@ -1,9 +1,9 @@
-# CRE-001 Primitive Semantics
+# Vocabulary Semantics Baseline 1.0 — Primitive Semantics
 
 
 ## Status Vocabulary
 
-- **Supported**: established for frozen CRE-001 vocabulary-semantics scope by explicit source definitions and this specification.
+- **Supported**: prospectively frozen for CRE-002 and later experiments by explicit baseline definitions and this specification.
 - **Unsupported**: not established and not licensed by this specification.
 - **Unknown**: not determined by available repository evidence.
 - **Assumed**: required CRE-001-scoped assumption recorded explicitly.
@@ -11,6 +11,15 @@
 
 
 This document is a primitive-only view of `semantic-specification.json`. Derived machinery is excluded except where a primitive interaction rule requires an explicit derived link.
+## Chronology and Prospective Authority
+
+- Vocabulary Semantics Baseline 1.0 was formalized after completion of deterministic CRE-001.
+- It was informed by lessons learned during CRE-001.
+- It is frozen for future experiments beginning with CRE-002.
+- It is not independent evidence supporting CRE-001.
+- It cannot be used as retrospective validation of CRE-001.
+- CRE-001 demonstrates only that compiler-authored declared interpretations successfully compiled, lowered, and verified under the registered deterministic reference.
+
 
 ## CRE-001-VOCAB-A-1.0
 
@@ -24,7 +33,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: unit individuation; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -38,7 +47,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Object used with recorded role in CRE-001 mapping
 
@@ -54,7 +63,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: explicit typed connection among Objects; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -68,7 +77,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Relation used with recorded role in CRE-001 mapping
 
@@ -84,7 +93,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: explicit operation on Objects/Relations; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -98,7 +107,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Transformation used with recorded role in CRE-001 mapping
 
@@ -116,7 +125,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: discrete configuration snapshot; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -130,7 +139,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: State used with recorded role in CRE-001 mapping
 
@@ -146,7 +155,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: movement/update between States; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -160,7 +169,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Transition used with recorded role in CRE-001 mapping
 
@@ -176,7 +185,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: attached marker or identifier; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -190,7 +199,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Label used with recorded role in CRE-001 mapping
 
@@ -208,7 +217,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: explicit represented item; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -222,7 +231,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Representation used with recorded role in CRE-001 mapping
 
@@ -238,7 +247,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: explicit organization over representations; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -252,7 +261,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Representational Structure used with recorded role in CRE-001 mapping
 
@@ -268,7 +277,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: meaning/status/truth/output policy; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -282,7 +291,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Interpretation used with recorded role in CRE-001 mapping
 
@@ -298,7 +307,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: bounded preservation task; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -312,7 +321,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Investigation used with recorded role in CRE-001 mapping
 
@@ -328,7 +337,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Permitted commitments: rule-governed transition/judgment procedure; explicit CRE-001-scoped representation when provenance and role are recorded
 
-- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims
+- Forbidden commitments: unstated domain rules; unbounded semantics; proof of universal sufficiency; proof of primitive-only sufficiency; necessity/minimality/independence/superiority claims; universal reasoning structure claims; formal vocabulary licensing for CRE-001; primitive sufficiency claims
 
 - Required properties: explicit identifier; declared role; CRE-001 scope; traceable source; no scenario alteration
 
@@ -342,7 +351,7 @@ This document is a primitive-only view of `semantic-specification.json`. Derived
 
 - Interaction rules: may interact with other primitives only through explicit derived machinery or recorded mapping relations; does not silently import another vocabulary primitive
 
-- Limitations: formalized only for CRE-001 vocabulary-semantics scope; does not license stronger project-level conclusions
+- Limitations: formalized after deterministic CRE-001; prospective for CRE-002 and later only; does not retroactively validate CRE-001 or license stronger project-level conclusions
 
 - Examples: Calculus used with recorded role in CRE-001 mapping
 

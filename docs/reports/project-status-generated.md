@@ -79,11 +79,13 @@ This report uses cautious language and does not authorize theory changes.
 
 Completed: deterministic CRE-001 implementation; vocabulary-native compilation; executable lowering; deterministic verification; replayable lowering traces; mutation testing; adversarial compiler audit; repository integration.
 
-Not established: universal sufficiency; primitive-only sufficiency; necessity; minimality; independence; superiority; FAR proof; universal reasoning structure; formally licensed vocabulary semantics.
+Prospective baseline: Vocabulary Semantics Baseline 1.0 is frozen for CRE-002 and later; it is not independent evidence supporting CRE-001 and cannot retrospectively validate CRE-001.
+
+Not established by CRE-001: formal vocabulary licensing; primitive sufficiency; universal sufficiency; necessity; minimality; independence; superiority; FAR proof; universal reasoning structure.
 
 ## Current Evidence Conclusion
 
-The merged deterministic CRE-001 implementation establishes vocabulary-native compilation, executable lowering, deterministic verification against the registered CRE-001 reference behavior, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration at registered CRE-001 scope. It does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or formally licensed vocabulary semantics.
+CRE-001 demonstrates only that compiler-authored declared interpretations successfully compiled, lowered, and verified under the registered deterministic reference. Vocabulary Semantics Baseline 1.0 was formalized after deterministic CRE-001 and is prospective for CRE-002 and later only. CRE-001 does not establish formal vocabulary licensing, primitive sufficiency, universal sufficiency, necessity, minimality, independence, superiority, FAR proof, or universal reasoning structure.
 
 ## Relevant Reports
 

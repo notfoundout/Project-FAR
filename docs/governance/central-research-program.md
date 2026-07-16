@@ -184,7 +184,7 @@ Mechanization strengthens confidence in internal coherence and executability. It
 
 External validation tests FAR against reasoning systems, arguments, and practices not constructed for FAR. It provides bounded evidence concerning representational reach, domain-specific assumptions, recurring pressure points, and possible limitations.
 
-External validation does not prove universal applicability. Each case remains conditional on its reconstruction, evidence, and scope. CRP v1.0 governs blinded comparative claims about representational vocabularies. The merged deterministic CRE-001 implementation establishes scoped vocabulary-native compilation, executable lowering, deterministic verification, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration; it does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or formally licensed vocabulary semantics.
+External validation does not prove universal applicability. Each case remains conditional on its reconstruction, evidence, and scope. CRP v1.0 governs blinded comparative claims about representational vocabularies. The merged deterministic CRE-001 implementation establishes scoped vocabulary-native compilation, executable lowering, deterministic verification, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration; it does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or non-CRE-001 vocabulary-semantics adequacy.
 
 ## Work Admission Standard
 

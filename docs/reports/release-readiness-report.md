@@ -6,9 +6,9 @@ This advisory report is the canonical Project FAR release checklist. It never pu
 
 | Metric | Current | Source |
 |---|---:|---|
-| Markdown files | 830 | [.](../..) |
-| Theory files | 256 | [theory](../../theory) |
-| Python tools | 50 | [tools](../../tools) |
+| Markdown files | 838 | [.](../..) |
+| Theory files | 266 | [theory](../../theory) |
+| Python tools | 51 | [tools](../../tools) |
 | Reports | 185 | [docs/reports](.) |
 | Registries | 10 | [theory](../../theory) |
 | Proof objects | 15 | [theory/proof-objects](../../theory/proof-objects) |
@@ -23,8 +23,8 @@ This advisory report is the canonical Project FAR release checklist. It never pu
 | Conservative extensions | 35 | [theory/falsification/primitive-pressure-registry.yaml](../../theory/falsification/primitive-pressure-registry.yaml) |
 | Fits FAR | 14 | [theory/evaluation/evidence-registry.yaml](../../theory/evaluation/evidence-registry.yaml) |
 | Unresolved cases | 17 | [docs/reports/research-gap-report.md](research-gap-report.md) |
-| Unresolved gaps | 160 | [docs/reports/research-gap-report.md](research-gap-report.md) |
-| Documentation coverage | 830 | [docs](..) |
+| Unresolved gaps | 162 | [docs/reports/research-gap-report.md](research-gap-report.md) |
+| Documentation coverage | 838 | [docs](..) |
 | Health-check availability | 1 | [tools/repo_health_check.py](../../tools/repo_health_check.py) |
 
 ## Validation Results
@@ -39,12 +39,12 @@ This advisory report is the canonical Project FAR release checklist. It never pu
 | Registry Validation | PASS | [tools/check_registry.py](../../tools/check_registry.py) |
 | Critical Research Gaps | 0 | [docs/reports/research-gap-report.md](research-gap-report.md) |
 | Candidate Primitive Failures | 0 | [theory/falsification/primitive-pressure-registry.yaml](../../theory/falsification/primitive-pressure-registry.yaml) |
-| Documentation Completeness | 830 | [docs](..) |
+| Documentation Completeness | 838 | [docs](..) |
 | Planner Freshness | PASS | [docs/planning/next-actions.md](../planning/next-actions.md) |
 
 ## Documentation Status
 
-- Markdown files: 830
+- Markdown files: 838
 - Reports: 185
 - Maintenance documents: 5
 
