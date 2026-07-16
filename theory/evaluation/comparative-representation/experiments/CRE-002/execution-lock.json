@@ -1,7 +1,7 @@
 {
   "lock_id": "CRE-002-EXECUTION-LOCK-1.0",
   "execution_permitted": false,
-  "reason": "Preregistration package has not yet been merged and checksum-locked.",
+  "reason": "Preregistration package is merged; checksum lock and a separate reviewed unlock PR are still required.",
   "unlock_requirements": [
     "preregistration package merged to main",
     "package manifest contains final SHA-256 checksums",
