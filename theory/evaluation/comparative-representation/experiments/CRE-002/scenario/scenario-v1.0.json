@@ -1,0 +1,136 @@
+{
+  "scenario_id": "CRE-002-SCENARIO-1.0",
+  "title": "Prospective Multi-Pressure Emergency-Response Controller",
+  "status": "frozen-upon-merge-not-executed",
+  "bounds": {
+    "record_a_max": 1,
+    "record_b_max": 1,
+    "override_max": 1,
+    "modification_max": 1,
+    "dispatch_alpha_max": 1,
+    "dispatch_beta_max": 1,
+    "contain_max": 1,
+    "halt_max": 1
+  },
+  "state": {
+    "booleans": {
+      "alarm_confirmed": false,
+      "sensor_a_positive": false,
+      "sensor_b_positive": false,
+      "manual_override": false,
+      "route_alpha_open": true,
+      "route_beta_open": true,
+      "alpha_dispatched": false,
+      "beta_dispatched": false,
+      "incident_contained": false,
+      "system_halted": false
+    },
+    "evidence_log": [],
+    "action_history": [],
+    "active_rules": ["R_confirm", "R_dispatch_alpha", "R_dispatch_beta", "R_override", "R_contain", "R_modify", "R_halt"],
+    "priorities": {"R_override": 100, "R_modify": 80, "R_dispatch_alpha": 50, "R_dispatch_beta": 50},
+    "modification_count": 0
+  },
+  "evidence_schema": {
+    "fields": ["claim", "source", "reliability"],
+    "sources": ["sensor_a", "sensor_b", "operator"],
+    "reliability_values": ["high", "low"]
+  },
+  "transitions": [
+    {
+      "id": "T_record_a",
+      "authorization": null,
+      "guard": ["not previously fired"],
+      "nondeterministic_alternatives": [
+        {"set": {"sensor_a_positive": true}, "append_evidence": ["sensor_a_positive=true", "sensor_a", "high"]},
+        {"set": {"sensor_a_positive": false}, "append_evidence": ["sensor_a_positive=false", "sensor_a", "high"]}
+      ],
+      "append_history": true
+    },
+    {
+      "id": "T_record_b",
+      "authorization": null,
+      "guard": ["not previously fired"],
+      "nondeterministic_alternatives": [
+        {"set": {"sensor_b_positive": true}, "append_evidence": ["sensor_b_positive=true", "sensor_b", "high"]},
+        {"set": {"sensor_b_positive": false}, "append_evidence": ["sensor_b_positive=false", "sensor_b", "low"]}
+      ],
+      "append_history": true
+    },
+    {
+      "id": "T_confirm",
+      "authorization": "R_confirm",
+      "guard_expression": "sensor_a_positive=true AND provenance(sensor_a_positive=true,sensor_a,high) AND (sensor_b_positive=true OR manual_override=true)",
+      "updates": {"alarm_confirmed": true},
+      "append_history": true
+    },
+    {
+      "id": "T_override",
+      "authorization": "R_override",
+      "guard_expression": "provenance(manual_override=true,operator,high)",
+      "updates": {"manual_override": true},
+      "defeats_lower_priority_conflict_for_current_state": true,
+      "append_history": true
+    },
+    {
+      "id": "T_dispatch_alpha",
+      "authorization": "R_dispatch_alpha",
+      "guard_all": ["alarm_confirmed=true", "route_alpha_open=true", "alpha_dispatched=false", "system_halted=false"],
+      "updates": {"alpha_dispatched": true},
+      "append_history": true
+    },
+    {
+      "id": "T_dispatch_beta",
+      "authorization": "R_dispatch_beta",
+      "guard_all": ["alarm_confirmed=true", "route_beta_open=true", "beta_dispatched=false", "system_halted=false"],
+      "updates": {"beta_dispatched": true},
+      "append_history": true
+    },
+    {
+      "id": "T_modify",
+      "authorization": "R_modify",
+      "guard_all": ["alarm_confirmed=true", "modification_count=0", "exactly_one(alpha_dispatched,beta_dispatched)=true"],
+      "updates": ["deactivate dispatch rule for not-yet-dispatched agent", "modification_count:=1", "append before/after rule-status record"],
+      "append_history": true
+    },
+    {
+      "id": "T_contain",
+      "authorization": "R_contain",
+      "guard_expression": "(alpha_dispatched=true OR beta_dispatched=true) AND alarm_confirmed=true",
+      "updates": {"incident_contained": true},
+      "append_history": true
+    },
+    {
+      "id": "T_halt",
+      "authorization": "R_halt",
+      "guard_any": ["incident_contained=true", "deadlock_condition=true"],
+      "updates": {"system_halted": true},
+      "append_history": true
+    }
+  ],
+  "interleaving": {
+    "independent_transitions": ["T_record_a", "T_record_b"],
+    "simultaneous_execution": false,
+    "atomic_transition_effects": true
+  },
+  "invariants": [
+    "evidence_log and action_history are append-only and ordered",
+    "provenance-sensitive guards require matching source and reliability records",
+    "no transition after system_halted=true",
+    "modification_count<=1",
+    "only T_modify changes rule activation",
+    "defeated rules remain represented and historically recoverable",
+    "interleaving does not alter atomic transition effects"
+  ],
+  "outputs": [
+    "final_state",
+    "ordered_evidence_log",
+    "ordered_action_history",
+    "final_rule_statuses",
+    "nondeterministic_outcomes",
+    "priority_defeat_occurred",
+    "rule_modification_occurred",
+    "terminal_reason",
+    "invariant_violation_occurred"
+  ]
+}
