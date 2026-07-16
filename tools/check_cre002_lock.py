@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "theory/evaluation/comparative-representation/experiments/CRE-002"
 MANIFEST = PACKAGE / "package-manifest.json"
 LOCK = PACKAGE / "checksum-lock.json"
+SOURCE_COMMIT = "003f0fda30f0919d13edb1e5f1b3b3d2e0fd1d04"
 
 
 def snapshot() -> dict:
@@ -31,7 +32,7 @@ def snapshot() -> dict:
         "lock_id": "CRE-002-CHECKSUM-LOCK-1.0",
         "algorithm": "SHA-256",
         "package_id": manifest["package_id"],
-        "source_commit": "a2c46a72b0fe145fd4835973d799531222f1edd8",
+        "source_commit": SOURCE_COMMIT,
         "execution_permitted": False,
         "files": files,
     }
