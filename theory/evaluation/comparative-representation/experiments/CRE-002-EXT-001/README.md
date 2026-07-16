@@ -2,26 +2,39 @@
 
 ## Purpose
 
-CRE-002-EXT-001 is a separately labeled prospective extension created after the official CRE-002 result. It may test the same bounded pressure dimensions using Vocabulary Semantics Baseline 1.1, but it is not a rerun of untouched CRE-002 and cannot replace or reclassify the original result.
+CRE-002-EXT-001 is a separately labeled prospective extension created after the official CRE-002 result. It tests the same bounded pressure dimensions under Vocabulary Semantics Baseline 1.1. It is not an untouched rerun of CRE-002 and cannot replace, validate, or reclassify the original CRE-002 result.
+
+## Frozen research question
+
+Under Vocabulary Semantics Baseline 1.1, can each official candidate vocabulary produce a fully traceable native representation and executable lowering of `CRE-002-EXT-001-SCENARIO-1.0` without undeclared semantic commitments or unrestricted hidden metalanguage?
 
 ## Current state
 
-- Status: preregistration required
+- Status: preregistered upon merge; checksum lock still required
 - Execution permitted: no
-- Semantic authority: Vocabulary Semantics Baseline 1.1, after that baseline is merged and checksum locked
+- Compiler implementation permitted: no
+- Semantic authority: Vocabulary Semantics Baseline 1.1
 - Original CRE-002 result: preserved unchanged
-- Compiler implementation: prohibited before preregistration and checksum lock
-- Scientific result: none
+- Scientific result for this extension: none
+
+## Frozen package
+
+- `preregistration.md`
+- `scenario/scenario-v1.0.json`
+- `ambiguity-policies.json`
+- `decision-rules.json`
+- `output-schema.json`
+- `package-manifest.json`
+- `execution-lock.json`
 
 ## Required sequence
 
-1. Freeze Baseline 1.1.
-2. Create a complete CRE-002-EXT-001 preregistration.
-3. Freeze the scenario, ambiguity policies, decision rules, and output schema.
-4. Compute and record checksums.
-5. Obtain a separate reviewed execution unlock.
-6. Implement and execute the extension prospectively.
+1. Merge this preregistration package.
+2. Compute and record SHA-256 checksums for the immutable scientific files.
+3. Obtain a separate reviewed execution unlock.
+4. Implement vocabulary-specific native compilers and executable lowerers.
+5. Execute prospectively and report under the frozen decision rules.
 
 ## Nonclaims
 
-No result for this extension currently exists. Nothing here establishes universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal structure of reasoning, or that the original CRE-002 outcome was erroneous.
+Nothing in this package establishes universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal structure of reasoning, retrospective validation of CRE-002, or behavioral success in CRE-002-EXT-001.
