@@ -11,13 +11,6 @@ jobs:
     - uses: actions/checkout@v4
       with:
         show-progress: false
-    - name: Emit CRE-002 checksum snapshot
-      run: python3 tools/check_cre002_lock.py --emit /tmp/cre002-checksum-lock.json
-    - name: Upload CRE-002 checksum snapshot
-      uses: actions/upload-artifact@v4
-      with:
-        name: cre002-checksum-snapshot
-        path: /tmp/cre002-checksum-lock.json
     - name: Verify CRE-002 checksum lock
       run: python3 tools/check_cre002_lock.py
     - uses: actions/setup-python@v5
