@@ -1,7 +1,7 @@
 {
   "package_id": "CRE-002-EXT-001-REP-001-PACKAGE-1.0",
   "experiment_id": "CRE-002-EXT-001-REP-001",
-  "status": "preregistered-checksum-locked",
+  "status": "team-registration-open",
   "semantic_baseline": "Vocabulary Semantics Baseline 1.1",
   "parent_experiment": "CRE-002-EXT-001",
   "immutable_scientific_files": [
@@ -14,14 +14,19 @@
   "mutable_administrative_controls": [
     "package-manifest.json",
     "execution-lock.json",
-    "checksum-lock.json"
+    "checksum-lock.json",
+    "team-registration-schema.json",
+    "team-registry.json"
   ],
   "checksum_state": "locked",
+  "team_registration_authorized": true,
   "execution_authorized": false,
   "compiler_implementation_authorized": false,
+  "submission_acceptance_authorized": false,
   "official_results_present": false,
-  "required_next_action": "Register eligible isolated teams and attestations, then obtain a separate reviewed execution unlock.",
+  "required_next_action": "Collect and review real isolated-team registrations. Execution unlock remains prohibited until minimum eligibility requirements are met.",
   "nonclaims": [
+    "no registered eligible teams yet",
     "no replication result",
     "no universal sufficiency",
     "no primitive-only sufficiency",
