@@ -1,0 +1,31 @@
+{
+  "audit_id": "CRE-002-EXECUTION-UNLOCK-AUDIT-1.0",
+  "status": "authorization-proposed",
+  "preregistration_merge_commit": "a2c46a72b0fe145fd4835973d799531222f1edd8",
+  "checksum_lock_merge_commit": "f1d086480ae39c91d05a1381f4c3915e682ce439",
+  "immutable_package_lock_verified": true,
+  "repository_health_before_unlock": "passed",
+  "pre_unlock_checks": {
+    "vocabulary_specific_compiler_present": false,
+    "vocabulary_specific_mapping_present": false,
+    "official_verifier_result_present": false,
+    "official_vocabulary_outcome_present": false,
+    "scientific_aggregation_present": false
+  },
+  "control_plane_correction": {
+    "issue": "execution-lock.json was both immutable checksum content and the mutable authorization control",
+    "resolution": "The six scientific preregistration files remain byte-locked. execution-lock.json is explicitly classified as a separately reviewed mutable administrative control, with its original locked digest retained for provenance."
+  },
+  "execution_permitted_after_merge": true,
+  "scientific_results_created_by_unlock": false,
+  "nonclaims_preserved": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "independence",
+    "superiority",
+    "FAR proof",
+    "universal structure of reasoning"
+  ]
+}
