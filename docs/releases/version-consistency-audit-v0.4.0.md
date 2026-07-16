@@ -17,7 +17,7 @@ Authoritative release document: [`project-far-v0.4.0.md`](project-far-v0.4.0.md)
 | v0.2.0 | Evidence-bearing infrastructure and proof-object/tooling transition | [`project-far-v0.2.0.md`](project-far-v0.2.0.md) |
 | v0.3.0 | Internal primitive-sufficiency evaluation baseline | [`project-far-v0.3.0.md`](project-far-v0.3.0.md) |
 | v0.3.1 | Repository maturity and automation maintenance baseline | [`project-far-v0.3.1.md`](project-far-v0.3.1.md) |
-| v0.4.0 | Preliminary external-validation milestone plus CRP v1.0 registration and CRE-001 preparation | [`project-far-v0.4.0.md`](project-far-v0.4.0.md) |
+| v0.4.0 | Preliminary external-validation milestone plus CRP v1.0 registration and historical CRE-001 preparation | [`project-far-v0.4.0.md`](project-far-v0.4.0.md) |
 
 ## Version Identifiers Reviewed
 
@@ -43,7 +43,7 @@ The audit reviewed release and milestone identifiers appearing in:
 - Replaced obsolete statements describing v0.3.0 or v0.3.1 as current repository-wide release baselines with historical descriptions.
 - Marked the historical v0.4.0 roadmap objective complete without redefining that objective.
 - Added v0.4.0 as the canonical current release while preserving v0.3.0 and v0.3.1 provenance.
-- Confirmed that CRP v1.0 is frozen and CRE-001 is registered but not executed.
+- Confirmed that CRP v1.0 is frozen and, after the later deterministic merge, CRE-001 has scoped deterministic implementation while preserving v0.4.0 as the historical release boundary.
 - Preserved external-validation evidence as preliminary and historical rather than comparative.
 
 ## Consistency Result

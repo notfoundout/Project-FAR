@@ -164,7 +164,7 @@ v0.4.0 is the current release baseline. The v0.4.0 milestone is complete and is 
 
 ## Current Phase
 
-Post-v0.4.0 work is the next development phase. Its objective is controlled preparation for CRE-001 execution under frozen CRP v1.0, without redefining the historical v0.4.0 milestone.
+Post-v0.4.0 work has moved past CRE-001 preparation into deterministic CRE-001 reconciliation and CRE-002 preparation. The merged CRE-001 result established deterministic implementation at registered CRE-001 scope without redefining the historical v0.4.0 milestone.
 
 ## Completed v0.3 Milestones
 
@@ -184,11 +184,11 @@ The historical v0.4.0 objectives are preserved:
 - Separate external evidence from internal fixture evidence.
 - Identify recurring external pressure points.
 
-Completed v0.4.0 work also exceeded the original milestone by adopting CRP v1.0 as the frozen canonical methodology for future comparative representation studies and registering CRE-001 without executing it.
+Completed v0.4.0 work also exceeded the original milestone by adopting CRP v1.0 as the frozen canonical methodology for future comparative representation studies and registering CRE-001. Later merged work completed deterministic CRE-001 implementation at its registered scope.
 
 ## Next Development Milestone
 
-Prepare and then execute CRE-001 only after evaluator recruitment, calibration, randomized assignment, provenance assignment, isolation confirmation, and pre-exposure hash verification are complete. This next milestone must not silently modify CRP v1.0 or treat unexecuted CRE-001 artifacts as comparative results.
+Freeze independent formal semantics for each official vocabulary, design and preregister CRE-002, execute CRE-002 prospectively, analyze prospective evidence, and pursue independent replication. This next milestone must not treat deterministic CRE-001 compatibility as universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or formally licensed vocabulary semantics.
 
 # Long-Term Goal
 
@@ -197,4 +197,4 @@ Reach the strongest justified conclusion about whether a common structure of rea
 Project success is measured by answering that question rigorously, not by forcing confirmation of FAR.
 ## Comparative Representation Evaluation Roadmap
 
-Comparative Representation Protocol v1.0 is registered and frozen under `theory/evaluation/comparative-representation/protocol-v1.0.md`. CRE-001 is registered with a complete execution package but has not yet been executed, and legacy external-validation evidence remains preliminary rather than comparative.
+Comparative Representation Protocol v1.0 is registered and frozen under `theory/evaluation/comparative-representation/protocol-v1.0.md`. CRE-001 deterministic implementation is complete at registered CRE-001 scope: vocabulary-native compilation, executable lowering, deterministic verification, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration are established. Legacy external-validation evidence remains preliminary rather than prospective independent comparative evidence.

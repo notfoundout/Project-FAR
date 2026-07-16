@@ -1,8 +1,8 @@
 # CRE-001 Deterministic Verifier
 
-Status: Phase 1 implementation.
+Status: Deterministic CRE-001 implementation merged at registered CRE-001 scope.
 
-This directory contains the first executable replacement for the concluded evaluator-correction track.
+This directory contains the merged executable deterministic CRE-001 implementation: vocabulary-native compilation outputs, executable lowering, deterministic verification, replayable lowering traces, mutation testing, and adversarial compiler audit artifacts.
 
 ## Purpose
 
@@ -69,4 +69,4 @@ It does not establish:
 - comparative superiority;
 - universality of FAR or any vocabulary.
 
-The remaining translation problem is explicit: a vocabulary-specific representation must still be compiled into this execution format. Phase 1 verifies the compiled claim deterministically; it does not yet generate that compilation automatically.
+The remaining limitation is semantic licensing: compiler-local compatibility checks and generated artifacts do not constitute independently frozen formal vocabulary semantics. Passing results do not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or formally licensed vocabulary semantics.

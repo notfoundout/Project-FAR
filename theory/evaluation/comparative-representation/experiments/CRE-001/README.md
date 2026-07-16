@@ -1,6 +1,6 @@
 # CRE-001: Reflective Discrete Rule-Transition System
 
-Status: Registered; prepared; not executed
+Status: Registered; deterministic implementation complete at CRE-001 scope
 Protocol: CRP-1.0
 Scenario: CRE-001-SCENARIO-1.0
 Vocabulary package: CRE-001-VOCABULARIES-1.0
@@ -8,7 +8,7 @@ Instructions: CRE-001-INSTRUCTIONS-1.0
 
 ## Experiment Purpose
 
-CRE-001 prepares the first Comparative Representation Protocol v1.0 experiment. It tests, when executed later, how registered vocabularies represent a reflective discrete rule-transition system under blinded, preregistered, symmetric conditions.
+CRE-001 records the first Comparative Representation Protocol v1.0 experiment package and the later merged deterministic implementation. The deterministic result tested how registered vocabularies can be compiled into vocabulary-native artifacts and lowered to executable models that match the registered reflective discrete rule-transition reference under explicit ambiguity policies.
 
 ## Scope
 
@@ -26,7 +26,7 @@ The experiment scope is limited to systems characterized by discrete states, exp
 - Pre-exposure checklist: `execution-checklist.md`.
 - Package manifest: `package-manifest.json`.
 
-## Execution Order
+## Historical Human-Comparison Execution Order
 
 1. Verify protocol lock and package hashes.
 2. Confirm evaluator eligibility and isolation.
@@ -41,14 +41,14 @@ The experiment scope is limited to systems characterized by discrete states, exp
 
 A completed execution requires eligibility records, calibration pass records, assignment records, provenance records, primary mapping submissions, CIR submissions, adjudication records, ablation submissions, aggregation worksheets, and an experiment summary.
 
-## Expected Outputs
+## Deterministic Outputs
 
-Expected outputs after future execution are mapping-level observations, CIR records, preservation vectors, agreement measures, ablation records, cost records, Pareto comparisons, adjudication resolutions, and an experiment summary. No such outputs exist yet.
+The merged deterministic implementation provides vocabulary-native compilation artifacts, executable lowerings, deterministic verifier reports, replayable lowering traces, mutation-test reports, an adversarial compiler audit, and repository integration for CRE-001. Historical human-comparison outputs such as evaluator mapping submissions, CIR records, adjudication records, and Pareto worksheets remain absent unless separately produced by a historical human-comparison experiment.
 
-## Completion Criteria
+## Supported Deterministic Conclusions
 
-CRE-001 is complete only when all evaluator submissions, CIR records, provenance records, adjudication records, ablation records, aggregation records, and experiment summary records are complete and validated under CRP v1.0.
+CRE-001 establishes deterministic implementation at registered CRE-001 scope: vocabulary-native compilation, executable lowering, deterministic verification against the registered reference behavior, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration.
 
-## Non-Execution Statement
+## Unsupported Conclusions
 
-The experiment has not yet been executed. No mappings have yet been collected. No comparative conclusions have yet been drawn.
+CRE-001 does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or formally licensed vocabulary semantics. Historical human-comparison conclusions also remain absent unless a separate human-comparison execution is performed and recorded.

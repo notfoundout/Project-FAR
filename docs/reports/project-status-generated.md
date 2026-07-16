@@ -20,12 +20,12 @@ This report uses cautious language and does not authorize theory changes.
 
 ## Current Release Baseline
 
-- Latest release document detected: [docs/releases/project-far-v0.3.1.md](../releases/project-far-v0.3.1.md)
+- Latest release document detected: [docs/releases/project-far-v0.4.0.md](../releases/project-far-v0.4.0.md)
 
 ## Evaluation Counts
 
 - Internal reasoning systems evaluated: 23
-- External systems evaluated: 20
+- External systems evaluated: 29
 - Adversarial tests summarized: 14
 
 ## Current Classification Counts
@@ -39,8 +39,9 @@ This report uses cautious language and does not authorize theory changes.
 
 ### External validation registry
 
-- conservative extension: 15
-- fits FAR: 5
+- conservative extension: 17
+- fits FAR: 7
+- unresolved: 5
 
 ### Adversarial test status
 
@@ -74,15 +75,23 @@ This report uses cautious language and does not authorize theory changes.
 - **Interpretation**: 3 stressing tests; unresolved pressures: 0; assessment: Interpretation remains provisionally sufficient, with recurring need for conservative policies that prevent level or context collapse.
 - **Reasoning Calculus**: 4 stressing tests; unresolved pressures: 1; assessment: Reasoning Calculus has the strongest remaining pressure. The self-modifying case is unresolved but has not established that conservative transition policies are insufficient.
 
+## Deterministic CRE-001 Status
+
+Completed: deterministic CRE-001 implementation; vocabulary-native compilation; executable lowering; deterministic verification; replayable lowering traces; mutation testing; adversarial compiler audit; repository integration.
+
+Not established: universal sufficiency; primitive-only sufficiency; necessity; minimality; independence; superiority; FAR proof; universal reasoning structure; formally licensed vocabulary semantics.
+
 ## Current Evidence Conclusion
 
-Current evidence is provisional and advisory. The registries do not establish that FAR is proven universal.
+The merged deterministic CRE-001 implementation establishes vocabulary-native compilation, executable lowering, deterministic verification against the registered CRE-001 reference behavior, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration at registered CRE-001 scope. It does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or formally licensed vocabulary semantics.
 
 ## Relevant Reports
 
 - [docs/reports/primitive-sufficiency-report.md](primitive-sufficiency-report.md)
 - [docs/reports/external-validation-report.md](external-validation-report.md)
 - [docs/reports/project-far-v0.3.0-synthesis.md](project-far-v0.3.0-synthesis.md)
+- [theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/README.md](../../theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/README.md)
+- [theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/cre001-deterministic-comparison.json](../../theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/cre001-deterministic-comparison.json)
 
 ## Navigation
 
