@@ -9,13 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        show-progress: false
+    - name: Verify CRE-002 checksum lock
+      run: python3 tools/check_cre002_lock.py
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11'
     - name: Install dependencies
       run: pip install -r requirements.txt
-    - name: Verify CRE-002 checksum lock
-      run: python tools/check_cre002_lock.py
     - name: Run theory verifier
       run: python tools/verify_theory.py
     - name: Run canonical fast repository health check
