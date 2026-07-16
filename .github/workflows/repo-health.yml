@@ -14,6 +14,22 @@ jobs:
         python-version: '3.11'
     - name: Install dependencies
       run: pip install -r requirements.txt
+    - name: Run theory verifier
+      shell: bash
+      run: |
+        set -o pipefail
+        python tools/verify_theory.py 2>&1 | tee verify-theory.log
     - name: Run canonical fast repository health check
-      run: python tools/repo_health_check.py --fast
+      shell: bash
+      run: |
+        set -o pipefail
+        python tools/repo_health_check.py --fast 2>&1 | tee repository-health-fast.log
+    - name: Upload fast health diagnostics
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: repository-health-fast-logs
+        path: |
+          verify-theory.log
+          repository-health-fast.log
     timeout-minutes: 30
