@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/cre001-execution-model-v1.json",
+  "title": "CRE-001 execution model v1",
+  "type": "object",
+  "required": [
+    "format",
+    "variables",
+    "transitions",
+    "terminal_condition",
+    "outputs"
+  ],
+  "properties": {
+    "format": {"const": "cre001-execution-model-v1"},
+    "model_id": {"type": "string", "minLength": 1},
+    "ambiguity_policy": {"type": "object"},
+    "variables": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["type", "initial"],
+        "properties": {
+          "type": {"enum": ["boolean", "history"]},
+          "initial": {}
+        },
+        "additionalProperties": false
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "guard", "updates"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "guard": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/condition"}
+          },
+          "guard_any": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/condition"}
+          },
+          "updates": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/update"}
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "terminal_condition": {"$ref": "#/$defs/condition"},
+    "terminal_blocks_all_transitions": {"type": "boolean"},
+    "invariants": {"type": "array", "items": {"type": "object"}},
+    "outputs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["kind"],
+        "properties": {
+          "kind": {"enum": ["variable", "status"]},
+          "variable": {"type": "string"},
+          "variables": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "condition": {
+      "type": "object",
+      "required": ["variable", "equals"],
+      "properties": {
+        "variable": {"type": "string", "minLength": 1},
+        "equals": {}
+      },
+      "additionalProperties": false
+    },
+    "update": {
+      "type": "object",
+      "required": ["variable", "operation", "value"],
+      "properties": {
+        "variable": {"type": "string", "minLength": 1},
+        "operation": {"enum": ["set", "append"]},
+        "from": {},
+        "value": {}
+      },
+      "additionalProperties": false
+    }
+  }
+}
