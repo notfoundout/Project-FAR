@@ -1,0 +1,38 @@
+{
+  "audit_id": "CRE-002-EXT-001-EXECUTION-UNLOCK-AUDIT-1.0",
+  "authorization_status": "authorized",
+  "status": "execution-authorized",
+  "preregistration_merge_commit": "d29e92f7a575197a562546ffd4604fcdccab22ea",
+  "checksum_lock_merge_commit": "e0f79a25f0314bbf2c0e62cf9bd4b7d458cb93c7",
+  "immutable_package_lock_verified": true,
+  "semantic_authority_verified": "VOCABULARY-SEMANTICS-BASELINE-1.1",
+  "repository_health_before_unlock": "passed",
+  "pre_unlock_checks": {
+    "extension_compiler_present": false,
+    "extension_native_mapping_present": false,
+    "official_extension_verifier_result_present": false,
+    "official_extension_vocabulary_outcome_present": false,
+    "extension_scientific_aggregation_present": false
+  },
+  "administrative_controls": {
+    "execution_lock_mutable": true,
+    "package_manifest_mutable": true,
+    "checksum_lock_mutable": false,
+    "scientific_files_mutable": false
+  },
+  "execution_permitted_after_merge": true,
+  "compiler_implementation_permitted_after_merge": true,
+  "scientific_results_created_by_unlock": false,
+  "preserved_prior_result": "CRE-002-COMPARISON-1.0",
+  "nonclaims_preserved": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "independence",
+    "superiority",
+    "FAR proof",
+    "universal structure of reasoning",
+    "retrospective validation of CRE-002"
+  ]
+}
