@@ -1,40 +1,31 @@
 {
   "control_id": "CRE-002-EXT-001-REP-001-EXECUTION-LOCK-1.0",
   "experiment_id": "CRE-002-EXT-001-REP-001",
-  "state": "team-registration-open-execution-locked",
+  "state": "superseded-not-executed-permanently-locked",
   "execution_authorized": false,
   "compiler_implementation_authorized": false,
-  "team_registration_authorized": true,
+  "team_registration_authorized": false,
   "submission_acceptance_authorized": false,
   "official_results_present": false,
-  "unlock_requirements": [
-    "merged preregistration package",
-    "verified checksum lock for immutable scientific files",
-    "at least two eligible isolated implementation teams",
-    "at least one eligible implementation for each official vocabulary",
-    "at least one eligible independent verifier team",
-    "reviewed isolation attestations",
-    "separate execution-unlock pull request"
-  ],
+  "execution_history": "not executed",
+  "superseded_by": "CRE-002-EXT-001-ROB-001",
+  "unlock_requirements": [],
   "current_blockers": [
-    "No team registrations are present.",
-    "Minimum implementation-team requirement is unmet.",
-    "Independent verifier-team requirement is unmet.",
-    "Vocabulary coverage requirement is unmet."
+    "The human-team design was withdrawn before execution because the available process could not establish genuine human or organizational independence.",
+    "This historical track is permanently closed rather than awaiting participants."
   ],
-  "permitted_while_registration_open": [
-    "publish neutral registration schema",
-    "collect team attestations",
-    "review eligibility without exposing prohibited parent materials",
-    "record eligible, ineligible, or unresolved status"
+  "permitted_after_supersession": [
+    "preserve the preregistration as historical documentation",
+    "cite the track as superseded and not executed",
+    "execute the separate automated robustness package CRE-002-EXT-001-ROB-001"
   ],
-  "prohibited_while_locked": [
-    "candidate implementation",
-    "verifier implementation",
-    "team exposure to parent implementation artifacts",
+  "prohibited_after_supersession": [
+    "team registration",
+    "candidate implementation under this track",
+    "verifier implementation under this track",
     "submission collection",
-    "reference comparison",
     "scientific aggregation",
-    "replication conclusion"
+    "replication conclusion",
+    "description of this track as executed"
   ]
 }
