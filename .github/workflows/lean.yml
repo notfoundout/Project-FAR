@@ -21,7 +21,7 @@ jobs:
             sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Compile FARCore
-        run: lean mechanization/lean/FARCore.lean
+        run: lean -o mechanization/lean/FARCore.olean mechanization/lean/FARCore.lean
       - name: Compile independent process semantics
         run: LEAN_PATH=. lean mechanization/lean/ProcessSemantics.lean >process-semantics.log 2>&1
       - name: Upload ProcessSemantics diagnostics
