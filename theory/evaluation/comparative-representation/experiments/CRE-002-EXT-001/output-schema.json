@@ -1,0 +1,7 @@
+{
+  "schema_id":"CRE-002-EXT-001-OUTPUT-SCHEMA-1.0",
+  "status":"frozen-upon-merge",
+  "candidate_fields":["vocabulary_id","source_checksums","semantic_baseline_checksum","construction_status","semantic_licensing_by_role","derived_constructs_used","embedded_metalanguage_classification","native_representation_path","lowering_trace_path","trace_replay_status","behavioral_verification_status","shortest_counterexample","required_outputs_preserved","unsupported_commitments","ambiguity_policy_dependence","deterministic_regeneration_status","mutation_status","limitations","outcome"],
+  "aggregate_fields":["experiment_id","scenario_id","semantic_authority","candidate_outcome_counts","reproducible_complete_candidates","nonclaims"],
+  "forbidden_fields":["global_ranking","superiority_winner","universal_sufficiency","necessity_result","minimality_result","far_proven"]
+}
