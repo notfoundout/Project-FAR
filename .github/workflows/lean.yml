@@ -21,16 +21,21 @@ jobs:
             sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Compile FARCore
-        id: compile
+        shell: bash
+        run: lean mechanization/lean/FARCore.lean >lean-output.log 2>&1
+      - name: Check T-003 alignment
+        run: python -m unittest tests.test_t003_lean_alignment
+      - name: Run fast repository health diagnostic
         shell: bash
         run: |
-          lean mechanization/lean/FARCore.lean >lean-output.log 2>&1
-      - name: Upload Lean diagnostics
+          python -m pip install pyyaml
+          python tools/repo_health_check.py --fast >fast-health.log 2>&1
+      - name: Upload Lean and health diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lean-compiler-output
-          path: lean-output.log
-          if-no-files-found: error
-      - name: Check T-003 alignment
-        run: python -m unittest tests.test_t003_lean_alignment
+          name: lean-t003-diagnostics
+          path: |
+            lean-output.log
+            fast-health.log
+          if-no-files-found: warn
