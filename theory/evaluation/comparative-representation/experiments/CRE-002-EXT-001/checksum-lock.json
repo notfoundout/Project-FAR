@@ -1,0 +1,40 @@
+{
+  "lock_id": "CRE-002-EXT-001-CHECKSUM-LOCK-1.0",
+  "algorithm": "SHA-256",
+  "package_id": "CRE-002-EXT-001-PACKAGE-1.0",
+  "immutable_scientific_files": [
+    {
+      "path": "README.md",
+      "sha256": "0a67134ea0e00e6d7e393f4165d31933dea768d8ccddba29f165c246213d2c6b",
+      "byte_count": 1736
+    },
+    {
+      "path": "preregistration.md",
+      "sha256": "6fcac38fed232ef3eb42b856855f21a222a426ec8aa159b4cc9ca8a58a1fa82a",
+      "byte_count": 2853
+    },
+    {
+      "path": "scenario/scenario-v1.0.json",
+      "sha256": "3b65fdefc814195d68d6dbc773b8dd598a6029356a17f9a05582fa023faa6239",
+      "byte_count": 4290
+    },
+    {
+      "path": "ambiguity-policies.json",
+      "sha256": "ab826c1f30f4adae9f4483e8aba075abb9c438fb83aff3536b9115845ddffb93",
+      "byte_count": 1709
+    },
+    {
+      "path": "decision-rules.json",
+      "sha256": "e7a83fd79b812dd7258cb78bbd307216945a58fdde05f8b5d98374c8fedac4e5",
+      "byte_count": 1746
+    },
+    {
+      "path": "output-schema.json",
+      "sha256": "cb74c6732bb8525072c6f1534295a54b402375cbf23b2f005c43baab57d222f9",
+      "byte_count": 872
+    }
+  ],
+  "execution_permitted": false,
+  "compiler_implementation_permitted": false,
+  "official_results_present": false
+}

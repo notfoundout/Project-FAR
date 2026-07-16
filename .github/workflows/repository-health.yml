@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Verify CRE-002-EXT-001 checksum lock
+      run: python3 tools/check_cre002_ext001_checksums.py
     - uses: actions/setup-python@v5
       with:
         python-version: 3.x
