@@ -15,13 +15,7 @@ REQUIRED = {"D_nondeterminism", "D_concurrency", "D_priority", "D_provenance", "
 
 class VocabularySemanticsBaseline11Tests(unittest.TestCase):
     def test_regression_checker_passes(self) -> None:
-        cp = subprocess.run(
-            [sys.executable, "tools/check_vocabulary_semantics_baseline_1_1.py"],
-            cwd=ROOT,
-            text=True,
-            capture_output=True,
-            check=False,
-        )
+        cp = subprocess.run([sys.executable, "tools/check_vocabulary_semantics_baseline_1_1.py"], cwd=ROOT, text=True, capture_output=True, check=False)
         self.assertEqual(cp.returncode, 0, cp.stdout + cp.stderr)
 
     def test_five_missing_constructs_are_defined(self) -> None:
@@ -48,17 +42,22 @@ class VocabularySemanticsBaseline11Tests(unittest.TestCase):
         self.assertEqual(result["aggregate"]["complete_candidates"], 0)
         self.assertTrue(all(row["outcome"] == "unsupported" for row in result["candidates"]))
 
-    def test_extension_is_locked_or_reviewedly_authorized(self) -> None:
+    def test_extension_phase_is_valid(self) -> None:
         lock = json.loads((EXTENSION / "execution-lock.json").read_text(encoding="utf-8"))
-        self.assertFalse(lock["official_results_present"])
         if lock["execution_permitted"]:
             audit = json.loads((EXTENSION / "execution-unlock-audit.json").read_text(encoding="utf-8"))
             self.assertTrue(lock["compiler_implementation_permitted"])
             self.assertEqual(lock["authorization_status"], "authorized")
             self.assertTrue(audit["immutable_package_lock_verified"])
             self.assertFalse(audit["scientific_results_created_by_unlock"])
+            if lock["official_results_present"]:
+                self.assertEqual(lock["status"], "execution-complete")
+                self.assertTrue((EXTENSION / lock["official_result"]).is_file())
+            else:
+                self.assertEqual(lock["status"], "execution-authorized")
         else:
             self.assertFalse(lock["compiler_implementation_permitted"])
+            self.assertFalse(lock["official_results_present"])
 
     def test_nonclaims_prevent_retroactive_validation(self) -> None:
         data = json.loads(BASELINE.read_text(encoding="utf-8"))
