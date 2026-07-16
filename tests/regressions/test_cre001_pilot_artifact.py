@@ -32,18 +32,21 @@ class Cre001PilotArtifactTests(unittest.TestCase):
         self.assertTrue(self.meta["raw_artifact_immutable"])
         self.assertFalse(self.meta["raw_preservation_pending"])
 
-    def test_pilot_is_noncanonical_and_excluded(self) -> None:
+    def test_pilot_is_noncanonical_excluded_and_concluded(self) -> None:
         self.assertFalse(self.meta["canonical_cre_001_primary_mapping"])
         self.assertFalse(self.meta["canonical_ingestion_eligibility"])
         self.assertIn("pilot-artifacts", RAW.parts)
-        self.assertEqual(self.meta["evaluator_rerun_status"], "not rerun")
-        self.assertEqual(self.meta["next_action"], "evaluator correction pass")
+        self.assertEqual(self.meta["pilot_track_status"], "concluded")
+        self.assertEqual(self.meta["pilot_track_disposition"], "superseded by deterministic verification")
+        self.assertEqual(self.meta["next_action"], "build deterministic CRE-001 verifier")
+        self.assertIn("correction loop intentionally stopped", self.meta["evaluator_rerun_status"])
 
     def test_review_is_separate_from_raw_output(self) -> None:
         forbidden = {"reviewer_status", "finding_identifiers", "canonical_ingestion_eligibility", "noncanonical_reasons"}
         self.assertTrue(forbidden.isdisjoint(self.raw.keys()))
-        self.assertIn("Required corrections", self.review)
-        self.assertNotIn("Required corrections", RAW.read_text(encoding="utf-8"))
+        self.assertIn("Required corrections identified during review", self.review)
+        self.assertIn("Why the evaluator track was concluded", self.review)
+        self.assertNotIn("Required corrections identified during review", RAW.read_text(encoding="utf-8"))
 
     def test_official_outputs_do_not_reference_raw_pilot(self) -> None:
         official_roots = [
