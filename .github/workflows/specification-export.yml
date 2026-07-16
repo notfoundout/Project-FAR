@@ -20,4 +20,18 @@ jobs:
       - name: Fail if specification export is stale
         run: git diff --exit-code -- exports/far-spec-v1
       - name: Verify export tests
-        run: python -m pytest tests/test_specification_export.py
+        run: |
+          set -o pipefail
+          python -m pytest tests/test_specification_export.py -vv 2>&1 | tee specification-export-tests.log
+      - name: Capture full repository health
+        if: always()
+        run: |
+          python tools/repo_health_check.py --full > repository-health.log 2>&1 || true
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: specification-export-diagnostics
+          path: |
+            specification-export-tests.log
+            repository-health.log
