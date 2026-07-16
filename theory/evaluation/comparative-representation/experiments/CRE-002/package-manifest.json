@@ -1,0 +1,47 @@
+{
+  "package_id": "CRE-002-PACKAGE-1.0",
+  "status": "preregistered-under-review",
+  "protocol": "CRP-1.0 with CRE-002 prospective deterministic extension",
+  "semantic_authority": {
+    "name": "Vocabulary Semantics Baseline 1.0",
+    "scope": "prospective from CRE-002 onward",
+    "dependency_path": "theory/evaluation/comparative-representation/experiments/CRE-001/semantics/semantic-specification.json"
+  },
+  "files": [
+    {"path": "README.md", "sha256": null},
+    {"path": "preregistration.md", "sha256": null},
+    {"path": "scenario/scenario-v1.0.md", "sha256": null},
+    {"path": "scenario/scenario-v1.0.json", "sha256": null},
+    {"path": "ambiguity-policies.json", "sha256": null},
+    {"path": "decision-rules.json", "sha256": null},
+    {"path": "execution-lock.json", "sha256": null}
+  ],
+  "checksum_state": "pending post-merge lock PR",
+  "execution_permitted": false,
+  "vocabularies": [
+    "CRE-001-VOCAB-A-1.0",
+    "CRE-001-VOCAB-B-1.0",
+    "CRE-001-VOCAB-C-1.0"
+  ],
+  "required_pressure_dimensions": [
+    "nested conditions",
+    "bounded nondeterminism",
+    "interleaved concurrency",
+    "defeasible priority",
+    "provenance sensitivity",
+    "higher-order rule modification",
+    "bounded history",
+    "terminal deadlock"
+  ],
+  "official_results_present": false,
+  "nonclaims": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "independence",
+    "superiority",
+    "FAR proof",
+    "universal structure of reasoning"
+  ]
+}
