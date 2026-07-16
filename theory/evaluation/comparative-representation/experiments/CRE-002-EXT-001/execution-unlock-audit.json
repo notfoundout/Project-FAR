@@ -1,0 +1,17 @@
+{
+  "audit_id":"CRE-002-EXT-001-EXECUTION-UNLOCK-AUDIT-1.0",
+  "experiment":"CRE-002-EXT-001",
+  "authorization_type":"separate-reviewed-pull-request",
+  "effective_condition":"merge of the execution-unlock pull request",
+  "checksum_state_verified":"locked",
+  "checksum_verifier":"tools/check_cre002_ext001_checksums.py",
+  "immutable_scientific_files_modified":false,
+  "semantic_authority":"VOCABULARY-SEMANTICS-BASELINE-1.1",
+  "compiler_implementation_authorized":true,
+  "execution_authorized":true,
+  "official_results_present":false,
+  "preserved_prior_result":"CRE-002-COMPARISON-1.0",
+  "authorized_scope":["implement vocabulary-specific native compilers","implement executable lowerers","run frozen trace replay and bounded-state verification","generate outputs required by the frozen output schema","apply the frozen decision rules"],
+  "prohibited_scope":["modify checksum-locked scientific files","retroactively alter or validate CRE-002","change Vocabulary Semantics Baseline 1.1 during execution","weaken frozen gates to force completion","claim universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, FAR proof, or universal reasoning structure"],
+  "review_status":"authorization becomes valid only through merge of this reviewed pull request"
+}
