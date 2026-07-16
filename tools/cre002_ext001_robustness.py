@@ -10,7 +10,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parents[1]
 SCENARIO = ROOT / "theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001/scenario/scenario-v1.0.json"
@@ -23,7 +23,8 @@ REQUIRED_TOP_LEVEL = {
 
 
 def canonical_bytes(value: Any) -> bytes:
-    return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode("utf-8")
+    text = json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return f"{text}\n".encode("utf-8")
 
 
 def validate_scenario(value: Any) -> dict[str, Any]:
@@ -44,7 +45,6 @@ def validate_scenario(value: Any) -> dict[str, Any]:
 
 
 def implementation_a(source: Path) -> dict[str, Any]:
-    # Direct recursive reconstruction; no shared generated artifacts.
     raw = validate_scenario(json.loads(source.read_text(encoding="utf-8")))
 
     def rebuild(value: Any) -> Any:
@@ -58,14 +58,10 @@ def implementation_a(source: Path) -> dict[str, Any]:
 
 
 def implementation_b(source: Path) -> dict[str, Any]:
-    # Token round-trip followed by an independently written iterative normalizer.
     parsed = validate_scenario(json.JSONDecoder().decode(source.read_text(encoding="utf-8")))
-    encoded = json.dumps(parsed, ensure_ascii=False)
-    value = json.loads(encoded)
-    stack: list[tuple[Any, Any, Any]] = []
+    value = json.loads(json.dumps(parsed, ensure_ascii=False))
     output: dict[str, Any] = {}
-    for key in sorted(value):
-        stack.append((output, key, value[key]))
+    stack: list[tuple[Any, Any, Any]] = [(output, key, value[key]) for key in sorted(value, reverse=True)]
     while stack:
         parent, key, current = stack.pop()
         if isinstance(current, dict):
@@ -84,14 +80,12 @@ def implementation_b(source: Path) -> dict[str, Any]:
 
 
 def implementation_c(source: Path) -> dict[str, Any]:
-    # Independent path: parse ordered pairs, recursively normalize, then reparse.
-    text = source.read_text(encoding="utf-8")
-    pairs = json.loads(text, object_pairs_hook=list)
+    pairs = json.loads(source.read_text(encoding="utf-8"), object_pairs_hook=lambda items: ("__object__", items))
 
     def materialize(value: Any) -> Any:
+        if isinstance(value, tuple) and len(value) == 2 and value[0] == "__object__":
+            return {str(key): materialize(item) for key, item in sorted(value[1], key=lambda pair: str(pair[0]))}
         if isinstance(value, list):
-            if all(isinstance(item, tuple) and len(item) == 2 for item in value):
-                return {str(k): materialize(v) for k, v in sorted(value, key=lambda item: str(item[0]))}
             return [materialize(item) for item in value]
         return value
 
@@ -100,9 +94,12 @@ def implementation_c(source: Path) -> dict[str, Any]:
 
 
 def worker(kind: str, source: Path, destination: Path) -> int:
-    implementations = {"a": implementation_a, "b": implementation_b, "c": implementation_c}
-    result = implementations[kind](source)
-    destination.write_bytes(canonical_bytes(result))
+    implementations: dict[str, Callable[[Path], dict[str, Any]]] = {
+        "a": implementation_a,
+        "b": implementation_b,
+        "c": implementation_c,
+    }
+    destination.write_bytes(canonical_bytes(implementations[kind](source)))
     return 0
 
 
@@ -125,21 +122,21 @@ def verifier(paths: list[Path]) -> dict[str, Any]:
     duplicate = json.loads(raw[0])
     duplicate["transitions"].append(dict(duplicate["transitions"][0]))
     mutations.append(("duplicate-transition-id", duplicate))
-    malformed: list[tuple[str, bytes]] = [
-        ("malformed-json", b"{not-json\n"),
-        ("wrong-root", b"[]\n"),
-        ("missing-id", canonical_bytes({"title": "adversarial"})),
-    ]
 
     cases: list[dict[str, Any]] = []
     reference = canonical[0]
     for name, candidate in mutations:
         try:
-            candidate_bytes = canonical_bytes(validate_scenario(candidate))
-            rejected = candidate_bytes != reference
+            rejected = canonical_bytes(validate_scenario(candidate)) != reference
         except Exception:
             rejected = True
         cases.append({"case": name, "rejected": rejected})
+
+    malformed = [
+        ("malformed-json", b"{not-json\n"),
+        ("wrong-root", b"[]\n"),
+        ("missing-id", canonical_bytes({"title": "adversarial"})),
+    ]
     for name, blob in malformed:
         try:
             validate_scenario(json.loads(blob))
@@ -147,6 +144,7 @@ def verifier(paths: list[Path]) -> dict[str, Any]:
         except Exception:
             rejected = True
         cases.append({"case": name, "rejected": rejected})
+
     if not all(case["rejected"] for case in cases):
         raise ValueError("mutation or adversarial case escaped detection")
     return {
@@ -160,6 +158,24 @@ def verifier(paths: list[Path]) -> dict[str, Any]:
     }
 
 
+def run_worker(kind: str, work: Path) -> Path:
+    private_input = work / "scenario.json"
+    destination = work / "output.json"
+    shutil.copyfile(SCENARIO, private_input)
+    env = {"PYTHONHASHSEED": "0", "PATH": os.environ.get("PATH", "")}
+    result = subprocess.run(
+        [sys.executable, str(Path(__file__).resolve()), "--worker", kind,
+         "--source", str(private_input), "--output", str(destination)],
+        cwd=work,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"compiler-{kind} failed:\n{result.stdout}{result.stderr}")
+    return destination
+
+
 def isolated_run(temp_root: Path, run_name: str) -> dict[str, Any]:
     run_root = temp_root / run_name
     run_root.mkdir()
@@ -167,19 +183,8 @@ def isolated_run(temp_root: Path, run_name: str) -> dict[str, Any]:
     for kind in ("a", "b", "c"):
         work = run_root / f"compiler-{kind}"
         work.mkdir()
-        private_input = work / "scenario.json"
-        shutil.copyfile(SCENARIO, private_input)
-        destination = work / "output.json"
-        env = {"PYTHONHASHSEED": "0", "PATH": os.environ.get("PATH", "")}
-        subprocess.run(
-            [sys.executable, str(Path(__file__).resolve()), "--worker", kind, "--source", str(private_input), "--output", str(destination)],
-            cwd=work,
-            env=env,
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-        output_paths.append(destination)
+        output_paths.append(run_worker(kind, work))
+
     verifier_work = run_root / "verifier"
     verifier_work.mkdir()
     frozen: list[Path] = []
