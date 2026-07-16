@@ -21,6 +21,14 @@ jobs:
             sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Compile FARCore
-        run: lean mechanization/lean/FARCore.lean
+        shell: bash
+        run: |
+          set -o pipefail
+          if ! lean mechanization/lean/FARCore.lean >lean-output.log 2>&1; then
+            echo "LEAN COMPILATION FAILED"
+            tail -n 60 lean-output.log
+            exit 1
+          fi
+          cat lean-output.log
       - name: Check T-003 alignment
         run: python -m unittest tests.test_t003_lean_alignment
