@@ -1,0 +1,9 @@
+{
+  "lock_id": "CRE-002-EXT-001-CHECKSUM-LOCK-1.0",
+  "algorithm": "SHA-256",
+  "package_id": "CRE-002-EXT-001-PACKAGE-1.0",
+  "immutable_scientific_files": [],
+  "execution_permitted": false,
+  "compiler_implementation_permitted": false,
+  "official_results_present": false
+}
