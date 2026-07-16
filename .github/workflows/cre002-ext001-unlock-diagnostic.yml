@@ -1,0 +1,24 @@
+name: CRE-002-EXT-001 Unlock Diagnostic
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Run fast health and print tail
+        shell: bash
+        run: |
+          set +e
+          python tools/repo_health_check.py --fast > /tmp/health.log 2>&1
+          code=$?
+          tail -120 /tmp/health.log
+          exit $code
