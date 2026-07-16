@@ -51,4 +51,4 @@ CRE-001 establishes deterministic implementation at registered CRE-001 scope: vo
 
 ## Unsupported Conclusions
 
-CRE-001 does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or formally licensed vocabulary semantics. Historical human-comparison conclusions also remain absent unless a separate human-comparison execution is performed and recorded.
+CRE-001 does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or non-CRE-001 vocabulary-semantics adequacy. Historical human-comparison conclusions also remain absent unless a separate human-comparison execution is performed and recorded.

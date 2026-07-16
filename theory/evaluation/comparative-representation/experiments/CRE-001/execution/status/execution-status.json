@@ -21,7 +21,7 @@
   "mappings_collected_count": 0,
   "adjudication_state": "incomplete",
   "comparative_results_state": "deterministic CRE-001 scoped result present; human-comparison submissions absent",
-  "hypothesis_decision_state": "no universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, FAR proof, universal reasoning structure, or formally licensed vocabulary semantics established",
+  "hypothesis_decision_state": "CRE-001 demonstrates only that compiler-authored declared interpretations successfully compiled, lowered, and verified under the registered deterministic reference; it does not establish formal vocabulary licensing, primitive sufficiency, universal sufficiency, necessity, minimality, independence, superiority, FAR proof, or universal reasoning structure",
   "created_at": "2026-07-13T04:56:10Z",
   "updated_at": "2026-07-16T00:00:00Z",
   "provenance_identifiers": {
@@ -29,5 +29,6 @@
     "integrity_record": "CRE-001-EXECUTION-INTEGRITY-VERIFICATION-1.0",
     "assignment_key": "CRE-001-INTERNAL-ASSIGNMENT-KEY-1.0"
   },
-  "deterministic_result_state": "complete: vocabulary-native compilation; executable lowering; deterministic verification; replayable lowering traces; mutation testing; adversarial compiler audit; repository integration"
+  "deterministic_result_state": "complete: vocabulary-native compilation; executable lowering; deterministic verification; replayable lowering traces; mutation testing; adversarial compiler audit; repository integration",
+  "semantic_status": "Vocabulary Semantics Baseline 1.0 formalized after deterministic CRE-001; prospective for CRE-002 and later; not retrospective CRE-001 validation"
 }

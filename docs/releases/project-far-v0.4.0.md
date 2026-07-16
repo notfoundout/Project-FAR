@@ -80,7 +80,7 @@ Research maturity remains bounded. The repository has stronger methodology for f
 - v0.4.0 external validation is preliminary and not blinded comparative evidence.
 - External-validation preservation judgments were not produced under CRP v1.0 evaluator isolation, canonicalization, adjudication, ablation, or aggregation rules.
 - Deterministic CRE-001 results are limited to the registered CRE-001 reference behavior, explicit ambiguity policies, compiler-local vocabulary interpretations, generated artifacts, mutation tests, and verifier depth.
-- CRE-001 does not establish formally licensed vocabulary semantics.
+- Vocabulary Semantics Baseline 1.0 was formalized after deterministic CRE-001 and is prospective for CRE-002 and later only; it is not independent evidence supporting CRE-001 and cannot retrospectively validate CRE-001.
 - Universality, primitive-only sufficiency, global minimality, independence, necessity, uniqueness, metaphysical necessity, adequacy for all reasoning, and superiority over all possible vocabularies remain unestablished.
 
 ## Known Unresolved Questions
