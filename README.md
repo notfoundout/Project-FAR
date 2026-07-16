@@ -23,7 +23,7 @@ The project does not assume that a universal structure exists, nor that FAR is t
 - Current project phase: post-CRE-001 prospective semantics baseline; CRE-002 preparation
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
-- Last dashboard generation time: 2026-07-16T03:44:07+00:00
+- Last dashboard generation time: 2026-07-16T08:17:16+00:00
 
 ## Repository Alerts
 
@@ -63,45 +63,48 @@ Trend data is not yet available because no prior generated snapshot is stored.
 
 ## Top Priority Tasks
 
-### STRATEGIC-001: Design and preregister CRE-002
-- Source: strategic roadmap priority
-- Affected files:
-  - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
-  - [docs/ROADMAP.md](docs/ROADMAP.md)
-  - [theory/evaluation/comparative-representation/experiments/CRE-001/semantics/formal-semantics.md](theory/evaluation/comparative-representation/experiments/CRE-001/semantics/formal-semantics.md)
-- Suggested branch: `research/preregister-cre-002`
-- Suggested PR title: `Design and preregister CRE-002`
-
-### STRATEGIC-002: Execute CRE-002 prospectively
-- Source: strategic roadmap priority
-- Affected files:
-  - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
-- Suggested branch: `research/execute-cre-002`
-- Suggested PR title: `Execute CRE-002 prospectively`
-
-### STRATEGIC-003: Analyze prospective CRE-002 evidence
-- Source: strategic roadmap priority
-- Affected files:
-  - [docs/reports](docs/reports)
-  - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
-- Suggested branch: `research/analyze-cre-002-evidence`
-- Suggested PR title: `Analyze prospective CRE-002 evidence`
-
-### STRATEGIC-004: Plan independent replication
+### STRATEGIC-001: Plan independent replication of CRE-002-EXT-001
 - Source: strategic roadmap priority
 - Affected files:
   - [docs/methodology/adversarial-evaluation.md](docs/methodology/adversarial-evaluation.md)
   - [docs/governance/central-research-program.md](docs/governance/central-research-program.md)
-- Suggested branch: `research/plan-independent-replication`
-- Suggested PR title: `Plan independent replication`
+  - [docs/reports/cre002-ext001-evidence-analysis.md](docs/reports/cre002-ext001-evidence-analysis.md)
+- Suggested branch: `research/plan-cre002-ext001-independent-replication`
+- Suggested PR title: `Plan independent CRE-002-EXT-001 replication`
 
-### STRATEGIC-005: Monitor frozen vocabulary semantic drift
+### STRATEGIC-002: Design a boundary-focused CRE-003
 - Source: strategic roadmap priority
 - Affected files:
-  - [theory/evaluation/comparative-representation/experiments/CRE-001/semantics/semantic-regression.md](theory/evaluation/comparative-representation/experiments/CRE-001/semantics/semantic-regression.md)
-  - [tools/check_cre001_semantics.py](tools/check_cre001_semantics.py)
-- Suggested branch: `maintenance/monitor-cre001-semantic-drift`
-- Suggested PR title: `Monitor CRE-001 semantic drift`
+  - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
+  - [docs/ROADMAP.md](docs/ROADMAP.md)
+  - [docs/reports/cre002-ext001-evidence-analysis.md](docs/reports/cre002-ext001-evidence-analysis.md)
+- Suggested branch: `research/design-cre003-boundary-test`
+- Suggested PR title: `Design CRE-003 boundary test`
+
+### STRATEGIC-003: Audit comparative representation cost
+- Source: strategic roadmap priority
+- Affected files:
+  - [docs/reports/cre002-ext001-evidence-analysis.md](docs/reports/cre002-ext001-evidence-analysis.md)
+  - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
+- Suggested branch: `research/audit-comparative-representation-cost`
+- Suggested PR title: `Audit comparative representation cost`
+
+### STRATEGIC-004: Preserve semantic and result drift locks
+- Source: strategic roadmap priority
+- Affected files:
+  - [theory/evaluation/comparative-representation/semantics/vocabulary-semantics-baseline-1.1.json](theory/evaluation/comparative-representation/semantics/vocabulary-semantics-baseline-1.1.json)
+  - [theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001](theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001)
+- Suggested branch: `maintenance/monitor-cre002-ext001-drift`
+- Suggested PR title: `Monitor CRE-002-EXT-001 drift`
+
+### STRATEGIC-005: Prepare the next evidence release
+- Source: strategic roadmap priority
+- Affected files:
+  - [docs/releases](docs/releases)
+  - [docs/project-status.md](docs/project-status.md)
+  - [docs/reports/cre002-ext001-evidence-analysis.md](docs/reports/cre002-ext001-evidence-analysis.md)
+- Suggested branch: `release/prepare-post-cre002-evidence-release`
+- Suggested PR title: `Prepare post-CRE-002 evidence release`
 
 ## Research Gap Summary
 

@@ -10,7 +10,7 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         self.assertIn('frozen for future experiments beginning with CRE-002', formal)
         self.assertIn('not independent evidence supporting CRE-001', formal)
         self.assertIn('cannot be used as retrospective validation of CRE-001', formal)
-        self.assertIn('CRE-001 demonstrates only that compiler-authored declared interpretations successfully compiled, lowered, and verified under the registered deterministic reference', generated)
+        self.assertIn('CRE-001: deterministic comparison complete at its registered retrospective scope under compiler-authored declared interpretations', generated)
         self.assertNotIn('Established at CRE-001 ' + 'vocabulary-semantics scope', generated)
         self.assertNotRegex(generated, 'CRE-001.*formal vocabulary ' + 'licensing.*' + 'estab' + 'lished')
 
@@ -26,7 +26,7 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         ranked=text.split('## Maintainer Task Briefs',1)[0]
         ids=re.findall(r'^### ([A-Z]+-\d{3}):', ranked, re.M)
         self.assertEqual(len(ids),len(set(ids)))
-        self.assertIn('### STRATEGIC-001: Design and preregister CRE-002', ranked)
+        self.assertIn('### STRATEGIC-001: Plan independent replication of CRE-002-EXT-001', ranked)
         self.assertIn('- Source: strategic roadmap priority', ranked)
         strategic=ranked.split('### TASK-054:',1)[0]
         self.assertNotIn('Source gap:', strategic)
