@@ -21,13 +21,5 @@ jobs:
     - name: Run theory verifier
       run: python tools/verify_theory.py
     - name: Run canonical fast repository health check
-      run: |
-        set -o pipefail
-        python tools/repo_health_check.py --fast 2>&1 | tee /tmp/repo-health-fast.log
-    - name: Upload repository health diagnostics
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: repo-health-fast-diagnostics
-        path: /tmp/repo-health-fast.log
+      run: python tools/repo_health_check.py --fast
     timeout-minutes: 30
