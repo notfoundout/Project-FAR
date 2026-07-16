@@ -1,0 +1,40 @@
+name: Formal Artifact Validation
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate-formal-artifacts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: python -m pip install pyyaml
+      - name: Validate every FAR YAML example
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(find examples/far -type f -name '*.far.yaml' | sort)
+          test "${#files[@]}" -gt 0
+          for file in "${files[@]}"; do
+            python tools/parse_far.py "$file"
+          done
+      - name: Validate every proof object
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(find theory/proof-objects -type f -name 'T-*.proof.yaml' | sort)
+          test "${#files[@]}" -gt 0
+          for file in "${files[@]}"; do
+            python tools/check_proof_object.py "$file"
+          done
+      - name: Run formal specification tests
+        run: python -m unittest tests.test_formal_semantics_and_grammar

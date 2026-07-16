@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.invalid/spec/far-yaml-1.0.schema.json",
+  "title": "Project FAR YAML Object 1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["investigation", "representations"],
+  "properties": {
+    "investigation": {"type": "string", "minLength": 1},
+    "reasoning_system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system", "far_primitives"],
+      "properties": {
+        "system": {"type": "string", "minLength": 1},
+        "verdict": {"enum": ["fits FAR", "extends FAR", "falsifies FAR", "draft"]},
+        "far_primitives": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["Investigation", "Representation", "Representational Structure", "Interpretation", "Reasoning Calculus"],
+          "properties": {
+            "Investigation": {"type": "string", "minLength": 1},
+            "Representation": {"type": "string", "minLength": 1},
+            "Representational Structure": {"type": "string", "minLength": 1},
+            "Interpretation": {"type": "string", "minLength": 1},
+            "Reasoning Calculus": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "representations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/representation"}
+    },
+    "relations": {"type": "array", "items": {"$ref": "#/$defs/relation"}},
+    "interpretations": {"type": "array", "items": {"$ref": "#/$defs/interpretation"}},
+    "rules": {"type": "array", "items": {"$ref": "#/$defs/rule"}},
+    "transitions": {"type": "array", "items": {"$ref": "#/$defs/transition"}}
+  },
+  "$defs": {
+    "statement": {
+      "oneOf": [
+        {"type": "string", "minLength": 1},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "claim"],
+          "properties": {
+            "kind": {"type": "string", "minLength": 1},
+            "claim": {"type": "string", "minLength": 1},
+            "subject": {"type": "string"},
+            "predicate": {"type": "string"},
+            "scope": {"type": "string"}
+          }
+        }
+      ]
+    },
+    "representation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "anyOf": [{"required": ["content"]}, {"required": ["statement"]}],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "minLength": 1},
+        "content": {"type": "string"},
+        "statement": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "source", "target"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "type": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "target": {"type": "string", "minLength": 1}
+      }
+    },
+    "interpretation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["representation", "meaning"],
+      "properties": {
+        "representation": {"type": "string", "minLength": 1},
+        "meaning": {"type": "string", "minLength": 1}
+      }
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "inputs", "output"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "name": {"type": "string", "minLength": 1},
+        "inputs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "output": {"type": "string", "minLength": 1},
+        "condition": {"type": "string"}
+      }
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source", "rule", "target", "order"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "rule": {"type": "string", "minLength": 1},
+        "target": {"type": "string", "minLength": 1},
+        "status": {"enum": ["admissible", "inadmissible", "unresolved", "draft"]},
+        "order": {"type": "integer"}
+      }
+    }
+  }
+}
