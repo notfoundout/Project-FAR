@@ -1,0 +1,23 @@
+name: Specification Export
+
+on:
+  pull_request:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  verify-specification-export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Regenerate Project FAR specification export
+        run: python tools/export_specification.py
+      - name: Fail if specification export is stale
+        run: git diff --exit-code -- exports/far-spec-v1
+      - name: Verify export tests
+        run: python -m pytest tests/test_specification_export.py

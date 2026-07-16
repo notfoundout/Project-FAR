@@ -1,0 +1,29 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "compatibility/compatibility-spec.md": "e55c247575e14c0e3d28b129ffd30bd30811b31c4a12516ee9b49c5b1f8f5f9e",
+    "examples/README.md": "8e3ccf239edcc4a3b8c61f33d9c49ef9cb87eba4667dd6c454e273426ee49150",
+    "examples/index.json": "0fcdf90b79460599f1a9548cfeea31fe05f1bd486cbb3aef6497b6dd6a3b3343",
+    "examples/invalid/broken-reference.json": "13a5cbdc8b5d339dc266039512e9bd5141198102af9d83867c3866be2d2c4017",
+    "examples/invalid/missing-format-version.json": "5504439709a92c9be90ea092997c266697094a6cc76c743d5625373daccd0d09",
+    "examples/valid/complete.json": "4c30ad95c222c0312c02dece3f566952003f3abc2cdb4a35c9a95d247853b602",
+    "examples/valid/minimal.json": "793cce17063e401844138941d4b54f643c437570be14f5326f6899695c701829",
+    "grammar/far-yaml-grammar.md": "b4cbf54f4f3e2ccea7d2ee22d41304b17a273f612dcb0d5a9b39053a0792f393",
+    "manifest.json": "682daac7b57697fc028274e5a6f44149ae415447ba26269405361c5cd3e0103c",
+    "schemas/far-document.schema.json": "1073c6ffd5c1fa30a5e96060eaae79a978b5e39231f6a8cae615b2202056f222",
+    "schemas/far-yaml.schema.json": "034ab5938ebfa2b00d9fee9937648773352567ccc331ff7f885a7a5a9894d53a",
+    "schemas/proof-object-schema.yaml": "c7a27e3c4f8a23472b65614f4a2f8e490ab922a2fb244d8fbcae6620340695e0",
+    "semantics/construction.md": "1d8c67d48158462af76e43ec5da5be6b5f522700658b73777bc2f667a7e39a2e",
+    "semantics/far-semantics.md": "4f9e4557b0b3c913525255ba7d8f10f6730536af1689840fc0ed90e319e7723e",
+    "semantics/model-theory.md": "14e15e0f13a9be122316d321fabdfc3b8e453f79716b90c9793af1970ebfe8e5",
+    "semantics/proof-step-rules.md": "8ce67cbfb11ef3f0b391906a9f69d1740d1df7cc59e0ee6c7b13757a2cc7b612",
+    "semantics/proof-step-semantics.md": "6f6c919e53103dc3a3b189ae2c428c4fed4a55e7209f8ddc44d38548622f1c41",
+    "semantics/scope.md": "ee032fbd333ab83524df6ffa6085a9a48a01155b81a948b86da689129dcc7579",
+    "semantics/semantic-proof-checking.md": "b3c4d2c6fe07b157166ec0648a0b66b69c95564d9d2d8e0767eece7339f5d22c",
+    "terminology/definitions.md": "f874587159aec7a5b2225c8b4d650845f9f6ee9d2dd56ef005904f56a6814cfb",
+    "terminology/definitions.yaml": "1171f7b77a875810c99674f0651058150c1fecd60258a20a5fd40d377202a10b",
+    "terminology/derivation.md": "c524e76951e3245d88be95ee7e9ec6fa717801cfa3e2e43a7a56eb96c50c4b54",
+    "terminology/derived-concepts.md": "e813c32b046e9a1323af0a7651c71afc36b552f5d2e9e90df10532e1c3f450e2",
+    "terminology/meta-theory-definitions.md": "cf41362d5307cff4f04a7fb956238f3b96eb75dbc47cc46f890cbd2e98d2f81a"
+  }
+}

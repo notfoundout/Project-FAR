@@ -1,0 +1,22 @@
+{
+  "invalid/broken-reference.json": {
+    "expected_validity": "invalid",
+    "purpose": "Rejects dependency references to unknown objects.",
+    "schema_version": "far-ir/1.0"
+  },
+  "invalid/missing-format-version.json": {
+    "expected_validity": "invalid",
+    "purpose": "Rejects documents without required format_version.",
+    "schema_version": "far-ir/1.0"
+  },
+  "valid/complete.json": {
+    "expected_validity": "valid",
+    "purpose": "Representative complete valid FAR IR document.",
+    "schema_version": "far-ir/1.0"
+  },
+  "valid/minimal.json": {
+    "expected_validity": "valid",
+    "purpose": "Minimal valid FAR IR document.",
+    "schema_version": "far-ir/1.0"
+  }
+}

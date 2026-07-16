@@ -1,0 +1,173 @@
+{
+  "active_branch": "work",
+  "artifacts": [
+    {
+      "category": "compatibility",
+      "path": "compatibility/compatibility-spec.md",
+      "sha256": "e55c247575e14c0e3d28b129ffd30bd30811b31c4a12516ee9b49c5b1f8f5f9e",
+      "source": null,
+      "status": "generated"
+    },
+    {
+      "category": "examples",
+      "path": "examples/README.md",
+      "sha256": "8e3ccf239edcc4a3b8c61f33d9c49ef9cb87eba4667dd6c454e273426ee49150",
+      "source": null,
+      "status": "generated"
+    },
+    {
+      "category": "examples",
+      "path": "examples/index.json",
+      "sha256": "0fcdf90b79460599f1a9548cfeea31fe05f1bd486cbb3aef6497b6dd6a3b3343",
+      "source": null,
+      "status": "generated"
+    },
+    {
+      "category": "examples",
+      "path": "examples/invalid/broken-reference.json",
+      "sha256": "13a5cbdc8b5d339dc266039512e9bd5141198102af9d83867c3866be2d2c4017",
+      "source": "conformance/far-ir-1.0/invalid/broken-reference.json",
+      "status": "canonical"
+    },
+    {
+      "category": "examples",
+      "path": "examples/invalid/missing-format-version.json",
+      "sha256": "5504439709a92c9be90ea092997c266697094a6cc76c743d5625373daccd0d09",
+      "source": "conformance/far-ir-1.0/invalid/missing-format-version.json",
+      "status": "canonical"
+    },
+    {
+      "category": "examples",
+      "path": "examples/valid/complete.json",
+      "sha256": "4c30ad95c222c0312c02dece3f566952003f3abc2cdb4a35c9a95d247853b602",
+      "source": "conformance/far-ir-1.0/valid/complete.json",
+      "status": "canonical"
+    },
+    {
+      "category": "examples",
+      "path": "examples/valid/minimal.json",
+      "sha256": "793cce17063e401844138941d4b54f643c437570be14f5326f6899695c701829",
+      "source": "conformance/far-ir-1.0/valid/minimal.json",
+      "status": "canonical"
+    },
+    {
+      "category": "grammar",
+      "path": "grammar/far-yaml-grammar.md",
+      "sha256": "b4cbf54f4f3e2ccea7d2ee22d41304b17a273f612dcb0d5a9b39053a0792f393",
+      "source": "spec/far-yaml-grammar.md",
+      "status": "canonical"
+    },
+    {
+      "category": "schemas",
+      "path": "schemas/far-document.schema.json",
+      "sha256": "1073c6ffd5c1fa30a5e96060eaae79a978b5e39231f6a8cae615b2202056f222",
+      "source": "schemas/far-document.schema.json",
+      "status": "canonical"
+    },
+    {
+      "category": "schemas",
+      "path": "schemas/far-yaml.schema.json",
+      "sha256": "034ab5938ebfa2b00d9fee9937648773352567ccc331ff7f885a7a5a9894d53a",
+      "source": "spec/far-yaml.schema.json",
+      "status": "canonical"
+    },
+    {
+      "category": "schemas",
+      "path": "schemas/proof-object-schema.yaml",
+      "sha256": "c7a27e3c4f8a23472b65614f4a2f8e490ab922a2fb244d8fbcae6620340695e0",
+      "source": "theory/proof-objects/proof-object-schema.yaml",
+      "status": "canonical"
+    },
+    {
+      "category": "semantics",
+      "path": "semantics/construction.md",
+      "sha256": "1d8c67d48158462af76e43ec5da5be6b5f522700658b73777bc2f667a7e39a2e",
+      "source": "theory/semantics/construction.md",
+      "status": "canonical"
+    },
+    {
+      "category": "semantics",
+      "path": "semantics/far-semantics.md",
+      "sha256": "4f9e4557b0b3c913525255ba7d8f10f6730536af1689840fc0ed90e319e7723e",
+      "source": "theory/formal-semantics/far-semantics.md",
+      "status": "canonical"
+    },
+    {
+      "category": "semantics",
+      "path": "semantics/model-theory.md",
+      "sha256": "14e15e0f13a9be122316d321fabdfc3b8e453f79716b90c9793af1970ebfe8e5",
+      "source": "theory/semantics/model-theory.md",
+      "status": "canonical"
+    },
+    {
+      "category": "semantics",
+      "path": "semantics/proof-step-rules.md",
+      "sha256": "8ce67cbfb11ef3f0b391906a9f69d1740d1df7cc59e0ee6c7b13757a2cc7b612",
+      "source": "theory/proof-objects/proof-step-rules.md",
+      "status": "canonical"
+    },
+    {
+      "category": "semantics",
+      "path": "semantics/proof-step-semantics.md",
+      "sha256": "6f6c919e53103dc3a3b189ae2c428c4fed4a55e7209f8ddc44d38548622f1c41",
+      "source": "theory/semantics/proof-step-semantics.md",
+      "status": "canonical"
+    },
+    {
+      "category": "semantics",
+      "path": "semantics/scope.md",
+      "sha256": "ee032fbd333ab83524df6ffa6085a9a48a01155b81a948b86da689129dcc7579",
+      "source": "theory/semantics/scope.md",
+      "status": "canonical"
+    },
+    {
+      "category": "semantics",
+      "path": "semantics/semantic-proof-checking.md",
+      "sha256": "b3c4d2c6fe07b157166ec0648a0b66b69c95564d9d2d8e0767eece7339f5d22c",
+      "source": "theory/proof-objects/semantic-proof-checking.md",
+      "status": "canonical"
+    },
+    {
+      "category": "terminology",
+      "path": "terminology/definitions.md",
+      "sha256": "f874587159aec7a5b2225c8b4d650845f9f6ee9d2dd56ef005904f56a6814cfb",
+      "source": "theory/definitions/definitions.md",
+      "status": "canonical"
+    },
+    {
+      "category": "terminology",
+      "path": "terminology/definitions.yaml",
+      "sha256": "1171f7b77a875810c99674f0651058150c1fecd60258a20a5fd40d377202a10b",
+      "source": "theory/metadata/definitions.yaml",
+      "status": "canonical"
+    },
+    {
+      "category": "terminology",
+      "path": "terminology/derivation.md",
+      "sha256": "c524e76951e3245d88be95ee7e9ec6fa717801cfa3e2e43a7a56eb96c50c4b54",
+      "source": "theory/definitions/derivation.md",
+      "status": "canonical"
+    },
+    {
+      "category": "terminology",
+      "path": "terminology/derived-concepts.md",
+      "sha256": "e813c32b046e9a1323af0a7651c71afc36b552f5d2e9e90df10532e1c3f450e2",
+      "source": "theory/definitions/derived-concepts.md",
+      "status": "canonical"
+    },
+    {
+      "category": "terminology",
+      "path": "terminology/meta-theory-definitions.md",
+      "sha256": "cf41362d5307cff4f04a7fb956238f3b96eb75dbc47cc46f890cbd2e98d2f81a",
+      "source": "theory/definitions/meta-theory-definitions.md",
+      "status": "canonical"
+    }
+  ],
+  "commit_sha": "6d3c114c922ee9f67a5c2790836f498d52803ebb",
+  "compatibility_version": "1.0.0",
+  "export_timestamp": "2026-07-16T14:00:05-04:00",
+  "export_version": "1.0.0",
+  "exporter_version": "1.0.0",
+  "project_far_repository": "/workspace/Project-FAR",
+  "schema_version": "far-ir/1.0"
+}
