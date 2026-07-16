@@ -67,4 +67,4 @@ Execution stops for a vocabulary when a required scenario commitment cannot be r
 
 ## Nonclaims
 
-No result from CRE-002 alone establishes universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, FAR, or universal reasoning structure.
+No result from CRE-002 alone establishes universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, or universal reasoning structure.
