@@ -20,5 +20,13 @@ jobs:
     - name: Install dependencies
       run: python -m pip install pyyaml
     - name: Run full canonical repository health
-      run: python tools/repo_health_check.py --full
+      run: |
+        set -o pipefail
+        python tools/repo_health_check.py --full 2>&1 | tee /tmp/full-health.log
+    - name: Upload full health diagnostics
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: full-health-diagnostics
+        path: /tmp/full-health.log
     timeout-minutes: 60
