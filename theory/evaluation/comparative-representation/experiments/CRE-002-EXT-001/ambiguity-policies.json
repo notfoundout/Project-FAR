@@ -1,0 +1,15 @@
+{
+  "policy_id":"CRE-002-EXT-001-AMBIGUITY-POLICIES-1.0",
+  "status":"frozen-upon-merge",
+  "policies":[
+    {"id":"AP-001","topic":"nondeterminism","resolution":"Every listed alternative is a distinct permitted successor; preserve the full successor set."},
+    {"id":"AP-002","topic":"concurrency","resolution":"Concurrency is finite interleaving of atomic transitions, never simultaneous updates; preserve every permitted order."},
+    {"id":"AP-003","topic":"defeasibility","resolution":"Priority defeat suppresses the lower-priority result for the current state only and does not delete or deactivate the rule."},
+    {"id":"AP-004","topic":"provenance","resolution":"A truth value never substitutes for a required evidence tuple; source and reliability are operational guard inputs."},
+    {"id":"AP-005","topic":"rule modification","resolution":"T_modify changes exactly one rule from active to inactive, records before and after status, and fires at most once."},
+    {"id":"AP-006","topic":"deadlock","resolution":"Deadlock holds when no non-halt transition is admissible and both dispatch rules are inactive or blocked; T_halt then records terminal_reason=deadlock."},
+    {"id":"AP-007","topic":"history","resolution":"Evidence and action histories preserve firing order and are not quotiented by commutativity."},
+    {"id":"AP-008","topic":"semantic authority","resolution":"Only Baseline 1.1 primitive semantics and its five declared bounded derived constructs may license candidate machinery."},
+    {"id":"AP-009","topic":"unsupported commitments","resolution":"Report partial or unsupported; never invent primitive meaning, extra derived operators, or unrestricted payload languages."}
+  ]
+}
