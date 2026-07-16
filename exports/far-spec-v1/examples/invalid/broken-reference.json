@@ -1,0 +1,66 @@
+{
+  "format_version": "far-ir/1.0",
+  "id": "DOC-broken",
+  "investigation": {
+    "id": "INV-g",
+    "kind": "investigation",
+    "question": "Graph?"
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "kind": "claim",
+      "statement": "c1"
+    },
+    {
+      "id": "C2",
+      "kind": "claim",
+      "statement": "c2"
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "A1",
+      "kind": "assumption",
+      "statement": "a1"
+    }
+  ],
+  "reasoning_steps": [
+    {
+      "id": "RS1",
+      "kind": "reasoning_step",
+      "order": 1,
+      "premises": [
+        {
+          "identifier": "A1",
+          "expected_kind": "assumption"
+        }
+      ],
+      "conclusions": [
+        {
+          "identifier": "C1",
+          "expected_kind": "claim"
+        }
+      ],
+      "rationale": "derive"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "D1",
+      "kind": "dependency",
+      "source_ref": {
+        "identifier": "C1",
+        "expected_kind": "claim"
+      },
+      "target_ref": {
+        "identifier": "MISSING",
+        "expected_kind": "claim"
+      },
+      "relation": "depends_on"
+    }
+  ],
+  "metadata": {
+    "graph": "fixture"
+  }
+}

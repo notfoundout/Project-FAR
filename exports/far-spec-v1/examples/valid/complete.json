@@ -1,0 +1,24 @@
+{
+  "format_version": "far-ir/1.0",
+  "id": "DOC-all",
+  "source": {"source": "fixture", "line": 1, "column": 1},
+  "metadata": {"suite": "mechanization", "order": [1, 2]},
+  "extensions": {"far.example": {"note": "namespaced extension"}},
+  "investigation": {"id": "INV-all", "kind": "investigation", "question": "Can all object kinds be represented?", "scope": "Prompt 2 fixture"},
+  "representations": [{"id": "REP-all", "kind": "representation", "content": "representation content", "metadata": {"m": true}}],
+  "structures": [{"id": "STR-all", "kind": "structure", "description": "structure", "representations": [{"identifier": "REP-all", "expected_kind": "representation"}]}],
+  "interpretations": [{"id": "INT-all", "kind": "interpretation", "representation": {"identifier": "REP-all", "expected_kind": "representation"}, "meaning": "meaning"}],
+  "claims": [{"id": "C-all", "kind": "claim", "statement": "claim"}],
+  "assumptions": [{"id": "A-all", "kind": "assumption", "statement": "assumption"}],
+  "evidence": [{"id": "EV-all", "kind": "evidence", "description": "evidence", "cites": [{"identifier": "REP-all", "expected_kind": "representation"}]}],
+  "operations": [{"id": "OP-all", "kind": "operation", "description": "operation", "inputs": [{"identifier": "A-all", "expected_kind": "assumption"}], "outputs": [{"identifier": "C-all", "expected_kind": "claim"}]}],
+  "reasoning_steps": [{"id": "RS-001", "kind": "reasoning_step", "order": 1, "operation": {"identifier": "OP-all", "expected_kind": "operation"}, "premises": [{"identifier": "A-all", "expected_kind": "assumption"}], "conclusions": [{"identifier": "C-all", "expected_kind": "claim"}], "rationale": "ordered rationale"}],
+  "dependencies": [{"id": "DEP-all", "kind": "dependency", "source_ref": {"identifier": "C-all", "expected_kind": "claim"}, "target_ref": {"identifier": "A-all", "expected_kind": "assumption"}, "relation": "depends_on"}],
+  "proofs": [{"id": "PRF-all", "kind": "proof", "claim": {"identifier": "C-all", "expected_kind": "claim"}, "steps": [{"identifier": "RS-001", "expected_kind": "reasoning_step"}], "assumptions": [{"identifier": "A-all", "expected_kind": "assumption"}], "evidence": [{"identifier": "EV-all", "expected_kind": "evidence"}]}],
+  "graph": {
+    "nodes": [{"id": "C-all", "kind": "claim"}, {"id": "A-all", "kind": "assumption"}],
+    "edges": [{"id": "GE-all", "kind": "supports", "source_ref": {"identifier": "A-all", "expected_kind": "assumption"}, "target_ref": {"identifier": "C-all", "expected_kind": "claim"}}],
+    "metadata": {"graph": "data only"},
+    "extensions": {"far.graph": true}
+  }
+}
