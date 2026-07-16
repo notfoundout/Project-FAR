@@ -8,7 +8,7 @@ This analysis integrates the recorded execution artifacts. It does not alter the
 
 Integration provenance: this report is derived from the committed comparison and execution artifacts and introduces no new candidate computation or adjudication.
 
-Repository integration status: canonical and generated status sources now treat independent replication as the next evidential requirement.
+Repository integration status: canonical and generated status sources now treat independent replication as the next evidential requirement. The regenerated repository index was reviewed after all temporary integration workflows were removed.
 
 ## Recorded result
 
