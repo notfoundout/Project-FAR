@@ -1,0 +1,19 @@
+{
+  "lock_id": "CRE-002-EXECUTION-LOCK-1.0",
+  "execution_permitted": false,
+  "reason": "Preregistration package has not yet been merged and checksum-locked.",
+  "unlock_requirements": [
+    "preregistration package merged to main",
+    "package manifest contains final SHA-256 checksums",
+    "repository health passes on merged main",
+    "separate reviewed PR changes execution_permitted to true",
+    "no vocabulary-specific CRE-002 compiler or mapping exists before unlock"
+  ],
+  "prohibited_before_unlock": [
+    "official compiler runs",
+    "official evaluator mappings",
+    "official verifier results",
+    "vocabulary pass or fail claims",
+    "scientific aggregation"
+  ]
+}
