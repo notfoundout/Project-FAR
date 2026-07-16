@@ -15,6 +15,16 @@ def load(name: str):
     return json.loads((PKG / name).read_text())
 
 
+def verify_checksums() -> bool:
+    cp = subprocess.run(
+        [sys.executable, 'tools/check_cre002_ext001_checksums.py'],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    return cp.returncode == 0
+
+
 def main() -> int:
     errors = []
     for name in REQUIRED:
@@ -38,26 +48,37 @@ def main() -> int:
     checksum_state = manifest.get('checksum_state')
     if checksum_state not in {'pending', 'locked'}:
         errors.append('checksum state must be pending or locked')
-    elif checksum_state == 'locked':
-        checksum_path = PKG / 'checksum-lock.json'
-        if not checksum_path.is_file():
-            errors.append('locked state requires checksum-lock.json')
-        else:
-            cp = subprocess.run(
-                [sys.executable, 'tools/check_cre002_ext001_checksums.py'],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-            )
-            if cp.returncode != 0:
-                errors.append('locked state checksum verification failed')
+    checksum_valid = checksum_state == 'locked' and (PKG / 'checksum-lock.json').is_file() and verify_checksums()
+    if checksum_state == 'locked' and not checksum_valid:
+        errors.append('locked state requires successful checksum verification')
 
-    if manifest.get('execution_permitted') is not False or lock.get('execution_permitted') is not False:
-        errors.append('execution must remain locked')
-    if manifest.get('compiler_implementation_permitted') is not False or lock.get('compiler_implementation_permitted') is not False:
-        errors.append('compiler implementation must remain locked')
+    execution = manifest.get('execution_permitted')
+    compiler = manifest.get('compiler_implementation_permitted')
+    if execution != lock.get('execution_permitted') or compiler != lock.get('compiler_implementation_permitted'):
+        errors.append('manifest and execution lock authorization disagree')
+    if execution is True or compiler is True:
+        audit_path = PKG / 'execution-unlock-audit.json'
+        if not checksum_valid:
+            errors.append('execution authorization requires a valid checksum lock')
+        if not audit_path.is_file():
+            errors.append('execution authorization requires execution-unlock-audit.json')
+        else:
+            audit = load('execution-unlock-audit.json')
+            if audit.get('authorization_type') != 'separate-reviewed-pull-request':
+                errors.append('unlock audit has wrong authorization type')
+            if audit.get('immutable_scientific_files_modified') is not False:
+                errors.append('unlock audit must confirm scientific files unchanged')
+            if audit.get('execution_authorized') is not True or audit.get('compiler_implementation_authorized') is not True:
+                errors.append('unlock audit does not authorize execution and compiler implementation')
+            if audit.get('official_results_present') is not False:
+                errors.append('unlock audit must not claim results')
+            if audit.get('preserved_prior_result') != 'CRE-002-COMPARISON-1.0':
+                errors.append('unlock audit does not preserve prior result')
+    elif execution is not False or compiler is not False:
+        errors.append('authorization fields must be booleans')
+
     if manifest.get('official_results_present') is not False or lock.get('official_results_present') is not False:
-        errors.append('results must be absent')
+        errors.append('results must be absent before execution')
     if scenario.get('scenario_id') != 'CRE-002-EXT-001-SCENARIO-1.0':
         errors.append('wrong scenario id')
     if scenario.get('semantic_authority') != 'VOCABULARY-SEMANTICS-BASELINE-1.1':
