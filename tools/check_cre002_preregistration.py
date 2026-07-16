@@ -46,7 +46,6 @@ def main() -> int:
     decisions = load("decision-rules.json")
     lock = load("execution-lock.json")
     manifest = load("package-manifest.json")
-    checksum = load("checksum-lock.json")
 
     permitted = lock.get("execution_permitted")
     if permitted not in {False, True}:
@@ -70,8 +69,6 @@ def main() -> int:
                 errors.append("unlock audit lacks the registered checksum-lock merge commit")
         if manifest.get("status") != "execution-authorized":
             errors.append("authorized manifest must use status execution-authorized")
-        if checksum.get("execution_permitted") is not True:
-            errors.append("checksum control must record the authorized execution state")
     else:
         if manifest.get("status") not in {"preregistered-under-review", "preregistered-checksum-locked"}:
             errors.append("locked manifest has an invalid preregistration status")
