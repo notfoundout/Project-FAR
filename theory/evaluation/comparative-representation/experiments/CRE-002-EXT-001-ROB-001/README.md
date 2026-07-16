@@ -6,23 +6,29 @@ Automated multi-implementation robustness track replacing the unexecuted human-t
 
 ## Purpose
 
-Test whether the frozen CRE-002-EXT-001 scenario survives multiple separately implemented computational normalization paths rather than depending on one implementation path.
+Test whether the frozen CRE-002-EXT-001 scenario survives multiple separately written computational implementations rather than depending on one implementation body.
 
-## Required architecture
+## Architecture
 
-1. Three compiler implementations execute in separate temporary working directories.
-2. Each compiler receives only the frozen scenario input and its own process arguments.
-3. No compiler receives or can read another compiler's generated artifact during compilation.
-4. A separate verifier process receives frozen copies only after all compiler processes finish.
-5. The verifier performs deterministic byte-level comparison after canonical serialization.
-6. The verifier applies structural mutations and adversarial malformed cases and must reject every changed case.
-7. A second complete run must reproduce the same canonical output and digest.
+The executable package contains three distinct compiler source files:
+
+- `tools/cre002_compilers/compiler_recursive.py`
+- `tools/cre002_compilers/compiler_iterative.py`
+- `tools/cre002_compilers/compiler_pairs.py`
+
+It also contains a separately implemented verifier:
+
+- `tools/cre002_compilers/verifier.py`
+
+Each compiler runs as its own process in a private temporary working directory. It receives only a private copy of the frozen input and its output path. Compiler outputs are not copied into the verifier workspace until all compiler processes finish. The verifier compares each output to the frozen scenario, requires byte-identical canonical serialization, and runs registered mutation and malformed-input tests. A complete second execution must reproduce the same report and digest.
+
+The implementations are separate source files and use materially different traversal strategies: recursive reconstruction, iterative stack reconstruction, and object-pair materialization. They remain controlled by one repository and one development process.
 
 ## Claim boundary
 
-A passing result establishes **bounded multi-implementation robustness**: the frozen scenario survived three computational normalization paths, a separately invoked verifier, registered mutations, malformed inputs, and a deterministic rerun.
+A passing result establishes **bounded multi-implementation robustness**. It shows that the frozen scenario survives three separately written computational paths, process/workspace isolation, a separate verifier, registered mutations, malformed inputs, and deterministic rerun.
 
-It is not independent external replication. One agent, researcher, repository, or organization controlling all implementations cannot establish independent human judgment, independent organizational incentives, or absence of shared specification-level mistakes.
+It is not independent external replication. It does not establish independent human judgment, independent organizational incentives, independent specification interpretation, or absence of shared specification-level mistakes.
 
 ## Execution
 
@@ -35,6 +41,6 @@ python -m unittest tests.test_cre002_ext001_rep001_team_registry
 
 Only this conclusion is licensed by a passing run:
 
-> For the frozen CRE-002-EXT-001 scenario, three isolated internal implementations produced the same canonical result; a separately invoked verifier accepted the unmodified outputs, rejected the registered mutations and adversarial cases, and a full rerun reproduced the same digest.
+> For the frozen CRE-002-EXT-001 scenario, three distinct compiler source implementations running in isolated workspaces produced the same canonical result; a separate verifier accepted the unmodified outputs, rejected the registered mutations and malformed cases, and a full rerun reproduced the same report and digest.
 
-No external-replication, universal-sufficiency, necessity, minimality, independence, superiority, FAR-proof, or universal-structure conclusion follows.
+No external-replication, universal-sufficiency, necessity, minimality, human-independence, organizational-independence, superiority, FAR-proof, or universal-structure conclusion follows.
