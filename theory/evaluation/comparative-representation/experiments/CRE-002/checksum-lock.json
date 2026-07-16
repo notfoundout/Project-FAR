@@ -1,6 +1,7 @@
 {
   "algorithm": "SHA-256",
   "execution_state_at_lock": false,
+  "execution_permitted": true,
   "files": [
     {
       "byte_count": 1999,
