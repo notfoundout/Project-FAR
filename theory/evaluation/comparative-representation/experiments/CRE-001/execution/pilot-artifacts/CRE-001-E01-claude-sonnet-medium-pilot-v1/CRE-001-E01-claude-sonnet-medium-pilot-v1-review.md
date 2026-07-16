@@ -1,6 +1,6 @@
 # CRE-001-E01 Claude Sonnet Medium Pilot v1 Review
 
-Status: Preserved review complete; correction required; noncanonical.
+Status: Preserved review complete; pilot concluded; noncanonical.
 Experiment: CRE-001.
 Assignment: CRE-001-E01.
 Evaluator: CRE-001-EVALUATOR-CLAUDE-SONNET-MEDIUM-01.
@@ -17,8 +17,8 @@ The exact raw evaluator output is preserved immutably at `theory/evaluation/comp
 - Byte count: `65270`.
 - The review remains separate and does not modify the evaluator's submitted values or conclusions.
 - The raw artifact remains noncanonical and ineligible for canonical ingestion.
-- Evaluator correction remains required.
-- Claude has not been rerun.
+- The evaluator correction loop has been intentionally stopped.
+- Claude has not been rerun as an official evaluator.
 
 ## Administrative status
 
@@ -28,6 +28,7 @@ The exact raw evaluator output is preserved immutably at `theory/evaluation/comp
 - No comparative or vocabulary-level conclusion is permitted.
 - The review is an internal-validity review only.
 - The artifact is noncanonical, unadjudicated, and ineligible for canonical ingestion.
+- The evaluator-based pilot track is concluded and superseded by deterministic verification work.
 
 ## Strengths
 
@@ -40,7 +41,9 @@ The evaluator reportedly:
 - preserved the raw output's own assumptions and limitations;
 - attempted canonicalization and complexity accounting.
 
-## Required corrections
+## Required corrections identified during review
+
+The findings below remain part of the historical review record. They are not being pursued through additional evaluator correction rounds.
 
 ### A. Incorrect CIR clause references
 
@@ -66,7 +69,7 @@ At minimum:
 - several explicit prohibition clauses are absent or only implicitly represented;
 - duplicate-merging decisions are not consistently documented.
 
-A full recount from the corrected CIR is required.
+A deterministic verifier should derive clause and complexity counts from canonical machine-readable structures instead of accepting evaluator self-counts.
 
 ### C. Derived-construct indispensability not demonstrated
 
@@ -77,7 +80,7 @@ In particular:
 - `TerminalLabel` may be redundant with `p_halted=true` plus the no-outgoing-transition condition;
 - `OutputSummaryLabel` may be derivable rather than indispensable.
 
-The evaluator must test each construct for indispensability and report any construct retained only for convenience.
+Future verification should compute or mechanically audit derived machinery rather than relying on evaluator self-assessment.
 
 ### D. Prohibited-transition occurrence is underrepresented
 
@@ -90,24 +93,19 @@ The output does not define:
 - a persistent violation variable or history item;
 - exact trigger semantics.
 
-Explicit handling or an Unknown/Partial assessment is required.
+This ambiguity must be resolved in the formal reference model before deterministic comparison.
 
 ### E. Unterminated-output semantics are incomplete
 
 The evaluator did not fully define how unterminated output is produced for a non-halted finite run or prefix.
 
-An explicit rule or a declared ambiguity is required.
+The formal reference model must specify this before the verifier can produce a determinate result.
 
 ### F. Repeatability of T_disable_reject is unresolved
 
 The listed preconditions for `T_disable_reject` remain true after its first execution unless `R_reject=active` is treated as an additional condition.
 
-The evaluator must:
-
-- identify this as a scenario ambiguity;
-- avoid silently adding a precondition;
-- explain both interpretations;
-- downgrade operational preservation if the ambiguity cannot be resolved from the frozen scenario.
+The formal scenario must select or explicitly preserve the competing interpretations before behavioral equivalence can be checked.
 
 ### G. Acceptance-after-modification branch is not explicitly represented
 
@@ -118,7 +116,7 @@ A valid branch appears to be:
 - T_accept;
 - T_halt.
 
-The evaluator must represent this reachable branch or explicitly prove that the transition schemas already preserve it without relying only on illustrative paths.
+The deterministic reference model must include all reachable branches and generate counterexamples when a candidate representation omits or changes one.
 
 ### H. Preservation result is overstated
 
@@ -132,7 +130,7 @@ This review's provisional assessment is:
 - p_d: Pass;
 - p_i: Partial;
 - p_h: Pass;
-- existential sufficiency: false pending correction.
+- existential sufficiency: false pending formal verification.
 
 These provisional review findings do not replace the evaluator's original scores in any raw artifact.
 
@@ -145,10 +143,18 @@ The calibration inferred:
 
 These are minor calibration assumptions, not fatal defects.
 
+## Why the evaluator track was concluded
+
+The pilot showed that repeated evaluator correction rounds create a recursive review burden without producing objective finality. The mapper was also asked to score its own work, and complexity counts depended on judgment about normalization, indispensability, and duplicate clauses.
+
+The core CRE-001 question is behavioral and representational: whether a candidate representation preserves the formal scenario. That question is better addressed by compiling both the reference scenario and candidate mapping into a canonical execution model and comparing them deterministically.
+
+The pilot remains useful as a preserved failure-analysis artifact. It is not being reverted or promoted into evidence.
+
 ## Noncanonical status rationale
 
-This pilot is noncanonical because it was a single-prompt isolated AI evaluator pilot, not an official primary mapping; calibration was self-assessed; calibration and experimental materials were exposed together; the output is unadjudicated; correction is required; canonical CRE-001 primary mapping is false; the exact raw evaluator output is preserved immutably; and it remains excluded from canonical CRE-001 processing.
+This pilot is noncanonical because it was a single-prompt isolated AI evaluator pilot, not an official primary mapping; calibration was self-assessed; calibration and experimental materials were exposed together; the output is unadjudicated; canonical CRE-001 primary mapping is false; the exact raw evaluator output is preserved immutably; and it remains excluded from canonical CRE-001 processing.
 
 ## Next action
 
-Evaluator correction pass after exact raw-output preservation. The evaluator has not been rerun by this documentation update.
+Build a narrow deterministic CRE-001 verifier that compares a formal reference execution model with a structured candidate mapping, reports behavioral mismatches and shortest counterexamples, and derives machine-checkable preservation and complexity results. No further Claude correction round is planned for this pilot.
