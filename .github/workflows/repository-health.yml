@@ -17,16 +17,14 @@ jobs:
         python-version: 3.x
     - name: Install dependencies
       run: python -m pip install pyyaml
-    - name: Generate CRE-002 prospective evidence
-      run: python tools/cre002_execute.py --write --check
     - name: Run full canonical repository health
-      run: python tools/repo_health_check.py --full
-    - name: Upload CRE-002 generated evidence
+      run: |
+        set -o pipefail
+        python tools/repo_health_check.py --full 2>&1 | tee /tmp/cre002-health.log
+    - name: Upload CRE-002 health diagnostics
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: cre002-generated-evidence
-        path: |
-          theory/evaluation/comparative-representation/experiments/CRE-002/execution
-          docs/reports/cre002-prospective-comparison.md
+        name: cre002-health-diagnostics
+        path: /tmp/cre002-health.log
     timeout-minutes: 60
