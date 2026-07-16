@@ -1,0 +1,768 @@
+{
+  "artifact_id": "CRE-001-FROZEN-VOCABULARY-SEMANTICS-1.0",
+  "derived_constructs": [
+    {
+      "classification": "derived",
+      "identifier": "D_boolean_value",
+      "licensing_note": "Introduces two-valued value/status distinction required by CRE-001 model; not primitive-only.",
+      "meaning": "explicit truth/status carriers"
+    },
+    {
+      "classification": "derived",
+      "identifier": "D_ordered_history",
+      "licensing_note": "Introduces order preservation for history; licensed only with a primitive that supports ordering, history points, or history structure.",
+      "meaning": "append-only ordered sequence"
+    },
+    {
+      "classification": "derived",
+      "identifier": "D_guarded_update",
+      "licensing_note": "Introduces guarded transition execution; not arbitrary programming language.",
+      "meaning": "atomic guard/effect records"
+    },
+    {
+      "classification": "derived",
+      "identifier": "D_disjunction",
+      "licensing_note": "Introduces OR guard for halt; limited to registered finite disjunction.",
+      "meaning": "bounded explicit alternative group"
+    },
+    {
+      "classification": "derived",
+      "identifier": "D_terminality",
+      "licensing_note": "Introduces terminal blocking policy and output treatment under registered ambiguity choices.",
+      "meaning": "halt variable and post-halt blocking"
+    },
+    {
+      "classification": "compiler artifact",
+      "identifier": "compiler capability table",
+      "licensing_note": "Historical compiler-local compatibility heuristic; superseded for semantic licensing by these frozen semantics.",
+      "meaning": "CAPS/CAP_KEYWORDS in tools/cre001_compile_vocabularies.py"
+    },
+    {
+      "classification": "representation artifact",
+      "identifier": "lowering trace entries",
+      "licensing_note": "Replay evidence for deterministic implementation; not primitive semantics.",
+      "meaning": "native construct to common-model trace links"
+    },
+    {
+      "classification": "semantic assumption",
+      "identifier": "registered ambiguity policies",
+      "licensing_note": "Frozen assumptions for CRE-001 deterministic scope; stronger claims require separate justification.",
+      "meaning": "disable/reject repeatability, prohibited transition output, unterminated output"
+    },
+    {
+      "classification": "unresolved",
+      "identifier": "unbounded quantification/concurrency/probability/higher-order modification",
+      "licensing_note": "No formal semantics frozen here beyond recording non-support in CRE-001 deterministic scope.",
+      "meaning": "outside compiler boundary fixtures"
+    }
+  ],
+  "nonclaims": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "independence",
+    "superiority",
+    "FAR proof",
+    "universal reasoning structure"
+  ],
+  "scope": "official CRE-001 vocabulary primitives and declared derived machinery only",
+  "status": "Frozen vocabulary semantics for CRE-001 scope",
+  "vocabularies": {
+    "CRE-001-VOCAB-A-1.0": {
+      "expressivity_commitments": {
+        "compiler interpretation": [
+          "Object as value/status/rule/history carrier",
+          "Relation as precondition/status/order/prohibition/output/invariant/ambiguity carrier",
+          "Transformation as transition schema and update carrier"
+        ],
+        "derived constructs": [
+          "boolean/status values",
+          "ordered history",
+          "guarded update records",
+          "bounded disjunction",
+          "terminal blocking policy"
+        ],
+        "implementation assumptions": [
+          "finite identifier set",
+          "boolean truth/status carrier",
+          "append-only ordered history",
+          "registered ambiguity policies"
+        ],
+        "lowering rules": [
+          "atomic variables, guards, updates, terminal condition, outputs, invariants, ambiguity policies"
+        ],
+        "primitive definitions": [
+          "object individuation",
+          "relations may express ordering/dependency/constraint/permission/prohibition/status association",
+          "transformations may express transition/update/rule application/state modification"
+        ]
+      },
+      "label": "A",
+      "primitive_semantics": [
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "Object used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, Object denotes a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-A-1.0:Object",
+          "identity_conditions": [
+            "object identity is by declared identifier within CRE-001 mapping scope"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "Object used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "unit individuation",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "unit individuation",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "Object",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "a discrete item, entity, token, state-bearing item, rule, or record treated as a unit of representation."
+        },
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "Relation used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, Relation denotes an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-A-1.0:Relation",
+          "identity_conditions": [
+            "relation identity is by relation identifier, endpoints, role, and scope"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "Relation used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "explicit typed connection among Objects",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "explicit typed connection among Objects",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "Relation",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "an explicit connection, ordering, dependency, constraint, permission, prohibition, or status association among objects."
+        },
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "Transformation used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, Transformation denotes an explicit change, update, transition, rule application, or state modification applied to objects and relations. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-A-1.0:Transformation",
+          "identity_conditions": [
+            "transformation identity is by transition/update identifier, guard/effect content, and scope"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "Transformation used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "explicit operation on Objects/Relations",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "explicit operation on Objects/Relations",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "Transformation",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "an explicit change, update, transition, rule application, or state modification applied to objects and relations."
+        }
+      ]
+    },
+    "CRE-001-VOCAB-B-1.0": {
+      "expressivity_commitments": {
+        "compiler interpretation": [
+          "Label carries most atomic values and conditions",
+          "Transition carries transition schema",
+          "State supports configuration semantics through labeled assignments"
+        ],
+        "derived constructs": [
+          "boolean/status labels",
+          "history labels",
+          "guard/update labels",
+          "bounded disjunction labels",
+          "terminal labels"
+        ],
+        "implementation assumptions": [
+          "labels are stable identifiers",
+          "state snapshots are finite",
+          "transition effects are deterministic under registered policy"
+        ],
+        "lowering rules": [
+          "labels lower to variables/guards/effects/outputs when their attachment role is explicit"
+        ],
+        "primitive definitions": [
+          "state as assignment/status/record/condition at discrete history point",
+          "transition as movement/update/status change/history extension",
+          "label as name/marker/status/condition/identifier attached to state/transition/item"
+        ]
+      },
+      "label": "B",
+      "primitive_semantics": [
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "State used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, State denotes a complete or partial assignment of values, statuses, records, or conditions at a discrete point in the system history. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-B-1.0:State",
+          "identity_conditions": [
+            "state identity is by assignment/status/history-point content within declared scope"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "State used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "discrete configuration snapshot",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "discrete configuration snapshot",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "State",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "a complete or partial assignment of values, statuses, records, or conditions at a discrete point in the system history."
+        },
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "Transition used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, Transition denotes an explicit movement from one state to another, including any update, rule application, status change, or history extension. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-B-1.0:Transition",
+          "identity_conditions": [
+            "transition identity is by source condition, target/effect, rule role, and history extension"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "Transition used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "movement/update between States",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "movement/update between States",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "Transition",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "an explicit movement from one state to another, including any update, rule application, status change, or history extension."
+        },
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "Label used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, Label denotes a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-B-1.0:Label",
+          "identity_conditions": [
+            "label identity is by label token, attachment target, and label role"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "Label used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "attached marker or identifier",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "attached marker or identifier",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "Label",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "a name, marker, tag, status, condition marker, or identifier attached to a state, transition, or recorded item."
+        }
+      ]
+    },
+    "CRE-001-VOCAB-C-1.0": {
+      "expressivity_commitments": {
+        "compiler interpretation": [
+          "Investigation fixes CRE-001 preservation objective",
+          "Interpretation carries truth/status/output meanings",
+          "Calculus carries transitions, guards, updates, prohibitions and policies",
+          "Representational Structure carries state/history/rule-status organization",
+          "Representation carries scenario items"
+        ],
+        "derived constructs": [
+          "boolean interpretations",
+          "history structure",
+          "calculus guard/update records",
+          "halt disjunction",
+          "terminal configuration"
+        ],
+        "implementation assumptions": [
+          "policy assignments are explicit",
+          "calculus is deterministic under registered ambiguity policies",
+          "investigation scope is CRE-001 only"
+        ],
+        "lowering rules": [
+          "typed representations and structures lower to common execution model fields"
+        ],
+        "primitive definitions": [
+          "representation of propositions/rules/state elements/transition records/output records",
+          "structure over ordering/dependency/rule-status/transition/admissibility/history",
+          "interpretation policies for meaning/truth/status/output",
+          "investigation scope",
+          "calculus procedure/policy/update/stopping"
+        ]
+      },
+      "label": "C",
+      "primitive_semantics": [
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "Representation used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, Representation denotes an explicit represented item, proposition, rule, state element, transition record, or output record. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-C-1.0:Representation",
+          "identity_conditions": [
+            "representation identity is by represented content, role, and identifier"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "Representation used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "explicit represented item",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "explicit represented item",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "Representation",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "an explicit represented item, proposition, rule, state element, transition record, or output record."
+        },
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "Representational Structure used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, Representational Structure denotes explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-C-1.0:Representational_Structure",
+          "identity_conditions": [
+            "structure identity is by participating representations, relation type, and constraints"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "Representational Structure used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "explicit organization over representations",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "explicit organization over representations",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "Representational Structure",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "explicit structure over representations, including ordering, dependency, rule-status structure, transition structure, admissibility structure, or history structure."
+        },
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "Interpretation used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, Interpretation denotes the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-C-1.0:Interpretation",
+          "identity_conditions": [
+            "interpretation identity is by policy assignment and target representation"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "Interpretation used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "meaning/status/truth/output policy",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "meaning/status/truth/output policy",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "Interpretation",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "the policy or assignment that gives represented items their scenario meaning, truth condition, status meaning, or output meaning."
+        },
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "Investigation used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, Investigation denotes the bounded task or question that fixes what must be represented and preserved for the mapping. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-C-1.0:Investigation",
+          "identity_conditions": [
+            "investigation identity is by objective, scope, and success criteria"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "Investigation used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "bounded preservation task",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "bounded preservation task",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "Investigation",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "the bounded task or question that fixes what must be represented and preserved for the mapping."
+        },
+        {
+          "closure_conditions": [
+            "closed under finite CRE-001-scoped composition when every component remains explicit and no forbidden commitment is introduced"
+          ],
+          "equivalence_conditions": [
+            "equivalent only when identifier, role, scope, operational contribution, and licensed commitments match"
+          ],
+          "examples": [
+            "Calculus used with recorded role in CRE-001 mapping"
+          ],
+          "forbidden_commitments": [
+            "unstated domain rules",
+            "unbounded semantics",
+            "proof of universal sufficiency",
+            "proof of primitive-only sufficiency",
+            "necessity/minimality/independence/superiority claims",
+            "universal reasoning structure claims"
+          ],
+          "formal_definition": "Within CRE-001 scope, Calculus denotes the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions. It licenses only explicit, finitely identified uses satisfying its source definition and recorded role.",
+          "identifier": "CRE-001-VOCAB-C-1.0:Calculus",
+          "identity_conditions": [
+            "calculus identity is by rule set, admissibility policy, update behavior, and stopping condition"
+          ],
+          "interaction_rules": [
+            "may interact with other primitives only through explicit derived machinery or recorded mapping relations",
+            "does not silently import another vocabulary primitive"
+          ],
+          "limitations": [
+            "formalized only for CRE-001 vocabulary-semantics scope",
+            "does not license stronger project-level conclusions"
+          ],
+          "non_examples": [
+            "Calculus used to import an unrecorded domain rule or universal conclusion"
+          ],
+          "operational_meaning": "rule-governed transition/judgment procedure",
+          "optional_properties": [
+            "human-readable label",
+            "provenance note",
+            "link to derived construct when used"
+          ],
+          "permitted_commitments": [
+            "rule-governed transition/judgment procedure",
+            "explicit CRE-001-scoped representation when provenance and role are recorded"
+          ],
+          "primitive_name": "Calculus",
+          "required_properties": [
+            "explicit identifier",
+            "declared role",
+            "CRE-001 scope",
+            "traceable source",
+            "no scenario alteration"
+          ],
+          "source_definition": "the explicit rule-governed procedure, transition policy, admissibility standard, update rule, or stopping rule used to move between states or judge transitions."
+        }
+      ]
+    }
+  }
+}
