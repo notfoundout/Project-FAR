@@ -40,7 +40,7 @@ class T003AdequacyAuditTests(unittest.TestCase):
         self.assertIn("does **not** prove model-theoretic independence", text)
         self.assertIn("bare tuple inhabitation does not imply faithful representation", text)
         self.assertIn("three examples", text)
-        self.assertIn("do not establish universal scope", text)
+        self.assertIn("do not establish universal domain coverage", text)
 
     def test_no_new_axiom_declarations_or_placeholder_proofs(self):
         text = LEAN.read_text(encoding="utf-8")
