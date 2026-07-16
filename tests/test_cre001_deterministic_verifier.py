@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import sys
 import unittest
 from pathlib import Path
 
@@ -11,6 +12,7 @@ TOOL_PATH = ROOT / "tools" / "cre001_verifier.py"
 SPEC = importlib.util.spec_from_file_location("cre001_verifier", TOOL_PATH)
 assert SPEC and SPEC.loader
 VERIFIER = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = VERIFIER
 SPEC.loader.exec_module(VERIFIER)
 
 MODEL_ROOT = ROOT / "theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier"
