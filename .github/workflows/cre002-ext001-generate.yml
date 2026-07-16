@@ -1,0 +1,19 @@
+name: CRE-002-EXT-001 Generate
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python tools/cre002_ext001_execute.py --write
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cre002-ext001-generated
+          path: theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001/execution
