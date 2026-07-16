@@ -42,4 +42,4 @@ Only the experiment design and preregistration package exist. No CRE-002 vocabul
 
 ## Nonclaims
 
-CRE-002 preregistration does not establish vocabulary sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, FAR, or a universal structure of reasoning.
+CRE-002 preregistration does not establish vocabulary sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, or a universal structure of reasoning.
