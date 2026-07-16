@@ -10,25 +10,17 @@ proves preservation relative to explicit observable behavior.
 
 namespace FAR
 
-/-- A state in the source process model. This type is independent of FAR. -/
 structure ModelState where
   id : String
   meaning : String
   deriving Repr, DecidableEq
 
-/-- A labeled source-model transition. -/
 structure ModelTransition where
   label : String
   source : ModelState
   target : ModelState
   deriving Repr, DecidableEq
 
-/--
-An independently specified finite transition-system model.
-
-Initial-state membership, transition closure, and trace membership are proof
-obligations of the source model rather than assumptions introduced by FAR.
--/
 structure IndependentProcessModel where
   name : String
   investigation : String
@@ -44,7 +36,6 @@ structure IndependentProcessModel where
   observableTrace : List ModelTransition
   traceContained : ∀ transition, transition ∈ observableTrace → transition ∈ transitions
 
-/-- Encode source-model state observables into a FAR representation object. -/
 def encodeState (model : IndependentProcessModel) (state : ModelState) : Representation :=
   {
     id := state.id
@@ -54,18 +45,15 @@ def encodeState (model : IndependentProcessModel) (state : ModelState) : Represe
       (if model.terminal state then "|terminal" else "|nonterminal")
   }
 
-/-- Convert a source transition label into a FAR transition signature. -/
 def encodeTransition (transition : ModelTransition) : TransitionSignature :=
   { label := transition.label }
 
-/-- The reasoning-process projection of an independent source model. -/
 def extractedReasoningProcess (model : IndependentProcessModel) : ReasoningProcess :=
   {
     name := model.name
     specifiedTransitions := model.observableTrace.map encodeTransition
   }
 
-/-- Transition relation induced by the source model. -/
 def extractedRelation
     (model : IndependentProcessModel)
     (source target : Representation) : Prop :=
@@ -73,13 +61,11 @@ def extractedRelation
     source = encodeState model transition.source ∧
     target = encodeState model transition.target
 
-/-- Transition-label admissibility induced by the source model. -/
 def extractedAdmissible
     (model : IndependentProcessModel)
     (signature : TransitionSignature) : Prop :=
   ∃ transition, transition ∈ model.transitions ∧ signature = encodeTransition transition
 
-/-- Verified extraction from independent process semantics into a FAR specification. -/
 def extractProcessSpecification
     (model : IndependentProcessModel) : ProcessSpecification :=
   {
@@ -88,8 +74,7 @@ def extractProcessSpecification
     representations := model.states.map (encodeState model)
     representationsNonempty := by
       intro h
-      have : model.states = [] := by
-        simpa using h
+      have : model.states = [] := by simpa using h
       exact model.statesNonempty this
     requiredRelation := extractedRelation model
     relationClosed := by
@@ -103,18 +88,11 @@ def extractProcessSpecification
     admissible := extractedAdmissible model
   }
 
-/-- The complete independent-model-to-FAR compilation pipeline. -/
 def compileIndependentModel
     (model : IndependentProcessModel) :
     FARRepresentation (extractedReasoningProcess model) :=
   canonicalRepresentation (extractProcessSpecification model)
 
-/--
-Observable source behavior that the FAR result must preserve.
-
-This includes entity encoding, transition structure, admissible labels, ordered
-trace, initial-state marking, terminal-state marking, and state semantics.
--/
 def EndToEndPreservation
     (model : IndependentProcessModel)
     (representation : FARRepresentation (extractedReasoningProcess model)) : Prop :=
@@ -132,7 +110,6 @@ def EndToEndPreservation
       representation.Int.meaning (encodeState model state) membership =
         (encodeState model state).content)
 
-/-- The verified compiler preserves all registered source-model observables. -/
 theorem compileIndependentModel_preserves_behavior
     (model : IndependentProcessModel) :
     EndToEndPreservation model (compileIndependentModel model) := by
@@ -154,18 +131,15 @@ theorem compileIndependentModel_preserves_behavior
       exact List.mem_map.mpr ⟨state, hState, rfl⟩
     exact ⟨membership, rfl⟩
 
-/-- A verifier checks the same end-to-end preservation contract. -/
 def VerifiedCompilation
     (model : IndependentProcessModel)
     (representation : FARRepresentation (extractedReasoningProcess model)) : Prop :=
   EndToEndPreservation model representation
 
-/-- The canonical compiler is accepted by the verifier. -/
 theorem verified_compiler_is_accepted (model : IndependentProcessModel) :
     VerifiedCompilation model (compileIndependentModel model) :=
   compileIndependentModel_preserves_behavior model
 
-/-- A lossy compiler that erases all source transition relations and permissions. -/
 def lossyCompiler
     (model : IndependentProcessModel) :
     FARRepresentation (extractedReasoningProcess model) :=
@@ -189,17 +163,13 @@ def lossyCompiler
     traceMatchesProcess := rfl
   }
 
-/-- Any source model with a transition exposes the lossy compiler's failure. -/
 theorem lossyCompiler_rejected_when_transition_exists
     (model : IndependentProcessModel)
     (transition : ModelTransition)
     (hTransition : transition ∈ model.transitions) :
     ¬ VerifiedCompilation model (lossyCompiler model) := by
   intro hVerified
-  have hRelation := hVerified.2.2.1 transition hTransition
-  exact hRelation
-
-/-! ## Four non-isomorphic source-model instances -/
+  exact hVerified.2.2.1 transition hTransition
 
 private def state (id meaning : String) : ModelState := { id := id, meaning := meaning }
 private def edge (label : String) (source target : ModelState) : ModelTransition :=
@@ -222,9 +192,9 @@ def deductiveModel : IndependentProcessModel :=
     transitions := [dStep]
     transitionClosed := by
       intro transition h
-      simp [dStep, dP, dQ] at h
+      simp [dStep] at h
       subst transition
-      simp [dP, dRule, dQ]
+      simp [edge, dP, dRule, dQ, state]
     observableTrace := [dStep]
     traceContained := by simp
   }
@@ -249,8 +219,8 @@ def defeasibleLegalModel : IndependentProcessModel :=
       intro transition h
       simp [lApply, lDefeat] at h
       rcases h with rfl | rfl
-      · simp [lFact, lException, lResult]
-      · simp [lFact, lException, lResult]
+      · simp [edge, lFact, lException, lResult, state]
+      · simp [edge, lFact, lException, lResult, state]
     observableTrace := [lApply]
     traceContained := by simp [lApply, lDefeat]
   }
@@ -275,8 +245,8 @@ def probabilisticDecisionModel : IndependentProcessModel :=
       intro transition h
       simp [pUpdate, pDecide] at h
       rcases h with rfl | rfl
-      · simp [pPrior, pEvidence, pPosterior]
-      · simp [pPrior, pEvidence, pPosterior]
+      · simp [edge, pPrior, pEvidence, pPosterior, state]
+      · simp [edge, pPrior, pEvidence, pPosterior, state]
     observableTrace := [pUpdate, pDecide]
     traceContained := by simp [pUpdate, pDecide]
   }
@@ -302,14 +272,13 @@ def ruleModifyingModel : IndependentProcessModel :=
       intro transition h
       simp [rUseOld, rModify, rUseNew] at h
       rcases h with rfl | rfl | rfl
-      · simp [rOld, rProposal, rNew]
-      · simp [rOld, rProposal, rNew]
-      · simp [rOld, rProposal, rNew]
+      · simp [edge, rOld, rProposal, rNew, state]
+      · simp [edge, rOld, rProposal, rNew, state]
+      · simp [edge, rOld, rProposal, rNew, state]
     observableTrace := [rUseOld, rModify, rUseNew]
     traceContained := by simp [rUseOld, rModify, rUseNew]
   }
 
-/-- Each distinct source-model family passes the same end-to-end theorem. -/
 theorem deductive_end_to_end :
     VerifiedCompilation deductiveModel (compileIndependentModel deductiveModel) :=
   verified_compiler_is_accepted deductiveModel
@@ -327,22 +296,25 @@ theorem rule_modifying_end_to_end :
     VerifiedCompilation ruleModifyingModel (compileIndependentModel ruleModifyingModel) :=
   verified_compiler_is_accepted ruleModifyingModel
 
-/-- The lossy compiler is concretely rejected on every nontrivial example. -/
 theorem lossy_deductive_rejected :
     ¬ VerifiedCompilation deductiveModel (lossyCompiler deductiveModel) := by
-  exact lossyCompiler_rejected_when_transition_exists deductiveModel dStep (by simp)
+  exact lossyCompiler_rejected_when_transition_exists deductiveModel dStep
+    (by simp [deductiveModel, dStep])
 
 theorem lossy_legal_rejected :
     ¬ VerifiedCompilation defeasibleLegalModel (lossyCompiler defeasibleLegalModel) := by
-  exact lossyCompiler_rejected_when_transition_exists defeasibleLegalModel lApply (by simp)
+  exact lossyCompiler_rejected_when_transition_exists defeasibleLegalModel lApply
+    (by simp [defeasibleLegalModel, lApply])
 
 theorem lossy_probabilistic_rejected :
     ¬ VerifiedCompilation probabilisticDecisionModel
       (lossyCompiler probabilisticDecisionModel) := by
-  exact lossyCompiler_rejected_when_transition_exists probabilisticDecisionModel pUpdate (by simp)
+  exact lossyCompiler_rejected_when_transition_exists probabilisticDecisionModel pUpdate
+    (by simp [probabilisticDecisionModel, pUpdate])
 
 theorem lossy_rule_modifying_rejected :
     ¬ VerifiedCompilation ruleModifyingModel (lossyCompiler ruleModifyingModel) := by
-  exact lossyCompiler_rejected_when_transition_exists ruleModifyingModel rUseOld (by simp)
+  exact lossyCompiler_rejected_when_transition_exists ruleModifyingModel rUseOld
+    (by simp [ruleModifyingModel, rUseOld])
 
 end FAR
