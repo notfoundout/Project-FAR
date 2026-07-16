@@ -1,0 +1,476 @@
+{
+  "records": [
+    {
+      "data": {
+        "name": "alarm_confirmed",
+        "value": false
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0000",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data": {
+        "name": "alpha_dispatched",
+        "value": false
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0001",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data": {
+        "name": "beta_dispatched",
+        "value": false
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0002",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data": {
+        "name": "incident_contained",
+        "value": false
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0003",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data": {
+        "name": "manual_override",
+        "value": false
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0004",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data": {
+        "name": "route_alpha_open",
+        "value": true
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0005",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data": {
+        "name": "route_beta_open",
+        "value": true
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0006",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data": {
+        "name": "sensor_a_positive",
+        "value": false
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0007",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data": {
+        "name": "sensor_b_positive",
+        "value": false
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0008",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data": {
+        "name": "system_halted",
+        "value": false
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0009",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data": {
+        "rule": "R_confirm",
+        "status": "active"
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0010",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data": {
+        "rule": "R_dispatch_alpha",
+        "status": "active"
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0011",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data": {
+        "rule": "R_dispatch_beta",
+        "status": "active"
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0012",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data": {
+        "rule": "R_override",
+        "status": "active"
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0013",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data": {
+        "rule": "R_contain",
+        "status": "active"
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0014",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data": {
+        "rule": "R_modify",
+        "status": "active"
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0015",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data": {
+        "rule": "R_halt",
+        "status": "active"
+      },
+      "primitive": "State",
+      "record_id": "CRE-001-VOCAB-B-1.0:0016",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data": {
+        "priorities": {
+          "R_dispatch_alpha": 50,
+          "R_dispatch_beta": 50,
+          "R_modify": 80,
+          "R_override": 100
+        }
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0017",
+      "semantic_role": "initial_priorities"
+    },
+    {
+      "data": {
+        "actions": [],
+        "evidence": []
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0018",
+      "semantic_role": "initial_histories"
+    },
+    {
+      "data": {
+        "value": 0
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0019",
+      "semantic_role": "initial_modification_count"
+    },
+    {
+      "data": {
+        "append_history": true,
+        "guard": [
+          "not previously fired"
+        ],
+        "id": "T_record_a",
+        "nondeterministic_alternatives": [
+          {
+            "append_evidence": [
+              "sensor_a_positive=true",
+              "sensor_a",
+              "high"
+            ],
+            "set": {
+              "sensor_a_positive": true
+            }
+          },
+          {
+            "append_evidence": [
+              "sensor_a_positive=false",
+              "sensor_a",
+              "high"
+            ],
+            "set": {
+              "sensor_a_positive": false
+            }
+          }
+        ]
+      },
+      "primitive": "Transition",
+      "record_id": "CRE-001-VOCAB-B-1.0:0020",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data": {
+        "append_history": true,
+        "guard": [
+          "not previously fired"
+        ],
+        "id": "T_record_b",
+        "nondeterministic_alternatives": [
+          {
+            "append_evidence": [
+              "sensor_b_positive=true",
+              "sensor_b",
+              "high"
+            ],
+            "set": {
+              "sensor_b_positive": true
+            }
+          },
+          {
+            "append_evidence": [
+              "sensor_b_positive=false",
+              "sensor_b",
+              "low"
+            ],
+            "set": {
+              "sensor_b_positive": false
+            }
+          }
+        ]
+      },
+      "primitive": "Transition",
+      "record_id": "CRE-001-VOCAB-B-1.0:0021",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data": {
+        "append_history": true,
+        "authorization": "R_confirm",
+        "guard_expression": "sensor_a_positive=true AND provenance(sensor_a_positive=true,sensor_a,high) AND (sensor_b_positive=true OR manual_override=true)",
+        "id": "T_confirm",
+        "updates": {
+          "alarm_confirmed": true
+        }
+      },
+      "primitive": "Transition",
+      "record_id": "CRE-001-VOCAB-B-1.0:0022",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data": {
+        "append_history": true,
+        "authorization": "R_override",
+        "defeats_lower_priority_conflict_for_current_state": true,
+        "guard_expression": "provenance(manual_override=true,operator,high)",
+        "id": "T_override",
+        "updates": {
+          "manual_override": true
+        }
+      },
+      "primitive": "Transition",
+      "record_id": "CRE-001-VOCAB-B-1.0:0023",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data": {
+        "append_history": true,
+        "authorization": "R_dispatch_alpha",
+        "guard_all": [
+          "alarm_confirmed=true",
+          "route_alpha_open=true",
+          "alpha_dispatched=false",
+          "system_halted=false"
+        ],
+        "id": "T_dispatch_alpha",
+        "updates": {
+          "alpha_dispatched": true
+        }
+      },
+      "primitive": "Transition",
+      "record_id": "CRE-001-VOCAB-B-1.0:0024",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data": {
+        "append_history": true,
+        "authorization": "R_dispatch_beta",
+        "guard_all": [
+          "alarm_confirmed=true",
+          "route_beta_open=true",
+          "beta_dispatched=false",
+          "system_halted=false"
+        ],
+        "id": "T_dispatch_beta",
+        "updates": {
+          "beta_dispatched": true
+        }
+      },
+      "primitive": "Transition",
+      "record_id": "CRE-001-VOCAB-B-1.0:0025",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data": {
+        "append_history": true,
+        "authorization": "R_modify",
+        "guard_all": [
+          "alarm_confirmed=true",
+          "modification_count=0",
+          "exactly_one(alpha_dispatched,beta_dispatched)=true"
+        ],
+        "id": "T_modify",
+        "updates": [
+          "deactivate dispatch rule for not-yet-dispatched agent",
+          "modification_count:=1",
+          "append before/after rule-status record"
+        ]
+      },
+      "primitive": "Transition",
+      "record_id": "CRE-001-VOCAB-B-1.0:0026",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data": {
+        "append_history": true,
+        "authorization": "R_contain",
+        "guard_expression": "(alpha_dispatched=true OR beta_dispatched=true) AND alarm_confirmed=true",
+        "id": "T_contain",
+        "updates": {
+          "incident_contained": true
+        }
+      },
+      "primitive": "Transition",
+      "record_id": "CRE-001-VOCAB-B-1.0:0027",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data": {
+        "append_history": true,
+        "authorization": "R_halt",
+        "guard_any": [
+          "incident_contained=true",
+          "deadlock_condition=true"
+        ],
+        "id": "T_halt",
+        "updates": {
+          "system_halted": true
+        }
+      },
+      "primitive": "Transition",
+      "record_id": "CRE-001-VOCAB-B-1.0:0028",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data": {
+        "atomic_transition_effects": true,
+        "independent_transitions": [
+          "T_record_a",
+          "T_record_b"
+        ],
+        "simultaneous_execution": false
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0029",
+      "semantic_role": "interleaving"
+    },
+    {
+      "data": {
+        "text": "evidence_log and action_history are append-only and ordered"
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0030",
+      "semantic_role": "invariant"
+    },
+    {
+      "data": {
+        "text": "provenance-sensitive guards require matching source and reliability records"
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0031",
+      "semantic_role": "invariant"
+    },
+    {
+      "data": {
+        "text": "no transition after system_halted=true"
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0032",
+      "semantic_role": "invariant"
+    },
+    {
+      "data": {
+        "text": "modification_count<=1"
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0033",
+      "semantic_role": "invariant"
+    },
+    {
+      "data": {
+        "text": "only T_modify changes rule activation"
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0034",
+      "semantic_role": "invariant"
+    },
+    {
+      "data": {
+        "text": "defeated rules remain represented and historically recoverable"
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0035",
+      "semantic_role": "invariant"
+    },
+    {
+      "data": {
+        "text": "interleaving does not alter atomic transition effects"
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0036",
+      "semantic_role": "invariant"
+    },
+    {
+      "data": {
+        "fields": [
+          "final_state",
+          "ordered_evidence_log",
+          "ordered_action_history",
+          "final_rule_statuses",
+          "nondeterministic_outcomes",
+          "priority_defeat_occurred",
+          "rule_modification_occurred",
+          "terminal_reason",
+          "invariant_violation_occurred"
+        ]
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0037",
+      "semantic_role": "outputs"
+    },
+    {
+      "data": {
+        "contain_max": 1,
+        "dispatch_alpha_max": 1,
+        "dispatch_beta_max": 1,
+        "halt_max": 1,
+        "modification_max": 1,
+        "override_max": 1,
+        "record_a_max": 1,
+        "record_b_max": 1
+      },
+      "primitive": "Label",
+      "record_id": "CRE-001-VOCAB-B-1.0:0038",
+      "semantic_role": "bounds"
+    }
+  ],
+  "vocabulary_id": "CRE-001-VOCAB-B-1.0"
+}
