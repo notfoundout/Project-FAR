@@ -1,0 +1,47 @@
+{
+  "decision_rule_id": "CRE-002-DECISION-RULES-1.0",
+  "status": "frozen-upon-merge",
+  "candidate_outcomes": ["complete", "partial", "unsupported", "error"],
+  "complete_requires": [
+    "all frozen scenario commitments represented",
+    "all native roles licensed by Vocabulary Semantics Baseline 1.0",
+    "no undeclared or unrestricted hidden metalanguage",
+    "atomic trace replay passes",
+    "behavioral verifier passes for the full bounded state space",
+    "all required outputs preserved",
+    "deterministic regeneration passes",
+    "mutation suite detects every registered semantic mutation"
+  ],
+  "partial_when": [
+    "some commitments are represented but at least one required commitment is unsupported or unresolved",
+    "behavior is preserved only under an additional undeclared semantic assumption",
+    "trace or output preservation is incomplete"
+  ],
+  "unsupported_when": [
+    "a required commitment cannot be licensed under the frozen semantics baseline",
+    "completion would require an unrestricted payload language or arbitrary code",
+    "the compiler can only pass by changing the frozen scenario or ambiguity policy"
+  ],
+  "error_when": [
+    "the implementation crashes or produces invalid artifacts before a scientific outcome can be assigned"
+  ],
+  "behavioral_failure": {
+    "requires": "verifier mismatch",
+    "report": "shortest counterexample and failed commitment classes"
+  },
+  "vocabulary_level_claim": {
+    "existential": "at least one independently regenerated complete candidate",
+    "reproducible": "three independently regenerated complete candidates with identical canonical outputs and source digests"
+  },
+  "comparison_rule": "No superiority or ranking conclusion is permitted in CRE-002.",
+  "global_nonclaims": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "independence",
+    "superiority",
+    "FAR proof",
+    "universal structure of reasoning"
+  ]
+}
