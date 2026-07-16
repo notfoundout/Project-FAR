@@ -153,7 +153,7 @@ def verifier(paths: list[Path]) -> dict[str, Any]:
         "implementations": len(paths),
         "byte_identical": byte_equal,
         "mutation_and_adversarial_cases": cases,
-        "claim_class": "internal implementation replication",
+        "claim_class": "bounded multi-implementation robustness",
         "external_replication": False,
     }
 
@@ -164,8 +164,16 @@ def run_worker(kind: str, work: Path) -> Path:
     shutil.copyfile(SCENARIO, private_input)
     env = {"PYTHONHASHSEED": "0", "PATH": os.environ.get("PATH", "")}
     result = subprocess.run(
-        [sys.executable, str(Path(__file__).resolve()), "--worker", kind,
-         "--source", str(private_input), "--output", str(destination)],
+        [
+            sys.executable,
+            str(Path(__file__).resolve()),
+            "--worker",
+            kind,
+            "--source",
+            str(private_input),
+            "--output",
+            str(destination),
+        ],
         cwd=work,
         env=env,
         capture_output=True,
