@@ -56,6 +56,6 @@ jobs:
           git rm .github/workflows/integrate-cre002-ext001-evidence.yml
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add docs/project-status.md docs/reports/project-status-generated.md docs/planning/next-actions.md README.md .github/workflows/integrate-cre002-ext001-evidence.yml
+          git add -A
           git commit -m 'Regenerate status after CRE-002-EXT-001 analysis'
           git push origin HEAD:analyze-cre002-ext001-evidence
