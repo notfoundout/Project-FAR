@@ -6,6 +6,8 @@ CRE-002-EXT-001 is complete as a prospective, checksum-locked, bounded comparati
 
 This analysis integrates the recorded execution artifacts. It does not alter the frozen preregistration, scenario, ambiguity policies, decision rules, output schema, Baseline 1.1, or the original CRE-002 result.
 
+Integration provenance: this report is derived from the committed comparison and execution artifacts and introduces no new candidate computation or adjudication.
+
 ## Recorded result
 
 All three official candidate vocabularies received the preregistered outcome `complete`:
