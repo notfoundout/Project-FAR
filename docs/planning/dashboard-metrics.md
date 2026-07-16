@@ -4,10 +4,10 @@ Navigation: [README Command Center](../../README.md) | [Project Status](../repor
 
 | Metric | Current | Previous | Change | Source |
 |---|---:|---:|---:|---|
-| Markdown files | 838 | 838 | +0 | [.](../..) |
-| Theory files | 266 | 266 | +0 | [theory](../../theory) |
-| Python tools | 51 | 51 | +0 | [tools](../../tools) |
-| Reports | 185 | 185 | +0 | [docs/reports](../reports) |
+| Markdown files | 847 | 838 | +9 | [.](../..) |
+| Theory files | 301 | 266 | +35 | [theory](../../theory) |
+| Python tools | 60 | 51 | +9 | [tools](../../tools) |
+| Reports | 187 | 185 | +2 | [docs/reports](../reports) |
 | Registries | 10 | 10 | +0 | [theory](../../theory) |
 | Proof objects | 15 | 15 | +0 | [theory/proof-objects](../../theory/proof-objects) |
 | Examples | 43 | 43 | +0 | [examples](../../examples) |
@@ -22,7 +22,7 @@ Navigation: [README Command Center](../../README.md) | [Project Status](../repor
 | Fits FAR | 14 | 14 | +0 | [theory/evaluation/evidence-registry.yaml](../../theory/evaluation/evidence-registry.yaml) |
 | Unresolved cases | 17 | 17 | +0 | [docs/reports/research-gap-report.md](../reports/research-gap-report.md) |
 | Unresolved gaps | 162 | 162 | +0 | [docs/reports/research-gap-report.md](../reports/research-gap-report.md) |
-| Documentation coverage | 838 | 838 | +0 | [docs](..) |
+| Documentation coverage | 847 | 838 | +9 | [docs](..) |
 | Health-check availability | 1 | 1 | +0 | [tools/repo_health_check.py](../../tools/repo_health_check.py) |
 
 Trend tracking compares the current snapshot with dashboard-metrics-history.json.
