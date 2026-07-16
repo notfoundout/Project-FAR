@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "CRE-002-EXT-001-REP-001-TEAM-REGISTRATION-1.0",
+  "type": "object",
+  "required": ["team_id", "role", "personnel", "repository_identity", "environment_identity", "materials_access", "attestations", "eligibility_status"],
+  "properties": {
+    "team_id": {"type": "string", "minLength": 1},
+    "role": {"enum": ["implementation", "verifier"]},
+    "assigned_vocabulary": {"enum": ["CRE-001-VOCAB-A-1.0", "CRE-001-VOCAB-B-1.0", "CRE-001-VOCAB-C-1.0", "not-applicable"]},
+    "personnel": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "repository_identity": {"type": "string", "minLength": 1},
+    "environment_identity": {"type": "string", "minLength": 1},
+    "materials_access": {"type": "array", "items": {"type": "string"}},
+    "attestations": {
+      "type": "object",
+      "required": ["no_shared_personnel", "no_prohibited_exposure", "no_cross_team_encoding_discussion", "independent_repository", "independent_credentials", "truthful_and_complete"],
+      "properties": {
+        "no_shared_personnel": {"const": true},
+        "no_prohibited_exposure": {"const": true},
+        "no_cross_team_encoding_discussion": {"const": true},
+        "independent_repository": {"const": true},
+        "independent_credentials": {"const": true},
+        "truthful_and_complete": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "eligibility_status": {"enum": ["pending", "eligible", "ineligible", "unresolved"]},
+    "review_record": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}
