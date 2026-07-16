@@ -87,12 +87,26 @@ def main() -> int:
     if baseline.get("scope", {}).get("primitive_only_claim") is not False:
         errors.append("Baseline 1.1 must not make a primitive-only claim")
 
-    if lock.get("execution_permitted") is not False:
-        errors.append("CRE-002-EXT-001 execution is not locked")
-    if lock.get("compiler_implementation_permitted") is not False:
-        errors.append("CRE-002-EXT-001 compiler implementation is not locked")
     if lock.get("official_results_present") is not False:
         errors.append("CRE-002-EXT-001 incorrectly claims results")
+    if lock.get("execution_permitted") is True or lock.get("compiler_implementation_permitted") is True:
+        audit_path = EXTENSION / "execution-unlock-audit.json"
+        if not audit_path.is_file():
+            errors.append("CRE-002-EXT-001 authorization lacks an execution-unlock audit")
+        else:
+            audit = load(audit_path)
+            if lock.get("authorization_status") != "authorized" or lock.get("status") != "execution-authorized":
+                errors.append("CRE-002-EXT-001 authorization fields are inconsistent")
+            if lock.get("execution_permitted") is not True or lock.get("compiler_implementation_permitted") is not True:
+                errors.append("CRE-002-EXT-001 authorization is only partially enabled")
+            if audit.get("authorization_status") != "authorized":
+                errors.append("CRE-002-EXT-001 execution-unlock audit is not authorized")
+            if audit.get("immutable_package_lock_verified") is not True:
+                errors.append("CRE-002-EXT-001 execution-unlock audit does not verify the scientific lock")
+            if audit.get("scientific_results_created_by_unlock") is not False:
+                errors.append("CRE-002-EXT-001 unlock improperly creates scientific results")
+    elif lock.get("execution_permitted") is not False or lock.get("compiler_implementation_permitted") is not False:
+        errors.append("CRE-002-EXT-001 pre-authorization state is inconsistent")
 
     if original.get("artifact_id") != "CRE-002-COMPARISON-1.0":
         errors.append("original CRE-002 result identity changed")
