@@ -2,7 +2,7 @@
 
 ## Status
 
-Automated internal implementation-replication track replacing the unexecuted human-team track `CRE-002-EXT-001-REP-001`.
+Automated multi-implementation robustness track replacing the unexecuted human-team track `CRE-002-EXT-001-REP-001`.
 
 ## Purpose
 
@@ -20,9 +20,9 @@ Test whether the frozen CRE-002-EXT-001 scenario survives multiple separately im
 
 ## Claim boundary
 
-A passing result is **internal implementation replication**: the bounded result survived multiple separately implemented computational paths plus a separately invoked verifier and adversarial checks.
+A passing result establishes **bounded multi-implementation robustness**: the frozen scenario survived three computational normalization paths, a separately invoked verifier, registered mutations, malformed inputs, and a deterministic rerun.
 
-It is **not independent external replication**. One agent, researcher, repository, or organization controlling all implementations cannot establish independent human judgment, independent organizational incentives, or absence of shared specification-level mistakes.
+It is not independent external replication. One agent, researcher, repository, or organization controlling all implementations cannot establish independent human judgment, independent organizational incentives, or absence of shared specification-level mistakes.
 
 ## Execution
 
