@@ -1,0 +1,13 @@
+{
+  "decision_rule_id":"CRE-002-EXT-001-DECISION-RULES-1.0",
+  "status":"frozen-upon-merge",
+  "candidate_outcomes":["complete","partial","unsupported","error"],
+  "complete_requires":["all frozen scenario commitments represented","all native roles licensed by Vocabulary Semantics Baseline 1.1","only the five declared bounded derived constructs used where needed","no undeclared or unrestricted hidden metalanguage","atomic trace replay passes","full bounded-state verifier passes","all required outputs preserved","deterministic regeneration passes","mutation suite detects every registered semantic mutation"],
+  "partial_when":["some commitments are represented but at least one required commitment is unresolved","behavior is preserved only under an undeclared semantic assumption","trace or output preservation is incomplete"],
+  "unsupported_when":["a required commitment cannot be licensed under Baseline 1.1","completion requires an additional derived construct or unrestricted payload language","the compiler can pass only by changing a frozen input"],
+  "error_when":["implementation failure prevents a scientific outcome"],
+  "behavioral_failure":{"requires":"verifier mismatch","report":"shortest counterexample and failed commitment classes"},
+  "reproducibility":{"single_run":"one deterministic complete candidate","reproducible":"three independently regenerated complete candidates with identical canonical outputs and source digests"},
+  "comparison_rule":"No superiority or ranking conclusion is permitted.",
+  "global_nonclaims":["universal sufficiency","primitive-only sufficiency","necessity","minimality","independence","superiority","FAR proof","universal structure of reasoning","retrospective validation of CRE-002"]
+}
