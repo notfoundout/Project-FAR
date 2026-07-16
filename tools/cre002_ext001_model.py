@@ -113,6 +113,25 @@ def successors(model: dict[str, Any], s: State, include_halt: bool = True) -> li
     return out
 
 
+def semantic_contract(model: dict[str, Any]) -> dict[str, Any]:
+    transitions = {item["id"]: item for item in model["transitions"]}
+    return {
+        "nondeterministic_alternatives": {
+            key: transitions[key].get("nondeterministic_alternatives", [])
+            for key in ("T_record_a", "T_record_b")
+        },
+        "interleaving": model["interleaving"],
+        "priorities": model["initial_state"]["priorities"],
+        "provenance_guards": {
+            key: transitions[key].get("guard_expression")
+            for key in ("T_confirm", "T_override")
+        },
+        "rule_modification": transitions["T_modify"],
+        "invariants": model["invariants"],
+        "outputs": model["outputs"],
+    }
+
+
 def explore(model: dict[str, Any]) -> dict[str, Any]:
     start = initial(model)
     queue, seen, edges = deque([start]), {start}, []
@@ -130,6 +149,7 @@ def explore(model: dict[str, Any]) -> dict[str, Any]:
         "edge_count": len(edges),
         "states_digest": hashlib.sha256(canonical(states).encode()).hexdigest(),
         "edges_digest": hashlib.sha256(canonical(sorted(edges)).encode()).hexdigest(),
+        "semantic_contract_digest": hashlib.sha256(canonical(semantic_contract(model)).encode()).hexdigest(),
         "terminal_count": len(terminals),
         "terminal_reasons": dict(sorted(Counter(s.terminal_reason for s in terminals).items())),
         "required_outputs_preserved": all({"booleans", "evidence_log", "action_history", "active_rules", "nondeterministic_outcomes", "priority_defeat_occurred", "terminal_reason"}.issubset(s.data()) for s in terminals),
