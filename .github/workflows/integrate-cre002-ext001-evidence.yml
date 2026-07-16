@@ -1,0 +1,61 @@
+name: Integrate CRE-002-EXT-001 Evidence
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  integrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analyze-cre002-ext001-evidence
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Update canonical status and regenerate planning outputs
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('docs/project-status.md')
+          s = p.read_text()
+          s = s.replace(
+              'Active development now moves toward CRE-002 design and prospective execution using Vocabulary Semantics Baseline 1.0 prospectively.',
+              'Active development now moves from completed CRE-002 and CRE-002-EXT-001 execution toward independent replication, boundary-focused falsification, and comparative representation-cost analysis.'
+          )
+          s = s.replace(
+              "The active target is designing and preregistering CRE-002 as a prospective study using Vocabulary Semantics Baseline 1.0 prospectively. CRE-001's deterministic implementation is complete at its stated scope: the official vocabularies were compiled into vocabulary-native artifacts, lowered to executable models, deterministically verified against the registered reference behavior, replayed through lowering traces, mutation-tested, adversarially audited, and integrated into the repository. This does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, or universal reasoning structure.",
+              "CRE-002 is complete as a prospective semantic-licensing boundary result under Baseline 1.0, and CRE-002-EXT-001 is complete as a prospective bounded behavioral result under Baseline 1.1. All three official vocabularies completed the extension's licensed native construction, trace replay, behavioral verification, output preservation, deterministic regeneration, and mutation gates over the registered 73-state graph. The result depends on five licensed derived constructs and nine ambiguity policies, provides no ranking, and does not establish universal or primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or independent replication. The active evidential target is independent replication."
+          )
+          s = s.replace(
+              '7. Deterministic CRE-001 implementation is merged for the registered CRE-001 scope, with vocabulary-native compilation, executable lowering, deterministic verification, replayable traces, mutation testing, adversarial compiler audit, and repository integration.',
+              '7. Deterministic CRE-001 implementation is merged for the registered CRE-001 scope, with vocabulary-native compilation, executable lowering, deterministic verification, replayable traces, mutation testing, adversarial compiler audit, and repository integration.\n8. CRE-002 is complete as a prospective Baseline 1.0 semantic-licensing boundary result.\n9. CRE-002-EXT-001 is complete as a prospective Baseline 1.1 bounded behavioral result; independent replication is the next evidential requirement.'
+          )
+          s = s.replace(
+              'CRE-001 deterministic comparison is complete at registered CRE-001 scope. Vocabulary Semantics Baseline 1.0 was formalized after CRE-001 and is prospective for CRE-002 and later; prospective independent replication is not established.',
+              'CRE-001 deterministic comparison is complete at registered CRE-001 scope. CRE-002 records a prospective Baseline 1.0 licensing boundary. CRE-002-EXT-001 records prospective bounded success for all three candidates under Baseline 1.1, five licensed derived constructs, and nine ambiguity policies. Prospective independent replication is not established.'
+          )
+          s = s.replace(
+              'Current research remains focused on preserving preliminary v0.4.0 external-system evaluation evidence, maintaining the merged deterministic CRE-001 result at its limited scope and preparing CRE-002 prospectively under Vocabulary Semantics Baseline 1.0.',
+              'Current research remains focused on preserving the distinct CRE-001, CRE-002, and CRE-002-EXT-001 evidence records, maintaining their claim boundaries, and preparing independent replication and boundary-focused falsification.'
+          )
+          s = s.replace(
+              'Current priorities are using Vocabulary Semantics Baseline 1.0 prospectively, designing and preregistering CRE-002, executing CRE-002 prospectively, analyzing prospective evidence, and pursuing independent replication while keeping certification, compatibility mapping, deterministic comparison, prospective comparative evaluation, and independent external review distinct.',
+              'Current priorities are independent replication of CRE-002-EXT-001, boundary-focused CRE-003 design, comparative representation-cost auditing, semantic/result drift monitoring, and a post-CRE-002 evidence release while keeping deterministic comparison, prospective evaluation, and independent replication distinct.'
+          )
+          p.write_text(s)
+          PY
+          python tools/project_status_report.py
+          python tools/generate_next_tasks.py
+          python tools/update_readme_dashboard.py || true
+          git rm .github/workflows/integrate-cre002-ext001-evidence.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add docs/project-status.md docs/reports/project-status-generated.md docs/planning/next-actions.md README.md .github/workflows/integrate-cre002-ext001-evidence.yml
+          git commit -m 'Regenerate status after CRE-002-EXT-001 analysis'
+          git push origin HEAD:analyze-cre002-ext001-evidence
