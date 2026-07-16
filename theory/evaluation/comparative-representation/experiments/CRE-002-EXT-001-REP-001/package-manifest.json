@@ -1,7 +1,7 @@
 {
   "package_id": "CRE-002-EXT-001-REP-001-PACKAGE-1.0",
   "experiment_id": "CRE-002-EXT-001-REP-001",
-  "status": "preregistered-pending-checksum-lock",
+  "status": "preregistered-checksum-locked",
   "semantic_baseline": "Vocabulary Semantics Baseline 1.1",
   "parent_experiment": "CRE-002-EXT-001",
   "immutable_scientific_files": [
@@ -13,13 +13,14 @@
   ],
   "mutable_administrative_controls": [
     "package-manifest.json",
-    "execution-lock.json"
+    "execution-lock.json",
+    "checksum-lock.json"
   ],
-  "checksum_state": "pending",
+  "checksum_state": "locked",
   "execution_authorized": false,
   "compiler_implementation_authorized": false,
   "official_results_present": false,
-  "required_next_action": "Merge preregistration, then create a separate checksum-lock PR.",
+  "required_next_action": "Register eligible isolated teams and attestations, then obtain a separate reviewed execution unlock.",
   "nonclaims": [
     "no replication result",
     "no universal sufficiency",

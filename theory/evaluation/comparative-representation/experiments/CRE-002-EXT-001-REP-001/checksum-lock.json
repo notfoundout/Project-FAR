@@ -1,0 +1,32 @@
+{
+  "artifact_id": "CRE-002-EXT-001-REP-001-CHECKSUM-LOCK-1.0",
+  "algorithm": "SHA-256",
+  "status": "locked",
+  "immutable_scientific_files": [
+    {
+      "path": "README.md",
+      "sha256": "4d909a831d9a72856e722e30d533bc9134a7b52feaba8be7858a815de38e8792",
+      "byte_count": 1451
+    },
+    {
+      "path": "preregistration.md",
+      "sha256": "0094c7aa1a366eca69fd8f9f24e3722d4e397e76b134ae20f1849aca29cd0980",
+      "byte_count": 4241
+    },
+    {
+      "path": "isolation-protocol.json",
+      "sha256": "1eebb3c164f1a0d8ea44c9f5d87eb9b8f3145d0f8278d3bea738ccc7a9b1defb",
+      "byte_count": 1852
+    },
+    {
+      "path": "decision-rules.json",
+      "sha256": "68472ec0c633eddf76f4d38807ae070a76e55aa5af0c23f98bbed2e2255b3437",
+      "byte_count": 2571
+    },
+    {
+      "path": "output-schema.json",
+      "sha256": "0f2dfb5fab60b3ce7f55710e6167d5f6ed89b57d6d84ceb411215691048095e8",
+      "byte_count": 1710
+    }
+  ]
+}
