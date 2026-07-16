@@ -19,79 +19,130 @@
     {
       "behavioral_verification_attempted": false,
       "decision_basis": "A required commitment cannot be licensed under Vocabulary Semantics Baseline 1.0.",
-      "licensing_audit": {
-        "all_required_commitments_licensed": false,
-        "dimensions": [
-          {"dimension": "nested conditions", "licensed": true, "missing_constructs": [], "required_constructs": ["D_guarded_update", "D_disjunction"]},
-          {"dimension": "bounded nondeterminism", "licensed": false, "missing_constructs": ["D_nondeterminism"], "required_constructs": ["D_nondeterminism"]},
-          {"dimension": "interleaved concurrency", "licensed": false, "missing_constructs": ["D_concurrency"], "required_constructs": ["D_concurrency"]},
-          {"dimension": "defeasible priority", "licensed": false, "missing_constructs": ["D_priority"], "required_constructs": ["D_priority"]},
-          {"dimension": "provenance sensitivity", "licensed": false, "missing_constructs": ["D_provenance"], "required_constructs": ["D_provenance"]},
-          {"dimension": "higher-order rule modification", "licensed": false, "missing_constructs": ["D_rule_modification"], "required_constructs": ["D_rule_modification"]},
-          {"dimension": "bounded history", "licensed": true, "missing_constructs": [], "required_constructs": ["D_ordered_history"]},
-          {"dimension": "terminal deadlock", "licensed": true, "missing_constructs": [], "required_constructs": ["D_terminality"]}
-        ],
-        "missing_constructs": ["D_concurrency", "D_nondeterminism", "D_priority", "D_provenance", "D_rule_modification"]
-      },
       "native_compilation_attempted": false,
       "outcome": "unsupported",
-      "scope_note": "This outcome concerns the frozen baseline's declared licensing, not possible expressivity under future semantics.",
+      "scope_note": "This concerns declared licensing, not possible expressivity under future semantics.",
       "shortest_counterexample": null,
       "vocabulary_id": "CRE-001-VOCAB-A-1.0"
     },
     {
       "behavioral_verification_attempted": false,
       "decision_basis": "A required commitment cannot be licensed under Vocabulary Semantics Baseline 1.0.",
-      "licensing_audit": {
-        "all_required_commitments_licensed": false,
-        "dimensions": [
-          {"dimension": "nested conditions", "licensed": true, "missing_constructs": [], "required_constructs": ["D_guarded_update", "D_disjunction"]},
-          {"dimension": "bounded nondeterminism", "licensed": false, "missing_constructs": ["D_nondeterminism"], "required_constructs": ["D_nondeterminism"]},
-          {"dimension": "interleaved concurrency", "licensed": false, "missing_constructs": ["D_concurrency"], "required_constructs": ["D_concurrency"]},
-          {"dimension": "defeasible priority", "licensed": false, "missing_constructs": ["D_priority"], "required_constructs": ["D_priority"]},
-          {"dimension": "provenance sensitivity", "licensed": false, "missing_constructs": ["D_provenance"], "required_constructs": ["D_provenance"]},
-          {"dimension": "higher-order rule modification", "licensed": false, "missing_constructs": ["D_rule_modification"], "required_constructs": ["D_rule_modification"]},
-          {"dimension": "bounded history", "licensed": true, "missing_constructs": [], "required_constructs": ["D_ordered_history"]},
-          {"dimension": "terminal deadlock", "licensed": true, "missing_constructs": [], "required_constructs": ["D_terminality"]}
-        ],
-        "missing_constructs": ["D_concurrency", "D_nondeterminism", "D_priority", "D_provenance", "D_rule_modification"]
-      },
       "native_compilation_attempted": false,
       "outcome": "unsupported",
-      "scope_note": "This outcome concerns the frozen baseline's declared licensing, not possible expressivity under future semantics.",
+      "scope_note": "This concerns declared licensing, not possible expressivity under future semantics.",
       "shortest_counterexample": null,
       "vocabulary_id": "CRE-001-VOCAB-B-1.0"
     },
     {
       "behavioral_verification_attempted": false,
       "decision_basis": "A required commitment cannot be licensed under Vocabulary Semantics Baseline 1.0.",
-      "licensing_audit": {
-        "all_required_commitments_licensed": false,
-        "dimensions": [
-          {"dimension": "nested conditions", "licensed": true, "missing_constructs": [], "required_constructs": ["D_guarded_update", "D_disjunction"]},
-          {"dimension": "bounded nondeterminism", "licensed": false, "missing_constructs": ["D_nondeterminism"], "required_constructs": ["D_nondeterminism"]},
-          {"dimension": "interleaved concurrency", "licensed": false, "missing_constructs": ["D_concurrency"], "required_constructs": ["D_concurrency"]},
-          {"dimension": "defeasible priority", "licensed": false, "missing_constructs": ["D_priority"], "required_constructs": ["D_priority"]},
-          {"dimension": "provenance sensitivity", "licensed": false, "missing_constructs": ["D_provenance"], "required_constructs": ["D_provenance"]},
-          {"dimension": "higher-order rule modification", "licensed": false, "missing_constructs": ["D_rule_modification"], "required_constructs": ["D_rule_modification"]},
-          {"dimension": "bounded history", "licensed": true, "missing_constructs": [], "required_constructs": ["D_ordered_history"]},
-          {"dimension": "terminal deadlock", "licensed": true, "missing_constructs": [], "required_constructs": ["D_terminality"]}
-        ],
-        "missing_constructs": ["D_concurrency", "D_nondeterminism", "D_priority", "D_provenance", "D_rule_modification"]
-      },
       "native_compilation_attempted": false,
       "outcome": "unsupported",
-      "scope_note": "This outcome concerns the frozen baseline's declared licensing, not possible expressivity under future semantics.",
+      "scope_note": "This concerns declared licensing, not possible expressivity under future semantics.",
       "shortest_counterexample": null,
       "vocabulary_id": "CRE-001-VOCAB-C-1.0"
     }
   ],
   "decision_rule_id": "CRE-002-DECISION-RULES-1.0",
   "execution_authorized": true,
+  "licensing_audit": {
+    "all_required_commitments_licensed": false,
+    "dimensions": [
+      {
+        "dimension": "nested conditions",
+        "licensed": true,
+        "missing_constructs": [],
+        "required_constructs": [
+          "D_guarded_update",
+          "D_disjunction"
+        ]
+      },
+      {
+        "dimension": "bounded nondeterminism",
+        "licensed": false,
+        "missing_constructs": [
+          "D_nondeterminism"
+        ],
+        "required_constructs": [
+          "D_nondeterminism"
+        ]
+      },
+      {
+        "dimension": "interleaved concurrency",
+        "licensed": false,
+        "missing_constructs": [
+          "D_concurrency"
+        ],
+        "required_constructs": [
+          "D_concurrency"
+        ]
+      },
+      {
+        "dimension": "defeasible priority",
+        "licensed": false,
+        "missing_constructs": [
+          "D_priority"
+        ],
+        "required_constructs": [
+          "D_priority"
+        ]
+      },
+      {
+        "dimension": "provenance sensitivity",
+        "licensed": false,
+        "missing_constructs": [
+          "D_provenance"
+        ],
+        "required_constructs": [
+          "D_provenance"
+        ]
+      },
+      {
+        "dimension": "higher-order rule modification",
+        "licensed": false,
+        "missing_constructs": [
+          "D_rule_modification"
+        ],
+        "required_constructs": [
+          "D_rule_modification"
+        ]
+      },
+      {
+        "dimension": "bounded history",
+        "licensed": true,
+        "missing_constructs": [],
+        "required_constructs": [
+          "D_ordered_history"
+        ]
+      },
+      {
+        "dimension": "terminal deadlock",
+        "licensed": true,
+        "missing_constructs": [],
+        "required_constructs": [
+          "D_terminality"
+        ]
+      }
+    ],
+    "missing_constructs": [
+      "D_concurrency",
+      "D_nondeterminism",
+      "D_priority",
+      "D_provenance",
+      "D_rule_modification"
+    ]
+  },
   "mutation_audit": {
     "cases": [
-      {"detected": true, "mutation": "add every explicitly required construct"},
-      {"detected": true, "mutation": "remove D_guarded_update"}
+      {
+        "detected": true,
+        "mutation": "add every explicitly required construct"
+      },
+      {
+        "detected": true,
+        "mutation": "remove D_guarded_update"
+      }
     ],
     "passed": true
   },
