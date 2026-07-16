@@ -1,0 +1,30 @@
+name: CRE-002 Evidence Status Diagnostic
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Capture repository health output
+        run: |
+          python tools/repo_health_check.py --fast > /tmp/fast.log 2>&1 || true
+          python tools/repo_health_check.py --full > /tmp/full.log 2>&1 || true
+          tail -180 /tmp/fast.log
+          tail -180 /tmp/full.log
+          grep -q '0 failures' /tmp/fast.log
+          grep -q '0 failures' /tmp/full.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cre002-evidence-status-diagnostic
+          path: |
+            /tmp/fast.log
+            /tmp/full.log
