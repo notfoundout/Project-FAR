@@ -35,25 +35,27 @@ def main() -> int:
         fail('contaminated outcome missing')
     if 'inconclusive' not in rules.get('submission_outcomes', {}):
         fail('inconclusive outcome missing')
-    checksum_state = manifest.get('checksum_state')
-    if checksum_state not in {'pending', 'locked'}:
-        fail('checksum state must be pending or locked')
-    if checksum_state == 'locked':
-        if not (PKG / 'checksum-lock.json').is_file():
-            fail('locked package requires checksum-lock.json')
-        subprocess.run(
-            [sys.executable, 'tools/check_cre002_ext001_rep001_checksums.py'],
-            cwd=ROOT,
-            check=True,
-        )
+    if manifest.get('checksum_state') != 'locked':
+        fail('checksum state must remain locked')
+    if not (PKG / 'checksum-lock.json').is_file():
+        fail('locked package requires checksum-lock.json')
+    subprocess.run([sys.executable, 'tools/check_cre002_ext001_rep001_checksums.py'], cwd=ROOT, check=True)
+    phase = manifest.get('status')
+    if phase not in {'preregistered-checksum-locked', 'team-registration-open'}:
+        fail(f'unsupported administrative phase: {phase}')
+    if lock.get('state') not in {'locked', 'team-registration-open-execution-locked'}:
+        fail('execution lock state is invalid')
     for key in ('execution_authorized','compiler_implementation_authorized','official_results_present'):
-        if manifest.get(key) is not False:
-            fail(f'manifest {key} must be false')
-    if lock.get('state') != 'locked':
-        fail('execution lock must remain locked')
-    for key in ('execution_authorized','compiler_implementation_authorized','official_results_present'):
-        if lock.get(key) is not False:
-            fail(f'execution lock {key} must be false')
+        if manifest.get(key) is not False or lock.get(key) is not False:
+            fail(f'{key} must remain false')
+    if phase == 'team-registration-open':
+        if manifest.get('team_registration_authorized') is not True:
+            fail('manifest must authorize team registration')
+        if lock.get('team_registration_authorized') is not True:
+            fail('execution control must authorize team registration')
+        for name in ('team-registration-schema.json', 'team-registry.json'):
+            if not (PKG / name).is_file():
+                fail(f'missing registration control: {name}')
     for name in ('generated','results','submissions'):
         if (PKG / name).exists():
             fail(f'forbidden pre-execution path exists: {name}')
