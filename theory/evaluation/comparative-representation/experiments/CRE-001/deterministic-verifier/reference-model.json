@@ -1,0 +1,108 @@
+{
+  "format": "cre001-execution-model-v1",
+  "model_id": "CRE-001-REFERENCE-V1",
+  "ambiguity_policy": {
+    "disable_reject_repeatability": "require_r_reject_active_before",
+    "prohibited_transition_output": "executed_only",
+    "unterminated_output": "finite_nonterminal_snapshot"
+  },
+  "variables": {
+    "p_ready": {"type": "boolean", "initial": true},
+    "p_token": {"type": "boolean", "initial": true},
+    "p_checked": {"type": "boolean", "initial": false},
+    "p_accepted": {"type": "boolean", "initial": false},
+    "p_rejected": {"type": "boolean", "initial": false},
+    "p_rule_modified": {"type": "boolean", "initial": false},
+    "p_halted": {"type": "boolean", "initial": false},
+    "R_check_active": {"type": "boolean", "initial": true},
+    "R_accept_active": {"type": "boolean", "initial": true},
+    "R_reject_active": {"type": "boolean", "initial": true},
+    "R_modify_active": {"type": "boolean", "initial": true},
+    "R_halt_active": {"type": "boolean", "initial": true},
+    "prohibited_transition_occurred": {"type": "boolean", "initial": false},
+    "history": {"type": "history", "initial": []}
+  },
+  "transitions": [
+    {
+      "name": "T_check",
+      "guard": [
+        {"variable": "p_ready", "equals": true},
+        {"variable": "p_token", "equals": true},
+        {"variable": "p_checked", "equals": false},
+        {"variable": "R_check_active", "equals": true}
+      ],
+      "updates": [
+        {"variable": "p_checked", "operation": "set", "value": true},
+        {"variable": "history", "operation": "append", "value": "T_check"}
+      ]
+    },
+    {
+      "name": "T_accept",
+      "guard": [
+        {"variable": "p_checked", "equals": true},
+        {"variable": "p_rejected", "equals": false},
+        {"variable": "R_accept_active", "equals": true}
+      ],
+      "updates": [
+        {"variable": "p_accepted", "operation": "set", "value": true},
+        {"variable": "history", "operation": "append", "value": "T_accept"}
+      ]
+    },
+    {
+      "name": "T_reject",
+      "guard": [
+        {"variable": "p_checked", "equals": true},
+        {"variable": "p_accepted", "equals": false},
+        {"variable": "R_reject_active", "equals": true}
+      ],
+      "updates": [
+        {"variable": "p_rejected", "operation": "set", "value": true},
+        {"variable": "history", "operation": "append", "value": "T_reject"}
+      ]
+    },
+    {
+      "name": "T_disable_reject",
+      "guard": [
+        {"variable": "p_checked", "equals": true},
+        {"variable": "p_accepted", "equals": false},
+        {"variable": "p_rejected", "equals": false},
+        {"variable": "R_modify_active", "equals": true},
+        {"variable": "R_reject_active", "equals": true}
+      ],
+      "updates": [
+        {"variable": "R_reject_active", "operation": "set", "from": true, "value": false},
+        {"variable": "p_rule_modified", "operation": "set", "value": true},
+        {"variable": "history", "operation": "append", "value": "T_disable_reject"}
+      ]
+    },
+    {
+      "name": "T_halt",
+      "guard": [
+        {"variable": "R_halt_active", "equals": true},
+        {"variable": "p_halted", "equals": false}
+      ],
+      "guard_any": [
+        {"variable": "p_accepted", "equals": true},
+        {"variable": "p_rejected", "equals": true}
+      ],
+      "updates": [
+        {"variable": "p_halted", "operation": "set", "value": true},
+        {"variable": "history", "operation": "append", "value": "T_halt"}
+      ]
+    }
+  ],
+  "terminal_condition": {"variable": "p_halted", "equals": true},
+  "terminal_blocks_all_transitions": true,
+  "invariants": [
+    {"kind": "mutual_exclusion", "variables": ["p_accepted", "p_rejected"]},
+    {"kind": "append_only", "variable": "history"},
+    {"kind": "exclusive_status_update", "variable_suffix": "_active", "allowed_transition": "T_disable_reject"}
+  ],
+  "outputs": {
+    "final_status": {"kind": "status", "variables": ["p_accepted", "p_rejected", "p_halted"]},
+    "rule_statuses": {"kind": "status", "variables": ["R_check_active", "R_accept_active", "R_reject_active", "R_modify_active", "R_halt_active"]},
+    "ordered_history": {"kind": "variable", "variable": "history"},
+    "rule_modification_occurred": {"kind": "variable", "variable": "p_rule_modified"},
+    "prohibited_transition_occurred": {"kind": "variable", "variable": "prohibited_transition_occurred"}
+  }
+}
