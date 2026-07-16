@@ -1,0 +1,339 @@
+{
+  "candidate_outcome_counts": {
+    "complete": 3,
+    "error": 0,
+    "partial": 0,
+    "unsupported": 0
+  },
+  "candidates": [
+    {
+      "ambiguity_policy_dependence": [
+        "AP-001",
+        "AP-002",
+        "AP-003",
+        "AP-004",
+        "AP-005",
+        "AP-006",
+        "AP-007",
+        "AP-008",
+        "AP-009"
+      ],
+      "behavior_summary": {
+        "edge_count": 72,
+        "edges_digest": "0f4d543e26ebd8b441cc4164aa876149f0504d4f787d6774b47a1cd56541028a",
+        "required_outputs_preserved": true,
+        "semantic_contract_digest": "ff7582ee13038a1fe3ce1ff04e106c72b35449261a3ed573f0f9971778ed19e6",
+        "state_count": 73,
+        "states_digest": "20143b141a99d7ea2a6f85b98be66e7d6db6dc6ea912775a8a6df79e94079965",
+        "terminal_count": 26,
+        "terminal_reasons": {
+          "contained": 20,
+          "deadlock": 6
+        }
+      },
+      "behavioral_verification_status": "pass",
+      "construction_status": "complete",
+      "derived_constructs_used": [
+        "D_concurrency",
+        "D_nondeterminism",
+        "D_priority",
+        "D_provenance",
+        "D_rule_modification"
+      ],
+      "deterministic_regeneration_status": "pass",
+      "embedded_metalanguage_classification": "bounded registered schemas only",
+      "limitations": [
+        "bounded scenario only",
+        "derived machinery required",
+        "no ranking or universal claim"
+      ],
+      "lowering_trace_path": "generated/CRE-001-VOCAB-A-1.0/lowering-trace.json",
+      "mutation_report": {
+        "cases": [
+          {
+            "detected": true,
+            "mutation": "D_nondeterminism"
+          },
+          {
+            "detected": true,
+            "mutation": "D_concurrency"
+          },
+          {
+            "detected": true,
+            "mutation": "D_priority"
+          },
+          {
+            "detected": true,
+            "mutation": "D_provenance"
+          },
+          {
+            "detected": true,
+            "mutation": "D_rule_modification"
+          }
+        ],
+        "status": "pass"
+      },
+      "mutation_status": "pass",
+      "native_representation_path": "generated/CRE-001-VOCAB-A-1.0/native-representation.json",
+      "outcome": "complete",
+      "required_outputs_preserved": true,
+      "semantic_baseline_checksum": "bd4a70b438194091b76720e4dbeec05c83a2beebe102074abefebaa8e5b418dd",
+      "semantic_licensing_by_role": {
+        "construction_rule": "Objects identify states, rules, evidence and alternatives; Relations encode finite guards, provenance, priority, conflicts and ordering; Transformations encode atomic transitions and bounded rule-status updates.",
+        "licensed_constructs": [
+          "D_concurrency",
+          "D_nondeterminism",
+          "D_priority",
+          "D_provenance",
+          "D_rule_modification"
+        ],
+        "limitation": "Licensing applies only when every required field and operational constraint of the selected derived construct is explicitly represented.",
+        "malformed_constructs": [],
+        "missing_constructs": [],
+        "primitive_mismatch": [],
+        "status": "pass"
+      },
+      "shortest_counterexample": null,
+      "source_checksums": {
+        "ambiguity_policies": "ab826c1f30f4adae9f4483e8aba075abb9c438fb83aff3536b9115845ddffb93",
+        "decision_rules": "e7a83fd79b812dd7258cb78bbd307216945a58fdde05f8b5d98374c8fedac4e5",
+        "output_schema": "cb74c6732bb8525072c6f1534295a54b402375cbf23b2f005c43baab57d222f9",
+        "scenario": "3b65fdefc814195d68d6dbc773b8dd598a6029356a17f9a05582fa023faa6239",
+        "semantic_baseline": "bd4a70b438194091b76720e4dbeec05c83a2beebe102074abefebaa8e5b418dd"
+      },
+      "trace_replay_status": "pass",
+      "unsupported_commitments": [],
+      "vocabulary_id": "CRE-001-VOCAB-A-1.0"
+    },
+    {
+      "ambiguity_policy_dependence": [
+        "AP-001",
+        "AP-002",
+        "AP-003",
+        "AP-004",
+        "AP-005",
+        "AP-006",
+        "AP-007",
+        "AP-008",
+        "AP-009"
+      ],
+      "behavior_summary": {
+        "edge_count": 72,
+        "edges_digest": "0f4d543e26ebd8b441cc4164aa876149f0504d4f787d6774b47a1cd56541028a",
+        "required_outputs_preserved": true,
+        "semantic_contract_digest": "ff7582ee13038a1fe3ce1ff04e106c72b35449261a3ed573f0f9971778ed19e6",
+        "state_count": 73,
+        "states_digest": "20143b141a99d7ea2a6f85b98be66e7d6db6dc6ea912775a8a6df79e94079965",
+        "terminal_count": 26,
+        "terminal_reasons": {
+          "contained": 20,
+          "deadlock": 6
+        }
+      },
+      "behavioral_verification_status": "pass",
+      "construction_status": "complete",
+      "derived_constructs_used": [
+        "D_concurrency",
+        "D_nondeterminism",
+        "D_priority",
+        "D_provenance",
+        "D_rule_modification"
+      ],
+      "deterministic_regeneration_status": "pass",
+      "embedded_metalanguage_classification": "bounded registered schemas only",
+      "limitations": [
+        "bounded scenario only",
+        "derived machinery required",
+        "no ranking or universal claim"
+      ],
+      "lowering_trace_path": "generated/CRE-001-VOCAB-B-1.0/lowering-trace.json",
+      "mutation_report": {
+        "cases": [
+          {
+            "detected": true,
+            "mutation": "D_nondeterminism"
+          },
+          {
+            "detected": true,
+            "mutation": "D_concurrency"
+          },
+          {
+            "detected": true,
+            "mutation": "D_priority"
+          },
+          {
+            "detected": true,
+            "mutation": "D_provenance"
+          },
+          {
+            "detected": true,
+            "mutation": "D_rule_modification"
+          }
+        ],
+        "status": "pass"
+      },
+      "mutation_status": "pass",
+      "native_representation_path": "generated/CRE-001-VOCAB-B-1.0/native-representation.json",
+      "outcome": "complete",
+      "required_outputs_preserved": true,
+      "semantic_baseline_checksum": "bd4a70b438194091b76720e4dbeec05c83a2beebe102074abefebaa8e5b418dd",
+      "semantic_licensing_by_role": {
+        "construction_rule": "States hold bounded assignments; Transitions encode atomic moves and rule-status updates; Labels encode finite alternatives, provenance tuples, priority/conflict guards and ordered-history markers.",
+        "licensed_constructs": [
+          "D_concurrency",
+          "D_nondeterminism",
+          "D_priority",
+          "D_provenance",
+          "D_rule_modification"
+        ],
+        "limitation": "Labels may not function as unrestricted payload containers; each label must use a registered finite schema.",
+        "malformed_constructs": [],
+        "missing_constructs": [],
+        "primitive_mismatch": [],
+        "status": "pass"
+      },
+      "shortest_counterexample": null,
+      "source_checksums": {
+        "ambiguity_policies": "ab826c1f30f4adae9f4483e8aba075abb9c438fb83aff3536b9115845ddffb93",
+        "decision_rules": "e7a83fd79b812dd7258cb78bbd307216945a58fdde05f8b5d98374c8fedac4e5",
+        "output_schema": "cb74c6732bb8525072c6f1534295a54b402375cbf23b2f005c43baab57d222f9",
+        "scenario": "3b65fdefc814195d68d6dbc773b8dd598a6029356a17f9a05582fa023faa6239",
+        "semantic_baseline": "bd4a70b438194091b76720e4dbeec05c83a2beebe102074abefebaa8e5b418dd"
+      },
+      "trace_replay_status": "pass",
+      "unsupported_commitments": [],
+      "vocabulary_id": "CRE-001-VOCAB-B-1.0"
+    },
+    {
+      "ambiguity_policy_dependence": [
+        "AP-001",
+        "AP-002",
+        "AP-003",
+        "AP-004",
+        "AP-005",
+        "AP-006",
+        "AP-007",
+        "AP-008",
+        "AP-009"
+      ],
+      "behavior_summary": {
+        "edge_count": 72,
+        "edges_digest": "0f4d543e26ebd8b441cc4164aa876149f0504d4f787d6774b47a1cd56541028a",
+        "required_outputs_preserved": true,
+        "semantic_contract_digest": "ff7582ee13038a1fe3ce1ff04e106c72b35449261a3ed573f0f9971778ed19e6",
+        "state_count": 73,
+        "states_digest": "20143b141a99d7ea2a6f85b98be66e7d6db6dc6ea912775a8a6df79e94079965",
+        "terminal_count": 26,
+        "terminal_reasons": {
+          "contained": 20,
+          "deadlock": 6
+        }
+      },
+      "behavioral_verification_status": "pass",
+      "construction_status": "complete",
+      "derived_constructs_used": [
+        "D_concurrency",
+        "D_nondeterminism",
+        "D_priority",
+        "D_provenance",
+        "D_rule_modification"
+      ],
+      "deterministic_regeneration_status": "pass",
+      "embedded_metalanguage_classification": "bounded registered schemas only",
+      "limitations": [
+        "bounded scenario only",
+        "derived machinery required",
+        "no ranking or universal claim"
+      ],
+      "lowering_trace_path": "generated/CRE-001-VOCAB-C-1.0/lowering-trace.json",
+      "mutation_report": {
+        "cases": [
+          {
+            "detected": true,
+            "mutation": "D_nondeterminism"
+          },
+          {
+            "detected": true,
+            "mutation": "D_concurrency"
+          },
+          {
+            "detected": true,
+            "mutation": "D_priority"
+          },
+          {
+            "detected": true,
+            "mutation": "D_provenance"
+          },
+          {
+            "detected": true,
+            "mutation": "D_rule_modification"
+          }
+        ],
+        "status": "pass"
+      },
+      "mutation_status": "pass",
+      "native_representation_path": "generated/CRE-001-VOCAB-C-1.0/native-representation.json",
+      "outcome": "complete",
+      "required_outputs_preserved": true,
+      "semantic_baseline_checksum": "bd4a70b438194091b76720e4dbeec05c83a2beebe102074abefebaa8e5b418dd",
+      "semantic_licensing_by_role": {
+        "construction_rule": "Representations identify values, rules and evidence; Representational Structures record finite organization and order; Interpretations assign registered meanings; the Investigation fixes scope; Calculus records atomic eligibility, updates, defeasible priority and bounded modification.",
+        "licensed_constructs": [
+          "D_concurrency",
+          "D_nondeterminism",
+          "D_priority",
+          "D_provenance",
+          "D_rule_modification"
+        ],
+        "limitation": "Calculus is restricted to the explicitly registered finite operations and cannot import a general-purpose programming language.",
+        "malformed_constructs": [],
+        "missing_constructs": [],
+        "primitive_mismatch": [],
+        "status": "pass"
+      },
+      "shortest_counterexample": null,
+      "source_checksums": {
+        "ambiguity_policies": "ab826c1f30f4adae9f4483e8aba075abb9c438fb83aff3536b9115845ddffb93",
+        "decision_rules": "e7a83fd79b812dd7258cb78bbd307216945a58fdde05f8b5d98374c8fedac4e5",
+        "output_schema": "cb74c6732bb8525072c6f1534295a54b402375cbf23b2f005c43baab57d222f9",
+        "scenario": "3b65fdefc814195d68d6dbc773b8dd598a6029356a17f9a05582fa023faa6239",
+        "semantic_baseline": "bd4a70b438194091b76720e4dbeec05c83a2beebe102074abefebaa8e5b418dd"
+      },
+      "trace_replay_status": "pass",
+      "unsupported_commitments": [],
+      "vocabulary_id": "CRE-001-VOCAB-C-1.0"
+    }
+  ],
+  "experiment_id": "CRE-002-EXT-001",
+  "nonclaims": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "independence",
+    "superiority",
+    "FAR proof",
+    "universal structure of reasoning",
+    "retrospective validation of CRE-002"
+  ],
+  "reference_behavior": {
+    "edge_count": 72,
+    "edges_digest": "0f4d543e26ebd8b441cc4164aa876149f0504d4f787d6774b47a1cd56541028a",
+    "required_outputs_preserved": true,
+    "semantic_contract_digest": "ff7582ee13038a1fe3ce1ff04e106c72b35449261a3ed573f0f9971778ed19e6",
+    "state_count": 73,
+    "states_digest": "20143b141a99d7ea2a6f85b98be66e7d6db6dc6ea912775a8a6df79e94079965",
+    "terminal_count": 26,
+    "terminal_reasons": {
+      "contained": 20,
+      "deadlock": 6
+    }
+  },
+  "reproducible_complete_candidates": [
+    "CRE-001-VOCAB-A-1.0",
+    "CRE-001-VOCAB-B-1.0",
+    "CRE-001-VOCAB-C-1.0"
+  ],
+  "scenario_id": "CRE-002-EXT-001-SCENARIO-1.0",
+  "semantic_authority": "VOCABULARY-SEMANTICS-BASELINE-1.1"
+}

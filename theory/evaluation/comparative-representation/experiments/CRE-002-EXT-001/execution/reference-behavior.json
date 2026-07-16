@@ -1,0 +1,13 @@
+{
+  "edge_count": 72,
+  "edges_digest": "0f4d543e26ebd8b441cc4164aa876149f0504d4f787d6774b47a1cd56541028a",
+  "required_outputs_preserved": true,
+  "semantic_contract_digest": "ff7582ee13038a1fe3ce1ff04e106c72b35449261a3ed573f0f9971778ed19e6",
+  "state_count": 73,
+  "states_digest": "20143b141a99d7ea2a6f85b98be66e7d6db6dc6ea912775a8a6df79e94079965",
+  "terminal_count": 26,
+  "terminal_reasons": {
+    "contained": 20,
+    "deadlock": 6
+  }
+}

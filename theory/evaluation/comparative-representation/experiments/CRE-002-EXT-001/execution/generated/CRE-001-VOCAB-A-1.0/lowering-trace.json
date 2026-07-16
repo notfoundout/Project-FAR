@@ -1,0 +1,239 @@
+{
+  "entries": [
+    {
+      "data_digest": "fda43a04d1de5e5f74eccc79f8b131897c75cb5d4b664c44535e5c8dd719c519",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0000",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data_digest": "c8cc4ca61fd293ebc80bf507272084958df66d7a624a28078b002da3f63ee104",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0001",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data_digest": "ed989dea2fba30b5216f25455ab975f4fcd7bdc6a3cf2b3dc7d944c4e57edeb2",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0002",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data_digest": "b367bbd714f4d9c40f8c96f767c14150867a08690ff07efc7fa527bbf43b1890",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0003",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data_digest": "3e3c67b6b5d600c531f9c8a11a44ce5f33672e460d8b356a2d3a01b8c86ce739",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0004",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data_digest": "e20b4d8be79081f767d2ba042c46dcc9ecb62da0cf0d8062c1329fde02d4b137",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0005",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data_digest": "2b658a372b60de1e9db38cbab77749f4ebc929548b181d42cec1ef0d687ee5d6",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0006",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data_digest": "9bdc091c80c608dbd6d2033398863a488abfad81b33baf9442e6cc98601ffd92",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0007",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data_digest": "3ca0762915565c49f0106864b0becb8a0cea1027034829f49863ff6ce11a01c5",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0008",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data_digest": "750012ca51c4f9f2f5f0f48032940972def899e33752dfb6dc9c7ccde2f07a12",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0009",
+      "semantic_role": "initial_boolean"
+    },
+    {
+      "data_digest": "b4534d628cfb51b4085a567cd066231e5e1a01313b3621d0bc89e92b2ff8d322",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0010",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data_digest": "8f6161820ad4486ce49fc6e8bb3d5661af244dd0420d7313852b4a4339c147a2",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0011",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data_digest": "e8c0aee2dced34bdff366d44af97eb2e52c1fb8e1e536466266134da1534f096",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0012",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data_digest": "1a549bcce072cfefad12308a28f3e17ceff8a35411d149c2656f7b3bee72cef0",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0013",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data_digest": "2e1e1213bc8391cb0415309f7cf77b7ba32663d39ae200e06e4af62c0797ec6f",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0014",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data_digest": "d4634a8d98b1d3b58cc0d126afd5bf5bdc4a657ca48109f4353b54e72e1f530e",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0015",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data_digest": "bb9159aa1181656a2c2c34f89fa9c5819dc19dc68769ad4d367124a1ff2e2902",
+      "primitive": "Object",
+      "record_id": "CRE-001-VOCAB-A-1.0:0016",
+      "semantic_role": "initial_rule"
+    },
+    {
+      "data_digest": "f07e4c0025471c5bf2fe5a76306238811bc9335f2611c35c59452b004d7cedc8",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0017",
+      "semantic_role": "initial_priorities"
+    },
+    {
+      "data_digest": "203df17cfd7898cbb7df3f7841ee3ee9cb1060f7579fa43b19d2aa57a4b76b63",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0018",
+      "semantic_role": "initial_histories"
+    },
+    {
+      "data_digest": "23d7b286bd429460b92a2a1c21b6afc34110446c5034c17363fda363aa0a7c5d",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0019",
+      "semantic_role": "initial_modification_count"
+    },
+    {
+      "data_digest": "2b15362a3ac73080d2087d79cc5adc87383e3145cb290e8b4d47f455a1093396",
+      "primitive": "Transformation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0020",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data_digest": "de45dd49c8ea6beca52d36f42bc8961a3820addc4662625379fd1b039dae7383",
+      "primitive": "Transformation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0021",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data_digest": "daa50846bbc28c52a6cca8f389676d39b93ca857053a59251bcf5f743354bd8a",
+      "primitive": "Transformation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0022",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data_digest": "38a72102f0469cfcadc16c6b86d07a0ff304ea82585e46e1fab0cb1fb81eebb5",
+      "primitive": "Transformation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0023",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data_digest": "661f103f6a98d277babc0217a4fbb71aa7ca6dfff99d0d75bbd7e586f5ec7117",
+      "primitive": "Transformation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0024",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data_digest": "2f7b910776bd8b525583f058fd6c9517130c3cfb2936813121fd9171fac02d9c",
+      "primitive": "Transformation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0025",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data_digest": "3488c801021886748166d86bef875adbc12a5b9afc43f56bf701360cc19f5596",
+      "primitive": "Transformation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0026",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data_digest": "0749de63aae3df0a759108633bf7a4960ca55fb56fe2f24a4c140b5663c4cd7b",
+      "primitive": "Transformation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0027",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data_digest": "9a5955d693b65da3d0922a6ee1976edc7782f13c5a8eef6333d7b3773c289b94",
+      "primitive": "Transformation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0028",
+      "semantic_role": "transition_schema"
+    },
+    {
+      "data_digest": "751c24b3145fdce8c1014f3f1d441c0e7775ece84e324c905fc2e909e08321b3",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0029",
+      "semantic_role": "interleaving"
+    },
+    {
+      "data_digest": "c7dad0c985d08ca555b1347a21bc1846c6c63910944817b557fbd6bc101d3dde",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0030",
+      "semantic_role": "invariant"
+    },
+    {
+      "data_digest": "ae78db6a513508be430ac30a272a419623a1c51da04ed750f2e1332a504607db",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0031",
+      "semantic_role": "invariant"
+    },
+    {
+      "data_digest": "3eb24183d2f047299e0e0d5ff489427a8ce8bd6baa5880f833caf435837f2e19",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0032",
+      "semantic_role": "invariant"
+    },
+    {
+      "data_digest": "b48204b3123cbb8017b0403262755ed02b124f3276614769b6a8a7538ecea95f",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0033",
+      "semantic_role": "invariant"
+    },
+    {
+      "data_digest": "53bc4582490735facc492542955c254a138708a3dee3c978e18b6bdf9c125d3c",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0034",
+      "semantic_role": "invariant"
+    },
+    {
+      "data_digest": "c0fe481d61337ee5f7c63abef560748ce68857dee0747d8c518362c05d7f9306",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0035",
+      "semantic_role": "invariant"
+    },
+    {
+      "data_digest": "fa2cd7431600659b17c3e6a84a2b5346c537c0f885674ad9b5d2ffa191b4d11d",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0036",
+      "semantic_role": "invariant"
+    },
+    {
+      "data_digest": "bbcc95267e14c96bc0604343b52e854d67d77bcae847fe6c81ee440986bfbc04",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0037",
+      "semantic_role": "outputs"
+    },
+    {
+      "data_digest": "e5756136257d6e9c81c4df22547fb7fb5d8db59c1662d264888e983c1a45716e",
+      "primitive": "Relation",
+      "record_id": "CRE-001-VOCAB-A-1.0:0038",
+      "semantic_role": "bounds"
+    }
+  ],
+  "vocabulary_id": "CRE-001-VOCAB-A-1.0"
+}
