@@ -1,8 +1,8 @@
 {
   "registry_id": "CRE-002-EXT-001-REP-001-TEAM-REGISTRY-1.0",
   "experiment_id": "CRE-002-EXT-001-REP-001",
-  "status": "registration-open-no-eligible-teams",
-  "registration_authorized": true,
+  "status": "superseded-registration-closed-no-teams-registered",
+  "registration_authorized": false,
   "teams": [],
   "eligibility_summary": {
     "eligible_implementation_teams": 0,
@@ -11,9 +11,10 @@
   },
   "minimum_requirements_met": false,
   "execution_unlock_eligible": false,
+  "execution_history": "not executed",
+  "superseded_by": "CRE-002-EXT-001-ROB-001",
   "blocking_reasons": [
-    "No implementation team registrations have been submitted.",
-    "No independent verifier team registration has been submitted.",
-    "No vocabulary has an eligible isolated implementation team."
+    "Participant registration was withdrawn before any team was registered.",
+    "The replacement test measures internal implementation robustness and does not claim human or organizational independence."
   ]
 }
