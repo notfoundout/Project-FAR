@@ -1,0 +1,90 @@
+{
+  "compiler_version": "cre002-prospective-execution-v1",
+  "decision_rules_digest": "1a4adca94f5597de0519d758153978e1f56dee71fcdf4e54e8f3166f1a7e64b0",
+  "execution_status": "completed-prospectively",
+  "experiment": "CRE-002",
+  "scenario_digest": "f1b355ea5a68526adeb071defc34dcd2260950be2af144d431c51466efb99b0a",
+  "semantics_digest": "4df4bfc22a370b0c97a8ed8464e02c220beaacb0cea4d87c61cc48fe777cfda6",
+  "supported_conclusions": [
+    "Each reported complete outcome passed all frozen CRE-002 complete gates for the bounded scenario.",
+    "The results are prospective relative to Vocabulary Semantics Baseline 1.0.",
+    "Behavioral equivalence, where reported, is limited to the full bounded CRE-002 state space and registered policies."
+  ],
+  "unsupported_conclusions": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "independence",
+    "superiority",
+    "FAR proof",
+    "universal structure of reasoning",
+    "adequacy outside the frozen CRE-002 scenario",
+    "unbounded concurrency",
+    "unbounded higher-order modification",
+    "global vocabulary ranking"
+  ],
+  "vocabulary_level": {
+    "complete_vocabularies": [
+      "CRE-001-VOCAB-A-1.0",
+      "CRE-001-VOCAB-B-1.0",
+      "CRE-001-VOCAB-C-1.0"
+    ],
+    "existential_complete": true,
+    "ranking_permitted": false,
+    "reproducible_complete": true
+  },
+  "vocabulary_results": [
+    {
+      "edge_count": 72,
+      "gates": {
+        "all_frozen_commitments_represented": true,
+        "atomic_trace_replay": true,
+        "deterministic_regeneration": true,
+        "full_bounded_behavioral_verification": true,
+        "no_unrestricted_hidden_metalanguage": true,
+        "registered_mutations_detected": true,
+        "required_outputs_preserved": true,
+        "semantic_licensing": true
+      },
+      "outcome": "complete",
+      "shortest_counterexample": null,
+      "state_count": 73,
+      "vocabulary_id": "CRE-001-VOCAB-A-1.0"
+    },
+    {
+      "edge_count": 72,
+      "gates": {
+        "all_frozen_commitments_represented": true,
+        "atomic_trace_replay": true,
+        "deterministic_regeneration": true,
+        "full_bounded_behavioral_verification": true,
+        "no_unrestricted_hidden_metalanguage": true,
+        "registered_mutations_detected": true,
+        "required_outputs_preserved": true,
+        "semantic_licensing": true
+      },
+      "outcome": "complete",
+      "shortest_counterexample": null,
+      "state_count": 73,
+      "vocabulary_id": "CRE-001-VOCAB-B-1.0"
+    },
+    {
+      "edge_count": 72,
+      "gates": {
+        "all_frozen_commitments_represented": true,
+        "atomic_trace_replay": true,
+        "deterministic_regeneration": true,
+        "full_bounded_behavioral_verification": true,
+        "no_unrestricted_hidden_metalanguage": true,
+        "registered_mutations_detected": true,
+        "required_outputs_preserved": true,
+        "semantic_licensing": true
+      },
+      "outcome": "complete",
+      "shortest_counterexample": null,
+      "state_count": 73,
+      "vocabulary_id": "CRE-001-VOCAB-C-1.0"
+    }
+  ]
+}
