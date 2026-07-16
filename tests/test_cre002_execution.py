@@ -13,9 +13,9 @@ VOCABS = ["CRE-001-VOCAB-A-1.0", "CRE-001-VOCAB-B-1.0", "CRE-001-VOCAB-C-1.0"]
 
 
 class Cre002ExecutionTests(unittest.TestCase):
-    def test_execution_regenerates_deterministically(self) -> None:
+    def test_execution_artifacts_match_deterministic_regeneration(self) -> None:
         result = subprocess.run(
-            [sys.executable, "tools/cre002_execute.py", "--write", "--check"],
+            [sys.executable, "tools/cre002_execute.py", "--check"],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -31,11 +31,11 @@ class Cre002ExecutionTests(unittest.TestCase):
             self.assertFalse(row["native_compilation_attempted"])
             self.assertFalse(row["behavioral_verification_attempted"])
             self.assertIsNone(row["shortest_counterexample"])
-            self.assertFalse(row["licensing_audit"]["all_required_commitments_licensed"])
+        self.assertFalse(summary["licensing_audit"]["all_required_commitments_licensed"])
 
     def test_missing_capabilities_are_explicit(self) -> None:
         summary = json.loads(RESULT.read_text())
-        missing = set(summary["candidates"][0]["licensing_audit"]["missing_constructs"])
+        missing = set(summary["licensing_audit"]["missing_constructs"])
         self.assertEqual(
             missing,
             {"D_nondeterminism", "D_concurrency", "D_priority", "D_provenance", "D_rule_modification"},
