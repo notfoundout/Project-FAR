@@ -1,0 +1,39 @@
+{
+  "decision_rules_id": "CRE-002-EXT-001-REP-001-DECISION-RULES-1.0",
+  "submission_outcomes": {
+    "complete": "Eligible, uncontaminated, licensed, reproducible, replayable, behaviorally equivalent, output-complete, and mutation-sensitive.",
+    "partial": "Eligible and uncontaminated, but one or more nonfatal required gates are incomplete or only partially satisfied.",
+    "failed": "Eligible and uncontaminated, but a required behavioral, licensing, replay, output, regeneration, or mutation gate fails.",
+    "contaminated": "Prohibited exposure or implementation dependence invalidates primary replication eligibility.",
+    "inconclusive": "Eligibility, provenance, environment, or discrepancy status cannot be resolved under the frozen protocol."
+  },
+  "required_gates": [
+    "isolation audit",
+    "semantic licensing",
+    "native construction completeness",
+    "trace replay",
+    "bounded behavioral equivalence",
+    "required output preservation",
+    "deterministic regeneration",
+    "registered mutation sensitivity",
+    "submission checksum verification",
+    "independent verifier reconstruction"
+  ],
+  "vocabulary_replication_success": "At least one eligible uncontaminated complete submission for the vocabulary, with no unresolved material verifier discrepancy.",
+  "overall_replication_success": "Every official vocabulary satisfies vocabulary_replication_success, at least two independent implementation teams contribute counted submissions, and the verifier independence audit passes.",
+  "overall_partial": "At least one official vocabulary succeeds and at least one is partial, failed, missing, or inconclusive, with no basis for overall success.",
+  "overall_failed": "One or more official vocabularies have eligible uncontaminated submissions but none complete, or the independent verifier finds a material behavioral contradiction.",
+  "overall_contaminated": "Independence requirements are materially violated across the counted replication set.",
+  "overall_inconclusive": "The minimum replication set, eligibility, verifier independence, or material discrepancies cannot be resolved.",
+  "aggregation_policy": "Report all submissions. Primary aggregation excludes contaminated submissions but lists them and their exclusion reasons. No submission may be discarded for divergence.",
+  "forbidden_inferences": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "primitive independence",
+    "superiority or ranking",
+    "FAR proof",
+    "universal structure of reasoning"
+  ]
+}
