@@ -1,10 +1,11 @@
 {
   "package_id":"CRE-002-EXT-001-PACKAGE-1.0",
-  "status":"preregistered-checksum-lock-required",
+  "status":"preregistered-checksum-locked",
   "semantic_authority":{"id":"VOCABULARY-SEMANTICS-BASELINE-1.1","path":"theory/evaluation/comparative-representation/semantics/vocabulary-semantics-baseline-1.1.json"},
   "immutable_scientific_files":["README.md","preregistration.md","scenario/scenario-v1.0.json","ambiguity-policies.json","decision-rules.json","output-schema.json"],
   "mutable_administrative_controls":["package-manifest.json","execution-lock.json","checksum-lock.json","execution-unlock-audit.json"],
-  "checksum_state":"pending",
+  "checksum_lock":{"path":"checksum-lock.json","algorithm":"SHA-256","immutable_scientific_file_count":6},
+  "checksum_state":"locked",
   "execution_permitted":false,
   "compiler_implementation_permitted":false,
   "official_results_present":false,
