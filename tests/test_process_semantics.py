@@ -46,7 +46,7 @@ class ProcessSemanticsTests(unittest.TestCase):
     def test_documentation_states_claim_boundary(self):
         text = DOC.read_text(encoding="utf-8").lower()
         self.assertIn("independent of far representation types", text)
-        self.assertIn("does not prove universal coverage", text)
+        self.assertIn("do not prove universal coverage", text)
         self.assertIn("terminal status is preserved as an observable encoding", text)
         self.assertIn("lossy compiler", text)
         self.assertIn("model-theoretic independence", text)
