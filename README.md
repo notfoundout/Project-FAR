@@ -33,7 +33,7 @@ The project does not assume that a universal structure exists, nor that FAR is t
 | High Priority Issues | 1 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
 | Repository Health | PASS | [docs/maintenance/repository-health-checks.md](docs/maintenance/repository-health-checks.md) |
 | Planner Status | CURRENT | [docs/planning/next-actions.md](docs/planning/next-actions.md) |
-| CI Status | Manual workflows available | [.github/workflows/repository-health.yml](.github/workflows/repository-health.yml) |
+| CI Status | Push, pull-request, and manual workflows available | [.github/workflows/repository-health.yml](.github/workflows/repository-health.yml) |
 | Release Readiness | AVAILABLE | [docs/reports/release-readiness-report.md](docs/reports/release-readiness-report.md) |
 
 ## Evidence Snapshot
@@ -63,8 +63,8 @@ Trend data is not yet available because no prior generated snapshot is stored.
 
 ## Top Priority Tasks
 
-### TASK-001: Design and preregister CRE-002
-- Source gap: [GAP-001](docs/reports/research-gap-report.md#gap-001)
+### STRATEGIC-001: Design and preregister CRE-002
+- Source: strategic roadmap priority
 - Affected files:
   - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
   - [docs/ROADMAP.md](docs/ROADMAP.md)
@@ -72,31 +72,31 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - Suggested branch: `research/preregister-cre-002`
 - Suggested PR title: `Design and preregister CRE-002`
 
-### TASK-002: Execute CRE-002 prospectively
-- Source gap: [GAP-002](docs/reports/research-gap-report.md#gap-002)
+### STRATEGIC-002: Execute CRE-002 prospectively
+- Source: strategic roadmap priority
 - Affected files:
   - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
 - Suggested branch: `research/execute-cre-002`
 - Suggested PR title: `Execute CRE-002 prospectively`
 
-### TASK-003: Analyze prospective CRE-002 evidence
-- Source gap: [GAP-003](docs/reports/research-gap-report.md#gap-003)
+### STRATEGIC-003: Analyze prospective CRE-002 evidence
+- Source: strategic roadmap priority
 - Affected files:
   - [docs/reports](docs/reports)
   - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
 - Suggested branch: `research/analyze-cre-002-evidence`
 - Suggested PR title: `Analyze prospective CRE-002 evidence`
 
-### TASK-004: Plan independent replication
-- Source gap: [GAP-004](docs/reports/research-gap-report.md#gap-004)
+### STRATEGIC-004: Plan independent replication
+- Source: strategic roadmap priority
 - Affected files:
   - [docs/methodology/adversarial-evaluation.md](docs/methodology/adversarial-evaluation.md)
   - [docs/governance/central-research-program.md](docs/governance/central-research-program.md)
 - Suggested branch: `research/plan-independent-replication`
 - Suggested PR title: `Plan independent replication`
 
-### TASK-005: Monitor frozen vocabulary semantic drift
-- Source gap: [GAP-005](docs/reports/research-gap-report.md#gap-005)
+### STRATEGIC-005: Monitor frozen vocabulary semantic drift
+- Source: strategic roadmap priority
 - Affected files:
   - [theory/evaluation/comparative-representation/experiments/CRE-001/semantics/semantic-regression.md](theory/evaluation/comparative-representation/experiments/CRE-001/semantics/semantic-regression.md)
   - [tools/check_cre001_semantics.py](tools/check_cre001_semantics.py)
@@ -167,7 +167,7 @@ make plan
 2. `make dashboard`
 3. Open README
 4. Choose top task
-5. Open source gap
+5. Open source reference
 6. Open affected files
 7. Copy generated task brief
 8. Implement
