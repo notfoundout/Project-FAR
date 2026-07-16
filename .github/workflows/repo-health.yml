@@ -13,6 +13,8 @@ jobs:
         show-progress: false
     - name: Verify CRE-002 checksum lock
       run: python3 tools/check_cre002_lock.py
+    - name: Verify CRE-002-EXT-001 checksum lock
+      run: python3 tools/check_cre002_ext001_checksums.py
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11'
