@@ -33,10 +33,10 @@ class CRE002EXT001ReplicationDispositionTests(unittest.TestCase):
         self.assertFalse(registry["registration_authorized"])
         self.assertFalse(registry["execution_unlock_eligible"])
 
-    def test_replacement_claim_is_internal_not_external(self):
-        readme = (ROB / "README.md").read_text(encoding="utf-8")
-        self.assertIn("internal implementation replication", readme)
-        self.assertIn("not independent external replication", readme.lower())
+    def test_replacement_claim_is_bounded_robustness_only(self):
+        readme = (ROB / "README.md").read_text(encoding="utf-8").lower()
+        self.assertIn("bounded multi-implementation robustness", readme)
+        self.assertIn("not independent external replication", readme)
 
     def test_automated_multi_implementation_robustness(self):
         result = subprocess.run(
@@ -51,7 +51,7 @@ class CRE002EXT001ReplicationDispositionTests(unittest.TestCase):
         self.assertEqual(report["implementations"], 3)
         self.assertTrue(report["byte_identical"])
         self.assertTrue(report["deterministic_rerun"])
-        self.assertEqual(report["claim_class"], "internal implementation replication")
+        self.assertEqual(report["claim_class"], "bounded multi-implementation robustness")
         self.assertFalse(report["external_replication"])
         self.assertTrue(all(case["rejected"] for case in report["mutation_and_adversarial_cases"]))
 
