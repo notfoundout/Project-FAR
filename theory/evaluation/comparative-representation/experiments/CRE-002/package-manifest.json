@@ -1,6 +1,6 @@
 {
   "package_id": "CRE-002-PACKAGE-1.0",
-  "status": "preregistered-checksum-locked",
+  "status": "execution-authorized",
   "protocol": "CRP-1.0 with CRE-002 prospective deterministic extension",
   "semantic_authority": {
     "name": "Vocabulary Semantics Baseline 1.0",
@@ -10,7 +10,8 @@
   "checksum_lock": {
     "path": "checksum-lock.json",
     "algorithm": "SHA-256",
-    "source_commit": "003f0fda30f0919d13edb1e5f1b3b3d2e0fd1d04"
+    "source_commit": "003f0fda30f0919d13edb1e5f1b3b3d2e0fd1d04",
+    "immutable_scientific_files": 6
   },
   "files": [
     {"path": "README.md", "sha256": "a8695bb976ca5a19072f809374054cfb1ff8ee9cc2cfe4e77955daa4c241ba02", "byte_count": 1999},
@@ -18,11 +19,27 @@
     {"path": "scenario/scenario-v1.0.md", "sha256": "a7b6b4c248c1c2e986b5cd9fe5de513b4aefb4ba7cc2f3078d8408033b6befd9", "byte_count": 4862},
     {"path": "scenario/scenario-v1.0.json", "sha256": "f1b355ea5a68526adeb071defc34dcd2260950be2af144d431c51466efb99b0a", "byte_count": 4918},
     {"path": "ambiguity-policies.json", "sha256": "766a64f0ca48af6bbb9f0c532a557c73925dc717c1a45f1c1a476fa1cdc2a61e", "byte_count": 1915},
-    {"path": "decision-rules.json", "sha256": "1a4adca94f5597de0519d758153978e1f56dee71fcdf4e54e8f3166f1a7e64b0", "byte_count": 1976},
-    {"path": "execution-lock.json", "sha256": "014a8cd67391270f28dec983a619bde281bc64473ec0eff397f5d86c507648f3", "byte_count": 722}
+    {"path": "decision-rules.json", "sha256": "1a4adca94f5597de0519d758153978e1f56dee71fcdf4e54e8f3166f1a7e64b0", "byte_count": 1976}
+  ],
+  "mutable_administrative_controls": [
+    {
+      "path": "execution-lock.json",
+      "review_required_for_change": true,
+      "excluded_from_immutable_checksum_set": true
+    },
+    {
+      "path": "execution-unlock-audit.json",
+      "review_required_for_change": true,
+      "excluded_from_immutable_checksum_set": true
+    },
+    {
+      "path": "checksum-lock.json",
+      "review_required_for_change": true,
+      "excluded_from_immutable_checksum_set": true
+    }
   ],
   "checksum_state": "locked",
-  "execution_permitted": false,
+  "execution_permitted": true,
   "vocabularies": [
     "CRE-001-VOCAB-A-1.0",
     "CRE-001-VOCAB-B-1.0",
