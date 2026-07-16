@@ -2,18 +2,26 @@ name: CRE-002-EXT-001 Generate
 on:
   pull_request:
     branches: [main]
+permissions:
+  contents: write
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.ref }}
           show-progress: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - run: python tools/cre002_ext001_execute.py --write
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cre002-ext001-generated
-          path: theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001/execution
+      - name: Commit generated artifacts and remove temporary workflow
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001/execution
+          git rm .github/workflows/cre002-ext001-generate.yml
+          git commit -m "Record CRE-002-EXT-001 execution artifacts"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
