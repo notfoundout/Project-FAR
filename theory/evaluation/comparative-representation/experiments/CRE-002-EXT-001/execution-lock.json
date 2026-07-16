@@ -1,11 +1,12 @@
 {
   "experiment":"CRE-002-EXT-001",
-  "status":"preregistered-checksum-lock-required",
-  "execution_permitted":false,
-  "compiler_implementation_permitted":false,
+  "status":"execution-authorized-upon-merge",
+  "execution_permitted":true,
+  "compiler_implementation_permitted":true,
   "official_results_present":false,
   "semantic_authority":"VOCABULARY-SEMANTICS-BASELINE-1.1",
   "authorization_requirements":["Baseline 1.1 merged","extension preregistration merged","extension scientific package checksum locked","separate reviewed execution-unlock pull request merged"],
+  "authorization_audit":"execution-unlock-audit.json",
   "preserves_original_result":"CRE-002-COMPARISON-1.0",
-  "prohibited_actions":["retroactively alter CRE-002 outcomes","reuse CRE-002 as though untouched","compile candidates before checksum lock and execution unlock","generate scientific conclusions before execution authorization"]
+  "prohibited_actions":["retroactively alter CRE-002 outcomes","reuse CRE-002 as though untouched","modify checksum-locked scientific files","generate conclusions outside frozen decision rules"]
 }
