@@ -1,0 +1,46 @@
+{
+  "policy_id": "CRE-002-AMBIGUITY-POLICIES-1.0",
+  "status": "frozen-upon-merge",
+  "policies": [
+    {
+      "id": "AP-001",
+      "topic": "nondeterminism",
+      "resolution": "Each listed alternative is a distinct permitted successor. A candidate must preserve the full successor set rather than choose one preferred outcome."
+    },
+    {
+      "id": "AP-002",
+      "topic": "concurrency",
+      "resolution": "Concurrency means interleaving of atomic transitions, not simultaneous state updates. All permitted orders must be represented."
+    },
+    {
+      "id": "AP-003",
+      "topic": "defeasibility",
+      "resolution": "Priority defeat suppresses the lower-priority conclusion for the current state only. It does not delete, deactivate, or rewrite the defeated rule."
+    },
+    {
+      "id": "AP-004",
+      "topic": "provenance",
+      "resolution": "A Boolean value never substitutes for a required evidence record. Source and reliability are operationally relevant guard inputs."
+    },
+    {
+      "id": "AP-005",
+      "topic": "rule modification",
+      "resolution": "T_modify changes exactly one rule from active to inactive, records before and after status, and may fire at most once."
+    },
+    {
+      "id": "AP-006",
+      "topic": "deadlock",
+      "resolution": "Deadlock holds when no non-halt transition is admissible and both dispatch rules are inactive or blocked. T_halt is then admissible with terminal_reason=deadlock."
+    },
+    {
+      "id": "AP-007",
+      "topic": "history",
+      "resolution": "Histories record firing order and may differ across interleavings. Histories are not quotiented by commutativity."
+    },
+    {
+      "id": "AP-008",
+      "topic": "unsupported commitments",
+      "resolution": "A compiler must report partial or unsupported. It may not invent an unstated primitive meaning, derived operator, or unrestricted payload language."
+    }
+  ]
+}
