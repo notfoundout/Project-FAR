@@ -4,7 +4,7 @@
 
 Project FAR v0.4.0 records completion of the external-validation milestone that followed the v0.3.0 internal primitive-sufficiency baseline.
 
-The release also records additional methodological work completed beyond the original v0.4.0 plan: adoption of the frozen Comparative Representation Protocol Version 1.0 (CRP v1.0) and registration of Comparative Representation Experiment 1 (CRE-001) as a prepared but unexecuted future comparative study.
+The release also records additional methodological work completed beyond the original v0.4.0 plan: adoption of the frozen Comparative Representation Protocol Version 1.0 (CRP v1.0) and registration of Comparative Representation Experiment 1 (CRE-001). At the v0.4.0 release date CRE-001 was prepared but unexecuted; the current repository baseline now also includes the later merged deterministic CRE-001 implementation result.
 
 ## Summary
 
@@ -49,7 +49,7 @@ The completed repository work exceeds the original v0.4.0 objective by adding a 
 - CRE-001 has prepared scenario, vocabulary, calibration, evaluator-instruction, submission, CIR, adjudication, provenance, manifest, and pre-exposure checklist artifacts.
 - Legacy external validation is explicitly preserved as preliminary evidence and subordinated only for stronger comparative claims.
 
-These additions document methodological evolution. They do not create comparative results.
+These additions documented methodological evolution at v0.4.0. They did not themselves create comparative results; later deterministic CRE-001 work created a scoped deterministic implementation result without changing the v0.4.0 release boundary.
 
 ## Methodological Evolution to CRP v1.0
 
@@ -67,9 +67,7 @@ Legacy reports retain their original evidential role as preliminary, historical,
 
 ## CRE-001 Status
 
-Comparative Representation Experiment 1: Reflective Discrete Rule-Transition System is registered but unexecuted.
-
-CRE-001 currently has prepared execution inputs and templates. No evaluator has received a vocabulary, no mappings have been collected, no adjudication has occurred, no ablation results exist, no aggregation has been performed, and no comparative conclusions have been drawn.
+Comparative Representation Experiment 1: Reflective Discrete Rule-Transition System was registered at v0.4.0. The later merged deterministic result establishes vocabulary-native compilation, executable lowering, deterministic verification against the registered reference behavior, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration at CRE-001 scope. Historical human-comparison mappings, CIR submissions, adjudication records, ablation records, and aggregation worksheets remain absent unless separately produced by a human-comparison experiment.
 
 ## Repository Maturity
 
@@ -81,19 +79,19 @@ Research maturity remains bounded. The repository has stronger methodology for f
 
 - v0.4.0 external validation is preliminary and not blinded comparative evidence.
 - External-validation preservation judgments were not produced under CRP v1.0 evaluator isolation, canonicalization, adjudication, ablation, or aggregation rules.
-- CRP v1.0 has not yet produced experimental results.
-- CRE-001 has not yet tested any vocabulary.
-- Universality, global minimality, uniqueness, metaphysical necessity, adequacy for all reasoning, and superiority over all possible vocabularies remain unestablished.
+- Deterministic CRE-001 results are limited to the registered CRE-001 reference behavior, explicit ambiguity policies, compiler-local vocabulary interpretations, generated artifacts, mutation tests, and verifier depth.
+- CRE-001 does not establish formally licensed vocabulary semantics.
+- Universality, primitive-only sufficiency, global minimality, independence, necessity, uniqueness, metaphysical necessity, adequacy for all reasoning, and superiority over all possible vocabularies remain unestablished.
 
 ## Known Unresolved Questions
 
-- Whether CRE-001 will support existential sufficiency, reproducible sufficiency, comparative structural reproducibility, comparative representation economy, or local necessity for any tested vocabulary.
+- Whether independently frozen formal vocabulary semantics can license the official vocabularies without relying on compiler-local compatibility assumptions.
 - Whether future external systems will create genuine counterexamples, new scope boundaries, or unresolved interpretation disputes.
 - Whether any simpler competing structure can match or dominate FAR-derived representational vocabulary under CRP v1.0 rules.
 - Whether unresolved pressure points identified by preliminary external validation will survive blinded comparative testing.
 
 ## Release Boundary
 
-CRP v1.0 is frozen, but CRE-001 has not yet been executed.
+CRP v1.0 is frozen. v0.4.0 itself remains a methodology, evidence-framing, and repository-status release; later deterministic CRE-001 implementation is a scoped post-v0.4.0 result and does not retroactively strengthen v0.4.0 claims.
 
-This release is a methodology, evidence-framing, and repository-status release. It does not alter protected theory, framework, proof, primitive, theorem, mechanization, parser, CLI, or accepted-doctrine artifacts.
+This release boundary does not alter protected theory, framework, proof, primitive, theorem, mechanization, parser, CLI, or accepted-doctrine artifacts. It does not alter protected theory, framework, proof, primitive, theorem, mechanization, parser, CLI, or accepted-doctrine artifacts.

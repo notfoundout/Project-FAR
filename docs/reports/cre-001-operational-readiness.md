@@ -1,17 +1,13 @@
-# CRE-001 Operational Readiness Report
+# CRE-001 Deterministic Status Reconciliation Report
 
-## Operationally Ready
+## Completed Deterministic Result
 
-CRE-001 has a registered execution package with scenario, vocabularies, evaluator instructions, calibration materials, execution checklist, and artifact directories. This change adds an aggregation script scaffold and synthetic test fixtures outside research-results directories.
+CRE-001 has a registered execution package and a merged deterministic implementation result. The completed deterministic scope establishes vocabulary-native compilation, executable lowering, deterministic verification against the registered CRE-001 reference behavior, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration.
 
-## Requires Evaluator Recruitment
+## Preserved Limitations
 
-No evaluator recruitment, eligibility confirmation, conflict-of-interest declaration, isolation confirmation, vocabulary assignment, or pre-exposure hash verification has been executed.
+The result is limited to CRE-001, registered ambiguity policies, compiler-local vocabulary interpretations, generated artifacts, mutation tests, and verifier depth. It does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, formally licensed vocabulary semantics, or prospective independent replication.
 
-## Requires Human Execution
+## Next Required Research Direction
 
-CRE-001 requires human evaluators to execute the frozen protocol, submit artifacts, and complete provenance declarations before any scientific result can exist.
-
-## Impossible to Conclude Now
-
-No existential sufficiency, reproducible sufficiency, comparative preservation, relative economy, local necessity, or Pareto conclusion can be drawn from readiness artifacts alone. CRE-001 remains unexecuted.
+The next priority is to freeze independent formal semantics for each official vocabulary, design and preregister CRE-002, execute CRE-002 prospectively, analyze prospective evidence, and pursue independent replication.

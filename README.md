@@ -20,10 +20,10 @@ The project does not assume that a universal structure exists, nor that FAR is t
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: post-v0.4.0 CRE-001 preparation
+- Current project phase: post-CRE-001 deterministic reconciliation; CRE-002 semantics preparation
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
-- Last dashboard generation time: 2026-07-08T16:26:56+00:00
+- Last dashboard generation time: 2026-07-16T03:28:53+00:00
 
 ## Repository Alerts
 
@@ -45,9 +45,9 @@ The project does not assume that a universal structure exists, nor that FAR is t
 | Adversarial fixtures | 14 | [theory/falsification/adversarial-test-suite.yaml](theory/falsification/adversarial-test-suite.yaml) |
 | Counterexample fixtures | 1 | [tests](tests) |
 | Candidate primitive failures | 0 | [theory/falsification/primitive-pressure-registry.yaml](theory/falsification/primitive-pressure-registry.yaml) |
-| Conservative extensions | 33 | [theory/falsification/primitive-pressure-registry.yaml](theory/falsification/primitive-pressure-registry.yaml) |
-| Fits FAR | 12 | [theory/evaluation/evidence-registry.yaml](theory/evaluation/evidence-registry.yaml) |
-| Unresolved cases | 12 | [docs/reports/project-status-generated.md](docs/reports/project-status-generated.md) |
+| Conservative extensions | 35 | [theory/falsification/primitive-pressure-registry.yaml](theory/falsification/primitive-pressure-registry.yaml) |
+| Fits FAR | 14 | [theory/evaluation/evidence-registry.yaml](theory/evaluation/evidence-registry.yaml) |
+| Unresolved cases | 17 | [docs/reports/project-status-generated.md](docs/reports/project-status-generated.md) |
 
 ## Progress Summary
 
@@ -57,22 +57,51 @@ Trend data is not yet available because no prior generated snapshot is stored.
 |---|---:|---:|---:|
 | Internal reasoning systems | 23 | not available | not available |
 | External reasoning systems | 29 | not available | not available |
-| Conservative extensions | 33 | not available | not available |
+| Conservative extensions | 35 | not available | not available |
 | Candidate primitive failures | 0 | not available | not available |
-| Open gaps | 93 | not available | not available |
+| Open gaps | 160 | not available | not available |
 
 ## Top Priority Tasks
 
-1. Finalize and verify the scoped status resolution for minimality and independence.
-2. Complete CRE-001 operational prerequisites.
-3. Recruit eligible independent evaluators.
-4. Execute CRE-001 under the frozen protocol.
-5. Preserve all successful, failed, partial, and divergent mappings.
-6. Analyze results using the preregistered decision rules.
-7. Update theorem and investigation statuses only after evidence warrants it.
-8. Prepare independent replication.
+### TASK-001: Freeze independent formal semantics for each official vocabulary
+- Source gap: [GAP-001](docs/reports/research-gap-report.md#gap-001)
+- Affected files:
+  - [theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-A.md](theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-A.md)
+  - [theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-B.md](theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-B.md)
+  - [theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-C.md](theory/evaluation/comparative-representation/experiments/CRE-001/vocabularies/vocabulary-C.md)
+- Suggested branch: `research/freeze-vocabulary-semantics`
+- Suggested PR title: `Freeze official vocabulary semantics`
 
-Current status boundaries: T-001 and T-002 are conditionally established only at their stated scope; VI-002 and VI-003 remain Research; global primitive minimality, global primitive independence, universality, future independent validation, and machine-verified formal proof are not established and current structural checks are not machine-verified formal proof; CRE-001 remains unexecuted.
+### TASK-002: Design and preregister CRE-002
+- Source gap: [GAP-002](docs/reports/research-gap-report.md#gap-002)
+- Affected files:
+  - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
+  - [docs/ROADMAP.md](docs/ROADMAP.md)
+- Suggested branch: `research/preregister-cre-002`
+- Suggested PR title: `Design and preregister CRE-002`
+
+### TASK-003: Execute CRE-002 prospectively
+- Source gap: [GAP-003](docs/reports/research-gap-report.md#gap-003)
+- Affected files:
+  - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
+- Suggested branch: `research/execute-cre-002`
+- Suggested PR title: `Execute CRE-002 prospectively`
+
+### TASK-004: Analyze prospective CRE-002 evidence
+- Source gap: [GAP-004](docs/reports/research-gap-report.md#gap-004)
+- Affected files:
+  - [docs/reports](docs/reports)
+  - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
+- Suggested branch: `research/analyze-cre-002-evidence`
+- Suggested PR title: `Analyze prospective CRE-002 evidence`
+
+### TASK-005: Plan independent replication
+- Source gap: [GAP-005](docs/reports/research-gap-report.md#gap-005)
+- Affected files:
+  - [docs/methodology/adversarial-evaluation.md](docs/methodology/adversarial-evaluation.md)
+  - [docs/governance/central-research-program.md](docs/governance/central-research-program.md)
+- Suggested branch: `research/plan-independent-replication`
+- Suggested PR title: `Plan independent replication`
 
 ## Research Gap Summary
 
@@ -80,8 +109,8 @@ Current status boundaries: T-001 and T-002 are conditionally established only at
 |---|---:|---|
 | Critical | 0 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
 | High | 1 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
-| Medium | 55 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
-| Low | 37 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| Medium | 67 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+| Low | 92 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
 
 ## Repository Navigation
 
@@ -108,10 +137,10 @@ Current status boundaries: T-001 and T-002 are conditionally established only at
 
 ## Current Roadmap
 
-- Current phase: post-v0.4.0 CRE-001 preparation
-- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation; CRP v1.0 registration; CRE-001 execution package
-- In-progress work: CRE-001 pre-exposure operations
-- Planned work: CRE-001 evaluator recruitment and execution; Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor
+- Current phase: post-CRE-001 deterministic reconciliation; CRE-002 semantics preparation
+- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation; CRP v1.0 registration; deterministic CRE-001 implementation; vocabulary-native compilation; executable lowering; deterministic verification; replayable lowering traces; mutation testing; adversarial compiler audit; repository integration
+- In-progress work: independent formal semantics for official vocabularies and CRE-002 preregistration design
+- Planned work: prospective CRE-002 execution; prospective evidence analysis; independent replication; Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor
 
 ## Command Center
 

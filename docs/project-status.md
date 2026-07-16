@@ -6,7 +6,7 @@ The root [README Command Center](../README.md) is the canonical entry point for 
 
 ## Current Status
 
-Project FAR has completed the v0.4.0 external-validation milestone. The current baseline includes the v0.3.0 internal-validation milestone, the v0.3.1 repository-maturity maintenance release, preliminary external validation EV-001 through EV-029, frozen CRP v1.0 methodology, and a registered but unexecuted CRE-001 execution package.
+Project FAR has completed the v0.4.0 external-validation milestone. The current baseline includes the v0.3.0 internal-validation milestone, the v0.3.1 repository-maturity maintenance release, preliminary external validation EV-001 through EV-029, frozen CRP v1.0 methodology, and a merged deterministic CRE-001 result.
 
 The v0.4.0 release does not change FAR primitives, definitions, axioms, theorem statements, proof objects, parser behavior, reasoning-engine behavior, metadata schemas, or accepted doctrine.
 
@@ -18,7 +18,7 @@ The v0.4.0 release does not change FAR primitives, definitions, axioms, theorem 
 | FARE | Mathematics | Frozen, requirement-driven |
 | FARM | Meta-framework coordination | Stable |
 
-Active development now moves toward controlled CRE-001 pre-exposure operations under frozen CRP v1.0, while preserving external validation as preliminary evidence. T-001 and T-002 are conditionally established only at their recorded scope and assurance level; VI-002 and VI-003 remain active broader research investigations, and global primitive minimality, global primitive independence, universality, CRE-001 execution, comparative superiority, and future independent validation remain unresolved or unexecuted as applicable.
+Active development now moves toward independent formal vocabulary semantics and the design of CRE-002. The merged deterministic CRE-001 result established, at CRE-001 scope only, vocabulary-native compilation, executable lowering, deterministic verification against the registered reference behavior, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration. T-001 and T-002 are conditionally established only at their recorded scope and assurance level; VI-002 and VI-003 remain active broader research investigations. Universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, global primitive minimality, global primitive independence, superiority, a FAR proof, universal reasoning structure, and formally licensed vocabulary semantics are not established.
 
 ---
 
@@ -42,7 +42,7 @@ Prior internal-validation release: [`releases/project-far-v0.3.0.md`](releases/p
 
 Status: Complete.
 
-v0.4.0 completes the historical external-validation milestone and additionally registers frozen CRP v1.0 plus unexecuted CRE-001 preparation artifacts.
+v0.4.0 completes the historical external-validation milestone and additionally registers frozen CRP v1.0 plus the original CRE-001 preparation artifacts; the current repository baseline now also includes the later merged deterministic CRE-001 implementation result.
 
 ---
 
@@ -126,9 +126,9 @@ Stable components:
 
 ## Active Focus
 
-### Post-v0.4.0 CRE-001 Preparation
+### Post-CRE-001 Deterministic Reconciliation
 
-The active target is completing operational prerequisites for CRE-001 execution under frozen CRP v1.0. The experiment remains unexecuted until evaluator recruitment, calibration, randomized assignment, provenance assignment, isolation confirmation, and pre-exposure hash verification are complete. Minimality and independence status work is scoped: conditional theorem results are preserved, while broader VI-002/VI-003 and global questions remain active.
+The active target is freezing independent formal semantics for each official vocabulary, then designing and preregistering CRE-002 as a prospective study. CRE-001's deterministic implementation is complete at its stated scope: the official vocabularies were compiled into vocabulary-native artifacts, lowered to executable models, deterministically verified against the registered reference behavior, replayed through lowering traces, mutation-tested, adversarially audited, and integrated into the repository. This does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or formally licensed vocabulary semantics.
 
 ---
 
@@ -141,7 +141,8 @@ The current project order is:
 3. v0.3.0 internal validation baseline preserved.
 4. v0.3.1 repository maturity baseline published.
 5. v0.4.0 external validation completes and preserves EV-001 through EV-029 as preliminary evidence.
-6. CRP v1.0 is frozen and CRE-001 is registered but unexecuted.
+6. CRP v1.0 is frozen and CRE-001 was registered.
+7. Deterministic CRE-001 implementation is merged for the registered CRE-001 scope, with vocabulary-native compilation, executable lowering, deterministic verification, replayable traces, mutation testing, adversarial compiler audit, and repository integration.
 
 ---
 
@@ -155,12 +156,12 @@ This lowercase path, `docs/project-status.md`, is the canonical case-stable proj
 | Framework maturity | FARA, FAR, FARO, and FARM are stable framework layers; FARE Mathematics v0.1 is frozen and requirement-driven. | Framework stability does not imply universality or comparative superiority. |
 | Implementation maturity | Prototype/mechanization support is limited to IR loading, validation, graph construction, trace inspection, selected transition summaries, and structural proof-object validation. | General semantic inference and general calculus execution remain unsupported. |
 | Proof-assurance maturity | Canonical theorem records are established only at their stated scope and assurance level. Current proof objects are structurally checked, not machine-verified formal proofs. | Assurance metadata is authoritative in `theory/metadata/theorems.yaml`. |
-| Empirical-validation maturity | EV-001 through EV-029 are preliminary external-system evaluations, not independent validation. CRE-001 is registered but unexecuted. | Independent validation requires isolated evaluators under a preregistered protocol. |
+| Empirical-validation maturity | EV-001 through EV-029 are preliminary external-system evaluations, not independent validation. CRE-001 deterministic comparison is complete at registered CRE-001 scope, but formally licensed vocabulary semantics and prospective independent replication are not established. | Independent validation requires isolated prospective execution under a preregistered protocol. |
 | Release maturity | v0.4.0 is the current release baseline. | Release maturity does not strengthen theorem or validation claims. |
 
 ## Preserved Unique Notes from Prior Status File
 
 - Status and maturity labels in this document describe project maturity only. They do not assign Charter artifact status.
-- Current research remains focused on preserving preliminary v0.4.0 external-system evaluation evidence while preparing future CRP v1.0 comparative execution.
+- Current research remains focused on preserving preliminary v0.4.0 external-system evaluation evidence, maintaining the merged deterministic CRE-001 result at its limited scope, freezing independent formal vocabulary semantics, and preparing CRE-002 prospectively.
 - Central research questions remain open: common reasoning structure, universality, primitive and assumption necessity, architectural and semantic minimality, counterexample construction, boundary identification, competing simpler structures, expressive power, alternative formulations, and unresolved uncertainty.
-- Current priorities are preserving preliminary evidence, maintaining CRP v1.0 as frozen methodology, completing operational prerequisites before evaluator recruitment, and keeping certification, compatibility mapping, blinded comparative evaluation, and independent external review distinct.
+- Current priorities are freezing independent formal semantics for each official vocabulary, designing and preregistering CRE-002, executing CRE-002 prospectively, analyzing prospective evidence, and pursuing independent replication while keeping certification, compatibility mapping, deterministic comparison, prospective comparative evaluation, and independent external review distinct.

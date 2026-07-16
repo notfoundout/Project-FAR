@@ -50,7 +50,8 @@ class ScopedStatusResolutionTests(unittest.TestCase):
         self.assertIn('global primitive independence', combined.lower())
         self.assertNotIn('global primitive minimality is established', combined.lower())
         self.assertNotIn('global primitive independence is established', combined.lower())
-        self.assertIn('CRE-001 remains unexecuted', combined)
+        self.assertIn('deterministic CRE-001 implementation', combined)
+        self.assertIn('formally licensed vocabulary semantics', combined)
         self.assertIn('universality', combined.lower())
 
     def test_status_consistency_checker_has_no_scoped_primitive_contradiction(self):

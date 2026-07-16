@@ -6,10 +6,10 @@ This advisory report is the canonical Project FAR release checklist. It never pu
 
 | Metric | Current | Source |
 |---|---:|---|
-| Markdown files | 819 | [.](../..) |
-| Theory files | 215 | [theory](../../theory) |
-| Python tools | 39 | [tools](../../tools) |
-| Reports | 179 | [docs/reports](.) |
+| Markdown files | 830 | [.](../..) |
+| Theory files | 256 | [theory](../../theory) |
+| Python tools | 50 | [tools](../../tools) |
+| Reports | 185 | [docs/reports](.) |
 | Registries | 10 | [theory](../../theory) |
 | Proof objects | 15 | [theory/proof-objects](../../theory/proof-objects) |
 | Examples | 43 | [examples](../../examples) |
@@ -23,8 +23,8 @@ This advisory report is the canonical Project FAR release checklist. It never pu
 | Conservative extensions | 35 | [theory/falsification/primitive-pressure-registry.yaml](../../theory/falsification/primitive-pressure-registry.yaml) |
 | Fits FAR | 14 | [theory/evaluation/evidence-registry.yaml](../../theory/evaluation/evidence-registry.yaml) |
 | Unresolved cases | 17 | [docs/reports/research-gap-report.md](research-gap-report.md) |
-| Unresolved gaps | 156 | [docs/reports/research-gap-report.md](research-gap-report.md) |
-| Documentation coverage | 819 | [docs](..) |
+| Unresolved gaps | 160 | [docs/reports/research-gap-report.md](research-gap-report.md) |
+| Documentation coverage | 830 | [docs](..) |
 | Health-check availability | 1 | [tools/repo_health_check.py](../../tools/repo_health_check.py) |
 
 ## Validation Results
@@ -39,13 +39,13 @@ This advisory report is the canonical Project FAR release checklist. It never pu
 | Registry Validation | PASS | [tools/check_registry.py](../../tools/check_registry.py) |
 | Critical Research Gaps | 0 | [docs/reports/research-gap-report.md](research-gap-report.md) |
 | Candidate Primitive Failures | 0 | [theory/falsification/primitive-pressure-registry.yaml](../../theory/falsification/primitive-pressure-registry.yaml) |
-| Documentation Completeness | 819 | [docs](..) |
+| Documentation Completeness | 830 | [docs](..) |
 | Planner Freshness | PASS | [docs/planning/next-actions.md](../planning/next-actions.md) |
 
 ## Documentation Status
 
-- Markdown files: 819
-- Reports: 179
+- Markdown files: 830
+- Reports: 185
 - Maintenance documents: 5
 
 ## Planning Status
@@ -164,7 +164,7 @@ PROOF OBJECT CHECK PASSED
 PASS proof object theory/proof-objects/T-015.proof.yaml
 
 Repository health summary:
-passed: 105 warnings: 0 failures: 0
+passed: 106 warnings: 0 failures: 0
 ```
 
 </details>
