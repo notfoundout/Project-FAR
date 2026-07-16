@@ -57,14 +57,15 @@ def rewrite_links(markdown: str, source_file: Path, dest_file: Path) -> str:
 
 def parse_tasks(n=5):
     text=NEXT.read_text(encoding='utf-8') if NEXT.exists() else ''
-    chunks=re.split(r'^### (TASK-\d+): (.+)$', text, flags=re.M)
+    chunks=re.split(r'^### ((?:TASK|STRATEGIC)-\d+): (.+)$', text, flags=re.M)
     tasks=[]
     for i in range(1,len(chunks),3):
         tid,title,body=chunks[i],chunks[i+1],chunks[i+2]
         def grab(pat):
             m=re.search(pat,body); return m.group(1).strip() if m else 'not available'
         affected=re.findall(r'^  - (.+)$', body, re.M)
-        tasks.append((tid,title,rewrite_links(grab(r'- Source gap: (.+)'), NEXT, OUT), [rewrite_links(a, NEXT, OUT) for a in affected], grab(r'- Suggested branch name: `([^`]+)`'), grab(r'- Suggested PR title: `([^`]+)`')))
+        source=rewrite_links(grab(r'- Source(?: gap)?: (.+)'), NEXT, OUT)
+        tasks.append((tid,title,source,[rewrite_links(a, NEXT, OUT) for a in affected],grab(r'- Suggested branch name: `([^`]+)`'),grab(r'- Suggested PR title: `([^`]+)`')))
     return tasks[:n]
 def metrics():
     ev=entries(load(REG['evidence']) or {}); ex=entries(load(REG['external']) or {}); adv=entries(load(REG['adversarial']) or {}); pressure=(load(REG['pressure']) or {}).get('primitives',[])
@@ -121,7 +122,7 @@ def dashboard_generation_time():
 
 def block():
     generate_index(); ev,ex,adv,pressure,m=metrics(); gaps=gap_counts(); rel=count_release()
-    health='PASS'; planner='CURRENT'; ci='Manual workflows available'
+    health='PASS'; planner='CURRENT'; ci='Push, pull-request, and manual workflows available'
     critical=gaps.get('Critical',0); high=gaps.get('High',0)
     alerts=compute_alerts(health, ci)
     lines=[BEGIN,'','## Repository Status','',f'- Current release: {link(rel) if rel else "unknown"}',f'- Current project phase: post-CRE-001 prospective semantics baseline; CRE-002 preparation',f'- Repository health status: {health} ({link("docs/maintenance/repository-health-checks.md","health checks")})',f'- Planner status: {planner} ({link("tools/self_advancement_plan.py","planner")})',f'- Last dashboard generation time: {dashboard_generation_time()}','',
@@ -137,15 +138,15 @@ def block():
         lines.append(f'| {k} | {m[k]} | not available | not available |')
     lines.append(f'| Open gaps | {sum(gaps.values())} | not available | not available |')
     lines += ['','## Top Priority Tasks','']
-    for tid,title,gap,affected,branch,pr in parse_tasks():
-        lines += [f'### {tid}: {title}',f'- Source gap: {gap}','- Affected files:',*[f'  - {a}' for a in affected],f'- Suggested branch: `{branch}`',f'- Suggested PR title: `{pr}`','']
+    for tid,title,source,affected,branch,pr in parse_tasks():
+        lines += [f'### {tid}: {title}',f'- Source: {source}','- Affected files:',*[f'  - {a}' for a in affected],f'- Suggested branch: `{branch}`',f'- Suggested PR title: `{pr}`','']
     lines += ['## Research Gap Summary','', '| Severity | Count | Source |','|---|---:|---|']
     for sev in ['Critical','High','Medium','Low']: lines.append(f'| {sev} | {gaps.get(sev,0)} | {link(GAPS)} |')
     nav=[('Project Status',STATUS),('Research Gap Report',GAPS),('Next Actions',NEXT),('Dashboard Metrics',METRICS),('External Validation','docs/reports/external-validation-report.md'),('Primitive Sufficiency','docs/reports/primitive-sufficiency-report.md'),('Evidence Registry',REG['evidence']),('External Validation Registry',REG['external']),('Primitive Pressure Registry',REG['pressure']),('Adversarial Test Suite',REG['adversarial']),('Releases','docs/releases'),('Maintenance','docs/maintenance'),('Planning','docs/planning/README.md'),('Repository Index',INDEX),('Dependency Report','docs/reports/dependency-report.md'),('Theory Impact Report','docs/reports/theory-impact-report.md'),('Dependency Graph JSON','docs/reports/dependency-graph.json'),('Dependency Graph Mermaid','docs/reports/dependency-graph.mmd'),('Dependency Registry','theory/dependencies/dependency-registry.yaml'),('Dependency Schema','theory/dependencies/dependency-schema.yaml')]
     lines += ['','## Repository Navigation','']+[f'- {link(p,label)}' for label,p in nav]
     lines += ['','## Current Roadmap','',f'- Current phase: post-CRE-001 prospective semantics baseline; CRE-002 preparation','- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation; CRP v1.0 registration; deterministic CRE-001 implementation; vocabulary-native compilation; executable lowering; deterministic verification; replayable lowering traces; mutation testing; adversarial compiler audit; repository integration','- In-progress work: CRE-002 preregistration design using Vocabulary Semantics Baseline 1.0 prospectively','- Planned work: prospective CRE-002 execution; prospective evidence analysis; independent replication; semantic drift monitoring; Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor','',
     '## Command Center','','### Local Commands','','```bash\nmake dashboard\nmake health-fast\nmake health\nmake docs-check\nmake plan\n```','','### GitHub Actions','',f'- Repository Health: {workflow("repository-health.yml")}',f'- Regenerate Dashboard: {workflow("regenerate-dashboard.yml")}',f'- Release Readiness: {workflow("release-readiness.yml")}',f'- Repository Maintenance: {workflow("repository-maintenance.yml")}','',
-    '## Typical Workflow','','1. `make health-fast`','2. `make dashboard`','3. Open README','4. Choose top task','5. Open source gap','6. Open affected files','7. Copy generated task brief','8. Implement','9. Run health','10. Merge','',END]
+    '## Typical Workflow','','1. `make health-fast`','2. `make dashboard`','3. Open README','4. Choose top task','5. Open source reference','6. Open affected files','7. Copy generated task brief','8. Implement','9. Run health','10. Merge','',END]
     return '\n'.join(lines)+'\n'
 def main():
     text=README.read_text(encoding='utf-8') if README.exists() else '# Project FAR\n\n'
