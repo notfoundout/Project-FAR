@@ -30,13 +30,13 @@ def main() -> int:
             add(tool, cmd)
     if full:
         add('cre001 deterministic', [sys.executable, 'tools/cre001_compile_vocabularies.py', '--write', '--check'])
-        add('cre002 prospective execution', [sys.executable, 'tools/cre002_execute.py', '--write', '--check'])
+        add('cre002 prospective execution', [sys.executable, 'tools/cre002_execute.py', '--check'])
         add('theory_impact_analyzer.py', [sys.executable,'tools/theory_impact_analyzer.py'])
         for tool in ['evaluate_reasoning_systems.py','evaluate_primitive_sufficiency.py','run_adversarial_suite.py','check_evaluation_consistency.py']:
             if (ROOT/'tools'/tool).exists(): add(tool, [sys.executable, f'tools/{tool}'])
         add('check_orphaned_docs.py', [sys.executable,'tools/check_orphaned_docs.py'], required=False)
     else:
-        add('cre002 prospective execution', [sys.executable, 'tools/cre002_execute.py', '--write', '--check'])
+        add('cre002 prospective execution', [sys.executable, 'tools/cre002_execute.py', '--check'])
         add('check_orphaned_docs.py (warnings)', [sys.executable,'tools/check_orphaned_docs.py'], required=False)
     for p in sorted((ROOT/'examples/far').glob('**/*.far.yaml')) if (ROOT/'examples/far').exists() else []:
         add(f'parse FAR {rel(p)}', [sys.executable,'tools/parse_far.py',rel(p)])
