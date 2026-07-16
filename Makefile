@@ -40,3 +40,6 @@ test-fast:
 
 cre001-deterministic:
 	python tools/cre001_compile_vocabularies.py --write --check
+
+cre002-execute:
+	python tools/cre002_execute.py --write --check

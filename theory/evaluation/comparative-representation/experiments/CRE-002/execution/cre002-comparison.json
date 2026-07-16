@@ -1,0 +1,183 @@
+{
+  "aggregate": {
+    "complete_candidates": 0,
+    "error_candidates": 0,
+    "existential_complete": false,
+    "partial_candidates": 0,
+    "reproducible_complete": false,
+    "unsupported_candidates": 3
+  },
+  "artifact_id": "CRE-002-COMPARISON-1.0",
+  "available_declared_derived_constructs": [
+    "D_boolean_value",
+    "D_disjunction",
+    "D_guarded_update",
+    "D_ordered_history",
+    "D_terminality"
+  ],
+  "candidates": [
+    {
+      "behavioral_verification_attempted": false,
+      "decision_basis": "A required commitment cannot be licensed under Vocabulary Semantics Baseline 1.0.",
+      "native_compilation_attempted": false,
+      "outcome": "unsupported",
+      "scope_note": "This concerns declared licensing, not possible expressivity under future semantics.",
+      "shortest_counterexample": null,
+      "vocabulary_id": "CRE-001-VOCAB-A-1.0"
+    },
+    {
+      "behavioral_verification_attempted": false,
+      "decision_basis": "A required commitment cannot be licensed under Vocabulary Semantics Baseline 1.0.",
+      "native_compilation_attempted": false,
+      "outcome": "unsupported",
+      "scope_note": "This concerns declared licensing, not possible expressivity under future semantics.",
+      "shortest_counterexample": null,
+      "vocabulary_id": "CRE-001-VOCAB-B-1.0"
+    },
+    {
+      "behavioral_verification_attempted": false,
+      "decision_basis": "A required commitment cannot be licensed under Vocabulary Semantics Baseline 1.0.",
+      "native_compilation_attempted": false,
+      "outcome": "unsupported",
+      "scope_note": "This concerns declared licensing, not possible expressivity under future semantics.",
+      "shortest_counterexample": null,
+      "vocabulary_id": "CRE-001-VOCAB-C-1.0"
+    }
+  ],
+  "decision_rule_id": "CRE-002-DECISION-RULES-1.0",
+  "execution_authorized": true,
+  "licensing_audit": {
+    "all_required_commitments_licensed": false,
+    "dimensions": [
+      {
+        "dimension": "nested conditions",
+        "licensed": true,
+        "missing_constructs": [],
+        "required_constructs": [
+          "D_guarded_update",
+          "D_disjunction"
+        ]
+      },
+      {
+        "dimension": "bounded nondeterminism",
+        "licensed": false,
+        "missing_constructs": [
+          "D_nondeterminism"
+        ],
+        "required_constructs": [
+          "D_nondeterminism"
+        ]
+      },
+      {
+        "dimension": "interleaved concurrency",
+        "licensed": false,
+        "missing_constructs": [
+          "D_concurrency"
+        ],
+        "required_constructs": [
+          "D_concurrency"
+        ]
+      },
+      {
+        "dimension": "defeasible priority",
+        "licensed": false,
+        "missing_constructs": [
+          "D_priority"
+        ],
+        "required_constructs": [
+          "D_priority"
+        ]
+      },
+      {
+        "dimension": "provenance sensitivity",
+        "licensed": false,
+        "missing_constructs": [
+          "D_provenance"
+        ],
+        "required_constructs": [
+          "D_provenance"
+        ]
+      },
+      {
+        "dimension": "higher-order rule modification",
+        "licensed": false,
+        "missing_constructs": [
+          "D_rule_modification"
+        ],
+        "required_constructs": [
+          "D_rule_modification"
+        ]
+      },
+      {
+        "dimension": "bounded history",
+        "licensed": true,
+        "missing_constructs": [],
+        "required_constructs": [
+          "D_ordered_history"
+        ]
+      },
+      {
+        "dimension": "terminal deadlock",
+        "licensed": true,
+        "missing_constructs": [],
+        "required_constructs": [
+          "D_terminality"
+        ]
+      }
+    ],
+    "missing_constructs": [
+      "D_concurrency",
+      "D_nondeterminism",
+      "D_priority",
+      "D_provenance",
+      "D_rule_modification"
+    ]
+  },
+  "mutation_audit": {
+    "cases": [
+      {
+        "detected": true,
+        "mutation": "add every explicitly required construct"
+      },
+      {
+        "detected": true,
+        "mutation": "remove D_guarded_update"
+      }
+    ],
+    "passed": true
+  },
+  "nonclaims": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "independence",
+    "superiority",
+    "FAR proof",
+    "universal structure of reasoning",
+    "the informal vocabularies are inherently incapable of representing CRE-002",
+    "behavioral failure of any candidate vocabulary"
+  ],
+  "scenario_audit": {
+    "frozen_package_checksum_verified_by": "tools/check_cre002_lock.py",
+    "required_pressure_dimensions": [
+      "nested conditions",
+      "bounded nondeterminism",
+      "interleaved concurrency",
+      "defeasible priority",
+      "provenance sensitivity",
+      "higher-order rule modification",
+      "bounded history",
+      "terminal deadlock"
+    ],
+    "transition_count": 9
+  },
+  "scenario_id": "CRE-002-SCENARIO-1.0",
+  "semantic_authority": "VOCABULARY-SEMANTICS-BASELINE-1.0",
+  "status": "official prospective execution result",
+  "supported_conclusions": [
+    "Vocabulary Semantics Baseline 1.0 does not explicitly license every required CRE-002 commitment.",
+    "Each official candidate receives the preregistered outcome unsupported at the semantic-licensing gate.",
+    "No native candidate compiler or behavioral verifier result is claimed after the failed prerequisite gate."
+  ]
+}
