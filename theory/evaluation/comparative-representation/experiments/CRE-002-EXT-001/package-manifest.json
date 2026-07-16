@@ -1,16 +1,59 @@
 {
-  "package_id":"CRE-002-EXT-001-PACKAGE-1.0",
-  "status":"preregistered-checksum-locked",
-  "semantic_authority":{"id":"VOCABULARY-SEMANTICS-BASELINE-1.1","path":"theory/evaluation/comparative-representation/semantics/vocabulary-semantics-baseline-1.1.json"},
-  "immutable_scientific_files":["README.md","preregistration.md","scenario/scenario-v1.0.json","ambiguity-policies.json","decision-rules.json","output-schema.json"],
-  "mutable_administrative_controls":["package-manifest.json","execution-lock.json","checksum-lock.json","execution-unlock-audit.json"],
-  "checksum_lock":{"path":"checksum-lock.json","algorithm":"SHA-256","immutable_scientific_file_count":6},
-  "checksum_state":"locked",
-  "execution_permitted":false,
-  "compiler_implementation_permitted":false,
-  "official_results_present":false,
-  "vocabularies":["CRE-001-VOCAB-A-1.0","CRE-001-VOCAB-B-1.0","CRE-001-VOCAB-C-1.0"],
-  "required_pressure_dimensions":["nested conditions","bounded nondeterminism","interleaved concurrency","defeasible priority","provenance sensitivity","higher-order rule modification","bounded history","terminal deadlock"],
-  "preserved_prior_result":"CRE-002-COMPARISON-1.0",
-  "nonclaims":["universal sufficiency","primitive-only sufficiency","necessity","minimality","independence","superiority","FAR proof","universal structure of reasoning","retrospective validation of CRE-002"]
+  "package_id": "CRE-002-EXT-001-PACKAGE-1.0",
+  "status": "execution-authorized",
+  "semantic_authority": {
+    "id": "VOCABULARY-SEMANTICS-BASELINE-1.1",
+    "path": "theory/evaluation/comparative-representation/semantics/vocabulary-semantics-baseline-1.1.json"
+  },
+  "immutable_scientific_files": [
+    "README.md",
+    "preregistration.md",
+    "scenario/scenario-v1.0.json",
+    "ambiguity-policies.json",
+    "decision-rules.json",
+    "output-schema.json"
+  ],
+  "mutable_administrative_controls": [
+    "package-manifest.json",
+    "execution-lock.json",
+    "checksum-lock.json",
+    "execution-unlock-audit.json"
+  ],
+  "checksum_lock": {
+    "path": "checksum-lock.json",
+    "algorithm": "SHA-256",
+    "immutable_scientific_file_count": 6
+  },
+  "checksum_state": "locked",
+  "execution_permitted": true,
+  "compiler_implementation_permitted": true,
+  "official_results_present": false,
+  "execution_authorization_audit": "execution-unlock-audit.json",
+  "vocabularies": [
+    "CRE-001-VOCAB-A-1.0",
+    "CRE-001-VOCAB-B-1.0",
+    "CRE-001-VOCAB-C-1.0"
+  ],
+  "required_pressure_dimensions": [
+    "nested conditions",
+    "bounded nondeterminism",
+    "interleaved concurrency",
+    "defeasible priority",
+    "provenance sensitivity",
+    "higher-order rule modification",
+    "bounded history",
+    "terminal deadlock"
+  ],
+  "preserved_prior_result": "CRE-002-COMPARISON-1.0",
+  "nonclaims": [
+    "universal sufficiency",
+    "primitive-only sufficiency",
+    "necessity",
+    "minimality",
+    "independence",
+    "superiority",
+    "FAR proof",
+    "universal structure of reasoning",
+    "retrospective validation of CRE-002"
+  ]
 }

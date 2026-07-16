@@ -48,11 +48,17 @@ class VocabularySemanticsBaseline11Tests(unittest.TestCase):
         self.assertEqual(result["aggregate"]["complete_candidates"], 0)
         self.assertTrue(all(row["outcome"] == "unsupported" for row in result["candidates"]))
 
-    def test_extension_execution_is_locked(self) -> None:
+    def test_extension_is_locked_or_reviewedly_authorized(self) -> None:
         lock = json.loads((EXTENSION / "execution-lock.json").read_text(encoding="utf-8"))
-        self.assertFalse(lock["execution_permitted"])
-        self.assertFalse(lock["compiler_implementation_permitted"])
         self.assertFalse(lock["official_results_present"])
+        if lock["execution_permitted"]:
+            audit = json.loads((EXTENSION / "execution-unlock-audit.json").read_text(encoding="utf-8"))
+            self.assertTrue(lock["compiler_implementation_permitted"])
+            self.assertEqual(lock["authorization_status"], "authorized")
+            self.assertTrue(audit["immutable_package_lock_verified"])
+            self.assertFalse(audit["scientific_results_created_by_unlock"])
+        else:
+            self.assertFalse(lock["compiler_implementation_permitted"])
 
     def test_nonclaims_prevent_retroactive_validation(self) -> None:
         data = json.loads(BASELINE.read_text(encoding="utf-8"))
