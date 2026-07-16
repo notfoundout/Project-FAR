@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import sys
@@ -37,7 +38,14 @@ def snapshot() -> dict:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--emit", type=Path)
+    args = parser.parse_args()
     actual = snapshot()
+    if args.emit:
+        args.emit.write_text(json.dumps(actual, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        print(args.emit)
+        return 0
     if not LOCK.exists():
         print("CRE-002 CHECKSUM SNAPSHOT")
         print(json.dumps(actual, indent=2, sort_keys=True))
