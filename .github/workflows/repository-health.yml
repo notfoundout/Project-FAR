@@ -1,6 +1,12 @@
 name: Repository Health
 on:
   workflow_dispatch: null
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
   health:
     runs-on: ubuntu-latest
