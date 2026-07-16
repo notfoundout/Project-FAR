@@ -23,7 +23,7 @@
       "variable_suffix": "_active"
     }
   ],
-  "model_id": "CRE-001-COMPILED-SCENARIO-V1",
+  "model_id": "CRE-001-VOCAB-B-1.0-LOWERED-V1",
   "outputs": {
     "final_status": {
       "kind": "status",
@@ -66,39 +66,6 @@
       "guard": [
         {
           "equals": true,
-          "variable": "p_ready"
-        },
-        {
-          "equals": true,
-          "variable": "p_token"
-        },
-        {
-          "equals": false,
-          "variable": "p_checked"
-        },
-        {
-          "equals": true,
-          "variable": "R_check_active"
-        }
-      ],
-      "name": "T_check",
-      "updates": [
-        {
-          "operation": "set",
-          "value": true,
-          "variable": "p_checked"
-        },
-        {
-          "operation": "append",
-          "value": "T_check",
-          "variable": "history"
-        }
-      ]
-    },
-    {
-      "guard": [
-        {
-          "equals": true,
           "variable": "p_checked"
         },
         {
@@ -128,27 +95,31 @@
       "guard": [
         {
           "equals": true,
-          "variable": "p_checked"
-        },
-        {
-          "equals": false,
-          "variable": "p_accepted"
+          "variable": "p_ready"
         },
         {
           "equals": true,
-          "variable": "R_reject_active"
+          "variable": "p_token"
+        },
+        {
+          "equals": false,
+          "variable": "p_checked"
+        },
+        {
+          "equals": true,
+          "variable": "R_check_active"
         }
       ],
-      "name": "T_reject",
+      "name": "T_check",
       "updates": [
         {
           "operation": "set",
           "value": true,
-          "variable": "p_rejected"
+          "variable": "p_checked"
         },
         {
           "operation": "append",
-          "value": "T_reject",
+          "value": "T_check",
           "variable": "history"
         }
       ]
@@ -227,6 +198,35 @@
         {
           "operation": "append",
           "value": "T_halt",
+          "variable": "history"
+        }
+      ]
+    },
+    {
+      "guard": [
+        {
+          "equals": true,
+          "variable": "p_checked"
+        },
+        {
+          "equals": false,
+          "variable": "p_accepted"
+        },
+        {
+          "equals": true,
+          "variable": "R_reject_active"
+        }
+      ],
+      "name": "T_reject",
+      "updates": [
+        {
+          "operation": "set",
+          "value": true,
+          "variable": "p_rejected"
+        },
+        {
+          "operation": "append",
+          "value": "T_reject",
           "variable": "history"
         }
       ]

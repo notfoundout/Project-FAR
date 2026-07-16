@@ -1,5 +1,6 @@
 {
-  "artifact_id": "CRE-001-DETERMINISTIC-COMPARISON-1.0",
+  "artifact_id": "CRE-001-DETERMINISTIC-COMPARISON-2.0",
+  "circularity_correction": "Candidate execution models are produced only by vocabulary-native construction followed by traced lowering; no candidate compiler directly returns the scenario reference model.",
   "experiment": "CRE-001",
   "nonclaims": [
     "This report does not draw universal sufficiency, necessity, minimality, FAR proof, shared-structure universality, or global superiority conclusions."
@@ -8,12 +9,12 @@
     {
       "assumptions": [
         "Scenario JSON and vocabulary markdown are frozen source inputs.",
-        "Ambiguity policies match deterministic verifier registration."
+        "Candidate model is accepted only after vocabulary-native construction and traced lowering."
       ],
       "compilation_status": "complete",
       "complexity": {
-        "declared_derived_construct_count": 3,
-        "normalized_compiler_clause_count": 6,
+        "declared_derived_construct_count": 4,
+        "normalized_compiler_clause_count": 25,
         "primitive_categories_used": [
           "Object",
           "Relation",
@@ -28,26 +29,27 @@
       },
       "derived_constructs": [
         {
-          "name": "boolean_state_variable",
-          "role": "Represents proposition and rule activation truth values.",
-          "supplied_category": "Object"
+          "id": "D_boolean_value",
+          "role": "truth/status value carrier"
         },
         {
-          "name": "ordered_append_only_history",
-          "role": "Represents transition order without removal or rewrite.",
-          "supplied_category": "Transformation"
+          "id": "D_ordered_history",
+          "role": "append-only ordered transition record"
         },
         {
-          "name": "guarded_transition_schema",
-          "role": "Represents precondition-authorized updates.",
-          "supplied_category": "Object"
+          "id": "D_guarded_update",
+          "role": "guarded update schema"
+        },
+        {
+          "id": "D_terminality",
+          "role": "terminal blocking and halt output"
         }
       ],
       "failed_checks": [],
       "full_deterministic_equivalence_demonstrated": true,
       "inventory_status": "eligible",
       "limitations": [
-        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies."
+        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies and complete lowering trace."
       ],
       "shortest_counterexample": null,
       "unsupported_elements": [],
@@ -57,16 +59,16 @@
     {
       "assumptions": [
         "Scenario JSON and vocabulary markdown are frozen source inputs.",
-        "Ambiguity policies match deterministic verifier registration."
+        "Candidate model is accepted only after vocabulary-native construction and traced lowering."
       ],
       "compilation_status": "complete",
       "complexity": {
-        "declared_derived_construct_count": 3,
-        "normalized_compiler_clause_count": 6,
+        "declared_derived_construct_count": 4,
+        "normalized_compiler_clause_count": 14,
         "primitive_categories_used": [
+          "Label",
           "State",
-          "Transition",
-          "Label"
+          "Transition"
         ],
         "supplied_primitive_categories": [
           "State",
@@ -77,26 +79,27 @@
       },
       "derived_constructs": [
         {
-          "name": "boolean_state_variable",
-          "role": "Represents proposition and rule activation truth values.",
-          "supplied_category": "Label"
+          "id": "D_boolean_value",
+          "role": "truth/status value carrier"
         },
         {
-          "name": "ordered_append_only_history",
-          "role": "Represents transition order without removal or rewrite.",
-          "supplied_category": "Transition"
+          "id": "D_ordered_history",
+          "role": "append-only ordered transition record"
         },
         {
-          "name": "guarded_transition_schema",
-          "role": "Represents precondition-authorized updates.",
-          "supplied_category": "Transition"
+          "id": "D_guarded_update",
+          "role": "guarded update schema"
+        },
+        {
+          "id": "D_terminality",
+          "role": "terminal blocking and halt output"
         }
       ],
       "failed_checks": [],
       "full_deterministic_equivalence_demonstrated": true,
       "inventory_status": "eligible",
       "limitations": [
-        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies."
+        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies and complete lowering trace."
       ],
       "shortest_counterexample": null,
       "unsupported_elements": [],
@@ -106,18 +109,18 @@
     {
       "assumptions": [
         "Scenario JSON and vocabulary markdown are frozen source inputs.",
-        "Ambiguity policies match deterministic verifier registration."
+        "Candidate model is accepted only after vocabulary-native construction and traced lowering."
       ],
       "compilation_status": "complete",
       "complexity": {
-        "declared_derived_construct_count": 3,
-        "normalized_compiler_clause_count": 6,
+        "declared_derived_construct_count": 4,
+        "normalized_compiler_clause_count": 25,
         "primitive_categories_used": [
-          "Representation",
-          "Representational Structure",
+          "Calculus",
           "Interpretation",
           "Investigation",
-          "Calculus"
+          "Representation",
+          "Representational Structure"
         ],
         "supplied_primitive_categories": [
           "Representation",
@@ -130,26 +133,27 @@
       },
       "derived_constructs": [
         {
-          "name": "boolean_state_variable",
-          "role": "Represents proposition and rule activation truth values.",
-          "supplied_category": "Calculus"
+          "id": "D_boolean_value",
+          "role": "truth/status value carrier"
         },
         {
-          "name": "ordered_append_only_history",
-          "role": "Represents transition order without removal or rewrite.",
-          "supplied_category": "Representational Structure"
+          "id": "D_ordered_history",
+          "role": "append-only ordered transition record"
         },
         {
-          "name": "guarded_transition_schema",
-          "role": "Represents precondition-authorized updates.",
-          "supplied_category": "Calculus"
+          "id": "D_guarded_update",
+          "role": "guarded update schema"
+        },
+        {
+          "id": "D_terminality",
+          "role": "terminal blocking and halt output"
         }
       ],
       "failed_checks": [],
       "full_deterministic_equivalence_demonstrated": true,
       "inventory_status": "eligible",
       "limitations": [
-        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies."
+        "Equivalence is only to CRE-001 deterministic reference under registered ambiguity policies and complete lowering trace."
       ],
       "shortest_counterexample": null,
       "unsupported_elements": [],

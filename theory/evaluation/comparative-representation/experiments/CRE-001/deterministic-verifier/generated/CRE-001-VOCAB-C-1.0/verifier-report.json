@@ -1,5 +1,5 @@
 {
-  "candidate_sha256": "0ec24ef2aae6e5989fb12c0a7c50f79a5e529bef2b530cbb739a0bbc1002d785",
+  "candidate_sha256": "5ea62fc1927b61bbcea9eb6dc72d10b0e42d6347841d0bb17eb9163beeeb76c8",
   "checks": {
     "ambiguity_policy": "pass",
     "historical": "pass",
@@ -9,7 +9,7 @@
   },
   "diagnostics": [],
   "max_depth": 12,
-  "reference_sha256": "0ec24ef2aae6e5989fb12c0a7c50f79a5e529bef2b530cbb739a0bbc1002d785",
+  "reference_sha256": "cf63c22e6623405a1caf20be70c77120afe18b247a53bb114a04663b7e797794",
   "result": "pass",
   "verifier": "cre001-deterministic-verifier-v1",
   "verifier_version": "cre001-deterministic-verifier-v1"

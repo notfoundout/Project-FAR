@@ -1,0 +1,199 @@
+{
+  "entries": [
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_p_ready",
+      "output_path": "/variables/p_ready",
+      "source_scenario_path": "/initial_state/propositions/p_ready",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_p_token",
+      "output_path": "/variables/p_token",
+      "source_scenario_path": "/initial_state/propositions/p_token",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_p_checked",
+      "output_path": "/variables/p_checked",
+      "source_scenario_path": "/initial_state/propositions/p_checked",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_p_accepted",
+      "output_path": "/variables/p_accepted",
+      "source_scenario_path": "/initial_state/propositions/p_accepted",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_p_rejected",
+      "output_path": "/variables/p_rejected",
+      "source_scenario_path": "/initial_state/propositions/p_rejected",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_p_rule_modified",
+      "output_path": "/variables/p_rule_modified",
+      "source_scenario_path": "/initial_state/propositions/p_rule_modified",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_p_halted",
+      "output_path": "/variables/p_halted",
+      "source_scenario_path": "/initial_state/propositions/p_halted",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_R_check_active",
+      "output_path": "/variables/R_check_active",
+      "source_scenario_path": "/initial_state/active_rules",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_R_accept_active",
+      "output_path": "/variables/R_accept_active",
+      "source_scenario_path": "/initial_state/active_rules",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_R_reject_active",
+      "output_path": "/variables/R_reject_active",
+      "source_scenario_path": "/initial_state/active_rules",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_R_modify_active",
+      "output_path": "/variables/R_modify_active",
+      "source_scenario_path": "/initial_state/active_rules",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_boolean_value",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_R_halt_active",
+      "output_path": "/variables/R_halt_active",
+      "source_scenario_path": "/initial_state/active_rules",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_guarded_update",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_prohibitions",
+      "output_path": "/variables/prohibited_transition_occurred",
+      "source_scenario_path": "/prohibited_transitions",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_ordered_history",
+      "lowering_rule_identifier": "B-LR-variable-from-state-label",
+      "native_construct_identifier": "L_history_empty",
+      "output_path": "/variables/history",
+      "source_scenario_path": "/initial_state/transition_history",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_guarded_update",
+      "lowering_rule_identifier": "B-LR-transition-from-guarded-transition",
+      "native_construct_identifier": "GT_T_accept",
+      "output_path": "/transitions/T_accept",
+      "source_scenario_path": "/rules/T_accept",
+      "supplied_vocabulary_primitive": "Transition"
+    },
+    {
+      "derived_construct_identifier": "D_guarded_update",
+      "lowering_rule_identifier": "B-LR-transition-from-guarded-transition",
+      "native_construct_identifier": "GT_T_check",
+      "output_path": "/transitions/T_check",
+      "source_scenario_path": "/rules/T_check",
+      "supplied_vocabulary_primitive": "Transition"
+    },
+    {
+      "derived_construct_identifier": "D_guarded_update",
+      "lowering_rule_identifier": "B-LR-transition-from-guarded-transition",
+      "native_construct_identifier": "GT_T_disable_reject",
+      "output_path": "/transitions/T_disable_reject",
+      "source_scenario_path": "/rules/T_disable_reject",
+      "supplied_vocabulary_primitive": "Transition"
+    },
+    {
+      "derived_construct_identifier": "D_guarded_update",
+      "lowering_rule_identifier": "B-LR-transition-from-guarded-transition",
+      "native_construct_identifier": "GT_T_halt",
+      "output_path": "/transitions/T_halt",
+      "source_scenario_path": "/rules/T_halt",
+      "supplied_vocabulary_primitive": "Transition"
+    },
+    {
+      "derived_construct_identifier": "D_guarded_update",
+      "lowering_rule_identifier": "B-LR-transition-from-guarded-transition",
+      "native_construct_identifier": "GT_T_reject",
+      "output_path": "/transitions/T_reject",
+      "source_scenario_path": "/rules/T_reject",
+      "supplied_vocabulary_primitive": "Transition"
+    },
+    {
+      "derived_construct_identifier": "D_terminality",
+      "lowering_rule_identifier": "B-LR-terminal-label",
+      "native_construct_identifier": "L_terminal",
+      "output_path": "/terminal_condition",
+      "source_scenario_path": "/stopping_condition",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_terminality",
+      "lowering_rule_identifier": "B-LR-terminal-label",
+      "native_construct_identifier": "L_terminal",
+      "output_path": "/terminal_blocks_all_transitions",
+      "source_scenario_path": "/stopping_condition",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_guarded_update",
+      "lowering_rule_identifier": "B-LR-terminal-label",
+      "native_construct_identifier": "L_prohibitions",
+      "output_path": "/invariants",
+      "source_scenario_path": "/prohibited_transitions",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_terminality",
+      "lowering_rule_identifier": "B-LR-output-recovery-label",
+      "native_construct_identifier": "L_outputs",
+      "output_path": "/outputs",
+      "source_scenario_path": "/observable_outputs",
+      "supplied_vocabulary_primitive": "Label"
+    },
+    {
+      "derived_construct_identifier": "D_terminality",
+      "lowering_rule_identifier": "B-LR-terminal-label",
+      "native_construct_identifier": "L_terminal",
+      "output_path": "/ambiguity_policy",
+      "source_scenario_path": "/stopping_condition",
+      "supplied_vocabulary_primitive": "Label"
+    }
+  ],
+  "native_sha256": "5fd3e0b9fa9956e33dcb22f10b00bf11258051ae6d542bbd842a73f5cfd82f7c",
+  "trace_format": "cre001-lowering-trace-v1",
+  "vocabulary_identifier": "CRE-001-VOCAB-B-1.0"
+}

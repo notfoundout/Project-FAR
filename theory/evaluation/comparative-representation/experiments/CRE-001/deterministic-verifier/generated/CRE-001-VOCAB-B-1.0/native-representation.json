@@ -1,0 +1,381 @@
+{
+  "constructs": [
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "S_initial_complete",
+      "kind": "complete_state",
+      "labels": [
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_p_ready",
+          "kind": "proposition_value_label",
+          "name": "p_ready",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/propositions/p_ready",
+          "value": true
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_p_token",
+          "kind": "proposition_value_label",
+          "name": "p_token",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/propositions/p_token",
+          "value": true
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_p_checked",
+          "kind": "proposition_value_label",
+          "name": "p_checked",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/propositions/p_checked",
+          "value": false
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_p_accepted",
+          "kind": "proposition_value_label",
+          "name": "p_accepted",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/propositions/p_accepted",
+          "value": false
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_p_rejected",
+          "kind": "proposition_value_label",
+          "name": "p_rejected",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/propositions/p_rejected",
+          "value": false
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_p_rule_modified",
+          "kind": "proposition_value_label",
+          "name": "p_rule_modified",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/propositions/p_rule_modified",
+          "value": false
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_p_halted",
+          "kind": "proposition_value_label",
+          "name": "p_halted",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/propositions/p_halted",
+          "value": false
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_R_check_active",
+          "kind": "rule_status_label",
+          "name": "R_check_active",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/active_rules",
+          "value": true
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_R_accept_active",
+          "kind": "rule_status_label",
+          "name": "R_accept_active",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/active_rules",
+          "value": true
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_R_reject_active",
+          "kind": "rule_status_label",
+          "name": "R_reject_active",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/active_rules",
+          "value": true
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_R_modify_active",
+          "kind": "rule_status_label",
+          "name": "R_modify_active",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/active_rules",
+          "value": true
+        },
+        {
+          "derived_construct": "D_boolean_value",
+          "id": "L_R_halt_active",
+          "kind": "rule_status_label",
+          "name": "R_halt_active",
+          "primitive": "Label",
+          "scenario_path": "/initial_state/active_rules",
+          "value": true
+        }
+      ],
+      "primitive": "State",
+      "scenario_path": "/initial_state"
+    },
+    {
+      "derived_construct": "D_ordered_history",
+      "id": "L_history_empty",
+      "kind": "history_label",
+      "name": "history",
+      "primitive": "Label",
+      "scenario_path": "/initial_state/transition_history",
+      "value": []
+    },
+    {
+      "derived_construct": "D_terminality",
+      "id": "L_terminal",
+      "kind": "terminal_label",
+      "name": "p_halted",
+      "primitive": "Label",
+      "scenario_path": "/stopping_condition",
+      "value": false
+    },
+    {
+      "derived_construct": "D_terminality",
+      "id": "L_outputs",
+      "kind": "output_recovery_labels",
+      "primitive": "Label",
+      "scenario_path": "/observable_outputs"
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "L_prohibitions",
+      "kind": "prohibition_labels",
+      "primitive": "Label",
+      "scenario_path": "/prohibited_transitions"
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "GT_T_check",
+      "kind": "guarded_transition",
+      "primitive": "Transition",
+      "scenario_path": "/rules/T_check",
+      "transition": {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_ready"
+          },
+          {
+            "equals": true,
+            "variable": "p_token"
+          },
+          {
+            "equals": false,
+            "variable": "p_checked"
+          },
+          {
+            "equals": true,
+            "variable": "R_check_active"
+          }
+        ],
+        "name": "T_check",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_checked"
+          },
+          {
+            "operation": "append",
+            "value": "T_check",
+            "variable": "history"
+          }
+        ]
+      }
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "GT_T_accept",
+      "kind": "guarded_transition",
+      "primitive": "Transition",
+      "scenario_path": "/rules/T_accept",
+      "transition": {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_checked"
+          },
+          {
+            "equals": false,
+            "variable": "p_rejected"
+          },
+          {
+            "equals": true,
+            "variable": "R_accept_active"
+          }
+        ],
+        "name": "T_accept",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_accepted"
+          },
+          {
+            "operation": "append",
+            "value": "T_accept",
+            "variable": "history"
+          }
+        ]
+      }
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "GT_T_reject",
+      "kind": "guarded_transition",
+      "primitive": "Transition",
+      "scenario_path": "/rules/T_reject",
+      "transition": {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_checked"
+          },
+          {
+            "equals": false,
+            "variable": "p_accepted"
+          },
+          {
+            "equals": true,
+            "variable": "R_reject_active"
+          }
+        ],
+        "name": "T_reject",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_rejected"
+          },
+          {
+            "operation": "append",
+            "value": "T_reject",
+            "variable": "history"
+          }
+        ]
+      }
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "GT_T_disable_reject",
+      "kind": "guarded_transition",
+      "primitive": "Transition",
+      "scenario_path": "/rules/T_disable_reject",
+      "transition": {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_checked"
+          },
+          {
+            "equals": false,
+            "variable": "p_accepted"
+          },
+          {
+            "equals": false,
+            "variable": "p_rejected"
+          },
+          {
+            "equals": true,
+            "variable": "R_modify_active"
+          },
+          {
+            "equals": true,
+            "variable": "R_reject_active"
+          }
+        ],
+        "name": "T_disable_reject",
+        "updates": [
+          {
+            "from": true,
+            "operation": "set",
+            "value": false,
+            "variable": "R_reject_active"
+          },
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_rule_modified"
+          },
+          {
+            "operation": "append",
+            "value": "T_disable_reject",
+            "variable": "history"
+          }
+        ]
+      }
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "GT_T_halt",
+      "kind": "guarded_transition",
+      "primitive": "Transition",
+      "scenario_path": "/rules/T_halt",
+      "transition": {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "R_halt_active"
+          },
+          {
+            "equals": false,
+            "variable": "p_halted"
+          }
+        ],
+        "guard_any": [
+          {
+            "equals": true,
+            "variable": "p_accepted"
+          },
+          {
+            "equals": true,
+            "variable": "p_rejected"
+          }
+        ],
+        "name": "T_halt",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_halted"
+          },
+          {
+            "operation": "append",
+            "value": "T_halt",
+            "variable": "history"
+          }
+        ]
+      }
+    }
+  ],
+  "definition_digest": "5ac7a9ec38e8aac9fe366bfa38b93ecb8447d33eef5fafdbdc19237efc42e5e4",
+  "derived_constructs": [
+    {
+      "id": "D_boolean_value",
+      "role": "truth/status value carrier"
+    },
+    {
+      "id": "D_ordered_history",
+      "role": "append-only ordered transition record"
+    },
+    {
+      "id": "D_guarded_update",
+      "role": "guarded update schema"
+    },
+    {
+      "id": "D_terminality",
+      "role": "terminal blocking and halt output"
+    }
+  ],
+  "native_format": "cre001-native-representation-v1",
+  "scenario_source_sha256": "9db7c1349f804bc9b2b1738a5821a71da97f352c9e5b8a274382feffe1ca20d1",
+  "vocabulary": "B",
+  "vocabulary_identifier": "CRE-001-VOCAB-B-1.0",
+  "vocabulary_source_sha256": "5ac7a9ec38e8aac9fe366bfa38b93ecb8447d33eef5fafdbdc19237efc42e5e4"
+}

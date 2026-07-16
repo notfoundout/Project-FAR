@@ -1,0 +1,369 @@
+{
+  "constructs": [
+    {
+      "derived_construct": "D_terminality",
+      "id": "I_cre001_objective",
+      "kind": "investigation_objective",
+      "objective": "preserve CRE-001 transition behavior and outputs",
+      "primitive": "Investigation",
+      "scenario_path": "/success_criteria"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "R_p_ready",
+      "initial": true,
+      "kind": "scenario_representation",
+      "meaning": "p_ready",
+      "primitive": "Representation",
+      "scenario_path": "/initial_state/propositions/p_ready"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "R_p_token",
+      "initial": true,
+      "kind": "scenario_representation",
+      "meaning": "p_token",
+      "primitive": "Representation",
+      "scenario_path": "/initial_state/propositions/p_token"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "R_p_checked",
+      "initial": false,
+      "kind": "scenario_representation",
+      "meaning": "p_checked",
+      "primitive": "Representation",
+      "scenario_path": "/initial_state/propositions/p_checked"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "R_p_accepted",
+      "initial": false,
+      "kind": "scenario_representation",
+      "meaning": "p_accepted",
+      "primitive": "Representation",
+      "scenario_path": "/initial_state/propositions/p_accepted"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "R_p_rejected",
+      "initial": false,
+      "kind": "scenario_representation",
+      "meaning": "p_rejected",
+      "primitive": "Representation",
+      "scenario_path": "/initial_state/propositions/p_rejected"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "R_p_rule_modified",
+      "initial": false,
+      "kind": "scenario_representation",
+      "meaning": "p_rule_modified",
+      "primitive": "Representation",
+      "scenario_path": "/initial_state/propositions/p_rule_modified"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "R_p_halted",
+      "initial": false,
+      "kind": "scenario_representation",
+      "meaning": "p_halted",
+      "primitive": "Representation",
+      "scenario_path": "/initial_state/propositions/p_halted"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "RS_R_check_status",
+      "initial": true,
+      "kind": "rule_status_structure",
+      "meaning": "R_check_active",
+      "primitive": "Representational Structure",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "RS_R_accept_status",
+      "initial": true,
+      "kind": "rule_status_structure",
+      "meaning": "R_accept_active",
+      "primitive": "Representational Structure",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "RS_R_reject_status",
+      "initial": true,
+      "kind": "rule_status_structure",
+      "meaning": "R_reject_active",
+      "primitive": "Representational Structure",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "RS_R_modify_status",
+      "initial": true,
+      "kind": "rule_status_structure",
+      "meaning": "R_modify_active",
+      "primitive": "Representational Structure",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "derived_construct": "D_boolean_value",
+      "id": "RS_R_halt_status",
+      "initial": true,
+      "kind": "rule_status_structure",
+      "meaning": "R_halt_active",
+      "primitive": "Representational Structure",
+      "scenario_path": "/initial_state/active_rules"
+    },
+    {
+      "derived_construct": "D_terminality",
+      "id": "INT_outputs",
+      "kind": "meaning_assignment",
+      "primitive": "Interpretation",
+      "scenario_path": "/observable_outputs"
+    },
+    {
+      "derived_construct": "D_ordered_history",
+      "id": "RS_history",
+      "kind": "history_structure",
+      "primitive": "Representational Structure",
+      "scenario_path": "/initial_state/transition_history"
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "CALC_prohibitions",
+      "kind": "prohibition_calculus",
+      "primitive": "Calculus",
+      "scenario_path": "/prohibited_transitions"
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "CALC_T_check",
+      "kind": "admissible_transition_calculus",
+      "primitive": "Calculus",
+      "scenario_path": "/rules/T_check",
+      "transition": {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_ready"
+          },
+          {
+            "equals": true,
+            "variable": "p_token"
+          },
+          {
+            "equals": false,
+            "variable": "p_checked"
+          },
+          {
+            "equals": true,
+            "variable": "R_check_active"
+          }
+        ],
+        "name": "T_check",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_checked"
+          },
+          {
+            "operation": "append",
+            "value": "T_check",
+            "variable": "history"
+          }
+        ]
+      }
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "CALC_T_accept",
+      "kind": "admissible_transition_calculus",
+      "primitive": "Calculus",
+      "scenario_path": "/rules/T_accept",
+      "transition": {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_checked"
+          },
+          {
+            "equals": false,
+            "variable": "p_rejected"
+          },
+          {
+            "equals": true,
+            "variable": "R_accept_active"
+          }
+        ],
+        "name": "T_accept",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_accepted"
+          },
+          {
+            "operation": "append",
+            "value": "T_accept",
+            "variable": "history"
+          }
+        ]
+      }
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "CALC_T_reject",
+      "kind": "admissible_transition_calculus",
+      "primitive": "Calculus",
+      "scenario_path": "/rules/T_reject",
+      "transition": {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_checked"
+          },
+          {
+            "equals": false,
+            "variable": "p_accepted"
+          },
+          {
+            "equals": true,
+            "variable": "R_reject_active"
+          }
+        ],
+        "name": "T_reject",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_rejected"
+          },
+          {
+            "operation": "append",
+            "value": "T_reject",
+            "variable": "history"
+          }
+        ]
+      }
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "CALC_T_disable_reject",
+      "kind": "admissible_transition_calculus",
+      "primitive": "Calculus",
+      "scenario_path": "/rules/T_disable_reject",
+      "transition": {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "p_checked"
+          },
+          {
+            "equals": false,
+            "variable": "p_accepted"
+          },
+          {
+            "equals": false,
+            "variable": "p_rejected"
+          },
+          {
+            "equals": true,
+            "variable": "R_modify_active"
+          },
+          {
+            "equals": true,
+            "variable": "R_reject_active"
+          }
+        ],
+        "name": "T_disable_reject",
+        "updates": [
+          {
+            "from": true,
+            "operation": "set",
+            "value": false,
+            "variable": "R_reject_active"
+          },
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_rule_modified"
+          },
+          {
+            "operation": "append",
+            "value": "T_disable_reject",
+            "variable": "history"
+          }
+        ]
+      }
+    },
+    {
+      "derived_construct": "D_guarded_update",
+      "id": "CALC_T_halt",
+      "kind": "admissible_transition_calculus",
+      "primitive": "Calculus",
+      "scenario_path": "/rules/T_halt",
+      "transition": {
+        "guard": [
+          {
+            "equals": true,
+            "variable": "R_halt_active"
+          },
+          {
+            "equals": false,
+            "variable": "p_halted"
+          }
+        ],
+        "guard_any": [
+          {
+            "equals": true,
+            "variable": "p_accepted"
+          },
+          {
+            "equals": true,
+            "variable": "p_rejected"
+          }
+        ],
+        "name": "T_halt",
+        "updates": [
+          {
+            "operation": "set",
+            "value": true,
+            "variable": "p_halted"
+          },
+          {
+            "operation": "append",
+            "value": "T_halt",
+            "variable": "history"
+          }
+        ]
+      }
+    }
+  ],
+  "definition_digest": "c921196ad3e8149fa9a6e3aa9ed2e37d3ec71d08f6d6bdd85ee89b65f8f590e3",
+  "derived_constructs": [
+    {
+      "id": "D_boolean_value",
+      "role": "truth/status value carrier"
+    },
+    {
+      "id": "D_ordered_history",
+      "role": "append-only ordered transition record"
+    },
+    {
+      "id": "D_guarded_update",
+      "role": "guarded update schema"
+    },
+    {
+      "id": "D_terminality",
+      "role": "terminal blocking and halt output"
+    }
+  ],
+  "native_format": "cre001-native-representation-v1",
+  "scenario_source_sha256": "9db7c1349f804bc9b2b1738a5821a71da97f352c9e5b8a274382feffe1ca20d1",
+  "vocabulary": "C",
+  "vocabulary_identifier": "CRE-001-VOCAB-C-1.0",
+  "vocabulary_source_sha256": "c921196ad3e8149fa9a6e3aa9ed2e37d3ec71d08f6d6bdd85ee89b65f8f590e3"
+}
