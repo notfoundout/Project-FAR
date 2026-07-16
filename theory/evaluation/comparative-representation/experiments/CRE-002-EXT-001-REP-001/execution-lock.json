@@ -1,0 +1,26 @@
+{
+  "control_id": "CRE-002-EXT-001-REP-001-EXECUTION-LOCK-1.0",
+  "experiment_id": "CRE-002-EXT-001-REP-001",
+  "state": "locked",
+  "execution_authorized": false,
+  "compiler_implementation_authorized": false,
+  "team_registration_authorized": false,
+  "submission_acceptance_authorized": false,
+  "official_results_present": false,
+  "unlock_requirements": [
+    "merged preregistration package",
+    "verified checksum lock for immutable scientific files",
+    "registered eligible isolated teams",
+    "reviewed isolation attestations",
+    "separate execution-unlock pull request"
+  ],
+  "prohibited_while_locked": [
+    "candidate implementation",
+    "verifier implementation",
+    "team exposure to parent implementation artifacts",
+    "submission collection",
+    "reference comparison",
+    "scientific aggregation",
+    "replication conclusion"
+  ]
+}
