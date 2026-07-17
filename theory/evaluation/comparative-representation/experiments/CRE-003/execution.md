@@ -45,7 +45,7 @@ FAR preserved distinct propositional and graph organizations while holding inter
 
 CRE-003 strengthens the evidence that the current five-way FAR distinction is useful for independently varying representation, interpretation, investigation, and reasoning calculus. It also reproduces the two simple merger failures observed in AVC-001 on a benchmark specifically designed to expose those collapses.
 
-It does **not** establish that FAR is globally minimal, uniquely optimal, necessary, or universal. The compact graph, state-transition, categorical, event, and typed-graph alternatives remain unresolved because some judgments are Partial or Unknown rather than decisive failures. No alternative dominated FAR under the preregistered Pareto rule, but the tested candidate space is not closed and the mappings were not externally independent.
+It does **not** establish that FAR is globally minimal, uniquely optimal, necessary, or universal. The compact graph, state-transition, categorical, event, and typed-graph alternatives remain unresolved rather than defeated because some judgments are Partial or Unknown. No alternative dominated FAR under the preregistered Pareto rule, but the tested candidate space is not closed and the mappings were not externally independent.
 
 ## Exact bounded conclusion
 
