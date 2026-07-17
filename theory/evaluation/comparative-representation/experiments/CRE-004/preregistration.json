@@ -1,0 +1,128 @@
+{
+  "experiment_id": "CRE-004",
+  "title": "Blind Discrimination Protocol",
+  "status": "frozen-before-evaluator-execution",
+  "purpose": "Determine whether frozen candidate translations preserve a preregistered difference between two reasoning systems without requiring evaluators to construct mappings or assign preservation scores.",
+  "source_benchmark": "CRE-003",
+  "unit_of_evaluation": "one anonymized system pair translated by one anonymized candidate vocabulary",
+  "interface_language": "plain-language functional descriptions only",
+  "prohibited_interface_terms": [
+    "FAR",
+    "Representation",
+    "Representational Structure",
+    "Interpretation",
+    "Investigation",
+    "Reasoning Calculus"
+  ],
+  "questions": [
+    {
+      "id": "source_difference",
+      "prompt": "Are System A and System B different?",
+      "type": "single_choice",
+      "choices": ["yes", "no", "cannot_determine"],
+      "required": true
+    },
+    {
+      "id": "translated_difference",
+      "prompt": "After translation into the candidate vocabulary, can you still distinguish the two systems?",
+      "type": "single_choice",
+      "choices": ["yes", "no", "cannot_determine"],
+      "required": true
+    },
+    {
+      "id": "difference_carriers",
+      "prompt": "What observable function makes the translated systems different?",
+      "type": "multiple_choice",
+      "choices": [
+        "stores_objects",
+        "organizes_objects",
+        "assigns_meaning",
+        "defines_objective",
+        "determines_permitted_steps",
+        "other",
+        "cannot_determine"
+      ],
+      "shown_when": {"translated_difference": "yes"},
+      "required_when_shown": true
+    },
+    {
+      "id": "other_function",
+      "prompt": "Does the other mechanism perform one of these functions?",
+      "type": "single_choice",
+      "choices": [
+        "stores_objects",
+        "organizes_objects",
+        "assigns_meaning",
+        "defines_objective",
+        "determines_permitted_steps",
+        "none",
+        "cannot_determine"
+      ],
+      "shown_when": {"difference_carriers_contains": "other"},
+      "required_when_shown": true
+    },
+    {
+      "id": "confidence",
+      "prompt": "How certain are you?",
+      "type": "single_choice",
+      "choices": ["certain", "likely", "unsure"],
+      "required": true,
+      "affects_score": false
+    }
+  ],
+  "functional_commitment_map": {
+    "stores_objects": "representation",
+    "organizes_objects": "representational_structure",
+    "assigns_meaning": "interpretation",
+    "defines_objective": "investigation",
+    "determines_permitted_steps": "reasoning_calculus"
+  },
+  "automatic_scoring": {
+    "pass": "source_difference=yes and translated_difference=yes and difference_carriers contains at least one functional label other than cannot_determine",
+    "fail": "source_difference=yes and translated_difference=no",
+    "unknown": "source_difference=cannot_determine or translated_difference=cannot_determine or a required follow-up is cannot_determine",
+    "invalid_case_response": "source_difference=no",
+    "hidden_reintroduction": "difference_carriers contains other and other_function names one of the five registered functional labels",
+    "confidence_effect": "none"
+  },
+  "complexity_policy": {
+    "evaluator_counts_complexity": false,
+    "metrics": ["A_used", "A_required", "D", "O", "L"],
+    "source": "separate mechanical audit of the frozen candidate translations"
+  },
+  "blinding": {
+    "candidate_labels": "random opaque identifiers",
+    "case_order": "randomized from a recorded seed",
+    "candidate_order": "randomized from a recorded seed",
+    "forbidden_packet_content": [
+      "candidate names",
+      "FAR terminology",
+      "repository paths",
+      "author-identifying metadata",
+      "prior scores",
+      "other evaluator responses",
+      "answer keys"
+    ],
+    "response_revision_after_submission": false,
+    "candidate_repair_after_exposure": false
+  },
+  "execution_requirements": {
+    "shared_schema_for_humans_and_ai": true,
+    "append_only_responses": true,
+    "independent_evaluator_claim_requires_genuine_independence": true,
+    "translations_frozen_before_evaluator_recruitment": true,
+    "calibration_required": true,
+    "calibration_cases_unrelated_to_project_far": true
+  },
+  "claim_boundary": {
+    "supports": "bounded discrimination evidence for tested frozen translations and cases",
+    "does_not_support": [
+      "unrestricted primitive necessity",
+      "closure of the alternative-vocabulary search",
+      "global minimality",
+      "unique optimality",
+      "universal reasoning coverage",
+      "external replication without genuinely independent evaluators and adjudication"
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.example/schemas/cre004-response.schema.json",
+  "title": "CRE-004 evaluator response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_version",
+    "evaluator_id",
+    "evaluator_type",
+    "case_label",
+    "candidate_label",
+    "source_difference",
+    "translated_difference",
+    "difference_carriers",
+    "confidence",
+    "submitted_at"
+  ],
+  "properties": {
+    "protocol_version": {"const": "CRE-004-v1.0"},
+    "evaluator_id": {"type": "string", "minLength": 1},
+    "evaluator_type": {"enum": ["human", "ai_agent"]},
+    "case_label": {"type": "string", "pattern": "^[A-Z0-9_-]+$"},
+    "candidate_label": {"type": "string", "pattern": "^[A-Z0-9_-]+$"},
+    "source_difference": {"enum": ["yes", "no", "cannot_determine"]},
+    "translated_difference": {"enum": ["yes", "no", "cannot_determine"]},
+    "difference_carriers": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "stores_objects",
+          "organizes_objects",
+          "assigns_meaning",
+          "defines_objective",
+          "determines_permitted_steps",
+          "other",
+          "cannot_determine"
+        ]
+      }
+    },
+    "other_function": {
+      "enum": [
+        "stores_objects",
+        "organizes_objects",
+        "assigns_meaning",
+        "defines_objective",
+        "determines_permitted_steps",
+        "none",
+        "cannot_determine"
+      ]
+    },
+    "confidence": {"enum": ["certain", "likely", "unsure"]},
+    "submitted_at": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"translated_difference": {"const": "yes"}},
+        "required": ["translated_difference"]
+      },
+      "then": {
+        "properties": {"difference_carriers": {"minItems": 1}}
+      },
+      "else": {
+        "properties": {"difference_carriers": {"maxItems": 0}}
+      }
+    },
+    {
+      "if": {
+        "properties": {"difference_carriers": {"contains": {"const": "other"}}},
+        "required": ["difference_carriers"]
+      },
+      "then": {"required": ["other_function"]},
+      "else": {"not": {"required": ["other_function"]}}
+    }
+  ]
+}
