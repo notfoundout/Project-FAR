@@ -5,8 +5,8 @@
   "algorithm": "git-blob-sha1",
   "files": {
     "preregistration.json": "af03bbd89d0e23a40c7c8131392e81b00dc50006",
-    "response.schema.json": "42066758f0e5c1f30ba8837a9c6340a606dc93b0",
-    "scoring.py": "57e349fc95491b189e467239d58dc6fb550e0300",
+    "response.schema.json": "40d8d9be7ed5d3f8151a77cc28704ed65b8d3425",
+    "scoring.py": "aa078eb95c90ca4f5edca16d6f34c7542211b55a",
     "evaluator_packet.md": "1ea5043ccb3a10aa0f350237ec1b4b3ce558c7ff"
   }
 }
