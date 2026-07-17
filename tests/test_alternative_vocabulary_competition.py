@@ -65,7 +65,9 @@ class AlternativeVocabularyCompetitionTests(unittest.TestCase):
         self.assertIn("Scientific conclusion: **inconclusive**", report)
         self.assertIn("FAR dominance: not established", report)
         self.assertIn("global minimality: not established", report)
-        self.assertNotIn("FAR is globally minimal", report)
+        self.assertNotIn("Scientific conclusion: **FAR is globally minimal**", report)
+        self.assertNotIn("FAR dominance: established", report)
+        self.assertNotIn("global minimality: established", report)
 
     def test_serious_competitors_remain_unresolved(self) -> None:
         unresolved = {
