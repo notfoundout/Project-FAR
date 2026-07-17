@@ -21,6 +21,8 @@
   <form id="response-form">
     <fieldset>
       <legend>Assigned identifiers</legend>
+      <label>Record ID <input id="record_id" type="text" required></label>
+      <label>Supersedes record ID, only for a correction <input id="supersedes_record_id" type="text"></label>
       <label>Evaluator ID <input id="evaluator_id" type="text" required></label>
       <label>Case label <input id="case_label" type="text" required pattern="[A-Z0-9_-]+"></label>
       <label>Candidate label <input id="candidate_label" type="text" required pattern="[A-Z0-9_-]+"></label>
@@ -116,6 +118,7 @@ form.addEventListener('submit', event => {
   }
   const payload = {
     protocol_version: 'CRE-004-v1.0',
+    record_id: document.getElementById('record_id').value.trim(),
     evaluator_id: document.getElementById('evaluator_id').value.trim(),
     evaluator_type: 'human',
     case_label: document.getElementById('case_label').value.trim(),
@@ -126,11 +129,13 @@ form.addEventListener('submit', event => {
     confidence: selected('confidence').value,
     submitted_at: new Date().toISOString()
   };
+  const supersedes = document.getElementById('supersedes_record_id').value.trim();
+  if (supersedes) payload.supersedes_record_id = supersedes;
   if (chosenCarriers.includes('other')) payload.other_function = other.value;
   const blob = new Blob([JSON.stringify(payload, null, 2) + '\n'], {type: 'application/json'});
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
-  link.download = `${payload.evaluator_id}__${payload.case_label}__${payload.candidate_label}.json`;
+  link.download = `${payload.record_id}.json`;
   link.click();
   URL.revokeObjectURL(link.href);
   statusBox.textContent = 'Response JSON created. Submit the downloaded file through the assigned channel.';
