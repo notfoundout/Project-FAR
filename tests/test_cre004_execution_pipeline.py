@@ -38,6 +38,7 @@ class CRE004ExecutionPipelineTests(unittest.TestCase):
     def response(self):
         return {
             "protocol_version": "CRE-004-v1.0",
+            "record_id": "RESPONSE_001",
             "evaluator_id": "EVALUATOR_001",
             "evaluator_type": "human",
             "case_label": "CASE_001",
@@ -75,14 +76,29 @@ class CRE004ExecutionPipelineTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "has not passed calibration"):
             PIPELINE.validate_and_score(manifest, [self.response()], CRE004)
 
-    def test_duplicate_response_tuple_is_rejected(self):
+    def test_duplicate_response_tuple_requires_supersession(self):
         response_a = self.response()
         response_b = self.response()
+        response_b["record_id"] = "RESPONSE_002"
         response_b["_source_file"] = "duplicate.json"
         with self.assertRaisesRegex(ValueError, "duplicate evaluator/case/candidate"):
             PIPELINE.validate_and_score(
                 self.manifest(), [response_a, response_b], CRE004
             )
+
+    def test_append_only_correction_is_linked(self):
+        response_a = self.response()
+        response_b = self.response()
+        response_b["record_id"] = "RESPONSE_002"
+        response_b["supersedes_record_id"] = "RESPONSE_001"
+        response_b["translated_difference"] = "no"
+        response_b["difference_carriers"] = []
+        response_b["_source_file"] = "correction.json"
+        scored = PIPELINE.validate_and_score(
+            self.manifest(), [response_a, response_b], CRE004
+        )
+        self.assertEqual(2, len(scored))
+        self.assertEqual("RESPONSE_001", scored[1]["supersedes_record_id"])
 
     def test_unregistered_response_field_is_rejected(self):
         response = self.response()
@@ -90,9 +106,31 @@ class CRE004ExecutionPipelineTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unregistered response fields"):
             PIPELINE.validate_and_score(self.manifest(), [response], CRE004)
 
-    def test_aggregation_is_order_independent(self):
+    def test_schema_label_pattern_is_enforced(self):
+        response = self.response()
+        response["case_label"] = "CASE 001"
+        with self.assertRaisesRegex(ValueError, "must match"):
+            PIPELINE.validate_and_score(self.manifest(), [response], CRE004)
+
+    def test_schema_datetime_format_is_enforced(self):
+        response = self.response()
+        response["submitted_at"] = "not-a-date"
+        with self.assertRaisesRegex(ValueError, "valid date-time"):
+            PIPELINE.validate_and_score(self.manifest(), [response], CRE004)
+
+    def test_unknown_hidden_reintroduction_is_preserved(self):
+        response = self.response()
+        response["difference_carriers"] = ["other"]
+        response["other_function"] = "cannot_determine"
+        scored = PIPELINE.validate_and_score(
+            self.manifest(), [response], CRE004
+        )
+        self.assertEqual("unknown", scored[0]["hidden_reintroduction"])
+
+    def test_aggregation_is_complete_and_order_independent(self):
         first = self.response()
         second = self.response()
+        second["record_id"] = "RESPONSE_002"
         second["evaluator_id"] = "EVALUATOR_002"
         second["translated_difference"] = "no"
         second["difference_carriers"] = []
@@ -106,9 +144,17 @@ class CRE004ExecutionPipelineTests(unittest.TestCase):
                 "independence_claim": "internal",
             }
         )
-        scored_a = PIPELINE.validate_and_score(manifest, [first.copy(), second.copy()], CRE004)
-        scored_b = PIPELINE.validate_and_score(manifest, [second.copy(), first.copy()], CRE004)
-        self.assertEqual(PIPELINE.aggregate(scored_a), PIPELINE.aggregate(scored_b))
+        scored_a = PIPELINE.validate_and_score(
+            manifest, [first.copy(), second.copy()], CRE004
+        )
+        scored_b = PIPELINE.validate_and_score(
+            manifest, [second.copy(), first.copy()], CRE004
+        )
+        summary = PIPELINE.aggregate(scored_a)
+        self.assertEqual(summary, PIPELINE.aggregate(scored_b))
+        self.assertIn("by_evaluator", summary)
+        self.assertIn("by_case", summary)
+        self.assertIn("by_candidate", summary)
 
     def test_replay_outputs_are_byte_stable(self):
         with tempfile.TemporaryDirectory() as temp:
