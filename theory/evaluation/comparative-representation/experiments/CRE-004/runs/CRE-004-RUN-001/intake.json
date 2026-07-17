@@ -1,0 +1,44 @@
+{
+  "execution_id": "CRE-004-RUN-001",
+  "protocol_version": "CRE-004-v1.0",
+  "status": "intake-open-not-executed",
+  "source_benchmark": "CRE-003",
+  "case_labels": [
+    "CRE-003-I",
+    "CRE-003-G",
+    "CRE-003-C",
+    "CRE-003-R"
+  ],
+  "candidate_labels": [
+    "CANDIDATE_001",
+    "CANDIDATE_002",
+    "CANDIDATE_003",
+    "CANDIDATE_004",
+    "CANDIDATE_005",
+    "CANDIDATE_006",
+    "CANDIDATE_007",
+    "CANDIDATE_008",
+    "CANDIDATE_009",
+    "CANDIDATE_010"
+  ],
+  "evaluator_slots": [
+    "EVALUATOR_001",
+    "EVALUATOR_002",
+    "EVALUATOR_003"
+  ],
+  "gates": {
+    "anonymized_candidate_packages_frozen": false,
+    "candidate_key_frozen_outside_evaluator_packet": false,
+    "evaluators_registered": false,
+    "calibration_completed": false,
+    "independence_claims_recorded": false,
+    "randomization_seed_frozen": false,
+    "assignment_order_generated": false,
+    "protocol_lock_verified": false,
+    "append_only_response_channel_verified": false
+  },
+  "response_count": 0,
+  "result_artifacts_present": false,
+  "scientific_result": null,
+  "claim_boundary": "This intake record opens a controlled execution run but contains no evaluator evidence or experimental result."
+}
