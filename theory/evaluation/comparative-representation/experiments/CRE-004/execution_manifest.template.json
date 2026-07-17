@@ -1,0 +1,15 @@
+{
+  "execution_id": "CRE-004-RUN-001",
+  "protocol_version": "CRE-004-v1.0",
+  "randomization_seed": 0,
+  "expected_case_labels": ["CASE_001"],
+  "expected_candidate_labels": ["CANDIDATE_001"],
+  "eligible_evaluators": [
+    {
+      "evaluator_id": "EVALUATOR_001",
+      "evaluator_type": "human",
+      "calibration_passed": true,
+      "independence_claim": "internal"
+    }
+  ]
+}
