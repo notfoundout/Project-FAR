@@ -1,0 +1,115 @@
+{
+  "experiment_id": "CRE-003",
+  "status": "frozen-before-mapping",
+  "title": "Independent Semantic, Investigative, and Calculus Variation Benchmark",
+  "purpose": "Test whether candidate vocabularies preserve independent variation among representation, interpretation, investigation, and reasoning calculus rather than merely simulating one execution trace.",
+  "claim_boundary": "A result applies only to the frozen matched cases and candidate vocabularies tested. It does not establish universal necessity, global minimality, or universal reasoning coverage.",
+  "dimensions": [
+    "structural",
+    "semantic",
+    "operational",
+    "dependency",
+    "information",
+    "historical"
+  ],
+  "matched_cases": [
+    {
+      "case_id": "CRE-003-I",
+      "variation": "interpretation",
+      "held_constant": ["representation", "representational_structure", "investigation", "reasoning_calculus"],
+      "changed": ["interpretation"],
+      "system_a": {
+        "tokens": ["p", "q"],
+        "relation": "p_implies_q",
+        "interpretation": {"p": "sensor is active", "q": "alarm is permitted"},
+        "investigation": "determine whether the alarm is permitted",
+        "calculus": ["from p and p_implies_q derive q"]
+      },
+      "system_b": {
+        "tokens": ["p", "q"],
+        "relation": "p_implies_q",
+        "interpretation": {"p": "account is verified", "q": "withdrawal is permitted"},
+        "investigation": "determine whether withdrawal is permitted",
+        "calculus": ["from p and p_implies_q derive q"]
+      },
+      "required_discrimination": "The mapping must preserve that the same syntax and inference pattern carry different denotations and information content."
+    },
+    {
+      "case_id": "CRE-003-G",
+      "variation": "investigation",
+      "held_constant": ["representation", "representational_structure", "interpretation", "reasoning_calculus"],
+      "changed": ["investigation"],
+      "system_a": {
+        "facts": ["p", "p_implies_q"],
+        "interpretation": {"p": "evidence accepted", "q": "claim supported"},
+        "investigation": "determine whether q is derivable",
+        "calculus": ["modus_ponens"],
+        "success_condition": "q derived"
+      },
+      "system_b": {
+        "facts": ["p", "p_implies_q"],
+        "interpretation": {"p": "evidence accepted", "q": "claim supported"},
+        "investigation": "determine whether the fact set is internally consistent",
+        "calculus": ["modus_ponens"],
+        "success_condition": "no contradiction derived"
+      },
+      "required_discrimination": "The mapping must preserve different objectives and success conditions over the same represented and interpreted material."
+    },
+    {
+      "case_id": "CRE-003-C",
+      "variation": "reasoning_calculus",
+      "held_constant": ["representation", "representational_structure", "interpretation", "investigation"],
+      "changed": ["reasoning_calculus"],
+      "system_a": {
+        "facts": ["p", "p_implies_q"],
+        "interpretation": {"p": "evidence accepted", "q": "claim supported"},
+        "investigation": "determine whether q is admissible",
+        "calculus": ["classical_modus_ponens"],
+        "outcome": "q admissible"
+      },
+      "system_b": {
+        "facts": ["p", "p_implies_q", "exception_q"],
+        "interpretation": {"p": "evidence accepted", "q": "claim supported", "exception_q": "registered defeating exception"},
+        "investigation": "determine whether q is admissible",
+        "calculus": ["defeasible_modus_ponens", "registered_exception_blocks_q"],
+        "outcome": "q not admissible"
+      },
+      "required_discrimination": "The mapping must preserve that different admissibility rules produce different permitted conclusions under the same objective."
+    },
+    {
+      "case_id": "CRE-003-R",
+      "variation": "representation",
+      "held_constant": ["interpretation", "investigation", "reasoning_calculus"],
+      "changed": ["representation", "representational_structure"],
+      "system_a": {
+        "representation_form": "propositional",
+        "content": ["p", "p_implies_q"],
+        "interpretation": "evidence supports claim",
+        "investigation": "determine whether claim is supported",
+        "calculus": ["modus_ponens"]
+      },
+      "system_b": {
+        "representation_form": "directed_graph",
+        "content": {"nodes": ["evidence", "claim"], "edges": ["supports"]},
+        "interpretation": "evidence supports claim",
+        "investigation": "determine whether claim is supported",
+        "calculus": ["support_edge_propagation"]
+      },
+      "required_discrimination": "The mapping must preserve distinct representational organization without treating shared interpreted content as representational identity."
+    }
+  ],
+  "evaluation_rules": {
+    "mapping_count_per_vocabulary": 3,
+    "discard_divergent_mappings": false,
+    "primary_aggregation": "least-favorable-resolved-value-per-dimension",
+    "unknown_policy": "unresolved-not-ordered-between-partial-and-fail",
+    "hidden_reintroduction_test": "commitment-equivalent recovered machinery counts as the removed primitive",
+    "complexity_metrics": ["A_used", "A_required", "D", "O", "L"],
+    "comparison_rule": "preregistered Pareto comparison"
+  },
+  "success_conditions": {
+    "existential_sufficiency": "at least one of three mappings passes all six preservation dimensions for every matched case",
+    "reproducible_sufficiency": "all three mappings pass all six preservation dimensions for every matched case",
+    "merger_failure": "a merged vocabulary cannot discriminate the changed commitment without hidden reintroduction or preservation loss"
+  }
+}
