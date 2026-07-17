@@ -56,7 +56,14 @@ def score_response(response: Mapping[str, Any]) -> dict[str, Any]:
     elif other_function is not None:
         raise ValueError("other_function is only allowed when other is selected")
 
-    hidden_reintroduction = "other" in carriers and other_function in FUNCTION_LABELS
+    if "other" not in carriers:
+        hidden_reintroduction: bool | str = False
+    elif other_function in FUNCTION_LABELS:
+        hidden_reintroduction = True
+    elif other_function == "cannot_determine":
+        hidden_reintroduction = "unknown"
+    else:
+        hidden_reintroduction = False
 
     if source == "no":
         classification = "invalid_case_response"
