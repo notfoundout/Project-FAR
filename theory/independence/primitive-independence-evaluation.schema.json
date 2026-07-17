@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.example/schemas/primitive-independence-evaluation.schema.json",
+  "title": "Project FAR Primitive Independence Evaluation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_version",
+    "primitive",
+    "test_type",
+    "candidate_vocabulary",
+    "preservation",
+    "complexity",
+    "hidden_reintroduction",
+    "decision"
+  ],
+  "properties": {
+    "protocol_version": {"const": "1.0"},
+    "primitive": {
+      "enum": [
+        "Investigation",
+        "Representation",
+        "Representational Structure",
+        "Interpretation",
+        "Reasoning Calculus"
+      ]
+    },
+    "test_type": {
+      "enum": ["elimination", "derivability", "merger", "substitution", "recovery"]
+    },
+    "candidate_vocabulary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identifier", "primitive_definitions", "frozen_before_mapping"],
+      "properties": {
+        "identifier": {"type": "string", "minLength": 1},
+        "primitive_definitions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "semantics", "identity_conditions"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "semantics": {"type": "string", "minLength": 1},
+              "identity_conditions": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "frozen_before_mapping": {"const": true}
+      }
+    },
+    "preservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structural", "semantic", "operational", "dependency", "information", "historical"],
+      "properties": {
+        "structural": {"$ref": "#/$defs/judgment"},
+        "semantic": {"$ref": "#/$defs/judgment"},
+        "operational": {"$ref": "#/$defs/judgment"},
+        "dependency": {"$ref": "#/$defs/judgment"},
+        "information": {"$ref": "#/$defs/judgment"},
+        "historical": {"$ref": "#/$defs/judgment"}
+      }
+    },
+    "complexity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["A_used", "A_required", "D", "O", "L"],
+      "properties": {
+        "A_used": {"type": "integer", "minimum": 0},
+        "A_required": {"type": "integer", "minimum": 0},
+        "D": {"type": "integer", "minimum": 0},
+        "O": {"type": "integer", "minimum": 0},
+        "L": {"type": "integer", "minimum": 0}
+      }
+    },
+    "hidden_reintroduction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["judgment", "reason"],
+      "properties": {
+        "judgment": {"enum": ["present", "absent", "unknown"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "decision": {
+      "enum": [
+        "independence-failed",
+        "locally-independent",
+        "tested-space-independent",
+        "unresolved"
+      ]
+    },
+    "notes": {"type": "string"}
+  },
+  "$defs": {
+    "judgment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "reason"],
+      "properties": {
+        "value": {"enum": ["Pass", "Partial", "Fail", "Unknown"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
