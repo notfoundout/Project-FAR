@@ -12,13 +12,17 @@ import csv
 import hashlib
 import importlib.util
 import json
+import re
 from collections import Counter, defaultdict
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 ROOT = Path(__file__).resolve().parent
+LABEL_PATTERN = re.compile(r"^[A-Z0-9_-]+$")
 REQUIRED_RESPONSE_FIELDS = {
     "protocol_version",
+    "record_id",
     "evaluator_id",
     "evaluator_type",
     "case_label",
@@ -29,7 +33,7 @@ REQUIRED_RESPONSE_FIELDS = {
     "confidence",
     "submitted_at",
 }
-OPTIONAL_RESPONSE_FIELDS = {"other_function"}
+OPTIONAL_RESPONSE_FIELDS = {"other_function", "supersedes_record_id"}
 
 
 def git_blob_sha1(data: bytes) -> str:
@@ -69,6 +73,16 @@ def load_scorer(root: Path = ROOT):
     return module.score_response
 
 
+def _is_date_time(value: Any) -> bool:
+    if not isinstance(value, str) or "T" not in value:
+        return False
+    try:
+        datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return True
+
+
 def validate_response_shape(response: Mapping[str, Any]) -> None:
     keys = set(response)
     missing = REQUIRED_RESPONSE_FIELDS - keys
@@ -81,9 +95,20 @@ def validate_response_shape(response: Mapping[str, Any]) -> None:
         raise ValueError("response protocol_version is not CRE-004-v1.0")
     if response["evaluator_type"] not in {"human", "ai_agent"}:
         raise ValueError("evaluator_type must be human or ai_agent")
-    for field in ("evaluator_id", "case_label", "candidate_label", "submitted_at"):
+    for field in ("record_id", "evaluator_id"):
         if not isinstance(response[field], str) or not response[field].strip():
             raise ValueError(f"{field} must be a non-empty string")
+    for field in ("case_label", "candidate_label"):
+        value = response[field]
+        if not isinstance(value, str) or LABEL_PATTERN.fullmatch(value) is None:
+            raise ValueError(f"{field} must match ^[A-Z0-9_-]+$")
+    if not _is_date_time(response["submitted_at"]):
+        raise ValueError("submitted_at must be a valid date-time")
+    supersedes = response.get("supersedes_record_id")
+    if supersedes is not None and (
+        not isinstance(supersedes, str) or not supersedes.strip()
+    ):
+        raise ValueError("supersedes_record_id must be a non-empty string")
 
 
 def validate_manifest(manifest: Mapping[str, Any]) -> None:
@@ -106,6 +131,11 @@ def validate_manifest(manifest: Mapping[str, Any]) -> None:
         values = manifest[field]
         if not isinstance(values, list) or not values or len(values) != len(set(values)):
             raise ValueError(f"{field} must be a non-empty unique list")
+        if any(
+            not isinstance(value, str) or LABEL_PATTERN.fullmatch(value) is None
+            for value in values
+        ):
+            raise ValueError(f"{field} values must match ^[A-Z0-9_-]+$")
     evaluators = manifest["eligible_evaluators"]
     if not isinstance(evaluators, list) or not evaluators:
         raise ValueError("eligible_evaluators must be a non-empty list")
@@ -138,12 +168,20 @@ def validate_and_score(
     eligible = {item["evaluator_id"] for item in manifest["eligible_evaluators"]}
     cases = set(manifest["expected_case_labels"])
     candidates = set(manifest["expected_candidate_labels"])
-    seen: set[tuple[str, str, str]] = set()
+    seen_records: set[str] = set()
+    latest_by_tuple: dict[tuple[str, str, str], str] = {}
     scored: list[dict[str, Any]] = []
 
-    for raw in responses:
+    for source in responses:
+        raw = dict(source)
         source_file = raw.pop("_source_file", None)
         validate_response_shape(raw)
+        record_id = raw["record_id"]
+        supersedes = raw.get("supersedes_record_id")
+        if record_id in seen_records:
+            raise ValueError(f"duplicate record_id: {record_id}")
+        if supersedes is not None and supersedes not in seen_records:
+            raise ValueError(f"unknown supersedes_record_id: {supersedes}")
         if raw["evaluator_id"] not in eligible:
             raise ValueError(f"ineligible evaluator: {raw['evaluator_id']}")
         if raw["case_label"] not in cases:
@@ -151,38 +189,58 @@ def validate_and_score(
         if raw["candidate_label"] not in candidates:
             raise ValueError(f"unregistered candidate label: {raw['candidate_label']}")
         key = (raw["evaluator_id"], raw["case_label"], raw["candidate_label"])
-        if key in seen:
+        previous = latest_by_tuple.get(key)
+        if previous is not None and supersedes != previous:
             raise ValueError(f"duplicate evaluator/case/candidate response: {key}")
-        seen.add(key)
+        if previous is None and supersedes is not None:
+            raise ValueError("supersession target does not match the response tuple")
+        seen_records.add(record_id)
+        latest_by_tuple[key] = record_id
         score = scorer(raw)
         scored.append({**raw, **score, "source_file": source_file})
 
     return sorted(
         scored,
-        key=lambda row: (row["candidate_label"], row["case_label"], row["evaluator_id"]),
+        key=lambda row: (
+            row["candidate_label"],
+            row["case_label"],
+            row["evaluator_id"],
+            row["submitted_at"],
+            row["record_id"],
+        ),
     )
 
 
-def aggregate(scored: list[Mapping[str, Any]]) -> dict[str, Any]:
-    overall = Counter(row["classification"] for row in scored)
-    hidden = sum(bool(row["hidden_reintroduction"]) for row in scored)
-    by_candidate: dict[str, Counter[str]] = defaultdict(Counter)
+def _group_counts(
+    scored: list[Mapping[str, Any]], field: str
+) -> dict[str, dict[str, int]]:
+    grouped: dict[str, Counter[str]] = defaultdict(Counter)
     for row in scored:
-        by_candidate[row["candidate_label"]][row["classification"]] += 1
+        grouped[str(row[field])][str(row["classification"])] += 1
+    return {
+        key: dict(sorted(counts.items()))
+        for key, counts in sorted(grouped.items())
+    }
+
+
+def aggregate(scored: list[Mapping[str, Any]]) -> dict[str, Any]:
+    overall = Counter(str(row["classification"]) for row in scored)
+    hidden = Counter(str(row["hidden_reintroduction"]).lower() for row in scored)
     return {
         "response_count": len(scored),
         "classifications": dict(sorted(overall.items())),
-        "hidden_reintroduction_count": hidden,
-        "by_candidate": {
-            candidate: dict(sorted(counts.items()))
-            for candidate, counts in sorted(by_candidate.items())
-        },
+        "hidden_reintroduction": dict(sorted(hidden.items())),
+        "by_evaluator": _group_counts(scored, "evaluator_id"),
+        "by_case": _group_counts(scored, "case_label"),
+        "by_candidate": _group_counts(scored, "candidate_label"),
     }
 
 
 def write_outputs(scored: list[dict[str, Any]], output_dir: Path) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     columns = [
+        "record_id",
+        "supersedes_record_id",
         "evaluator_id",
         "evaluator_type",
         "case_label",
@@ -198,7 +256,7 @@ def write_outputs(scored: list[dict[str, Any]], output_dir: Path) -> None:
         writer = csv.DictWriter(handle, fieldnames=columns)
         writer.writeheader()
         for row in scored:
-            projected = {key: row[key] for key in columns}
+            projected = {key: row.get(key, "") for key in columns}
             projected["functional_carriers"] = ";".join(row["functional_carriers"])
             writer.writerow(projected)
     with (output_dir / "summary.json").open("w", encoding="utf-8") as handle:
