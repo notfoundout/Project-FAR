@@ -1,0 +1,35 @@
+{
+  "assessment_id": "GMA-001",
+  "status": "closed-bounded-search-space",
+  "benchmark_ids": ["CRE-001-REFERENCE-V1"],
+  "evidence_sources": [
+    "theory/independence/executions/PIE-001/attempts.csv",
+    "theory/independence/alternative-vocabularies/AVC-001/vocabularies.json",
+    "theory/independence/alternative-vocabularies/AVC-001/results.csv"
+  ],
+  "candidate_families": [
+    "FAR",
+    "merged-representation-semantics",
+    "merged-investigation-calculus",
+    "graph-ontology",
+    "operational",
+    "categorical",
+    "information-theoretic",
+    "semantic-first",
+    "event-calculus",
+    "graph-only"
+  ],
+  "primitive_count_range_tested": {"minimum": 3, "maximum": 5},
+  "excluded_spaces": [
+    "vocabularies with fewer than three commitment-distinct primitives",
+    "vocabularies outside the ten frozen AVC-001 candidates",
+    "benchmarks other than CRE-001",
+    "post-hoc repaired candidate semantics",
+    "external blinded evaluator mappings"
+  ],
+  "decision_rule": {
+    "global_minimality_established": "every lower-cost admissible vocabulary in the stated global search domain is defeated or Pareto-inferior with no unresolved preservation judgments",
+    "global_minimality_falsified": "at least one lower-cost admissible vocabulary preserves all required commitments and Pareto-dominates or equals FAR",
+    "otherwise": "unresolved"
+  }
+}
