@@ -1,0 +1,12 @@
+{
+  "lock_version": "CRE-004-execution-lock-v1",
+  "source_pr": 205,
+  "source_merge_commit": "4ece01818d92cd986600a4dfcee69f4212879429",
+  "algorithm": "git-blob-sha1",
+  "files": {
+    "preregistration.json": "af03bbd89d0e23a40c7c8131392e81b00dc50006",
+    "response.schema.json": "40d8d9be7ed5d3f8151a77cc28704ed65b8d3425",
+    "scoring.py": "aa078eb95c90ca4f5edca16d6f34c7542211b55a",
+    "evaluator_packet.md": "1ea5043ccb3a10aa0f350237ec1b4b3ce558c7ff"
+  }
+}

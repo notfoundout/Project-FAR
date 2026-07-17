@@ -26,10 +26,7 @@ def _require_choice(response: Mapping[str, Any], key: str, allowed: set[str]) ->
 
 
 def score_response(response: Mapping[str, Any]) -> dict[str, Any]:
-    """Validate and score one response using only frozen decision rules.
-
-    Confidence is validated and retained but never affects the result.
-    """
+    """Validate and score one response using only frozen decision rules."""
 
     source = _require_choice(response, "source_difference", VALID_DIFFERENCE_VALUES)
     translated = _require_choice(response, "translated_difference", VALID_DIFFERENCE_VALUES)
@@ -56,7 +53,12 @@ def score_response(response: Mapping[str, Any]) -> dict[str, Any]:
     elif other_function is not None:
         raise ValueError("other_function is only allowed when other is selected")
 
-    hidden_reintroduction = "other" in carriers and other_function in FUNCTION_LABELS
+    if "other" in carriers and other_function == "cannot_determine":
+        hidden_reintroduction: bool | str = "unknown"
+    elif "other" in carriers and other_function in FUNCTION_LABELS:
+        hidden_reintroduction = True
+    else:
+        hidden_reintroduction = False
 
     if source == "no":
         classification = "invalid_case_response"

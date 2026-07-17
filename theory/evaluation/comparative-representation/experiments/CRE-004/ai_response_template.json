@@ -1,0 +1,16 @@
+{
+  "protocol_version": "CRE-004-v1.0",
+  "record_id": "UNIQUE_RECORD_ID",
+  "evaluator_id": "EVALUATOR_ID",
+  "evaluator_type": "ai_agent",
+  "case_label": "CASE_LABEL",
+  "candidate_label": "CANDIDATE_LABEL",
+  "source_difference": "yes|no|cannot_determine",
+  "translated_difference": "yes|no|cannot_determine",
+  "difference_carriers": [
+    "stores_objects|organizes_objects|assigns_meaning|defines_objective|determines_permitted_steps|other|cannot_determine"
+  ],
+  "other_function": "stores_objects|organizes_objects|assigns_meaning|defines_objective|determines_permitted_steps|none|cannot_determine",
+  "confidence": "certain|likely|unsure",
+  "submitted_at": "RFC3339 timestamp"
+}

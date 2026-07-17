@@ -2,7 +2,7 @@
 
 ## Status
 
-Preregistered and frozen before evaluator execution.
+Preregistered and frozen before evaluator execution. Execution infrastructure is implemented separately from evaluator data.
 
 ## Purpose
 
@@ -32,6 +32,17 @@ The evaluator answers:
 5. **How certain is the evaluator?** — `certain`, `likely`, or `unsure`.
 
 The interface does not expose the terms FAR, Representation, Representational Structure, Interpretation, Investigation, or Reasoning Calculus.
+
+## Human and AI interfaces
+
+Humans and AI agents receive the same frozen questions and submit the same response fields.
+
+- Human evaluators use `human_response_form.html`. The form presents one response at a time, conditionally reveals required follow-ups, blocks invalid combinations, assigns `evaluator_type=human`, and downloads schema-shaped JSON.
+- AI evaluators use `ai_response_template.json` with the frozen evaluator packet. They return only one JSON object and assign `evaluator_type=ai_agent`.
+- Neither interface exposes or accepts manual classifications, sufficiency judgments, dominance judgments, or hidden-reintroduction judgments.
+- Interface tests verify that both surfaces contain the same frozen choice tokens and required schema fields.
+
+The two interfaces differ only in presentation. Validation, scoring, aggregation, and replay are shared.
 
 ## Plain-language function labels
 
@@ -99,5 +110,13 @@ It does not establish:
 - `automatic_scoring.md` — input, output, aggregation, and immutability rules;
 - `hidden_reintroduction.md` — frozen functional-equivalence test;
 - `calibration_cases.json` — unrelated evaluator eligibility calibration;
+- `human_response_form.html` — no-install human form that exports response JSON;
+- `ai_response_template.json` — machine-facing response template using the same schema;
+- `protocol_lock.json` — hashes that bind execution to the protocol merged in PR #205;
+- `execution_manifest.template.json` — required execution metadata and evaluator eligibility template;
+- `execution_pipeline.py` — deterministic validator, scorer, aggregator, and replay command;
+- `execution.md` — execution-stage boundaries and operating procedure;
 - `tests/test_cre004_protocol.py` — protocol, scoring, blinding, and claim-boundary tests;
-- `tests/test_cre004_evaluator_package.py` — evaluator-package, calibration, and immutability tests.
+- `tests/test_cre004_evaluator_package.py` — evaluator-package, calibration, and immutability tests;
+- `tests/test_cre004_execution_pipeline.py` — lock, validation, duplicate, eligibility, aggregation, and replay tests;
+- `tests/test_cre004_evaluator_interfaces.py` — human/AI parity, schema, blinding, and no-manual-scoring tests.

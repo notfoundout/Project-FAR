@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blind discrimination response</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; line-height: 1.45; }
+    fieldset { margin: 1.25rem 0; padding: 1rem; }
+    label { display: block; margin: .45rem 0; }
+    input[type=text] { width: 100%; padding: .5rem; box-sizing: border-box; }
+    button { padding: .7rem 1rem; }
+    .hidden { display: none; }
+    #status { margin-top: 1rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Blind discrimination response</h1>
+  <p>Complete one response for the assigned system pair and candidate translation. Do not identify or repair the candidate vocabulary.</p>
+
+  <form id="response-form">
+    <fieldset>
+      <legend>Assigned identifiers</legend>
+      <label>Record ID <input id="record_id" type="text" required></label>
+      <label>Supersedes record ID, only for a correction <input id="supersedes_record_id" type="text"></label>
+      <label>Evaluator ID <input id="evaluator_id" type="text" required></label>
+      <label>Case label <input id="case_label" type="text" required pattern="[A-Z0-9_-]+"></label>
+      <label>Candidate label <input id="candidate_label" type="text" required pattern="[A-Z0-9_-]+"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Are System A and System B different?</legend>
+      <label><input type="radio" name="source_difference" value="yes" required> Yes</label>
+      <label><input type="radio" name="source_difference" value="no"> No</label>
+      <label><input type="radio" name="source_difference" value="cannot_determine"> Cannot determine</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>After translation into the candidate vocabulary, can you still distinguish the two systems?</legend>
+      <label><input type="radio" name="translated_difference" value="yes" required> Yes</label>
+      <label><input type="radio" name="translated_difference" value="no"> No</label>
+      <label><input type="radio" name="translated_difference" value="cannot_determine"> Cannot determine</label>
+    </fieldset>
+
+    <fieldset id="carriers" class="hidden">
+      <legend>What observable function makes the translated systems different?</legend>
+      <label><input type="checkbox" name="difference_carriers" value="stores_objects"> Stores the explicit objects being reasoned about</label>
+      <label><input type="checkbox" name="difference_carriers" value="organizes_objects"> Organizes or relates those objects</label>
+      <label><input type="checkbox" name="difference_carriers" value="assigns_meaning"> Assigns meaning or denotation</label>
+      <label><input type="checkbox" name="difference_carriers" value="defines_objective"> Defines the objective or success condition</label>
+      <label><input type="checkbox" name="difference_carriers" value="determines_permitted_steps"> Determines permitted inferences or transitions</label>
+      <label><input type="checkbox" name="difference_carriers" value="other"> Another visible mechanism</label>
+      <label><input type="checkbox" name="difference_carriers" value="cannot_determine"> Cannot determine the mechanism</label>
+    </fieldset>
+
+    <fieldset id="other-function" class="hidden">
+      <legend>Does the other mechanism perform one of these functions?</legend>
+      <label><input type="radio" name="other_function" value="stores_objects"> Stores objects</label>
+      <label><input type="radio" name="other_function" value="organizes_objects"> Organizes objects</label>
+      <label><input type="radio" name="other_function" value="assigns_meaning"> Assigns meaning</label>
+      <label><input type="radio" name="other_function" value="defines_objective"> Defines an objective</label>
+      <label><input type="radio" name="other_function" value="determines_permitted_steps"> Determines permitted steps</label>
+      <label><input type="radio" name="other_function" value="none"> None of these</label>
+      <label><input type="radio" name="other_function" value="cannot_determine"> Cannot determine</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>How certain are you?</legend>
+      <label><input type="radio" name="confidence" value="certain" required> Certain</label>
+      <label><input type="radio" name="confidence" value="likely"> Likely</label>
+      <label><input type="radio" name="confidence" value="unsure"> Unsure</label>
+    </fieldset>
+
+    <button type="submit">Download response JSON</button>
+    <div id="status" role="status"></div>
+  </form>
+
+<script>
+const form = document.getElementById('response-form');
+const carriersBox = document.getElementById('carriers');
+const otherBox = document.getElementById('other-function');
+const statusBox = document.getElementById('status');
+
+function selected(name) {
+  return form.querySelector(`input[name="${name}"]:checked`);
+}
+function carriers() {
+  return [...form.querySelectorAll('input[name="difference_carriers"]:checked')].map(x => x.value);
+}
+function refresh() {
+  const translated = selected('translated_difference')?.value;
+  carriersBox.classList.toggle('hidden', translated !== 'yes');
+  if (translated !== 'yes') {
+    form.querySelectorAll('input[name="difference_carriers"]').forEach(x => x.checked = false);
+  }
+  const hasOther = carriers().includes('other');
+  otherBox.classList.toggle('hidden', !hasOther);
+  if (!hasOther) form.querySelectorAll('input[name="other_function"]').forEach(x => x.checked = false);
+}
+form.addEventListener('change', refresh);
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  refresh();
+  const translated = selected('translated_difference').value;
+  const chosenCarriers = carriers();
+  if (translated === 'yes' && chosenCarriers.length === 0) {
+    statusBox.textContent = 'Select at least one observable function.';
+    return;
+  }
+  if (chosenCarriers.includes('cannot_determine') && chosenCarriers.length > 1) {
+    statusBox.textContent = 'Cannot determine cannot be combined with another function.';
+    return;
+  }
+  const other = selected('other_function');
+  if (chosenCarriers.includes('other') && !other) {
+    statusBox.textContent = 'Answer the follow-up question for the other mechanism.';
+    return;
+  }
+  const payload = {
+    protocol_version: 'CRE-004-v1.0',
+    record_id: document.getElementById('record_id').value.trim(),
+    evaluator_id: document.getElementById('evaluator_id').value.trim(),
+    evaluator_type: 'human',
+    case_label: document.getElementById('case_label').value.trim(),
+    candidate_label: document.getElementById('candidate_label').value.trim(),
+    source_difference: selected('source_difference').value,
+    translated_difference: translated,
+    difference_carriers: translated === 'yes' ? chosenCarriers : [],
+    confidence: selected('confidence').value,
+    submitted_at: new Date().toISOString()
+  };
+  const supersedes = document.getElementById('supersedes_record_id').value.trim();
+  if (supersedes) payload.supersedes_record_id = supersedes;
+  if (chosenCarriers.includes('other')) payload.other_function = other.value;
+  const blob = new Blob([JSON.stringify(payload, null, 2) + '\n'], {type: 'application/json'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `${payload.record_id}.json`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+  statusBox.textContent = 'Response JSON created. Submit the downloaded file through the assigned channel.';
+});
+</script>
+</body>
+</html>
