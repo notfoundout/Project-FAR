@@ -12,6 +12,7 @@ This directory contains the canonical theory of Project FAR. Research notes and 
 - `theorems/` — propositions, conjectures, and theorems.
 - `proofs/` — proof material and proof-theoretic foundations.
 - `consistency/` — verification and consistency checks.
+- `independence/` — falsifiable primitive-independence criteria, schemas, and future execution artifacts.
 
 ## Reading Order
 
@@ -23,3 +24,4 @@ This directory contains the canonical theory of Project FAR. Research notes and 
 6. `theorems/theorems.md`
 7. `proofs/proofs.md`
 8. `consistency/verification.md`
+9. `independence/primitive-independence-framework.md`
