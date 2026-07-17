@@ -4,8 +4,8 @@ For each case, process answers in this order.
 
 1. If `source_difference = no`, classify the response as `invalid_case_response`.
 2. If `source_difference = cannot_determine`, classify it as `unknown`.
-3. If `source_difference = yes` and `translated_distinction = no`, classify it as `fail`.
-4. If `source_difference = yes` and `translated_distinction = cannot_determine`, classify it as `unknown`.
+3. If `source_difference = yes` and `translated_difference = no`, classify it as `fail`.
+4. If `source_difference = yes` and `translated_difference = cannot_determine`, classify it as `unknown`.
 5. If both are `yes`, require at least one mechanism label.
 6. If the only mechanism label is `cannot_determine`, classify it as `unknown`.
 7. Otherwise classify it as `pass`.
