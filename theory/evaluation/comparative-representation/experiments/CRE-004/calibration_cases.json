@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "purpose": "Eligibility calibration unrelated to Project FAR candidates or CRE-003 benchmark content.",
+  "passing_rule": "All three cases must match the frozen expected source and translation judgments. Mechanism labels may include any listed correct label.",
+  "cases": [
+    {
+      "case_id": "CAL-001",
+      "source_a": "A cabinet stores a red card in drawer 1.",
+      "source_b": "A cabinet stores a blue card in drawer 1.",
+      "translation_a": "drawer_1 = red",
+      "translation_b": "drawer_1 = blue",
+      "expected_source_difference": "yes",
+      "expected_translated_distinction": "yes",
+      "accepted_mechanisms": ["stores_objects", "assigns_meaning"]
+    },
+    {
+      "case_id": "CAL-002",
+      "source_a": "The objective is to reach room 4.",
+      "source_b": "The objective is to avoid room 4.",
+      "translation_a": "goal = room_4",
+      "translation_b": "goal = room_4",
+      "expected_source_difference": "yes",
+      "expected_translated_distinction": "no",
+      "accepted_mechanisms": []
+    },
+    {
+      "case_id": "CAL-003",
+      "source_a": "Move is permitted only after a key is found.",
+      "source_b": "Move is permitted without a key.",
+      "translation_a": "permit(move) if key_found",
+      "translation_b": "permit(move)",
+      "expected_source_difference": "yes",
+      "expected_translated_distinction": "yes",
+      "accepted_mechanisms": ["determines_permitted_steps"]
+    }
+  ]
+}

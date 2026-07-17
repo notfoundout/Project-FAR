@@ -94,4 +94,10 @@ It does not establish:
 - `preregistration.json` — frozen decision tree, response choices, blinding rules, and claim boundary;
 - `response.schema.json` — shared machine-readable response format for humans and AI agents;
 - `scoring.py` — deterministic response scorer;
-- `tests/test_cre004_protocol.py` — protocol, scoring, blinding, and claim-boundary tests.
+- `evaluator_packet.md` — frozen plain-language evaluator instructions and eligibility rules;
+- `decision_tree.md` — human-readable normative classification tree;
+- `automatic_scoring.md` — input, output, aggregation, and immutability rules;
+- `hidden_reintroduction.md` — frozen functional-equivalence test;
+- `calibration_cases.json` — unrelated evaluator eligibility calibration;
+- `tests/test_cre004_protocol.py` — protocol, scoring, blinding, and claim-boundary tests;
+- `tests/test_cre004_evaluator_package.py` — evaluator-package, calibration, and immutability tests.
