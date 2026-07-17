@@ -51,7 +51,8 @@
       ]
     },
     "confidence": {"enum": ["certain", "likely", "unsure"]},
-    "submitted_at": {"type": "string", "format": "date-time"}
+    "submitted_at": {"type": "string", "format": "date-time"},
+    "supersedes_record_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
   },
   "allOf": [
     {
