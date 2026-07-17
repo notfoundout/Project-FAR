@@ -1,5 +1,6 @@
 {
   "protocol_version": "CRE-004-v1.0",
+  "record_id": "UNIQUE_RECORD_ID",
   "evaluator_id": "EVALUATOR_ID",
   "evaluator_type": "ai_agent",
   "case_label": "CASE_LABEL",
