@@ -1,0 +1,111 @@
+{
+  "competition_id": "AVC-001",
+  "status": "frozen-before-evaluation",
+  "benchmark_id": "CRE-001-REFERENCE-V1",
+  "vocabularies": [
+    {
+      "id": "AV-001",
+      "name": "FAR five-primitive control",
+      "family": "FAR",
+      "primitives": [
+        {"name": "Investigation", "semantics": "A reasoning objective together with the conditions under which it is pursued.", "identity_conditions": "Distinct when objective or pursuit conditions differ."},
+        {"name": "Representation", "semantics": "An explicitly distinguishable object used to denote, encode, or refer.", "identity_conditions": "Distinct by token identity and denotational role."},
+        {"name": "Representational Structure", "semantics": "Representations together with explicit organizational relations.", "identity_conditions": "Distinct when membership or organizing relations differ."},
+        {"name": "Interpretation", "semantics": "A mapping assigning semantic content to representations.", "identity_conditions": "Distinct when any assigned meaning differs."},
+        {"name": "Reasoning Calculus", "semantics": "Rules governing admissible transformations and resolutions.", "identity_conditions": "Distinct when any admissible transition or resolution rule differs."}
+      ]
+    },
+    {
+      "id": "AV-002",
+      "name": "Sign system",
+      "family": "merged-representation-semantics",
+      "primitives": [
+        {"name": "Task", "semantics": "A target condition and evaluation context.", "identity_conditions": "Distinct when target or evaluation context differs."},
+        {"name": "Sign", "semantics": "A distinguishable bearer inseparable from its assigned content.", "identity_conditions": "Distinct when bearer or assigned content differs."},
+        {"name": "Configuration", "semantics": "An organized collection of signs and relations.", "identity_conditions": "Distinct when signs or relations differ."},
+        {"name": "Procedure", "semantics": "Permitted changes of configurations and stopping conditions.", "identity_conditions": "Distinct when permitted change or stopping condition differs."}
+      ]
+    },
+    {
+      "id": "AV-003",
+      "name": "Goal-governed process",
+      "family": "merged-investigation-calculus",
+      "primitives": [
+        {"name": "Directive", "semantics": "A unified objective together with the rules for pursuing it.", "identity_conditions": "Distinct when objective or any pursuit rule differs."},
+        {"name": "Token", "semantics": "A distinguishable symbolic item.", "identity_conditions": "Distinct by token identity."},
+        {"name": "Arrangement", "semantics": "Tokens together with explicit relations.", "identity_conditions": "Distinct when tokens or relations differ."},
+        {"name": "Valuation", "semantics": "An assignment of content to tokens.", "identity_conditions": "Distinct when any assignment differs."}
+      ]
+    },
+    {
+      "id": "AV-004",
+      "name": "Object-relation-transformation",
+      "family": "graph-ontology",
+      "primitives": [
+        {"name": "Object", "semantics": "Any explicitly distinguishable entity.", "identity_conditions": "Distinct by object identity."},
+        {"name": "Relation", "semantics": "An explicitly specified association among objects.", "identity_conditions": "Distinct by ordered participants and relation type."},
+        {"name": "Transformation", "semantics": "A conditionally permitted change to objects or relations.", "identity_conditions": "Distinct when precondition or effect differs."}
+      ]
+    },
+    {
+      "id": "AV-005",
+      "name": "State-transition system",
+      "family": "operational",
+      "primitives": [
+        {"name": "State", "semantics": "A complete valuation of declared variables at a step.", "identity_conditions": "Distinct when any declared variable differs."},
+        {"name": "Transition", "semantics": "A guarded relation between predecessor and successor states.", "identity_conditions": "Distinct when guard or successor relation differs."},
+        {"name": "Observation", "semantics": "A projection from states or traces to externally compared values.", "identity_conditions": "Distinct when projection differs."}
+      ]
+    },
+    {
+      "id": "AV-006",
+      "name": "Category-process vocabulary",
+      "family": "categorical",
+      "primitives": [
+        {"name": "Object", "semantics": "A typed process condition.", "identity_conditions": "Distinct according to the category's object equality."},
+        {"name": "Morphism", "semantics": "A composable transformation between typed conditions.", "identity_conditions": "Distinct according to domain, codomain, and arrow equality."},
+        {"name": "Functorial Observation", "semantics": "A structure-preserving mapping to an observation category.", "identity_conditions": "Distinct when object or arrow mapping differs."}
+      ]
+    },
+    {
+      "id": "AV-007",
+      "name": "Information-channel vocabulary",
+      "family": "information-theoretic",
+      "primitives": [
+        {"name": "Message", "semantics": "A distinguishable information-bearing value.", "identity_conditions": "Distinct by value in the declared alphabet."},
+        {"name": "Channel", "semantics": "A conditional mapping from input messages and channel state to output messages and state.", "identity_conditions": "Distinct when conditional mapping differs."},
+        {"name": "Decoder", "semantics": "A mapping from messages or histories to assessed content.", "identity_conditions": "Distinct when decoded output differs for any admissible input."}
+      ]
+    },
+    {
+      "id": "AV-008",
+      "name": "Semantic-commitment vocabulary",
+      "family": "semantic-first",
+      "primitives": [
+        {"name": "Commitment", "semantics": "A content-bearing item that may be held, changed, or withdrawn.", "identity_conditions": "Distinct when content or commitment status differs."},
+        {"name": "Context", "semantics": "Conditions fixing relevance and assessment of commitments.", "identity_conditions": "Distinct when relevance or assessment conditions differ."},
+        {"name": "Revision", "semantics": "A permitted change in a commitment set.", "identity_conditions": "Distinct when applicability or change differs."}
+      ]
+    },
+    {
+      "id": "AV-009",
+      "name": "Event-process vocabulary",
+      "family": "event-calculus",
+      "primitives": [
+        {"name": "Event", "semantics": "A typed occurrence at a position in an ordered process.", "identity_conditions": "Distinct by type, participants, and process position."},
+        {"name": "Fluent", "semantics": "A property whose value may vary across process positions.", "identity_conditions": "Distinct by property identity and value domain."},
+        {"name": "Constraint", "semantics": "A condition governing event occurrence or fluent evolution.", "identity_conditions": "Distinct when satisfaction conditions differ."}
+      ]
+    },
+    {
+      "id": "AV-010",
+      "name": "Typed dependency graph",
+      "family": "graph-only",
+      "primitives": [
+        {"name": "Node", "semantics": "A typed distinguishable vertex carrying declared attributes.", "identity_conditions": "Distinct by node identity."},
+        {"name": "Edge", "semantics": "A typed directed dependency between nodes carrying declared attributes.", "identity_conditions": "Distinct by source, target, type, and attributes."},
+        {"name": "Rewrite", "semantics": "A guarded graph transformation rule.", "identity_conditions": "Distinct when match condition or graph replacement differs."}
+      ]
+    }
+  ]
+}
