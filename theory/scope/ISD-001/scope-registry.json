@@ -1,0 +1,53 @@
+{
+  "scope_id": "ISD-001",
+  "status": "bounded-current-scope",
+  "claim_level": "demonstrated-representational-scope",
+  "inclusion_rule": "A class is in current demonstrated scope only when at least one explicit instance has a preserved mapping or deterministic execution artifact covering structural, semantic, operational, dependency, information, and historical commitments, with no unresolved required dimension.",
+  "exclusion_rule": "Classes with only conceptual discussion, partial mappings, inaccessible internal state, unresolved preservation dimensions, or no executable artifact are not in demonstrated scope.",
+  "included_classes": [
+    {
+      "id": "SC-001",
+      "class": "finite explicit rule-governed state-transition reasoning",
+      "status": "included",
+      "evidence": ["CRE-001-REFERENCE-V1"],
+      "boundary": "Finite declared variables, explicit guards and updates, inspectable transition history, and explicit rule-status modification."
+    },
+    {
+      "id": "SC-002",
+      "class": "explicitly represented rule modification",
+      "status": "included",
+      "evidence": ["CRE-001-REFERENCE-V1", "PIE-001", "AVC-001"],
+      "boundary": "The modification point, prior rule status, successor rule status, and later operational consequences must be recorded."
+    },
+    {
+      "id": "SC-003",
+      "class": "finite machine-checkable reasoning traces",
+      "status": "included",
+      "evidence": ["CRE-001 deterministic verifier"],
+      "boundary": "Trace generation and preservation claims must be reproducible from repository artifacts."
+    }
+  ],
+  "investigated_but_unresolved_classes": [
+    {"id": "SU-001", "class": "large-language-model reasoning", "status": "unresolved", "reason": "Visible prompts and outputs are representable, but ordinary proprietary or under-instrumented runs do not expose enough semantic, operational, dependency, or information-preservation evidence."},
+    {"id": "SU-002", "class": "agentic AI reasoning", "status": "unresolved", "reason": "Documented traces may be structurally represented, but tool-state, hidden policy, memory, and dependency capture are often incomplete."},
+    {"id": "SU-003", "class": "human expert reasoning", "status": "unresolved", "reason": "Tacit, perceptual, and unreported processes prevent complete operational and information preservation."},
+    {"id": "SU-004", "class": "analogical reasoning", "status": "unresolved", "reason": "Explicit structure mappings are representable, but relevance selection and creative generation remain underdetermined."},
+    {"id": "SU-005", "class": "legal reasoning", "status": "conservative-extension", "reason": "Representable with additional machinery for authority, jurisdiction, defeasibility, standards, and time-indexed sources; not yet demonstrated as core-only scope."}
+  ],
+  "excluded_from_current_claims": [
+    "all human reasoning",
+    "all artificial intelligence reasoning",
+    "continuous or unbounded reasoning processes without a finite preserved artifact",
+    "private internal states inferred only from behavior",
+    "semantic equivalence asserted without identity or commitment-equivalence criteria",
+    "universal necessity, global minimality, or unique optimality"
+  ],
+  "scope_expansion_requirements": [
+    "freeze a representative benchmark before evaluation",
+    "record explicit source artifacts and observability limits",
+    "construct at least three independent mappings when making reproducibility claims",
+    "resolve all six preservation dimensions or retain the class as unresolved",
+    "record required domain-specific extensions separately from the core vocabulary",
+    "run alternative-vocabulary comparison where a scope expansion is used to support necessity or universality"
+  ]
+}
