@@ -1,8 +1,8 @@
-# CRE-004 Evaluator Packet
+# Evaluator Packet
 
 ## Scope
 
-This packet is the frozen evaluator-facing procedure for CRE-004. Evaluators do not construct mappings, assign preservation scores, compare complexity, or decide whether FAR is sufficient.
+This packet is the frozen evaluator-facing procedure. Evaluators do not construct mappings, assign preservation scores, compare complexity, or decide whether any candidate framework is sufficient.
 
 ## Eligibility
 
@@ -24,7 +24,7 @@ For each anonymized case, read:
 4. Candidate Translation B;
 5. the anonymized vocabulary card.
 
-Then answer only the fields allowed by `response.schema.json`.
+Then answer only the fields allowed by the supplied response form.
 
 ### Question 1
 
@@ -79,7 +79,7 @@ Confidence is metadata only and never alters scoring.
 Evaluators must not:
 
 - infer candidate identity;
-- use FAR terminology in submitted answers;
+- use framework-specific terminology in submitted answers;
 - repair or improve a translation;
 - consult repository history, author notes, answer keys, or other evaluators;
 - choose `pass`, `fail`, `unknown`, sufficiency, dominance, or hidden reintroduction directly.
