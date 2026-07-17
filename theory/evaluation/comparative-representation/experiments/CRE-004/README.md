@@ -2,7 +2,7 @@
 
 ## Status
 
-Preregistered and frozen before evaluator execution.
+Preregistered and frozen before evaluator execution. Execution infrastructure is implemented separately from evaluator data.
 
 ## Purpose
 
@@ -99,5 +99,10 @@ It does not establish:
 - `automatic_scoring.md` — input, output, aggregation, and immutability rules;
 - `hidden_reintroduction.md` — frozen functional-equivalence test;
 - `calibration_cases.json` — unrelated evaluator eligibility calibration;
+- `protocol_lock.json` — hashes that bind execution to the protocol merged in PR #205;
+- `execution_manifest.template.json` — required execution metadata and evaluator eligibility template;
+- `execution_pipeline.py` — deterministic validator, scorer, aggregator, and replay command;
+- `execution.md` — execution-stage boundaries and operating procedure;
 - `tests/test_cre004_protocol.py` — protocol, scoring, blinding, and claim-boundary tests;
-- `tests/test_cre004_evaluator_package.py` — evaluator-package, calibration, and immutability tests.
+- `tests/test_cre004_evaluator_package.py` — evaluator-package, calibration, and immutability tests;
+- `tests/test_cre004_execution_pipeline.py` — lock, validation, duplicate, eligibility, aggregation, and replay tests.
