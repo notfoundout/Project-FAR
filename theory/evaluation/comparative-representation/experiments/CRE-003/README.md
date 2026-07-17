@@ -2,7 +2,7 @@
 
 ## Status
 
-Preregistered and frozen before candidate mapping or evaluation.
+Preregistered and frozen before candidate mapping or evaluation. The frozen benchmark has now received a bounded internal execution recorded separately from the preregistration.
 
 ## Purpose
 
@@ -19,7 +19,7 @@ CRE-003 therefore uses matched cases that change one commitment while holding th
 | CRE-003-C | Reasoning calculus | Representation, structure, interpretation, investigation | Same objective with different admissibility rules and permitted conclusions |
 | CRE-003-R | Representation and structure | Interpretation, investigation, calculus-level role | Different explicit organization carrying shared interpreted content |
 
-The complete systems and equality constraints are frozen in `preregistration.json`.
+The complete systems and equality constraints remain frozen in `preregistration.json`.
 
 ## Evaluation design
 
@@ -41,7 +41,7 @@ Existential sufficiency requires at least one of three mappings to pass all six 
 
 ## Candidate set
 
-The first execution should reuse the ten frozen AVC-001 vocabularies without changing their primitive semantics. Any later candidate must be frozen before exposure to the case-specific mapping artifacts.
+The first execution reused the ten frozen AVC-001 vocabularies without changing their primitive semantics. Any later candidate must be frozen before exposure to the case-specific mapping artifacts.
 
 ## Claim boundary
 
@@ -53,13 +53,18 @@ CRE-003 can test whether the frozen candidates preserve independent variation am
 - unique optimality;
 - universal coverage of reasoning.
 
-A favorable FAR result would establish only bounded comparative support on the frozen cases. A successful lower-cost candidate would falsify the corresponding bounded minimality claim and require GMA-001 to be revised.
+A favorable FAR result establishes only bounded comparative support on the frozen cases. A successful lower-cost candidate would falsify the corresponding bounded minimality claim and require GMA-001 to be revised.
 
 ## Execution status
 
-No candidate mappings or scores are included in this PR. This separation is intentional: the benchmark and decision rules are frozen before evaluation.
+The preregistration was merged before any candidate mappings or scores were added. The later internal execution is preserved as a separate artifact so the frozen design remains distinguishable from its results.
+
+The execution is internal implementation evidence, not independent external replication. Its bounded conclusions and unresolved judgments are recorded in `execution.md`.
 
 ## Artifacts
 
-- `preregistration.json` — complete matched-case and decision-rule specification;
-- `tests/test_cre003_preregistration.py` — deterministic freeze, orthogonality, and claim-boundary checks.
+- `preregistration.json` — frozen matched-case and decision-rule specification;
+- `execution.md` — bounded internal execution report and exact claim limits;
+- `results.csv` — all 30 retained mapping records;
+- `tests/test_cre003_preregistration.py` — deterministic freeze, orthogonality, and claim-boundary checks;
+- `tests/test_cre003_execution.py` — deterministic execution-integrity and result-boundary checks.

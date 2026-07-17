@@ -29,10 +29,11 @@ class CRE003PreregistrationTests(unittest.TestCase):
         self.spec = json.loads(SPEC.read_text(encoding="utf-8"))
         self.report = REPORT.read_text(encoding="utf-8")
 
-    def test_protocol_is_frozen_before_mapping(self) -> None:
+    def test_protocol_was_frozen_before_mapping(self) -> None:
         self.assertEqual("CRE-003", self.spec["experiment_id"])
         self.assertEqual("frozen-before-mapping", self.spec["status"])
-        self.assertIn("No candidate mappings or scores are included", self.report)
+        self.assertIn("preregistration was merged before any candidate mappings or scores were added", self.report)
+        self.assertIn("separate artifact", self.report)
 
     def test_all_four_discrimination_cases_are_registered_once(self) -> None:
         cases = self.spec["matched_cases"]
