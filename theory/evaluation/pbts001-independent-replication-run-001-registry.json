@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.0",
+  "run_id": "PBTS-001-REP-001-RUN-001",
+  "package_id": "PBTS-001-REP-001",
+  "package_version": "1.0",
+  "status": "coordinator_controls_frozen_no_participants",
+  "controls": "docs/research/pbts001-replication-run-001-coordinator-controls.md",
+  "target_replication_layer": "R3_independent_technical_replication",
+  "public_repository_blinding_guaranteed": false,
+  "primary_slots": [
+    {
+      "slot_id": "REP-A",
+      "registration_id": null,
+      "qualification_status": "unregistered",
+      "calibration_status": "not_administered",
+      "exposure_declaration_status": "missing",
+      "independence_audit_status": "not_started",
+      "maximum_justified_layer": "unresolved",
+      "assignment_status": "not_generated",
+      "submission_status": "not_started"
+    },
+    {
+      "slot_id": "REP-B",
+      "registration_id": null,
+      "qualification_status": "unregistered",
+      "calibration_status": "not_administered",
+      "exposure_declaration_status": "missing",
+      "independence_audit_status": "not_started",
+      "maximum_justified_layer": "unresolved",
+      "assignment_status": "not_generated",
+      "submission_status": "not_started"
+    },
+    {
+      "slot_id": "REP-C",
+      "registration_id": null,
+      "qualification_status": "unregistered",
+      "calibration_status": "not_administered",
+      "exposure_declaration_status": "missing",
+      "independence_audit_status": "not_started",
+      "maximum_justified_layer": "unresolved",
+      "assignment_status": "not_generated",
+      "submission_status": "not_started"
+    }
+  ],
+  "minimum_primary_registrants": 3,
+  "minimum_distinct_organizational_affiliations": 2,
+  "required_roles": [
+    "package_coordinator",
+    "primary_replicator",
+    "calibration_scorer",
+    "independence_auditor",
+    "submission_custodian",
+    "adjudicator",
+    "aggregation_operator",
+    "red_team_reviewer"
+  ],
+  "registration_requirements": [
+    "real_person_or_organization_attestation",
+    "competency_statement",
+    "affiliation_or_unaffiliated_status",
+    "project_relationship_disclosure",
+    "funding_employment_collaboration_conflicts",
+    "tool_model_and_assistance_disclosure",
+    "package_non_authorship_declaration",
+    "failure_preservation_acknowledgement",
+    "timestamp_and_content_digest"
+  ],
+  "calibration_rule": {
+    "items": 6,
+    "minimum_correct": 5,
+    "critical_item": "CAL-04_observation_vs_inference",
+    "maximum_retests": 1,
+    "self_scoring_prohibited": true
+  },
+  "assignment_plan": {
+    "all_slots_receive_full_suite": true,
+    "canonical_sections": [
+      "PAIR",
+      "ABLATION",
+      "DOMAIN",
+      "COUNTERMODEL",
+      "HIDDEN_RECOVERY",
+      "ADDITION_SEARCH",
+      "P8",
+      "DISCLOSURES"
+    ],
+    "algorithm": "deterministic_fisher_yates_sha256_counter_mode",
+    "seed_template": "PBTS-001-REP-001-RUN-001|{slot_id}|order-v1",
+    "generated_assignments": []
+  },
+  "participant_bundle": {
+    "includes": [
+      "protected_inputs",
+      "replication_protocol",
+      "calibration_instructions_after_registration",
+      "response_schema",
+      "slot_section_order",
+      "submission_instructions",
+      "nonclaims"
+    ],
+    "excludes": [
+      "docs/research/pb001-execution-run-001-report.md",
+      "theory/evaluation/pb001-execution-run-001-records.json",
+      "theory/evaluation/pb001-execution-run-001-summary.json",
+      "derivative_RUN_001_judgment_summaries"
+    ]
+  },
+  "channels": {
+    "registrations": "theory/evaluation/pbts001-independent-replication/run-001/registrations.json",
+    "exposure_declarations": "theory/evaluation/pbts001-independent-replication/run-001/exposure-declarations.json",
+    "calibrations": "theory/evaluation/pbts001-independent-replication/run-001/calibrations.json",
+    "independence_audits": "theory/evaluation/pbts001-independent-replication/run-001/independence-audits.json",
+    "assignments": "theory/evaluation/pbts001-independent-replication/run-001/assignments.json",
+    "submissions": "theory/evaluation/pbts001-independent-replication/run-001/submissions.json",
+    "rejections_withdrawals": "theory/evaluation/pbts001-independent-replication/run-001/rejections-withdrawals.json",
+    "adjudications": "theory/evaluation/pbts001-independent-replication/run-001/adjudications.json",
+    "results": "theory/evaluation/pbts001-independent-replication/run-001/results.json"
+  },
+  "channel_policy": {
+    "append_only": true,
+    "deletion_prohibited": true,
+    "silent_replacement_prohibited": true,
+    "supersession_requires_new_record": true,
+    "stable_record_ids_required": true,
+    "content_digests_required": true
+  },
+  "execution_gate": {
+    "three_real_registrants_recorded": false,
+    "all_calibrations_passed": false,
+    "all_exposure_declarations_recorded": false,
+    "all_independence_audits_complete": false,
+    "all_assignments_generated": false,
+    "append_only_channels_operational": true,
+    "participant_bundles_verified": false,
+    "execution_authorized": false
+  },
+  "result_gate": {
+    "three_primary_submissions_frozen_or_permanently_unavailable": false,
+    "adjudication_complete": false,
+    "full_distributions_registered": false,
+    "unfavorable_and_unresolved_results_published": false,
+    "P8_role_resolved_or_alternatives_registered": false,
+    "maximum_replication_layer_recorded": false,
+    "representation_theorem_gate_open": false
+  },
+  "registrations": [],
+  "calibration_records": [],
+  "exposure_declarations": [],
+  "independence_audits": [],
+  "assignments": [],
+  "submissions": [],
+  "rejections": [],
+  "adjudications": [],
+  "results": [],
+  "nonclaims": [
+    "This run registry does not register or qualify a participant.",
+    "This run registry does not establish independent replication or R3 evidence.",
+    "This run registry does not establish PB-001 sufficiency, necessity, independence, minimality, or completeness.",
+    "This run registry does not resolve P8.",
+    "This run registry does not establish FARA compliance or a representation theorem.",
+    "The representation-theorem gate remains closed."
+  ],
+  "next_required_action": "Recruit real qualified replicators, append registration and exposure records, administer calibration, complete independence audits, and generate assignments without adding replication judgments."
+}
