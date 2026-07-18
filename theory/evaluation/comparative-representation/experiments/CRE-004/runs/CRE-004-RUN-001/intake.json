@@ -28,11 +28,11 @@
   ],
   "gates": {
     "anonymized_candidate_packages_frozen": false,
-    "candidate_key_frozen_outside_evaluator_packet": false,
+    "candidate_key_frozen_outside_evaluator_packet": true,
     "evaluators_registered": false,
     "calibration_completed": false,
     "independence_claims_recorded": false,
-    "randomization_seed_frozen": false,
+    "randomization_seed_frozen": true,
     "assignment_order_generated": false,
     "protocol_lock_verified": false,
     "append_only_response_channel_verified": false
