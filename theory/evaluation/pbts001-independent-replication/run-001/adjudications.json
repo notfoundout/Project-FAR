@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "run_id": "PBTS-001-REP-001-RUN-001",
+  "channel": "adjudications",
+  "append_only": true,
+  "records": []
+}
