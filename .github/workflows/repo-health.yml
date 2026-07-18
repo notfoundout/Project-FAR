@@ -26,12 +26,14 @@ jobs:
       id: health
       continue-on-error: true
       run: python tools/repo_health_check.py --fast > repo-health.log 2>&1
-    - name: Upload repository health report
+    - name: Upload repository health diagnostics
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: repo-health-fast
-        path: repo-health.log
+        path: |
+          repo-health.log
+          docs/planning/next-actions.md
     - name: Fail if repository health failed
       if: steps.health.outcome == 'failure'
       run: |
