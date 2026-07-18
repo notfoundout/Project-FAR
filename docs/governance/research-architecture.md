@@ -16,7 +16,7 @@ Project FAR is the architecture-neutral research program asking whether any comm
 
 A reasoning-domain specification defines the class of processes under investigation independently of any candidate architecture. It states observables, admissible transformations, relevant commitments, scope, and exclusion criteria without requiring FARA-native primitives.
 
-The repository does not yet contain a final accepted architecture-neutral definition of reasoning. That missing definition is the first unresolved dependency for the next scientific program.
+The prospective target domain is frozen in `docs/research/reasoning-domain-specification-v1.0.md` and registered in `theory/evaluation/reasoning-domain-registry.json`. This artifact fixes the classes and boundary cases that the next mathematical-definition milestone must address. It is not itself a mathematical definition of reasoning.
 
 ## Candidate architecture
 

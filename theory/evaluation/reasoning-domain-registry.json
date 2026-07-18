@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "specification_version": "1.0",
+  "specification": "docs/research/reasoning-domain-specification-v1.0.md",
+  "status": "frozen_prospective",
+  "purpose": "Fix the architecture-neutral target domain before proposing a mathematical definition of reasoning.",
+  "nonclaims": [
+    "This registry does not define reasoning mathematically.",
+    "This registry does not establish that one universal reasoning class exists.",
+    "This registry does not establish FARA universality, necessity, minimality, or superiority."
+  ],
+  "allowed_case_statuses": [
+    "target",
+    "boundary_unresolved",
+    "provisionally_excluded"
+  ],
+  "observability_strata": {
+    "O0": "input_output_only",
+    "O1": "reported_trace_unverified",
+    "O2": "instrumented_operational_trace",
+    "O3": "white_box_specification",
+    "O4": "proven_correspondence"
+  },
+  "target_classes": [
+    {"id": "D1", "name": "Deductive and formal proof systems", "status": "target"},
+    {"id": "D2", "name": "Rule-based and symbolic inference systems", "status": "target"},
+    {"id": "D3", "name": "Probabilistic and statistical reasoning", "status": "target"},
+    {"id": "D4", "name": "Causal, explanatory, and diagnostic reasoning", "status": "target"},
+    {"id": "D5", "name": "Scientific and empirical investigation", "status": "target"},
+    {"id": "D6", "name": "Legal, normative, and policy reasoning", "status": "target"},
+    {"id": "D7", "name": "Analogical, case-based, and similarity-driven reasoning", "status": "target"},
+    {"id": "D8", "name": "Planning, decision, and practical reasoning", "status": "target"},
+    {"id": "D9", "name": "Learning and model-revision systems", "status": "target"},
+    {"id": "D10", "name": "Language-model and neural reasoning claims", "status": "target"},
+    {"id": "D11", "name": "Agentic and tool-mediated systems", "status": "target"},
+    {"id": "D12", "name": "Human individual reasoning", "status": "target"},
+    {"id": "D13", "name": "Collective and distributed reasoning", "status": "target"},
+    {"id": "D14", "name": "Embodied and situated reasoning", "status": "target"},
+    {"id": "D15", "name": "Self-modifying and reflective reasoning", "status": "target"},
+    {"id": "D16", "name": "Adversarial, deceptive, and strategically opaque reasoning", "status": "target"}
+  ],
+  "cross_cutting_axes": [
+    "discrete_continuous",
+    "deterministic_stochastic",
+    "static_dynamic_types",
+    "monotonic_retractable",
+    "centralized_distributed",
+    "explicit_partially_observable",
+    "terminating_open_ended",
+    "fixed_changing_goals",
+    "synchronous_asynchronous",
+    "finite_unbounded_history",
+    "exact_approximate",
+    "symbolic_subsymbolic",
+    "individual_collective",
+    "passive_action_coupled"
+  ],
+  "boundary_classes": [
+    "reflexes",
+    "fixed_stimulus_response_loops",
+    "simple_feedback_controllers",
+    "lookup_tables",
+    "static_classifiers",
+    "opaque_optimization",
+    "evolutionary_search",
+    "associative_recall",
+    "perception_only_pipelines",
+    "unconstrained_generation",
+    "social_aggregation_without_inferential_function",
+    "opaque_reasoning_like_outputs",
+    "operator_supplied_reasoning"
+  ],
+  "next_required_artifact": "architecture-neutral mathematical definition or family of definitions tested against all target classes and boundary classes"
+}
