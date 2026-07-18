@@ -26,6 +26,7 @@ REQUIRED_POLICY_TRUE = {
     "theory_change_after_freeze_creates_new_version",
     "failed_frozen_results_are_immutable",
     "tradeoffs_must_not_be_reported_as_wins",
+    "satisfied_gate_requires_evidence",
 }
 
 
@@ -52,6 +53,7 @@ def main() -> int:
     artifacts = data.get("required_canonical_artifacts")
     if not isinstance(artifacts, list) or not artifacts:
         fail("required_canonical_artifacts must be a non-empty list", errors)
+        artifacts = []
     else:
         for relative in artifacts:
             if not isinstance(relative, str) or not relative.strip():
@@ -75,6 +77,7 @@ def main() -> int:
         name = gate.get("name")
         status = gate.get("status")
         required_before = gate.get("required_before")
+        evidence = gate.get("evidence")
 
         if not isinstance(gate_id, str) or not gate_id:
             fail("every gate requires a non-empty id", errors)
@@ -95,6 +98,17 @@ def main() -> int:
 
         if not isinstance(required_before, list) or not required_before:
             fail(f"gate {gate_id or '<unknown>'} requires a non-empty required_before list", errors)
+
+        if not isinstance(evidence, list):
+            fail(f"gate {gate_id or '<unknown>'} evidence must be a list", errors)
+        elif status == "satisfied" and not evidence:
+            fail(f"gate {gate_id or '<unknown>'} cannot be satisfied without evidence", errors)
+        else:
+            for relative in evidence:
+                if not isinstance(relative, str) or not relative.strip():
+                    fail(f"gate {gate_id or '<unknown>'} has an invalid evidence path", errors)
+                elif not (ROOT / relative).exists():
+                    fail(f"gate {gate_id or '<unknown>'} evidence does not exist: {relative}", errors)
 
     missing_names = REQUIRED_GATE_NAMES - seen_names
     if missing_names:
