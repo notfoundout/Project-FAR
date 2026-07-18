@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "run_id": "PBTS-001-REP-001-RUN-001",
+  "channel": "submissions",
+  "append_only": true,
+  "mutual_embargo": true,
+  "records": []
+}
