@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "suite_id": "PBTS-001",
+  "suite_version": "1.0",
+  "status": "frozen_prospective",
+  "specification": "docs/research/pb001-preservation-basis-test-suite-v1.0.md",
+  "basis_id": "PB-001",
+  "basis_version": "1.0",
+  "candidate_dependencies": [],
+  "primary_pairs": [
+    {"id": "PA-01", "target_axis": "P1"},
+    {"id": "PA-02", "target_axis": "P2"},
+    {"id": "PA-03", "target_axis": "P3"},
+    {"id": "PA-04", "target_axis": "P4"},
+    {"id": "PA-05", "target_axis": "P5"},
+    {"id": "PA-06", "target_axis": "P6"},
+    {"id": "PA-07", "target_axis": "P7"},
+    {"id": "PA-08", "target_axis": "P8"}
+  ],
+  "required_test_families": [
+    "paired_axis_discrimination",
+    "axis_ablation",
+    "domain_coverage",
+    "IRD_countermodel_coverage",
+    "hidden_recovery_audit",
+    "adversarial_addition_search"
+  ],
+  "domain_coverage": {
+    "target_classes": ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "D13", "D14", "D15", "D16"],
+    "minimum_cases_per_class": 2,
+    "required_case_roles": ["ordinary_or_representative", "pressure_or_boundary_adjacent"]
+  },
+  "mandatory_countermodels": [
+    "arbitrary_labeled_transition",
+    "output_equivalent_lookup",
+    "post_hoc_narrative",
+    "hidden_operator",
+    "pure_optimizer",
+    "trivial_universal_encoding",
+    "distributed_reasoning",
+    "self_revision",
+    "continuous_embodied_control",
+    "conflicting_normative_reasons"
+  ],
+  "ablation_outcomes": [
+    "loss_detected",
+    "recoverable_with_counted_commitment",
+    "hidden_reintroduction",
+    "no_observed_loss",
+    "unknown"
+  ],
+  "addition_search_hypotheses": [
+    "resource_and_computational_bounds",
+    "agency_authorship_responsibility",
+    "uncertainty_calibration",
+    "social_authority_and_institutional_role",
+    "spatial_environmental_embedding",
+    "representational_granularity",
+    "type_creation_and_ontology_change",
+    "counterfactual_causal_intervention_structure",
+    "privacy_public_private_commitments",
+    "termination_liveness_open_endedness"
+  ],
+  "execution_status": "not_executed",
+  "results": [],
+  "advance_gate": {
+    "all_axes_have_valid_pair": false,
+    "all_ablations_resolved_or_explicitly_unknown": false,
+    "D1_D16_coverage_complete": false,
+    "countermodel_coverage_complete": false,
+    "hidden_recovery_audits_complete": false,
+    "no_missing_general_axis": false,
+    "no_required_IRD_or_domain_revision": false,
+    "results_registered": false
+  },
+  "allowed_outcomes": [
+    "scoped_support",
+    "axis_redundancy",
+    "axis_revision_required",
+    "new_general_axis_required",
+    "class_specific_bases",
+    "no_finite_basis",
+    "IRD_revision_required",
+    "observability_blocked",
+    "insufficient_evidence"
+  ],
+  "nonclaims": [
+    "Freezing PBTS-001 does not establish PB-001 sufficiency, necessity, independence, minimality, or completeness.",
+    "PBTS-001 has not been executed.",
+    "PBTS-001 does not establish FARA compliance or a representation theorem.",
+    "PBTS-001 does not establish universality, superiority, or independent replication."
+  ],
+  "next_required_artifact": "separate execution and interpretation of PBTS-001 without post-exposure modification"
+}

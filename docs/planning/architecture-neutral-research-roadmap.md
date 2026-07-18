@@ -12,62 +12,49 @@ Each milestone must preserve favorable, unfavorable, and unresolved outcomes.
 
 **Result:** sixteen target classes, fourteen cross-cutting variation axes, unresolved boundary classes, five observability strata, revision controls, and a candidate-neutrality audit are registered.
 
-**Cannot establish alone:** a mathematical definition of reasoning, universality, necessity, or minimality.
-
 ## Milestone 2 — Independent mathematical definition of reasoning
 
 **Status:** complete prospectively through `docs/research/independent-reasoning-definition-v1.0.md` and `theory/evaluation/independent-reasoning-definition-registry.json`.
 
 **Result:** IRD-001 defines a candidate-neutral process presentation and six reasoning conditions, with E0-E2 evidential grades and mandatory countermodels.
 
-**Cannot establish alone:** that R1-R6 are sufficient, necessary, independent, minimal, or faithfully represented by FARA.
-
 ## Milestone 3 — Preservation-basis investigation
 
 **Status:** derivation phase complete prospectively through `docs/research/preservation-basis-investigation-v1.0.md` and `theory/evaluation/preservation-basis-registry.json`.
 
-**Result:** PB-001 registers eight candidate preservation axes:
+**Result:** PB-001 registers eight candidate preservation axes: configuration, commitment, stake and alternatives, grounds and justification, admissibility and dynamics, consequence, history and path, and evidential correspondence.
 
-1. configuration;
-2. commitment;
-3. stake and alternatives;
-4. grounds and justification;
-5. admissibility and dynamics;
-6. consequence;
-7. history and path;
-8. evidential correspondence.
+The inherited information-preservation dimension is an aggregate no-relevant-loss criterion rather than an independent coordinate.
 
-The inherited information-preservation dimension is reclassified as an aggregate no-relevant-loss criterion rather than an independent coordinate. Structural, operational, dependency, and historical preservation are retained in sharpened form. The inherited semantic dimension is decomposed.
-
-**Current status:** PB-001 is derived and frozen for testing, but is not established as sufficient, necessary, independent, minimal, or complete.
-
-**Next required work:** construct the frozen preservation-basis test suite with domain coverage, paired independence cases, axis ablations, and adversarial addition-search challenges.
+PB-001 is not established as sufficient, necessary, independent, minimal, or complete.
 
 ## Milestone 4 — Preservation-basis test suite
 
-**Entrance:** PB-001 derivation merged and frozen.
+**Status:** suite-design phase complete prospectively through `docs/research/pb001-preservation-basis-test-suite-v1.0.md` and `theory/evaluation/pb001-test-suite-registry.json`.
 
-**Goal:** test whether P1-P8 are sufficient within declared scopes, independently discriminating, nonredundant, and resistant to uncovered distinctions.
+**Result:** PBTS-001 freezes:
 
-**Required artifacts:**
-
-- at least one discriminating pair per axis where constructible;
-- explicit impossibility or dependence argument where a clean pair cannot be constructed;
+- one primary discriminating pair for each P1-P8 axis;
 - one ablation challenge per axis;
-- coverage records for D1-D16, boundary classes, and mandatory IRD countermodels;
-- adversarial pairs designed to match on P1-P8 while differing materially under IRD-001;
-- hidden-recovery and evaluator-repair checks;
-- immutable favorable, unfavorable, and unresolved classifications.
+- two-case minimum coverage for every D1-D16 target class;
+- coverage of all ten mandatory IRD-001 countermodels;
+- hidden-recovery audits;
+- ten adversarial missing-axis hypotheses;
+- a strict advance gate that remains entirely false before execution.
 
-**Favorable result:** PB-001 survives the frozen test suite within a declared scope.
+**Current status:** PBTS-001 is frozen but not executed. No scores or preservation conclusions exist.
 
-**Unfavorable result:** one or more axes are redundant, PB-001 is incomplete, different domain classes require different bases, or no finite basis survives.
+**Next required work:** execute and interpret PBTS-001 in a separate PR without modifying the frozen suite after exposure.
 
-**Cannot establish alone:** FARA compliance, universality, primitive necessity, minimality, superiority, or independent replication.
+**Favorable result:** PB-001 receives scoped support and no required general distinction remains uncovered.
+
+**Unfavorable result:** one or more axes are redundant or defective, a new axis is needed, class-specific bases are required, no finite basis survives, or IRD-001 must be revised.
+
+**Cannot establish alone:** FARA compliance, universality, primitive necessity, global minimality, superiority, or independent replication.
 
 ## Milestone 5 — Scoped representation theorem
 
-Prove or refute a nontrivial faithful representation theorem from IRD-001 or a justified revision into FARA using a preservation basis that has survived its registered tests. Placeholder, label-only, lookup, hidden-interpreter, or evaluator-repaired inhabitation is excluded.
+Blocked until PBTS-001 has been executed and interpreted. Then prove or refute a nontrivial faithful representation theorem from IRD-001 or a justified revision into FARA using a preservation basis that survived its registered tests. Placeholder, label-only, lookup, hidden-interpreter, or evaluator-repaired inhabitation is excluded.
 
 ## Milestone 6 — Candidate architecture schema and compiler contracts
 
@@ -103,18 +90,11 @@ Execute frozen packages at the strongest available independence level, including
 
 ## Milestone 14 — Central decision assessment
 
-Update the central claim registry and candidate registry. Allowed conclusions include:
-
-- FARA supported within a proven scope;
-- FARA replaced within a declared scope;
-- multiple candidates equivalent or incomparable;
-- only bounded architectures exist;
-- no finite universal architecture exists under stated assumptions;
-- evidence remains insufficient.
+Update the central claim registry and candidate registry. Allowed conclusions include FARA supported within a proven scope, FARA replaced, multiple candidates equivalent or incomparable, only bounded architectures, no finite universal architecture under stated assumptions, or insufficient evidence.
 
 ## Dependency order
 
-The frozen domain precedes IRD-001. IRD-001 precedes preservation-basis derivation. PB-001 derivation precedes its test suite. A preservation basis must survive registered tests before supporting representation-theorem claims. Candidate, ablation, and competitor milestones define architectural pressure. Bounded search, counterexample, equivalence, and impossibility milestones investigate the formal space. Independent replication supplies external evidential force. The final assessment records only the strongest justified conclusion.
+The frozen domain precedes IRD-001. IRD-001 precedes PB-001 derivation. PB-001 derivation precedes PBTS-001. PBTS-001 execution and interpretation precede representation-theorem work. Later candidate, ablation, competitor, bounded-search, counterexample, equivalence, impossibility, and independent-replication milestones supply the remaining evidence.
 
 ## Paused work
 
@@ -122,4 +102,4 @@ Certification expansion, new dashboards, release packaging, favorable-case accum
 
 ## Immediate next PR
 
-Construct and freeze the PB-001 preservation-basis test suite. Do not begin the FARA representation theorem until P1-P8 have undergone registered coverage, independence, ablation, and adversarial addition-search tests.
+Execute and interpret PBTS-001 without post-exposure modification. Preserve every response, rejection, failure, hidden-recovery finding, and unresolved classification. Do not begin the FARA representation theorem unless the registered advance gate is satisfied or the basis is revised through a new version.
