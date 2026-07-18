@@ -1,0 +1,34 @@
+{
+  "execution_id": "CRE-004-RUN-001",
+  "protocol_version": "CRE-004-v1.0",
+  "status": "seed-frozen-assignment-not-generated",
+  "randomization_seed": 4001,
+  "algorithm": "For each evaluator slot, construct the Cartesian product of the four frozen case labels and ten frozen candidate labels, then shuffle that evaluator's 40 assignments using Python random.Random with the string seed '<randomization_seed>:<evaluator_id>'.",
+  "expected_assignments_per_evaluator": 40,
+  "expected_total_assignments": 120,
+  "evaluator_slots": [
+    "EVALUATOR_001",
+    "EVALUATOR_002",
+    "EVALUATOR_003"
+  ],
+  "case_labels": [
+    "CRE-003-I",
+    "CRE-003-G",
+    "CRE-003-C",
+    "CRE-003-R"
+  ],
+  "candidate_labels": [
+    "CANDIDATE_001",
+    "CANDIDATE_002",
+    "CANDIDATE_003",
+    "CANDIDATE_004",
+    "CANDIDATE_005",
+    "CANDIDATE_006",
+    "CANDIDATE_007",
+    "CANDIDATE_008",
+    "CANDIDATE_009",
+    "CANDIDATE_010"
+  ],
+  "assignment_artifact": null,
+  "claim_boundary": "Freezing a seed and algorithm does not register evaluators, complete calibration, generate assignments, collect responses, or produce an experimental result."
+}
