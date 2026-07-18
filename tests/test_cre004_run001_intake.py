@@ -37,8 +37,18 @@ class CRE004Run001IntakeTests(unittest.TestCase):
         self.assertIsNone(self.intake["scientific_result"])
 
     def test_all_execution_gates_begin_closed(self) -> None:
-        self.assertTrue(self.intake["gates"])
-        self.assertFalse(any(self.intake["gates"].values()))
+        gates = self.intake["gates"]
+        self.assertTrue(gates)
+        for gate in (
+            "anonymized_candidate_packages_frozen",
+            "evaluators_registered",
+            "calibration_completed",
+            "independence_claims_recorded",
+            "assignment_order_generated",
+            "protocol_lock_verified",
+            "append_only_response_channel_verified",
+        ):
+            self.assertFalse(gates[gate])
 
     def test_no_result_files_exist_before_evaluator_submissions(self) -> None:
         for filename in ("results.csv", "summary.json", "execution_report.md"):
