@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "definition_id": "IRD-001",
+  "definition_version": "1.0",
+  "definition": "docs/research/independent-reasoning-definition-v1.0.md",
+  "status": "frozen_prospective",
+  "depends_on": [
+    "docs/research/reasoning-domain-specification-v1.0.md",
+    "theory/evaluation/reasoning-domain-registry.json"
+  ],
+  "candidate_dependencies": [],
+  "core_components": [
+    "T",
+    "X",
+    "H",
+    "O",
+    "K",
+    "Q",
+    "Delta",
+    "Gamma",
+    "support_relation"
+  ],
+  "core_conditions": [
+    {"id": "R1", "name": "situated_stake"},
+    {"id": "R2", "name": "alternative_sensitive_commitment_space"},
+    {"id": "R3", "name": "ground_sensitivity"},
+    {"id": "R4", "name": "directed_evaluation_or_transformation"},
+    {"id": "R5", "name": "commitment_consequence"},
+    {"id": "R6", "name": "traceable_justificatory_dependence"}
+  ],
+  "evidential_grades": {
+    "E0": "behaviorally_supported_reasoning_claim",
+    "E1": "operationally_grounded_reasoning_episode",
+    "E2": "correspondence_grounded_reasoning_system"
+  },
+  "covered_domain_classes": [
+    "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8",
+    "D9", "D10", "D11", "D12", "D13", "D14", "D15", "D16"
+  ],
+  "mandatory_countermodels": [
+    "C1_arbitrary_labeled_transition",
+    "C2_output_equivalent_lookup",
+    "C3_post_hoc_narrative",
+    "C4_hidden_operator",
+    "C5_pure_optimizer",
+    "C6_trivial_universal_encoding",
+    "C7_distributed_reasoning",
+    "C8_self_revision",
+    "C9_continuous_embodied_control",
+    "C10_conflicting_normative_reasons"
+  ],
+  "allowed_outcomes": [
+    "definition_supported_within_scope",
+    "definition_requires_revision",
+    "multiple_reasoning_classes_required",
+    "no_finite_universal_architecture",
+    "evidence_insufficient"
+  ],
+  "nonclaims": [
+    "R1-R6 are not established as necessary, independent, sufficient, or minimal.",
+    "This definition does not establish that one universal reasoning class exists.",
+    "This definition does not establish that FARA represents the defined class.",
+    "This definition does not establish FARA universality, necessity, minimality, economy, superiority, or independent replication."
+  ],
+  "next_required_artifact": "preservation-basis investigation testing sufficiency, independence, redundancy, and completeness against IRD-001 and the frozen reasoning domain"
+}
