@@ -5,6 +5,7 @@ health:
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
 	python tools/check_preservation_basis.py
+	python tools/check_pb001_test_suite.py
 
 health-fast:
 	python tools/repo_health_check.py --fast
@@ -13,6 +14,7 @@ health-fast:
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
 	python tools/check_preservation_basis.py
+	python tools/check_pb001_test_suite.py
 
 docs-check:
 	python tools/validate_docs.py
@@ -32,6 +34,7 @@ research-check:
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
 	python tools/check_preservation_basis.py
+	python tools/check_pb001_test_suite.py
 
 status:
 	python tools/project_status_report.py
