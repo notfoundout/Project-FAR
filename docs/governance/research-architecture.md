@@ -16,7 +16,15 @@ Project FAR is the architecture-neutral research program asking whether any comm
 
 A reasoning-domain specification defines the class of processes under investigation independently of any candidate architecture. It states observables, admissible transformations, relevant commitments, scope, and exclusion criteria without requiring FARA-native primitives.
 
-The prospective target domain is frozen in `docs/research/reasoning-domain-specification-v1.0.md` and registered in `theory/evaluation/reasoning-domain-registry.json`. This artifact fixes the classes and boundary cases that the next mathematical-definition milestone must address. It is not itself a mathematical definition of reasoning.
+The prospective target domain is frozen in `docs/research/reasoning-domain-specification-v1.0.md` and registered in `theory/evaluation/reasoning-domain-registry.json`. This artifact fixes the classes and boundary cases that the mathematical definition must address. It is not itself a mathematical definition of reasoning.
+
+## Independent reasoning definition
+
+The architecture-neutral mathematical target is frozen prospectively in `docs/research/independent-reasoning-definition-v1.0.md` and registered as `IRD-001` in `theory/evaluation/independent-reasoning-definition-registry.json`.
+
+IRD-001 defines a reasoning episode through a stake, distinguishable alternatives, ground sensitivity, directed evaluation or transformation, commitment consequence, and traceable justificatory dependence. It does not depend on FARA, FARO, FAR-IR, or any candidate compiler. Its clauses remain hypotheses subject to preservation-basis, independence, counterexample, and revision tests.
+
+Freezing IRD-001 does not establish that one universal reasoning class exists, that every target-domain case satisfies it, or that any candidate architecture represents it.
 
 ## Candidate architecture
 
@@ -54,6 +62,8 @@ An evidence record is an immutable or append-only result that supports, weakens,
 
 - **Project**: the complete research undertaking and repository.
 - **Research program**: the governed investigation of the central question.
+- **Reasoning domain**: the independently frozen classes and boundary cases under investigation.
+- **Independent reasoning definition**: the candidate-neutral mathematical target against which architectures and preservation commitments are tested.
 - **Candidate architecture**: a proposed common structure under evaluation.
 - **Candidate vocabulary**: the explicit primitive and derived terms used by a candidate.
 - **Formal theory**: axioms, definitions, propositions, and proofs concerning a candidate or domain.
@@ -67,7 +77,7 @@ An evidence record is an immutable or append-only result that supports, weakens,
 
 ## Backward compatibility
 
-Older repository artifacts may use “FAR” to refer contextually to the project, the existing candidate architecture, its vocabulary, or associated machinery. New central governance, registry, and roadmap artifacts must distinguish Project FAR, FARA, FARO, and candidate architectures explicitly. Historical wording must not be rewritten in a way that alters the original result or claim boundary.
+Older repository artifacts may use “FAR” to refer contextually to the project, the existing candidate architecture, its vocabulary, or associated machinery. New central governance, registry, and roadmap artifacts must distinguish Project FAR, FARA, FARO, the reasoning domain, the independent definition, and candidate architectures explicitly. Historical wording must not be rewritten in a way that alters the original result or claim boundary.
 
 ## Outcome space
 
@@ -80,4 +90,4 @@ The research program can legitimately conclude that:
 5. only bounded architectures exist for restricted reasoning classes; or
 6. current evidence remains insufficient.
 
-Failure of FARA does not by itself establish that no universal architecture exists. Conversely, failure to find a counterexample does not establish universality.
+Failure of FARA does not by itself establish that no universal architecture exists. Failure of IRD-001 does not by itself establish that reasoning lacks common structure. Conversely, failure to find a counterexample does not establish universality.
