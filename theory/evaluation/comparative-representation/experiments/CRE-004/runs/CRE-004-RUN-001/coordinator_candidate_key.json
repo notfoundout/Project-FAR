@@ -1,0 +1,25 @@
+{
+  "execution_id": "CRE-004-RUN-001",
+  "protocol_version": "CRE-004-v1.0",
+  "status": "frozen-coordinator-only",
+  "source_candidate_set": "CRE-003 ten frozen AVC-001 vocabularies",
+  "candidate_key": {
+    "CANDIDATE_001": "AV-001",
+    "CANDIDATE_002": "AV-002",
+    "CANDIDATE_003": "AV-003",
+    "CANDIDATE_004": "AV-004",
+    "CANDIDATE_005": "AV-005",
+    "CANDIDATE_006": "AV-006",
+    "CANDIDATE_007": "AV-007",
+    "CANDIDATE_008": "AV-008",
+    "CANDIDATE_009": "AV-009",
+    "CANDIDATE_010": "AV-010"
+  },
+  "access_policy": {
+    "included_in_evaluator_packet": false,
+    "available_to_evaluators": false,
+    "candidate_identity_may_be_used_during_scoring": false,
+    "unblinding_allowed_after_response_freeze_only": true
+  },
+  "claim_boundary": "This key fixes opaque labels to the inherited candidate set. It contains no evaluator judgment or experimental result."
+}
