@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "basis_id": "PB-001",
+  "basis_version": "1.0",
+  "status": "frozen_prospective_candidate",
+  "specification": "docs/research/preservation-basis-investigation-v1.0.md",
+  "derivation_inputs": [
+    "docs/research/reasoning-domain-specification-v1.0.md",
+    "docs/research/independent-reasoning-definition-v1.0.md"
+  ],
+  "candidate_dependencies": [],
+  "axes": [
+    {"id": "P1", "name": "configuration", "status": "provisionally_retained"},
+    {"id": "P2", "name": "commitment", "status": "provisionally_retained"},
+    {"id": "P3", "name": "stake_and_alternatives", "status": "provisionally_retained"},
+    {"id": "P4", "name": "ground_and_justification", "status": "provisionally_retained"},
+    {"id": "P5", "name": "admissibility_and_dynamics", "status": "provisionally_retained"},
+    {"id": "P6", "name": "consequence", "status": "provisionally_retained"},
+    {"id": "P7", "name": "historical_and_path", "status": "provisionally_retained"},
+    {"id": "P8", "name": "evidential_correspondence", "status": "provisionally_retained"}
+  ],
+  "score_values": ["pass", "partial", "fail", "unknown"],
+  "unknown_ordering": "unordered",
+  "aggregate_criterion": {
+    "name": "no_relevant_information_loss",
+    "coordinate": false,
+    "derived_from": ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8"]
+  },
+  "legacy_dimension_dispositions": {
+    "structural": "retained_as_P1",
+    "semantic": "split_across_P2_P3_P6",
+    "operational": "retained_as_P5",
+    "dependency": "retained_as_P4",
+    "information": "reclassified_as_aggregate_criterion",
+    "historical": "retained_as_P7"
+  },
+  "required_test_families": [
+    "domain_coverage",
+    "paired_independence",
+    "axis_ablation",
+    "adversarial_addition_search"
+  ],
+  "allowed_outcomes": [
+    "scoped_support",
+    "axis_redundancy",
+    "basis_incomplete",
+    "multiple_class_specific_bases",
+    "no_finite_basis",
+    "IRD_revision_required",
+    "insufficient_evidence"
+  ],
+  "nonclaims": [
+    "PB-001 is not established as sufficient.",
+    "PB-001 is not established as necessary.",
+    "PB-001 is not established as independent.",
+    "PB-001 is not established as minimal.",
+    "PB-001 does not establish a representation theorem.",
+    "PB-001 does not establish FARA compliance, universality, necessity, minimality, superiority, or economy."
+  ],
+  "next_required_artifact": "frozen preservation-basis test suite for P1-P8"
+}
