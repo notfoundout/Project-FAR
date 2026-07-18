@@ -9,7 +9,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "theory/evaluation/research-gates.json"
+CLAIM_REGISTRY = ROOT / "theory/evaluation/central-claim-registry.json"
 ALLOWED_STATUS = {"not_satisfied", "in_progress", "satisfied", "blocked", "retired"}
+ALLOWED_CLAIM_STATUS = {
+    "unresolved",
+    "partially_supported",
+    "not_established",
+    "not_established_generally",
+    "supported",
+    "weakened",
+    "refuted",
+}
 REQUIRED_GATE_NAMES = {
     "external-observation-contract",
     "negative-controls",
@@ -19,6 +29,16 @@ REQUIRED_GATE_NAMES = {
     "private-holdout-counterexample-challenge",
     "nonclaim-audit",
 }
+REQUIRED_CLAIM_IDS = {
+    "CLM-EXISTENCE",
+    "CLM-SUFFICIENCY",
+    "CLM-UNIVERSALITY",
+    "CLM-NECESSITY",
+    "CLM-MINIMALITY",
+    "CLM-NONTRIVIALITY",
+    "CLM-ECONOMY",
+    "CLM-INDEPENDENCE",
+}
 REQUIRED_POLICY_TRUE = {
     "unsatisfied_gate_blocks_stronger_claim",
     "unknown_is_not_pass",
@@ -27,6 +47,7 @@ REQUIRED_POLICY_TRUE = {
     "failed_frozen_results_are_immutable",
     "tradeoffs_must_not_be_reported_as_wins",
     "satisfied_gate_requires_evidence",
+    "central_claim_updates_require_registry_change",
 }
 
 
@@ -34,21 +55,28 @@ def fail(message: str, errors: list[str]) -> None:
     errors.append(message)
 
 
+def read_json(path: Path, label: str, errors: list[str]) -> dict:
+    if not path.is_file():
+        fail(f"missing {label}: {path.relative_to(ROOT)}", errors)
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        fail(f"cannot read {label}: {exc}", errors)
+        return {}
+    if not isinstance(data, dict):
+        fail(f"{label} must contain a JSON object", errors)
+        return {}
+    return data
+
+
 def main() -> int:
     errors: list[str] = []
-
-    if not REGISTRY.is_file():
-        print(f"FAIL: missing research gate registry: {REGISTRY.relative_to(ROOT)}")
-        return 1
-
-    try:
-        data = json.loads(REGISTRY.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        print(f"FAIL: cannot read research gate registry: {exc}")
-        return 1
+    data = read_json(REGISTRY, "research gate registry", errors)
+    claims_data = read_json(CLAIM_REGISTRY, "central claim registry", errors)
 
     if data.get("schema_version") != "1.0":
-        fail("schema_version must equal 1.0", errors)
+        fail("research gate schema_version must equal 1.0", errors)
 
     artifacts = data.get("required_canonical_artifacts")
     if not isinstance(artifacts, list) or not artifacts:
@@ -78,6 +106,7 @@ def main() -> int:
         status = gate.get("status")
         required_before = gate.get("required_before")
         evidence = gate.get("evidence")
+        standard = gate.get("standard")
 
         if not isinstance(gate_id, str) or not gate_id:
             fail("every gate requires a non-empty id", errors)
@@ -98,6 +127,11 @@ def main() -> int:
 
         if not isinstance(required_before, list) or not required_before:
             fail(f"gate {gate_id or '<unknown>'} requires a non-empty required_before list", errors)
+
+        if not isinstance(standard, str) or not standard.strip():
+            fail(f"gate {gate_id or '<unknown>'} requires a standard path", errors)
+        elif not (ROOT / standard).is_file():
+            fail(f"gate {gate_id or '<unknown>'} standard does not exist: {standard}", errors)
 
         if not isinstance(evidence, list):
             fail(f"gate {gate_id or '<unknown>'} evidence must be a list", errors)
@@ -133,13 +167,49 @@ def main() -> int:
     if overlap:
         fail("work cannot be both authorized and paused: " + ", ".join(sorted(overlap)), errors)
 
+    if claims_data.get("schema_version") != "1.0":
+        fail("central claim registry schema_version must equal 1.0", errors)
+    claims = claims_data.get("claims")
+    if not isinstance(claims, list):
+        fail("central claim registry claims must be a list", errors)
+        claims = []
+
+    seen_claims: set[str] = set()
+    for claim in claims:
+        if not isinstance(claim, dict):
+            fail("every central claim must be an object", errors)
+            continue
+        claim_id = claim.get("id")
+        status = claim.get("current_status")
+        if not isinstance(claim_id, str) or not claim_id:
+            fail("every central claim requires a non-empty id", errors)
+            continue
+        if claim_id in seen_claims:
+            fail(f"duplicate central claim id: {claim_id}", errors)
+        seen_claims.add(claim_id)
+        if status not in ALLOWED_CLAIM_STATUS:
+            fail(f"central claim {claim_id} has invalid status: {status!r}", errors)
+        for field in ("maximum_supported_scope", "required_next_test", "falsification_condition"):
+            if not isinstance(claim.get(field), str) or not claim[field].strip():
+                fail(f"central claim {claim_id} requires {field}", errors)
+        nonclaims = claim.get("nonclaims")
+        if not isinstance(nonclaims, list) or not nonclaims:
+            fail(f"central claim {claim_id} requires nonclaims", errors)
+
+    missing_claims = REQUIRED_CLAIM_IDS - seen_claims
+    if missing_claims:
+        fail("missing required central claims: " + ", ".join(sorted(missing_claims)), errors)
+
     if errors:
         print("Research gate validation FAILED")
         for error in errors:
             print(f"- {error}")
         return 1
 
-    print(f"Research gate validation PASS ({len(gates)} gates, {len(artifacts)} canonical artifacts)")
+    print(
+        "Research gate validation PASS "
+        f"({len(gates)} gates, {len(artifacts)} canonical artifacts, {len(claims)} central claims)"
+    )
     return 0
 
 
