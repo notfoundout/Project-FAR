@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "run_id": "PBTS-001-REP-001-RUN-001",
+  "channel": "assignments",
+  "append_only": true,
+  "algorithm": "deterministic_fisher_yates_sha256_counter_mode",
+  "seed_template": "PBTS-001-REP-001-RUN-001|{slot_id}|order-v1",
+  "records": []
+}
