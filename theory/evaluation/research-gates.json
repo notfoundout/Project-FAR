@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "status": "prospective",
+  "effective_on_merge": true,
+  "central_claims": [
+    "existence",
+    "bounded_sufficiency",
+    "universality",
+    "necessity",
+    "minimality",
+    "nontriviality"
+  ],
+  "required_canonical_artifacts": [
+    "docs/governance/central-research-program.md",
+    "docs/governance/anti-self-validation-standard.md",
+    "docs/governance/research-priority-reset.md",
+    "docs/methodology/confirmatory-research-package.md",
+    "docs/templates/claim-ledger-entry.md"
+  ],
+  "gates": [
+    {
+      "id": "RG-01",
+      "name": "external-observation-contract",
+      "status": "not_satisfied",
+      "required_before": ["confirmatory_execution", "universality_claim", "superiority_claim"]
+    },
+    {
+      "id": "RG-02",
+      "name": "negative-controls",
+      "status": "not_satisfied",
+      "required_before": ["nontriviality_claim", "confirmatory_execution"]
+    },
+    {
+      "id": "RG-03",
+      "name": "full-cost-accounting",
+      "status": "not_satisfied",
+      "required_before": ["minimality_claim", "superiority_claim", "pareto_comparison"]
+    },
+    {
+      "id": "RG-04",
+      "name": "anti-reintroduction-ablation",
+      "status": "not_satisfied",
+      "required_before": ["necessity_claim"]
+    },
+    {
+      "id": "RG-05",
+      "name": "independent-replication",
+      "status": "not_satisfied",
+      "required_before": ["independent_confirmation_claim"]
+    },
+    {
+      "id": "RG-06",
+      "name": "private-holdout-counterexample-challenge",
+      "status": "not_satisfied",
+      "required_before": ["universality_claim"]
+    },
+    {
+      "id": "RG-07",
+      "name": "nonclaim-audit",
+      "status": "not_satisfied",
+      "required_before": ["evidence_release"]
+    }
+  ],
+  "current_authorized_work": [
+    "external_observation_contract",
+    "negative_control_design",
+    "full_cost_model",
+    "anti_reintroduction_rules",
+    "confirmatory_package_pilot",
+    "independent_replication_recruitment",
+    "boundary_counterexample_design",
+    "supporting_engineering_required_by_these_items"
+  ],
+  "paused_by_default": [
+    "new_certification_layers",
+    "new_dashboard_features",
+    "release_packaging",
+    "favorable_case_count_expansion",
+    "generic_terminology_cleanup",
+    "applications_unrelated_to_active_experiment"
+  ],
+  "claim_policy": {
+    "unsatisfied_gate_blocks_stronger_claim": true,
+    "unknown_is_not_pass": true,
+    "internal_multi_implementation_is_not_external_independence": true,
+    "theory_change_after_freeze_creates_new_version": true,
+    "failed_frozen_results_are_immutable": true,
+    "tradeoffs_must_not_be_reported_as_wins": true
+  }
+}
