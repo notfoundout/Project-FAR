@@ -10,8 +10,6 @@ Each milestone must preserve favorable, unfavorable, and unresolved outcomes.
 
 **Status:** complete prospectively through `docs/research/reasoning-domain-specification-v1.0.md` and `theory/evaluation/reasoning-domain-registry.json`.
 
-**Goal:** freeze independently justified target classes, boundary cases, observability limits, exclusion rules, and admission controls without defining reasoning through FARA-native primitives.
-
 **Result:** sixteen target classes, fourteen cross-cutting variation axes, unresolved boundary classes, five observability strata, revision controls, and a candidate-neutrality audit are registered.
 
 **Cannot establish alone:** a mathematical definition of reasoning, universality, necessity, or minimality.
@@ -20,88 +18,90 @@ Each milestone must preserve favorable, unfavorable, and unresolved outcomes.
 
 **Status:** complete prospectively through `docs/research/independent-reasoning-definition-v1.0.md` and `theory/evaluation/independent-reasoning-definition-registry.json`.
 
-**Result:** IRD-001 defines a process presentation with architecture-neutral time/event order, state, histories, observations, commitment states, stakes, admissible evolutions, grounds, and support relations. A reasoning episode requires:
-
-1. a situated stake;
-2. alternative-sensitive commitment space;
-3. ground sensitivity;
-4. directed evaluation or transformation;
-5. commitment consequence;
-6. traceable justificatory dependence.
-
-Three evidential grades separate behaviorally supported, operationally grounded, and correspondence-grounded claims. Ten mandatory countermodels test trivial labeling, lookup equivalence, post hoc narrative, hidden operators, pure optimization, universal encoding, distributed reasoning, self-revision, continuous embodied control, and conflicting normative reasons.
-
-**Favorable interpretation:** one nontrivial candidate-neutral class has been stated against the full frozen domain.
-
-**Unfavorable possibilities preserved:** clauses may be redundant, incomplete, overbroad, underbroad, candidate-biased, or incapable of supporting one common class.
+**Result:** IRD-001 defines a candidate-neutral process presentation and six reasoning conditions, with E0-E2 evidential grades and mandatory countermodels.
 
 **Cannot establish alone:** that R1-R6 are sufficient, necessary, independent, minimal, or faithfully represented by FARA.
 
 ## Milestone 3 — Preservation-basis investigation
 
-**Status:** next active scientific milestone.
+**Status:** derivation phase complete prospectively through `docs/research/preservation-basis-investigation-v1.0.md` and `theory/evaluation/preservation-basis-registry.json`.
 
-**Entrance:** the frozen reasoning domain and IRD-001 are merged.
+**Result:** PB-001 registers eight candidate preservation axes:
 
-**Goal:** determine what a faithful representation of IRD-001 must preserve and whether the current structural, semantic, operational, dependency, information, and historical dimensions are sufficient, independent, redundant, or incomplete.
+1. configuration;
+2. commitment;
+3. stake and alternatives;
+4. grounds and justification;
+5. admissibility and dynamics;
+6. consequence;
+7. history and path;
+8. evidential correspondence.
 
-**Required work:**
+The inherited information-preservation dimension is reclassified as an aggregate no-relevant-loss criterion rather than an independent coordinate. Structural, operational, dependency, and historical preservation are retained in sharpened form. The inherited semantic dimension is decomposed.
 
-- derive each proposed preservation dimension from IRD-001 rather than FARA;
-- construct paired systems that differ in exactly one candidate preservation commitment where possible;
-- test deletion, merger, and substitution of dimensions;
-- identify hidden recovery through metadata, interpreters, evaluators, or runtime machinery;
-- classify unknown and incomparable cases without forcing an ordering;
-- permit discovery of fewer, more, or differently organized dimensions;
-- freeze a revised basis only after countermodels and candidate-neutrality review.
+**Current status:** PB-001 is derived and frozen for testing, but is not established as sufficient, necessary, independent, minimal, or complete.
 
-**Favorable result:** a nontrivial preservation basis survives positive, negative, ablation, and distinction tests.
+**Next required work:** construct the frozen preservation-basis test suite with domain coverage, paired independence cases, axis ablations, and adversarial addition-search challenges.
 
-**Unfavorable result:** the current basis is incomplete, redundant, candidate-specific, or cannot be made finite across the frozen domain.
+## Milestone 4 — Preservation-basis test suite
 
-**Unresolved result:** multiple incomparable bases remain or observability prevents stable classification.
+**Entrance:** PB-001 derivation merged and frozen.
 
-**May update:** preservation commitments, representation-test design, and the scope of later representation theorems.
+**Goal:** test whether P1-P8 are sufficient within declared scopes, independently discriminating, nonredundant, and resistant to uncovered distinctions.
 
-**Cannot establish alone:** FARA universality, primitive necessity, global minimality, comparative superiority, or independent replication.
+**Required artifacts:**
 
-## Milestone 4 — Scoped representation theorem
+- at least one discriminating pair per axis where constructible;
+- explicit impossibility or dependence argument where a clean pair cannot be constructed;
+- one ablation challenge per axis;
+- coverage records for D1-D16, boundary classes, and mandatory IRD countermodels;
+- adversarial pairs designed to match on P1-P8 while differing materially under IRD-001;
+- hidden-recovery and evaluator-repair checks;
+- immutable favorable, unfavorable, and unresolved classifications.
 
-Prove or refute a nontrivial faithful representation theorem from IRD-001 or a justified revision into FARA. Placeholder, label-only, lookup, or hidden-interpreter inhabitation is excluded.
+**Favorable result:** PB-001 survives the frozen test suite within a declared scope.
 
-## Milestone 5 — Candidate architecture schema and compiler contracts
+**Unfavorable result:** one or more axes are redundant, PB-001 is incomplete, different domain classes require different bases, or no finite basis survives.
+
+**Cannot establish alone:** FARA compliance, universality, primitive necessity, minimality, superiority, or independent replication.
+
+## Milestone 5 — Scoped representation theorem
+
+Prove or refute a nontrivial faithful representation theorem from IRD-001 or a justified revision into FARA using a preservation basis that has survived its registered tests. Placeholder, label-only, lookup, hidden-interpreter, or evaluator-repaired inhabitation is excluded.
+
+## Milestone 6 — Candidate architecture schema and compiler contracts
 
 Create a candidate-neutral formal schema enabling multiple architectures to be specified, frozen, compiled, and evaluated uniformly. The governance registry is not a substitute for this formalism.
 
-## Milestone 6 — Primitive ablation and lower bounds
+## Milestone 7 — Primitive ablation and lower bounds
 
 Remove or reconstruct every FARA primitive under anti-reintroduction and full-cost accounting. Classify each as necessary within scope, derivable, replaceable, unresolved, or unnecessary.
 
-## Milestone 7 — Strong competitor completion
+## Milestone 8 — Strong competitor completion
 
 Resolve the compact alternatives left unresolved by CRE-003 and successor work. Unresolved candidates remain live competitors until evidence changes their status.
 
-## Milestone 8 — Exhaustive bounded small-system search
+## Milestone 9 — Exhaustive bounded small-system search
 
 Define a finite universe of small reasoning systems, enumerate it completely, and test all admitted candidates or candidate families. Publish coverage limits and generation rules.
 
-## Milestone 9 — Minimal counterexample generation
+## Milestone 10 — Minimal counterexample generation
 
 For each failure, produce or approximate the smallest counterexample and classify whether it defeats a mapping, candidate, preservation basis, domain definition, independent definition, or universal finite-architecture hypothesis.
 
-## Milestone 10 — Equivalence and dominance analysis
+## Milestone 11 — Equivalence and dominance analysis
 
 Separate syntactic similarity, experimental indistinguishability, bidirectional translation, scoped Pareto dominance, and formally proved equivalence.
 
-## Milestone 11 — Impossibility and no-go results
+## Milestone 12 — Impossibility and no-go results
 
 Search for conditions proving that no finite architecture can preserve all accepted commitments, or that incompatible reasoning classes require incompatible primitive distinctions.
 
-## Milestone 12 — Independent replication and adversarial holdouts
+## Milestone 13 — Independent replication and adversarial holdouts
 
 Execute frozen packages at the strongest available independence level, including private holdouts and permanent publication of failures and unresolved outcomes.
 
-## Milestone 13 — Central decision assessment
+## Milestone 14 — Central decision assessment
 
 Update the central claim registry and candidate registry. Allowed conclusions include:
 
@@ -114,7 +114,7 @@ Update the central claim registry and candidate registry. Allowed conclusions in
 
 ## Dependency order
 
-The frozen domain precedes IRD-001. IRD-001 precedes preservation-basis, representation-theorem, and exhaustive-search claims. Preservation-basis work precedes final preservation claims. Candidate, ablation, and competitor milestones define architectural pressure. Bounded search, counterexample, equivalence, and impossibility milestones investigate the formal space. Independent replication supplies external evidential force. The final assessment records only the strongest justified conclusion.
+The frozen domain precedes IRD-001. IRD-001 precedes preservation-basis derivation. PB-001 derivation precedes its test suite. A preservation basis must survive registered tests before supporting representation-theorem claims. Candidate, ablation, and competitor milestones define architectural pressure. Bounded search, counterexample, equivalence, and impossibility milestones investigate the formal space. Independent replication supplies external evidential force. The final assessment records only the strongest justified conclusion.
 
 ## Paused work
 
@@ -122,4 +122,4 @@ Certification expansion, new dashboards, release packaging, favorable-case accum
 
 ## Immediate next PR
 
-Conduct and freeze the preservation-basis investigation. Begin from IRD-001 and the frozen reasoning domain, not from the assumption that the existing six preservation dimensions are final, independent, or complete.
+Construct and freeze the PB-001 preservation-basis test suite. Do not begin the FARA representation theorem until P1-P8 have undergone registered coverage, independence, ablation, and adversarial addition-search tests.
