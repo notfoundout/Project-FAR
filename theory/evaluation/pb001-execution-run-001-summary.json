@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "run_id": "PBTS-001-RUN-001",
+  "suite_id": "PBTS-001",
+  "suite_version": "1.0",
+  "basis_id": "PB-001",
+  "basis_version": "1.0",
+  "status": "executed_internal_interpreted",
+  "records": "theory/evaluation/pb001-execution-run-001-records.json",
+  "report": "docs/research/pb001-execution-run-001-report.md",
+  "execution_scope": "Frozen synthetic and established-family cases evaluated by three separately specified internal methods in one assistant context.",
+  "independence": {
+    "human_independence": false,
+    "organizational_independence": false,
+    "model_independence": false,
+    "separate_method_specifications": true,
+    "classification": "internal_methodological_robustness_only"
+  },
+  "paired_axis_summary": {
+    "P1": {"distribution": {"pass": 2, "partial": 1, "fail": 0, "unknown": 0}, "valid_pair": true},
+    "P2": {"distribution": {"pass": 3, "partial": 0, "fail": 0, "unknown": 0}, "valid_pair": true},
+    "P3": {"distribution": {"pass": 2, "partial": 1, "fail": 0, "unknown": 0}, "valid_pair": true},
+    "P4": {"distribution": {"pass": 3, "partial": 0, "fail": 0, "unknown": 0}, "valid_pair": true},
+    "P5": {"distribution": {"pass": 3, "partial": 0, "fail": 0, "unknown": 0}, "valid_pair": true},
+    "P6": {"distribution": {"pass": 2, "partial": 1, "fail": 0, "unknown": 0}, "valid_pair": true},
+    "P7": {"distribution": {"pass": 3, "partial": 0, "fail": 0, "unknown": 0}, "valid_pair": true},
+    "P8": {"distribution": {"pass": 2, "partial": 0, "fail": 0, "unknown": 1}, "valid_pair": true}
+  },
+  "ablation_summary": {
+    "P1": "loss_detected",
+    "P2": "loss_detected",
+    "P3": "loss_or_counted_recovery",
+    "P4": "loss_detected",
+    "P5": "loss_detected",
+    "P6": "loss_or_counted_recovery",
+    "P7": "loss_detected",
+    "P8": "loss_or_counted_recovery"
+  },
+  "domain_coverage": {
+    "target_classes_covered": 16,
+    "total_cases": 32,
+    "ordinary_cases": 16,
+    "pressure_cases": 16,
+    "cases_with_explicit_unknowns": 10,
+    "complete": true,
+    "adequacy_claimed": false
+  },
+  "countermodel_coverage": {
+    "covered": 10,
+    "pass": 7,
+    "partial": 2,
+    "unknown": 0,
+    "boundary_unresolved": 1,
+    "complete": true
+  },
+  "hidden_recovery": {
+    "audits_complete": true,
+    "rejected_recoveries": 8,
+    "accepted_uncounted_recoveries": 0
+  },
+  "addition_search": {
+    "hypotheses_tested": 10,
+    "already_subsumed": 5,
+    "required_clarification": 4,
+    "domain_specific": 1,
+    "candidate_new_axis": 0,
+    "unresolved": 0,
+    "missing_general_axis_found": false
+  },
+  "suite_advance_gate": {
+    "all_axes_have_valid_pair": true,
+    "all_ablations_resolved_or_explicitly_unknown": true,
+    "D1_D16_coverage_complete": true,
+    "countermodel_coverage_complete": true,
+    "hidden_recovery_audits_complete": true,
+    "no_missing_general_axis": true,
+    "no_required_IRD_or_domain_revision": true,
+    "results_registered": true
+  },
+  "execution_requirement_gate": {
+    "three_independently_constructed_evaluations": false,
+    "reason": "Three methods were separately specified but authored in one assistant context and therefore are not independent constructions under the strict reading of PBTS-001 section 213-228."
+  },
+  "representation_theorem_gate": {
+    "open": false,
+    "blocking_reason": "The frozen suite's substantive conditions received scoped internal support, but the required independent-construction condition was not satisfied. An independently implemented or externally evaluated replication must occur before PB-001 is used as the basis of a FARA representation theorem."
+  },
+  "result_classification": "scoped_internal_support_with_independence_block",
+  "interpretation": [
+    "P1-P8 each discriminate at least one frozen distinction in this internal execution.",
+    "No ablation was lossless without explicit recovery machinery.",
+    "No required new general preservation axis was found in the registered addition search.",
+    "P3, P6, and P8 show conceptual overlap or qualifier concerns that should remain visible in replication.",
+    "P8 may be better understood as a mandatory evidential qualifier than as an ordinary source-structure coordinate; RUN-001 does not resolve that issue.",
+    "Coverage is complete as a test inventory but does not establish representativeness or universal adequacy."
+  ],
+  "nonclaims": [
+    "RUN-001 does not establish PB-001 sufficiency, necessity, independence, minimality, or completeness.",
+    "RUN-001 does not establish external, organizational, human, or model-independent replication.",
+    "RUN-001 does not establish FARA compliance or a representation theorem.",
+    "RUN-001 does not establish universality, superiority, comparative economy, or global minimality.",
+    "RUN-001 does not establish that the D1-D16 cases are representative of their full domains."
+  ],
+  "next_required_artifact": "independently implemented or externally evaluated replication of PBTS-001 using the frozen suite and PB-001 without post-exposure changes"
+}
