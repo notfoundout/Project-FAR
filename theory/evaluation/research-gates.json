@@ -8,21 +8,31 @@
     "universality",
     "necessity",
     "minimality",
-    "nontriviality"
+    "nontriviality",
+    "comparative_economy",
+    "independent_replication"
   ],
   "required_canonical_artifacts": [
     "docs/governance/central-research-program.md",
     "docs/governance/anti-self-validation-standard.md",
     "docs/governance/research-priority-reset.md",
+    "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
     "docs/methodology/confirmatory-research-package.md",
+    "docs/methodology/external-observation-contract-v1.0.md",
+    "docs/methodology/negative-control-suite-v1.0.md",
+    "docs/methodology/comparative-cost-model-v1.0.md",
+    "docs/methodology/primitive-necessity-and-reintroduction-protocol-v1.0.md",
+    "docs/methodology/boundary-discovery-program-v1.0.md",
     "docs/planning/anti-self-validation-implementation-plan.md",
-    "docs/templates/claim-ledger-entry.md"
+    "docs/templates/claim-ledger-entry.md",
+    "theory/evaluation/central-claim-registry.json"
   ],
   "gates": [
     {
       "id": "RG-01",
       "name": "external-observation-contract",
       "status": "not_satisfied",
+      "standard": "docs/methodology/external-observation-contract-v1.0.md",
       "evidence": [],
       "required_before": ["confirmatory_execution", "universality_claim", "superiority_claim"]
     },
@@ -30,6 +40,7 @@
       "id": "RG-02",
       "name": "negative-controls",
       "status": "not_satisfied",
+      "standard": "docs/methodology/negative-control-suite-v1.0.md",
       "evidence": [],
       "required_before": ["nontriviality_claim", "confirmatory_execution"]
     },
@@ -37,6 +48,7 @@
       "id": "RG-03",
       "name": "full-cost-accounting",
       "status": "not_satisfied",
+      "standard": "docs/methodology/comparative-cost-model-v1.0.md",
       "evidence": [],
       "required_before": ["minimality_claim", "superiority_claim", "pareto_comparison"]
     },
@@ -44,6 +56,7 @@
       "id": "RG-04",
       "name": "anti-reintroduction-ablation",
       "status": "not_satisfied",
+      "standard": "docs/methodology/primitive-necessity-and-reintroduction-protocol-v1.0.md",
       "evidence": [],
       "required_before": ["necessity_claim"]
     },
@@ -51,6 +64,7 @@
       "id": "RG-05",
       "name": "independent-replication",
       "status": "not_satisfied",
+      "standard": "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
       "evidence": [],
       "required_before": ["independent_confirmation_claim"]
     },
@@ -58,6 +72,7 @@
       "id": "RG-06",
       "name": "private-holdout-counterexample-challenge",
       "status": "not_satisfied",
+      "standard": "docs/methodology/boundary-discovery-program-v1.0.md",
       "evidence": [],
       "required_before": ["universality_claim"]
     },
@@ -65,6 +80,7 @@
       "id": "RG-07",
       "name": "nonclaim-audit",
       "status": "not_satisfied",
+      "standard": "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
       "evidence": [],
       "required_before": ["evidence_release"]
     }
@@ -77,11 +93,12 @@
     "confirmatory_package_pilot",
     "independent_replication_recruitment",
     "boundary_counterexample_design",
+    "claim_registry_maintenance",
     "supporting_engineering_required_by_these_items"
   ],
   "paused_by_default": [
     "new_certification_layers",
-    "new_dashboard_features",
+    "new_cosmetic_dashboard_features",
     "release_packaging",
     "favorable_case_count_expansion",
     "generic_terminology_cleanup",
@@ -94,6 +111,7 @@
     "theory_change_after_freeze_creates_new_version": true,
     "failed_frozen_results_are_immutable": true,
     "tradeoffs_must_not_be_reported_as_wins": true,
-    "satisfied_gate_requires_evidence": true
+    "satisfied_gate_requires_evidence": true,
+    "central_claim_updates_require_registry_change": true
   }
 }
