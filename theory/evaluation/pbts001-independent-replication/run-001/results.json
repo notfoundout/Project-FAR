@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "run_id": "PBTS-001-REP-001-RUN-001",
+  "channel": "results",
+  "append_only": true,
+  "aggregation_locked": true,
+  "records": []
+}
