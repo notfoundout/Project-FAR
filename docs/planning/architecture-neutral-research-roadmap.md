@@ -58,36 +58,59 @@ RUN-001 artifacts:
 
 ## Milestone 5 — Independent PBTS-001 replication
 
-**Status:** next active scientific milestone.
+**Status:** replication package frozen; participant registration and execution not started.
 
-**Entrance:** PBTS-001 and RUN-001 are frozen and merged.
+Package artifacts:
 
-**Goal:** execute the unchanged PBTS-001 package through genuinely separate implementation or evaluation paths without access to RUN-001 judgments before submission.
+- `docs/research/pbts001-independent-replication-package-v1.0.md`;
+- `docs/research/pbts001-independent-replication-calibration-v1.0.md`;
+- `theory/evaluation/pbts001-independent-replication-registry.json`;
+- `theory/evaluation/pbts001-independent-replication-response-schema.json`;
+- `docs/audits/pbts001-independent-replication-freeze-audit.md`.
 
-**Required artifacts:**
+**Frozen design:**
 
-- frozen evaluator or implementation identities and provenance;
-- declared independence level under the evidence standard;
-- calibration unrelated to PB-001 where evaluators are used;
-- append-only responses and preserved rejections;
-- three independently constructed evaluation paths where construction is required;
-- deterministic aggregation of full distributions;
-- explicit replication analysis against RUN-001;
-- dedicated test of whether P8 is a preservation coordinate or an evidence-level qualifier;
-- unchanged PB-001 and PBTS-001 inputs;
-- explicit nonclaims.
+- three opaque primary replicator slots;
+- target classification R3, with mandatory downgrade to R1 or R2 when independence is not established;
+- exact protected-input Git blob identifiers;
+- exclusion of RUN-001 result artifacts from the participant-facing bundle;
+- explicit acknowledgment that public-repository access prevents guaranteed technical blinding;
+- calibration unrelated to PB-001 cases;
+- exposure, conflict, tooling, funding, and assistance declarations;
+- append-only submissions and preserved rejections;
+- full-distribution aggregation rather than majority-only or scalar scoring;
+- separate existential and 3/3 reproducible discrimination criteria;
+- dedicated neutral classification of P8;
+- all execution and theorem gates initially false.
 
-**Favorable result:** independently constructed paths reproduce scoped discrimination and ablation findings without discovering a required general axis or mandatory revision.
+**Current claim boundary:** package freeze is infrastructure for replication, not replication evidence. No participant has been registered, calibrated, assigned, or independently verified.
 
-**Unfavorable result:** independent paths fail to reproduce one or more axis distinctions, identify redundancy, require a new axis, require PB/IRD/domain revision, or expose RUN-001 authoring bias.
+**Next execution phase must:**
 
-**Unresolved result:** evaluator disagreement or observability prevents a stable result.
+1. register qualified replicators for REP-A, REP-B, and REP-C;
+2. administer and preserve calibration records before PBTS material release;
+3. audit prior exposure and actual independence;
+4. freeze `PBTS-001-REP-001-RUN-001` assignments and append-only channels;
+5. distribute only the protected participant-facing bundle;
+6. embargo submissions from one another until freeze;
+7. preserve every submission, rejection, downgrade, deviation, and adjudication;
+8. aggregate only after all submissions are frozen;
+9. compare with RUN-001 only after independent submission freeze;
+10. record the maximum justified replication layer.
+
+**Favorable result:** three valid independently constructed paths reproduce scoped discrimination and ablation findings without discovering a required general axis or mandatory revision.
+
+**Unfavorable result:** independent paths fail to reproduce one or more axis distinctions, identify redundancy, require a new axis, require PB/IRD/domain revision, expose RUN-001 authoring bias, or fail independence controls.
+
+**Unresolved result:** evaluator disagreement, exposure, observability, or P8 classification prevents a stable result.
 
 **Cannot establish alone:** FARA universality, global minimality, superiority, or universal reasoning structure.
 
 ## Milestone 6 — Scoped representation theorem
 
-Blocked until Milestone 5 satisfies the independent-construction requirement or produces a justified PB revision that is separately frozen and retested.
+Blocked until Milestone 5 produces three valid independent primary submissions or a justified PB revision that is separately frozen and retested.
+
+P8's theorem role must also be resolved or represented through explicit alternative theorem obligations.
 
 Then prove or refute a nontrivial faithful representation theorem from IRD-001 or a justified revision into FARA using a preservation basis that survived its registered tests. Placeholder, label-only, lookup, hidden-interpreter, or evaluator-repaired inhabitation is excluded.
 
@@ -129,7 +152,7 @@ Update the central claim registry and candidate registry. Allowed conclusions in
 
 ## Dependency order
 
-The frozen domain precedes IRD-001. IRD-001 precedes PB-001 derivation. PB-001 derivation precedes PBTS-001. Internal PBTS execution precedes independent PBTS replication. Independent replication or a separately frozen PB revision precedes representation-theorem work. Later candidate, ablation, competitor, bounded-search, counterexample, equivalence, impossibility, and replication milestones supply the remaining evidence.
+The frozen domain precedes IRD-001. IRD-001 precedes PB-001 derivation. PB-001 derivation precedes PBTS-001. Internal PBTS execution precedes independent PBTS replication. Replication-package freeze precedes participant registration and independent execution. Valid independent replication or a separately frozen PB revision precedes representation-theorem work. Later candidate, ablation, competitor, bounded-search, counterexample, equivalence, impossibility, and replication milestones supply the remaining evidence.
 
 ## Paused work
 
@@ -137,4 +160,4 @@ Certification expansion, new dashboards, release packaging, favorable-case accum
 
 ## Immediate next PR
 
-Prepare and freeze an independently executable PBTS-001 replication package. Do not expose replicators to RUN-001 judgments before submission, do not modify PB-001 or PBTS-001, and do not begin the FARA representation theorem while the independent-construction gate remains unsatisfied.
+Register qualified independent replicators and freeze `PBTS-001-REP-001-RUN-001` assignments, calibration records, prior-exposure declarations, independence audits, and append-only submission channels. Do not add replication judgments or open the FARA representation-theorem gate in that registration PR.
