@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "governing_standard": "docs/governance/candidate-architecture-standard-v1.0.md",
+  "project": {
+    "id": "PROJECT-FAR",
+    "kind": "architecture-neutral-research-program",
+    "candidate": false
+  },
+  "allowed_statuses": [
+    "proposed",
+    "exploratory-admissible",
+    "frozen-for-experiment",
+    "actively-evaluated",
+    "boundedly-supported",
+    "unresolved",
+    "dominated-within-declared-space",
+    "superseded",
+    "rejected-within-declared-scope",
+    "retired"
+  ],
+  "candidates": [
+    {
+      "id": "FARA",
+      "name": "Foundational Architecture of Reasoning Analysis",
+      "version": "foundation-v1.0",
+      "status": "boundedly-supported",
+      "principal_candidate": true,
+      "provenance": "Project FAR accepted Foundation and theory",
+      "canonical_specifications": [
+        "frameworks/FARA/",
+        "docs/glossary/canonical-vocabulary-index.md"
+      ],
+      "primitive_commitments": [
+        "representation",
+        "representational-structure",
+        "interpretation",
+        "investigation",
+        "reasoning-calculus"
+      ],
+      "derived_machinery": [
+        "registered formal theory",
+        "mechanization and comparative-representation implementations"
+      ],
+      "admissibility_assumptions": [
+        "scope and preservation commitments must be independently declared",
+        "hidden reintroduction is counted",
+        "placeholder inhabitation is not faithful representation"
+      ],
+      "intended_scope": "under investigation; currently demonstrated only at bounded registered scopes",
+      "known_limitations": [
+        "universality not established",
+        "primitive necessity not established",
+        "minimality not established",
+        "comparative economy not established",
+        "general independent replication not established"
+      ],
+      "claim_status": {
+        "coherence_and_executability": "supported-at-registered-scope",
+        "bounded_sufficiency": "partially-supported",
+        "universality": "not-established",
+        "necessity": "not-established",
+        "minimality": "not-established",
+        "comparative_economy": "not-established",
+        "independent_replication": "not-established-generally"
+      },
+      "related_experiments": [
+        "CRE-003",
+        "CRE-004"
+      ],
+      "confirmatory_comparison_eligible": true,
+      "unresolved_questions": [
+        "Does an architecture-neutral reasoning class admit a nontrivial faithful representation theorem into FARA?",
+        "Are the five current primitive commitments independent or reducible?",
+        "Does a lower-cost candidate preserve the same commitments?",
+        "Does any finite universal architecture exist?"
+      ],
+      "status_history": [
+        {
+          "status": "boundedly-supported",
+          "basis": "existing registered bounded evidence; no upgrade to universality or minimality"
+        }
+      ],
+      "supersedes": [],
+      "superseded_by": null
+    }
+  ],
+  "blinding_constraints": {
+    "cre004_candidate_identity_key_exposed": false,
+    "note": "Coordinator-only CRE-004 candidate keys remain outside this public registry."
+  }
+}
