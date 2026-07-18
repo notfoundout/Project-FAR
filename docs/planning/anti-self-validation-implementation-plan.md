@@ -12,6 +12,16 @@ Project FAR already distinguishes bounded mechanized results from universality, 
 
 The implementation program therefore prioritizes controls that can produce unfavorable results.
 
+## Enforcement Already Added by This Change
+
+- `theory/evaluation/research-gates.json` records the prospective gates and blocked stronger claims.
+- `tools/check_research_gates.py` validates the registry and canonical control artifacts.
+- `make research-check`, `make health-fast`, and `make health` run the gate validator.
+- the pull-request template requires claim boundaries, possible unfavorable results, independence classification, cost accounting, and explicit nonclaims;
+- the README, roadmap, Central Research Program, and Next Actions now point to the reset as controlling policy.
+
+The remaining workstreams implement actual experiments. The presence of governance controls is not itself evidence for FAR.
+
 ## Workstream 1 — Governance Adoption
 
 ### Deliverables
@@ -235,16 +245,16 @@ The following status labels are conservative and should be updated only through 
 
 ## Immediate Sequence
 
-1. Merge the governance standard and templates.
+1. Merge the governance standard, enforcement, and templates.
 2. Create canonical claim-ledger entries.
-3. Select one bounded experiment as the pilot conversion.
+3. Select the next unexecuted comparative-representation experiment as the pilot.
 4. Freeze its external observation contract.
-5. add full-cost accounting and negative controls;
-6. run hidden-reintroduction review;
-7. perform internal isolated implementation replication;
-8. seek independent technical replication;
-9. run a private holdout challenge;
-10. update the claim ledger without deleting failures.
+5. Add full-cost accounting and negative controls.
+6. Run hidden-reintroduction review.
+7. Perform internal isolated implementation replication.
+8. Seek independent technical replication.
+9. Run a private holdout challenge.
+10. Update the claim ledger without deleting failures.
 
 ## Pilot Recommendation
 
