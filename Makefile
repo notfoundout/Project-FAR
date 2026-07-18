@@ -1,10 +1,12 @@
 health:
 	python tools/repo_health_check.py --full
 	python tools/check_research_gates.py
+	python tools/check_candidate_architectures.py
 
 health-fast:
 	python tools/repo_health_check.py --fast
 	python tools/check_research_gates.py
+	python tools/check_candidate_architectures.py
 
 docs-check:
 	python tools/validate_docs.py
@@ -20,6 +22,7 @@ release-check:
 
 research-check:
 	python tools/check_research_gates.py
+	python tools/check_candidate_architectures.py
 
 status:
 	python tools/project_status_report.py
