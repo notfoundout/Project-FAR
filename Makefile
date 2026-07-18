@@ -3,12 +3,14 @@ health:
 	python tools/check_research_gates.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
+	python tools/check_independent_reasoning_definition.py
 
 health-fast:
 	python tools/repo_health_check.py --fast
 	python tools/check_research_gates.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
+	python tools/check_independent_reasoning_definition.py
 
 docs-check:
 	python tools/validate_docs.py
@@ -26,6 +28,7 @@ research-check:
 	python tools/check_research_gates.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
+	python tools/check_independent_reasoning_definition.py
 
 status:
 	python tools/project_status_report.py
