@@ -18,29 +18,56 @@ Each milestone must preserve favorable, unfavorable, and unresolved outcomes.
 
 ## Milestone 2 — Independent mathematical definition of reasoning
 
-**Entrance:** Milestone 1 domain specification merged and frozen.
+**Status:** complete prospectively through `docs/research/independent-reasoning-definition-v1.0.md` and `theory/evaluation/independent-reasoning-definition-registry.json`.
 
-**Goal:** propose one or more mathematical classes that address the frozen target domain without deriving their required structure from FARA.
+**Result:** IRD-001 defines a process presentation with architecture-neutral time/event order, state, histories, observations, commitment states, stakes, admissible evolutions, grounds, and support relations. A reasoning episode requires:
 
-**Required artifacts:** formal definitions, axioms or admissibility conditions, mappings from target classes to the proposed abstraction, exclusions and counterexamples, clause-level candidate-neutrality audit, and unresolved-case ledger.
+1. a situated stake;
+2. alternative-sensitive commitment space;
+3. ground sensitivity;
+4. directed evaluation or transformation;
+5. commitment consequence;
+6. traceable justificatory dependence.
 
-**Favorable result:** a nontrivial architecture-neutral class covers the justified domain under explicit assumptions.
+Three evidential grades separate behaviorally supported, operationally grounded, and correspondence-grounded claims. Ten mandatory countermodels test trivial labeling, lookup equivalence, post hoc narrative, hidden operators, pure optimization, universal encoding, distributed reasoning, self-revision, continuous embodied control, and conflicting normative reasons.
 
-**Unfavorable result:** no single nontrivial class covers the domain without embedding a candidate ontology or collapsing relevant distinctions.
+**Favorable interpretation:** one nontrivial candidate-neutral class has been stated against the full frozen domain.
 
-**Unresolved result:** multiple defensible classes remain, or some target classes cannot yet be classified.
+**Unfavorable possibilities preserved:** clauses may be redundant, incomplete, overbroad, underbroad, candidate-biased, or incapable of supporting one common class.
 
-**May update:** scope, existence research design, and the domain-definition dependency.
-
-**Cannot establish alone:** FARA universality, necessity, minimality, or comparative superiority.
+**Cannot establish alone:** that R1-R6 are sufficient, necessary, independent, minimal, or faithfully represented by FARA.
 
 ## Milestone 3 — Preservation-basis investigation
 
-Determine whether the current preservation dimensions are sufficient, independent, redundant, or incomplete. The number six is a hypothesis, not a protected result.
+**Status:** next active scientific milestone.
+
+**Entrance:** the frozen reasoning domain and IRD-001 are merged.
+
+**Goal:** determine what a faithful representation of IRD-001 must preserve and whether the current structural, semantic, operational, dependency, information, and historical dimensions are sufficient, independent, redundant, or incomplete.
+
+**Required work:**
+
+- derive each proposed preservation dimension from IRD-001 rather than FARA;
+- construct paired systems that differ in exactly one candidate preservation commitment where possible;
+- test deletion, merger, and substitution of dimensions;
+- identify hidden recovery through metadata, interpreters, evaluators, or runtime machinery;
+- classify unknown and incomparable cases without forcing an ordering;
+- permit discovery of fewer, more, or differently organized dimensions;
+- freeze a revised basis only after countermodels and candidate-neutrality review.
+
+**Favorable result:** a nontrivial preservation basis survives positive, negative, ablation, and distinction tests.
+
+**Unfavorable result:** the current basis is incomplete, redundant, candidate-specific, or cannot be made finite across the frozen domain.
+
+**Unresolved result:** multiple incomparable bases remain or observability prevents stable classification.
+
+**May update:** preservation commitments, representation-test design, and the scope of later representation theorems.
+
+**Cannot establish alone:** FARA universality, primitive necessity, global minimality, comparative superiority, or independent replication.
 
 ## Milestone 4 — Scoped representation theorem
 
-Prove or refute a nontrivial faithful representation theorem from an independent reasoning class into FARA. Placeholder or label-only inhabitation is excluded.
+Prove or refute a nontrivial faithful representation theorem from IRD-001 or a justified revision into FARA. Placeholder, label-only, lookup, or hidden-interpreter inhabitation is excluded.
 
 ## Milestone 5 — Candidate architecture schema and compiler contracts
 
@@ -60,7 +87,7 @@ Define a finite universe of small reasoning systems, enumerate it completely, an
 
 ## Milestone 9 — Minimal counterexample generation
 
-For each failure, produce or approximate the smallest counterexample and classify whether it defeats a mapping, candidate, preservation basis, domain definition, or universal finite-architecture hypothesis.
+For each failure, produce or approximate the smallest counterexample and classify whether it defeats a mapping, candidate, preservation basis, domain definition, independent definition, or universal finite-architecture hypothesis.
 
 ## Milestone 10 — Equivalence and dominance analysis
 
@@ -87,7 +114,7 @@ Update the central claim registry and candidate registry. Allowed conclusions in
 
 ## Dependency order
 
-The frozen domain precedes the mathematical definition. The independent definition precedes representation-theorem and exhaustive-search claims. Preservation-basis work precedes final preservation claims. Candidate, ablation, and competitor milestones define architectural pressure. Bounded search, counterexample, equivalence, and impossibility milestones investigate the formal space. Independent replication supplies external evidential force. The final assessment records only the strongest justified conclusion.
+The frozen domain precedes IRD-001. IRD-001 precedes preservation-basis, representation-theorem, and exhaustive-search claims. Preservation-basis work precedes final preservation claims. Candidate, ablation, and competitor milestones define architectural pressure. Bounded search, counterexample, equivalence, and impossibility milestones investigate the formal space. Independent replication supplies external evidential force. The final assessment records only the strongest justified conclusion.
 
 ## Paused work
 
@@ -95,4 +122,4 @@ Certification expansion, new dashboards, release packaging, favorable-case accum
 
 ## Immediate next PR
 
-Construct and freeze one or more architecture-neutral mathematical definitions of reasoning. Every clause must be justified against the frozen domain specification, audited for candidate bias, and accompanied by counterexamples showing how it could be too weak or too strong.
+Conduct and freeze the preservation-basis investigation. Begin from IRD-001 and the frozen reasoning domain, not from the assumption that the existing six preservation dimensions are final, independent, or complete.
