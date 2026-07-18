@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "status": "prospective",
+  "governing_documents": [
+    "docs/governance/central-research-program.md",
+    "docs/governance/anti-self-validation-standard.md",
+    "docs/governance/evidence-replication-and-freeze-standard-v1.0.md"
+  ],
+  "claims": [
+    {
+      "id": "CLM-EXISTENCE",
+      "name": "Existence of a common reasoning structure",
+      "current_status": "unresolved",
+      "maximum_supported_scope": "none beyond bounded recurring similarities",
+      "required_next_test": "adversarial cross-vocabulary and boundary program",
+      "falsification_condition": "incompatible in-scope reasoning systems for which no common structure preserves the registered commitments",
+      "nonclaims": ["FAR is the common structure", "universality", "minimality"]
+    },
+    {
+      "id": "CLM-SUFFICIENCY",
+      "name": "FAR bounded representational sufficiency",
+      "current_status": "partially_supported",
+      "maximum_supported_scope": "specific frozen systems and mappings already tested",
+      "required_next_test": "prospective observation-contract pilot with negative controls",
+      "falsification_condition": "an in-scope frozen source contract cannot be preserved without protected-theory change",
+      "nonclaims": ["universal sufficiency", "primitive-only sufficiency", "necessity"]
+    },
+    {
+      "id": "CLM-UNIVERSALITY",
+      "name": "FAR universality",
+      "current_status": "not_established",
+      "maximum_supported_scope": "none",
+      "required_next_test": "independent adversarial holdout and boundary accumulation",
+      "falsification_condition": "one genuine in-scope counterexample",
+      "nonclaims": ["absence of discovered counterexamples proves universality"]
+    },
+    {
+      "id": "CLM-NECESSITY",
+      "name": "Necessity of FAR primitives",
+      "current_status": "not_established",
+      "maximum_supported_scope": "none",
+      "required_next_test": "registered primitive ablations with hidden-reintroduction audits",
+      "falsification_condition": "a valid preserved reconstruction omits a tested primitive without prohibited reintroduction",
+      "nonclaims": ["successful use establishes necessity"]
+    },
+    {
+      "id": "CLM-MINIMALITY",
+      "name": "FAR minimality",
+      "current_status": "not_established",
+      "maximum_supported_scope": "none",
+      "required_next_test": "broad alternative-vocabulary search with full-cost Pareto comparison",
+      "falsification_condition": "a simpler candidate preserves the same contract and Pareto-dominates FAR",
+      "nonclaims": ["low primitive count establishes minimality"]
+    },
+    {
+      "id": "CLM-NONTRIVIALITY",
+      "name": "FAR imposes nontrivial representational constraints",
+      "current_status": "not_established_generally",
+      "maximum_supported_scope": "implementation-specific checks only",
+      "required_next_test": "mandatory negative-control suite",
+      "falsification_condition": "invalid output-equivalent encodings pass the same acceptance machinery",
+      "nonclaims": ["expressive reach alone establishes constraint"]
+    },
+    {
+      "id": "CLM-ECONOMY",
+      "name": "FAR comparative economy",
+      "current_status": "not_established",
+      "maximum_supported_scope": "none",
+      "required_next_test": "canonical full-cost model across strong competitor mappings",
+      "falsification_condition": "FAR is dominated or its apparent advantage depends on uncounted machinery",
+      "nonclaims": ["primitive count alone is economy", "tradeoff is superiority"]
+    },
+    {
+      "id": "CLM-INDEPENDENCE",
+      "name": "Independent replication",
+      "current_status": "not_established_generally",
+      "maximum_supported_scope": "internal isolated implementation robustness where completed",
+      "required_next_test": "R3 independent technical replication followed by R4 adversarial conceptual replication",
+      "falsification_condition": "qualified independent teams cannot reproduce the frozen result or identify framing-dependent acceptance",
+      "nonclaims": ["one-agent multi-implementation is external independence"]
+    }
+  ],
+  "update_policy": {
+    "evidence_for_and_against_required": true,
+    "unknown_is_not_pass": true,
+    "failures_are_immutable": true,
+    "scope_changes_must_be_versioned": true,
+    "stronger_status_requires_linked_artifacts": true
+  }
+}
