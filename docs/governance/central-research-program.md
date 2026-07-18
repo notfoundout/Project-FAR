@@ -184,7 +184,7 @@ Mechanization strengthens confidence in internal coherence and executability. It
 
 External validation tests FAR against reasoning systems, arguments, and practices not constructed for FAR. It provides bounded evidence concerning representational reach, domain-specific assumptions, recurring pressure points, and possible limitations.
 
-External validation does not prove universal applicability. Each case remains conditional on its reconstruction, evidence, and scope. CRP v1.0 governs blinded comparative claims about representational vocabularies. The merged deterministic CRE-001 implementation establishes scoped vocabulary-native compilation, executable lowering, deterministic verification, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration; it does not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or non-CRE-001 vocabulary-semantics adequacy.
+External validation does not prove universal applicability. Each case remains conditional on its reconstruction, evidence, and scope. CRP v1.0 governs blinded comparative claims about representational vocabularies. Deterministic implementations establish only their scoped vocabulary-native compilation, executable lowering, deterministic verification, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration. They do not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or untested vocabulary-semantics adequacy.
 
 ## Work Admission Standard
 
@@ -241,6 +241,22 @@ The current repository establishes that:
 These results establish readiness for systematic investigation. They do not answer the central research question.
 
 Future major work should therefore be evaluated by its contribution to determining whether FAR captures a universal and minimal structure of reasoning, where its boundaries lie, and whether a simpler competing structure can account for the same phenomena.
+
 ## Comparative Representation Evaluation Governance
 
-The central research program distinguishes preliminary external validation from blinded comparative representation evaluation. Preliminary external validation may describe systems, map FAR/FARA roles, and identify pressure points. Comparative Representation Protocol v1.0 governs claims about comparative distinctiveness, reproducibility, local necessity, relative economy, and Pareto interpretation. CRE-001 is registered but not executed.
+The central research program distinguishes preliminary external validation from blinded comparative representation evaluation. Preliminary external validation may describe systems, map FAR/FARA roles, and identify pressure points. Comparative Representation Protocol v1.0 governs claims about comparative distinctiveness, reproducibility, local necessity, relative economy, and Pareto interpretation. Completed deterministic experiments remain bounded evidence and do not automatically satisfy prospective independence or anti-self-validation gates.
+
+## Anti-Self-Validation Governance
+
+All future confirmatory or claim-strengthening work is additionally governed by:
+
+- [`anti-self-validation-standard.md`](anti-self-validation-standard.md);
+- [`research-priority-reset.md`](research-priority-reset.md);
+- [`../methodology/confirmatory-research-package.md`](../methodology/confirmatory-research-package.md);
+- [`../../theory/evaluation/research-gates.json`](../../theory/evaluation/research-gates.json).
+
+These controls require separation of theory, case generation, competing representations, implementation, verification, and adjudication to the degree claimed by the evidence. A project-authored end-to-end pipeline may establish internal coherence or implementation robustness, but it may not be described as independent confirmation.
+
+The source-system observation contract must be vocabulary-neutral. All primitives, derived constructs, operations, semantic clauses, hidden state, ambiguity policies, implementation assumptions, and adjudication burden must be counted when necessity, minimality, or superiority is evaluated. Negative controls must demonstrate that output-equivalent but structurally unfaithful encodings are rejected.
+
+Any theory or scope change made after exposure to a frozen case creates a new version and does not erase the earlier result. Failed, divergent, excluded, and unresolved outcomes remain part of the permanent evidence record. An unsatisfied research gate blocks only the stronger claim associated with that gate; it does not invalidate narrower results that are accurately described.
