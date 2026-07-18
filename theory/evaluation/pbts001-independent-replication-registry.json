@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0",
+  "package_id": "PBTS-001-REP-001",
+  "package_version": "1.0",
+  "status": "frozen_prospective_not_executed",
+  "protocol": "docs/research/pbts001-independent-replication-package-v1.0.md",
+  "calibration": "docs/research/pbts001-independent-replication-calibration-v1.0.md",
+  "response_schema": "theory/evaluation/pbts001-independent-replication-response-schema.json",
+  "basis_id": "PB-001",
+  "basis_version": "1.0",
+  "suite_id": "PBTS-001",
+  "suite_version": "1.0",
+  "candidate_dependencies": [],
+  "primary_evidence_class": "replication",
+  "target_replication_layer": "R3_independent_technical_replication",
+  "protected_inputs": [
+    {
+      "path": "docs/research/reasoning-domain-specification-v1.0.md",
+      "git_blob_sha": "9898674fe266eddf34182b27ae40accc731de54c"
+    },
+    {
+      "path": "docs/research/independent-reasoning-definition-v1.0.md",
+      "git_blob_sha": "757d92ae89156d585d3f4b89e095a4baf607b2e5"
+    },
+    {
+      "path": "docs/research/preservation-basis-investigation-v1.0.md",
+      "git_blob_sha": "6fc5b853b4fbabe1f901e715e38e64abb0be1be1"
+    },
+    {
+      "path": "theory/evaluation/preservation-basis-registry.json",
+      "git_blob_sha": "547d603ed60aae9a987b1ac41a31976a1715c697"
+    },
+    {
+      "path": "docs/research/pb001-preservation-basis-test-suite-v1.0.md",
+      "git_blob_sha": "98e1b15d60f280e4ad05db8ff754ba4cdfbe1aaa"
+    },
+    {
+      "path": "theory/evaluation/pb001-test-suite-registry.json",
+      "git_blob_sha": "5c54a0fbec1311927f8a1e94d8277eab0285f427"
+    },
+    {
+      "path": "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
+      "git_blob_sha": "560291aa80c5f0d70bd4acc9f4ef5cfaf61030a7"
+    },
+    {
+      "path": "docs/governance/anti-self-validation-standard.md",
+      "git_blob_sha": "0569d0c23a95799bbde50fde9c2dfbdbf0712550"
+    }
+  ],
+  "excluded_prior_result_artifacts": [
+    {
+      "path": "docs/research/pb001-execution-run-001-report.md",
+      "git_blob_sha": "df7157e4f94973b5f51792f31adbc214c62285c5"
+    },
+    {
+      "path": "theory/evaluation/pb001-execution-run-001-records.json",
+      "git_blob_sha": "d07246cf6649a21381e4aa31277ce058df15133e"
+    },
+    {
+      "path": "theory/evaluation/pb001-execution-run-001-summary.json",
+      "git_blob_sha": "0fb41a71a7188d2cbb29fdf41ddd855a485754f9"
+    }
+  ],
+  "replicator_slots": [
+    {"id": "REP-A", "identity": null, "registration_status": "unregistered"},
+    {"id": "REP-B", "identity": null, "registration_status": "unregistered"},
+    {"id": "REP-C", "identity": null, "registration_status": "unregistered"}
+  ],
+  "minimum_primary_submissions": 3,
+  "minimum_distinct_organizational_affiliations": 2,
+  "calibration": {
+    "items": 6,
+    "minimum_correct": 5,
+    "critical_item": "CAL-04_observation_vs_inference",
+    "maximum_retests": 1,
+    "status": "not_administered"
+  },
+  "required_roles": [
+    "package_coordinator",
+    "primary_replicator",
+    "calibration_scorer",
+    "independence_auditor",
+    "adjudicator",
+    "aggregation_operator",
+    "red_team_reviewer"
+  ],
+  "required_execution_sections": [
+    "paired_axis_discrimination",
+    "axis_ablation",
+    "domain_coverage",
+    "IRD_countermodel_coverage",
+    "hidden_recovery_audit",
+    "adversarial_addition_search",
+    "P8_classification",
+    "deviations_and_disclosures"
+  ],
+  "allowed_pair_scores": ["pass", "partial", "fail", "unknown"],
+  "allowed_ablation_outcomes": [
+    "loss_detected",
+    "recoverable_with_counted_commitment",
+    "hidden_reintroduction",
+    "no_observed_loss",
+    "unknown"
+  ],
+  "allowed_P8_classifications": [
+    "ordinary_preservation_coordinate",
+    "cross_cutting_evidential_qualifier",
+    "separate_evidence_contract",
+    "axis_revision_required",
+    "unresolved"
+  ],
+  "allowed_submission_statuses": [
+    "registered",
+    "submitted",
+    "accepted",
+    "rejected",
+    "downgraded",
+    "withdrawn"
+  ],
+  "allowed_replication_layers": ["R1", "R2", "R3", "R4", "R5", "unresolved"],
+  "execution_status": "not_started",
+  "participant_registrations": [],
+  "calibration_records": [],
+  "submissions": [],
+  "rejections": [],
+  "adjudications": [],
+  "results": [],
+  "advance_gate": {
+    "three_valid_primary_submissions": false,
+    "calibration_complete": false,
+    "independence_audits_complete": false,
+    "protected_inputs_verified": false,
+    "all_suite_families_complete_or_explicitly_unresolved": false,
+    "full_distributions_registered": false,
+    "hidden_recovery_adjudication_complete": false,
+    "no_unresolved_candidate_general_axis": false,
+    "no_unresolved_required_revision": false,
+    "P8_theorem_role_resolved_or_alternatives_registered": false,
+    "maximum_replication_layer_recorded": false,
+    "nonclaims_and_unfavorable_results_published": false,
+    "representation_theorem_gate_open": false
+  },
+  "allowed_outcomes": [
+    "R3_scoped_replication_support",
+    "R2_implementation_path_robustness_only",
+    "partial_replication",
+    "nonreplication",
+    "axis_redundancy_or_revision_pressure",
+    "new_general_axis_required",
+    "class_specific_bases",
+    "P8_reclassification",
+    "IRD_domain_PB_or_suite_revision_required",
+    "independence_failure",
+    "observability_blocked",
+    "insufficient_evidence"
+  ],
+  "nonclaims": [
+    "Freezing this package does not register or qualify any independent replicator.",
+    "Freezing this package does not execute PBTS-001 independently.",
+    "This package does not establish PB-001 sufficiency, necessity, independence, minimality, or completeness.",
+    "This package does not resolve P8.",
+    "This package does not establish FARA compliance or a representation theorem.",
+    "This package does not establish universality, global minimality, superiority, or comparative economy."
+  ],
+  "next_required_artifact": "registered qualified replicators and frozen PBTS-001-REP-001-RUN-001 assignments, calibration records, exposure declarations, and append-only submission channels without replication results"
+}
