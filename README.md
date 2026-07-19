@@ -28,7 +28,7 @@ Run `make research-check` to validate that the deduction-first dependency struct
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: post-CRE-001 prospective semantics baseline; CRE-002 preparation
+- Current project phase: deduction-first theorem-target freeze
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 - Last dashboard generation time: 2026-07-16T08:17:16+00:00
@@ -71,48 +71,51 @@ Trend data is not yet available because no prior generated snapshot is stored.
 
 ## Top Priority Tasks
 
-### STRATEGIC-001: Plan independent replication of CRE-002-EXT-001
-- Source: strategic roadmap priority
+### STRATEGIC-001: Freeze THM-TARGET-001 and premise ledger
+- Source: deduction-first strategic priority
 - Affected files:
-  - [docs/methodology/adversarial-evaluation.md](docs/methodology/adversarial-evaluation.md)
-  - [docs/governance/central-research-program.md](docs/governance/central-research-program.md)
-  - [docs/reports/cre002-ext001-evidence-analysis.md](docs/reports/cre002-ext001-evidence-analysis.md)
-- Suggested branch: `research/plan-cre002-ext001-independent-replication`
-- Suggested PR title: `Plan independent CRE-002-EXT-001 replication`
+  - [docs/governance/deduction-first-research-standard.md](docs/governance/deduction-first-research-standard.md)
+  - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
+  - [docs/research/independent-reasoning-definition-v1.0.md](docs/research/independent-reasoning-definition-v1.0.md)
+  - [docs/research/preservation-basis-investigation-v1.0.md](docs/research/preservation-basis-investigation-v1.0.md)
+- Suggested branch: `research/freeze-thm-target-001`
+- Suggested PR title: `Freeze THM-TARGET-001 theorem target and premise ledger`
 
-### STRATEGIC-002: Design a boundary-focused CRE-003
-- Source: strategic roadmap priority
+### STRATEGIC-002: Formalize faithful representation and nontriviality
+- Source: deduction-first strategic priority
 - Affected files:
-  - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
-  - [docs/ROADMAP.md](docs/ROADMAP.md)
-  - [docs/reports/cre002-ext001-evidence-analysis.md](docs/reports/cre002-ext001-evidence-analysis.md)
-- Suggested branch: `research/design-cre003-boundary-test`
-- Suggested PR title: `Design CRE-003 boundary test`
+  - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
+  - [docs/research/preservation-basis-investigation-v1.0.md](docs/research/preservation-basis-investigation-v1.0.md)
+  - [docs/methodology/negative-control-suite-v1.0.md](docs/methodology/negative-control-suite-v1.0.md)
+- Suggested branch: `research/formalize-faithful-representation`
+- Suggested PR title: `Formalize faithful representation and nontriviality`
 
-### STRATEGIC-003: Audit comparative representation cost
-- Source: strategic roadmap priority
+### STRATEGIC-003: Resolve the formal role of P8
+- Source: deduction-first strategic priority
 - Affected files:
-  - [docs/reports/cre002-ext001-evidence-analysis.md](docs/reports/cre002-ext001-evidence-analysis.md)
-  - [theory/evaluation/comparative-representation](theory/evaluation/comparative-representation)
-- Suggested branch: `research/audit-comparative-representation-cost`
-- Suggested PR title: `Audit comparative representation cost`
+  - [docs/research/preservation-basis-investigation-v1.0.md](docs/research/preservation-basis-investigation-v1.0.md)
+  - [docs/research/pb001-execution-run-001-report.md](docs/research/pb001-execution-run-001-report.md)
+  - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
+- Suggested branch: `research/resolve-p8-theorem-role`
+- Suggested PR title: `Resolve P8 theorem role`
 
-### STRATEGIC-004: Preserve semantic and result drift locks
-- Source: strategic roadmap priority
+### STRATEGIC-004: Develop construction and obstruction lemmas
+- Source: deduction-first strategic priority
 - Affected files:
-  - [theory/evaluation/comparative-representation/semantics/vocabulary-semantics-baseline-1.1.json](theory/evaluation/comparative-representation/semantics/vocabulary-semantics-baseline-1.1.json)
-  - [theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001](theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001)
-- Suggested branch: `maintenance/monitor-cre002-ext001-drift`
-- Suggested PR title: `Monitor CRE-002-EXT-001 drift`
+  - [docs/research/reasoning-domain-specification-v1.0.md](docs/research/reasoning-domain-specification-v1.0.md)
+  - [docs/research/independent-reasoning-definition-v1.0.md](docs/research/independent-reasoning-definition-v1.0.md)
+  - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
+- Suggested branch: `research/build-representation-lemmas`
+- Suggested PR title: `Develop representation construction and obstruction lemmas`
 
-### STRATEGIC-005: Prepare the next evidence release
-- Source: strategic roadmap priority
+### STRATEGIC-005: Prepare proof mechanization architecture
+- Source: deduction-first strategic priority
 - Affected files:
-  - [docs/releases](docs/releases)
-  - [docs/project-status.md](docs/project-status.md)
-  - [docs/reports/cre002-ext001-evidence-analysis.md](docs/reports/cre002-ext001-evidence-analysis.md)
-- Suggested branch: `release/prepare-post-cre002-evidence-release`
-- Suggested PR title: `Prepare post-CRE-002 evidence release`
+  - [mechanization](mechanization)
+  - [docs/governance/deduction-first-research-standard.md](docs/governance/deduction-first-research-standard.md)
+  - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
+- Suggested branch: `research/plan-proof-mechanization`
+- Suggested PR title: `Plan deduction-first proof mechanization`
 
 ## Research Gap Summary
 
@@ -129,6 +132,8 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - [Research Gap Report](docs/reports/research-gap-report.md)
 - [Next Actions](docs/planning/next-actions.md)
 - [Dashboard Metrics](docs/planning/dashboard-metrics.md)
+- [Deduction-First Standard](docs/governance/deduction-first-research-standard.md)
+- [Proof Roadmap](docs/planning/deduction-first-proof-roadmap.md)
 - [External Validation](docs/reports/external-validation-report.md)
 - [Primitive Sufficiency](docs/reports/primitive-sufficiency-report.md)
 - [Evidence Registry](theory/evaluation/evidence-registry.yaml)
@@ -148,22 +153,23 @@ Trend data is not yet available because no prior generated snapshot is stored.
 
 ## Current Roadmap
 
-- Current phase: post-CRE-001 prospective semantics baseline; CRE-002 preparation
-- Completed work: Repository Health; Self-Advancement Planner; README Command Center; External Validation; CRP v1.0 registration; deterministic CRE-001 implementation; vocabulary-native compilation; executable lowering; deterministic verification; replayable lowering traces; mutation testing; adversarial compiler audit; repository integration
-- In-progress work: CRE-002 preregistration design using Vocabulary Semantics Baseline 1.0 prospectively
-- Planned work: prospective CRE-002 execution; prospective evidence analysis; independent replication; semantic drift monitoring; Theory Dependency Graph; Knowledge Graph; Evidence Dashboard; Theory Impact Analyzer; Semantic Consistency Auditor
+- Current phase: deduction-first theorem-target freeze
+- Completed foundation for the active phase: architecture-neutral reasoning domain; IRD-001; PB-001 candidate basis; PBTS-001 and internal RUN-001; independent-replication package and coordinator controls; deduction-first governance and theorem gates
+- In-progress work: freeze THM-TARGET-001 and its premise ledger
+- Planned work: faithful-representation formalization; P8 theorem-role resolution; construction and obstruction lemmas; scoped representation theorem or refutation; lower bounds; minimality, equivalence, or impossibility; proof mechanization; independent proof review
+- Parallel supporting work: PBTS-001 independent replication, comparative evaluation, boundary discovery, and application validation
 
 ## Command Center
 
 ### Local Commands
 
 ```bash
-make dashboard
+make research-check
 make health-fast
 make health
-make research-check
 make docs-check
 make plan
+make dashboard
 ```
 
 ### GitHub Actions
@@ -177,13 +183,14 @@ make plan
 
 1. `make research-check`
 2. `make health-fast`
-3. Open the Research Priority Reset
-4. Choose only work authorized by the research gate registry
-5. Freeze the claim, failure conditions, and observation contract
-6. Implement
-7. Run health
-8. Preserve all failures and nonclaims
-9. Merge
+3. Open the Deduction-First Research Standard
+4. Open the Proof Roadmap
+5. Choose the highest unsatisfied theorem obligation
+6. Freeze its statement, assumptions, failure conditions, and nonclaims
+7. Prove, refute, or register the obstruction
+8. Preserve all failures and unresolved obligations
+9. Run health
+10. Merge
 
 <!-- END GENERATED PROJECT FAR DASHBOARD -->
 
