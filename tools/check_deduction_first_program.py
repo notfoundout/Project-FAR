@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 STANDARD = ROOT / "docs/governance/deduction-first-research-standard.md"
 CENTRAL = ROOT / "docs/governance/central-research-program.md"
 PRIORITY = ROOT / "docs/governance/research-priority-reset.md"
+ANTI_SELF_CLARIFICATION = ROOT / "docs/governance/anti-self-validation-deduction-clarification.md"
 PROOF_ROADMAP = ROOT / "docs/planning/deduction-first-proof-roadmap.md"
 ARCH_ROADMAP = ROOT / "docs/planning/architecture-neutral-research-roadmap.md"
 NEXT_ACTIONS = ROOT / "docs/planning/next-actions.md"
@@ -27,6 +28,7 @@ REQUIRED_FILES = [
     STANDARD,
     CENTRAL,
     PRIORITY,
+    ANTI_SELF_CLARIFICATION,
     PROOF_ROADMAP,
     ARCH_ROADMAP,
     NEXT_ACTIONS,
@@ -84,6 +86,16 @@ def main() -> int:
             "The next milestone is a frozen theorem target and premise ledger",
             "recruitment is no longer the immediate central dependency",
             "Independent validation strengthens confidence in the result",
+        ],
+    )
+    require_phrases(
+        ANTI_SELF_CLARIFICATION,
+        [
+            "The Anti-Self-Validation Standard does not prohibit Project FAR authors",
+            "independent empirical replication must occur before a representation theorem may be attempted",
+            "independent replication is required before claiming independent empirical confirmation",
+            "formal theorem gates are required before claiming a theorem",
+            "this clarification and the Deduction-First Research Standard control that dependency question",
         ],
     )
     require_phrases(
@@ -171,6 +183,7 @@ def main() -> int:
 
     gates = read_json(GATES)
     assert gates.get("research_mode") == "deduction_first_with_parallel_empirical_validation"
+    assert "docs/governance/anti-self-validation-deduction-clarification.md" in gates.get("required_canonical_artifacts", [])
     policy = gates.get("claim_policy", {})
     assert policy.get("proof_construction_not_blocked_by_empirical_replication") is True
     assert policy.get("independent_replication_gates_only_independent_empirical_confirmation") is True
@@ -198,6 +211,7 @@ def main() -> int:
 
     claims = read_json(CLAIMS)
     assert claims.get("research_mode") == "deduction_first_with_separate_validation_dimensions"
+    assert "docs/governance/anti-self-validation-deduction-clarification.md" in claims.get("governing_documents", [])
     dimensions = claims.get("claim_dimensions", {})
     assert {
         "theorem_status",
