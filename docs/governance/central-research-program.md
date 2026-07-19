@@ -4,259 +4,300 @@
 
 Project FAR exists to determine whether there is a universal and minimal structure underlying reasoning.
 
-This document defines the primary research program governing the long-term direction of the project. It establishes the central question under investigation, the standards by which evidence is evaluated, and the criteria by which the project's success is judged.
+This document defines the primary research program governing the long-term direction of the project. It establishes the central question, the admissible routes to an answer, and the criteria by which success is judged.
 
-Every theoretical development, mechanization effort, external validation, proof, implementation, and supporting framework should contribute directly or indirectly to this research program.
+Every theoretical development, mechanization effort, proof, external validation, implementation, and supporting framework should contribute directly or indirectly to this program.
 
 ## Why?
 
 The purpose of Project FAR is not merely to construct a reasoning framework. Its purpose is to answer a foundational question about reasoning itself.
 
-Without an explicit central research program, the project risks improving FAR as an artifact without determining whether FAR accurately represents the phenomenon it was created to investigate. This document prevents infrastructure, implementation, and maintenance work from replacing the research objective.
+Without an explicit central program, the project risks improving FAR as an artifact without determining whether FAR accurately represents the phenomenon it was created to investigate. Infrastructure, implementation, case accumulation, and administration may support the research objective but may not replace it.
 
 ## Scope
 
 This document governs the project's primary research direction.
 
-It does not define new mathematics, introduce new primitives, revise accepted proofs, or modify Foundation v1.0. It defines the research program through which the existing theory and any future revisions are evaluated.
+It does not introduce new mathematical primitives, accept a theorem, revise Foundation v1.0, or declare FAR correct. Substantive mathematical change still requires the applicable Foundation Revision, Theory Revision, or Research Investigation process.
 
 ## Role in Project FAR
 
 The Central Research Program is the authoritative statement of Project FAR's research objective. It governs:
 
 - theory development;
+- theorem and countermodel development;
 - research investigations;
-- external validation;
 - mechanization used for research;
+- external validation;
 - future Foundation or theory revision proposals;
 - roadmap planning;
 - admission of work into the theoretical core.
 
 When uncertainty exists about whether proposed work belongs in the project's core, this document provides the governing criterion.
 
-## Dependencies
+## Governing standards
 
-This document depends on:
+This program is controlled by:
 
-- Foundation v1.0;
-- the canonical Project FAR definitions;
-- repository governance;
-- completed v0.4.0 preliminary external-validation evidence;
-- the mechanization MVP;
-- repository certification.
+- `docs/governance/deduction-first-research-standard.md`;
+- `docs/governance/anti-self-validation-standard.md`;
+- `docs/governance/evidence-replication-and-freeze-standard-v1.0.md`;
+- `docs/governance/research-priority-reset.md`;
+- `theory/evaluation/research-gates.json`.
 
-## Dependents
+The deduction-first standard controls the dependency between proof and empirical validation. Anti-self-validation and replication standards continue to control claims of independent confirmation.
 
-This document governs:
+## Design rationale
 
-- future research programs;
-- counterexample investigations;
-- universality and minimality studies;
-- theory-revision proposals;
-- research-oriented roadmap decisions;
-- criteria for core research contributions.
+Project FAR is fundamentally a research project. The framework exists because of the question, not the other way around.
 
-## Design Rationale
+The central question is mathematical once its source class, target class, semantics, and assumptions are fixed. The primary route to an answer is therefore deduction: explicit definitions, axioms, lemmas, constructions, countermodels, lower bounds, equivalence results, and impossibility results.
 
-Project FAR is fundamentally a research project. The framework exists because of the question, not the other way around. The research objective therefore governs subsequent theory and engineering rather than emerging implicitly from them.
+Experiments and replication remain important because they can expose ambiguous definitions, implementation defects, hidden assumptions, omitted cases, or human interpretation failures. They support the proof program but do not serve as a logical premise merely because evaluators agree.
 
-The program is framed as hypothesis evaluation rather than confirmation or falsification alone. This preserves neutrality: supporting evidence, counterexamples, bounded applicability, and failure of the hypothesis are all valid outcomes.
+The program is neutral among favorable and unfavorable outcomes. A proof that FAR works, a counterexample showing it fails, a theorem establishing only a bounded scope, multiple incomparable structures, or a no-go result are all legitimate central results.
 
-## Central Research Question
+## Central research question
 
 > Does every reasoning process necessarily instantiate a common underlying structure, and if so, is that structure both universal and minimal?
 
-This question includes three distinct issues:
+This question contains distinct obligations:
 
 1. whether a common structure exists;
-2. whether it applies to every reasoning process within the justified scope;
-3. whether it is irreducible or can be replaced by a simpler structure with equal expressive power.
+2. whether every reasoning process in a formally justified scope can be faithfully represented;
+3. whether each retained commitment is necessary;
+4. whether the complete structure is minimal within a declared candidate universe;
+5. whether successful structures are unique, equivalent, or incomparable;
+6. whether a universal finite structure is impossible under some assumptions.
 
-The repository, theory, mechanization, and supporting artifacts exist to investigate this question rather than to presuppose its answer.
+These obligations must not be collapsed into one favorable claim.
 
-## Research Position
+## Research position
 
-Project FAR treats the existence of a universal structure of reasoning as a hypothesis.
+Project FAR treats the existence of a universal structure of reasoning as an open hypothesis.
 
-The project does not assume that such a structure exists. It does not assume that FAR is that structure. A result against FAR is a valid research result when supported by rigorous analysis.
+The project does not assume that such a structure exists. It does not assume that FAR or FARA is that structure. A result against the current framework is a valid research result when established by proof, countermodel, bounded exhaustive analysis, or rigorous supporting evidence.
 
-Evidence may strengthen or weaken the central hypothesis. Existing accepted theory remains subject to scrutiny through the established theory-revision and Foundation-revision processes. No accepted artifact is protected from criticism merely because it supports the current framework.
+No accepted artifact is protected from criticism merely because it supports the current framework.
 
-## Primary Research Objectives
+## Primary research objectives
 
-### Objective I — Existence
+### Objective I — Formal existence
 
-Determine whether any universal structure of reasoning exists.
+Determine whether a common structure exists for a precisely defined class of reasoning systems.
 
-If no such structure exists, identify the strongest counterexamples, boundaries, or incompatibilities supporting that conclusion.
+An existence result must state its assumptions and scope. Failure may be established by an obstruction, countermodel, inconsistency, or impossibility theorem.
 
-### Objective II — Universality
+### Objective II — Faithful representation
 
-If a candidate structure exists, determine whether every reasoning process can be faithfully represented within it without ad hoc modification or loss of relevant structure.
+If a candidate structure exists, determine whether every source system in the declared scope admits a faithful representation without ad hoc theory change, unrestricted hidden interpretation, evaluator repair, or loss of protected commitments.
 
-A failed representation must be analyzed to determine whether it indicates:
+A representation result must define the source class, target class, representation relation, and preservation obligations.
 
-- a limitation of FAR;
-- a defective reconstruction;
-- an interpretation dispute;
-- a justified scope boundary;
-- or a process that does not meet the project's independently stated criteria for reasoning.
+### Objective III — Necessity and independence
 
-### Objective III — Necessity
+Determine whether every retained primitive or preservation commitment is indispensable, derivable, replaceable, scope-dependent, or unnecessary.
 
-Determine whether every component of the candidate structure is required.
-
-A component is necessary only if removing it reduces the framework's ability to represent or evaluate reasoning within the justified scope. Components that do not satisfy this test should not remain in the minimal core.
+Experimental ablation may discover candidate dependencies. Necessity requires a deductive lower bound or equivalent proof over the declared reconstruction class.
 
 ### Objective IV — Minimality
 
-Determine whether the structure is irreducible.
+Determine whether the structure is irreducible within a declared universe of alternatives and an explicit equivalence or cost relation.
 
-If a competing structure with fewer primitives, assumptions, or relations has equal expressive and explanatory power, the simpler structure is preferred. Necessity asks whether each current component is required; minimality asks whether the entire structure is the smallest adequate structure among alternatives.
+Local minimality, bounded minimality, and global minimality are different claims. Global minimality may not be claimed from a finite comparison unless the candidate universe is proved exhaustive.
 
-## Research Method
+### Objective V — Equivalence, uniqueness, and impossibility
 
-Research governed by this program should use the following pattern where applicable:
+Characterize whether successful structures are unique up to isomorphism or translation, form multiple equivalent classes, remain incomparable, or cannot be finite and universal under stated assumptions.
 
-1. formulate the tested claim precisely;
-2. identify all material assumptions;
-3. identify the relevant scope and interpretation;
-4. construct plausible counterexamples and competing structures;
-5. reconstruct the candidate reasoning process faithfully;
-6. represent it using FAR without silent repair or redefinition;
-7. test alternative interpretations and adversarial objections;
-8. mechanize the representation where doing so adds reproducibility;
-9. classify failures explicitly;
-10. record implications for existence, universality, necessity, and minimality;
-11. preserve unresolved uncertainty rather than forcing a conclusion.
+## Primary deductive method
 
-Research should be reproducible, traceable, and open to independent scrutiny.
+The active central method is:
 
-## Evidence and Evaluation Standard
+1. state the theorem family and quantified scope precisely;
+2. define the source and target objects independently;
+3. classify every premise as a definition, well-formedness condition, axiom, imported theorem, scope restriction, evidence condition, or conjecture;
+4. define faithful representation and nontriviality formally;
+5. resolve the role of semantic and evidential correspondence, including P8;
+6. construct mappings and prove preservation lemmas;
+7. search concurrently for obstruction lemmas and countermodels;
+8. prove or refute the scoped representation theorem;
+9. establish primitive independence, derivability, or lower bounds;
+10. establish minimality, equivalence, uniqueness, incomparability, or impossibility within a declared universe;
+11. mechanize the largest sound theorem fragment;
+12. obtain independent proof review and adversarial counterexample search.
 
-The central hypothesis may be evaluated using:
+The canonical detailed sequence is `docs/planning/deduction-first-proof-roadmap.md`.
 
-- formal proof;
-- formal derivation;
-- empirical evidence;
-- mechanized conformance;
-- reproducible case studies;
-- comparative analysis;
-- successful representation;
-- identified limitations;
-- genuine counterexamples.
+## Theorem discipline
 
-These forms of evidence do not have identical force. Formal proof supports only the propositions and assumptions it actually establishes. Mechanized conformance demonstrates executability and contract satisfaction, not universal truth. Case studies provide bounded evidence. Failure to discover a counterexample does not prove universality.
+Every theorem artifact must identify:
 
-Every conclusion must state the evidence type, assumptions, scope, and remaining uncertainty.
+- theorem identifier and version;
+- exact statement;
+- quantified domain and scope;
+- definitions and axioms used;
+- dependency lemmas;
+- proof or refutation status;
+- machine-check status;
+- known countermodels and boundary cases;
+- consequences actually established;
+- stronger nonclaims.
 
-## Counterexample Policy
+A theorem may not quantify over all reasoning unless the quantified class is independently and formally defined.
+
+A representation theorem may not hide missing structure in an unrestricted interpreter, oracle, metadata field, lookup table, evaluator repair, or unconstrained representation relation.
+
+## Supporting empirical method
+
+Where useful, the project may:
+
+1. freeze vocabulary-neutral source observations;
+2. register positive and negative controls;
+3. execute comparative representations;
+4. perform primitive ablations and bounded searches;
+5. test implementations and proof artifacts;
+6. seek independent replication;
+7. preserve complete result distributions, failures, and nonclaims.
+
+These activities may reveal counterexamples, ambiguity, hidden assumptions, implementation defects, or scope pressure. Their conclusions remain bounded by their design.
+
+They do not gate drafting, proving, refuting, or mechanizing a theorem. Independent replication gates only claims of independent empirical confirmation.
+
+## Evidence hierarchy
+
+For mathematical claims, evidence is ordered by force as follows:
+
+1. machine-checked proof from frozen assumptions;
+2. complete human-checkable proof;
+3. partial proof, lemma, lower bound, or formal countermodel;
+4. exhaustive result over a fully defined finite universe;
+5. bounded mechanized conformance or model checking;
+6. comparative experiment or independently replicated evaluation;
+7. informal argument or intuition.
+
+Lower-ranked evidence may motivate or challenge a proof but may not be described as logically equivalent to it.
+
+Formal proof supports only the propositions and assumptions it actually establishes. Mechanization demonstrates only what the formal encoding and trusted kernel establish. Case studies and replication provide bounded evidence. Failure to discover a counterexample does not prove universality.
+
+Every conclusion must state its evidence type, assumptions, scope, and remaining uncertainty.
+
+## Counterexample policy
 
 Potential counterexamples are primary research objects and must not be dismissed merely because they pressure the current theory.
 
-Each candidate must be classified as exactly one of:
+Each candidate must be classified as one of:
 
-- **Genuine Counterexample** — a reasoning process within the justified scope cannot be faithfully represented by FAR;
-- **Representation Failure** — the attempted mapping is defective or incomplete, but the case has not shown FAR itself to fail;
-- **Interpretation Dispute** — the outcome depends on unresolved meanings or reconstructions;
-- **Scope-Boundary Case** — the case lies outside a previously and independently justified scope;
-- **Non-Reasoning Process** — the case fails independently established criteria for reasoning;
-- **Inconclusive** — the available evidence does not support a stable classification;
-- **Successfully Represented** — the relevant reasoning structure is represented without changing the protected theory.
+- **Formal Countermodel** — satisfies the frozen source definition and violates the proposed theorem conclusion;
+- **Impossibility Witness** — supports a no-go or lower-bound result under stated assumptions;
+- **Representation Failure** — the attempted mapping fails, but framework failure has not been established;
+- **Interpretation Dispute** — the outcome depends on unresolved semantics or reconstruction;
+- **Scope-Boundary Case** — lies outside a previously and independently justified scope;
+- **Non-Reasoning Process** — fails the independently stated source definition;
+- **Inconclusive** — available information does not support a stable classification;
+- **Successfully Represented** — required commitments are preserved without protected-theory change.
 
-Every classification requires explicit justification. A candidate may not be excluded by redefining reasoning after the fact. Any scope restriction must be stated independently of the challenged case and defended on its own merits.
+A candidate may not be excluded by redefining reasoning after exposure. Any scope restriction must be versioned and defended independently.
 
-## Theory Revision Policy
+## Theory revision policy
 
-The central research program may reveal defects, limitations, or unnecessary structure in FAR.
+Protected Foundation and theory artifacts must not be modified silently.
 
-Protected Foundation artifacts must not be modified silently. If research requires a mathematical change, it must enter an explicit Foundation Revision, Theory Revision, or Research Investigation process under the repository's governance rules.
+If a proof attempt or countermodel requires mathematical change, it must enter an explicit revision process. A revised theorem, source class, preservation basis, or target structure becomes a new version. Earlier failed or weaker versions remain part of the record.
 
-Documentation, repository restructuring, terminology cleanup, or mechanization changes may not be used to conceal substantive theoretical revision.
+Documentation, repository restructuring, terminology cleanup, or mechanization changes may not conceal substantive theoretical revision.
 
-## Relationship to Mechanization
+## Relationship to mechanization
 
-Mechanization operationalizes FAR, tests whether its concepts can be represented precisely, enables reproducible validation, and supports systematic counterexample analysis.
+Mechanization formalizes definitions and proofs, exposes missing assumptions, checks derivations, and supports reproducible counterexample analysis.
 
-Mechanization strengthens confidence in internal coherence and executability. It does not by itself establish universality, necessity, minimality, or truth.
+A proof assistant can provide the strongest available verification when the theorem and assumptions are faithfully encoded. It does not erase questionable axioms, circular definitions, or an unjustified source scope.
 
-## Relationship to External Validation
+Executability alone does not establish universality, necessity, minimality, or truth.
 
-External validation tests FAR against reasoning systems, arguments, and practices not constructed for FAR. It provides bounded evidence concerning representational reach, domain-specific assumptions, recurring pressure points, and possible limitations.
+## Relationship to PBTS-001 and independent replication
 
-External validation does not prove universal applicability. Each case remains conditional on its reconstruction, evidence, and scope. CRP v1.0 governs blinded comparative claims about representational vocabularies. Deterministic implementations establish only their scoped vocabulary-native compilation, executable lowering, deterministic verification, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration. They do not establish universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or untested vocabulary-semantics adequacy.
+PBTS-001, its internal RUN-001, the independent replication package, and coordinator controls remain valid supporting artifacts.
 
-## Work Admission Standard
+They test the operational clarity and robustness of PB-001 judgments. They may expose missing theorem obligations or counterexamples. They do not constitute a representation theorem and are not prerequisites for attempting one.
 
-A proposed contribution belongs in the core research program only if it materially advances at least one of the following:
+Independent replication remains required before claiming independent confirmation of PBTS results. It is not a prerequisite for mathematical deduction.
 
-- counterexample discovery;
-- faithful representation;
-- limitation identification;
-- assumption reduction;
-- primitive reduction;
-- proof strengthening;
+## Relationship to external validation
+
+External validation tests FAR against systems and practices not constructed for FAR. It provides bounded evidence concerning applicability, recurring pressure points, representational assumptions, and possible limitations.
+
+External validation does not prove universal applicability. Deterministic implementations establish only their scoped compilation, execution, verification, and robustness properties. They do not establish universal sufficiency, necessity, minimality, superiority, or a universal reasoning structure.
+
+## Anti-self-validation governance
+
+Project-authored experiments may establish internal coherence or implementation robustness but may not be described as independent confirmation.
+
+This restriction applies to empirical and review claims. It does not prohibit the project from developing a proof. A proof claim is governed by theorem correctness, explicit assumptions, and the applicable proof gates. Independent review remains necessary before claiming independent proof verification.
+
+Source-system observation contracts must remain vocabulary-neutral. All primitives, derived constructs, operations, semantic clauses, hidden state, ambiguity policies, implementation assumptions, and adjudication burden must be counted in empirical necessity or economy studies.
+
+## Work admission standard
+
+A proposed contribution belongs in the core research program only if it materially advances at least one of:
+
+- theorem specification;
+- definition or axiom clarification;
+- proof construction;
+- proof refutation;
+- countermodel discovery;
+- lower bounds or primitive independence;
+- equivalence, uniqueness, or impossibility;
+- mechanized proof checking;
 - boundary clarification;
-- mechanized testability;
-- explanatory power;
-- comparison with a simpler competing structure.
+- independent proof review;
+- supporting empirical work that can expose a theorem defect or implementation error.
 
-Work that does not advance the central question should be classified accurately as infrastructure, maintenance, application, future enhancement, or outside core research scope. Such work may still be valuable, but it must not be confused with evidence resolving the central hypothesis.
+Work that does not advance the central question should be classified as infrastructure, maintenance, application, future enhancement, or outside core scope.
 
-## Possible Outcomes
+## Possible outcomes
 
-The program recognizes at least the following legitimate outcomes:
+The program recognizes at least:
 
-1. no universal structure of reasoning exists;
+1. no universal structure of reasoning exists under the declared assumptions;
 2. a universal structure exists, but FAR is not that structure;
-3. FAR is universal only within an explicitly bounded domain;
-4. FAR is universal under stated assumptions but is not minimal;
-5. FAR is universal and minimal under stated assumptions;
-6. the evidence remains insufficient for a justified conclusion.
+3. FAR is universal only within an explicitly bounded formal domain;
+4. FAR is sufficient under stated assumptions but not necessary or minimal;
+5. FAR is one of multiple equivalent or incomparable structures;
+6. FAR is universal and minimal within a declared candidate universe;
+7. no finite universal architecture exists under stated assumptions;
+8. the proof obligations remain unresolved.
 
-Project success does not require a favorable conclusion about FAR. It requires the strongest conclusion justified by the evidence.
+Project success does not require a favorable conclusion about FAR. It requires the strongest justified conclusion.
 
-## Completion Standard
+## Completion standard
 
-The Central Research Program is complete only when the strongest justified conclusion has been established regarding:
+The Central Research Program is complete only when the strongest justified formal conclusion has been established regarding:
 
 - existence;
-- universality;
-- necessity;
-- minimality;
-- boundaries of applicability;
-- unresolved uncertainty.
+- faithful representation;
+- universality within a declared scope;
+- necessity and independence;
+- minimality within a declared universe;
+- equivalence, uniqueness, or incomparability;
+- impossibility or no-go boundaries;
+- unresolved obligations.
 
-The project must distinguish proof from bounded evidence, and justified conclusion from absence of disconfirmation. Completion does not require certainty beyond what the evidence can support.
+Independent empirical validation and proof review strengthen confidence and applicability but are recorded as separate claim dimensions.
 
-## Current Research Boundary
+## Current research boundary
 
-The current repository establishes that:
+The repository currently provides:
 
-- Foundation v1.0 is frozen;
-- initial cross-domain external validation is complete;
-- the mechanization MVP is complete;
-- repository governance and certification are complete.
+- a frozen Foundation v1.0;
+- a prospective architecture-neutral reasoning domain;
+- IRD-001;
+- PB-001 as a candidate preservation basis;
+- PBTS-001 and an internal execution;
+- an independently executable replication package and coordinator controls;
+- a mechanization MVP;
+- governance and evidence infrastructure.
 
-These results establish readiness for systematic investigation. They do not answer the central research question.
+These results establish readiness for deduction and systematic challenge. They do not answer the central research question.
 
-Future major work should therefore be evaluated by its contribution to determining whether FAR captures a universal and minimal structure of reasoning, where its boundaries lie, and whether a simpler competing structure can account for the same phenomena.
-
-## Comparative Representation Evaluation Governance
-
-The central research program distinguishes preliminary external validation from blinded comparative representation evaluation. Preliminary external validation may describe systems, map FAR/FARA roles, and identify pressure points. Comparative Representation Protocol v1.0 governs claims about comparative distinctiveness, reproducibility, local necessity, relative economy, and Pareto interpretation. Completed deterministic experiments remain bounded evidence and do not automatically satisfy prospective independence or anti-self-validation gates.
-
-## Anti-Self-Validation Governance
-
-All future confirmatory or claim-strengthening work is additionally governed by:
-
-- [`anti-self-validation-standard.md`](anti-self-validation-standard.md);
-- [`research-priority-reset.md`](research-priority-reset.md);
-- [`../methodology/confirmatory-research-package.md`](../methodology/confirmatory-research-package.md);
-- [`../../theory/evaluation/research-gates.json`](../../theory/evaluation/research-gates.json).
-
-These controls require separation of theory, case generation, competing representations, implementation, verification, and adjudication to the degree claimed by the evidence. A project-authored end-to-end pipeline may establish internal coherence or implementation robustness, but it may not be described as independent confirmation.
-
-The source-system observation contract must be vocabulary-neutral. All primitives, derived constructs, operations, semantic clauses, hidden state, ambiguity policies, implementation assumptions, and adjudication burden must be counted when necessity, minimality, or superiority is evaluated. Negative controls must demonstrate that output-equivalent but structurally unfaithful encodings are rejected.
-
-Any theory or scope change made after exposure to a frozen case creates a new version and does not erase the earlier result. Failed, divergent, excluded, and unresolved outcomes remain part of the permanent evidence record. An unsatisfied research gate blocks only the stronger claim associated with that gate; it does not invalidate narrower results that are accurately described.
+The immediate central task is to freeze the scoped representation-theorem target and premise ledger. Independent PBTS replication continues as a parallel supporting track when real qualified participants are available.
