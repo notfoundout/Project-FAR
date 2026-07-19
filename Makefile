@@ -1,6 +1,7 @@
 health:
 	python tools/repo_health_check.py --full
 	python tools/check_research_gates.py
+	python tools/check_deduction_first_program.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
@@ -13,6 +14,7 @@ health:
 health-fast:
 	python tools/repo_health_check.py --fast
 	python tools/check_research_gates.py
+	python tools/check_deduction_first_program.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
@@ -36,6 +38,7 @@ release-check:
 
 research-check:
 	python tools/check_research_gates.py
+	python tools/check_deduction_first_program.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
