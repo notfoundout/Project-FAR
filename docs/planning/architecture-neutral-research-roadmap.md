@@ -4,6 +4,8 @@
 
 This roadmap orders the scientific work required to determine whether any genuine common structure of reasoning exists and whether FARA is universal, bounded, nonminimal, replaceable, equivalent to alternatives, or false as a universal account.
 
+Deduction is the primary path to the central result. Empirical validation and independent replication remain parallel supporting tracks.
+
 Each milestone must preserve favorable, unfavorable, and unresolved outcomes.
 
 ## Milestone 1 — Architecture-neutral reasoning domain
@@ -18,6 +20,8 @@ Each milestone must preserve favorable, unfavorable, and unresolved outcomes.
 
 **Result:** IRD-001 defines a candidate-neutral process presentation and six reasoning conditions, with E0-E2 evidential grades and mandatory countermodels.
 
+IRD-001 remains a candidate formal source definition. Its adequacy for the theorem target must be audited rather than assumed.
+
 ## Milestone 3 — Preservation-basis investigation
 
 **Status:** derivation phase complete prospectively through `docs/research/preservation-basis-investigation-v1.0.md` and `theory/evaluation/preservation-basis-registry.json`.
@@ -26,7 +30,7 @@ Each milestone must preserve favorable, unfavorable, and unresolved outcomes.
 
 The inherited information-preservation dimension is an aggregate no-relevant-loss criterion rather than an independent coordinate.
 
-PB-001 is not established as sufficient, necessary, independent, minimal, or complete.
+PB-001 is not established as sufficient, necessary, independent, minimal, or complete. Its theorem role remains open.
 
 ## Milestone 4 — PBTS-001 design and internal execution
 
@@ -54,9 +58,9 @@ RUN-001 artifacts:
 - P3, P6, and P8 retained overlap or qualifier concerns;
 - P8 remains unresolved as an ordinary coordinate versus a meta-level evidential qualifier.
 
-**Claim boundary:** RUN-001 is one-context, three-method internal methodological robustness. It does not satisfy independent-construction, external-replication, or representation-theorem requirements.
+**Claim boundary:** RUN-001 is one-context, three-method internal methodological robustness. It is not a mathematical proof, independent confirmation, or a representation theorem.
 
-## Milestone 5 — Independent PBTS-001 replication
+## Milestone 5 — Supporting independent PBTS-001 replication
 
 **Status:** replication package and RUN-001 coordinator controls frozen; recruitment and participant registration not started.
 
@@ -75,100 +79,171 @@ RUN-001 control artifacts:
 - `theory/evaluation/pbts001-independent-replication/run-001/` append-only channels;
 - `docs/audits/pbts001-replication-run-001-controls-audit.md`.
 
-**Frozen design:**
+**Current claim boundary:** the package is infrastructure for independent empirical replication. REP-A, REP-B, and REP-C remain empty. No independent result exists.
 
-- three opaque primary replicator slots;
-- target classification R3, with mandatory downgrade when actual independence is weaker;
-- exact protected-input Git blob identifiers;
-- exclusion of RUN-001 result artifacts and derivative judgments from participant-facing bundles;
-- explicit acknowledgment that a public repository cannot guarantee technical blinding;
-- unrelated calibration with independent scoring;
-- real-person or organization attestation and duplicate-participant controls;
-- exposure, conflict, tooling, funding, and assistance declarations;
-- deterministic section-order assignment after qualification;
-- nine empty append-only channels;
-- mutual submission embargo;
-- full-distribution aggregation only after submission freeze;
-- dedicated neutral classification of P8;
-- all participant, execution, result, and theorem gates false.
+**Dependency status:** this milestone is parallel and nonblocking for theorem construction. It remains mandatory before claiming independent empirical confirmation of PBTS-001.
 
-**Current claim boundary:** coordinator controls are infrastructure for independent replication, not replication evidence. REP-A, REP-B, and REP-C are empty slots. No participant has been registered, calibrated, assigned, or independently verified.
+Replication may reveal ambiguity, missing obligations, counterexamples, or implementation dependence. Any such result must be incorporated through a versioned theorem, definition, or basis revision.
 
-**Next execution phase must:**
+## Milestone 6 — THM-TARGET-001 theorem target and premise ledger
 
-1. recruit at least three real qualified replicators;
-2. record registrations without exposing one registrant to another;
-3. obtain prior-exposure, conflict, funding, tooling, and assistance declarations;
-4. administer and independently score the frozen calibration;
-5. complete independence audits and record the maximum justified layer;
-6. generate deterministic section orders only after qualification;
-7. distribute only the protected participant-facing bundle;
-8. embargo submissions from one another until freeze;
-9. preserve every submission, rejection, downgrade, deviation, withdrawal, and adjudication;
-10. aggregate only after all submissions are frozen or permanently unavailable;
-11. compare with internal RUN-001 only after independent submission freeze;
-12. record the maximum justified replication layer and all nonclaims.
+**Status:** immediate next milestone.
 
-**Favorable result:** three valid independently constructed paths reproduce scoped discrimination and ablation findings without discovering a required general axis or mandatory revision.
+Freeze separate statements for:
 
-**Unfavorable result:** independent paths fail to reproduce one or more axis distinctions, identify redundancy, require a new axis, require PB/IRD/domain revision, expose RUN-001 authoring bias, or fail independence controls.
+- scoped existence;
+- faithful representation;
+- universality within the declared source class;
+- primitive necessity and independence;
+- minimality within a declared candidate universe;
+- equivalence, uniqueness, incomparability, or impossibility.
 
-**Unresolved result:** evaluator disagreement, exposure, observability, recruitment failure, or P8 classification prevents a stable result.
+The artifact must define:
 
-**Cannot establish alone:** FARA universality, global minimality, superiority, or universal reasoning structure.
+- the source class;
+- the FARA target structure or justified successor;
+- the representation relation;
+- preservation obligations;
+- nontriviality exclusions;
+- the role of IRD-001;
+- the role of PB-001 or a proposed revision;
+- P8 treatment alternatives;
+- assumptions, failure conditions, and nonclaims.
 
-## Milestone 6 — Scoped representation theorem
+**Exit condition:** a mathematically well-formed theorem family and complete premise ledger. No proof claim is made at this stage.
 
-Blocked until Milestone 5 produces three valid independent primary submissions or a justified PB revision that is separately frozen and retested.
+## Milestone 7 — Faithful-representation formalization
 
-P8's theorem role must also be resolved or represented through explicit alternative theorem obligations.
+Define source and target objects, mapping requirements, admissibility, transition correspondence, dependency and history preservation, semantics, and evidential correspondence.
 
-Then prove or refute a nontrivial faithful representation theorem from IRD-001 or a justified revision into FARA using a preservation basis that survived its registered tests. Placeholder, label-only, lookup, hidden-interpreter, or evaluator-repaired inhabitation is excluded.
+Formally exclude placeholder, label-only, lookup-table, hidden-interpreter, metadata-smuggling, dependency-collapse, history-erasure, and evaluator-repaired encodings.
 
-## Milestone 7 — Candidate architecture schema and compiler contracts
+**Exit condition:** the representation relation is strong enough to distinguish faithful representation from unrestricted coding.
 
-Create a candidate-neutral formal schema enabling multiple architectures to be specified, frozen, compiled, and evaluated uniformly. The governance registry is not a substitute for this formalism.
+## Milestone 8 — Construction and obstruction lemmas
 
-## Milestone 8 — Primitive ablation and lower bounds
+Build constructive mappings for the ordinary finite core while searching for obstruction lemmas and countermodels.
 
-Remove or reconstruct every FARA primitive under anti-reintroduction and full-cost accounting. Classify each as necessary within scope, derivable, replaceable, unresolved, or unnecessary.
+Required pressure classes include:
 
-## Milestone 9 — Strong competitor completion
+- self-modification;
+- nonmonotonic revision;
+- probabilistic or graded commitment;
+- distributed reasoning;
+- semantic change;
+- hidden or partially observed state;
+- resource bounds;
+- circular support;
+- dynamic representational types;
+- open-ended or nonterminating reasoning.
 
-Resolve the compact alternatives left unresolved by CRE-003 and successor work. Unresolved candidates remain live competitors until evidence changes their status.
+**Exit condition:** every admitted source feature has a construction lemma or a registered obstruction.
 
-## Milestone 10 — Exhaustive bounded small-system search
+## Milestone 9 — Scoped representation theorem or refutation
 
-Define a finite universe of small reasoning systems, enumerate it completely, and test all admitted candidates or candidate families. Publish coverage limits and generation rules.
+Prove or refute the frozen theorem target from IRD-001 or a justified versioned revision into FARA or a justified versioned successor.
 
-## Milestone 11 — Minimal counterexample generation
+Allowed outcomes:
 
-For each failure, produce or approximate the smallest counterexample and classify whether it defeats a mapping, candidate, preservation basis, domain definition, independent definition, or universal finite-architecture hypothesis.
+- proved within scope;
+- disproved by formal countermodel;
+- proved only after explicit scope restriction;
+- proved only after theory revision;
+- impossible under stated assumptions;
+- unresolved due to open lemmas.
 
-## Milestone 12 — Equivalence and dominance analysis
+P8 must be resolved as an ordinary preservation coordinate, cross-cutting theorem side condition, separate correspondence theorem, revision requirement, or explicit unresolved blocker.
 
-Separate syntactic similarity, experimental indistinguishability, bidirectional translation, scoped Pareto dominance, and formally proved equivalence.
+Independent PBTS replication is not a premise of this theorem. Proof correctness, scope, and assumptions control the theorem claim.
 
-## Milestone 13 — Impossibility and no-go results
+## Milestone 10 — Primitive independence, derivability, and lower bounds
 
-Search for conditions proving that no finite architecture can preserve all accepted commitments, or that incompatible reasoning classes require incompatible primitive distinctions.
+For each retained FARA primitive or preservation commitment, prove whether it is:
 
-## Milestone 14 — Broader independent replication and adversarial holdouts
+- indispensable within scope;
+- derivable;
+- replaceable by an equivalent commitment;
+- necessary only under added assumptions;
+- unnecessary;
+- unresolved.
 
-Execute later frozen theorem, architecture, ablation, and boundary packages at the strongest available independence level, including private holdouts and permanent publication of failures and unresolved outcomes.
+Experimental ablation remains supporting evidence and counterexample search. It is not by itself a proof of necessity.
+
+## Milestone 11 — Minimality, equivalence, uniqueness, and impossibility
+
+Define a candidate universe and equivalence or cost relation.
+
+Then establish one or more of:
+
+- local or bounded minimality;
+- lower bounds on required distinctions;
+- equivalence classes of successful bases;
+- uniqueness up to isomorphism or translation;
+- incomparable minimal bases;
+- absence of a global minimum;
+- impossibility of finite universal representation.
+
+No global minimality claim may be inferred from a finite competitor sample unless exhaustiveness is proved.
+
+## Milestone 12 — Mechanized proof verification
+
+Encode the frozen definitions, axioms, lemmas, theorem, and countermodels in an appropriate proof assistant or verified formal system.
+
+Distinguish trusted kernel assumptions, Project FAR axioms, executable definitions, proved lemmas, admitted obligations, and unmechanized dependencies.
+
+**Exit condition:** the largest sound theorem fragment is machine checked and every remaining gap is explicit.
+
+## Milestone 13 — Bounded exhaustive search and minimal counterexamples
+
+Define finite universes where useful, enumerate them completely, and use model search to:
+
+- validate bounded theorem fragments;
+- discover minimal counterexamples;
+- test lower bounds;
+- compare equivalent constructions;
+- expose hidden assumptions.
+
+Bounded exhaustive results remain indexed to their declared finite universe.
+
+## Milestone 14 — Independent proof review and broader adversarial validation
+
+Invite independent reviewers to reconstruct the proof, challenge definitions and assumptions, test mechanized artifacts, and search for countermodels.
+
+Execute PBTS replication, theorem-review packages, private holdouts, and adversarial challenges at the strongest available independence level.
+
+Independent review strengthens confidence and can invalidate a defective proof. It is not a logical premise of an otherwise valid theorem.
 
 ## Milestone 15 — Central decision assessment
 
-Update the central claim registry and candidate registry. Allowed conclusions include FARA supported within a proven scope, FARA replaced, multiple candidates equivalent or incomparable, only bounded architectures, no finite universal architecture under stated assumptions, or insufficient evidence.
+Update the central claim registry and candidate registry.
+
+Allowed conclusions include:
+
+- FARA supported within a proved scope;
+- FARA refuted or replaced;
+- multiple candidates equivalent or incomparable;
+- only bounded architectures exist;
+- no finite universal architecture exists under stated assumptions;
+- the formal question remains unresolved.
+
+Separate theorem status, mechanization status, independent proof-review status, and empirical replication status.
 
 ## Dependency order
 
-The frozen domain precedes IRD-001. IRD-001 precedes PB-001 derivation. PB-001 derivation precedes PBTS-001. Internal PBTS execution precedes independent PBTS replication. Replication-package and coordinator-control freezes precede real participant registration and independent execution. Valid independent replication or a separately frozen PB revision precedes representation-theorem work. Later candidate, ablation, competitor, bounded-search, counterexample, equivalence, impossibility, and replication milestones supply the remaining evidence.
+The frozen domain precedes IRD-001. IRD-001 and PB-001 inform, but do not automatically satisfy, the theorem target.
+
+The primary dependency chain is:
+
+`domain → source definition → theorem target and premises → faithful representation → construction/obstruction lemmas → representation theorem or refutation → lower bounds → minimality/equivalence/impossibility → mechanization → independent proof review`.
+
+PBTS-001 replication proceeds in parallel. Its completion is required only for independent empirical-confirmation claims, not for theorem construction.
 
 ## Paused work
 
-Certification expansion, new dashboards, release packaging, favorable-case accumulation, generic exposition, and unrelated applications remain paused unless required to execute or verify an active milestone.
+Certification expansion, new dashboards, release packaging, favorable-case accumulation, generic exposition, new replication infrastructure, and unrelated applications remain paused unless required to define, prove, refute, mechanize, or independently review an active theorem obligation.
 
 ## Immediate next action
 
-Recruit at least three real qualified replicators for REP-A, REP-B, and REP-C. After real candidates exist, append registrations, exposure declarations, calibration outcomes, independence audits, and deterministic assignments under the frozen RUN-001 controls. Do not insert simulated participants, replication judgments, or a favorable theorem gate.
+Create and freeze `THM-TARGET-001`, the scoped representation-theorem target and premise ledger.
+
+Do not claim a theorem, necessity, minimality, universality, or independent validation in that artifact. Preserve PBTS-001 replication as a parallel supporting track rather than the gate controlling deductive progress.
