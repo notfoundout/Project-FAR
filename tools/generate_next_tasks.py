@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate advisory next actions from generated status and gap reports."""
+"""Generate advisory next actions from generated status, gaps, and the deduction-first program."""
 from __future__ import annotations
 from pathlib import Path
 import re
@@ -52,11 +52,67 @@ def task_from_gap(g):
 
 def strategic_tasks():
     return [
-        {'id':'STRATEGIC-001','gap':None,'priority':'high','title':'Plan independent replication of CRE-002-EXT-001','why':'CRE-002-EXT-001 is a positive prospective bounded result, but all encodings, compilers, lowerers, and verifiers remain repository-authored. Independent replication is now the primary evidential bottleneck.','affected':[markdown_link(ROOT / 'docs/methodology/adversarial-evaluation.md', OUT), markdown_link(ROOT / 'docs/governance/central-research-program.md', OUT), markdown_link(ROOT / 'docs/reports/cre002-ext001-evidence-analysis.md', OUT)],'outcome':'A preregistered replication plan with independent encoders or compiler implementations, isolation rules, provenance requirements, frozen acceptance criteria, and explicit nonclaims.','risk':'high','branch':'research/plan-cre002-ext001-independent-replication','pr':'Plan independent CRE-002-EXT-001 replication'},
-        {'id':'STRATEGIC-002','gap':None,'priority':'high','title':'Design a boundary-focused CRE-003','why':'The extension passed only a bounded registered scenario with five derived constructs. A new prospective experiment should target capabilities and failure modes outside that exact grammar without reusing the same acceptance path.','affected':[markdown_link(ROOT / 'theory/evaluation/comparative-representation', OUT), markdown_link(ROOT / 'docs/ROADMAP.md', OUT), markdown_link(ROOT / 'docs/reports/cre002-ext001-evidence-analysis.md', OUT)],'outcome':'A boundary-focused preregistration that attempts to falsify adequacy outside CRE-002-EXT-001 while preserving the current result unchanged.','risk':'high','branch':'research/design-cre003-boundary-test','pr':'Design CRE-003 boundary test'},
-        {'id':'STRATEGIC-003','gap':None,'priority':'medium','title':'Audit comparative representation cost','why':'CRE-002-EXT-001 showed behavioral completion for all three vocabularies but did not measure complexity, derived-machinery burden, or encoding cost, so it supports no ranking.','affected':[markdown_link(ROOT / 'docs/reports/cre002-ext001-evidence-analysis.md', OUT), markdown_link(ROOT / 'theory/evaluation/comparative-representation', OUT)],'outcome':'A preregistered cost model separating primitive count, derived constructs, semantic clauses, lowering rules, trace size, and implementation assumptions without converting cost into unsupported superiority claims.','risk':'medium','branch':'research/audit-comparative-representation-cost','pr':'Audit comparative representation cost'},
-        {'id':'STRATEGIC-004','gap':None,'priority':'medium','title':'Preserve semantic and result drift locks','why':'Baseline 1.1, the original CRE-002 result, the CRE-002-EXT-001 scientific package, and its generated result must remain historically distinct and reproducible.','affected':[markdown_link(ROOT / 'theory/evaluation/comparative-representation/semantics/vocabulary-semantics-baseline-1.1.json', OUT), markdown_link(ROOT / 'theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001', OUT)],'outcome':'Regression checks continue to detect semantic, checksum, chronology, generated-result, and claim-boundary drift.','risk':'medium','branch':'maintenance/monitor-cre002-ext001-drift','pr':'Monitor CRE-002-EXT-001 drift'},
-        {'id':'STRATEGIC-005','gap':None,'priority':'medium','title':'Prepare the next evidence release','why':'The current v0.4.0 release predates the prospective CRE-002 and CRE-002-EXT-001 evidence sequence. A later release should package the evidence without strengthening theory claims.','affected':[markdown_link(ROOT / 'docs/releases', OUT), markdown_link(ROOT / 'docs/project-status.md', OUT), markdown_link(ROOT / 'docs/reports/cre002-ext001-evidence-analysis.md', OUT)],'outcome':'A release-readiness plan that records CRE-002 and CRE-002-EXT-001 chronology, supported conclusions, limitations, and independent-replication requirements.','risk':'medium','branch':'release/prepare-post-cre002-evidence-release','pr':'Prepare post-CRE-002 evidence release'},
+        {
+            'id':'STRATEGIC-001','gap':None,'priority':'high',
+            'title':'Freeze THM-TARGET-001 and premise ledger',
+            'why':'The central question cannot be proved or refuted until its source class, target structure, theorem family, assumptions, preservation obligations, P8 alternatives, failure conditions, and nonclaims are fixed.',
+            'affected':[
+                markdown_link(ROOT / 'docs/governance/deduction-first-research-standard.md', OUT),
+                markdown_link(ROOT / 'docs/planning/deduction-first-proof-roadmap.md', OUT),
+                markdown_link(ROOT / 'docs/research/independent-reasoning-definition-v1.0.md', OUT),
+                markdown_link(ROOT / 'docs/research/preservation-basis-investigation-v1.0.md', OUT),
+            ],
+            'outcome':'A versioned THM-TARGET-001 artifact that states separate scoped existence, faithful-representation, necessity, minimality, equivalence, and impossibility obligations without claiming a proof.',
+            'risk':'high','branch':'research/freeze-thm-target-001','pr':'Freeze THM-TARGET-001 theorem target and premise ledger'
+        },
+        {
+            'id':'STRATEGIC-002','gap':None,'priority':'high',
+            'title':'Formalize faithful representation and nontriviality',
+            'why':'A representation theorem is vacuous unless the representation relation formally excludes label-only mappings, lookup tables, hidden interpreters, metadata smuggling, dependency collapse, history erasure, and evaluator repair.',
+            'affected':[
+                markdown_link(ROOT / 'docs/planning/deduction-first-proof-roadmap.md', OUT),
+                markdown_link(ROOT / 'docs/research/preservation-basis-investigation-v1.0.md', OUT),
+                markdown_link(ROOT / 'docs/methodology/negative-control-suite-v1.0.md', OUT),
+            ],
+            'outcome':'A frozen faithful-representation specification with explicit source and target objects, preservation clauses, conditional obligations, and formal nontriviality exclusions.',
+            'risk':'high','branch':'research/formalize-faithful-representation','pr':'Formalize faithful representation and nontriviality'
+        },
+        {
+            'id':'STRATEGIC-003','gap':None,'priority':'high',
+            'title':'Resolve the formal role of P8',
+            'why':'P8 remains unresolved as an ordinary preservation coordinate versus a cross-cutting evidential condition. A completed theorem cannot leave that distinction informal.',
+            'affected':[
+                markdown_link(ROOT / 'docs/research/preservation-basis-investigation-v1.0.md', OUT),
+                markdown_link(ROOT / 'docs/research/pb001-execution-run-001-report.md', OUT),
+                markdown_link(ROOT / 'docs/planning/deduction-first-proof-roadmap.md', OUT),
+            ],
+            'outcome':'A theorem-facing classification of P8 as a coordinate, theorem side condition, separate correspondence theorem, revision requirement, or explicit unresolved blocker.',
+            'risk':'high','branch':'research/resolve-p8-theorem-role','pr':'Resolve P8 theorem role'
+        },
+        {
+            'id':'STRATEGIC-004','gap':None,'priority':'medium',
+            'title':'Develop construction and obstruction lemmas',
+            'why':'The theorem program must build mappings for the ordinary finite core while simultaneously searching for self-modification, nonmonotonic, probabilistic, distributed, semantic-change, hidden-state, and open-ended countermodels.',
+            'affected':[
+                markdown_link(ROOT / 'docs/research/reasoning-domain-specification-v1.0.md', OUT),
+                markdown_link(ROOT / 'docs/research/independent-reasoning-definition-v1.0.md', OUT),
+                markdown_link(ROOT / 'docs/planning/deduction-first-proof-roadmap.md', OUT),
+            ],
+            'outcome':'A dependency-ordered lemma ledger in which every admitted source feature has a construction lemma or a registered obstruction.',
+            'risk':'high','branch':'research/build-representation-lemmas','pr':'Develop representation construction and obstruction lemmas'
+        },
+        {
+            'id':'STRATEGIC-005','gap':None,'priority':'medium',
+            'title':'Prepare proof mechanization architecture',
+            'why':'Machine checking will require a declared trusted base, formal encodings of the source and target classes, explicit axioms, theorem dependencies, and a policy for admitted obligations.',
+            'affected':[
+                markdown_link(ROOT / 'mechanization', OUT),
+                markdown_link(ROOT / 'docs/governance/deduction-first-research-standard.md', OUT),
+                markdown_link(ROOT / 'docs/planning/deduction-first-proof-roadmap.md', OUT),
+            ],
+            'outcome':'A proof-assistant selection and encoding plan that does not claim machine verification before the theorem statement and semantics are frozen.',
+            'risk':'medium','branch':'research/plan-proof-mechanization','pr':'Plan deduction-first proof mechanization'
+        },
     ]
 
 def nav_links(out_path: Path) -> list[str]:
@@ -67,7 +123,6 @@ def nav_links(out_path: Path) -> list[str]:
         f"- Next Actions: {markdown_link(ROOT / 'docs/planning/next-actions.md', out_path)}",
     ]
 
-
 def main():
     gaps=parse_gaps(); gaps.sort(key=lambda g:(SEV.get(g['sev'],9), g['id']))
     tasks=strategic_tasks() + [task_from_gap(g) for g in gaps[:15]]
@@ -76,15 +131,15 @@ def main():
     ids=[t['id'] for t in tasks]
     if len(ids)!=len(set(ids)):
         raise ValueError('generated task identifiers must be unique')
-    lines=['# Next Actions','', '## Navigation','', *nav_links(OUT), '', f'Generated by `python tools/generate_next_tasks.py` from {markdown_link(STATUS, OUT)} and {markdown_link(GAP, OUT)}. These recommendations are advisory only and do not authorize theory changes.','', '## Ranked Next Actions','']
+    lines=['# Next Actions','', '## Navigation','', *nav_links(OUT), '', f'Generated by `python tools/generate_next_tasks.py` from {markdown_link(STATUS, OUT)} and {markdown_link(GAP, OUT)} under the deduction-first strategic priority. These recommendations are advisory and do not authorize unregistered theory changes.','', '## Ranked Next Actions','']
     for t in tasks:
-        source=(f"- Source gap: {source_gap_link(t['gap'])}" if t.get('gap') else '- Source: strategic roadmap priority')
+        source=(f"- Source gap: {source_gap_link(t['gap'])}" if t.get('gap') else '- Source: deduction-first strategic priority')
         lines += [f"### {t['id']}: {t['title']}",'',source,f"- Priority: {t['priority']}",f"- Why it matters: {t['why']}","- Affected files:",*[f"  - {a}" for a in t['affected']],f"- Expected outcome: {t['outcome']}",f"- Risk level: {t['risk']}",f"- Suggested branch name: `{t['branch']}`",f"- Suggested PR title: `{t['pr']}`",'']
     lines += ['## Maintainer Task Briefs','']
     for t in tasks[:5]:
         allowed=', '.join(t['affected'])
-        source=(f"Source gap: {source_gap_link(t['gap'])}" if t.get('gap') else 'Source: strategic roadmap priority')
-        lines += [f"### Task brief for {t['id']}",'','```markdown',f"Create branch `{t['branch']}`.",'',f"Scope: {t['title']}. This is advisory planning or documentation only.",source,f"Allowed files: {allowed}, generated reports, and planning documentation directly needed for this review.",'Forbidden files: primitives, definitions, axioms, theorem statements, proof objects, parser behavior, reasoning-engine behavior, metadata schemas, and evaluation conclusions.','Validation commands:','- `python tools/self_advancement_plan.py`','- `python tools/repo_health_check.py --fast` if available',f"PR title: {t['pr']}",'Stop condition: stop before any theory change; request human review if the work would alter accepted theory or conclusions.','```','']
+        source=(f"Source gap: {source_gap_link(t['gap'])}" if t.get('gap') else 'Source: deduction-first strategic priority')
+        lines += [f"### Task brief for {t['id']}",'','```markdown',f"Create branch `{t['branch']}`.",'',f"Scope: {t['title']}.",source,f"Primary files: {allowed}.",'Preserve all frozen evidence, failures, unknowns, and nonclaims. Do not silently modify Foundation, accepted primitives, axioms, or prior results. Any substantive theory change requires the registered versioned revision process.','Do not claim a theorem, universality, necessity, minimality, mechanized verification, or independent validation unless the corresponding research gate contains evidence.','Validation commands:','- `make research-check`','- `make health-fast`',f"PR title: {t['pr']}",'Stop condition: stop when the scoped artifact is complete or when a formal obstruction requires a separately registered revision.','```','']
     lines += ['', '## Navigation', '', *nav_links(OUT)]
     OUT.parent.mkdir(parents=True, exist_ok=True); OUT.write_text('\n'.join(lines)+'\n',encoding='utf-8')
     print(f"{OUT.relative_to(ROOT)} tasks={len(tasks)}")
