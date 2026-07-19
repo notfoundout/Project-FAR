@@ -13,9 +13,15 @@ CENTRAL = ROOT / "docs/governance/central-research-program.md"
 PRIORITY = ROOT / "docs/governance/research-priority-reset.md"
 PROOF_ROADMAP = ROOT / "docs/planning/deduction-first-proof-roadmap.md"
 ARCH_ROADMAP = ROOT / "docs/planning/architecture-neutral-research-roadmap.md"
+NEXT_ACTIONS = ROOT / "docs/planning/next-actions.md"
+PROJECT_STATUS = ROOT / "docs/reports/project-status-generated.md"
 README = ROOT / "README.md"
 GATES = ROOT / "theory/evaluation/research-gates.json"
 CLAIMS = ROOT / "theory/evaluation/central-claim-registry.json"
+NEXT_GENERATOR = ROOT / "tools/generate_next_tasks.py"
+STATUS_GENERATOR = ROOT / "tools/project_status_report.py"
+DASHBOARD_GENERATOR = ROOT / "tools/update_readme_dashboard.py"
+PLANNER = ROOT / "tools/self_advancement_plan.py"
 
 REQUIRED_FILES = [
     STANDARD,
@@ -23,9 +29,15 @@ REQUIRED_FILES = [
     PRIORITY,
     PROOF_ROADMAP,
     ARCH_ROADMAP,
+    NEXT_ACTIONS,
+    PROJECT_STATUS,
     README,
     GATES,
     CLAIMS,
+    NEXT_GENERATOR,
+    STATUS_GENERATOR,
+    DASHBOARD_GENERATOR,
+    PLANNER,
 ]
 
 
@@ -37,6 +49,12 @@ def require_phrases(path: Path, phrases: list[str]) -> None:
     text = path.read_text(encoding="utf-8")
     for phrase in phrases:
         assert phrase in text, f"{path.relative_to(ROOT)} missing required phrase: {phrase}"
+
+
+def prohibit_phrases(path: Path, phrases: list[str]) -> None:
+    text = path.read_text(encoding="utf-8")
+    for phrase in phrases:
+        assert phrase not in text, f"{path.relative_to(ROOT)} retains obsolete phrase: {phrase}"
 
 
 def main() -> int:
@@ -89,13 +107,67 @@ def main() -> int:
         [
             "The project is now deduction-first",
             "The active objective is to freeze `THM-TARGET-001`",
+            "Current project phase: deduction-first theorem-target freeze",
             "They do not serve as prerequisites for constructing a proof",
         ],
     )
+    require_phrases(
+        NEXT_ACTIONS,
+        [
+            "### STRATEGIC-001: Freeze THM-TARGET-001 and premise ledger",
+            "### STRATEGIC-002: Formalize faithful representation and nontriviality",
+            "### STRATEGIC-003: Resolve the formal role of P8",
+            "Research gaps remain available in the gap report but do not automatically enter the active central queue",
+        ],
+    )
+    require_phrases(
+        PROJECT_STATUS,
+        [
+            "## Current Research Mode",
+            "Primary mode: deduction-first with parallel empirical validation",
+            "Immediate central artifact: `THM-TARGET-001`",
+            "Current theorem status: no representation theorem",
+        ],
+    )
+    require_phrases(
+        NEXT_GENERATOR,
+        [
+            "Generate the active deduction-first strategic task queue",
+            "Freeze THM-TARGET-001 and premise ledger",
+            "Research gaps remain available in the gap report but do not automatically enter the active central queue",
+        ],
+    )
+    require_phrases(
+        STATUS_GENERATOR,
+        [
+            "Primary mode: deduction-first with parallel empirical validation",
+            "Immediate central artifact: `THM-TARGET-001`",
+        ],
+    )
+    require_phrases(
+        DASHBOARD_GENERATOR,
+        [
+            "Current project phase: deduction-first theorem-target freeze",
+            "In-progress work: freeze THM-TARGET-001 and its premise ledger",
+            "Parallel supporting work: PBTS-001 independent replication",
+        ],
+    )
+    require_phrases(
+        PLANNER,
+        [
+            "(?:TASK|STRATEGIC)",
+        ],
+    )
 
-    arch_text = ARCH_ROADMAP.read_text(encoding="utf-8")
-    assert "Blocked until Milestone 5 produces three valid independent primary submissions" not in arch_text
-    assert "Valid independent replication or a separately frozen PB revision precedes representation-theorem work" not in arch_text
+    obsolete = [
+        "Blocked until Milestone 5 produces three valid independent primary submissions",
+        "Valid independent replication or a separately frozen PB revision precedes representation-theorem work",
+        "Independent replication is now the primary evidential bottleneck",
+        "Current project phase: post-CRE-001 prospective semantics baseline; CRE-002 preparation",
+        "Plan independent replication of CRE-002-EXT-001",
+    ]
+    for path in [ARCH_ROADMAP, NEXT_ACTIONS, PROJECT_STATUS, README, NEXT_GENERATOR, STATUS_GENERATOR, DASHBOARD_GENERATOR]:
+        prohibit_phrases(path, obsolete)
 
     gates = read_json(GATES)
     assert gates.get("research_mode") == "deduction_first_with_parallel_empirical_validation"
