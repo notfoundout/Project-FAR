@@ -18,7 +18,7 @@ def count_gaps():
 def tasks():
     p=ROOT/'docs/planning/next-actions.md'
     if not p.exists(): return []
-    return re.findall(r'^### (TASK-\d+): (.+)$', p.read_text(encoding='utf-8'), re.M)
+    return re.findall(r'^### ((?:TASK|STRATEGIC)-\d+): (.+)$', p.read_text(encoding='utf-8'), re.M)
 def main():
     for cmd in CMDS:
         rc=run(cmd)
