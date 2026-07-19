@@ -1,10 +1,13 @@
 {
   "schema_version": "1.0",
   "status": "prospective",
+  "research_mode": "deduction_first_with_separate_validation_dimensions",
   "governing_documents": [
     "docs/governance/central-research-program.md",
+    "docs/governance/deduction-first-research-standard.md",
     "docs/governance/anti-self-validation-standard.md",
-    "docs/governance/evidence-replication-and-freeze-standard-v1.0.md"
+    "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
+    "docs/planning/deduction-first-proof-roadmap.md"
   ],
   "claims": [
     {
@@ -12,79 +15,105 @@
       "name": "Existence of a common reasoning structure",
       "current_status": "unresolved",
       "maximum_supported_scope": "none beyond bounded recurring similarities",
-      "required_next_test": "adversarial cross-vocabulary and boundary program",
-      "falsification_condition": "incompatible in-scope reasoning systems for which no common structure preserves the registered commitments",
-      "nonclaims": ["FAR is the common structure", "universality", "minimality"]
+      "primary_resolution_mode": "existence proof or formal impossibility/countermodel over a frozen source class",
+      "required_next_test": "freeze THM-TARGET-001 and its source-class and premise ledger",
+      "supporting_validation": "bounded model search, counterexample programs, and independent proof review",
+      "falsification_condition": "a formal in-scope incompatibility or impossibility result showing that no common structure satisfies the registered commitments",
+      "nonclaims": ["FAR is the common structure", "universality", "minimality", "replicated similarity proves existence"]
     },
     {
       "id": "CLM-SUFFICIENCY",
       "name": "FAR bounded representational sufficiency",
       "current_status": "partially_supported",
       "maximum_supported_scope": "specific frozen systems and mappings already tested",
-      "required_next_test": "prospective observation-contract pilot with negative controls",
-      "falsification_condition": "an in-scope frozen source contract cannot be preserved without protected-theory change",
-      "nonclaims": ["universal sufficiency", "primitive-only sufficiency", "necessity"]
+      "primary_resolution_mode": "scoped faithful-representation theorem or formal countermodel",
+      "required_next_test": "formalize faithful representation and prove or refute the scoped construction",
+      "supporting_validation": "PBTS-001, negative controls, mechanized conformance, and independent replication",
+      "falsification_condition": "an in-scope source object satisfies the frozen source definition but admits no faithful target representation under the theorem obligations",
+      "nonclaims": ["universal sufficiency", "primitive-only sufficiency", "necessity", "finite successful cases prove the theorem"]
     },
     {
       "id": "CLM-UNIVERSALITY",
       "name": "FAR universality",
       "current_status": "not_established",
       "maximum_supported_scope": "none",
-      "required_next_test": "independent adversarial holdout and boundary accumulation",
-      "falsification_condition": "one genuine in-scope counterexample",
-      "nonclaims": ["absence of discovered counterexamples proves universality"]
+      "primary_resolution_mode": "formal theorem quantified over an independently defined source class, or a formal countermodel",
+      "required_next_test": "freeze the quantified source class and scoped representation-theorem target",
+      "supporting_validation": "adversarial holdouts, boundary discovery, and independent proof review",
+      "falsification_condition": "one formal genuine in-scope countermodel",
+      "nonclaims": ["absence of discovered counterexamples proves universality", "independent replication of examples proves universality"]
     },
     {
       "id": "CLM-NECESSITY",
       "name": "Necessity of FAR primitives",
       "current_status": "not_established",
       "maximum_supported_scope": "none",
-      "required_next_test": "registered primitive ablations with hidden-reintroduction audits",
-      "falsification_condition": "a valid preserved reconstruction omits a tested primitive without prohibited reintroduction",
-      "nonclaims": ["successful use establishes necessity"]
+      "primary_resolution_mode": "primitive lower-bound or independence proof over a declared reconstruction class",
+      "required_next_test": "define the admissible reconstruction class and prove indispensability, derivability, or replaceability for each primitive",
+      "supporting_validation": "registered ablations and hidden-reintroduction audits",
+      "falsification_condition": "a valid general construction omits the tested primitive without equivalent reintroduction under the declared equivalence model",
+      "nonclaims": ["successful use establishes necessity", "failed finite ablations establish necessity"]
     },
     {
       "id": "CLM-MINIMALITY",
       "name": "FAR minimality",
       "current_status": "not_established",
       "maximum_supported_scope": "none",
-      "required_next_test": "broad alternative-vocabulary search with full-cost Pareto comparison",
-      "falsification_condition": "a simpler candidate preserves the same contract and Pareto-dominates FAR",
-      "nonclaims": ["low primitive count establishes minimality"]
+      "primary_resolution_mode": "minimality, lower-bound, uniqueness, or no-minimum theorem over a declared candidate universe",
+      "required_next_test": "define the candidate universe and equivalence relation before proving local or global minimality",
+      "supporting_validation": "full-cost Pareto comparison and bounded exhaustive search",
+      "falsification_condition": "a strictly simpler admissible structure is proved equivalent for the same theorem scope, or no global minimum exists",
+      "nonclaims": ["low primitive count establishes minimality", "finite competitor comparison establishes global minimality"]
     },
     {
       "id": "CLM-NONTRIVIALITY",
       "name": "FAR imposes nontrivial representational constraints",
       "current_status": "not_established_generally",
       "maximum_supported_scope": "implementation-specific checks only",
-      "required_next_test": "mandatory negative-control suite",
-      "falsification_condition": "invalid output-equivalent encodings pass the same acceptance machinery",
-      "nonclaims": ["expressive reach alone establishes constraint"]
+      "primary_resolution_mode": "formal faithful-representation definition and theorem excluding unrestricted coding",
+      "required_next_test": "formalize and prove exclusions for label-only, lookup-table, hidden-interpreter, metadata-smuggling, dependency-collapse, and evaluator-repaired encodings",
+      "supporting_validation": "mandatory negative-control suite",
+      "falsification_condition": "the formal representation relation admits structurally unfaithful encodings with no additional counted commitment",
+      "nonclaims": ["expressive reach alone establishes constraint", "an evaluator rejecting examples proves formal nontriviality"]
     },
     {
       "id": "CLM-ECONOMY",
       "name": "FAR comparative economy",
       "current_status": "not_established",
       "maximum_supported_scope": "none",
-      "required_next_test": "canonical full-cost model across strong competitor mappings",
+      "primary_resolution_mode": "formal equivalence classes and declared cost relations, supplemented by full-cost Pareto analysis",
+      "required_next_test": "define equivalence and cost commitments for the theorem scope, then compare strong admissible alternatives",
+      "supporting_validation": "canonical full-cost experiments across frozen competitor mappings",
       "falsification_condition": "FAR is dominated or its apparent advantage depends on uncounted machinery",
-      "nonclaims": ["primitive count alone is economy", "tradeoff is superiority"]
+      "nonclaims": ["primitive count alone is economy", "tradeoff is superiority", "economy establishes truth"]
     },
     {
       "id": "CLM-INDEPENDENCE",
-      "name": "Independent replication",
+      "name": "Independent verification and replication",
       "current_status": "not_established_generally",
       "maximum_supported_scope": "internal isolated implementation robustness where completed",
-      "required_next_test": "R3 independent technical replication followed by R4 adversarial conceptual replication",
-      "falsification_condition": "qualified independent teams cannot reproduce the frozen result or identify framing-dependent acceptance",
-      "nonclaims": ["one-agent multi-implementation is external independence"]
+      "primary_resolution_mode": "separate independent proof-review and independent empirical-replication records",
+      "required_next_test": "after theorem artifacts exist, obtain independent proof reconstruction; continue R3 PBTS replication as a parallel supporting track",
+      "supporting_validation": "R3 technical replication, R4 adversarial conceptual replication, proof-assistant replay, and external countermodel search",
+      "falsification_condition": "qualified independent reviewers identify a valid proof defect, or qualified replicators cannot reproduce the frozen empirical result",
+      "nonclaims": ["one-agent multi-implementation is external independence", "lack of external review makes a deduction an empirical result", "review agreement substitutes for proof"]
     }
   ],
+  "claim_dimensions": {
+    "theorem_status": "whether a formal claim is proved, refuted, bounded, or unresolved",
+    "mechanization_status": "whether the formal artifact is machine checked and under which trusted assumptions",
+    "independent_proof_review_status": "whether independent reviewers reconstructed or challenged the proof",
+    "empirical_replication_status": "whether frozen evaluations were independently reproduced",
+    "application_status": "whether implementations or domains satisfy the stated bounded contract"
+  },
   "update_policy": {
     "evidence_for_and_against_required": true,
     "unknown_is_not_pass": true,
     "failures_are_immutable": true,
     "scope_changes_must_be_versioned": true,
-    "stronger_status_requires_linked_artifacts": true
+    "stronger_status_requires_linked_artifacts": true,
+    "theorem_and_replication_status_must_remain_separate": true,
+    "experimental_results_may_not_be_promoted_to_proof": true,
+    "proof_claims_require_explicit_assumptions_and_scope": true
   }
 }
