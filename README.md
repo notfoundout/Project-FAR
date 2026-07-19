@@ -17,11 +17,11 @@ The project does not assume that a universal structure exists, nor that FAR is t
 
 ## Current Research Reset
 
-The project is now governed prospectively by the [Anti-Self-Validation Standard](docs/governance/anti-self-validation-standard.md), the [Research Priority Reset](docs/governance/research-priority-reset.md), and the machine-readable [Research Gate Registry](theory/evaluation/research-gates.json).
+The project is now deduction-first. The [Deduction-First Research Standard](docs/governance/deduction-first-research-standard.md), [Central Research Program](docs/governance/central-research-program.md), [Research Priority Reset](docs/governance/research-priority-reset.md), and machine-readable [Research Gate Registry](theory/evaluation/research-gates.json) make formal definition, proof, countermodel, lower-bound, equivalence, and impossibility work the primary path to the central answer.
 
-The active objective is to complete a vocabulary-neutral observation contract, negative controls, full-cost accounting, anti-reintroduction ablations, independent replication, and a private-holdout counterexample challenge. New certification layers, dashboards, release packaging, favorable-case expansion, and unrelated applications are paused by default unless required for those tests.
+The active objective is to freeze `THM-TARGET-001`: the scoped representation-theorem target and premise ledger. PBTS-001 replication, comparative experiments, and external validation remain parallel supporting tracks for detecting ambiguity, defects, counterexamples, implementation dependence, and human-comprehension failures. They do not serve as prerequisites for constructing a proof.
 
-Run `make research-check` to validate that the prospective controls remain present and internally consistent.
+Run `make research-check` to validate that the deduction-first dependency structure and conservative claim boundaries remain present and internally consistent.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
