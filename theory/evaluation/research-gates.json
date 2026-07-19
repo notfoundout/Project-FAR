@@ -2,21 +2,30 @@
   "schema_version": "1.0",
   "status": "prospective",
   "effective_on_merge": true,
+  "research_mode": "deduction_first_with_parallel_empirical_validation",
   "central_claims": [
     "existence",
     "bounded_sufficiency",
+    "faithful_representation",
     "universality",
     "necessity",
     "minimality",
+    "equivalence_or_uniqueness",
+    "impossibility",
     "nontriviality",
     "comparative_economy",
+    "mechanized_verification",
+    "independent_proof_review",
     "independent_replication"
   ],
   "required_canonical_artifacts": [
     "docs/governance/central-research-program.md",
+    "docs/governance/deduction-first-research-standard.md",
     "docs/governance/anti-self-validation-standard.md",
     "docs/governance/research-priority-reset.md",
     "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
+    "docs/planning/deduction-first-proof-roadmap.md",
+    "docs/planning/architecture-neutral-research-roadmap.md",
     "docs/methodology/confirmatory-research-package.md",
     "docs/methodology/external-observation-contract-v1.0.md",
     "docs/methodology/negative-control-suite-v1.0.md",
@@ -34,7 +43,7 @@
       "status": "not_satisfied",
       "standard": "docs/methodology/external-observation-contract-v1.0.md",
       "evidence": [],
-      "required_before": ["confirmatory_execution", "universality_claim", "superiority_claim"]
+      "required_before": ["confirmatory_execution", "empirical_universality_claim", "empirical_superiority_claim"]
     },
     {
       "id": "RG-02",
@@ -42,7 +51,7 @@
       "status": "not_satisfied",
       "standard": "docs/methodology/negative-control-suite-v1.0.md",
       "evidence": [],
-      "required_before": ["nontriviality_claim", "confirmatory_execution"]
+      "required_before": ["empirical_nontriviality_claim", "confirmatory_execution"]
     },
     {
       "id": "RG-03",
@@ -50,7 +59,7 @@
       "status": "not_satisfied",
       "standard": "docs/methodology/comparative-cost-model-v1.0.md",
       "evidence": [],
-      "required_before": ["minimality_claim", "superiority_claim", "pareto_comparison"]
+      "required_before": ["empirical_minimality_claim", "empirical_superiority_claim", "pareto_comparison"]
     },
     {
       "id": "RG-04",
@@ -58,7 +67,7 @@
       "status": "not_satisfied",
       "standard": "docs/methodology/primitive-necessity-and-reintroduction-protocol-v1.0.md",
       "evidence": [],
-      "required_before": ["necessity_claim"]
+      "required_before": ["empirical_necessity_claim"]
     },
     {
       "id": "RG-05",
@@ -66,7 +75,7 @@
       "status": "not_satisfied",
       "standard": "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
       "evidence": [],
-      "required_before": ["independent_confirmation_claim"]
+      "required_before": ["independent_empirical_confirmation_claim"]
     },
     {
       "id": "RG-06",
@@ -74,7 +83,7 @@
       "status": "not_satisfied",
       "standard": "docs/methodology/boundary-discovery-program-v1.0.md",
       "evidence": [],
-      "required_before": ["universality_claim"]
+      "required_before": ["empirical_universality_claim"]
     },
     {
       "id": "RG-07",
@@ -82,17 +91,88 @@
       "status": "not_satisfied",
       "standard": "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
       "evidence": [],
-      "required_before": ["evidence_release"]
+      "required_before": ["evidence_release", "theorem_release"]
+    },
+    {
+      "id": "RG-08",
+      "name": "formal-theorem-target",
+      "status": "not_satisfied",
+      "standard": "docs/governance/deduction-first-research-standard.md",
+      "evidence": [],
+      "required_before": ["representation_theorem_proof_claim", "formal_universality_claim"]
+    },
+    {
+      "id": "RG-09",
+      "name": "premise-ledger-and-semantics",
+      "status": "not_satisfied",
+      "standard": "docs/governance/deduction-first-research-standard.md",
+      "evidence": [],
+      "required_before": ["representation_theorem_proof_claim", "formal_universality_claim"]
+    },
+    {
+      "id": "RG-10",
+      "name": "faithful-representation-definition",
+      "status": "not_satisfied",
+      "standard": "docs/governance/deduction-first-research-standard.md",
+      "evidence": [],
+      "required_before": ["representation_theorem_proof_claim", "formal_universality_claim"]
+    },
+    {
+      "id": "RG-11",
+      "name": "scoped-representation-proof",
+      "status": "not_satisfied",
+      "standard": "docs/governance/deduction-first-research-standard.md",
+      "evidence": [],
+      "required_before": ["representation_theorem_proof_claim", "formal_universality_claim"]
+    },
+    {
+      "id": "RG-12",
+      "name": "primitive-lower-bounds",
+      "status": "not_satisfied",
+      "standard": "docs/governance/deduction-first-research-standard.md",
+      "evidence": [],
+      "required_before": ["formal_necessity_claim", "primitive_independence_claim"]
+    },
+    {
+      "id": "RG-13",
+      "name": "minimality-universe-and-proof",
+      "status": "not_satisfied",
+      "standard": "docs/governance/deduction-first-research-standard.md",
+      "evidence": [],
+      "required_before": ["formal_minimality_claim", "uniqueness_claim"]
+    },
+    {
+      "id": "RG-14",
+      "name": "mechanized-proof-verification",
+      "status": "not_satisfied",
+      "standard": "docs/governance/deduction-first-research-standard.md",
+      "evidence": [],
+      "required_before": ["machine_checked_theorem_claim"]
+    },
+    {
+      "id": "RG-15",
+      "name": "independent-proof-review",
+      "status": "not_satisfied",
+      "standard": "docs/governance/deduction-first-research-standard.md",
+      "evidence": [],
+      "required_before": ["independent_proof_verification_claim"]
     }
   ],
   "current_authorized_work": [
-    "external_observation_contract",
-    "negative_control_design",
-    "full_cost_model",
-    "anti_reintroduction_rules",
-    "confirmatory_package_pilot",
-    "independent_replication_recruitment",
-    "boundary_counterexample_design",
+    "theorem_target_and_scope",
+    "premise_ledger",
+    "formal_semantics",
+    "faithful_representation_definition",
+    "construction_lemmas",
+    "obstruction_lemmas",
+    "formal_countermodel_search",
+    "scoped_representation_proof",
+    "primitive_lower_bounds",
+    "minimality_equivalence_and_impossibility",
+    "proof_mechanization",
+    "independent_proof_review_preparation",
+    "bounded_model_search",
+    "independent_replication_recruitment_as_parallel_support",
     "claim_registry_maintenance",
     "supporting_engineering_required_by_these_items"
   ],
@@ -102,7 +182,8 @@
     "release_packaging",
     "favorable_case_count_expansion",
     "generic_terminology_cleanup",
-    "applications_unrelated_to_active_experiment"
+    "new_replication_infrastructure",
+    "applications_unrelated_to_active_theorem_work"
   ],
   "claim_policy": {
     "unsatisfied_gate_blocks_stronger_claim": true,
@@ -112,6 +193,12 @@
     "failed_frozen_results_are_immutable": true,
     "tradeoffs_must_not_be_reported_as_wins": true,
     "satisfied_gate_requires_evidence": true,
-    "central_claim_updates_require_registry_change": true
+    "central_claim_updates_require_registry_change": true,
+    "proof_construction_not_blocked_by_empirical_replication": true,
+    "independent_replication_gates_only_independent_empirical_confirmation": true,
+    "theorem_claim_requires_explicit_assumptions_and_scope": true,
+    "experimental_evidence_is_not_deductive_proof": true,
+    "mechanization_does_not_validate_axioms": true,
+    "independent_review_is_separate_claim_dimension": true
   }
 }
