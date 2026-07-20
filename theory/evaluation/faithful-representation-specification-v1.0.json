@@ -24,41 +24,13 @@
     "unknown_applicability_allowed_for_theorem": false
   },
   "axis_reducts": [
-    {
-      "id": "P1",
-      "name": "configuration",
-      "required_content": ["locations", "states", "participants", "resources", "externalized_components", "typed_incidence_and_availability"]
-    },
-    {
-      "id": "P2",
-      "name": "commitment",
-      "required_content": ["commitments", "holder", "content_reference", "status", "degree", "location", "revision_relations"]
-    },
-    {
-      "id": "P3",
-      "name": "stake_and_alternative",
-      "required_content": ["stakes", "questions", "objectives", "conflicts", "alternatives", "live_and_relevance_relations"]
-    },
-    {
-      "id": "P4",
-      "name": "ground_and_justification",
-      "required_content": ["grounds", "constraints", "assumptions", "observations", "rules", "models", "prior_commitments", "typed_justificatory_roles"]
-    },
-    {
-      "id": "P5",
-      "name": "admissibility_and_dynamics",
-      "required_content": ["configurations", "continuations", "preconditions", "rule_identity_and_version", "resource_conditions", "action_observation_dependence", "weights", "admissibility_status"]
-    },
-    {
-      "id": "P6",
-      "name": "consequence",
-      "required_content": ["consequences", "content_reference", "status", "degree", "producing_basis", "downstream_role"]
-    },
-    {
-      "id": "P7",
-      "name": "historical_and_path",
-      "required_content": ["event_positions", "temporal_or_causal_order", "provenance", "revision", "retraction", "supersession", "rule_activation", "dependency_ancestry", "path_conditions"]
-    }
+    {"id":"P1","name":"configuration","required_content":["locations","states","participants","resources","externalized_components","typed_incidence_and_availability"]},
+    {"id":"P2","name":"commitment","required_content":["commitments","holder","content_reference","status","degree","location","revision_relations"]},
+    {"id":"P3","name":"stake_and_alternative","required_content":["stakes","questions","objectives","conflicts","alternatives","live_and_relevance_relations"]},
+    {"id":"P4","name":"ground_and_justification","required_content":["grounds","constraints","assumptions","observations","rules","models","prior_commitments","typed_justificatory_roles"]},
+    {"id":"P5","name":"admissibility_and_dynamics","required_content":["configurations","continuations","preconditions","rule_identity_and_version","resource_conditions","action_observation_dependence","weights","admissibility_status"]},
+    {"id":"P6","name":"consequence","required_content":["consequences","content_reference","status","degree","producing_basis","downstream_role"]},
+    {"id":"P7","name":"historical_and_path","required_content":["event_positions","temporal_or_causal_order","provenance","revision","retraction","supersession","rule_activation","dependency_ancestry","path_conditions"]}
   ],
   "recovery_contract": {
     "fixed_versioned_interface": true,
@@ -101,10 +73,14 @@
     "duplication_must_be_ledgered": true
   },
   "p8": {
-    "selected_mode": null,
+    "selected_mode": "split",
+    "selection_artifact": "docs/research/p8-theorem-role-decision-v1.0.md",
+    "selection_registry": "theory/evaluation/p8-theorem-role-decision.json",
+    "internal_predicate": "Pres_8I",
+    "external_predicate": "Corr_8E",
     "allowed_modes": ["coordinate", "side_condition", "split"],
     "clauses_frozen_for_all_modes": true,
-    "proof_acceptance_blocked_until_selection": true,
+    "proof_acceptance_blocked_until_selection": false,
     "coordinate": ["internal provenance and evidence-status strong embedding", "no evidential upgrade"],
     "side_condition": ["internal theorem applies to mathematical presentation only", "external application requires separate correspondence contract"],
     "split": ["internal provenance and evidence-status strong embedding", "separate external process-presentation correspondence"]
@@ -128,13 +104,13 @@
   },
   "machinery_ledger": {
     "finite_dependency_graph_required": true,
-    "covers": ["target_primitives", "derived_constructs", "schemas", "state", "algorithms", "semantic_bridges", "metadata", "external_dependencies", "normalization", "equivalence", "composition", "cost_bearing_helpers"],
+    "covers": ["target_primitives","derived_constructs","schemas","state","algorithms","semantic_bridges","metadata","external_dependencies","normalization","equivalence","composition","cost_bearing_helpers"],
     "all_E_D_M_iota_dependencies_resolve": true,
     "metadata_is_free": false,
     "missing_dependency_effect": "inadmissible_hidden_machinery"
   },
   "nontriviality": {
-    "required_predicates": ["admissible_recovery", "strong_preservation_and_reflection", "lexical_invariance", "no_source_oracle", "cross_axis_coherence", "complete_machinery_accounting", "no_evaluator_repair", "no_evidential_upgrade", "compositional_accountability"],
+    "required_predicates": ["admissible_recovery","strong_preservation_and_reflection","lexical_invariance","no_source_oracle","cross_axis_coherence","complete_machinery_accounting","no_evaluator_repair","no_evidential_upgrade","compositional_accountability"],
     "negative_control_mapping": {
       "NC-01": ["P4", "P5", "P7"],
       "NC-02": ["P4_relation_reflection"],
@@ -143,25 +119,12 @@
       "NC-05": ["SemAgree", "lexical_invariance"],
       "NC-06": ["admissible_recovery", "uniformity", "LedgerComplete"],
       "NC-07": ["image_accountability", "LedgerComplete"],
-      "NC-08": ["P4", "P7", "selected_P8_clause"],
+      "NC-08": ["P4", "P7", "Pres_8I"],
       "NC-09": ["P4", "P5", "P6", "P7"],
       "NC-10": ["LedgerComplete", "machinery_accounting"]
     }
   },
-  "faithful_formula": [
-    "WF_S_core",
-    "WF_A_FARA",
-    "WF_W",
-    "AdmissibleRecovery",
-    "all_applicable_Pres_1_through_Pres_7",
-    "P8_m8",
-    "SemAgree",
-    "Coherent",
-    "Uniform",
-    "CompAccount",
-    "LedgerComplete",
-    "Nontrivial"
-  ],
+  "faithful_formula": ["WF_S_core","WF_A_FARA","WF_W","AdmissibleRecovery","all_applicable_Pres_1_through_Pres_7","Pres_8I","SemAgree","Coherent","Uniform","CompAccount","LedgerComplete","Nontrivial"],
   "decision_semantics": {
     "true": "all conjuncts derived",
     "false": "formal failure witness",
@@ -175,17 +138,17 @@
     "faithful-representation-definition": "satisfied",
     "scoped-representation-proof": "not_satisfied"
   },
-  "unresolved": ["P8_mode_selection", "existence_of_uniform_constructor", "S_core_representation_theorem", "PB_001_completeness"],
+  "unresolved": ["existence_of_uniform_constructor", "S_core_representation_theorem", "PB_001_completeness", "external_process_correspondence"],
   "nonclaims": [
-    "Faithful_m8 is satisfiable",
+    "Faithful_split is satisfiable",
     "FARA represents S_core",
     "FARA represents S_IRD",
     "PB-001 is complete",
-    "P8 is resolved",
+    "actual-process correspondence is established",
     "negative controls are exhaustive",
     "any primitive is necessary",
     "FARA is minimal unique or universal",
     "any theorem is proved"
   ],
-  "next_required_artifact": "versioned P8 theorem-role decision"
+  "next_required_artifact": "S_core construction and obstruction lemma ledger"
 }
