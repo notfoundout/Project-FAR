@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "proof_id": "SCORE-W2-PROOF-001",
+  "version": "1.0",
+  "status": "project_authored_human_checkable_proof",
+  "source_scope": "S_core",
+  "proof_artifact": "docs/research/s-core-w2-dynamics-history-proof-v1.0.md",
+  "lemma_ledger": "theory/evaluation/s-core-construction-obstruction-ledger.json",
+  "dependencies": [
+    "SCORE-W0-PROOF-001",
+    "SCORE-W1-PROOF-001",
+    "FAITHFUL-REP-001",
+    "P8-ROLE-001"
+  ],
+  "target_schema": {
+    "id": "DYN-HISTORY-1.0",
+    "uses_existing_fara_components": ["U", "Pi", "R", "Rep", "S", "I", "Inv", "C", "Sigma", "Theta", "H", "Omega", "Prov"],
+    "adds_new_primitive": false,
+    "reuses_w1_images": true,
+    "live_transition_definition": "copied transition status is permitted and copied governing rule version is active at the represented source state",
+    "probabilistic_kernel_definition": "copy each finite source support branch and exact source-declared weight",
+    "history_definition": "copy and reflect every material event order causal provenance revision modification ancestry and path fact"
+  },
+  "results": [
+    {"id":"LEM-SC-010","status":"proved","proof_sections":["2","3"],"result":"the represented target live-transition graph is isomorphic to every admitted deterministic source graph"},
+    {"id":"LEM-SC-011","status":"proved","proof_sections":["2","4"],"result":"the represented target kernels are finite-support measure-preserving copies of every admitted source kernel"},
+    {"id":"LEM-SC-013","status":"proved","proof_sections":["2","5"],"result":"the event map is an order embedding and preserves and reflects all registered material history and path relations"},
+    {"id":"LEM-SC-015","status":"proved","proof_sections":["2","6"],"result":"revision retraction and supersession records agree with copied before and after state snapshots"},
+    {"id":"LEM-SC-016","status":"proved","proof_sections":["2","7"],"result":"accepted rule-version changes alter later target live transitions while rejected changes do not"},
+    {"id":"OBS-SC-004","status":"refuted","proof_sections":["3","4","8"],"scope":"finite deterministic and finite-support probabilistic S_core dynamics"},
+    {"id":"OBS-SC-005","status":"refuted","proof_sections":["5","6","7","8"],"scope":"finite explicit S_core history path revision and rule-version records"}
+  ],
+  "dependency_audit": {
+    "uses_w3_recovery": false,
+    "uses_global_semantic_agreement": false,
+    "uses_complete_cross_axis_coherence": false,
+    "uses_complete_machinery_ledger": false,
+    "uses_distributed_composition": false,
+    "uses_complete_constructor_uniformity": false,
+    "uses_faithful_split_satisfiability": false,
+    "uses_external_process_correspondence": false,
+    "all_dependencies_frozen_or_proved_in_package": true
+  },
+  "reference_implementation": "tools/s_core_w2_reference.py",
+  "reference_tests": "tests/test_s_core_w2_reference.py",
+  "reference_fixtures": "theory/evaluation/s-core-w2-reference-fixtures.json",
+  "audit_artifact": "docs/audits/s-core-w2-proof-audit.md",
+  "verification": {
+    "human_proof_status": "complete_project_authored",
+    "machine_check_status": "bounded_executable_reference_only",
+    "reference_test_count": 11,
+    "proof_assistant_status": "not_started",
+    "independent_review_status": "not_started"
+  },
+  "ledger_effect": {
+    "proved_obligations": 16,
+    "refuted_obstruction_hypotheses": 4,
+    "scope_boundaries_established": 1,
+    "open_obligations": 16,
+    "completed_waves": ["W0", "W1", "W2"],
+    "active_wave": "W3"
+  },
+  "gate_effect": {
+    "formal-theorem-target": "satisfied",
+    "premise-ledger-and-semantics": "satisfied",
+    "faithful-representation-definition": "satisfied",
+    "scoped-representation-proof": "not_satisfied",
+    "mechanized-proof-verification": "not_satisfied",
+    "independent-proof-review": "not_satisfied"
+  },
+  "nonclaims": [
+    "any W3 or W5 construction or assembly obligation is proved",
+    "the remaining W4 obstruction or negative-control obligations are resolved",
+    "admissible target-only recovery is proved",
+    "any complete Pres_i predicate is proved",
+    "Faithful_split is satisfiable",
+    "a complete uniform FARA witness constructor exists",
+    "FARA faithfully represents S_core or S_IRD",
+    "PB-001 is sufficient necessary independent minimal or complete",
+    "actual-process correspondence is established",
+    "any representation universality necessity minimality equivalence uniqueness or impossibility theorem is established",
+    "proof-assistant verification or independent proof review has occurred"
+  ],
+  "next_required_artifact": "W3 global witness recovery semantics coherence machinery uniformity composition and assembly proof-or-obstruction package"
+}
