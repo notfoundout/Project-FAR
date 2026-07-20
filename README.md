@@ -17,18 +17,20 @@ The project does not assume that a universal structure exists, nor that FAR is t
 
 ## Current Research Reset
 
-The project is now deduction-first. The [Deduction-First Research Standard](docs/governance/deduction-first-research-standard.md), [Central Research Program](docs/governance/central-research-program.md), [Research Priority Reset](docs/governance/research-priority-reset.md), and machine-readable [Research Gate Registry](theory/evaluation/research-gates.json) make formal definition, proof, countermodel, lower-bound, equivalence, and impossibility work the primary path to the central answer.
+The project is deduction-first. The [Deduction-First Research Standard](docs/governance/deduction-first-research-standard.md), [Central Research Program](docs/governance/central-research-program.md), [Research Priority Reset](docs/governance/research-priority-reset.md), and machine-readable [Research Gate Registry](theory/evaluation/research-gates.json) make formal definition, proof, countermodel, lower-bound, equivalence, and impossibility work the primary path to the central answer.
 
-The active objective is to freeze `THM-TARGET-001`: the scoped representation-theorem target and premise ledger. PBTS-001 replication, comparative experiments, and external validation remain parallel supporting tracks for detecting ambiguity, defects, counterexamples, implementation dependence, and human-comprehension failures. They do not serve as prerequisites for constructing a proof.
+[`THM-TARGET-001` v1.0](docs/research/thm-target-001-v1.0.md) and its [premise ledger](theory/evaluation/thm-target-001-premise-ledger.json) are frozen. The active objective is faithful-representation formalization and P8 resolution: define `Pres_1` through `Pres_7`, `Faithful_m8`, admissible recovery, semantic agreement, uniformity, compositionality, and machinery accounting before attempting a representation proof.
 
-Run `make research-check` to validate that the deduction-first dependency structure and conservative claim boundaries remain present and internally consistent.
+PBTS-001 replication, comparative experiments, and external validation remain parallel supporting tracks for detecting ambiguity, defects, counterexamples, implementation dependence, and human-comprehension failures. They do not serve as prerequisites for constructing a proof.
+
+Run `make research-check` to validate the theorem target, deduction-first dependency structure, and conservative claim boundaries.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: deduction-first theorem-target freeze
+- Current project phase: faithful-representation formalization and P8 resolution
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 - Last dashboard generation time: 2026-07-16T08:17:16+00:00
@@ -71,47 +73,50 @@ Trend data is not yet available because no prior generated snapshot is stored.
 
 ## Top Priority Tasks
 
-### STRATEGIC-001: Freeze THM-TARGET-001 and premise ledger
+### STRATEGIC-001: Formalize faithful representation and nontriviality
 - Source: deduction-first strategic priority
 - Affected files:
-  - [docs/governance/deduction-first-research-standard.md](docs/governance/deduction-first-research-standard.md)
-  - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
-  - [docs/research/independent-reasoning-definition-v1.0.md](docs/research/independent-reasoning-definition-v1.0.md)
-  - [docs/research/preservation-basis-investigation-v1.0.md](docs/research/preservation-basis-investigation-v1.0.md)
-- Suggested branch: `research/freeze-thm-target-001`
-- Suggested PR title: `Freeze THM-TARGET-001 theorem target and premise ledger`
-
-### STRATEGIC-002: Formalize faithful representation and nontriviality
-- Source: deduction-first strategic priority
-- Affected files:
-  - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
+  - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
   - [docs/research/preservation-basis-investigation-v1.0.md](docs/research/preservation-basis-investigation-v1.0.md)
   - [docs/methodology/negative-control-suite-v1.0.md](docs/methodology/negative-control-suite-v1.0.md)
+  - [theory/evaluation/thm-target-001-premise-ledger.json](theory/evaluation/thm-target-001-premise-ledger.json)
 - Suggested branch: `research/formalize-faithful-representation`
 - Suggested PR title: `Formalize faithful representation and nontriviality`
 
-### STRATEGIC-003: Resolve the formal role of P8
+### STRATEGIC-002: Resolve the formal role of P8
 - Source: deduction-first strategic priority
 - Affected files:
+  - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
   - [docs/research/preservation-basis-investigation-v1.0.md](docs/research/preservation-basis-investigation-v1.0.md)
   - [docs/research/pb001-execution-run-001-report.md](docs/research/pb001-execution-run-001-report.md)
-  - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
+  - [theory/evaluation/thm-target-001.json](theory/evaluation/thm-target-001.json)
 - Suggested branch: `research/resolve-p8-theorem-role`
 - Suggested PR title: `Resolve P8 theorem role`
 
-### STRATEGIC-004: Develop construction and obstruction lemmas
+### STRATEGIC-003: Build the S_core construction and obstruction ledger
 - Source: deduction-first strategic priority
 - Affected files:
+  - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
   - [docs/research/reasoning-domain-specification-v1.0.md](docs/research/reasoning-domain-specification-v1.0.md)
   - [docs/research/independent-reasoning-definition-v1.0.md](docs/research/independent-reasoning-definition-v1.0.md)
   - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
-- Suggested branch: `research/build-representation-lemmas`
-- Suggested PR title: `Develop representation construction and obstruction lemmas`
+- Suggested branch: `research/build-s-core-lemma-ledger`
+- Suggested PR title: `Build S_core construction and obstruction ledger`
+
+### STRATEGIC-004: Prepare formal countermodel fixtures for S_core
+- Source: deduction-first strategic priority
+- Affected files:
+  - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
+  - [docs/methodology/negative-control-suite-v1.0.md](docs/methodology/negative-control-suite-v1.0.md)
+  - [theory/falsification](theory/falsification)
+- Suggested branch: `research/register-s-core-countermodels`
+- Suggested PR title: `Register S_core countermodel fixtures`
 
 ### STRATEGIC-005: Prepare proof mechanization architecture
 - Source: deduction-first strategic priority
 - Affected files:
   - [mechanization](mechanization)
+  - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
   - [docs/governance/deduction-first-research-standard.md](docs/governance/deduction-first-research-standard.md)
   - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
 - Suggested branch: `research/plan-proof-mechanization`
@@ -134,6 +139,8 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - [Dashboard Metrics](docs/planning/dashboard-metrics.md)
 - [Deduction-First Standard](docs/governance/deduction-first-research-standard.md)
 - [Proof Roadmap](docs/planning/deduction-first-proof-roadmap.md)
+- [THM-TARGET-001](docs/research/thm-target-001-v1.0.md)
+- [THM-TARGET-001 Registry](theory/evaluation/thm-target-001.json)
 - [External Validation](docs/reports/external-validation-report.md)
 - [Primitive Sufficiency](docs/reports/primitive-sufficiency-report.md)
 - [Evidence Registry](theory/evaluation/evidence-registry.yaml)
@@ -153,10 +160,10 @@ Trend data is not yet available because no prior generated snapshot is stored.
 
 ## Current Roadmap
 
-- Current phase: deduction-first theorem-target freeze
-- Completed foundation for the active phase: architecture-neutral reasoning domain; IRD-001; PB-001 candidate basis; PBTS-001 and internal RUN-001; independent-replication package and coordinator controls; deduction-first governance and theorem gates
-- In-progress work: freeze THM-TARGET-001 and its premise ledger
-- Planned work: faithful-representation formalization; P8 theorem-role resolution; construction and obstruction lemmas; scoped representation theorem or refutation; lower bounds; minimality, equivalence, or impossibility; proof mechanization; independent proof review
+- Current phase: faithful-representation formalization and P8 resolution
+- Completed foundation for the active phase: architecture-neutral reasoning domain; IRD-001; PB-001 candidate basis; PBTS-001 and internal RUN-001; independent-replication package and coordinator controls; deduction-first governance; THM-TARGET-001 and premise ledger
+- In-progress work: formalize Pres_1 through Pres_7 and Faithful_m8; resolve P8
+- Planned work: S_core construction and obstruction lemmas; finite-core theorem or refutation; S_IRD extension analysis; lower bounds; minimality, equivalence, or impossibility; proof mechanization; independent proof review
 - Parallel supporting work: PBTS-001 independent replication, comparative evaluation, boundary discovery, and application validation
 
 ## Command Center
@@ -183,14 +190,13 @@ make dashboard
 
 1. `make research-check`
 2. `make health-fast`
-3. Open the Deduction-First Research Standard
-4. Open the Proof Roadmap
-5. Choose the highest unsatisfied theorem obligation
-6. Freeze its statement, assumptions, failure conditions, and nonclaims
-7. Prove, refute, or register the obstruction
-8. Preserve all failures and unresolved obligations
-9. Run health
-10. Merge
+3. Open THM-TARGET-001
+4. Choose the highest unsatisfied theorem obligation
+5. Freeze exact semantics, assumptions, failure conditions, and nonclaims
+6. Prove, refute, or register the obstruction
+7. Preserve all failures and unresolved obligations
+8. Run health
+9. Merge
 
 <!-- END GENERATED PROJECT FAR DASHBOARD -->
 
