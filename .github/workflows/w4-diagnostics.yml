@@ -1,0 +1,60 @@
+name: W4 Diagnostics
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Canonical tests
+        run: python tools/run_tests.py --fast
+      - name: Research gates
+        run: python tools/check_research_gates.py
+      - name: Deduction program
+        run: python tools/check_deduction_first_program.py
+      - name: Theorem target
+        run: python tools/check_thm_target_001.py
+      - name: Faithful representation
+        run: python tools/check_faithful_representation.py
+      - name: P8 role
+        run: python tools/check_p8_theorem_role.py
+      - name: S core ledger
+        run: python tools/check_s_core_lemma_ledger.py
+      - name: W0 retained
+        run: python tools/check_s_core_w0.py
+      - name: W1 retained
+        run: python tools/check_s_core_w1.py
+      - name: W2 retained
+        run: python tools/check_s_core_w2.py
+      - name: W3 retained
+        run: python tools/check_s_core_w3.py
+      - name: W4 package
+        run: python tools/check_s_core_w4.py
+      - name: REP ADJ USD separation
+        run: python tools/check_representation_discovery_separation.py
+      - name: Repository hygiene
+        run: python tools/check_repository_hygiene.py
+      - name: Markdown hygiene
+        run: python tools/check_markdown_hygiene.py
+      - name: Internal links
+        run: python tools/check_internal_links.py
+      - name: Generator drift
+        run: |
+          python tools/generate_next_tasks.py
+          python tools/project_status_report.py
+          python tools/update_readme_dashboard.py
+          git diff --exit-code
