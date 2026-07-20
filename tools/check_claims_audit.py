@@ -5,7 +5,10 @@ import re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 TERMS=re.compile(r'\b(machine-verified|machine verified|production-ready|fully mechanized|independent validation)\b',re.I)
-QUAL=re.compile(r'\b(not |unsupported|requires|future|unknown|unexecuted|separate|distinguishes|not independent|no current)\b',re.I)
+QUAL=re.compile(
+    r'\b(not |unsupported|requires|future|unknown|unexecuted|separate|distinguishes|not independent|no current|checks and challenges|strengthens confidence)\b',
+    re.I,
+)
 def main():
     findings=[]
     for base in ['README.md','docs','theory']:
