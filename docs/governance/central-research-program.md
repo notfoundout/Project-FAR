@@ -4,324 +4,211 @@
 
 Project FAR exists to determine whether there is a universal and minimal structure underlying reasoning.
 
-This document defines the primary research program governing the long-term direction of the project. It establishes the central question, the admissible routes to an answer, the current formal stage, and the criteria by which success is judged.
+This program governs the primary research direction. Infrastructure, implementations, experiments, and applications support the central question but may not replace it.
 
-The purpose is not merely to improve FAR as an artifact. Infrastructure, implementations, experiments, and applications support the research objective but may not replace it.
-
-## Scope
-
-This document governs the project's primary research direction.
-
-It does not introduce new mathematical primitives, accept a representation theorem, revise Foundation v1.0, or declare FAR correct. Substantive mathematical change still requires the applicable versioned revision process.
+It does not introduce a new primitive, accept a representation theorem, revise Foundation v1.0, or declare FAR correct.
 
 ## Governing standards and artifacts
 
-This program is controlled by:
+The active program is controlled by:
 
 - `docs/governance/deduction-first-research-standard.md`;
 - `docs/governance/anti-self-validation-standard.md`;
 - `docs/governance/anti-self-validation-deduction-clarification.md`;
 - `docs/governance/evidence-replication-and-freeze-standard-v1.0.md`;
-- `docs/governance/research-priority-reset.md`;
 - `docs/research/thm-target-001-v1.0.md`;
 - `docs/research/faithful-representation-specification-v1.0.md`;
 - `docs/research/p8-theorem-role-decision-v1.0.md`;
 - `docs/research/s-core-construction-obstruction-ledger-v1.0.md`;
 - `docs/research/s-core-w0-normalization-proof-v1.0.md`;
+- `docs/research/s-core-w1-direct-axis-proof-v1.0.md`;
 - `theory/evaluation/research-gates.json`.
 
-The deduction-first standard controls the dependency between proof and empirical validation. Anti-self-validation and replication standards continue to control claims of independent confirmation.
-
-## Design rationale
-
-Project FAR is fundamentally a research project. The framework exists because of the question, not the other way around.
-
-The central question is mathematical once its source class, target class, semantics, and assumptions are fixed. The primary route to an answer is therefore deduction: explicit definitions, axioms, lemmas, constructions, countermodels, lower bounds, equivalence results, and impossibility results.
-
-Experiments and replication remain important because they can expose ambiguous definitions, implementation defects, hidden assumptions, omitted cases, or human interpretation failures. They support the proof program but do not serve as a logical premise merely because evaluators agree.
-
-The program is neutral among favorable and unfavorable outcomes. A proof that FAR works, a counterexample showing it fails, a theorem establishing only a bounded scope, multiple incomparable structures, or a no-go result are all legitimate central results.
+The deduction-first standard controls proof dependencies. Anti-self-validation and replication standards separately control independent-confirmation claims.
 
 ## Central research question
 
 > Does every reasoning process necessarily instantiate a common underlying structure, and if so, is that structure both universal and minimal?
 
-This question contains distinct obligations:
+This separates at least six obligations:
 
-1. whether a common structure exists;
-2. whether every reasoning process in a formally justified scope can be faithfully represented;
-3. whether each retained commitment is necessary;
-4. whether the complete structure is minimal within a declared candidate universe;
-5. whether successful structures are unique, equivalent, or incomparable;
-6. whether a universal finite structure is impossible under some assumptions.
+1. common-schema existence;
+2. faithful representation within a formally justified source class;
+3. necessity or derivability of retained commitments;
+4. minimality within a declared candidate universe;
+5. equivalence, uniqueness, or incomparability;
+6. impossibility under stated assumptions.
 
-These obligations must not be collapsed into one favorable claim.
+These obligations may not be collapsed into one favorable conclusion.
 
 ## Research position
 
-Project FAR treats the existence of a universal structure of reasoning as an open hypothesis.
+The existence of a universal reasoning structure is an open hypothesis. Project FAR does not assume that such a structure exists or that FAR or FARA is that structure.
 
-The project does not assume that such a structure exists. It does not assume that FAR or FARA is that structure. A result against the current framework is a valid research result when established by proof, countermodel, bounded exhaustive analysis, or rigorous supporting evidence.
+A proof, countermodel, proper-subclass theorem, equivalence result, no-go theorem, or unresolved result is an admissible central outcome. No artifact is protected from criticism because it supports the current framework.
 
-No accepted artifact is protected from criticism merely because it supports the current framework.
+## Frozen boundaries
 
-## Frozen theorem, semantic, and lemma boundaries
+`THM-TARGET-001` v1.0 freezes:
 
-`THM-TARGET-001` v1.0 is the current theorem-family boundary. It separates:
+- `S_core`, the first finite explicit source class;
+- `S_IRD`, the broader extension target;
+- the theorem-facing target class `A_FARA`;
+- witness `W=(E,D,M,iota,kappa)`;
+- P1–P7 and P8-I preservation obligations;
+- the separate P8-E correspondence family;
+- common-schema, representation, extension, necessity, minimality, equivalence, and impossibility theorem families.
 
-- `S_core`, the finite explicit IRD-001 source class used for the first exact theorem attempt;
-- `S_IRD`, the broader extension class;
-- the theorem-facing FARA interface `A_FARA`;
-- the representation-witness signature;
-- P1–P7 preservation obligations;
-- P8-I as an internal obligation and P8-E as a separate application-correspondence obligation;
-- common-schema, faithful-representation, extension, necessity, minimality, equivalence, and impossibility theorem families.
+`FAITHFUL-REP-001` freezes materiality, applicability, canonical reducts, strong typed correspondence, target-only recovery, P5 bisimulation, P7 history and path requirements, semantic agreement, coherence, uniformity, composition, machinery accounting, nontriviality, and `Faithful_split`.
 
-`FAITHFUL-REP-001` v1.0 is the representation-semantic boundary. It defines source materiality, canonical source reducts, target-only recovery, total typed strong embeddings, relation preservation and reflection, P5 bisimulation, P7 order and path embedding, semantic agreement, cross-axis coherence, uniformity, compositional accountability, machinery accounting, nontriviality, and the complete `Faithful_split` conjunction.
+`P8-ROLE-001` selects `split`: `Pres_8I` remains internal, while `Corr_8E` remains a separate actual-process correspondence obligation.
 
-`P8-ROLE-001` selects `split`. `Pres_8I` remains internal to `Faithful_split`; `Corr_8E` remains a separate actual-process correspondence requirement.
+`SCORE-LEMMA-LEDGER-001` registers 24 construction, 10 obstruction, and 3 assembly obligations. Its statements and dependency graph remain frozen.
 
-`SCORE-LEMMA-LEDGER-001` v1.0 is the D4 proof-dependency boundary. It registers 24 construction obligations, 10 obstruction obligations, and 3 assembly obligations.
+A material change to source scope, target interface, faithful predicate, P8 boundary, lemma statement, quantified obstruction, or theorem family requires a versioned revision.
 
-`SCORE-W0-PROOF-001` is the first accepted partial proof package. It proves:
+## Accepted partial proof packages
 
-- `LEM-SC-001` — finite source-contract normalization;
-- `LEM-SC-002` — canonical P1–P7 and P8-I reduct extraction;
-- `LEM-SC-003` — materiality closure and applicability decidability;
-- `LEM-SC-004` — source-isomorphism transport.
+### W0 — Source normalization
+
+`SCORE-W0-PROOF-001` proves:
+
+- `LEM-SC-001` finite source-contract normalization;
+- `LEM-SC-002` canonical reduct extraction;
+- `LEM-SC-003` materiality closure and applicability decidability;
+- `LEM-SC-004` source-isomorphism transport.
 
 It establishes `OBS-SC-001` as a source-scope boundary: genuinely non-finite material closure is outside frozen `S_core`.
 
-These are source-side results only. They do not construct `A_FARA`, prove a target preservation predicate, establish `Faithful_split`, or answer the central research question.
+### W1 — Target allocation and direct axes
 
-A material change to source scope, target structure, theorem family, faithful-representation clauses, P8 content, lemma statements, quantified obstruction strength, or failure conditions requires a new version.
+`SCORE-W1-PROOF-001` proves:
 
-## Primary research objectives
+- `LEM-SC-005` target carrier allocation;
+- `LEM-SC-006` P1 configuration construction;
+- `LEM-SC-007` P2 commitment construction;
+- `LEM-SC-008` P3 stake-and-alternative construction;
+- `LEM-SC-009` P4 ground-and-justification construction;
+- `LEM-SC-012` P6 consequence construction;
+- `LEM-SC-014` P8-I internal evidential-status construction.
 
-### Objective I — Formal existence
+It refutes the registered direct-axis impossibility hypotheses `OBS-SC-003` and `OBS-SC-006` by one fixed finite incidence construction.
 
-Determine whether a common structure exists for a precisely defined class of reasoning systems.
+The W1 construction uses existing FARA categories and adds no primitive. Source-specific roles, sorts, values, and denotations enter as explicit target data. Objects and representations remain distinct.
 
-An existence result must state its assumptions and scope. Failure may be established by an obstruction, countermodel, inconsistency, or impossibility theorem.
-
-### Objective II — Faithful representation
-
-Determine whether every source system in the declared scope admits a witness satisfying `Faithful_split` without ad hoc theory change, unrestricted hidden interpretation, evaluator repair, incoherent per-axis encoding, or loss of protected commitments.
-
-A representation result must use the frozen source class, target class, representation relation, preservation obligations, recovery procedure, semantic agreement, cross-axis coherence, uniformity, compositionality, and counted machinery.
-
-### Objective III — Necessity and independence
-
-Determine whether every retained primitive or preservation commitment is indispensable, derivable, replaceable, scope-dependent, or unnecessary.
-
-Experimental ablation may discover candidate dependencies. Necessity requires a deductive lower bound or equivalent proof over the declared reconstruction class.
-
-### Objective IV — Minimality
-
-Determine whether the structure is irreducible within a declared universe of alternatives and an explicit equivalence or cost relation.
-
-Local minimality, bounded minimality, and global minimality are different claims. Global minimality may not be claimed from a finite comparison unless the candidate universe is proved exhaustive.
-
-### Objective V — Equivalence, uniqueness, and impossibility
-
-Characterize whether successful structures are unique up to isomorphism or translation, form multiple equivalent classes, remain incomparable, or cannot be finite and universal under stated assumptions.
-
-## Primary deductive method
-
-The active central method is:
-
-1. preserve the frozen theorem family and quantified scope;
-2. preserve the completed premise and semantics ledger;
-3. preserve the frozen faithful-representation definition;
-4. preserve the split P8 decision;
-5. execute the registered `S_core` construction and obstruction lemma ledger;
-6. search concurrently for quantified obstruction lemmas and countermodels;
-7. assemble the strongest justified finite-core theorem or refutation;
-8. determine whether the result extends to `S_IRD`;
-9. establish primitive independence, derivability, or lower bounds;
-10. establish minimality, equivalence, uniqueness, incomparability, or impossibility within a declared universe;
-11. mechanize the largest sound theorem fragment;
-12. obtain independent proof review and adversarial counterexample search.
-
-The canonical detailed sequence is `docs/planning/deduction-first-proof-roadmap.md`.
+W1 proves direct-axis strong embeddings. It does not prove target-only recovery or any complete `Pres_i` predicate.
 
 ## Current active stage
 
-The following gates are satisfied:
-
-- formal-theorem-target;
-- premise-ledger-and-semantics;
-- faithful-representation-definition.
-
-Their evidence includes:
-
-- `docs/research/thm-target-001-v1.0.md`;
-- `theory/evaluation/thm-target-001.json`;
-- `theory/evaluation/thm-target-001-premise-ledger.json` v1.3;
-- `docs/research/faithful-representation-specification-v1.0.md`;
-- `theory/evaluation/faithful-representation-specification-v1.0.json`;
-- `docs/research/p8-theorem-role-decision-v1.0.md`;
-- `theory/evaluation/p8-theorem-role-decision.json`.
-
-The D4 dependency program and W0 result are registered through:
-
-- `docs/research/s-core-construction-obstruction-ledger-v1.0.md`;
-- `theory/evaluation/s-core-construction-obstruction-ledger.json`;
-- `docs/research/s-core-w0-normalization-proof-v1.0.md`;
-- `theory/evaluation/s-core-w0-normalization-proof.json`;
-- `docs/audits/s-core-w0-proof-audit.md`.
-
-Current lemma state:
+Current ledger state:
 
 - total obligations: 37;
-- proved construction lemmas: 4;
+- proved construction lemmas: 11;
 - source-scope boundaries established: 1;
-- open obligations: 32;
-- completed wave: W0;
-- active wave: W1.
+- refuted obstruction hypotheses: 2;
+- open obligations: 23;
+- completed waves: W0 and W1;
+- active wave: W2.
 
-The scoped-representation-proof gate remains unsatisfied. The mechanized-proof-verification and independent-proof-review gates also remain unsatisfied.
+The active obligations are:
 
-The immediate central task is the W1 target package: construct or obstruct `LEM-SC-005`, `LEM-SC-006`, `LEM-SC-007`, `LEM-SC-008`, `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`.
+- `LEM-SC-010` deterministic dynamics;
+- `LEM-SC-011` finite-support probabilistic dynamics;
+- `LEM-SC-013` history and path;
+- `LEM-SC-015` nonmonotonic revision and retraction;
+- `LEM-SC-016` self-modification and rule-version change.
+
+`OBS-SC-004` and `OBS-SC-005` are executed as their dependencies close.
+
+The scoped-representation-proof, mechanized-proof-verification, and independent-proof-review gates remain unsatisfied.
+
+## W2 proof requirements
+
+The W2 package must preserve and reflect operational behavior rather than merely store labels.
+
+For deterministic dynamics it must establish finite labeled bisimulation, including preconditions, resources, actions, observations, rule identity, rule version, and admissibility.
+
+For finite-support stochastic dynamics it must preserve exact source probabilities or source-declared weight equivalence and establish the registered probabilistic bisimulation.
+
+For history it must provide an order embedding preserving and reflecting provenance, dependency ancestry, revision, retraction, supersession, activation, rejection, and material path conditions.
+
+For nonmonotonic revision it must retain earlier and later commitment states rather than replacing history with current output.
+
+For self-modification it must show that accepted, rejected, and superseded rule changes alter later admissible transitions at the exact source position.
+
+## Primary deductive method
+
+1. preserve the frozen theorem, source, target, semantic, and P8 boundaries;
+2. execute the lemma ledger in dependency order;
+3. search concurrently for quantified countermodels and obstructions;
+4. assemble the strongest finite-core result only after dependencies close;
+5. attempt extension to `S_IRD` only after the finite-core result;
+6. then address necessity, lower bounds, minimality, equivalence, uniqueness, or impossibility;
+7. mechanize the largest sound fragment;
+8. obtain independent proof review and adversarial counterexample search.
+
+The canonical detailed sequence is `docs/planning/deduction-first-proof-roadmap.md`.
 
 ## Proof-status discipline
 
-Every theorem or lemma artifact must identify:
+Every proof artifact must state its identifier, version, exact statement, quantified scope, assumptions, dependencies, result status, countermodels, machine-check status, independent-review status, consequences, and stronger nonclaims.
 
-- identifier and version;
-- exact statement;
-- quantified domain and scope;
-- definitions and axioms used;
-- dependency lemmas;
-- proof or refutation status;
-- machine-check status;
-- known countermodels and boundary cases;
-- consequences actually established;
-- stronger nonclaims.
+The following dimensions are separate:
 
-The status dimensions are separate:
+- **project-authored human-checkable proof**: a complete written derivation registered internally;
+- **bounded executable corroboration**: finite implementations and adversarial fixtures test the construction;
+- **proof-assistant verification**: a formal encoding checked by a trusted kernel;
+- **independent proof review**: qualified external reconstruction or challenge.
 
-- **project-authored human-checkable proof** means a complete written derivation has been registered internally;
-- **bounded executable corroboration** means algorithms and fixtures test a finite implementation of the definitions;
-- **proof-assistant verification** requires a formal encoding checked by a trusted kernel;
-- **independent proof review** requires qualified external reconstruction or adversarial review.
+No lower status may be reported as a higher one. Partial lemma packages do not satisfy the scoped-representation-proof gate.
 
-No lower status may be reported as a higher one.
-
-A theorem may not quantify over all reasoning unless the quantified class is independently and formally defined.
-
-A representation theorem may not hide missing structure in an unrestricted interpreter, oracle, metadata field, lookup table, evaluator repair, source-specific decoder, or unconstrained representation relation.
-
-A proof over `S_core` may not be reported as a proof over `S_IRD`.
-
-A failed attempted witness may not be reported as an obstruction unless nonexistence is proved over the registered class.
-
-A partial lemma package may not satisfy the scoped-representation-proof gate.
-
-## Supporting empirical method
-
-Where useful, the project may freeze vocabulary-neutral observations, register positive and negative controls, execute comparative representations, perform ablations and bounded searches, test implementations and proof artifacts, seek independent replication, and preserve complete results and failures.
-
-These activities may reveal counterexamples, ambiguity, hidden assumptions, implementation defects, or scope pressure. Their conclusions remain bounded by their design.
-
-They do not gate drafting, proving, refuting, or mechanizing a theorem. Independent replication gates only claims of independent empirical confirmation.
+A proof over `S_core` may not be reported as a proof over `S_IRD`. A failed witness is not an impossibility theorem unless nonexistence is proved over the registered class.
 
 ## Evidence hierarchy
 
-For mathematical claims, evidence is ordered by force as follows:
+For mathematical claims:
 
 1. machine-checked proof from frozen assumptions;
 2. complete human-checkable proof;
 3. partial proof, lemma, lower bound, or formal countermodel;
 4. exhaustive result over a fully defined finite universe;
-5. bounded mechanized conformance or model checking;
+5. bounded executable conformance or model checking;
 6. comparative experiment or independently replicated evaluation;
 7. informal argument or intuition.
 
-Lower-ranked evidence may motivate or challenge a proof but may not be described as logically equivalent to it.
-
-Formal proof supports only the propositions and assumptions it actually establishes. Mechanization demonstrates only what the formal encoding and trusted kernel establish. Failure to discover a counterexample does not prove universality.
+Lower-ranked evidence may motivate or challenge proof work but may not be described as logically equivalent to proof.
 
 ## Counterexample policy
 
-Potential counterexamples are primary research objects and must not be dismissed merely because they pressure the current theory.
+Potential counterexamples are primary research objects. Each must be classified as a formal countermodel, impossibility witness, representation failure, interpretation dispute, scope-boundary case, non-reasoning process, inconclusive case, or successful representation.
 
-Each candidate must be classified as one of:
+A candidate may not be excluded by redefining reasoning after exposure. Scope restrictions must be versioned and defended independently.
 
-- **Formal Countermodel** — satisfies the frozen source definition and violates the proposed theorem conclusion;
-- **Impossibility Witness** — supports a no-go or lower-bound result under stated assumptions;
-- **Representation Failure** — the attempted mapping fails, but framework failure has not been established;
-- **Interpretation Dispute** — the outcome depends on unresolved semantics or reconstruction;
-- **Scope-Boundary Case** — lies outside a previously and independently justified scope;
-- **Non-Reasoning Process** — fails the independently stated source definition;
-- **Inconclusive** — available information does not support a stable classification;
-- **Successfully Represented** — required commitments are preserved without protected-theory change.
+## Supporting empirical work
 
-A candidate may not be excluded by redefining reasoning after exposure. Any scope restriction must be versioned and defended independently.
+PBTS-001 replication, comparative representation, boundary discovery, bounded model search, and implementation validation continue as parallel supporting tracks. They may expose ambiguity, implementation defects, hidden assumptions, or counterexamples.
 
-## Theory revision policy
+They are not logical premises of the theorem. Independent replication gates only independent empirical-confirmation claims.
 
-Protected Foundation and theory artifacts must not be modified silently.
+## Theory revision and mechanization
 
-If a proof attempt or countermodel requires mathematical change, it must enter an explicit revision process. A revised theorem, source class, preservation basis, target structure, faithful predicate, P8 treatment, or lemma ledger becomes a new version. Earlier failed or weaker versions remain part of the record.
+Protected theory may not be silently changed to rescue a proof. Any substantive change creates the applicable new version and preserves earlier failures.
 
-## Relationship to mechanization
+A proof assistant can verify only the encoded theorem under its trusted assumptions. Executable W0 and W1 reference implementations are corroboration, not proof-assistant verification.
 
-Mechanization formalizes definitions and proofs, exposes missing assumptions, checks derivations, and supports reproducible counterexample analysis.
+## Current nonclaims
 
-A proof assistant can provide strong verification when the theorem and assumptions are faithfully encoded. It does not erase questionable axioms, circular definitions, or an unjustified source scope.
+The repository does not establish:
 
-`tools/s_core_w0_reference.py` is executable corroboration, not proof-assistant mechanization.
+- admissible target-only recovery;
+- any complete `Pres_i` predicate;
+- `Faithful_split` satisfiability;
+- FARA adequacy for `S_core` or `S_IRD`;
+- PB-001 sufficiency, necessity, independence, minimality, or completeness;
+- actual-process correspondence;
+- a representation, universality, necessity, minimality, equivalence, uniqueness, or impossibility theorem;
+- proof-assistant verification or independent proof review of W0 or W1.
 
-Executability alone does not establish universality, necessity, minimality, or truth.
+## Immediate central task
 
-## Relationship to PBTS-001 and independent replication
-
-PBTS-001, its internal RUN-001, the independent replication package, and coordinator controls remain valid supporting artifacts.
-
-They test the operational clarity and robustness of PB-001 judgments. They may expose missing theorem obligations or counterexamples. They do not constitute a representation theorem and are not prerequisites for attempting one.
-
-Independent replication remains required before claiming independent confirmation of PBTS results. It is not a prerequisite for mathematical deduction.
-
-## Anti-self-validation governance
-
-Project-authored experiments and reference implementations may establish internal coherence or implementation robustness but may not be described as independent confirmation.
-
-Project-authored proofs may be reported as such when the derivation, assumptions, and scope are explicit. They may not be described as independently verified until qualified external review occurs.
-
-## Possible outcomes
-
-The program recognizes at least:
-
-1. no universal structure of reasoning exists under the declared assumptions;
-2. a universal structure exists, but FAR is not that structure;
-3. FAR is universal only within an explicitly bounded formal domain;
-4. FAR is sufficient under stated assumptions but not necessary or minimal;
-5. FAR is one of multiple equivalent or incomparable structures;
-6. FAR is universal and minimal within a declared candidate universe;
-7. no finite universal architecture exists under stated assumptions;
-8. the proof obligations remain unresolved.
-
-Project success does not require a favorable conclusion about FAR. It requires the strongest justified conclusion.
-
-## Current research boundary
-
-The repository currently provides:
-
-- a frozen Foundation v1.0;
-- a prospective architecture-neutral reasoning domain;
-- IRD-001;
-- PB-001 as a candidate preservation basis;
-- PBTS-001 and an internal execution;
-- an independently executable replication package and coordinator controls;
-- a mechanization MVP unrelated to theorem verification;
-- deduction-first governance;
-- `THM-TARGET-001` v1.0 and premise ledger v1.3;
-- `FAITHFUL-REP-001` v1.0;
-- `P8-ROLE-001` v1.0 selecting split;
-- `SCORE-LEMMA-LEDGER-001` v1.0;
-- `SCORE-W0-PROOF-001` with four proved source-side lemmas and one established source boundary.
-
-These results establish a sound source-normalization kernel and readiness for W1 target construction. They do not answer the central research question.
-
-The immediate central task is W1. Independent PBTS replication and future independent proof review continue as separate supporting tracks.
+Execute the W2 dynamics, history, revision, and self-modification proof-or-obstruction package. Independent empirical work remains parallel and nonblocking.
