@@ -20,11 +20,5 @@ jobs:
     - name: Install dependencies
       run: python -m pip install pyyaml
     - name: Run full canonical repository health
-      shell: bash
-      run: |
-        set +e
-        python tools/repo_health_check.py --full > /tmp/project-far-health.log 2>&1
-        rc=$?
-        tail -n 180 /tmp/project-far-health.log
-        exit "$rc"
+      run: python tools/repo_health_check.py --full
     timeout-minutes: 60
