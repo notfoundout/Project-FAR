@@ -1,157 +1,36 @@
 #!/usr/bin/env python3
 """Generate an advisory Project FAR status report from existing evidence files."""
 from __future__ import annotations
-
 from collections import Counter
 from pathlib import Path
-import re
-import yaml
+import re, yaml
 from report_link_utils import markdown_link
-
-ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "docs/reports/project-status-generated.md"
-REGISTRIES = {
-    "evidence": ROOT / "theory/evaluation/evidence-registry.yaml",
-    "external": ROOT / "theory/evaluation/external-validation-registry.yaml",
-    "adversarial": ROOT / "theory/falsification/adversarial-test-suite.yaml",
-    "pressure": ROOT / "theory/falsification/primitive-pressure-registry.yaml",
-}
-REPORTS = [
-    "docs/governance/deduction-first-research-standard.md",
-    "docs/governance/central-research-program.md",
-    "docs/planning/deduction-first-proof-roadmap.md",
-    "docs/planning/architecture-neutral-research-roadmap.md",
-    "docs/research/thm-target-001-v1.0.md",
-    "theory/evaluation/thm-target-001.json",
-    "theory/evaluation/thm-target-001-premise-ledger.json",
-    "docs/research/faithful-representation-specification-v1.0.md",
-    "theory/evaluation/faithful-representation-specification-v1.0.json",
-    "docs/research/p8-theorem-role-decision-v1.0.md",
-    "theory/evaluation/p8-theorem-role-decision.json",
-    "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
-    "theory/evaluation/s-core-construction-obstruction-ledger.json",
-    "docs/research/s-core-w0-normalization-proof-v1.0.md",
-    "theory/evaluation/s-core-w0-normalization-proof.json",
-    "theory/evaluation/s-core-w0-reference-fixtures.json",
-    "docs/audits/s-core-w0-proof-audit.md",
-    "docs/audits/s-core-lemma-ledger-audit.md",
-    "docs/reports/primitive-sufficiency-report.md",
-    "docs/reports/external-validation-report.md",
-    "docs/reports/project-far-v0.3.0-synthesis.md",
-    "theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/README.md",
-    "theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/cre001-deterministic-comparison.json",
-    "theory/evaluation/comparative-representation/experiments/CRE-002/execution/cre002-comparison.json",
-    "theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001/execution/cre002-ext001-comparison.json",
-    "docs/reports/cre002-ext001-evidence-analysis.md",
-]
-
-
-def load_yaml(path: Path):
-    with path.open(encoding="utf-8") as handle:
-        return yaml.safe_load(handle) or {}
-
-
-def entries(data):
-    return data.get("entries") or data.get("tests") or []
-
-
+ROOT=Path(__file__).resolve().parents[1]; OUT=ROOT/'docs/reports/project-status-generated.md'
+REGISTRIES={'evidence':ROOT/'theory/evaluation/evidence-registry.yaml','external':ROOT/'theory/evaluation/external-validation-registry.yaml','adversarial':ROOT/'theory/falsification/adversarial-test-suite.yaml','pressure':ROOT/'theory/falsification/primitive-pressure-registry.yaml'}
+REPORTS=['docs/governance/deduction-first-research-standard.md','docs/governance/central-research-program.md','docs/planning/deduction-first-proof-roadmap.md','docs/planning/architecture-neutral-research-roadmap.md','docs/research/thm-target-001-v1.0.md','theory/evaluation/thm-target-001.json','theory/evaluation/thm-target-001-premise-ledger.json','docs/research/faithful-representation-specification-v1.0.md','theory/evaluation/faithful-representation-specification-v1.0.json','docs/research/p8-theorem-role-decision-v1.0.md','theory/evaluation/p8-theorem-role-decision.json','docs/research/s-core-construction-obstruction-ledger-v1.0.md','theory/evaluation/s-core-construction-obstruction-ledger.json','docs/research/s-core-w0-normalization-proof-v1.0.md','theory/evaluation/s-core-w0-normalization-proof.json','docs/audits/s-core-w0-proof-audit.md','docs/research/s-core-w1-direct-axis-proof-v1.0.md','theory/evaluation/s-core-w1-direct-axis-proof.json','docs/audits/s-core-w1-proof-audit.md','docs/audits/s-core-lemma-ledger-audit.md','docs/reports/primitive-sufficiency-report.md','docs/reports/external-validation-report.md','docs/reports/project-far-v0.3.0-synthesis.md','theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/README.md','theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/cre001-deterministic-comparison.json','theory/evaluation/comparative-representation/experiments/CRE-002/execution/cre002-comparison.json','theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001/execution/cre002-ext001-comparison.json','docs/reports/cre002-ext001-evidence-analysis.md']
+def load_yaml(p):
+    with p.open(encoding='utf-8') as f:return yaml.safe_load(f) or {}
+def entries(d): return d.get('entries') or d.get('tests') or []
 def latest_release():
-    versions = []
-    for path in (ROOT / "docs/releases").glob("project-far-v*.md"):
-        match = re.search(r"v(\d+\.\d+\.\d+)", path.name)
-        if match:
-            versions.append((tuple(int(x) for x in match.group(1).split(".")), match.group(0), path))
-    return max(versions)[2] if versions else None
-
-
-def count_values(items, key):
-    return Counter(str(item.get(key, "unspecified")) for item in items)
-
-
-def bullet_counts(counter):
-    return "\n".join(f"- {key}: {value}" for key, value in sorted(counter.items())) or "- None found."
-
-
-def nav_links(out_path: Path) -> list[str]:
-    return [
-        f"- README Command Center: {markdown_link(ROOT / 'README.md', out_path)}",
-        f"- Project Status: {markdown_link(ROOT / 'docs/reports/project-status-generated.md', out_path)}",
-        f"- Research Gaps: {markdown_link(ROOT / 'docs/reports/research-gap-report.md', out_path)}",
-        f"- Next Actions: {markdown_link(ROOT / 'docs/planning/next-actions.md', out_path)}",
-    ]
-
-
-def main() -> int:
-    data = {name: load_yaml(path) for name, path in REGISTRIES.items()}
-    ev = entries(data["evidence"])
-    ext = entries(data["external"])
-    adv = entries(data["adversarial"])
-    pressure = data["pressure"].get("primitives", [])
-    unresolved = [item for item in ev + ext + adv if "unresolved" in str(item.get("registry_resolution", item.get("current_status", ""))).lower()]
-    failures = []
-    for item in pressure:
-        failures.extend(item.get("candidate_primitive_failures") or [])
-    conclusion = (
-        "CRE-002-EXT-001 remains a prospective bounded result under Vocabulary Semantics Baseline 1.1 and does not establish "
-        "primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal "
-        "reasoning structure, or independent replication. SCORE-W0-PROOF-001 proves four source-normalization lemmas and "
-        "establishes OBS-SC-001 as a source-scope boundary. It does not construct a FARA target, prove any Pres_i target "
-        "obligation, satisfy Faithful_split, or establish a theorem. The lemma program has 32 open obligations and W1 is active."
-    )
-    lines = [
-        "# Project Status (Generated)", "", "## Navigation", "", *nav_links(OUT), "",
-        "Generated by `python tools/project_status_report.py` from machine-readable registries and selected reports.", "",
-        "This report uses cautious language and does not authorize theory changes.", "",
-        "## Current Research Mode", "",
-        "- Primary mode: deduction-first with parallel empirical validation.",
-        "- Frozen central artifacts: `THM-TARGET-001` v1.0, `FAITHFUL-REP-001` v1.0, `P8-ROLE-001` v1.0, and `SCORE-LEMMA-LEDGER-001` v1.0.",
-        "- Partial proof artifact: `SCORE-W0-PROOF-001` proves `LEM-SC-001` through `LEM-SC-004`; `OBS-SC-001` is a source-scope boundary.",
-        "- Selected P8 mode: `split`; `Pres_8I` is internal and `Corr_8E` remains a separate application-correspondence obligation.",
-        "- Lemma program status: 37 registered obligations; 4 proved; 1 source boundary established; 32 open; active wave `W1`.",
-        "- Immediate central work: construct or obstruct `LEM-SC-005`, `LEM-SC-006`, `LEM-SC-007`, `LEM-SC-008`, `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`.",
-        "- Formal-theorem-target gate: satisfied with registered artifacts.",
-        "- Premise-ledger-and-semantics gate: satisfied with registered artifacts.",
-        "- Faithful-representation-definition gate: satisfied with registered artifacts.",
-        "- Scoped-representation-proof gate: not satisfied.",
-        "- Mechanized-proof-verification gate: not satisfied; executable W0 checks are bounded corroboration only.",
-        "- Independent-proof-review gate: not satisfied.",
-        "- Parallel supporting track: PBTS-001 replication, comparative evaluation, boundary discovery, and implementation validation.",
-        "- Current theorem status: no representation theorem, universality theorem, necessity theorem, or minimality theorem is established.", "",
-        "## Source Registries", "",
-        *[f"- {name}: {markdown_link(path, OUT)}" for name, path in REGISTRIES.items()], "",
-        "## Current Release Baseline", "",
-        f"- Latest release document detected: {markdown_link(latest_release(), OUT) if latest_release() else 'unknown'}", "",
-        "## Evaluation Counts", "",
-        f"- Internal reasoning systems evaluated: {len(ev)}",
-        f"- External systems evaluated: {len(ext)}",
-        f"- Adversarial tests summarized: {len(adv)}", "",
-        "## Current Classification Counts", "", "### Internal registry", "", bullet_counts(count_values(ev, "classification")), "",
-        "### External validation registry", "", bullet_counts(count_values(ext, "classification")), "",
-        "### Adversarial test status", "", bullet_counts(count_values(adv, "current_status")), "",
-        "## Unresolved Cases", "",
-    ]
-    lines += [f"- `{item.get('id','unknown')}`: {item.get('system') or item.get('title')} ({item.get('registry_resolution') or item.get('current_status')})" for item in unresolved] or ["- None detected in parsed status fields."]
-    lines += ["", "## Candidate Primitive Failures", ""]
-    lines += [f"- {item}" for item in failures] or ["- None recorded in the primitive pressure registry."]
-    lines += ["", "## Current Primitive Pressure Summary", ""]
-    for item in pressure:
-        lines.append(f"- **{item.get('primitive')}**: {item.get('number_of_tests_stressing_it', 0)} stressing tests; unresolved pressures: {len(item.get('unresolved_pressures') or [])}; assessment: {item.get('current_assessment','not stated')}")
-    lines += [
-        "", "## Comparative Representation Status", "",
-        "CRE-001: deterministic comparison complete at its registered retrospective scope under compiler-authored declared interpretations.", "",
-        "CRE-002: prospective semantic-licensing result complete under Baseline 1.0; all three candidates remain unsupported because the five required capability classes were not licensed.", "",
-        "CRE-002-EXT-001: prospective bounded execution complete under Baseline 1.1; all three candidates are complete for the registered scenario, ambiguity policies, derived machinery, and verifier conditions.", "",
-        "The extension does not rank the vocabularies and does not retroactively alter CRE-002.", "",
-        "## Current Evidence Conclusion", "", conclusion, "", "## Relevant Reports", "",
-    ]
-    for report in REPORTS:
-        lines.append(f"- {markdown_link(ROOT / report, OUT)}" if (ROOT / report).exists() else f"- Missing expected report: `{report}`")
-    lines += ["", "## Navigation", "", *nav_links(OUT)]
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(OUT.relative_to(ROOT))
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+    vals=[]
+    for p in (ROOT/'docs/releases').glob('project-far-v*.md'):
+        m=re.search(r'v(\d+\.\d+\.\d+)',p.name)
+        if m: vals.append((tuple(int(x) for x in m.group(1).split('.')),p))
+    return max(vals)[1] if vals else None
+def count_values(items,key): return Counter(str(x.get(key,'unspecified')) for x in items)
+def bullet_counts(c): return '\n'.join(f'- {k}: {v}' for k,v in sorted(c.items())) or '- None found.'
+def nav(): return [f"- README Command Center: {markdown_link(ROOT/'README.md',OUT)}",f"- Project Status: {markdown_link(OUT,OUT)}",f"- Research Gaps: {markdown_link(ROOT/'docs/reports/research-gap-report.md',OUT)}",f"- Next Actions: {markdown_link(ROOT/'docs/planning/next-actions.md',OUT)}"]
+def main()->int:
+    data={k:load_yaml(v) for k,v in REGISTRIES.items()}; ev=entries(data['evidence']); ext=entries(data['external']); adv=entries(data['adversarial']); pressure=data['pressure'].get('primitives',[])
+    unresolved=[x for x in ev+ext+adv if 'unresolved' in str(x.get('registry_resolution',x.get('current_status',''))).lower()]
+    failures=[f for p in pressure for f in (p.get('candidate_primitive_failures') or [])]
+    conclusion=('CRE-002-EXT-001 remains a prospective bounded result and does not establish primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal reasoning structure, or independent replication. SCORE-W0-PROOF-001 and SCORE-W1-PROOF-001 establish 11 construction lemmas, one S_core source boundary, and two refuted direct-axis obstruction hypotheses. W1 proves finite direct-axis strong embeddings but not target-only recovery, complete Pres_i predicates, Faithful_split, or a theorem. The ledger has 23 open obligations and W2 is active.')
+    lines=['# Project Status (Generated)','','## Navigation','',*nav(),'','Generated by `python tools/project_status_report.py` from machine-readable registries and selected reports.','','This report uses cautious language and does not authorize theory changes.','','## Current Research Mode','','- Primary mode: deduction-first with parallel empirical validation.','- Frozen central artifacts: `THM-TARGET-001` v1.0, `FAITHFUL-REP-001` v1.0, `P8-ROLE-001` v1.0, and `SCORE-LEMMA-LEDGER-001` v1.0.','- Partial proof artifacts: `SCORE-W0-PROOF-001` and `SCORE-W1-PROOF-001`.','- Selected P8 mode: `split`; the P8-I direct-axis embedding is proved, while recovery and `Corr_8E` remain unproved.','- Lemma program status: 37 obligations; 11 proved; 1 source boundary established; 2 obstruction hypotheses refuted; 23 open; active wave `W2`.','- Immediate central work: prove or obstruct deterministic dynamics, finite-support probabilistic dynamics, history and path, nonmonotonic revision, and self-modification.','- Formal-theorem-target gate: satisfied.','- Premise-ledger-and-semantics gate: satisfied.','- Faithful-representation-definition gate: satisfied.','- Scoped-representation-proof gate: not satisfied.','- Mechanized-proof-verification gate: not satisfied; executable W0/W1 checks are bounded corroboration only.','- Independent-proof-review gate: not satisfied.','- Current theorem status: no representation, universality, necessity, or minimality theorem is established.','','## Source Registries','',*[f'- {k}: {markdown_link(v,OUT)}' for k,v in REGISTRIES.items()],'','## Current Release Baseline','',f"- Latest release document detected: {markdown_link(latest_release(),OUT) if latest_release() else 'unknown'}",'','## Evaluation Counts','',f'- Internal reasoning systems evaluated: {len(ev)}',f'- External systems evaluated: {len(ext)}',f'- Adversarial tests summarized: {len(adv)}','','## Current Classification Counts','','### Internal registry','',bullet_counts(count_values(ev,'classification')),'','### External validation registry','',bullet_counts(count_values(ext,'classification')),'','### Adversarial test status','',bullet_counts(count_values(adv,'current_status')),'','## Unresolved Cases','']
+    lines += [f"- `{x.get('id','unknown')}`: {x.get('system') or x.get('title')} ({x.get('registry_resolution') or x.get('current_status')})" for x in unresolved] or ['- None detected in parsed status fields.']
+    lines += ['','## Candidate Primitive Failures','']+[f'- {x}' for x in failures] if failures else ['','## Candidate Primitive Failures','','- None recorded in the primitive pressure registry.']
+    lines += ['','## Current Primitive Pressure Summary','']
+    for p in pressure: lines.append(f"- **{p.get('primitive')}**: {p.get('number_of_tests_stressing_it',0)} stressing tests; unresolved pressures: {len(p.get('unresolved_pressures') or [])}; assessment: {p.get('current_assessment','not stated')}")
+    lines += ['','## Comparative Representation Status','','CRE-001: deterministic comparison complete at its registered retrospective scope under compiler-authored declared interpretations.','','CRE-002: prospective semantic-licensing result complete under Baseline 1.0; all three candidates remain unsupported because the five required capability classes were not licensed.','','CRE-002-EXT-001: prospective bounded execution complete under Baseline 1.1; all three candidates are complete for the registered scenario, ambiguity policies, derived machinery, and verifier conditions.','','The extension does not rank the vocabularies and does not retroactively alter CRE-002.','','## Current Evidence Conclusion','',conclusion,'','## Relevant Reports','']
+    for r in REPORTS: lines.append(f'- {markdown_link(ROOT/r,OUT)}' if (ROOT/r).exists() else f'- Missing expected report: `{r}`')
+    lines += ['','## Navigation','',*nav()]; OUT.write_text('\n'.join(lines)+'\n',encoding='utf-8'); print(OUT.relative_to(ROOT)); return 0
+if __name__=='__main__': raise SystemExit(main())
