@@ -4,109 +4,152 @@ from __future__ import annotations
 from pathlib import Path
 from report_link_utils import markdown_link
 
-ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'docs/planning/next-actions.md'
-STATUS=ROOT/'docs/reports/project-status-generated.md'
-GAP=ROOT/'docs/reports/research-gap-report.md'
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "docs/planning/next-actions.md"
+STATUS = ROOT / "docs/reports/project-status-generated.md"
+GAP = ROOT / "docs/reports/research-gap-report.md"
+
+TASKS = [
+    {
+        "id": "STRATEGIC-001",
+        "priority": "high",
+        "title": "Build the S_core construction and obstruction ledger",
+        "why": "THM-TARGET-001, FAITHFUL-REP-001, and P8-DEC-001 are frozen. Every finite-core source feature now needs either a uniform FARA construction obligation or a registered obstruction before the theorem can be attempted.",
+        "affected": [
+            "docs/research/faithful-representation-specification-v1.0.md",
+            "docs/research/p8-theorem-role-decision-v1.0.md",
+            "docs/research/thm-target-001-v1.0.md",
+            "docs/research/independent-reasoning-definition-v1.0.md",
+            "docs/planning/deduction-first-proof-roadmap.md",
+        ],
+        "outcome": "A dependency-ordered lemma ledger for S_core covering configuration, commitments, alternatives, grounds, dynamics, consequences, history, internal evidential status, self-modification, uncertainty, distribution, and composition.",
+        "risk": "high",
+        "branch": "research/build-s-core-lemma-ledger",
+        "pr": "Build S_core construction and obstruction ledger",
+    },
+    {
+        "id": "STRATEGIC-002",
+        "priority": "high",
+        "title": "Prove faithful-representation negative-control lemmas",
+        "why": "FAITHFUL-REP-001 assigns NC-01 through NC-10 to exact failure predicates, but the expected failures remain proof obligations rather than established results.",
+        "affected": [
+            "docs/research/faithful-representation-specification-v1.0.md",
+            "docs/methodology/negative-control-suite-v1.0.md",
+            "theory/falsification",
+            "docs/planning/deduction-first-proof-roadmap.md",
+        ],
+        "outcome": "A formal lemma family giving each mandatory negative control a source-valid construction and a derivation of its registered faithfulness failure.",
+        "risk": "high",
+        "branch": "research/prove-faithful-negative-controls",
+        "pr": "Prove faithful-representation negative-control lemmas",
+    },
+    {
+        "id": "STRATEGIC-003",
+        "priority": "high",
+        "title": "Develop the first uniform S_core constructor",
+        "why": "The common-schema and faithful-representation theorems require one effective source-isomorphism-equivariant constructor, not unrelated hand-built mappings.",
+        "affected": [
+            "docs/research/faithful-representation-specification-v1.0.md",
+            "docs/research/p8-theorem-role-decision-v1.0.md",
+            "docs/research/thm-target-001-v1.0.md",
+            "frameworks/FARA/architecture.md",
+            "theory/evaluation/thm-target-001-premise-ledger.json",
+        ],
+        "outcome": "A constructor definition and witness schema for the ordinary finite core, with every helper operation and internal evidential-status mapping declared and counted.",
+        "risk": "high",
+        "branch": "research/build-s-core-constructor",
+        "pr": "Develop uniform S_core constructor",
+    },
+    {
+        "id": "STRATEGIC-004",
+        "priority": "medium",
+        "title": "Register S_core countermodel fixtures",
+        "why": "Construction work must be attacked concurrently with source-valid cases targeting uniformity, dynamics, dependency, history, provenance, composition, and hidden-interpreter assumptions.",
+        "affected": [
+            "docs/research/faithful-representation-specification-v1.0.md",
+            "docs/research/p8-theorem-role-decision-v1.0.md",
+            "docs/methodology/negative-control-suite-v1.0.md",
+            "theory/falsification",
+        ],
+        "outcome": "A registered fixture family classified as S_core countermodels, impossibility witnesses, representation failures, controls, or scope-boundary cases.",
+        "risk": "high",
+        "branch": "research/register-s-core-countermodels",
+        "pr": "Register S_core countermodel fixtures",
+    },
+    {
+        "id": "STRATEGIC-005",
+        "priority": "medium",
+        "title": "Prepare proof mechanization architecture",
+        "why": "Machine checking requires a declared trusted base, formal encodings of S_core, A_FARA, FAITHFUL-REP-001, the split P8 obligations, theorem dependencies, and an admitted-obligation policy.",
+        "affected": [
+            "mechanization",
+            "docs/research/faithful-representation-specification-v1.0.md",
+            "docs/research/p8-theorem-role-decision-v1.0.md",
+            "docs/research/thm-target-001-v1.0.md",
+            "docs/planning/deduction-first-proof-roadmap.md",
+        ],
+        "outcome": "A proof-assistant selection and encoding plan preserving the separation between Faithful_split and Corr_8E without making a machine-verification claim.",
+        "risk": "medium",
+        "branch": "research/plan-proof-mechanization",
+        "pr": "Plan deduction-first proof mechanization",
+    },
+]
 
 
-def strategic_tasks():
+def nav_links() -> list[str]:
     return [
-        {
-            'id':'STRATEGIC-001','priority':'high',
-            'title':'Resolve the formal role of P8',
-            'why':'THM-TARGET-001 and FAITHFUL-REP-001 freeze all three P8 clauses, but THM-CORE-REP-001 remains blocked until coordinate, side_condition, or split is selected and justified.',
-            'affected':[
-                markdown_link(ROOT / 'docs/research/faithful-representation-specification-v1.0.md', OUT),
-                markdown_link(ROOT / 'docs/research/thm-target-001-v1.0.md', OUT),
-                markdown_link(ROOT / 'docs/research/preservation-basis-investigation-v1.0.md', OUT),
-                markdown_link(ROOT / 'docs/research/pb001-execution-run-001-report.md', OUT),
-                markdown_link(ROOT / 'theory/evaluation/thm-target-001.json', OUT),
-            ],
-            'outcome':'A versioned theorem-facing P8 decision selecting one frozen mode, recording theorem and application effects, and leaving every representation claim unproved.',
-            'risk':'high','branch':'research/resolve-p8-theorem-role','pr':'Resolve P8 theorem role'
-        },
-        {
-            'id':'STRATEGIC-002','priority':'high',
-            'title':'Build the S_core construction and obstruction ledger',
-            'why':'After P8 is selected, every finite-core source feature needs either a uniform FARA construction lemma or a registered obstruction before the theorem can be attempted.',
-            'affected':[
-                markdown_link(ROOT / 'docs/research/faithful-representation-specification-v1.0.md', OUT),
-                markdown_link(ROOT / 'docs/research/thm-target-001-v1.0.md', OUT),
-                markdown_link(ROOT / 'docs/research/independent-reasoning-definition-v1.0.md', OUT),
-                markdown_link(ROOT / 'docs/planning/deduction-first-proof-roadmap.md', OUT),
-            ],
-            'outcome':'A dependency-ordered lemma ledger for S_core covering configuration, commitments, alternatives, grounds, dynamics, consequences, history, self-modification, uncertainty, and composition.',
-            'risk':'high','branch':'research/build-s-core-lemma-ledger','pr':'Build S_core construction and obstruction ledger'
-        },
-        {
-            'id':'STRATEGIC-003','priority':'high',
-            'title':'Prove formal negative-control lemmas',
-            'why':'FAITHFUL-REP-001 assigns NC-01 through NC-10 to exact failure predicates, but those expected failures must be proved rather than inferred from the definitions.',
-            'affected':[
-                markdown_link(ROOT / 'docs/research/faithful-representation-specification-v1.0.md', OUT),
-                markdown_link(ROOT / 'docs/methodology/negative-control-suite-v1.0.md', OUT),
-                markdown_link(ROOT / 'theory/falsification', OUT),
-                markdown_link(ROOT / 'docs/planning/deduction-first-proof-roadmap.md', OUT),
-            ],
-            'outcome':'A formal control-lemma family giving each mandatory negative control a source-valid construction and a derivation of its registered faithfulness failure.',
-            'risk':'high','branch':'research/prove-faithful-negative-controls','pr':'Prove faithful-representation negative-control lemmas'
-        },
-        {
-            'id':'STRATEGIC-004','priority':'medium',
-            'title':'Develop the first uniform S_core constructor',
-            'why':'The common-schema and representation theorems require one effective source-isomorphism-equivariant constructor, not a collection of hand-built mappings.',
-            'affected':[
-                markdown_link(ROOT / 'docs/research/faithful-representation-specification-v1.0.md', OUT),
-                markdown_link(ROOT / 'docs/research/thm-target-001-v1.0.md', OUT),
-                markdown_link(ROOT / 'frameworks/FARA/architecture.md', OUT),
-                markdown_link(ROOT / 'theory/evaluation/thm-target-001-premise-ledger.json', OUT),
-            ],
-            'outcome':'A constructor definition and witness schema for the ordinary finite core, with all helper machinery declared and no theorem claim until its obligations are proved.',
-            'risk':'high','branch':'research/build-s-core-constructor','pr':'Develop uniform S_core constructor'
-        },
-        {
-            'id':'STRATEGIC-005','priority':'medium',
-            'title':'Prepare proof mechanization architecture',
-            'why':'Machine checking will require a declared trusted base, formal encodings of S_core, A_FARA, FAITHFUL-REP-001, the selected P8 mode, theorem dependencies, and admitted-obligation policy.',
-            'affected':[
-                markdown_link(ROOT / 'mechanization', OUT),
-                markdown_link(ROOT / 'docs/research/faithful-representation-specification-v1.0.md', OUT),
-                markdown_link(ROOT / 'docs/research/thm-target-001-v1.0.md', OUT),
-                markdown_link(ROOT / 'docs/planning/deduction-first-proof-roadmap.md', OUT),
-            ],
-            'outcome':'A proof-assistant selection and encoding plan that does not claim machine verification before theorem lemmas and dependencies are proved.',
-            'risk':'medium','branch':'research/plan-proof-mechanization','pr':'Plan deduction-first proof mechanization'
-        },
+        f"- README Command Center: {markdown_link(ROOT / 'README.md', OUT)}",
+        f"- Project Status: {markdown_link(STATUS, OUT)}",
+        f"- Research Gaps: {markdown_link(GAP, OUT)}",
+        f"- Next Actions: {markdown_link(OUT, OUT)}",
     ]
 
 
-def nav_links(out_path: Path) -> list[str]:
-    return [
-        f"- README Command Center: {markdown_link(ROOT / 'README.md', out_path)}",
-        f"- Project Status: {markdown_link(STATUS, out_path)}",
-        f"- Research Gaps: {markdown_link(GAP, out_path)}",
-        f"- Next Actions: {markdown_link(OUT, out_path)}",
+def main() -> int:
+    ids = [task["id"] for task in TASKS]
+    if len(ids) != len(set(ids)):
+        raise ValueError("generated task identifiers must be unique")
+    lines = [
+        "# Next Actions", "", "## Navigation", "", *nav_links(), "",
+        "Generated by `python tools/generate_next_tasks.py` under the deduction-first strategic priority. THM-TARGET-001, FAITHFUL-REP-001, and P8-DEC-001 are frozen; research gaps remain available in the gap report but do not automatically enter the active central queue. These recommendations do not authorize unregistered theory changes.",
+        "", "## Ranked Next Actions", "",
     ]
-
-
-def main():
-    tasks=strategic_tasks()
-    ids=[t['id'] for t in tasks]
-    if len(ids)!=len(set(ids)):
-        raise ValueError('generated task identifiers must be unique')
-    lines=['# Next Actions','', '## Navigation','', *nav_links(OUT), '', 'Generated by `python tools/generate_next_tasks.py` under the deduction-first strategic priority. THM-TARGET-001 and FAITHFUL-REP-001 are frozen; research gaps remain available in the gap report but do not automatically enter the active central queue. These recommendations do not authorize unregistered theory changes.','', '## Ranked Next Actions','']
-    for t in tasks:
-        lines += [f"### {t['id']}: {t['title']}",'','- Source: deduction-first strategic priority',f"- Priority: {t['priority']}",f"- Why it matters: {t['why']}",'- Affected files:',*[f"  - {a}" for a in t['affected']],f"- Expected outcome: {t['outcome']}",f"- Risk level: {t['risk']}",f"- Suggested branch name: `{t['branch']}`",f"- Suggested PR title: `{t['pr']}`",'']
-    lines += ['## Maintainer Task Briefs','']
-    for t in tasks:
-        allowed=', '.join(t['affected'])
-        lines += [f"### Task brief for {t['id']}",'','```markdown',f"Create branch `{t['branch']}`.",'',f"Scope: {t['title']}.",'Source: deduction-first strategic priority.',f"Primary files: {allowed}.",'Preserve THM-TARGET-001, FAITHFUL-REP-001, all frozen evidence, failures, unknowns, and nonclaims. A material source-scope, target-structure, faithful-predicate, theorem-family, or P8-content change requires a versioned revision.','Do not claim a theorem, universality, necessity, minimality, mechanized verification, or independent validation unless the corresponding research gate contains evidence.','Validation commands:','- `make research-check`','- `make health-fast`',f"PR title: `{t['pr']}`",'Stop condition: stop when the scoped artifact is complete or when a formal obstruction requires a separately registered revision.','```','']
-    lines += ['', '## Navigation', '', *nav_links(OUT)]
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text('\n'.join(lines)+'\n',encoding='utf-8')
-    print(f"{OUT.relative_to(ROOT)} tasks={len(tasks)}")
+    for task in TASKS:
+        affected = [markdown_link(ROOT / path, OUT) for path in task["affected"]]
+        lines += [
+            f"### {task['id']}: {task['title']}", "",
+            "- Source: deduction-first strategic priority",
+            f"- Priority: {task['priority']}",
+            f"- Why it matters: {task['why']}",
+            "- Affected files:",
+            *[f"  - {item}" for item in affected],
+            f"- Expected outcome: {task['outcome']}",
+            f"- Risk level: {task['risk']}",
+            f"- Suggested branch name: `{task['branch']}`",
+            f"- Suggested PR title: `{task['pr']}`",
+            "",
+        ]
+    lines += ["## Maintainer Task Briefs", ""]
+    for task in TASKS:
+        lines += [
+            f"### Task brief for {task['id']}", "",
+            "```markdown",
+            f"Create branch `{task['branch']}`.",
+            f"Scope: {task['title']}.",
+            "Preserve THM-TARGET-001, FAITHFUL-REP-001, P8-DEC-001, all frozen evidence, failures, unknowns, and nonclaims.",
+            "Do not claim a theorem, universality, necessity, minimality, mechanized verification, actual-process correspondence, or independent validation without registered evidence.",
+            "Validation commands:",
+            "- `make research-check`",
+            "- `make health-fast`",
+            f"PR title: `{task['pr']}`",
+            "```",
+            "",
+        ]
+    lines += ["## Navigation", "", *nav_links()]
+    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"{OUT.relative_to(ROOT)} tasks={len(TASKS)}")
     return 0
 
 
-if __name__=='__main__': raise SystemExit(main())
+if __name__ == "__main__":
+    raise SystemExit(main())
