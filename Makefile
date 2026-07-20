@@ -9,6 +9,7 @@ health:
 	python tools/check_s_core_w0.py
 	python tools/check_s_core_w1.py
 	python tools/check_s_core_w2.py
+	python tools/check_s_core_w3.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
@@ -29,6 +30,7 @@ health-fast:
 	python tools/check_s_core_w0.py
 	python tools/check_s_core_w1.py
 	python tools/check_s_core_w2.py
+	python tools/check_s_core_w3.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
@@ -60,6 +62,7 @@ research-check:
 	python tools/check_s_core_w0.py
 	python tools/check_s_core_w1.py
 	python tools/check_s_core_w2.py
+	python tools/check_s_core_w3.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
