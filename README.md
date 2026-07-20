@@ -17,26 +17,26 @@ The project does not assume that a universal structure exists or that FAR is tha
 
 ## Current Research State
 
-The project now separates three tracks:
+The project separates three tracks:
 
 - **REP:** finite representation capacity and fidelity;
 - **ADJ:** generic-baseline factorization, FARA-specificity, contrast, ablation, reconstruction, and cost;
 - **USD:** representation-independent universal-structure discovery.
 
-`SCORE-W0-PROOF-001` through `SCORE-W3-PROOF-001` remain project-authored REP packages. W3 establishes all 24 finite construction lemmas, target-only recovery, semantic agreement, cross-axis coherence, complete machinery accounting, uniformity, composition, and typed witness assembly.
+`SCORE-W0-PROOF-001` through `SCORE-W4-PROOF-001` are project-authored bounded REP packages. W3 establishes all 24 finite construction lemmas, target-only recovery, semantic agreement, coherence, machinery accounting, uniformity, composition, and witness assembly. W4 establishes that every applicable registered NC-01 through NC-10 family violates at least one frozen faithful-representation clause for its registered reason.
 
-W3 does not establish `OBS-SC-010`, `Nontrivial`, `Faithful_split`, a representation theorem, FARA-specificity, universal structure, necessity, or minimality.
+These results do not establish complete `Faithful_split`, rejection of every invalid representation, FARA-specificity, a representation theorem, universal structure, necessity, or minimality.
 
-W4 formal negative controls and W3.5 specificity/discovery are active in parallel. W5 is blocked until both resolve.
+`W3.5-SDG-001` is now the sole live blocker before W5. Its concrete reasoning and contrast corpus remains unfrozen, and all factorization, specificity, candidate, and cost results remain unresolved.
 
-Run `make research-check` to validate the frozen REP program, the representation–discovery separation, W3.5 gates, universal target, and conservative claim boundaries.
+Run `make research-check` to validate the frozen REP program, representation-discovery separation, W3.5 gates, universal target, and conservative claim boundaries.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: W4 formal negative controls and W3.5 specificity/discovery in parallel
+- Current project phase: W3.5 corpus, factorization, specificity, ablation, reconstruction, and cost
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 
@@ -44,10 +44,10 @@ Run `make research-check` to validate the frozen REP program, the representation
 
 | Track | Status | Current boundary |
 |---|---|---|
-| REP | W4 active | W0–W3 finite construction packages; theorem unproved |
-| ADJ | W3.5 frozen, not executed | Generic baseline, specificity, contrast, ablation, reconstruction |
+| REP | W0-W4 complete | Bounded construction and registered controls; theorem unproved |
+| ADJ | W3.5 frozen, not executed | Corpus, factorization, specificity, contrast, ablation, reconstruction, cost |
 | USD | Target frozen, unexecuted | No universal-structure candidate classified |
-| W5 | Blocked | Requires `OBS-SC-010` and `W3.5-SDG-001` |
+| W5 | Blocked | Requires evidence-backed `W3.5-SDG-001` |
 
 No aggregate completion percentage is authorized across REP, ADJ, and USD.
 
@@ -59,23 +59,32 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 | Proved construction lemmas | 24 |
 | Source boundaries established | 1 |
 | Obstruction hypotheses refuted | 8 |
-| Open obligations | 4 |
-| Completed waves | W0, W1, W2, W3 |
-| Active wave | W4 |
+| Negative-control obstructions established | 1 |
+| Open assembly obligations | 3 |
+| Completed waves | W0, W1, W2, W3, W4 |
+| Active status | W5 blocked by W3.5 |
 
 ## Top Priority Tasks
 
-### STRATEGIC-001: Execute W4 formal negative controls
+### STRATEGIC-001: Freeze the concrete reasoning and contrast corpora
 
-- Resolve `OBS-SC-010` and NC-01 through NC-10 without changing the frozen representation predicate.
+- Register nonempty positive and contrast instances, exclusions, source contracts, and observation boundaries before candidate scoring.
 
-### STRATEGIC-002: Execute W3.5 specificity and universal-discovery gate
+### STRATEGIC-002: Execute dimensioned GREL-FARA factorization
 
-- Resolve `GREL-001` factorization, FARA-specificity, reasoning/contrast discrimination, candidate ablation, alternative reconstruction, machinery cost, and claim impact.
+- Produce fixed translation witnesses or explicit failed-translation records and independently classify expressiveness, translation, constraints, reasoning specificity, cost, and overall interpretation.
 
-### STRATEGIC-003: Assemble W5
+### STRATEGIC-003: Execute candidate ablation and reconstruction
 
-- Blocked until W4 and W3.5 resolve.
+- Test every candidate across the frozen corpus and alternative conceptual bases, counting equivalent reintroduction.
+
+### STRATEGIC-004: Complete W3.5 cost and claim-impact audit
+
+- Produce immutable evidence, complete machinery accounting, preserved failures, and track-specific claim effects.
+
+### STRATEGIC-005: Assemble W5
+
+- Blocked until W3.5 resolves with complete immutable evidence.
 
 ## Universal-Structure Discovery
 
@@ -94,19 +103,19 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 - [Architecture-Neutral Research Roadmap](docs/planning/architecture-neutral-research-roadmap.md)
 - [THM-TARGET-001](docs/research/thm-target-001-v1.0.md)
 - [THM-US-TARGET-001](docs/research/universal-structure-discovery-target-v1.0.md)
+- [W4 Negative-Control Proof](docs/research/s-core-w4-negative-control-proof-v1.0.md)
 - [Generic Relational Baseline](docs/research/generic-relational-baseline-v1.0.md)
 - [Reasoning and Contrast Scope](docs/research/reasoning-and-contrast-scope-v1.0.md)
 - [W3.5 Gate](docs/research/w3-5-specificity-and-discovery-gate-v1.0.md)
-- [S_core W3 Proof](docs/research/s-core-w3-global-witness-proof-v1.0.md)
 - [Central Claim Registry](theory/evaluation/central-claim-registry.json)
 - [Research Gates](theory/evaluation/research-gates.json)
 
 ## Current Roadmap
 
-- REP: execute W4.
-- ADJ: execute W3.5.
-- USD: execute candidate-neutral reasoning/contrast and invariant tests.
-- W5: blocked until W4 and W3.5 resolve.
+- REP: W0-W4 complete at bounded `S_core` scope.
+- ADJ: freeze corpora and execute W3.5 factorization, specificity, contrast, ablation, reconstruction, cost, and claim impact.
+- USD: keep every candidate unresolved until candidate-neutral execution.
+- W5: blocked until W3.5 resolves with immutable evidence.
 
 ## Command Center
 
