@@ -4,7 +4,7 @@
 
 Project FAR exists to determine whether there is a universal and minimal structure underlying reasoning.
 
-This document defines the primary research program governing the long-term direction of the project. It establishes the central question, the admissible routes to an answer, and the criteria by which success is judged.
+This document defines the primary research program governing the long-term direction of the project. It establishes the central question, the admissible routes to an answer, the current formal stage, and the criteria by which success is judged.
 
 Every theoretical development, mechanization effort, proof, external validation, implementation, and supporting framework should contribute directly or indirectly to this program.
 
@@ -20,29 +20,16 @@ This document governs the project's primary research direction.
 
 It does not introduce new mathematical primitives, accept a theorem, revise Foundation v1.0, or declare FAR correct. Substantive mathematical change still requires the applicable Foundation Revision, Theory Revision, or Research Investigation process.
 
-## Role in Project FAR
-
-The Central Research Program is the authoritative statement of Project FAR's research objective. It governs:
-
-- theory development;
-- theorem and countermodel development;
-- research investigations;
-- mechanization used for research;
-- external validation;
-- future Foundation or theory revision proposals;
-- roadmap planning;
-- admission of work into the theoretical core.
-
-When uncertainty exists about whether proposed work belongs in the project's core, this document provides the governing criterion.
-
 ## Governing standards
 
 This program is controlled by:
 
 - `docs/governance/deduction-first-research-standard.md`;
 - `docs/governance/anti-self-validation-standard.md`;
+- `docs/governance/anti-self-validation-deduction-clarification.md`;
 - `docs/governance/evidence-replication-and-freeze-standard-v1.0.md`;
 - `docs/governance/research-priority-reset.md`;
+- `docs/research/thm-target-001-v1.0.md`;
 - `theory/evaluation/research-gates.json`.
 
 The deduction-first standard controls the dependency between proof and empirical validation. Anti-self-validation and replication standards continue to control claims of independent confirmation.
@@ -80,6 +67,24 @@ The project does not assume that such a structure exists. It does not assume tha
 
 No accepted artifact is protected from criticism merely because it supports the current framework.
 
+## Frozen theorem target
+
+`THM-TARGET-001` v1.0 is the current theorem-family boundary.
+
+It separates:
+
+- `S_core`, the finite explicit IRD-001 source class used for the first exact theorem attempt;
+- `S_IRD`, the broader extension class;
+- the theorem-facing FARA interface `A_FARA`;
+- the representation-witness signature;
+- P1-P7 preservation obligations;
+- P8 as an unresolved theorem parameter;
+- common-schema, faithful-representation, extension, necessity, minimality, equivalence, and impossibility theorem families.
+
+Freezing this target establishes a stable proposition for proof or refutation. It does not establish that the proposition is true, satisfiable, machine checked, or independently verified.
+
+A material change to source scope, target structure, theorem family, representation-witness requirements, P8 content, or failure conditions requires a new target version.
+
 ## Primary research objectives
 
 ### Objective I — Formal existence
@@ -92,7 +97,7 @@ An existence result must state its assumptions and scope. Failure may be establi
 
 If a candidate structure exists, determine whether every source system in the declared scope admits a faithful representation without ad hoc theory change, unrestricted hidden interpretation, evaluator repair, or loss of protected commitments.
 
-A representation result must define the source class, target class, representation relation, and preservation obligations.
+A representation result must define the source class, target class, representation relation, preservation obligations, recovery procedure, semantic agreement, and all counted machinery.
 
 ### Objective III — Necessity and independence
 
@@ -114,20 +119,46 @@ Characterize whether successful structures are unique up to isomorphism or trans
 
 The active central method is:
 
-1. state the theorem family and quantified scope precisely;
-2. define the source and target objects independently;
-3. classify every premise as a definition, well-formedness condition, axiom, imported theorem, scope restriction, evidence condition, or conjecture;
-4. define faithful representation and nontriviality formally;
-5. resolve the role of semantic and evidential correspondence, including P8;
-6. construct mappings and prove preservation lemmas;
-7. search concurrently for obstruction lemmas and countermodels;
-8. prove or refute the scoped representation theorem;
+1. preserve the frozen theorem family and quantified scope;
+2. complete the premise and semantics ledger;
+3. formalize faithful representation and nontriviality;
+4. resolve the role of semantic and evidential correspondence, including P8;
+5. construct mappings and prove preservation lemmas for `S_core`;
+6. search concurrently for obstruction lemmas and countermodels;
+7. prove or refute the finite-core representation theorem;
+8. determine whether the result extends to `S_IRD`;
 9. establish primitive independence, derivability, or lower bounds;
 10. establish minimality, equivalence, uniqueness, incomparability, or impossibility within a declared universe;
 11. mechanize the largest sound theorem fragment;
 12. obtain independent proof review and adversarial counterexample search.
 
 The canonical detailed sequence is `docs/planning/deduction-first-proof-roadmap.md`.
+
+## Current active stage
+
+The formal-theorem-target gate is satisfied through:
+
+- `docs/research/thm-target-001-v1.0.md`;
+- `theory/evaluation/thm-target-001.json`;
+- `theory/evaluation/thm-target-001-premise-ledger.json`.
+
+The premise-ledger-and-semantics gate remains in progress.
+
+The immediate central task is to formalize:
+
+- `Pres_1` through `Pres_7`;
+- `Faithful_m8`;
+- typed source-target encoding;
+- admissible recovery;
+- semantic agreement;
+- transition and admissibility correspondence;
+- dependency, consequence, and history preservation;
+- uniformity and compositionality;
+- complete machinery accounting.
+
+P8 must then be resolved as `coordinate`, `side_condition`, or `split`, or registered as a theorem-target revision blocker.
+
+No construction proof may be accepted before those semantics and the P8 role are frozen.
 
 ## Theorem discipline
 
@@ -147,6 +178,8 @@ Every theorem artifact must identify:
 A theorem may not quantify over all reasoning unless the quantified class is independently and formally defined.
 
 A representation theorem may not hide missing structure in an unrestricted interpreter, oracle, metadata field, lookup table, evaluator repair, or unconstrained representation relation.
+
+A proof over `S_core` may not be reported as a proof over `S_IRD`.
 
 ## Supporting empirical method
 
@@ -180,8 +213,6 @@ Lower-ranked evidence may motivate or challenge a proof but may not be described
 
 Formal proof supports only the propositions and assumptions it actually establishes. Mechanization demonstrates only what the formal encoding and trusted kernel establish. Case studies and replication provide bounded evidence. Failure to discover a counterexample does not prove universality.
 
-Every conclusion must state its evidence type, assumptions, scope, and remaining uncertainty.
-
 ## Counterexample policy
 
 Potential counterexamples are primary research objects and must not be dismissed merely because they pressure the current theory.
@@ -203,7 +234,7 @@ A candidate may not be excluded by redefining reasoning after exposure. Any scop
 
 Protected Foundation and theory artifacts must not be modified silently.
 
-If a proof attempt or countermodel requires mathematical change, it must enter an explicit revision process. A revised theorem, source class, preservation basis, or target structure becomes a new version. Earlier failed or weaker versions remain part of the record.
+If a proof attempt or countermodel requires mathematical change, it must enter an explicit revision process. A revised theorem, source class, preservation basis, target structure, or P8 treatment becomes a new version. Earlier failed or weaker versions remain part of the record.
 
 Documentation, repository restructuring, terminology cleanup, or mechanization changes may not conceal substantive theoretical revision.
 
@@ -211,7 +242,7 @@ Documentation, repository restructuring, terminology cleanup, or mechanization c
 
 Mechanization formalizes definitions and proofs, exposes missing assumptions, checks derivations, and supports reproducible counterexample analysis.
 
-A proof assistant can provide the strongest available verification when the theorem and assumptions are faithfully encoded. It does not erase questionable axioms, circular definitions, or an unjustified source scope.
+A proof assistant can provide strong verification when the theorem and assumptions are faithfully encoded. It does not erase questionable axioms, circular definitions, or an unjustified source scope.
 
 Executability alone does not establish universality, necessity, minimality, or truth.
 
@@ -223,37 +254,11 @@ They test the operational clarity and robustness of PB-001 judgments. They may e
 
 Independent replication remains required before claiming independent confirmation of PBTS results. It is not a prerequisite for mathematical deduction.
 
-## Relationship to external validation
-
-External validation tests FAR against systems and practices not constructed for FAR. It provides bounded evidence concerning applicability, recurring pressure points, representational assumptions, and possible limitations.
-
-External validation does not prove universal applicability. Deterministic implementations establish only their scoped compilation, execution, verification, and robustness properties. They do not establish universal sufficiency, necessity, minimality, superiority, or a universal reasoning structure.
-
 ## Anti-self-validation governance
 
 Project-authored experiments may establish internal coherence or implementation robustness but may not be described as independent confirmation.
 
 This restriction applies to empirical and review claims. It does not prohibit the project from developing a proof. A proof claim is governed by theorem correctness, explicit assumptions, and the applicable proof gates. Independent review remains necessary before claiming independent proof verification.
-
-Source-system observation contracts must remain vocabulary-neutral. All primitives, derived constructs, operations, semantic clauses, hidden state, ambiguity policies, implementation assumptions, and adjudication burden must be counted in empirical necessity or economy studies.
-
-## Work admission standard
-
-A proposed contribution belongs in the core research program only if it materially advances at least one of:
-
-- theorem specification;
-- definition or axiom clarification;
-- proof construction;
-- proof refutation;
-- countermodel discovery;
-- lower bounds or primitive independence;
-- equivalence, uniqueness, or impossibility;
-- mechanized proof checking;
-- boundary clarification;
-- independent proof review;
-- supporting empirical work that can expose a theorem defect or implementation error.
-
-Work that does not advance the central question should be classified as infrastructure, maintenance, application, future enhancement, or outside core scope.
 
 ## Possible outcomes
 
@@ -270,21 +275,6 @@ The program recognizes at least:
 
 Project success does not require a favorable conclusion about FAR. It requires the strongest justified conclusion.
 
-## Completion standard
-
-The Central Research Program is complete only when the strongest justified formal conclusion has been established regarding:
-
-- existence;
-- faithful representation;
-- universality within a declared scope;
-- necessity and independence;
-- minimality within a declared universe;
-- equivalence, uniqueness, or incomparability;
-- impossibility or no-go boundaries;
-- unresolved obligations.
-
-Independent empirical validation and proof review strengthen confidence and applicability but are recorded as separate claim dimensions.
-
 ## Current research boundary
 
 The repository currently provides:
@@ -296,8 +286,9 @@ The repository currently provides:
 - PBTS-001 and an internal execution;
 - an independently executable replication package and coordinator controls;
 - a mechanization MVP;
-- governance and evidence infrastructure.
+- deduction-first governance;
+- `THM-TARGET-001` v1.0 and its premise ledger.
 
-These results establish readiness for deduction and systematic challenge. They do not answer the central research question.
+These results establish readiness for formal faithful-representation work and systematic challenge. They do not answer the central research question.
 
-The immediate central task is to freeze the scoped representation-theorem target and premise ledger. Independent PBTS replication continues as a parallel supporting track when real qualified participants are available.
+The immediate central task is faithful-representation formalization and P8 resolution. Independent PBTS replication continues as a parallel supporting track when real qualified participants are available.
