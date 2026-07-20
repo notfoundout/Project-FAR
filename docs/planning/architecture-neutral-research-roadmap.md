@@ -4,132 +4,124 @@
 
 This roadmap orders the work needed to determine whether any genuine common structure of reasoning exists and whether FARA is universal, bounded, nonminimal, replaceable, equivalent to alternatives, or false as a universal account.
 
-Deduction is primary. Representation, discovery, adjudication, empirical validation, mechanization, and independent review retain separate statuses.
+REP, ADJ, USD, empirical validation, mechanization, and independent review retain separate statuses.
 
 ## Milestones 1–7.5 — Frozen foundation
 
-The reasoning domain, IRD-001, PB-001 investigation, PBTS packages, `THM-TARGET-001`, `FAITHFUL-REP-001`, and the P8 split are frozen prospectively.
+The reasoning domain, IRD-001, PB-001 investigation, PBTS packages, `THM-TARGET-001`, `FAITHFUL-REP-001`, and the P8 split are frozen prospectively. PB-001 remains unproved as sufficient, necessary, independent, minimal, or complete.
 
-PB-001 remains unproved as sufficient, necessary, independent, minimal, or complete.
+## Milestone 8 — REP construction and controls
 
-## Milestone 8 — REP construction program
-
-**Status:** W0–W3 complete as project-authored finite construction packages; W4 active.
+**Status:** W0-W4 complete as project-authored bounded proof packages.
 
 Current REP ledger:
 
 - 37 obligations;
-- 24 construction lemmas project-authored as proved;
-- 1 source boundary;
-- 8 refuted obstruction hypotheses;
-- 4 open obligations;
-- W4 active.
+- 24 construction lemmas proved;
+- 1 source boundary established;
+- 8 obstruction hypotheses refuted;
+- 1 registered negative-control obstruction established;
+- 3 assembly obligations open and blocked.
 
-W3 proves finite target-only recovery, semantic agreement, coherence, machinery accounting, uniformity, composition, and typed witness assembly.
+W3 proves finite target-only recovery, semantic agreement, coherence, machinery accounting, uniformity, composition, and witness assembly.
 
-W3 does not establish `Nontrivial`, `Faithful_split`, a representation theorem, or universal structure.
+W4 proves that every applicable registered NC-01 through NC-10 family violates at least one frozen faithful-representation clause for its registered reason.
+
+Neither result establishes complete `Faithful_split`, FARA-specificity, or universal structure.
 
 ## Milestone 8.5 — W3.5 adjudication bridge
 
-**Status:** frozen, not executed.
+**Status:** frozen, not executed; sole blocker before W5.
 
-### Generic baseline
+### Concrete corpus freeze
 
-`GREL-001` is a neutral finite typed relational baseline with no reasoning-specific primitive.
+Populate RCS-001 with prospectively admitted, nonempty positive and contrast instances. Record inclusion, exclusion, source contracts, and observation boundaries before candidate scoring.
 
-### Factorization
+### Generic baseline factorization
 
-Determine whether the W0–W3 construction factors through the baseline and whether fixed translations exist in either direction.
+Execute fixed translations among `S_core`, `GREL-001`, and FARA. Preserve failed translations and prohibit case-specific repair.
 
-### Specificity
+### Dimensioned result
 
-Classify FARA as strict, constrained-equivalent, translation-equivalent, simpler, dominated, incomparable, failed, or unresolved.
+Report independently:
 
-### Contrast
-
-Execute `RCS-001` across independent reasoning and structured non-reasoning families.
+- expressiveness;
+- translation direction;
+- constraint strength;
+- reasoning specificity;
+- cost relation;
+- overall interpretation.
 
 ### Candidate program
 
-Execute `US-CANDIDATES-001` without treating current FARA concepts as established invariants.
+Execute `US-CANDIDATES-001` through ablation and alternative reconstruction. Count equivalent reintroductions and preserve counterexamples.
 
-**Exit condition:** immutable factorization, specificity, contrast, candidate, cost, and claim-impact results.
+### Cost and machinery
 
-## Milestone 9 — W4 negative controls
+Count semantic bridges, recovery, normalization, verifier logic, metadata, hidden assumptions, and translation machinery.
 
-**Status:** active in parallel with W3.5.
+### Exit condition
 
-Resolve `OBS-SC-010` and NC-01 through NC-10 without modifying the frozen representation predicate.
+W3.5 closes only with linked immutable artifacts, stable identifiers, matching SHA-256 digests, terminal dimensions, frozen nonempty corpora, completed discrimination and candidate classifications, complete cost accounting, preserved failures, and claim-impact output.
 
-## Milestone 10 — W5 bounded representation result
+## Milestone 9 — W5 bounded representation result
 
-**Status:** blocked by W4 and W3.5.
+**Status:** blocked by W3.5.
 
-Assembly may produce a FARA-specific theorem, generic representation theorem, equivalence theorem, proper-subclass theorem, countermodel, impossibility result, or unresolved result.
+Assembly may produce a FARA-specific theorem, generic representation theorem, equivalence result, proper-subclass theorem, countermodel, impossibility result, or unresolved result. No W5 result automatically advances USD.
 
-No W5 result automatically advances USD.
-
-## Milestone 11 — THM-US-TARGET-001
+## Milestone 10 — THM-US-TARGET-001
 
 **Status:** frozen prospectively; unexecuted.
 
-The universal-structure program asks whether an unknown kernel `K*` satisfies:
-
-- coverage;
-- representation invariance;
-- nondefinitionality;
-- reasoning-relevant discrimination;
-- ablation resistance;
-- reconstruction resistance;
-- full machinery accounting;
-- minimality or equivalence classification.
+The universal-structure program asks whether an unknown kernel `K*` satisfies coverage, representation invariance, nondefinitionality, reasoning-relevant discrimination, ablation resistance, reconstruction resistance, full machinery accounting, and minimality or equivalence classification.
 
 Valid outcomes include one kernel, a proper-subclass kernel, equivalent kernels, incomparable kernels, generic properties only, no single kernel, or unresolved.
 
-## Milestone 12 — Reasoning and contrast execution
+## Milestone 11 — Reasoning and contrast execution
 
 Execute positive and contrast classes using candidate-independent admission rules and explicit observation or formalization boundaries.
 
-## Milestone 13 — Representation invariance
+## Milestone 12 — Representation invariance
 
-Translate each candidate through materially different formalisms and determine whether the structural commitment survives rather than merely its label.
+Translate candidates through materially different formalisms and determine whether the structural commitment survives rather than merely its label.
 
-## Milestone 14 — Ablation and alternative reconstruction
+## Milestone 13 — Ablation and alternative reconstruction
 
 Attempt to eliminate every candidate and recover the same reasoning commitments through different bases. Count equivalent reintroduction.
 
-## Milestone 15 — S_IRD extension
+## Milestone 14 — S_IRD extension
 
 Resolve infinite, continuous, partially observed, open-ended, semantically changing, and non-finite-support cases separately.
 
-## Milestone 16 — Necessity and lower bounds
+## Milestone 15 — Necessity and lower bounds
 
 Freeze a reconstruction class before proving indispensability, derivability, replaceability, or scope dependence.
 
-## Milestone 17 — Minimality, equivalence, and no-go alternatives
+## Milestone 16 — Minimality, equivalence, and no-go alternatives
 
 Freeze candidate universes, equivalence relations, and cost preorders. Permit multiple minima, incomparable solutions, no minimum, or no universal kernel.
 
-## Milestone 18 — Mechanized verification
+## Milestone 17 — Mechanized verification
 
 Mechanize the largest sound REP, ADJ, and USD fragments while keeping trusted assumptions explicit.
 
-## Milestone 19 — Independent proof review
+## Milestone 18 — Independent proof review
 
-Invite qualified reviewers to reconstruct proofs and actively search for generic factorizations, hidden machinery, countermodels, reductions, and alternative kernels.
+Invite qualified reviewers to reconstruct proofs and search for generic factorizations, hidden machinery, countermodels, reductions, and alternative kernels.
 
-## Milestone 20 — Central decision
+## Milestone 19 — Central decision
 
 Update each central claim independently. Do not aggregate REP and USD into one completion percentage.
 
 ## Dependency order
 
-`domain → IRD → REP target → W0 → W1 → W2 → W3 → {W4 || W3.5} → W5 bounded REP result`
+`domain → IRD → REP target → W0 → W1 → W2 → W3 → W4 → W3.5 → W5 bounded REP result`
 
 and independently:
 
-`THM-US-TARGET-001 → RCS-001 execution → invariance → ablation/reconstruction → necessity/minimality/equivalence/no-kernel result`.
+`THM-US-TARGET-001 → concrete RCS corpus → invariance → ablation/reconstruction → necessity/minimality/equivalence/no-kernel result`.
 
 ## Immediate next action
 
-Execute W4 and W3.5 in parallel. W5 remains blocked until both resolve.
+Execute W3.5. W5 remains blocked until its complete evidence contract resolves.
