@@ -2,7 +2,9 @@
   "schema_version": "1.0",
   "scope_id": "RCS-001",
   "version": "1.0",
-  "status": "frozen_prospective_execution_open",
+  "status": "frozen_admission_framework_execution_open",
+  "framework_frozen": true,
+  "concrete_corpus_status": "not_frozen",
   "positive_families": [
     "deductive_proof",
     "probabilistic_inference",
@@ -35,12 +37,27 @@
     "positive_independent_of_candidate": true,
     "contrast_independent_of_fara_failure": true,
     "contrast_independent_of_candidate_absence": true,
-    "explicit_source_or_observation_contract_required": true
+    "explicit_source_or_observation_contract_required": true,
+    "admission_decision_must_precede_candidate_scoring": true
   },
-  "execution_status": "not_started",
+  "required_instance_fields": [
+    "instance_id",
+    "family",
+    "admission_decision",
+    "admission_rationale",
+    "source_or_observation_contract",
+    "formalization_boundary",
+    "candidate_exposure_status",
+    "version"
+  ],
+  "positive_instances": [],
+  "contrast_instances": [],
+  "execution_status": "blocked_until_concrete_corpus_frozen",
   "nonclaims": [
-    "families are exhaustive",
-    "every listed instance is reasoning",
+    "the concrete reasoning corpus is frozen",
+    "the concrete contrast corpus is frozen",
+    "the listed families are exhaustive",
+    "every future admitted positive instance is reasoning",
     "contrast systems cannot reason"
   ]
 }
