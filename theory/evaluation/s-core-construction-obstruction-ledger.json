@@ -2,11 +2,14 @@
   "schema_version": "1.0",
   "ledger_id": "SCORE-LEMMA-LEDGER-001",
   "version": "1.0",
-  "status": "frozen_dependency_decomposition_registered_unexecuted",
+  "status": "frozen_dependency_decomposition_w0_complete_w1_active",
   "theorem_target": "THM-TARGET-001",
   "source_scope": "S_core",
   "faithful_predicate": "Faithful_split",
   "source_artifact": "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
+  "proof_packages": [
+    "theory/evaluation/s-core-w0-normalization-proof.json"
+  ],
   "governing_artifacts": [
     "docs/research/thm-target-001-v1.0.md",
     "theory/evaluation/thm-target-001.json",
@@ -47,10 +50,10 @@
     "W5": "theorem_assembly"
   },
   "obligations": [
-    {"id":"LEM-SC-001","class":"construction","wave":"W0","title":"Finite source-contract normalization","covers":["finite_source_normalization"],"depends_on":[],"status":"registered_unproved","evidence":[]},
-    {"id":"LEM-SC-002","class":"construction","wave":"W0","title":"Canonical reduct extraction","covers":["configuration","commitments","stakes_and_alternatives","grounds_and_justificatory_roles","deterministic_dynamics","finite_support_probabilistic_dynamics","consequences","history_and_path_dependence","internal_evidential_status"],"depends_on":["LEM-SC-001"],"status":"registered_unproved","evidence":[]},
-    {"id":"LEM-SC-003","class":"construction","wave":"W0","title":"Materiality closure and applicability decidability","covers":["finite_source_normalization"],"depends_on":["LEM-SC-001","LEM-SC-002"],"status":"registered_unproved","evidence":[]},
-    {"id":"LEM-SC-004","class":"construction","wave":"W0","title":"Source-isomorphism transport","covers":["uniformity_and_equivariance"],"depends_on":["LEM-SC-001","LEM-SC-002","LEM-SC-003"],"status":"registered_unproved","evidence":[]},
+    {"id":"LEM-SC-001","class":"construction","wave":"W0","title":"Finite source-contract normalization","covers":["finite_source_normalization"],"depends_on":[],"status":"proved","evidence":["docs/research/s-core-w0-normalization-proof-v1.0.md","theory/evaluation/s-core-w0-normalization-proof.json"]},
+    {"id":"LEM-SC-002","class":"construction","wave":"W0","title":"Canonical reduct extraction","covers":["configuration","commitments","stakes_and_alternatives","grounds_and_justificatory_roles","deterministic_dynamics","finite_support_probabilistic_dynamics","consequences","history_and_path_dependence","internal_evidential_status"],"depends_on":["LEM-SC-001"],"status":"proved","evidence":["docs/research/s-core-w0-normalization-proof-v1.0.md","theory/evaluation/s-core-w0-normalization-proof.json"]},
+    {"id":"LEM-SC-003","class":"construction","wave":"W0","title":"Materiality closure and applicability decidability","covers":["finite_source_normalization"],"depends_on":["LEM-SC-001","LEM-SC-002"],"status":"proved","evidence":["docs/research/s-core-w0-normalization-proof-v1.0.md","theory/evaluation/s-core-w0-normalization-proof.json"]},
+    {"id":"LEM-SC-004","class":"construction","wave":"W0","title":"Source-isomorphism transport","covers":["uniformity_and_equivariance"],"depends_on":["LEM-SC-001","LEM-SC-002","LEM-SC-003"],"status":"proved","evidence":["docs/research/s-core-w0-normalization-proof-v1.0.md","theory/evaluation/s-core-w0-normalization-proof.json"]},
     {"id":"LEM-SC-005","class":"construction","wave":"W1","title":"Target carrier allocation","covers":["configuration","commitments","stakes_and_alternatives","grounds_and_justificatory_roles","consequences","internal_evidential_status","machinery_accounting"],"depends_on":["LEM-SC-002","LEM-SC-004"],"status":"registered_unproved","evidence":[]},
     {"id":"LEM-SC-006","class":"construction","wave":"W1","title":"Configuration construction","covers":["configuration"],"depends_on":["LEM-SC-005"],"status":"registered_unproved","evidence":[]},
     {"id":"LEM-SC-007","class":"construction","wave":"W1","title":"Commitment construction","covers":["commitments"],"depends_on":["LEM-SC-005"],"status":"registered_unproved","evidence":[]},
@@ -71,7 +74,7 @@
     {"id":"LEM-SC-022","class":"construction","wave":"W3","title":"Uniformity and source-isomorphism equivariance","covers":["uniformity_and_equivariance"],"depends_on":["LEM-SC-004","LEM-SC-018","LEM-SC-020","LEM-SC-021"],"status":"registered_unproved","evidence":[]},
     {"id":"LEM-SC-023","class":"construction","wave":"W3","title":"Compositional accountability","covers":["distributed_composition"],"depends_on":["LEM-SC-017","LEM-SC-018","LEM-SC-020","LEM-SC-021","LEM-SC-022"],"status":"registered_unproved","evidence":[]},
     {"id":"LEM-SC-024","class":"construction","wave":"W3","title":"Well-formed witness assembly","covers":["theorem_assembly"],"depends_on":["LEM-SC-018","LEM-SC-019","LEM-SC-020","LEM-SC-021","LEM-SC-022","LEM-SC-023"],"status":"registered_unproved","evidence":[]},
-    {"id":"OBS-SC-001","class":"obstruction","wave":"W4","title":"Non-finite material-closure boundary","covers":["finite_source_normalization"],"depends_on":["LEM-SC-001","LEM-SC-003"],"status":"registered_unproved","evidence":[]},
+    {"id":"OBS-SC-001","class":"obstruction","wave":"W4","title":"Non-finite material-closure boundary","covers":["finite_source_normalization"],"depends_on":["LEM-SC-001","LEM-SC-003"],"status":"scope_boundary_established","evidence":["docs/research/s-core-w0-normalization-proof-v1.0.md","theory/evaluation/s-core-w0-normalization-proof.json"]},
     {"id":"OBS-SC-002","class":"obstruction","wave":"W4","title":"Hidden-interpreter necessity","covers":["target_only_recovery","uniformity_and_equivariance","machinery_accounting"],"depends_on":["LEM-SC-018","LEM-SC-021","LEM-SC-022"],"status":"registered_unproved","evidence":[]},
     {"id":"OBS-SC-003","class":"obstruction","wave":"W4","title":"Relation-reflection collapse","covers":["commitments","stakes_and_alternatives","grounds_and_justificatory_roles"],"depends_on":["LEM-SC-007","LEM-SC-008","LEM-SC-009"],"status":"registered_unproved","evidence":[]},
     {"id":"OBS-SC-004","class":"obstruction","wave":"W4","title":"Dynamics-bisimulation mismatch","covers":["deterministic_dynamics","finite_support_probabilistic_dynamics"],"depends_on":["LEM-SC-010","LEM-SC-011"],"status":"registered_unproved","evidence":[]},
@@ -90,11 +93,15 @@
     "construction": 24,
     "obstruction": 10,
     "assembly": 3,
-    "proved": 0,
+    "proved": 4,
     "obstruction_established": 0,
+    "scope_boundary_established": 1,
     "refuted": 0,
-    "open": 37
+    "open": 32
   },
+  "completed_waves": ["W0"],
+  "active_wave": "W1",
+  "active_obligations": ["LEM-SC-005","LEM-SC-006","LEM-SC-007","LEM-SC-008","LEM-SC-009","LEM-SC-012","LEM-SC-014"],
   "exit_condition": "every mandatory feature is resolved by an accepted construction lemma or quantified obstruction and ASM-SC-003 records the strongest justified outcome",
   "gate_effect": {
     "formal-theorem-target": "satisfied",
@@ -103,13 +110,13 @@
     "scoped-representation-proof": "not_satisfied"
   },
   "nonclaims": [
-    "any registered obligation is proved",
+    "any W1 through W5 obligation is proved",
     "Faithful_split is satisfiable for any or every S_core object",
     "a uniform FARA constructor exists",
     "FARA faithfully represents S_core",
     "PB-001 is sufficient necessary independent minimal or complete",
     "any representation universality necessity minimality equivalence uniqueness or impossibility theorem is established",
-    "machine verification or independent proof review"
+    "W0 has proof-assistant verification or independent proof review"
   ],
-  "next_required_artifact": "W0 proof package for LEM-SC-001 through LEM-SC-004"
+  "next_required_artifact": "W1 base-carrier and direct-axis construction proof package"
 }
