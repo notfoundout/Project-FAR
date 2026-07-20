@@ -11,6 +11,7 @@ REG = ROOT / "theory/evaluation/faithful-representation-specification-v1.0.json"
 TARGET = ROOT / "theory/evaluation/thm-target-001.json"
 PREMISES = ROOT / "theory/evaluation/thm-target-001-premise-ledger.json"
 P8_DECISION = ROOT / "theory/evaluation/p8-theorem-role-decision.json"
+LEMMA_REG = ROOT / "theory/evaluation/s-core-construction-obstruction-ledger.json"
 GATES = ROOT / "theory/evaluation/research-gates.json"
 
 
@@ -24,7 +25,7 @@ def require_true(mapping: dict, keys: set[str], label: str) -> None:
 
 
 def main() -> int:
-    for path in (DOC, REG, TARGET, PREMISES, P8_DECISION, GATES):
+    for path in (DOC, REG, TARGET, PREMISES, P8_DECISION, LEMMA_REG, GATES):
         assert path.is_file(), f"missing faithful-representation artifact: {path.relative_to(ROOT)}"
 
     text = DOC.read_text(encoding="utf-8")
@@ -50,6 +51,7 @@ def main() -> int:
     assert data.get("source_scope") == "S_core"
     assert data.get("source_artifact") == DOC.relative_to(ROOT).as_posix()
     assert data.get("theorem_target") == "THM-TARGET-001"
+    assert data.get("lemma_ledger_registry") == LEMMA_REG.relative_to(ROOT).as_posix()
 
     source = data.get("source_contract", {})
     assert source.get("tuple") == ["tau_S", "Mat", "ValEq", "App"]
@@ -106,11 +108,11 @@ def main() -> int:
     composition = data.get("compositional_accountability", {})
     require_true(composition, {"conditional_on_declared_decomposition", "component_encoding_required", "interface_mapping_required", "cross_component_relations_required", "restriction_commutes_up_to_declared_equivalence", "indecomposable_declaration_allowed"}, "compositional_accountability")
 
-    ledger = data.get("machinery_ledger", {})
-    require_true(ledger, {"finite_dependency_graph_required", "all_E_D_M_iota_dependencies_resolve"}, "machinery_ledger")
-    assert ledger.get("metadata_is_free") is False
-    assert len(ledger.get("covers", [])) >= 10
-    assert ledger.get("missing_dependency_effect") == "inadmissible_hidden_machinery"
+    machinery = data.get("machinery_ledger", {})
+    require_true(machinery, {"finite_dependency_graph_required", "all_E_D_M_iota_dependencies_resolve"}, "machinery_ledger")
+    assert machinery.get("metadata_is_free") is False
+    assert len(machinery.get("covers", [])) >= 10
+    assert machinery.get("missing_dependency_effect") == "inadmissible_hidden_machinery"
 
     controls = data.get("nontriviality", {}).get("negative_control_mapping", {})
     assert set(controls) == {f"NC-{i:02d}" for i in range(1, 11)}
@@ -120,9 +122,16 @@ def main() -> int:
     required_formula = {"WF_S_core", "WF_A_FARA", "WF_W", "AdmissibleRecovery", "all_applicable_Pres_1_through_Pres_7", "Pres_8I", "SemAgree", "Coherent", "Uniform", "CompAccount", "LedgerComplete", "Nontrivial"}
     assert set(data.get("faithful_formula", [])) == required_formula
     assert data.get("decision_semantics", {}).get("unknown") == "blocks_theorem_acceptance"
-    assert data.get("next_required_artifact") == "S_core construction and obstruction lemma ledger"
+    assert data.get("next_required_artifact") == "W0 proof package for LEM-SC-001 through LEM-SC-004"
     assert "any theorem is proved" in data.get("nonclaims", [])
     assert "actual-process correspondence is established" in data.get("nonclaims", [])
+    assert "any registered lemma is proved" in data.get("nonclaims", [])
+
+    lemma = load(LEMMA_REG)
+    assert lemma.get("ledger_id") == "SCORE-LEMMA-LEDGER-001"
+    assert lemma.get("status") == "frozen_dependency_decomposition_registered_unexecuted"
+    assert lemma.get("execution_summary", {}).get("proved") == 0
+    assert lemma.get("execution_summary", {}).get("open") == 37
 
     target = load(TARGET)
     current = target.get("current_gates", {})
@@ -135,7 +144,7 @@ def main() -> int:
     assert target.get("p8", {}).get("external_correspondence_not_implied_by_formal_theorem") is True
     core = {item.get("id"): item for item in target.get("theorem_family", [])}["THM-CORE-REP-001"]
     assert core.get("predicate") == "Faithful_split"
-    assert core.get("blocked_by") == ["construction_and_obstruction_lemmas"]
+    assert core.get("blocked_by") == ["lemma_ledger_execution"]
 
     premises = load(PREMISES)
     by_id = {item.get("id"): item for item in premises.get("entries", [])}
@@ -154,7 +163,7 @@ def main() -> int:
         assert by_name[name].get("evidence"), f"{name} requires evidence"
     assert by_name["scoped-representation-proof"].get("status") == "not_satisfied"
 
-    print("FAITHFUL-REP-001 validation PASS (P8 split; theorem unproved)")
+    print("FAITHFUL-REP-001 validation PASS (lemma ledger registered; W0 open; theorem unproved)")
     return 0
 
 
