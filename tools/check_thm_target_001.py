@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the frozen THM-TARGET-001 theorem target and premise ledger."""
-
+"""Validate THM-TARGET-001, its premise ledger, and faithful-semantics integration."""
 from __future__ import annotations
 
 import json
@@ -11,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DOC = ROOT / "docs/research/thm-target-001-v1.0.md"
 TARGET = ROOT / "theory/evaluation/thm-target-001.json"
 LEDGER = ROOT / "theory/evaluation/thm-target-001-premise-ledger.json"
+FAITHFUL_DOC = ROOT / "docs/research/faithful-representation-specification-v1.0.md"
+FAITHFUL_REGISTRY = ROOT / "theory/evaluation/faithful-representation-specification-v1.0.json"
 GATES = ROOT / "theory/evaluation/research-gates.json"
 CLAIMS = ROOT / "theory/evaluation/central-claim-registry.json"
 
@@ -25,7 +26,7 @@ def require(text: str, phrases: list[str], label: str) -> None:
 
 
 def main() -> int:
-    for path in [DOC, TARGET, LEDGER, GATES, CLAIMS]:
+    for path in [DOC, TARGET, LEDGER, FAITHFUL_DOC, FAITHFUL_REGISTRY, GATES, CLAIMS]:
         assert path.is_file(), f"missing THM-TARGET-001 artifact: {path.relative_to(ROOT)}"
 
     doc = DOC.read_text(encoding="utf-8")
@@ -43,7 +44,6 @@ def main() -> int:
             "### THM-IRD-EXT-001",
             "### THM-IMP-001",
             "This artifact does not establish",
-            "Create a frozen faithful-representation specification",
         ],
         "THM-TARGET-001 document",
     )
@@ -65,6 +65,8 @@ def main() -> int:
     assert target.get("independent_review_status") == "not_started"
     assert target.get("source_artifact") == "docs/research/thm-target-001-v1.0.md"
     assert target.get("premise_ledger") == "theory/evaluation/thm-target-001-premise-ledger.json"
+    assert target.get("faithful_representation_specification") == "docs/research/faithful-representation-specification-v1.0.md"
+    assert target.get("faithful_representation_registry") == "theory/evaluation/faithful-representation-specification-v1.0.json"
 
     source_classes = target.get("source_classes", {})
     assert set(source_classes) == {"S_core", "S_IRD"}
@@ -83,6 +85,7 @@ def main() -> int:
     assert witness.get("uniform_construction_required") is True
     assert witness.get("complete_machinery_ledger_required") is True
     assert witness.get("source_specific_unrestricted_decoder_allowed") is False
+    assert witness.get("formal_semantics_status") == "frozen_unproved_satisfiability"
 
     assert target.get("preservation_obligations") == [
         "P1_configuration",
@@ -96,6 +99,7 @@ def main() -> int:
     p8 = target.get("p8", {})
     assert p8.get("status") == "unresolved_theorem_parameter"
     assert p8.get("allowed_values") == ["coordinate", "side_condition", "split"]
+    assert p8.get("clauses_frozen") is True
     assert p8.get("proof_acceptance_blocked_until_resolved") is True
 
     theorem_family = target.get("theorem_family", [])
@@ -113,13 +117,17 @@ def main() -> int:
     assert required_ids == set(by_id)
     assert all(item.get("status") != "proved" for item in theorem_family)
     assert by_id["THM-CORE-REP-001"].get("scope") == "S_core"
+    assert by_id["THM-CORE-REP-001"].get("blocked_by") == ["p8_resolution"]
     assert by_id["THM-IRD-EXT-001"].get("scope") == "S_IRD"
 
     gate_snapshot = target.get("current_gates", {})
-    assert gate_snapshot.get("formal_theorem_target") == "satisfied"
-    assert gate_snapshot.get("premise_ledger_and_semantics") == "in_progress"
     for name in [
+        "formal_theorem_target",
+        "premise_ledger_and_semantics",
         "faithful_representation_definition",
+    ]:
+        assert gate_snapshot.get(name) == "satisfied"
+    for name in [
         "scoped_representation_proof",
         "primitive_lower_bounds",
         "minimality_universe_and_proof",
@@ -127,12 +135,13 @@ def main() -> int:
         "independent_proof_review",
     ]:
         assert gate_snapshot.get(name) == "not_satisfied"
+    assert target.get("next_required_artifact") == "versioned P8 theorem-role decision"
 
     ledger = load(LEDGER)
     assert ledger.get("schema_version") == "1.0"
     assert ledger.get("ledger_id") == "THM-TARGET-001-PREMISES"
-    assert ledger.get("version") == "1.0"
-    assert ledger.get("status") == "frozen_with_explicit_open_parameters"
+    assert ledger.get("version") == "1.1"
+    assert ledger.get("status") == "frozen_with_explicit_open_parameters_and_faithful_semantics"
     entries = ledger.get("entries", [])
     assert len(entries) == 22
     ids = [entry.get("id") for entry in entries]
@@ -151,15 +160,30 @@ def main() -> int:
     classifications = Counter(entry.get("classification") for entry in entries)
     assert set(classifications) <= allowed_classes
     assert classifications == Counter(ledger.get("classification_counts", {}))
+    by_premise = {entry.get("id"): entry for entry in entries}
+    for premise_id in ("PRM-011", "PRM-012"):
+        assert by_premise[premise_id].get("status") == "semantics_frozen_unproved_satisfiability"
+        assert by_premise[premise_id].get("source") == "docs/research/faithful-representation-specification-v1.0.md"
+        assert not by_premise[premise_id].get("blocks")
     assert any(entry.get("status") == "open" for entry in entries)
     assert any(entry.get("status") == "explicitly_absent" for entry in entries)
-
-    gate_effect = ledger.get("gate_effect", {})
-    assert gate_effect == {
+    assert ledger.get("open_items") == [
+        "P8 mode",
+        "reconstruction class for necessity",
+        "candidate universe and equivalence relation for minimality",
+    ]
+    assert ledger.get("gate_effect") == {
         "formal-theorem-target": "satisfied",
-        "premise-ledger-and-semantics": "in_progress",
-        "faithful-representation-definition": "not_satisfied",
+        "premise-ledger-and-semantics": "satisfied",
+        "faithful-representation-definition": "satisfied",
     }
+
+    faithful = load(FAITHFUL_REGISTRY)
+    assert faithful.get("specification_id") == "FAITHFUL-REP-001"
+    assert faithful.get("status") == "frozen_definition_unproved_satisfiability"
+    assert faithful.get("p8", {}).get("selected_mode") is None
+    assert faithful.get("gate_effect", {}).get("faithful-representation-definition") == "satisfied"
+    assert "Faithful_m8 is satisfiable" in faithful.get("nonclaims", [])
 
     gates = load(GATES)
     gates_by_name = {gate.get("name"): gate for gate in gates.get("gates", [])}
@@ -170,11 +194,10 @@ def main() -> int:
         "theory/evaluation/thm-target-001.json",
         "theory/evaluation/thm-target-001-premise-ledger.json",
     }
-    premise_gate = gates_by_name["premise-ledger-and-semantics"]
-    assert premise_gate.get("status") == "in_progress"
-    assert "theory/evaluation/thm-target-001-premise-ledger.json" in premise_gate.get("evidence", [])
+    for name in ("premise-ledger-and-semantics", "faithful-representation-definition"):
+        assert gates_by_name[name].get("status") == "satisfied"
+        assert gates_by_name[name].get("evidence")
     for name in [
-        "faithful-representation-definition",
         "scoped-representation-proof",
         "primitive-lower-bounds",
         "minimality-universe-and-proof",
@@ -184,6 +207,7 @@ def main() -> int:
         assert gates_by_name[name].get("status") != "satisfied"
 
     claims = load(CLAIMS)
+    assert "docs/research/faithful-representation-specification-v1.0.md" in claims.get("governing_documents", [])
     for claim in claims.get("claims", []):
         if claim.get("id") in {"CLM-EXISTENCE", "CLM-UNIVERSALITY", "CLM-NECESSITY", "CLM-MINIMALITY"}:
             assert claim.get("current_status") != "supported"
