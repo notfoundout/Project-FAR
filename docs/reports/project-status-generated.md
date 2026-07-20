@@ -15,15 +15,15 @@ This report uses cautious language and does not authorize theory changes.
 
 - Primary mode: deduction-first with parallel empirical validation.
 - Frozen central artifacts: `THM-TARGET-001` v1.0, `FAITHFUL-REP-001` v1.0, `P8-ROLE-001` v1.0, and `SCORE-LEMMA-LEDGER-001` v1.0.
-- Partial proof artifacts: `SCORE-W0-PROOF-001` and `SCORE-W1-PROOF-001`.
+- Partial proof artifacts: `SCORE-W0-PROOF-001`, `SCORE-W1-PROOF-001`, and `SCORE-W2-PROOF-001`.
 - Selected P8 mode: `split`; the P8-I direct-axis embedding is proved, while recovery and `Corr_8E` remain unproved.
-- Lemma program status: 37 obligations; 11 proved; 1 source boundary established; 2 obstruction hypotheses refuted; 23 open; active wave `W2`.
-- Immediate central work: prove or obstruct deterministic dynamics, finite-support probabilistic dynamics, history and path, nonmonotonic revision, and self-modification.
+- Lemma program status: 37 obligations; 16 proved; 1 source boundary established; 4 obstruction hypotheses refuted; 16 open; active wave `W3`.
+- Immediate central work: prove or obstruct target-only recovery, semantic agreement, cross-axis coherence, complete machinery accounting, uniformity, composition, and well-formed witness assembly.
 - Formal-theorem-target gate: satisfied.
 - Premise-ledger-and-semantics gate: satisfied.
 - Faithful-representation-definition gate: satisfied.
 - Scoped-representation-proof gate: not satisfied.
-- Mechanized-proof-verification gate: not satisfied; executable W0/W1 checks are bounded corroboration only.
+- Mechanized-proof-verification gate: not satisfied; executable W0-W2 checks are bounded corroboration only.
 - Independent-proof-review gate: not satisfied.
 - Current theorem status: no representation, universality, necessity, or minimality theorem is established.
 
@@ -103,7 +103,7 @@ The extension does not rank the vocabularies and does not retroactively alter CR
 
 ## Current Evidence Conclusion
 
-CRE-002-EXT-001 remains a prospective bounded result and does not establish primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal reasoning structure, or independent replication. SCORE-W0-PROOF-001 and SCORE-W1-PROOF-001 establish 11 construction lemmas, one S_core source boundary, and two refuted direct-axis obstruction hypotheses. W1 proves finite direct-axis strong embeddings but not target-only recovery, complete Pres_i predicates, Faithful_split, or a theorem. The ledger has 23 open obligations and W2 is active.
+CRE-002-EXT-001 remains a prospective bounded result and does not establish primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal reasoning structure, or independent replication. SCORE-W0-PROOF-001 through SCORE-W2-PROOF-001 establish 16 construction lemmas, one S_core source boundary, and four refuted finite obstruction hypotheses. W1 and W2 prove finite axis, dynamics, history, revision, and rule-version constructions but not target-only recovery, complete Pres_i predicates, Faithful_split, or a theorem. The ledger has 16 open obligations and W3 is active.
 
 ## Relevant Reports
 
@@ -126,6 +126,9 @@ CRE-002-EXT-001 remains a prospective bounded result and does not establish prim
 - [docs/research/s-core-w1-direct-axis-proof-v1.0.md](../research/s-core-w1-direct-axis-proof-v1.0.md)
 - [theory/evaluation/s-core-w1-direct-axis-proof.json](../../theory/evaluation/s-core-w1-direct-axis-proof.json)
 - [docs/audits/s-core-w1-proof-audit.md](../audits/s-core-w1-proof-audit.md)
+- [docs/research/s-core-w2-dynamics-history-proof-v1.0.md](../research/s-core-w2-dynamics-history-proof-v1.0.md)
+- [theory/evaluation/s-core-w2-dynamics-history-proof.json](../../theory/evaluation/s-core-w2-dynamics-history-proof.json)
+- [docs/audits/s-core-w2-proof-audit.md](../audits/s-core-w2-proof-audit.md)
 - [docs/audits/s-core-lemma-ledger-audit.md](../audits/s-core-lemma-ledger-audit.md)
 - [docs/reports/primitive-sufficiency-report.md](primitive-sufficiency-report.md)
 - [docs/reports/external-validation-report.md](external-validation-report.md)
