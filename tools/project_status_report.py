@@ -20,6 +20,9 @@ REPORTS = [
     "docs/governance/deduction-first-research-standard.md",
     "docs/planning/deduction-first-proof-roadmap.md",
     "docs/planning/architecture-neutral-research-roadmap.md",
+    "docs/research/thm-target-001-v1.0.md",
+    "theory/evaluation/thm-target-001.json",
+    "theory/evaluation/thm-target-001-premise-ledger.json",
     "docs/audits/deduction-first-research-shift-audit.md",
     "docs/reports/primitive-sufficiency-report.md",
     "docs/reports/external-validation-report.md",
@@ -78,13 +81,11 @@ def main() -> int:
     for p in pressure:
         failures.extend(p.get("candidate_primitive_failures") or [])
     conclusion = (
-        "CRE-002-EXT-001 remains a prospective bounded result under Vocabulary Semantics Baseline 1.1: "
-        "all three official vocabularies supported licensed vocabulary-native constructions that replayed, regenerated, "
-        "mutation-tested, and behaviorally matched the registered 73-state reference graph with required outputs preserved. "
-        "The result depends on five explicitly licensed derived constructs and nine ambiguity policies. It does not establish "
+        "CRE-002-EXT-001 remains a prospective bounded result under Vocabulary Semantics Baseline 1.1 and does not establish "
         "primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal "
-        "reasoning structure, or independent replication. The central research program is now deduction-first: the immediate "
-        "formal objective is THM-TARGET-001, while comparative and replication work remains supporting evidence."
+        "reasoning structure, or independent replication. THM-TARGET-001 is now frozen as an unproved theorem family with an "
+        "explicit S_core scope, broader S_IRD extension target, theorem-facing FARA package, premise ledger, P1-P7 obligations, "
+        "and unresolved P8 parameter. The immediate formal work is faithful-representation semantics and P8 resolution."
     )
     lines = [
         "# Project Status (Generated)", "", "## Navigation", "", *nav_links(OUT), "",
@@ -92,7 +93,10 @@ def main() -> int:
         "This report uses cautious language and does not authorize theory changes.", "",
         "## Current Research Mode", "",
         "- Primary mode: deduction-first with parallel empirical validation.",
-        "- Immediate central artifact: `THM-TARGET-001`, the scoped representation-theorem target and premise ledger.",
+        "- Frozen central artifact: `THM-TARGET-001` v1.0 and its premise ledger.",
+        "- Immediate central work: formalize `Pres_1` through `Pres_7` and `Faithful_m8`, then resolve P8.",
+        "- Formal-theorem-target gate: satisfied with registered artifacts.",
+        "- Premise-ledger-and-semantics gate: in progress.",
         "- Parallel supporting track: PBTS-001 replication, comparative evaluation, boundary discovery, and implementation validation.",
         "- Current theorem status: no representation theorem, universality theorem, necessity theorem, or minimality theorem is established.", "",
         "## Source Registries", "",
