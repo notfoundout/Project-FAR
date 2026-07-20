@@ -18,6 +18,7 @@ REGISTRIES = {
 }
 REPORTS = [
     "docs/governance/deduction-first-research-standard.md",
+    "docs/governance/central-research-program.md",
     "docs/planning/deduction-first-proof-roadmap.md",
     "docs/planning/architecture-neutral-research-roadmap.md",
     "docs/research/thm-target-001-v1.0.md",
@@ -27,7 +28,9 @@ REPORTS = [
     "theory/evaluation/faithful-representation-specification-v1.0.json",
     "docs/research/p8-theorem-role-decision-v1.0.md",
     "theory/evaluation/p8-theorem-role-decision.json",
-    "docs/audits/deduction-first-research-shift-audit.md",
+    "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
+    "theory/evaluation/s-core-construction-obstruction-ledger.json",
+    "docs/audits/s-core-lemma-ledger-audit.md",
     "docs/reports/primitive-sufficiency-report.md",
     "docs/reports/external-validation-report.md",
     "docs/reports/project-far-v0.3.0-synthesis.md",
@@ -50,19 +53,19 @@ def entries(data):
 
 def latest_release():
     versions = []
-    for p in (ROOT / "docs/releases").glob("project-far-v*.md"):
-        m = re.search(r"v(\d+\.\d+\.\d+)", p.name)
-        if m:
-            versions.append((tuple(int(x) for x in m.group(1).split(".")), m.group(0), p))
+    for path in (ROOT / "docs/releases").glob("project-far-v*.md"):
+        match = re.search(r"v(\d+\.\d+\.\d+)", path.name)
+        if match:
+            versions.append((tuple(int(x) for x in match.group(1).split(".")), match.group(0), path))
     return max(versions)[2] if versions else None
 
 
 def count_values(items, key):
-    return Counter(str(i.get(key, "unspecified")) for i in items)
+    return Counter(str(item.get(key, "unspecified")) for item in items)
 
 
 def bullet_counts(counter):
-    return "\n".join(f"- {k}: {v}" for k, v in sorted(counter.items())) or "- None found."
+    return "\n".join(f"- {key}: {value}" for key, value in sorted(counter.items())) or "- None found."
 
 
 def nav_links(out_path: Path) -> list[str]:
@@ -80,16 +83,16 @@ def main() -> int:
     ext = entries(data["external"])
     adv = entries(data["adversarial"])
     pressure = data["pressure"].get("primitives", [])
-    unresolved = [e for e in ev + ext + adv if "unresolved" in str(e.get("registry_resolution", e.get("current_status", ""))).lower()]
+    unresolved = [item for item in ev + ext + adv if "unresolved" in str(item.get("registry_resolution", item.get("current_status", ""))).lower()]
     failures = []
-    for p in pressure:
-        failures.extend(p.get("candidate_primitive_failures") or [])
+    for item in pressure:
+        failures.extend(item.get("candidate_primitive_failures") or [])
     conclusion = (
         "CRE-002-EXT-001 remains a prospective bounded result under Vocabulary Semantics Baseline 1.1 and does not establish "
         "primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal "
-        "reasoning structure, or independent replication. THM-TARGET-001, FAITHFUL-REP-001, and P8-DEC-001 are frozen but "
-        "unproved. P8 uses split mode: internal evidential status is part of Faithful_split, while actual-process correspondence "
-        "requires the separate Corr_8E obligation. The immediate formal work is the S_core construction and obstruction lemma ledger."
+        "reasoning structure, or independent replication. THM-TARGET-001, FAITHFUL-REP-001, P8-ROLE-001, and "
+        "SCORE-LEMMA-LEDGER-001 are frozen but unproved. The lemma ledger registers 37 obligations, zero proved obligations, "
+        "and 37 open obligations. The immediate formal work is the W0 proof-or-refutation package for LEM-SC-001 through LEM-SC-004."
     )
     lines = [
         "# Project Status (Generated)", "", "## Navigation", "", *nav_links(OUT), "",
@@ -97,9 +100,10 @@ def main() -> int:
         "This report uses cautious language and does not authorize theory changes.", "",
         "## Current Research Mode", "",
         "- Primary mode: deduction-first with parallel empirical validation.",
-        "- Frozen central artifacts: `THM-TARGET-001` v1.0, `FAITHFUL-REP-001` v1.0, and `P8-DEC-001` v1.0.",
+        "- Frozen central artifacts: `THM-TARGET-001` v1.0, `FAITHFUL-REP-001` v1.0, `P8-ROLE-001` v1.0, and `SCORE-LEMMA-LEDGER-001` v1.0.",
         "- Selected P8 mode: `split`; `Pres_8I` is internal and `Corr_8E` remains a separate application-correspondence obligation.",
-        "- Immediate central work: build the `S_core` construction and obstruction lemma ledger.",
+        "- Lemma program status: 37 registered obligations; 0 proved; 37 open; active wave `W0`.",
+        "- Immediate central work: prove or refute `LEM-SC-001` through `LEM-SC-004`.",
         "- Formal-theorem-target gate: satisfied with registered artifacts.",
         "- Premise-ledger-and-semantics gate: satisfied with registered artifacts.",
         "- Faithful-representation-definition gate: satisfied with registered artifacts.",
@@ -119,22 +123,22 @@ def main() -> int:
         "### Adversarial test status", "", bullet_counts(count_values(adv, "current_status")), "",
         "## Unresolved Cases", "",
     ]
-    lines += [f"- `{e.get('id','unknown')}`: {e.get('system') or e.get('title')} ({e.get('registry_resolution') or e.get('current_status')})" for e in unresolved] or ["- None detected in parsed status fields."]
+    lines += [f"- `{item.get('id','unknown')}`: {item.get('system') or item.get('title')} ({item.get('registry_resolution') or item.get('current_status')})" for item in unresolved] or ["- None detected in parsed status fields."]
     lines += ["", "## Candidate Primitive Failures", ""]
-    lines += [f"- {x}" for x in failures] or ["- None recorded in the primitive pressure registry."]
+    lines += [f"- {item}" for item in failures] or ["- None recorded in the primitive pressure registry."]
     lines += ["", "## Current Primitive Pressure Summary", ""]
-    for p in pressure:
-        lines.append(f"- **{p.get('primitive')}**: {p.get('number_of_tests_stressing_it', 0)} stressing tests; unresolved pressures: {len(p.get('unresolved_pressures') or [])}; assessment: {p.get('current_assessment','not stated')}")
+    for item in pressure:
+        lines.append(f"- **{item.get('primitive')}**: {item.get('number_of_tests_stressing_it', 0)} stressing tests; unresolved pressures: {len(item.get('unresolved_pressures') or [])}; assessment: {item.get('current_assessment','not stated')}")
     lines += [
         "", "## Comparative Representation Status", "",
         "CRE-001: deterministic comparison complete at its registered retrospective scope under compiler-authored declared interpretations.", "",
         "CRE-002: prospective semantic-licensing result complete under Baseline 1.0; all three candidates remain unsupported because the five required capability classes were not licensed.", "",
         "CRE-002-EXT-001: prospective bounded execution complete under Baseline 1.1; all three candidates are complete for the registered scenario, ambiguity policies, derived machinery, and verifier conditions.", "",
         "The extension does not rank the vocabularies and does not retroactively alter CRE-002.", "",
-        "## Current Evidence Conclusion", "", conclusion, "", "## Relevant Reports", ""
+        "## Current Evidence Conclusion", "", conclusion, "", "## Relevant Reports", "",
     ]
-    for r in REPORTS:
-        lines.append(f"- {markdown_link(ROOT / r, OUT)}" if (ROOT / r).exists() else f"- Missing expected report: `{r}`")
+    for report in REPORTS:
+        lines.append(f"- {markdown_link(ROOT / report, OUT)}" if (ROOT / report).exists() else f"- Missing expected report: `{report}`")
     lines += ["", "## Navigation", "", *nav_links(OUT)]
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
