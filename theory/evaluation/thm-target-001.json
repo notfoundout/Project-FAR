@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0",
+  "theorem_target_id": "THM-TARGET-001",
+  "version": "1.0",
+  "status": "frozen_unproved",
+  "proof_status": "none",
+  "machine_check_status": "not_started",
+  "independent_review_status": "not_started",
+  "source_artifact": "docs/research/thm-target-001-v1.0.md",
+  "premise_ledger": "theory/evaluation/thm-target-001-premise-ledger.json",
+  "governing_standard": "docs/governance/deduction-first-research-standard.md",
+  "source_classes": {
+    "S_core": {
+      "status": "frozen_initial_scope",
+      "basis": "IRD-001 process presentations satisfying R1-R6",
+      "requirements": [
+        "finite event region",
+        "finite explicit material carrier sets",
+        "explicit finite or finite-support admissible dynamics",
+        "explicit grounds and support relation",
+        "explicit material history and revision distinctions",
+        "declared source interpretation",
+        "candidate-neutral IRD-001 admission"
+      ],
+      "nonclaim": "S_core is not asserted to contain all reasoning"
+    },
+    "S_IRD": {
+      "status": "frozen_extension_target",
+      "basis": "all well-formed IRD-001 reasoning episodes",
+      "blocked_features": [
+        "infinite carriers",
+        "continuous dynamics",
+        "partial observability",
+        "open-ended histories",
+        "semantic change",
+        "non-finite-support stochasticity",
+        "unresolved external correspondence"
+      ]
+    }
+  },
+  "target_class": {
+    "id": "A_FARA",
+    "status": "frozen_interface_unproved_adequacy",
+    "tuple": [
+      "U",
+      "Pi",
+      "R",
+      "Rep",
+      "S",
+      "I",
+      "Inv",
+      "C",
+      "Sigma",
+      "Theta",
+      "H",
+      "Omega",
+      "Res",
+      "Prov"
+    ],
+    "canonical_sources": [
+      "theory/definitions/definitions.md",
+      "frameworks/FARA/architecture.md",
+      "frameworks/FARA/primitives.md"
+    ],
+    "adds_new_primitive": false
+  },
+  "representation_witness": {
+    "tuple": ["E", "D", "M", "iota", "kappa"],
+    "uniform_construction_required": true,
+    "complete_machinery_ledger_required": true,
+    "source_specific_unrestricted_decoder_allowed": false
+  },
+  "preservation_obligations": [
+    "P1_configuration",
+    "P2_commitment",
+    "P3_stake_and_alternative",
+    "P4_ground_and_justification",
+    "P5_admissibility_and_dynamics",
+    "P6_consequence",
+    "P7_historical_and_path"
+  ],
+  "p8": {
+    "status": "unresolved_theorem_parameter",
+    "parameter": "m8",
+    "allowed_values": ["coordinate", "side_condition", "split"],
+    "proof_acceptance_blocked_until_resolved": true
+  },
+  "nontriviality_conditions": [
+    "uniform construction",
+    "no label-only success",
+    "no output-only lookup",
+    "no opaque universal state",
+    "no hidden interpreter",
+    "no metadata smuggling",
+    "no evaluator repair",
+    "no history erasure",
+    "no evidential upgrade",
+    "compositional accountability"
+  ],
+  "theorem_family": [
+    {
+      "id": "THM-CORE-COMMON-001",
+      "kind": "common_schema_existence",
+      "scope": "S_core",
+      "status": "target_frozen_unproved"
+    },
+    {
+      "id": "THM-CORE-REP-001",
+      "kind": "faithful_representation",
+      "scope": "S_core",
+      "status": "target_frozen_unproved",
+      "blocked_by": ["formal_faithful_representation_definition", "p8_resolution"]
+    },
+    {
+      "id": "THM-IRD-EXT-001",
+      "kind": "general_extension",
+      "scope": "S_IRD",
+      "status": "target_frozen_blocked",
+      "blocked_by": ["core_result", "extension_feature_lemmas", "p8_resolution"]
+    },
+    {
+      "id": "THM-P8-CORR-001",
+      "kind": "evidential_correspondence",
+      "scope": "selected_p8_mode",
+      "status": "target_frozen_blocked_by_p8_decision"
+    },
+    {
+      "id": "THM-PRIM-NEC-001",
+      "kind": "primitive_necessity_or_derivability_family",
+      "scope": "declared_reconstruction_class",
+      "status": "target_frozen_blocked_by_reconstruction_class"
+    },
+    {
+      "id": "THM-MIN-001",
+      "kind": "minimality",
+      "scope": "declared_candidate_universe",
+      "status": "target_frozen_blocked_by_candidate_universe"
+    },
+    {
+      "id": "THM-EQUIV-001",
+      "kind": "equivalence_or_uniqueness",
+      "scope": "declared_candidate_universe",
+      "status": "target_frozen_blocked_by_candidate_universe"
+    },
+    {
+      "id": "THM-IMP-001",
+      "kind": "impossibility_alternative",
+      "scope": "S_core_or_explicit_subclass",
+      "status": "target_frozen_unproved"
+    }
+  ],
+  "failure_conditions": [
+    "in_scope source countermodel",
+    "only prohibited hidden machinery permits a witness",
+    "source definition is circular through FARA",
+    "unregistered target primitive or commitment is required",
+    "material dependency or history collapse",
+    "P8 resolution changes theorem content",
+    "uniformity requires unrestricted source interpretation",
+    "strictly simpler equivalent target",
+    "unstated substantive axiom",
+    "bounded result promoted to broader scope"
+  ],
+  "current_gates": {
+    "formal_theorem_target": "satisfied",
+    "premise_ledger_and_semantics": "in_progress",
+    "faithful_representation_definition": "not_satisfied",
+    "scoped_representation_proof": "not_satisfied",
+    "primitive_lower_bounds": "not_satisfied",
+    "minimality_universe_and_proof": "not_satisfied",
+    "mechanized_proof_verification": "not_satisfied",
+    "independent_proof_review": "not_satisfied"
+  },
+  "nonclaims": [
+    "FARA faithfully represents S_core",
+    "S_core contains all reasoning",
+    "PB-001 is sufficient or minimal",
+    "P8 is resolved",
+    "any FARA primitive is necessary",
+    "FARA is minimal or unique",
+    "a universal finite architecture exists",
+    "any theorem is proved"
+  ],
+  "next_required_artifact": "frozen faithful-representation specification with P8 theorem-role decision"
+}
