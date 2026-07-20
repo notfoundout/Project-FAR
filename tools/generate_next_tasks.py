@@ -1,70 +1,135 @@
 #!/usr/bin/env python3
-"""Generate the active deduction-first and universal-discovery strategic task queue."""
+"""Generate the active representation, adjudication, and discovery task queue."""
 from __future__ import annotations
 from pathlib import Path
 from report_link_utils import markdown_link
 
-ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'docs/planning/next-actions.md'
-STATUS=ROOT/'docs/reports/project-status-generated.md'
-GAP=ROOT/'docs/reports/research-gap-report.md'
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "docs/planning/next-actions.md"
+STATUS = ROOT / "docs/reports/project-status-generated.md"
+GAP = ROOT / "docs/reports/research-gap-report.md"
 
-TASKS=[
-{'id':'STRATEGIC-001','priority':'high','title':'Execute the W4 S_core formal negative controls','why':'All 24 construction lemmas are project-authored as proved and eight obstruction hypotheses are refuted. OBS-SC-010 must determine whether NC-01 through NC-10 are rejected by the frozen clauses or expose a valid countermodel.','affected':['docs/research/s-core-construction-obstruction-ledger-v1.0.md','theory/evaluation/s-core-construction-obstruction-ledger.json','docs/methodology/negative-control-suite-v1.0.md','theory/evaluation/faithful-representation-specification-v1.0.json'],'outcome':'A versioned formal negative-control package resolving OBS-SC-010 without changing the frozen representation definition.','risk':'high','branch':'research/prove-s-core-w4-negative-controls','pr':'Prove S_core W4 formal negative controls'},
-{'id':'STRATEGIC-002','priority':'high','title':'Execute W3.5 baseline factorization and universal-discovery gate','why':'W3 proves a complete finite FARA witness construction but does not determine whether the result is FARA-specific, generic relational encoding, reasoning-specific, necessary, or minimal. W3.5 must resolve that interpretation before W5.','affected':['docs/research/w3-5-specificity-and-discovery-gate-v1.0.md','theory/evaluation/w3-5-specificity-and-discovery-gate.json','docs/research/generic-relational-baseline-v1.0.md','theory/evaluation/generic-relational-baseline-v1.0.json','docs/research/reasoning-and-contrast-scope-v1.0.md','theory/evaluation/reasoning-and-contrast-scope-v1.0.json','theory/evaluation/universal-structure-candidate-registry.json'],'outcome':'Immutable factorization, specificity, contrast, ablation, reconstruction, machinery-cost, and claim-impact results.','risk':'high','branch':'research/execute-w3-5-specificity-discovery','pr':'Execute W3.5 specificity and universal-discovery gate'},
-{'id':'STRATEGIC-003','priority':'blocked','title':'Assemble the finite-core theorem or strongest obstruction','why':'ASM-SC-001 through ASM-SC-003 remain open, but W5 is blocked until both OBS-SC-010 and W3.5-SDG-001 resolve.','affected':['docs/research/s-core-construction-obstruction-ledger-v1.0.md','theory/evaluation/s-core-construction-obstruction-ledger.json','theory/evaluation/thm-target-001.json','theory/evaluation/central-claim-registry.json'],'outcome':'A bounded REP theorem, equivalence, countermodel, proper-subclass result, impossibility result, or explicit unresolved result with specificity classification.','risk':'high','branch':'research/assemble-s-core-result','pr':'Assemble S_core theorem or obstruction'}]
+TASKS = [
+    {
+        "id": "STRATEGIC-001",
+        "priority": "high",
+        "title": "Execute the W4 S_core formal negative controls",
+        "why": "The project-authored W0-W3 packages record all 24 construction obligations as complete and eight obstruction hypotheses as refuted. OBS-SC-010 must determine whether NC-01 through NC-10 are rejected by the frozen clauses or expose a valid countermodel.",
+        "affected": [
+            "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
+            "theory/evaluation/s-core-construction-obstruction-ledger.json",
+            "docs/methodology/negative-control-suite-v1.0.md",
+            "theory/evaluation/faithful-representation-specification-v1.0.json",
+        ],
+        "outcome": "A versioned formal negative-control package resolving OBS-SC-010 without changing the frozen representation definition.",
+        "risk": "high",
+        "branch": "research/prove-s-core-w4-negative-controls",
+        "pr": "Prove S_core W4 formal negative controls",
+    },
+    {
+        "id": "STRATEGIC-002",
+        "priority": "high",
+        "title": "Execute W3.5 baseline factorization and universal-discovery gate",
+        "why": "The W3 package records a complete finite FARA witness construction but does not determine whether the result is FARA-specific, generic relational encoding, reasoning-specific, necessary, or minimal. W3.5 must freeze the concrete corpus and resolve that interpretation before W5.",
+        "affected": [
+            "docs/research/w3-5-specificity-and-discovery-gate-v1.0.md",
+            "theory/evaluation/w3-5-specificity-and-discovery-gate.json",
+            "docs/research/generic-relational-baseline-v1.0.md",
+            "theory/evaluation/generic-relational-baseline-v1.0.json",
+            "docs/research/reasoning-and-contrast-scope-v1.0.md",
+            "theory/evaluation/reasoning-and-contrast-scope-v1.0.json",
+            "theory/evaluation/universal-structure-candidate-registry.json",
+        ],
+        "outcome": "Immutable dimensioned factorization, specificity, corpus, contrast, ablation, reconstruction, machinery-cost, and claim-impact results.",
+        "risk": "high",
+        "branch": "research/execute-w3-5-specificity-discovery",
+        "pr": "Execute W3.5 specificity and universal-discovery gate",
+    },
+    {
+        "id": "STRATEGIC-003",
+        "priority": "blocked",
+        "title": "Assemble the finite-core theorem or strongest obstruction",
+        "why": "ASM-SC-001 through ASM-SC-003 remain open, but W5 is blocked until both OBS-SC-010 and the evidence-backed W3.5-SDG-001 gate resolve.",
+        "affected": [
+            "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
+            "theory/evaluation/s-core-construction-obstruction-ledger.json",
+            "theory/evaluation/thm-target-001.json",
+            "theory/evaluation/central-claim-registry.json",
+        ],
+        "outcome": "A bounded REP theorem, equivalence, countermodel, proper-subclass result, impossibility result, or explicit unresolved result with dimensioned specificity classification.",
+        "risk": "high",
+        "branch": "research/assemble-s-core-result",
+        "pr": "Assemble S_core theorem or obstruction",
+    },
+]
 
-def nav_links():
+
+def nav_links() -> list[str]:
     return [
-        f"- README Command Center: {markdown_link(ROOT/'README.md',OUT)}",
-        f"- Project Status: {markdown_link(STATUS,OUT)}",
-        f"- Research Gaps: {markdown_link(GAP,OUT)}",
-        f"- Next Actions: {markdown_link(OUT,OUT)}",
+        f"- README Command Center: {markdown_link(ROOT / 'README.md', OUT)}",
+        f"- Project Status: {markdown_link(STATUS, OUT)}",
+        f"- Research Gaps: {markdown_link(GAP, OUT)}",
+        f"- Next Actions: {markdown_link(OUT, OUT)}",
     ]
 
-def main()->int:
-    ids=[x['id'] for x in TASKS]
-    assert len(ids)==len(set(ids))
-    lines=[
-        '# Next Actions','','## Navigation','',*nav_links(),'',
-        'Generated by `python tools/generate_next_tasks.py` under the separated REP, ADJ, and USD program.',
-        '',
-        'W0-W3 remain frozen project-authored REP packages. W4 and W3.5 are active in parallel. W5 is blocked until both resolve. Representation progress does not update the universal-structure claim.',
-        '',
-        '## Ranked Next Actions',''
+
+def main() -> int:
+    ids = [item["id"] for item in TASKS]
+    assert len(ids) == len(set(ids))
+    lines = [
+        "# Next Actions",
+        "",
+        "## Navigation",
+        "",
+        *nav_links(),
+        "",
+        "Generated by `python tools/generate_next_tasks.py` under the separated REP, ADJ, and USD program.",
+        "",
+        "W0-W3 remain frozen project-authored REP packages. W4 and W3.5 are active in parallel. The RCS-001 admission framework is frozen, but its concrete corpus is not. W5 is blocked until W4 and evidence-backed W3.5 results resolve. Representation progress does not update the universal-structure claim.",
+        "",
+        "## Ranked Next Actions",
+        "",
     ]
-    for t in TASKS:
-        affected=[markdown_link(ROOT/p,OUT) for p in t['affected']]
+    for task in TASKS:
+        affected = [markdown_link(ROOT / path, OUT) for path in task["affected"]]
         lines += [
-            f"### {t['id']}: {t['title']}",'',
-            '- Source: central research program',
-            f"- Priority: {t['priority']}",
-            f"- Why it matters: {t['why']}",
-            '- Affected files:',*[f'  - {x}' for x in affected],
-            f"- Expected outcome: {t['outcome']}",
-            f"- Risk level: {t['risk']}",
-            f"- Suggested branch name: `{t['branch']}`",
-            f"- Suggested PR title: `{t['pr']}`",''
+            f"### {task['id']}: {task['title']}",
+            "",
+            "- Source: central research program",
+            f"- Priority: {task['priority']}",
+            f"- Why it matters: {task['why']}",
+            "- Affected files:",
+            *[f"  - {item}" for item in affected],
+            f"- Expected outcome: {task['outcome']}",
+            f"- Risk level: {task['risk']}",
+            f"- Suggested branch name: `{task['branch']}`",
+            f"- Suggested PR title: `{task['pr']}`",
+            "",
         ]
-    lines += ['## Maintainer Task Briefs','']
-    for t in TASKS:
+    lines += ["## Maintainer Task Briefs", ""]
+    for task in TASKS:
         lines += [
-            f"### Task brief for {t['id']}",'','```markdown',
-            f"Create branch `{t['branch']}`.",
-            f"Scope: {t['title']}.",
-            'Preserve THM-TARGET-001, THM-US-TARGET-001, FAITHFUL-REP-001, P8-ROLE-001, W0-W3, all failures, and every nonclaim.',
-            'Do not promote REP progress into USD, necessity, minimality, or uniqueness.',
-            'Do not begin W5 while OBS-SC-010 or W3.5-SDG-001 remains unresolved.',
-            'Validation commands:',
-            '- `make research-check`',
-            '- `make health-fast`',
-            f"PR title: `{t['pr']}`",
-            '```',''
+            f"### Task brief for {task['id']}",
+            "",
+            "```markdown",
+            f"Create branch `{task['branch']}`.",
+            f"Scope: {task['title']}.",
+            "Preserve THM-TARGET-001, THM-US-TARGET-001, FAITHFUL-REP-001, P8-ROLE-001, W0-W3, all failures, and every nonclaim.",
+            "Do not promote REP progress into USD, necessity, minimality, or uniqueness.",
+            "Do not treat the RCS-001 framework as a frozen concrete corpus.",
+            "Do not begin W5 while OBS-SC-010 or W3.5-SDG-001 remains unresolved or lacks linked immutable evidence.",
+            "Validation commands:",
+            "- `make research-check`",
+            "- `make health-fast`",
+            f"PR title: `{task['pr']}`",
+            "```",
+            "",
         ]
-    lines += ['## Navigation','',*nav_links()]
-    OUT.write_text('\n'.join(lines)+'\n',encoding='utf-8')
-    print(f'{OUT.relative_to(ROOT)} tasks={len(TASKS)}')
+    lines += ["## Navigation", "", *nav_links()]
+    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"{OUT.relative_to(ROOT)} tasks={len(TASKS)}")
     return 0
 
-if __name__=='__main__':
+
+if __name__ == "__main__":
     raise SystemExit(main())
