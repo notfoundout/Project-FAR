@@ -12,9 +12,9 @@ This reset establishes deduction as the primary route to the central result. Emp
 
 ## Current controlling objective
 
-`THM-TARGET-001` and its premise ledger are now frozen.
+`THM-TARGET-001`, its premise ledger, and `FAITHFUL-REP-001` are now frozen.
 
-The immediate objective is to formalize the faithful-representation relation and resolve P8 before any representation proof is attempted. Project FAR must define exactly what a valid encoding preserves, how missing structure is detected, which decoding and interpretation machinery is admissible, and whether evidential correspondence is an internal coordinate, an external side condition, or a split obligation.
+The immediate objective is to resolve the theorem role of P8 before construction or representation-proof work begins. The three admissible modes—`coordinate`, `side_condition`, and `split`—already have frozen clauses. The next artifact must select one mode, justify it, record its theorem and application consequences, and preserve the possibility that the decision exposes a target defect.
 
 ## Current evidence position
 
@@ -27,13 +27,16 @@ The project may presently claim:
 - PB-001 as an unproved candidate preservation basis;
 - a frozen PBTS-001 suite and internal execution;
 - independent-replication infrastructure without independent results;
-- a frozen theorem family and explicit premise ledger;
-- satisfaction of the formal-theorem-target gate;
-- readiness to formalize faithful representation and search for countermodels.
+- a frozen theorem family and premise ledger;
+- a frozen faithful-representation predicate with formal nontriviality clauses;
+- satisfaction of the formal-theorem-target, premise-ledger-and-semantics, and faithful-representation-definition gates;
+- readiness to resolve P8 and then construct lemmas and countermodels.
 
 The project may not presently claim:
 
 - a proved common structure of reasoning;
+- existence of a uniform FARA constructor;
+- satisfiability of `Faithful_{m_8}`;
 - a faithful representation theorem;
 - universal applicability;
 - primitive necessity or independence;
@@ -46,39 +49,15 @@ The project may not presently claim:
 
 ## Priority order
 
-### Priority 1 — Preserve THM-TARGET-001
+### Priority 1 — Preserve the frozen target and faithful definition
 
-`THM-TARGET-001` separates the finite explicit core `S_core`, the broader extension class `S_IRD`, the theorem-facing FARA package, representation-witness signature, P1-P7 obligations, P8 alternatives, nontriviality requirements, and separate theorem families.
+`THM-TARGET-001` separates `S_core`, `S_IRD`, the theorem-facing FARA package, witness signature, theorem families, failure conditions, and P8 alternatives.
 
-Any material change to source scope, target structure, theorem family, or failure conditions creates a new version. The current target is not a proof.
+`FAITHFUL-REP-001` fixes source materiality, axis reducts, admissible recovery, strong typed embeddings, relation preservation and reflection, semantic agreement, cross-axis coherence, uniformity, compositional accountability, machinery accounting, and nontriviality.
 
-### Priority 2 — Complete the premise and semantics audit
+Any material change to these commitments creates a new version. Neither artifact is a proof.
 
-Finish the formal meanings of `Pres_1` through `Pres_7`, `Faithful_m8`, semantic agreement, admissible recovery, and machinery accounting.
-
-Eliminate circularity, unrestricted hidden interpreters, unconstrained representation maps, and FAR-native success definitions at the source boundary.
-
-**Exit condition:** a complete theorem-facing premise and semantics ledger with no hidden mathematical assumptions relevant to the representation proof.
-
-### Priority 3 — Formalize faithful representation and nontriviality
-
-Define source objects, target objects, encoding, recovery, interpretation, admissible transitions, dependency and history preservation, consequences, uniformity, and compositionality.
-
-Formally exclude:
-
-- label-only mappings;
-- output-only lookup;
-- opaque universal states;
-- hidden interpreters and operators;
-- metadata smuggling;
-- evaluator repair;
-- dependency collapse;
-- history erasure;
-- unsupported evidential upgrading.
-
-**Exit condition:** a frozen faithful-representation specification suitable for proof or refutation.
-
-### Priority 4 — Resolve P8
+### Priority 2 — Resolve P8
 
 Choose and justify one theorem role:
 
@@ -86,15 +65,28 @@ Choose and justify one theorem role:
 - `side_condition`;
 - `split`.
 
-A proof may not be accepted while P8 remains an unresolved theorem parameter. A change that alters theorem content requires a target revision.
+The decision must address IRD-001, PB-001, internal provenance, external process correspondence, application-claim limits, and `THM-P8-CORR-001`.
 
-### Priority 5 — Construct lemmas and search for obstructions
+A proof may not be accepted while P8 remains unresolved. Selecting one already-frozen clause does not establish existence or representation. A content-changing fourth alternative requires a target revision.
 
-Develop constructive mappings and preservation lemmas for `S_core` while actively searching for countermodels, no-go lemmas, and incompatible source classes.
+### Priority 3 — Construct lemmas and search for obstructions
 
-Pressure cases include self-modification, nonmonotonicity, finite-support probabilistic revision, distributed reasoning, semantic change, hidden state, resource bounds, circular support, dynamic representational types, and open-ended processes.
+After P8 is selected, develop constructive mappings and preservation lemmas for `S_core` while actively searching for countermodels, no-go lemmas, and incompatible source classes.
 
-### Priority 6 — Prove or refute the finite-core theorem family
+Required finite-core work includes:
+
+- configuration and typed identity;
+- commitments and graded status;
+- stakes and live alternatives;
+- grounds and typed justificatory roles;
+- deterministic and finite-support probabilistic dynamics;
+- consequences and downstream effects;
+- revision, retraction, supersession, provenance, and path dependence;
+- self-modification;
+- distributed composition;
+- formal negative-control lemmas and hidden-machinery attempts.
+
+### Priority 4 — Prove or refute the finite-core theorem family
 
 Attempt:
 
@@ -104,31 +96,31 @@ Attempt:
 
 Allowed outcomes include proof, countermodel, scope restriction, theory revision, impossibility, or unresolved obligations.
 
-### Priority 7 — Attempt the general IRD extension
+### Priority 5 — Attempt the general IRD extension
 
 Only after resolving the finite core, determine whether the construction extends to `S_IRD`.
 
 A finite-core result may not be reported as universal over the broader IRD class.
 
-### Priority 8 — Establish lower bounds, independence, and derivability
+### Priority 6 — Establish lower bounds, independence, and derivability
 
 For each retained primitive or preservation commitment, define the admissible reconstruction class and prove whether the commitment is indispensable, derivable, replaceable, assumption-dependent, unnecessary, or unresolved.
 
-### Priority 9 — Establish minimality, equivalence, uniqueness, or impossibility
+### Priority 7 — Establish minimality, equivalence, uniqueness, or impossibility
 
 Define the candidate universe, equivalence relation, and cost preorder before making any minimality claim.
 
 Seek local minimality, lower bounds, equivalent bases, incomparable bases, uniqueness up to translation, absence of a global minimum, or impossibility of finite universal representation.
 
-### Priority 10 — Mechanize the proof chain
+### Priority 8 — Mechanize the proof chain
 
 Encode the frozen definitions, assumptions, lemmas, and theorem in an appropriate proof assistant or verified formal system.
 
-### Priority 11 — Independent proof review and adversarial challenge
+### Priority 9 — Independent proof review and adversarial challenge
 
 Obtain independent reconstruction, proof review, mechanized-artifact review, and counterexample search. Record all disagreements and defects.
 
-### Priority 12 — Supporting empirical validation
+### Priority 10 — Supporting empirical validation
 
 Continue PBTS-001 replication, comparative representation experiments, bounded exhaustive searches, and application tests when resources permit.
 
@@ -136,8 +128,10 @@ These activities test interpretation, implementation, robustness, applicability,
 
 ## Work paused by default
 
-Until the faithful-representation specification and P8 role are frozen, the following work is paused unless directly required by the deductive program:
+Until the P8 role is frozen, the following work is paused unless directly required by the decision:
 
+- representation-proof construction;
+- a purported complete `S_core` constructor;
 - new certification layers;
 - additional dashboard or status automation;
 - broad terminology cleanup;
@@ -148,7 +142,7 @@ Until the faithful-representation specification and P8 role are frozen, the foll
 - new replication infrastructure beyond the already frozen PBTS-001 controls;
 - retrospective relabeling of internal evidence as proof or independence.
 
-Paused work is deferred because it does not currently reduce the main formal uncertainty.
+Countermodel preparation and analysis of the three P8 alternatives are permitted because they directly reduce the active formal uncertainty.
 
 ## Admission test for new work
 
@@ -168,10 +162,10 @@ A task that cannot answer these questions does not enter the active central queu
 
 The active sequence is:
 
-1. preserve `THM-TARGET-001` and its premise ledger;
-2. formalize `Pres_1` through `Pres_7` and `Faithful_m8`;
-3. resolve P8;
-4. prove construction lemmas for `S_core`;
+1. preserve `THM-TARGET-001`, premise ledger v1.1, and `FAITHFUL-REP-001`;
+2. resolve P8;
+3. create the `S_core` construction-and-obstruction lemma ledger;
+4. prove construction lemmas and formal negative-control lemmas;
 5. attack the construction with registered pressure cases and countermodels;
 6. prove or refute the finite-core theorem family;
 7. attempt extension to `S_IRD`;
@@ -193,9 +187,10 @@ The project must stop strengthening a theorem claim when:
 
 - the source class cannot be defined without presupposing FAR or FARA;
 - faithful representation depends on an unrestricted interpreter, oracle, metadata channel, or evaluator repair;
+- the strong-embedding, reflection, coherence, or machinery conditions cannot be satisfied;
 - a formal countermodel satisfies the source definition and defeats the theorem;
 - the proof requires an unstated axiom or circular lemma;
-- P8 or another obligation remains semantically undefined;
+- P8 remains unresolved or the selected mode changes theorem content unexpectedly;
 - a primitive claimed as necessary is derivable or replaceable within the admitted class;
 - the candidate universe is insufficient to support the stated minimality claim;
 - mechanization reveals a gap in the human proof;
