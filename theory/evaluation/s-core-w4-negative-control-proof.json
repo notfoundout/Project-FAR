@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "proof_id": "SCORE-W4-PROOF-001",
+  "version": "1.0",
+  "status": "complete_project_authored",
+  "program_track": "REP",
+  "source_scope": "S_core",
+  "obligation": "OBS-SC-010",
+  "proof_artifact": "docs/research/s-core-w4-negative-control-proof-v1.0.md",
+  "audit_artifact": "docs/audits/s-core-w4-proof-audit.md",
+  "fixture_manifest": "theory/evaluation/s-core-w4-negative-control-fixtures.json",
+  "reference_implementation": "tools/s_core_w4_negative_controls.py",
+  "reference_tests": "tests/test_s_core_w4_negative_controls.py",
+  "dependencies": [
+    "FAITHFUL-REP-001",
+    "SCORE-W0-PROOF-001",
+    "SCORE-W1-PROOF-001",
+    "SCORE-W2-PROOF-001",
+    "SCORE-W3-PROOF-001",
+    "NEGATIVE-CONTROL-SUITE-1.0"
+  ],
+  "result": {
+    "obligation_id": "OBS-SC-010",
+    "status": "obstruction_established",
+    "statement": "Every applicable member of the frozen NC-01 through NC-10 control families violates at least one independently frozen Faithful_split conjunct for its registered structural reason.",
+    "applicability_rule": "A control is applicable only when its protected source distinction is material and nonempty; otherwise it is not_applicable and supplies no rejection evidence.",
+    "global_nontriviality_status": "proved_for_registered_control_families_over_S_core",
+    "all_invalid_representations_rejected": false,
+    "faithful_split_satisfiability_proved": false
+  },
+  "control_results": [
+    {"id":"NC-01","family_status":"proved_rejected_when_applicable","diagnostic":"process_and_commitment_structure_lost","violated_clauses":["P4","P5","P7"]},
+    {"id":"NC-02","family_status":"proved_rejected_when_applicable","diagnostic":"distinct_dependency_roles_collapsed","violated_clauses":["P4_relation_reflection"]},
+    {"id":"NC-03","family_status":"proved_rejected_when_applicable","diagnostic":"material_history_or_revision_erased","violated_clauses":["P7_order_or_revision_reflection"]},
+    {"id":"NC-04","family_status":"proved_rejected_when_applicable","diagnostic":"undeclared_operational_machinery","violated_clauses":["AdmissibleRecovery","LedgerComplete"]},
+    {"id":"NC-05","family_status":"proved_rejected_when_applicable","diagnostic":"semantic_claim_reduced_to_label","violated_clauses":["SemAgree","lexical_invariance"]},
+    {"id":"NC-06","family_status":"proved_rejected_when_applicable","diagnostic":"unrestricted_external_interpreter","violated_clauses":["AdmissibleRecovery","Uniform","LedgerComplete"]},
+    {"id":"NC-07","family_status":"proved_rejected_when_applicable","diagnostic":"protected_information_relocated_outside_witness","violated_clauses":["image_accountability","LedgerComplete"]},
+    {"id":"NC-08","family_status":"proved_rejected_when_applicable","diagnostic":"material_provenance_deleted","violated_clauses":["P4","P7","Pres_8I"]},
+    {"id":"NC-09","family_status":"proved_rejected_when_applicable","diagnostic":"output_equivalence_without_process_equivalence","violated_clauses":["P4","P5","P6","P7"]},
+    {"id":"NC-10","family_status":"proved_rejected_when_applicable","diagnostic":"function_relocated_into_unaccounted_metadata","violated_clauses":["LedgerComplete","machinery_accounting"]}
+  ],
+  "executable_corroboration": {
+    "status": "complete_bounded_reference",
+    "fixture_set": "SCORE-W4-NEGATIVE-CONTROLS-001",
+    "control_count": 10,
+    "expected_rejections": 10,
+    "unexpected_passes": 0,
+    "wrong_reason_failures": 0,
+    "reference_test_count": 15,
+    "same_w3_validation_pipeline": true,
+    "does_not_prove_quantified_family_result": true
+  },
+  "dependency_audit": {
+    "changes_faithful_representation_definition": false,
+    "changes_source_scope": false,
+    "changes_target_interface": false,
+    "adds_fara_primitive": false,
+    "uses_w5_assembly": false,
+    "uses_w3_5_result": false,
+    "uses_primitive_necessity": false,
+    "uses_actual_process_correspondence": false,
+    "treats_fixtures_as_deductive_proof": false
+  },
+  "verification": {
+    "human_proof_status": "complete_project_authored",
+    "bounded_executable_status": "complete",
+    "proof_assistant_status": "not_started",
+    "independent_review_status": "not_started"
+  },
+  "ledger_effect": {
+    "proved_construction_lemmas": 24,
+    "source_scope_boundaries_established": 1,
+    "refuted_obstruction_hypotheses": 8,
+    "established_obstructions": 1,
+    "open_obligations": 3,
+    "completed_waves": ["W0","W1","W2","W3","W4"],
+    "w5_status": "blocked_by_W3.5-SDG-001"
+  },
+  "claim_effect": {
+    "registered_nontriviality_scope": "supported_for_NC01_through_NC10_over_applicable_S_core_sources",
+    "representation_theorem_status": "unproved",
+    "fara_specificity_status": "unresolved",
+    "universal_structure_status": "unresolved",
+    "necessity_status": "not_established",
+    "minimality_status": "not_established"
+  },
+  "nonclaims": [
+    "Faithful_split is satisfiable",
+    "THM-CORE-COMMON-001 or THM-CORE-REP-001 is proved",
+    "every invalid representation is rejected",
+    "FARA is reasoning-specific",
+    "FARA is more expressive or more economical than GREL-001",
+    "any FARA primitive is necessary",
+    "FARA is minimal unique or universal",
+    "S_core contains all reasoning",
+    "S_IRD extension is established",
+    "proof-assistant verification or independent review has occurred"
+  ],
+  "next_required_artifact": "Evidence-backed W3.5-SDG-001 factorization, concrete-corpus, specificity, ablation, reconstruction, cost, and claim-impact result before W5"
+}
