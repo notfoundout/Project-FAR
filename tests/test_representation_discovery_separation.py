@@ -34,14 +34,7 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         self.assertEqual(self.baseline["reasoning_specific_primitives"], [])
 
     def test_factorization_is_dimensioned(self) -> None:
-        expected = {
-            "expressiveness",
-            "translation",
-            "constraint_strength",
-            "reasoning_specificity",
-            "cost_relation",
-            "overall_interpretation",
-        }
+        expected = {"expressiveness", "translation", "constraint_strength", "reasoning_specificity", "cost_relation", "overall_interpretation"}
         self.assertEqual(set(self.baseline["result_dimensions"]), expected)
         self.assertEqual(set(self.baseline["current_result"]), expected)
         self.assertTrue(self.baseline["single_scalar_classification_prohibited"])
@@ -73,8 +66,10 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         self.assertEqual(self.w35["position"], "after_W3_before_W5")
         self.assertFalse(self.w35["w5_authorized"])
 
-    def test_w4_remains_parallel(self) -> None:
-        self.assertTrue(self.w35["W4_parallel_execution_allowed"])
+    def test_w4_completion_does_not_resolve_w35(self) -> None:
+        by_id = {item["id"]: item for item in self.ledger["obligations"]}
+        self.assertEqual(by_id["OBS-SC-010"]["status"], "obstruction_established")
+        self.assertEqual(self.w35["status"], "frozen_not_executed")
 
     def test_w35_registers_immutable_evidence_fields(self) -> None:
         self.assertGreaterEqual(len(self.w35["required_result_artifacts"]), 8)
@@ -91,15 +86,15 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         self.assertEqual(self.rep_target["program_track"], "REP")
         self.assertIn("universal_structure", self.rep_target["does_not_imply"])
 
-    def test_w5_requires_w4_and_w35(self) -> None:
-        blockers = set(self.rep_target["w5_authorization"]["blocked_by"])
-        self.assertIn("OBS-SC-010", blockers)
-        self.assertIn("W3.5-SDG-001", blockers)
+    def test_w5_now_requires_only_w35(self) -> None:
+        self.assertEqual(self.rep_target["w5_authorization"]["blocked_by"], ["W3.5-SDG-001"])
+        self.assertEqual(self.rep_target["w5_authorization"]["resolved_dependencies"], ["OBS-SC-010"])
 
     def test_rep_theorems_are_blocked_by_specificity_bridge(self) -> None:
         by_id = {item["id"]: item for item in self.rep_target["theorem_family"]}
         for theorem_id in ("THM-CORE-COMMON-001", "THM-CORE-REP-001", "THM-IMP-001"):
             self.assertIn("specificity_discovery_bridge", by_id[theorem_id]["blocked_by"])
+            self.assertNotIn("formal_negative_controls", by_id[theorem_id]["blocked_by"])
 
     def test_research_gates_separate_framework_corpus_and_results(self) -> None:
         by_name = {item["name"]: item for item in self.gates["gates"]}
@@ -107,6 +102,7 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         self.assertEqual(by_name["reasoning-contrast-scope-framework-frozen"]["status"], "satisfied")
         self.assertEqual(by_name["reasoning-contrast-corpus-frozen"]["status"], "not_satisfied")
         self.assertEqual(by_name["baseline-factorization-resolved"]["status"], "not_satisfied")
+        self.assertEqual(by_name["formal-negative-controls"]["status"], "satisfied")
         self.assertNotIn("reasoning-contrast-scope-frozen", by_name)
 
     def test_rep_capacity_does_not_imply_universal_structure(self) -> None:
@@ -118,17 +114,7 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         self.assertEqual(by_id["CLM-UNIVERSAL-STRUCTURE"]["current_status"], "unresolved")
 
     def test_current_unauthorized_state_is_valid(self) -> None:
-        self.assertEqual(
-            authorization_errors(
-                self.w35,
-                self.rep_target,
-                self.scope,
-                self.gates,
-                self.ledger,
-                ROOT,
-            ),
-            [],
-        )
+        self.assertEqual(authorization_errors(self.w35, self.rep_target, self.scope, self.gates, self.ledger, ROOT), [])
 
     def test_status_only_authorization_is_rejected(self) -> None:
         w35 = copy.deepcopy(self.w35)
@@ -139,7 +125,7 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         target["w5_authorization"]["blocked_by"] = []
         errors = authorization_errors(w35, target, self.scope, self.gates, self.ledger, ROOT)
         joined = "\n".join(errors)
-        self.assertIn("OBS-SC-010", joined)
+        self.assertNotIn("OBS-SC-010 must have a terminal", joined)
         self.assertIn("concrete reasoning and contrast corpus", joined)
         self.assertIn("is not complete", joined)
         self.assertIn("factorization dimension", joined)
