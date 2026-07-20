@@ -30,6 +30,10 @@ REPORTS = [
     "theory/evaluation/p8-theorem-role-decision.json",
     "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
     "theory/evaluation/s-core-construction-obstruction-ledger.json",
+    "docs/research/s-core-w0-normalization-proof-v1.0.md",
+    "theory/evaluation/s-core-w0-normalization-proof.json",
+    "theory/evaluation/s-core-w0-reference-fixtures.json",
+    "docs/audits/s-core-w0-proof-audit.md",
     "docs/audits/s-core-lemma-ledger-audit.md",
     "docs/reports/primitive-sufficiency-report.md",
     "docs/reports/external-validation-report.md",
@@ -43,8 +47,8 @@ REPORTS = [
 
 
 def load_yaml(path: Path):
-    with path.open(encoding="utf-8") as f:
-        return yaml.safe_load(f) or {}
+    with path.open(encoding="utf-8") as handle:
+        return yaml.safe_load(handle) or {}
 
 
 def entries(data):
@@ -90,9 +94,9 @@ def main() -> int:
     conclusion = (
         "CRE-002-EXT-001 remains a prospective bounded result under Vocabulary Semantics Baseline 1.1 and does not establish "
         "primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal "
-        "reasoning structure, or independent replication. THM-TARGET-001, FAITHFUL-REP-001, P8-ROLE-001, and "
-        "SCORE-LEMMA-LEDGER-001 are frozen but unproved. The lemma ledger registers 37 obligations, zero proved obligations, "
-        "and 37 open obligations. The immediate formal work is the W0 proof-or-refutation package for LEM-SC-001 through LEM-SC-004."
+        "reasoning structure, or independent replication. SCORE-W0-PROOF-001 proves four source-normalization lemmas and "
+        "establishes OBS-SC-001 as a source-scope boundary. It does not construct a FARA target, prove any Pres_i target "
+        "obligation, satisfy Faithful_split, or establish a theorem. The lemma program has 32 open obligations and W1 is active."
     )
     lines = [
         "# Project Status (Generated)", "", "## Navigation", "", *nav_links(OUT), "",
@@ -101,13 +105,16 @@ def main() -> int:
         "## Current Research Mode", "",
         "- Primary mode: deduction-first with parallel empirical validation.",
         "- Frozen central artifacts: `THM-TARGET-001` v1.0, `FAITHFUL-REP-001` v1.0, `P8-ROLE-001` v1.0, and `SCORE-LEMMA-LEDGER-001` v1.0.",
+        "- Partial proof artifact: `SCORE-W0-PROOF-001` proves `LEM-SC-001` through `LEM-SC-004`; `OBS-SC-001` is a source-scope boundary.",
         "- Selected P8 mode: `split`; `Pres_8I` is internal and `Corr_8E` remains a separate application-correspondence obligation.",
-        "- Lemma program status: 37 registered obligations; 0 proved; 37 open; active wave `W0`.",
-        "- Immediate central work: prove or refute `LEM-SC-001` through `LEM-SC-004`.",
+        "- Lemma program status: 37 registered obligations; 4 proved; 1 source boundary established; 32 open; active wave `W1`.",
+        "- Immediate central work: construct or obstruct `LEM-SC-005`, `LEM-SC-006`, `LEM-SC-007`, `LEM-SC-008`, `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`.",
         "- Formal-theorem-target gate: satisfied with registered artifacts.",
         "- Premise-ledger-and-semantics gate: satisfied with registered artifacts.",
         "- Faithful-representation-definition gate: satisfied with registered artifacts.",
         "- Scoped-representation-proof gate: not satisfied.",
+        "- Mechanized-proof-verification gate: not satisfied; executable W0 checks are bounded corroboration only.",
+        "- Independent-proof-review gate: not satisfied.",
         "- Parallel supporting track: PBTS-001 replication, comparative evaluation, boundary discovery, and implementation validation.",
         "- Current theorem status: no representation theorem, universality theorem, necessity theorem, or minimality theorem is established.", "",
         "## Source Registries", "",
