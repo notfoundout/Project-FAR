@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "SCORE-W2-FIXTURES-001",
+  "fixtures": [
+    {
+      "id": "W2-FX-001",
+      "description": "deterministic revision and accepted rule replacement with path-dependent history",
+      "source": {
+        "schema_version": "1.0",
+        "rules": [
+          {"id": "R1", "kind": "inference_rule"},
+          {"id": "R1p", "kind": "inference_rule"}
+        ],
+        "rule_versions": [
+          {"id": "R1@v1", "rule": "R1", "version": 1},
+          {"id": "R1p@v1", "rule": "R1p", "version": 1}
+        ],
+        "states": [
+          {"id": "s0", "commitments": {"c1": "accepted"}, "active_rule_versions": ["R1@v1"], "resources": {"budget": 2}},
+          {"id": "s1", "commitments": {"c1": "retracted"}, "active_rule_versions": ["R1@v1"], "resources": {"budget": 1}},
+          {"id": "s2", "commitments": {"c1": "retracted", "c2": "accepted"}, "active_rule_versions": ["R1p@v1"], "resources": {"budget": 1}}
+        ],
+        "transitions": [
+          {"id": "t0", "from": "s0", "to": "s1", "label": "retract-c1", "status": "permitted", "rule_version": "R1@v1", "preconditions": ["defeater-d1"], "resource_conditions": ["budget>=1"], "action_dependencies": [], "observation_dependencies": ["obs-d1"]},
+          {"id": "t1", "from": "s1", "to": "s2", "label": "accept-rule-change", "status": "permitted", "rule_version": "R1@v1", "preconditions": ["proposal-p1"], "resource_conditions": [], "action_dependencies": ["approve-p1"], "observation_dependencies": []},
+          {"id": "t2", "from": "s2", "to": "s2", "label": "derive-c2", "status": "permitted", "rule_version": "R1p@v1", "preconditions": ["c1=retracted"], "resource_conditions": [], "action_dependencies": [], "observation_dependencies": []},
+          {"id": "t3", "from": "s2", "to": "s0", "label": "legacy-derive", "status": "superseded", "rule_version": "R1@v1", "preconditions": [], "resource_conditions": [], "action_dependencies": [], "observation_dependencies": []}
+        ],
+        "history": {
+          "events": [
+            {"id": "e0", "state": "s0", "transition": null, "kind": "initial"},
+            {"id": "e1", "state": "s1", "transition": "t0", "kind": "revision"},
+            {"id": "e2", "state": "s2", "transition": "t1", "kind": "rule_modification"},
+            {"id": "e3", "state": "s2", "transition": "t2", "kind": "derivation"}
+          ],
+          "order": [["e0", "e0"], ["e0", "e1"], ["e0", "e2"], ["e0", "e3"], ["e1", "e1"], ["e1", "e2"], ["e1", "e3"], ["e2", "e2"], ["e2", "e3"], ["e3", "e3"]],
+          "causal": [["e0", "e1"], ["e1", "e2"], ["e2", "e3"]],
+          "provenance": [{"event": "e1", "source": "obs-d1", "grade": "observed"}],
+          "revisions": [{"id": "rev1", "event": "e1", "before_state": "s0", "after_state": "s1", "subject": "c1", "kind": "retract", "before": "accepted", "after": "retracted", "basis": "defeater-d1"}],
+          "modifications": [{"id": "mod1", "event": "e2", "before_state": "s1", "after_state": "s2", "proposal": "p1", "decision": "accepted", "deactivates": ["R1@v1"], "activates": ["R1p@v1"]}],
+          "dependency_ancestry": [["e0", "e1"], ["e1", "e2"], ["e2", "e3"], ["e0", "e3"]],
+          "path_conditions": [{"id": "pc1", "path": ["e0", "e1", "e2"], "effect": "t2-enabled-only-after-r1p-activation"}]
+        }
+      }
+    },
+    {
+      "id": "W2-FX-002",
+      "description": "finite-support probabilistic kernel with rejected rule modification",
+      "source": {
+        "schema_version": "1.0",
+        "rules": [{"id": "R2", "kind": "observation_rule"}],
+        "rule_versions": [{"id": "R2@v1", "rule": "R2", "version": 1}],
+        "states": [
+          {"id": "q0", "commitments": {}, "active_rule_versions": ["R2@v1"], "resources": {}},
+          {"id": "q1", "commitments": {"weather": "rain"}, "active_rule_versions": ["R2@v1"], "resources": {}},
+          {"id": "q2", "commitments": {"weather": "clear"}, "active_rule_versions": ["R2@v1"], "resources": {}}
+        ],
+        "transitions": [
+          {"id": "p1", "from": "q0", "to": "q1", "label": "observe-weather", "status": "permitted", "rule_version": "R2@v1", "kernel": "K-weather", "weight": "1/3", "preconditions": [], "resource_conditions": [], "action_dependencies": [], "observation_dependencies": ["sensor"]},
+          {"id": "p2", "from": "q0", "to": "q2", "label": "observe-weather", "status": "permitted", "rule_version": "R2@v1", "kernel": "K-weather", "weight": "2/3", "preconditions": [], "resource_conditions": [], "action_dependencies": [], "observation_dependencies": ["sensor"]}
+        ],
+        "history": {
+          "events": [
+            {"id": "h0", "state": "q0", "transition": null, "kind": "initial"},
+            {"id": "h1", "state": "q0", "transition": null, "kind": "rule_modification_rejected"}
+          ],
+          "order": [["h0", "h0"], ["h0", "h1"], ["h1", "h1"]],
+          "causal": [["h0", "h1"]],
+          "provenance": [],
+          "revisions": [],
+          "modifications": [{"id": "mod2", "event": "h1", "before_state": "q0", "after_state": "q0", "proposal": "replace-R2", "decision": "rejected", "deactivates": [], "activates": []}],
+          "dependency_ancestry": [["h0", "h1"]],
+          "path_conditions": []
+        }
+      }
+    }
+  ],
+  "negative_fixtures": [
+    {"id": "W2-NF-001", "description": "probability mass does not sum to one", "base_fixture": "W2-FX-002", "mutation": {"transition": "p2", "field": "weight", "value": "1/3"}, "expected_error": "weights must sum to 1"},
+    {"id": "W2-NF-002", "description": "permitted transition uses inactive rule version", "base_fixture": "W2-FX-001", "mutation": {"transition": "t2", "field": "rule_version", "value": "R1@v1"}, "expected_error": "uses inactive rule version"}
+  ]
+}
