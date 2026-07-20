@@ -12,20 +12,14 @@
   "w0_proof_registry": "theory/evaluation/s-core-w0-normalization-proof.json",
   "w1_direct_axis_proof_artifact": "docs/research/s-core-w1-direct-axis-proof-v1.0.md",
   "w1_direct_axis_proof_registry": "theory/evaluation/s-core-w1-direct-axis-proof.json",
+  "w2_dynamics_history_proof_artifact": "docs/research/s-core-w2-dynamics-history-proof-v1.0.md",
+  "w2_dynamics_history_proof_registry": "theory/evaluation/s-core-w2-dynamics-history-proof.json",
   "internal_construction_status": "direct_axis_embedding_proved_recovery_unproved",
   "internal_obligation": {
     "id": "P8-I",
     "predicate": "Pres_8I",
     "role": "internal_to_faithful_representation",
-    "required_preservation": [
-      "observation_vs_inference",
-      "reported_vs_instrumented",
-      "assumed_vs_derived",
-      "source_and_provenance",
-      "confidence_uncertainty_and_qualification",
-      "accepted_rejected_superseded_or_withdrawn_support",
-      "evidence_grade"
-    ],
+    "required_preservation": ["observation_vs_inference","reported_vs_instrumented","assumed_vs_derived","source_and_provenance","confidence_uncertainty_and_qualification","accepted_rejected_superseded_or_withdrawn_support","evidence_grade"],
     "source_reduct_extraction_status": "proved_LEM-SC-002",
     "target_direct_axis_embedding_status": "proved_LEM-SC-014",
     "target_preservation_status": "direct_axis_embedding_proved_recovery_unproved",
@@ -37,28 +31,15 @@
     "id": "P8-E",
     "predicate": "Corr_8E",
     "role": "separate_process_to_presentation_correspondence",
-    "required_fields": [
-      "actual_process_and_episode",
-      "observation_and_instrumentation_boundary",
-      "process_to_source_mapping",
-      "unsupported_or_unobservable_components",
-      "evidential_grade",
-      "uncertainty_limitations_and_alternatives"
-    ],
+    "required_fields": ["actual_process_and_episode","observation_and_instrumentation_boundary","process_to_source_mapping","unsupported_or_unobservable_components","evidential_grade","uncertainty_limitations_and_alternatives"],
     "not_implied_by_formal_representation": true,
     "failure_blocks_application_not_formal_theorem": true,
     "status": "unproved"
   },
-  "formal_definitions": {
-    "Faithful_split": "Faithful_internal and Pres_8I",
-    "ApplicableFaithful": "Corr_8E and Faithful_split"
-  },
-  "rejected_modes": {
-    "coordinate": "conflates internal preservation with external application correspondence",
-    "side_condition": "fails to protect provenance and evidence-status distinctions already internal to the source presentation"
-  },
+  "formal_definitions": {"Faithful_split":"Faithful_internal and Pres_8I","ApplicableFaithful":"Corr_8E and Faithful_split"},
+  "rejected_modes": {"coordinate":"conflates internal preservation with external application correspondence","side_condition":"fails to protect provenance and evidence-status distinctions already internal to the source presentation"},
   "theorem_effects": {
-    "THM-CORE-REP-001": "uses Faithful_split and remains unproved because recovery and other ledger obligations remain open",
+    "THM-CORE-REP-001": "uses Faithful_split and remains unproved because recovery and other W3 and W4 ledger obligations remain open",
     "THM-IRD-EXT-001": "uses Faithful_split",
     "THM-P8-CORR-001": "external Corr_8E theorem_or_contract_family"
   },
@@ -72,10 +53,11 @@
     "Faithful_split is satisfiable for every S_core object",
     "FARA faithfully represents S_core",
     "any actual system corresponds to an IRD-001 presentation",
-    "any W2 through W5 construction or assembly obligation is proved",
+    "any W3 or W5 construction or assembly obligation is proved",
+    "the remaining W4 obstruction or negative-control obligations are resolved",
     "PB-001 is sufficient necessary independent minimal or complete",
     "universality minimality uniqueness or impossibility",
     "proof-assistant verification or independent proof review"
   ],
-  "next_required_artifact": "W2 dynamics history revision and self-modification proof-or-obstruction package"
+  "next_required_artifact": "W3 global witness recovery semantics coherence machinery uniformity composition and assembly proof-or-obstruction package"
 }
