@@ -1,15 +1,16 @@
 {
   "schema_version": "1.0",
   "ledger_id": "THM-TARGET-001-PREMISES",
-  "version": "1.4",
-  "status": "frozen_premises_with_w0_w1_proof_progress",
+  "version": "1.5",
+  "status": "frozen_premises_with_w0_w1_w2_proof_progress",
   "theorem_target": "THM-TARGET-001",
   "revision_history": [
     {"version":"1.0","effect":"froze theorem premises with Pres_i and Faithful_m8 signatures incomplete"},
     {"version":"1.1","effect":"completed PRM-011 and PRM-012 through FAITHFUL-REP-001"},
     {"version":"1.2","effect":"resolved PRM-010 as split through P8-ROLE-001 without changing source scope or target interface"},
     {"version":"1.3","effect":"recorded proof of the W0 source-normalization kernel and the OBS-SC-001 scope boundary without adding deleting or changing any premise"},
-    {"version":"1.4","effect":"recorded the W1 target-allocation and direct-axis construction proofs plus refutation of OBS-SC-003 and OBS-SC-006 without adding deleting or changing any premise"}
+    {"version":"1.4","effect":"recorded the W1 target-allocation and direct-axis construction proofs plus refutation of OBS-SC-003 and OBS-SC-006 without adding deleting or changing any premise"},
+    {"version":"1.5","effect":"recorded the W2 dynamics history revision and operational rule-version proofs plus refutation of OBS-SC-004 and OBS-SC-005 without adding deleting or changing any premise"}
   ],
   "entries": [
     {"id":"PRM-001","classification":"imported_frozen_specification","statement":"The source-domain classes and revision rules are those of Reasoning Domain Specification v1.0.","source":"docs/research/reasoning-domain-specification-v1.0.md","status":"accepted_for_target"},
@@ -22,7 +23,7 @@
     {"id":"PRM-008","classification":"definition","statement":"A representation witness is W=(E,D,M,iota,kappa).","source":"docs/research/thm-target-001-v1.0.md","status":"accepted_for_target"},
     {"id":"PRM-009","classification":"imported_frozen_specification","statement":"PB-001 P1-P7 supply provisional internal preservation obligations.","source":"docs/research/preservation-basis-investigation-v1.0.md","status":"accepted_provisionally","nonclaim":"PB-001 sufficiency and independence are not established"},
     {"id":"PRM-010","classification":"definition","statement":"P8 uses split mode: Pres_8I is internal to Faithful_split and Corr_8E is a separate process-to-presentation correspondence obligation.","source":"docs/research/p8-theorem-role-decision-v1.0.md","status":"resolved_frozen","decision":"split"},
-    {"id":"PRM-011","classification":"definition","statement":"Pres_i requires admissible target-only recovery and a total typed strong embedding preserving and reflecting material relations and attributes.","source":"docs/research/faithful-representation-specification-v1.0.md","status":"semantics_frozen_partial_direct_axis_construction_proved"},
+    {"id":"PRM-011","classification":"definition","statement":"Pres_i requires admissible target-only recovery and a total typed strong embedding preserving and reflecting material relations and attributes.","source":"docs/research/faithful-representation-specification-v1.0.md","status":"semantics_frozen_w1_w2_embedding_constructions_proved_recovery_unproved"},
     {"id":"PRM-012","classification":"definition","statement":"Faithful_split combines the frozen P1-P7 semantics Pres_8I semantic agreement coherence uniformity compositionality machinery accounting and nontriviality.","source":"docs/research/p8-theorem-role-decision-v1.0.md","status":"semantics_frozen_global_satisfiability_unproved"},
     {"id":"PRM-013","classification":"scope_restriction","statement":"A theorem about a mathematical presentation does not itself establish correspondence to an actual process.","source":"docs/research/p8-theorem-role-decision-v1.0.md","status":"accepted_for_target"},
     {"id":"PRM-014","classification":"evidence_condition","statement":"Application to an actual process requires Corr_8E at an appropriate evidence grade.","source":"docs/research/p8-theorem-role-decision-v1.0.md","status":"accepted_for_target"},
@@ -36,19 +37,19 @@
     {"id":"PRM-022","classification":"substantive_axiom","statement":"No axiom asserting FARA adequacy PB-001 completeness primitive necessity or universal reasoning structure is accepted.","source":"docs/research/thm-target-001-v1.0.md","status":"explicitly_absent"}
   ],
   "proof_progress": {
-    "packages": ["SCORE-W0-PROOF-001", "SCORE-W1-PROOF-001"],
-    "artifacts": ["docs/research/s-core-w0-normalization-proof-v1.0.md", "docs/research/s-core-w1-direct-axis-proof-v1.0.md"],
-    "registries": ["theory/evaluation/s-core-w0-normalization-proof.json", "theory/evaluation/s-core-w1-direct-axis-proof.json"],
-    "proved": ["LEM-SC-001", "LEM-SC-002", "LEM-SC-003", "LEM-SC-004", "LEM-SC-005", "LEM-SC-006", "LEM-SC-007", "LEM-SC-008", "LEM-SC-009", "LEM-SC-012", "LEM-SC-014"],
+    "packages": ["SCORE-W0-PROOF-001", "SCORE-W1-PROOF-001", "SCORE-W2-PROOF-001"],
+    "artifacts": ["docs/research/s-core-w0-normalization-proof-v1.0.md", "docs/research/s-core-w1-direct-axis-proof-v1.0.md", "docs/research/s-core-w2-dynamics-history-proof-v1.0.md"],
+    "registries": ["theory/evaluation/s-core-w0-normalization-proof.json", "theory/evaluation/s-core-w1-direct-axis-proof.json", "theory/evaluation/s-core-w2-dynamics-history-proof.json"],
+    "proved": ["LEM-SC-001", "LEM-SC-002", "LEM-SC-003", "LEM-SC-004", "LEM-SC-005", "LEM-SC-006", "LEM-SC-007", "LEM-SC-008", "LEM-SC-009", "LEM-SC-010", "LEM-SC-011", "LEM-SC-012", "LEM-SC-013", "LEM-SC-014", "LEM-SC-015", "LEM-SC-016"],
     "scope_boundaries_established": ["OBS-SC-001"],
-    "refuted_obstruction_hypotheses": ["OBS-SC-003", "OBS-SC-006"],
-    "active_wave": "W2",
+    "refuted_obstruction_hypotheses": ["OBS-SC-003", "OBS-SC-004", "OBS-SC-005", "OBS-SC-006"],
+    "active_wave": "W3",
     "premise_change": false,
     "source_scope_change": false,
     "target_interface_change": false,
     "theorem_status_change": false
   },
-  "open_items": ["W2 through W5 construction obstruction and assembly obligations for S_core", "admissible target-only recovery and complete Pres_i predicates", "global semantic agreement and cross-axis coherence", "reconstruction class for necessity", "candidate universe and equivalence relation for minimality"],
+  "open_items": ["W3 and W5 construction and assembly obligations for S_core", "remaining W4 obstruction and negative-control obligations", "admissible target-only recovery and complete Pres_i predicates", "global semantic agreement and cross-axis coherence", "complete machinery accounting uniformity and compositionality", "reconstruction class for necessity", "candidate universe and equivalence relation for minimality"],
   "gate_effect": {"formal-theorem-target":"satisfied","premise-ledger-and-semantics":"satisfied","faithful-representation-definition":"satisfied","scoped-representation-proof":"not_satisfied"},
-  "nonclaims": ["the premises are true of every actual reasoning process", "the conjectures are proved", "FARA adequacy is an axiom", "PB-001 is complete", "Faithful_split is satisfiable", "W0 or W1 proves a target representation theorem", "direct-axis embeddings prove complete Pres_i predicates"]
+  "nonclaims": ["the premises are true of every actual reasoning process", "the conjectures are proved", "FARA adequacy is an axiom", "PB-001 is complete", "Faithful_split is satisfiable", "W0 W1 or W2 proves a target representation theorem", "W1 or W2 embeddings prove complete Pres_i predicates"]
 }
