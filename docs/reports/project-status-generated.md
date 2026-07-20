@@ -14,9 +14,10 @@ This report uses cautious language and does not authorize theory changes.
 ## Current Research Mode
 
 - Primary mode: deduction-first with parallel empirical validation.
-- Frozen central artifacts: `THM-TARGET-001` v1.0, `FAITHFUL-REP-001` v1.0, and `P8-DEC-001` v1.0.
+- Frozen central artifacts: `THM-TARGET-001` v1.0, `FAITHFUL-REP-001` v1.0, `P8-ROLE-001` v1.0, and `SCORE-LEMMA-LEDGER-001` v1.0.
 - Selected P8 mode: `split`; `Pres_8I` is internal and `Corr_8E` remains a separate application-correspondence obligation.
-- Immediate central work: build the `S_core` construction and obstruction lemma ledger.
+- Lemma program status: 37 registered obligations; 0 proved; 37 open; active wave `W0`.
+- Immediate central work: prove or refute `LEM-SC-001` through `LEM-SC-004`.
 - Formal-theorem-target gate: satisfied with registered artifacts.
 - Premise-ledger-and-semantics gate: satisfied with registered artifacts.
 - Faithful-representation-definition gate: satisfied with registered artifacts.
@@ -100,11 +101,12 @@ The extension does not rank the vocabularies and does not retroactively alter CR
 
 ## Current Evidence Conclusion
 
-CRE-002-EXT-001 remains a prospective bounded result under Vocabulary Semantics Baseline 1.1 and does not establish primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal reasoning structure, or independent replication. THM-TARGET-001, FAITHFUL-REP-001, and P8-DEC-001 are frozen but unproved. P8 uses split mode: internal evidential status is part of Faithful_split, while actual-process correspondence requires the separate Corr_8E obligation. The immediate formal work is the S_core construction and obstruction lemma ledger.
+CRE-002-EXT-001 remains a prospective bounded result under Vocabulary Semantics Baseline 1.1 and does not establish primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal reasoning structure, or independent replication. THM-TARGET-001, FAITHFUL-REP-001, P8-ROLE-001, and SCORE-LEMMA-LEDGER-001 are frozen but unproved. The lemma ledger registers 37 obligations, zero proved obligations, and 37 open obligations. The immediate formal work is the W0 proof-or-refutation package for LEM-SC-001 through LEM-SC-004.
 
 ## Relevant Reports
 
 - [docs/governance/deduction-first-research-standard.md](../governance/deduction-first-research-standard.md)
+- [docs/governance/central-research-program.md](../governance/central-research-program.md)
 - [docs/planning/deduction-first-proof-roadmap.md](../planning/deduction-first-proof-roadmap.md)
 - [docs/planning/architecture-neutral-research-roadmap.md](../planning/architecture-neutral-research-roadmap.md)
 - [docs/research/thm-target-001-v1.0.md](../research/thm-target-001-v1.0.md)
@@ -114,7 +116,9 @@ CRE-002-EXT-001 remains a prospective bounded result under Vocabulary Semantics 
 - [theory/evaluation/faithful-representation-specification-v1.0.json](../../theory/evaluation/faithful-representation-specification-v1.0.json)
 - [docs/research/p8-theorem-role-decision-v1.0.md](../research/p8-theorem-role-decision-v1.0.md)
 - [theory/evaluation/p8-theorem-role-decision.json](../../theory/evaluation/p8-theorem-role-decision.json)
-- [docs/audits/deduction-first-research-shift-audit.md](../audits/deduction-first-research-shift-audit.md)
+- [docs/research/s-core-construction-obstruction-ledger-v1.0.md](../research/s-core-construction-obstruction-ledger-v1.0.md)
+- [theory/evaluation/s-core-construction-obstruction-ledger.json](../../theory/evaluation/s-core-construction-obstruction-ledger.json)
+- [docs/audits/s-core-lemma-ledger-audit.md](../audits/s-core-lemma-ledger-audit.md)
 - [docs/reports/primitive-sufficiency-report.md](primitive-sufficiency-report.md)
 - [docs/reports/external-validation-report.md](external-validation-report.md)
 - [docs/reports/project-far-v0.3.0-synthesis.md](project-far-v0.3.0-synthesis.md)
