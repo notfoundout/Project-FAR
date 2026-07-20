@@ -29,9 +29,11 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         ranked=text.split('## Maintainer Task Briefs',1)[0]
         ids=re.findall(r'^### ([A-Z]+-\d{3}):', ranked, re.M)
         self.assertEqual(len(ids),len(set(ids)))
-        self.assertIn('### STRATEGIC-001: Formalize faithful representation and nontriviality', ranked)
-        self.assertIn('### STRATEGIC-002: Resolve the formal role of P8', ranked)
+        self.assertIn('### STRATEGIC-001: Resolve the formal role of P8', ranked)
+        self.assertIn('### STRATEGIC-002: Build the S_core construction and obstruction ledger', ranked)
+        self.assertIn('### STRATEGIC-003: Prove formal negative-control lemmas', ranked)
         self.assertIn('- Source: deduction-first strategic priority', ranked)
+        self.assertNotIn('Formalize faithful representation and nontriviality', ranked)
         self.assertNotIn('Freeze THM-TARGET-001 and premise ledger', ranked)
         self.assertNotIn('Plan independent replication of CRE-002-EXT-001', ranked)
         self.assertNotIn('Source gap:', ranked)
