@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "RCS-001",
+  "version": "1.0",
+  "status": "frozen_prospective_execution_open",
+  "positive_families": [
+    "deductive_proof",
+    "probabilistic_inference",
+    "defeasible_reasoning",
+    "planning",
+    "diagnosis",
+    "legal_or_policy_reasoning",
+    "analogical_reasoning",
+    "distributed_institutional_reasoning",
+    "self_modifying_machine_reasoning",
+    "human_expert_reasoning",
+    "partially_observed_reasoning",
+    "semantic_revision"
+  ],
+  "contrast_families": [
+    "passive_database",
+    "event_log",
+    "ordinary_workflow",
+    "arbitrary_labeled_transition_system",
+    "lookup_table",
+    "traffic_controller",
+    "cellular_automaton",
+    "random_finite_state_machine",
+    "copying_or_serialization_system",
+    "scripted_pipeline",
+    "disputed_borderline_process"
+  ],
+  "admission_rules": {
+    "positive_independent_of_fara": true,
+    "positive_independent_of_candidate": true,
+    "contrast_independent_of_fara_failure": true,
+    "contrast_independent_of_candidate_absence": true,
+    "explicit_source_or_observation_contract_required": true
+  },
+  "execution_status": "not_started",
+  "nonclaims": [
+    "families are exhaustive",
+    "every listed instance is reasoning",
+    "contrast systems cannot reason"
+  ]
+}

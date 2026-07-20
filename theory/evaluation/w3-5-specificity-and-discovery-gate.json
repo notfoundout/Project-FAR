@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "gate_id": "W3.5-SDG-001",
+  "version": "1.0",
+  "status": "frozen_not_executed",
+  "position": "after_W3_before_W5",
+  "W4_parallel_execution_allowed": true,
+  "W5_blocked_until_resolved": true,
+  "required_investigations": [
+    "generic_baseline_factorization",
+    "fara_specificity",
+    "reasoning_contrast_discrimination",
+    "candidate_ablation_and_reconstruction",
+    "full_machinery_and_cost_accounting",
+    "central_claim_impact_audit"
+  ],
+  "required_result_artifacts": [
+    "factorization_result",
+    "specificity_result",
+    "scope_execution_result",
+    "candidate_classification_result",
+    "cost_and_machinery_result",
+    "claim_impact_result",
+    "nonclaims_and_preserved_failures"
+  ],
+  "allowed_factorization_outcomes": [
+    "strict_fara_separation",
+    "fara_constrained_equivalent",
+    "translation_equivalent",
+    "generic_baseline_strictly_simpler",
+    "incomparable",
+    "factorization_failed_for_explicit_reason",
+    "unresolved"
+  ],
+  "current_results": {
+    "factorization": "unresolved",
+    "fara_specificity": "unresolved",
+    "reasoning_discrimination": "not_executed",
+    "candidate_invariants": "not_executed",
+    "claim_impact": "representation_only_no_universal_promotion"
+  },
+  "w5_authorized": false,
+  "nonclaims": [
+    "W3.5 is resolved",
+    "FARA is specific to reasoning",
+    "FARA is equivalent to the baseline",
+    "a universal kernel exists"
+  ]
+}

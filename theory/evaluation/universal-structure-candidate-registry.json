@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "registry_id": "US-CANDIDATES-001",
+  "version": "1.0",
+  "status": "prospective",
+  "candidate_source_policy": "candidates may be derived from FARA or external theories but are not presumed universal",
+  "allowed_classifications": [
+    "indispensable_within_frozen_class",
+    "derivable",
+    "replaceable",
+    "architecture_dependent",
+    "scope_dependent",
+    "generic_system_property",
+    "unnecessary",
+    "unresolved"
+  ],
+  "candidates": [
+    {
+      "id": "USC-001",
+      "name": "distinguishable_state_or_configuration",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-002",
+      "name": "commitment_sensitive_state",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-003",
+      "name": "stakes_questions_or_live_alternatives",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-004",
+      "name": "grounds_constraints_or_dependency",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-005",
+      "name": "admissibility_beyond_arbitrary_transition",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-006",
+      "name": "consequence_sensitive_update",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-007",
+      "name": "history_or_path_dependence",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-008",
+      "name": "representation_denotation_separation",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-009",
+      "name": "semantic_interpretation",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-010",
+      "name": "investigation_objective_or_problem_relativization",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-011",
+      "name": "calculus_or_equivalent_transition_constraint",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    },
+    {
+      "id": "USC-012",
+      "name": "provenance_or_entitlement_structure",
+      "current_classification": "unresolved",
+      "positive_scope_status": "not_executed",
+      "contrast_scope_status": "not_executed",
+      "representation_invariance_status": "not_executed",
+      "ablation_status": "not_executed",
+      "reconstruction_status": "not_executed"
+    }
+  ],
+  "aggregate_result": "unresolved",
+  "nonclaims": [
+    "candidate recurrence establishes necessity",
+    "FARA terminology defines the universal kernel",
+    "absence in one encoding refutes the candidate"
+  ]
+}

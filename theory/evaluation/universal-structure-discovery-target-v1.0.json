@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "target_id": "THM-US-TARGET-001",
+  "version": "1.0",
+  "status": "frozen_prospective",
+  "unknown_kernel": "K*",
+  "independent_of": [
+    "FARA",
+    "FARO",
+    "PB-001",
+    "current_candidate_primitives",
+    "THM-TARGET-001_success"
+  ],
+  "governing_artifacts": [
+    "docs/governance/representation-discovery-separation-standard-v1.0.md",
+    "docs/research/generic-relational-baseline-v1.0.md",
+    "theory/evaluation/generic-relational-baseline-v1.0.json",
+    "docs/research/reasoning-and-contrast-scope-v1.0.md",
+    "theory/evaluation/reasoning-and-contrast-scope-v1.0.json",
+    "theory/evaluation/universal-structure-candidate-registry.json"
+  ],
+  "candidate_conditions": [
+    "coverage",
+    "representation_invariance",
+    "nondefinitionality",
+    "reasoning_relevant_discrimination",
+    "ablation_resistance",
+    "reconstruction_resistance",
+    "complete_cost_accounting",
+    "minimality_or_equivalence_classification"
+  ],
+  "theorem_families": [
+    {
+      "id": "THM-US-EXIST-001",
+      "status": "target_frozen_unproved"
+    },
+    {
+      "id": "THM-US-INV-001[K]",
+      "status": "target_frozen_blocked_by_transformation_class"
+    },
+    {
+      "id": "THM-US-DISC-001[K]",
+      "status": "target_frozen_blocked_by_scope_execution"
+    },
+    {
+      "id": "THM-US-NEC-001[K]",
+      "status": "target_frozen_blocked_by_reconstruction_class"
+    },
+    {
+      "id": "THM-US-RED-001[K]",
+      "status": "target_frozen_blocked_by_reduction_program"
+    },
+    {
+      "id": "THM-US-MIN-001",
+      "status": "target_frozen_blocked_by_candidate_universe"
+    },
+    {
+      "id": "THM-US-EQUIV-001",
+      "status": "target_frozen_blocked_by_candidate_universe"
+    },
+    {
+      "id": "THM-US-NO-001",
+      "status": "target_frozen_unproved"
+    }
+  ],
+  "representation_track_implication": "none",
+  "valid_outcomes": [
+    "universal_kernel",
+    "proper_subclass_kernel",
+    "translation_equivalent_kernels",
+    "incomparable_kernels",
+    "generic_system_properties_only",
+    "no_single_nontrivial_kernel",
+    "unresolved"
+  ],
+  "current_result": "unresolved"
+}

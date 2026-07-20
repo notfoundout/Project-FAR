@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "GREL-001",
+  "version": "1.0",
+  "status": "frozen_prospective",
+  "purpose": "neutral finite typed relational comparison baseline for W0-W3 factorization",
+  "components": [
+    "sorts",
+    "entities",
+    "exact_values",
+    "typed_attributes",
+    "typed_nary_relation_occurrences",
+    "schema",
+    "canonical_encoder",
+    "target_only_decoder",
+    "machinery_ledger"
+  ],
+  "reasoning_specific_primitives": [],
+  "allowed_reasoning_content": "ordinary typed data only",
+  "constructor_requirements": {
+    "finite_on_S_core": true,
+    "one_fixed_schema": true,
+    "one_fixed_encoder": true,
+    "one_fixed_decoder": true,
+    "target_only_recovery": true,
+    "source_isomorphism_equivariant": true,
+    "case_identifier_branching": false,
+    "case_database": false,
+    "hidden_interpreter": false,
+    "complete_machinery_accounting": true
+  },
+  "factorization_outcomes": [
+    "strict_fara_separation",
+    "fara_constrained_equivalent",
+    "translation_equivalent",
+    "generic_baseline_strictly_simpler",
+    "incomparable",
+    "factorization_failed_for_explicit_reason",
+    "unresolved"
+  ],
+  "current_result": "unresolved",
+  "nonclaims": [
+    "GREL-001 represents S_core",
+    "FARA factors through GREL-001",
+    "GREL-001 is minimal",
+    "generic relational structure is the universal structure"
+  ]
+}
