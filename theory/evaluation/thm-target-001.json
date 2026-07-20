@@ -3,8 +3,8 @@
   "theorem_target_id": "THM-TARGET-001",
   "version": "1.0",
   "status": "frozen_unproved",
-  "proof_status": "none",
-  "machine_check_status": "not_started",
+  "proof_status": "partial_lemmas_only",
+  "machine_check_status": "bounded_executable_reference_only",
   "independent_review_status": "not_started",
   "source_artifact": "docs/research/thm-target-001-v1.0.md",
   "premise_ledger": "theory/evaluation/thm-target-001-premise-ledger.json",
@@ -14,9 +14,11 @@
   "p8_decision_registry": "theory/evaluation/p8-theorem-role-decision.json",
   "lemma_ledger_artifact": "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
   "lemma_ledger_registry": "theory/evaluation/s-core-construction-obstruction-ledger.json",
+  "w0_proof_artifact": "docs/research/s-core-w0-normalization-proof-v1.0.md",
+  "w0_proof_registry": "theory/evaluation/s-core-w0-normalization-proof.json",
   "governing_standard": "docs/governance/deduction-first-research-standard.md",
   "source_classes": {
-    "S_core": {"status":"frozen_initial_scope","basis":"IRD-001 process presentations satisfying R1-R6","requirements":["finite event region","finite explicit material carrier sets","explicit finite or finite-support admissible dynamics","explicit grounds and support relation","explicit material history and revision distinctions","declared source interpretation","candidate-neutral IRD-001 admission"],"nonclaim":"S_core is not asserted to contain all reasoning"},
+    "S_core": {"status":"frozen_initial_scope_w0_normalization_proved","basis":"IRD-001 process presentations satisfying R1-R6","requirements":["finite event region","finite explicit material carrier sets","explicit finite or finite-support admissible dynamics","explicit grounds and support relation","explicit material history and revision distinctions","declared source interpretation","candidate-neutral IRD-001 admission"],"nonclaim":"S_core is not asserted to contain all reasoning"},
     "S_IRD": {"status":"frozen_extension_target","basis":"all well-formed IRD-001 reasoning episodes","blocked_features":["infinite carriers","continuous dynamics","partial observability","open-ended histories","semantic change","non-finite-support stochasticity","unresolved external correspondence"]}
   },
   "target_class": {"id":"A_FARA","status":"frozen_interface_unproved_adequacy","tuple":["U","Pi","R","Rep","S","I","Inv","C","Sigma","Theta","H","Omega","Res","Prov"],"canonical_sources":["theory/definitions/definitions.md","frameworks/FARA/architecture.md","frameworks/FARA/primitives.md"],"adds_new_primitive":false},
@@ -36,16 +38,18 @@
   },
   "lemma_program": {
     "id": "SCORE-LEMMA-LEDGER-001",
-    "status": "registered_unexecuted",
+    "status": "w0_complete_w1_active",
     "total_obligations": 37,
     "construction_obligations": 24,
     "obstruction_obligations": 10,
     "assembly_obligations": 3,
-    "proved_obligations": 0,
+    "proved_obligations": 4,
     "established_obstructions": 0,
-    "open_obligations": 37,
-    "active_wave": "W0",
-    "active_obligations": ["LEM-SC-001","LEM-SC-002","LEM-SC-003","LEM-SC-004"]
+    "established_scope_boundaries": 1,
+    "open_obligations": 32,
+    "completed_waves": ["W0"],
+    "active_wave": "W1",
+    "active_obligations": ["LEM-SC-005","LEM-SC-006","LEM-SC-007","LEM-SC-008","LEM-SC-009","LEM-SC-012","LEM-SC-014"]
   },
   "nontriviality_conditions": ["uniform construction","strong preservation and reflection","cross-axis coherence","no label-only success","no output-only lookup","no opaque universal state","no hidden interpreter","no metadata smuggling","no evaluator repair","no history erasure","no evidential upgrade","compositional accountability","complete machinery ledger"],
   "theorem_family": [
@@ -60,6 +64,6 @@
   ],
   "failure_conditions": ["in_scope source countermodel","only prohibited hidden machinery permits a witness","source definition is circular through FARA","unregistered target primitive or commitment is required","material dependency history or evidential-status collapse","unsupported evidential upgrade","uniformity requires unrestricted source interpretation","strictly simpler equivalent target","unstated substantive axiom","bounded result promoted to broader scope"],
   "current_gates": {"formal_theorem_target":"satisfied","premise_ledger_and_semantics":"satisfied","faithful_representation_definition":"satisfied","scoped_representation_proof":"not_satisfied","primitive_lower_bounds":"not_satisfied","minimality_universe_and_proof":"not_satisfied","mechanized_proof_verification":"not_satisfied","independent_proof_review":"not_satisfied"},
-  "nonclaims": ["FARA faithfully represents S_core","S_core contains all reasoning","PB-001 is sufficient or minimal","any actual process corresponds to an IRD-001 presentation","any registered lemma is proved","any FARA primitive is necessary","FARA is minimal or unique","a universal finite architecture exists","any theorem is proved"],
-  "next_required_artifact": "W0 proof package for LEM-SC-001 through LEM-SC-004"
+  "nonclaims": ["FARA faithfully represents S_core","S_core contains all reasoning","PB-001 is sufficient or minimal","any actual process corresponds to an IRD-001 presentation","any W1 through W5 obligation is proved","any FARA primitive is necessary","FARA is minimal or unique","a universal finite architecture exists","any theorem in the frozen theorem family is proved","W0 has proof-assistant verification or independent proof review"],
+  "next_required_artifact": "W1 base-carrier and direct-axis construction proof package"
 }
