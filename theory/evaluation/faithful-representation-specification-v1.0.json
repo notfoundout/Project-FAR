@@ -6,6 +6,8 @@
   "source_artifact": "docs/research/faithful-representation-specification-v1.0.md",
   "theorem_target": "THM-TARGET-001",
   "source_scope": "S_core",
+  "lemma_ledger_artifact": "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
+  "lemma_ledger_registry": "theory/evaluation/s-core-construction-obstruction-ledger.json",
   "source_contract": {
     "tuple": ["tau_S", "Mat", "ValEq", "App"],
     "owned_by_source": true,
@@ -138,17 +140,18 @@
     "faithful-representation-definition": "satisfied",
     "scoped-representation-proof": "not_satisfied"
   },
-  "unresolved": ["existence_of_uniform_constructor", "S_core_representation_theorem", "PB_001_completeness", "external_process_correspondence"],
+  "unresolved": ["SCORE_LEMMA_LEDGER_execution","existence_of_uniform_constructor","S_core_representation_theorem","PB_001_completeness","external_process_correspondence"],
   "nonclaims": [
     "Faithful_split is satisfiable",
     "FARA represents S_core",
     "FARA represents S_IRD",
     "PB-001 is complete",
     "actual-process correspondence is established",
+    "any registered lemma is proved",
     "negative controls are exhaustive",
     "any primitive is necessary",
     "FARA is minimal unique or universal",
     "any theorem is proved"
   ],
-  "next_required_artifact": "S_core construction and obstruction lemma ledger"
+  "next_required_artifact": "W0 proof package for LEM-SC-001 through LEM-SC-004"
 }
