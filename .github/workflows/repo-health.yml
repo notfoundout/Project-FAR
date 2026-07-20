@@ -23,11 +23,19 @@ jobs:
     - name: Run theory verifier
       run: python tools/verify_theory.py
     - name: Run canonical fast repository health check
+      id: fast_health
       shell: bash
       run: |
         set +e
         python tools/repo_health_check.py --fast > /tmp/project-far-health.log 2>&1
         rc=$?
-        tail -n 180 /tmp/project-far-health.log
+        echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
         exit "$rc"
+    - name: Upload fast health diagnostics
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: fast-health-diagnostics
+        path: /tmp/project-far-health.log
+        if-no-files-found: error
     timeout-minutes: 30
