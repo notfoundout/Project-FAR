@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "decision_id": "P8-ROLE-001",
   "version": "1.0",
-  "status": "frozen_unproved",
+  "status": "frozen_partial_internal_construction_only",
   "theorem_target": "THM-TARGET-001",
   "selected_mode": "split",
   "decision_artifact": "docs/research/p8-theorem-role-decision-v1.0.md",
@@ -10,6 +10,9 @@
   "lemma_ledger_registry": "theory/evaluation/s-core-construction-obstruction-ledger.json",
   "w0_proof_artifact": "docs/research/s-core-w0-normalization-proof-v1.0.md",
   "w0_proof_registry": "theory/evaluation/s-core-w0-normalization-proof.json",
+  "w1_direct_axis_proof_artifact": "docs/research/s-core-w1-direct-axis-proof-v1.0.md",
+  "w1_direct_axis_proof_registry": "theory/evaluation/s-core-w1-direct-axis-proof.json",
+  "internal_construction_status": "direct_axis_embedding_proved_recovery_unproved",
   "internal_obligation": {
     "id": "P8-I",
     "predicate": "Pres_8I",
@@ -24,7 +27,9 @@
       "evidence_grade"
     ],
     "source_reduct_extraction_status": "proved_LEM-SC-002",
-    "target_preservation_status": "unproved_LEM-SC-014",
+    "target_direct_axis_embedding_status": "proved_LEM-SC-014",
+    "target_preservation_status": "direct_axis_embedding_proved_recovery_unproved",
+    "registered_impossibility_status": "OBS-SC-006_refuted_for_finite_direct_axis_reducts",
     "no_evidential_upgrade": true,
     "metadata_is_counted_machinery": true
   },
@@ -41,7 +46,8 @@
       "uncertainty_limitations_and_alternatives"
     ],
     "not_implied_by_formal_representation": true,
-    "failure_blocks_application_not_formal_theorem": true
+    "failure_blocks_application_not_formal_theorem": true,
+    "status": "unproved"
   },
   "formal_definitions": {
     "Faithful_split": "Faithful_internal and Pres_8I",
@@ -52,23 +58,24 @@
     "side_condition": "fails to protect provenance and evidence-status distinctions already internal to the source presentation"
   },
   "theorem_effects": {
-    "THM-CORE-REP-001": "uses Faithful_split",
+    "THM-CORE-REP-001": "uses Faithful_split and remains unproved because recovery and other ledger obligations remain open",
     "THM-IRD-EXT-001": "uses Faithful_split",
     "THM-P8-CORR-001": "external Corr_8E theorem_or_contract_family"
   },
-  "proof_status": "none",
-  "machine_check_status": "not_started",
+  "proof_status": "partial_internal_direct_axis_lemma_only",
+  "machine_check_status": "bounded_executable_reference_only",
   "independent_review_status": "not_started",
   "revision_rule": "mode or boundary changes require a versioned theorem-target revision unless definitional equivalence is proved",
   "nonclaims": [
-    "Pres_8I target preservation is proved",
+    "the complete Pres_8I predicate is proved",
+    "admissible target-only recovery is proved",
     "Faithful_split is satisfiable for every S_core object",
     "FARA faithfully represents S_core",
     "any actual system corresponds to an IRD-001 presentation",
-    "any W1 through W5 obligation is proved",
+    "any W2 through W5 construction or assembly obligation is proved",
     "PB-001 is sufficient necessary independent minimal or complete",
     "universality minimality uniqueness or impossibility",
-    "machine verification or independent proof review"
+    "proof-assistant verification or independent proof review"
   ],
-  "next_required_artifact": "W1 base-carrier and direct-axis construction proof package"
+  "next_required_artifact": "W2 dynamics history revision and self-modification proof-or-obstruction package"
 }

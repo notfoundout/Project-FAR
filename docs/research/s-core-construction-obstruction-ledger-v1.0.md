@@ -2,11 +2,13 @@
 
 ## Status
 
-Frozen proof-dependency ledger for `THM-TARGET-001`; W0 complete and W1 active.
+Frozen proof-dependency ledger for `THM-TARGET-001`; W0 and W1 complete, W2 active.
 
 Ledger identifier: `SCORE-LEMMA-LEDGER-001`.
 
-This artifact decomposes the finite-core proof program into explicit construction, obstruction, and assembly obligations. `SCORE-W0-PROOF-001` proves `LEM-SC-001` through `LEM-SC-004` and establishes `OBS-SC-001` as a source-scope boundary. No target-construction lemma, representation witness, FARA adequacy result, or scoped representation theorem is established.
+This artifact preserves the frozen construction, obstruction, and assembly statements while recording their execution state. `SCORE-W0-PROOF-001` proves the source-normalization kernel and establishes one source-scope boundary. `SCORE-W1-PROOF-001` proves the target-carrier and direct-axis construction package and refutes two registered direct-axis impossibility hypotheses.
+
+The ledger currently records 11 proved construction lemmas, 1 established source-scope boundary, 2 refuted obstruction hypotheses, and 23 open obligations. It does not establish admissible target-only recovery, any complete `Pres_i` predicate, `Faithful_split`, FARA adequacy, or a scoped representation theorem.
 
 ## Governing artifacts
 
@@ -20,357 +22,261 @@ The ledger is subordinate to:
 - `docs/research/p8-theorem-role-decision-v1.0.md`;
 - `docs/governance/deduction-first-research-standard.md`.
 
-The machine-readable registration is `theory/evaluation/s-core-construction-obstruction-ledger.json`.
+Accepted execution packages:
 
-The accepted W0 proof package is:
+- `docs/research/s-core-w0-normalization-proof-v1.0.md` and `theory/evaluation/s-core-w0-normalization-proof.json`;
+- `docs/research/s-core-w1-direct-axis-proof-v1.0.md` and `theory/evaluation/s-core-w1-direct-axis-proof.json`.
 
-- `docs/research/s-core-w0-normalization-proof-v1.0.md`;
-- `theory/evaluation/s-core-w0-normalization-proof.json`;
-- `docs/audits/s-core-w0-proof-audit.md`.
+The machine-readable ledger is `theory/evaluation/s-core-construction-obstruction-ledger.json`.
 
 ## 1. Purpose and result boundary
 
 Stage D4 requires every material `S_core` feature to receive either:
 
 1. a proved uniform construction lemma showing how the feature participates in a `Faithful_split` witness; or
-2. a proved obstruction, countermodel, or scope-boundary result showing why the required construction cannot be obtained under the frozen assumptions.
+2. a proved obstruction, countermodel, refutation, or scope-boundary result showing the strongest justified negative conclusion.
 
-Registration in this ledger is not proof. A ledger entry may move from `registered_unproved` only when its proof, refutation, or obstruction artifact is versioned, dependency-complete, and accepted under repository proof governance.
+Registration is not proof. A terminal status requires a versioned evidence artifact and dependency audit. Failure of one attempted construction does not establish nonexistence.
 
-Failure of one attempted construction does not establish nonexistence. An obstruction entry must quantify over the stated constructor or witness class and prove the registered impossibility statement.
+W1 proves direct-axis target structures and strong embeddings. The frozen definition of `Pres_i` also requires admissible target-only recovery, which remains `LEM-SC-018`. Therefore this ledger does not report any complete `Pres_i` predicate as proved.
 
 ## 2. Obligation classes
 
-The ledger uses three classes.
+- **Construction:** produces or preserves a component of a target package, correspondence, recovery, or global witness.
+- **Obstruction:** proves a registered impossibility, refutes an impossibility hypothesis by a quantified construction, or establishes a source boundary.
+- **Assembly:** combines accepted obligations into a common-schema result, arbitrary-episode witness, or strongest theorem-or-obstruction conclusion.
 
-### Construction obligations
+## 3. Dependency waves and execution
 
-A construction lemma produces or preserves a component of the target package, witness, recovered reduct, correspondence map, or global faithfulness condition.
+### W0 — Source normalization kernel — **complete**
 
-### Obstruction obligations
-
-An obstruction lemma proves that a stated construction class cannot satisfy a frozen obligation, or that a candidate source object lies outside the frozen finite-core scope. Obstructions must distinguish:
-
-- failure of one attempted witness;
-- failure of one constructor family;
-- failure of the fixed `A_FARA` target interface;
-- failure of the theorem over all admissible targets in the frozen class;
-- source-scope failure.
-
-### Assembly obligations
-
-An assembly lemma combines previously proved obligations into a common-schema result, a `Faithful_split` witness result, or the strongest justified theorem-or-obstruction conclusion.
-
-## 3. Dependency waves
-
-The dependency order is mandatory.
-
-### Wave W0 — Source normalization kernel — complete
-
-- `LEM-SC-001` — finite source-contract normalization — **proved**;
-- `LEM-SC-002` — canonical P1–P7 and P8-I reduct extraction — **proved**;
-- `LEM-SC-003` — materiality closure and applicability decidability — **proved**;
+- `LEM-SC-001` — finite source-contract normalization — **proved**.
+- `LEM-SC-002` — canonical reduct extraction — **proved**.
+- `LEM-SC-003` — materiality closure and applicability decidability — **proved**.
 - `LEM-SC-004` — source-isomorphism transport — **proved**.
+- `OBS-SC-001` — non-finite material-closure boundary — **scope boundary established**.
 
-`OBS-SC-001` is resolved as `scope_boundary_established`: a non-finite material closure is incompatible with the frozen `S_core` source requirements and is not a target countermodel.
+### W1 — Base carriers and direct axes — **complete**
 
-These results are project-authored human-checkable proofs with bounded executable corroboration. Proof-assistant verification and independent proof review are not complete.
+- `LEM-SC-005` — target carrier allocation — **proved**.
+- `LEM-SC-006` — configuration construction — **proved**.
+- `LEM-SC-007` — commitment construction — **proved**.
+- `LEM-SC-008` — stake-and-alternative construction — **proved**.
+- `LEM-SC-009` — ground-and-justification construction — **proved**.
+- `LEM-SC-012` — consequence construction — **proved**.
+- `LEM-SC-014` — internal evidential-status construction — **proved**.
+- `OBS-SC-003` — relation-reflection collapse — **refuted**.
+- `OBS-SC-006` — evidential-status impossibility — **refuted**.
 
-### Wave W1 — Base carriers and direct axes — active
+### W2 — Dynamics, history, and revision — **active**
 
-- `LEM-SC-005` — target carrier allocation;
-- `LEM-SC-006` — configuration construction (`Pres_1`);
-- `LEM-SC-007` — commitment construction (`Pres_2`);
-- `LEM-SC-008` — stake-and-alternative construction (`Pres_3`);
-- `LEM-SC-009` — ground-and-justification construction (`Pres_4`);
-- `LEM-SC-012` — consequence construction (`Pres_6`);
-- `LEM-SC-014` — internal evidential-status construction (`Pres_8I`).
+- `LEM-SC-010` — deterministic dynamics construction — **registered unproved**.
+- `LEM-SC-011` — finite-support probabilistic dynamics construction — **registered unproved**.
+- `LEM-SC-013` — historical-and-path construction — **registered unproved**.
+- `LEM-SC-015` — nonmonotonic revision and retraction — **registered unproved**.
+- `LEM-SC-016` — self-modification and rule-version change — **registered unproved**.
+- `OBS-SC-004` and `OBS-SC-005` become executable as their dependencies close.
 
-### Wave W2 — Dynamics, history, and revision
+### W3 — Global witness obligations — **open**
 
-- `LEM-SC-010` — deterministic dynamics construction;
-- `LEM-SC-011` — finite-support probabilistic dynamics construction;
-- `LEM-SC-013` — historical-and-path construction (`Pres_7`);
-- `LEM-SC-015` — nonmonotonic revision and retraction;
-- `LEM-SC-016` — self-modification and rule-version change.
+- `LEM-SC-017` through `LEM-SC-024`.
 
-### Wave W3 — Global witness obligations
+### W4 — Remaining obstruction and negative controls — **open**
 
-- `LEM-SC-017` — distributed decomposition and interface construction;
-- `LEM-SC-018` — admissible target-only recovery;
-- `LEM-SC-019` — semantic agreement;
-- `LEM-SC-020` — cross-axis coherence;
-- `LEM-SC-021` — complete machinery-ledger construction;
-- `LEM-SC-022` — uniformity and source-isomorphism equivariance;
-- `LEM-SC-023` — compositional accountability;
-- `LEM-SC-024` — well-formed witness assembly.
+- `OBS-SC-002`, `OBS-SC-004`, `OBS-SC-005`, and `OBS-SC-007` through `OBS-SC-010`.
 
-### Wave W4 — Obstruction and negative-control program
+### W5 — Theorem assembly — **open**
 
-- `OBS-SC-001` — non-finite material-closure boundary — **scope boundary established**;
-- `OBS-SC-002` through `OBS-SC-010` — unresolved.
+- `ASM-SC-001` through `ASM-SC-003`.
 
-Obstruction work may begin as soon as its dependencies are defined. It does not need to wait for a favorable construction.
+No W5 entry may be accepted while a dependency remains open, unknown, or supported only by examples.
 
-### Wave W5 — Theorem assembly
+## 4. Frozen construction statements
 
-- `ASM-SC-001` — common target-schema assembly;
-- `ASM-SC-002` — arbitrary-episode `Faithful_split` assembly;
-- `ASM-SC-003` — finite-core theorem-or-obstruction closure.
+### `LEM-SC-001` — Finite source-contract normalization — **proved**
 
-No W5 entry may be accepted while a dependency is `registered_unproved`, `unknown`, or merely supported by examples.
+For every `(P,J,C_S) ∈ S_core`, construct a finite normalized source contract preserving the source interpretation, materiality predicate, value-equivalence relations, axis applicability, R1–R6 truth, and every material dependency. The normalization may not discard information later required by `Faithful_split`.
 
-## 4. Construction lemma statements
-
-### `LEM-SC-001` — Finite source-contract normalization
-
-For every `(P,J,C_S) ∈ S_core`, construct a finite normalized source contract preserving the source interpretation, materiality predicate, value-equivalence relations, axis applicability, R1–R6 truth, and every material dependency.
-
-The normalization may not discard information later required by `Faithful_split`.
-
-**Result:** proved by `SCORE-W0-PROOF-001` using canonical finite typed relational-structure coding.
-
-### `LEM-SC-002` — Canonical reduct extraction
+### `LEM-SC-002` — Canonical reduct extraction — **proved**
 
 From the normalized source contract, effectively extract the least finite typed reducts `S_1` through `S_7` and the internal evidential-status reduct `S_8I`, including their materiality-closure dependencies.
 
-**Result:** proved by `SCORE-W0-PROOF-001` using least finite reference closure and induced structures.
-
-### `LEM-SC-003` — Materiality closure and applicability decidability
+### `LEM-SC-003` — Materiality closure and applicability decidability — **proved**
 
 Prove that materiality closure terminates on `S_core`, that every registered material reference is included, and that every axis applicability judgment is decidable from the frozen source contract.
 
-**Result:** proved by `SCORE-W0-PROOF-001` using stabilization of a monotone sequence of subsets of a finite material universe.
-
-### `LEM-SC-004` — Source-isomorphism transport
+### `LEM-SC-004` — Source-isomorphism transport — **proved**
 
 Prove that source isomorphisms transport normalized contracts, reducts, materiality, applicability, and later construction inputs without case identifiers or semantic strengthening.
 
-**Result:** proved by `SCORE-W0-PROOF-001` through closure transport and equality of canonical code sets.
-
-### `LEM-SC-005` — Target carrier allocation
+### `LEM-SC-005` — Target carrier allocation — **proved**
 
 Define one finite target-allocation schema that assigns typed target carriers, relation schemas, and witness references to every normalized source carrier while preserving material disjointness and leaving all helper machinery explicit in `kappa`.
 
-### `LEM-SC-006` — Configuration construction
+### `LEM-SC-006` — Configuration construction — **proved**
 
 Using `LEM-SC-005`, construct the P1 target reduct and correspondence package preserving and reflecting material participants, states, resources, locations, externalized components, incidence, containment, availability, ownership, and participation.
 
-### `LEM-SC-007` — Commitment construction
+### `LEM-SC-007` — Commitment construction — **proved**
 
 Construct the P2 target reduct and correspondence package preserving and reflecting commitment identity, holder, content, status, degree, location, retention, acceptance, rejection, suspension, comparison, and revision.
 
-### `LEM-SC-008` — Stake-and-alternative construction
+### `LEM-SC-008` — Stake-and-alternative construction — **proved**
 
 Construct the P3 target reduct and correspondence package preserving and reflecting stakes, questions, objectives, conflicts, live alternatives, relevance, mutual exclusion, ranking, and availability.
 
-### `LEM-SC-009` — Ground-and-justification construction
+### `LEM-SC-009` — Ground-and-justification construction — **proved**
 
 Construct the P4 target reduct and correspondence package preserving and reflecting every material ground, constraint, assumption, observation, rule, model, prior commitment, and typed justificatory role, including support, defeat, qualification, constraint, selection, and provenance.
 
-### `LEM-SC-010` — Deterministic dynamics construction
+### `LEM-SC-010` — Deterministic dynamics construction — **registered unproved**
 
 For deterministic finite source dynamics, construct a target transition system and correspondence satisfying the P5 finite labeled bisimulation, including preconditions, resource conditions, action or observation dependence, rule identity, rule version, and admissibility status.
 
-### `LEM-SC-011` — Finite-support probabilistic dynamics construction
+### `LEM-SC-011` — Finite-support probabilistic dynamics construction — **registered unproved**
 
 For finite-support stochastic source dynamics, construct a target transition system and weight correspondence satisfying the registered finite labeled probabilistic bisimulation without changing source probabilities or source-declared value equivalence.
 
-### `LEM-SC-012` — Consequence construction
+### `LEM-SC-012` — Consequence construction — **proved**
 
 Construct the P6 target reduct and correspondence preserving and reflecting consequence identity, content, status, degree, producing basis, downstream use, authorization, policy effect, inquiry effect, proof status, and communication role.
 
-### `LEM-SC-013` — Historical-and-path construction
+### `LEM-SC-013` — Historical-and-path construction — **registered unproved**
 
 Construct the P7 target reduct and correspondence as an order embedding preserving and reflecting temporal or causal order, provenance, revision, retraction, supersession, dependency ancestry, rule activation, rejected modifications, and material path conditions.
 
-### `LEM-SC-014` — Internal evidential-status construction
+### `LEM-SC-014` — Internal evidential-status construction — **proved**
 
-Construct `Pres_8I` while preserving and reflecting observation versus inference, reported versus instrumented status, assumed versus derived status, provenance source, confidence, uncertainty, qualification, rejection, supersession, withdrawal, unresolved status, and evidence grade. Prove that no evidential upgrade is introduced.
+Construct `Pres_8I`'s direct-axis target reduct and correspondence while preserving and reflecting observation versus inference, reported versus instrumented status, assumed versus derived status, provenance source, confidence, uncertainty, qualification, rejection, supersession, withdrawal, unresolved status, and evidence grade. Prove that no evidential upgrade is introduced. Full `Pres_8I` remains dependent on admissible recovery.
 
-### `LEM-SC-015` — Nonmonotonic revision and retraction
+### `LEM-SC-015` — Nonmonotonic revision and retraction — **registered unproved**
 
 Show that defeasible support, rejection, suspension, retraction, and supersession can be represented without collapsing earlier and later commitment states or treating current output as a substitute for revision history.
 
-### `LEM-SC-016` — Self-modification and rule-version change
+### `LEM-SC-016` — Self-modification and rule-version change — **registered unproved**
 
 Show that accepted, rejected, and superseded rule modifications alter the represented later admissible dynamics at the exact source event position, preserving before/after rule versions and dependencies.
 
-### `LEM-SC-017` — Distributed decomposition and interface construction
+### `LEM-SC-017` — Distributed decomposition and interface construction — **registered unproved**
 
 For a source-declared decomposition `(P,J)=P_1 ⊕_B P_2`, construct component images, the interface image, cross-component relations, and composed histories without attributing the whole episode to an unsupported component or erasing interaction structure.
 
-### `LEM-SC-018` — Admissible target-only recovery
+### `LEM-SC-018` — Admissible target-only recovery — **registered unproved**
 
 Define one versioned deterministic recovery family that terminates on all constructed finite targets, uses target and declared witness data only, produces the registered reducts or explicit diagnostics, and calls no source oracle, case database, evaluator, network resource, or undeclared executable dependency.
 
-### `LEM-SC-019` — Semantic agreement
+### `LEM-SC-019` — Semantic agreement — **registered unproved**
 
 Prove that every material source item and relation role receives a target denotation equivalent under the frozen source semantics, consistently across axes, without lexical shortcuts or strengthening of precision, certainty, modality, normativity, authority, or evidence grade.
 
-### `LEM-SC-020` — Cross-axis coherence
+### `LEM-SC-020` — Cross-axis coherence — **registered unproved**
 
 Prove that the per-axis images form one compatible representation: shared source items are identical or explicitly linked, semantic denotations agree, statuses and versions do not conflict, and deliberate duplication is declared and counted.
 
-### `LEM-SC-021` — Complete machinery-ledger construction
+### `LEM-SC-021` — Complete machinery-ledger construction — **registered unproved**
 
 Construct a finite acyclic dependency graph resolving every target primitive, derived construct, schema, state variable, algorithm, semantic bridge, metadata field, external dependency, normalization rule, equivalence rule, composition rule, and cost-bearing helper used by `E`, `D`, `M`, `iota`, or verification.
 
-### `LEM-SC-022` — Uniformity and equivariance
+### `LEM-SC-022` — Uniformity and equivariance — **registered unproved**
 
 Prove that the constructor family has one finite definition and input schema, does not branch on source case identifiers, is effective and terminating on `S_core`, and maps source-isomorphic inputs to target-isomorphic outputs under induced renaming.
 
-### `LEM-SC-023` — Compositional accountability
+### `LEM-SC-023` — Compositional accountability — **registered unproved**
 
 Prove that encoding commutes with every source-declared decomposition up to the frozen target equivalence and preserves material interface, cross-component, historical, and admissibility relations.
 
-### `LEM-SC-024` — Well-formed witness assembly
+### `LEM-SC-024` — Well-formed witness assembly — **registered unproved**
 
 Combine the constructed target, recovery family, correspondence packages, semantic interpretation, and machinery ledger into a well-typed witness `W=(E,D,M,iota,kappa)` without assuming any unproved theorem-level conclusion.
 
-## 5. Obstruction lemma statements
+## 5. Frozen obstruction statements
 
-### `OBS-SC-001` — Non-finite material-closure boundary
+### `OBS-SC-001` — Non-finite material-closure boundary — **scope boundary established**
 
-Determine whether any admitted `S_core` source contract can have nonterminating or non-finite materiality closure. A proved example is a source-scope defect or countermodel to the frozen `S_core` requirements, not automatically a target failure.
+Determine whether any admitted `S_core` source contract can have nonterminating or non-finite materiality closure. The W0 proof shows that no admitted object can; genuinely non-finite closure lies outside `S_core`.
 
-**Result:** `scope_boundary_established`. Every well-formed `S_core` material universe is finite, so closure terminates; a genuinely non-finite closure lies outside `S_core`.
-
-### `OBS-SC-002` — Hidden-interpreter necessity
+### `OBS-SC-002` — Hidden-interpreter necessity — **registered unproved**
 
 Prove or refute that some in-scope source object can be recovered only by an unrestricted interpreter, source oracle, or case database. Acceptance requires quantification over the frozen admissible constructor and recovery class.
 
-### `OBS-SC-003` — Relation-reflection collapse
+### `OBS-SC-003` — Relation-reflection collapse — **refuted**
 
-Search for an in-scope source whose material justificatory, commitment, or alternative relations cannot all be preserved and reflected under the fixed target interface without collapse or unregistered machinery.
+Search for an in-scope source whose material justificatory, commitment, or alternative relations cannot all be preserved and reflected under the fixed target interface without collapse or unregistered machinery. The W1 generic incidence construction embeds every finite direct-axis reduct in this registered scope.
 
-### `OBS-SC-004` — Dynamics-bisimulation mismatch
+### `OBS-SC-004` — Dynamics-bisimulation mismatch — **registered unproved**
 
 Search for deterministic or finite-support stochastic `S_core` dynamics for which no admissible target transition system satisfies the frozen P5 bisimulation requirements.
 
-### `OBS-SC-005` — History-and-path collapse
+### `OBS-SC-005` — History-and-path collapse — **registered unproved**
 
 Search for an in-scope source whose revision, provenance, dependency ancestry, or path-sensitive admissibility cannot be order-embedded and reflected by an admissible target witness.
 
-### `OBS-SC-006` — Evidential-status impossibility
+### `OBS-SC-006` — Evidential-status impossibility — **refuted**
 
-Search for an in-scope source whose internal evidence-status distinctions cannot be preserved without loss, fabrication, or upgrade under `Pres_8I`.
+Search for an in-scope source whose internal evidence-status distinctions cannot be preserved without loss, fabrication, or upgrade under the direct-axis `Pres_8I` construction. W1 supplies an exact strong embedding for every finite `S_8I` reduct. `Corr_8E` remains separate.
 
-### `OBS-SC-007` — Nonuniform-constructor obstruction
+### `OBS-SC-007` — Nonuniform-constructor obstruction — **registered unproved**
 
 Determine whether successful witnesses necessarily require source-specific case branching, source identifiers, or an unbounded family of helper definitions, contradicting frozen uniformity.
 
-### `OBS-SC-008` — Composition-interface loss
+### `OBS-SC-008` — Composition-interface loss — **registered unproved**
 
 Search for a source-declared distributed decomposition whose material cross-component relations or composed dynamics cannot be recovered by any admissible compositional witness.
 
-### `OBS-SC-009` — Fixed-target-interface insufficiency
+### `OBS-SC-009` — Fixed-target-interface insufficiency — **registered unproved**
 
 Determine whether some `S_core` object requires a target commitment not expressible or derivable in the frozen `A_FARA` interface without adding an unregistered primitive or weakening faithfulness.
 
-### `OBS-SC-010` — Formal negative-control family
+### `OBS-SC-010` — Formal negative-control family — **registered unproved**
 
 For NC-01 through NC-10, prove the expected failure predicate or register the control as unresolved. Passing a control for an unexpected or unproved reason does not establish the expected obstruction.
 
-## 6. Assembly lemma statements
+## 6. Frozen assembly statements
 
-### `ASM-SC-001` — Common target-schema assembly
+### `ASM-SC-001` — Common target-schema assembly — **registered unproved**
 
 From the accepted construction lemmas, derive one fixed finite target and witness schema eligible for every `S_core` input. This is the immediate dependency of `THM-CORE-COMMON-001`.
 
-### `ASM-SC-002` — Arbitrary-episode faithful-witness assembly
+### `ASM-SC-002` — Arbitrary-episode faithful-witness assembly — **registered unproved**
 
 For arbitrary `(P,J,C_S) ∈ S_core`, combine the accepted obligations into an `A,W` satisfying every conjunct of `Faithful_split`. This is the immediate dependency of `THM-CORE-REP-001`.
 
-### `ASM-SC-003` — Finite-core theorem-or-obstruction closure
+### `ASM-SC-003` — Finite-core theorem-or-obstruction closure — **registered unproved**
 
-Conclude exactly one strongest justified outcome:
+Conclude exactly one strongest justified outcome: the scoped representation theorem is proved; a quantified obstruction refutes it; a proper subclass theorem is proved; or named obligations remain unresolved. This entry may not convert unresolved obligations into a favorable theorem statement.
 
-- the scoped representation theorem is proved;
-- a quantified obstruction or countermodel refutes it;
-- a proper subclass theorem is proved with the excluded cases identified;
-- the theorem remains unresolved because named ledger obligations remain open.
+## 7. Coverage and status rules
 
-This entry may not convert unresolved obligations into a favorable theorem statement.
+The mandatory feature set remains finite source normalization, P1–P7, P8-I, target-only recovery, semantic agreement, coherence, uniformity, distributed composition, machinery accounting, formal negative controls, and theorem assembly.
 
-## 7. Coverage rule
+Allowed statuses are `registered_unproved`, `proof_in_progress`, `proved`, `refuted`, `obstruction_established`, `scope_boundary_established`, `blocked`, `unknown`, and `superseded`.
 
-The mandatory feature set is:
+A terminal status requires accepted evidence. Examples, successful compilers, evaluator agreement, or one failed mapping do not resolve an obligation.
 
-- finite source normalization;
-- configuration;
-- commitments;
-- stakes and alternatives;
-- grounds and justificatory roles;
-- deterministic dynamics;
-- finite-support probabilistic dynamics;
-- consequences;
-- history and path dependence;
-- nonmonotonic revision;
-- self-modification and rule versions;
-- internal evidential status;
-- target-only recovery;
-- semantic agreement;
-- cross-axis coherence;
-- uniformity and equivariance;
-- distributed composition;
-- machinery accounting;
-- formal negative controls;
-- theorem assembly.
+## 8. Gate and claim effects
 
-A feature is resolved only when a cited accepted artifact proves a construction lemma or establishes a quantified obstruction with the exact registered scope. Examples, successful compilers, evaluator agreement, or one failed mapping do not resolve a feature.
-
-## 8. Status transitions and execution summary
-
-Allowed obligation statuses are:
-
-- `registered_unproved`;
-- `proof_in_progress`;
-- `proved`;
-- `refuted`;
-- `obstruction_established`;
-- `scope_boundary_established`;
-- `blocked`;
-- `unknown`;
-- `superseded`.
-
-A status other than `registered_unproved`, `proof_in_progress`, `blocked`, or `unknown` requires an evidence artifact and dependency audit.
-
-Current execution summary:
-
-- total obligations: 37;
-- proved: 4;
-- source-scope boundaries established: 1;
-- open: 32;
-- completed wave: W0;
-- active wave: W1.
-
-## 9. Gate and claim effects
-
-- the formal-theorem-target gate remains satisfied;
-- the premise-ledger-and-semantics gate remains satisfied;
-- the faithful-representation-definition gate remains satisfied;
-- the scoped-representation-proof gate remains not satisfied;
-- the mechanized-proof-verification gate remains not satisfied;
-- the independent-proof-review gate remains not satisfied;
+- formal-theorem-target remains satisfied;
+- premise-ledger-and-semantics remains satisfied;
+- faithful-representation-definition remains satisfied;
+- scoped-representation-proof remains not satisfied;
+- mechanized-proof-verification remains not satisfied;
+- independent-proof-review remains not satisfied;
 - no central claim is promoted.
 
-The W0 proof establishes source normalization and extraction only. It is not a target representation result.
+W1 direct-axis results are partial lemma progress. No admissible recovery family or complete faithful witness has been established.
 
-## 10. Revision policy
+## 9. Revision policy
 
-Changing an obligation's statement, quantified scope, accepted dependencies, success criterion, or obstruction strength requires a new ledger version unless the change is a non-substantive clarification. Failed and superseded proof attempts remain preserved.
-
-A lemma that reveals a defect in `THM-TARGET-001`, `FAITHFUL-REP-001`, P8-ROLE-001, or `S_core` triggers the applicable versioned revision rather than silent repair.
+Changing an obligation statement, quantified scope, accepted dependencies, success criterion, or obstruction strength requires a new ledger version unless the change is a non-substantive clarification. Failed and superseded proof attempts remain preserved.
 
 ## Nonclaims
 
 This ledger does not establish:
 
-- any W1–W5 obligation;
-- existence of a uniform FARA constructor;
-- satisfiability of `Faithful_split` for any or every `S_core` object;
-- FARA adequacy;
+- any W2–W5 construction or assembly obligation;
+- admissible target-only recovery or a complete `Pres_i` predicate;
+- satisfiability of `Faithful_split`;
+- FARA adequacy for `S_core` or `S_IRD`;
 - PB-001 sufficiency, necessity, independence, minimality, or completeness;
 - correspondence between an actual process and an IRD presentation;
 - a representation, universality, necessity, minimality, equivalence, uniqueness, or impossibility theorem;
@@ -378,4 +284,4 @@ This ledger does not establish:
 
 ## Next required proof package
 
-Construct or obstruct the W1 base-carrier and direct-axis package: `LEM-SC-005`, `LEM-SC-006`, `LEM-SC-007`, `LEM-SC-008`, `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`.
+Construct or obstruct the W2 dynamics, history, revision, and self-modification package: `LEM-SC-010`, `LEM-SC-011`, `LEM-SC-013`, `LEM-SC-015`, and `LEM-SC-016`. Execute `OBS-SC-004` and `OBS-SC-005` as their dependencies close.

@@ -2,134 +2,106 @@
 
 ## Audit target
 
-This audit covers:
-
-- `docs/research/s-core-construction-obstruction-ledger-v1.0.md`;
-- `theory/evaluation/s-core-construction-obstruction-ledger.json`;
-- `docs/research/s-core-w0-normalization-proof-v1.0.md`;
-- `theory/evaluation/s-core-w0-normalization-proof.json`;
-- integration with `THM-TARGET-001`, `Faithful_split`, P8-ROLE-001, the deduction-first roadmaps, and repository gates.
+This audit covers the frozen lemma ledger, the W0 and W1 proof packages, executable corroboration, theorem and faithful-representation registries, P8, roadmaps, claims, and research gates.
 
 ## Audit question
 
-Does the repository preserve the complete dependency-ordered finite-core program while accepting only the exact W0 results established by a versioned proof package?
+Does the repository preserve the complete dependency-ordered finite-core program while accepting only the exact W0 and W1 results established by versioned proof packages?
 
 ## Result
 
-**Pass for W0 execution.**
+**Pass through W1 execution.**
 
-The ledger retains 37 obligations:
-
-- 24 construction obligations;
-- 10 obstruction obligations;
-- 3 assembly obligations.
+The ledger retains 37 obligations: 24 construction, 10 obstruction, and 3 assembly.
 
 Current execution state:
 
-- 4 construction lemmas proved: `LEM-SC-001` through `LEM-SC-004`;
-- 1 source-scope boundary established: `OBS-SC-001`;
-- 0 target obstructions established;
-- 0 refutations;
-- 32 open obligations;
-- W0 complete;
-- W1 active.
+- 11 construction lemmas proved;
+- 1 source-scope boundary established;
+- 2 obstruction hypotheses refuted;
+- 0 target impossibility results established;
+- 23 obligations open;
+- W0 and W1 complete;
+- W2 active.
 
-## W0 proof audit
+## W0 audit
 
-`SCORE-W0-PROOF-001` establishes:
+`SCORE-W0-PROOF-001` establishes finite source normalization, least reference-closed reduct extraction, materiality-closure termination, applicability decidability, and source-isomorphism transport.
 
-- finite canonical normalization of the theorem-facing material source restriction;
-- least finite P1–P7 and P8-I reduct extraction by reference closure;
-- termination and completeness of materiality closure;
-- decidability of axis applicability;
-- transport and canonical-code invariance under source isomorphism.
+`OBS-SC-001` is correctly classified as a source boundary: non-finite material closure is outside frozen `S_core`, not a target success or target impossibility result.
 
-The proof depends only on frozen `S_core` finiteness and explicitness, finite graph reachability, induced finite relational structures, and sort-preserving isomorphism transport.
+## W1 audit
 
-It does not depend on:
+`SCORE-W1-PROOF-001` uses one fixed target schema, `DIR-INCIDENCE-1.0`, for every finite direct-axis reduct.
 
-- FARA target adequacy;
-- a target constructor;
-- `Faithful_split` satisfiability;
-- PB-001 completeness;
-- actual-process correspondence;
-- evaluator agreement.
+It proves:
 
-## `OBS-SC-001` classification
+- `LEM-SC-005` target allocation;
+- `LEM-SC-006` P1 configuration;
+- `LEM-SC-007` P2 commitments;
+- `LEM-SC-008` P3 stakes and alternatives;
+- `LEM-SC-009` P4 grounds and justificatory roles;
+- `LEM-SC-012` P6 consequences;
+- `LEM-SC-014` P8-I internal evidence status.
 
-A non-finite or nonterminating mathematical materiality closure is incompatible with the frozen `S_core` requirements. It is therefore registered as `scope_boundary_established`, not as evidence that FARA succeeds and not as a target-level impossibility result.
+The constructor allocates explicit source-element images, role codes, value objects, relation and attribute occurrences, and separate representations. Derived relations select occurrence records by role and ordered arguments. This gives totality, typing, injectivity, preservation, reflection, exact attribute preservation, and image accountability.
 
-A looping implementation on a finite cycle is an implementation defect, not a mathematical countermodel.
+Source-specific data enters as target data rather than new primitives or case-specific schemas. Objects and representations remain distinct.
 
-## Coverage audit
+W1 refutes:
 
-The ledger still covers:
+- `OBS-SC-003`, because arbitrary finite P2, P3, and P4 reducts admit relation-preserving and relation-reflecting embeddings;
+- `OBS-SC-006`, because arbitrary finite P8-I reducts admit exact no-upgrade embeddings.
 
-- finite source normalization and canonical reduct extraction;
-- P1 configuration;
-- P2 commitments;
-- P3 stakes and alternatives;
-- P4 grounds and justificatory roles;
-- deterministic and finite-support probabilistic P5 dynamics;
-- P6 consequences;
-- P7 history and path dependence;
-- nonmonotonic revision and retraction;
-- self-modification and rule-version change;
-- P8-I internal evidential status;
-- admissible target-only recovery;
-- semantic agreement;
-- cross-axis coherence;
-- uniformity and source-isomorphism equivariance;
-- distributed composition and interface preservation;
-- complete machinery accounting;
-- NC-01 through NC-10;
-- common-schema, faithful-witness, and theorem-or-obstruction assembly.
+These refutations do not settle recovery, global semantics, coherence, dynamics, composition, or complete machinery accounting.
+
+## Executable corroboration
+
+The W0 and W1 reference suites test finite closure, cycles, sparse axes, canonical renaming, direct-axis injection, relation and attribute namespace separation, spurious-relation rejection, support/defeat noncollapse, alternative retention, consequence roles, evidence no-upgrade, and malformed sort rejection.
+
+These tests are bounded corroboration, not proof-assistant verification or independent proof review.
 
 ## Dependency audit
 
 The graph remains finite, acyclic, and wave ordered:
 
 1. W0 source normalization — complete;
-2. W1 base carriers and direct axes — active;
-3. W2 dynamics, history, and revision;
-4. W3 global witness obligations;
-5. W4 obstruction and negative controls;
-6. W5 theorem assembly.
+2. W1 target allocation and direct axes — complete;
+3. W2 dynamics, history, revision, and self-modification — active;
+4. W3 global witness obligations — open;
+5. W4 remaining obstructions and negative controls — open;
+6. W5 theorem assembly — open.
 
 No assembly obligation may pass while a dependency remains open, unknown, or supported only by examples.
-
-## Executable corroboration
-
-The reference implementation and tests cover finite closure, cycles, sparse applicability, canonical renaming invariance, reduct transport, undeclared references, and sort-changing renamings.
-
-This is bounded executable corroboration. It is not proof-assistant verification and is not independent proof review.
 
 ## Scope audit
 
 The frozen boundaries remain unchanged:
 
-- theorem source class remains `S_core`;
-- broader `S_IRD` features remain extension obligations;
-- target interface remains `A_FARA`;
-- witness remains `W=(E,D,M,iota,kappa)`;
-- faithful predicate remains `Faithful_split`;
-- external process correspondence remains `Corr_8E`;
-- no primitive is added or declared necessary.
+- source class `S_core`;
+- extension class `S_IRD`;
+- target interface `A_FARA`;
+- witness `W=(E,D,M,iota,kappa)`;
+- faithful predicate `Faithful_split`;
+- external correspondence `Corr_8E`;
+- no primitive added or declared necessary.
+
+W1 proves direct-axis strong embeddings only. Complete `Pres_i` predicates remain dependent on target-only recovery.
 
 ## Gate effects
 
-- formal-theorem-target: remains satisfied;
-- premise-ledger-and-semantics: remains satisfied;
-- faithful-representation-definition: remains satisfied;
-- scoped-representation-proof: remains not satisfied;
-- mechanized-proof-verification: remains not satisfied;
-- independent-proof-review: remains not satisfied;
-- all lower-bound, minimality, and empirical-replication gates remain unchanged.
+- formal-theorem-target remains satisfied;
+- premise-ledger-and-semantics remains satisfied;
+- faithful-representation-definition remains satisfied;
+- scoped-representation-proof remains not satisfied;
+- mechanized-proof-verification remains not satisfied;
+- independent-proof-review remains not satisfied;
+- lower-bound, minimality, and empirical-replication gates remain unchanged.
 
 ## Claim effects
 
-No central claim is promoted. W0 is a source-side partial proof package, not a representation theorem or universality result.
+No central claim is promoted. W0 and W1 are partial lemma packages, not a common-schema theorem, representation theorem, universality result, necessity result, or minimality result.
 
 ## Exact next work
 
-Construct or obstruct the W1 package: `LEM-SC-005`, `LEM-SC-006`, `LEM-SC-007`, `LEM-SC-008`, `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`.
+Execute W2: `LEM-SC-010`, `LEM-SC-011`, `LEM-SC-013`, `LEM-SC-015`, and `LEM-SC-016`, with `OBS-SC-004` and `OBS-SC-005` executed as dependencies close.

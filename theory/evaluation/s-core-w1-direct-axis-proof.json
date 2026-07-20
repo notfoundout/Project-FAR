@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0",
+  "proof_id": "SCORE-W1-PROOF-001",
+  "version": "1.0",
+  "status": "project_authored_human_checkable_proof_complete",
+  "source_scope": "S_core_W0_normalized_direct_axis_reducts",
+  "target_interface": "A_FARA",
+  "construction_schema": "DIR-INCIDENCE-1.0",
+  "source_artifact": "docs/research/s-core-w1-direct-axis-proof-v1.0.md",
+  "ledger": "theory/evaluation/s-core-construction-obstruction-ledger.json",
+  "depends_on": [
+    "SCORE-W0-PROOF-001",
+    "FAITHFUL-REP-001",
+    "P8-ROLE-001",
+    "theory/definitions/definitions.md",
+    "frameworks/FARA/architecture.md",
+    "frameworks/FARA/primitives.md"
+  ],
+  "fixed_target_schema": {
+    "object_kinds": [
+      "encoded_element",
+      "encoded_value",
+      "sort_code",
+      "role_code",
+      "axis_code",
+      "position_code",
+      "relation_occurrence",
+      "attribute_occurrence",
+      "evidence_status_record",
+      "provenance_record",
+      "investigation_record"
+    ],
+    "relations": [
+      "represented_by",
+      "denotes",
+      "has_sort",
+      "in_axis",
+      "occurrence_role",
+      "argument",
+      "attribute_owner",
+      "attribute_role",
+      "attribute_value",
+      "has_provenance",
+      "has_evidence_status",
+      "has_source_denotation",
+      "source_equivalent"
+    ],
+    "derived_relation_template": "DR(role_code, arity)(y_1,...,y_n) iff an occurrence with that role has exactly those ordered arguments",
+    "derived_attribute_template": "DA(role_code)(x)=v iff an attribute occurrence with that role links x to v",
+    "source_specific_content_is_data": true,
+    "source_case_branching": false,
+    "object_representation_separation": true,
+    "new_fara_primitive_added": false
+  },
+  "construction_properties": {
+    "finite_on_S_core": true,
+    "total_on_direct_axis_reducts": true,
+    "source_element_injective": true,
+    "sort_preserving": true,
+    "material_sort_disjointness_preserved": true,
+    "relation_preservation": true,
+    "relation_reflection": true,
+    "attribute_preservation": true,
+    "image_accountability": true,
+    "lexical_label_independent": true,
+    "direct_axis_isomorphism_equivariant": true,
+    "internal_evidence_no_upgrade": true,
+    "complete_global_recovery_proved": false,
+    "complete_global_machinery_ledger_proved": false
+  },
+  "results": [
+    {
+      "id": "LEM-SC-005",
+      "status": "proved",
+      "statement": "Every finite W0-normalized direct-axis family admits a finite typed A_FARA carrier allocation using the fixed DIR-INCIDENCE-1.0 schema.",
+      "dependencies": ["LEM-SC-002", "LEM-SC-004"]
+    },
+    {
+      "id": "LEM-SC-006",
+      "status": "proved",
+      "statement": "The configuration reduct admits a total typed strong embedding preserving and reflecting every material configuration distinction and relation.",
+      "dependencies": ["LEM-SC-005"]
+    },
+    {
+      "id": "LEM-SC-007",
+      "status": "proved",
+      "statement": "The commitment reduct admits a total typed strong embedding preserving and reflecting commitment identity, attributes, statuses, and relations.",
+      "dependencies": ["LEM-SC-005"]
+    },
+    {
+      "id": "LEM-SC-008",
+      "status": "proved",
+      "statement": "The stake-and-alternative reduct admits a total typed strong embedding preserving and reflecting the complete live-alternative structure.",
+      "dependencies": ["LEM-SC-005"]
+    },
+    {
+      "id": "LEM-SC-009",
+      "status": "proved",
+      "statement": "The ground-and-justification reduct admits a total typed strong embedding preserving and reflecting justificatory endpoints and roles.",
+      "dependencies": ["LEM-SC-005"]
+    },
+    {
+      "id": "LEM-SC-012",
+      "status": "proved",
+      "statement": "The consequence reduct admits a total typed strong embedding preserving and reflecting consequence identity, basis, status, and downstream role.",
+      "dependencies": ["LEM-SC-005", "LEM-SC-007", "LEM-SC-009"]
+    },
+    {
+      "id": "LEM-SC-014",
+      "status": "proved",
+      "statement": "The internal evidential-status reduct admits an exact strong embedding with no evidential upgrade.",
+      "dependencies": ["LEM-SC-005", "LEM-SC-007", "LEM-SC-009"]
+    },
+    {
+      "id": "OBS-SC-003",
+      "status": "refuted",
+      "statement": "No direct-axis relation-reflection impossibility exists for finite S_2, S_3, or S_4 reducts under the fixed A_FARA interface, because DIR-INCIDENCE-1.0 embeds every such reduct.",
+      "dependencies": ["LEM-SC-007", "LEM-SC-008", "LEM-SC-009"]
+    },
+    {
+      "id": "OBS-SC-006",
+      "status": "refuted",
+      "statement": "No internal evidential-status impossibility exists for finite S_8I reducts under the fixed A_FARA interface, because exact copying preserves and reflects all registered statuses without upgrade.",
+      "dependencies": ["LEM-SC-014"]
+    }
+  ],
+  "verification": {
+    "human_checkable_proof": "complete_project_authored",
+    "executable_reference": "complete_bounded_corroboration",
+    "proof_assistant": "not_started",
+    "independent_review": "not_started"
+  },
+  "executable_artifacts": [
+    "tools/s_core_w1_reference.py",
+    "tests/test_s_core_w1_reference.py",
+    "theory/evaluation/s-core-w1-reference-fixtures.json",
+    "tools/check_s_core_w1.py"
+  ],
+  "ledger_effect": {
+    "total": 37,
+    "proved": 11,
+    "obstruction_established": 0,
+    "scope_boundary_established": 1,
+    "refuted": 2,
+    "open": 23,
+    "completed_waves": ["W0", "W1"],
+    "active_wave": "W2"
+  },
+  "gate_effect": {
+    "formal-theorem-target": "satisfied",
+    "premise-ledger-and-semantics": "satisfied",
+    "faithful-representation-definition": "satisfied",
+    "scoped-representation-proof": "not_satisfied",
+    "mechanized-proof-verification": "not_satisfied",
+    "independent-proof-review": "not_satisfied"
+  },
+  "nonclaims": [
+    "admissible target-only recovery is proved",
+    "any complete Pres_i predicate is proved",
+    "deterministic or probabilistic dynamics are represented",
+    "history revision or self-modification is represented",
+    "global semantic agreement or cross-axis coherence is proved",
+    "Faithful_split is satisfiable",
+    "FARA faithfully represents S_core or S_IRD",
+    "PB-001 is sufficient necessary independent minimal or complete",
+    "actual-process correspondence is established",
+    "a representation universality necessity minimality equivalence uniqueness or impossibility theorem is established",
+    "proof-assistant verification or independent proof review"
+  ],
+  "next_required_artifact": "W2 dynamics history revision and self-modification proof-or-obstruction package"
+}

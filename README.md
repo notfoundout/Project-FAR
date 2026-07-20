@@ -5,32 +5,32 @@
 
 Project FAR is a foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
 
-This root README is the canonical Project FAR command center: the single entry point for repository status, health, evidence, planning, and navigation. Only the generated dashboard block below is automatically regenerated; content outside the block is manually maintained.
+This root README is the canonical command center for repository status, health, evidence, planning, and navigation.
 
 ## Central Research Program
 
 Project FAR's primary objective is to determine whether every reasoning process necessarily instantiates a common underlying structure and, if so, whether that structure is universal and minimal.
 
-The project does not assume that a universal structure exists, nor that FAR is that structure. The Foundation, theory, mechanization, validation work, and future implementations are instruments for evaluating the question rather than presupposing its answer.
+The project does not assume that a universal structure exists or that FAR is that structure.
 
 **[Read the Central Research Program](docs/governance/central-research-program.md)**
 
-## Current Research Reset
+## Current Research State
 
-The project is deduction-first. The [Deduction-First Research Standard](docs/governance/deduction-first-research-standard.md), [Central Research Program](docs/governance/central-research-program.md), [Research Priority Reset](docs/governance/research-priority-reset.md), and machine-readable [Research Gate Registry](theory/evaluation/research-gates.json) make formal definition, proof, countermodel, lower-bound, equivalence, and impossibility work the primary path to the central answer.
+The project is deduction-first. [`THM-TARGET-001`](docs/research/thm-target-001-v1.0.md), premise ledger v1.4, [`FAITHFUL-REP-001`](docs/research/faithful-representation-specification-v1.0.md), [`P8-ROLE-001`](docs/research/p8-theorem-role-decision-v1.0.md), and [`SCORE-LEMMA-LEDGER-001`](docs/research/s-core-construction-obstruction-ledger-v1.0.md) remain frozen.
 
-[`THM-TARGET-001` v1.0](docs/research/thm-target-001-v1.0.md), premise ledger v1.3, [`FAITHFUL-REP-001` v1.0](docs/research/faithful-representation-specification-v1.0.md), and the [`P8-ROLE-001` split decision](docs/research/p8-theorem-role-decision-v1.0.md) are frozen. [`SCORE-LEMMA-LEDGER-001` v1.0](docs/research/s-core-construction-obstruction-ledger-v1.0.md) registers 37 obligations. [`SCORE-W0-PROOF-001`](docs/research/s-core-w0-normalization-proof-v1.0.md) proves four source-normalization lemmas and establishes one source boundary. Thirty-two obligations remain; the active objective is W1 target allocation and direct-axis construction.
+[`SCORE-W0-PROOF-001`](docs/research/s-core-w0-normalization-proof-v1.0.md) and [`SCORE-W1-PROOF-001`](docs/research/s-core-w1-direct-axis-proof-v1.0.md) establish 11 construction lemmas, one source boundary, and two refuted direct-axis obstruction hypotheses. Twenty-three obligations remain. W2 dynamics, history, revision, and self-modification are active.
 
-PBTS-001 replication, comparative experiments, and external validation remain parallel supporting tracks for detecting ambiguity, defects, counterexamples, implementation dependence, and human-comprehension failures. They do not serve as prerequisites for constructing a proof.
+W1 proves finite direct-axis strong embeddings. It does not prove target-only recovery, complete `Pres_i` predicates, `Faithful_split`, a representation theorem, universality, necessity, or minimality.
 
-Run `make research-check` to validate the theorem target, faithful-representation definition, P8 split, lemma dependency graph, W0 proof package, and conservative claim boundaries.
+Run `make research-check` to validate the theorem target, semantics, P8 split, lemma ledger, W0/W1 proof packages, executable corroboration, gates, and conservative claim boundaries.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: S_core W1 base-carrier and direct-axis construction
+- Current project phase: S_core W2 dynamics history revision and self-modification
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 - Last dashboard generation time: 2026-07-16T08:17:16+00:00
@@ -61,30 +61,19 @@ Run `make research-check` to validate the theorem target, faithful-representatio
 
 ## Progress Summary
 
-Trend data is not yet available because no prior generated snapshot is stored.
-
-| Metric | Current | Previous | Change |
-|---|---:|---:|---:|
-| Internal reasoning systems | 23 | not available | not available |
-| External reasoning systems | 29 | not available | not available |
-| Conservative extensions | 35 | not available | not available |
-| Candidate primitive failures | 0 | not available | not available |
-| Open gaps | 162 | not available | not available |
+| Formal metric | Current |
+|---|---:|
+| Registered obligations | 37 |
+| Proved construction lemmas | 11 |
+| Source boundaries established | 1 |
+| Obstruction hypotheses refuted | 2 |
+| Open obligations | 23 |
+| Completed waves | W0, W1 |
+| Active wave | W2 |
 
 ## Top Priority Tasks
 
-### STRATEGIC-001: Prove the W1 S_core base carriers and direct axes
-- Source: deduction-first strategic priority
-- Affected files:
-  - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
-  - [theory/evaluation/s-core-construction-obstruction-ledger.json](theory/evaluation/s-core-construction-obstruction-ledger.json)
-  - [frameworks/FARA/architecture.md](frameworks/FARA/architecture.md)
-  - [frameworks/FARA/primitives.md](frameworks/FARA/primitives.md)
-  - [docs/research/faithful-representation-specification-v1.0.md](docs/research/faithful-representation-specification-v1.0.md)
-- Suggested branch: `research/prove-s-core-w1-direct-axes`
-- Suggested PR title: `Construct S_core W1 base carriers and direct axes`
-
-### STRATEGIC-002: Prove dynamics, history, and revision constructors
+### STRATEGIC-001: Prove the W2 S_core dynamics history and revision package
 - Source: deduction-first strategic priority
 - Affected files:
   - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
@@ -92,9 +81,9 @@ Trend data is not yet available because no prior generated snapshot is stored.
   - [docs/research/faithful-representation-specification-v1.0.md](docs/research/faithful-representation-specification-v1.0.md)
   - [docs/research/independent-reasoning-definition-v1.0.md](docs/research/independent-reasoning-definition-v1.0.md)
 - Suggested branch: `research/prove-s-core-w2-dynamics-history`
-- Suggested PR title: `Construct S_core W2 dynamics history and revision`
+- Suggested PR title: `Prove S_core W2 dynamics history and revision`
 
-### STRATEGIC-003: Prove global witness obligations
+### STRATEGIC-002: Prove the W3 global witness obligations
 - Source: deduction-first strategic priority
 - Affected files:
   - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
@@ -102,25 +91,15 @@ Trend data is not yet available because no prior generated snapshot is stored.
   - [docs/research/faithful-representation-specification-v1.0.md](docs/research/faithful-representation-specification-v1.0.md)
   - [theory/evaluation/thm-target-001.json](theory/evaluation/thm-target-001.json)
 - Suggested branch: `research/prove-s-core-w3-global-witness`
-- Suggested PR title: `Construct S_core W3 global witness obligations`
+- Suggested PR title: `Prove S_core W3 global witness obligations`
 
-### STRATEGIC-004: Execute the remaining obstruction and negative-control program
+### STRATEGIC-003: Execute the remaining obstruction and negative-control program
 - Source: deduction-first strategic priority
-- Affected files:
-  - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
-  - [theory/evaluation/s-core-construction-obstruction-ledger.json](theory/evaluation/s-core-construction-obstruction-ledger.json)
-  - [docs/methodology/negative-control-suite-v1.0.md](docs/methodology/negative-control-suite-v1.0.md)
-  - [theory/falsification](theory/falsification)
 - Suggested branch: `research/execute-s-core-obstructions`
 - Suggested PR title: `Execute remaining S_core obstruction program`
 
-### STRATEGIC-005: Assemble the finite-core theorem or strongest obstruction
+### STRATEGIC-004: Assemble the finite-core theorem or strongest obstruction
 - Source: deduction-first strategic priority
-- Affected files:
-  - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
-  - [theory/evaluation/s-core-construction-obstruction-ledger.json](theory/evaluation/s-core-construction-obstruction-ledger.json)
-  - [theory/evaluation/thm-target-001.json](theory/evaluation/thm-target-001.json)
-  - [theory/evaluation/central-claim-registry.json](theory/evaluation/central-claim-registry.json)
 - Suggested branch: `research/assemble-s-core-result`
 - Suggested PR title: `Assemble S_core theorem or obstruction`
 
@@ -148,26 +127,23 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - [S_core Lemma Registry](theory/evaluation/s-core-construction-obstruction-ledger.json)
 - [S_core W0 Proof](docs/research/s-core-w0-normalization-proof-v1.0.md)
 - [S_core W0 Proof Registry](theory/evaluation/s-core-w0-normalization-proof.json)
+- [S_core W1 Proof](docs/research/s-core-w1-direct-axis-proof-v1.0.md)
+- [S_core W1 Proof Registry](theory/evaluation/s-core-w1-direct-axis-proof.json)
 - [Evidence Registry](theory/evaluation/evidence-registry.yaml)
 - [External Validation Registry](theory/evaluation/external-validation-registry.yaml)
 - [Primitive Pressure Registry](theory/falsification/primitive-pressure-registry.yaml)
 - [Adversarial Test Suite](theory/falsification/adversarial-test-suite.yaml)
-- [Releases](docs/releases)
-- [Maintenance](docs/maintenance)
-- [Planning](docs/planning/README.md)
 - [Repository Index](docs/planning/repository-index.md)
 
 ## Current Roadmap
 
-- Current phase: S_core W1 base-carrier and direct-axis construction
-- Completed foundation for the active phase: architecture-neutral domain; IRD-001; PB-001; PBTS-001; deduction-first governance; THM-TARGET-001; premise ledger v1.3; FAITHFUL-REP-001; P8-ROLE-001 split decision; SCORE-LEMMA-LEDGER-001; SCORE-W0-PROOF-001 with 4 proved source lemmas and 1 established source boundary
-- In-progress work: construct or obstruct LEM-SC-005, LEM-SC-006, LEM-SC-007, LEM-SC-008, LEM-SC-009, LEM-SC-012, and LEM-SC-014
-- Planned work: W2 dynamics and history; W3 global witness obligations; remaining W4 obstruction controls; W5 theorem assembly; S_IRD extension analysis; lower bounds; minimality; mechanization; independent review
-- Parallel supporting work: PBTS-001 independent replication, comparative evaluation, boundary discovery, and application validation
+- Current phase: S_core W2 dynamics history revision and self-modification
+- Completed foundation: domain; IRD-001; PB-001; PBTS-001; theorem target; premise ledger v1.4; faithful semantics; P8 split; W0; W1
+- In progress: `LEM-SC-010`, `011`, `013`, `015`, and `016`, with `OBS-SC-004` and `OBS-SC-005`
+- Planned: W3 global witness; remaining W4 obstructions; W5 assembly; S_IRD extension; lower bounds; minimality; mechanization; independent review
+- Parallel: PBTS replication, comparative evaluation, boundary discovery, and application validation
 
 ## Command Center
-
-### Local Commands
 
 ```bash
 make research-check
@@ -178,24 +154,15 @@ make plan
 make dashboard
 ```
 
-### GitHub Actions
-
-- Repository Health: [repository-health.yml](.github/workflows/repository-health.yml)
-- Regenerate Dashboard: [regenerate-dashboard.yml](.github/workflows/regenerate-dashboard.yml)
-- Release Readiness: [release-readiness.yml](.github/workflows/release-readiness.yml)
-- Repository Maintenance: [repository-maintenance.yml](.github/workflows/repository-maintenance.yml)
-
 ## Typical Workflow
 
-1. `make research-check`
-2. `make health-fast`
-3. Open SCORE-LEMMA-LEDGER-001 and the latest proof package
-4. Select the earliest open obligation whose dependencies are resolved
-5. Freeze assumptions, proof statement, countermodels, failure conditions, and nonclaims
-6. Prove, refute, or register the obstruction
-7. Preserve failures and unresolved obligations
-8. Run health
-9. Merge
+1. Run `make research-check` and `make health-fast`.
+2. Open the lemma ledger and latest proof package.
+3. Select the earliest open obligation with resolved dependencies.
+4. Freeze assumptions, statement, countermodels, failure conditions, and nonclaims.
+5. Prove, refute, or establish the strongest justified obstruction.
+6. Preserve failures and unresolved obligations.
+7. Run full health before merge.
 
 <!-- END GENERATED PROJECT FAR DASHBOARD -->
 
@@ -217,16 +184,9 @@ make dashboard
 
 Phase 3 mechanization provides an executable MVP for the `far-ir/1.0` interchange format. It includes a canonical Python IR, JSON/YAML parsing, deterministic normalization and serialization, graph construction and dependency validation, structured diagnostics, a CLI, and a versioned conformance suite.
 
-Install dependencies and the local package:
-
 ```bash
 python -m pip install -r requirements.txt
 python -m pip install -e .
-```
-
-Minimal CLI workflow:
-
-```bash
 far version
 far validate examples/mechanization/minimal-investigation.json
 far normalize examples/mechanization/minimal-investigation.json

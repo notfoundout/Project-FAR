@@ -13,33 +13,19 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         self.assertIn('CRE-001: deterministic comparison complete at its registered retrospective scope under compiler-authored declared interpretations', generated)
         self.assertNotIn('Established at CRE-001 ' + 'vocabulary-semantics scope', generated)
         self.assertNotRegex(generated, 'CRE-001.*formal vocabulary ' + 'licensing.*' + 'estab' + 'lished')
-
     def test_frozen_semantic_specification_is_consistent(self):
         cp=subprocess.run([sys.executable,'tools/check_cre001_semantics.py'],cwd=ROOT,text=True,capture_output=True)
-        self.assertEqual(cp.returncode,0,cp.stdout+cp.stderr)
-        self.assertIn('CRE-001 SEMANTIC CHECK PASSED', cp.stdout)
-
+        self.assertEqual(cp.returncode,0,cp.stdout+cp.stderr); self.assertIn('CRE-001 SEMANTIC CHECK PASSED',cp.stdout)
     def test_generated_task_ids_and_provenance_are_unambiguous(self):
-        path=ROOT/'docs/planning/next-actions.md'
-        before=path.read_text(encoding='utf-8')
+        path=ROOT/'docs/planning/next-actions.md'; before=path.read_text(encoding='utf-8')
         cp=subprocess.run([sys.executable,'tools/generate_next_tasks.py'],cwd=ROOT,text=True,capture_output=True)
         self.assertEqual(cp.returncode,0,cp.stdout+cp.stderr)
-        text=path.read_text(encoding='utf-8')
-        self.assertEqual(text,before,'next-actions.md must match the canonical generator output')
-        ranked=text.split('## Maintainer Task Briefs',1)[0]
-        ids=re.findall(r'^### ([A-Z]+-\d{3}):', ranked, re.M)
-        self.assertEqual(len(ids),len(set(ids)))
-        self.assertIn('### STRATEGIC-001: Prove the W1 S_core base carriers and direct axes', ranked)
-        self.assertIn('### STRATEGIC-002: Prove dynamics, history, and revision constructors', ranked)
-        self.assertIn('### STRATEGIC-003: Prove global witness obligations', ranked)
-        self.assertIn('four source-side lemmas and establishes one source boundary; 32 obligations remain and W1 is active', ranked)
-        self.assertIn('- Source: deduction-first strategic priority', ranked)
-        self.assertNotIn('Prove the W0 S_core normalization kernel', ranked)
-        self.assertNotIn('Build the S_core construction and obstruction ledger', ranked)
-        self.assertNotIn('Resolve the formal role of P8', ranked)
-        self.assertNotIn('Formalize faithful representation and nontriviality', ranked)
-        self.assertNotIn('Freeze THM-TARGET-001 and premise ledger', ranked)
-        self.assertNotIn('Plan independent replication of CRE-002-EXT-001', ranked)
-        self.assertNotIn('Source gap:', ranked)
-
+        text=path.read_text(encoding='utf-8'); self.assertEqual(text,before,'next-actions.md must match the canonical generator output')
+        ranked=text.split('## Maintainer Task Briefs',1)[0]; ids=re.findall(r'^### ([A-Z]+-\d{3}):',ranked,re.M); self.assertEqual(len(ids),len(set(ids)))
+        self.assertIn('### STRATEGIC-001: Prove the W2 S_core dynamics history and revision package',ranked)
+        self.assertIn('### STRATEGIC-002: Prove the W3 global witness obligations',ranked)
+        self.assertIn('### STRATEGIC-003: Execute the remaining obstruction and negative-control program',ranked)
+        self.assertIn('11 construction lemmas, one source boundary, and two refuted obstruction hypotheses; 23 obligations remain and W2 is active',ranked)
+        self.assertIn('- Source: deduction-first strategic priority',ranked)
+        for stale in ('Prove the W0 S_core normalization kernel','Prove the W1 S_core base carriers and direct axes','Build the S_core construction and obstruction ledger','Resolve the formal role of P8','Formalize faithful representation and nontriviality','Freeze THM-TARGET-001 and premise ledger','Plan independent replication of CRE-002-EXT-001','Source gap:'): self.assertNotIn(stale,ranked)
 if __name__=='__main__': unittest.main()
