@@ -49,7 +49,7 @@ def strategic_tasks():
                 markdown_link(ROOT / 'docs/planning/deduction-first-proof-roadmap.md', OUT),
             ],
             'outcome':'A dependency-ordered lemma ledger for S_core covering ordinary finite systems, self-modification, nonmonotonicity, finite-support uncertainty, distribution, and path dependence.',
-            'risk':'high','branch':'research/build-score-lemma-ledger','pr':'Build S_core construction and obstruction ledger'
+            'risk':'high','branch':'research/build-s-core-lemma-ledger','pr':'Build S_core construction and obstruction ledger'
         },
         {
             'id':'STRATEGIC-004','priority':'medium',
@@ -61,7 +61,7 @@ def strategic_tasks():
                 markdown_link(ROOT / 'theory/falsification', OUT),
             ],
             'outcome':'A registered countermodel fixture family whose members either satisfy S_core or are explicitly classified as controls or boundary failures.',
-            'risk':'high','branch':'research/register-score-countermodels','pr':'Register S_core countermodel fixtures'
+            'risk':'high','branch':'research/register-s-core-countermodels','pr':'Register S_core countermodel fixtures'
         },
         {
             'id':'STRATEGIC-005','priority':'medium',
