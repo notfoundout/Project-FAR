@@ -1,0 +1,201 @@
+{
+  "schema_version": "1.0",
+  "ledger_id": "THM-TARGET-001-PREMISES",
+  "version": "1.0",
+  "status": "frozen_with_explicit_open_parameters",
+  "theorem_target": "THM-TARGET-001",
+  "entries": [
+    {
+      "id": "PRM-001",
+      "classification": "imported_frozen_specification",
+      "statement": "The source-domain classes D1-D16, boundary cases, observability strata, and revision rules are those of Reasoning Domain Specification v1.0.",
+      "source": "docs/research/reasoning-domain-specification-v1.0.md",
+      "status": "accepted_for_target"
+    },
+    {
+      "id": "PRM-002",
+      "classification": "imported_frozen_specification",
+      "statement": "An IRD process presentation is P=(T,X,H,O,K,Q,Delta,Gamma,support) and a reasoning episode satisfies R1-R6.",
+      "source": "docs/research/independent-reasoning-definition-v1.0.md",
+      "status": "accepted_for_target"
+    },
+    {
+      "id": "PRM-003",
+      "classification": "scope_restriction",
+      "statement": "The first representation theorem quantifies over S_core, the finite explicit IRD-001 episode class, not over all S_IRD.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "accepted_for_target",
+      "revision_trigger": "proof or countermodel shows the restriction is unnecessary, insufficiently precise, or still intractable"
+    },
+    {
+      "id": "PRM-004",
+      "classification": "typing_or_well_formedness_condition",
+      "statement": "Every S_core episode has a finite event region and finite explicit carrier sets for every distinction material to R1-R6 and the registered preservation obligations.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "accepted_for_target"
+    },
+    {
+      "id": "PRM-005",
+      "classification": "typing_or_well_formedness_condition",
+      "statement": "S_core dynamics are explicit finite relations or finite-support probability kernels, with explicit grounds, support, and material history.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "accepted_for_target"
+    },
+    {
+      "id": "PRM-006",
+      "classification": "definition",
+      "statement": "A theorem-facing FARA package is A=(U,Pi,R,Rep,S,I,Inv,C,Sigma,Theta,H,Omega,Res,Prov).",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "accepted_for_target",
+      "note": "This is an interface over existing canonical FARA concepts, not a new primitive basis."
+    },
+    {
+      "id": "PRM-007",
+      "classification": "imported_frozen_specification",
+      "statement": "Canonical meanings of representation, representational structure, interpretation, investigation, reasoning calculus, state, transition, admissibility, and resolution are imported from Project FAR definitions and FARA v1.0.",
+      "source": "theory/definitions/definitions.md",
+      "additional_sources": ["frameworks/FARA/architecture.md", "frameworks/FARA/primitives.md"],
+      "status": "accepted_for_target"
+    },
+    {
+      "id": "PRM-008",
+      "classification": "definition",
+      "statement": "A representation witness is W=(E,D,M,iota,kappa), including encoding, declared recovery, correspondence map, semantic agreement, and complete machinery ledger.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "accepted_for_target"
+    },
+    {
+      "id": "PRM-009",
+      "classification": "imported_frozen_specification",
+      "statement": "PB-001 P1-P7 supply the provisional internal preservation obligations for configuration, commitment, stake and alternatives, grounds and justification, dynamics, consequences, and history.",
+      "source": "docs/research/preservation-basis-investigation-v1.0.md",
+      "status": "accepted_provisionally",
+      "nonclaim": "PB-001 sufficiency and independence are not established"
+    },
+    {
+      "id": "PRM-010",
+      "classification": "unresolved_theorem_parameter",
+      "statement": "P8 must be resolved as coordinate, side condition, or split internal/external correspondence obligation before a representation proof is accepted.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "open",
+      "blocks": ["THM-CORE-REP-001", "THM-IRD-EXT-001", "THM-P8-CORR-001"]
+    },
+    {
+      "id": "PRM-011",
+      "classification": "definition",
+      "statement": "Pres_i holds only when every source distinction registered as material for axis i remains target-distinguishable and correctly related under the declared witness.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "signature_frozen_semantics_incomplete",
+      "blocks": ["faithful-representation-definition"]
+    },
+    {
+      "id": "PRM-012",
+      "classification": "definition",
+      "statement": "Faithful_m8 is the conjunction of applicable preservation, semantic, dynamics, consequence, history, uniformity, nontriviality, and machinery-accounting clauses.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "signature_frozen_semantics_incomplete",
+      "blocks": ["faithful-representation-definition"]
+    },
+    {
+      "id": "PRM-013",
+      "classification": "scope_restriction",
+      "statement": "A theorem about a mathematical presentation does not by itself establish correspondence to an actual physical, human, institutional, or machine process.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "accepted_for_target"
+    },
+    {
+      "id": "PRM-014",
+      "classification": "evidence_condition",
+      "statement": "Application to an actual process requires a separately justified process-to-presentation correspondence at an appropriate observability or evidence grade.",
+      "source": "docs/research/independent-reasoning-definition-v1.0.md",
+      "status": "accepted_for_target"
+    },
+    {
+      "id": "PRM-015",
+      "classification": "typing_or_well_formedness_condition",
+      "statement": "The representation construction must be uniform over the declared source class and all source-specific machinery must appear in the target machinery ledger.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "accepted_for_target"
+    },
+    {
+      "id": "PRM-016",
+      "classification": "typing_or_well_formedness_condition",
+      "statement": "Label-only maps, output-only lookup, opaque universal state, hidden interpreters, metadata smuggling, evaluator repair, history erasure, and evidential upgrading are inadmissible witnesses.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "accepted_for_target"
+    },
+    {
+      "id": "PRM-017",
+      "classification": "conjecture",
+      "statement": "There exists one fixed FARA interface schema and one uniform construction method eligible for every S_core source object.",
+      "source": "THM-CORE-COMMON-001",
+      "status": "unproved"
+    },
+    {
+      "id": "PRM-018",
+      "classification": "conjecture",
+      "statement": "Every S_core source object admits a faithful FARA target witness after the P8 mode and faithful predicate are frozen.",
+      "source": "THM-CORE-REP-001",
+      "status": "unproved"
+    },
+    {
+      "id": "PRM-019",
+      "classification": "conjecture",
+      "statement": "The finite-core result may extend to S_IRD.",
+      "source": "THM-IRD-EXT-001",
+      "status": "blocked_unproved"
+    },
+    {
+      "id": "PRM-020",
+      "classification": "unresolved_theorem_parameter",
+      "statement": "The admissible reconstruction class for primitive necessity has not been defined.",
+      "source": "THM-PRIM-NEC-001",
+      "status": "open",
+      "blocks": ["primitive-lower-bounds"]
+    },
+    {
+      "id": "PRM-021",
+      "classification": "unresolved_theorem_parameter",
+      "statement": "The candidate universe, equivalence relation, and cost preorder for minimality and uniqueness have not been defined.",
+      "source": "THM-MIN-001",
+      "status": "open",
+      "blocks": ["minimality-universe-and-proof", "THM-EQUIV-001"]
+    },
+    {
+      "id": "PRM-022",
+      "classification": "substantive_axiom",
+      "statement": "No substantive axiom asserting FARA adequacy, PB-001 completeness, primitive necessity, or universal reasoning structure is accepted in this target.",
+      "source": "docs/research/thm-target-001-v1.0.md",
+      "status": "explicitly_absent"
+    }
+  ],
+  "classification_counts": {
+    "definition": 4,
+    "typing_or_well_formedness_condition": 4,
+    "imported_frozen_specification": 4,
+    "scope_restriction": 2,
+    "evidence_condition": 1,
+    "conjecture": 3,
+    "unresolved_theorem_parameter": 3,
+    "substantive_axiom": 1
+  },
+  "open_items": [
+    "formal semantics of Pres_1 through Pres_7",
+    "formal semantics of Faithful_m8",
+    "P8 mode",
+    "reconstruction class for necessity",
+    "candidate universe and equivalence relation for minimality"
+  ],
+  "gate_effect": {
+    "formal-theorem-target": "satisfied",
+    "premise-ledger-and-semantics": "in_progress",
+    "faithful-representation-definition": "not_satisfied"
+  },
+  "nonclaims": [
+    "the premises are all true of every actual reasoning process",
+    "the conjectures are proved",
+    "the open theorem parameters are resolved",
+    "FARA adequacy is an axiom",
+    "PB-001 is complete"
+  ]
+}
