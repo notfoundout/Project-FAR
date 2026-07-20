@@ -91,7 +91,7 @@ Create branch `research/freeze-thm-target-001`.
 
 Scope: Freeze THM-TARGET-001 and premise ledger.
 Source: deduction-first strategic priority.
-Primary files: the deduction-first standard, proof roadmap, IRD-001, and PB-001 investigation.
+Primary files: [docs/governance/deduction-first-research-standard.md](../governance/deduction-first-research-standard.md), [docs/planning/deduction-first-proof-roadmap.md](deduction-first-proof-roadmap.md), [docs/research/independent-reasoning-definition-v1.0.md](../research/independent-reasoning-definition-v1.0.md), [docs/research/preservation-basis-investigation-v1.0.md](../research/preservation-basis-investigation-v1.0.md).
 Preserve all frozen evidence, failures, unknowns, and nonclaims. Do not silently modify Foundation, accepted primitives, axioms, or prior results. Any substantive theory change requires the registered versioned revision process.
 Do not claim a theorem, universality, necessity, minimality, mechanized verification, or independent validation unless the corresponding research gate contains evidence.
 Validation commands:
@@ -108,7 +108,7 @@ Create branch `research/formalize-faithful-representation`.
 
 Scope: Formalize faithful representation and nontriviality.
 Source: deduction-first strategic priority.
-Primary files: the proof roadmap, PB-001 investigation, and negative-control suite.
+Primary files: [docs/planning/deduction-first-proof-roadmap.md](deduction-first-proof-roadmap.md), [docs/research/preservation-basis-investigation-v1.0.md](../research/preservation-basis-investigation-v1.0.md), [docs/methodology/negative-control-suite-v1.0.md](../methodology/negative-control-suite-v1.0.md).
 Preserve all frozen evidence, failures, unknowns, and nonclaims. Do not silently modify Foundation, accepted primitives, axioms, or prior results. Any substantive theory change requires the registered versioned revision process.
 Do not claim a theorem, universality, necessity, minimality, mechanized verification, or independent validation unless the corresponding research gate contains evidence.
 Validation commands:
@@ -125,7 +125,7 @@ Create branch `research/resolve-p8-theorem-role`.
 
 Scope: Resolve the formal role of P8.
 Source: deduction-first strategic priority.
-Primary files: PB-001 investigation, PBTS RUN-001 report, and the proof roadmap.
+Primary files: [docs/research/preservation-basis-investigation-v1.0.md](../research/preservation-basis-investigation-v1.0.md), [docs/research/pb001-execution-run-001-report.md](../research/pb001-execution-run-001-report.md), [docs/planning/deduction-first-proof-roadmap.md](deduction-first-proof-roadmap.md).
 Preserve all frozen evidence, failures, unknowns, and nonclaims. Do not silently modify Foundation, accepted primitives, axioms, or prior results. Any substantive theory change requires the registered versioned revision process.
 Do not claim a theorem, universality, necessity, minimality, mechanized verification, or independent validation unless the corresponding research gate contains evidence.
 Validation commands:
@@ -142,7 +142,7 @@ Create branch `research/build-representation-lemmas`.
 
 Scope: Develop construction and obstruction lemmas.
 Source: deduction-first strategic priority.
-Primary files: the reasoning-domain specification, IRD-001, and the proof roadmap.
+Primary files: [docs/research/reasoning-domain-specification-v1.0.md](../research/reasoning-domain-specification-v1.0.md), [docs/research/independent-reasoning-definition-v1.0.md](../research/independent-reasoning-definition-v1.0.md), [docs/planning/deduction-first-proof-roadmap.md](deduction-first-proof-roadmap.md).
 Preserve all frozen evidence, failures, unknowns, and nonclaims. Do not silently modify Foundation, accepted primitives, axioms, or prior results. Any substantive theory change requires the registered versioned revision process.
 Do not claim a theorem, universality, necessity, minimality, mechanized verification, or independent validation unless the corresponding research gate contains evidence.
 Validation commands:
@@ -159,7 +159,7 @@ Create branch `research/plan-proof-mechanization`.
 
 Scope: Prepare proof mechanization architecture.
 Source: deduction-first strategic priority.
-Primary files: mechanization, the deduction-first standard, and the proof roadmap.
+Primary files: [mechanization](../../mechanization), [docs/governance/deduction-first-research-standard.md](../governance/deduction-first-research-standard.md), [docs/planning/deduction-first-proof-roadmap.md](deduction-first-proof-roadmap.md).
 Preserve all frozen evidence, failures, unknowns, and nonclaims. Do not silently modify Foundation, accepted primitives, axioms, or prior results. Any substantive theory change requires the registered versioned revision process.
 Do not claim a theorem, universality, necessity, minimality, mechanized verification, or independent validation unless the corresponding research gate contains evidence.
 Validation commands:
@@ -168,6 +168,7 @@ Validation commands:
 PR title: `Plan deduction-first proof mechanization`
 Stop condition: stop when the scoped artifact is complete or when a formal obstruction requires a separately registered revision.
 ```
+
 
 ## Navigation
 
