@@ -15,15 +15,15 @@ This report uses cautious language and does not authorize theory changes.
 
 - Primary mode: deduction-first with parallel empirical validation.
 - Frozen central artifacts: `THM-TARGET-001` v1.0, `FAITHFUL-REP-001` v1.0, `P8-ROLE-001` v1.0, and `SCORE-LEMMA-LEDGER-001` v1.0.
-- Partial proof artifacts: `SCORE-W0-PROOF-001`, `SCORE-W1-PROOF-001`, and `SCORE-W2-PROOF-001`.
-- Selected P8 mode: `split`; the P8-I direct-axis embedding is proved, while recovery and `Corr_8E` remain unproved.
-- Lemma program status: 37 obligations; 16 proved; 1 source boundary established; 4 obstruction hypotheses refuted; 16 open; active wave `W3`.
-- Immediate central work: prove or obstruct target-only recovery, semantic agreement, cross-axis coherence, complete machinery accounting, uniformity, composition, and well-formed witness assembly.
+- Partial proof artifacts: `SCORE-W0-PROOF-001` through `SCORE-W3-PROOF-001`.
+- Selected P8 mode: `split`; finite P8-I construction and target-only recovery are proved, while `Corr_8E` remains separate and unproved.
+- Lemma program status: 37 obligations; 24 proved; 1 source boundary established; 8 obstruction hypotheses refuted; 4 open; active wave `W4`.
+- Immediate central work: execute `OBS-SC-010` against NC-01 through NC-10, then assemble W5.
 - Formal-theorem-target gate: satisfied.
 - Premise-ledger-and-semantics gate: satisfied.
 - Faithful-representation-definition gate: satisfied.
 - Scoped-representation-proof gate: not satisfied.
-- Mechanized-proof-verification gate: not satisfied; executable W0-W2 checks are bounded corroboration only.
+- Mechanized-proof-verification gate: not satisfied; executable W0-W3 checks are bounded corroboration only.
 - Independent-proof-review gate: not satisfied.
 - Current theorem status: no representation, universality, necessity, or minimality theorem is established.
 
@@ -41,7 +41,7 @@ This report uses cautious language and does not authorize theory changes.
 ## Evaluation Counts
 
 - Internal reasoning systems evaluated: 23
-- External systems evaluated: 29
+- External reasoning systems evaluated: 29
 - Adversarial tests summarized: 14
 
 ## Current Classification Counts
@@ -103,7 +103,7 @@ The extension does not rank the vocabularies and does not retroactively alter CR
 
 ## Current Evidence Conclusion
 
-CRE-002-EXT-001 remains a prospective bounded result and does not establish primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal reasoning structure, or independent replication. SCORE-W0-PROOF-001 through SCORE-W2-PROOF-001 establish 16 construction lemmas, one S_core source boundary, and four refuted finite obstruction hypotheses. W1 and W2 prove finite axis, dynamics, history, revision, and rule-version constructions but not target-only recovery, complete Pres_i predicates, Faithful_split, or a theorem. The ledger has 16 open obligations and W3 is active.
+CRE-002-EXT-001 remains a prospective bounded result and does not establish primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal reasoning structure, or independent replication. SCORE-W0-PROOF-001 through SCORE-W3-PROOF-001 establish all 24 construction lemmas, one S_core source boundary, and eight refuted finite obstruction hypotheses. W3 proves finite target-only recovery, semantic agreement, coherence, complete machinery accounting, uniformity, composition, and typed witness assembly, but not the formal negative-control family, the global Nontrivial conjunct, Faithful_split, or a theorem. Four obligations remain and W4 is active.
 
 ## Relevant Reports
 
@@ -129,6 +129,9 @@ CRE-002-EXT-001 remains a prospective bounded result and does not establish prim
 - [docs/research/s-core-w2-dynamics-history-proof-v1.0.md](../research/s-core-w2-dynamics-history-proof-v1.0.md)
 - [theory/evaluation/s-core-w2-dynamics-history-proof.json](../../theory/evaluation/s-core-w2-dynamics-history-proof.json)
 - [docs/audits/s-core-w2-proof-audit.md](../audits/s-core-w2-proof-audit.md)
+- [docs/research/s-core-w3-global-witness-proof-v1.0.md](../research/s-core-w3-global-witness-proof-v1.0.md)
+- [theory/evaluation/s-core-w3-global-witness-proof.json](../../theory/evaluation/s-core-w3-global-witness-proof.json)
+- [docs/audits/s-core-w3-proof-audit.md](../audits/s-core-w3-proof-audit.md)
 - [docs/audits/s-core-lemma-ledger-audit.md](../audits/s-core-lemma-ledger-audit.md)
 - [docs/reports/primitive-sufficiency-report.md](primitive-sufficiency-report.md)
 - [docs/reports/external-validation-report.md](external-validation-report.md)

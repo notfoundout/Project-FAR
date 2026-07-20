@@ -17,20 +17,20 @@ The project does not assume that a universal structure exists or that FAR is tha
 
 ## Current Research State
 
-The project is deduction-first. [`THM-TARGET-001`](docs/research/thm-target-001-v1.0.md), premise ledger v1.5, [`FAITHFUL-REP-001`](docs/research/faithful-representation-specification-v1.0.md), [`P8-ROLE-001`](docs/research/p8-theorem-role-decision-v1.0.md), and [`SCORE-LEMMA-LEDGER-001`](docs/research/s-core-construction-obstruction-ledger-v1.0.md) remain frozen.
+The project is deduction-first. [`THM-TARGET-001`](docs/research/thm-target-001-v1.0.md), premise ledger v1.6, [`FAITHFUL-REP-001`](docs/research/faithful-representation-specification-v1.0.md), [`P8-ROLE-001`](docs/research/p8-theorem-role-decision-v1.0.md), and [`SCORE-LEMMA-LEDGER-001`](docs/research/s-core-construction-obstruction-ledger-v1.0.md) remain frozen.
 
-[`SCORE-W0-PROOF-001`](docs/research/s-core-w0-normalization-proof-v1.0.md), [`SCORE-W1-PROOF-001`](docs/research/s-core-w1-direct-axis-proof-v1.0.md), and [`SCORE-W2-PROOF-001`](docs/research/s-core-w2-dynamics-history-proof-v1.0.md) establish 16 construction lemmas, one source boundary, and four refuted finite obstruction hypotheses. Sixteen obligations remain. W3 global witness construction is active.
+[`SCORE-W0-PROOF-001`](docs/research/s-core-w0-normalization-proof-v1.0.md) through [`SCORE-W3-PROOF-001`](docs/research/s-core-w3-global-witness-proof-v1.0.md) establish all 24 construction lemmas, one source boundary, and eight refuted finite obstruction hypotheses. Four obligations remain. W4 formal negative controls are active.
 
-W1 and W2 prove finite direct-axis, dynamics, history, revision, and rule-version strong embeddings. They do not prove target-only recovery, complete `Pres_i` predicates, `Faithful_split`, a representation theorem, universality, necessity, or minimality.
+W3 proves finite target-only recovery, semantic agreement, cross-axis coherence, complete machinery accounting, uniformity, composition, and typed witness assembly. It does not prove the formal negative-control family, the global `Nontrivial` conjunct, `Faithful_split`, a representation theorem, universality, necessity, or minimality.
 
-Run `make research-check` to validate the theorem target, semantics, P8 split, lemma ledger, W0-W2 proof packages, executable corroboration, gates, and conservative claim boundaries.
+Run `make research-check` to validate the theorem target, semantics, P8 split, lemma ledger, W0-W3 proof packages, executable corroboration, gates, and conservative claim boundaries.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: S_core W3 global witness construction
+- Current project phase: S_core W4 formal negative controls
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 - Last dashboard generation time: 2026-07-16T08:17:16+00:00
@@ -64,32 +64,32 @@ Run `make research-check` to validate the theorem target, semantics, P8 split, l
 | Formal metric | Current |
 |---|---:|
 | Registered obligations | 37 |
-| Proved construction lemmas | 16 |
+| Proved construction lemmas | 24 |
 | Source boundaries established | 1 |
-| Obstruction hypotheses refuted | 4 |
-| Open obligations | 16 |
-| Completed waves | W0, W1, W2 |
-| Active wave | W3 |
+| Obstruction hypotheses refuted | 8 |
+| Open obligations | 4 |
+| Completed waves | W0, W1, W2, W3 |
+| Active wave | W4 |
 
 ## Top Priority Tasks
 
-### STRATEGIC-001: Prove the W3 S_core global witness obligations
+### STRATEGIC-001: Execute the W4 S_core formal negative controls
 - Source: deduction-first strategic priority
 - Affected files:
   - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
   - [theory/evaluation/s-core-construction-obstruction-ledger.json](theory/evaluation/s-core-construction-obstruction-ledger.json)
-  - [docs/research/faithful-representation-specification-v1.0.md](docs/research/faithful-representation-specification-v1.0.md)
+  - [docs/methodology/negative-control-suite-v1.0.md](docs/methodology/negative-control-suite-v1.0.md)
+  - [theory/evaluation/faithful-representation-specification-v1.0.json](theory/evaluation/faithful-representation-specification-v1.0.json)
+- Suggested branch: `research/prove-s-core-w4-negative-controls`
+- Suggested PR title: `Prove S_core W4 formal negative controls`
+
+### STRATEGIC-002: Assemble the finite-core theorem or strongest obstruction
+- Source: deduction-first strategic priority
+- Affected files:
+  - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
+  - [theory/evaluation/s-core-construction-obstruction-ledger.json](theory/evaluation/s-core-construction-obstruction-ledger.json)
   - [theory/evaluation/thm-target-001.json](theory/evaluation/thm-target-001.json)
-- Suggested branch: `research/prove-s-core-w3-global-witness`
-- Suggested PR title: `Prove S_core W3 global witness obligations`
-
-### STRATEGIC-002: Execute the remaining obstruction and negative-control program
-- Source: deduction-first strategic priority
-- Suggested branch: `research/execute-s-core-obstructions`
-- Suggested PR title: `Execute remaining S_core obstruction program`
-
-### STRATEGIC-003: Assemble the finite-core theorem or strongest obstruction
-- Source: deduction-first strategic priority
+  - [theory/evaluation/central-claim-registry.json](theory/evaluation/central-claim-registry.json)
 - Suggested branch: `research/assemble-s-core-result`
 - Suggested PR title: `Assemble S_core theorem or obstruction`
 
@@ -116,11 +116,10 @@ Run `make research-check` to validate the theorem target, semantics, P8 split, l
 - [S_core Lemma Ledger](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
 - [S_core Lemma Registry](theory/evaluation/s-core-construction-obstruction-ledger.json)
 - [S_core W0 Proof](docs/research/s-core-w0-normalization-proof-v1.0.md)
-- [S_core W0 Proof Registry](theory/evaluation/s-core-w0-normalization-proof.json)
 - [S_core W1 Proof](docs/research/s-core-w1-direct-axis-proof-v1.0.md)
-- [S_core W1 Proof Registry](theory/evaluation/s-core-w1-direct-axis-proof.json)
 - [S_core W2 Proof](docs/research/s-core-w2-dynamics-history-proof-v1.0.md)
-- [S_core W2 Proof Registry](theory/evaluation/s-core-w2-dynamics-history-proof.json)
+- [S_core W3 Proof](docs/research/s-core-w3-global-witness-proof-v1.0.md)
+- [S_core W3 Proof Registry](theory/evaluation/s-core-w3-global-witness-proof.json)
 - [Evidence Registry](theory/evaluation/evidence-registry.yaml)
 - [External Validation Registry](theory/evaluation/external-validation-registry.yaml)
 - [Primitive Pressure Registry](theory/falsification/primitive-pressure-registry.yaml)
@@ -129,10 +128,10 @@ Run `make research-check` to validate the theorem target, semantics, P8 split, l
 
 ## Current Roadmap
 
-- Current phase: S_core W3 global witness construction
-- Completed foundation: domain; IRD-001; PB-001; PBTS-001; theorem target; premise ledger v1.5; faithful semantics; P8 split; W0; W1; W2
-- In progress: `LEM-SC-017` through `LEM-SC-024` covering recovery, semantics, coherence, machinery, uniformity, composition, and witness assembly
-- Planned: remaining W4 obstructions; W5 assembly; S_IRD extension; lower bounds; minimality; mechanization; independent review
+- Current phase: S_core W4 formal negative controls
+- Completed foundation: W0 source normalization; W1 direct axes; W2 dynamics/history; W3 recovery, semantics, coherence, machinery, uniformity, composition, and typed witness assembly
+- In progress: OBS-SC-010 and NC-01 through NC-10
+- Planned: W5 finite-core theorem assembly; S_IRD extension; lower bounds; minimality; mechanization; independent review
 - Parallel: PBTS replication, comparative evaluation, boundary discovery, and application validation
 
 ## Command Center
@@ -150,11 +149,9 @@ make dashboard
 
 1. Run `make research-check` and `make health-fast`.
 2. Open the lemma ledger and latest proof package.
-3. Select the earliest open obligation with resolved dependencies.
-4. Freeze assumptions, statement, countermodels, failure conditions, and nonclaims.
-5. Prove, refute, or establish the strongest justified obstruction.
-6. Preserve failures and unresolved obligations.
-7. Run full health before merge.
+3. Execute the earliest unresolved obligation with closed dependencies.
+4. Preserve countermodels, failures, assumptions, and nonclaims.
+5. Run full health before merge.
 
 <!-- END GENERATED PROJECT FAR DASHBOARD -->
 
