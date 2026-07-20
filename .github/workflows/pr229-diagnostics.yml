@@ -1,0 +1,43 @@
+name: PR229 Diagnostics
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostics:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Capture diagnostics
+        shell: bash
+        run: |
+          set +e
+          python tools/run_tests.py --fast > unit-tests.log 2>&1
+          echo $? > unit-tests.exit
+          make research-check > research-check.log 2>&1
+          echo $? > research-check.exit
+          python tools/repo_health_check.py --fast > health-fast.log 2>&1
+          echo $? > health-fast.exit
+          exit 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr229-diagnostics
+          path: |
+            unit-tests.log
+            unit-tests.exit
+            research-check.log
+            research-check.exit
+            health-fast.log
+            health-fast.exit
+          if-no-files-found: error
