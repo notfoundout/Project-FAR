@@ -12,18 +12,28 @@ REG = ROOT / "theory/evaluation/s-core-construction-obstruction-ledger.json"
 TARGET = ROOT / "theory/evaluation/thm-target-001.json"
 GATES = ROOT / "theory/evaluation/research-gates.json"
 MAKEFILE = ROOT / "Makefile"
+WAVE_ORDER = {f"W{i}": i for i in range(6)}
 
 
 def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def assert_acyclic(obligations: list[dict]) -> None:
-    ids = {item["id"] for item in obligations}
-    incoming = {item["id"]: set(item.get("depends_on", [])) for item in obligations}
+def assert_dependency_graph(obligations: list[dict]) -> None:
+    by_id = {item["id"]: item for item in obligations}
+    ids = set(by_id)
+    incoming = {item_id: set(item.get("depends_on", [])) for item_id, item in by_id.items()}
     for item_id, deps in incoming.items():
         assert deps <= ids, f"{item_id} has unknown dependencies: {sorted(deps - ids)}"
         assert item_id not in deps, f"{item_id} depends on itself"
+        item_wave = by_id[item_id].get("wave")
+        assert item_wave in WAVE_ORDER, f"{item_id} has invalid wave: {item_wave}"
+        for dep in deps:
+            dep_wave = by_id[dep].get("wave")
+            assert dep_wave in WAVE_ORDER, f"{dep} has invalid wave: {dep_wave}"
+            assert WAVE_ORDER[dep_wave] <= WAVE_ORDER[item_wave], (
+                f"{item_id} in {item_wave} depends backward on {dep} in {dep_wave}"
+            )
     outgoing: dict[str, set[str]] = defaultdict(set)
     for item_id, deps in incoming.items():
         for dep in deps:
@@ -66,6 +76,7 @@ def main() -> int:
     assert data.get("theorem_target") == "THM-TARGET-001"
     assert data.get("source_scope") == "S_core"
     assert data.get("faithful_predicate") == "Faithful_split"
+    assert set(data.get("waves", {})) == set(WAVE_ORDER)
 
     obligations = data.get("obligations", [])
     assert len(obligations) == 37
@@ -80,7 +91,11 @@ def main() -> int:
     assert classes == {"construction": 24, "obstruction": 10, "assembly": 3}
     assert all(item.get("status") == "registered_unproved" for item in obligations)
     assert all(item.get("evidence") == [] for item in obligations)
-    assert_acyclic(obligations)
+    assert_dependency_graph(obligations)
+
+    by_id = {item["id"]: item for item in obligations}
+    assert by_id["LEM-SC-014"]["wave"] == "W1"
+    assert "LEM-SC-013" not in by_id["LEM-SC-014"]["depends_on"]
 
     mandatory = set(data.get("mandatory_features", []))
     covered = {feature for item in obligations for feature in item.get("covers", [])}
