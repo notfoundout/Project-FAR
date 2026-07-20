@@ -3,6 +3,7 @@ health:
 	python tools/check_research_gates.py
 	python tools/check_deduction_first_program.py
 	python tools/check_thm_target_001.py
+	python tools/check_faithful_representation.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
@@ -17,6 +18,7 @@ health-fast:
 	python tools/check_research_gates.py
 	python tools/check_deduction_first_program.py
 	python tools/check_thm_target_001.py
+	python tools/check_faithful_representation.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
@@ -42,6 +44,7 @@ research-check:
 	python tools/check_research_gates.py
 	python tools/check_deduction_first_program.py
 	python tools/check_thm_target_001.py
+	python tools/check_faithful_representation.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py

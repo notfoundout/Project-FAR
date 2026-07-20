@@ -8,6 +8,8 @@
   "independent_review_status": "not_started",
   "source_artifact": "docs/research/thm-target-001-v1.0.md",
   "premise_ledger": "theory/evaluation/thm-target-001-premise-ledger.json",
+  "faithful_representation_specification": "docs/research/faithful-representation-specification-v1.0.md",
+  "faithful_representation_registry": "theory/evaluation/faithful-representation-specification-v1.0.json",
   "governing_standard": "docs/governance/deduction-first-research-standard.md",
   "source_classes": {
     "S_core": {
@@ -68,7 +70,8 @@
     "tuple": ["E", "D", "M", "iota", "kappa"],
     "uniform_construction_required": true,
     "complete_machinery_ledger_required": true,
-    "source_specific_unrestricted_decoder_allowed": false
+    "source_specific_unrestricted_decoder_allowed": false,
+    "formal_semantics_status": "frozen_unproved_satisfiability"
   },
   "preservation_obligations": [
     "P1_configuration",
@@ -83,10 +86,13 @@
     "status": "unresolved_theorem_parameter",
     "parameter": "m8",
     "allowed_values": ["coordinate", "side_condition", "split"],
+    "clauses_frozen": true,
     "proof_acceptance_blocked_until_resolved": true
   },
   "nontriviality_conditions": [
     "uniform construction",
+    "strong preservation and reflection",
+    "cross-axis coherence",
     "no label-only success",
     "no output-only lookup",
     "no opaque universal state",
@@ -95,7 +101,8 @@
     "no evaluator repair",
     "no history erasure",
     "no evidential upgrade",
-    "compositional accountability"
+    "compositional accountability",
+    "complete machinery ledger"
   ],
   "theorem_family": [
     {
@@ -109,7 +116,7 @@
       "kind": "faithful_representation",
       "scope": "S_core",
       "status": "target_frozen_unproved",
-      "blocked_by": ["formal_faithful_representation_definition", "p8_resolution"]
+      "blocked_by": ["p8_resolution"]
     },
     {
       "id": "THM-IRD-EXT-001",
@@ -163,8 +170,8 @@
   ],
   "current_gates": {
     "formal_theorem_target": "satisfied",
-    "premise_ledger_and_semantics": "in_progress",
-    "faithful_representation_definition": "not_satisfied",
+    "premise_ledger_and_semantics": "satisfied",
+    "faithful_representation_definition": "satisfied",
     "scoped_representation_proof": "not_satisfied",
     "primitive_lower_bounds": "not_satisfied",
     "minimality_universe_and_proof": "not_satisfied",
@@ -181,5 +188,5 @@
     "a universal finite architecture exists",
     "any theorem is proved"
   ],
-  "next_required_artifact": "frozen faithful-representation specification with P8 theorem-role decision"
+  "next_required_artifact": "versioned P8 theorem-role decision"
 }

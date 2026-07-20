@@ -15,6 +15,8 @@ Explicit axioms and admissibility conditions
             ↓
 Faithful-representation specification
             ↓
+P8 theorem-role decision
+            ↓
 Construction lemmas and obstruction lemmas
             ↓
 Scoped existence / representation theorem or refutation
@@ -38,104 +40,106 @@ Independent empirical replication is a parallel supporting track. It is not a pa
 - `theory/evaluation/thm-target-001.json`;
 - `theory/evaluation/thm-target-001-premise-ledger.json`.
 
-`THM-TARGET-001` now separates:
-
-1. common-schema existence for the finite explicit IRD core `S_core`;
-2. faithful representation of `S_core`;
-3. extension to the broader IRD class `S_IRD`;
-4. evidential correspondence under a selected P8 mode;
-5. primitive necessity or derivability;
-6. minimality within a declared candidate universe;
-7. equivalence, uniqueness, incomparability, or impossibility.
-
-The target defines a theorem-facing FARA package, representation-witness signature, preservation obligations, nontriviality conditions, failure rules, and nonclaims.
+`THM-TARGET-001` separates common-schema existence, faithful representation of `S_core`, extension to `S_IRD`, P8 correspondence, primitive necessity, minimality, equivalence, uniqueness, incomparability, and impossibility.
 
 **Result boundary:** freezing the target does not establish that the target is satisfiable or that any theorem is proved.
 
 ## Stage D2 — Complete the premise and semantics audit
 
-**Status:** in progress.
+**Status:** complete prospectively through:
 
-The premise ledger classifies every current dependency as one of:
+- `theory/evaluation/thm-target-001-premise-ledger.json` v1.1;
+- `docs/research/faithful-representation-specification-v1.0.md`;
+- `theory/evaluation/faithful-representation-specification-v1.0.json`.
 
-- definition;
-- typing or well-formedness condition;
-- substantive axiom;
-- imported frozen specification;
-- scope restriction;
-- evidence condition;
-- conjecture;
-- unresolved theorem parameter.
+The premise ledger classifies every current dependency as a definition, typing or well-formedness condition, substantive axiom, imported frozen specification, scope restriction, evidence condition, conjecture, or unresolved theorem parameter.
 
-Open items are:
+`PRM-011` and `PRM-012` now have frozen semantics. Remaining open parameters are explicit:
 
-- formal semantics of `Pres_1` through `Pres_7`;
-- formal semantics of `Faithful_m8`;
-- the theorem role of P8;
+- the theorem-facing P8 mode;
 - the reconstruction class for necessity;
 - the candidate universe and equivalence relation for minimality.
 
-The source boundary may not define reasoning by FARA representability. The target boundary may not use unconstrained decoding, hidden interpreters, or FARA-native labels as preservation criteria.
+No substantive axiom asserting FARA adequacy, PB-001 completeness, primitive necessity, or universal structure has been admitted.
 
-**Exit condition:** a complete theorem-facing semantic specification with no hidden assumptions relevant to the next proof stage.
+**Exit result:** the premise and semantics gate is satisfied without promoting any conjecture.
 
 ## Stage D3 — Formalize faithful representation
 
+**Status:** complete prospectively through `FAITHFUL-REP-001`.
+
+The specification fixes:
+
+- the source materiality contract and axis applicability;
+- canonical finite source reducts for P1–P7;
+- admissible target-only recovery;
+- total typed correspondence;
+- injectivity and sort preservation;
+- relation preservation and reflection;
+- source-declared attribute equivalence;
+- P5 finite labeled bisimulation;
+- P7 order embedding and path preservation;
+- semantic agreement;
+- cross-axis coherence;
+- uniform source-isomorphism-equivariant construction;
+- compositional accountability;
+- complete machinery accounting;
+- formal nontriviality and negative-control diagnostics;
+- all three parameterized P8 clauses;
+- the complete `Faithful_{m_8}` conjunction.
+
+The definition formally rejects label-only mappings, output-only lookup, opaque universal states, hidden interpreters, metadata smuggling, evaluator repair, dependency collapse, history erasure, incoherent per-axis encodings, and unsupported evidential upgrading.
+
+**Result boundary:** the definition is frozen, but satisfiability and existence of a uniform FARA constructor are unproved.
+
+## Stage D3.5 — Select the P8 theorem role
+
 **Status:** active immediate stage.
 
-Expand the predicate schema fixed by `THM-TARGET-001` into exact definitions for:
+Select and justify exactly one frozen mode:
 
-- source-object and target-object identity;
-- typed encoding and admissible recovery;
-- configuration preservation;
-- commitment preservation;
-- stake-and-alternative preservation;
-- ground-and-justification preservation;
-- admissibility-and-dynamics preservation;
-- consequence preservation;
-- historical-and-path preservation;
-- semantic interpretation;
-- evidential correspondence;
-- machinery accounting;
-- uniformity and compositionality.
+1. `coordinate` — P8 is an eighth internal strong-embedding obligation;
+2. `side_condition` — process-to-presentation correspondence is external to the internal representation theorem;
+3. `split` — internal provenance is preserved and actual-process correspondence is a separate theorem or evidence contract.
 
-State which obligations apply to every source object and which are conditional on features present in a source object.
+The decision artifact must state:
 
-The definition must formally exclude:
+- why the selected mode matches IRD-001 and PB-001;
+- which theorem clauses it activates;
+- which application claims remain external;
+- whether `THM-P8-CORR-001` remains separate;
+- effects on existing evidence and nonclaims;
+- counterarguments and failure conditions.
 
-- label-only mappings;
-- output-only lookup tables;
-- opaque universal states;
-- hidden interpreters or operators;
-- metadata smuggling;
-- evaluator repair;
-- dependency collapse;
-- history erasure;
-- unsupported evidential upgrading.
+A content-changing choice outside the three frozen clauses requires a new theorem-target version. Selecting among the frozen clauses does not prove the representation theorem.
 
-P8 must be fixed as `coordinate`, `side_condition`, or `split`, or registered as an explicit blocker requiring a target revision.
-
-**Exit condition:** a frozen faithful-representation specification suitable for proof or refutation and strong enough to distinguish representation from unrestricted coding.
+**Exit condition:** one P8 mode is frozen and `THM-CORE-REP-001` is no longer blocked by an unresolved theorem parameter.
 
 ## Stage D4 — Construction and obstruction lemmas
 
-Attempt constructive lemmas showing how each admitted source component maps into the target.
+**Status:** blocked only by the P8 decision.
 
-In parallel, search for obstruction lemmas showing that the construction cannot be total, faithful, finite, computable, compositional, or minimal under stated assumptions.
+Attempt constructive lemmas showing how each admitted `S_core` component maps into the target under `FAITHFUL-REP-001`.
+
+In parallel, search for obstruction lemmas showing that the construction cannot be total, faithful, finite, effective, uniform, compositional, or nontrivial under stated assumptions.
 
 Required outputs include:
 
-- construction for the ordinary finite core;
-- treatment of self-modification;
-- treatment of nonmonotonic revision;
-- treatment of probabilistic or graded commitment;
-- treatment of distributed reasoning;
-- treatment of semantic change;
-- treatment of hidden or partially observed state;
-- treatment of open-ended or nonterminating processes;
+- ordinary finite configurations and commitments;
+- stakes and live alternatives;
+- typed grounds and justificatory roles;
+- finite deterministic and finite-support probabilistic dynamics;
+- nonmonotonic revision and retraction;
+- self-modification and rule-version change;
+- distributed composition and cross-component dependence;
+- consequences and downstream status;
+- path-dependent history;
+- formal negative-control lemmas;
 - explicit countermodels where construction fails.
 
-**Exit condition:** every source feature in scope has either a construction lemma or a registered obstruction.
+Broader `S_IRD` features such as continuous carriers, open-ended histories, hidden state, and semantic change remain extension obligations rather than prerequisites for the finite-core theorem.
+
+**Exit condition:** every `S_core` source feature has either a construction lemma or a registered obstruction.
 
 ## Stage D5 — Scoped representation theorem
 
@@ -221,30 +225,24 @@ Independent review strengthens confidence and may discover defects. It is not a 
 
 PBTS-001 independent replication, comparative experiments, boundary cases, and application tests remain active when resources are available.
 
-Their outputs may:
+Their outputs may reveal ambiguous definitions, produce counterexamples, suggest missing theorem obligations, test human comprehensibility, validate implementations, or support bounded empirical claims.
 
-- reveal ambiguous definitions;
-- produce counterexamples;
-- suggest missing theorem obligations;
-- test human comprehensibility;
-- validate implementations;
-- support bounded empirical claims.
-
-They may not be used as a substitute for D1-D8 when making a mathematical universality, necessity, or minimality claim.
+They may not be used as a substitute for D1–D8 when making a mathematical universality, necessity, or minimality claim.
 
 ## Immediate next artifacts
 
-1. Freeze the faithful-representation specification expanding `Pres_1` through `Pres_7`, `Faithful_m8`, admissible recovery, semantic agreement, and machinery accounting.
-2. Resolve P8 as `coordinate`, `side_condition`, or `split`, or register a versioned blocker.
-3. Add construction and obstruction lemma ledgers for `S_core` only after the first two artifacts are frozen.
+1. Freeze the P8 theorem-role decision.
+2. Create the `S_core` construction-and-obstruction lemma ledger under the selected P8 mode.
+3. Register formal negative-control lemmas and minimal countermodel fixtures concurrently with constructive work.
 
 ## Current nonclaims
 
 This roadmap does not establish that:
 
 - `THM-TARGET-001` is satisfiable;
+- `Faithful_{m_8}` is satisfiable;
 - IRD-001 defines every form of reasoning;
-- PB-001 is the correct preservation basis;
+- PB-001 is the correct or complete preservation basis;
 - FARA admits the required representation;
 - any primitive is necessary;
 - FARA is minimal or unique;

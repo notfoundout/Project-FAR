@@ -9,19 +9,20 @@
     "docs/governance/anti-self-validation-deduction-clarification.md",
     "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
     "docs/planning/deduction-first-proof-roadmap.md",
-    "docs/research/thm-target-001-v1.0.md"
+    "docs/research/thm-target-001-v1.0.md",
+    "docs/research/faithful-representation-specification-v1.0.md"
   ],
   "claims": [
     {
       "id": "CLM-EXISTENCE",
       "name": "Existence of a common reasoning structure",
       "current_status": "unresolved",
-      "maximum_supported_scope": "none beyond bounded recurring similarities; THM-TARGET-001 now fixes the initial S_core question",
+      "maximum_supported_scope": "none beyond bounded recurring similarities; THM-TARGET-001 fixes the initial S_core question and FAITHFUL-REP-001 fixes the test predicate",
       "primary_resolution_mode": "existence proof or formal impossibility/countermodel over a frozen source class",
-      "required_next_test": "formalize Faithful_m8, resolve P8, and prove or refute THM-CORE-COMMON-001",
+      "required_next_test": "select the P8 mode, then prove or refute THM-CORE-COMMON-001 and its uniform-construction obligations",
       "supporting_validation": "bounded model search, counterexample programs, and independent proof review",
       "falsification_condition": "a formal in-scope incompatibility or impossibility result showing that no common structure satisfies the registered commitments",
-      "nonclaims": ["FAR is the common structure", "universality", "minimality", "freezing a theorem target proves existence"]
+      "nonclaims": ["FAR is the common structure", "universality", "minimality", "a frozen faithful predicate proves existence"]
     },
     {
       "id": "CLM-SUFFICIENCY",
@@ -29,10 +30,10 @@
       "current_status": "partially_supported",
       "maximum_supported_scope": "specific frozen systems and mappings already tested; no theorem-level S_core result",
       "primary_resolution_mode": "scoped faithful-representation theorem or formal countermodel",
-      "required_next_test": "freeze the faithful-representation predicates and P8 mode, then prove construction or obstruction lemmas for S_core",
+      "required_next_test": "select the P8 mode, then prove construction or obstruction lemmas for S_core under FAITHFUL-REP-001",
       "supporting_validation": "PBTS-001, negative controls, mechanized conformance, and independent replication",
       "falsification_condition": "an in-scope source object satisfies the frozen source definition but admits no faithful target representation under the theorem obligations",
-      "nonclaims": ["universal sufficiency", "primitive-only sufficiency", "necessity", "THM-TARGET-001 is a sufficiency proof"]
+      "nonclaims": ["universal sufficiency", "primitive-only sufficiency", "necessity", "defining Faithful_m8 is a sufficiency proof"]
     },
     {
       "id": "CLM-UNIVERSALITY",
@@ -71,12 +72,12 @@
       "id": "CLM-NONTRIVIALITY",
       "name": "FAR imposes nontrivial representational constraints",
       "current_status": "not_established_generally",
-      "maximum_supported_scope": "implementation-specific checks and prospective theorem exclusions only",
-      "primary_resolution_mode": "formal faithful-representation definition and theorem excluding unrestricted coding",
-      "required_next_test": "formalize the uniformity and nontriviality clauses in THM-TARGET-001 and prove that the registered negative controls fail",
+      "maximum_supported_scope": "implementation-specific checks plus the frozen prospective constraints of FAITHFUL-REP-001",
+      "primary_resolution_mode": "formal faithful-representation theorem and control lemmas excluding unrestricted coding",
+      "required_next_test": "prove the registered negative controls fail for the frozen reasons and show that at least one nontrivial S_core witness can satisfy the definition",
       "supporting_validation": "mandatory negative-control suite",
       "falsification_condition": "the formal representation relation admits structurally unfaithful encodings with no additional counted commitment",
-      "nonclaims": ["expressive reach alone establishes constraint", "listing prohibited encodings proves they are formally excluded"]
+      "nonclaims": ["expressive reach alone establishes constraint", "freezing exclusions proves every invalid encoding is rejected", "the faithful predicate is satisfiable"]
     },
     {
       "id": "CLM-ECONOMY",

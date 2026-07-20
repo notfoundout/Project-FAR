@@ -17,20 +17,20 @@ The project does not assume that a universal structure exists, nor that FAR is t
 
 ## Current Research Reset
 
-The project is deduction-first. The [Deduction-First Research Standard](docs/governance/deduction-first-research-standard.md), [Central Research Program](docs/governance/central-research-program.md), [Research Priority Reset](docs/governance/research-priority-reset.md), and machine-readable [Research Gate Registry](theory/evaluation/research-gates.json) make formal definition, proof, countermodel, lower-bound, equivalence, and impossibility work the primary path to the central answer.
+The project is now deduction-first. The [Deduction-First Research Standard](docs/governance/deduction-first-research-standard.md), [Central Research Program](docs/governance/central-research-program.md), [Research Priority Reset](docs/governance/research-priority-reset.md), and machine-readable [Research Gate Registry](theory/evaluation/research-gates.json) make formal definition, proof, countermodel, lower-bound, equivalence, and impossibility work the primary path to the central answer.
 
-[`THM-TARGET-001` v1.0](docs/research/thm-target-001-v1.0.md) and its [premise ledger](theory/evaluation/thm-target-001-premise-ledger.json) are frozen. The active objective is faithful-representation formalization and P8 resolution: define `Pres_1` through `Pres_7`, `Faithful_m8`, admissible recovery, semantic agreement, uniformity, compositionality, and machinery accounting before attempting a representation proof.
+[`THM-TARGET-001` v1.0](docs/research/thm-target-001-v1.0.md), premise ledger v1.1, and [`FAITHFUL-REP-001` v1.0](docs/research/faithful-representation-specification-v1.0.md) are frozen. The active objective is the P8 theorem-role decision: select and justify `coordinate`, `side_condition`, or `split` before beginning finite-core representation-proof construction.
 
 PBTS-001 replication, comparative experiments, and external validation remain parallel supporting tracks for detecting ambiguity, defects, counterexamples, implementation dependence, and human-comprehension failures. They do not serve as prerequisites for constructing a proof.
 
-Run `make research-check` to validate the theorem target, deduction-first dependency structure, and conservative claim boundaries.
+Run `make research-check` to validate the theorem target, faithful-representation definition, deduction-first dependency structure, and conservative claim boundaries.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: faithful-representation formalization and P8 resolution
+- Current project phase: P8 theorem-role decision
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 - Last dashboard generation time: 2026-07-16T08:17:16+00:00
@@ -73,19 +73,10 @@ Trend data is not yet available because no prior generated snapshot is stored.
 
 ## Top Priority Tasks
 
-### STRATEGIC-001: Formalize faithful representation and nontriviality
+### STRATEGIC-001: Resolve the formal role of P8
 - Source: deduction-first strategic priority
 - Affected files:
-  - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
-  - [docs/research/preservation-basis-investigation-v1.0.md](docs/research/preservation-basis-investigation-v1.0.md)
-  - [docs/methodology/negative-control-suite-v1.0.md](docs/methodology/negative-control-suite-v1.0.md)
-  - [theory/evaluation/thm-target-001-premise-ledger.json](theory/evaluation/thm-target-001-premise-ledger.json)
-- Suggested branch: `research/formalize-faithful-representation`
-- Suggested PR title: `Formalize faithful representation and nontriviality`
-
-### STRATEGIC-002: Resolve the formal role of P8
-- Source: deduction-first strategic priority
-- Affected files:
+  - [docs/research/faithful-representation-specification-v1.0.md](docs/research/faithful-representation-specification-v1.0.md)
   - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
   - [docs/research/preservation-basis-investigation-v1.0.md](docs/research/preservation-basis-investigation-v1.0.md)
   - [docs/research/pb001-execution-run-001-report.md](docs/research/pb001-execution-run-001-report.md)
@@ -93,31 +84,42 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - Suggested branch: `research/resolve-p8-theorem-role`
 - Suggested PR title: `Resolve P8 theorem role`
 
-### STRATEGIC-003: Build the S_core construction and obstruction ledger
+### STRATEGIC-002: Build the S_core construction and obstruction ledger
 - Source: deduction-first strategic priority
 - Affected files:
+  - [docs/research/faithful-representation-specification-v1.0.md](docs/research/faithful-representation-specification-v1.0.md)
   - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
-  - [docs/research/reasoning-domain-specification-v1.0.md](docs/research/reasoning-domain-specification-v1.0.md)
   - [docs/research/independent-reasoning-definition-v1.0.md](docs/research/independent-reasoning-definition-v1.0.md)
   - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
 - Suggested branch: `research/build-s-core-lemma-ledger`
 - Suggested PR title: `Build S_core construction and obstruction ledger`
 
-### STRATEGIC-004: Prepare formal countermodel fixtures for S_core
+### STRATEGIC-003: Prove formal negative-control lemmas
 - Source: deduction-first strategic priority
 - Affected files:
-  - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
+  - [docs/research/faithful-representation-specification-v1.0.md](docs/research/faithful-representation-specification-v1.0.md)
   - [docs/methodology/negative-control-suite-v1.0.md](docs/methodology/negative-control-suite-v1.0.md)
   - [theory/falsification](theory/falsification)
-- Suggested branch: `research/register-s-core-countermodels`
-- Suggested PR title: `Register S_core countermodel fixtures`
+  - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
+- Suggested branch: `research/prove-faithful-negative-controls`
+- Suggested PR title: `Prove faithful-representation negative-control lemmas`
+
+### STRATEGIC-004: Develop the first uniform S_core constructor
+- Source: deduction-first strategic priority
+- Affected files:
+  - [docs/research/faithful-representation-specification-v1.0.md](docs/research/faithful-representation-specification-v1.0.md)
+  - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
+  - [frameworks/FARA/architecture.md](frameworks/FARA/architecture.md)
+  - [theory/evaluation/thm-target-001-premise-ledger.json](theory/evaluation/thm-target-001-premise-ledger.json)
+- Suggested branch: `research/build-s-core-constructor`
+- Suggested PR title: `Develop uniform S_core constructor`
 
 ### STRATEGIC-005: Prepare proof mechanization architecture
 - Source: deduction-first strategic priority
 - Affected files:
   - [mechanization](mechanization)
+  - [docs/research/faithful-representation-specification-v1.0.md](docs/research/faithful-representation-specification-v1.0.md)
   - [docs/research/thm-target-001-v1.0.md](docs/research/thm-target-001-v1.0.md)
-  - [docs/governance/deduction-first-research-standard.md](docs/governance/deduction-first-research-standard.md)
   - [docs/planning/deduction-first-proof-roadmap.md](docs/planning/deduction-first-proof-roadmap.md)
 - Suggested branch: `research/plan-proof-mechanization`
 - Suggested PR title: `Plan deduction-first proof mechanization`
@@ -140,9 +142,8 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - [Deduction-First Standard](docs/governance/deduction-first-research-standard.md)
 - [Proof Roadmap](docs/planning/deduction-first-proof-roadmap.md)
 - [THM-TARGET-001](docs/research/thm-target-001-v1.0.md)
-- [THM-TARGET-001 Registry](theory/evaluation/thm-target-001.json)
-- [External Validation](docs/reports/external-validation-report.md)
-- [Primitive Sufficiency](docs/reports/primitive-sufficiency-report.md)
+- [Faithful Representation](docs/research/faithful-representation-specification-v1.0.md)
+- [Faithful Representation Registry](theory/evaluation/faithful-representation-specification-v1.0.json)
 - [Evidence Registry](theory/evaluation/evidence-registry.yaml)
 - [External Validation Registry](theory/evaluation/external-validation-registry.yaml)
 - [Primitive Pressure Registry](theory/falsification/primitive-pressure-registry.yaml)
@@ -151,19 +152,13 @@ Trend data is not yet available because no prior generated snapshot is stored.
 - [Maintenance](docs/maintenance)
 - [Planning](docs/planning/README.md)
 - [Repository Index](docs/planning/repository-index.md)
-- [Dependency Report](docs/reports/dependency-report.md)
-- [Theory Impact Report](docs/reports/theory-impact-report.md)
-- [Dependency Graph JSON](docs/reports/dependency-graph.json)
-- [Dependency Graph Mermaid](docs/reports/dependency-graph.mmd)
-- [Dependency Registry](theory/dependencies/dependency-registry.yaml)
-- [Dependency Schema](theory/dependencies/dependency-schema.yaml)
 
 ## Current Roadmap
 
-- Current phase: faithful-representation formalization and P8 resolution
-- Completed foundation for the active phase: architecture-neutral reasoning domain; IRD-001; PB-001 candidate basis; PBTS-001 and internal RUN-001; independent-replication package and coordinator controls; deduction-first governance; THM-TARGET-001 and premise ledger
-- In-progress work: formalize Pres_1 through Pres_7 and Faithful_m8; resolve P8
-- Planned work: S_core construction and obstruction lemmas; finite-core theorem or refutation; S_IRD extension analysis; lower bounds; minimality, equivalence, or impossibility; proof mechanization; independent proof review
+- Current phase: P8 theorem-role decision
+- Completed foundation for the active phase: architecture-neutral domain; IRD-001; PB-001; PBTS-001; deduction-first governance; THM-TARGET-001; premise ledger v1.1; FAITHFUL-REP-001
+- In-progress work: select and justify coordinate, side_condition, or split for P8
+- Planned work: S_core construction and obstruction ledger; formal negative-control lemmas; uniform constructor; finite-core theorem or refutation; extension analysis; lower bounds; minimality; mechanization; independent review
 - Parallel supporting work: PBTS-001 independent replication, comparative evaluation, boundary discovery, and application validation
 
 ## Command Center
@@ -190,11 +185,11 @@ make dashboard
 
 1. `make research-check`
 2. `make health-fast`
-3. Open THM-TARGET-001
-4. Choose the highest unsatisfied theorem obligation
-5. Freeze exact semantics, assumptions, failure conditions, and nonclaims
+3. Open THM-TARGET-001 and FAITHFUL-REP-001
+4. Resolve the highest unsatisfied theorem obligation
+5. Freeze assumptions, failure conditions, and nonclaims
 6. Prove, refute, or register the obstruction
-7. Preserve all failures and unresolved obligations
+7. Preserve failures and unresolved obligations
 8. Run health
 9. Merge
 
