@@ -6,21 +6,15 @@ Project FAR exists to determine whether there is a universal and minimal structu
 
 This document defines the primary research program governing the long-term direction of the project. It establishes the central question, the admissible routes to an answer, the current formal stage, and the criteria by which success is judged.
 
-Every theoretical development, mechanization effort, proof, external validation, implementation, and supporting framework should contribute directly or indirectly to this program.
-
-## Why?
-
-The purpose of Project FAR is not merely to construct a reasoning framework. Its purpose is to answer a foundational question about reasoning itself.
-
-Without an explicit central program, the project risks improving FAR as an artifact without determining whether FAR accurately represents the phenomenon it was created to investigate. Infrastructure, implementation, case accumulation, and administration may support the research objective but may not replace it.
+The purpose is not merely to improve FAR as an artifact. Infrastructure, implementations, experiments, and applications support the research objective but may not replace it.
 
 ## Scope
 
 This document governs the project's primary research direction.
 
-It does not introduce new mathematical primitives, accept a theorem, revise Foundation v1.0, or declare FAR correct. Substantive mathematical change still requires the applicable Foundation Revision, Theory Revision, or Research Investigation process.
+It does not introduce new mathematical primitives, accept a theorem, revise Foundation v1.0, or declare FAR correct. Substantive mathematical change still requires the applicable versioned revision process.
 
-## Governing standards
+## Governing standards and artifacts
 
 This program is controlled by:
 
@@ -30,6 +24,7 @@ This program is controlled by:
 - `docs/governance/evidence-replication-and-freeze-standard-v1.0.md`;
 - `docs/governance/research-priority-reset.md`;
 - `docs/research/thm-target-001-v1.0.md`;
+- `docs/research/faithful-representation-specification-v1.0.md`;
 - `theory/evaluation/research-gates.json`.
 
 The deduction-first standard controls the dependency between proof and empirical validation. Anti-self-validation and replication standards continue to control claims of independent confirmation.
@@ -67,11 +62,9 @@ The project does not assume that such a structure exists. It does not assume tha
 
 No accepted artifact is protected from criticism merely because it supports the current framework.
 
-## Frozen theorem target
+## Frozen theorem and semantic boundary
 
-`THM-TARGET-001` v1.0 is the current theorem-family boundary.
-
-It separates:
+`THM-TARGET-001` v1.0 is the current theorem-family boundary. It separates:
 
 - `S_core`, the finite explicit IRD-001 source class used for the first exact theorem attempt;
 - `S_IRD`, the broader extension class;
@@ -81,9 +74,25 @@ It separates:
 - P8 as an unresolved theorem parameter;
 - common-schema, faithful-representation, extension, necessity, minimality, equivalence, and impossibility theorem families.
 
-Freezing this target establishes a stable proposition for proof or refutation. It does not establish that the proposition is true, satisfiable, machine checked, or independently verified.
+`FAITHFUL-REP-001` v1.0 is the current representation-semantic boundary. It defines:
 
-A material change to source scope, target structure, theorem family, representation-witness requirements, P8 content, or failure conditions requires a new target version.
+- source materiality and applicability;
+- canonical P1-P7 source reducts;
+- admissible target-only recovery;
+- total typed strong embeddings;
+- preservation and reflection of relations and attributes;
+- P5 finite labeled bisimulation;
+- P7 order and path embedding;
+- semantic agreement and cross-axis coherence;
+- uniform source-isomorphism-equivariant construction;
+- compositional accountability;
+- complete machinery accounting;
+- formal nontriviality and the expected failure locations for NC-01 through NC-10;
+- parameterized clauses for `coordinate`, `side_condition`, and `split` P8 modes.
+
+Freezing these artifacts establishes stable definitions for proof or refutation. It does not establish that the definitions are satisfiable, that a uniform constructor exists, that FARA passes, or that any theorem is proved, machine checked, or independently verified.
+
+A material change to source scope, target structure, theorem family, faithful-representation clauses, P8 content, or failure conditions requires a new version.
 
 ## Primary research objectives
 
@@ -95,9 +104,9 @@ An existence result must state its assumptions and scope. Failure may be establi
 
 ### Objective II — Faithful representation
 
-If a candidate structure exists, determine whether every source system in the declared scope admits a faithful representation without ad hoc theory change, unrestricted hidden interpretation, evaluator repair, or loss of protected commitments.
+Determine whether every source system in the declared scope admits a witness satisfying the frozen `Faithful_{m_8}` predicate without ad hoc theory change, unrestricted hidden interpretation, evaluator repair, incoherent per-axis encoding, or loss of protected commitments.
 
-A representation result must define the source class, target class, representation relation, preservation obligations, recovery procedure, semantic agreement, and all counted machinery.
+A representation result must use the frozen source class, target class, representation relation, preservation obligations, recovery procedure, semantic agreement, cross-axis coherence, uniformity, compositionality, and counted machinery.
 
 ### Objective III — Necessity and independence
 
@@ -120,9 +129,9 @@ Characterize whether successful structures are unique up to isomorphism or trans
 The active central method is:
 
 1. preserve the frozen theorem family and quantified scope;
-2. complete the premise and semantics ledger;
-3. formalize faithful representation and nontriviality;
-4. resolve the role of semantic and evidential correspondence, including P8;
+2. preserve the completed premise and semantics ledger;
+3. preserve the frozen faithful-representation definition;
+4. resolve the role of semantic and evidential correspondence by selecting the P8 mode;
 5. construct mappings and prove preservation lemmas for `S_core`;
 6. search concurrently for obstruction lemmas and countermodels;
 7. prove or refute the finite-core representation theorem;
@@ -136,29 +145,23 @@ The canonical detailed sequence is `docs/planning/deduction-first-proof-roadmap.
 
 ## Current active stage
 
-The formal-theorem-target gate is satisfied through:
+The following gates are satisfied:
+
+- formal-theorem-target;
+- premise-ledger-and-semantics;
+- faithful-representation-definition.
+
+Their evidence is:
 
 - `docs/research/thm-target-001-v1.0.md`;
 - `theory/evaluation/thm-target-001.json`;
-- `theory/evaluation/thm-target-001-premise-ledger.json`.
+- `theory/evaluation/thm-target-001-premise-ledger.json` v1.1;
+- `docs/research/faithful-representation-specification-v1.0.md`;
+- `theory/evaluation/faithful-representation-specification-v1.0.json`.
 
-The premise-ledger-and-semantics gate remains in progress.
+The scoped-representation-proof gate remains unsatisfied.
 
-The immediate central task is to formalize:
-
-- `Pres_1` through `Pres_7`;
-- `Faithful_m8`;
-- typed source-target encoding;
-- admissible recovery;
-- semantic agreement;
-- transition and admissibility correspondence;
-- dependency, consequence, and history preservation;
-- uniformity and compositionality;
-- complete machinery accounting.
-
-P8 must then be resolved as `coordinate`, `side_condition`, or `split`, or registered as a theorem-target revision blocker.
-
-No construction proof may be accepted before those semantics and the P8 role are frozen.
+The immediate central task is to select and justify P8 as `coordinate`, `side_condition`, or `split`. No construction proof may be accepted while the theorem mode remains unresolved. After P8 is frozen, the next task is the `S_core` construction-and-obstruction lemma ledger and formal negative-control lemmas.
 
 ## Theorem discipline
 
@@ -177,21 +180,13 @@ Every theorem artifact must identify:
 
 A theorem may not quantify over all reasoning unless the quantified class is independently and formally defined.
 
-A representation theorem may not hide missing structure in an unrestricted interpreter, oracle, metadata field, lookup table, evaluator repair, or unconstrained representation relation.
+A representation theorem may not hide missing structure in an unrestricted interpreter, oracle, metadata field, lookup table, evaluator repair, source-specific decoder, or unconstrained representation relation.
 
 A proof over `S_core` may not be reported as a proof over `S_IRD`.
 
 ## Supporting empirical method
 
-Where useful, the project may:
-
-1. freeze vocabulary-neutral source observations;
-2. register positive and negative controls;
-3. execute comparative representations;
-4. perform primitive ablations and bounded searches;
-5. test implementations and proof artifacts;
-6. seek independent replication;
-7. preserve complete result distributions, failures, and nonclaims.
+Where useful, the project may freeze vocabulary-neutral observations, register positive and negative controls, execute comparative representations, perform ablations and bounded searches, test implementations and proof artifacts, seek independent replication, and preserve complete results and failures.
 
 These activities may reveal counterexamples, ambiguity, hidden assumptions, implementation defects, or scope pressure. Their conclusions remain bounded by their design.
 
@@ -211,7 +206,7 @@ For mathematical claims, evidence is ordered by force as follows:
 
 Lower-ranked evidence may motivate or challenge a proof but may not be described as logically equivalent to it.
 
-Formal proof supports only the propositions and assumptions it actually establishes. Mechanization demonstrates only what the formal encoding and trusted kernel establish. Case studies and replication provide bounded evidence. Failure to discover a counterexample does not prove universality.
+Formal proof supports only the propositions and assumptions it actually establishes. Mechanization demonstrates only what the formal encoding and trusted kernel establish. Failure to discover a counterexample does not prove universality.
 
 ## Counterexample policy
 
@@ -234,9 +229,7 @@ A candidate may not be excluded by redefining reasoning after exposure. Any scop
 
 Protected Foundation and theory artifacts must not be modified silently.
 
-If a proof attempt or countermodel requires mathematical change, it must enter an explicit revision process. A revised theorem, source class, preservation basis, target structure, or P8 treatment becomes a new version. Earlier failed or weaker versions remain part of the record.
-
-Documentation, repository restructuring, terminology cleanup, or mechanization changes may not conceal substantive theoretical revision.
+If a proof attempt or countermodel requires mathematical change, it must enter an explicit revision process. A revised theorem, source class, preservation basis, target structure, faithful predicate, or P8 treatment becomes a new version. Earlier failed or weaker versions remain part of the record.
 
 ## Relationship to mechanization
 
@@ -287,8 +280,9 @@ The repository currently provides:
 - an independently executable replication package and coordinator controls;
 - a mechanization MVP;
 - deduction-first governance;
-- `THM-TARGET-001` v1.0 and its premise ledger.
+- `THM-TARGET-001` v1.0 and premise ledger v1.1;
+- `FAITHFUL-REP-001` v1.0.
 
-These results establish readiness for formal faithful-representation work and systematic challenge. They do not answer the central research question.
+These results establish readiness for a P8 decision and systematic construction/countermodel work. They do not answer the central research question.
 
-The immediate central task is faithful-representation formalization and P8 resolution. Independent PBTS replication continues as a parallel supporting track when real qualified participants are available.
+The immediate central task is the P8 theorem-role decision. Independent PBTS replication continues as a parallel supporting track when real qualified participants are available.
