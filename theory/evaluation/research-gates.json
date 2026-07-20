@@ -27,6 +27,9 @@
     "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
     "docs/planning/deduction-first-proof-roadmap.md",
     "docs/planning/architecture-neutral-research-roadmap.md",
+    "docs/research/thm-target-001-v1.0.md",
+    "theory/evaluation/thm-target-001.json",
+    "theory/evaluation/thm-target-001-premise-ledger.json",
     "docs/methodology/confirmatory-research-package.md",
     "docs/methodology/external-observation-contract-v1.0.md",
     "docs/methodology/negative-control-suite-v1.0.md",
@@ -97,17 +100,24 @@
     {
       "id": "RG-08",
       "name": "formal-theorem-target",
-      "status": "not_satisfied",
+      "status": "satisfied",
       "standard": "docs/governance/deduction-first-research-standard.md",
-      "evidence": [],
+      "evidence": [
+        "docs/research/thm-target-001-v1.0.md",
+        "theory/evaluation/thm-target-001.json",
+        "theory/evaluation/thm-target-001-premise-ledger.json"
+      ],
       "required_before": ["representation_theorem_proof_claim", "formal_universality_claim"]
     },
     {
       "id": "RG-09",
       "name": "premise-ledger-and-semantics",
-      "status": "not_satisfied",
+      "status": "in_progress",
       "standard": "docs/governance/deduction-first-research-standard.md",
-      "evidence": [],
+      "evidence": [
+        "docs/research/thm-target-001-v1.0.md",
+        "theory/evaluation/thm-target-001-premise-ledger.json"
+      ],
       "required_before": ["representation_theorem_proof_claim", "formal_universality_claim"]
     },
     {
@@ -160,10 +170,11 @@
     }
   ],
   "current_authorized_work": [
-    "theorem_target_and_scope",
+    "theorem_target_and_scope_maintenance",
     "premise_ledger",
     "formal_semantics",
     "faithful_representation_definition",
+    "p8_theorem_role_resolution",
     "construction_lemmas",
     "obstruction_lemmas",
     "formal_countermodel_search",
