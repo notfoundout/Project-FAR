@@ -5,6 +5,7 @@ health:
 	python tools/check_thm_target_001.py
 	python tools/check_faithful_representation.py
 	python tools/check_p8_theorem_role.py
+	python tools/check_s_core_lemma_ledger.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
@@ -21,6 +22,7 @@ health-fast:
 	python tools/check_thm_target_001.py
 	python tools/check_faithful_representation.py
 	python tools/check_p8_theorem_role.py
+	python tools/check_s_core_lemma_ledger.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
@@ -48,6 +50,7 @@ research-check:
 	python tools/check_thm_target_001.py
 	python tools/check_faithful_representation.py
 	python tools/check_p8_theorem_role.py
+	python tools/check_s_core_lemma_ledger.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
 	python tools/check_independent_reasoning_definition.py
