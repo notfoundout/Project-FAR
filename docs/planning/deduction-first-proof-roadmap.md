@@ -48,7 +48,7 @@ Independent empirical replication is a parallel supporting track. It is not a pa
 
 **Status:** complete prospectively through:
 
-- `theory/evaluation/thm-target-001-premise-ledger.json` v1.2;
+- `theory/evaluation/thm-target-001-premise-ledger.json` v1.3;
 - `docs/research/faithful-representation-specification-v1.0.md`;
 - `theory/evaluation/faithful-representation-specification-v1.0.json`;
 - `docs/research/p8-theorem-role-decision-v1.0.md`;
@@ -56,7 +56,7 @@ Independent empirical replication is a parallel supporting track. It is not a pa
 
 The premise ledger classifies every current dependency as a definition, typing or well-formedness condition, substantive axiom, imported frozen specification, scope restriction, evidence condition, conjecture, or unresolved theorem parameter.
 
-`PRM-010` is resolved as `split`. `PRM-011` and `PRM-012` have frozen semantics. Remaining open parameters concern the reconstruction class for necessity and the candidate universe and equivalence relation for minimality.
+`PRM-010` is resolved as `split`. `PRM-011` and `PRM-012` have frozen semantics. Version 1.3 records W0 proof progress without changing a premise. Remaining open parameters concern the reconstruction class for necessity and the candidate universe and equivalence relation for minimality.
 
 No substantive axiom asserting FARA adequacy, PB-001 completeness, primitive necessity, or universal structure has been admitted.
 
@@ -88,7 +88,7 @@ The specification fixes:
 
 The definition formally rejects label-only mappings, output-only lookup, opaque universal states, hidden interpreters, metadata smuggling, evaluator repair, dependency collapse, history erasure, incoherent per-axis encodings, and unsupported evidential upgrading.
 
-**Result boundary:** the definition is frozen, but satisfiability and existence of a uniform FARA constructor are unproved.
+**Result boundary:** the definition is frozen. W0 now proves the source-side normalization and reduct kernel, but target construction, recovery, preservation, and `Faithful_split` satisfiability remain unproved.
 
 ## Stage D3.5 — Select the P8 theorem role
 
@@ -100,6 +100,8 @@ The selected mode is `split`:
 - `Corr_8E` remains a separate actual-process-to-presentation correspondence obligation;
 - `THM-CORE-REP-001` and `THM-IRD-EXT-001` use `Faithful_split`;
 - `THM-P8-CORR-001` governs the external correspondence family.
+
+`LEM-SC-002` proves extraction of the source-side P8-I reduct. The target-side `Pres_8I` construction remains the W1 obligation `LEM-SC-014`.
 
 The decision permits formal construction work to proceed without turning empirical correspondence into a logical premise. It does not establish either the internal representation theorem or an application correspondence claim.
 
@@ -118,16 +120,56 @@ The ledger registers 37 obligations:
 - 10 obstruction obligations;
 - 3 assembly obligations.
 
-Every obligation is currently `registered_unproved`. The ledger itself is complete as a dependency decomposition but unexecuted as a proof program.
+Current execution state:
 
-### D4 dependency waves
+- 4 proved construction lemmas;
+- 1 established source-scope boundary;
+- 32 open obligations;
+- W0 complete;
+- W1 active.
 
-1. **W0 — Source normalization kernel:** `LEM-SC-001` through `LEM-SC-004`.
-2. **W1 — Base carriers and direct axes:** target allocation and P1, P2, P3, P4, P6, and P8-I constructors.
-3. **W2 — Dynamics, history, and revision:** deterministic and probabilistic P5, P7, nonmonotonic revision, and self-modification.
-4. **W3 — Global witness obligations:** recovery, semantics, coherence, machinery, uniformity, composition, and witness assembly.
-5. **W4 — Obstruction and negative controls:** `OBS-SC-001` through `OBS-SC-010`.
-6. **W5 — Theorem assembly:** common schema, arbitrary-episode witness, and theorem-or-obstruction closure.
+### W0 — Source normalization kernel — complete
+
+`SCORE-W0-PROOF-001` proves:
+
+- `LEM-SC-001` — finite source-contract normalization;
+- `LEM-SC-002` — canonical P1–P7 and P8-I reduct extraction;
+- `LEM-SC-003` — materiality closure and applicability decidability;
+- `LEM-SC-004` — source-isomorphism transport.
+
+`OBS-SC-001` is resolved as `scope_boundary_established`: non-finite material closure is incompatible with the frozen `S_core` source requirements.
+
+The proof is project-authored and human-checkable. The executable reference implementation provides bounded corroboration only. Proof-assistant verification and independent review have not occurred.
+
+### W1 — Base carriers and direct axes — active
+
+Resolve:
+
+- `LEM-SC-005` — target carrier allocation;
+- `LEM-SC-006` — P1 configuration;
+- `LEM-SC-007` — P2 commitments;
+- `LEM-SC-008` — P3 stakes and alternatives;
+- `LEM-SC-009` — P4 grounds and justificatory roles;
+- `LEM-SC-012` — P6 consequences;
+- `LEM-SC-014` — P8-I internal evidential status.
+
+Each obligation requires an accepted construction proof or a quantified obstruction. A generic opaque encoding, metadata dump, source-specific decoder, or label-only mapping is inadmissible.
+
+### W2 — Dynamics, history, and revision
+
+Resolve deterministic and finite-support probabilistic P5 dynamics, P7 history, nonmonotonic revision, and self-modification through `LEM-SC-010`, `011`, `013`, `015`, and `016`.
+
+### W3 — Global witness obligations
+
+Resolve recovery, semantics, coherence, machinery accounting, uniformity, distributed composition, and witness assembly through `LEM-SC-017` through `LEM-SC-024`.
+
+### W4 — Obstruction and negative controls
+
+`OBS-SC-001` is complete as a source boundary. `OBS-SC-002` through `OBS-SC-010` remain open, including the formal NC-01 through NC-10 failure family.
+
+### W5 — Theorem assembly
+
+`ASM-SC-001` through `ASM-SC-003` remain blocked until their dependencies are resolved.
 
 Construction and obstruction work proceed concurrently when dependencies permit. A failed attempted witness is not a theorem-level obstruction. Every obstruction must quantify over its registered constructor, witness, target, or source class.
 
@@ -135,11 +177,11 @@ Broader `S_IRD` features such as continuous carriers, open-ended histories, hidd
 
 **Exit condition:** every mandatory `S_core` feature has an accepted construction lemma or a quantified obstruction, and `ASM-SC-003` records the strongest justified result.
 
-**Immediate work:** prove or refute the W0 normalization kernel, `LEM-SC-001` through `LEM-SC-004`.
+**Immediate work:** construct or obstruct the W1 obligations.
 
 ## Stage D5 — Scoped representation theorem
 
-**Status:** blocked by execution of the D4 lemma ledger.
+**Status:** blocked by the 32 open D4 obligations.
 
 Prove or refute the frozen theorem family, beginning with:
 
@@ -193,7 +235,7 @@ Then establish one or more of:
 
 ## Stage D8 — Mechanization
 
-Encode the frozen definitions, axioms, and theorem chain in an appropriate proof assistant or verified formal system.
+Encode the frozen definitions, assumptions, proved lemmas, unresolved obligations, theorem chain, and countermodels in an appropriate proof assistant or verified formal system.
 
 Mechanization must distinguish:
 
@@ -203,6 +245,8 @@ Mechanization must distinguish:
 - proved lemmas;
 - admitted or unfinished obligations;
 - extraction or implementation claims.
+
+The current W0 reference implementation is not proof-assistant mechanization.
 
 **Exit condition:** the largest sound theorem fragment is machine checked, and every unmechanized dependency is listed.
 
@@ -219,6 +263,8 @@ Invite independent reviewers to:
 
 Independent review strengthens confidence and may discover defects. It is not a logical premise of the theorem.
 
+`SCORE-W0-PROOF-001` is currently project-authored and has not received independent proof review.
+
 ## Parallel track E — Empirical and replication work
 
 PBTS-001 independent replication, comparative experiments, boundary cases, and application tests remain active when resources are available.
@@ -229,22 +275,22 @@ They may not be used as a substitute for D1–D8 when making a mathematical univ
 
 ## Immediate next artifacts
 
-1. Prove or refute `LEM-SC-001` through `LEM-SC-004` as the W0 normalization package.
-2. Begin `OBS-SC-001` concurrently to test the finite material-closure boundary.
-3. Prepare proof objects and countermodel fixtures for every W0 result.
+1. Construct or obstruct `LEM-SC-005` through `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014` as the W1 package.
+2. Register target-side fixtures attacking relation reflection, evidential-status preservation, and primitive smuggling concurrently.
+3. Preserve W0 as project-authored human proof with bounded executable corroboration until proof-assistant verification and independent review occur.
 4. Do not begin theorem assembly while any required dependency remains open.
 
 ## Current nonclaims
 
 This roadmap does not establish that:
 
-- `THM-TARGET-001` is satisfiable;
+- `THM-TARGET-001` is proved;
 - `Faithful_split` is satisfiable;
-- any registered lemma is proved;
+- any W1–W5 obligation is proved;
 - IRD-001 defines every form of reasoning;
 - PB-001 is the correct or complete preservation basis;
 - FARA admits the required representation;
 - any primitive is necessary;
 - FARA is minimal or unique;
 - a universal finite reasoning architecture exists;
-- any proof is machine checked or independently reviewed.
+- W0 is proof-assistant verified or independently reviewed.

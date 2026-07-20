@@ -12,41 +12,42 @@
     "docs/research/thm-target-001-v1.0.md",
     "docs/research/faithful-representation-specification-v1.0.md",
     "docs/research/p8-theorem-role-decision-v1.0.md",
-    "docs/research/s-core-construction-obstruction-ledger-v1.0.md"
+    "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
+    "docs/research/s-core-w0-normalization-proof-v1.0.md"
   ],
   "claims": [
     {
       "id": "CLM-EXISTENCE",
       "name": "Existence of a common reasoning structure",
       "current_status": "unresolved",
-      "maximum_supported_scope": "none beyond bounded recurring similarities; THM-TARGET-001 fixes the S_core question, FAITHFUL-REP-001 fixes the predicate, and SCORE-LEMMA-LEDGER-001 registers the unproved dependencies",
+      "maximum_supported_scope": "the W0 source-normalization kernel is proved for frozen S_core, but no common FARA target schema or representation witness has been established",
       "primary_resolution_mode": "existence proof or formal impossibility/countermodel over a frozen source class",
-      "required_next_test": "prove or refute the W0 normalization obligations LEM-SC-001 through LEM-SC-004, then execute the remaining common-schema dependencies",
-      "supporting_validation": "bounded model search, counterexample programs, and independent proof review",
+      "required_next_test": "construct or obstruct the W1 target-allocation and direct-axis obligations, then execute W2 through W5",
+      "supporting_validation": "bounded model search, counterexample programs, proof-assistant verification, and independent proof review",
       "falsification_condition": "a formal in-scope incompatibility or impossibility result showing that no common structure satisfies the registered commitments",
-      "nonclaims": ["FAR is the common structure", "universality", "minimality", "registering a lemma ledger proves existence"]
+      "nonclaims": ["FAR is the common structure", "universality", "minimality", "source normalization proves target-schema existence"]
     },
     {
       "id": "CLM-SUFFICIENCY",
       "name": "FAR bounded representational sufficiency",
       "current_status": "partially_supported",
-      "maximum_supported_scope": "specific frozen systems and mappings already tested; no theorem-level S_core result and no registered lemma is proved",
+      "maximum_supported_scope": "specific frozen mappings plus a proved S_core source-normalization kernel; no target-preservation lemma or theorem-level S_core result",
       "primary_resolution_mode": "scoped faithful-representation theorem or formal countermodel",
-      "required_next_test": "execute SCORE-LEMMA-LEDGER-001 beginning with W0, then assemble or refute an arbitrary-episode Faithful_split witness",
-      "supporting_validation": "PBTS-001, negative controls, mechanized conformance, and independent replication",
+      "required_next_test": "execute W1 base carriers and direct axes, then dynamics history global witness obstruction and assembly obligations",
+      "supporting_validation": "PBTS-001, negative controls, mechanized conformance, bounded reference implementations, and independent replication",
       "falsification_condition": "an in-scope source object satisfies the frozen source definition but admits no faithful target representation under the theorem obligations",
-      "nonclaims": ["universal sufficiency", "primitive-only sufficiency", "necessity", "registering construction obligations is a sufficiency proof"]
+      "nonclaims": ["universal sufficiency", "primitive-only sufficiency", "necessity", "W0 proves any Pres_i target obligation"]
     },
     {
       "id": "CLM-UNIVERSALITY",
       "name": "FAR universality",
       "current_status": "not_established",
-      "maximum_supported_scope": "none; S_core is a bounded first theorem scope and S_IRD remains an extension target",
+      "maximum_supported_scope": "none; W0 is a source-side lemma package for bounded S_core and S_IRD remains an extension target",
       "primary_resolution_mode": "formal theorem quantified over an independently defined source class, or a formal countermodel",
-      "required_next_test": "resolve the S_core lemma program and finite-core theorem first, then establish or refute extension to S_IRD without promoting the bounded result",
-      "supporting_validation": "adversarial holdouts, boundary discovery, and independent proof review",
+      "required_next_test": "resolve the remaining S_core lemma program and finite-core theorem first, then establish or refute extension to S_IRD without promoting the bounded result",
+      "supporting_validation": "adversarial holdouts, boundary discovery, proof-assistant verification, and independent proof review",
       "falsification_condition": "one formal genuine in-scope countermodel",
-      "nonclaims": ["absence of discovered counterexamples proves universality", "a proof over S_core proves S_IRD universality"]
+      "nonclaims": ["absence of discovered counterexamples proves universality", "a proof over S_core proves S_IRD universality", "W0 is a universality result"]
     },
     {
       "id": "CLM-NECESSITY",
@@ -74,12 +75,12 @@
       "id": "CLM-NONTRIVIALITY",
       "name": "FAR imposes nontrivial representational constraints",
       "current_status": "not_established_generally",
-      "maximum_supported_scope": "implementation-specific checks plus the frozen prospective constraints of FAITHFUL-REP-001 and the unproved obstruction program OBS-SC-001 through OBS-SC-010",
+      "maximum_supported_scope": "implementation-specific checks plus frozen FAITHFUL-REP-001 constraints; OBS-SC-001 is resolved only as a source boundary and target negative controls remain unproved",
       "primary_resolution_mode": "formal faithful-representation theorem and obstruction lemmas excluding unrestricted coding",
-      "required_next_test": "prove the registered negative controls fail for the frozen reasons and show that at least one nontrivial S_core witness can satisfy the definition",
-      "supporting_validation": "mandatory negative-control suite",
+      "required_next_test": "prove the W1-W3 target construction and recovery obligations, then prove NC-01 through NC-10 fail for the registered reasons",
+      "supporting_validation": "mandatory negative-control suite and bounded adversarial reference checks",
       "falsification_condition": "the formal representation relation admits structurally unfaithful encodings with no additional counted commitment",
-      "nonclaims": ["expressive reach alone establishes constraint", "registering obstruction lemmas proves every invalid encoding is rejected", "the faithful predicate is satisfiable"]
+      "nonclaims": ["expressive reach alone establishes constraint", "OBS-SC-001 proves target nontriviality", "the faithful predicate is satisfiable"]
     },
     {
       "id": "CLM-ECONOMY",
@@ -96,12 +97,12 @@
       "id": "CLM-INDEPENDENCE",
       "name": "Independent verification and replication",
       "current_status": "not_established_generally",
-      "maximum_supported_scope": "internal isolated implementation robustness where completed",
+      "maximum_supported_scope": "internal isolated implementation robustness and project-authored W0 proof with bounded executable corroboration",
       "primary_resolution_mode": "separate independent proof-review and independent empirical-replication records",
-      "required_next_test": "after proof artifacts exist, obtain independent proof reconstruction; continue R3 PBTS replication as a parallel supporting track",
+      "required_next_test": "obtain independent reconstruction of SCORE-W0-PROOF-001 and later theorem packages; continue R3 PBTS replication as a parallel supporting track",
       "supporting_validation": "R3 technical replication, R4 adversarial conceptual replication, proof-assistant replay, and external countermodel search",
       "falsification_condition": "qualified independent reviewers identify a valid proof defect, or qualified replicators cannot reproduce the frozen empirical result",
-      "nonclaims": ["one-agent multi-implementation is external independence", "lack of external review makes a deduction an empirical result", "review agreement substitutes for proof"]
+      "nonclaims": ["one-agent implementation checks are external independence", "project-authored W0 proof is independently verified", "review agreement substitutes for proof"]
     }
   ],
   "claim_dimensions": {
@@ -119,6 +120,7 @@
     "stronger_status_requires_linked_artifacts": true,
     "theorem_and_replication_status_must_remain_separate": true,
     "experimental_results_may_not_be_promoted_to_proof": true,
-    "proof_claims_require_explicit_assumptions_and_scope": true
+    "proof_claims_require_explicit_assumptions_and_scope": true,
+    "partial_lemmas_may_not_be_promoted_to_theorem_status": true
   }
 }

@@ -1,0 +1,167 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "SCORE-W0-FIXTURES-001",
+  "description": "Finite fixtures for executable corroboration of the W0 normalization kernel. They are not proof evidence beyond the bounded cases exercised.",
+  "fixtures": [
+    {
+      "id": "W0-FX-001",
+      "title": "Full eight-axis contract with cyclic provenance-history references",
+      "contract": {
+        "nodes": ["e0", "s0", "c0", "q0", "a0", "g0", "t0", "o0", "h0", "p0"],
+        "sorts": {
+          "e0": "event",
+          "s0": "state",
+          "c0": "commitment",
+          "q0": "stake",
+          "a0": "alternative",
+          "g0": "ground",
+          "t0": "transition",
+          "o0": "consequence",
+          "h0": "history",
+          "p0": "provenance"
+        },
+        "relations": [
+          ["at", ["s0", "e0"]],
+          ["holds", ["c0", "s0"]],
+          ["live_for", ["a0", "q0"]],
+          ["supports", ["g0", "c0"]],
+          ["permits", ["t0", "s0"]],
+          ["yields", ["t0", "o0"]],
+          ["records", ["h0", "o0"]],
+          ["evidenced_by", ["c0", "p0"]]
+        ],
+        "references": {
+          "s0": ["e0"],
+          "c0": ["s0", "e0"],
+          "q0": ["a0"],
+          "a0": ["q0"],
+          "g0": ["c0"],
+          "t0": ["s0", "g0"],
+          "o0": ["t0", "c0"],
+          "h0": ["e0", "o0", "p0"],
+          "p0": ["g0", "h0"],
+          "e0": []
+        },
+        "material_seed": ["c0", "q0", "g0", "t0", "o0", "h0", "p0"],
+        "axis_tags": {
+          "P1": ["e0", "s0"],
+          "P2": ["c0"],
+          "P3": ["q0", "a0"],
+          "P4": ["g0"],
+          "P5": ["t0"],
+          "P6": ["o0"],
+          "P7": ["h0"],
+          "P8I": ["p0"]
+        }
+      },
+      "renaming": {
+        "e0": "event_z",
+        "s0": "state_z",
+        "c0": "commitment_z",
+        "q0": "stake_z",
+        "a0": "alternative_z",
+        "g0": "ground_z",
+        "t0": "transition_z",
+        "o0": "consequence_z",
+        "h0": "history_z",
+        "p0": "provenance_z"
+      },
+      "expected_closure": ["a0", "c0", "e0", "g0", "h0", "o0", "p0", "q0", "s0", "t0"],
+      "expected_applicable_axes": ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8I"]
+    },
+    {
+      "id": "W0-FX-002",
+      "title": "Sparse contract with inapplicable history and evidential axes",
+      "contract": {
+        "nodes": ["e1", "s1", "c1", "q1", "a1", "g1", "t1", "o1"],
+        "sorts": {
+          "e1": "event",
+          "s1": "state",
+          "c1": "commitment",
+          "q1": "stake",
+          "a1": "alternative",
+          "g1": "ground",
+          "t1": "transition",
+          "o1": "consequence"
+        },
+        "relations": [
+          ["at", ["s1", "e1"]],
+          ["holds", ["c1", "s1"]],
+          ["live_for", ["a1", "q1"]],
+          ["supports", ["g1", "c1"]],
+          ["yields", ["t1", "o1"]]
+        ],
+        "references": {
+          "e1": [],
+          "s1": ["e1"],
+          "c1": ["s1"],
+          "q1": ["a1"],
+          "a1": ["q1"],
+          "g1": ["c1"],
+          "t1": ["s1", "g1"],
+          "o1": ["t1"]
+        },
+        "material_seed": ["c1", "q1", "g1", "t1", "o1"],
+        "axis_tags": {
+          "P1": ["e1", "s1"],
+          "P2": ["c1"],
+          "P3": ["q1", "a1"],
+          "P4": ["g1"],
+          "P5": ["t1"],
+          "P6": ["o1"],
+          "P7": [],
+          "P8I": []
+        }
+      },
+      "renaming": {
+        "e1": "event_y",
+        "s1": "state_y",
+        "c1": "commitment_y",
+        "q1": "stake_y",
+        "a1": "alternative_y",
+        "g1": "ground_y",
+        "t1": "transition_y",
+        "o1": "consequence_y"
+      },
+      "expected_closure": ["a1", "c1", "e1", "g1", "o1", "q1", "s1", "t1"],
+      "expected_applicable_axes": ["P1", "P2", "P3", "P4", "P5", "P6"]
+    }
+  ],
+  "negative_fixtures": [
+    {
+      "id": "W0-NF-001",
+      "title": "Undeclared reference endpoint",
+      "contract": {
+        "nodes": ["c2"],
+        "sorts": {"c2": "commitment"},
+        "relations": [],
+        "references": {"c2": ["missing"]},
+        "material_seed": ["c2"],
+        "axis_tags": {"P1": [], "P2": ["c2"], "P3": [], "P4": [], "P5": [], "P6": [], "P7": [], "P8I": []}
+      },
+      "expected_error": "undeclared reference endpoint"
+    },
+    {
+      "id": "W0-NF-002",
+      "title": "Sort-changing renaming",
+      "base_fixture": "W0-FX-002",
+      "renaming": {
+        "e1": "state_y",
+        "s1": "event_y",
+        "c1": "commitment_y",
+        "q1": "stake_y",
+        "a1": "alternative_y",
+        "g1": "ground_y",
+        "t1": "transition_y",
+        "o1": "consequence_y"
+      },
+      "expected_error": "renaming must preserve sorts"
+    }
+  ],
+  "nonclaims": [
+    "the fixtures exhaust S_core",
+    "fixture success proves a theorem",
+    "FARA adequacy is tested",
+    "independent validation is established"
+  ]
+}

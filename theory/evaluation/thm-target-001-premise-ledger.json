@@ -1,13 +1,14 @@
 {
   "schema_version": "1.0",
   "ledger_id": "THM-TARGET-001-PREMISES",
-  "version": "1.2",
-  "status": "frozen_with_faithful_semantics_and_p8_split",
+  "version": "1.3",
+  "status": "frozen_premises_with_w0_proof_progress",
   "theorem_target": "THM-TARGET-001",
   "revision_history": [
     {"version":"1.0","effect":"froze theorem premises with Pres_i and Faithful_m8 signatures incomplete"},
     {"version":"1.1","effect":"completed PRM-011 and PRM-012 through FAITHFUL-REP-001"},
-    {"version":"1.2","effect":"resolved PRM-010 as split through P8-ROLE-001 without changing source scope or target interface"}
+    {"version":"1.2","effect":"resolved PRM-010 as split through P8-ROLE-001 without changing source scope or target interface"},
+    {"version":"1.3","effect":"recorded proof of the W0 source-normalization kernel and the OBS-SC-001 scope boundary without adding, deleting, or changing any premise"}
   ],
   "entries": [
     {"id":"PRM-001","classification":"imported_frozen_specification","statement":"The source-domain classes and revision rules are those of Reasoning Domain Specification v1.0.","source":"docs/research/reasoning-domain-specification-v1.0.md","status":"accepted_for_target"},
@@ -33,7 +34,17 @@
     {"id":"PRM-021","classification":"unresolved_theorem_parameter","statement":"The candidate universe, equivalence relation, and cost preorder are undefined.","source":"THM-MIN-001","status":"open"},
     {"id":"PRM-022","classification":"substantive_axiom","statement":"No axiom asserting FARA adequacy, PB-001 completeness, primitive necessity, or universal reasoning structure is accepted.","source":"docs/research/thm-target-001-v1.0.md","status":"explicitly_absent"}
   ],
-  "open_items": ["construction and obstruction lemmas for S_core","reconstruction class for necessity","candidate universe and equivalence relation for minimality"],
-  "gate_effect": {"formal-theorem-target":"satisfied","premise-ledger-and-semantics":"satisfied","faithful-representation-definition":"satisfied"},
-  "nonclaims": ["the premises are true of every actual reasoning process","the conjectures are proved","FARA adequacy is an axiom","PB-001 is complete","Faithful_split is satisfiable"]
+  "proof_progress": {
+    "package": "SCORE-W0-PROOF-001",
+    "artifact": "docs/research/s-core-w0-normalization-proof-v1.0.md",
+    "registry": "theory/evaluation/s-core-w0-normalization-proof.json",
+    "proved": ["LEM-SC-001", "LEM-SC-002", "LEM-SC-003", "LEM-SC-004"],
+    "scope_boundaries_established": ["OBS-SC-001"],
+    "active_wave": "W1",
+    "premise_change": false,
+    "theorem_status_change": false
+  },
+  "open_items": ["W1 through W5 construction obstruction and assembly obligations for S_core","reconstruction class for necessity","candidate universe and equivalence relation for minimality"],
+  "gate_effect": {"formal-theorem-target":"satisfied","premise-ledger-and-semantics":"satisfied","faithful-representation-definition":"satisfied","scoped-representation-proof":"not_satisfied"},
+  "nonclaims": ["the premises are true of every actual reasoning process","the conjectures are proved","FARA adequacy is an axiom","PB-001 is complete","Faithful_split is satisfiable","W0 proves a target representation theorem"]
 }

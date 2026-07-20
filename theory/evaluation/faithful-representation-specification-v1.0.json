@@ -2,12 +2,14 @@
   "schema_version": "1.0",
   "specification_id": "FAITHFUL-REP-001",
   "version": "1.0",
-  "status": "frozen_definition_unproved_satisfiability",
+  "status": "frozen_definition_w0_source_kernel_proved_target_satisfiability_unproved",
   "source_artifact": "docs/research/faithful-representation-specification-v1.0.md",
   "theorem_target": "THM-TARGET-001",
   "source_scope": "S_core",
   "lemma_ledger_artifact": "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
   "lemma_ledger_registry": "theory/evaluation/s-core-construction-obstruction-ledger.json",
+  "w0_proof_artifact": "docs/research/s-core-w0-normalization-proof-v1.0.md",
+  "w0_proof_registry": "theory/evaluation/s-core-w0-normalization-proof.json",
   "source_contract": {
     "tuple": ["tau_S", "Mat", "ValEq", "App"],
     "owned_by_source": true,
@@ -23,7 +25,12 @@
     ],
     "materiality_closure_required": true,
     "exclusion_certificate_required": true,
-    "unknown_applicability_allowed_for_theorem": false
+    "unknown_applicability_allowed_for_theorem": false,
+    "finite_normalization_status": "proved_LEM-SC-001",
+    "canonical_reduct_extraction_status": "proved_LEM-SC-002",
+    "materiality_closure_and_applicability_status": "proved_LEM-SC-003",
+    "source_isomorphism_transport_status": "proved_LEM-SC-004",
+    "nonfinite_closure_status": "outside_S_core_OBS-SC-001"
   },
   "axis_reducts": [
     {"id":"P1","name":"configuration","required_content":["locations","states","participants","resources","externalized_components","typed_incidence_and_availability"]},
@@ -34,6 +41,13 @@
     {"id":"P6","name":"consequence","required_content":["consequences","content_reference","status","degree","producing_basis","downstream_role"]},
     {"id":"P7","name":"historical_and_path","required_content":["event_positions","temporal_or_causal_order","provenance","revision","retraction","supersession","rule_activation","dependency_ancestry","path_conditions"]}
   ],
+  "axis_reduct_extraction": {
+    "status": "proved_source_side",
+    "proof_obligation": "LEM-SC-002",
+    "method": "least finite reference-closed induced typed structure",
+    "includes_internal_P8I_reduct": true,
+    "does_not_establish_target_preservation": true
+  },
   "recovery_contract": {
     "fixed_versioned_interface": true,
     "target_only_after_construction": true,
@@ -94,7 +108,9 @@
     "helpers_fixed_and_ledgered": true,
     "source_reaccess_after_construction_allowed_for_recovery": false,
     "source_isomorphism_equivariance_required": true,
-    "effective_and_terminating_on_S_core": true
+    "effective_and_terminating_on_S_core": true,
+    "source_normalization_equivariance_status": "proved_LEM-SC-004",
+    "target_constructor_equivariance_status": "unproved_LEM-SC-022"
   },
   "compositional_accountability": {
     "conditional_on_declared_decomposition": true,
@@ -140,18 +156,19 @@
     "faithful-representation-definition": "satisfied",
     "scoped-representation-proof": "not_satisfied"
   },
-  "unresolved": ["SCORE_LEMMA_LEDGER_execution","existence_of_uniform_constructor","S_core_representation_theorem","PB_001_completeness","external_process_correspondence"],
+  "unresolved": ["W1_through_W5_lemma_execution","existence_of_uniform_target_constructor","S_core_representation_theorem","PB_001_completeness","external_process_correspondence"],
   "nonclaims": [
     "Faithful_split is satisfiable",
     "FARA represents S_core",
     "FARA represents S_IRD",
     "PB-001 is complete",
     "actual-process correspondence is established",
-    "any registered lemma is proved",
+    "any W1 through W5 obligation is proved",
     "negative controls are exhaustive",
     "any primitive is necessary",
     "FARA is minimal unique or universal",
-    "any theorem is proved"
+    "any theorem in THM-TARGET-001 is proved",
+    "W0 has proof-assistant verification or independent proof review"
   ],
-  "next_required_artifact": "W0 proof package for LEM-SC-001 through LEM-SC-004"
+  "next_required_artifact": "W1 base-carrier and direct-axis construction proof package"
 }

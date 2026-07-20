@@ -2,11 +2,11 @@
 
 ## Status
 
-Frozen prospective proof-dependency ledger for `THM-TARGET-001`.
+Frozen proof-dependency ledger for `THM-TARGET-001`; W0 complete and W1 active.
 
 Ledger identifier: `SCORE-LEMMA-LEDGER-001`.
 
-This artifact decomposes the finite-core proof program into explicit construction, obstruction, and assembly obligations. It does not prove any listed lemma, establish a representation witness, establish FARA adequacy, or satisfy the scoped-representation-proof gate.
+This artifact decomposes the finite-core proof program into explicit construction, obstruction, and assembly obligations. `SCORE-W0-PROOF-001` proves `LEM-SC-001` through `LEM-SC-004` and establishes `OBS-SC-001` as a source-scope boundary. No target-construction lemma, representation witness, FARA adequacy result, or scoped representation theorem is established.
 
 ## Governing artifacts
 
@@ -21,6 +21,12 @@ The ledger is subordinate to:
 - `docs/governance/deduction-first-research-standard.md`.
 
 The machine-readable registration is `theory/evaluation/s-core-construction-obstruction-ledger.json`.
+
+The accepted W0 proof package is:
+
+- `docs/research/s-core-w0-normalization-proof-v1.0.md`;
+- `theory/evaluation/s-core-w0-normalization-proof.json`;
+- `docs/audits/s-core-w0-proof-audit.md`.
 
 ## 1. Purpose and result boundary
 
@@ -59,16 +65,18 @@ An assembly lemma combines previously proved obligations into a common-schema re
 
 The dependency order is mandatory.
 
-### Wave W0 — Source normalization kernel
+### Wave W0 — Source normalization kernel — complete
 
-- `LEM-SC-001` — finite source-contract normalization;
-- `LEM-SC-002` — canonical P1–P7 and P8-I reduct extraction;
-- `LEM-SC-003` — materiality closure and applicability decidability;
-- `LEM-SC-004` — source-isomorphism transport.
+- `LEM-SC-001` — finite source-contract normalization — **proved**;
+- `LEM-SC-002` — canonical P1–P7 and P8-I reduct extraction — **proved**;
+- `LEM-SC-003` — materiality closure and applicability decidability — **proved**;
+- `LEM-SC-004` — source-isomorphism transport — **proved**.
 
-These obligations determine whether the finite theorem inputs are explicit, finite, stable under renaming, and suitable for effective construction.
+`OBS-SC-001` is resolved as `scope_boundary_established`: a non-finite material closure is incompatible with the frozen `S_core` source requirements and is not a target countermodel.
 
-### Wave W1 — Base carriers and direct axes
+These results are project-authored human-checkable proofs with bounded executable corroboration. Proof-assistant verification and independent proof review are not complete.
+
+### Wave W1 — Base carriers and direct axes — active
 
 - `LEM-SC-005` — target carrier allocation;
 - `LEM-SC-006` — configuration construction (`Pres_1`);
@@ -99,7 +107,8 @@ These obligations determine whether the finite theorem inputs are explicit, fini
 
 ### Wave W4 — Obstruction and negative-control program
 
-- `OBS-SC-001` through `OBS-SC-010`.
+- `OBS-SC-001` — non-finite material-closure boundary — **scope boundary established**;
+- `OBS-SC-002` through `OBS-SC-010` — unresolved.
 
 Obstruction work may begin as soon as its dependencies are defined. It does not need to wait for a favorable construction.
 
@@ -119,17 +128,25 @@ For every `(P,J,C_S) ∈ S_core`, construct a finite normalized source contract 
 
 The normalization may not discard information later required by `Faithful_split`.
 
+**Result:** proved by `SCORE-W0-PROOF-001` using canonical finite typed relational-structure coding.
+
 ### `LEM-SC-002` — Canonical reduct extraction
 
 From the normalized source contract, effectively extract the least finite typed reducts `S_1` through `S_7` and the internal evidential-status reduct `S_8I`, including their materiality-closure dependencies.
+
+**Result:** proved by `SCORE-W0-PROOF-001` using least finite reference closure and induced structures.
 
 ### `LEM-SC-003` — Materiality closure and applicability decidability
 
 Prove that materiality closure terminates on `S_core`, that every registered material reference is included, and that every axis applicability judgment is decidable from the frozen source contract.
 
+**Result:** proved by `SCORE-W0-PROOF-001` using stabilization of a monotone sequence of subsets of a finite material universe.
+
 ### `LEM-SC-004` — Source-isomorphism transport
 
 Prove that source isomorphisms transport normalized contracts, reducts, materiality, applicability, and later construction inputs without case identifiers or semantic strengthening.
+
+**Result:** proved by `SCORE-W0-PROOF-001` through closure transport and equality of canonical code sets.
 
 ### `LEM-SC-005` — Target carrier allocation
 
@@ -217,6 +234,8 @@ Combine the constructed target, recovery family, correspondence packages, semant
 
 Determine whether any admitted `S_core` source contract can have nonterminating or non-finite materiality closure. A proved example is a source-scope defect or countermodel to the frozen `S_core` requirements, not automatically a target failure.
 
+**Result:** `scope_boundary_established`. Every well-formed `S_core` material universe is finite, so closure terminates; a genuinely non-finite closure lies outside `S_core`.
+
 ### `OBS-SC-002` — Hidden-interpreter necessity
 
 Prove or refute that some in-scope source object can be recovered only by an unrestricted interpreter, source oracle, or case database. Acceptance requires quantification over the frozen admissible constructor and recovery class.
@@ -301,7 +320,7 @@ The mandatory feature set is:
 
 A feature is resolved only when a cited accepted artifact proves a construction lemma or establishes a quantified obstruction with the exact registered scope. Examples, successful compilers, evaluator agreement, or one failed mapping do not resolve a feature.
 
-## 8. Status transitions
+## 8. Status transitions and execution summary
 
 Allowed obligation statuses are:
 
@@ -317,20 +336,26 @@ Allowed obligation statuses are:
 
 A status other than `registered_unproved`, `proof_in_progress`, `blocked`, or `unknown` requires an evidence artifact and dependency audit.
 
-The ledger itself is frozen and complete as a dependency decomposition. Its execution status is `registered_unexecuted`.
+Current execution summary:
+
+- total obligations: 37;
+- proved: 4;
+- source-scope boundaries established: 1;
+- open: 32;
+- completed wave: W0;
+- active wave: W1.
 
 ## 9. Gate and claim effects
-
-Upon merge:
 
 - the formal-theorem-target gate remains satisfied;
 - the premise-ledger-and-semantics gate remains satisfied;
 - the faithful-representation-definition gate remains satisfied;
 - the scoped-representation-proof gate remains not satisfied;
-- no lower-bound, minimality, mechanization, independent-review, or empirical-replication gate changes;
+- the mechanized-proof-verification gate remains not satisfied;
+- the independent-proof-review gate remains not satisfied;
 - no central claim is promoted.
 
-The ledger is evidence that proof dependencies have been registered, not evidence that the dependencies hold.
+The W0 proof establishes source normalization and extraction only. It is not a target representation result.
 
 ## 10. Revision policy
 
@@ -342,15 +367,15 @@ A lemma that reveals a defect in `THM-TARGET-001`, `FAITHFUL-REP-001`, P8-ROLE-0
 
 This ledger does not establish:
 
-- any listed lemma;
-- existence of a uniform constructor;
+- any W1–W5 obligation;
+- existence of a uniform FARA constructor;
 - satisfiability of `Faithful_split` for any or every `S_core` object;
 - FARA adequacy;
 - PB-001 sufficiency, necessity, independence, minimality, or completeness;
 - correspondence between an actual process and an IRD presentation;
 - a representation, universality, necessity, minimality, equivalence, uniqueness, or impossibility theorem;
-- machine verification or independent proof review.
+- proof-assistant verification or independent proof review.
 
 ## Next required proof package
 
-Prove or refute the W0 source-normalization kernel: `LEM-SC-001` through `LEM-SC-004`. No target-construction theorem should be accepted before those source-side obligations are resolved.
+Construct or obstruct the W1 base-carrier and direct-axis package: `LEM-SC-005`, `LEM-SC-006`, `LEM-SC-007`, `LEM-SC-008`, `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`.

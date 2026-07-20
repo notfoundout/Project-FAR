@@ -12,7 +12,7 @@ The purpose is not merely to improve FAR as an artifact. Infrastructure, impleme
 
 This document governs the project's primary research direction.
 
-It does not introduce new mathematical primitives, accept a theorem, revise Foundation v1.0, or declare FAR correct. Substantive mathematical change still requires the applicable versioned revision process.
+It does not introduce new mathematical primitives, accept a representation theorem, revise Foundation v1.0, or declare FAR correct. Substantive mathematical change still requires the applicable versioned revision process.
 
 ## Governing standards and artifacts
 
@@ -27,6 +27,7 @@ This program is controlled by:
 - `docs/research/faithful-representation-specification-v1.0.md`;
 - `docs/research/p8-theorem-role-decision-v1.0.md`;
 - `docs/research/s-core-construction-obstruction-ledger-v1.0.md`;
+- `docs/research/s-core-w0-normalization-proof-v1.0.md`;
 - `theory/evaluation/research-gates.json`.
 
 The deduction-first standard controls the dependency between proof and empirical validation. Anti-self-validation and replication standards continue to control claims of independent confirmation.
@@ -76,27 +77,22 @@ No accepted artifact is protected from criticism merely because it supports the 
 - P8-I as an internal obligation and P8-E as a separate application-correspondence obligation;
 - common-schema, faithful-representation, extension, necessity, minimality, equivalence, and impossibility theorem families.
 
-`FAITHFUL-REP-001` v1.0 is the current representation-semantic boundary. It defines:
-
-- source materiality and applicability;
-- canonical P1–P7 source reducts;
-- admissible target-only recovery;
-- total typed strong embeddings;
-- preservation and reflection of relations and attributes;
-- P5 finite labeled bisimulation;
-- P7 order and path embedding;
-- semantic agreement and cross-axis coherence;
-- uniform source-isomorphism-equivariant construction;
-- compositional accountability;
-- complete machinery accounting;
-- formal nontriviality and the expected failure locations for NC-01 through NC-10;
-- parameterized clauses for `coordinate`, `side_condition`, and `split` P8 modes.
+`FAITHFUL-REP-001` v1.0 is the representation-semantic boundary. It defines source materiality, canonical source reducts, target-only recovery, total typed strong embeddings, relation preservation and reflection, P5 bisimulation, P7 order and path embedding, semantic agreement, cross-axis coherence, uniformity, compositional accountability, machinery accounting, nontriviality, and the complete `Faithful_split` conjunction.
 
 `P8-ROLE-001` selects `split`. `Pres_8I` remains internal to `Faithful_split`; `Corr_8E` remains a separate actual-process correspondence requirement.
 
-`SCORE-LEMMA-LEDGER-001` v1.0 is the current D4 proof-dependency boundary. It registers 24 construction obligations, 10 obstruction obligations, and 3 assembly obligations. Every obligation is unproved.
+`SCORE-LEMMA-LEDGER-001` v1.0 is the D4 proof-dependency boundary. It registers 24 construction obligations, 10 obstruction obligations, and 3 assembly obligations.
 
-Freezing these artifacts establishes stable definitions and proof dependencies. It does not establish that the definitions are satisfiable, that a uniform constructor exists, that FARA passes, that any ledger obligation holds, or that any theorem is proved, machine checked, or independently verified.
+`SCORE-W0-PROOF-001` is the first accepted partial proof package. It proves:
+
+- `LEM-SC-001` — finite source-contract normalization;
+- `LEM-SC-002` — canonical P1–P7 and P8-I reduct extraction;
+- `LEM-SC-003` — materiality closure and applicability decidability;
+- `LEM-SC-004` — source-isomorphism transport.
+
+It establishes `OBS-SC-001` as a source-scope boundary: genuinely non-finite material closure is outside frozen `S_core`.
+
+These are source-side results only. They do not construct `A_FARA`, prove a target preservation predicate, establish `Faithful_split`, or answer the central research question.
 
 A material change to source scope, target structure, theorem family, faithful-representation clauses, P8 content, lemma statements, quantified obstruction strength, or failure conditions requires a new version.
 
@@ -157,26 +153,38 @@ The following gates are satisfied:
 - premise-ledger-and-semantics;
 - faithful-representation-definition.
 
-Their evidence is:
+Their evidence includes:
 
 - `docs/research/thm-target-001-v1.0.md`;
 - `theory/evaluation/thm-target-001.json`;
-- `theory/evaluation/thm-target-001-premise-ledger.json` v1.2;
+- `theory/evaluation/thm-target-001-premise-ledger.json` v1.3;
 - `docs/research/faithful-representation-specification-v1.0.md`;
 - `theory/evaluation/faithful-representation-specification-v1.0.json`;
 - `docs/research/p8-theorem-role-decision-v1.0.md`;
 - `theory/evaluation/p8-theorem-role-decision.json`.
 
-The D4 lemma dependency decomposition is frozen through:
+The D4 dependency program and W0 result are registered through:
 
 - `docs/research/s-core-construction-obstruction-ledger-v1.0.md`;
-- `theory/evaluation/s-core-construction-obstruction-ledger.json`.
+- `theory/evaluation/s-core-construction-obstruction-ledger.json`;
+- `docs/research/s-core-w0-normalization-proof-v1.0.md`;
+- `theory/evaluation/s-core-w0-normalization-proof.json`;
+- `docs/audits/s-core-w0-proof-audit.md`.
 
-The ledger records 37 open obligations and zero proved lemmas. The scoped-representation-proof gate remains unsatisfied.
+Current lemma state:
 
-The immediate central task is the W0 source-normalization proof package: prove or refute `LEM-SC-001` through `LEM-SC-004`. `OBS-SC-001` may proceed concurrently. Target construction and theorem assembly remain blocked by their registered dependencies.
+- total obligations: 37;
+- proved construction lemmas: 4;
+- source-scope boundaries established: 1;
+- open obligations: 32;
+- completed wave: W0;
+- active wave: W1.
 
-## Theorem discipline
+The scoped-representation-proof gate remains unsatisfied. The mechanized-proof-verification and independent-proof-review gates also remain unsatisfied.
+
+The immediate central task is the W1 target package: construct or obstruct `LEM-SC-005`, `LEM-SC-006`, `LEM-SC-007`, `LEM-SC-008`, `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`.
+
+## Proof-status discipline
 
 Every theorem or lemma artifact must identify:
 
@@ -191,6 +199,15 @@ Every theorem or lemma artifact must identify:
 - consequences actually established;
 - stronger nonclaims.
 
+The status dimensions are separate:
+
+- **project-authored human-checkable proof** means a complete written derivation has been registered internally;
+- **bounded executable corroboration** means algorithms and fixtures test a finite implementation of the definitions;
+- **proof-assistant verification** requires a formal encoding checked by a trusted kernel;
+- **independent proof review** requires qualified external reconstruction or adversarial review.
+
+No lower status may be reported as a higher one.
+
 A theorem may not quantify over all reasoning unless the quantified class is independently and formally defined.
 
 A representation theorem may not hide missing structure in an unrestricted interpreter, oracle, metadata field, lookup table, evaluator repair, source-specific decoder, or unconstrained representation relation.
@@ -198,6 +215,8 @@ A representation theorem may not hide missing structure in an unrestricted inter
 A proof over `S_core` may not be reported as a proof over `S_IRD`.
 
 A failed attempted witness may not be reported as an obstruction unless nonexistence is proved over the registered class.
+
+A partial lemma package may not satisfy the scoped-representation-proof gate.
 
 ## Supporting empirical method
 
@@ -252,6 +271,8 @@ Mechanization formalizes definitions and proofs, exposes missing assumptions, ch
 
 A proof assistant can provide strong verification when the theorem and assumptions are faithfully encoded. It does not erase questionable axioms, circular definitions, or an unjustified source scope.
 
+`tools/s_core_w0_reference.py` is executable corroboration, not proof-assistant mechanization.
+
 Executability alone does not establish universality, necessity, minimality, or truth.
 
 ## Relationship to PBTS-001 and independent replication
@@ -264,9 +285,9 @@ Independent replication remains required before claiming independent confirmatio
 
 ## Anti-self-validation governance
 
-Project-authored experiments may establish internal coherence or implementation robustness but may not be described as independent confirmation.
+Project-authored experiments and reference implementations may establish internal coherence or implementation robustness but may not be described as independent confirmation.
 
-This restriction applies to empirical and review claims. It does not prohibit the project from developing a proof. A proof claim is governed by theorem correctness, explicit assumptions, and the applicable proof gates. Independent review remains necessary before claiming independent proof verification.
+Project-authored proofs may be reported as such when the derivation, assumptions, and scope are explicit. They may not be described as independently verified until qualified external review occurs.
 
 ## Possible outcomes
 
@@ -293,13 +314,14 @@ The repository currently provides:
 - PB-001 as a candidate preservation basis;
 - PBTS-001 and an internal execution;
 - an independently executable replication package and coordinator controls;
-- a mechanization MVP;
+- a mechanization MVP unrelated to theorem verification;
 - deduction-first governance;
-- `THM-TARGET-001` v1.0 and premise ledger v1.2;
+- `THM-TARGET-001` v1.0 and premise ledger v1.3;
 - `FAITHFUL-REP-001` v1.0;
 - `P8-ROLE-001` v1.0 selecting split;
-- `SCORE-LEMMA-LEDGER-001` v1.0 with 37 registered unproved obligations.
+- `SCORE-LEMMA-LEDGER-001` v1.0;
+- `SCORE-W0-PROOF-001` with four proved source-side lemmas and one established source boundary.
 
-These results establish readiness for systematic lemma proof and countermodel work. They do not answer the central research question.
+These results establish a sound source-normalization kernel and readiness for W1 target construction. They do not answer the central research question.
 
-The immediate central task is the W0 source-normalization proof package. Independent PBTS replication continues as a parallel supporting track when real qualified participants are available.
+The immediate central task is W1. Independent PBTS replication and future independent proof review continue as separate supporting tracks.
