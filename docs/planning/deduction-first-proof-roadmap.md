@@ -44,9 +44,9 @@ The target separates `S_core`, `S_IRD`, `A_FARA`, the witness signature, preserv
 
 ## Stage D2 — Premises and semantics
 
-**Status:** complete prospectively through premise ledger v1.4, `FAITHFUL-REP-001`, and `P8-ROLE-001`.
+**Status:** complete prospectively through premise ledger v1.5, `FAITHFUL-REP-001`, and `P8-ROLE-001`.
 
-The premise ledger records W0 and W1 proof progress without adding an axiom, changing source scope, changing the target interface, or promoting a theorem.
+The premise ledger records W0 through W2 proof progress without adding an axiom, changing source scope, changing the target interface, or promoting a theorem.
 
 No premise asserts FARA adequacy, PB-001 completeness, primitive necessity, or universal reasoning structure.
 
@@ -56,7 +56,7 @@ No premise asserts FARA adequacy, PB-001 completeness, primitive necessity, or u
 
 The specification fixes materiality, applicability, canonical reducts, target-only recovery, total typed strong embeddings, relation preservation and reflection, P5 bisimulation, P7 history and path requirements, semantic agreement, coherence, uniformity, composition, machinery accounting, nontriviality, and `Faithful_split`.
 
-W0 proves source-side normalization. W1 proves finite direct-axis target structures and strong embeddings. Recovery and complete `Pres_i` predicates remain unproved.
+W0 proves source-side normalization. W1 proves finite direct-axis target structures and strong embeddings. W2 proves finite deterministic and probabilistic dynamics, history, revision, and operational rule-version constructions. Recovery and complete `Pres_i` predicates remain unproved.
 
 ## Stage D3.5 — P8 role
 
@@ -74,12 +74,12 @@ The frozen ledger contains 37 obligations: 24 construction, 10 obstruction, and 
 
 Current execution state:
 
-- proved construction lemmas: 11;
+- proved construction lemmas: 16;
 - established source-scope boundaries: 1;
-- refuted obstruction hypotheses: 2;
-- open obligations: 23;
-- completed waves: W0 and W1;
-- active wave: W2.
+- refuted obstruction hypotheses: 4;
+- open obligations: 16;
+- completed waves: W0, W1, and W2;
+- active wave: W3.
 
 ### W0 — Source normalization — complete
 
@@ -87,23 +87,11 @@ Current execution state:
 
 ### W1 — Target allocation and direct axes — complete
 
-`SCORE-W1-PROOF-001` proves:
+`SCORE-W1-PROOF-001` proves `LEM-SC-005` through `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`. It refutes `OBS-SC-003` and `OBS-SC-006` over their registered finite scopes.
 
-- `LEM-SC-005` target carrier allocation;
-- `LEM-SC-006` P1 configuration;
-- `LEM-SC-007` P2 commitments;
-- `LEM-SC-008` P3 stakes and alternatives;
-- `LEM-SC-009` P4 grounds and justificatory roles;
-- `LEM-SC-012` P6 consequences;
-- `LEM-SC-014` P8-I internal evidential status.
+### W2 — Dynamics, history, and revision — complete
 
-It refutes `OBS-SC-003` and `OBS-SC-006` over their registered finite direct-axis scopes.
-
-The proof uses fixed schema `DIR-INCIDENCE-1.0`, existing FARA categories, explicit occurrence data, and separate object and representation carriers. It does not add a primitive.
-
-### W2 — Dynamics, history, and revision — active
-
-Resolve:
+`SCORE-W2-PROOF-001` proves:
 
 - `LEM-SC-010` deterministic finite labeled bisimulation;
 - `LEM-SC-011` finite-support probabilistic bisimulation;
@@ -111,29 +99,40 @@ Resolve:
 - `LEM-SC-015` nonmonotonic revision and retraction;
 - `LEM-SC-016` self-modification and rule-version change.
 
-Execute `OBS-SC-004` and `OBS-SC-005` as dependencies close.
+It refutes `OBS-SC-004` and `OBS-SC-005` over their registered finite explicit scopes.
 
-Success requires operational preservation: exact preconditions, resources, actions or observations, rule identities and versions, weights, admissibility, provenance, dependency ancestry, and before/after effects.
+The fixed `DYN-HISTORY-1.0` construction copies complete material transition metadata, finite support and weights, history order, provenance, revision snapshots, active rule versions, accepted and rejected modifications, dependency ancestry, and path conditions. Rule change is operational rather than label-only.
 
-### W3 — Global witness obligations — open
+### W3 — Global witness obligations — active
 
-Resolve `LEM-SC-017` through `LEM-SC-024`: distributed decomposition, target-only recovery, semantic agreement, cross-axis coherence, machinery accounting, global uniformity, composition, and witness assembly.
+Resolve:
+
+- `LEM-SC-017` distributed decomposition and interface construction;
+- `LEM-SC-018` admissible target-only recovery;
+- `LEM-SC-019` semantic agreement;
+- `LEM-SC-020` cross-axis coherence;
+- `LEM-SC-021` complete machinery-ledger construction;
+- `LEM-SC-022` uniformity and source-isomorphism equivariance;
+- `LEM-SC-023` compositional accountability;
+- `LEM-SC-024` well-formed witness assembly.
+
+Success requires one fixed target-only recovery family, source-declared semantic equivalence, compatible shared identities, complete helper accounting, no case database or hidden interpreter, source-isomorphism equivariance, declared interface preservation, and a well-typed witness.
 
 ### W4 — Remaining obstructions and negative controls — open
 
-Resolve `OBS-SC-002`, `OBS-SC-004`, `OBS-SC-005`, and `OBS-SC-007` through `OBS-SC-010`, including NC-01 through NC-10.
+Resolve `OBS-SC-002`, `OBS-SC-007`, `OBS-SC-008`, `OBS-SC-009`, and `OBS-SC-010`, including NC-01 through NC-10.
 
 A failed implementation is not a theorem-level obstruction without quantification over the registered class.
 
 ### W5 — Assembly — open
 
-`ASM-SC-001` through `ASM-SC-003` remain blocked. Assembly may conclude a scoped theorem, formal countermodel, proper-subclass theorem, or explicit unresolved result.
+`ASM-SC-001` through `ASM-SC-003` remain blocked. Assembly may conclude a scoped theorem, formal countermodel, proper-subclass theorem, impossibility result, or explicit unresolved result.
 
 **D4 exit condition:** every mandatory feature has an accepted construction or quantified negative result, and `ASM-SC-003` records the strongest justified outcome.
 
 ## Stage D5 — Scoped representation theorem
 
-**Status:** blocked by 23 open obligations.
+**Status:** blocked by 16 open obligations.
 
 The first theorem attempts are `THM-CORE-COMMON-001`, `THM-CORE-REP-001`, and `THM-IMP-001`. `THM-IRD-EXT-001` remains blocked until the finite-core result is resolved.
 
@@ -155,13 +154,13 @@ Encode frozen definitions, assumptions, proved lemmas, unresolved obligations, a
 
 Distinguish trusted kernel assumptions, Project FAR axioms, executable definitions, proved lemmas, and admitted obligations.
 
-The W0 and W1 Python references are bounded corroboration, not proof-assistant verification.
+The W0, W1, and W2 Python references are bounded corroboration, not proof-assistant verification.
 
 ## Stage D9 — Independent proof review
 
 Qualified reviewers should reconstruct the proofs, challenge scope and assumptions, search for countermodels, inspect mechanized artifacts, and test whether conclusions exceed the derivations.
 
-W0 and W1 are project-authored and not independently reviewed.
+W0, W1, and W2 are project-authored and not independently reviewed.
 
 ## Parallel empirical track
 
@@ -169,9 +168,9 @@ PBTS-001 replication, comparative experiments, boundary discovery, and applicati
 
 ## Immediate next artifacts
 
-1. Produce the W2 proof-or-obstruction package for `LEM-SC-010`, `011`, `013`, `015`, and `016`.
-2. Execute `OBS-SC-004` and `OBS-SC-005` as dependencies close.
-3. Add deterministic, probabilistic, history-collapse, revision, and exact-rule-change adversarial fixtures.
+1. Produce the W3 proof-or-obstruction package for `LEM-SC-017` through `LEM-SC-024`.
+2. Register recovery-oracle, semantic-strengthening, identity-conflict, hidden-machinery, nonuniformity, and composition-interface adversarial fixtures.
+3. Execute the remaining W4 obligations as W3 dependencies close.
 4. Preserve every unresolved dependency and nonclaim.
 5. Do not begin theorem assembly while a required obligation remains open.
 
@@ -187,4 +186,4 @@ This roadmap does not establish:
 - PB-001 sufficiency or completeness;
 - primitive necessity or minimality;
 - universality, equivalence, uniqueness, or impossibility;
-- proof-assistant verification or independent review of W0 or W1.
+- proof-assistant verification or independent review of W0, W1, or W2.
