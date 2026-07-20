@@ -19,6 +19,6 @@ def main()->int:
     gates={x['name']:x for x in load(GATES)['gates']}; assert gates['scoped-representation-proof']['status']=='not_satisfied'; assert gates['mechanized-proof-verification']['status']=='not_satisfied'; assert gates['independent-proof-review']['status']=='not_satisfied'
     assert MAKE.read_text(encoding='utf-8').count('python tools/check_s_core_w0.py')==3
     cp=subprocess.run([sys.executable,'-m','unittest','discover','-s','tests','-p','test_s_core_w0_reference.py'],cwd=ROOT,text=True,capture_output=True); assert cp.returncode==0,cp.stdout+cp.stderr
-    print('S_core W0 proof: PASS (retained after W1; 4 lemmas and 1 boundary remain established)')
+    print('S_core W0 proof: PASS (retained after W2; 4 lemmas and 1 boundary remain established)')
     return 0
 if __name__=='__main__': raise SystemExit(main())
