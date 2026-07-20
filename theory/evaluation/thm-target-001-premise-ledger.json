@@ -1,9 +1,19 @@
 {
   "schema_version": "1.0",
   "ledger_id": "THM-TARGET-001-PREMISES",
-  "version": "1.0",
-  "status": "frozen_with_explicit_open_parameters",
+  "version": "1.1",
+  "status": "frozen_with_explicit_open_parameters_and_faithful_semantics",
   "theorem_target": "THM-TARGET-001",
+  "revision_history": [
+    {
+      "version": "1.0",
+      "effect": "froze theorem premises with Pres_i and Faithful_m8 signatures incomplete"
+    },
+    {
+      "version": "1.1",
+      "effect": "completed PRM-011 and PRM-012 through FAITHFUL-REP-001 without changing source scope, target interface, theorem family, or P8 alternatives"
+    }
+  ],
   "entries": [
     {
       "id": "PRM-001",
@@ -54,7 +64,10 @@
       "classification": "imported_frozen_specification",
       "statement": "Canonical meanings of representation, representational structure, interpretation, investigation, reasoning calculus, state, transition, admissibility, and resolution are imported from Project FAR definitions and FARA v1.0.",
       "source": "theory/definitions/definitions.md",
-      "additional_sources": ["frameworks/FARA/architecture.md", "frameworks/FARA/primitives.md"],
+      "additional_sources": [
+        "frameworks/FARA/architecture.md",
+        "frameworks/FARA/primitives.md"
+      ],
       "status": "accepted_for_target"
     },
     {
@@ -78,23 +91,27 @@
       "statement": "P8 must be resolved as coordinate, side condition, or split internal/external correspondence obligation before a representation proof is accepted.",
       "source": "docs/research/thm-target-001-v1.0.md",
       "status": "open",
-      "blocks": ["THM-CORE-REP-001", "THM-IRD-EXT-001", "THM-P8-CORR-001"]
+      "blocks": [
+        "THM-CORE-REP-001",
+        "THM-IRD-EXT-001",
+        "THM-P8-CORR-001"
+      ]
     },
     {
       "id": "PRM-011",
       "classification": "definition",
-      "statement": "Pres_i holds only when every source distinction registered as material for axis i remains target-distinguishable and correctly related under the declared witness.",
-      "source": "docs/research/thm-target-001-v1.0.md",
-      "status": "signature_frozen_semantics_incomplete",
-      "blocks": ["faithful-representation-definition"]
+      "statement": "Pres_i holds exactly when admissible target-only recovery yields an axis reduct into which the applicable material source reduct has a total typed strong embedding preserving and reflecting registered relations and attributes.",
+      "source": "docs/research/faithful-representation-specification-v1.0.md",
+      "status": "semantics_frozen_unproved_satisfiability",
+      "note": "The definition includes axis-specific bisimulation and order-embedding clauses and does not assert that a witness exists."
     },
     {
       "id": "PRM-012",
       "classification": "definition",
-      "statement": "Faithful_m8 is the conjunction of applicable preservation, semantic, dynamics, consequence, history, uniformity, nontriviality, and machinery-accounting clauses.",
-      "source": "docs/research/thm-target-001-v1.0.md",
-      "status": "signature_frozen_semantics_incomplete",
-      "blocks": ["faithful-representation-definition"]
+      "statement": "Faithful_m8 is the frozen conjunction of source, target, and witness well-formedness; admissible recovery; all applicable Pres_1-Pres_7 predicates; the selected P8 clause; semantic agreement; cross-axis coherence; uniformity; compositional accountability; complete machinery accounting; and formal nontriviality.",
+      "source": "docs/research/faithful-representation-specification-v1.0.md",
+      "status": "semantics_frozen_unproved_satisfiability",
+      "note": "P8 mode selection and theorem satisfiability remain open."
     },
     {
       "id": "PRM-013",
@@ -113,15 +130,15 @@
     {
       "id": "PRM-015",
       "classification": "typing_or_well_formedness_condition",
-      "statement": "The representation construction must be uniform over the declared source class and all source-specific machinery must appear in the target machinery ledger.",
-      "source": "docs/research/thm-target-001-v1.0.md",
+      "statement": "The representation constructor and recovery family must be fixed and source-isomorphism equivariant over the declared class; all source-specific machinery must appear as target data or in the complete machinery ledger.",
+      "source": "docs/research/faithful-representation-specification-v1.0.md",
       "status": "accepted_for_target"
     },
     {
       "id": "PRM-016",
       "classification": "typing_or_well_formedness_condition",
-      "statement": "Label-only maps, output-only lookup, opaque universal state, hidden interpreters, metadata smuggling, evaluator repair, history erasure, and evidential upgrading are inadmissible witnesses.",
-      "source": "docs/research/thm-target-001-v1.0.md",
+      "statement": "Label-only maps, output-only lookup, opaque universal state, hidden interpreters, metadata smuggling, evaluator repair, history erasure, evidential upgrading, and incoherent per-axis encodings are inadmissible witnesses.",
+      "source": "docs/research/faithful-representation-specification-v1.0.md",
       "status": "accepted_for_target"
     },
     {
@@ -151,7 +168,9 @@
       "statement": "The admissible reconstruction class for primitive necessity has not been defined.",
       "source": "THM-PRIM-NEC-001",
       "status": "open",
-      "blocks": ["primitive-lower-bounds"]
+      "blocks": [
+        "primitive-lower-bounds"
+      ]
     },
     {
       "id": "PRM-021",
@@ -159,7 +178,10 @@
       "statement": "The candidate universe, equivalence relation, and cost preorder for minimality and uniqueness have not been defined.",
       "source": "THM-MIN-001",
       "status": "open",
-      "blocks": ["minimality-universe-and-proof", "THM-EQUIV-001"]
+      "blocks": [
+        "minimality-universe-and-proof",
+        "THM-EQUIV-001"
+      ]
     },
     {
       "id": "PRM-022",
@@ -170,32 +192,31 @@
     }
   ],
   "classification_counts": {
-    "definition": 4,
-    "typing_or_well_formedness_condition": 4,
     "imported_frozen_specification": 4,
     "scope_restriction": 2,
+    "typing_or_well_formedness_condition": 4,
+    "definition": 4,
+    "unresolved_theorem_parameter": 3,
     "evidence_condition": 1,
     "conjecture": 3,
-    "unresolved_theorem_parameter": 3,
     "substantive_axiom": 1
   },
   "open_items": [
-    "formal semantics of Pres_1 through Pres_7",
-    "formal semantics of Faithful_m8",
     "P8 mode",
     "reconstruction class for necessity",
     "candidate universe and equivalence relation for minimality"
   ],
   "gate_effect": {
     "formal-theorem-target": "satisfied",
-    "premise-ledger-and-semantics": "in_progress",
-    "faithful-representation-definition": "not_satisfied"
+    "premise-ledger-and-semantics": "satisfied",
+    "faithful-representation-definition": "satisfied"
   },
   "nonclaims": [
     "the premises are all true of every actual reasoning process",
     "the conjectures are proved",
     "the open theorem parameters are resolved",
     "FARA adequacy is an axiom",
-    "PB-001 is complete"
+    "PB-001 is complete",
+    "Faithful_m8 is satisfiable"
   ]
 }
