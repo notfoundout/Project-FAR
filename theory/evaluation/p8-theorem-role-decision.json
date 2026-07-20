@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "decision_id": "P8-ROLE-001",
+  "version": "1.0",
+  "status": "frozen_unproved",
+  "theorem_target": "THM-TARGET-001",
+  "selected_mode": "split",
+  "decision_artifact": "docs/research/p8-theorem-role-decision-v1.0.md",
+  "internal_obligation": {
+    "id": "P8-I",
+    "predicate": "Pres_8I",
+    "role": "internal_to_faithful_representation",
+    "required_preservation": [
+      "observation_vs_inference",
+      "reported_vs_instrumented",
+      "assumed_vs_derived",
+      "source_and_provenance",
+      "confidence_uncertainty_and_qualification",
+      "accepted_rejected_superseded_or_withdrawn_support",
+      "evidence_grade"
+    ],
+    "no_evidential_upgrade": true,
+    "metadata_is_counted_machinery": true
+  },
+  "external_obligation": {
+    "id": "P8-E",
+    "predicate": "Corr_8E",
+    "role": "separate_process_to_presentation_correspondence",
+    "required_fields": [
+      "actual_process_and_episode",
+      "observation_and_instrumentation_boundary",
+      "process_to_source_mapping",
+      "unsupported_or_unobservable_components",
+      "evidential_grade",
+      "uncertainty_limitations_and_alternatives"
+    ],
+    "not_implied_by_formal_representation": true,
+    "failure_blocks_application_not_formal_theorem": true
+  },
+  "formal_definitions": {
+    "Faithful_split": "Faithful_internal and Pres_8I",
+    "ApplicableFaithful": "Corr_8E and Faithful_split"
+  },
+  "rejected_modes": {
+    "coordinate": "conflates internal preservation with external application correspondence",
+    "side_condition": "fails to protect provenance and evidence-status distinctions already internal to the source presentation"
+  },
+  "theorem_effects": {
+    "THM-CORE-REP-001": "uses Faithful_split",
+    "THM-IRD-EXT-001": "uses Faithful_split",
+    "THM-P8-CORR-001": "external Corr_8E theorem_or_contract_family"
+  },
+  "proof_status": "none",
+  "machine_check_status": "not_started",
+  "independent_review_status": "not_started",
+  "revision_rule": "mode or boundary changes require a versioned theorem-target revision unless definitional equivalence is proved",
+  "nonclaims": [
+    "Faithful_split is satisfiable for every S_core object",
+    "FARA faithfully represents S_core",
+    "any actual system corresponds to an IRD-001 presentation",
+    "PB-001 is sufficient necessary independent minimal or complete",
+    "universality minimality uniqueness or impossibility",
+    "machine verification or independent proof review"
+  ],
+  "next_required_artifact": "S_core construction and obstruction lemma ledger"
+}
