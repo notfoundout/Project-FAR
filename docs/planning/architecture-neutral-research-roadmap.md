@@ -50,57 +50,74 @@ Replication may reveal ambiguity, missing obligations, counterexamples, or imple
 - `theory/evaluation/thm-target-001.json`;
 - `theory/evaluation/thm-target-001-premise-ledger.json`.
 
-**Result:** the theorem program now distinguishes:
+**Result:** the theorem program distinguishes `S_core`, `S_IRD`, the theorem-facing FARA interface, the witness signature, P1-P7 obligations, three P8 alternatives, nontriviality conditions, failure rules, and separate theorem families.
 
-- `S_core`, the finite explicit IRD-001 proof scope;
-- `S_IRD`, the broader extension target;
-- a theorem-facing FARA interface package;
-- a uniform representation-witness signature;
-- P1-P7 preservation obligations;
-- P8 as an unresolved parameter with `coordinate`, `side_condition`, and `split` alternatives;
-- formal nontriviality and machinery-accounting requirements;
-- separate existence, representation, extension, necessity, minimality, equivalence, and impossibility theorem families.
-
-The formal-theorem-target gate is satisfied. The premise-and-semantics gate remains in progress. No theorem is proved.
+The formal-theorem-target gate is satisfied. No theorem is proved.
 
 ## Milestone 7 — Faithful-representation formalization
 
+**Status:** complete prospectively through:
+
+- `docs/research/faithful-representation-specification-v1.0.md`;
+- `theory/evaluation/faithful-representation-specification-v1.0.json`;
+- `theory/evaluation/thm-target-001-premise-ledger.json` v1.1.
+
+**Result:** `FAITHFUL-REP-001` defines:
+
+- a frozen source materiality and applicability contract;
+- canonical finite source reducts for P1-P7;
+- target-only deterministic recovery;
+- total typed strong embeddings;
+- relation preservation and reflection;
+- source-declared value equivalence;
+- P5 finite labeled bisimulation;
+- P7 order and path embedding;
+- semantic agreement and cross-axis coherence;
+- uniform source-isomorphism-equivariant construction;
+- compositional accountability;
+- complete machinery accounting;
+- formal nontriviality and NC-01 through NC-10 failure locations;
+- parameterized clauses for all three P8 modes;
+- the complete `Faithful_{m_8}` conjunction.
+
+The premise-ledger-and-semantics and faithful-representation-definition gates are satisfied. This means the definitions are frozen and evidence-backed as artifacts; it does not mean they are satisfiable or that FARA passes them.
+
+## Milestone 7.5 — P8 theorem-role decision
+
 **Status:** active immediate milestone.
 
-Expand `Pres_1` through `Pres_7` and `Faithful_m8` into exact mathematical definitions for:
+Select exactly one already-frozen mode:
 
-- typed source-target encoding;
-- admissible recovery;
-- semantic agreement;
-- transition and admissibility correspondence;
-- commitment, stake, grounds, consequence, dependency, and history preservation;
-- complete machinery accounting;
-- uniformity and compositionality.
+- `coordinate`;
+- `side_condition`;
+- `split`.
 
-Formally exclude placeholder, label-only, lookup-table, hidden-interpreter, metadata-smuggling, dependency-collapse, history-erasure, evaluator-repaired, and evidential-upgrade encodings.
+The decision must justify its relation to IRD-001, PB-001, internal provenance, process-to-presentation correspondence, application claims, and `THM-P8-CORR-001`.
 
-Resolve P8 as `coordinate`, `side_condition`, or `split`, or register a theorem-target revision blocker.
+A selection among the frozen clauses unblocks the finite-core proof program but proves nothing. A fourth mode or content-changing alteration requires a new `THM-TARGET` and faithful-specification version.
 
-**Exit condition:** a frozen faithful-representation relation suitable for proof or refutation.
+**Exit condition:** P8 is resolved and the finite-core theorem is blocked only by unproved construction and obstruction obligations.
 
 ## Milestone 8 — Construction and obstruction lemmas
 
-Build constructive mappings for `S_core` while searching for obstruction lemmas and countermodels.
+**Status:** blocked by Milestone 7.5.
+
+Build constructive mappings for `S_core` while searching for obstruction lemmas and countermodels under `FAITHFUL-REP-001`.
 
 Required pressure classes include:
 
+- ordinary finite configurations, commitments, stakes, grounds, consequences, and histories;
 - self-modification;
 - nonmonotonic revision;
 - finite-support probabilistic or graded commitment;
-- distributed reasoning;
-- semantic change;
-- hidden or partially observed state;
-- resource bounds;
-- circular support;
-- dynamic representational types;
-- open-ended or nonterminating reasoning.
+- distributed composition;
+- resource and admissibility conditions;
+- circular support where admitted;
+- formal negative controls and hidden-machinery attempts.
 
-**Exit condition:** every admitted source feature has a construction lemma or a registered obstruction.
+Continuous, open-ended, partially observed, semantically changing, and non-finite-support systems remain `S_IRD` extension obligations unless a finite explicit instance belongs to `S_core`.
+
+**Exit condition:** every admitted `S_core` source feature has a construction lemma or a registered obstruction.
 
 ## Milestone 9 — Scoped representation theorem or refutation
 
@@ -174,7 +191,7 @@ Separate theorem status, mechanization status, independent proof-review status, 
 
 The primary dependency chain is:
 
-`domain → source definition → theorem target and premises → faithful representation → construction/obstruction lemmas → representation theorem or refutation → lower bounds → minimality/equivalence/impossibility → mechanization → independent proof review`.
+`domain → source definition → theorem target and premises → faithful representation → P8 decision → construction/obstruction lemmas → representation theorem or refutation → lower bounds → minimality/equivalence/impossibility → mechanization → independent proof review`.
 
 PBTS-001 replication proceeds in parallel. Its completion is required only for independent empirical-confirmation claims, not for theorem construction.
 
@@ -184,4 +201,4 @@ Certification expansion, new dashboards, release packaging, favorable-case accum
 
 ## Immediate next action
 
-Freeze the faithful-representation specification and resolve the theorem role of P8. Do not begin a representation proof until `Pres_1` through `Pres_7`, `Faithful_m8`, admissible recovery, semantic agreement, machinery accounting, and the selected P8 mode are fixed.
+Freeze the P8 theorem-role decision. Do not begin `THM-CORE-REP-001` proof construction until one of the three already-defined P8 clauses is selected. After selection, create the `S_core` construction-and-obstruction lemma ledger and formal negative-control lemmas.
