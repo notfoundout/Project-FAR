@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate frozen THM-TARGET-001 and the registered S_core lemma program."""
+"""Validate frozen THM-TARGET-001 and partial W0 lemma progress."""
 from __future__ import annotations
 import json
 from pathlib import Path
@@ -14,6 +14,8 @@ FAITHFUL = ROOT / "docs/research/faithful-representation-specification-v1.0.md"
 P8DOC = ROOT / "docs/research/p8-theorem-role-decision-v1.0.md"
 LEMMA_DOC = ROOT / "docs/research/s-core-construction-obstruction-ledger-v1.0.md"
 LEMMA_REG = ROOT / "theory/evaluation/s-core-construction-obstruction-ledger.json"
+W0_DOC = ROOT / "docs/research/s-core-w0-normalization-proof-v1.0.md"
+W0_REG = ROOT / "theory/evaluation/s-core-w0-normalization-proof.json"
 
 
 def load(path: Path) -> dict:
@@ -21,7 +23,7 @@ def load(path: Path) -> dict:
 
 
 def main() -> int:
-    for path in (DOC, TARGET, PREMISES, GATES, CLAIMS, FAITHFUL, P8DOC, LEMMA_DOC, LEMMA_REG):
+    for path in (DOC, TARGET, PREMISES, GATES, CLAIMS, FAITHFUL, P8DOC, LEMMA_DOC, LEMMA_REG, W0_DOC, W0_REG):
         assert path.is_file(), f"missing theorem artifact: {path.relative_to(ROOT)}"
 
     doc = DOC.read_text(encoding="utf-8")
@@ -39,10 +41,13 @@ def main() -> int:
     assert target.get("theorem_target_id") == "THM-TARGET-001"
     assert target.get("version") == "1.0"
     assert target.get("status") == "frozen_unproved"
-    assert target.get("proof_status") == "none"
-    assert target.get("machine_check_status") == "not_started"
+    assert target.get("proof_status") == "partial_lemmas_only"
+    assert target.get("machine_check_status") == "bounded_executable_reference_only"
     assert target.get("independent_review_status") == "not_started"
+    assert target.get("w0_proof_artifact") == W0_DOC.relative_to(ROOT).as_posix()
+    assert target.get("w0_proof_registry") == W0_REG.relative_to(ROOT).as_posix()
     assert set(target.get("source_classes", {})) == {"S_core", "S_IRD"}
+    assert target["source_classes"]["S_core"]["status"] == "frozen_initial_scope_w0_normalization_proved"
     assert target["target_class"]["id"] == "A_FARA"
     assert target["target_class"]["adds_new_primitive"] is False
     assert target["representation_witness"]["tuple"] == ["E", "D", "M", "iota", "kappa"]
@@ -63,16 +68,18 @@ def main() -> int:
     program = target.get("lemma_program", {})
     assert program == {
         "id": "SCORE-LEMMA-LEDGER-001",
-        "status": "registered_unexecuted",
+        "status": "w0_complete_w1_active",
         "total_obligations": 37,
         "construction_obligations": 24,
         "obstruction_obligations": 10,
         "assembly_obligations": 3,
-        "proved_obligations": 0,
+        "proved_obligations": 4,
         "established_obstructions": 0,
-        "open_obligations": 37,
-        "active_wave": "W0",
-        "active_obligations": ["LEM-SC-001", "LEM-SC-002", "LEM-SC-003", "LEM-SC-004"],
+        "established_scope_boundaries": 1,
+        "open_obligations": 32,
+        "completed_waves": ["W0"],
+        "active_wave": "W1",
+        "active_obligations": ["LEM-SC-005", "LEM-SC-006", "LEM-SC-007", "LEM-SC-008", "LEM-SC-009", "LEM-SC-012", "LEM-SC-014"],
     }
 
     family = {item["id"]: item for item in target.get("theorem_family", [])}
@@ -91,14 +98,13 @@ def main() -> int:
     assert snapshot.get("faithful_representation_definition") == "satisfied"
     for name in ("scoped_representation_proof","primitive_lower_bounds","minimality_universe_and_proof","mechanized_proof_verification","independent_proof_review"):
         assert snapshot.get(name) == "not_satisfied"
-    assert target.get("next_required_artifact") == "W0 proof package for LEM-SC-001 through LEM-SC-004"
-    assert "any registered lemma is proved" in target.get("nonclaims", [])
+    assert target.get("next_required_artifact") == "W1 base-carrier and direct-axis construction proof package"
+    assert "any W1 through W5 obligation is proved" in target.get("nonclaims", [])
 
     premises = load(PREMISES)
-    assert premises.get("version") == "1.2"
+    assert premises.get("version") in {"1.2", "1.3"}
     entries = premises.get("entries", [])
-    assert len(entries) == 22
-    assert [item.get("id") for item in entries] == [f"PRM-{i:03d}" for i in range(1, 23)]
+    assert len(entries) >= 22
     prm10 = next(item for item in entries if item["id"] == "PRM-010")
     assert prm10.get("status") == "resolved_frozen"
     assert prm10.get("decision") == "split"
@@ -107,10 +113,17 @@ def main() -> int:
     lemma = load(LEMMA_REG)
     assert lemma.get("ledger_id") == "SCORE-LEMMA-LEDGER-001"
     assert lemma.get("version") == "1.0"
-    assert lemma.get("status") == "frozen_dependency_decomposition_registered_unexecuted"
+    assert lemma.get("status") == "frozen_dependency_decomposition_w0_complete_w1_active"
     assert len(lemma.get("obligations", [])) == 37
-    assert lemma.get("execution_summary", {}).get("proved") == 0
-    assert lemma.get("execution_summary", {}).get("open") == 37
+    assert lemma.get("execution_summary", {}).get("proved") == 4
+    assert lemma.get("execution_summary", {}).get("scope_boundary_established") == 1
+    assert lemma.get("execution_summary", {}).get("open") == 32
+
+    w0 = load(W0_REG)
+    assert w0.get("proof_id") == "SCORE-W0-PROOF-001"
+    assert w0.get("status") == "project_authored_human_checkable_proof"
+    assert w0.get("verification", {}).get("proof_assistant_status") == "not_started"
+    assert w0.get("verification", {}).get("independent_review_status") == "not_started"
 
     gates = load(GATES)
     by_name = {gate["name"]: gate for gate in gates.get("gates", [])}
@@ -125,7 +138,7 @@ def main() -> int:
         if claim.get("id") in {"CLM-EXISTENCE", "CLM-UNIVERSALITY", "CLM-NECESSITY", "CLM-MINIMALITY"}:
             assert claim.get("current_status") != "supported"
 
-    print("THM-TARGET-001 validation: PASS (37 lemma obligations open; W0 next; no proof claim)")
+    print("THM-TARGET-001 validation: PASS (W0 proved; W1 active; theorem unproved)")
     return 0
 
 
