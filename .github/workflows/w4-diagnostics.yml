@@ -21,7 +21,12 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
       - name: Canonical tests
-        run: python tools/run_tests.py --fast
+        run: |
+          if ! python tools/run_tests.py --fast > /tmp/project-far-tests.log 2>&1; then
+            tail -n 240 /tmp/project-far-tests.log
+            exit 1
+          fi
+          tail -n 20 /tmp/project-far-tests.log
       - name: Research gates
         run: python tools/check_research_gates.py
       - name: Deduction program
