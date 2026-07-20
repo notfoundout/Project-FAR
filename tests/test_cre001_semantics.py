@@ -20,15 +20,18 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         self.assertIn('CRE-001 SEMANTIC CHECK PASSED', cp.stdout)
 
     def test_generated_task_ids_and_provenance_are_unambiguous(self):
+        path=ROOT/'docs/planning/next-actions.md'
+        before=path.read_text(encoding='utf-8')
         cp=subprocess.run([sys.executable,'tools/generate_next_tasks.py'],cwd=ROOT,text=True,capture_output=True)
         self.assertEqual(cp.returncode,0,cp.stdout+cp.stderr)
-        text=(ROOT/'docs/planning/next-actions.md').read_text(encoding='utf-8')
+        text=path.read_text(encoding='utf-8')
+        self.assertEqual(text,before,'next-actions.md must match the canonical generator output')
         ranked=text.split('## Maintainer Task Briefs',1)[0]
         ids=re.findall(r'^### ([A-Z]+-\d{3}):', ranked, re.M)
         self.assertEqual(len(ids),len(set(ids)))
-        self.assertIn('### STRATEGIC-001: Plan independent replication of CRE-002-EXT-001', ranked)
-        self.assertIn('- Source: strategic roadmap priority', ranked)
-        strategic=ranked.split('### TASK-054:',1)[0]
-        self.assertNotIn('Source gap:', strategic)
+        self.assertIn('### STRATEGIC-001: Freeze THM-TARGET-001 and premise ledger', ranked)
+        self.assertIn('- Source: deduction-first strategic priority', ranked)
+        self.assertNotIn('Plan independent replication of CRE-002-EXT-001', ranked)
+        self.assertNotIn('Source gap:', ranked)
 
 if __name__=='__main__': unittest.main()
