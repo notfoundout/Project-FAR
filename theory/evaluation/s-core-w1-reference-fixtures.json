@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "SCORE-W1-FIXTURES-001",
+  "constructor_schema": "DIR-INCIDENCE-1.0",
+  "source": {
+    "axes": {
+      "P1": {
+        "elements": [
+          {"id": "participant:analyst", "sort": "participant", "label": "Analyst", "denotation": "the acting analyst"},
+          {"id": "state:open", "sort": "state", "label": "Open investigation", "denotation": "the current open state"},
+          {"id": "location:desk", "sort": "location", "label": "Desk", "denotation": "the episode location"},
+          {"id": "resource:record", "sort": "resource", "label": "Record", "denotation": "the available record"}
+        ],
+        "relations": [
+          {"role": "P1.participates", "display_role": "participates", "args": ["participant:analyst", "state:open"]},
+          {"role": "P1.state_at_location", "display_role": "state at", "args": ["state:open", "location:desk"]},
+          {"role": "P1.resource_available", "display_role": "available", "args": ["resource:record", "state:open"]}
+        ],
+        "attributes": [
+          {"owner": "resource:record", "role": "P1.availability_status", "display_role": "availability", "value": "available"}
+        ]
+      },
+      "P2": {
+        "elements": [
+          {"id": "participant:analyst", "sort": "participant", "label": "Analyst", "denotation": "the acting analyst"},
+          {"id": "commitment:c1", "sort": "commitment", "label": "C1", "denotation": "the proposition accepted by the analyst"},
+          {"id": "content:p", "sort": "content", "label": "P", "denotation": "the proposition P"},
+          {"id": "event:e2", "sort": "event", "label": "E2", "denotation": "the second event position"}
+        ],
+        "relations": [
+          {"role": "P2.holder", "display_role": "held by", "args": ["commitment:c1", "participant:analyst"]},
+          {"role": "P2.content_reference", "display_role": "has content", "args": ["commitment:c1", "content:p"]},
+          {"role": "P2.located_at", "display_role": "located at", "args": ["commitment:c1", "event:e2"]}
+        ],
+        "attributes": [
+          {"owner": "commitment:c1", "role": "P2.commitment_status", "display_role": "status", "value": "accepted"},
+          {"owner": "commitment:c1", "role": "P2.commitment_degree", "display_role": "degree", "value": 0.8}
+        ]
+      },
+      "P3": {
+        "elements": [
+          {"id": "stake:s1", "sort": "stake", "label": "Decision stake", "denotation": "the active decision stake"},
+          {"id": "question:q1", "sort": "question", "label": "Question", "denotation": "which alternative should be selected"},
+          {"id": "alternative:a", "sort": "alternative", "label": "A", "denotation": "alternative A"},
+          {"id": "alternative:b", "sort": "alternative", "label": "B", "denotation": "alternative B"},
+          {"id": "event:e2", "sort": "event", "label": "E2", "denotation": "the second event position"}
+        ],
+        "relations": [
+          {"role": "P3.stake_question", "display_role": "question for", "args": ["stake:s1", "question:q1"]},
+          {"role": "P3.live_alternative", "display_role": "live", "args": ["stake:s1", "alternative:a", "event:e2"]},
+          {"role": "P3.live_alternative", "display_role": "live", "args": ["stake:s1", "alternative:b", "event:e2"]},
+          {"role": "P3.mutually_exclusive", "display_role": "exclusive", "args": ["alternative:a", "alternative:b"]},
+          {"role": "P3.ranked_above", "display_role": "ranked above", "args": ["alternative:a", "alternative:b"]}
+        ],
+        "attributes": []
+      },
+      "P4": {
+        "elements": [
+          {"id": "ground:g1", "sort": "ground", "label": "Observation G1", "denotation": "the first supporting ground"},
+          {"id": "ground:g2", "sort": "ground", "label": "Defeater G2", "denotation": "the defeating ground"},
+          {"id": "commitment:c1", "sort": "commitment", "label": "C1", "denotation": "the proposition accepted by the analyst"},
+          {"id": "rule:r1", "sort": "rule", "label": "R1", "denotation": "the applicable rule"}
+        ],
+        "relations": [
+          {"role": "P4.support", "display_role": "supports", "args": ["ground:g1", "commitment:c1"]},
+          {"role": "P4.defeat", "display_role": "defeats", "args": ["ground:g2", "commitment:c1"]},
+          {"role": "P4.rule_basis", "display_role": "uses rule", "args": ["ground:g1", "rule:r1"]},
+          {"role": "P4.provenance", "display_role": "provenance", "args": ["commitment:c1", "ground:g1"]}
+        ],
+        "attributes": [
+          {"owner": "ground:g1", "role": "P4.ground_kind", "display_role": "kind", "value": "observation"},
+          {"owner": "ground:g2", "role": "P4.ground_kind", "display_role": "kind", "value": "counterexample"}
+        ]
+      },
+      "P6": {
+        "elements": [
+          {"id": "consequence:k1", "sort": "consequence", "label": "Authorization", "denotation": "authorization to act"},
+          {"id": "commitment:c1", "sort": "commitment", "label": "C1", "denotation": "the proposition accepted by the analyst"},
+          {"id": "action:act", "sort": "action", "label": "Act", "denotation": "the authorized action"},
+          {"id": "ground:g1", "sort": "ground", "label": "Observation G1", "denotation": "the first supporting ground"}
+        ],
+        "relations": [
+          {"role": "P6.content_reference", "display_role": "content", "args": ["consequence:k1", "commitment:c1"]},
+          {"role": "P6.producing_basis", "display_role": "produced by", "args": ["consequence:k1", "ground:g1"]},
+          {"role": "P6.authorizes", "display_role": "authorizes", "args": ["consequence:k1", "action:act"]}
+        ],
+        "attributes": [
+          {"owner": "consequence:k1", "role": "P6.consequence_status", "display_role": "status", "value": "active"},
+          {"owner": "consequence:k1", "role": "P6.consequence_role", "display_role": "role", "value": "action_authorization"}
+        ]
+      },
+      "P8I": {
+        "elements": [
+          {"id": "ground:g1", "sort": "ground", "label": "Observation G1", "denotation": "the first supporting ground"},
+          {"id": "commitment:c1", "sort": "commitment", "label": "C1", "denotation": "the proposition accepted by the analyst"}
+        ],
+        "relations": [
+          {"role": "P8I.provenance_source", "display_role": "derived from", "args": ["commitment:c1", "ground:g1"]}
+        ],
+        "attributes": [
+          {"owner": "ground:g1", "role": "P8I.evidence_status", "display_role": "evidence status", "value": "observed"},
+          {"owner": "ground:g1", "role": "P8I.evidence_grade", "display_role": "grade", "value": "E1"},
+          {"owner": "commitment:c1", "role": "P8I.evidence_status", "display_role": "evidence status", "value": "inferred"},
+          {"owner": "commitment:c1", "role": "P8I.confidence", "display_role": "confidence", "value": 0.8},
+          {"owner": "commitment:c1", "role": "P8I.unresolved_status", "display_role": "unresolved", "value": false}
+        ]
+      }
+    }
+  },
+  "mutations": [
+    "collapse_two_source_elements_to_one_target_object",
+    "add_spurious_support_tuple",
+    "merge_support_and_defeat_role_codes",
+    "delete_one_live_alternative",
+    "replace_action_authorization_with_generic_output",
+    "upgrade_inferred_to_formally_proved",
+    "change_only_display_labels"
+  ],
+  "expected": {
+    "baseline_all_axes": true,
+    "collapsed_image": false,
+    "spurious_relation": false,
+    "role_collapse": false,
+    "missing_live_alternative": false,
+    "consequence_role_loss": false,
+    "evidence_upgrade": false,
+    "display_label_alpha_rename": true
+  }
+}
