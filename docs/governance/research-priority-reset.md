@@ -8,15 +8,13 @@ Effective prospectively upon merge.
 
 Project FAR has accumulated substantial repository architecture, certification, mechanization, comparative evaluation, registries, and internally authored validation. Those assets are useful, but they do not answer the central mathematical question.
 
-This reset establishes deduction as the primary route to the central result. Empirical experiments, independent replication, and external validation remain active supporting tracks, but they no longer block theorem construction.
+This reset establishes deduction as the primary route to the central result. Empirical experiments, independent replication, and external validation remain active supporting tracks, but they do not block theorem construction.
 
-## Controlling objective
+## Current controlling objective
 
-The next major milestone is not another release, dashboard, certification layer, favorable-case expansion, or participant-recruitment campaign.
+`THM-TARGET-001` and its premise ledger are now frozen.
 
-The next milestone is a frozen theorem target and premise ledger for a scoped faithful-representation theorem.
-
-Project FAR must now determine exactly what is being claimed, from which assumptions, over which source class, into which target structure, with which preservation obligations, and under which failure conditions.
+The immediate objective is to formalize the faithful-representation relation and resolve P8 before any representation proof is attempted. Project FAR must define exactly what a valid encoding preserves, how missing structure is detected, which decoding and interpretation machinery is admissible, and whether evidential correspondence is an internal coordinate, an external side condition, or a split obligation.
 
 ## Current evidence position
 
@@ -29,7 +27,9 @@ The project may presently claim:
 - PB-001 as an unproved candidate preservation basis;
 - a frozen PBTS-001 suite and internal execution;
 - independent-replication infrastructure without independent results;
-- readiness to begin the deductive theorem program.
+- a frozen theorem family and explicit premise ledger;
+- satisfaction of the formal-theorem-target gate;
+- readiness to formalize faithful representation and search for countermodels.
 
 The project may not presently claim:
 
@@ -41,87 +41,94 @@ The project may not presently claim:
 - uniqueness or equivalence of FARA;
 - impossibility of competing structures;
 - independent replication;
+- machine-checked proof;
 - independent proof verification.
 
 ## Priority order
 
-### Priority 1 — Freeze the theorem target and scope
+### Priority 1 — Preserve THM-TARGET-001
 
-Create `THM-TARGET-001` with separate statements for scoped existence, faithful representation, universality within scope, necessity, minimality, and equivalence or uniqueness.
+`THM-TARGET-001` separates the finite explicit core `S_core`, the broader extension class `S_IRD`, the theorem-facing FARA package, representation-witness signature, P1-P7 obligations, P8 alternatives, nontriviality requirements, and separate theorem families.
 
-The target must identify:
+Any material change to source scope, target structure, theorem family, or failure conditions creates a new version. The current target is not a proof.
 
-- the formally quantified source class;
-- the target FARA structure or successor;
-- the representation relation;
-- preservation obligations;
-- nontriviality exclusions;
-- the role of IRD-001;
-- the role of PB-001 or a justified revision;
-- the role of P8;
-- exact failure conditions and nonclaims.
+### Priority 2 — Complete the premise and semantics audit
 
-Exit condition: the theorem family is mathematically well formed and does not quantify over an undefined notion of all reasoning.
-
-### Priority 2 — Audit definitions, semantics, and axioms
-
-Classify every premise as a definition, typing condition, substantive axiom, imported theorem, scope restriction, evidence condition, or conjecture.
+Finish the formal meanings of `Pres_1` through `Pres_7`, `Faithful_m8`, semantic agreement, admissible recovery, and machinery accounting.
 
 Eliminate circularity, unrestricted hidden interpreters, unconstrained representation maps, and FAR-native success definitions at the source boundary.
 
-Exit condition: a complete premise ledger with no hidden mathematical assumptions.
+**Exit condition:** a complete theorem-facing premise and semantics ledger with no hidden mathematical assumptions relevant to the representation proof.
 
-### Priority 3 — Formalize faithful representation
+### Priority 3 — Formalize faithful representation and nontriviality
 
-Define source objects, target objects, representation maps, semantic interpretation, admissible transitions, dependency and history preservation, and evidential correspondence.
+Define source objects, target objects, encoding, recovery, interpretation, admissible transitions, dependency and history preservation, consequences, uniformity, and compositionality.
 
-Negative controls must be excluded formally rather than only through evaluator judgment.
+Formally exclude:
 
-Exit condition: a complete faithful-representation specification suitable for proof or refutation.
+- label-only mappings;
+- output-only lookup;
+- opaque universal states;
+- hidden interpreters and operators;
+- metadata smuggling;
+- evaluator repair;
+- dependency collapse;
+- history erasure;
+- unsupported evidential upgrading.
 
-### Priority 4 — Construct lemmas and search for obstructions
+**Exit condition:** a frozen faithful-representation specification suitable for proof or refutation.
 
-Develop constructive mappings and preservation lemmas while actively searching for countermodels, no-go lemmas, and incompatible source classes.
+### Priority 4 — Resolve P8
 
-Pressure cases include self-modification, nonmonotonicity, probabilistic revision, distributed reasoning, semantic change, hidden state, resource bounds, circular support, dynamic representational types, and open-ended processes.
+Choose and justify one theorem role:
 
-Exit condition: each in-scope source feature has either a construction or a registered obstruction.
+- `coordinate`;
+- `side_condition`;
+- `split`.
 
-### Priority 5 — Prove or refute the scoped representation theorem
+A proof may not be accepted while P8 remains an unresolved theorem parameter. A change that alters theorem content requires a target revision.
 
-Attempt the frozen theorem without requiring prior independent PBTS replication.
+### Priority 5 — Construct lemmas and search for obstructions
+
+Develop constructive mappings and preservation lemmas for `S_core` while actively searching for countermodels, no-go lemmas, and incompatible source classes.
+
+Pressure cases include self-modification, nonmonotonicity, finite-support probabilistic revision, distributed reasoning, semantic change, hidden state, resource bounds, circular support, dynamic representational types, and open-ended processes.
+
+### Priority 6 — Prove or refute the finite-core theorem family
+
+Attempt:
+
+1. `THM-CORE-COMMON-001`;
+2. `THM-CORE-REP-001`;
+3. `THM-IMP-001` as the negative alternative.
 
 Allowed outcomes include proof, countermodel, scope restriction, theory revision, impossibility, or unresolved obligations.
 
-Exit condition: a complete proof or refutation, or a precise ledger of remaining open lemmas that prevents a stronger claim.
+### Priority 7 — Attempt the general IRD extension
 
-### Priority 6 — Establish lower bounds, independence, and derivability
+Only after resolving the finite core, determine whether the construction extends to `S_IRD`.
 
-For each retained primitive or preservation commitment, prove whether it is indispensable, derivable, replaceable, assumption-dependent, unnecessary, or unresolved within the declared reconstruction class.
+A finite-core result may not be reported as universal over the broader IRD class.
 
-Exit condition: no necessity claim rests solely on finite experimental ablation.
+### Priority 8 — Establish lower bounds, independence, and derivability
 
-### Priority 7 — Establish minimality, equivalence, uniqueness, or impossibility
+For each retained primitive or preservation commitment, define the admissible reconstruction class and prove whether the commitment is indispensable, derivable, replaceable, assumption-dependent, unnecessary, or unresolved.
 
-Define the candidate universe and equivalence or cost relation before making a minimality claim.
+### Priority 9 — Establish minimality, equivalence, uniqueness, or impossibility
+
+Define the candidate universe, equivalence relation, and cost preorder before making any minimality claim.
 
 Seek local minimality, lower bounds, equivalent bases, incomparable bases, uniqueness up to translation, absence of a global minimum, or impossibility of finite universal representation.
 
-Exit condition: every minimality or uniqueness claim is indexed to a declared universe.
-
-### Priority 8 — Mechanize the proof chain
+### Priority 10 — Mechanize the proof chain
 
 Encode the frozen definitions, assumptions, lemmas, and theorem in an appropriate proof assistant or verified formal system.
 
-Exit condition: the largest sound theorem fragment is machine checked and every admitted or unmechanized obligation is explicit.
+### Priority 11 — Independent proof review and adversarial challenge
 
-### Priority 9 — Independent proof review and adversarial challenge
+Obtain independent reconstruction, proof review, mechanized-artifact review, and counterexample search. Record all disagreements and defects.
 
-Obtain independent reconstruction, proof review, mechanized-artifact review, and counterexample search.
-
-Exit condition: the maximum justified level of independent proof verification is recorded, including disagreement and defects.
-
-### Priority 10 — Supporting empirical validation
+### Priority 12 — Supporting empirical validation
 
 Continue PBTS-001 replication, comparative representation experiments, bounded exhaustive searches, and application tests when resources permit.
 
@@ -129,7 +136,7 @@ These activities test interpretation, implementation, robustness, applicability,
 
 ## Work paused by default
 
-Until Priorities 1–3 are complete, the following work is paused unless directly required by the deductive program:
+Until the faithful-representation specification and P8 role are frozen, the following work is paused unless directly required by the deductive program:
 
 - new certification layers;
 - additional dashboard or status automation;
@@ -141,13 +148,13 @@ Until Priorities 1–3 are complete, the following work is paused unless directl
 - new replication infrastructure beyond the already frozen PBTS-001 controls;
 - retrospective relabeling of internal evidence as proof or independence.
 
-Paused work is not declared worthless. It is deferred because it does not currently reduce the main formal uncertainty.
+Paused work is deferred because it does not currently reduce the main formal uncertainty.
 
 ## Admission test for new work
 
 Every proposed major task must answer:
 
-1. Which formal obligation does it advance: theorem scope, definition, axiom, lemma, construction, obstruction, representation, lower bound, minimality, equivalence, mechanization, or proof review?
+1. Which formal obligation does it advance?
 2. What result could count against FAR or force a weaker theorem?
 3. Which hidden assumption or open proof obligation will be reduced?
 4. Is the work deductive research, proof-enabling engineering, empirical support, maintenance, or application work?
@@ -161,13 +168,13 @@ A task that cannot answer these questions does not enter the active central queu
 
 The active sequence is:
 
-1. freeze `THM-TARGET-001`;
-2. freeze the premise ledger;
-3. formalize faithful representation and nontriviality;
-4. resolve P8 as a coordinate, theorem side condition, correspondence theorem, or revision requirement;
-5. prove construction lemmas for the ordinary finite core;
-6. attack the construction with registered pressure cases and countermodels;
-7. prove or refute the scoped representation theorem;
+1. preserve `THM-TARGET-001` and its premise ledger;
+2. formalize `Pres_1` through `Pres_7` and `Faithful_m8`;
+3. resolve P8;
+4. prove construction lemmas for `S_core`;
+5. attack the construction with registered pressure cases and countermodels;
+6. prove or refute the finite-core theorem family;
+7. attempt extension to `S_IRD`;
 8. derive lower bounds and primitive independence results;
 9. characterize minimality, equivalence, uniqueness, or impossibility;
 10. mechanize the sound theorem fragment;
@@ -178,7 +185,7 @@ The active sequence is:
 
 PBTS-001 independent replication remains available under its frozen package and coordinator controls.
 
-It may proceed when real qualified participants exist, but recruitment is no longer the immediate central dependency. Its results may affect definitions, assumptions, scope, or confidence, and any discovered defect must be incorporated through a versioned revision.
+It may proceed when real qualified participants exist, but recruitment is not the immediate central dependency. Its results may affect definitions, assumptions, scope, or confidence, and any discovered defect must be incorporated through a versioned revision.
 
 ## Stop and revision conditions
 
