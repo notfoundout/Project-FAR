@@ -16,7 +16,7 @@ def main()->int:
     w3=load(W3); assert w3['proof_id']=='SCORE-W3-PROOF-001' and w3['construction_properties']['faithful_split_proved'] is False
     w4=load(W4); assert w4['proof_id']=='SCORE-W4-PROOF-001' and w4['result']['faithful_split_satisfiability_proved'] is False
     target=load(TARGET); assert target['proof_status']=='partial_lemma_progress_only'; rep=next(x for x in target['theorem_family'] if x['id']=='THM-CORE-REP-001'); assert rep['status']!='proved' and rep['blocked_by']==['specificity_discovery_bridge','theorem_assembly']
-    premises=load(PREMISES); assert premises['version']=='1.6' and premises['proof_progress']['premise_change'] is False
+    premises=load(PREMISES); assert premises['version']=='1.7' and premises['proof_progress']['premise_change'] is False
     p8=load(P8); assert p8['internal_obligation']['target_recovery_status']=='proved_LEM-SC-018' and p8['external_obligation']['status']=='unproved'
     gates={x['name']:x for x in load(GATES)['gates']}; assert gates['formal-negative-controls']['status']=='satisfied'; assert gates['scoped-representation-proof']['status']=='not_satisfied'; assert gates['mechanized-proof-verification']['status']=='not_satisfied'; assert gates['independent-proof-review']['status']=='not_satisfied'; assert gates['baseline-factorization-resolved']['status']=='not_satisfied'
     print('FAITHFUL-REP-001 validation PASS (construction, recovery, and registered W4 controls proved; W3.5 and theorem assembly open)'); return 0
