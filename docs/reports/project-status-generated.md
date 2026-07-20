@@ -15,18 +15,17 @@ This report uses cautious language and does not authorize theory changes.
 
 - Primary mode: deduction-first with parallel empirical validation.
 - Frozen central artifacts: `THM-TARGET-001` v1.0, `FAITHFUL-REP-001` v1.0, `P8-ROLE-001` v1.0, and `SCORE-LEMMA-LEDGER-001` v1.0.
-- Partial proof artifact: `SCORE-W0-PROOF-001` proves `LEM-SC-001` through `LEM-SC-004`; `OBS-SC-001` is a source-scope boundary.
-- Selected P8 mode: `split`; `Pres_8I` is internal and `Corr_8E` remains a separate application-correspondence obligation.
-- Lemma program status: 37 registered obligations; 4 proved; 1 source boundary established; 32 open; active wave `W1`.
-- Immediate central work: construct or obstruct `LEM-SC-005`, `LEM-SC-006`, `LEM-SC-007`, `LEM-SC-008`, `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`.
-- Formal-theorem-target gate: satisfied with registered artifacts.
-- Premise-ledger-and-semantics gate: satisfied with registered artifacts.
-- Faithful-representation-definition gate: satisfied with registered artifacts.
+- Partial proof artifacts: `SCORE-W0-PROOF-001` and `SCORE-W1-PROOF-001`.
+- Selected P8 mode: `split`; the P8-I direct-axis embedding is proved, while recovery and `Corr_8E` remain unproved.
+- Lemma program status: 37 obligations; 11 proved; 1 source boundary established; 2 obstruction hypotheses refuted; 23 open; active wave `W2`.
+- Immediate central work: prove or obstruct deterministic dynamics, finite-support probabilistic dynamics, history and path, nonmonotonic revision, and self-modification.
+- Formal-theorem-target gate: satisfied.
+- Premise-ledger-and-semantics gate: satisfied.
+- Faithful-representation-definition gate: satisfied.
 - Scoped-representation-proof gate: not satisfied.
-- Mechanized-proof-verification gate: not satisfied; executable W0 checks are bounded corroboration only.
+- Mechanized-proof-verification gate: not satisfied; executable W0/W1 checks are bounded corroboration only.
 - Independent-proof-review gate: not satisfied.
-- Parallel supporting track: PBTS-001 replication, comparative evaluation, boundary discovery, and implementation validation.
-- Current theorem status: no representation theorem, universality theorem, necessity theorem, or minimality theorem is established.
+- Current theorem status: no representation, universality, necessity, or minimality theorem is established.
 
 ## Source Registries
 
@@ -104,7 +103,7 @@ The extension does not rank the vocabularies and does not retroactively alter CR
 
 ## Current Evidence Conclusion
 
-CRE-002-EXT-001 remains a prospective bounded result under Vocabulary Semantics Baseline 1.1 and does not establish primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal reasoning structure, or independent replication. SCORE-W0-PROOF-001 proves four source-normalization lemmas and establishes OBS-SC-001 as a source-scope boundary. It does not construct a FARA target, prove any Pres_i target obligation, satisfy Faithful_split, or establish a theorem. The lemma program has 32 open obligations and W1 is active.
+CRE-002-EXT-001 remains a prospective bounded result and does not establish primitive-only or universal sufficiency, necessity, minimality, independence, superiority, a FAR proof, a universal reasoning structure, or independent replication. SCORE-W0-PROOF-001 and SCORE-W1-PROOF-001 establish 11 construction lemmas, one S_core source boundary, and two refuted direct-axis obstruction hypotheses. W1 proves finite direct-axis strong embeddings but not target-only recovery, complete Pres_i predicates, Faithful_split, or a theorem. The ledger has 23 open obligations and W2 is active.
 
 ## Relevant Reports
 
@@ -123,8 +122,10 @@ CRE-002-EXT-001 remains a prospective bounded result under Vocabulary Semantics 
 - [theory/evaluation/s-core-construction-obstruction-ledger.json](../../theory/evaluation/s-core-construction-obstruction-ledger.json)
 - [docs/research/s-core-w0-normalization-proof-v1.0.md](../research/s-core-w0-normalization-proof-v1.0.md)
 - [theory/evaluation/s-core-w0-normalization-proof.json](../../theory/evaluation/s-core-w0-normalization-proof.json)
-- [theory/evaluation/s-core-w0-reference-fixtures.json](../../theory/evaluation/s-core-w0-reference-fixtures.json)
 - [docs/audits/s-core-w0-proof-audit.md](../audits/s-core-w0-proof-audit.md)
+- [docs/research/s-core-w1-direct-axis-proof-v1.0.md](../research/s-core-w1-direct-axis-proof-v1.0.md)
+- [theory/evaluation/s-core-w1-direct-axis-proof.json](../../theory/evaluation/s-core-w1-direct-axis-proof.json)
+- [docs/audits/s-core-w1-proof-audit.md](../audits/s-core-w1-proof-audit.md)
 - [docs/audits/s-core-lemma-ledger-audit.md](../audits/s-core-lemma-ledger-audit.md)
 - [docs/reports/primitive-sufficiency-report.md](primitive-sufficiency-report.md)
 - [docs/reports/external-validation-report.md](external-validation-report.md)
