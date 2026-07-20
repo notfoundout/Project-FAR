@@ -17,49 +17,41 @@ The project does not assume that a universal structure exists or that FAR is tha
 
 ## Current Research State
 
-The project is deduction-first. [`THM-TARGET-001`](docs/research/thm-target-001-v1.0.md), premise ledger v1.6, [`FAITHFUL-REP-001`](docs/research/faithful-representation-specification-v1.0.md), [`P8-ROLE-001`](docs/research/p8-theorem-role-decision-v1.0.md), and [`SCORE-LEMMA-LEDGER-001`](docs/research/s-core-construction-obstruction-ledger-v1.0.md) remain frozen.
+The project now separates three tracks:
 
-[`SCORE-W0-PROOF-001`](docs/research/s-core-w0-normalization-proof-v1.0.md) through [`SCORE-W3-PROOF-001`](docs/research/s-core-w3-global-witness-proof-v1.0.md) establish all 24 construction lemmas, one source boundary, and eight refuted finite obstruction hypotheses. Four obligations remain. W4 formal negative controls are active.
+- **REP:** finite representation capacity and fidelity;
+- **ADJ:** generic-baseline factorization, FARA-specificity, contrast, ablation, reconstruction, and cost;
+- **USD:** representation-independent universal-structure discovery.
 
-W3 proves finite target-only recovery, semantic agreement, cross-axis coherence, complete machinery accounting, uniformity, composition, and typed witness assembly. It does not prove the formal negative-control family, the global `Nontrivial` conjunct, `Faithful_split`, a representation theorem, universality, necessity, or minimality.
+`SCORE-W0-PROOF-001` through `SCORE-W3-PROOF-001` remain project-authored REP packages. W3 establishes all 24 finite construction lemmas, target-only recovery, semantic agreement, cross-axis coherence, complete machinery accounting, uniformity, composition, and typed witness assembly.
 
-Run `make research-check` to validate the theorem target, semantics, P8 split, lemma ledger, W0-W3 proof packages, executable corroboration, gates, and conservative claim boundaries.
+W3 does not establish `OBS-SC-010`, `Nontrivial`, `Faithful_split`, a representation theorem, FARA-specificity, universal structure, necessity, or minimality.
+
+W4 formal negative controls and W3.5 specificity/discovery are active in parallel. W5 is blocked until both resolve.
+
+Run `make research-check` to validate the frozen REP program, the representation–discovery separation, W3.5 gates, universal target, and conservative claim boundaries.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: S_core W4 formal negative controls
+- Current project phase: W4 formal negative controls and W3.5 specificity/discovery in parallel
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
-- Last dashboard generation time: 2026-07-16T08:17:16+00:00
 
-## Repository Alerts
+## Track Status
 
-| Alert | Status | Source |
-|---|---:|---|
-| Critical Issues | 0 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
-| High Priority Issues | 1 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
-| Repository Health | PASS | [docs/maintenance/repository-health-checks.md](docs/maintenance/repository-health-checks.md) |
-| Planner Status | CURRENT | [docs/planning/next-actions.md](docs/planning/next-actions.md) |
-| CI Status | Push, pull-request, and manual workflows available | [.github/workflows/repository-health.yml](.github/workflows/repository-health.yml) |
-| Release Readiness | AVAILABLE | [docs/reports/release-readiness-report.md](docs/reports/release-readiness-report.md) |
+| Track | Status | Current boundary |
+|---|---|---|
+| REP | W4 active | W0–W3 finite construction packages; theorem unproved |
+| ADJ | W3.5 frozen, not executed | Generic baseline, specificity, contrast, ablation, reconstruction |
+| USD | Target frozen, unexecuted | No universal-structure candidate classified |
+| W5 | Blocked | Requires `OBS-SC-010` and `W3.5-SDG-001` |
 
-## Evidence Snapshot
+No aggregate completion percentage is authorized across REP, ADJ, and USD.
 
-| Metric | Current | Source |
-|---|---:|---|
-| Internal reasoning systems | 23 | [theory/evaluation/evidence-registry.yaml](theory/evaluation/evidence-registry.yaml) |
-| External reasoning systems | 29 | [theory/evaluation/external-validation-registry.yaml](theory/evaluation/external-validation-registry.yaml) |
-| Adversarial fixtures | 14 | [theory/falsification/adversarial-test-suite.yaml](theory/falsification/adversarial-test-suite.yaml) |
-| Counterexample fixtures | 1 | [tests](tests) |
-| Candidate primitive failures | 0 | [theory/falsification/primitive-pressure-registry.yaml](theory/falsification/primitive-pressure-registry.yaml) |
-| Conservative extensions | 35 | [theory/falsification/primitive-pressure-registry.yaml](theory/falsification/primitive-pressure-registry.yaml) |
-| Fits FAR | 14 | [theory/evaluation/evidence-registry.yaml](theory/evaluation/evidence-registry.yaml) |
-| Unresolved cases | 17 | [docs/reports/project-status-generated.md](docs/reports/project-status-generated.md) |
-
-## Progress Summary
+## REP Progress Summary
 
 | Formal metric | Current |
 |---|---:|
@@ -73,66 +65,48 @@ Run `make research-check` to validate the theorem target, semantics, P8 split, l
 
 ## Top Priority Tasks
 
-### STRATEGIC-001: Execute the W4 S_core formal negative controls
-- Source: deduction-first strategic priority
-- Affected files:
-  - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
-  - [theory/evaluation/s-core-construction-obstruction-ledger.json](theory/evaluation/s-core-construction-obstruction-ledger.json)
-  - [docs/methodology/negative-control-suite-v1.0.md](docs/methodology/negative-control-suite-v1.0.md)
-  - [theory/evaluation/faithful-representation-specification-v1.0.json](theory/evaluation/faithful-representation-specification-v1.0.json)
-- Suggested branch: `research/prove-s-core-w4-negative-controls`
-- Suggested PR title: `Prove S_core W4 formal negative controls`
+### STRATEGIC-001: Execute W4 formal negative controls
 
-### STRATEGIC-002: Assemble the finite-core theorem or strongest obstruction
-- Source: deduction-first strategic priority
-- Affected files:
-  - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
-  - [theory/evaluation/s-core-construction-obstruction-ledger.json](theory/evaluation/s-core-construction-obstruction-ledger.json)
-  - [theory/evaluation/thm-target-001.json](theory/evaluation/thm-target-001.json)
-  - [theory/evaluation/central-claim-registry.json](theory/evaluation/central-claim-registry.json)
-- Suggested branch: `research/assemble-s-core-result`
-- Suggested PR title: `Assemble S_core theorem or obstruction`
+- Resolve `OBS-SC-010` and NC-01 through NC-10 without changing the frozen representation predicate.
 
-## Research Gap Summary
+### STRATEGIC-002: Execute W3.5 specificity and universal-discovery gate
 
-| Severity | Count | Source |
-|---|---:|---|
-| Critical | 0 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
-| High | 1 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
-| Medium | 67 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
-| Low | 94 | [docs/reports/research-gap-report.md](docs/reports/research-gap-report.md) |
+- Resolve `GREL-001` factorization, FARA-specificity, reasoning/contrast discrimination, candidate ablation, alternative reconstruction, machinery cost, and claim impact.
+
+### STRATEGIC-003: Assemble W5
+
+- Blocked until W4 and W3.5 resolve.
+
+## Universal-Structure Discovery
+
+- Target: [THM-US-TARGET-001](docs/research/universal-structure-discovery-target-v1.0.md)
+- Generic baseline: [GREL-001](docs/research/generic-relational-baseline-v1.0.md)
+- Reasoning and contrast scope: [RCS-001](docs/research/reasoning-and-contrast-scope-v1.0.md)
+- Candidate registry: [US-CANDIDATES-001](theory/evaluation/universal-structure-candidate-registry.json)
+- Current result: unresolved
 
 ## Repository Navigation
 
 - [Project Status](docs/reports/project-status-generated.md)
-- [Research Gap Report](docs/reports/research-gap-report.md)
 - [Next Actions](docs/planning/next-actions.md)
-- [Dashboard Metrics](docs/planning/dashboard-metrics.md)
-- [Deduction-First Standard](docs/governance/deduction-first-research-standard.md)
-- [Proof Roadmap](docs/planning/deduction-first-proof-roadmap.md)
+- [Representation–Discovery Separation Standard](docs/governance/representation-discovery-separation-standard-v1.0.md)
+- [Deduction-First Proof Roadmap](docs/planning/deduction-first-proof-roadmap.md)
+- [Architecture-Neutral Research Roadmap](docs/planning/architecture-neutral-research-roadmap.md)
 - [THM-TARGET-001](docs/research/thm-target-001-v1.0.md)
-- [Faithful Representation](docs/research/faithful-representation-specification-v1.0.md)
-- [P8 Role Decision](docs/research/p8-theorem-role-decision-v1.0.md)
-- [S_core Lemma Ledger](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
-- [S_core Lemma Registry](theory/evaluation/s-core-construction-obstruction-ledger.json)
-- [S_core W0 Proof](docs/research/s-core-w0-normalization-proof-v1.0.md)
-- [S_core W1 Proof](docs/research/s-core-w1-direct-axis-proof-v1.0.md)
-- [S_core W2 Proof](docs/research/s-core-w2-dynamics-history-proof-v1.0.md)
+- [THM-US-TARGET-001](docs/research/universal-structure-discovery-target-v1.0.md)
+- [Generic Relational Baseline](docs/research/generic-relational-baseline-v1.0.md)
+- [Reasoning and Contrast Scope](docs/research/reasoning-and-contrast-scope-v1.0.md)
+- [W3.5 Gate](docs/research/w3-5-specificity-and-discovery-gate-v1.0.md)
 - [S_core W3 Proof](docs/research/s-core-w3-global-witness-proof-v1.0.md)
-- [S_core W3 Proof Registry](theory/evaluation/s-core-w3-global-witness-proof.json)
-- [Evidence Registry](theory/evaluation/evidence-registry.yaml)
-- [External Validation Registry](theory/evaluation/external-validation-registry.yaml)
-- [Primitive Pressure Registry](theory/falsification/primitive-pressure-registry.yaml)
-- [Adversarial Test Suite](theory/falsification/adversarial-test-suite.yaml)
-- [Repository Index](docs/planning/repository-index.md)
+- [Central Claim Registry](theory/evaluation/central-claim-registry.json)
+- [Research Gates](theory/evaluation/research-gates.json)
 
 ## Current Roadmap
 
-- Current phase: S_core W4 formal negative controls
-- Completed foundation: W0 source normalization; W1 direct axes; W2 dynamics/history; W3 recovery, semantics, coherence, machinery, uniformity, composition, and typed witness assembly
-- In progress: OBS-SC-010 and NC-01 through NC-10
-- Planned: W5 finite-core theorem assembly; S_IRD extension; lower bounds; minimality; mechanization; independent review
-- Parallel: PBTS replication, comparative evaluation, boundary discovery, and application validation
+- REP: execute W4.
+- ADJ: execute W3.5.
+- USD: execute candidate-neutral reasoning/contrast and invariant tests.
+- W5: blocked until W4 and W3.5 resolve.
 
 ## Command Center
 
@@ -148,9 +122,9 @@ make dashboard
 ## Typical Workflow
 
 1. Run `make research-check` and `make health-fast`.
-2. Open the lemma ledger and latest proof package.
-3. Execute the earliest unresolved obligation with closed dependencies.
-4. Preserve countermodels, failures, assumptions, and nonclaims.
+2. Work only on an authorized REP, ADJ, or USD obligation.
+3. Preserve countermodels, equivalences, reductions, failures, assumptions, and nonclaims.
+4. Do not promote representation progress into universal-structure status.
 5. Run full health before merge.
 
 <!-- END GENERATED PROJECT FAR DASHBOARD -->

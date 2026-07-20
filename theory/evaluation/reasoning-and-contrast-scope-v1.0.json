@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "RCS-001",
+  "version": "1.0",
+  "status": "frozen_admission_framework_execution_open",
+  "framework_frozen": true,
+  "concrete_corpus_status": "not_frozen",
+  "positive_families": [
+    "deductive_proof",
+    "probabilistic_inference",
+    "defeasible_reasoning",
+    "planning",
+    "diagnosis",
+    "legal_or_policy_reasoning",
+    "analogical_reasoning",
+    "distributed_institutional_reasoning",
+    "self_modifying_machine_reasoning",
+    "human_expert_reasoning",
+    "partially_observed_reasoning",
+    "semantic_revision"
+  ],
+  "contrast_families": [
+    "passive_database",
+    "event_log",
+    "ordinary_workflow",
+    "arbitrary_labeled_transition_system",
+    "lookup_table",
+    "traffic_controller",
+    "cellular_automaton",
+    "random_finite_state_machine",
+    "copying_or_serialization_system",
+    "scripted_pipeline",
+    "disputed_borderline_process"
+  ],
+  "admission_rules": {
+    "positive_independent_of_fara": true,
+    "positive_independent_of_candidate": true,
+    "contrast_independent_of_fara_failure": true,
+    "contrast_independent_of_candidate_absence": true,
+    "explicit_source_or_observation_contract_required": true,
+    "admission_decision_must_precede_candidate_scoring": true
+  },
+  "required_instance_fields": [
+    "instance_id",
+    "family",
+    "admission_decision",
+    "admission_rationale",
+    "source_or_observation_contract",
+    "formalization_boundary",
+    "candidate_exposure_status",
+    "version"
+  ],
+  "positive_instances": [],
+  "contrast_instances": [],
+  "execution_status": "blocked_until_concrete_corpus_frozen",
+  "nonclaims": [
+    "the concrete reasoning corpus is frozen",
+    "the concrete contrast corpus is frozen",
+    "the listed families are exhaustive",
+    "every future admitted positive instance is reasoning",
+    "contrast systems cannot reason"
+  ]
+}

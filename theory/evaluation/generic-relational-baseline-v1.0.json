@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "GREL-001",
+  "version": "1.0",
+  "status": "frozen_prospective",
+  "purpose": "neutral finite typed relational comparison baseline for W0-W3 factorization",
+  "components": [
+    "sorts",
+    "entities",
+    "exact_values",
+    "typed_attributes",
+    "typed_nary_relation_occurrences",
+    "schema",
+    "canonical_encoder",
+    "target_only_decoder",
+    "machinery_ledger"
+  ],
+  "reasoning_specific_primitives": [],
+  "allowed_reasoning_content": "ordinary typed data only",
+  "constructor_requirements": {
+    "finite_on_S_core": true,
+    "one_fixed_schema": true,
+    "one_fixed_encoder": true,
+    "one_fixed_decoder": true,
+    "target_only_recovery": true,
+    "source_isomorphism_equivariant": true,
+    "case_identifier_branching": false,
+    "case_database": false,
+    "hidden_interpreter": false,
+    "complete_machinery_accounting": true
+  },
+  "result_dimensions": {
+    "expressiveness": [
+      "fara_stronger",
+      "grel_stronger",
+      "equivalent",
+      "incomparable",
+      "unresolved"
+    ],
+    "translation": [
+      "bidirectional",
+      "fara_to_grel_only",
+      "grel_to_fara_only",
+      "none",
+      "failed_for_explicit_reason",
+      "unresolved"
+    ],
+    "constraint_strength": [
+      "fara_stricter",
+      "grel_stricter",
+      "equivalent",
+      "incomparable",
+      "unresolved"
+    ],
+    "reasoning_specificity": [
+      "established",
+      "not_established",
+      "refuted",
+      "unresolved"
+    ],
+    "cost_relation": [
+      "fara_dominates",
+      "grel_dominates",
+      "tradeoff",
+      "equivalent",
+      "incomparable",
+      "unresolved"
+    ],
+    "overall_interpretation": [
+      "strict_fara_separation",
+      "fara_constrained_equivalent",
+      "translation_equivalent",
+      "generic_baseline_strictly_simpler",
+      "incomparable",
+      "factorization_failed_for_explicit_reason",
+      "unresolved"
+    ]
+  },
+  "current_result": {
+    "expressiveness": "unresolved",
+    "translation": "unresolved",
+    "constraint_strength": "unresolved",
+    "reasoning_specificity": "unresolved",
+    "cost_relation": "unresolved",
+    "overall_interpretation": "unresolved"
+  },
+  "single_scalar_classification_prohibited": true,
+  "nonclaims": [
+    "GREL-001 represents S_core",
+    "FARA factors through GREL-001",
+    "GREL-001 is minimal",
+    "generic relational structure is the universal structure",
+    "one result dimension determines the others"
+  ]
+}
