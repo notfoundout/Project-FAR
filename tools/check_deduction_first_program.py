@@ -14,9 +14,14 @@ PRIORITY = ROOT / "docs/governance/research-priority-reset.md"
 ANTI_SELF_CLARIFICATION = ROOT / "docs/governance/anti-self-validation-deduction-clarification.md"
 PROOF_ROADMAP = ROOT / "docs/planning/deduction-first-proof-roadmap.md"
 ARCH_ROADMAP = ROOT / "docs/planning/architecture-neutral-research-roadmap.md"
+THEOREM_DOC = ROOT / "docs/research/thm-target-001-v1.0.md"
+THEOREM_REGISTRY = ROOT / "theory/evaluation/thm-target-001.json"
+PREMISE_LEDGER = ROOT / "theory/evaluation/thm-target-001-premise-ledger.json"
+THEOREM_CHECKER = ROOT / "tools/check_thm_target_001.py"
 NEXT_ACTIONS = ROOT / "docs/planning/next-actions.md"
 PROJECT_STATUS = ROOT / "docs/reports/project-status-generated.md"
 README = ROOT / "README.md"
+MAKEFILE = ROOT / "Makefile"
 GATES = ROOT / "theory/evaluation/research-gates.json"
 CLAIMS = ROOT / "theory/evaluation/central-claim-registry.json"
 NEXT_GENERATOR = ROOT / "tools/generate_next_tasks.py"
@@ -31,9 +36,14 @@ REQUIRED_FILES = [
     ANTI_SELF_CLARIFICATION,
     PROOF_ROADMAP,
     ARCH_ROADMAP,
+    THEOREM_DOC,
+    THEOREM_REGISTRY,
+    PREMISE_LEDGER,
+    THEOREM_CHECKER,
     NEXT_ACTIONS,
     PROJECT_STATUS,
     README,
+    MAKEFILE,
     GATES,
     CLAIMS,
     NEXT_GENERATOR,
@@ -77,14 +87,14 @@ def main() -> int:
         [
             "The primary route to an answer is therefore deduction",
             "They do not gate drafting, proving, refuting, or mechanizing a theorem",
-            "The immediate central task is to freeze the scoped representation-theorem target and premise ledger",
+            "THM-TARGET-001",
         ],
     )
     require_phrases(
         PRIORITY,
         [
-            "The next milestone is a frozen theorem target and premise ledger",
-            "recruitment is no longer the immediate central dependency",
+            "`THM-TARGET-001` and its premise ledger are now frozen",
+            "The immediate objective is to formalize the faithful-representation relation and resolve P8",
             "Independent validation strengthens confidence in the result",
         ],
     )
@@ -95,22 +105,36 @@ def main() -> int:
             "independent empirical replication must occur before a representation theorem may be attempted",
             "independent replication is required before claiming independent empirical confirmation",
             "formal theorem gates are required before claiming a theorem",
-            "this clarification and the Deduction-First Research Standard control that dependency question",
+        ],
+    )
+    require_phrases(
+        THEOREM_DOC,
+        [
+            "Frozen prospective theorem target and premise boundary",
+            "Finite explicit core `S_core`",
+            "General extension class `S_IRD`",
+            "THM-CORE-REP-001",
+            "THM-IMP-001",
+            "This artifact does not establish",
         ],
     )
     require_phrases(
         PROOF_ROADMAP,
         [
             "Independent empirical replication is a parallel supporting track",
-            "Create and freeze `THM-TARGET-001`",
-            "They may not be used as a substitute for D1-D8",
+            "Stage D1 — Freeze the theorem target",
+            "Status:** complete prospectively",
+            "Stage D3 — Formalize faithful representation",
+            "Status:** active immediate stage",
         ],
     )
     require_phrases(
         ARCH_ROADMAP,
         [
-            "parallel and nonblocking for theorem construction",
             "## Milestone 6 — THM-TARGET-001 theorem target and premise ledger",
+            "**Status:** complete prospectively",
+            "## Milestone 7 — Faithful-representation formalization",
+            "**Status:** active immediate milestone",
             "PBTS-001 replication proceeds in parallel",
         ],
     )
@@ -118,18 +142,18 @@ def main() -> int:
         README,
         [
             "The project is now deduction-first",
-            "The active objective is to freeze `THM-TARGET-001`",
-            "Current project phase: deduction-first theorem-target freeze",
+            "THM-TARGET-001",
+            "faithful-representation formalization and P8 resolution",
             "They do not serve as prerequisites for constructing a proof",
         ],
     )
     require_phrases(
         NEXT_ACTIONS,
         [
-            "### STRATEGIC-001: Freeze THM-TARGET-001 and premise ledger",
-            "### STRATEGIC-002: Formalize faithful representation and nontriviality",
-            "### STRATEGIC-003: Resolve the formal role of P8",
-            "Research gaps remain available in the gap report but do not automatically enter the active central queue",
+            "### STRATEGIC-001: Formalize faithful representation and nontriviality",
+            "### STRATEGIC-002: Resolve the formal role of P8",
+            "### STRATEGIC-003: Build the S_core construction and obstruction ledger",
+            "THM-TARGET-001 is frozen",
         ],
     )
     require_phrases(
@@ -137,7 +161,9 @@ def main() -> int:
         [
             "## Current Research Mode",
             "Primary mode: deduction-first with parallel empirical validation",
-            "Immediate central artifact: `THM-TARGET-001`",
+            "Frozen central artifact: `THM-TARGET-001` v1.0",
+            "Formal-theorem-target gate: satisfied",
+            "Premise-ledger-and-semantics gate: in progress",
             "Current theorem status: no representation theorem",
         ],
     )
@@ -145,31 +171,28 @@ def main() -> int:
         NEXT_GENERATOR,
         [
             "Generate the active deduction-first strategic task queue",
-            "Freeze THM-TARGET-001 and premise ledger",
-            "Research gaps remain available in the gap report but do not automatically enter the active central queue",
+            "Formalize faithful representation and nontriviality",
+            "Resolve the formal role of P8",
+            "THM-TARGET-001 is frozen",
         ],
     )
     require_phrases(
         STATUS_GENERATOR,
         [
-            "Primary mode: deduction-first with parallel empirical validation",
-            "Immediate central artifact: `THM-TARGET-001`",
+            "Frozen central artifact: `THM-TARGET-001` v1.0",
+            "Immediate central work: formalize `Pres_1` through `Pres_7` and `Faithful_m8`, then resolve P8",
         ],
     )
     require_phrases(
         DASHBOARD_GENERATOR,
         [
-            "Current project phase: deduction-first theorem-target freeze",
-            "In-progress work: freeze THM-TARGET-001 and its premise ledger",
+            "Current project phase: faithful-representation formalization and P8 resolution",
+            "In-progress work: formalize Pres_1 through Pres_7 and Faithful_m8; resolve P8",
             "Parallel supporting work: PBTS-001 independent replication",
         ],
     )
-    require_phrases(
-        PLANNER,
-        [
-            "(?:TASK|STRATEGIC)",
-        ],
-    )
+    require_phrases(MAKEFILE, ["python tools/check_thm_target_001.py"])
+    require_phrases(PLANNER, ["(?:TASK|STRATEGIC)"])
 
     obsolete = [
         "Blocked until Milestone 5 produces three valid independent primary submissions",
@@ -177,13 +200,20 @@ def main() -> int:
         "Independent replication is now the primary evidential bottleneck",
         "Current project phase: post-CRE-001 prospective semantics baseline; CRE-002 preparation",
         "Plan independent replication of CRE-002-EXT-001",
+        "Current project phase: deduction-first theorem-target freeze",
+        "In-progress work: freeze THM-TARGET-001 and its premise ledger",
     ]
     for path in [ARCH_ROADMAP, NEXT_ACTIONS, PROJECT_STATUS, README, NEXT_GENERATOR, STATUS_GENERATOR, DASHBOARD_GENERATOR]:
         prohibit_phrases(path, obsolete)
 
     gates = read_json(GATES)
     assert gates.get("research_mode") == "deduction_first_with_parallel_empirical_validation"
-    assert "docs/governance/anti-self-validation-deduction-clarification.md" in gates.get("required_canonical_artifacts", [])
+    required_artifacts = set(gates.get("required_canonical_artifacts", []))
+    assert {
+        "docs/research/thm-target-001-v1.0.md",
+        "theory/evaluation/thm-target-001.json",
+        "theory/evaluation/thm-target-001-premise-ledger.json",
+    } <= required_artifacts
     policy = gates.get("claim_policy", {})
     assert policy.get("proof_construction_not_blocked_by_empirical_replication") is True
     assert policy.get("independent_replication_gates_only_independent_empirical_confirmation") is True
@@ -191,8 +221,7 @@ def main() -> int:
     assert policy.get("independent_review_is_separate_claim_dimension") is True
 
     by_name = {gate.get("name"): gate for gate in gates.get("gates", [])}
-    replication = by_name["independent-replication"]
-    assert replication.get("required_before") == ["independent_empirical_confirmation_claim"]
+    assert by_name["independent-replication"].get("required_before") == ["independent_empirical_confirmation_claim"]
 
     required_theorem_gates = {
         "formal-theorem-target",
@@ -207,11 +236,31 @@ def main() -> int:
     assert required_theorem_gates <= set(by_name)
     for name in required_theorem_gates:
         assert by_name[name].get("standard") == "docs/governance/deduction-first-research-standard.md"
-        assert by_name[name].get("status") != "satisfied", f"{name} has no registered evidence yet"
+
+    formal_target = by_name["formal-theorem-target"]
+    assert formal_target.get("status") == "satisfied"
+    assert set(formal_target.get("evidence", [])) == {
+        "docs/research/thm-target-001-v1.0.md",
+        "theory/evaluation/thm-target-001.json",
+        "theory/evaluation/thm-target-001-premise-ledger.json",
+    }
+    assert by_name["premise-ledger-and-semantics"].get("status") == "in_progress"
+    for name in required_theorem_gates - {"formal-theorem-target", "premise-ledger-and-semantics"}:
+        assert by_name[name].get("status") != "satisfied", f"{name} has no registered proof evidence yet"
+
+    target = read_json(THEOREM_REGISTRY)
+    assert target.get("status") == "frozen_unproved"
+    assert target.get("proof_status") == "none"
+    assert target.get("p8", {}).get("status") == "unresolved_theorem_parameter"
+
+    ledger = read_json(PREMISE_LEDGER)
+    assert ledger.get("status") == "frozen_with_explicit_open_parameters"
+    assert ledger.get("gate_effect", {}).get("formal-theorem-target") == "satisfied"
+    assert ledger.get("gate_effect", {}).get("premise-ledger-and-semantics") == "in_progress"
 
     claims = read_json(CLAIMS)
     assert claims.get("research_mode") == "deduction_first_with_separate_validation_dimensions"
-    assert "docs/governance/anti-self-validation-deduction-clarification.md" in claims.get("governing_documents", [])
+    assert "docs/research/thm-target-001-v1.0.md" in claims.get("governing_documents", [])
     dimensions = claims.get("claim_dimensions", {})
     assert {
         "theorem_status",
