@@ -23,6 +23,7 @@ The active program is controlled by:
 - `docs/research/s-core-w0-normalization-proof-v1.0.md`;
 - `docs/research/s-core-w1-direct-axis-proof-v1.0.md`;
 - `docs/research/s-core-w2-dynamics-history-proof-v1.0.md`;
+- `docs/research/s-core-w3-global-witness-proof-v1.0.md`;
 - `theory/evaluation/research-gates.json`.
 
 The deduction-first standard controls proof dependencies. Anti-self-validation and replication standards separately control independent-confirmation claims.
@@ -31,203 +32,125 @@ The deduction-first standard controls proof dependencies. Anti-self-validation a
 
 > Does every reasoning process necessarily instantiate a common underlying structure, and if so, is that structure both universal and minimal?
 
-This separates at least six obligations:
-
-1. common-schema existence;
-2. faithful representation within a formally justified source class;
-3. necessity or derivability of retained commitments;
-4. minimality within a declared candidate universe;
-5. equivalence, uniqueness, or incomparability;
-6. impossibility under stated assumptions.
-
-These obligations may not be collapsed into one favorable conclusion.
-
-## Research position
-
-The existence of a universal reasoning structure is an open hypothesis. Project FAR does not assume that such a structure exists or that FAR or FARA is that structure.
-
-A proof, countermodel, proper-subclass theorem, equivalence result, no-go theorem, or unresolved result is an admissible central outcome. No artifact is protected from criticism because it supports the current framework.
+This separates common-schema existence, faithful representation, necessity or derivability, minimality, equivalence or uniqueness, and impossibility. These obligations may not be collapsed into one favorable conclusion.
 
 ## Frozen boundaries
 
-`THM-TARGET-001` v1.0 freezes:
+`THM-TARGET-001` v1.0 freezes `S_core`, `S_IRD`, `A_FARA`, witness `W=(E,D,M,iota,kappa)`, P1-P7, P8-I, P8-E, and the theorem families.
 
-- `S_core`, the first finite explicit source class;
-- `S_IRD`, the broader extension target;
-- the theorem-facing target class `A_FARA`;
-- witness `W=(E,D,M,iota,kappa)`;
-- P1–P7 and P8-I preservation obligations;
-- the separate P8-E correspondence family;
-- common-schema, representation, extension, necessity, minimality, equivalence, and impossibility theorem families.
+`FAITHFUL-REP-001` freezes materiality, applicability, canonical reducts, target-only recovery, strong typed correspondence, P5 bisimulation, P7 history and path, semantic agreement, coherence, uniformity, composition, machinery accounting, nontriviality, and `Faithful_split`.
 
-`FAITHFUL-REP-001` freezes materiality, applicability, canonical reducts, strong typed correspondence, target-only recovery, P5 bisimulation, P7 history and path requirements, semantic agreement, coherence, uniformity, composition, machinery accounting, nontriviality, and `Faithful_split`.
+`P8-ROLE-001` selects `split`: `Pres_8I` is internal; `Corr_8E` remains a separate actual-process correspondence obligation.
 
-`P8-ROLE-001` selects `split`: `Pres_8I` remains internal, while `Corr_8E` remains a separate actual-process correspondence obligation.
-
-`SCORE-LEMMA-LEDGER-001` registers 24 construction, 10 obstruction, and 3 assembly obligations. Its statements and dependency graph remain frozen.
-
-A material change to source scope, target interface, faithful predicate, P8 boundary, lemma statement, quantified obstruction, or theorem family requires a versioned revision.
+`SCORE-LEMMA-LEDGER-001` freezes 24 construction, 10 obstruction, and 3 assembly obligations. A material change requires a versioned revision.
 
 ## Accepted partial proof packages
 
 ### W0 — Source normalization
 
-`SCORE-W0-PROOF-001` proves `LEM-SC-001` through `LEM-SC-004` and establishes `OBS-SC-001` as a source-scope boundary. Genuinely non-finite material closure is outside frozen `S_core`.
+`SCORE-W0-PROOF-001` proves `LEM-SC-001` through `LEM-SC-004` and establishes `OBS-SC-001` as a source boundary.
 
 ### W1 — Target allocation and direct axes
 
-`SCORE-W1-PROOF-001` proves:
+`SCORE-W1-PROOF-001` proves `LEM-SC-005` through `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`; it refutes `OBS-SC-003` and `OBS-SC-006`.
 
-- `LEM-SC-005` target carrier allocation;
-- `LEM-SC-006` P1 configuration construction;
-- `LEM-SC-007` P2 commitment construction;
-- `LEM-SC-008` P3 stake-and-alternative construction;
-- `LEM-SC-009` P4 ground-and-justification construction;
-- `LEM-SC-012` P6 consequence construction;
-- `LEM-SC-014` P8-I internal evidential-status construction.
+### W2 — Dynamics, history, revision, and rule versions
 
-It refutes `OBS-SC-003` and `OBS-SC-006` over their registered finite scopes. It uses existing FARA categories and adds no primitive.
+`SCORE-W2-PROOF-001` proves `LEM-SC-010`, `LEM-SC-011`, `LEM-SC-013`, `LEM-SC-015`, and `LEM-SC-016`; it refutes `OBS-SC-004` and `OBS-SC-005`.
 
-### W2 — Dynamics, history, revision, and self-modification
+### W3 — Global witness construction
 
-`SCORE-W2-PROOF-001` proves:
+`SCORE-W3-PROOF-001` proves:
 
-- `LEM-SC-010` deterministic dynamics construction;
-- `LEM-SC-011` finite-support probabilistic dynamics construction;
-- `LEM-SC-013` historical-and-path construction;
-- `LEM-SC-015` nonmonotonic revision and retraction;
-- `LEM-SC-016` self-modification and rule-version change.
+- `LEM-SC-017` distributed decomposition and interface construction;
+- `LEM-SC-018` deterministic terminating target-only recovery;
+- `LEM-SC-019` semantic agreement;
+- `LEM-SC-020` cross-axis coherence;
+- `LEM-SC-021` complete machinery accounting;
+- `LEM-SC-022` uniformity and source-isomorphism equivariance;
+- `LEM-SC-023` compositional accountability;
+- `LEM-SC-024` well-formed witness assembly.
 
-It refutes:
+It refutes `OBS-SC-002`, `OBS-SC-007`, `OBS-SC-008`, and `OBS-SC-009` over their registered finite scopes.
 
-- `OBS-SC-004` dynamics-bisimulation mismatch;
-- `OBS-SC-005` history-and-path collapse.
-
-The fixed `DYN-HISTORY-1.0` schema copies finite transition records, exact finite-support weights, state-indexed active rule versions, material event order, revision snapshots, rule modifications, ancestry, and path conditions. Accepted rule changes alter later live transitions; rejected changes do not. No new FARA primitive is added.
-
-W1 and W2 prove finite target constructions and strong embeddings. They do not prove target-only recovery or any complete `Pres_i` predicate.
+W3 uses the frozen FARA interface and adds no primitive. It proves all registered finite construction obligations. It does not prove the formal negative-control family, `Nontrivial`, `Faithful_split`, or a theorem.
 
 ## Current active stage
 
 Current ledger state:
 
 - total obligations: 37;
-- proved construction lemmas: 16;
+- proved construction lemmas: 24;
 - source-scope boundaries established: 1;
-- refuted obstruction hypotheses: 4;
-- open obligations: 16;
-- completed waves: W0, W1, and W2;
-- active wave: W3.
+- refuted obstruction hypotheses: 8;
+- open obligations: 4;
+- completed waves: W0 through W3;
+- active wave: W4.
 
-The active obligations are:
-
-- `LEM-SC-017` distributed decomposition and interface construction;
-- `LEM-SC-018` admissible target-only recovery;
-- `LEM-SC-019` semantic agreement;
-- `LEM-SC-020` cross-axis coherence;
-- `LEM-SC-021` complete machinery-ledger construction;
-- `LEM-SC-022` uniformity and source-isomorphism equivariance;
-- `LEM-SC-023` compositional accountability;
-- `LEM-SC-024` well-formed witness assembly.
+The active obligation is `OBS-SC-010`, the formal NC-01 through NC-10 family. W5 remains open with `ASM-SC-001` through `ASM-SC-003`.
 
 The scoped-representation-proof, mechanized-proof-verification, and independent-proof-review gates remain unsatisfied.
 
-## W3 proof requirements
+## W4 proof requirements
 
-The W3 package must close the difference between successful per-axis constructions and one admissible faithful witness.
+Each negative control must be rejected by a frozen formal clause rather than by evaluator preference, source reaccess, case-specific repair, or a newly invented restriction. The package must:
 
-Recovery must:
+- instantiate NC-01 through NC-10 against the completed W3 witness class;
+- identify the exact violated preservation, recovery, semantics, coherence, uniformity, composition, or machinery clause;
+- prove that the violation is structural for the registered control family;
+- preserve any valid countermodel or hidden commitment;
+- avoid modifying the frozen faithful predicate to force failure.
 
-- accept target data, registered witness metadata, and an axis query only;
-- terminate deterministically on every finite theorem-facing package;
-- use no source object, source identifier, evaluator repair, unrestricted interpreter, network resource, or case database;
-- return exactly the recovered reduct or an explicit failure diagnostic.
-
-Semantic agreement must use source-declared denotational equivalence and must not strengthen precision, certainty, modality, normativity, authority, or evidential grade.
-
-Cross-axis coherence must reuse or explicitly link shared identities and prohibit contradictory commitment, version, provenance, or consequence data.
-
-The machinery ledger must count every schema, algorithm, field, bridge, helper, metadata item, and dependency used by construction, recovery, interpretation, or verification.
-
-Uniformity must establish one finite source-isomorphism-equivariant constructor family with no case-identifier branching or unbounded helper family.
-
-Compositional accountability must preserve declared interfaces, cross-component relations, histories, and admissibility conditions, and restriction must commute with encoding up to the declared target equivalence.
-
-Witness assembly must produce a well-formed `W=(E,D,M,iota,kappa)` without assuming `Faithful_split` or the theorem conclusion.
+A successful W4 package may establish the global `Nontrivial` conjunct. It still does not itself assemble the theorem.
 
 ## Primary deductive method
 
 1. preserve the frozen theorem, source, target, semantic, and P8 boundaries;
 2. execute the lemma ledger in dependency order;
-3. search concurrently for quantified countermodels and obstructions;
-4. assemble the strongest finite-core result only after dependencies close;
-5. attempt extension to `S_IRD` only after the finite-core result;
-6. then address necessity, lower bounds, minimality, equivalence, uniqueness, or impossibility;
-7. mechanize the largest sound fragment;
-8. obtain independent proof review and adversarial counterexample search.
-
-The canonical detailed sequence is `docs/planning/deduction-first-proof-roadmap.md`.
+3. search concurrently for countermodels and obstructions;
+4. resolve W4 formal negative controls;
+5. assemble the strongest finite-core result in W5;
+6. attempt extension to `S_IRD` only after the finite-core result;
+7. address necessity, lower bounds, minimality, equivalence, uniqueness, or impossibility;
+8. mechanize the largest sound fragment;
+9. obtain independent proof review and adversarial counterexample search.
 
 ## Proof-status discipline
 
-Every proof artifact must state its identifier, version, exact statement, quantified scope, assumptions, dependencies, result status, countermodels, machine-check status, independent-review status, consequences, and stronger nonclaims.
+The following dimensions remain separate:
 
-The following dimensions are separate:
+- project-authored human-checkable proof;
+- bounded executable corroboration;
+- proof-assistant verification;
+- independent proof review.
 
-- **project-authored human-checkable proof**: a complete written derivation registered internally;
-- **bounded executable corroboration**: finite implementations and adversarial fixtures test the construction;
-- **proof-assistant verification**: a formal encoding checked by a trusted kernel;
-- **independent proof review**: qualified external reconstruction or challenge.
-
-No lower status may be reported as a higher one. Partial lemma packages do not satisfy the scoped-representation-proof gate.
-
-A proof over `S_core` may not be reported as a proof over `S_IRD`. A failed witness is not an impossibility theorem unless nonexistence is proved over the registered class.
+No lower status may be reported as a higher one. Partial lemma packages do not satisfy the scoped-representation-proof gate. A result over `S_core` may not be reported as a result over `S_IRD`.
 
 ## Evidence hierarchy
 
-For mathematical claims:
-
-1. machine-checked proof from frozen assumptions;
-2. complete human-checkable proof;
-3. partial proof, lemma, lower bound, or formal countermodel;
-4. exhaustive result over a fully defined finite universe;
-5. bounded executable conformance or model checking;
-6. comparative experiment or independently replicated evaluation;
-7. informal argument or intuition.
-
-Lower-ranked evidence may motivate or challenge proof work but may not be described as logically equivalent to proof.
+For mathematical claims, machine-checked proof outranks complete human proof, which outranks partial lemmas and formal countermodels, bounded exhaustive results, executable conformance, experiments, and informal arguments. Lower-ranked evidence may challenge or motivate proof work but may not substitute for it.
 
 ## Counterexample policy
 
-Potential counterexamples are primary research objects. Each must be classified as a formal countermodel, impossibility witness, representation failure, interpretation dispute, scope-boundary case, non-reasoning process, inconclusive case, or successful representation.
-
-A candidate may not be excluded by redefining reasoning after exposure. Scope restrictions must be versioned and defended independently.
+Potential counterexamples are primary research objects. Each must be classified as a formal countermodel, impossibility witness, representation failure, interpretation dispute, scope-boundary case, non-reasoning process, inconclusive case, or successful representation. Scope may not be changed after exposure without a versioned and independently defended revision.
 
 ## Supporting empirical work
 
-PBTS-001 replication, comparative representation, boundary discovery, bounded model search, and implementation validation continue as parallel supporting tracks. They may expose ambiguity, implementation defects, hidden assumptions, or counterexamples.
-
-They are not logical premises of the theorem. Independent replication gates only independent empirical-confirmation claims.
-
-## Theory revision and mechanization
-
-Protected theory may not be silently changed to rescue a proof. Any substantive change creates the applicable new version and preserves earlier failures.
-
-A proof assistant can verify only the encoded theorem under its trusted assumptions. Executable W0, W1, and W2 reference implementations are corroboration, not proof-assistant verification.
+PBTS-001 replication, comparative representation, boundary discovery, bounded model search, and implementation validation continue as parallel supporting tracks. They are not theorem premises.
 
 ## Current nonclaims
 
 The repository does not establish:
 
-- admissible target-only recovery;
-- any complete `Pres_i` predicate;
+- `OBS-SC-010` or the global `Nontrivial` conjunct;
 - `Faithful_split` satisfiability;
+- any W5 assembly obligation;
 - FARA adequacy for `S_core` or `S_IRD`;
 - PB-001 sufficiency, necessity, independence, minimality, or completeness;
 - actual-process correspondence;
 - a representation, universality, necessity, minimality, equivalence, uniqueness, or impossibility theorem;
-- proof-assistant verification or independent proof review of W0, W1, or W2.
+- proof-assistant verification or independent proof review of W0-W3.
 
 ## Immediate central task
 
-Execute the W3 global-witness proof-or-obstruction package. Independent empirical work remains parallel and nonblocking.
+Execute the W4 formal negative-control package. W5 theorem assembly remains blocked until `OBS-SC-010` closes.
