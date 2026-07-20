@@ -6,25 +6,8 @@
   "source_scope": "S_core",
   "proof_artifact": "docs/research/s-core-w3-global-witness-proof-v1.0.md",
   "lemma_ledger": "theory/evaluation/s-core-construction-obstruction-ledger.json",
-  "dependencies": [
-    "SCORE-W0-PROOF-001",
-    "SCORE-W1-PROOF-001",
-    "SCORE-W2-PROOF-001",
-    "FAITHFUL-REP-001",
-    "P8-ROLE-001"
-  ],
-  "target_schema": {
-    "id": "FARA-WITNESS-1.0",
-    "recovery_schema": "RECOVER-FARA-1.0",
-    "uses_existing_fara_components": ["U", "Pi", "R", "Rep", "S", "I", "Inv", "C", "Sigma", "Theta", "H", "Omega", "Res", "Prov"],
-    "witness_tuple": ["E", "D", "M", "iota", "kappa"],
-    "adds_new_primitive": false,
-    "source_specific_content_is_explicit_target_data": true,
-    "recovery_uses_source": false,
-    "recovery_uses_E_or_M": false,
-    "case_database": false,
-    "external_interpreter": false
-  },
+  "dependencies": ["SCORE-W0-PROOF-001","SCORE-W1-PROOF-001","SCORE-W2-PROOF-001","FAITHFUL-REP-001","P8-ROLE-001"],
+  "target_schema": {"id":"FARA-WITNESS-1.0","recovery_schema":"RECOVER-FARA-1.0","uses_existing_fara_components":["U","Pi","R","Rep","S","I","Inv","C","Sigma","Theta","H","Omega","Res","Prov"],"witness_tuple":["E","D","M","iota","kappa"],"adds_new_primitive":false,"source_specific_content_is_explicit_target_data":true,"recovery_uses_source":false,"recovery_uses_E_or_M":false,"case_database":false,"external_interpreter":false},
   "results": [
     {"id":"LEM-SC-017","status":"proved","proof_sections":["2","3"],"result":"every finite source-declared decomposition receives explicit component interface cross-relation and composed-history images"},
     {"id":"LEM-SC-018","status":"proved","proof_sections":["4"],"result":"one deterministic terminating target-only recovery family reconstructs every registered reduct using no source oracle case database evaluator or external dependency"},
@@ -39,75 +22,16 @@
     {"id":"OBS-SC-008","status":"refuted","proof_sections":["3","9","11.3"],"scope":"registered finite source-declared decomposition class"},
     {"id":"OBS-SC-009","status":"refuted","proof_sections":["10","11.4"],"scope":"frozen A_FARA target interface for finite S_core witness construction"}
   ],
-  "construction_properties": {
-    "finite_on_S_core": true,
-    "target_only_recovery": true,
-    "recovery_deterministic": true,
-    "recovery_terminating": true,
-    "recovery_pure": true,
-    "complete_axis_recovery": true,
-    "semantic_agreement": true,
-    "cross_axis_coherence": true,
-    "complete_machinery_ledger": true,
-    "uniform_constructor": true,
-    "source_isomorphism_equivariant": true,
-    "distributed_decomposition": true,
-    "compositional_accountability": true,
-    "well_formed_witness_assembly": true,
-    "formal_negative_controls_proved": false,
-    "faithful_split_proved": false,
-    "theorem_assembly_proved": false
-  },
-  "dependency_audit": {
-    "uses_formal_negative_control_result": false,
-    "uses_W5_assembly": false,
-    "uses_faithful_split_satisfiability": false,
-    "uses_PB001_sufficiency": false,
-    "uses_external_process_correspondence": false,
-    "changes_source_scope": false,
-    "changes_target_interface": false,
-    "adds_new_primitive": false,
-    "all_dependencies_frozen_or_proved_in_package": true
-  },
+  "construction_properties": {"finite_on_S_core":true,"target_only_recovery":true,"recovery_deterministic":true,"recovery_terminating":true,"recovery_pure":true,"complete_axis_recovery":true,"semantic_agreement":true,"cross_axis_coherence":true,"complete_machinery_ledger":true,"uniform_constructor":true,"source_isomorphism_equivariant":true,"distributed_decomposition":true,"compositional_accountability":true,"well_formed_witness_assembly":true,"formal_negative_controls_proved":false,"faithful_split_proved":false,"theorem_assembly_proved":false},
+  "dependency_audit": {"uses_formal_negative_control_result":false,"uses_W5_assembly":false,"uses_faithful_split_satisfiability":false,"uses_PB001_sufficiency":false,"uses_external_process_correspondence":false,"changes_source_scope":false,"changes_target_interface":false,"adds_new_primitive":false,"all_dependencies_frozen_or_proved_in_package":true},
   "reference_implementation": "tools/s_core_w3_reference.py",
+  "supporting_implementation_modules": ["tools/s_core_w3_schema.py","tools/s_core_w3_validation.py","tools/s_core_w3_builder.py","tools/s_core_w3_machinery.py","tools/s_core_w3_construct.py","tools/s_core_w3_recovery.py","tools/s_core_w3_expected.py"],
   "reference_tests": "tests/test_s_core_w3_reference.py",
   "reference_fixtures": "theory/evaluation/s-core-w3-reference-fixtures.json",
   "audit_artifact": "docs/audits/s-core-w3-proof-audit.md",
-  "verification": {
-    "human_proof_status": "complete_project_authored",
-    "machine_check_status": "bounded_executable_reference_only",
-    "reference_test_count": 15,
-    "proof_assistant_status": "not_started",
-    "independent_review_status": "not_started"
-  },
-  "ledger_effect": {
-    "proved_obligations": 24,
-    "refuted_obstruction_hypotheses": 8,
-    "scope_boundaries_established": 1,
-    "open_obligations": 4,
-    "completed_waves": ["W0", "W1", "W2", "W3"],
-    "active_wave": "W4",
-    "active_obligations": ["OBS-SC-010"]
-  },
-  "gate_effect": {
-    "formal-theorem-target": "satisfied",
-    "premise-ledger-and-semantics": "satisfied",
-    "faithful-representation-definition": "satisfied",
-    "scoped-representation-proof": "not_satisfied",
-    "mechanized-proof-verification": "not_satisfied",
-    "independent-proof-review": "not_satisfied"
-  },
-  "nonclaims": [
-    "OBS-SC-010 formal negative controls are proved",
-    "the global Nontrivial conjunct is proved",
-    "Faithful_split is satisfiable",
-    "any W5 assembly obligation is proved",
-    "THM-CORE-COMMON-001 or THM-CORE-REP-001 is proved",
-    "FARA faithfully represents S_core or S_IRD",
-    "PB-001 is sufficient necessary independent minimal or complete",
-    "actual-process correspondence is established",
-    "any universality necessity minimality equivalence uniqueness or impossibility theorem is established",
-    "proof-assistant verification or independent proof review has occurred"
-  ],
+  "verification": {"human_proof_status":"complete_project_authored","machine_check_status":"bounded_executable_reference_only","reference_test_count":15,"proof_assistant_status":"not_started","independent_review_status":"not_started"},
+  "ledger_effect": {"proved_obligations":24,"refuted_obstruction_hypotheses":8,"scope_boundaries_established":1,"open_obligations":4,"completed_waves":["W0","W1","W2","W3"],"active_wave":"W4","active_obligations":["OBS-SC-010"]},
+  "gate_effect": {"formal-theorem-target":"satisfied","premise-ledger-and-semantics":"satisfied","faithful-representation-definition":"satisfied","scoped-representation-proof":"not_satisfied","mechanized-proof-verification":"not_satisfied","independent-proof-review":"not_satisfied"},
+  "nonclaims": ["OBS-SC-010 formal negative controls are proved","the global Nontrivial conjunct is proved","Faithful_split is satisfiable","any W5 assembly obligation is proved","THM-CORE-COMMON-001 or THM-CORE-REP-001 is proved","FARA faithfully represents S_core or S_IRD","PB-001 is sufficient necessary independent minimal or complete","actual-process correspondence is established","any universality necessity minimality equivalence uniqueness or impossibility theorem is established","proof-assistant verification or independent proof review has occurred"],
   "next_required_artifact": "W4 formal negative-control package for OBS-SC-010 and NC-01 through NC-10"
 }
