@@ -8,6 +8,8 @@
   "decision_artifact": "docs/research/p8-theorem-role-decision-v1.0.md",
   "lemma_ledger_artifact": "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
   "lemma_ledger_registry": "theory/evaluation/s-core-construction-obstruction-ledger.json",
+  "w0_proof_artifact": "docs/research/s-core-w0-normalization-proof-v1.0.md",
+  "w0_proof_registry": "theory/evaluation/s-core-w0-normalization-proof.json",
   "internal_obligation": {
     "id": "P8-I",
     "predicate": "Pres_8I",
@@ -21,6 +23,8 @@
       "accepted_rejected_superseded_or_withdrawn_support",
       "evidence_grade"
     ],
+    "source_reduct_extraction_status": "proved_LEM-SC-002",
+    "target_preservation_status": "unproved_LEM-SC-014",
     "no_evidential_upgrade": true,
     "metadata_is_counted_machinery": true
   },
@@ -57,13 +61,14 @@
   "independent_review_status": "not_started",
   "revision_rule": "mode or boundary changes require a versioned theorem-target revision unless definitional equivalence is proved",
   "nonclaims": [
+    "Pres_8I target preservation is proved",
     "Faithful_split is satisfiable for every S_core object",
     "FARA faithfully represents S_core",
     "any actual system corresponds to an IRD-001 presentation",
-    "any registered lemma is proved",
+    "any W1 through W5 obligation is proved",
     "PB-001 is sufficient necessary independent minimal or complete",
     "universality minimality uniqueness or impossibility",
     "machine verification or independent proof review"
   ],
-  "next_required_artifact": "W0 proof package for LEM-SC-001 through LEM-SC-004"
+  "next_required_artifact": "W1 base-carrier and direct-axis construction proof package"
 }
