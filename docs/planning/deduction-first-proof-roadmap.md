@@ -48,17 +48,15 @@ Independent empirical replication is a parallel supporting track. It is not a pa
 
 **Status:** complete prospectively through:
 
-- `theory/evaluation/thm-target-001-premise-ledger.json` v1.1;
+- `theory/evaluation/thm-target-001-premise-ledger.json` v1.2;
 - `docs/research/faithful-representation-specification-v1.0.md`;
-- `theory/evaluation/faithful-representation-specification-v1.0.json`.
+- `theory/evaluation/faithful-representation-specification-v1.0.json`;
+- `docs/research/p8-theorem-role-decision-v1.0.md`;
+- `theory/evaluation/p8-theorem-role-decision.json`.
 
 The premise ledger classifies every current dependency as a definition, typing or well-formedness condition, substantive axiom, imported frozen specification, scope restriction, evidence condition, conjecture, or unresolved theorem parameter.
 
-`PRM-011` and `PRM-012` now have frozen semantics. Remaining open parameters are explicit:
-
-- the theorem-facing P8 mode;
-- the reconstruction class for necessity;
-- the candidate universe and equivalence relation for minimality.
+`PRM-010` is resolved as `split`. `PRM-011` and `PRM-012` have frozen semantics. Remaining open parameters concern the reconstruction class for necessity and the candidate universe and equivalence relation for minimality.
 
 No substantive axiom asserting FARA adequacy, PB-001 completeness, primitive necessity, or universal structure has been admitted.
 
@@ -94,54 +92,54 @@ The definition formally rejects label-only mappings, output-only lookup, opaque 
 
 ## Stage D3.5 — Select the P8 theorem role
 
-**Status:** active immediate stage.
+**Status:** complete prospectively through `P8-ROLE-001`.
 
-Select and justify exactly one frozen mode:
+The selected mode is `split`:
 
-1. `coordinate` — P8 is an eighth internal strong-embedding obligation;
-2. `side_condition` — process-to-presentation correspondence is external to the internal representation theorem;
-3. `split` — internal provenance is preserved and actual-process correspondence is a separate theorem or evidence contract.
+- `Pres_8I` preserves internal provenance and evidential status inside `Faithful_split`;
+- `Corr_8E` remains a separate actual-process-to-presentation correspondence obligation;
+- `THM-CORE-REP-001` and `THM-IRD-EXT-001` use `Faithful_split`;
+- `THM-P8-CORR-001` governs the external correspondence family.
 
-The decision artifact must state:
+The decision permits formal construction work to proceed without turning empirical correspondence into a logical premise. It does not establish either the internal representation theorem or an application correspondence claim.
 
-- why the selected mode matches IRD-001 and PB-001;
-- which theorem clauses it activates;
-- which application claims remain external;
-- whether `THM-P8-CORR-001` remains separate;
-- effects on existing evidence and nonclaims;
-- counterarguments and failure conditions.
-
-A content-changing choice outside the three frozen clauses requires a new theorem-target version. Selecting among the frozen clauses does not prove the representation theorem.
-
-**Exit condition:** one P8 mode is frozen and `THM-CORE-REP-001` is no longer blocked by an unresolved theorem parameter.
+**Exit result:** P8 is frozen and no longer blocks D4.
 
 ## Stage D4 — Construction and obstruction lemmas
 
-**Status:** blocked only by the P8 decision.
+**Status:** active. The dependency decomposition is frozen through:
 
-Attempt constructive lemmas showing how each admitted `S_core` component maps into the target under `FAITHFUL-REP-001`.
+- `docs/research/s-core-construction-obstruction-ledger-v1.0.md`;
+- `theory/evaluation/s-core-construction-obstruction-ledger.json`.
 
-In parallel, search for obstruction lemmas showing that the construction cannot be total, faithful, finite, effective, uniform, compositional, or nontrivial under stated assumptions.
+The ledger registers 37 obligations:
 
-Required outputs include:
+- 24 construction obligations;
+- 10 obstruction obligations;
+- 3 assembly obligations.
 
-- ordinary finite configurations and commitments;
-- stakes and live alternatives;
-- typed grounds and justificatory roles;
-- finite deterministic and finite-support probabilistic dynamics;
-- nonmonotonic revision and retraction;
-- self-modification and rule-version change;
-- distributed composition and cross-component dependence;
-- consequences and downstream status;
-- path-dependent history;
-- formal negative-control lemmas;
-- explicit countermodels where construction fails.
+Every obligation is currently `registered_unproved`. The ledger itself is complete as a dependency decomposition but unexecuted as a proof program.
+
+### D4 dependency waves
+
+1. **W0 — Source normalization kernel:** `LEM-SC-001` through `LEM-SC-004`.
+2. **W1 — Base carriers and direct axes:** target allocation and P1, P2, P3, P4, P6, and P8-I constructors.
+3. **W2 — Dynamics, history, and revision:** deterministic and probabilistic P5, P7, nonmonotonic revision, and self-modification.
+4. **W3 — Global witness obligations:** recovery, semantics, coherence, machinery, uniformity, composition, and witness assembly.
+5. **W4 — Obstruction and negative controls:** `OBS-SC-001` through `OBS-SC-010`.
+6. **W5 — Theorem assembly:** common schema, arbitrary-episode witness, and theorem-or-obstruction closure.
+
+Construction and obstruction work proceed concurrently when dependencies permit. A failed attempted witness is not a theorem-level obstruction. Every obstruction must quantify over its registered constructor, witness, target, or source class.
 
 Broader `S_IRD` features such as continuous carriers, open-ended histories, hidden state, and semantic change remain extension obligations rather than prerequisites for the finite-core theorem.
 
-**Exit condition:** every `S_core` source feature has either a construction lemma or a registered obstruction.
+**Exit condition:** every mandatory `S_core` feature has an accepted construction lemma or a quantified obstruction, and `ASM-SC-003` records the strongest justified result.
+
+**Immediate work:** prove or refute the W0 normalization kernel, `LEM-SC-001` through `LEM-SC-004`.
 
 ## Stage D5 — Scoped representation theorem
+
+**Status:** blocked by execution of the D4 lemma ledger.
 
 Prove or refute the frozen theorem family, beginning with:
 
@@ -157,7 +155,7 @@ Allowed outcomes:
 - disproved by countermodel;
 - proved only after explicit scope restriction;
 - proved only after theory revision;
-- unresolved because a lemma remains open;
+- unresolved because named ledger obligations remain open;
 - impossible under stated assumptions.
 
 **Exit condition:** a complete proof or a complete refutation/countermodel with the strongest remaining theorem stated precisely.
@@ -231,16 +229,18 @@ They may not be used as a substitute for D1–D8 when making a mathematical univ
 
 ## Immediate next artifacts
 
-1. Freeze the P8 theorem-role decision.
-2. Create the `S_core` construction-and-obstruction lemma ledger under the selected P8 mode.
-3. Register formal negative-control lemmas and minimal countermodel fixtures concurrently with constructive work.
+1. Prove or refute `LEM-SC-001` through `LEM-SC-004` as the W0 normalization package.
+2. Begin `OBS-SC-001` concurrently to test the finite material-closure boundary.
+3. Prepare proof objects and countermodel fixtures for every W0 result.
+4. Do not begin theorem assembly while any required dependency remains open.
 
 ## Current nonclaims
 
 This roadmap does not establish that:
 
 - `THM-TARGET-001` is satisfiable;
-- `Faithful_{m_8}` is satisfiable;
+- `Faithful_split` is satisfiable;
+- any registered lemma is proved;
 - IRD-001 defines every form of reasoning;
 - PB-001 is the correct or complete preservation basis;
 - FARA admits the required representation;

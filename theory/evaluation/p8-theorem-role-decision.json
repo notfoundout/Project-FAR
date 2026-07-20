@@ -6,6 +6,8 @@
   "theorem_target": "THM-TARGET-001",
   "selected_mode": "split",
   "decision_artifact": "docs/research/p8-theorem-role-decision-v1.0.md",
+  "lemma_ledger_artifact": "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
+  "lemma_ledger_registry": "theory/evaluation/s-core-construction-obstruction-ledger.json",
   "internal_obligation": {
     "id": "P8-I",
     "predicate": "Pres_8I",
@@ -58,9 +60,10 @@
     "Faithful_split is satisfiable for every S_core object",
     "FARA faithfully represents S_core",
     "any actual system corresponds to an IRD-001 presentation",
+    "any registered lemma is proved",
     "PB-001 is sufficient necessary independent minimal or complete",
     "universality minimality uniqueness or impossibility",
     "machine verification or independent proof review"
   ],
-  "next_required_artifact": "S_core construction and obstruction lemma ledger"
+  "next_required_artifact": "W0 proof package for LEM-SC-001 through LEM-SC-004"
 }

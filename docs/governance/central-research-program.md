@@ -25,6 +25,8 @@ This program is controlled by:
 - `docs/governance/research-priority-reset.md`;
 - `docs/research/thm-target-001-v1.0.md`;
 - `docs/research/faithful-representation-specification-v1.0.md`;
+- `docs/research/p8-theorem-role-decision-v1.0.md`;
+- `docs/research/s-core-construction-obstruction-ledger-v1.0.md`;
 - `theory/evaluation/research-gates.json`.
 
 The deduction-first standard controls the dependency between proof and empirical validation. Anti-self-validation and replication standards continue to control claims of independent confirmation.
@@ -62,7 +64,7 @@ The project does not assume that such a structure exists. It does not assume tha
 
 No accepted artifact is protected from criticism merely because it supports the current framework.
 
-## Frozen theorem and semantic boundary
+## Frozen theorem, semantic, and lemma boundaries
 
 `THM-TARGET-001` v1.0 is the current theorem-family boundary. It separates:
 
@@ -70,14 +72,14 @@ No accepted artifact is protected from criticism merely because it supports the 
 - `S_IRD`, the broader extension class;
 - the theorem-facing FARA interface `A_FARA`;
 - the representation-witness signature;
-- P1-P7 preservation obligations;
-- P8 as an unresolved theorem parameter;
+- P1–P7 preservation obligations;
+- P8-I as an internal obligation and P8-E as a separate application-correspondence obligation;
 - common-schema, faithful-representation, extension, necessity, minimality, equivalence, and impossibility theorem families.
 
 `FAITHFUL-REP-001` v1.0 is the current representation-semantic boundary. It defines:
 
 - source materiality and applicability;
-- canonical P1-P7 source reducts;
+- canonical P1–P7 source reducts;
 - admissible target-only recovery;
 - total typed strong embeddings;
 - preservation and reflection of relations and attributes;
@@ -90,9 +92,13 @@ No accepted artifact is protected from criticism merely because it supports the 
 - formal nontriviality and the expected failure locations for NC-01 through NC-10;
 - parameterized clauses for `coordinate`, `side_condition`, and `split` P8 modes.
 
-Freezing these artifacts establishes stable definitions for proof or refutation. It does not establish that the definitions are satisfiable, that a uniform constructor exists, that FARA passes, or that any theorem is proved, machine checked, or independently verified.
+`P8-ROLE-001` selects `split`. `Pres_8I` remains internal to `Faithful_split`; `Corr_8E` remains a separate actual-process correspondence requirement.
 
-A material change to source scope, target structure, theorem family, faithful-representation clauses, P8 content, or failure conditions requires a new version.
+`SCORE-LEMMA-LEDGER-001` v1.0 is the current D4 proof-dependency boundary. It registers 24 construction obligations, 10 obstruction obligations, and 3 assembly obligations. Every obligation is unproved.
+
+Freezing these artifacts establishes stable definitions and proof dependencies. It does not establish that the definitions are satisfiable, that a uniform constructor exists, that FARA passes, that any ledger obligation holds, or that any theorem is proved, machine checked, or independently verified.
+
+A material change to source scope, target structure, theorem family, faithful-representation clauses, P8 content, lemma statements, quantified obstruction strength, or failure conditions requires a new version.
 
 ## Primary research objectives
 
@@ -104,7 +110,7 @@ An existence result must state its assumptions and scope. Failure may be establi
 
 ### Objective II — Faithful representation
 
-Determine whether every source system in the declared scope admits a witness satisfying the frozen `Faithful_{m_8}` predicate without ad hoc theory change, unrestricted hidden interpretation, evaluator repair, incoherent per-axis encoding, or loss of protected commitments.
+Determine whether every source system in the declared scope admits a witness satisfying `Faithful_split` without ad hoc theory change, unrestricted hidden interpretation, evaluator repair, incoherent per-axis encoding, or loss of protected commitments.
 
 A representation result must use the frozen source class, target class, representation relation, preservation obligations, recovery procedure, semantic agreement, cross-axis coherence, uniformity, compositionality, and counted machinery.
 
@@ -131,10 +137,10 @@ The active central method is:
 1. preserve the frozen theorem family and quantified scope;
 2. preserve the completed premise and semantics ledger;
 3. preserve the frozen faithful-representation definition;
-4. resolve the role of semantic and evidential correspondence by selecting the P8 mode;
-5. construct mappings and prove preservation lemmas for `S_core`;
-6. search concurrently for obstruction lemmas and countermodels;
-7. prove or refute the finite-core representation theorem;
+4. preserve the split P8 decision;
+5. execute the registered `S_core` construction and obstruction lemma ledger;
+6. search concurrently for quantified obstruction lemmas and countermodels;
+7. assemble the strongest justified finite-core theorem or refutation;
 8. determine whether the result extends to `S_IRD`;
 9. establish primitive independence, derivability, or lower bounds;
 10. establish minimality, equivalence, uniqueness, incomparability, or impossibility within a declared universe;
@@ -155,19 +161,26 @@ Their evidence is:
 
 - `docs/research/thm-target-001-v1.0.md`;
 - `theory/evaluation/thm-target-001.json`;
-- `theory/evaluation/thm-target-001-premise-ledger.json` v1.1;
+- `theory/evaluation/thm-target-001-premise-ledger.json` v1.2;
 - `docs/research/faithful-representation-specification-v1.0.md`;
-- `theory/evaluation/faithful-representation-specification-v1.0.json`.
+- `theory/evaluation/faithful-representation-specification-v1.0.json`;
+- `docs/research/p8-theorem-role-decision-v1.0.md`;
+- `theory/evaluation/p8-theorem-role-decision.json`.
 
-The scoped-representation-proof gate remains unsatisfied.
+The D4 lemma dependency decomposition is frozen through:
 
-The immediate central task is to select and justify P8 as `coordinate`, `side_condition`, or `split`. No construction proof may be accepted while the theorem mode remains unresolved. After P8 is frozen, the next task is the `S_core` construction-and-obstruction lemma ledger and formal negative-control lemmas.
+- `docs/research/s-core-construction-obstruction-ledger-v1.0.md`;
+- `theory/evaluation/s-core-construction-obstruction-ledger.json`.
+
+The ledger records 37 open obligations and zero proved lemmas. The scoped-representation-proof gate remains unsatisfied.
+
+The immediate central task is the W0 source-normalization proof package: prove or refute `LEM-SC-001` through `LEM-SC-004`. `OBS-SC-001` may proceed concurrently. Target construction and theorem assembly remain blocked by their registered dependencies.
 
 ## Theorem discipline
 
-Every theorem artifact must identify:
+Every theorem or lemma artifact must identify:
 
-- theorem identifier and version;
+- identifier and version;
 - exact statement;
 - quantified domain and scope;
 - definitions and axioms used;
@@ -183,6 +196,8 @@ A theorem may not quantify over all reasoning unless the quantified class is ind
 A representation theorem may not hide missing structure in an unrestricted interpreter, oracle, metadata field, lookup table, evaluator repair, source-specific decoder, or unconstrained representation relation.
 
 A proof over `S_core` may not be reported as a proof over `S_IRD`.
+
+A failed attempted witness may not be reported as an obstruction unless nonexistence is proved over the registered class.
 
 ## Supporting empirical method
 
@@ -229,7 +244,7 @@ A candidate may not be excluded by redefining reasoning after exposure. Any scop
 
 Protected Foundation and theory artifacts must not be modified silently.
 
-If a proof attempt or countermodel requires mathematical change, it must enter an explicit revision process. A revised theorem, source class, preservation basis, target structure, faithful predicate, or P8 treatment becomes a new version. Earlier failed or weaker versions remain part of the record.
+If a proof attempt or countermodel requires mathematical change, it must enter an explicit revision process. A revised theorem, source class, preservation basis, target structure, faithful predicate, P8 treatment, or lemma ledger becomes a new version. Earlier failed or weaker versions remain part of the record.
 
 ## Relationship to mechanization
 
@@ -280,9 +295,11 @@ The repository currently provides:
 - an independently executable replication package and coordinator controls;
 - a mechanization MVP;
 - deduction-first governance;
-- `THM-TARGET-001` v1.0 and premise ledger v1.1;
-- `FAITHFUL-REP-001` v1.0.
+- `THM-TARGET-001` v1.0 and premise ledger v1.2;
+- `FAITHFUL-REP-001` v1.0;
+- `P8-ROLE-001` v1.0 selecting split;
+- `SCORE-LEMMA-LEDGER-001` v1.0 with 37 registered unproved obligations.
 
-These results establish readiness for a P8 decision and systematic construction/countermodel work. They do not answer the central research question.
+These results establish readiness for systematic lemma proof and countermodel work. They do not answer the central research question.
 
-The immediate central task is the P8 theorem-role decision. Independent PBTS replication continues as a parallel supporting track when real qualified participants are available.
+The immediate central task is the W0 source-normalization proof package. Independent PBTS replication continues as a parallel supporting track when real qualified participants are available.
