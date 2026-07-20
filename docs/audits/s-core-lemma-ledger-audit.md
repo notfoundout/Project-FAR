@@ -2,68 +2,52 @@
 
 ## Audit target
 
-This audit covers the frozen lemma ledger, the W0 through W2 proof packages, executable corroboration, theorem and faithful-representation registries, P8, roadmaps, claims, and research gates.
+This audit covers the frozen lemma ledger, W0 through W3 proof packages, executable corroboration, theorem and faithful-representation registries, P8, roadmaps, claims, and research gates.
 
 ## Audit question
 
-Does the repository preserve the complete dependency-ordered finite-core program while accepting only the exact W0, W1, and W2 results established by versioned proof packages?
+Does the repository preserve the complete dependency-ordered finite-core program while accepting only the exact W0-W3 results established by versioned proof packages?
 
 ## Result
 
-**Pass through W2 execution.**
+**Pass through W3 execution.**
 
 The ledger retains 37 obligations: 24 construction, 10 obstruction, and 3 assembly.
 
 Current execution state:
 
-- 16 construction lemmas proved;
+- 24 construction lemmas proved;
 - 1 source-scope boundary established;
-- 4 obstruction hypotheses refuted;
+- 8 obstruction hypotheses refuted;
 - 0 target impossibility results established;
-- 16 obligations open;
-- W0, W1, and W2 complete;
-- W3 active.
+- 4 obligations open;
+- W0 through W3 complete;
+- W4 active with `OBS-SC-010`;
+- W5 open with `ASM-SC-001` through `ASM-SC-003`.
 
-## W0 audit
+## Accepted proof packages
 
-`SCORE-W0-PROOF-001` establishes finite source normalization, least reference-closed reduct extraction, materiality-closure termination, applicability decidability, and source-isomorphism transport.
+- `SCORE-W0-PROOF-001` establishes source normalization and the non-finite-closure boundary.
+- `SCORE-W1-PROOF-001` establishes target allocation and direct-axis embeddings.
+- `SCORE-W2-PROOF-001` establishes finite dynamics, history, revision, and operational rule-version change.
+- `SCORE-W3-PROOF-001` establishes target-only recovery, semantics, coherence, machinery accounting, uniformity, composition, and typed witness assembly.
 
-`OBS-SC-001` is correctly classified as a source boundary: non-finite material closure is outside frozen `S_core`, not a target success or target impossibility result.
+## W3 audit
 
-## W1 audit
+The W3 package uses one fixed finite target schema and one deterministic terminating recovery family. Recovery receives only the target, declared recovery descriptor, and complete machinery ledger. It does not use source reaccess, correspondence maps, case identifiers, evaluator input, network access, or a hidden oracle.
 
-`SCORE-W1-PROOF-001` uses one fixed target schema, `DIR-INCIDENCE-1.0`, for every finite direct-axis reduct.
+Material denotations are explicit target interpretation records. Shared source identities reuse one target image. Every target and witness field has a declared producer in a finite acyclic machinery graph. Source-declared components, interfaces, cross-component relations, and restrictions remain explicit.
 
-It proves `LEM-SC-005` through `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`. It refutes `OBS-SC-003` and `OBS-SC-006` over their registered finite scopes.
+The package proves `LEM-SC-017` through `LEM-SC-024` and refutes:
 
-The constructor allocates explicit source-element images, role codes, value objects, relation and attribute occurrences, and separate representations. Derived relations select occurrence records by role and ordered arguments. Source-specific content enters as target data rather than new primitives or case-specific schemas.
-
-## W2 audit
-
-`SCORE-W2-PROOF-001` uses one fixed extension schema, `DYN-HISTORY-1.0`, for every admitted finite P5 and P7 reduct.
-
-It proves:
-
-- `LEM-SC-010` deterministic dynamics construction;
-- `LEM-SC-011` finite-support probabilistic dynamics construction;
-- `LEM-SC-013` historical-and-path construction;
-- `LEM-SC-015` nonmonotonic revision and retraction;
-- `LEM-SC-016` self-modification and rule-version change.
-
-It refutes:
-
-- `OBS-SC-004`, because every admitted finite deterministic graph or finite-support kernel receives a preservation-and-reflection construction;
-- `OBS-SC-005`, because every admitted finite material history, path, revision, and rule-version structure receives an injective order-preserving and relation-reflecting construction.
-
-The construction copies complete material transition records, exact finite-support weights, state-indexed active rule versions, material event order, causal and provenance facts, revision snapshots, accepted and rejected modifications, dependency ancestry, and path conditions.
-
-A transition is live only when its copied status is permitted and its governing rule version is active at the represented source state. Accepted rule changes alter later live transitions; rejected changes do not. Therefore rule modification is operational rather than label-only.
-
-These results do not settle target-only recovery, semantic agreement, complete cross-axis coherence, complete machinery accounting, global uniformity, composition, or witness assembly.
+- `OBS-SC-002`, because fixed target-only recovery requires no hidden interpreter;
+- `OBS-SC-007`, because the constructor is finite, uniform, and equivariant;
+- `OBS-SC-008`, because interfaces and cross-component structure are preserved compositionally;
+- `OBS-SC-009`, because the frozen target interface supports arbitrary finite witness construction without a new primitive.
 
 ## Executable corroboration
 
-The W0 through W2 reference suites test finite closure, canonical transport, direct-axis injection and reflection, exact transition metadata, probability mass, inactive rule versions, material order, revision snapshots, accepted and rejected modification behavior, path retention, and rule-version history.
+The W3 reference suite tests complete witness construction, recovery with `E` and `M` removed, relation loss, undeclared occurrence injection, semantic mutation, shared-image splitting, sort conflict, machinery cycles, missing producers, interface loss, hidden dependencies, label invariance, source-isomorphism equivariance, component views, and decoder replacement.
 
 These tests are bounded corroboration, not proof-assistant verification or independent proof review.
 
@@ -74,11 +58,11 @@ The graph remains finite, acyclic, and wave ordered:
 1. W0 source normalization — complete;
 2. W1 target allocation and direct axes — complete;
 3. W2 dynamics, history, revision, and self-modification — complete;
-4. W3 global witness obligations — active;
-5. W4 remaining obstructions and negative controls — open;
+4. W3 global witness obligations — complete;
+5. W4 formal negative controls — active;
 6. W5 theorem assembly — open.
 
-No assembly obligation may pass while a dependency remains open, unknown, or supported only by examples.
+No W5 obligation may pass while `OBS-SC-010` remains open, unknown, or supported only by examples.
 
 ## Scope audit
 
@@ -92,7 +76,7 @@ The frozen boundaries remain unchanged:
 - external correspondence `Corr_8E`;
 - no primitive added or declared necessary.
 
-W1 and W2 prove finite strong embeddings only. Complete `Pres_i` predicates remain dependent on target-only recovery and the other W3 obligations.
+W3 proves all registered construction obligations. It does not prove the global `Nontrivial` conjunct or the final faithful theorem.
 
 ## Gate effects
 
@@ -106,8 +90,8 @@ W1 and W2 prove finite strong embeddings only. Complete `Pres_i` predicates rema
 
 ## Claim effects
 
-No central claim is promoted. W0 through W2 are partial lemma packages, not a common-schema theorem, representation theorem, universality result, necessity result, or minimality result.
+No theorem-level central claim is promoted. W3 is a complete construction package for finite `S_core` before formal negative controls and assembly; it is not a common-schema theorem, representation theorem, universality result, necessity result, or minimality result.
 
 ## Exact next work
 
-Execute W3: `LEM-SC-017` through `LEM-SC-024`, covering distributed interfaces, target-only recovery, semantics, coherence, machinery, uniformity, composition, and well-formed witness assembly.
+Execute `OBS-SC-010` against NC-01 through NC-10. Preserve any valid countermodel or hidden commitment. Only after W4 closes may W5 assemble the finite-core result.
