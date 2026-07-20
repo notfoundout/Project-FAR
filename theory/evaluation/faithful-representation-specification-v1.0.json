@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "specification_id": "FAITHFUL-REP-001",
   "version": "1.0",
-  "status": "frozen_definition_w0_w1_partial_construction_proved_global_satisfiability_unproved",
+  "status": "frozen_definition_w0_w1_w2_partial_construction_proved_global_satisfiability_unproved",
   "source_artifact": "docs/research/faithful-representation-specification-v1.0.md",
   "theorem_target": "THM-TARGET-001",
   "source_scope": "S_core",
@@ -12,20 +12,15 @@
   "w0_proof_registry": "theory/evaluation/s-core-w0-normalization-proof.json",
   "w1_direct_axis_proof_artifact": "docs/research/s-core-w1-direct-axis-proof-v1.0.md",
   "w1_direct_axis_proof_registry": "theory/evaluation/s-core-w1-direct-axis-proof.json",
+  "w2_dynamics_history_proof_artifact": "docs/research/s-core-w2-dynamics-history-proof-v1.0.md",
+  "w2_dynamics_history_proof_registry": "theory/evaluation/s-core-w2-dynamics-history-proof.json",
   "direct_axis_construction_status": "proved_without_global_recovery",
+  "dynamics_history_construction_status": "proved_without_global_recovery",
   "source_contract": {
     "tuple": ["tau_S", "Mat", "ValEq", "App"],
     "owned_by_source": true,
     "target_may_weaken": false,
-    "materiality_criterion": [
-      "R1-R6 truth",
-      "live commitments or alternatives",
-      "justificatory role",
-      "admissible dynamics or weight",
-      "commitment consequence",
-      "history provenance or path",
-      "semantic or evidential claim"
-    ],
+    "materiality_criterion": ["R1-R6 truth","live commitments or alternatives","justificatory role","admissible dynamics or weight","commitment consequence","history provenance or path","semantic or evidential claim"],
     "materiality_closure_required": true,
     "exclusion_certificate_required": true,
     "unknown_applicability_allowed_for_theorem": false,
@@ -36,166 +31,50 @@
     "nonfinite_closure_status": "outside_S_core_OBS-SC-001"
   },
   "axis_reducts": [
-    {"id":"P1","name":"configuration","required_content":["locations","states","participants","resources","externalized_components","typed_incidence_and_availability"],"direct_axis_construction_status":"proved_LEM-SC-006_recovery_unproved"},
-    {"id":"P2","name":"commitment","required_content":["commitments","holder","content_reference","status","degree","location","revision_relations"],"direct_axis_construction_status":"proved_LEM-SC-007_recovery_unproved"},
-    {"id":"P3","name":"stake_and_alternative","required_content":["stakes","questions","objectives","conflicts","alternatives","live_and_relevance_relations"],"direct_axis_construction_status":"proved_LEM-SC-008_recovery_unproved"},
-    {"id":"P4","name":"ground_and_justification","required_content":["grounds","constraints","assumptions","observations","rules","models","prior_commitments","typed_justificatory_roles"],"direct_axis_construction_status":"proved_LEM-SC-009_recovery_unproved"},
-    {"id":"P5","name":"admissibility_and_dynamics","required_content":["configurations","continuations","preconditions","rule_identity_and_version","resource_conditions","action_observation_dependence","weights","admissibility_status"],"direct_axis_construction_status":"unproved_W2"},
-    {"id":"P6","name":"consequence","required_content":["consequences","content_reference","status","degree","producing_basis","downstream_role"],"direct_axis_construction_status":"proved_LEM-SC-012_recovery_unproved"},
-    {"id":"P7","name":"historical_and_path","required_content":["event_positions","temporal_or_causal_order","provenance","revision","retraction","supersession","rule_activation","dependency_ancestry","path_conditions"],"direct_axis_construction_status":"unproved_W2"}
+    {"id":"P1","name":"configuration","required_content":["locations","states","participants","resources","externalized_components","typed_incidence_and_availability"],"construction_status":"proved_LEM-SC-006_recovery_unproved"},
+    {"id":"P2","name":"commitment","required_content":["commitments","holder","content_reference","status","degree","location","revision_relations"],"construction_status":"proved_LEM-SC-007_recovery_unproved"},
+    {"id":"P3","name":"stake_and_alternative","required_content":["stakes","questions","objectives","conflicts","alternatives","live_and_relevance_relations"],"construction_status":"proved_LEM-SC-008_recovery_unproved"},
+    {"id":"P4","name":"ground_and_justification","required_content":["grounds","constraints","assumptions","observations","rules","models","prior_commitments","typed_justificatory_roles"],"construction_status":"proved_LEM-SC-009_recovery_unproved"},
+    {"id":"P5","name":"admissibility_and_dynamics","required_content":["configurations","continuations","preconditions","rule_identity_and_version","resource_conditions","action_observation_dependence","weights","admissibility_status"],"construction_status":"proved_LEM-SC-010_LEM-SC-011_recovery_unproved"},
+    {"id":"P6","name":"consequence","required_content":["consequences","content_reference","status","degree","producing_basis","downstream_role"],"construction_status":"proved_LEM-SC-012_recovery_unproved"},
+    {"id":"P7","name":"historical_and_path","required_content":["event_positions","temporal_or_causal_order","provenance","revision","retraction","supersession","rule_activation","dependency_ancestry","path_conditions"],"construction_status":"proved_LEM-SC-013_LEM-SC-015_LEM-SC-016_recovery_unproved"}
   ],
-  "axis_reduct_extraction": {
-    "status": "proved_source_side",
-    "proof_obligation": "LEM-SC-002",
-    "method": "least finite reference-closed induced typed structure",
-    "includes_internal_P8I_reduct": true,
-    "does_not_establish_target_preservation": true
-  },
-  "target_allocation": {
-    "status": "proved_LEM-SC-005",
-    "schema": "DIR-INCIDENCE-1.0",
-    "object_representation_separation": true,
-    "source_roles_as_data": true,
+  "axis_reduct_extraction": {"status":"proved_source_side","proof_obligation":"LEM-SC-002","method":"least finite reference-closed induced typed structure","includes_internal_P8I_reduct":true,"does_not_establish_target_preservation":true},
+  "target_allocation": {"status":"proved_LEM-SC-005","schema":"DIR-INCIDENCE-1.0","object_representation_separation":true,"source_roles_as_data":true,"new_fara_primitive_added":false,"complete_global_machinery_ledger":false},
+  "dynamics_history_allocation": {
+    "status": "proved_LEM-SC-010_LEM-SC-011_LEM-SC-013_LEM-SC-015_LEM-SC-016",
+    "schema": "DYN-HISTORY-1.0",
+    "reuses_w1_images": true,
+    "live_transition_rule": "permitted copied transition whose governing rule version is active at the represented source state",
+    "finite_support_weights_copied_exactly": true,
+    "material_history_relations_preserved_and_reflected": true,
+    "revision_state_snapshots_checked": true,
+    "rule_modification_operational": true,
     "new_fara_primitive_added": false,
     "complete_global_machinery_ledger": false
   },
-  "recovery_contract": {
-    "fixed_versioned_interface": true,
-    "target_only_after_construction": true,
-    "source_identifier_allowed": false,
-    "external_narrative_allowed": false,
-    "evaluator_input_allowed": false,
-    "deterministic": true,
-    "terminates_on_S_core": true,
-    "pure": true,
-    "derived_relations_declared_in_ledger": true,
-    "hidden_oracle_allowed": false,
-    "proof_status": "unproved_LEM-SC-018"
-  },
-  "correspondence_package": {
-    "tuple": ["phi_i", "psi_i", "rho_i"],
-    "totality": true,
-    "type_preservation": true,
-    "element_injectivity": true,
-    "relation_preservation": true,
-    "relation_reflection": true,
-    "attribute_preservation_under_source_equivalence": true,
-    "exact_equality_default": true,
-    "image_accountability": true,
-    "direct_axis_status": "proved_for_P1_P2_P3_P4_P6_P8I_without_recovery"
-  },
+  "recovery_contract": {"fixed_versioned_interface":true,"target_only_after_construction":true,"source_identifier_allowed":false,"external_narrative_allowed":false,"evaluator_input_allowed":false,"deterministic":true,"terminates_on_S_core":true,"pure":true,"derived_relations_declared_in_ledger":true,"hidden_oracle_allowed":false,"proof_status":"unproved_LEM-SC-018"},
+  "correspondence_package": {"tuple":["phi_i","psi_i","rho_i"],"totality":true,"type_preservation":true,"element_injectivity":true,"relation_preservation":true,"relation_reflection":true,"attribute_preservation_under_source_equivalence":true,"exact_equality_default":true,"image_accountability":true,"construction_status":"proved_for_P1_P2_P3_P4_P5_P6_P7_P8I_without_recovery"},
   "axis_specific": {
-    "P5": "finite labeled probabilistic bisimulation when weights exist; finite labeled bisimulation otherwise",
-    "P7": "order embedding plus preservation and reflection of revision provenance and path relations",
+    "P5": "finite labeled bisimulation and finite-support probabilistic bisimulation constructions proved by LEM-SC-010 and LEM-SC-011; recovery remains unproved",
+    "P7": "order embedding plus revision provenance path and rule-version preservation proved by LEM-SC-013 LEM-SC-015 and LEM-SC-016; recovery remains unproved",
     "P8I": "direct-axis exact strong embedding with no evidential upgrade proved by LEM-SC-014; recovery remains unproved"
   },
-  "semantic_agreement": {
-    "source_declared_equivalence": true,
-    "lexical_labels_sufficient": false,
-    "semantic_strengthening_allowed": false,
-    "bridges_declared_and_ledgered": true,
-    "global_proof_status": "unproved_LEM-SC-019"
-  },
-  "cross_axis_coherence": {
-    "required": true,
-    "shared_source_item_policy": "same target image or explicit identity_coreference_version_representation link",
-    "semantic_compatibility_required": true,
-    "conflicts_allowed": false,
-    "duplication_must_be_ledgered": true,
-    "global_proof_status": "unproved_LEM-SC-020",
-    "w1_supporting_fact": "reference constructor reuses one image for shared source identifiers"
-  },
-  "p8": {
-    "selected_mode": "split",
-    "selection_artifact": "docs/research/p8-theorem-role-decision-v1.0.md",
-    "selection_registry": "theory/evaluation/p8-theorem-role-decision.json",
-    "internal_predicate": "Pres_8I",
-    "external_predicate": "Corr_8E",
-    "allowed_modes": ["coordinate", "side_condition", "split"],
-    "clauses_frozen_for_all_modes": true,
-    "proof_acceptance_blocked_until_selection": false,
-    "internal_direct_axis_embedding_status": "proved_LEM-SC-014_recovery_unproved",
-    "coordinate": ["internal provenance and evidence-status strong embedding", "no evidential upgrade"],
-    "side_condition": ["internal theorem applies to mathematical presentation only", "external application requires separate correspondence contract"],
-    "split": ["internal provenance and evidence-status strong embedding", "separate external process-presentation correspondence"]
-  },
-  "uniformity": {
-    "one_identifier_version_definition_and_input_schema": true,
-    "case_identifier_branching_allowed": false,
-    "case_database_allowed": false,
-    "helpers_fixed_and_ledgered": true,
-    "source_reaccess_after_construction_allowed_for_recovery": false,
-    "source_isomorphism_equivariance_required": true,
-    "effective_and_terminating_on_S_core": true,
-    "source_normalization_equivariance_status": "proved_LEM-SC-004",
-    "direct_axis_constructor_equivariance_status": "proved_supporting_result_SCORE-W1-PROOF-001",
-    "global_target_constructor_equivariance_status": "unproved_LEM-SC-022"
-  },
-  "compositional_accountability": {
-    "conditional_on_declared_decomposition": true,
-    "component_encoding_required": true,
-    "interface_mapping_required": true,
-    "cross_component_relations_required": true,
-    "restriction_commutes_up_to_declared_equivalence": true,
-    "indecomposable_declaration_allowed": true,
-    "proof_status": "unproved_LEM-SC-017_and_LEM-SC-023"
-  },
-  "machinery_ledger": {
-    "finite_dependency_graph_required": true,
-    "covers": ["target_primitives","derived_constructs","schemas","state","algorithms","semantic_bridges","metadata","external_dependencies","normalization","equivalence","composition","cost_bearing_helpers"],
-    "all_E_D_M_iota_dependencies_resolve": true,
-    "metadata_is_free": false,
-    "missing_dependency_effect": "inadmissible_hidden_machinery",
-    "w1_fragment_status": "declared_DIR-INCIDENCE-1.0",
-    "complete_global_status": "unproved_LEM-SC-021"
-  },
+  "semantic_agreement": {"source_declared_equivalence":true,"lexical_labels_sufficient":false,"semantic_strengthening_allowed":false,"bridges_declared_and_ledgered":true,"global_proof_status":"unproved_LEM-SC-019"},
+  "cross_axis_coherence": {"required":true,"shared_source_item_policy":"same target image or explicit identity_coreference_version_representation link","semantic_compatibility_required":true,"conflicts_allowed":false,"duplication_must_be_ledgered":true,"global_proof_status":"unproved_LEM-SC-020","w1_supporting_fact":"reference constructor reuses one image for shared source identifiers","w2_supporting_fact":"dynamics history revision and rule-version records reuse W1 images where available"},
+  "p8": {"selected_mode":"split","selection_artifact":"docs/research/p8-theorem-role-decision-v1.0.md","selection_registry":"theory/evaluation/p8-theorem-role-decision.json","internal_predicate":"Pres_8I","external_predicate":"Corr_8E","allowed_modes":["coordinate","side_condition","split"],"clauses_frozen_for_all_modes":true,"proof_acceptance_blocked_until_selection":false,"internal_direct_axis_embedding_status":"proved_LEM-SC-014_recovery_unproved","coordinate":["internal provenance and evidence-status strong embedding","no evidential upgrade"],"side_condition":["internal theorem applies to mathematical presentation only","external application requires separate correspondence contract"],"split":["internal provenance and evidence-status strong embedding","separate external process-presentation correspondence"]},
+  "uniformity": {"one_identifier_version_definition_and_input_schema":true,"case_identifier_branching_allowed":false,"case_database_allowed":false,"helpers_fixed_and_ledgered":true,"source_reaccess_after_construction_allowed_for_recovery":false,"source_isomorphism_equivariance_required":true,"effective_and_terminating_on_S_core":true,"source_normalization_equivariance_status":"proved_LEM-SC-004","direct_axis_constructor_supporting_status":"fixed_schema_SCORE-W1-PROOF-001","dynamics_history_constructor_supporting_status":"fixed_schema_SCORE-W2-PROOF-001","global_target_constructor_equivariance_status":"unproved_LEM-SC-022"},
+  "compositional_accountability": {"conditional_on_declared_decomposition":true,"component_encoding_required":true,"interface_mapping_required":true,"cross_component_relations_required":true,"restriction_commutes_up_to_declared_equivalence":true,"indecomposable_declaration_allowed":true,"proof_status":"unproved_LEM-SC-017_and_LEM-SC-023"},
+  "machinery_ledger": {"finite_dependency_graph_required":true,"covers":["target_primitives","derived_constructs","schemas","state","algorithms","semantic_bridges","metadata","external_dependencies","normalization","equivalence","composition","cost_bearing_helpers"],"all_E_D_M_iota_dependencies_resolve":true,"metadata_is_free":false,"missing_dependency_effect":"inadmissible_hidden_machinery","w1_fragment_status":"declared_DIR-INCIDENCE-1.0","w2_fragment_status":"declared_DYN-HISTORY-1.0","complete_global_status":"unproved_LEM-SC-021"},
   "nontriviality": {
     "required_predicates": ["admissible_recovery","strong_preservation_and_reflection","lexical_invariance","no_source_oracle","cross_axis_coherence","complete_machinery_accounting","no_evaluator_repair","no_evidential_upgrade","compositional_accountability"],
-    "negative_control_mapping": {
-      "NC-01": ["P4", "P5", "P7"],
-      "NC-02": ["P4_relation_reflection"],
-      "NC-03": ["P7_order_or_revision_reflection"],
-      "NC-04": ["admissible_recovery", "LedgerComplete"],
-      "NC-05": ["SemAgree", "lexical_invariance"],
-      "NC-06": ["admissible_recovery", "uniformity", "LedgerComplete"],
-      "NC-07": ["image_accountability", "LedgerComplete"],
-      "NC-08": ["P4", "P7", "Pres_8I"],
-      "NC-09": ["P4", "P5", "P6", "P7"],
-      "NC-10": ["LedgerComplete", "machinery_accounting"]
-    },
-    "w1_obstruction_results": {
-      "OBS-SC-003": "refuted_by_generic_direct_axis_relation_embedding",
-      "OBS-SC-006": "refuted_by_exact_internal_evidence_embedding"
-    }
+    "negative_control_mapping": {"NC-01":["P4","P5","P7"],"NC-02":["P4_relation_reflection"],"NC-03":["P7_order_or_revision_reflection"],"NC-04":["admissible_recovery","LedgerComplete"],"NC-05":["SemAgree","lexical_invariance"],"NC-06":["admissible_recovery","uniformity","LedgerComplete"],"NC-07":["image_accountability","LedgerComplete"],"NC-08":["P4","P7","Pres_8I"],"NC-09":["P4","P5","P6","P7"],"NC-10":["LedgerComplete","machinery_accounting"]},
+    "obstruction_results": {"OBS-SC-003":"refuted_by_generic_direct_axis_relation_embedding","OBS-SC-004":"refuted_by_exact_finite_dynamics_bisimulation_construction","OBS-SC-005":"refuted_by_exact_history_path_revision_and_rule_version_construction","OBS-SC-006":"refuted_by_exact_internal_evidence_embedding"}
   },
   "faithful_formula": ["WF_S_core","WF_A_FARA","WF_W","AdmissibleRecovery","all_applicable_Pres_1_through_Pres_7","Pres_8I","SemAgree","Coherent","Uniform","CompAccount","LedgerComplete","Nontrivial"],
-  "decision_semantics": {
-    "true": "all conjuncts derived",
-    "false": "formal failure witness",
-    "not_applicable": "source-declared empty axis only",
-    "partial": "diagnostic_only",
-    "unknown": "blocks_theorem_acceptance"
-  },
-  "gate_effect": {
-    "formal-theorem-target": "satisfied",
-    "premise-ledger-and-semantics": "satisfied",
-    "faithful-representation-definition": "satisfied",
-    "scoped-representation-proof": "not_satisfied"
-  },
-  "unresolved": ["W2_through_W5_lemma_execution","admissible_target_only_recovery","global_semantic_agreement","cross_axis_coherence","existence_of_uniform_complete_target_constructor","S_core_representation_theorem","PB_001_completeness","external_process_correspondence"],
-  "nonclaims": [
-    "Faithful_split is satisfiable",
-    "any complete Pres_i predicate is proved",
-    "FARA represents S_core",
-    "FARA represents S_IRD",
-    "PB-001 is complete",
-    "actual-process correspondence is established",
-    "any W2 through W5 construction or assembly obligation is proved",
-    "negative controls are exhaustive",
-    "any primitive is necessary",
-    "FARA is minimal unique or universal",
-    "any theorem in THM-TARGET-001 is proved",
-    "W0 or W1 has proof-assistant verification or independent proof review"
-  ],
-  "next_required_artifact": "W2 dynamics history revision and self-modification proof-or-obstruction package"
+  "decision_semantics": {"true":"all conjuncts derived","false":"formal failure witness","not_applicable":"source-declared empty axis only","partial":"diagnostic_only","unknown":"blocks_theorem_acceptance"},
+  "gate_effect": {"formal-theorem-target":"satisfied","premise-ledger-and-semantics":"satisfied","faithful-representation-definition":"satisfied","scoped-representation-proof":"not_satisfied"},
+  "unresolved": ["W3_and_W5_lemma_execution","remaining_W4_obstruction_and_negative_control_execution","admissible_target_only_recovery","global_semantic_agreement","cross_axis_coherence","complete_machinery_accounting","global_uniformity_and_equivariance","distributed_composition","well_formed_witness_assembly","S_core_representation_theorem","PB_001_completeness","external_process_correspondence"],
+  "nonclaims": ["Faithful_split is satisfiable","any complete Pres_i predicate is proved","FARA represents S_core","FARA represents S_IRD","PB-001 is complete","actual-process correspondence is established","any W3 or W5 construction or assembly obligation is proved","the remaining W4 obstruction or negative-control obligations are resolved","negative controls are exhaustive","any primitive is necessary","FARA is minimal unique or universal","any theorem in THM-TARGET-001 is proved","W0 W1 or W2 has proof-assistant verification or independent proof review"],
+  "next_required_artifact": "W3 global witness recovery semantics coherence machinery uniformity composition and assembly proof-or-obstruction package"
 }

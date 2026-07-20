@@ -2,27 +2,27 @@
 
 ## Audit target
 
-This audit covers the frozen lemma ledger, the W0 and W1 proof packages, executable corroboration, theorem and faithful-representation registries, P8, roadmaps, claims, and research gates.
+This audit covers the frozen lemma ledger, the W0 through W2 proof packages, executable corroboration, theorem and faithful-representation registries, P8, roadmaps, claims, and research gates.
 
 ## Audit question
 
-Does the repository preserve the complete dependency-ordered finite-core program while accepting only the exact W0 and W1 results established by versioned proof packages?
+Does the repository preserve the complete dependency-ordered finite-core program while accepting only the exact W0, W1, and W2 results established by versioned proof packages?
 
 ## Result
 
-**Pass through W1 execution.**
+**Pass through W2 execution.**
 
 The ledger retains 37 obligations: 24 construction, 10 obstruction, and 3 assembly.
 
 Current execution state:
 
-- 11 construction lemmas proved;
+- 16 construction lemmas proved;
 - 1 source-scope boundary established;
-- 2 obstruction hypotheses refuted;
+- 4 obstruction hypotheses refuted;
 - 0 target impossibility results established;
-- 23 obligations open;
-- W0 and W1 complete;
-- W2 active.
+- 16 obligations open;
+- W0, W1, and W2 complete;
+- W3 active.
 
 ## W0 audit
 
@@ -34,30 +34,36 @@ Current execution state:
 
 `SCORE-W1-PROOF-001` uses one fixed target schema, `DIR-INCIDENCE-1.0`, for every finite direct-axis reduct.
 
+It proves `LEM-SC-005` through `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014`. It refutes `OBS-SC-003` and `OBS-SC-006` over their registered finite scopes.
+
+The constructor allocates explicit source-element images, role codes, value objects, relation and attribute occurrences, and separate representations. Derived relations select occurrence records by role and ordered arguments. Source-specific content enters as target data rather than new primitives or case-specific schemas.
+
+## W2 audit
+
+`SCORE-W2-PROOF-001` uses one fixed extension schema, `DYN-HISTORY-1.0`, for every admitted finite P5 and P7 reduct.
+
 It proves:
 
-- `LEM-SC-005` target allocation;
-- `LEM-SC-006` P1 configuration;
-- `LEM-SC-007` P2 commitments;
-- `LEM-SC-008` P3 stakes and alternatives;
-- `LEM-SC-009` P4 grounds and justificatory roles;
-- `LEM-SC-012` P6 consequences;
-- `LEM-SC-014` P8-I internal evidence status.
+- `LEM-SC-010` deterministic dynamics construction;
+- `LEM-SC-011` finite-support probabilistic dynamics construction;
+- `LEM-SC-013` historical-and-path construction;
+- `LEM-SC-015` nonmonotonic revision and retraction;
+- `LEM-SC-016` self-modification and rule-version change.
 
-The constructor allocates explicit source-element images, role codes, value objects, relation and attribute occurrences, and separate representations. Derived relations select occurrence records by role and ordered arguments. This gives totality, typing, injectivity, preservation, reflection, exact attribute preservation, and image accountability.
+It refutes:
 
-Source-specific data enters as target data rather than new primitives or case-specific schemas. Objects and representations remain distinct.
+- `OBS-SC-004`, because every admitted finite deterministic graph or finite-support kernel receives a preservation-and-reflection construction;
+- `OBS-SC-005`, because every admitted finite material history, path, revision, and rule-version structure receives an injective order-preserving and relation-reflecting construction.
 
-W1 refutes:
+The construction copies complete material transition records, exact finite-support weights, state-indexed active rule versions, material event order, causal and provenance facts, revision snapshots, accepted and rejected modifications, dependency ancestry, and path conditions.
 
-- `OBS-SC-003`, because arbitrary finite P2, P3, and P4 reducts admit relation-preserving and relation-reflecting embeddings;
-- `OBS-SC-006`, because arbitrary finite P8-I reducts admit exact no-upgrade embeddings.
+A transition is live only when its copied status is permitted and its governing rule version is active at the represented source state. Accepted rule changes alter later live transitions; rejected changes do not. Therefore rule modification is operational rather than label-only.
 
-These refutations do not settle recovery, global semantics, coherence, dynamics, composition, or complete machinery accounting.
+These results do not settle target-only recovery, semantic agreement, complete cross-axis coherence, complete machinery accounting, global uniformity, composition, or witness assembly.
 
 ## Executable corroboration
 
-The W0 and W1 reference suites test finite closure, cycles, sparse axes, canonical renaming, direct-axis injection, relation and attribute namespace separation, spurious-relation rejection, support/defeat noncollapse, alternative retention, consequence roles, evidence no-upgrade, and malformed sort rejection.
+The W0 through W2 reference suites test finite closure, canonical transport, direct-axis injection and reflection, exact transition metadata, probability mass, inactive rule versions, material order, revision snapshots, accepted and rejected modification behavior, path retention, and rule-version history.
 
 These tests are bounded corroboration, not proof-assistant verification or independent proof review.
 
@@ -67,8 +73,8 @@ The graph remains finite, acyclic, and wave ordered:
 
 1. W0 source normalization — complete;
 2. W1 target allocation and direct axes — complete;
-3. W2 dynamics, history, revision, and self-modification — active;
-4. W3 global witness obligations — open;
+3. W2 dynamics, history, revision, and self-modification — complete;
+4. W3 global witness obligations — active;
 5. W4 remaining obstructions and negative controls — open;
 6. W5 theorem assembly — open.
 
@@ -86,7 +92,7 @@ The frozen boundaries remain unchanged:
 - external correspondence `Corr_8E`;
 - no primitive added or declared necessary.
 
-W1 proves direct-axis strong embeddings only. Complete `Pres_i` predicates remain dependent on target-only recovery.
+W1 and W2 prove finite strong embeddings only. Complete `Pres_i` predicates remain dependent on target-only recovery and the other W3 obligations.
 
 ## Gate effects
 
@@ -100,8 +106,8 @@ W1 proves direct-axis strong embeddings only. Complete `Pres_i` predicates remai
 
 ## Claim effects
 
-No central claim is promoted. W0 and W1 are partial lemma packages, not a common-schema theorem, representation theorem, universality result, necessity result, or minimality result.
+No central claim is promoted. W0 through W2 are partial lemma packages, not a common-schema theorem, representation theorem, universality result, necessity result, or minimality result.
 
 ## Exact next work
 
-Execute W2: `LEM-SC-010`, `LEM-SC-011`, `LEM-SC-013`, `LEM-SC-015`, and `LEM-SC-016`, with `OBS-SC-004` and `OBS-SC-005` executed as dependencies close.
+Execute W3: `LEM-SC-017` through `LEM-SC-024`, covering distributed interfaces, target-only recovery, semantics, coherence, machinery, uniformity, composition, and well-formed witness assembly.

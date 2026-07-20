@@ -38,11 +38,11 @@ This track is parallel and nonblocking for theorem construction. It remains requ
 
 ## Milestone 6 — Theorem target and premise ledger
 
-**Status:** complete prospectively through `THM-TARGET-001` v1.0 and premise ledger v1.4.
+**Status:** complete prospectively through `THM-TARGET-001` v1.0 and premise ledger v1.5.
 
 The theorem program distinguishes `S_core`, `S_IRD`, `A_FARA`, the witness signature, preservation obligations, split P8, nontriviality, failure rules, and separate theorem families.
 
-Premise ledger v1.4 records W0 and W1 proof progress without changing any premise, source scope, target interface, or theorem status.
+Premise ledger v1.5 records W0 through W2 proof progress without changing any premise, source scope, target interface, or theorem status.
 
 ## Milestone 7 — Faithful-representation formalization
 
@@ -50,7 +50,7 @@ Premise ledger v1.4 records W0 and W1 proof progress without changing any premis
 
 `FAITHFUL-REP-001` fixes source materiality, canonical reducts, target-only recovery, strong embeddings, P5 bisimulation, P7 order and path, semantic agreement, coherence, uniformity, composition, machinery accounting, nontriviality, and `Faithful_split`.
 
-W0 proves the source kernel. W1 proves direct-axis target structures and strong embeddings. Recovery and complete `Pres_i` predicates remain unproved.
+W0 proves the source kernel. W1 proves direct-axis target structures and strong embeddings. W2 proves finite dynamics, history, revision, and operational rule-version constructions. Recovery and complete `Pres_i` predicates remain unproved.
 
 ## Milestone 7.5 — P8 theorem role
 
@@ -69,13 +69,14 @@ W0 proves the source kernel. W1 proves direct-axis target structures and strong 
 
 Current state:
 
-- proved construction lemmas: 11;
+- proved construction lemmas: 16;
 - source-scope boundaries established: 1;
-- refuted obstruction hypotheses: 2;
-- open obligations: 23;
+- refuted obstruction hypotheses: 4;
+- open obligations: 16;
 - W0 complete;
 - W1 complete;
-- W2 active;
+- W2 complete;
+- W3 active;
 - scoped-representation-proof gate not satisfied.
 
 ### W0 result
@@ -84,36 +85,40 @@ Current state:
 
 ### W1 result
 
-`SCORE-W1-PROOF-001` proves target allocation and direct-axis constructions for P1, P2, P3, P4, P6, and P8-I.
+`SCORE-W1-PROOF-001` proves target allocation and direct-axis constructions for P1, P2, P3, P4, P6, and P8-I. The fixed `DIR-INCIDENCE-1.0` construction preserves and reflects every finite direct-axis relation and adds no primitive. `OBS-SC-003` and `OBS-SC-006` are refuted over their registered scopes.
 
-The fixed `DIR-INCIDENCE-1.0` construction:
+### W2 result
 
-- uses existing FARA categories;
-- allocates distinct target objects and representations;
-- stores source-specific sorts, roles, values, and denotations as explicit data;
-- preserves and reflects all finite direct-axis relations;
-- preserves exact attributes and internal evidence status;
+`SCORE-W2-PROOF-001` proves deterministic and finite-support probabilistic dynamics, history and path, nonmonotonic revision, and self-modification with operational rule-version change.
+
+The fixed `DYN-HISTORY-1.0` construction:
+
+- reuses W1 images;
+- copies complete transition metadata and exact finite-support weights;
+- preserves and reflects material history order, provenance, ancestry, revision, and path conditions;
+- checks revision records against before and after state snapshots;
+- makes accepted rule-version change alter later live transitions;
+- leaves later transitions unchanged for rejected modifications;
 - adds no primitive.
 
-`OBS-SC-003` and `OBS-SC-006` are refuted over their registered finite direct-axis scopes.
+`OBS-SC-004` and `OBS-SC-005` are refuted over their registered finite explicit scopes.
 
-### W2 active obligations
+### W3 active obligations
 
-- `LEM-SC-010` deterministic dynamics;
-- `LEM-SC-011` finite-support probabilistic dynamics;
-- `LEM-SC-013` history and path;
-- `LEM-SC-015` nonmonotonic revision and retraction;
-- `LEM-SC-016` self-modification and rule-version change.
+- `LEM-SC-017` distributed decomposition and interface construction;
+- `LEM-SC-018` admissible target-only recovery;
+- `LEM-SC-019` semantic agreement;
+- `LEM-SC-020` cross-axis coherence;
+- `LEM-SC-021` complete machinery accounting;
+- `LEM-SC-022` global uniformity and source-isomorphism equivariance;
+- `LEM-SC-023` compositional accountability;
+- `LEM-SC-024` well-formed witness assembly.
 
-The W2 package must preserve operational effects, exact weights, admissibility, rule identity and version, provenance, dependency ancestry, earlier and later states, and the exact event at which a rule change alters later transitions.
-
-`OBS-SC-004` and `OBS-SC-005` should be executed as dependencies close.
+W3 must prohibit source oracles, hidden interpreters, case databases, evaluator repair, semantic strengthening, identity conflicts, uncounted metadata, nonuniform helper families, and interface loss.
 
 ### Later pressure classes
 
-W3 must resolve distributed composition, target-only recovery, semantic agreement, cross-axis coherence, complete machinery accounting, global uniformity, and witness assembly.
-
-W4 must resolve remaining hidden-interpreter, dynamics, history, uniformity, composition, fixed-interface, and negative-control obligations.
+W4 must resolve hidden-interpreter necessity, nonuniformity, composition-interface loss, fixed-target-interface insufficiency, and the formal negative-control family.
 
 W5 must assemble the strongest theorem-or-obstruction conclusion.
 
@@ -125,7 +130,7 @@ A failed mapping is not a theorem-level obstruction unless nonexistence is prove
 
 ## Milestone 9 — Scoped representation theorem or refutation
 
-**Status:** blocked by 23 open Milestone 8 obligations.
+**Status:** blocked by 16 open Milestone 8 obligations.
 
 Attempt `THM-CORE-COMMON-001`, `THM-CORE-REP-001`, and `THM-IMP-001`. Attempt `THM-IRD-EXT-001` only after the finite-core result is resolved.
 
@@ -147,7 +152,7 @@ No global minimality claim follows from a finite competitor sample unless exhaus
 
 Encode frozen definitions, assumptions, proved lemmas, unresolved obligations, and theorem chains in a proof assistant or verified formal system.
 
-The W0 and W1 Python references are bounded executable corroboration, not proof-assistant verification.
+The W0, W1, and W2 Python references are bounded executable corroboration, not proof-assistant verification.
 
 ## Milestone 13 — Bounded exhaustive search
 
@@ -159,7 +164,7 @@ Every result remains indexed to its declared universe.
 
 Invite qualified reviewers to reconstruct proofs, challenge definitions and assumptions, test mechanized artifacts, and search for countermodels.
 
-W0 and W1 remain project-authored and not independently reviewed.
+W0, W1, and W2 remain project-authored and not independently reviewed.
 
 ## Milestone 15 — Central decision assessment
 
@@ -179,4 +184,4 @@ Certification expansion, cosmetic dashboards, release packaging, favorable-case 
 
 ## Immediate next action
 
-Produce the W2 dynamics, history, revision, and self-modification proof-or-obstruction package. Do not begin theorem assembly or claim complete target faithfulness while any dependency remains open.
+Produce the W3 global-witness proof-or-obstruction package. Do not begin theorem assembly or claim complete target faithfulness while any dependency remains open.

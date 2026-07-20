@@ -17,20 +17,20 @@ The project does not assume that a universal structure exists or that FAR is tha
 
 ## Current Research State
 
-The project is deduction-first. [`THM-TARGET-001`](docs/research/thm-target-001-v1.0.md), premise ledger v1.4, [`FAITHFUL-REP-001`](docs/research/faithful-representation-specification-v1.0.md), [`P8-ROLE-001`](docs/research/p8-theorem-role-decision-v1.0.md), and [`SCORE-LEMMA-LEDGER-001`](docs/research/s-core-construction-obstruction-ledger-v1.0.md) remain frozen.
+The project is deduction-first. [`THM-TARGET-001`](docs/research/thm-target-001-v1.0.md), premise ledger v1.5, [`FAITHFUL-REP-001`](docs/research/faithful-representation-specification-v1.0.md), [`P8-ROLE-001`](docs/research/p8-theorem-role-decision-v1.0.md), and [`SCORE-LEMMA-LEDGER-001`](docs/research/s-core-construction-obstruction-ledger-v1.0.md) remain frozen.
 
-[`SCORE-W0-PROOF-001`](docs/research/s-core-w0-normalization-proof-v1.0.md) and [`SCORE-W1-PROOF-001`](docs/research/s-core-w1-direct-axis-proof-v1.0.md) establish 11 construction lemmas, one source boundary, and two refuted direct-axis obstruction hypotheses. Twenty-three obligations remain. W2 dynamics, history, revision, and self-modification are active.
+[`SCORE-W0-PROOF-001`](docs/research/s-core-w0-normalization-proof-v1.0.md), [`SCORE-W1-PROOF-001`](docs/research/s-core-w1-direct-axis-proof-v1.0.md), and [`SCORE-W2-PROOF-001`](docs/research/s-core-w2-dynamics-history-proof-v1.0.md) establish 16 construction lemmas, one source boundary, and four refuted finite obstruction hypotheses. Sixteen obligations remain. W3 global witness construction is active.
 
-W1 proves finite direct-axis strong embeddings. It does not prove target-only recovery, complete `Pres_i` predicates, `Faithful_split`, a representation theorem, universality, necessity, or minimality.
+W1 and W2 prove finite direct-axis, dynamics, history, revision, and rule-version strong embeddings. They do not prove target-only recovery, complete `Pres_i` predicates, `Faithful_split`, a representation theorem, universality, necessity, or minimality.
 
-Run `make research-check` to validate the theorem target, semantics, P8 split, lemma ledger, W0/W1 proof packages, executable corroboration, gates, and conservative claim boundaries.
+Run `make research-check` to validate the theorem target, semantics, P8 split, lemma ledger, W0-W2 proof packages, executable corroboration, gates, and conservative claim boundaries.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: S_core W2 dynamics history revision and self-modification
+- Current project phase: S_core W3 global witness construction
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 - Last dashboard generation time: 2026-07-16T08:17:16+00:00
@@ -64,26 +64,16 @@ Run `make research-check` to validate the theorem target, semantics, P8 split, l
 | Formal metric | Current |
 |---|---:|
 | Registered obligations | 37 |
-| Proved construction lemmas | 11 |
+| Proved construction lemmas | 16 |
 | Source boundaries established | 1 |
-| Obstruction hypotheses refuted | 2 |
-| Open obligations | 23 |
-| Completed waves | W0, W1 |
-| Active wave | W2 |
+| Obstruction hypotheses refuted | 4 |
+| Open obligations | 16 |
+| Completed waves | W0, W1, W2 |
+| Active wave | W3 |
 
 ## Top Priority Tasks
 
-### STRATEGIC-001: Prove the W2 S_core dynamics history and revision package
-- Source: deduction-first strategic priority
-- Affected files:
-  - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
-  - [theory/evaluation/s-core-construction-obstruction-ledger.json](theory/evaluation/s-core-construction-obstruction-ledger.json)
-  - [docs/research/faithful-representation-specification-v1.0.md](docs/research/faithful-representation-specification-v1.0.md)
-  - [docs/research/independent-reasoning-definition-v1.0.md](docs/research/independent-reasoning-definition-v1.0.md)
-- Suggested branch: `research/prove-s-core-w2-dynamics-history`
-- Suggested PR title: `Prove S_core W2 dynamics history and revision`
-
-### STRATEGIC-002: Prove the W3 global witness obligations
+### STRATEGIC-001: Prove the W3 S_core global witness obligations
 - Source: deduction-first strategic priority
 - Affected files:
   - [docs/research/s-core-construction-obstruction-ledger-v1.0.md](docs/research/s-core-construction-obstruction-ledger-v1.0.md)
@@ -93,12 +83,12 @@ Run `make research-check` to validate the theorem target, semantics, P8 split, l
 - Suggested branch: `research/prove-s-core-w3-global-witness`
 - Suggested PR title: `Prove S_core W3 global witness obligations`
 
-### STRATEGIC-003: Execute the remaining obstruction and negative-control program
+### STRATEGIC-002: Execute the remaining obstruction and negative-control program
 - Source: deduction-first strategic priority
 - Suggested branch: `research/execute-s-core-obstructions`
 - Suggested PR title: `Execute remaining S_core obstruction program`
 
-### STRATEGIC-004: Assemble the finite-core theorem or strongest obstruction
+### STRATEGIC-003: Assemble the finite-core theorem or strongest obstruction
 - Source: deduction-first strategic priority
 - Suggested branch: `research/assemble-s-core-result`
 - Suggested PR title: `Assemble S_core theorem or obstruction`
@@ -129,6 +119,8 @@ Run `make research-check` to validate the theorem target, semantics, P8 split, l
 - [S_core W0 Proof Registry](theory/evaluation/s-core-w0-normalization-proof.json)
 - [S_core W1 Proof](docs/research/s-core-w1-direct-axis-proof-v1.0.md)
 - [S_core W1 Proof Registry](theory/evaluation/s-core-w1-direct-axis-proof.json)
+- [S_core W2 Proof](docs/research/s-core-w2-dynamics-history-proof-v1.0.md)
+- [S_core W2 Proof Registry](theory/evaluation/s-core-w2-dynamics-history-proof.json)
 - [Evidence Registry](theory/evaluation/evidence-registry.yaml)
 - [External Validation Registry](theory/evaluation/external-validation-registry.yaml)
 - [Primitive Pressure Registry](theory/falsification/primitive-pressure-registry.yaml)
@@ -137,10 +129,10 @@ Run `make research-check` to validate the theorem target, semantics, P8 split, l
 
 ## Current Roadmap
 
-- Current phase: S_core W2 dynamics history revision and self-modification
-- Completed foundation: domain; IRD-001; PB-001; PBTS-001; theorem target; premise ledger v1.4; faithful semantics; P8 split; W0; W1
-- In progress: `LEM-SC-010`, `011`, `013`, `015`, and `016`, with `OBS-SC-004` and `OBS-SC-005`
-- Planned: W3 global witness; remaining W4 obstructions; W5 assembly; S_IRD extension; lower bounds; minimality; mechanization; independent review
+- Current phase: S_core W3 global witness construction
+- Completed foundation: domain; IRD-001; PB-001; PBTS-001; theorem target; premise ledger v1.5; faithful semantics; P8 split; W0; W1; W2
+- In progress: `LEM-SC-017` through `LEM-SC-024` covering recovery, semantics, coherence, machinery, uniformity, composition, and witness assembly
+- Planned: remaining W4 obstructions; W5 assembly; S_IRD extension; lower bounds; minimality; mechanization; independent review
 - Parallel: PBTS replication, comparative evaluation, boundary discovery, and application validation
 
 ## Command Center

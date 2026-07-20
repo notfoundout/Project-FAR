@@ -22,6 +22,7 @@ The active program is controlled by:
 - `docs/research/s-core-construction-obstruction-ledger-v1.0.md`;
 - `docs/research/s-core-w0-normalization-proof-v1.0.md`;
 - `docs/research/s-core-w1-direct-axis-proof-v1.0.md`;
+- `docs/research/s-core-w2-dynamics-history-proof-v1.0.md`;
 - `theory/evaluation/research-gates.json`.
 
 The deduction-first standard controls proof dependencies. Anti-self-validation and replication standards separately control independent-confirmation claims.
@@ -71,14 +72,7 @@ A material change to source scope, target interface, faithful predicate, P8 boun
 
 ### W0 — Source normalization
 
-`SCORE-W0-PROOF-001` proves:
-
-- `LEM-SC-001` finite source-contract normalization;
-- `LEM-SC-002` canonical reduct extraction;
-- `LEM-SC-003` materiality closure and applicability decidability;
-- `LEM-SC-004` source-isomorphism transport.
-
-It establishes `OBS-SC-001` as a source-scope boundary: genuinely non-finite material closure is outside frozen `S_core`.
+`SCORE-W0-PROOF-001` proves `LEM-SC-001` through `LEM-SC-004` and establishes `OBS-SC-001` as a source-scope boundary. Genuinely non-finite material closure is outside frozen `S_core`.
 
 ### W1 — Target allocation and direct axes
 
@@ -92,49 +86,74 @@ It establishes `OBS-SC-001` as a source-scope boundary: genuinely non-finite mat
 - `LEM-SC-012` P6 consequence construction;
 - `LEM-SC-014` P8-I internal evidential-status construction.
 
-It refutes the registered direct-axis impossibility hypotheses `OBS-SC-003` and `OBS-SC-006` by one fixed finite incidence construction.
+It refutes `OBS-SC-003` and `OBS-SC-006` over their registered finite scopes. It uses existing FARA categories and adds no primitive.
 
-The W1 construction uses existing FARA categories and adds no primitive. Source-specific roles, sorts, values, and denotations enter as explicit target data. Objects and representations remain distinct.
+### W2 — Dynamics, history, revision, and self-modification
 
-W1 proves direct-axis strong embeddings. It does not prove target-only recovery or any complete `Pres_i` predicate.
+`SCORE-W2-PROOF-001` proves:
+
+- `LEM-SC-010` deterministic dynamics construction;
+- `LEM-SC-011` finite-support probabilistic dynamics construction;
+- `LEM-SC-013` historical-and-path construction;
+- `LEM-SC-015` nonmonotonic revision and retraction;
+- `LEM-SC-016` self-modification and rule-version change.
+
+It refutes:
+
+- `OBS-SC-004` dynamics-bisimulation mismatch;
+- `OBS-SC-005` history-and-path collapse.
+
+The fixed `DYN-HISTORY-1.0` schema copies finite transition records, exact finite-support weights, state-indexed active rule versions, material event order, revision snapshots, rule modifications, ancestry, and path conditions. Accepted rule changes alter later live transitions; rejected changes do not. No new FARA primitive is added.
+
+W1 and W2 prove finite target constructions and strong embeddings. They do not prove target-only recovery or any complete `Pres_i` predicate.
 
 ## Current active stage
 
 Current ledger state:
 
 - total obligations: 37;
-- proved construction lemmas: 11;
+- proved construction lemmas: 16;
 - source-scope boundaries established: 1;
-- refuted obstruction hypotheses: 2;
-- open obligations: 23;
-- completed waves: W0 and W1;
-- active wave: W2.
+- refuted obstruction hypotheses: 4;
+- open obligations: 16;
+- completed waves: W0, W1, and W2;
+- active wave: W3.
 
 The active obligations are:
 
-- `LEM-SC-010` deterministic dynamics;
-- `LEM-SC-011` finite-support probabilistic dynamics;
-- `LEM-SC-013` history and path;
-- `LEM-SC-015` nonmonotonic revision and retraction;
-- `LEM-SC-016` self-modification and rule-version change.
-
-`OBS-SC-004` and `OBS-SC-005` are executed as their dependencies close.
+- `LEM-SC-017` distributed decomposition and interface construction;
+- `LEM-SC-018` admissible target-only recovery;
+- `LEM-SC-019` semantic agreement;
+- `LEM-SC-020` cross-axis coherence;
+- `LEM-SC-021` complete machinery-ledger construction;
+- `LEM-SC-022` uniformity and source-isomorphism equivariance;
+- `LEM-SC-023` compositional accountability;
+- `LEM-SC-024` well-formed witness assembly.
 
 The scoped-representation-proof, mechanized-proof-verification, and independent-proof-review gates remain unsatisfied.
 
-## W2 proof requirements
+## W3 proof requirements
 
-The W2 package must preserve and reflect operational behavior rather than merely store labels.
+The W3 package must close the difference between successful per-axis constructions and one admissible faithful witness.
 
-For deterministic dynamics it must establish finite labeled bisimulation, including preconditions, resources, actions, observations, rule identity, rule version, and admissibility.
+Recovery must:
 
-For finite-support stochastic dynamics it must preserve exact source probabilities or source-declared weight equivalence and establish the registered probabilistic bisimulation.
+- accept target data, registered witness metadata, and an axis query only;
+- terminate deterministically on every finite theorem-facing package;
+- use no source object, source identifier, evaluator repair, unrestricted interpreter, network resource, or case database;
+- return exactly the recovered reduct or an explicit failure diagnostic.
 
-For history it must provide an order embedding preserving and reflecting provenance, dependency ancestry, revision, retraction, supersession, activation, rejection, and material path conditions.
+Semantic agreement must use source-declared denotational equivalence and must not strengthen precision, certainty, modality, normativity, authority, or evidential grade.
 
-For nonmonotonic revision it must retain earlier and later commitment states rather than replacing history with current output.
+Cross-axis coherence must reuse or explicitly link shared identities and prohibit contradictory commitment, version, provenance, or consequence data.
 
-For self-modification it must show that accepted, rejected, and superseded rule changes alter later admissible transitions at the exact source position.
+The machinery ledger must count every schema, algorithm, field, bridge, helper, metadata item, and dependency used by construction, recovery, interpretation, or verification.
+
+Uniformity must establish one finite source-isomorphism-equivariant constructor family with no case-identifier branching or unbounded helper family.
+
+Compositional accountability must preserve declared interfaces, cross-component relations, histories, and admissibility conditions, and restriction must commute with encoding up to the declared target equivalence.
+
+Witness assembly must produce a well-formed `W=(E,D,M,iota,kappa)` without assuming `Faithful_split` or the theorem conclusion.
 
 ## Primary deductive method
 
@@ -194,7 +213,7 @@ They are not logical premises of the theorem. Independent replication gates only
 
 Protected theory may not be silently changed to rescue a proof. Any substantive change creates the applicable new version and preserves earlier failures.
 
-A proof assistant can verify only the encoded theorem under its trusted assumptions. Executable W0 and W1 reference implementations are corroboration, not proof-assistant verification.
+A proof assistant can verify only the encoded theorem under its trusted assumptions. Executable W0, W1, and W2 reference implementations are corroboration, not proof-assistant verification.
 
 ## Current nonclaims
 
@@ -207,8 +226,8 @@ The repository does not establish:
 - PB-001 sufficiency, necessity, independence, minimality, or completeness;
 - actual-process correspondence;
 - a representation, universality, necessity, minimality, equivalence, uniqueness, or impossibility theorem;
-- proof-assistant verification or independent proof review of W0 or W1.
+- proof-assistant verification or independent proof review of W0, W1, or W2.
 
 ## Immediate central task
 
-Execute the W2 dynamics, history, revision, and self-modification proof-or-obstruction package. Independent empirical work remains parallel and nonblocking.
+Execute the W3 global-witness proof-or-obstruction package. Independent empirical work remains parallel and nonblocking.

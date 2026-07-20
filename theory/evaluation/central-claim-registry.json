@@ -14,41 +14,42 @@
     "docs/research/p8-theorem-role-decision-v1.0.md",
     "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
     "docs/research/s-core-w0-normalization-proof-v1.0.md",
-    "docs/research/s-core-w1-direct-axis-proof-v1.0.md"
+    "docs/research/s-core-w1-direct-axis-proof-v1.0.md",
+    "docs/research/s-core-w2-dynamics-history-proof-v1.0.md"
   ],
   "claims": [
     {
       "id": "CLM-EXISTENCE",
       "name": "Existence of a common reasoning structure",
       "current_status": "unresolved",
-      "maximum_supported_scope": "W0 source normalization and W1 finite direct-axis target allocation are proved for frozen S_core; no complete common target schema or faithful witness has been established",
+      "maximum_supported_scope": "W0 normalization, W1 direct-axis target construction, and W2 finite dynamics, history, revision, and operational rule-version construction are proved for frozen S_core; no complete common target schema or faithful witness has been established",
       "primary_resolution_mode": "existence proof or formal impossibility or countermodel over a frozen source class",
-      "required_next_test": "prove or obstruct W2 dynamics history revision and self-modification then execute W3 recovery semantics coherence machinery composition and assembly",
+      "required_next_test": "execute W3 recovery semantics coherence machinery uniformity composition and witness assembly, then resolve remaining W4 and W5 obligations",
       "supporting_validation": "bounded model search counterexample programs proof-assistant verification and independent proof review",
       "falsification_condition": "a formal in-scope incompatibility or impossibility result showing that no common structure satisfies the registered commitments",
-      "nonclaims": ["FAR is the common structure", "universality", "minimality", "direct-axis allocation proves common-schema existence"]
+      "nonclaims": ["FAR is the common structure", "universality", "minimality", "W0-W2 partial constructions prove common-schema existence"]
     },
     {
       "id": "CLM-SUFFICIENCY",
       "name": "FAR bounded representational sufficiency",
       "current_status": "partially_supported",
-      "maximum_supported_scope": "specific frozen mappings plus proved W0 source normalization and proved W1 direct-axis strong embeddings; recovery dynamics history coherence and theorem-level S_core sufficiency remain unproved",
+      "maximum_supported_scope": "specific frozen mappings plus proved W0 source normalization, W1 direct-axis strong embeddings, and W2 P5 and P7 constructions; recovery semantics coherence machinery uniformity composition and theorem-level S_core sufficiency remain unproved",
       "primary_resolution_mode": "scoped faithful-representation theorem or formal countermodel",
-      "required_next_test": "execute W2 and W3 then complete the obstruction program and arbitrary-episode Faithful_split assembly",
+      "required_next_test": "execute W3, complete remaining obstruction and negative-control obligations, and assemble an arbitrary-episode Faithful_split witness",
       "supporting_validation": "PBTS-001 negative controls mechanized conformance bounded reference implementations and independent replication",
       "falsification_condition": "an in-scope source object satisfies the frozen source definition but admits no faithful target representation under the theorem obligations",
-      "nonclaims": ["universal sufficiency", "primitive-only sufficiency", "necessity", "W1 proves any complete Pres_i predicate", "partial construction proves Faithful_split"]
+      "nonclaims": ["universal sufficiency", "primitive-only sufficiency", "necessity", "W1 or W2 proves any complete Pres_i predicate", "partial construction proves Faithful_split"]
     },
     {
       "id": "CLM-UNIVERSALITY",
       "name": "FAR universality",
       "current_status": "not_established",
-      "maximum_supported_scope": "none; W0 and W1 are bounded partial lemma packages for S_core and S_IRD remains an extension target",
+      "maximum_supported_scope": "none; W0 through W2 are bounded partial lemma packages for finite explicit S_core and S_IRD remains an extension target",
       "primary_resolution_mode": "formal theorem quantified over an independently defined source class or a formal countermodel",
       "required_next_test": "resolve the remaining S_core lemma program and finite-core theorem first then establish or refute extension to S_IRD without promoting the bounded result",
       "supporting_validation": "adversarial holdouts boundary discovery proof-assistant verification and independent proof review",
       "falsification_condition": "one formal genuine in-scope countermodel",
-      "nonclaims": ["absence of discovered counterexamples proves universality", "a proof over S_core proves S_IRD universality", "W0 or W1 is a universality result"]
+      "nonclaims": ["absence of discovered counterexamples proves universality", "a proof over S_core proves S_IRD universality", "W0 W1 or W2 is a universality result"]
     },
     {
       "id": "CLM-NECESSITY",
@@ -59,7 +60,7 @@
       "required_next_test": "after a successful representation theorem define the admissible reconstruction class and prove indispensability derivability or replaceability for each commitment",
       "supporting_validation": "registered ablations and hidden-reintroduction audits",
       "falsification_condition": "a valid general construction omits the tested primitive without equivalent reintroduction under the declared equivalence model",
-      "nonclaims": ["successful use establishes necessity", "failed finite ablations establish necessity", "the theorem-facing FARA tuple is minimal", "using FARA categories in W1 proves they are necessary"]
+      "nonclaims": ["successful use establishes necessity", "failed finite ablations establish necessity", "the theorem-facing FARA tuple is minimal", "using FARA categories in W1 or W2 proves they are necessary"]
     },
     {
       "id": "CLM-MINIMALITY",
@@ -70,18 +71,18 @@
       "required_next_test": "define the candidate universe equivalence relation and cost preorder only after the representation obligations are stable",
       "supporting_validation": "full-cost Pareto comparison and bounded exhaustive search",
       "falsification_condition": "a strictly simpler admissible structure is proved equivalent for the same theorem scope or no global minimum exists",
-      "nonclaims": ["low primitive count establishes minimality", "finite competitor comparison establishes global minimality", "THM-TARGET-001 defines the minimality universe", "DIR-INCIDENCE-1.0 is minimal"]
+      "nonclaims": ["low primitive count establishes minimality", "finite competitor comparison establishes global minimality", "THM-TARGET-001 defines the minimality universe", "DIR-INCIDENCE-1.0 or DYN-HISTORY-1.0 is minimal"]
     },
     {
       "id": "CLM-NONTRIVIALITY",
       "name": "FAR imposes nontrivial representational constraints",
       "current_status": "not_established_generally",
-      "maximum_supported_scope": "W1 proves strong direct-axis preservation and reflection and refutes two direct-axis impossibility hypotheses; recovery global negative controls and full Nontrivial remain unproved",
+      "maximum_supported_scope": "W1 and W2 prove strong finite preservation and reflection for direct axes dynamics history revision and rule-version change and refute four bounded impossibility hypotheses; recovery complete machinery accounting and the formal negative-control family remain unproved",
       "primary_resolution_mode": "formal faithful-representation theorem and obstruction lemmas excluding unrestricted coding",
-      "required_next_test": "prove W2-W3 and then prove NC-01 through NC-10 fail for the registered reasons",
+      "required_next_test": "prove W3 and then prove NC-01 through NC-10 fail for the registered reasons",
       "supporting_validation": "mandatory negative-control suite and bounded adversarial reference checks",
       "falsification_condition": "the formal representation relation admits structurally unfaithful encodings with no additional counted commitment",
-      "nonclaims": ["expressive reach alone establishes constraint", "refuting OBS-SC-003 or OBS-SC-006 proves all target nontriviality", "the faithful predicate is satisfiable"]
+      "nonclaims": ["expressive reach alone establishes constraint", "refuting OBS-SC-003 through OBS-SC-006 proves all target nontriviality", "the faithful predicate is satisfiable"]
     },
     {
       "id": "CLM-ECONOMY",
@@ -92,18 +93,18 @@
       "required_next_test": "define equivalence and cost commitments after the faithful theorem scope is stable then compare strong admissible alternatives",
       "supporting_validation": "canonical full-cost experiments across frozen competitor mappings",
       "falsification_condition": "FAR is dominated or its apparent advantage depends on uncounted machinery",
-      "nonclaims": ["primitive count alone is economy", "tradeoff is superiority", "economy establishes truth", "the W1 incidence schema has proven economy"]
+      "nonclaims": ["primitive count alone is economy", "tradeoff is superiority", "economy establishes truth", "the W1 or W2 schemas have proven economy"]
     },
     {
       "id": "CLM-INDEPENDENCE",
       "name": "Independent verification and replication",
       "current_status": "not_established_generally",
-      "maximum_supported_scope": "internal isolated implementation robustness and project-authored W0 and W1 proofs with bounded executable corroboration",
+      "maximum_supported_scope": "internal isolated implementation robustness and project-authored W0 W1 and W2 proofs with bounded executable corroboration",
       "primary_resolution_mode": "separate independent proof-review and independent empirical-replication records",
-      "required_next_test": "obtain independent reconstruction of SCORE-W0-PROOF-001 and SCORE-W1-PROOF-001 and later theorem packages; continue R3 PBTS replication as a parallel supporting track",
+      "required_next_test": "obtain independent reconstruction of SCORE-W0-PROOF-001 SCORE-W1-PROOF-001 SCORE-W2-PROOF-001 and later theorem packages; continue R3 PBTS replication as a parallel supporting track",
       "supporting_validation": "R3 technical replication R4 adversarial conceptual replication proof-assistant replay and external countermodel search",
       "falsification_condition": "qualified independent reviewers identify a valid proof defect or qualified replicators cannot reproduce the frozen empirical result",
-      "nonclaims": ["one-agent implementation checks are external independence", "project-authored W0 or W1 proofs are independently verified", "review agreement substitutes for proof"]
+      "nonclaims": ["one-agent implementation checks are external independence", "project-authored W0 W1 or W2 proofs are independently verified", "review agreement substitutes for proof"]
     }
   ],
   "claim_dimensions": {
