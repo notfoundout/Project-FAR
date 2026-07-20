@@ -2,250 +2,181 @@
 
 ## Purpose
 
-This roadmap orders the scientific work required to determine whether any genuine common structure of reasoning exists and whether FARA is universal, bounded, nonminimal, replaceable, equivalent to alternatives, or false as a universal account.
+This roadmap orders the scientific work needed to determine whether any genuine common structure of reasoning exists and whether FARA is universal, bounded, nonminimal, replaceable, equivalent to alternatives, or false as a universal account.
 
-Deduction is the primary path to the central result. Empirical validation and independent replication remain parallel supporting tracks. Each milestone must preserve favorable, unfavorable, and unresolved outcomes.
+Deduction is primary. Empirical validation and independent replication remain parallel supporting tracks. Every milestone preserves favorable, unfavorable, bounded, and unresolved outcomes.
 
 ## Milestone 1 — Architecture-neutral reasoning domain
 
-**Status:** complete prospectively through `docs/research/reasoning-domain-specification-v1.0.md` and `theory/evaluation/reasoning-domain-registry.json`.
+**Status:** complete prospectively.
 
-**Result:** sixteen target classes, cross-cutting variation axes, unresolved boundary classes, observability strata, revision controls, and a candidate-neutrality audit are registered.
+Sixteen target classes, variation axes, unresolved boundaries, observability strata, revision controls, and a candidate-neutrality audit are registered.
 
 ## Milestone 2 — Independent mathematical definition of reasoning
 
-**Status:** complete prospectively through `docs/research/independent-reasoning-definition-v1.0.md` and `theory/evaluation/independent-reasoning-definition-registry.json`.
+**Status:** complete prospectively through IRD-001.
 
-**Result:** IRD-001 defines a candidate-neutral process presentation and six reasoning conditions, with E0–E2 evidential grades and mandatory countermodels.
-
-IRD-001 remains a candidate formal source definition. Its adequacy for the theorem target must be tested rather than assumed.
+IRD-001 defines a candidate-neutral process presentation and six reasoning conditions. Its adequacy remains testable rather than assumed.
 
 ## Milestone 3 — Preservation-basis investigation
 
-**Status:** derivation phase complete prospectively through `docs/research/preservation-basis-investigation-v1.0.md` and `theory/evaluation/preservation-basis-registry.json`.
+**Status:** derivation phase complete prospectively.
 
-**Result:** PB-001 registers eight candidate preservation axes. PB-001 is not established as sufficient, necessary, independent, minimal, or complete.
+PB-001 registers candidate preservation axes. It is not established sufficient, necessary, independent, minimal, or complete.
 
-## Milestone 4 — PBTS-001 design and internal execution
+## Milestone 4 — PBTS-001 internal execution
 
 **Status:** frozen suite and first internal execution complete.
 
-**Result boundary:** RUN-001 found internal discriminating support for P1–P8 and rejected registered hidden-recovery attempts, but P3, P6, and P8 retain overlap or qualifier concerns. The theorem-facing P8 role is resolved separately by `P8-ROLE-001`; RUN-001 did not itself resolve that formal issue.
+RUN-001 is internal methodological robustness. It is not proof, independent confirmation, or a representation theorem.
 
-RUN-001 is internal methodological robustness. It is not a mathematical proof, independent confirmation, or a representation theorem.
+## Milestone 5 — Independent PBTS-001 replication
 
-## Milestone 5 — Supporting independent PBTS-001 replication
+**Status:** package and coordinator controls frozen; external recruitment not completed.
 
-**Status:** replication package and RUN-001 coordinator controls frozen; recruitment and participant registration not started.
+This track is parallel and nonblocking for theorem construction. It remains required before an independent empirical-confirmation claim.
 
-**Dependency status:** this milestone is parallel and nonblocking for theorem construction. It remains mandatory before claiming independent empirical confirmation of PBTS-001.
+## Milestone 6 — Theorem target and premise ledger
 
-Replication may reveal ambiguity, missing obligations, counterexamples, or implementation dependence. Any such result must be incorporated through a versioned theorem, definition, basis, P8, or lemma revision.
+**Status:** complete prospectively through `THM-TARGET-001` v1.0 and premise ledger v1.4.
 
-## Milestone 6 — THM-TARGET-001 theorem target and premise ledger
+The theorem program distinguishes `S_core`, `S_IRD`, `A_FARA`, the witness signature, preservation obligations, split P8, nontriviality, failure rules, and separate theorem families.
 
-**Status:** complete prospectively through:
-
-- `docs/research/thm-target-001-v1.0.md`;
-- `theory/evaluation/thm-target-001.json`;
-- `theory/evaluation/thm-target-001-premise-ledger.json` v1.3.
-
-**Result:** the theorem program distinguishes `S_core`, `S_IRD`, the theorem-facing FARA interface, the witness signature, P1–P7 obligations, the split P8 treatment, nontriviality conditions, failure rules, and separate theorem families.
-
-Version 1.3 records W0 proof progress without changing any premise. The formal-theorem-target gate is satisfied. No theorem is proved.
+Premise ledger v1.4 records W0 and W1 proof progress without changing any premise, source scope, target interface, or theorem status.
 
 ## Milestone 7 — Faithful-representation formalization
 
-**Status:** complete prospectively through:
+**Status:** definition complete; global satisfiability unproved.
 
-- `docs/research/faithful-representation-specification-v1.0.md`;
-- `theory/evaluation/faithful-representation-specification-v1.0.json`;
-- `theory/evaluation/thm-target-001-premise-ledger.json` v1.3.
+`FAITHFUL-REP-001` fixes source materiality, canonical reducts, target-only recovery, strong embeddings, P5 bisimulation, P7 order and path, semantic agreement, coherence, uniformity, composition, machinery accounting, nontriviality, and `Faithful_split`.
 
-**Result:** `FAITHFUL-REP-001` defines:
+W0 proves the source kernel. W1 proves direct-axis target structures and strong embeddings. Recovery and complete `Pres_i` predicates remain unproved.
 
-- a frozen source materiality and applicability contract;
-- canonical finite source reducts for P1–P7;
-- target-only deterministic recovery;
-- total typed strong embeddings;
-- relation preservation and reflection;
-- source-declared value equivalence;
-- P5 finite labeled bisimulation;
-- P7 order and path embedding;
-- semantic agreement and cross-axis coherence;
-- uniform source-isomorphism-equivariant construction;
-- compositional accountability;
-- complete machinery accounting;
-- formal nontriviality and NC-01 through NC-10 failure locations;
-- the complete `Faithful_split` conjunction.
+## Milestone 7.5 — P8 theorem role
 
-The premise-ledger-and-semantics and faithful-representation-definition gates are satisfied. W0 proves the source normalization and reduct kernel only; it does not prove target preservation or `Faithful_split` satisfiability.
-
-## Milestone 7.5 — P8 theorem-role decision
-
-**Status:** complete prospectively through:
-
-- `docs/research/p8-theorem-role-decision-v1.0.md`;
-- `theory/evaluation/p8-theorem-role-decision.json`.
-
-**Result:** `split` is selected.
+**Status:** complete prospectively; selected mode `split`.
 
 - `Pres_8I` is internal to `Faithful_split`;
-- `Corr_8E` is a separate actual-process-to-presentation correspondence obligation;
-- the finite-core proof program may proceed without treating empirical correspondence as a theorem premise;
-- `LEM-SC-002` proves source-side extraction of the P8-I reduct;
-- target-side `Pres_8I` remains unproved as `LEM-SC-014`;
-- no representation theorem or application correspondence is established.
-
-A change to the mode or the internal/external boundary requires a versioned revision unless definitional equivalence is proved.
+- `Corr_8E` is a separate actual-process correspondence obligation;
+- W1 proves the direct-axis P8-I embedding and no-upgrade property;
+- recovery and `Corr_8E` remain unproved.
 
 ## Milestone 8 — Construction and obstruction lemmas
 
-**Status:** active. The dependency decomposition is frozen through:
+**Status:** active.
 
-- `docs/research/s-core-construction-obstruction-ledger-v1.0.md`;
-- `theory/evaluation/s-core-construction-obstruction-ledger.json`.
-
-`SCORE-LEMMA-LEDGER-001` registers:
-
-- 24 construction obligations;
-- 10 obstruction obligations;
-- 3 assembly obligations.
+`SCORE-LEMMA-LEDGER-001` contains 24 construction, 10 obstruction, and 3 assembly obligations.
 
 Current state:
 
-- 4 construction lemmas proved;
-- 1 source-scope boundary established;
-- 32 obligations open;
+- proved construction lemmas: 11;
+- source-scope boundaries established: 1;
+- refuted obstruction hypotheses: 2;
+- open obligations: 23;
 - W0 complete;
-- W1 active;
+- W1 complete;
+- W2 active;
 - scoped-representation-proof gate not satisfied.
 
 ### W0 result
 
-`SCORE-W0-PROOF-001` proves finite source normalization, canonical P1–P7 and P8-I reduct extraction, materiality closure and applicability decidability, and source-isomorphism transport.
+`SCORE-W0-PROOF-001` proves finite source normalization, canonical reduct extraction, materiality closure and applicability decidability, and source-isomorphism transport. `OBS-SC-001` is established as a source boundary.
 
-`OBS-SC-001` is a source boundary: a non-finite material closure is outside frozen `S_core`, not a target countermodel.
+### W1 result
 
-The proof is project-authored and human-checkable. Its executable reference checks are bounded corroboration, not proof-assistant verification or independent review.
+`SCORE-W1-PROOF-001` proves target allocation and direct-axis constructions for P1, P2, P3, P4, P6, and P8-I.
 
-### W1 active obligations
+The fixed `DIR-INCIDENCE-1.0` construction:
 
-- `LEM-SC-005` target carrier allocation;
-- `LEM-SC-006` P1 configuration;
-- `LEM-SC-007` P2 commitments;
-- `LEM-SC-008` P3 stakes and alternatives;
-- `LEM-SC-009` P4 grounds and justificatory roles;
-- `LEM-SC-012` P6 consequences;
-- `LEM-SC-014` P8-I internal evidential status.
+- uses existing FARA categories;
+- allocates distinct target objects and representations;
+- stores source-specific sorts, roles, values, and denotations as explicit data;
+- preserves and reflects all finite direct-axis relations;
+- preserves exact attributes and internal evidence status;
+- adds no primitive.
 
-Later pressure classes remain:
+`OBS-SC-003` and `OBS-SC-006` are refuted over their registered finite direct-axis scopes.
 
-- deterministic and finite-support probabilistic dynamics;
-- history and path dependence;
-- nonmonotonic revision;
-- self-modification;
-- distributed composition;
-- target-only recovery;
-- semantic agreement and coherence;
-- machinery accounting and uniformity;
-- formal negative controls and hidden-machinery attempts;
-- theorem-or-obstruction assembly.
+### W2 active obligations
+
+- `LEM-SC-010` deterministic dynamics;
+- `LEM-SC-011` finite-support probabilistic dynamics;
+- `LEM-SC-013` history and path;
+- `LEM-SC-015` nonmonotonic revision and retraction;
+- `LEM-SC-016` self-modification and rule-version change.
+
+The W2 package must preserve operational effects, exact weights, admissibility, rule identity and version, provenance, dependency ancestry, earlier and later states, and the exact event at which a rule change alters later transitions.
+
+`OBS-SC-004` and `OBS-SC-005` should be executed as dependencies close.
+
+### Later pressure classes
+
+W3 must resolve distributed composition, target-only recovery, semantic agreement, cross-axis coherence, complete machinery accounting, global uniformity, and witness assembly.
+
+W4 must resolve remaining hidden-interpreter, dynamics, history, uniformity, composition, fixed-interface, and negative-control obligations.
+
+W5 must assemble the strongest theorem-or-obstruction conclusion.
 
 Continuous, open-ended, partially observed, semantically changing, and non-finite-support systems remain `S_IRD` extension obligations unless a finite explicit instance belongs to `S_core`.
 
 A failed mapping is not a theorem-level obstruction unless nonexistence is proved over the registered class.
 
-**Exit condition:** every admitted `S_core` source feature has an accepted construction lemma or quantified obstruction, and the theorem-or-obstruction assembly records the strongest justified conclusion.
-
-**Immediate work:** resolve W1 while registering relation-reflection, evidential-status, and primitive-smuggling attacks concurrently.
+**Milestone 8 exit condition:** every admitted `S_core` feature has an accepted construction or quantified negative result, and assembly records the strongest justified conclusion.
 
 ## Milestone 9 — Scoped representation theorem or refutation
 
-**Status:** blocked by the 32 open Milestone 8 obligations.
+**Status:** blocked by 23 open Milestone 8 obligations.
 
-Attempt, in order:
+Attempt `THM-CORE-COMMON-001`, `THM-CORE-REP-001`, and `THM-IMP-001`. Attempt `THM-IRD-EXT-001` only after the finite-core result is resolved.
 
-1. `THM-CORE-COMMON-001`;
-2. `THM-CORE-REP-001`;
-3. `THM-IMP-001` as the negative alternative;
-4. `THM-IRD-EXT-001` only after the finite-core result is resolved.
+Independent PBTS replication is not a premise of these theorems.
 
-Allowed outcomes include proof, countermodel, explicit scope restriction, theory revision, impossibility, or unresolved lemmas.
+## Milestone 10 — Primitive independence and lower bounds
 
-Independent PBTS replication is not a premise of these theorems. Proof correctness, scope, and assumptions control the theorem claim.
+After a stable representation result, prove each retained commitment indispensable, derivable, replaceable, assumption-dependent, unnecessary, or unresolved within a declared reconstruction class.
 
-## Milestone 10 — Primitive independence, derivability, and lower bounds
-
-For each retained FARA primitive or preservation commitment, prove whether it is indispensable, derivable, replaceable, assumption-dependent, unnecessary, or unresolved within a declared reconstruction class.
-
-Experimental ablation remains supporting evidence and counterexample search. It is not by itself a proof of necessity.
+Experimental ablation alone is not necessity proof.
 
 ## Milestone 11 — Minimality, equivalence, uniqueness, and impossibility
 
-Define a candidate universe, equivalence relation, and cost preorder.
+Define a candidate universe, equivalence relation, and cost preorder. Then establish local or global lower bounds, equivalence classes, uniqueness, incomparable minima, absence of a minimum, or impossibility.
 
-Then establish one or more of:
-
-- local or bounded minimality;
-- lower bounds on required distinctions;
-- equivalence classes of successful bases;
-- uniqueness up to isomorphism or translation;
-- incomparable minimal bases;
-- absence of a global minimum;
-- impossibility of finite universal representation.
-
-No global minimality claim may be inferred from a finite competitor sample unless exhaustiveness is proved.
+No global minimality claim follows from a finite competitor sample unless exhaustiveness is proved.
 
 ## Milestone 12 — Mechanized proof verification
 
-Encode the frozen definitions, assumptions, proved lemmas, unresolved obligations, theorem, and countermodels in an appropriate proof assistant or verified formal system.
+Encode frozen definitions, assumptions, proved lemmas, unresolved obligations, and theorem chains in a proof assistant or verified formal system.
 
-Distinguish trusted kernel assumptions, Project FAR axioms, executable definitions, proved lemmas, admitted obligations, and unmechanized dependencies.
+The W0 and W1 Python references are bounded executable corroboration, not proof-assistant verification.
 
-`tools/s_core_w0_reference.py` is an executable reference model, not proof-assistant verification.
+## Milestone 13 — Bounded exhaustive search
 
-## Milestone 13 — Bounded exhaustive search and minimal counterexamples
+Where a finite universe can be fully defined, enumerate it to validate bounded fragments, find minimal counterexamples, test lower bounds, and expose hidden assumptions.
 
-Define finite universes where useful, enumerate them completely, and use model search to validate bounded fragments, discover minimal counterexamples, test lower bounds, compare equivalent constructions, and expose hidden assumptions.
+Every result remains indexed to its declared universe.
 
-Bounded exhaustive results remain indexed to their declared finite universe.
+## Milestone 14 — Independent proof review
 
-## Milestone 14 — Independent proof review and broader adversarial validation
+Invite qualified reviewers to reconstruct proofs, challenge definitions and assumptions, test mechanized artifacts, and search for countermodels.
 
-Invite independent reviewers to reconstruct proofs, challenge definitions and assumptions, test mechanized artifacts, and search for countermodels.
-
-Execute PBTS replication and adversarial challenges at the strongest available independence level. Independent review may invalidate a defective proof but is not a logical premise of an otherwise valid theorem.
-
-`SCORE-W0-PROOF-001` has not been independently reviewed.
+W0 and W1 remain project-authored and not independently reviewed.
 
 ## Milestone 15 — Central decision assessment
 
-Update the central claim registry and candidate registry with the strongest justified conclusion.
+Update the central claims with the strongest justified result: bounded support, refutation, replacement, equivalence, incomparability, impossibility, or unresolved status.
 
-Allowed conclusions include:
-
-- FARA supported within a proved scope;
-- FARA refuted or replaced;
-- multiple candidates equivalent or incomparable;
-- only bounded architectures exist;
-- no finite universal architecture exists under stated assumptions;
-- the formal question remains unresolved.
-
-Separate theorem status, mechanization status, independent proof-review status, and empirical replication status.
+Keep theorem, mechanization, independent-review, empirical-replication, and application statuses separate.
 
 ## Dependency order
 
-The primary dependency chain is:
+`domain → IRD source definition → theorem target and premises → faithful representation → P8 split → W0 → W1 → W2 → W3 → W4 → W5 → finite-core result → S_IRD extension → lower bounds → minimality/equivalence/impossibility → mechanization → independent review`.
 
-`domain → source definition → theorem target and premises → faithful representation → P8 decision → lemma ledger → W0 source kernel → W1–W4 execution → theorem assembly → representation theorem or refutation → S_IRD extension → lower bounds → minimality/equivalence/impossibility → mechanization → independent proof review`.
-
-PBTS-001 replication proceeds in parallel. Its completion is required only for independent empirical-confirmation claims, not for theorem construction.
+PBTS replication proceeds in parallel.
 
 ## Paused work
 
-Certification expansion, new dashboards, release packaging, favorable-case accumulation, generic exposition, new replication infrastructure, and unrelated applications remain paused unless required to define, prove, refute, mechanize, or independently review an active theorem obligation.
+Certification expansion, cosmetic dashboards, release packaging, favorable-case accumulation, new replication infrastructure, and unrelated applications remain paused unless required for an active theorem obligation.
 
 ## Immediate next action
 
-Construct or obstruct `LEM-SC-005`, `LEM-SC-006`, `LEM-SC-007`, `LEM-SC-008`, `LEM-SC-009`, `LEM-SC-012`, and `LEM-SC-014` as the W1 base-carrier and direct-axis package. Do not begin theorem assembly or claim target faithfulness while any required dependency remains open.
+Produce the W2 dynamics, history, revision, and self-modification proof-or-obstruction package. Do not begin theorem assembly or claim complete target faithfulness while any dependency remains open.
