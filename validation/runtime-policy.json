@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "network_policy": "deny",
+  "allow_read_patterns": [
+    ".git/**",
+    ".github/**",
+    "validation/**",
+    "far_validation/**/*.py",
+    "validation_bootstrap/**/*.py",
+    "tools/**/*.py",
+    "mechanization/**/*.py",
+    "requirements.txt",
+    "Makefile",
+    "pyproject.toml",
+    "lean-toolchain",
+    "lakefile.lean",
+    "artifacts/validation/**"
+  ],
+  "allow_write_patterns": [
+    ".far/**",
+    "artifacts/validation/runtime/**"
+  ],
+  "allowed_executables": [
+    "python",
+    "python3",
+    "git",
+    "bash",
+    "sh",
+    "make",
+    "lake",
+    "lean",
+    "grep",
+    "sed",
+    "awk",
+    "cat",
+    "tail",
+    "find",
+    "env",
+    "uname",
+    "dirname",
+    "basename"
+  ],
+  "skip_checks": []
+}
