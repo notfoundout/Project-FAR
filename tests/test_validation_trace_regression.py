@@ -21,6 +21,7 @@ class TraceContractRegressionTests(unittest.TestCase):
         self.assertTrue(_matches("tools/check_one.py", ("tools/**/*.py",)))
         self.assertTrue(_matches("mechanization/model.py", ("mechanization/**/*.py",)))
         self.assertTrue(_matches("tools", ("tools/check_one.py",)))
+        self.assertTrue(_matches("README.md", ("**/*",)))
 
     def test_process_cwd_tracking_excludes_temporary_child_repository(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
