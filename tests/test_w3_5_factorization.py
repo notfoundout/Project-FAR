@@ -11,17 +11,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from check_w3_5_factorization import EXPECTED_DIMENSIONS, ValidationError, validate, validate_static  # noqa: E402
-from w3_5_factorization import (  # noqa: E402
-    FactorizationError,
-    authoritative_projection,
-    compile_projection,
-    compile_record,
-    decode_grel,
-    encode_grel,
-    load_records,
-    run_factorization,
-    validate_grel,
-)
+from w3_5_factor_source import FactorizationError, authoritative_projection, compile_projection, compile_record, load_records  # noqa: E402
+from w3_5_factorization import run_factorization  # noqa: E402
+from w3_5_grel import decode_grel, encode_grel, validate_grel  # noqa: E402
+
 
 class W35FactorizationTests(unittest.TestCase):
     def test_complete_factorization_passes(self) -> None:
@@ -39,12 +32,17 @@ class W35FactorizationTests(unittest.TestCase):
         record = load_records(ROOT)[0]
         baseline = compile_record(record)
         mutated = copy.deepcopy(record)
-        mutated.update({"title": "changed", "family": "changed", "admission_decision": "disputed", "admission_rationale": "changed", "candidate_exposure_status": "changed"})
+        mutated["title"] = "changed"
+        mutated["family"] = "changed"
+        mutated["admission_decision"] = "disputed"
+        mutated["admission_rationale"] = "changed"
+        mutated["candidate_exposure_status"] = "changed"
         self.assertEqual(compile_record(mutated), baseline)
 
     def test_grel_round_trip_is_exact(self) -> None:
         value = {"b": [1, True, None], "a": {"x": "y"}}
-        self.assertEqual(decode_grel(encode_grel(value)), value)
+        package = encode_grel(value)
+        self.assertEqual(decode_grel(package), value)
 
     def test_grel_mediates_candidate_neutral_projection_before_fara_adapter(self) -> None:
         record = load_records(ROOT)[0]
@@ -74,7 +72,8 @@ class W35FactorizationTests(unittest.TestCase):
     def test_relation_loss_is_rejected_or_changes_recovery(self) -> None:
         package = encode_grel({"a": 1, "b": 2})
         package["typed_nary_relation_occurrences"].pop()
-        self.assertNotEqual(decode_grel(package), {"a": 1, "b": 2})
+        recovered = decode_grel(package)
+        self.assertNotEqual(recovered, {"a": 1, "b": 2})
 
     def test_dimension_record_is_not_collapsed(self) -> None:
         static = validate_static(ROOT)
@@ -83,7 +82,8 @@ class W35FactorizationTests(unittest.TestCase):
         self.assertEqual(static["result"]["dimensions"]["reasoning_specificity"], "not_established")
 
     def test_operational_factorization_is_not_primitive_reduction(self) -> None:
-        contract = validate_static(ROOT)["result"]["factorization_contract"]
+        static = validate_static(ROOT)
+        contract = static["result"]["factorization_contract"]
         self.assertFalse(contract["primitive_reduction_established"])
         self.assertIn("fixed FARA-oriented compile_projection source adapter", contract["reintroduced_machinery"])
         self.assertIn("accepted SCORE-W3 construct_witness implementation", contract["reintroduced_machinery"])
@@ -108,12 +108,14 @@ class W35FactorizationTests(unittest.TestCase):
                 "theory/evaluation/research-gates.json",
                 "theory/evaluation/thm-target-001.json",
             ):
-                source, target = ROOT / relative, root / relative
+                source = ROOT / relative
+                target = root / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(source.read_bytes())
             w35_path = root / "theory/evaluation/w3-5-specificity-and-discovery-gate.json"
             w35 = json.loads(w35_path.read_text(encoding="utf-8"))
-            next(item for item in w35["required_result_artifacts"] if item["id"] == "W35-FACTOR-RESULT")["content_sha256"] = "0" * 64
+            factor = next(item for item in w35["required_result_artifacts"] if item["id"] == "W35-FACTOR-RESULT")
+            factor["content_sha256"] = "0" * 64
             w35_path.write_text(json.dumps(w35), encoding="utf-8")
             with self.assertRaises(ValidationError):
                 validate_static(root)
@@ -121,6 +123,7 @@ class W35FactorizationTests(unittest.TestCase):
     def test_makefile_runs_factorization_checker_three_times(self) -> None:
         text = (ROOT / "Makefile").read_text(encoding="utf-8")
         self.assertEqual(text.count("python tools/check_w3_5_factorization.py"), 3)
+
 
 if __name__ == "__main__":
     unittest.main()
