@@ -46,14 +46,14 @@ def validate(root:Path=ROOT):
         require(rb[cid]['structural_commitment_necessity']==item['structural_commitment_necessity'],'registry axis disagreement')
         require(rb[cid]['trial_evidence_status']==item['trial_evidence_status'],'registry evidence disagreement')
     current=w35['current_results']
-    require(current['candidate_invariants']=='preliminary_reexecution_required','gate candidate status inflated')
-    require(w35['w5_authorized'] is False and w35['status']=='in_progress_candidate_reexecution_required','W5/gate status invalid')
+    require(current['candidate_invariants']=='not_executed','gate candidate status inflated')
+    require(w35['w5_authorized'] is False and w35['status']=='in_progress_specificity_complete','W5/gate status invalid')
     arts={x['id']:x for x in w35['required_result_artifacts']}; a=arts['W35-CANDIDATE-RESULT']
-    require(a['status']=='preliminary' and a['content_sha256']==sha(paths[1]),'gate result link invalid')
+    require(a['status']=='missing' and a['artifact_id'] is None and a['content_sha256'] is None,'preliminary observation promoted into gate evidence')
     return {'status':'pass','candidates':12,'aggregate_result':result['aggregate_result'],'atomic_trials_preserved':0}
 def main():
     try: report=validate()
     except (OSError,KeyError,TypeError,ValueError,json.JSONDecodeError) as exc:
         print(f'FAR-VAL-CAND-001: {exc}'); return 1
-    print('W3.5 candidate boundary: PASS (preliminary adjudication; 648 atomic trials required; W5 blocked)'); return 0
+    print('W3.5 candidate boundary: PASS (preliminary observation only; 648 atomic trials required; W5 blocked)'); return 0
 if __name__=='__main__': raise SystemExit(main())
