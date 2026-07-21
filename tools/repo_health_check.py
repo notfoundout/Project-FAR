@@ -17,6 +17,7 @@ def main()->int:
     add('w3.5 concrete corpus freeze',[sys.executable,'tools/check_w3_5_corpus_freeze.py'])
     add('w3.5 GREL-FARA factorization',[sys.executable,'tools/check_w3_5_factorization.py'])
     add('w3.5 reasoning discrimination and specificity',[sys.executable,'tools/check_w3_5_specificity.py'])
+    add('w3.5 candidate ablation and reconstruction',[sys.executable,'tools/check_w3_5_candidate_tests.py'])
     add('vocabulary semantics baseline 1.1',[sys.executable,'tools/check_vocabulary_semantics_baseline_1_1.py'])
     add('cre002 extension preregistration',[sys.executable,'tools/check_cre002_ext001_preregistration.py'])
     add('cre002 extension checksum lock',[sys.executable,'tools/check_cre002_ext001_checksums.py'])
