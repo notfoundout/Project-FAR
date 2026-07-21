@@ -12,6 +12,7 @@
     "mechanization/lean/ValidationEngine.lean",
     "formal/ValidationEngine.tla",
     "tests/test_validation_assurance.py",
+    "tests/test_validation_trace_regression.py",
     "requirements.txt",
     "Makefile",
     "pyproject.toml",
