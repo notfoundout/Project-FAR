@@ -42,7 +42,8 @@ def main()->int:
     counts=Counter(x['status'] for x in items); s=d['execution_summary']; assert s=={'total':37,'construction':24,'obstruction':10,'assembly':3,'proved':24,'obstruction_established':1,'scope_boundary_established':1,'refuted':8,'open':3}; assert counts['proved']==24 and counts['refuted']==8 and counts['obstruction_established']==1 and counts['scope_boundary_established']==1 and counts['registered_unproved']==3
     t=load(TARGET)['lemma_program']; assert t['status']=='w0_w1_w2_w3_w4_complete_w5_blocked_by_w3_5' and t['proved_obligations']==24 and t['established_obstructions']==1 and t['refuted_obstruction_hypotheses']==8 and t['open_obligations']==3 and t['active_obligations']==[]
     gates=load(GATES); req=set(gates['required_canonical_artifacts'])
-    for p in paths[:-1]: assert p.relative_to(ROOT).as_posix() in req,p
+    canonical_paths=[DOC,REG,TARGET]+[p for pair in PROOFS.values() for p in pair]
+    for p in canonical_paths: assert p.relative_to(ROOT).as_posix() in req,p
     g={x['name']:x for x in gates['gates']}; assert g['formal-negative-controls']['status']=='satisfied'; assert g['scoped-representation-proof']['status']=='not_satisfied' and g['scoped-representation-proof']['evidence']==[]; assert g['baseline-factorization-resolved']['status']=='not_satisfied'
     make=MAKE.read_text(encoding='utf-8')
     for checker in ('check_s_core_lemma_ledger.py','check_s_core_w0.py','check_s_core_w1.py','check_s_core_w2.py','check_s_core_w3.py','check_s_core_w4.py'): assert make.count(f'python tools/{checker}')==3
