@@ -88,8 +88,7 @@ class W35FactorizationTests(unittest.TestCase):
         self.assertIn("fixed FARA-oriented compile_projection source adapter", contract["reintroduced_machinery"])
         self.assertIn("accepted SCORE-W3 construct_witness implementation", contract["reintroduced_machinery"])
 
-    # Historical name retained: factorization itself still does not promote
-    # specificity or W5. Later specificity gates require separate evidence.
+    # Historical test name retained for validator-assurance continuity.
     def test_factorization_does_not_promote_specificity_or_w5(self) -> None:
         static = validate_static(ROOT)
         gate_map = {item["name"]: item for item in static["gates"]["gates"]}
@@ -114,6 +113,7 @@ class W35FactorizationTests(unittest.TestCase):
                 "theory/evaluation/w3-5-specificity-and-discovery-gate.json",
                 "theory/evaluation/research-gates.json",
                 "theory/evaluation/thm-target-001.json",
+                "theory/evaluation/w3-5-candidate-test-result-v1.0.json",
             ):
                 source = ROOT / relative
                 target = root / relative

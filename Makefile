@@ -14,6 +14,7 @@ health:
 	python tools/check_w3_5_corpus_freeze.py
 	python tools/check_w3_5_factorization.py
 	python tools/check_w3_5_specificity.py
+	python tools/check_w3_5_candidate_tests.py
 	python tools/check_representation_discovery_separation.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
@@ -40,6 +41,7 @@ health-fast:
 	python tools/check_w3_5_corpus_freeze.py
 	python tools/check_w3_5_factorization.py
 	python tools/check_w3_5_specificity.py
+	python tools/check_w3_5_candidate_tests.py
 	python tools/check_representation_discovery_separation.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
@@ -77,6 +79,7 @@ research-check:
 	python tools/check_w3_5_corpus_freeze.py
 	python tools/check_w3_5_factorization.py
 	python tools/check_w3_5_specificity.py
+	python tools/check_w3_5_candidate_tests.py
 	python tools/check_representation_discovery_separation.py
 	python tools/check_candidate_architectures.py
 	python tools/check_reasoning_domain.py
