@@ -31,13 +31,18 @@ jobs:
       - name: Print fast-profile root failures
         if: always() && steps.fast.outcome == 'failure'
         run: python tools/print_validation_failures.py
+      - name: Stage fast-profile failure bundles
+        if: always() && steps.fast.outcome == 'failure'
+        run: |
+          rm -rf artifacts/validation/runtime
+          mkdir -p artifacts/validation/runtime
+          cp -R .far/. artifacts/validation/runtime/
       - name: Upload fast-profile failure bundles
         if: always() && steps.fast.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: unified-validation-failures
-          path: .far
-          include-hidden-files: true
+          path: artifacts/validation
           if-no-files-found: error
           retention-days: 7
       - name: Enforce fast-profile result
@@ -63,13 +68,18 @@ jobs:
       - name: Print Python 3.11 root failures
         if: always() && steps.py311.outcome == 'failure'
         run: python tools/print_validation_failures.py
+      - name: Stage Python 3.11 failure bundles
+        if: always() && steps.py311.outcome == 'failure'
+        run: |
+          rm -rf artifacts/validation/runtime
+          mkdir -p artifacts/validation/runtime
+          cp -R .far/. artifacts/validation/runtime/
       - name: Upload Python 3.11 failure bundles
         if: always() && steps.py311.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: unified-validation-python311-failures
-          path: .far
-          include-hidden-files: true
+          path: artifacts/validation
           if-no-files-found: error
           retention-days: 7
       - name: Enforce Python 3.11 result
@@ -95,13 +105,18 @@ jobs:
       - name: Print full-profile root failures
         if: always() && steps.full.outcome == 'failure'
         run: python tools/print_validation_failures.py
+      - name: Stage full-profile failure bundles
+        if: always() && steps.full.outcome == 'failure'
+        run: |
+          rm -rf artifacts/validation/runtime
+          mkdir -p artifacts/validation/runtime
+          cp -R .far/. artifacts/validation/runtime/
       - name: Upload full-profile failure bundles
         if: always() && steps.full.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: unified-validation-full-failures
-          path: .far
-          include-hidden-files: true
+          path: artifacts/validation
           if-no-files-found: error
           retention-days: 7
       - name: Enforce full-profile result
