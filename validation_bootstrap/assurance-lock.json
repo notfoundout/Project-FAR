@@ -18,7 +18,7 @@
     "far_validation/trust.py": "9be0833e8d30f8245317601efc8637b1f7d9989556752f3554dba140276cd07a",
     "far_validation/weakening.py": "aae88e582f096015e5246ffb079ae263b212e66177a5a4e041176253990b0fde",
     "formal/ValidationEngine.tla": "73697921f7f34efc4acc10a224e1ac1aae75a821b9f6b366cc3f669b374a6a40",
-    "mechanization/lean/ValidationEngine.lean": "f68b419865d4c51d1763bdfc18913bd3912dd0681f19c3141ccfbfde1dacf19c",
+    "mechanization/lean/ValidationEngine.lean": "54372afeb15f9025ea477d33aab9a4714a34f223862c27b37ad292ee63208269",
     "tests/test_validation_assurance.py": "edbd3610ca7def54b75bab7e982cf669273fb291a9125b2c16f90daac3b4073c",
     "tools/assemble_validation_certificate.py": "8d2e3692e5530879d7e9d183cbe27981d0c2e3444d6fce05b52888beaf47dec8",
     "tools/configure_validation_protection.py": "c4d8b59d54c04c489979a7b4b3ebaeb26fcff39d6c15dc0c178453c810960f38",
