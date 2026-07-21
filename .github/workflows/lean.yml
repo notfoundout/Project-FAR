@@ -30,16 +30,16 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          lean mechanization/lean/ValidationEngine.lean 2>&1 | tee /tmp/validation-engine-lean.log
+          lean mechanization/lean/ValidationEngine.lean 2>&1 | tee artifacts/validation/lean/validation-engine-lean.log
       - name: Print validation-engine Lean failure
         if: always() && steps.assurance_lean.outcome == 'failure'
-        run: tail -n 160 /tmp/validation-engine-lean.log
+        run: tail -n 160 artifacts/validation/lean/validation-engine-lean.log
       - name: Upload validation-engine Lean failure
         if: always() && steps.assurance_lean.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: validation-engine-lean-failure
-          path: /tmp/validation-engine-lean.log
+          path: artifacts/validation/lean/validation-engine-lean.log
           if-no-files-found: error
           retention-days: 7
       - name: Enforce validation-engine Lean result
