@@ -19,11 +19,11 @@ W0-W4 are complete bounded REP packages. Corpus freeze, bounded GREL-FARA factor
 - Priority: high
 - Why it matters: Corpus, factorization, registered discrimination, qualified FARA-specificity, and all twelve registered candidate tests are complete. W3.5 still cannot close until architecture and derived-machinery costs are fully accounted, every bounded result is propagated to the correct claim track, and all negative results, reintroduced machinery, disputed cases, and nonclaims are preserved in immutable closure artifacts.
 - Affected files:
+  - [docs/research/w3-5-specificity-and-discovery-gate-v1.0.md](../research/w3-5-specificity-and-discovery-gate-v1.0.md)
   - [theory/evaluation/w3-5-specificity-and-discovery-gate.json](../../theory/evaluation/w3-5-specificity-and-discovery-gate.json)
   - [theory/evaluation/w3-5-candidate-test-result-v1.0.json](../../theory/evaluation/w3-5-candidate-test-result-v1.0.json)
   - [theory/evaluation/central-claim-registry.json](../../theory/evaluation/central-claim-registry.json)
   - [theory/evaluation/research-gates.json](../../theory/evaluation/research-gates.json)
-  - [docs/research/w3-5-specificity-and-discovery-gate-v1.0.md](../research/w3-5-specificity-and-discovery-gate-v1.0.md)
 - Expected outcome: Complete W35-COST-RESULT, W35-CLAIM-RESULT, and W35-FAILURE-RESULT with linked immutable evidence, then resolve W3.5 only if every authorization condition is satisfied without erasing the qualified-negative specificity result or the no-indispensable-candidate result.
 - Risk level: high
 - Suggested branch name: `research/close-w3-5-adjudication`
