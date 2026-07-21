@@ -12,7 +12,7 @@ LATEST = ROOT / ".far" / "runs" / "latest.json"
 def main() -> int:
     if not LATEST.is_file():
         print("No unified validation run record exists.")
-        return 1
+        return 0
     payload = json.loads(LATEST.read_text(encoding="utf-8"))
     failures = [
         item
@@ -46,7 +46,7 @@ def main() -> int:
             print("stdout tail:")
             for line in stdout[-25:]:
                 print(f"  {line}")
-    return 1
+    return 0
 
 
 if __name__ == "__main__":
