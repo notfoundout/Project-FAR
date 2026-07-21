@@ -52,7 +52,15 @@ class RuntimePolicy:
 def _matches(path: str, patterns: Iterable[str]) -> bool:
     normalized = path.replace(os.sep, "/")
     for pattern in patterns:
-        if fnmatch.fnmatch(normalized, pattern) or Path(normalized).match(pattern):
+        variants = {pattern}
+        collapsed = pattern
+        while "/**/" in collapsed:
+            collapsed = collapsed.replace("/**/", "/", 1)
+            variants.add(collapsed)
+        if any(
+            fnmatch.fnmatch(normalized, candidate) or Path(normalized).match(candidate)
+            for candidate in variants
+        ):
             return True
         if pattern.endswith("/**"):
             prefix = pattern[:-3].rstrip("/")
@@ -74,7 +82,8 @@ def _normalize_observed(raw: str, cwd: Path, root: Path) -> str | None:
     candidate = Path(raw)
     if not candidate.is_absolute():
         candidate = cwd / candidate
-    return _inside(candidate, root)
+    relative = _inside(candidate, root)
+    return None if relative in {None, "."} else relative
 
 
 _QUOTED = re.compile(r'"((?:[^"\\]|\\.)*)"')
