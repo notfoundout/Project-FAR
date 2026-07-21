@@ -20,7 +20,7 @@
     "formal/ValidationEngine.tla": "73697921f7f34efc4acc10a224e1ac1aae75a821b9f6b366cc3f669b374a6a40",
     "mechanization/lean/ValidationEngine.lean": "54372afeb15f9025ea477d33aab9a4714a34f223862c27b37ad292ee63208269",
     "tests/test_validation_assurance.py": "edbd3610ca7def54b75bab7e982cf669273fb291a9125b2c16f90daac3b4073c",
-    "tests/test_validation_trace_regression.py": "547463aed527d2eaa729b8be4880529db93fbf61a7ff9b96cbe67ebae8600712",
+    "tests/test_validation_trace_regression.py": "1900bac2d8d9724e68a3bb978a6dd9c462c8763f2788ee18c8f82eaa775e5bcd",
     "tools/assemble_validation_certificate.py": "8d2e3692e5530879d7e9d183cbe27981d0c2e3444d6fce05b52888beaf47dec8",
     "tools/configure_validation_protection.py": "c4d8b59d54c04c489979a7b4b3ebaeb26fcff39d6c15dc0c178453c810960f38",
     "validation/runtime-dependencies.json": "9a6e1bc49402348e4fc31debf658bf97c6323fbd41f00a048d7f5a9112aee151",
