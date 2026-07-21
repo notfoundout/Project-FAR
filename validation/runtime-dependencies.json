@@ -18,8 +18,12 @@
       "outputs": []
     },
     "generator.dashboard": {
-      "inputs": ["README.md"],
-      "outputs": ["README.md"]
+      "inputs": [
+        "README.md"
+      ],
+      "outputs": [
+        "README.md"
+      ]
     },
     "generator.next-actions": {
       "inputs": [
@@ -28,11 +32,17 @@
         "docs/research/**",
         "theory/**"
       ],
-      "outputs": ["docs/planning/next-actions.md"]
+      "outputs": [
+        "docs/planning/next-actions.md"
+      ]
     },
     "generator.project-status": {
-      "inputs": ["README.md"],
-      "outputs": ["docs/reports/project-status-generated.md"]
+      "inputs": [
+        "README.md"
+      ],
+      "outputs": [
+        "docs/reports/project-status-generated.md"
+      ]
     },
     "governance.claim-boundaries": {
       "inputs": [
@@ -45,7 +55,9 @@
       "outputs": []
     },
     "governance.research-gates": {
-      "inputs": ["docs/**"],
+      "inputs": [
+        "docs/**"
+      ],
       "outputs": []
     },
     "governance.w5-authorization": {
@@ -65,6 +77,12 @@
         "docs/reports/**",
         "theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/**"
       ]
+    },
+    "repository.links": {
+      "inputs": [
+        "**/*"
+      ],
+      "outputs": []
     },
     "research.deduction-program": {
       "inputs": [
@@ -107,7 +125,9 @@
       "outputs": []
     },
     "tests.canonical": {
-      "inputs": ["**/*"],
+      "inputs": [
+        "**/*"
+      ],
       "outputs": [
         ".git/index.lock",
         "docs/planning/next-actions.md"
