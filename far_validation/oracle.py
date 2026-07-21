@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 ORACLE_SCHEMA = "far-independent-oracle-v1"
+DEFAULT_TEST_FAILURE_CODE = "FAR-VAL-TEST-001"
 EXPLICIT_LEGACY_ENTRYPOINTS = {
     "tools/run_tests.py",
     "tools/verify_theory.py",
@@ -291,6 +292,8 @@ def _manifest_commands(root: Path) -> tuple[dict[str, dict[str, str]], list[str]
         if not isinstance(inputs, list) or not inputs:
             failures.append(f"{check_id}: no declared inputs")
         failure_code = raw.get("failure_code")
+        if failure_code is None and raw.get("category") == "tests":
+            failure_code = DEFAULT_TEST_FAILURE_CODE
         if not isinstance(failure_code, str) or not failure_code.startswith("FAR-VAL-"):
             failures.append(f"{check_id}: unstable or missing failure code")
     return commands, failures
