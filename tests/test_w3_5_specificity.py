@@ -33,10 +33,11 @@ class W35SpecificityTests(unittest.TestCase):
         specificity=copy.deepcopy(self.specificity); specificity['result']['fara_primitive_necessity']='established'; specificity['result']['fara_reasoning_specificity_general']='established'; joined='\n'.join(self.errors(specificity=specificity)); self.assertIn('primitive necessity',joined); self.assertIn('general FARA specificity',joined)
     def test_disputed_cases_cannot_enter_primary_metric(self):
         discrimination=copy.deepcopy(self.discrimination); discrimination['execution_contract']['disputed_excluded_from_primary_metric']=False; self.assertTrue(any('disputed' in error for error in self.errors(discrimination=discrimination)))
+    # Historical name retained; now verifies completed registered-scope evidence cannot regress to unresolved.
     def test_candidate_registry_remains_unexecuted(self):
-        candidates=copy.deepcopy(self.candidates); candidates['candidates'][0]['structural_commitment_necessity']='supported_at_registered_scope'; self.assertTrue(any('structural necessity was prejudged' in error for error in self.errors(candidates=candidates)))
+        candidates=copy.deepcopy(self.candidates); candidates['candidates'][0]['structural_commitment_necessity']='unresolved'; self.assertTrue(any('candidate structural axis is not terminal' in error for error in self.errors(candidates=candidates)))
     def test_candidate_aggregate_promotion_is_rejected(self):
-        candidates=copy.deepcopy(self.candidates); candidates['aggregate_result']='no_registered_candidate_indispensable_within_frozen_class'; self.assertTrue(any('candidate aggregate must preserve unresolved structural indispensability' in error for error in self.errors(candidates=candidates)))
+        candidates=copy.deepcopy(self.candidates); candidates['aggregate_result']='no_registered_candidate_indispensable_within_frozen_class'; self.assertTrue(any('candidate aggregate changed' in error for error in self.errors(candidates=candidates)))
     def test_status_only_w5_promotion_is_rejected(self):
         w35=copy.deepcopy(self.w35); target=copy.deepcopy(self.target); w35['w5_authorized']=True; target['w5_authorization']['authorized']=True; self.assertIn('authorized W5','\n'.join(self.errors(w35=w35,target=target)))
     def test_missing_gate_evidence_is_rejected(self):
