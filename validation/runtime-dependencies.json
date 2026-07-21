@@ -18,12 +18,8 @@
       "outputs": []
     },
     "generator.dashboard": {
-      "inputs": [
-        "README.md"
-      ],
-      "outputs": [
-        "README.md"
-      ]
+      "inputs": ["README.md"],
+      "outputs": ["README.md"]
     },
     "generator.next-actions": {
       "inputs": [
@@ -32,17 +28,11 @@
         "docs/research/**",
         "theory/**"
       ],
-      "outputs": [
-        "docs/planning/next-actions.md"
-      ]
+      "outputs": ["docs/planning/next-actions.md"]
     },
     "generator.project-status": {
-      "inputs": [
-        "README.md"
-      ],
-      "outputs": [
-        "docs/reports/project-status-generated.md"
-      ]
+      "inputs": ["README.md"],
+      "outputs": ["docs/reports/project-status-generated.md"]
     },
     "governance.claim-boundaries": {
       "inputs": [
@@ -55,9 +45,7 @@
       "outputs": []
     },
     "governance.research-gates": {
-      "inputs": [
-        "docs/**"
-      ],
+      "inputs": ["docs/**"],
       "outputs": []
     },
     "governance.w5-authorization": {
@@ -76,6 +64,53 @@
         "docs/planning/next-actions.md",
         "docs/reports/**",
         "theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/**"
+      ]
+    },
+    "research.deduction-program": {
+      "inputs": [
+        "docs/governance/central-research-program.md",
+        "docs/governance/deduction-first-research-standard.md",
+        "docs/planning/architecture-neutral-research-roadmap.md",
+        "docs/planning/deduction-first-proof-roadmap.md"
+      ],
+      "outputs": []
+    },
+    "research.w0": {
+      "inputs": [
+        "docs/audits/s-core-w0-proof-audit.md",
+        "tests/**",
+        "tools/*.so"
+      ],
+      "outputs": []
+    },
+    "research.w1": {
+      "inputs": [
+        "docs/audits/s-core-w1-proof-audit.md",
+        "tests/**",
+        "tools/*.so"
+      ],
+      "outputs": []
+    },
+    "research.w2": {
+      "inputs": [
+        "docs/audits/s-core-w2-proof-audit.md",
+        "tests/**",
+        "tools/*.so"
+      ],
+      "outputs": []
+    },
+    "research.w3": {
+      "inputs": [
+        "docs/audits/s-core-w3-proof-audit.md",
+        "tests/**"
+      ],
+      "outputs": []
+    },
+    "tests.canonical": {
+      "inputs": ["**/*"],
+      "outputs": [
+        ".git/index.lock",
+        "docs/planning/next-actions.md"
       ]
     }
   },
