@@ -19,8 +19,10 @@ class UnifiedManifestTests(unittest.TestCase):
     def test_canonical_manifest_is_valid(self) -> None:
         manifest = load_manifest(ROOT / "validation" / "manifest.json")
         self.assertEqual(manifest.schema_version, "1.0")
-        self.assertGreaterEqual(len(manifest.checks), 20)
+        self.assertGreaterEqual(len(manifest.checks), 32)
         self.assertIn("governance.w5-authorization", manifest.protected_checks)
+        self.assertIn("repository.health-fast", manifest.profiles["pr-fast"])
+        self.assertIn("repository.health-full", manifest.profiles["pr-full"])
         for protected in manifest.protected_checks:
             for profile in ("pr-fast", "pr-full", "full", "release"):
                 self.assertIn(protected, manifest.profiles[profile])
@@ -140,6 +142,58 @@ class UnifiedEngineTests(unittest.TestCase):
             )
             self.assertTrue(summary.selection_fallback_to_full)
             self.assertTrue(any("uncovered.txt" in note for note in summary.selection_notes))
+
+    def test_cache_reuses_only_identical_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            input_path = root / "input.txt"
+            input_path.write_text("one\n", encoding="utf-8")
+            checks = [
+                {
+                    "id": "cached",
+                    "title": "cached",
+                    "command": [sys.executable, "-c", "print('ok')"],
+                    "profiles": ["pr-fast"],
+                    "inputs": ["input.txt"],
+                }
+            ]
+            self._write_manifest(root, checks, {"pr-fast": ["cached"]})
+            engine = ValidationEngine(root, jobs=1, use_cache=True)
+            first = engine.run(profile="pr-fast")
+            second = engine.run(profile="pr-fast")
+            self.assertFalse(first.results[0].cache_hit)
+            self.assertTrue(second.results[0].cache_hit)
+            input_path.write_text("two\n", encoding="utf-8")
+            third = engine.run(profile="pr-fast")
+            self.assertFalse(third.results[0].cache_hit)
+            self.assertNotEqual(first.results[0].cache_key, third.results[0].cache_key)
+
+
+class RegisteredResearchCheckerRegressionTests(unittest.TestCase):
+    def test_frozen_architecture_neutral_checkers_pass(self) -> None:
+        scripts = (
+            "tools/check_independent_reasoning_definition.py",
+            "tools/check_preservation_basis.py",
+            "tools/check_pbts001_replication_package.py",
+        )
+        for script in scripts:
+            with self.subTest(script=script):
+                completed = subprocess.run(
+                    [sys.executable, script],
+                    cwd=ROOT,
+                    text=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    check=False,
+                )
+                self.assertEqual(
+                    completed.returncode,
+                    0,
+                    msg=(
+                        f"{script} failed\nstdout:\n{completed.stdout}\n"
+                        f"stderr:\n{completed.stderr}"
+                    ),
+                )
 
 
 if __name__ == "__main__":
