@@ -118,6 +118,33 @@ validate-doctor:
 validate-diagnose:
 	python -m far_validation diagnose
 
+validate-trace:
+	python -m far_validation validate --profile pr-full --no-cache --trace-dependencies --require-trace
+
+validate-oracle:
+	python -m far_validation oracle
+
+validate-weakening:
+	python -m far_validation weakening --base origin/main
+
+validate-mutations:
+	python -m far_validation mutations --report artifacts/validation/runtime/mutation-campaign.json
+
+validate-formal:
+	python -m far_validation formal --max-checks 4
+	lean mechanization/lean/ValidationEngine.lean
+
+validate-assurance:
+	python validation_bootstrap/verify.py
+	python -m unittest discover -s tests -p "test_validation_assurance.py" -v
+	python -m far_validation oracle
+	python -m far_validation weakening --base origin/main
+	python -m far_validation formal --max-checks 4
+	python -m far_validation mutations --report artifacts/validation/runtime/mutation-campaign.json
+
+validate-certificate:
+	python -m far_validation certificate verify --require-signed --expected-commit "$$(git rev-parse HEAD)" --expected-tree "$$(git rev-parse HEAD^{tree})"
+
 cre001-deterministic:
 	python tools/cre001_compile_vocabularies.py --write --check
 
