@@ -1,6 +1,8 @@
 name: Repository Health
 on:
   pull_request: null
+  merge_group:
+    types: [checks_requested]
   push:
     branches:
     - main
