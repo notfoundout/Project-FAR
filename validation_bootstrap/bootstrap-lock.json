@@ -8,5 +8,6 @@
     "governance.w5-authorization"
   ],
   "required_profiles": ["pr-fast", "pr-full", "full", "release"],
-  "forbidden_status_defaults": ["passed", "satisfied", "resolved", "authorized"]
+  "forbidden_status_defaults": ["passed", "satisfied", "resolved", "authorized"],
+  "assurance_lock": "validation_bootstrap/assurance-lock.json"
 }
