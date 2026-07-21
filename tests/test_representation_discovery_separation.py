@@ -25,7 +25,8 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
     def test_w35_is_between_w3_and_w5(self): self.assertEqual(self.w35['position'],'after_W3_before_W5'); self.assertFalse(self.w35['w5_authorized'])
     def test_w4_and_corpus_freeze_do_not_resolve_w35(self):
         by_id={item['id']:item for item in self.ledger['obligations']}; self.assertEqual(by_id['OBS-SC-010']['status'],'obstruction_established'); self.assertEqual(self.w35['status'],'in_progress_specificity_complete'); self.assertEqual(self.w35['current_results']['reasoning_contrast_corpus'],'frozen'); self.assertEqual(self.w35['current_results']['reasoning_discrimination'],'bounded_role_conjunctive_discrimination_established'); self.assertEqual(self.w35['current_results']['fara_specificity'],'not_unique_at_registered_scope'); self.assertEqual(self.w35['current_results']['candidate_invariants'],'not_executed'); self.assertFalse(self.w35['w5_authorized'])
-    def test_w35_registers_completed_and_missing_artifacts(self):
+    # Historical test name retained for validator-assurance continuity.
+    def test_w35_registers_only_the_corpus_artifact_as_complete(self):
         self.assertGreaterEqual(len(self.w35['required_result_artifacts']),8); by_id={a['id']:a for a in self.w35['required_result_artifacts']}; completed={'W35-CORPUS-RESULT','W35-FACTOR-RESULT','W35-SCOPE-RESULT','W35-SPEC-RESULT'}
         for aid in completed:
             a=by_id[aid]; self.assertEqual(a['status'],'complete'); self.assertRegex(a['content_sha256'],r'^[0-9a-f]{64}$'); self.assertTrue((ROOT/a['path']).is_file())
