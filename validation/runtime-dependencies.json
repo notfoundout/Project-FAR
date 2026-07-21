@@ -47,6 +47,7 @@
     "governance.claim-boundaries": {
       "inputs": [
         "README.md",
+        "docs/audits/w3-5-concrete-corpus-freeze-audit.md",
         "docs/governance/central-research-program.md",
         "docs/governance/representation-discovery-separation-standard-v1.0.md",
         "docs/planning/architecture-neutral-research-roadmap.md",
