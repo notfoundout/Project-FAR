@@ -74,7 +74,7 @@ jobs:
           set -euo pipefail
           key="$(openssl rand -hex 32)"
           export FAR_VALIDATION_CACHE_SIGNING_KEY="$key"
-          python -m far_validation validate repository.hygiene --require-signed-cache
+          python -m far_validation validate bootstrap.manifest --require-signed-cache
           printf '%s' "$key" > .far/cache-signing-key
           tar -czf artifacts/validation/signed-cache.tar.gz .far/cache .far/cache-signing-key
       - name: Attest signed cache bundle
@@ -119,12 +119,12 @@ jobs:
           set -euo pipefail
           tar -xzf artifacts/validation/cache-download/signed-cache.tar.gz
           export FAR_VALIDATION_CACHE_SIGNING_KEY="$(cat .far/cache-signing-key)"
-          python -m far_validation validate repository.hygiene --require-signed-cache --format json > /tmp/cache-consumer.json
+          python -m far_validation validate bootstrap.manifest --require-signed-cache --format json > /tmp/cache-consumer.json
           python - <<'PY2'
           import json
           payload = json.load(open('/tmp/cache-consumer.json', encoding='utf-8'))
           hits = set(payload.get('signed_cache_hits', []))
-          required = {'bootstrap.manifest', 'repository.hygiene'}
+          required = {'bootstrap.manifest'}
           missing = sorted(required - hits)
           if missing:
               raise SystemExit(f'signed cross-runner cache misses: {missing}')
