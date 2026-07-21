@@ -3,6 +3,8 @@ name: Lean Mechanization
 on:
   pull_request:
     branches: [main]
+  merge_group:
+    types: [checks_requested]
   push:
     branches: [main]
   workflow_dispatch:
@@ -22,5 +24,7 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Compile FARCore
         run: lean mechanization/lean/FARCore.lean
+      - name: Compile validation-engine assurance model
+        run: lean mechanization/lean/ValidationEngine.lean
       - name: Check T-003 alignment
         run: python -m unittest tests.test_t003_lean_alignment
