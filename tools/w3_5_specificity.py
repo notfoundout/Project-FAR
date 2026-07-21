@@ -31,6 +31,7 @@ EXPERIMENT_ID = "W35-REASONING-DISCRIMINATION-001"
 CRITERIA = ("R1", "R2", "R3", "R4", "R5", "R6", "R7")
 CORE_CRITERIA = {"R2", "R3", "R4", "R5", "R7"}
 ALLOWED = {"pass", "partial", "fail", "unknown"}
+STATUS_CODES = {"P": "pass", "L": "partial", "F": "fail", "U": "unknown"}
 BANNED = {
     "admission_decision", "family", "title", "admission_rationale",
     "candidate_exposure_status", "expected_class", "expected_decision",
@@ -82,7 +83,7 @@ def validate_licensing(
         raise SpecificityError("licensing registry is not frozen")
     if licensing.get("corpus_id") != "RCS-CORPUS-001":
         raise SpecificityError("licensing corpus changed")
-    if set(licensing.get("allowed_statuses", [])) != ALLOWED:
+    if licensing.get("status_codes") != STATUS_CODES:
         raise SpecificityError("licensing status vocabulary changed")
     authored = licensing.get("authorship_and_blinding", {})
     if authored.get("admission_labels_hidden_from_runtime_scoring") is not True:
@@ -113,20 +114,15 @@ def validate_licensing(
             raise SpecificityError(f"duplicate or unknown licensing record: {instance_id}")
         if entry.get("source_record_id") != expected[instance_id].get("source_record_id"):
             raise SpecificityError(f"{instance_id}: source record link changed")
-        criteria = entry.get("criteria")
-        if not isinstance(criteria, dict) or set(criteria) != set(CRITERIA):
-            raise SpecificityError(f"{instance_id}: criterion set changed")
+        profile = entry.get("profile")
+        if not isinstance(profile, str) or len(profile) != len(CRITERIA) or any(code not in STATUS_CODES for code in profile):
+            raise SpecificityError(f"{instance_id}: criterion profile changed")
+        evidence = entry.get("evidence_summary")
+        if not isinstance(evidence, str) or len(evidence) < 120:
+            raise SpecificityError(f"{instance_id}: evidence summary is not substantive")
         projection = authoritative_projection(expected[instance_id])
         for criterion_id in CRITERIA:
-            judgment = criteria[criterion_id]
-            if judgment.get("status") not in ALLOWED:
-                raise SpecificityError(f"{instance_id}/{criterion_id}: invalid status")
-            if not isinstance(judgment.get("evidence"), str) or len(judgment["evidence"]) < 20:
-                raise SpecificityError(f"{instance_id}/{criterion_id}: evidence is not substantive")
-            source_fields = judgment.get("source_fields")
-            if source_fields != definition_map[criterion_id]["source_fields"]:
-                raise SpecificityError(f"{instance_id}/{criterion_id}: evidence fields changed")
-            for field in source_fields:
+            for field in definition_map[criterion_id]["source_fields"]:
                 _resolve(projection, field)
         by_id[instance_id] = entry
     if set(by_id) != set(expected) or len(by_id) != 18:
@@ -151,12 +147,17 @@ def score_projection(
     licensing_entry: dict[str, Any],
     criterion_definitions: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
-    """Score one projection without admission class, family, title, or rationale."""
-    criteria = copy.deepcopy(licensing_entry["criteria"])
+    """Score one candidate-neutral authoritative projection."""
+    profile = licensing_entry["profile"]
+    criteria = {
+        criterion_id: {
+            "status": STATUS_CODES[profile[index]],
+            "source_fields": copy.deepcopy(criterion_definitions[criterion_id]["source_fields"]),
+        }
+        for index, criterion_id in enumerate(CRITERIA)
+    }
     for criterion_id in CRITERIA:
         definition = criterion_definitions[criterion_id]
-        if criteria[criterion_id]["source_fields"] != definition["source_fields"]:
-            raise SpecificityError(f"{licensing_entry['instance_id']}/{criterion_id}: field contract mismatch")
         for field in definition["source_fields"]:
             _resolve(projection, field)
     return {
@@ -164,6 +165,7 @@ def score_projection(
         "source_record_id": licensing_entry["source_record_id"],
         "projection_sha256": sha256_json(projection),
         "criteria": criteria,
+        "evidence_summary": licensing_entry["evidence_summary"],
         "decision": classify(criteria),
     }
 
@@ -191,6 +193,7 @@ def run_discrimination(root: Path = ROOT) -> dict[str, Any]:
     by_license = validate_licensing(licensing, records)
     definitions = {item["id"]: item for item in licensing["criteria"]}
 
+    # Scores are frozen before admission labels are consulted.
     scored: dict[str, dict[str, Any]] = {}
     for record in records:
         projection = authoritative_projection(record)
@@ -227,6 +230,7 @@ def run_discrimination(root: Path = ROOT) -> dict[str, Any]:
             "representation_transport": "source_projection_to_GREL_exact_and_FARA_axes_direct",
         }
 
+    # Admission labels are joined only after every score is computed.
     joined = []
     counts = {
         "positive": {"reasoning_like": 0, "nonreasoning_like": 0, "borderline": 0, "unknown": 0},
