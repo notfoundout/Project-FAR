@@ -17,9 +17,6 @@ def main()->int:
     for task in TASKS:
         affected=[markdown_link(ROOT/path,OUT) for path in task['affected']]
         lines += [f"### {task['id']}: {task['title']}",'','- Source: central research program',f"- Priority: {task['priority']}",f"- Why it matters: {task['why']}",'- Affected files:',*[f'  - {item}' for item in affected],f"- Expected outcome: {task['outcome']}",f"- Risk level: {task['risk']}",f"- Suggested branch name: `{task['branch']}`",f"- Suggested PR title: `{task['pr']}`",'']
-    lines += ['## Maintainer Task Briefs','']
-    for task in TASKS:
-        lines += [f"### Task brief for {task['id']}",'','```markdown',f"Create branch `{task['branch']}`.",f"Scope: {task['title']}.",'Preserve THM-TARGET-001, THM-US-TARGET-001, FAITHFUL-REP-001, P8-ROLE-001, W0-W4, all failures, and every nonclaim.','Do not promote REP progress into USD, necessity, minimality, or uniqueness.','Do not treat the RCS-001 framework as a frozen concrete corpus.','Do not begin W5 while W3.5-SDG-001 remains unresolved or lacks linked immutable evidence.','Validation commands:','- `make research-check`','- `make health-fast`',f"PR title: `{task['pr']}`",'```','']
-    lines += ['## Navigation','',*nav_links()]
+    lines += ['## Maintainer Task Briefs','','Each task must preserve `THM-TARGET-001`, `THM-US-TARGET-001`, `FAITHFUL-REP-001`, `P8-ROLE-001`, W0-W4, all failures, and every nonclaim. Do not promote REP progress into USD, necessity, minimality, or uniqueness. Do not treat the RCS-001 framework as a frozen concrete corpus. Do not begin W5 while `W3.5-SDG-001` remains unresolved or lacks linked immutable evidence.','','Validation commands:','','- `make research-check`','- `make health-fast`','','## Navigation','',*nav_links()]
     OUT.write_text('\n'.join(lines)+'\n',encoding='utf-8'); print(f"{OUT.relative_to(ROOT)} tasks={len(TASKS)}"); return 0
 if __name__=='__main__': raise SystemExit(main())
