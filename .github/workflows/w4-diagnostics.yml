@@ -68,12 +68,15 @@ jobs:
           echo "$failed" > diagnostic-logs/failed
           cat diagnostic-logs/summary.txt
           exit 0
-      - name: Upload diagnostic logs
+      - name: Upload diagnostic logs and generated files
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: w4-diagnostic-logs
-          path: diagnostic-logs
+          path: |
+            diagnostic-logs
+            README.md
+            docs/planning/repository-index.md
           if-no-files-found: error
           retention-days: 2
       - name: Fail on diagnostic defects
