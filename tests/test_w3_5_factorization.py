@@ -88,12 +88,19 @@ class W35FactorizationTests(unittest.TestCase):
         self.assertIn("fixed FARA-oriented compile_projection source adapter", contract["reintroduced_machinery"])
         self.assertIn("accepted SCORE-W3 construct_witness implementation", contract["reintroduced_machinery"])
 
+    # Historical name retained: factorization itself still does not promote
+    # specificity or W5. Later specificity gates require separate evidence.
     def test_factorization_does_not_promote_specificity_or_w5(self) -> None:
         static = validate_static(ROOT)
         gate_map = {item["name"]: item for item in static["gates"]["gates"]}
+        self.assertEqual(static["result"]["dimensions"]["reasoning_specificity"], "not_established")
+        self.assertFalse(static["result"]["gate_effect"]["w5_authorized"])
         self.assertEqual(gate_map["baseline-factorization-resolved"]["status"], "satisfied")
-        self.assertEqual(gate_map["fara-specificity-resolved"]["status"], "not_satisfied")
-        self.assertEqual(gate_map["reasoning-contrast-execution"]["status"], "not_satisfied")
+        for name in ("fara-specificity-resolved", "reasoning-contrast-execution"):
+            self.assertEqual(gate_map[name]["status"], "satisfied")
+            self.assertTrue(gate_map[name]["evidence"])
+        self.assertEqual(static["w35"]["current_results"]["candidate_invariants"], "not_executed")
+        self.assertEqual(static["w35"]["current_results"]["machinery_and_cost"], "not_executed")
         self.assertFalse(static["w35"]["w5_authorized"])
         self.assertFalse(static["target"]["w5_authorization"]["authorized"])
 

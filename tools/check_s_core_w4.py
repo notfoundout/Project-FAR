@@ -125,8 +125,9 @@ def main() -> int:
     assert gates["scoped-representation-proof"]["status"] == "not_satisfied"
     assert gates["baseline-factorization-resolved"]["status"] == "satisfied"
     assert gates["baseline-factorization-resolved"]["evidence"]
-    assert gates["fara-specificity-resolved"]["status"] == "not_satisfied"
-    assert gates["reasoning-contrast-execution"]["status"] == "not_satisfied"
+    for name in ("fara-specificity-resolved", "reasoning-contrast-execution"):
+        assert gates[name]["status"] == "satisfied"
+        assert gates[name]["evidence"]
     assert gates["universal-structure-result"]["status"] == "not_satisfied"
 
     claims = {item["id"]: item for item in load(CLAIMS)["claims"]}
@@ -145,7 +146,7 @@ def main() -> int:
     )
     assert completed.returncode == 0, completed.stdout + completed.stderr
 
-    print("S_core W4 proof: PASS (10 control families rejected at registered scope; OBS-SC-010 established; factorization may advance independently; W5 still blocked by remaining W3.5 evidence)")
+    print("S_core W4 proof: PASS (registered controls unchanged; later specificity evidence may advance independently; candidates and W5 remain blocked)")
     return 0
 
 
