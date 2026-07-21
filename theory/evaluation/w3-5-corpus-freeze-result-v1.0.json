@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "result_id": "W35-CORPUS-FREEZE-RESULT-001",
+  "artifact_id": "RCS-CORPUS-001",
+  "version": "1.0",
+  "status": "complete",
+  "gate_id": "W3.5-SDG-001",
+  "scope_id": "RCS-001",
+  "freeze_status": "frozen_candidate_independent_with_declared_candidate_registry_exposure",
+  "candidate_scoring_status": "not_started",
+  "execution_status": "ready_for_candidate_neutral_execution",
+  "artifacts": {
+    "source_catalog": {
+      "path": "theory/evaluation/rcs-concrete-source-catalog-v1.0.json",
+      "content_sha256": "6b0249b64216585371a7a57362396201336064f5edce7849408c513f3168ea3f"
+    },
+    "positive_registry": {
+      "path": "theory/evaluation/rcs-positive-corpus-v1.0.json",
+      "content_sha256": "1a70c175601e199b6b0c412dadec2d48ac4fe94106b850a0a97b24cd352030dd"
+    },
+    "contrast_registry": {
+      "path": "theory/evaluation/rcs-contrast-corpus-v1.0.json",
+      "content_sha256": "0f206b1f1bb8fa9ead5937d56f992513dd3d5887a92f85888e70f2591bb0f578"
+    },
+    "disputed_registry": {
+      "path": "theory/evaluation/rcs-disputed-corpus-v1.0.json",
+      "content_sha256": "db04d13a5b8465a6debcf2483b9287fb58dc8b6ad0ac4a7a570aa70139097312"
+    }
+  },
+  "counts": {
+    "positive": 8,
+    "contrast": 8,
+    "disputed": 2,
+    "total": 18
+  },
+  "family_coverage": {
+    "positive": [
+      "deductive_proof",
+      "defeasible_reasoning",
+      "diagnosis",
+      "legal_or_policy_reasoning",
+      "partially_observed_reasoning",
+      "planning",
+      "probabilistic_inference",
+      "self_modifying_machine_reasoning"
+    ],
+    "contrast": [
+      "arbitrary_labeled_transition_system",
+      "cellular_automaton",
+      "event_log",
+      "lookup_table",
+      "ordinary_workflow",
+      "passive_database",
+      "random_finite_state_machine",
+      "traffic_controller"
+    ],
+    "disputed": [
+      "disputed_borderline_process"
+    ]
+  },
+  "admission_assurance": {
+    "all_decisions_precede_candidate_scoring": true,
+    "all_records_have_source_or_observation_contracts": true,
+    "all_records_have_formalization_boundaries": true,
+    "all_records_have_candidate_neutral_observations": true,
+    "all_records_replayable_within_boundary": true,
+    "all_candidate_exposure_statuses_explicit": true,
+    "candidate_registry_preexisted": true,
+    "candidate_scores_or_results_not_exposed_before_admission": true
+  },
+  "preserved_failures_and_uncertainties": [
+    "RCS-DIS-001 remains disputed",
+    "RCS-DIS-002 remains disputed",
+    "No empirical adequacy claim is made for synthetic formal instances",
+    "The corpus is not a private or evaluator-blind holdout because the candidate registry preexisted the freeze"
+  ],
+  "claim_impact": {
+    "reasoning_contrast_corpus_freeze": "satisfied",
+    "reasoning_contrast_execution": "not_started",
+    "fara_specificity": "unresolved",
+    "universal_structure": "unresolved",
+    "necessity": "not_established",
+    "minimality": "not_established",
+    "W5_authorized": false
+  },
+  "nonclaims": [
+    "the corpus is statistically representative",
+    "candidate scoring is complete",
+    "reasoning discrimination is complete",
+    "FARA is reasoning-specific",
+    "a universal structure exists",
+    "W3.5 is resolved",
+    "W5 is authorized",
+    "the corpus is candidate-blind or a private holdout"
+  ],
+  "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+  "source_records": {
+    "directory": "theory/evaluation/rcs-corpus-sources",
+    "bundle_count": 6,
+    "record_count": 18,
+    "catalog_embeds_bundle_sha256": true
+  }
+}
