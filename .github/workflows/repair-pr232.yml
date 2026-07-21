@@ -1,8 +1,8 @@
 name: Repair PR 232 Trace Contract
 
 on:
-  push:
-    branches: [agent/validator-assurance-hardening]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
