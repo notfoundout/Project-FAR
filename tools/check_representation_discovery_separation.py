@@ -34,6 +34,8 @@ PATHS={
 TERMINAL={'proved','refuted','obstruction_established','scope_boundary_established','superseded'}
 HEX64=re.compile(r'^[0-9a-f]{64}$')
 EXPECTED_FACTOR={'expressiveness':'equivalent','translation':'bidirectional','constraint_strength':'fara_stricter','reasoning_specificity':'not_established','cost_relation':'tradeoff','overall_interpretation':'fara_constrained_equivalent'}
+AXES={'primitive_necessity','explicit_representation_necessity','structural_commitment_necessity','reasoning_specificity','architecture_invariance'}
+REGISTERED_OUTCOMES={'supported_at_registered_scope','refuted_at_registered_scope','partial'}
 
 def load(path:Path)->dict: return json.loads(path.read_text(encoding='utf-8'))
 def require(ok:bool,message:str,errors:list[str])->None:
@@ -71,21 +73,27 @@ def main()->int:
     try: require(validate_specificity(ROOT).get('status')=='pass','specificity validation failed',errors)
     except Exception as exc: errors.append(f'specificity validation failed: {exc}')
     require(scope.get('concrete_corpus_status')=='frozen','RCS-001 concrete corpus must be frozen',errors); require(len(scope.get('positive_instances',[]))==8 and len(scope.get('contrast_instances',[]))==8 and len(scope.get('disputed_instances',[]))==2,'RCS-001 frozen corpus counts changed',errors); errors.extend(validate_corpus(ROOT))
-    require(candidate_result.get('artifact_id')=='W35-CANDIDATE-RESULT-001','candidate-result identity changed',errors); require(candidate_result.get('status')=='preliminary_internal_adjudication_reexecution_required','candidate result must remain preliminary and require re-execution',errors); require(candidate_result.get('aggregate_result')=='candidate_structural_indispensability_unresolved_reexecution_required','candidate aggregate result changed',errors); require(candidate_result.get('claim_effect',{}).get('universal_structure')=='unresolved','candidate result promoted universal structure',errors); require(candidate_result.get('claim_effect',{}).get('W5_authorized') is False,'candidate result authorized W5',errors)
+    require(candidate_result.get('artifact_id')=='W35-CANDIDATE-RESULT-001','candidate-result identity changed',errors); require(candidate_result.get('status')=='complete_project_authored_internal_execution','candidate result must be complete at the registered internal scope',errors); require(candidate_result.get('aggregate_result')=='registered_candidate_axes_resolved_at_frozen_internal_scope','candidate aggregate result changed',errors); require(candidate_result.get('claim_effect',{}).get('universal_structure')=='unresolved','candidate result promoted universal structure',errors); require(candidate_result.get('claim_effect',{}).get('W5_authorized') is False,'candidate result authorized W5',errors)
     execution=candidate_result.get('execution',{})
-    if execution.get('preserved_atomic_trials') != 0: errors.append('preliminary candidate result must preserve zero completed atomic trials')
-    if execution.get('expected_atomic_trials') != 648: errors.append('candidate execution must require exactly 648 atomic trials')
-    if len(candidate_result.get('results',[])) != 12: errors.append('candidate result must preserve all twelve preliminary hypotheses')
-    if any(item.get('trial_evidence_status') != 'missing' for item in candidate_result.get('results',[])): errors.append('preliminary candidate summaries may not claim trial evidence')
+    require(execution.get('preserved_atomic_trials')==648,'candidate result must preserve 648 completed atomic trials',errors)
+    require(execution.get('expected_atomic_trials')==648,'candidate execution must require exactly 648 atomic trials',errors)
+    require(all(execution.get(k) is True for k in ('ablation_evidence_complete','reconstruction_evidence_complete','equivalent_reintroduction_evidence_complete','machinery_cost_complete')),'candidate execution evidence is incomplete',errors)
+    results=candidate_result.get('results',[]); require(len(results)==12,'candidate result must preserve all twelve hypotheses',errors)
+    require(all(item.get('trial_count')==54 and item.get('trial_evidence_status')=='complete' for item in results),'candidate trial coverage is incomplete',errors)
+    require(all(all(item.get(axis) in REGISTERED_OUTCOMES for axis in AXES) for item in results),'candidate axis contains unresolved or invalid result',errors)
+    if execution.get('preserved_atomic_trials') != execution.get('expected_atomic_trials'): errors.append('candidate atomic-trial preservation is incomplete')
+    if not execution.get('ablation_evidence_complete'): errors.append('candidate ablation evidence is incomplete')
+    if not execution.get('reconstruction_evidence_complete'): errors.append('candidate reconstruction evidence is incomplete')
+    if candidate_result.get('claim_effect',{}).get('universal_structure') != 'unresolved': errors.append('candidate execution crossed the universal-structure claim boundary')
     try: require(validate_candidates(ROOT).get('status')=='pass','candidate validation failed',errors)
     except Exception as exc: errors.append(f'candidate validation failed: {exc}')
     require(universal_target.get('target_id')=='THM-US-TARGET-001','universal target id mismatch',errors); require(all(x.get('status')!='proved' for x in universal_target.get('theorem_families',[])),'candidate package may not prove a universal theorem',errors)
-    require(w35.get('gate_id')=='W3.5-SDG-001','W3.5 gate id mismatch',errors); require(w35.get('status')=='in_progress_specificity_complete','W3.5 must remain at completed specificity while candidate execution is pending',errors); require(w35.get('w5_authorized') is False,'W5 must not be authorized',errors)
-    artifacts={a.get('id'):a for a in w35.get('required_result_artifacts',[])}; completed={'W35-CORPUS-RESULT','W35-FACTOR-RESULT','W35-SCOPE-RESULT','W35-SPEC-RESULT'}
+    require(w35.get('gate_id')=='W3.5-SDG-001','W3.5 gate id mismatch',errors); require(w35.get('status')=='in_progress_candidate_complete','W3.5 must record candidate completion without resolving the gate',errors); require(w35.get('w5_authorized') is False,'W5 must not be authorized',errors)
+    artifacts={a.get('id'):a for a in w35.get('required_result_artifacts',[])}; completed={'W35-CORPUS-RESULT','W35-FACTOR-RESULT','W35-SCOPE-RESULT','W35-SPEC-RESULT','W35-CANDIDATE-RESULT'}
     for aid in completed: require(artifacts.get(aid,{}).get('status')=='complete',f'{aid} must be complete',errors)
-    for aid in ('W35-CANDIDATE-RESULT','W35-COST-RESULT','W35-CLAIM-RESULT','W35-FAILURE-RESULT'): require(artifacts.get(aid,{}).get('status')=='missing',f'{aid} must remain missing',errors)
-    current=w35.get('current_results',{}); require(current.get('candidate_invariants')=='not_executed','candidate invariants must remain unexecuted',errors); require(current.get('machinery_and_cost')=='not_executed','machinery and cost must remain unexecuted',errors)
-    items=candidates.get('candidates',[]); require(len(items)==12,'candidate registry must contain twelve hypotheses',errors); require(all(x.get('structural_commitment_necessity')=='unresolved' and x.get('trial_evidence_status')=='missing' for x in items),'candidate registry contains prejudged or fabricated evidence',errors); require(candidates.get('aggregate_result')=='candidate_structural_indispensability_unresolved_reexecution_required','candidate registry aggregate changed',errors); require(candidates.get('status')=='preliminary_internal_adjudication_reexecution_required','candidate registry status changed',errors)
+    for aid in ('W35-COST-RESULT','W35-CLAIM-RESULT','W35-FAILURE-RESULT'): require(artifacts.get(aid,{}).get('status')=='missing',f'{aid} must remain missing',errors)
+    current=w35.get('current_results',{}); require(current.get('candidate_invariants')=='complete_registered_scope_internal_execution','candidate invariants must record completed internal execution',errors); require(current.get('machinery_and_cost')=='not_executed','cross-package machinery and cost closure must remain unexecuted',errors)
+    items=candidates.get('candidates',[]); require(len(items)==12,'candidate registry must contain twelve hypotheses',errors); require(all(x.get('trial_evidence_status')=='complete' and x.get('trial_count')==54 for x in items),'candidate registry trial evidence is incomplete',errors); require(all(all(x.get(axis) in REGISTERED_OUTCOMES for axis in AXES) for x in items),'candidate registry contains unresolved or invalid axis',errors); require(candidates.get('aggregate_result')=='registered_candidate_axes_resolved_at_frozen_internal_scope','candidate registry aggregate changed',errors); require(candidates.get('status')=='complete_project_authored_internal_execution','candidate registry status changed',errors)
     gm=gate_map(gates)
     for name in ('representation-discovery-separation','generic-baseline-frozen','universal-structure-target-frozen','reasoning-contrast-scope-framework-frozen','reasoning-contrast-corpus-frozen','baseline-factorization-resolved','fara-specificity-resolved','reasoning-contrast-execution','formal-negative-controls'): require(gm.get(name,{}).get('status')=='satisfied',f'research gate {name} must be satisfied',errors)
     require(gm.get('universal-structure-result',{}).get('status')=='not_satisfied','universal structure result must remain unsatisfied',errors)
@@ -100,6 +108,6 @@ def report(errors:list[str])->int:
         print('Representation-discovery separation FAILED')
         for error in errors: print(f'- {error}')
         return 1
-    print('Representation-discovery separation PASS (REP isolated; candidate execution pending; W5 blocked; USD unresolved)')
+    print('Representation-discovery separation PASS (REP isolated; 648 candidate trials complete; W5 blocked; USD unresolved)')
     return 0
 if __name__=='__main__': raise SystemExit(main())

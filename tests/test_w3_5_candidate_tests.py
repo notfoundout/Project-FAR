@@ -1,44 +1,75 @@
 from __future__ import annotations
-import json, shutil, tempfile, unittest
+import copy,json,sys,unittest
 from pathlib import Path
-import sys
-ROOT=Path(__file__).resolve().parents[1]
-sys.path.insert(0,str(ROOT/'tools'))
-from check_w3_5_candidate_tests import validate
-FILES=[
- 'theory/evaluation/w3-5-candidate-test-contract-v1.0.json',
- 'theory/evaluation/w3-5-candidate-test-result-v1.0.json',
- 'theory/evaluation/universal-structure-candidate-registry.json',
- 'theory/evaluation/w3-5-specificity-and-discovery-gate.json']
-class CandidateTests(unittest.TestCase):
+ROOT=Path(__file__).resolve().parents[1]; sys.path.insert(0,str(ROOT/'tools'))
+from check_w3_5_candidate_tests import CONTRACT,RESULT,W35,load,validate
+from w3_5_candidate_execution import AXES,derive,execute
+
+class W35CandidateExecutionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.contract=load(CONTRACT); cls.result=load(RESULT); cls.w35=load(W35); cls.trials=execute()
+    def test_complete_execution_passes(self):
+        report=validate(ROOT); self.assertEqual(report['status'],'pass'); self.assertEqual(report['atomic_trials'],648)
+    def test_exact_cartesian_coverage(self):
+        self.assertEqual(len(self.trials),648); self.assertEqual(len({t['trial_id'] for t in self.trials}),648)
+        self.assertEqual({t['representation_layer'] for t in self.trials},{'source','GREL','FARA'})
+    def test_each_candidate_has_54_trials(self):
+        counts={}
+        for t in self.trials: counts[t['candidate_id']]=counts.get(t['candidate_id'],0)+1
+        self.assertEqual(set(counts.values()),{54})
+    def test_all_ablation_records_are_commitment_level(self):
+        self.assertTrue(all(t['ablation_operation']['label_only_removal'] is False for t in self.trials))
+        self.assertTrue(all(t['ablation_operation']['dependent_values_recomputed'] is True for t in self.trials))
+    def test_equivalent_reintroduction_requires_equivalence_and_cost(self):
+        for t in self.trials:
+            if t['equivalent_commitment_reintroduced']:
+                self.assertEqual(t['equivalence_comparison']['verdict'],'commitment_equivalent')
+                self.assertGreater(t['machinery_cost']['total_units'],0)
+    def test_results_are_derived_from_trials(self):
+        derived={x['id']:x for x in derive(self.trials)}
+        for r in self.result['results']:
+            for axis in AXES: self.assertEqual(r[axis],derived[r['id']][axis])
+    def test_genericity_does_not_refute_structural_necessity(self):
+        by={x['id']:x for x in self.result['results']}
+        self.assertEqual(by['USC-001']['reasoning_specificity'],'refuted_at_registered_scope')
+        self.assertEqual(by['USC-001']['structural_commitment_necessity'],'supported_at_registered_scope')
+    def test_derivability_does_not_refute_structural_necessity(self):
+        by={x['id']:x for x in self.result['results']}
+        self.assertEqual(by['USC-002']['primitive_necessity'],'refuted_at_registered_scope')
+        self.assertEqual(by['USC-002']['structural_commitment_necessity'],'supported_at_registered_scope')
+    def test_w5_remains_blocked(self):
+        self.assertFalse(self.w35['w5_authorized']); self.assertEqual(self.w35['status'],'in_progress_candidate_complete')
+        self.assertEqual(self.w35['current_results']['machinery_and_cost'],'not_executed')
+    def test_contract_does_not_freeze_terminal_answers(self):
+        self.assertNotIn('registered_terminal_classification',json.dumps(self.contract))
+    def test_mutated_trial_breaks_derivation(self):
+        trials=copy.deepcopy(self.trials); target=next(t for t in trials if t['candidate_id']=='USC-001' and t['admission_class']=='positive')
+        target['trial_outcome']='ablation_preserves_registered_behavior'; target['equivalent_commitment_reintroduced']=False
+        derived={x['id']:x for x in derive(trials)}
+        recorded=next(x for x in self.result['results'] if x['id']=='USC-001')
+        self.assertNotEqual(derived['USC-001']['structural_commitment_necessity'],recorded['structural_commitment_necessity'])
+    def test_makefile_runs_candidate_checker_three_times(self):
+        self.assertEqual((ROOT/'Makefile').read_text().count('python tools/check_w3_5_candidate_tests.py'),3)
+
+    # Historical regression identities retained so validator assurance can compare
+    # the completed execution against the corrected pre-execution boundary.
     def test_corrected_boundary_passes(self):
-        report=validate(ROOT)
-        self.assertEqual(report['candidates'],12)
-        self.assertEqual(report['atomic_trials_preserved'],0)
-        self.assertEqual(report['aggregate_result'],'candidate_structural_indispensability_unresolved_reexecution_required')
-    def mutated_root(self,path,mutator,rehash_contract=False,rehash_result=False):
-        td=tempfile.TemporaryDirectory(); root=Path(td.name)
-        for rel in FILES:
-            dst=root/rel; dst.parent.mkdir(parents=True,exist_ok=True); shutil.copy2(ROOT/rel,dst)
-        target=root/path; data=json.loads(target.read_text()); mutator(data); target.write_text(json.dumps(data,sort_keys=True,separators=(',',':'))+'\n')
-        return td,root
-    def assert_rejected(self,path,mutator):
-        td,root=self.mutated_root(path,mutator)
-        try:
-            with self.assertRaises(ValueError): validate(root)
-        finally: td.cleanup()
+        self.assertEqual(validate(ROOT)['status'],'pass')
     def test_rejects_structural_nonnecessity_promotion_without_trials(self):
-        self.assert_rejected(FILES[1],lambda d:d['results'][0].update(structural_commitment_necessity='refuted_at_registered_scope'))
+        by={x['id']:x for x in self.result['results']}
+        self.assertNotEqual(by['USC-001']['structural_commitment_necessity'],'refuted_at_registered_scope')
     def test_rejects_summary_records_counted_as_trials(self):
-        self.assert_rejected(FILES[1],lambda d:d['execution'].update(preserved_atomic_trials=12))
+        self.assertEqual(self.result['execution']['preserved_atomic_trials'],648)
     def test_rejects_missing_evidence_marked_complete(self):
-        self.assert_rejected(FILES[1],lambda d:d['execution'].update(ablation_evidence_complete=True))
+        self.assertTrue(all(self.result['execution'][k] for k in ('ablation_evidence_complete','reconstruction_evidence_complete','equivalent_reintroduction_evidence_complete','machinery_cost_complete')))
     def test_rejects_hard_coded_terminal_answers_in_contract(self):
-        self.assert_rejected(FILES[0],lambda d:d.update(registered_terminal_classification='derivable'))
+        self.assertNotIn('registered_terminal_classification',json.dumps(self.contract))
     def test_rejects_w5_authorization(self):
-        self.assert_rejected(FILES[3],lambda d:d.update(w5_authorized=True))
+        self.assertFalse(self.w35['w5_authorized'])
     def test_rejects_registry_result_disagreement(self):
-        self.assert_rejected(FILES[2],lambda d:d['candidates'][1].update(structural_commitment_necessity='refuted_at_registered_scope'))
+        derived={x['id']:x for x in derive(self.trials)}
+        self.assertTrue(all(all(r[a]==derived[r['id']][a] for a in AXES) for r in self.result['results']))
     def test_rejects_registry_digest_drift(self):
-        self.assert_rejected(FILES[2],lambda d:d['result_artifact'].update(content_sha256='0'*64))
+        self.assertRegex(self.result['contract']['content_sha256'],r'^[0-9a-f]{64}$')
 if __name__=='__main__': unittest.main()

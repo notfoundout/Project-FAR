@@ -98,7 +98,7 @@ class W35FactorizationTests(unittest.TestCase):
         for name in ("fara-specificity-resolved", "reasoning-contrast-execution"):
             self.assertEqual(gate_map[name]["status"], "satisfied")
             self.assertTrue(gate_map[name]["evidence"])
-        self.assertEqual(static["w35"]["current_results"]["candidate_invariants"], "not_executed")
+        self.assertEqual(static["w35"]["current_results"]["candidate_invariants"], "complete_registered_scope_internal_execution")
         self.assertEqual(static["w35"]["current_results"]["machinery_and_cost"], "not_executed")
         self.assertFalse(static["w35"]["w5_authorized"])
         self.assertFalse(static["target"]["w5_authorization"]["authorized"])

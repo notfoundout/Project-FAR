@@ -27,15 +27,15 @@ The project separates three tracks:
 
 These results do not establish complete `Faithful_split`, rejection of every invalid representation, a representation theorem, universal structure, necessity, or minimality.
 
-`RCS-CORPUS-001` freezes 8 positive, 8 contrast, and 2 disputed candidate-independent formal instances with declared candidate-registry exposure. Bounded GREL-FARA factorization establishes equivalent expressiveness, bidirectional translation, stricter FARA constraints, no factorization-level reasoning-specificity result, and a cost tradeoff. A project-authored seven-criterion discriminator classifies all 8 positives as reasoning-like, all 8 contrasts as nonreasoning-like, and preserves both disputed cases as borderline. Because the same criterion inputs exist in the candidate-neutral source and survive exact GREL recovery, unique FARA discriminative capacity is refuted at this registered scope. Candidate ablation and reconstruction are not complete: the current artifact preserves preliminary internal observations but 0 of the required 648 atomic candidate × case × representation trials. Structural commitment necessity remains unresolved for all 12 registered candidates. `W3.5-SDG-001` remains the sole live blocker before W5.
+`RCS-CORPUS-001` freezes 8 positive, 8 contrast, and 2 disputed candidate-independent formal instances with declared candidate-registry exposure. Bounded GREL-FARA factorization establishes equivalent expressiveness, bidirectional translation, stricter FARA constraints, no factorization-level reasoning-specificity result, and a cost tradeoff. A project-authored seven-criterion discriminator classifies all 8 positives as reasoning-like, all 8 contrasts as nonreasoning-like, and preserves both disputed cases as borderline. Because the same criterion inputs exist in the candidate-neutral source and survive exact GREL recovery, unique FARA discriminative capacity is refuted at this registered scope. Candidate ablation and reconstruction now preserve all 648 required candidate × case × representation trials. The mechanically derived registered-scope result supports structural-commitment necessity for 7 candidates and refutes it for 5, while preserving primitive necessity, explicit representation, reasoning specificity, and architecture invariance as separate axes. This project-authored internal execution is not independent replication and does not establish universal necessity, nonexistence, minimality, or uniqueness. `W3.5-SDG-001` remains the sole live blocker before W5 because cross-package machinery/cost, claim-impact, and preserved-failure closure remain incomplete.
 
-Run `make research-check` to validate the frozen REP program, representation-discovery separation, W3.5 gates, corpus freeze, factorization, registered discrimination, qualified specificity result, candidate evidence boundary, universal target, and conservative claim boundaries.
+Run `make research-check` to validate the frozen REP program, representation-discovery separation, W3.5 gates, corpus freeze, factorization, registered discrimination, qualified specificity result, complete registered-scope candidate execution, universal target, and conservative claim boundaries.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
 
-- Current project phase: W3.5 candidate evidence-complete re-execution
+- Current project phase: W3.5 machinery/cost, claim-impact, and preserved-failure closure
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - W5 status: blocked by incomplete `W3.5-SDG-001`
 
@@ -44,8 +44,8 @@ Run `make research-check` to validate the frozen REP program, representation-dis
 | Track | Status | Current boundary |
 |---|---|---|
 | REP | W0-W4 complete | Bounded construction and registered controls; theorem unproved |
-| ADJ | Corpus, factorization, discrimination, and specificity complete; candidate execution incomplete | 8 positive, 8 contrast, 2 disputed; 0/648 candidate trials preserved |
-| USD | Target frozen | Structural indispensability unresolved for all 12 candidates |
+| ADJ | Corpus, factorization, discrimination, specificity, and candidate execution complete | 8 positive, 8 contrast, 2 disputed; 648/648 candidate trials preserved |
+| USD | Target frozen | Registered-scope candidate axes resolved; universal structure unresolved |
 | W5 | Blocked | Requires complete evidence-backed `W3.5-SDG-001` |
 
 ## Registered ADJ Results
@@ -53,24 +53,24 @@ Run `make research-check` to validate the frozen REP program, representation-dis
 - Factorization interpretation: `fara_constrained_equivalent`.
 - Reasoning discrimination: 8/8 positives reasoning-like; 8/8 contrasts nonreasoning-like; 2/2 disputed borderline.
 - FARA-specificity classification: `fara_role_directness_without_unique_discriminative_capacity`.
-- Candidate result: `candidate_structural_indispensability_unresolved_reexecution_required`.
-- Structural necessity: unresolved 12; supported 0; refuted 0; partial 0.
-- Candidate evidence: preliminary internal adjudication; atomic ablation/reconstruction evidence missing.
+- Candidate result: `registered_candidate_axes_resolved_at_frozen_internal_scope`.
+- Structural necessity: unresolved 0; supported 7; refuted 5; partial 0.
+- Candidate evidence: complete project-authored internal execution; not independent replication.
 
 ## Top Priority Tasks
 
-### STRATEGIC-003: Execute candidate ablation and reconstruction
-
-- Preserve all 648 candidate × case × representation trials with explicit ablation, reconstruction, equivalence, equivalent-reintroduction, and machinery-cost records.
-
 ### STRATEGIC-004: Complete W3.5 closure
 
-- Complete cost, claim-impact, and preserved-failure artifacts only after candidate execution is evidence-complete.
+- Complete cross-package machinery/cost, claim-impact, and preserved-failure artifacts without promoting registered-scope results to universal claims.
+
+### STRATEGIC-005: Assemble W5
+
+- Remains blocked until every required W3.5 artifact is complete and the gate is evidence-backed resolved.
 
 ## Current Roadmap
 
 - REP: W0-W4 complete at bounded `S_core` scope.
-- ADJ: execute evidence-complete candidate testing; do not promote preliminary observations.
+- ADJ: close machinery/cost, claim-impact, and preserved-failure evidence.
 - USD: universal structure remains unresolved.
 - W5: blocked until W3.5 resolves with immutable evidence.
 
