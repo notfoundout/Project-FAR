@@ -8,6 +8,7 @@ import unittest
 from pathlib import Path
 
 from far_validation.assured_engine import ValidationEngine
+from far_validation.mutations import _checker_mutations
 from far_validation.oracle import _manifest_commands, analyze_checker_path, analyze_checker_source
 from far_validation.tracing import (
     RuntimePolicy,
@@ -178,6 +179,40 @@ class OracleDelegationRegressionTests(unittest.TestCase):
             commands, failures = _manifest_commands(root)
             self.assertIn("tests.canonical", commands)
             self.assertEqual(failures, [])
+
+    def test_mutation_campaign_preserves_oracle_roles(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "validation").mkdir()
+            (root / "tools").mkdir()
+            (root / "tools" / "check_one.py").write_text(
+                "from pathlib import Path\n"
+                "def main():\n"
+                "    value = Path('evidence.txt').read_text()\n"
+                "    if value != 'ok':\n"
+                "        raise SystemExit('bad')\n"
+                "if __name__ == '__main__':\n"
+                "    main()\n",
+                encoding="utf-8",
+            )
+            manifest = {
+                "schema_version": "1.0",
+                "profiles": {"pr-fast": ["one"]},
+                "protected_checks": [],
+                "global_invalidation_paths": [],
+                "checks": [{
+                    "id": "one",
+                    "title": "one",
+                    "command": [sys.executable, "tools/check_one.py"],
+                    "profiles": ["pr-fast"],
+                    "inputs": ["evidence.txt", "tools/check_one.py"],
+                    "failure_code": "FAR-VAL-ONE-001",
+                }],
+            }
+            (root / "validation" / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+            results, coverage = _checker_mutations(root)
+            self.assertEqual(coverage, 1)
+            self.assertTrue(all(item.rejected for item in results))
 
 
 if __name__ == "__main__":
