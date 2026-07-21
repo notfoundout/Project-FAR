@@ -19,6 +19,40 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  assurance-hash-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Record assurance lock hash comparison
+        shell: bash
+        run: |
+          python - <<'PY2'
+          import hashlib, json
+          from pathlib import Path
+          root = Path('.')
+          lock = json.loads((root / 'validation_bootstrap/assurance-lock.json').read_text(encoding='utf-8'))
+          rows = []
+          for raw, expected in sorted(lock['files'].items()):
+              path = root / raw
+              actual = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+              rows.append({'path': raw, 'expected': expected, 'actual': actual, 'matches': actual == expected})
+          payload = {'successful': all(row['matches'] for row in rows), 'files': rows}
+          (root / 'artifacts/validation/assurance-hash-audit.json').write_text(
+              json.dumps(payload, indent=2, sort_keys=True), encoding='utf-8'
+          )
+          print(json.dumps(payload, indent=2, sort_keys=True))
+          PY2
+      - name: Upload assurance hash audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: assurance-hash-audit
+          path: artifacts/validation/assurance-hash-audit.json
+          if-no-files-found: error
+          retention-days: 7
+
   signed-cache-producer:
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -42,16 +76,16 @@ jobs:
           export FAR_VALIDATION_CACHE_SIGNING_KEY="$key"
           python -m far_validation validate repository.hygiene --require-signed-cache
           printf '%s' "$key" > .far/cache-signing-key
-          tar -czf /tmp/signed-cache.tar.gz .far/cache .far/cache-signing-key
+          tar -czf artifacts/validation/signed-cache.tar.gz .far/cache .far/cache-signing-key
       - name: Attest signed cache bundle
         uses: actions/attest@v4
         with:
-          subject-path: /tmp/signed-cache.tar.gz
+          subject-path: artifacts/validation/signed-cache.tar.gz
       - name: Upload signed cache bundle
         uses: actions/upload-artifact@v4
         with:
           name: signed-validation-cache
-          path: /tmp/signed-cache.tar.gz
+          path: artifacts/validation/signed-cache.tar.gz
           if-no-files-found: error
           retention-days: 7
 
@@ -74,16 +108,16 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: signed-validation-cache
-          path: /tmp/signed-cache
+          path: artifacts/validation/cache-download
       - name: Verify GitHub Sigstore cache provenance
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh attestation verify /tmp/signed-cache/signed-cache.tar.gz --repo "${{ github.repository }}"
+        run: gh attestation verify artifacts/validation/cache-download/signed-cache.tar.gz --repo "${{ github.repository }}"
       - name: Consume signed cache on independent runner
         shell: bash
         run: |
           set -euo pipefail
-          tar -xzf /tmp/signed-cache/signed-cache.tar.gz
+          tar -xzf artifacts/validation/cache-download/signed-cache.tar.gz
           export FAR_VALIDATION_CACHE_SIGNING_KEY="$(cat .far/cache-signing-key)"
           python -m far_validation validate repository.hygiene --require-signed-cache --format json > /tmp/cache-consumer.json
           python - <<'PY2'
