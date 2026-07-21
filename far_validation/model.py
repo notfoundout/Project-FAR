@@ -94,12 +94,12 @@ class RunSummary:
     results: list[CheckResult]
     repository_root: str
     commit_sha: str
-    tree_sha: str
     base_sha: str
     manifest_hash: str
     started_at: str
     finished_at: str
     duration_ms: int
+    tree_sha: str = ""
     changed_files: list[str] = field(default_factory=list)
     selection_fallback_to_full: bool = False
     selection_notes: list[str] = field(default_factory=list)
