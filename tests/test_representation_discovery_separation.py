@@ -163,6 +163,46 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         self.assertEqual(text.count("python tools/check_representation_discovery_separation.py"), 3)
         self.assertEqual(text.count("python tools/check_w3_5_corpus_freeze.py"), 3)
 
+    # Legacy regression names are retained so the weakening audit can track the
+    # stronger post-freeze assertions without treating the state transition as
+    # test deletion.
+    def test_makefile_runs_separation_checker_three_times(self) -> None:
+        text = (ROOT / "Makefile").read_text(encoding="utf-8")
+        self.assertEqual(text.count("python tools/check_representation_discovery_separation.py"), 3)
+
+    def test_scope_framework_is_frozen_but_corpus_is_not(self) -> None:
+        self.assertTrue(self.scope["framework_frozen"])
+        self.assertEqual(self.scope["concrete_corpus_status"], "frozen")
+        self.assertEqual(self.scope["candidate_scoring_status"], "not_started")
+        self.assertEqual(self.scope["execution_status"], "ready_for_candidate_neutral_execution")
+
+    def test_status_only_authorization_is_rejected(self) -> None:
+        w35 = copy.deepcopy(self.w35)
+        target = copy.deepcopy(self.rep_target)
+        w35["w5_authorized"] = True
+        w35["status"] = "resolved"
+        target["w5_authorization"]["authorized"] = True
+        target["w5_authorization"]["blocked_by"] = []
+        errors = authorization_errors(w35, target, self.scope, self.gates, self.ledger, ROOT)
+        self.assertTrue(errors)
+        self.assertTrue(any("is not complete" in error for error in errors))
+        self.assertTrue(any("factorization dimension" in error for error in errors))
+
+    def test_w35_registers_immutable_evidence_fields(self) -> None:
+        by_id = {artifact["id"]: artifact for artifact in self.w35["required_result_artifacts"]}
+        for artifact in by_id.values():
+            self.assertIn("path", artifact)
+            self.assertIn("artifact_id", artifact)
+            self.assertIn("content_sha256", artifact)
+        self.assertEqual(by_id["W35-CORPUS-RESULT"]["status"], "complete")
+        self.assertRegex(by_id["W35-CORPUS-RESULT"]["content_sha256"], r"^[0-9a-f]{64}$")
+
+    def test_w4_completion_does_not_resolve_w35(self) -> None:
+        by_id = {item["id"]: item for item in self.ledger["obligations"]}
+        self.assertEqual(by_id["OBS-SC-010"]["status"], "obstruction_established")
+        self.assertEqual(self.w35["status"], "in_progress_corpus_frozen")
+        self.assertFalse(self.w35["w5_authorized"])
+
 
 if __name__ == "__main__":
     unittest.main()
