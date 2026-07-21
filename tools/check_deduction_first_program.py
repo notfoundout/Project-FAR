@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate deduction-first dependencies after bounded W4 and factorization closure."""
+"""Validate deduction-first dependencies after bounded W4 and ADJ stage progress."""
 from __future__ import annotations
 import json
 from pathlib import Path
@@ -17,10 +17,10 @@ def main()->int:
     ledger=load(F['ledger']); s=ledger['execution_summary']; assert (s['proved'],s['obstruction_established'],s['scope_boundary_established'],s['refuted'],s['open'])==(24,1,1,8,3); by={x['id']:x for x in ledger['obligations']}; assert all(by[f'LEM-SC-{i:03d}']['status']=='proved' for i in range(1,25)); assert by['OBS-SC-010']['status']=='obstruction_established'; assert all(by[f'ASM-SC-{i:03d}']['status']=='registered_unproved' for i in range(1,4))
     w3=load(F['w3']); assert w3['proof_id']=='SCORE-W3-PROOF-001' and w3['construction_properties']['formal_negative_controls_proved'] is False and w3['construction_properties']['theorem_assembly_proved'] is False
     w4=load(F['w4']); assert w4['proof_id']=='SCORE-W4-PROOF-001' and w4['result']['status']=='obstruction_established' and w4['result']['faithful_split_satisfiability_proved'] is False
-    names={x['name']:x for x in load(F['gates'])['gates']}; assert names['formal-negative-controls']['status']=='satisfied'; assert names['scoped-representation-proof']['status']=='not_satisfied'; assert names['baseline-factorization-resolved']['status']=='satisfied' and names['baseline-factorization-resolved']['evidence']; assert names['fara-specificity-resolved']['status']=='not_satisfied'; assert names['reasoning-contrast-execution']['status']=='not_satisfied'; assert names['mechanized-proof-verification']['status']=='not_satisfied'; assert names['independent-proof-review']['status']=='not_satisfied'
+    names={x['name']:x for x in load(F['gates'])['gates']}; assert names['formal-negative-controls']['status']=='satisfied'; assert names['scoped-representation-proof']['status']=='not_satisfied'; assert names['baseline-factorization-resolved']['status']=='satisfied' and names['baseline-factorization-resolved']['evidence']; assert names['fara-specificity-resolved']['status']=='satisfied' and names['fara-specificity-resolved']['evidence']; assert names['reasoning-contrast-execution']['status']=='satisfied' and names['reasoning-contrast-execution']['evidence']; assert names['universal-structure-result']['status']=='not_satisfied'; assert names['mechanized-proof-verification']['status']=='not_satisfied'; assert names['independent-proof-review']['status']=='not_satisfied'
     for claim in load(F['claims'])['claims']:
         if claim['id'] in {'CLM-EXISTENCE','CLM-UNIVERSALITY','CLM-UNIVERSAL-STRUCTURE','CLM-NECESSITY','CLM-MINIMALITY'}: assert claim['current_status'] not in {'supported','supported_at_registered_control_scope'}
     make=F['make'].read_text(encoding='utf-8')
     for checker in ('check_faithful_representation.py','check_p8_theorem_role.py','check_s_core_lemma_ledger.py','check_s_core_w0.py','check_s_core_w1.py','check_s_core_w2.py','check_s_core_w3.py','check_s_core_w4.py'): assert make.count(f'python tools/{checker}')==3
-    print('Deduction-first research program: PASS (W0-W4 and bounded factorization complete; specificity and execution evidence still block W5; theorem gate closed)'); return 0
+    print('Deduction-first research program: PASS (W0-W4 frozen; bounded factorization and registered specificity complete; candidate/cost/claim closure still blocks W5; theorem gate closed)'); return 0
 if __name__=='__main__': raise SystemExit(main())
