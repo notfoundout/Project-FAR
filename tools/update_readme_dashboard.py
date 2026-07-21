@@ -11,7 +11,7 @@ def block():
 
 ## Repository Status
 
-- Current project phase: W3.5 candidate evidence-complete re-execution
+- Current project phase: W3.5 machinery/cost, claim-impact, and preserved-failure closure
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - W5 status: blocked by incomplete `W3.5-SDG-001`
 
@@ -20,8 +20,8 @@ def block():
 | Track | Status | Current boundary |
 |---|---|---|
 | REP | W0-W4 complete | Bounded construction and registered controls; theorem unproved |
-| ADJ | Corpus, factorization, discrimination, and specificity complete; candidate execution incomplete | {n[0]} positive, {n[1]} contrast, {n[2]} disputed; 0/648 candidate trials preserved |
-| USD | Target frozen | Structural indispensability unresolved for all 12 candidates |
+| ADJ | Corpus, factorization, discrimination, specificity, and candidate execution complete | {n[0]} positive, {n[1]} contrast, {n[2]} disputed; 648/648 candidate trials preserved |
+| USD | Target frozen | Registered-scope candidate axes resolved; universal structure unresolved |
 | W5 | Blocked | Requires complete evidence-backed `W3.5-SDG-001` |
 
 ## Registered ADJ Results
@@ -31,22 +31,22 @@ def block():
 - FARA-specificity classification: `{q['classification']}`.
 - Candidate result: `{c['aggregate_result']}`.
 - Structural necessity: unresolved {a['unresolved']}; supported {a['supported_at_registered_scope']}; refuted {a['refuted_at_registered_scope']}; partial {a['partial']}.
-- Candidate evidence: preliminary internal adjudication; atomic ablation/reconstruction evidence missing.
+- Candidate evidence: complete project-authored internal execution; not independent replication.
 
 ## Top Priority Tasks
 
-### STRATEGIC-003: Execute candidate ablation and reconstruction
-
-- Preserve all 648 candidate × case × representation trials with explicit ablation, reconstruction, equivalence, equivalent-reintroduction, and machinery-cost records.
-
 ### STRATEGIC-004: Complete W3.5 closure
 
-- Complete cost, claim-impact, and preserved-failure artifacts only after candidate execution is evidence-complete.
+- Complete cross-package machinery/cost, claim-impact, and preserved-failure artifacts without promoting registered-scope results to universal claims.
+
+### STRATEGIC-005: Assemble W5
+
+- Remains blocked until every required W3.5 artifact is complete and the gate is evidence-backed resolved.
 
 ## Current Roadmap
 
 - REP: W0-W4 complete at bounded `S_core` scope.
-- ADJ: execute evidence-complete candidate testing; do not promote preliminary observations.
+- ADJ: close machinery/cost, claim-impact, and preserved-failure evidence.
 - USD: universal structure remains unresolved.
 - W5: blocked until W3.5 resolves with immutable evidence.
 
