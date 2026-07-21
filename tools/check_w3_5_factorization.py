@@ -11,12 +11,12 @@ from typing import Any
 from w3_5_factorization import FactorizationError, run_factorization
 
 ROOT = Path(__file__).resolve().parents[1]
-RESULT = ROOT / "theory" / "evaluation" / "w3-5-factorization-result-v1.0.json"
-WITNESSES = ROOT / "theory" / "evaluation" / "w3-5-factorization-witnesses-v1.0.json"
-BASELINE = ROOT / "theory" / "evaluation" / "generic-relational-baseline-v1.0.json"
-W35 = ROOT / "theory" / "evaluation" / "w3-5-specificity-and-discovery-gate.json"
-GATES = ROOT / "theory" / "evaluation" / "research-gates.json"
-TARGET = ROOT / "theory" / "evaluation" / "thm-target-001.json"
+RESULT = ROOT / "theory/evaluation/w3-5-factorization-result-v1.0.json"
+WITNESSES = ROOT / "theory/evaluation/w3-5-factorization-witnesses-v1.0.json"
+BASELINE = ROOT / "theory/evaluation/generic-relational-baseline-v1.0.json"
+W35 = ROOT / "theory/evaluation/w3-5-specificity-and-discovery-gate.json"
+GATES = ROOT / "theory/evaluation/research-gates.json"
+TARGET = ROOT / "theory/evaluation/thm-target-001.json"
 EXPECTED_DIMENSIONS = {
     "expressiveness": "equivalent",
     "translation": "bidirectional",
@@ -26,14 +26,18 @@ EXPECTED_DIMENSIONS = {
     "overall_interpretation": "fara_constrained_equivalent",
 }
 
+
 class ValidationError(ValueError):
     pass
+
 
 def load(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
+
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
 
 def validate_static(root: Path) -> dict[str, Any]:
     paths = {name: root / path.relative_to(ROOT) for name, path in {
@@ -85,24 +89,31 @@ def validate_static(root: Path) -> dict[str, Any]:
     factor = artifacts.get("W35-FACTOR-RESULT")
     if not factor or factor.get("status") != "complete" or factor.get("path") != RESULT.relative_to(ROOT).as_posix() or factor.get("artifact_id") != "W35-FACTOR-RESULT-001" or factor.get("content_sha256") != sha256_file(paths["result"]):
         raise ValidationError("W35-FACTOR-RESULT linkage is invalid")
-    if w35.get("current_results", {}).get("factorization") != EXPECTED_DIMENSIONS or w35.get("status") != "in_progress_factorization_complete" or w35.get("w5_authorized") is not False:
+    current = w35.get("current_results", {})
+    if current.get("factorization") != EXPECTED_DIMENSIONS or w35.get("status") not in {"in_progress_factorization_complete", "in_progress_specificity_complete"} or w35.get("w5_authorized") is not False:
         raise ValidationError("W3.5 factorization state is inconsistent")
-    for artifact_id, artifact in artifacts.items():
-        if artifact_id not in {"W35-CORPUS-RESULT", "W35-FACTOR-RESULT"} and artifact.get("status") != "missing":
-            raise ValidationError(f"{artifact_id} was promoted by factorization alone")
+    for artifact_id in ("W35-CANDIDATE-RESULT", "W35-COST-RESULT", "W35-CLAIM-RESULT", "W35-FAILURE-RESULT"):
+        if artifacts.get(artifact_id, {}).get("status") != "missing":
+            raise ValidationError(f"{artifact_id} was promoted before its own execution")
 
     gate_map = {item["name"]: item for item in gates.get("gates", [])}
     baseline_gate = gate_map.get("baseline-factorization-resolved")
     expected_evidence = {"docs/research/w3-5-grel-fara-factorization-v1.0.md", "docs/audits/w3-5-factorization-audit.md", RESULT.relative_to(ROOT).as_posix(), WITNESSES.relative_to(ROOT).as_posix()}
     if not baseline_gate or baseline_gate.get("status") != "satisfied" or not expected_evidence <= set(baseline_gate.get("evidence", [])):
         raise ValidationError("baseline factorization gate lacks immutable evidence")
-    for name in ("fara-specificity-resolved", "reasoning-contrast-execution"):
-        if gate_map.get(name, {}).get("status") != "not_satisfied":
-            raise ValidationError(f"{name} was promoted by factorization alone")
+    if w35.get("status") == "in_progress_factorization_complete":
+        for name in ("fara-specificity-resolved", "reasoning-contrast-execution"):
+            if gate_map.get(name, {}).get("status") != "not_satisfied":
+                raise ValidationError(f"{name} was promoted without a later-stage result")
+    else:
+        for name in ("fara-specificity-resolved", "reasoning-contrast-execution"):
+            if gate_map.get(name, {}).get("status") != "satisfied" or not gate_map.get(name, {}).get("evidence"):
+                raise ValidationError(f"{name} lacks later-stage evidence")
     authorization = target.get("w5_authorization", {})
     if authorization.get("authorized") is not False or authorization.get("blocked_by") != ["W3.5-SDG-001"]:
         raise ValidationError("THM-TARGET-001 no longer blocks W5")
     return {"result": result, "witnesses": witnesses, "baseline": baseline, "w35": w35, "gates": gates, "target": target}
+
 
 def validate_runtime(root: Path, witnesses: dict[str, Any]) -> dict[str, Any]:
     report = run_factorization(root)
@@ -122,10 +133,12 @@ def validate_runtime(root: Path, witnesses: dict[str, Any]) -> dict[str, Any]:
             raise ValidationError(f"{instance_id}: declared FARA semantic-access advantage disappeared")
     return report
 
+
 def validate(root: Path = ROOT) -> dict[str, Any]:
     static = validate_static(root)
     runtime = validate_runtime(root, static["witnesses"])
     return {"status": "pass", "artifact_id": static["result"]["artifact_id"], "runtime_experiment_id": runtime["experiment_id"], "instance_count": runtime["scope"]["instances"], "dimensions": runtime["dimensions"]}
+
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Validate W3.5 GREL-FARA factorization")
@@ -142,6 +155,7 @@ def main(argv: list[str] | None = None) -> int:
     else:
         print(f"W3.5 factorization validation: PASS ({report['instance_count']} instances; {report['dimensions']['overall_interpretation']})")
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
