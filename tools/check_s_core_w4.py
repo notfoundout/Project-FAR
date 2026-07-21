@@ -123,7 +123,11 @@ def main() -> int:
         "theory/evaluation/s-core-w4-negative-control-fixtures.json",
     ]
     assert gates["scoped-representation-proof"]["status"] == "not_satisfied"
-    assert gates["baseline-factorization-resolved"]["status"] == "not_satisfied"
+    assert gates["baseline-factorization-resolved"]["status"] == "satisfied"
+    assert gates["baseline-factorization-resolved"]["evidence"]
+    assert gates["fara-specificity-resolved"]["status"] == "not_satisfied"
+    assert gates["reasoning-contrast-execution"]["status"] == "not_satisfied"
+    assert gates["universal-structure-result"]["status"] == "not_satisfied"
 
     claims = {item["id"]: item for item in load(CLAIMS)["claims"]}
     assert claims["CLM-NONTRIVIALITY"]["current_status"] == "supported_at_registered_control_scope"
@@ -141,7 +145,7 @@ def main() -> int:
     )
     assert completed.returncode == 0, completed.stdout + completed.stderr
 
-    print("S_core W4 proof: PASS (10 control families rejected at registered scope; OBS-SC-010 established; W5 still blocked by W3.5)")
+    print("S_core W4 proof: PASS (10 control families rejected at registered scope; OBS-SC-010 established; factorization may advance independently; W5 still blocked by remaining W3.5 evidence)")
     return 0
 
 
