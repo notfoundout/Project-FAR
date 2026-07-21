@@ -8,6 +8,7 @@ import unittest
 from pathlib import Path
 
 from far_validation.assured_engine import ValidationEngine
+from far_validation.oracle import analyze_checker_path, analyze_checker_source
 from far_validation.tracing import (
     RuntimePolicy,
     TraceReport,
@@ -109,6 +110,49 @@ class TraceContractRegressionTests(unittest.TestCase):
             extra.write_text("two\n", encoding="utf-8")
             third = engine.run(profile="pr-fast")
             self.assertFalse(third.results[0].cache_hit)
+
+
+class OracleDelegationRegressionTests(unittest.TestCase):
+    def test_thin_wrapper_is_evaluated_with_local_delegate(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tools = root / "tools"
+            tools.mkdir()
+            (tools / "implementation.py").write_text(
+                "from pathlib import Path\n"
+                "def validate():\n"
+                "    data = Path('evidence.txt').read_text()\n"
+                "    if data != 'ok':\n"
+                "        raise RuntimeError('bad evidence')\n",
+                encoding="utf-8",
+            )
+            (tools / "check_wrapper.py").write_text(
+                "from implementation import validate\n"
+                "if __name__ == '__main__':\n"
+                "    try:\n"
+                "        validate()\n"
+                "    except RuntimeError as exc:\n"
+                "        raise SystemExit(str(exc))\n",
+                encoding="utf-8",
+            )
+            finding = analyze_checker_path(root, "tools/check_wrapper.py")
+            self.assertTrue(finding.accepted, finding.failures)
+            self.assertIn("tools/implementation.py", finding.delegated_modules)
+
+    def test_generator_contract_requires_output_but_not_local_failure_branch(self) -> None:
+        source = (
+            "from pathlib import Path\n"
+            "target = Path('generated.txt')\n"
+            "if target.exists():\n"
+            "    text = target.read_text()\n"
+            "else:\n"
+            "    text = ''\n"
+            "target.write_text(text + 'x')\n"
+        )
+        finding = analyze_checker_source(source, "generator.py", role="generator")
+        self.assertTrue(finding.accepted, finding.failures)
+        trivial = analyze_checker_source("print('PASS')\n", "generator.py", role="generator")
+        self.assertFalse(trivial.accepted)
 
 
 if __name__ == "__main__":
