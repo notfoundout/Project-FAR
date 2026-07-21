@@ -131,8 +131,6 @@ def validate_manifest(manifest: Manifest) -> None:
         unknown_profiles = sorted(set(check.profiles) - set(manifest.profiles))
         if unknown_profiles:
             raise ManifestError(f"check {check.check_id} references unknown profiles: {unknown_profiles}")
-        if check.command and not check.inputs:
-            raise ManifestError(f"command check {check.check_id} must declare inputs")
     missing_protected = sorted(set(manifest.protected_checks) - check_ids)
     if missing_protected:
         raise ManifestError(f"protected checks missing: {missing_protected}")
