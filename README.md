@@ -25,18 +25,18 @@ The project separates three tracks:
 
 `SCORE-W0-PROOF-001` through `SCORE-W4-PROOF-001` are project-authored bounded REP packages. W3 establishes all 24 finite construction lemmas, target-only recovery, semantic agreement, coherence, machinery accounting, uniformity, composition, and witness assembly. W4 establishes that every applicable registered NC-01 through NC-10 family violates at least one frozen faithful-representation clause for its registered reason.
 
-These results do not establish complete `Faithful_split`, rejection of every invalid representation, FARA-specificity, a representation theorem, universal structure, necessity, or minimality.
+These results do not establish complete `Faithful_split`, rejection of every invalid representation, a representation theorem, universal structure, necessity, or minimality.
 
-`RCS-CORPUS-001` freezes 8 positive, 8 contrast, and 2 disputed candidate-independent formal instances with declared candidate-registry exposure. `W35-GREL-FARA-FACTOR-001` establishes bounded operational factorization: equivalent expressiveness, bidirectional translation, stricter FARA constraints, no established reasoning specificity, a cost tradeoff, and the interpretation `fara_constrained_equivalent`. The translation explicitly reuses the declared FARA-oriented adapter and accepted constructor, so this is not a primitive reduction. Candidate scoring and reasoning/contrast discrimination have not begun. `W3.5-SDG-001` remains the sole live blocker before W5.
+`RCS-CORPUS-001` freezes 8 positive, 8 contrast, and 2 disputed candidate-independent formal instances with declared candidate-registry exposure. Bounded GREL-FARA factorization establishes equivalent expressiveness, bidirectional translation, stricter FARA constraints, no factorization-level reasoning-specificity result, and a cost tradeoff. A project-authored seven-criterion discriminator classifies all 8 positives as reasoning-like, all 8 contrasts as nonreasoning-like, and preserves both disputed cases as borderline. Because the same criterion inputs exist in the candidate-neutral source and survive exact GREL recovery, unique FARA discriminative capacity is refuted at this registered scope. General FARA specificity, primitive necessity, population-level accuracy, and independent evaluation remain unestablished. Candidate testing, full cost accounting, claim-impact closure, and preserved-failure closure have not begun. `W3.5-SDG-001` remains the sole live blocker before W5.
 
-Run `make research-check` to validate the frozen REP program, representation-discovery separation, W3.5 gates, universal target, corpus freeze, factorization result, and conservative claim boundaries.
+Run `make research-check` to validate the frozen REP program, representation-discovery separation, W3.5 gates, corpus freeze, factorization, registered discrimination, qualified specificity result, universal target, and conservative claim boundaries.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: W3.5 specificity, discrimination, candidate testing, reconstruction, and cost closure
+- Current project phase: W3.5 candidate testing, reconstruction, full cost accounting, and claim closure
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 
@@ -45,39 +45,38 @@ Run `make research-check` to validate the frozen REP program, representation-dis
 | Track | Status | Current boundary |
 |---|---|---|
 | REP | W0-W4 complete | Bounded construction and registered controls; theorem unproved |
-| ADJ | W3.5 in progress; corpus and factorization complete | 8 positive, 8 contrast, 2 disputed; specificity and execution pending |
+| ADJ | W3.5 in progress; corpus, factorization, discrimination, and specificity complete | 8 positive, 8 contrast, 2 disputed; candidate, cost, and claim closure pending |
 | USD | Target frozen, unexecuted | No universal-structure candidate classified |
 | W5 | Blocked | Requires complete evidence-backed `W3.5-SDG-001` |
 
 No aggregate completion percentage is authorized across REP, ADJ, and USD.
 
-## Factorization Result
+## Registered ADJ Results
 
-- Expressiveness: `equivalent`.
-- Translation: `bidirectional`.
-- Constraint strength: `fara_stricter`.
-- Reasoning specificity: `not_established`.
-- Cost relation: `tradeoff`.
-- Overall interpretation: `fara_constrained_equivalent`.
-- Boundary: operational factorization only; the translation reuses the declared FARA-oriented adapter and accepted constructor, so no primitive reduction is claimed.
+- Factorization expressiveness: `equivalent`.
+- Factorization translation: `bidirectional`.
+- Factorization constraint strength: `fara_stricter`.
+- Factorization reasoning specificity: `not_established`.
+- Factorization cost relation: `tradeoff`.
+- Factorization interpretation: `fara_constrained_equivalent`.
+- Reasoning discrimination: 8/8 positives reasoning-like; 8/8 contrasts nonreasoning-like; 2/2 disputed borderline.
+- FARA-specificity classification: `fara_role_directness_without_unique_discriminative_capacity`.
+- Unique FARA discriminative capacity: `refuted_at_registered_scope`.
+- Boundary: project-authored, non-blind semantic licensing over a finite synthetic corpus; no population inference, FARA necessity, or universal definition is claimed.
 
 ## Top Priority Tasks
 
-### STRATEGIC-002: Execute reasoning/contrast discrimination and FARA specificity
-
-- Test whether FARA constraints have a distinct reasoning-relevant role over the frozen corpus.
-
 ### STRATEGIC-003: Execute candidate ablation and reconstruction
 
-- Test every candidate across the frozen corpus and alternative conceptual bases, counting equivalent reintroduction.
+- Test every universal-structure hypothesis across the frozen corpus and alternative conceptual bases, counting equivalent reintroduction and preserving counterexamples.
 
 ### STRATEGIC-004: Complete W3.5 cost and claim-impact audit
 
-- Produce complete machinery accounting, preserved failures, and track-specific claim effects.
+- Produce complete machinery accounting, preserved failures, immutable links, and track-specific claim effects without erasing the qualified-negative specificity result.
 
 ### STRATEGIC-005: Assemble W5
 
-- Blocked until W3.5 resolves with complete immutable evidence.
+- Blocked until all remaining W3.5 artifacts are complete.
 
 ## Universal-Structure Discovery
 
@@ -85,6 +84,7 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 - Generic baseline: [GREL-001](docs/research/generic-relational-baseline-v1.0.md)
 - Frozen concrete corpus: [RCS-CORPUS-001](docs/research/w3-5-concrete-corpus-freeze-v1.0.md)
 - Factorization result: [W35-FACTOR-RESULT-001](docs/research/w3-5-grel-fara-factorization-v1.0.md)
+- Discrimination and specificity result: [W35-SCOPE-RESULT-001 / W35-SPEC-RESULT-001](docs/research/w3-5-reasoning-discrimination-and-specificity-v1.0.md)
 - Candidate registry: [US-CANDIDATES-001](theory/evaluation/universal-structure-candidate-registry.json)
 - Current candidate result: unresolved
 
@@ -92,7 +92,8 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 
 - [Project Status](docs/reports/project-status-generated.md)
 - [Next Actions](docs/planning/next-actions.md)
-- [GREL–FARA Factorization](docs/research/w3-5-grel-fara-factorization-v1.0.md)
+- [GREL-FARA Factorization](docs/research/w3-5-grel-fara-factorization-v1.0.md)
+- [Reasoning Discrimination and Specificity](docs/research/w3-5-reasoning-discrimination-and-specificity-v1.0.md)
 - [W3.5 Gate](docs/research/w3-5-specificity-and-discovery-gate-v1.0.md)
 - [Central Claim Registry](theory/evaluation/central-claim-registry.json)
 - [Research Gates](theory/evaluation/research-gates.json)
@@ -100,7 +101,7 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 ## Current Roadmap
 
 - REP: W0-W4 complete at bounded `S_core` scope.
-- ADJ: corpus and factorization complete; execute specificity, discrimination, candidate testing, reconstruction, full cost, and claim impact.
+- ADJ: corpus, factorization, registered discrimination, and qualified specificity complete; execute candidate testing, reconstruction, full cost, failure, and claim closure.
 - USD: keep every candidate unresolved until candidate-neutral execution.
 - W5: blocked until W3.5 resolves with immutable evidence.
 
@@ -120,7 +121,7 @@ make dashboard
 1. Run `make research-check` and `make health-fast`.
 2. Work only on an authorized REP, ADJ, or USD obligation.
 3. Preserve countermodels, equivalences, reductions, failures, assumptions, and nonclaims.
-4. Do not promote representation progress into universal-structure status.
+4. Do not promote bounded discrimination into universal-structure or necessity status.
 5. Run full health before merge.
 
 <!-- END GENERATED PROJECT FAR DASHBOARD -->
