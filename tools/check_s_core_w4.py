@@ -109,11 +109,12 @@ def main() -> int:
 
     target = load(TARGET)
     program = target["lemma_program"]
-    assert program["status"] == "w0_w1_w2_w3_w4_complete_w5_blocked_by_w3_5"
+    assert program["status"] == "w0_w1_w2_w3_w4_complete_w5_authorized"
     assert program["established_obstructions"] == 1
     assert program["open_obligations"] == 3
-    assert target["w5_authorization"]["authorized"] is False
-    assert target["w5_authorization"]["blocked_by"] == ["W3.5-SDG-001"]
+    assert set(program["active_obligations"]) == {"ASM-SC-001", "ASM-SC-002", "ASM-SC-003"}
+    assert target["w5_authorization"]["authorized"] is True
+    assert target["w5_authorization"]["blocked_by"] == []
 
     gates = {item["name"]: item for item in load(GATES)["gates"]}
     assert gates["formal-negative-controls"]["status"] == "satisfied"
@@ -146,7 +147,7 @@ def main() -> int:
     )
     assert completed.returncode == 0, completed.stdout + completed.stderr
 
-    print("S_core W4 proof: PASS (registered controls unchanged; later specificity evidence may advance independently; candidates and W5 remain blocked)")
+    print("S_core W4 proof: PASS (registered controls unchanged; W3.5 resolved later; W5 authorized but unproved)")
     return 0
 
 
