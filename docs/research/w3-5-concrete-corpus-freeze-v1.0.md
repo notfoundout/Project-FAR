@@ -43,13 +43,13 @@ Only the enumerated finite system is admitted. Unrecorded implementation behavio
 
 ## Frozen artifacts
 
-The source catalog cryptographically indexes 18 separate immutable source records under `theory/evaluation/rcs-corpus-sources/`.
+The source catalog cryptographically indexes six immutable source bundles containing 18 indexed source records under `theory/evaluation/rcs-corpus-sources/`.
 
-- `theory/evaluation/rcs-concrete-source-catalog-v1.0.json` — SHA-256 `73470eb64cb777dfd8e4314667f128a4966e743b726895186f8fc44360e7c50d`
-- `theory/evaluation/rcs-positive-corpus-v1.0.json` — SHA-256 `b190d22b0890c609aaa093b81927f61b1a26f696468f8c09c024ec1a4531e96a`
-- `theory/evaluation/rcs-contrast-corpus-v1.0.json` — SHA-256 `579db283bf513f99c78f8a40424a0de7027d9e7e9b65222db702d008e963ff7a`
-- `theory/evaluation/rcs-disputed-corpus-v1.0.json` — SHA-256 `676441742f4bb4b9f564df7fecbd0e28c8f1cec54baec6141f1462c7f56f913c`
-- `theory/evaluation/w3-5-corpus-freeze-result-v1.0.json` — SHA-256 `30d2d0331d4a0aebc833283bafe2a1fd88d36080b63726a8ba9b0f1d0c56e28e`
+- `theory/evaluation/rcs-concrete-source-catalog-v1.0.json` — SHA-256 `6b0249b64216585371a7a57362396201336064f5edce7849408c513f3168ea3f`
+- `theory/evaluation/rcs-positive-corpus-v1.0.json` — SHA-256 `1a70c175601e199b6b0c412dadec2d48ac4fe94106b850a0a97b24cd352030dd`
+- `theory/evaluation/rcs-contrast-corpus-v1.0.json` — SHA-256 `0f206b1f1bb8fa9ead5937d56f992513dd3d5887a92f85888e70f2591bb0f578`
+- `theory/evaluation/rcs-disputed-corpus-v1.0.json` — SHA-256 `db04d13a5b8465a6debcf2483b9287fb58dc8b6ad0ac4a7a570aa70139097312`
+- `theory/evaluation/w3-5-corpus-freeze-result-v1.0.json` — SHA-256 `d178e5a3e649c0f4926f7803480cc61eb297ab38baa28082a6cdfd1dc8635f2a`
 
 ## Decision effect
 
