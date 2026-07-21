@@ -25,15 +25,23 @@ jobs:
       - name: Test unified validation engine
         run: python -m unittest discover -s tests -p "test_unified_validation.py" -v
       - name: Run unified fast profile without cache
+        id: fast
+        continue-on-error: true
         run: python -m far_validation validate --profile pr-fast --no-cache
-      - name: Upload failure bundles
-        if: failure()
+      - name: Print fast-profile root failures
+        if: steps.fast.outcome == 'failure'
+        run: python tools/print_validation_failures.py
+      - name: Upload fast-profile failure bundles
+        if: steps.fast.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: unified-validation-failures
           path: .far
           if-no-files-found: ignore
           retention-days: 7
+      - name: Enforce fast-profile result
+        if: steps.fast.outcome == 'failure'
+        run: exit 1
 
   full-shadow:
     runs-on: ubuntu-latest
@@ -48,12 +56,20 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
       - name: Run unified full PR profile
+        id: full
+        continue-on-error: true
         run: python -m far_validation validate --profile pr-full --no-cache
-      - name: Upload failure bundles
-        if: failure()
+      - name: Print full-profile root failures
+        if: steps.full.outcome == 'failure'
+        run: python tools/print_validation_failures.py
+      - name: Upload full-profile failure bundles
+        if: steps.full.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: unified-validation-full-failures
           path: .far
           if-no-files-found: ignore
           retention-days: 7
+      - name: Enforce full-profile result
+        if: steps.full.outcome == 'failure'
+        run: exit 1
