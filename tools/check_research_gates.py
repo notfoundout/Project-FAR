@@ -9,6 +9,8 @@ REGISTRY=ROOT/'theory/evaluation/research-gates.json'
 CLAIMS=ROOT/'theory/evaluation/central-claim-registry.json'
 CORPUS_RESULT=ROOT/'theory/evaluation/w3-5-corpus-freeze-result-v1.0.json'
 FACTOR_RESULT=ROOT/'theory/evaluation/w3-5-factorization-result-v1.0.json'
+DISC_RESULT=ROOT/'theory/evaluation/w3-5-reasoning-discrimination-result-v1.0.json'
+SPEC_RESULT=ROOT/'theory/evaluation/w3-5-fara-specificity-result-v1.0.json'
 ALLOWED_GATE_STATUS={'not_satisfied','in_progress','satisfied','blocked','retired'}
 ALLOWED_CLAIM_STATUS={'unresolved','partially_supported','supported_at_registered_control_scope','not_established','not_established_generally','supported','weakened','refuted'}
 REQUIRED_GATE_NAMES={'external-observation-contract','negative-controls','full-cost-accounting','anti-reintroduction-ablation','independent-replication','private-holdout-counterexample-challenge','nonclaim-audit','formal-theorem-target','premise-ledger-and-semantics','faithful-representation-definition','scoped-representation-proof','primitive-lower-bounds','minimality-universe-and-proof','mechanized-proof-verification','independent-proof-review','representation-discovery-separation','generic-baseline-frozen','universal-structure-target-frozen','reasoning-contrast-scope-framework-frozen','reasoning-contrast-corpus-frozen','baseline-factorization-resolved','fara-specificity-resolved','reasoning-contrast-execution','universal-structure-result','formal-negative-controls'}
@@ -17,15 +19,16 @@ REQUIRED_POLICY_TRUE={'unsatisfied_gate_blocks_stronger_claim','unknown_is_not_p
 REQUIRED_UPDATE_POLICY_TRUE={'evidence_for_and_against_required','unknown_is_not_pass','failures_are_immutable','scope_changes_must_be_versioned','stronger_status_requires_linked_artifacts','theorem_and_replication_status_must_remain_separate','experimental_results_may_not_be_promoted_to_proof','proof_claims_require_explicit_assumptions_and_scope','representation_progress_may_not_update_universal_structure_status','track_statuses_may_not_be_aggregated'}
 CORPUS_EVIDENCE={'docs/research/w3-5-concrete-corpus-freeze-v1.0.md','docs/audits/w3-5-concrete-corpus-freeze-audit.md','theory/evaluation/rcs-concrete-source-catalog-v1.0.json','theory/evaluation/rcs-positive-corpus-v1.0.json','theory/evaluation/rcs-contrast-corpus-v1.0.json','theory/evaluation/rcs-disputed-corpus-v1.0.json','theory/evaluation/w3-5-corpus-freeze-result-v1.0.json'}
 FACTOR_EVIDENCE={'docs/research/w3-5-grel-fara-factorization-v1.0.md','docs/audits/w3-5-factorization-audit.md','theory/evaluation/w3-5-factorization-result-v1.0.json','theory/evaluation/w3-5-factorization-witnesses-v1.0.json'}
+SPEC_EVIDENCE={'docs/research/w3-5-reasoning-discrimination-and-specificity-v1.0.md','docs/audits/w3-5-specificity-audit.md','theory/evaluation/w3-5-reasoning-licensing-v1.0.json','theory/evaluation/w3-5-reasoning-discrimination-result-v1.0.json','theory/evaluation/w3-5-fara-specificity-result-v1.0.json'}
 
 def load(path:Path)->dict: return json.loads(path.read_text(encoding='utf-8'))
 
 def main()->int:
     errors=[]
-    for path in (REGISTRY,CLAIMS,CORPUS_RESULT,FACTOR_RESULT):
+    for path in (REGISTRY,CLAIMS,CORPUS_RESULT,FACTOR_RESULT,DISC_RESULT,SPEC_RESULT):
         if not path.is_file(): errors.append(f'missing {path.relative_to(ROOT)}')
     if errors: return report(errors)
-    data=load(REGISTRY); claims_data=load(CLAIMS); corpus_result=load(CORPUS_RESULT); factor_result=load(FACTOR_RESULT)
+    data=load(REGISTRY); claims_data=load(CLAIMS); corpus_result=load(CORPUS_RESULT); factor_result=load(FACTOR_RESULT); disc_result=load(DISC_RESULT); spec_result=load(SPEC_RESULT)
     if data.get('schema_version')!='1.0': errors.append('research gate schema_version must equal 1.0')
     if data.get('research_mode')!='deduction_first_with_parallel_empirical_validation': errors.append('research_mode mismatch')
     artifacts=data.get('required_canonical_artifacts')
@@ -34,10 +37,9 @@ def main()->int:
     for relative in artifacts:
         if not isinstance(relative,str) or not relative: errors.append('invalid canonical artifact path')
         elif not (ROOT/relative).is_file(): errors.append(f'missing canonical artifact: {relative}')
-    for relative in CORPUS_EVIDENCE:
-        if relative not in artifacts: errors.append(f'corpus evidence is not canonical: {relative}')
-    for relative in FACTOR_EVIDENCE:
-        if relative not in artifacts: errors.append(f'factorization evidence is not canonical: {relative}')
+    for label,evidence in (('corpus',CORPUS_EVIDENCE),('factorization',FACTOR_EVIDENCE),('specificity',SPEC_EVIDENCE)):
+        for relative in evidence:
+            if relative not in artifacts: errors.append(f'{label} evidence is not canonical: {relative}')
     gates=data.get('gates')
     if not isinstance(gates,list): errors.append('gates must be a list'); gates=[]
     ids=set(); names=set(); by_name={}
@@ -69,20 +71,30 @@ def main()->int:
     if len(formal_nc.get('evidence',[]))<3: errors.append('formal-negative-controls gate lacks proof, registry, or fixture evidence')
     if by_name.get('scoped-representation-proof',{}).get('status')!='not_satisfied': errors.append('scoped-representation-proof must remain not_satisfied before W5')
     factor_gate=by_name.get('baseline-factorization-resolved',{})
-    if factor_gate.get('status')!='satisfied': errors.append('baseline factorization gate must be satisfied after executable factorization')
+    if factor_gate.get('status')!='satisfied': errors.append('baseline factorization gate must be satisfied')
     if not FACTOR_EVIDENCE <= set(factor_gate.get('evidence',[])): errors.append('baseline factorization gate lacks complete evidence')
     corpus_gate=by_name.get('reasoning-contrast-corpus-frozen',{})
-    if corpus_gate.get('status')!='satisfied': errors.append('reasoning/contrast corpus gate must be satisfied after RCS-CORPUS-001 freeze')
+    if corpus_gate.get('status')!='satisfied': errors.append('reasoning/contrast corpus gate must be satisfied')
     if not CORPUS_EVIDENCE <= set(corpus_gate.get('evidence',[])): errors.append('reasoning/contrast corpus gate lacks complete freeze evidence')
+    for name in ('fara-specificity-resolved','reasoning-contrast-execution'):
+        gate=by_name.get(name,{})
+        if gate.get('status')!='satisfied': errors.append(f'{name} must be satisfied after registered execution')
+        if not SPEC_EVIDENCE <= set(gate.get('evidence',[])): errors.append(f'{name} lacks complete specificity evidence')
+    if by_name.get('universal-structure-result',{}).get('status')!='not_satisfied': errors.append('universal structure must remain unresolved')
     if corpus_result.get('status')!='complete' or corpus_result.get('artifact_id')!='RCS-CORPUS-001': errors.append('corpus freeze result is not complete')
     if corpus_result.get('candidate_scoring_status')!='not_started': errors.append('corpus freeze must precede candidate scoring')
     if corpus_result.get('claim_impact',{}).get('W5_authorized') is not False: errors.append('corpus freeze must not authorize W5')
     if factor_result.get('status')!='complete' or factor_result.get('artifact_id')!='W35-FACTOR-RESULT-001': errors.append('factorization result is not complete')
-    if factor_result.get('dimensions',{}).get('reasoning_specificity')!='not_established': errors.append('factorization must not establish reasoning specificity')
+    if factor_result.get('dimensions',{}).get('reasoning_specificity')!='not_established': errors.append('factorization must not be retrospectively promoted')
     if factor_result.get('factorization_contract',{}).get('primitive_reduction_established') is not False: errors.append('factorization must not be promoted to primitive reduction')
-    if factor_result.get('gate_effect',{}).get('w5_authorized') is not False: errors.append('factorization must not authorize W5')
-    for name in ('fara-specificity-resolved','reasoning-contrast-execution','universal-structure-result'):
-        if by_name.get(name,{}).get('status')!='not_satisfied': errors.append(f'{name} must remain not_satisfied after factorization')
+    if disc_result.get('status')!='complete' or disc_result.get('artifact_id')!='W35-SCOPE-RESULT-001': errors.append('reasoning discrimination result is not complete')
+    if disc_result.get('registered_results')!={'positive':{'reasoning_like':8,'nonreasoning_like':0,'borderline':0,'unknown':0},'contrast':{'reasoning_like':0,'nonreasoning_like':8,'borderline':0,'unknown':0},'disputed':{'reasoning_like':0,'nonreasoning_like':0,'borderline':2,'unknown':0}}: errors.append('registered discrimination result changed')
+    if disc_result.get('primary_metrics',{}).get('statistical_inference')!='not_authorized': errors.append('statistical inference was added')
+    if spec_result.get('status')!='complete_qualified_negative' or spec_result.get('artifact_id')!='W35-SPEC-RESULT-001': errors.append('specificity result is not a complete qualified negative')
+    spec=spec_result.get('result',{})
+    if spec.get('unique_discriminative_capacity_of_fara')!='refuted_at_registered_scope': errors.append('FARA uniqueness must remain refuted at registered scope')
+    if spec.get('fara_reasoning_specificity_general')!='not_established' or spec.get('fara_primitive_necessity')!='not_established': errors.append('general specificity or necessity was promoted')
+    if spec_result.get('gate_effect',{}).get('w5_authorized') is not False: errors.append('specificity result must not authorize W5')
     if by_name.get('independent-replication',{}).get('required_before')!=['independent_empirical_confirmation_claim']: errors.append('independent replication may gate only independent empirical confirmation')
     policy=data.get('claim_policy')
     if not isinstance(policy,dict): errors.append('claim_policy must be an object')
@@ -94,7 +106,7 @@ def main()->int:
     if not isinstance(paused,list) or not paused: errors.append('paused_by_default must be nonempty'); paused=[]
     overlap=set(authorized)&set(paused)
     if overlap: errors.append('authorized and paused work overlap: '+', '.join(sorted(overlap)))
-    for item in ('generic_baseline_factorization','reasoning_contrast_scope_execution','universal_structure_candidate_testing','candidate_ablation_and_reconstruction'):
+    for item in ('universal_structure_candidate_testing','candidate_ablation_and_reconstruction'):
         if item not in authorized: errors.append(f'next W3.5 work is not authorized: {item}')
     if claims_data.get('schema_version')!='1.0': errors.append('central claim schema_version must equal 1.0')
     if claims_data.get('research_mode')!='deduction_first_with_separate_validation_dimensions': errors.append('central claims must separate validation dimensions')
@@ -113,7 +125,7 @@ def main()->int:
     missing_claims=REQUIRED_CLAIM_IDS-claim_ids
     if missing_claims: errors.append('missing claims: '+', '.join(sorted(missing_claims)))
     for cid,status in {'CLM-UNIVERSAL-STRUCTURE':'unresolved','CLM-UNIVERSALITY':'not_established','CLM-NECESSITY':'not_established','CLM-MINIMALITY':'not_established'}.items():
-        if claims_by_id.get(cid,{}).get('current_status')!=status: errors.append(f'{cid} must remain {status} after factorization')
+        if claims_by_id.get(cid,{}).get('current_status')!=status: errors.append(f'{cid} must remain {status} after specificity execution')
     dimensions=claims_data.get('claim_dimensions')
     for key in ('theorem_status','mechanization_status','independent_proof_review_status','empirical_replication_status','application_status','research_track'):
         if not isinstance(dimensions,dict) or key not in dimensions: errors.append(f'missing claim dimension: {key}')
@@ -127,7 +139,7 @@ def report(errors:list[str],gate_count:int=0,claim_count:int=0)->int:
         print('Research gate validation FAILED')
         for error in errors: print(f'- {error}')
         return 1
-    print(f'Research gate validation PASS ({gate_count} gates; {claim_count} claims; corpus and factorization complete; specificity, execution, and W5 remain blocked)')
+    print(f'Research gate validation PASS ({gate_count} gates; {claim_count} claims; corpus, factorization, and registered specificity complete; candidates and W5 blocked)')
     return 0
 
 if __name__=='__main__': raise SystemExit(main())
