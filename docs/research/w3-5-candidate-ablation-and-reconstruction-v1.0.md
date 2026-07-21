@@ -1,42 +1,70 @@
-# W3.5 Candidate Ablation and Reconstruction v1.0
+# W3.5 Candidate Ablation and Reconstruction v1.1
 
-## Purpose
+## Correction status
 
-This investigation executes all twelve candidates in `US-CANDIDATES-001` against the frozen 8-positive, 8-contrast, and 2-disputed corpus. It evaluates coverage, source/GREL/FARA transport, destructive ablation, reconstruction, and equivalent reintroduction. Candidate recurrence alone is never treated as necessity.
+The original v1.0 package overstated preliminary project-authored judgments as completed destructive ablation and reconstruction evidence. It conflated primitive reducibility, explicit representational eliminability, structural commitment necessity, reasoning specificity, architecture dependence, and scope dependence. It also froze candidate-level answers in the contract and preserved no atomic candidate–case–representation trial records.
 
-## Method
+The corrected package therefore withdraws the terminal conclusion that no registered candidate is indispensable within the frozen class. That proposition is unresolved.
 
-Each candidate is linked to a frozen role basis from `W35-REASONING-LICENSING-001`. The experiment records whether the candidate appears across positive and contrast scope, whether its commitment survives representation transport, whether removing it changes the registered discrimination result, whether the lost commitment can be reconstructed from remaining roles, and whether a nominally successful ablation merely reintroduces the same commitment under another name.
+## Preserved observations
 
-The study is project-authored, non-blind, non-independent, finite, and synthetic. Admission labels were available when candidate-presence judgments were authored. The output is therefore a deterministic internal adjudication, not independent replication or population inference.
+The previous work remains useful only as preliminary internal observation:
 
-## Terminal classifications
+- several candidates appear in contrast systems and therefore lack demonstrated reasoning specificity;
+- several candidates may be expressible from other licensed roles and therefore may not require primitive naming;
+- representation/denotation separation appears architecture-sensitive;
+- semantic interpretation appears scope-sensitive.
 
-| Candidate | Classification |
-|---|---|
-| USC-001 distinguishable state/configuration | `generic_system_property` |
-| USC-002 commitment-sensitive state | `derivable` |
-| USC-003 stakes/questions/live alternatives | `replaceable` |
-| USC-004 grounds/constraints/dependency | `derivable` |
-| USC-005 admissibility beyond arbitrary transition | `derivable` |
-| USC-006 consequence-sensitive update | `derivable` |
-| USC-007 history/path dependence | `derivable` |
-| USC-008 representation/denotation separation | `architecture_dependent` |
-| USC-009 semantic interpretation | `scope_dependent` |
-| USC-010 objective/problem relativization | `generic_system_property` |
-| USC-011 calculus/equivalent transition constraint | `generic_system_property` |
-| USC-012 provenance/entitlement structure | `derivable` |
+None of those observations entails structural dispensability. A generic property may still be necessary. A derived property may still be structurally necessary. A scope-dependent result is unresolved, not negative. Reconstructing the same commitment under another name refutes, at most, primitive necessity; it does not refute structural commitment necessity.
 
-No registered candidate is classified as `indispensable_within_frozen_class`.
+## Corrected hypothesis axes
 
-## Interpretation
+Each candidate must be evaluated independently on:
 
-The result is negative for the current candidate list: none survives as an independently indispensable universal kernel component. This does not prove that no universal structure exists. The list is not exhaustive, the corpus is finite, and several candidates are useful derivable or scope-relative structures. Equivalent reintroduction is counted against nominal ablation, preventing renaming from being mistaken for elimination.
+1. primitive necessity;
+2. explicit representation necessity;
+3. structural commitment necessity;
+4. reasoning specificity;
+5. architecture invariance.
+
+The allowed outcomes on each axis are `supported_at_registered_scope`, `refuted_at_registered_scope`, `partial`, and `unresolved`.
+
+## Required execution
+
+The unit of analysis is candidate × corpus case × representation layer. With 12 candidates, 18 frozen cases, and source/GREL/FARA layers, the required package contains 648 atomic trial records.
+
+Every record must preserve:
+
+- candidate and case identity;
+- admission class and representation layer;
+- candidate presence evidence;
+- the exact commitment-level ablation operation;
+- discriminator and preservation results before and after ablation;
+- the exact reconstruction formulation;
+- all added primitives, operations, constraints, hidden state, and semantic clauses;
+- dimensioned equivalence comparison;
+- equivalent-reintroduction determination;
+- machinery cost;
+- ambiguities and evidence references.
+
+Terminal results must be generated from those records. The contract may freeze definitions, methods, and decision rules, but not expected candidate answers.
+
+## Current result
+
+`W35-CANDIDATE-RESULT-001` is a `preliminary_internal_adjudication_reexecution_required` artifact.
+
+- Preserved atomic trials: 0 of 648.
+- Structural commitment necessity: unresolved for 12 of 12 candidates.
+- Machinery-cost accounting: not executed.
+- Candidate testing: incomplete.
+- Universal structure: unresolved.
+- W3.5: unresolved.
+- W5: blocked.
 
 ## Gate effect
 
-`W35-CANDIDATE-RESULT` becomes complete and `candidate_invariants` becomes `complete_no_indispensable_candidate`. Machinery/cost accounting, claim-impact closure, preserved-failure closure, W3.5 resolution, universal structure, and W5 remain blocked.
+`candidate_invariants` is `preliminary_reexecution_required`. `W35-CANDIDATE-RESULT` is preliminary rather than complete. Cost, claim-impact, preserved-failure closure, W3.5 resolution, and W5 remain blocked behind evidence-complete candidate re-execution.
 
 ## Nonclaims
 
-This result does not establish universal nonexistence, candidate-list exhaustiveness, FARA necessity, GREL minimality, population-level generalization, W3.5 completion, or W5 authorization.
+The corrected package does not claim that any candidate is necessary or unnecessary, that the candidate list is exhaustive, that genericity refutes necessity, that derivability refutes structural necessity, that the previous summaries are reproducible trial evidence, that no universal structure exists, or that W5 is authorized.
