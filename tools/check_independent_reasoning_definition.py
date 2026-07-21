@@ -105,7 +105,7 @@ def main() -> None:
         and "does not require these grounds to be divided into fara primitives" not in lower
     ):
         fail("FARA-neutral decomposition statement missing")
-    if "multiple reasoning classes" not in lower:
+    if "fragmentation into multiple non-equivalent reasoning classes" not in lower:
         fail("fragmentation outcome must remain allowed")
     if "no finite universal architecture" not in lower:
         fail("impossibility outcome must remain allowed")
