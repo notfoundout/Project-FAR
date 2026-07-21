@@ -1,26 +1,10 @@
 {
-  "schema_version": "1.0",
-  "status": "prospective",
-  "effective_on_merge": true,
-  "research_mode": "deduction_first_with_parallel_empirical_validation",
-  "central_claims": [
-    "existence",
-    "bounded_sufficiency",
-    "faithful_representation",
-    "representation_capacity",
-    "universal_structure",
-    "universality",
-    "necessity",
-    "minimality",
-    "equivalence_or_uniqueness",
-    "impossibility",
-    "nontriviality",
-    "comparative_economy",
-    "mechanized_verification",
-    "independent_proof_review",
-    "independent_replication"
-  ],
-  "required_canonical_artifacts": [
+  "schema_version":"1.0",
+  "status":"prospective",
+  "effective_on_merge":true,
+  "research_mode":"deduction_first_with_parallel_empirical_validation",
+  "central_claims":["existence","bounded_sufficiency","faithful_representation","representation_capacity","universal_structure","universality","necessity","minimality","equivalence_or_uniqueness","impossibility","nontriviality","comparative_economy","mechanized_verification","independent_proof_review","independent_replication"],
+  "required_canonical_artifacts":[
     "docs/governance/central-research-program.md",
     "docs/governance/deduction-first-research-standard.md",
     "docs/governance/anti-self-validation-standard.md",
@@ -55,6 +39,10 @@
     "theory/evaluation/s-core-w3-global-witness-proof.json",
     "theory/evaluation/s-core-w3-reference-fixtures.json",
     "docs/audits/s-core-w3-proof-audit.md",
+    "docs/research/s-core-w4-negative-control-proof-v1.0.md",
+    "theory/evaluation/s-core-w4-negative-control-proof.json",
+    "theory/evaluation/s-core-w4-negative-control-fixtures.json",
+    "docs/audits/s-core-w4-proof-audit.md",
     "docs/research/generic-relational-baseline-v1.0.md",
     "theory/evaluation/generic-relational-baseline-v1.0.json",
     "docs/research/reasoning-and-contrast-scope-v1.0.md",
@@ -74,368 +62,34 @@
     "docs/templates/claim-ledger-entry.md",
     "theory/evaluation/central-claim-registry.json"
   ],
-  "gates": [
-    {
-      "id": "RG-01",
-      "name": "external-observation-contract",
-      "status": "not_satisfied",
-      "standard": "docs/methodology/external-observation-contract-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "confirmatory_execution",
-        "empirical_universality_claim",
-        "empirical_superiority_claim"
-      ]
-    },
-    {
-      "id": "RG-02",
-      "name": "negative-controls",
-      "status": "not_satisfied",
-      "standard": "docs/methodology/negative-control-suite-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "empirical_nontriviality_claim",
-        "confirmatory_execution"
-      ]
-    },
-    {
-      "id": "RG-03",
-      "name": "full-cost-accounting",
-      "status": "not_satisfied",
-      "standard": "docs/methodology/comparative-cost-model-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "empirical_minimality_claim",
-        "empirical_superiority_claim",
-        "pareto_comparison"
-      ]
-    },
-    {
-      "id": "RG-04",
-      "name": "anti-reintroduction-ablation",
-      "status": "not_satisfied",
-      "standard": "docs/methodology/primitive-necessity-and-reintroduction-protocol-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "empirical_necessity_claim"
-      ]
-    },
-    {
-      "id": "RG-05",
-      "name": "independent-replication",
-      "status": "not_satisfied",
-      "standard": "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "independent_empirical_confirmation_claim"
-      ]
-    },
-    {
-      "id": "RG-06",
-      "name": "private-holdout-counterexample-challenge",
-      "status": "not_satisfied",
-      "standard": "docs/methodology/boundary-discovery-program-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "empirical_universality_claim"
-      ]
-    },
-    {
-      "id": "RG-07",
-      "name": "nonclaim-audit",
-      "status": "not_satisfied",
-      "standard": "docs/governance/evidence-replication-and-freeze-standard-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "evidence_release",
-        "theorem_release"
-      ]
-    },
-    {
-      "id": "RG-08",
-      "name": "formal-theorem-target",
-      "status": "satisfied",
-      "standard": "docs/governance/deduction-first-research-standard.md",
-      "evidence": [
-        "docs/research/thm-target-001-v1.0.md",
-        "theory/evaluation/thm-target-001.json",
-        "theory/evaluation/thm-target-001-premise-ledger.json"
-      ],
-      "required_before": [
-        "representation_theorem_proof_claim",
-        "formal_universality_claim"
-      ]
-    },
-    {
-      "id": "RG-09",
-      "name": "premise-ledger-and-semantics",
-      "status": "satisfied",
-      "standard": "docs/governance/deduction-first-research-standard.md",
-      "evidence": [
-        "docs/research/thm-target-001-v1.0.md",
-        "theory/evaluation/thm-target-001-premise-ledger.json",
-        "docs/research/faithful-representation-specification-v1.0.md",
-        "theory/evaluation/faithful-representation-specification-v1.0.json",
-        "docs/research/p8-theorem-role-decision-v1.0.md",
-        "theory/evaluation/p8-theorem-role-decision.json"
-      ],
-      "required_before": [
-        "representation_theorem_proof_claim",
-        "formal_universality_claim"
-      ]
-    },
-    {
-      "id": "RG-10",
-      "name": "faithful-representation-definition",
-      "status": "satisfied",
-      "standard": "docs/governance/deduction-first-research-standard.md",
-      "evidence": [
-        "docs/research/faithful-representation-specification-v1.0.md",
-        "theory/evaluation/faithful-representation-specification-v1.0.json",
-        "docs/research/p8-theorem-role-decision-v1.0.md",
-        "theory/evaluation/p8-theorem-role-decision.json"
-      ],
-      "required_before": [
-        "representation_theorem_proof_claim",
-        "formal_universality_claim"
-      ]
-    },
-    {
-      "id": "RG-11",
-      "name": "scoped-representation-proof",
-      "status": "not_satisfied",
-      "standard": "docs/governance/deduction-first-research-standard.md",
-      "evidence": [],
-      "required_before": [
-        "representation_theorem_proof_claim",
-        "formal_universality_claim"
-      ]
-    },
-    {
-      "id": "RG-12",
-      "name": "primitive-lower-bounds",
-      "status": "not_satisfied",
-      "standard": "docs/governance/deduction-first-research-standard.md",
-      "evidence": [],
-      "required_before": [
-        "formal_necessity_claim",
-        "primitive_independence_claim"
-      ]
-    },
-    {
-      "id": "RG-13",
-      "name": "minimality-universe-and-proof",
-      "status": "not_satisfied",
-      "standard": "docs/governance/deduction-first-research-standard.md",
-      "evidence": [],
-      "required_before": [
-        "formal_minimality_claim",
-        "uniqueness_claim"
-      ]
-    },
-    {
-      "id": "RG-14",
-      "name": "mechanized-proof-verification",
-      "status": "not_satisfied",
-      "standard": "docs/governance/deduction-first-research-standard.md",
-      "evidence": [],
-      "required_before": [
-        "machine_checked_theorem_claim"
-      ]
-    },
-    {
-      "id": "RG-15",
-      "name": "independent-proof-review",
-      "status": "not_satisfied",
-      "standard": "docs/governance/deduction-first-research-standard.md",
-      "evidence": [],
-      "required_before": [
-        "independent_proof_verification_claim"
-      ]
-    },
-    {
-      "id": "RG-16",
-      "name": "representation-discovery-separation",
-      "status": "satisfied",
-      "standard": "docs/governance/representation-discovery-separation-standard-v1.0.md",
-      "evidence": [
-        "docs/governance/representation-discovery-separation-standard-v1.0.md",
-        "theory/evaluation/central-claim-registry.json"
-      ],
-      "required_before": [
-        "w5_theorem_assembly",
-        "universal_structure_claim"
-      ]
-    },
-    {
-      "id": "RG-17",
-      "name": "generic-baseline-frozen",
-      "status": "satisfied",
-      "standard": "docs/research/generic-relational-baseline-v1.0.md",
-      "evidence": [
-        "docs/research/generic-relational-baseline-v1.0.md",
-        "theory/evaluation/generic-relational-baseline-v1.0.json"
-      ],
-      "required_before": [
-        "baseline_factorization_execution",
-        "w5_theorem_assembly"
-      ]
-    },
-    {
-      "id": "RG-18",
-      "name": "universal-structure-target-frozen",
-      "status": "satisfied",
-      "standard": "docs/research/universal-structure-discovery-target-v1.0.md",
-      "evidence": [
-        "docs/research/universal-structure-discovery-target-v1.0.md",
-        "theory/evaluation/universal-structure-discovery-target-v1.0.json",
-        "theory/evaluation/universal-structure-candidate-registry.json"
-      ],
-      "required_before": [
-        "universal_structure_execution",
-        "universal_structure_claim"
-      ]
-    },
-    {
-      "id": "RG-19",
-      "name": "reasoning-contrast-scope-framework-frozen",
-      "status": "satisfied",
-      "standard": "docs/research/reasoning-and-contrast-scope-v1.0.md",
-      "evidence": [
-        "docs/research/reasoning-and-contrast-scope-v1.0.md",
-        "theory/evaluation/reasoning-and-contrast-scope-v1.0.json"
-      ],
-      "required_before": [
-        "reasoning_contrast_corpus_freeze"
-      ]
-    },
-    {
-      "id": "RG-20",
-      "name": "reasoning-contrast-corpus-frozen",
-      "status": "not_satisfied",
-      "standard": "docs/research/reasoning-and-contrast-scope-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "reasoning_contrast_execution",
-        "universal_structure_claim",
-        "w5_theorem_assembly"
-      ]
-    },
-    {
-      "id": "RG-21",
-      "name": "baseline-factorization-resolved",
-      "status": "not_satisfied",
-      "standard": "docs/research/w3-5-specificity-and-discovery-gate-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "w5_theorem_assembly",
-        "fara_specificity_claim"
-      ]
-    },
-    {
-      "id": "RG-22",
-      "name": "fara-specificity-resolved",
-      "status": "not_satisfied",
-      "standard": "docs/research/w3-5-specificity-and-discovery-gate-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "w5_theorem_assembly",
-        "fara_specificity_claim",
-        "universal_structure_claim"
-      ]
-    },
-    {
-      "id": "RG-23",
-      "name": "reasoning-contrast-execution",
-      "status": "not_satisfied",
-      "standard": "docs/research/w3-5-specificity-and-discovery-gate-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "reasoning_discrimination_claim",
-        "universal_structure_claim",
-        "w5_theorem_assembly"
-      ]
-    },
-    {
-      "id": "RG-24",
-      "name": "universal-structure-result",
-      "status": "not_satisfied",
-      "standard": "docs/research/universal-structure-discovery-target-v1.0.md",
-      "evidence": [],
-      "required_before": [
-        "universal_structure_claim",
-        "reasoning_specificity_claim"
-      ]
-    }
+  "gates":[
+    {"id":"RG-01","name":"external-observation-contract","status":"not_satisfied","standard":"docs/methodology/external-observation-contract-v1.0.md","evidence":[],"required_before":["confirmatory_execution","empirical_universality_claim","empirical_superiority_claim"]},
+    {"id":"RG-02","name":"negative-controls","status":"not_satisfied","standard":"docs/methodology/negative-control-suite-v1.0.md","evidence":[],"required_before":["empirical_nontriviality_claim","confirmatory_execution"]},
+    {"id":"RG-03","name":"full-cost-accounting","status":"not_satisfied","standard":"docs/methodology/comparative-cost-model-v1.0.md","evidence":[],"required_before":["empirical_minimality_claim","empirical_superiority_claim","pareto_comparison"]},
+    {"id":"RG-04","name":"anti-reintroduction-ablation","status":"not_satisfied","standard":"docs/methodology/primitive-necessity-and-reintroduction-protocol-v1.0.md","evidence":[],"required_before":["empirical_necessity_claim"]},
+    {"id":"RG-05","name":"independent-replication","status":"not_satisfied","standard":"docs/governance/evidence-replication-and-freeze-standard-v1.0.md","evidence":[],"required_before":["independent_empirical_confirmation_claim"]},
+    {"id":"RG-06","name":"private-holdout-counterexample-challenge","status":"not_satisfied","standard":"docs/methodology/boundary-discovery-program-v1.0.md","evidence":[],"required_before":["empirical_universality_claim"]},
+    {"id":"RG-07","name":"nonclaim-audit","status":"not_satisfied","standard":"docs/governance/evidence-replication-and-freeze-standard-v1.0.md","evidence":[],"required_before":["evidence_release","theorem_release"]},
+    {"id":"RG-08","name":"formal-theorem-target","status":"satisfied","standard":"docs/governance/deduction-first-research-standard.md","evidence":["docs/research/thm-target-001-v1.0.md","theory/evaluation/thm-target-001.json","theory/evaluation/thm-target-001-premise-ledger.json"],"required_before":["representation_theorem_proof_claim","formal_universality_claim"]},
+    {"id":"RG-09","name":"premise-ledger-and-semantics","status":"satisfied","standard":"docs/governance/deduction-first-research-standard.md","evidence":["docs/research/thm-target-001-v1.0.md","theory/evaluation/thm-target-001-premise-ledger.json","docs/research/faithful-representation-specification-v1.0.md","theory/evaluation/faithful-representation-specification-v1.0.json","docs/research/p8-theorem-role-decision-v1.0.md","theory/evaluation/p8-theorem-role-decision.json"],"required_before":["representation_theorem_proof_claim","formal_universality_claim"]},
+    {"id":"RG-10","name":"faithful-representation-definition","status":"satisfied","standard":"docs/governance/deduction-first-research-standard.md","evidence":["docs/research/faithful-representation-specification-v1.0.md","theory/evaluation/faithful-representation-specification-v1.0.json","docs/research/p8-theorem-role-decision-v1.0.md","theory/evaluation/p8-theorem-role-decision.json"],"required_before":["representation_theorem_proof_claim","formal_universality_claim"]},
+    {"id":"RG-11","name":"scoped-representation-proof","status":"not_satisfied","standard":"docs/governance/deduction-first-research-standard.md","evidence":[],"required_before":["representation_theorem_proof_claim","formal_universality_claim"]},
+    {"id":"RG-12","name":"primitive-lower-bounds","status":"not_satisfied","standard":"docs/governance/deduction-first-research-standard.md","evidence":[],"required_before":["formal_necessity_claim","primitive_independence_claim"]},
+    {"id":"RG-13","name":"minimality-universe-and-proof","status":"not_satisfied","standard":"docs/governance/deduction-first-research-standard.md","evidence":[],"required_before":["formal_minimality_claim","uniqueness_claim"]},
+    {"id":"RG-14","name":"mechanized-proof-verification","status":"not_satisfied","standard":"docs/governance/deduction-first-research-standard.md","evidence":[],"required_before":["machine_checked_theorem_claim"]},
+    {"id":"RG-15","name":"independent-proof-review","status":"not_satisfied","standard":"docs/governance/deduction-first-research-standard.md","evidence":[],"required_before":["independent_proof_verification_claim"]},
+    {"id":"RG-16","name":"representation-discovery-separation","status":"satisfied","standard":"docs/governance/representation-discovery-separation-standard-v1.0.md","evidence":["docs/governance/representation-discovery-separation-standard-v1.0.md","theory/evaluation/central-claim-registry.json"],"required_before":["w5_theorem_assembly","universal_structure_claim"]},
+    {"id":"RG-17","name":"generic-baseline-frozen","status":"satisfied","standard":"docs/research/generic-relational-baseline-v1.0.md","evidence":["docs/research/generic-relational-baseline-v1.0.md","theory/evaluation/generic-relational-baseline-v1.0.json"],"required_before":["baseline_factorization_execution","w5_theorem_assembly"]},
+    {"id":"RG-18","name":"universal-structure-target-frozen","status":"satisfied","standard":"docs/research/universal-structure-discovery-target-v1.0.md","evidence":["docs/research/universal-structure-discovery-target-v1.0.md","theory/evaluation/universal-structure-discovery-target-v1.0.json","theory/evaluation/universal-structure-candidate-registry.json"],"required_before":["universal_structure_execution","universal_structure_claim"]},
+    {"id":"RG-19","name":"reasoning-contrast-scope-framework-frozen","status":"satisfied","standard":"docs/research/reasoning-and-contrast-scope-v1.0.md","evidence":["docs/research/reasoning-and-contrast-scope-v1.0.md","theory/evaluation/reasoning-and-contrast-scope-v1.0.json"],"required_before":["reasoning_contrast_corpus_freeze"]},
+    {"id":"RG-20","name":"reasoning-contrast-corpus-frozen","status":"not_satisfied","standard":"docs/research/reasoning-and-contrast-scope-v1.0.md","evidence":[],"required_before":["reasoning_contrast_execution","universal_structure_claim","w5_theorem_assembly"]},
+    {"id":"RG-21","name":"baseline-factorization-resolved","status":"not_satisfied","standard":"docs/research/w3-5-specificity-and-discovery-gate-v1.0.md","evidence":[],"required_before":["w5_theorem_assembly","fara_specificity_claim"]},
+    {"id":"RG-22","name":"fara-specificity-resolved","status":"not_satisfied","standard":"docs/research/w3-5-specificity-and-discovery-gate-v1.0.md","evidence":[],"required_before":["w5_theorem_assembly","fara_specificity_claim","universal_structure_claim"]},
+    {"id":"RG-23","name":"reasoning-contrast-execution","status":"not_satisfied","standard":"docs/research/w3-5-specificity-and-discovery-gate-v1.0.md","evidence":[],"required_before":["reasoning_discrimination_claim","universal_structure_claim","w5_theorem_assembly"]},
+    {"id":"RG-24","name":"universal-structure-result","status":"not_satisfied","standard":"docs/research/universal-structure-discovery-target-v1.0.md","evidence":[],"required_before":["universal_structure_claim","reasoning_specificity_claim"]},
+    {"id":"RG-25","name":"formal-negative-controls","status":"satisfied","standard":"docs/research/s-core-w4-negative-control-proof-v1.0.md","evidence":["docs/research/s-core-w4-negative-control-proof-v1.0.md","theory/evaluation/s-core-w4-negative-control-proof.json","theory/evaluation/s-core-w4-negative-control-fixtures.json"],"required_before":["w5_theorem_assembly","representation_theorem_proof_claim","formal_nontriviality_claim"]}
   ],
-  "current_authorized_work": [
-    "theorem_target_and_scope",
-    "theorem_target_and_scope_maintenance",
-    "premise_ledger",
-    "formal_semantics",
-    "faithful_representation_definition",
-    "faithful_representation_maintenance",
-    "p8_theorem_role_maintenance",
-    "lemma_ledger_maintenance",
-    "lemma_proof_execution",
-    "source_normalization_proof_maintenance",
-    "direct_axis_proof_maintenance",
-    "dynamics_history_revision_proof_maintenance",
-    "global_witness_proof_maintenance",
-    "formal_negative_control_execution",
-    "w3_5_specificity_and_discovery",
-    "generic_baseline_factorization",
-    "reasoning_contrast_scope_framework_maintenance",
-    "reasoning_contrast_corpus_freeze",
-    "reasoning_contrast_scope_execution",
-    "universal_structure_candidate_testing",
-    "candidate_ablation_and_reconstruction",
-    "theorem_assembly_after_w3_5",
-    "construction_lemmas",
-    "obstruction_lemmas",
-    "formal_countermodel_search",
-    "scoped_representation_proof",
-    "primitive_lower_bounds",
-    "minimality_equivalence_and_impossibility",
-    "proof_mechanization",
-    "independent_proof_review_preparation",
-    "bounded_model_search",
-    "independent_replication_recruitment_as_parallel_support",
-    "claim_registry_maintenance",
-    "supporting_engineering_required_by_these_items"
-  ],
-  "paused_by_default": [
-    "new_certification_layers",
-    "new_cosmetic_dashboard_features",
-    "release_packaging",
-    "favorable_case_count_expansion",
-    "generic_terminology_cleanup",
-    "new_replication_infrastructure",
-    "applications_unrelated_to_active_theorem_work"
-  ],
-  "claim_policy": {
-    "unsatisfied_gate_blocks_stronger_claim": true,
-    "unknown_is_not_pass": true,
-    "internal_multi_implementation_is_not_external_independence": true,
-    "theory_change_after_freeze_creates_new_version": true,
-    "failed_frozen_results_are_immutable": true,
-    "tradeoffs_must_not_be_reported_as_wins": true,
-    "satisfied_gate_requires_evidence": true,
-    "central_claim_updates_require_registry_change": true,
-    "proof_construction_not_blocked_by_empirical_replication": true,
-    "independent_replication_gates_only_independent_empirical_confirmation": true,
-    "theorem_claim_requires_explicit_assumptions_and_scope": true,
-    "experimental_evidence_is_not_deductive_proof": true,
-    "mechanization_does_not_validate_axioms": true,
-    "independent_review_is_separate_claim_dimension": true,
-    "partial_lemmas_do_not_satisfy_scoped_representation_proof": true,
-    "representation_does_not_imply_universal_structure": true,
-    "common_schema_does_not_imply_reasoning_specificity": true,
-    "finite_core_does_not_imply_general_universality": true,
-    "w5_requires_w3_5_resolution": true,
-    "dashboard_tracks_may_not_be_aggregated": true,
-    "concrete_scope_requires_registered_instances": true,
-    "w5_authorization_requires_linked_immutable_evidence": true,
-    "factorization_dimensions_may_not_be_collapsed": true
-  }
+  "current_authorized_work":["theorem_target_and_scope","theorem_target_and_scope_maintenance","premise_ledger","formal_semantics","faithful_representation_definition","faithful_representation_maintenance","p8_theorem_role_maintenance","lemma_ledger_maintenance","lemma_proof_execution","source_normalization_proof_maintenance","direct_axis_proof_maintenance","dynamics_history_revision_proof_maintenance","global_witness_proof_maintenance","formal_negative_control_maintenance","w3_5_specificity_and_discovery","generic_baseline_factorization","reasoning_contrast_scope_framework_maintenance","reasoning_contrast_corpus_freeze","reasoning_contrast_scope_execution","universal_structure_candidate_testing","candidate_ablation_and_reconstruction","theorem_assembly_after_w3_5","construction_lemmas","obstruction_lemmas","formal_countermodel_search","scoped_representation_proof","primitive_lower_bounds","minimality_equivalence_and_impossibility","proof_mechanization","independent_proof_review_preparation","bounded_model_search","independent_replication_recruitment_as_parallel_support","claim_registry_maintenance","supporting_engineering_required_by_these_items"],
+  "paused_by_default":["new_certification_layers","new_cosmetic_dashboard_features","release_packaging","favorable_case_count_expansion","generic_terminology_cleanup","new_replication_infrastructure","applications_unrelated_to_active_theorem_work"],
+  "claim_policy":{"unsatisfied_gate_blocks_stronger_claim":true,"unknown_is_not_pass":true,"internal_multi_implementation_is_not_external_independence":true,"theory_change_after_freeze_creates_new_version":true,"failed_frozen_results_are_immutable":true,"tradeoffs_must_not_be_reported_as_wins":true,"satisfied_gate_requires_evidence":true,"central_claim_updates_require_registry_change":true,"proof_construction_not_blocked_by_empirical_replication":true,"independent_replication_gates_only_independent_empirical_confirmation":true,"theorem_claim_requires_explicit_assumptions_and_scope":true,"experimental_evidence_is_not_deductive_proof":true,"mechanization_does_not_validate_axioms":true,"independent_review_is_separate_claim_dimension":true,"partial_lemmas_do_not_satisfy_scoped_representation_proof":true,"representation_does_not_imply_universal_structure":true,"common_schema_does_not_imply_reasoning_specificity":true,"finite_core_does_not_imply_general_universality":true,"w5_requires_w3_5_resolution":true,"dashboard_tracks_may_not_be_aggregated":true,"concrete_scope_requires_registered_instances":true,"w5_authorization_requires_linked_immutable_evidence":true,"factorization_dimensions_may_not_be_collapsed":true,"formal_negative_controls_do_not_satisfy_empirical_negative_controls":true,"registered_nontriviality_does_not_imply_fara_specificity":true}
 }

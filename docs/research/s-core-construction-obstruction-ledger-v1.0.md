@@ -2,18 +2,19 @@
 
 ## Status
 
-Frozen proof-dependency ledger for `THM-TARGET-001`; W0 through W3 complete; W4 active.
+Frozen proof-dependency ledger for `THM-TARGET-001`; W0 through W4 complete; W5 blocked by `W3.5-SDG-001`.
 
 Ledger identifier: `SCORE-LEMMA-LEDGER-001`.
 
-This artifact preserves the frozen construction, obstruction, and assembly statements while recording their execution state. The accepted proof packages are:
+This artifact preserves the frozen construction, obstruction, and assembly statements while recording their execution state. Accepted proof packages are:
 
 - `SCORE-W0-PROOF-001` — source normalization and reduct extraction;
 - `SCORE-W1-PROOF-001` — target allocation and direct-axis construction;
-- `SCORE-W2-PROOF-001` — deterministic and probabilistic dynamics, history, revision, and operational rule-version change;
-- `SCORE-W3-PROOF-001` — target-only recovery, semantics, coherence, machinery, uniformity, composition, and typed witness assembly.
+- `SCORE-W2-PROOF-001` — dynamics, history, revision, and operational rule-version change;
+- `SCORE-W3-PROOF-001` — target-only recovery, semantics, coherence, machinery, uniformity, composition, and typed witness assembly;
+- `SCORE-W4-PROOF-001` — formal incompatibility of the applicable registered NC-01 through NC-10 families with the frozen faithful-representation relation.
 
-The ledger records 24 proved construction lemmas, 1 established source-scope boundary, 8 refuted obstruction hypotheses, and 4 open obligations. It does not establish the formal negative-control family, the global `Nontrivial` conjunct, `Faithful_split`, or a scoped representation theorem.
+The ledger records 24 proved construction lemmas, 1 established source-scope boundary, 8 refuted obstruction hypotheses, 1 established negative-control obstruction, and 3 open assembly obligations.
 
 ## Governing artifacts
 
@@ -25,22 +26,18 @@ The ledger is subordinate to:
 - `docs/research/independent-reasoning-definition-v1.0.md`;
 - `docs/research/faithful-representation-specification-v1.0.md`;
 - `docs/research/p8-theorem-role-decision-v1.0.md`;
-- `docs/governance/deduction-first-research-standard.md`.
+- `docs/governance/deduction-first-research-standard.md`;
+- `docs/governance/representation-discovery-separation-standard-v1.0.md`.
 
-Accepted execution packages:
-
-- `docs/research/s-core-w0-normalization-proof-v1.0.md` and `theory/evaluation/s-core-w0-normalization-proof.json`;
-- `docs/research/s-core-w1-direct-axis-proof-v1.0.md` and `theory/evaluation/s-core-w1-direct-axis-proof.json`;
-- `docs/research/s-core-w2-dynamics-history-proof-v1.0.md` and `theory/evaluation/s-core-w2-dynamics-history-proof.json`;
-- `docs/research/s-core-w3-global-witness-proof-v1.0.md` and `theory/evaluation/s-core-w3-global-witness-proof.json`.
-
-The machine-readable ledger is `theory/evaluation/s-core-construction-obstruction-ledger.json`.
+The machine-readable authority is `theory/evaluation/s-core-construction-obstruction-ledger.json`.
 
 ## Result boundary
 
-Stage D4 requires every material `S_core` feature to receive either a proved uniform construction lemma or a quantified obstruction, refutation, countermodel, or scope-boundary result. Registration is not proof. Failure of one attempted construction does not establish nonexistence.
+W0 through W3 prove every registered construction obligation. W4 proves that each applicable registered negative-control family violates at least one independently frozen `Faithful_split` conjunct for its registered reason.
 
-W0 through W3 now prove every registered construction obligation, including target-only recovery and complete finite witness assembly. The frozen `Faithful_split` definition also requires the registered formal negative-control family and global `Nontrivial` conclusion. Therefore the scoped representation theorem remains unproved until W4 and W5 close.
+This closes `OBS-SC-010` at its stated scope. It does not prove that all invalid representations are rejected, that FARA is more constrained than `GREL-001`, or that the complete faithful predicate is satisfiable.
+
+W5 may not begin until `W3.5-SDG-001` has terminal, immutable evidence for the concrete corpus, dimensioned factorization, specificity, ablation, reconstruction, machinery cost, and claim-impact requirements.
 
 ## Dependency waves and execution
 
@@ -54,98 +51,51 @@ W0 through W3 now prove every registered construction obligation, including targ
 
 ### W1 — Base carriers and direct axes — **complete**
 
-- `LEM-SC-005` — target carrier allocation — **proved**.
-- `LEM-SC-006` — configuration construction — **proved**.
-- `LEM-SC-007` — commitment construction — **proved**.
-- `LEM-SC-008` — stake-and-alternative construction — **proved**.
-- `LEM-SC-009` — ground-and-justification construction — **proved**.
+- `LEM-SC-005` through `LEM-SC-009` — target allocation and P1-P4 construction — **proved**.
 - `LEM-SC-012` — consequence construction — **proved**.
 - `LEM-SC-014` — internal evidential-status construction — **proved**.
-- `OBS-SC-003` — relation-reflection collapse — **refuted**.
-- `OBS-SC-006` — evidential-status impossibility — **refuted**.
+- `OBS-SC-003` and `OBS-SC-006` — **refuted**.
 
 ### W2 — Dynamics, history, and revision — **complete**
 
-- `LEM-SC-010` — deterministic dynamics construction — **proved**.
-- `LEM-SC-011` — finite-support probabilistic dynamics construction — **proved**.
-- `LEM-SC-013` — historical-and-path construction — **proved**.
-- `LEM-SC-015` — nonmonotonic revision and retraction — **proved**.
-- `LEM-SC-016` — self-modification and rule-version change — **proved**.
-- `OBS-SC-004` — dynamics-bisimulation mismatch — **refuted**.
-- `OBS-SC-005` — history-and-path collapse — **refuted**.
+- `LEM-SC-010`, `LEM-SC-011`, `LEM-SC-013`, `LEM-SC-015`, and `LEM-SC-016` — **proved**.
+- `OBS-SC-004` and `OBS-SC-005` — **refuted**.
 
 ### W3 — Global witness obligations — **complete**
 
-- `LEM-SC-017` — distributed decomposition and interface construction — **proved**.
-- `LEM-SC-018` — admissible target-only recovery — **proved**.
-- `LEM-SC-019` — semantic agreement — **proved**.
-- `LEM-SC-020` — cross-axis coherence — **proved**.
-- `LEM-SC-021` — complete machinery-ledger construction — **proved**.
-- `LEM-SC-022` — uniformity and source-isomorphism equivariance — **proved**.
-- `LEM-SC-023` — compositional accountability — **proved**.
-- `LEM-SC-024` — well-formed witness assembly — **proved**.
-- `OBS-SC-002` — hidden-interpreter necessity — **refuted**.
-- `OBS-SC-007` — nonuniform-constructor obstruction — **refuted**.
-- `OBS-SC-008` — composition-interface loss — **refuted**.
-- `OBS-SC-009` — fixed-target-interface insufficiency — **refuted**.
+- `LEM-SC-017` through `LEM-SC-024` — **proved**.
+- `OBS-SC-002`, `OBS-SC-007`, `OBS-SC-008`, and `OBS-SC-009` — **refuted**.
 
-### W4 — Formal obstruction and negative controls — **active**
+### W4 — Formal negative controls — **complete**
 
-- `OBS-SC-010` — formal negative-control family — **registered unproved**.
+- `OBS-SC-010` — formal NC-01 through NC-10 family — **obstruction established**.
 
-### W5 — Theorem assembly — **open**
+`SCORE-W4-PROOF-001` proves the family result only when the protected source distinction is material and applicable. Empty or inapplicable cases are not counted as successful rejections.
+
+### W5 — Theorem assembly — **blocked**
 
 - `ASM-SC-001` — common target-schema assembly — **registered unproved**.
 - `ASM-SC-002` — arbitrary-episode faithful-witness assembly — **registered unproved**.
 - `ASM-SC-003` — finite-core theorem-or-obstruction closure — **registered unproved**.
 
-No W5 entry may be accepted while `OBS-SC-010` remains open, unknown, or supported only by examples.
+External blocker: `W3.5-SDG-001`.
 
 ## Frozen construction statements
 
-- `LEM-SC-001`: normalize every finite explicit `S_core` source contract without losing theorem-facing materiality, interpretation, applicability, or dependency information.
-- `LEM-SC-002`: extract the least finite P1–P7 and P8-I reducts and their closure dependencies.
-- `LEM-SC-003`: prove finite materiality closure and decidable applicability.
-- `LEM-SC-004`: transport normalized contracts and reducts under source isomorphism.
-- `LEM-SC-005`: allocate one finite typed target schema with all helper machinery explicit.
-- `LEM-SC-006`: preserve and reflect configuration carriers and incidence.
-- `LEM-SC-007`: preserve and reflect commitment identity, content, holder, status, degree, and revision state.
-- `LEM-SC-008`: preserve and reflect stakes, questions, live alternatives, relevance, exclusion, rank, and availability.
-- `LEM-SC-009`: preserve and reflect grounds and typed justificatory roles.
-- `LEM-SC-010`: construct deterministic finite target dynamics satisfying the registered labeled bisimulation.
-- `LEM-SC-011`: construct finite-support probabilistic target dynamics preserving exact source weights or source-declared equivalence.
-- `LEM-SC-012`: preserve and reflect consequence identity, basis, status, degree, and downstream role.
-- `LEM-SC-013`: order-embed and reflect material history, provenance, ancestry, revision, rule versions, and path conditions.
-- `LEM-SC-014`: preserve internal evidence status without evidential upgrade.
-- `LEM-SC-015`: represent nonmonotonic revision, rejection, retraction, and supersession as actual before/after state change.
-- `LEM-SC-016`: make accepted rule-version changes alter later admissible dynamics while rejected changes do not.
-- `LEM-SC-017`: construct source-declared distributed components, interfaces, cross-component relations, and composed histories.
-- `LEM-SC-018`: define one terminating deterministic target-only recovery family with no source oracle, evaluator, case database, network resource, or undeclared dependency.
-- `LEM-SC-019`: prove source-declared semantic agreement without lexical shortcuts or semantic strengthening.
-- `LEM-SC-020`: prove one compatible cross-axis representation with shared identities, compatible denotations, and no conflicting status or version data.
-- `LEM-SC-021`: construct a complete finite dependency graph for every symbol, procedure, state field, bridge, metadata item, and helper.
-- `LEM-SC-022`: prove one finite source-isomorphism-equivariant constructor family with no case-identifier branching.
-- `LEM-SC-023`: prove restriction and composition commute for every source-declared decomposition.
-- `LEM-SC-024`: assemble a well-formed witness `W=(E,D,M,iota,kappa)` without assuming the theorem conclusion.
+The 24 frozen construction statements remain unchanged. They cover normalization, canonical reducts, materiality, source transport, target allocation, P1-P7 and P8-I construction, deterministic and finite-support probabilistic dynamics, history, revision, self-modification, decomposition, target-only recovery, semantic agreement, coherence, complete machinery accounting, uniformity, composition, and witness assembly.
 
 ## Frozen obstruction statements
 
-- `OBS-SC-001`: determine whether non-finite material closure is admitted by `S_core`; W0 establishes it is outside scope.
-- `OBS-SC-002`: determine whether some in-scope source necessarily requires a hidden interpreter, source oracle, or case database; W3 refutes this hypothesis.
-- `OBS-SC-003`: determine whether finite direct-axis relations necessarily collapse; W1 refutes this hypothesis.
-- `OBS-SC-004`: determine whether finite deterministic or finite-support probabilistic dynamics necessarily fail P5 bisimulation; W2 refutes this hypothesis.
-- `OBS-SC-005`: determine whether finite explicit history, revision, path, or rule-version distinctions necessarily collapse; W2 refutes this hypothesis.
-- `OBS-SC-006`: determine whether finite internal evidence-status distinctions are impossible to preserve; W1 refutes this hypothesis.
-- `OBS-SC-007`: determine whether successful witnesses necessarily require nonuniform case branching or an unbounded helper family; W3 refutes this hypothesis.
-- `OBS-SC-008`: determine whether a source-declared composition necessarily loses interface or cross-component structure; W3 refutes this hypothesis.
-- `OBS-SC-009`: determine whether the frozen target interface is insufficient after complete witness assembly; W3 refutes this hypothesis.
-- `OBS-SC-010`: prove the registered NC-01 through NC-10 family fails for the required formal reasons.
-
-## Assembly statements
-
-- `ASM-SC-001`: assemble one common target schema after recovery, machinery, uniformity, and witness well-formedness are proved.
-- `ASM-SC-002`: assemble a faithful witness for an arbitrary admitted source episode from every accepted construction dependency.
-- `ASM-SC-003`: derive the strongest justified finite-core theorem, countermodel, proper-subclass result, impossibility result, or explicit unresolved conclusion.
+- `OBS-SC-001`: non-finite material closure is outside `S_core` — **boundary established**.
+- `OBS-SC-002`: hidden interpreter or source oracle is necessary — **refuted**.
+- `OBS-SC-003`: finite direct-axis relations necessarily collapse — **refuted**.
+- `OBS-SC-004`: finite dynamics necessarily fail P5 — **refuted**.
+- `OBS-SC-005`: finite history or revision necessarily collapses — **refuted**.
+- `OBS-SC-006`: internal evidential status is impossible to preserve — **refuted**.
+- `OBS-SC-007`: witnesses necessarily require nonuniform case branching — **refuted**.
+- `OBS-SC-008`: source-declared composition necessarily loses interfaces — **refuted**.
+- `OBS-SC-009`: the frozen target interface is necessarily insufficient — **refuted**.
+- `OBS-SC-010`: applicable NC-01 through NC-10 controls satisfy the frozen faithful relation — **obstruction established against that possibility**.
 
 ## Current execution summary
 
@@ -157,20 +107,32 @@ No W5 entry may be accepted while `OBS-SC-010` remains open, unknown, or support
 | Assembly obligations | 3 |
 | Proved construction obligations | 24 |
 | Refuted obstruction hypotheses | 8 |
+| Established negative-control obstructions | 1 |
 | Established source-scope boundaries | 1 |
-| Open obligations | 4 |
+| Open assembly obligations | 3 |
 
 ## Exact next work
 
-Execute `OBS-SC-010` as one formal negative-control package covering NC-01 through NC-10. Every negative control must fail for a frozen structural reason, not because of evaluator preference or a case-specific patch. Preserve any valid countermodel or newly exposed hidden commitment. Only after W4 closes may W5 assemble the finite-core result.
+Execute `W3.5-SDG-001` with:
+
+- a prospectively frozen, nonempty positive and contrast corpus;
+- fixed `S_core → GREL-001`, `GREL-001 → FARA`, and where defined `FARA → GREL-001` translations;
+- dimensioned expressiveness, translation, constraint-strength, reasoning-specificity, cost, and overall-interpretation results;
+- candidate ablation and alternative reconstruction;
+- complete machinery and cost accounting;
+- immutable result artifacts with stable identifiers and matching SHA-256 digests;
+- preserved failures, counterexamples, and claim-impact output.
+
+Only after that evidence resolves may W5 assembly begin.
 
 ## Nonclaims
 
 This ledger does not establish:
 
-- `OBS-SC-010` or the global `Nontrivial` conjunct;
 - `Faithful_split` satisfiability;
+- rejection of every invalid representation;
 - any W5 assembly obligation;
+- FARA-specificity relative to `GREL-001`;
 - FARA adequacy for `S_core` or `S_IRD`;
 - PB-001 sufficiency, necessity, independence, minimality, or completeness;
 - actual-process correspondence;

@@ -1,314 +1,63 @@
 {
-  "schema_version": "1.0",
-  "theorem_target_id": "THM-TARGET-001",
-  "version": "1.0",
-  "status": "frozen_unproved",
-  "proof_status": "partial_lemma_progress_only",
-  "machine_check_status": "bounded_executable_reference_only",
-  "independent_review_status": "not_started",
-  "program_track": "REP",
-  "track_description": "finite explicit representation capacity and fidelity",
-  "universal_structure_target": "THM-US-TARGET-001",
-  "does_not_imply": [
-    "reasoning_specificity",
-    "universal_structure",
-    "primitive_necessity",
-    "minimality",
-    "uniqueness",
-    "S_IRD_universality"
+  "schema_version":"1.0",
+  "theorem_target_id":"THM-TARGET-001",
+  "version":"1.0",
+  "status":"frozen_unproved",
+  "proof_status":"partial_lemma_progress_only",
+  "machine_check_status":"bounded_executable_reference_only",
+  "independent_review_status":"not_started",
+  "program_track":"REP",
+  "track_description":"finite explicit representation capacity and fidelity",
+  "universal_structure_target":"THM-US-TARGET-001",
+  "does_not_imply":["reasoning_specificity","universal_structure","primitive_necessity","minimality","uniqueness","S_IRD_universality"],
+  "source_artifact":"docs/research/thm-target-001-v1.0.md",
+  "premise_ledger":"theory/evaluation/thm-target-001-premise-ledger.json",
+  "faithful_representation_specification":"docs/research/faithful-representation-specification-v1.0.md",
+  "faithful_representation_registry":"theory/evaluation/faithful-representation-specification-v1.0.json",
+  "p8_decision_artifact":"docs/research/p8-theorem-role-decision-v1.0.md",
+  "p8_decision_registry":"theory/evaluation/p8-theorem-role-decision.json",
+  "lemma_ledger_artifact":"docs/research/s-core-construction-obstruction-ledger-v1.0.md",
+  "lemma_ledger_registry":"theory/evaluation/s-core-construction-obstruction-ledger.json",
+  "w0_proof_artifact":"docs/research/s-core-w0-normalization-proof-v1.0.md",
+  "w0_proof_registry":"theory/evaluation/s-core-w0-normalization-proof.json",
+  "w1_proof_artifact":"docs/research/s-core-w1-direct-axis-proof-v1.0.md",
+  "w1_proof_registry":"theory/evaluation/s-core-w1-direct-axis-proof.json",
+  "w2_proof_artifact":"docs/research/s-core-w2-dynamics-history-proof-v1.0.md",
+  "w2_proof_registry":"theory/evaluation/s-core-w2-dynamics-history-proof.json",
+  "w3_proof_artifact":"docs/research/s-core-w3-global-witness-proof-v1.0.md",
+  "w3_proof_registry":"theory/evaluation/s-core-w3-global-witness-proof.json",
+  "w4_proof_artifact":"docs/research/s-core-w4-negative-control-proof-v1.0.md",
+  "w4_proof_registry":"theory/evaluation/s-core-w4-negative-control-proof.json",
+  "governing_standard":"docs/governance/deduction-first-research-standard.md",
+  "separation_standard":"docs/governance/representation-discovery-separation-standard-v1.0.md",
+  "w3_5_gate_artifact":"docs/research/w3-5-specificity-and-discovery-gate-v1.0.md",
+  "w3_5_gate_registry":"theory/evaluation/w3-5-specificity-and-discovery-gate.json",
+  "source_classes":{
+    "S_core":{"status":"frozen_initial_scope_all_construction_and_registered_negative_control_obligations_proved_assembly_open","basis":"IRD-001 process presentations satisfying R1-R6","requirements":["finite event region","finite explicit material carrier sets","explicit finite or finite-support admissible dynamics","explicit grounds and support relation","explicit material history and revision distinctions","declared source interpretation","candidate-neutral IRD-001 admission"],"nonclaim":"S_core is not asserted to contain all reasoning"},
+    "S_IRD":{"status":"frozen_extension_target","basis":"all well-formed IRD-001 reasoning episodes","blocked_features":["infinite carriers","continuous dynamics","partial observability","open-ended histories","semantic change","non-finite-support stochasticity","unresolved external correspondence"]}
+  },
+  "target_class":{"id":"A_FARA","status":"frozen_interface_complete_finite_construction_recovery_semantics_coherence_machinery_uniformity_composition_and_registered_negative_controls_proved_theorem_unproved","tuple":["U","Pi","R","Rep","S","I","Inv","C","Sigma","Theta","H","Omega","Res","Prov"],"canonical_sources":["theory/definitions/definitions.md","frameworks/FARA/architecture.md","frameworks/FARA/primitives.md"],"adds_new_primitive":false},
+  "representation_witness":{"tuple":["E","D","M","iota","kappa"],"uniform_construction_required":true,"complete_machinery_ledger_required":true,"source_specific_unrestricted_decoder_allowed":false,"formal_semantics_status":"complete_finite_global_witness_construction_and_registered_nontriviality_proved_theorem_assembly_unproved"},
+  "preservation_obligations":["P1_configuration","P2_commitment","P3_stake_and_alternative","P4_ground_and_justification","P5_admissibility_and_dynamics","P6_consequence","P7_historical_and_path","P8I_internal_evidential_status"],
+  "p8":{"status":"resolved_split","parameter":"m8","selected_value":"split","internal_predicate":"Pres_8I","external_predicate":"Corr_8E","faithful_predicate":"Faithful_split","application_predicate":"ApplicableFaithful","decision_artifact":"docs/research/p8-theorem-role-decision-v1.0.md","proof_acceptance_blocked_until_resolved":false,"internal_preservation_status":"construction_and_target_only_recovery_proved_registered_nontriviality_proved_theorem_unproved","external_correspondence_not_implied_by_formal_theorem":true},
+  "lemma_program":{"id":"SCORE-LEMMA-LEDGER-001","status":"w0_w1_w2_w3_w4_complete_w5_blocked_by_w3_5","total_obligations":37,"construction_obligations":24,"obstruction_obligations":10,"assembly_obligations":3,"proved_obligations":24,"established_obstructions":1,"scope_boundaries_established":1,"refuted_obstructions":8,"refuted_obstruction_hypotheses":8,"open_obligations":3,"completed_waves":["W0","W1","W2","W3","W4"],"active_wave":"W5_blocked","active_obligations":[],"blocked_obligations":["ASM-SC-001","ASM-SC-002","ASM-SC-003"]},
+  "bridge_program":{"id":"W3.5-SDG-001","status":"frozen_not_executed","runs_after":"W3","W4_status":"complete","required_before":"W5","required_results":["generic_baseline_factorization_dimensions","fara_specificity","reasoning_contrast_corpus_freeze","reasoning_contrast_discrimination","candidate_ablation_and_reconstruction","machinery_and_cost_accounting","claim_impact_audit"]},
+  "w5_authorization":{"authorized":false,"blocked_by":["W3.5-SDG-001"],"resolved_dependencies":["OBS-SC-010"],"rule":"the evidence-backed specificity/discovery bridge must resolve before theorem assembly","evidence_required":true},
+  "nontriviality_conditions":["uniform construction","strong preservation and reflection","cross-axis coherence","no label-only success","no output-only lookup","no opaque universal state","no hidden interpreter","no metadata smuggling","no evaluator repair","no history erasure","no evidential upgrade","compositional accountability","complete machinery ledger"],
+  "registered_nontriviality_result":{"status":"proved_for_registered_control_families_over_S_core","proof_id":"SCORE-W4-PROOF-001","obligation":"OBS-SC-010","all_invalid_representations_rejected":false,"fara_specificity_implied":false},
+  "theorem_family":[
+    {"id":"THM-CORE-COMMON-001","kind":"common_schema_existence","scope":"S_core","status":"target_frozen_unproved","blocked_by":["specificity_discovery_bridge","theorem_assembly"]},
+    {"id":"THM-CORE-REP-001","kind":"faithful_representation","scope":"S_core","predicate":"Faithful_split","status":"target_frozen_unproved","blocked_by":["specificity_discovery_bridge","theorem_assembly"]},
+    {"id":"THM-IRD-EXT-001","kind":"general_extension","scope":"S_IRD","predicate":"Faithful_split","status":"target_frozen_blocked","blocked_by":["core_result","extension_feature_lemmas"]},
+    {"id":"THM-P8-CORR-001","kind":"external_evidential_correspondence","scope":"actual_process_to_formal_presentation","predicate":"Corr_8E","status":"target_frozen_unproved"},
+    {"id":"THM-PRIM-NEC-001","kind":"primitive_necessity_or_derivability_family","scope":"declared_reconstruction_class","status":"target_frozen_blocked_by_reconstruction_class"},
+    {"id":"THM-MIN-001","kind":"minimality","scope":"declared_candidate_universe","status":"target_frozen_blocked_by_candidate_universe"},
+    {"id":"THM-EQUIV-001","kind":"equivalence_or_uniqueness","scope":"declared_candidate_universe","status":"target_frozen_blocked_by_candidate_universe"},
+    {"id":"THM-IMP-001","kind":"impossibility_alternative","scope":"S_core_or_explicit_subclass","status":"target_frozen_unproved","blocked_by":["specificity_discovery_bridge","theorem_assembly"]}
   ],
-  "source_artifact": "docs/research/thm-target-001-v1.0.md",
-  "premise_ledger": "theory/evaluation/thm-target-001-premise-ledger.json",
-  "faithful_representation_specification": "docs/research/faithful-representation-specification-v1.0.md",
-  "faithful_representation_registry": "theory/evaluation/faithful-representation-specification-v1.0.json",
-  "p8_decision_artifact": "docs/research/p8-theorem-role-decision-v1.0.md",
-  "p8_decision_registry": "theory/evaluation/p8-theorem-role-decision.json",
-  "lemma_ledger_artifact": "docs/research/s-core-construction-obstruction-ledger-v1.0.md",
-  "lemma_ledger_registry": "theory/evaluation/s-core-construction-obstruction-ledger.json",
-  "w0_proof_artifact": "docs/research/s-core-w0-normalization-proof-v1.0.md",
-  "w0_proof_registry": "theory/evaluation/s-core-w0-normalization-proof.json",
-  "w1_proof_artifact": "docs/research/s-core-w1-direct-axis-proof-v1.0.md",
-  "w1_proof_registry": "theory/evaluation/s-core-w1-direct-axis-proof.json",
-  "w2_proof_artifact": "docs/research/s-core-w2-dynamics-history-proof-v1.0.md",
-  "w2_proof_registry": "theory/evaluation/s-core-w2-dynamics-history-proof.json",
-  "w3_proof_artifact": "docs/research/s-core-w3-global-witness-proof-v1.0.md",
-  "w3_proof_registry": "theory/evaluation/s-core-w3-global-witness-proof.json",
-  "governing_standard": "docs/governance/deduction-first-research-standard.md",
-  "separation_standard": "docs/governance/representation-discovery-separation-standard-v1.0.md",
-  "w3_5_gate_artifact": "docs/research/w3-5-specificity-and-discovery-gate-v1.0.md",
-  "w3_5_gate_registry": "theory/evaluation/w3-5-specificity-and-discovery-gate.json",
-  "source_classes": {
-    "S_core": {
-      "status": "frozen_initial_scope_all_construction_lemmas_proved_negative_controls_and_assembly_open",
-      "basis": "IRD-001 process presentations satisfying R1-R6",
-      "requirements": [
-        "finite event region",
-        "finite explicit material carrier sets",
-        "explicit finite or finite-support admissible dynamics",
-        "explicit grounds and support relation",
-        "explicit material history and revision distinctions",
-        "declared source interpretation",
-        "candidate-neutral IRD-001 admission"
-      ],
-      "nonclaim": "S_core is not asserted to contain all reasoning"
-    },
-    "S_IRD": {
-      "status": "frozen_extension_target",
-      "basis": "all well-formed IRD-001 reasoning episodes",
-      "blocked_features": [
-        "infinite carriers",
-        "continuous dynamics",
-        "partial observability",
-        "open-ended histories",
-        "semantic change",
-        "non-finite-support stochasticity",
-        "unresolved external correspondence"
-      ]
-    }
-  },
-  "target_class": {
-    "id": "A_FARA",
-    "status": "frozen_interface_complete_finite_construction_recovery_semantics_coherence_machinery_uniformity_and_composition_proved_negative_controls_and_theorem_unproved",
-    "tuple": [
-      "U",
-      "Pi",
-      "R",
-      "Rep",
-      "S",
-      "I",
-      "Inv",
-      "C",
-      "Sigma",
-      "Theta",
-      "H",
-      "Omega",
-      "Res",
-      "Prov"
-    ],
-    "canonical_sources": [
-      "theory/definitions/definitions.md",
-      "frameworks/FARA/architecture.md",
-      "frameworks/FARA/primitives.md"
-    ],
-    "adds_new_primitive": false
-  },
-  "representation_witness": {
-    "tuple": [
-      "E",
-      "D",
-      "M",
-      "iota",
-      "kappa"
-    ],
-    "uniform_construction_required": true,
-    "complete_machinery_ledger_required": true,
-    "source_specific_unrestricted_decoder_allowed": false,
-    "formal_semantics_status": "complete_finite_global_witness_construction_proved_nontriviality_and_theorem_assembly_unproved"
-  },
-  "preservation_obligations": [
-    "P1_configuration",
-    "P2_commitment",
-    "P3_stake_and_alternative",
-    "P4_ground_and_justification",
-    "P5_admissibility_and_dynamics",
-    "P6_consequence",
-    "P7_historical_and_path",
-    "P8I_internal_evidential_status"
-  ],
-  "p8": {
-    "status": "resolved_split",
-    "parameter": "m8",
-    "selected_value": "split",
-    "internal_predicate": "Pres_8I",
-    "external_predicate": "Corr_8E",
-    "faithful_predicate": "Faithful_split",
-    "application_predicate": "ApplicableFaithful",
-    "decision_artifact": "docs/research/p8-theorem-role-decision-v1.0.md",
-    "proof_acceptance_blocked_until_resolved": false,
-    "internal_preservation_status": "construction_and_target_only_recovery_proved_global_nontriviality_and_theorem_unproved",
-    "external_correspondence_not_implied_by_formal_theorem": true
-  },
-  "lemma_program": {
-    "id": "SCORE-LEMMA-LEDGER-001",
-    "status": "w0_w1_w2_w3_complete_w4_active",
-    "total_obligations": 37,
-    "construction_obligations": 24,
-    "obstruction_obligations": 10,
-    "assembly_obligations": 3,
-    "proved_obligations": 24,
-    "established_obstructions": 0,
-    "scope_boundaries_established": 1,
-    "refuted_obstructions": 8,
-    "refuted_obstruction_hypotheses": 8,
-    "open_obligations": 4,
-    "completed_waves": [
-      "W0",
-      "W1",
-      "W2",
-      "W3"
-    ],
-    "active_wave": "W4",
-    "active_obligations": [
-      "OBS-SC-010"
-    ]
-  },
-  "bridge_program": {
-    "id": "W3.5-SDG-001",
-    "status": "frozen_not_executed",
-    "runs_in_parallel_with": "W4",
-    "required_before": "W5",
-    "required_results": [
-      "generic_baseline_factorization_dimensions",
-      "fara_specificity",
-      "reasoning_contrast_corpus_freeze",
-      "reasoning_contrast_discrimination",
-      "candidate_ablation_and_reconstruction",
-      "machinery_and_cost_accounting",
-      "claim_impact_audit"
-    ]
-  },
-  "w5_authorization": {
-    "authorized": false,
-    "blocked_by": [
-      "OBS-SC-010",
-      "W3.5-SDG-001"
-    ],
-    "rule": "formal negative controls and the evidence-backed specificity/discovery bridge must both resolve before theorem assembly",
-    "evidence_required": true
-  },
-  "nontriviality_conditions": [
-    "uniform construction",
-    "strong preservation and reflection",
-    "cross-axis coherence",
-    "no label-only success",
-    "no output-only lookup",
-    "no opaque universal state",
-    "no hidden interpreter",
-    "no metadata smuggling",
-    "no evaluator repair",
-    "no history erasure",
-    "no evidential upgrade",
-    "compositional accountability",
-    "complete machinery ledger"
-  ],
-  "theorem_family": [
-    {
-      "id": "THM-CORE-COMMON-001",
-      "kind": "common_schema_existence",
-      "scope": "S_core",
-      "status": "target_frozen_unproved",
-      "blocked_by": [
-        "formal_negative_controls",
-        "specificity_discovery_bridge",
-        "theorem_assembly"
-      ]
-    },
-    {
-      "id": "THM-CORE-REP-001",
-      "kind": "faithful_representation",
-      "scope": "S_core",
-      "predicate": "Faithful_split",
-      "status": "target_frozen_unproved",
-      "blocked_by": [
-        "formal_negative_controls",
-        "specificity_discovery_bridge",
-        "theorem_assembly"
-      ]
-    },
-    {
-      "id": "THM-IRD-EXT-001",
-      "kind": "general_extension",
-      "scope": "S_IRD",
-      "predicate": "Faithful_split",
-      "status": "target_frozen_blocked",
-      "blocked_by": [
-        "core_result",
-        "extension_feature_lemmas"
-      ]
-    },
-    {
-      "id": "THM-P8-CORR-001",
-      "kind": "external_evidential_correspondence",
-      "scope": "actual_process_to_formal_presentation",
-      "predicate": "Corr_8E",
-      "status": "target_frozen_unproved"
-    },
-    {
-      "id": "THM-PRIM-NEC-001",
-      "kind": "primitive_necessity_or_derivability_family",
-      "scope": "declared_reconstruction_class",
-      "status": "target_frozen_blocked_by_reconstruction_class"
-    },
-    {
-      "id": "THM-MIN-001",
-      "kind": "minimality",
-      "scope": "declared_candidate_universe",
-      "status": "target_frozen_blocked_by_candidate_universe"
-    },
-    {
-      "id": "THM-EQUIV-001",
-      "kind": "equivalence_or_uniqueness",
-      "scope": "declared_candidate_universe",
-      "status": "target_frozen_blocked_by_candidate_universe"
-    },
-    {
-      "id": "THM-IMP-001",
-      "kind": "impossibility_alternative",
-      "scope": "S_core_or_explicit_subclass",
-      "status": "target_frozen_unproved",
-      "blocked_by": [
-        "formal_negative_controls",
-        "specificity_discovery_bridge",
-        "theorem_assembly"
-      ]
-    }
-  ],
-  "failure_conditions": [
-    "in_scope source countermodel",
-    "only prohibited hidden machinery permits a witness",
-    "source definition is circular through FARA",
-    "unregistered target primitive or commitment is required",
-    "material dependency history or evidential-status collapse",
-    "unsupported evidential upgrade",
-    "uniformity requires unrestricted source interpretation",
-    "strictly simpler equivalent target",
-    "unstated substantive axiom",
-    "bounded result promoted to broader scope"
-  ],
-  "current_gates": {
-    "formal_theorem_target": "satisfied",
-    "premise_ledger_and_semantics": "satisfied",
-    "faithful_representation_definition": "satisfied",
-    "scoped_representation_proof": "not_satisfied",
-    "representation_discovery_separation": "satisfied",
-    "generic_baseline_frozen": "satisfied",
-    "universal_structure_target_frozen": "satisfied",
-    "reasoning_contrast_scope_framework_frozen": "satisfied",
-    "reasoning_contrast_corpus_frozen": "not_satisfied",
-    "baseline_factorization_resolved": "not_satisfied",
-    "fara_specificity_resolved": "not_satisfied",
-    "primitive_lower_bounds": "not_satisfied",
-    "minimality_universe_and_proof": "not_satisfied",
-    "mechanized_proof_verification": "not_satisfied",
-    "independent_proof_review": "not_satisfied"
-  },
-  "nonclaims": [
-    "FARA faithfully represents S_core",
-    "S_core contains all reasoning",
-    "PB-001 is sufficient or minimal",
-    "any actual process corresponds to an IRD-001 presentation",
-    "formal negative controls are proved",
-    "Faithful_split is proved",
-    "W3.5 is resolved",
-    "the concrete reasoning and contrast corpus is frozen",
-    "any W5 assembly obligation is proved",
-    "any FARA primitive is necessary",
-    "FARA is minimal or unique",
-    "a universal finite architecture exists",
-    "THM-US-TARGET-001 is proved",
-    "any theorem in the frozen theorem family is proved",
-    "W0 through W3 has proof-assistant verification or independent proof review"
-  ],
-  "next_required_artifact": "W4 formal negative-control package for OBS-SC-010 and NC-01 through NC-10",
-  "parallel_required_artifact": "W3.5 dimensioned baseline-factorization specificity corpus and discovery execution before W5"
+  "failure_conditions":["in_scope source countermodel","only prohibited hidden machinery permits a witness","source definition is circular through FARA","unregistered target primitive or commitment is required","material dependency history or evidential-status collapse","unsupported evidential upgrade","uniformity requires unrestricted source interpretation","strictly simpler equivalent target","unstated substantive axiom","bounded result promoted to broader scope"],
+  "current_gates":{"formal_theorem_target":"satisfied","premise_ledger_and_semantics":"satisfied","faithful_representation_definition":"satisfied","formal_negative_controls":"satisfied","scoped_representation_proof":"not_satisfied","representation_discovery_separation":"satisfied","generic_baseline_frozen":"satisfied","universal_structure_target_frozen":"satisfied","reasoning_contrast_scope_framework_frozen":"satisfied","reasoning_contrast_corpus_frozen":"not_satisfied","baseline_factorization_resolved":"not_satisfied","fara_specificity_resolved":"not_satisfied","primitive_lower_bounds":"not_satisfied","minimality_universe_and_proof":"not_satisfied","mechanized_proof_verification":"not_satisfied","independent_proof_review":"not_satisfied"},
+  "nonclaims":["FARA faithfully represents S_core","S_core contains all reasoning","PB-001 is sufficient or minimal","any actual process corresponds to an IRD-001 presentation","all invalid representations are rejected","Faithful_split is proved","W3.5 is resolved","the concrete reasoning and contrast corpus is frozen","any W5 assembly obligation is proved","any FARA primitive is necessary","FARA is minimal or unique","a universal finite architecture exists","THM-US-TARGET-001 is proved","any theorem in the frozen theorem family is proved","W0 through W4 has proof-assistant verification or independent proof review"],
+  "next_required_artifact":"Evidence-backed W3.5-SDG-001 resolution before W5 theorem assembly",
+  "parallel_required_artifact":"Concrete corpus freeze, dimensioned baseline factorization, specificity, ablation, reconstruction, cost, and claim-impact evidence"
 }

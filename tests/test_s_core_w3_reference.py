@@ -1,8 +1,9 @@
 from __future__ import annotations
-import copy, json, unittest
+import copy, json, sys, unittest
 from pathlib import Path
-from s_core_w3_reference import W3Error, canonical_json, component_view, construct_witness, cross_axis_coherent, recover_target, semantic_agreement, structural_digest, validate_package, validate_source, verify_witness
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'tools'))
+from s_core_w3_reference import W3Error, canonical_json, component_view, construct_witness, cross_axis_coherent, recover_target, semantic_agreement, structural_digest, validate_package, validate_source, verify_witness
 FIXTURE=ROOT/'theory/evaluation/s-core-w3-reference-fixtures.json'
 def load_source(): return json.loads(FIXTURE.read_text(encoding='utf-8'))['source']
 def rename_source(source,mapping):
