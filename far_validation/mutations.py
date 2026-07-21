@@ -162,12 +162,18 @@ def _checker_mutations(root: Path) -> tuple[list[MutationResult], int]:
     commands, failures = _manifest_commands(root)
     if failures:
         raise RuntimeError("manifest oracle precondition failed: " + "; ".join(failures))
-    checkers = discover_legacy_checkers(root, set(commands.values()))
+    manifest_paths = {item["path"] for item in commands.values()}
+    path_roles: dict[str, str] = {}
+    for item in commands.values():
+        previous = path_roles.get(item["path"])
+        path_roles[item["path"]] = "checker" if previous == "checker" else item["role"]
+    checkers = discover_legacy_checkers(root, manifest_paths)
     results: list[MutationResult] = []
     for path in checkers:
         source = (root / path).read_text(encoding="utf-8")
+        role = path_roles.get(path, "checker")
         for mutation_id, mutated in _mutations(source).items():
-            finding = analyze_checker_source(mutated, path)
+            finding = analyze_checker_source(mutated, path, role=role)
             results.append(
                 MutationResult(
                     f"ORACLE-{path.replace('/', '_')}-{mutation_id}", "independent-oracle",
