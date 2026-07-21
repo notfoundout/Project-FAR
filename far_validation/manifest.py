@@ -37,8 +37,7 @@ def load_manifest(path: Path) -> Manifest:
     schema_version = payload.get("schema_version")
     if schema_version not in SUPPORTED_SCHEMA_VERSIONS:
         raise ManifestError(
-            f"unsupported manifest schema_version {schema_version!r}; "
-            f"supported={sorted(SUPPORTED_SCHEMA_VERSIONS)}"
+            f"unsupported manifest schema_version {schema_version!r}; supported={sorted(SUPPORTED_SCHEMA_VERSIONS)}"
         )
 
     raw_profiles = payload.get("profiles")
@@ -86,23 +85,26 @@ def load_manifest(path: Path) -> Manifest:
             profiles=_tuple_strings(raw.get("profiles", []), f"checks[{index}].profiles"),
             depends_on=_tuple_strings(raw.get("depends_on", []), f"checks[{index}].depends_on"),
             inputs=_tuple_strings(raw.get("inputs", []), f"checks[{index}].inputs"),
+            outputs=_tuple_strings(raw.get("outputs", []), f"checks[{index}].outputs"),
             timeout_seconds=int(raw.get("timeout_seconds", 300)),
             cacheable=bool(raw.get("cacheable", True)),
             deterministic=bool(raw.get("deterministic", True)),
             sandbox_copy=bool(raw.get("sandbox_copy", False)),
             expect_no_changes=bool(raw.get("expect_no_changes", False)),
+            trace_dependencies=bool(raw.get("trace_dependencies", True)),
+            allow_network=bool(raw.get("allow_network", False)),
             protected=bool(raw.get("protected", False)),
             failure_code=str(raw.get("failure_code", "FAR-VAL-TEST-001")),
             description=str(raw.get("description", "")),
         )
         if definition.timeout_seconds <= 0:
             raise ManifestError(f"check {check_id} timeout_seconds must be positive")
+        if definition.allow_network and definition.deterministic:
+            raise ManifestError(f"deterministic check {check_id} may not allow network access")
         checks[check_id] = definition
 
     protected_checks = _tuple_strings(payload.get("protected_checks", []), "protected_checks")
-    global_paths = _tuple_strings(
-        payload.get("global_invalidation_paths", []), "global_invalidation_paths"
-    )
+    global_paths = _tuple_strings(payload.get("global_invalidation_paths", []), "global_invalidation_paths")
     manifest = Manifest(
         schema_version=schema_version,
         profiles=profiles,
@@ -128,9 +130,9 @@ def validate_manifest(manifest: Manifest) -> None:
             raise ManifestError(f"check {check.check_id} has unknown dependencies: {unknown}")
         unknown_profiles = sorted(set(check.profiles) - set(manifest.profiles))
         if unknown_profiles:
-            raise ManifestError(
-                f"check {check.check_id} references unknown profiles: {unknown_profiles}"
-            )
+            raise ManifestError(f"check {check.check_id} references unknown profiles: {unknown_profiles}")
+        if check.command and not check.inputs:
+            raise ManifestError(f"command check {check.check_id} must declare inputs")
     missing_protected = sorted(set(manifest.protected_checks) - check_ids)
     if missing_protected:
         raise ManifestError(f"protected checks missing: {missing_protected}")
@@ -140,9 +142,7 @@ def validate_manifest(manifest: Manifest) -> None:
             raise ManifestError(f"protected check {protected_id} is not marked protected")
         for required_profile in ("pr-fast", "pr-full", "full", "release"):
             if required_profile in manifest.profiles and protected_id not in manifest.profiles[required_profile]:
-                raise ManifestError(
-                    f"protected check {protected_id} missing from {required_profile}"
-                )
+                raise ManifestError(f"protected check {protected_id} missing from {required_profile}")
     _validate_acyclic(manifest)
 
 
