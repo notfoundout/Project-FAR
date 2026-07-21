@@ -2,7 +2,7 @@
 
 ## Status
 
-Frozen mandatory bridge after W3 and before W5 theorem assembly.
+Mandatory bridge after W3 and before W5 theorem assembly. The candidate-independent concrete corpus is frozen; factorization, discrimination, ablation, reconstruction, cost accounting, and claim-impact closure remain open.
 
 Identifier: `W3.5-SDG-001`.
 
@@ -10,7 +10,7 @@ Identifier: `W3.5-SDG-001`.
 
 W0–W3 record project-authored finite representation constructions. W3.5 determines how those constructions should be classified before the repository assembles the finite-core theorem.
 
-W4 formal negative controls may proceed in parallel. W5 remains blocked until W3.5 is resolved with linked immutable result artifacts.
+W4 formal negative controls are complete. W5 remains blocked until every W3.5 investigation is resolved with linked immutable result artifacts.
 
 ## Required investigations
 
@@ -28,9 +28,7 @@ and, where defined,
 FARA\text{-}WITNESS\text{-}1.0\xrightarrow{T_{FG}}GREL\text{-}001.
 \]
 
-Record exact failures, extra constraints, helper machinery, and costs.
-
-The result must be reported as a vector rather than a single scalar classification.
+Record exact failures, extra constraints, helper machinery, and costs. The result must be reported as a vector rather than a single scalar classification.
 
 ### B. Dimensioned FARA comparison
 
@@ -47,18 +45,21 @@ Expressive equivalence may coexist with stronger FARA constraints, a cost tradeo
 
 ### C. Concrete reasoning and contrast corpus
 
-`RCS-001` currently freezes only the admission framework.
+`RCS-CORPUS-001` is frozen under [W3.5 Concrete Reasoning and Contrast Corpus Freeze v1.0](w3-5-concrete-corpus-freeze-v1.0.md).
 
-Before discrimination testing, W3.5 must freeze concrete positive and contrast instance registries with:
+The frozen package contains:
 
-- stable instance identifiers and versions;
+- eight positive instances;
+- eight contrast instances;
+- two disputed borderline instances;
+- stable identifiers and versions;
 - independent admission decisions and rationales;
 - source or observation contracts;
 - formalization boundaries;
 - candidate-exposure status;
-- immutable corpus records.
+- immutable source and registry digests.
 
-Execution remains blocked while either corpus is empty.
+Candidate scoring remains not started.
 
 ### D. Reasoning discrimination
 
@@ -93,7 +94,7 @@ Allowed classifications are:
 
 ### F. Claim-impact audit
 
-Update every central claim independently. Representation counts may not change universal-structure, necessity, minimality, or uniqueness status.
+Update every central claim independently. Representation counts and corpus freeze may not change universal-structure, necessity, minimality, or uniqueness status.
 
 ## Immutable result contract
 
@@ -107,7 +108,7 @@ Every required W3.5 result must have:
 - preserved failures and countermodels;
 - explicit nonclaims.
 
-A status string without linked evidence does not resolve W3.5.
+`W35-CORPUS-RESULT` now satisfies this contract. Every other required W3.5 result remains missing. A status string without linked evidence does not resolve W3.5.
 
 ## Exit criteria
 
@@ -139,4 +140,4 @@ The separation checker must reject any attempt to set `w5_authorized` to true wi
 
 ## Nonclaims
 
-Freezing W3.5 does not establish any factorization, specificity, discrimination, necessity, universal structure result, concrete corpus freeze, or W5 authorization.
+The corpus freeze does not establish any factorization, specificity, discrimination, necessity, universal-structure result, W3.5 resolution, or W5 authorization.
