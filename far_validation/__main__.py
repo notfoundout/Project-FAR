@@ -5,9 +5,9 @@ import json
 import sys
 from pathlib import Path
 
+from .assured_engine import ValidationEngine, ValidationEngineError, format_text
 from .certificate import main as certificate_main
 from .diagnostics import format_diagnosis, load_latest
-from .engine import ValidationEngine, ValidationEngineError, format_text
 from .formal_model import main as formal_main
 from .manifest import ManifestError
 from .mutations import main as mutations_main
