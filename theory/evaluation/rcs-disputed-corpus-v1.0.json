@@ -1,8 +1,43 @@
 {
-  "schema_version":"1.0","registry_id":"RCS-DISPUTED-CORPUS-001","scope_id":"RCS-001","corpus_id":"RCS-CORPUS-001","version":"1.0","status":"frozen","admission_decision":"disputed","candidate_scoring_status":"not_started","source_catalog_path":"theory/evaluation/rcs-concrete-source-catalog-v1.0.json","source_catalog_sha256":"6b0249b64216585371a7a57362396201336064f5edce7849408c513f3168ea3f",
-  "instances":[
-    {"instance_id":"RCS-DIS-001","source_record_id":"RCS-DIS-001-SRC","title":"Model-free reinforcement-learning policy execution","family":"disputed_borderline_process","admission_decision":"disputed","admission_rationale":"The frozen instance executes a learned action-value table. Whether table-based value comparison counts as reasoning is intentionally not decided at admission.","formalization_boundary":"Policy execution only; training, model construction, and online learning are excluded.","candidate_exposure_status":"candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed","candidate_independence_attestation":true},
-    {"instance_id":"RCS-DIS-002","source_record_id":"RCS-DIS-002-SRC","title":"Constraint propagation without search","family":"disputed_borderline_process","admission_decision":"disputed","admission_rationale":"The instance repeatedly applies deterministic local consistency rules. Whether such propagation is reasoning without branching or explanation is left unresolved.","formalization_boundary":"One finite arc-consistency episode; search, explanation generation, and backtracking are excluded.","candidate_exposure_status":"candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed","candidate_independence_attestation":true}
+  "schema_version": "1.0",
+  "registry_id": "RCS-DISPUTED-CORPUS-001",
+  "scope_id": "RCS-001",
+  "corpus_id": "RCS-CORPUS-001",
+  "version": "1.0",
+  "status": "frozen",
+  "admission_decision": "disputed",
+  "candidate_scoring_status": "not_started",
+  "source_catalog_path": "theory/evaluation/rcs-concrete-source-catalog-v1.0.json",
+  "source_catalog_sha256": "6b0249b64216585371a7a57362396201336064f5edce7849408c513f3168ea3f",
+  "instances": [
+    {
+      "instance_id": "RCS-DIS-001",
+      "source_record_id": "RCS-DIS-001-SRC",
+      "title": "Model-free reinforcement-learning policy execution",
+      "family": "disputed_borderline_process",
+      "admission_decision": "disputed",
+      "admission_rationale": "The frozen instance executes a learned action-value table. Whether table-based value comparison counts as reasoning is intentionally not decided at admission.",
+      "formalization_boundary": "Policy execution only; training, model construction, and online learning are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true
+    },
+    {
+      "instance_id": "RCS-DIS-002",
+      "source_record_id": "RCS-DIS-002-SRC",
+      "title": "Constraint propagation without search",
+      "family": "disputed_borderline_process",
+      "admission_decision": "disputed",
+      "admission_rationale": "The instance repeatedly applies deterministic local consistency rules. Whether such propagation is reasoning without branching or explanation is left unresolved.",
+      "formalization_boundary": "One finite arc-consistency episode; search, explanation generation, and backtracking are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true
+    }
   ],
-  "nonclaims":["candidate invariants have been scored","FARA-specificity has been established","W3.5 is resolved","W5 is authorized"],"candidate_exposure_status":"candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed"
+  "nonclaims": [
+    "candidate invariants have been scored",
+    "FARA-specificity has been established",
+    "W3.5 is resolved",
+    "W5 is authorized"
+  ],
+  "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed"
 }
