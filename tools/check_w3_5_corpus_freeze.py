@@ -34,8 +34,7 @@ def validate_data(*,scope,catalog,source_records,registries,result,w35,gates,act
     for entry in entries:
         iid=entry.get('instance_id') if isinstance(entry,dict) else None
         req(isinstance(iid,str) and bool(iid),'catalog entry requires instance_id',e)
-        if isinstance(iid,str):
-            req(iid not in entry_by_id,f'duplicate catalog instance id: {iid}',e); entry_by_id[iid]=entry
+        if isinstance(iid,str): req(iid not in entry_by_id,f'duplicate catalog instance id: {iid}',e); entry_by_id[iid]=entry
         req(isinstance(entry.get('bundle_path'),str) and bool(entry.get('bundle_path')),f'{iid} catalog bundle path missing',e)
         req(re.fullmatch(r'[0-9a-f]{64}',str(entry.get('bundle_sha256',''))) is not None,f'{iid} catalog bundle digest invalid',e)
         req(entry.get('bundle_sha256')==actual_bundle_digests.get(entry.get('bundle_path')),f'{iid} source bundle digest mismatch',e)
@@ -44,13 +43,11 @@ def validate_data(*,scope,catalog,source_records,registries,result,w35,gates,act
     req(len(records)==len(entries) and bool(records),'loaded source record set differs from catalog',e)
     by_id={}; ids=set(); source_ids=set()
     for r in records:
-        if not isinstance(r,dict):
-            e.append('every source record must be an object'); continue
+        if not isinstance(r,dict): e.append('every source record must be an object'); continue
         iid=r.get('instance_id'); sid=r.get('source_record_id')
         req(isinstance(iid,str) and bool(iid),'source record requires instance_id',e)
         req(isinstance(sid,str) and bool(sid),f'{iid} requires source_record_id',e)
-        if isinstance(iid,str):
-            req(iid not in ids,f'duplicate instance id: {iid}',e); ids.add(iid); by_id[iid]=r
+        if isinstance(iid,str): req(iid not in ids,f'duplicate instance id: {iid}',e); ids.add(iid); by_id[iid]=r
         if isinstance(sid,str): req(sid not in source_ids,f'duplicate source record id: {sid}',e); source_ids.add(sid)
         entry=entry_by_id.get(iid,{})
         req(entry.get('source_record_id')==sid,f'{iid} catalog source-record link mismatch',e)
@@ -60,8 +57,7 @@ def validate_data(*,scope,catalog,source_records,registries,result,w35,gates,act
         decision=r.get('admission_decision'); req(decision in {'positive','contrast','disputed'},f'{iid} has invalid admission decision',e)
         rationale=r.get('admission_rationale'); req(isinstance(rationale,str) and len(rationale)>=40,f'{iid} requires a substantive admission rationale',e)
         if isinstance(rationale,str):
-            low=rationale.lower()
-            for term in BANNED: req(term not in low,f'{iid} admission rationale is candidate-dependent: {term}',e)
+            for term in BANNED: req(term not in rationale.lower(),f'{iid} admission rationale is candidate-dependent: {term}',e)
         req(r.get('candidate_exposure_status')=='candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed',f'{iid} must disclose the frozen candidate-registry exposure status',e)
         req(r.get('candidate_independence_attestation') is True,f'{iid} lacks candidate-independence attestation',e)
         req(isinstance(r.get('formalization_boundary'),str) and bool(r.get('formalization_boundary')),f'{iid} lacks formalization boundary',e)
@@ -109,27 +105,34 @@ def validate_data(*,scope,catalog,source_records,registries,result,w35,gates,act
     req(result.get('counts')=={'positive':8,'contrast':8,'disputed':2,'total':18},'freeze result counts mismatch',e)
     for key in ('all_decisions_precede_candidate_scoring','all_candidate_exposure_statuses_explicit','candidate_registry_preexisted','candidate_scores_or_results_not_exposed_before_admission','all_records_have_source_or_observation_contracts','all_records_have_formalization_boundaries','all_records_have_candidate_neutral_observations','all_records_replayable_within_boundary'): req(result.get('admission_assurance',{}).get(key) is True,f'freeze result assurance {key} must be true',e)
     for result_key,digest_key in {'source_catalog':'catalog','positive_registry':'positive','contrast_registry':'contrast','disputed_registry':'disputed'}.items(): req(result.get('artifacts',{}).get(result_key,{}).get('content_sha256')==actual_digests.get(digest_key),f'freeze result digest mismatch for {result_key}',e)
-    req(w35.get('status') in {'in_progress_corpus_frozen','in_progress_factorization_complete'},'W3.5 must remain in progress after corpus freeze',e)
+    stage=w35.get('status')
+    req(stage in {'in_progress_corpus_frozen','in_progress_factorization_complete','in_progress_specificity_complete'},'W3.5 must remain in a recognized in-progress stage after corpus freeze',e)
     req(w35.get('W5_blocked_until_resolved') is True,'W5 block must remain active',e)
     req(w35.get('w5_authorized') is False,'W5 must remain unauthorized',e)
     current=w35.get('current_results',{})
     req(current.get('reasoning_contrast_corpus')=='frozen','W3.5 current corpus result must be frozen',e)
-    req(current.get('reasoning_discrimination')=='not_executed','reasoning discrimination must remain not_executed',e)
+    expected_disc='bounded_role_conjunctive_discrimination_established' if stage=='in_progress_specificity_complete' else 'not_executed'
+    req(current.get('reasoning_discrimination')==expected_disc,'reasoning discrimination stage is inconsistent',e)
     req(current.get('candidate_invariants')=='not_executed','candidate tests must remain not_executed',e)
     arts={a.get('id'):a for a in w35.get('required_result_artifacts',[]) if isinstance(a,dict)}
     ca=arts.get('W35-CORPUS-RESULT',{})
     req(ca.get('status')=='complete','W35-CORPUS-RESULT must be complete',e)
     req(ca.get('artifact_id')=='RCS-CORPUS-001','W35-CORPUS-RESULT artifact id mismatch',e)
     req(ca.get('content_sha256')==actual_digests.get('result'),'W35-CORPUS-RESULT digest mismatch',e)
+    allowed_complete={'W35-CORPUS-RESULT'}
+    if stage in {'in_progress_factorization_complete','in_progress_specificity_complete'}: allowed_complete.add('W35-FACTOR-RESULT')
+    if stage=='in_progress_specificity_complete': allowed_complete|={'W35-SPEC-RESULT','W35-SCOPE-RESULT'}
     for aid,a in arts.items():
-        if aid not in {'W35-CORPUS-RESULT','W35-FACTOR-RESULT'}: req(a.get('status')=='missing',f'{aid} must remain missing',e)
+        if aid not in allowed_complete: req(a.get('status')=='missing',f'{aid} must remain missing',e)
     gm={g.get('name'):g for g in gates.get('gates',[]) if isinstance(g,dict)}
     gate=gm.get('reasoning-contrast-corpus-frozen',{})
     req(gate.get('status')=='satisfied','reasoning-contrast-corpus-frozen gate must be satisfied',e)
     needed={PATHS['doc'],PATHS['audit'],PATHS['catalog'],PATHS['positive'],PATHS['contrast'],PATHS['disputed'],PATHS['result']}
     req(needed<=set(gate.get('evidence',[])),'corpus gate evidence is incomplete',e)
     req(gm.get('baseline-factorization-resolved',{}).get('status') in {'not_satisfied','satisfied'},'baseline factorization gate has invalid status',e)
-    for name in ('fara-specificity-resolved','reasoning-contrast-execution','universal-structure-result'): req(gm.get(name,{}).get('status')=='not_satisfied',f'{name} must remain not_satisfied',e)
+    expected_later='satisfied' if stage=='in_progress_specificity_complete' else 'not_satisfied'
+    for name in ('fara-specificity-resolved','reasoning-contrast-execution'): req(gm.get(name,{}).get('status')==expected_later,f'{name} stage is inconsistent',e)
+    req(gm.get('universal-structure-result',{}).get('status')=='not_satisfied','universal-structure-result must remain not_satisfied',e)
     return e
 
 def validate(root:Path=ROOT)->list[str]:
