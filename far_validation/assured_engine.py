@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import shutil
@@ -14,13 +15,17 @@ from .engine import (
     ValidationEngine as BaseValidationEngine,
     ValidationEngineError,
     _git,
+    _iter_input_files,
+    _matches,
+    _safe_relative,
+    _sha256_file,
     _snapshot_files,
 )
 from .model import CheckDefinition, CheckResult, RunSummary
 from .tracing import RuntimePolicy, audit_trace, run_traced
 from .trust import HMACTrust, TrustError, read_attestation, write_attestation
 
-ENGINE_VERSION = "0.2.0"
+ENGINE_VERSION = "0.3.0"
 
 
 class ValidationEngine(BaseValidationEngine):
@@ -51,6 +56,89 @@ class ValidationEngine(BaseValidationEngine):
             skip_checks=(),
             deny_network=True,
         )
+        contract_path = self.root / "validation" / "runtime-dependencies.json"
+        self.runtime_contract_hash = "missing"
+        self.runtime_contracts: dict[str, dict[str, tuple[str, ...]]] = {}
+        if contract_path.is_file():
+            raw = contract_path.read_bytes()
+            payload = json.loads(raw)
+            if payload.get("schema_version") != "1.0" or not isinstance(payload.get("checks"), dict):
+                raise ValidationEngineError("invalid runtime dependency contract")
+            self.runtime_contract_hash = hashlib.sha256(raw).hexdigest()
+            for check_id, contract in payload["checks"].items():
+                if check_id not in self.manifest.checks or not isinstance(contract, dict):
+                    raise ValidationEngineError(f"invalid runtime dependency contract check: {check_id}")
+                inputs = contract.get("inputs", [])
+                outputs = contract.get("outputs", [])
+                if not isinstance(inputs, list) or not all(isinstance(item, str) for item in inputs):
+                    raise ValidationEngineError(f"runtime inputs for {check_id} must be strings")
+                if not isinstance(outputs, list) or not all(isinstance(item, str) for item in outputs):
+                    raise ValidationEngineError(f"runtime outputs for {check_id} must be strings")
+                self.runtime_contracts[check_id] = {
+                    "inputs": tuple(inputs),
+                    "outputs": tuple(outputs),
+                }
+
+    def _runtime_patterns(self, definition: CheckDefinition, kind: str) -> tuple[str, ...]:
+        return self.runtime_contracts.get(definition.check_id, {}).get(kind, ())
+
+    def _combined_inputs(self, definition: CheckDefinition) -> tuple[str, ...]:
+        return tuple(dict.fromkeys(definition.inputs + self._runtime_patterns(definition, "inputs")))
+
+    def _combined_outputs(self, definition: CheckDefinition) -> tuple[str, ...]:
+        return tuple(dict.fromkeys(definition.outputs + self._runtime_patterns(definition, "outputs")))
+
+    def _input_hashes(self, definition: CheckDefinition) -> dict[str, str]:
+        hashes = super()._input_hashes(definition)
+        for path in _iter_input_files(self.root, self._runtime_patterns(definition, "inputs")):
+            hashes[_safe_relative(path, self.root)] = _sha256_file(path)
+        return dict(sorted(hashes.items()))
+
+    def _select_changed(
+        self, profile: str, changed_files: list[str]
+    ) -> tuple[list[str], dict[str, list[str]], bool, list[str]]:
+        profile_checks = set(self._profile_checks(profile))
+        reasons: dict[str, list[str]] = {}
+        notes: list[str] = []
+        if not changed_files:
+            checks = self._dependency_closure(["bootstrap.manifest"])
+            return checks, {item: ["no changed files; bootstrap only"] for item in checks}, False, notes
+        if any(_matches(path, self.manifest.global_invalidation_paths) for path in changed_files):
+            checks = self._profile_checks(profile)
+            for check_id in checks:
+                reasons[check_id] = ["global invalidation path changed"]
+            return checks, reasons, False, notes
+        direct: set[str] = set()
+        uncovered: list[str] = []
+        for path in changed_files:
+            matched = []
+            for check_id in profile_checks:
+                definition = self.manifest.checks[check_id]
+                if _matches(path, self._combined_inputs(definition)):
+                    matched.append(check_id)
+            if not matched:
+                uncovered.append(path)
+            for check_id in matched:
+                direct.add(check_id)
+                reasons.setdefault(check_id, []).append(f"input changed: {path}")
+        if uncovered:
+            notes.append("selection completeness could not prove coverage for: " + ", ".join(uncovered))
+            notes.append("falling back to full requested profile")
+            checks = self._profile_checks(profile)
+            for check_id in checks:
+                reasons.setdefault(check_id, []).append("full fallback after incomplete coverage")
+            return checks, reasons, True, notes
+        expanded = set(self._dependency_closure(direct))
+        dependents = self._dependents_map()
+        queue = list(direct)
+        while queue:
+            current = queue.pop()
+            for dependent in dependents.get(current, ()):
+                if dependent in profile_checks and dependent not in expanded:
+                    expanded.add(dependent)
+                    reasons.setdefault(dependent, []).append(f"affected by {current}")
+                    queue.append(dependent)
+        return self._topological_order(expanded), reasons, False, notes
 
     def _cache_key(
         self,
@@ -58,8 +146,6 @@ class ValidationEngine(BaseValidationEngine):
         input_hashes: dict[str, str],
         dependency_fingerprints: dict[str, object],
     ) -> str:
-        import hashlib
-
         base = super()._cache_key(definition, input_hashes, dependency_fingerprints)
         material = {
             "base": base,
@@ -67,7 +153,9 @@ class ValidationEngine(BaseValidationEngine):
             "trace_dependencies": self.trace_dependencies,
             "trace_contract": definition.trace_dependencies,
             "allow_network": definition.allow_network,
-            "outputs": definition.outputs,
+            "outputs": self._combined_outputs(definition),
+            "runtime_inputs": self._runtime_patterns(definition, "inputs"),
+            "runtime_contract_hash": self.runtime_contract_hash,
         }
         return hashlib.sha256(json.dumps(material, sort_keys=True).encode("utf-8")).hexdigest()
 
@@ -93,7 +181,6 @@ class ValidationEngine(BaseValidationEngine):
                 return result
             except (TrustError, KeyError, TypeError, ValueError, json.JSONDecodeError):
                 cache_path.unlink(missing_ok=True)
-
         started = time.monotonic()
         result = self._run_builtin(definition) if definition.builtin else self._run_command(definition)
         result.duration_ms = int((time.monotonic() - started) * 1000)
@@ -107,7 +194,11 @@ class ValidationEngine(BaseValidationEngine):
                 trust=self.trust,
                 kind="cache-result",
                 payload={"cache_key": cache_key, "check_id": definition.check_id, "result": result.to_dict()},
-                metadata={"engine_version": ENGINE_VERSION, "manifest_hash": self.manifest.manifest_hash},
+                metadata={
+                    "engine_version": ENGINE_VERSION,
+                    "manifest_hash": self.manifest.manifest_hash,
+                    "runtime_contract_hash": self.runtime_contract_hash,
+                },
             )
         return result
 
@@ -160,8 +251,8 @@ class ValidationEngine(BaseValidationEngine):
                     )
                 trace = audit_trace(
                     trace,
-                    declared_inputs=definition.inputs,
-                    declared_outputs=definition.outputs,
+                    declared_inputs=self._combined_inputs(definition),
+                    declared_outputs=self._combined_outputs(definition),
                     command=command,
                     policy=policy,
                     sandbox_copy=definition.sandbox_copy,
@@ -258,6 +349,7 @@ class ValidationEngine(BaseValidationEngine):
                 "trust_domain": self.trust.trust_domain,
                 "key_id": self.trust.key_id,
                 "trace_dependencies": str(self.trace_dependencies),
+                "runtime_contract_hash": self.runtime_contract_hash,
             }
         )
         return environment
@@ -271,6 +363,7 @@ class ValidationEngine(BaseValidationEngine):
                 "signed_cache_required": self.require_signed_cache,
                 "trust_domain": self.trust.trust_domain,
                 "key_id": self.trust.key_id,
+                "runtime_contract_hash": self.runtime_contract_hash,
             }
         )
         payload = summary.to_dict()
