@@ -1,0 +1,218 @@
+name: Validator Assurance
+
+on:
+  pull_request:
+    branches: [main]
+  merge_group:
+    types: [checks_requested]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+concurrency:
+  group: validator-assurance-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  signed-cache-producer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FAR_VALIDATION_TRUST_DOMAIN: project-far:${{ github.repository }}:attested-cache
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Produce signed cache bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/validation/runtime
+          key="$(openssl rand -hex 32)"
+          export FAR_VALIDATION_CACHE_SIGNING_KEY="$key"
+          python -m far_validation validate repository.hygiene --require-signed-cache
+          printf '%s' "$key" > .far/cache-signing-key
+          tar -czf artifacts/validation/runtime/signed-cache.tar.gz .far/cache .far/cache-signing-key
+      - name: Attest signed cache bundle
+        uses: actions/attest@v4
+        with:
+          subject-path: artifacts/validation/runtime/signed-cache.tar.gz
+      - name: Upload signed cache bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-validation-cache
+          path: artifacts/validation/runtime/signed-cache.tar.gz
+          if-no-files-found: error
+          retention-days: 7
+
+  signed-cache-consumer:
+    needs: signed-cache-producer
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FAR_VALIDATION_TRUST_DOMAIN: project-far:${{ github.repository }}:attested-cache
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          name: signed-validation-cache
+          path: artifacts/validation/runtime
+      - name: Verify GitHub Sigstore cache provenance
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh attestation verify artifacts/validation/runtime/signed-cache.tar.gz --repo "${{ github.repository }}"
+      - name: Consume signed cache on independent runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          tar -xzf artifacts/validation/runtime/signed-cache.tar.gz
+          export FAR_VALIDATION_CACHE_SIGNING_KEY="$(cat .far/cache-signing-key)"
+          python -m far_validation validate repository.hygiene --require-signed-cache --format json > /tmp/cache-consumer.json
+          python - <<'PY2'
+          import json
+          payload = json.load(open('/tmp/cache-consumer.json', encoding='utf-8'))
+          hits = set(payload.get('signed_cache_hits', []))
+          required = {'bootstrap.manifest', 'repository.hygiene'}
+          missing = sorted(required - hits)
+          if missing:
+              raise SystemExit(f'signed cross-runner cache misses: {missing}')
+          print('signed cross-runner cache trust: PASS')
+          PY2
+
+  merge-authority:
+    needs: signed-cache-consumer
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      FAR_VALIDATION_CACHE_SIGNING_KEY: ${{ secrets.FAR_VALIDATION_CACHE_SIGNING_KEY || github.token }}
+      FAR_VALIDATION_TRUST_DOMAIN: project-far:${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies and trace backend
+        run: |
+          python -m pip install -r requirements.txt
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq strace
+      - name: Resolve comparison base
+        id: base
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            base="${{ github.event.pull_request.base.sha }}"
+          elif [[ "${{ github.event_name }}" == "merge_group" ]]; then
+            base="$(git merge-base HEAD origin/main)"
+          elif git rev-parse HEAD^ >/dev/null 2>&1; then
+            base="$(git rev-parse HEAD^)"
+          else
+            base="$(git rev-parse HEAD)"
+          fi
+          echo "sha=$base" >> "$GITHUB_OUTPUT"
+      - name: Verify independent bootstrap
+        run: python validation_bootstrap/verify.py
+      - name: Run validator assurance tests
+        run: python -m unittest discover -s tests -p "test_validation_assurance.py" -v
+      - name: Prepare assurance artifact directory
+        run: mkdir -p artifacts/validation/runtime
+      - name: Run complete traced validation profile
+        run: >-
+          python -m far_validation validate --profile pr-full --no-cache
+          --trace-dependencies --require-trace --require-signed-cache
+      - name: Run independent legacy-checker oracle
+        run: python -m far_validation oracle --json > artifacts/validation/runtime/independent-oracle.json
+      - name: Detect test and validator weakening
+        run: >-
+          python -m far_validation weakening --base "${{ steps.base.outputs.sha }}" --json
+          > artifacts/validation/runtime/test-weakening.json
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | \
+            sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Machine-check validation-engine assurance theorems
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$HOME/.elan/bin/lean" mechanization/lean/ValidationEngine.lean
+          python - <<'PY2'
+          import json
+          from pathlib import Path
+          Path('artifacts/validation/runtime/lean-proof.json').write_text(
+              json.dumps({'successful': True, 'artifact': 'mechanization/lean/ValidationEngine.lean'}, indent=2),
+              encoding='utf-8',
+          )
+          PY2
+      - name: Exhaustively model-check engine state space
+        run: python -m far_validation formal --max-checks 4 --json > artifacts/validation/runtime/formal-model.json
+      - name: Run complete registered mutation campaign
+        run: >-
+          python -m far_validation mutations --json
+          --report artifacts/validation/runtime/mutation-campaign.json
+          > artifacts/validation/runtime/mutation-campaign.stdout.json
+      - name: Assemble signed merge-authority certificate
+        run: |
+          python tools/assemble_validation_certificate.py \
+            --evidence independent-oracle=artifacts/validation/runtime/independent-oracle.json \
+            --evidence test-weakening=artifacts/validation/runtime/test-weakening.json \
+            --evidence formal-model=artifacts/validation/runtime/formal-model.json \
+            --evidence lean-proof=artifacts/validation/runtime/lean-proof.json \
+            --evidence mutation-campaign=artifacts/validation/runtime/mutation-campaign.json
+      - name: Verify exact commit and tree certificate
+        run: |
+          python -m far_validation certificate verify --require-signed \
+            --expected-commit "$(git rev-parse HEAD)" \
+            --expected-tree "$(git rev-parse HEAD^{tree})" \
+            --required-check bootstrap.manifest \
+            --required-check selection.completeness \
+            --required-check governance.research-gates \
+            --required-check governance.claim-boundaries \
+            --required-check governance.w5-authorization \
+            --required-evidence independent-oracle \
+            --required-evidence test-weakening \
+            --required-evidence formal-model \
+            --required-evidence lean-proof \
+            --required-evidence mutation-campaign
+      - name: Stage complete assurance bundle
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p artifacts/validation/runtime
+          if [[ -d .far ]]; then
+            rm -rf artifacts/validation/runtime/far-state
+            cp -R .far artifacts/validation/runtime/far-state
+          fi
+      - name: Upload assurance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validator-assurance-${{ github.sha }}
+          path: artifacts/validation
+          if-no-files-found: error
+          retention-days: 30
