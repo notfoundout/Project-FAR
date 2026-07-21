@@ -27,16 +27,16 @@ The project separates three tracks:
 
 These results do not establish complete `Faithful_split`, rejection of every invalid representation, FARA-specificity, a representation theorem, universal structure, necessity, or minimality.
 
-`W3.5-SDG-001` is now the sole live blocker before W5. Its concrete reasoning and contrast corpus remains unfrozen, and all factorization, specificity, candidate, and cost results remain unresolved.
+`RCS-CORPUS-001` freezes 8 positive, 8 contrast, and 2 disputed candidate-independent with declared candidate-registry exposure formal instances. Candidate scoring and discrimination have not begun. `W3.5-SDG-001` remains the sole live blocker before W5 because factorization, specificity, execution, candidate, cost, and claim-impact results remain unresolved.
 
-Run `make research-check` to validate the frozen REP program, representation-discovery separation, W3.5 gates, universal target, and conservative claim boundaries.
+Run `make research-check` to validate the frozen REP program, representation-discovery separation, W3.5 gates, universal target, corpus freeze, and conservative claim boundaries.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: W3.5 corpus, factorization, specificity, ablation, reconstruction, and cost
+- Current project phase: W3.5 factorization, specificity, discrimination, ablation, reconstruction, and cost
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 
@@ -45,9 +45,9 @@ Run `make research-check` to validate the frozen REP program, representation-dis
 | Track | Status | Current boundary |
 |---|---|---|
 | REP | W0-W4 complete | Bounded construction and registered controls; theorem unproved |
-| ADJ | W3.5 frozen, not executed | Corpus, factorization, specificity, contrast, ablation, reconstruction, cost |
+| ADJ | W3.5 in progress; corpus frozen | 8 positive, 8 contrast, 2 disputed; factorization and execution pending |
 | USD | Target frozen, unexecuted | No universal-structure candidate classified |
-| W5 | Blocked | Requires evidence-backed `W3.5-SDG-001` |
+| W5 | Blocked | Requires complete evidence-backed `W3.5-SDG-001` |
 
 No aggregate completion percentage is authorized across REP, ADJ, and USD.
 
@@ -65,10 +65,6 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 | Active status | W5 blocked by W3.5 |
 
 ## Top Priority Tasks
-
-### STRATEGIC-001: Freeze the concrete reasoning and contrast corpora
-
-- Register nonempty positive and contrast instances, exclusions, source contracts, and observation boundaries before candidate scoring.
 
 ### STRATEGIC-002: Execute dimensioned GREL-FARA factorization
 
@@ -91,8 +87,9 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 - Target: [THM-US-TARGET-001](docs/research/universal-structure-discovery-target-v1.0.md)
 - Generic baseline: [GREL-001](docs/research/generic-relational-baseline-v1.0.md)
 - Reasoning and contrast scope: [RCS-001](docs/research/reasoning-and-contrast-scope-v1.0.md)
+- Frozen concrete corpus: [RCS-CORPUS-001](docs/research/w3-5-concrete-corpus-freeze-v1.0.md)
 - Candidate registry: [US-CANDIDATES-001](theory/evaluation/universal-structure-candidate-registry.json)
-- Current result: unresolved
+- Current candidate result: unresolved
 
 ## Repository Navigation
 
@@ -106,6 +103,7 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 - [W4 Negative-Control Proof](docs/research/s-core-w4-negative-control-proof-v1.0.md)
 - [Generic Relational Baseline](docs/research/generic-relational-baseline-v1.0.md)
 - [Reasoning and Contrast Scope](docs/research/reasoning-and-contrast-scope-v1.0.md)
+- [Concrete Corpus Freeze](docs/research/w3-5-concrete-corpus-freeze-v1.0.md)
 - [W3.5 Gate](docs/research/w3-5-specificity-and-discovery-gate-v1.0.md)
 - [Central Claim Registry](theory/evaluation/central-claim-registry.json)
 - [Research Gates](theory/evaluation/research-gates.json)
@@ -113,7 +111,7 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 ## Current Roadmap
 
 - REP: W0-W4 complete at bounded `S_core` scope.
-- ADJ: freeze corpora and execute W3.5 factorization, specificity, contrast, ablation, reconstruction, cost, and claim impact.
+- ADJ: corpus frozen; execute factorization, specificity, discrimination, ablation, reconstruction, cost, and claim impact.
 - USD: keep every candidate unresolved until candidate-neutral execution.
 - W5: blocked until W3.5 resolves with immutable evidence.
 

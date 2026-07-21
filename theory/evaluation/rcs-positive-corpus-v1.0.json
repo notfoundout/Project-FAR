@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0",
+  "registry_id": "RCS-POSITIVE-CORPUS-001",
+  "scope_id": "RCS-001",
+  "corpus_id": "RCS-CORPUS-001",
+  "version": "1.0",
+  "status": "frozen",
+  "admission_decision": "positive",
+  "candidate_scoring_status": "not_started",
+  "source_catalog_path": "theory/evaluation/rcs-concrete-source-catalog-v1.0.json",
+  "source_catalog_sha256": "6b0249b64216585371a7a57362396201336064f5edce7849408c513f3168ea3f",
+  "instances": [
+    {
+      "instance_id": "RCS-POS-001",
+      "source_record_id": "RCS-POS-001-SRC",
+      "title": "Natural-deduction proof episode",
+      "family": "deductive_proof",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance derives a theorem from stated premises through explicit inference rules and a checkable proof trace.",
+      "formalization_boundary": "One finite natural-deduction derivation; metatheoretic completeness and human proof search are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true
+    },
+    {
+      "instance_id": "RCS-POS-002",
+      "source_record_id": "RCS-POS-002-SRC",
+      "title": "Bayesian diagnostic update",
+      "family": "probabilistic_inference",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance updates explicit competing fault hypotheses from observed evidence using a frozen probabilistic model.",
+      "formalization_boundary": "Single exact Bayesian update over two hypotheses; parameter learning and causal discovery are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true
+    },
+    {
+      "instance_id": "RCS-POS-003",
+      "source_record_id": "RCS-POS-003-SRC",
+      "title": "Defeasible bird classification",
+      "family": "defeasible_reasoning",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance applies defaults, records an exception, retracts an earlier conclusion, and preserves the reason for revision.",
+      "formalization_boundary": "One finite priority-ordered default theory; open-world semantics beyond listed predicates are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true
+    },
+    {
+      "instance_id": "RCS-POS-004",
+      "source_record_id": "RCS-POS-004-SRC",
+      "title": "A-star route-planning episode",
+      "family": "planning",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance searches alternatives against an explicit goal and cost function, records frontier changes, and returns a justified plan.",
+      "formalization_boundary": "One finite deterministic graph-search episode; online replanning and learned heuristics are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true
+    },
+    {
+      "instance_id": "RCS-POS-005",
+      "source_record_id": "RCS-POS-005-SRC",
+      "title": "Model-based pump fault diagnosis",
+      "family": "diagnosis",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance generates competing explanations for observations, eliminates inconsistent explanations, and records the surviving diagnosis.",
+      "formalization_boundary": "Single-shot consistency diagnosis over three registered candidates; continuous physics and unmodeled faults are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true
+    },
+    {
+      "instance_id": "RCS-POS-006",
+      "source_record_id": "RCS-POS-006-SRC",
+      "title": "Rule-hierarchy policy adjudication",
+      "family": "legal_or_policy_reasoning",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance resolves a policy question by combining facts, authority hierarchy, an exception, and a written rationale.",
+      "formalization_boundary": "Synthetic policy adjudication with two rules; real legal interpretation, discretion, and external sources are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true
+    },
+    {
+      "instance_id": "RCS-POS-007",
+      "source_record_id": "RCS-POS-007-SRC",
+      "title": "Self-modifying rule-governed reasoner",
+      "family": "self_modifying_machine_reasoning",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance derives conclusions, evaluates a rule-change proposal, changes its active rule set, and preserves pre/post-change history.",
+      "formalization_boundary": "One finite, fully instrumented self-modification episode; hidden implementation state is excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true
+    },
+    {
+      "instance_id": "RCS-POS-008",
+      "source_record_id": "RCS-POS-008-SRC",
+      "title": "Partially observed rescue planning",
+      "family": "partially_observed_reasoning",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance maintains a belief state under partial observation and chooses an action by comparing expected outcomes.",
+      "formalization_boundary": "One-step finite partially observed decision; long-horizon policy optimization is excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true
+    }
+  ],
+  "nonclaims": [
+    "candidate invariants have been scored",
+    "FARA-specificity has been established",
+    "W3.5 is resolved",
+    "W5 is authorized"
+  ],
+  "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed"
+}
