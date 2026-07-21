@@ -88,7 +88,8 @@ class W35FactorizationTests(unittest.TestCase):
         self.assertIn("fixed FARA-oriented compile_projection source adapter", contract["reintroduced_machinery"])
         self.assertIn("accepted SCORE-W3 construct_witness implementation", contract["reintroduced_machinery"])
 
-    def test_factorization_does_not_promote_specificity_candidates_or_w5(self) -> None:
+    # Historical test name retained for validator-assurance continuity.
+    def test_factorization_does_not_promote_specificity_or_w5(self) -> None:
         static = validate_static(ROOT)
         gate_map = {item["name"]: item for item in static["gates"]["gates"]}
         self.assertEqual(static["result"]["dimensions"]["reasoning_specificity"], "not_established")
