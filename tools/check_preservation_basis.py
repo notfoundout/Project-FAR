@@ -87,12 +87,24 @@ def main() -> None:
         fail("required preservation-basis test families changed")
 
     allowed = set(data.get("allowed_outcomes", []))
-    for required in {"axis_redundancy", "basis_incomplete", "no_finite_basis", "IRD_revision_required", "insufficient_evidence"}:
+    for required in {
+        "axis_redundancy",
+        "basis_incomplete",
+        "no_finite_basis",
+        "IRD_revision_required",
+        "insufficient_evidence",
+    }:
         if required not in allowed:
             fail(f"unfavorable or unresolved outcome missing: {required}")
 
     nonclaims = " ".join(data.get("nonclaims", []))
-    for term in ["not established as sufficient", "not established as necessary", "not established as independent", "not established as minimal", "does not establish FARA"]:
+    for term in [
+        "not established as sufficient",
+        "not established as necessary",
+        "not established as independent",
+        "not established as minimal",
+        "does not establish FARA",
+    ]:
         if term not in nonclaims:
             fail(f"required nonclaim missing: {term}")
 
@@ -106,7 +118,12 @@ def main() -> None:
         if forbidden in text:
             fail(f"unsupported affirmative claim present: {forbidden}")
 
-    if "information preservation is an aggregate adequacy criterion" not in text.lower():
+    lower = text.lower()
+    aggregate_statements = (
+        "reclassified as an aggregate adequacy criterion, not a coordinate",
+        "information preservation is an aggregate no-loss criterion rather than an independent dimension",
+    )
+    if not all(statement in lower for statement in aggregate_statements):
         fail("aggregate treatment of information preservation is not explicit")
     if "FARA primitives" not in text or "not derivation inputs" not in text:
         fail("candidate-neutral derivation boundary is not explicit")

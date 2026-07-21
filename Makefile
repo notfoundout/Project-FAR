@@ -100,6 +100,24 @@ test:
 test-fast:
 	python tools/run_tests.py --fast
 
+validate:
+	python -m far_validation validate --profile pr-fast
+
+validate-changed:
+	python -m far_validation validate --profile pr-fast --changed origin/main --explain
+
+validate-full:
+	python -m far_validation validate --profile pr-full
+
+validate-release:
+	python -m far_validation validate --profile release --no-cache
+
+validate-doctor:
+	python -m far_validation doctor
+
+validate-diagnose:
+	python -m far_validation diagnose
+
 cre001-deterministic:
 	python tools/cre001_compile_vocabularies.py --write --check
 
