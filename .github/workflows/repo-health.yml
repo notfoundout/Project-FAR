@@ -23,5 +23,24 @@ jobs:
     - name: Run theory verifier
       run: python tools/verify_theory.py
     - name: Run canonical fast repository health check
-      run: python tools/repo_health_check.py --fast
+      id: health
+      continue-on-error: true
+      shell: bash
+      run: |
+        set -o pipefail
+        python tools/repo_health_check.py --fast 2>&1 | tee repository-health.log
+    - name: Print repository health root-cause tail
+      if: always() && steps.health.outcome == 'failure'
+      run: tail -n 180 repository-health.log
+    - name: Upload repository health log
+      if: always() && steps.health.outcome == 'failure'
+      uses: actions/upload-artifact@v4
+      with:
+        name: repository-health-failure-log
+        path: repository-health.log
+        if-no-files-found: error
+        retention-days: 7
+    - name: Enforce repository health result
+      if: always() && steps.health.outcome == 'failure'
+      run: exit 1
     timeout-minutes: 30
