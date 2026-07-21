@@ -54,12 +54,15 @@ def _pattern_variants(pattern: str) -> set[str]:
     pending = [pattern]
     while pending:
         current = pending.pop()
-        if "/**/" not in current:
-            continue
-        collapsed = current.replace("/**/", "/", 1)
-        if collapsed not in variants:
-            variants.add(collapsed)
-            pending.append(collapsed)
+        candidates: list[str] = []
+        if current.startswith("**/"):
+            candidates.append(current[3:])
+        if "/**/" in current:
+            candidates.append(current.replace("/**/", "/", 1))
+        for collapsed in candidates:
+            if collapsed not in variants:
+                variants.add(collapsed)
+                pending.append(collapsed)
     return variants
 
 
