@@ -100,8 +100,11 @@ def main() -> None:
     lower = text.lower()
     if "does not depend on `frameworks/fara/`" not in lower:
         fail("candidate-independence declaration missing")
-    if "no fara primitive" not in lower and "does not require representation" not in lower:
-        fail("FARA-neutrality statement missing")
+    if (
+        "no clause requires representation" not in lower
+        and "does not require these grounds to be divided into fara primitives" not in lower
+    ):
+        fail("FARA-neutral decomposition statement missing")
     if "multiple reasoning classes" not in lower:
         fail("fragmentation outcome must remain allowed")
     if "no finite universal architecture" not in lower:
@@ -110,7 +113,11 @@ def main() -> None:
         fail("observability anti-repair rule missing")
 
     nonclaims = " ".join(registry.get("nonclaims", [])).lower()
-    for phrase in ("not established as necessary", "does not establish that one universal", "does not establish that fara represents"):
+    for phrase in (
+        "not established as necessary",
+        "does not establish that one universal",
+        "does not establish that fara represents",
+    ):
         if phrase not in nonclaims:
             fail(f"required nonclaim missing: {phrase}")
 
