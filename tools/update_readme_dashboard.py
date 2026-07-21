@@ -43,7 +43,7 @@ def parse_tasks(n=5):
         def grab(pat):
             m=re.search(pat,body); return m.group(1).strip() if m else 'not available'
         affected=re.findall(r'^  - (.+)$',body,re.M); source=rewrite_links(grab(r'- Source(?: gap)?: (.+)'),NEXT,OUT)
-        tasks.append((tid,title,source,[rewrite_links(a,NEXT,OUT) for a in affected],grab(r'- Suggested branch name: `([^`]+)`'),grab(r'- Suggested PR title: `([^`]+)`'))
+        tasks.append((tid,title,source,[rewrite_links(a,NEXT,OUT) for a in affected],grab(r'- Suggested branch name: `([^`]+)`'),grab(r'- Suggested PR title: `([^`]+)`')))
     return tasks[:n]
 def metrics():
     ev=entries(load(REG['evidence']) or {}); ex=entries(load(REG['external']) or {}); adv=entries(load(REG['adversarial']) or {}); pressure=(load(REG['pressure']) or {}).get('primitives',[])
