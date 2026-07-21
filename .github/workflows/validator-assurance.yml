@@ -38,21 +38,20 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p artifacts/validation/runtime
           key="$(openssl rand -hex 32)"
           export FAR_VALIDATION_CACHE_SIGNING_KEY="$key"
           python -m far_validation validate repository.hygiene --require-signed-cache
           printf '%s' "$key" > .far/cache-signing-key
-          tar -czf artifacts/validation/runtime/signed-cache.tar.gz .far/cache .far/cache-signing-key
+          tar -czf /tmp/signed-cache.tar.gz .far/cache .far/cache-signing-key
       - name: Attest signed cache bundle
         uses: actions/attest@v4
         with:
-          subject-path: artifacts/validation/runtime/signed-cache.tar.gz
+          subject-path: /tmp/signed-cache.tar.gz
       - name: Upload signed cache bundle
         uses: actions/upload-artifact@v4
         with:
           name: signed-validation-cache
-          path: artifacts/validation/runtime/signed-cache.tar.gz
+          path: /tmp/signed-cache.tar.gz
           if-no-files-found: error
           retention-days: 7
 
@@ -75,16 +74,16 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: signed-validation-cache
-          path: artifacts/validation/runtime
+          path: /tmp/signed-cache
       - name: Verify GitHub Sigstore cache provenance
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh attestation verify artifacts/validation/runtime/signed-cache.tar.gz --repo "${{ github.repository }}"
+        run: gh attestation verify /tmp/signed-cache/signed-cache.tar.gz --repo "${{ github.repository }}"
       - name: Consume signed cache on independent runner
         shell: bash
         run: |
           set -euo pipefail
-          tar -xzf artifacts/validation/runtime/signed-cache.tar.gz
+          tar -xzf /tmp/signed-cache/signed-cache.tar.gz
           export FAR_VALIDATION_CACHE_SIGNING_KEY="$(cat .far/cache-signing-key)"
           python -m far_validation validate repository.hygiene --require-signed-cache --format json > /tmp/cache-consumer.json
           python - <<'PY2'
