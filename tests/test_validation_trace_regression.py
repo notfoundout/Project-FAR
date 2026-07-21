@@ -1,13 +1,21 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 
 from far_validation.assured_engine import ValidationEngine
-from far_validation.tracing import _matches, _normalize_observed, parse_strace
+from far_validation.tracing import (
+    RuntimePolicy,
+    TraceReport,
+    _matches,
+    _normalize_observed,
+    audit_trace,
+    parse_strace,
+)
 from far_validation.trust import HMACTrust
 
 
@@ -22,6 +30,27 @@ class TraceContractRegressionTests(unittest.TestCase):
         self.assertTrue(_matches("mechanization/model.py", ("mechanization/**/*.py",)))
         self.assertTrue(_matches("tools", ("tools/check_one.py",)))
         self.assertTrue(_matches("README.md", ("**/*",)))
+
+    def test_directory_traversal_metadata_is_not_file_content(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "docs").mkdir()
+            (root / "secret.txt").write_text("secret\n", encoding="utf-8")
+            report = TraceReport(backend="test", reads=["docs", "secret.txt"])
+            policy = RuntimePolicy((), (), ("python",), (), True)
+            previous = Path.cwd()
+            os.chdir(root)
+            try:
+                audited = audit_trace(
+                    report,
+                    declared_inputs=(),
+                    command=("python", "check.py"),
+                    policy=policy,
+                    sandbox_copy=False,
+                )
+            finally:
+                os.chdir(previous)
+            self.assertEqual(audited.violations, ["undeclared read: secret.txt"])
 
     def test_process_cwd_tracking_excludes_temporary_child_repository(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
