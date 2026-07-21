@@ -98,10 +98,10 @@ class W35FactorizationTests(unittest.TestCase):
         for name in ("fara-specificity-resolved", "reasoning-contrast-execution"):
             self.assertEqual(gate_map[name]["status"], "satisfied")
             self.assertTrue(gate_map[name]["evidence"])
-        self.assertEqual(static["w35"]["current_results"]["candidate_invariants"], "complete_registered_scope_internal_execution")
-        self.assertEqual(static["w35"]["current_results"]["machinery_and_cost"], "not_executed")
-        self.assertFalse(static["w35"]["w5_authorized"])
-        self.assertFalse(static["target"]["w5_authorization"]["authorized"])
+        self.assertEqual(static["w35"]["current_results"]["candidate_invariants"], "complete")
+        self.assertEqual(static["w35"]["current_results"]["machinery_and_cost"], "complete")
+        self.assertTrue(static["w35"]["w5_authorized"])
+        self.assertTrue(static["target"]["w5_authorization"]["authorized"])
 
     def test_status_only_factorization_promotion_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
