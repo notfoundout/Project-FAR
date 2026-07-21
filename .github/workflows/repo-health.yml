@@ -28,16 +28,22 @@ jobs:
       shell: bash
       run: |
         set -o pipefail
-        python tools/repo_health_check.py --fast 2>&1 | tee repository-health.log
+        python tools/repo_health_check.py --fast 2>&1 | tee /tmp/repository-health.log
     - name: Print repository health root-cause tail
       if: always() && steps.health.outcome == 'failure'
-      run: tail -n 180 repository-health.log
+      run: tail -n 180 /tmp/repository-health.log
+    - name: Stage repository health log
+      if: always() && steps.health.outcome == 'failure'
+      run: |
+        rm -rf artifacts/validation/runtime
+        mkdir -p artifacts/validation/runtime
+        cp /tmp/repository-health.log artifacts/validation/runtime/repository-health.log
     - name: Upload repository health log
       if: always() && steps.health.outcome == 'failure'
       uses: actions/upload-artifact@v4
       with:
         name: repository-health-failure-log
-        path: repository-health.log
+        path: artifacts/validation
         if-no-files-found: error
         retention-days: 7
     - name: Enforce repository health result
