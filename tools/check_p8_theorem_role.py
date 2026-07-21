@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-"""Validate the frozen split P8 decision after bounded W4 closure."""
 from __future__ import annotations
 import json
 from pathlib import Path
@@ -15,6 +14,6 @@ def main()->int:
     premises=load(PREMISES); assert premises['version']=='1.7' and next(x for x in premises['entries'] if x['id']=='PRM-010')['decision']=='split'
     ledger=load(LEDGER); by={x['id']:x for x in ledger['obligations']}; assert by['LEM-SC-014']['status']=='proved' and by['LEM-SC-018']['status']=='proved' and by['OBS-SC-006']['status']=='refuted' and by['OBS-SC-010']['status']=='obstruction_established'
     w4=load(W4); assert w4['result']['global_nontriviality_status']=='proved_for_registered_control_families_over_S_core'
-    gates={x['name']:x for x in load(GATES)['gates']}; assert gates['formal-negative-controls']['status']=='satisfied'; assert gates['scoped-representation-proof']['status']=='not_satisfied'; assert gates['baseline-factorization-resolved']['status']=='not_satisfied'
-    print('P8 theorem-role decision: PASS (P8-I construction recovery and registered protection proved; Corr_8E and theorem remain separate)'); return 0
+    gates={x['name']:x for x in load(GATES)['gates']}; assert gates['formal-negative-controls']['status']=='satisfied'; assert gates['scoped-representation-proof']['status']=='not_satisfied'; assert gates['baseline-factorization-resolved']['status']=='satisfied' and gates['baseline-factorization-resolved']['evidence']; assert gates['fara-specificity-resolved']['status']=='not_satisfied'; assert gates['reasoning-contrast-execution']['status']=='not_satisfied'
+    print('P8 theorem-role decision: PASS'); return 0
 if __name__=='__main__': raise SystemExit(main())

@@ -22,6 +22,7 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         cls.baseline = load("theory/evaluation/generic-relational-baseline-v1.0.json")
         cls.scope = load("theory/evaluation/reasoning-and-contrast-scope-v1.0.json")
         cls.corpus_result = load("theory/evaluation/w3-5-corpus-freeze-result-v1.0.json")
+        cls.factor_result = load("theory/evaluation/w3-5-factorization-result-v1.0.json")
         cls.target = load("theory/evaluation/universal-structure-discovery-target-v1.0.json")
         cls.w35 = load("theory/evaluation/w3-5-specificity-and-discovery-gate.json")
         cls.candidates = load("theory/evaluation/universal-structure-candidate-registry.json")
@@ -41,7 +42,17 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         self.assertTrue(self.baseline["single_scalar_classification_prohibited"])
 
     def test_generic_baseline_has_no_result_yet(self) -> None:
-        self.assertTrue(all(value == "unresolved" for value in self.baseline["current_result"].values()))
+        expected = {
+            "expressiveness": "equivalent",
+            "translation": "bidirectional",
+            "constraint_strength": "fara_stricter",
+            "reasoning_specificity": "not_established",
+            "cost_relation": "tradeoff",
+            "overall_interpretation": "fara_constrained_equivalent",
+        }
+        self.assertEqual(self.baseline["current_result"], expected)
+        self.assertEqual(self.factor_result["dimensions"], expected)
+        self.assertFalse(self.factor_result["factorization_contract"]["primitive_reduction_established"])
 
     def test_positive_scope_is_independent_of_fara(self) -> None:
         self.assertTrue(self.scope["admission_rules"]["positive_independent_of_fara"])
@@ -80,23 +91,26 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
     def test_w4_and_corpus_freeze_do_not_resolve_w35(self) -> None:
         by_id = {item["id"]: item for item in self.ledger["obligations"]}
         self.assertEqual(by_id["OBS-SC-010"]["status"], "obstruction_established")
-        self.assertEqual(self.w35["status"], "in_progress_corpus_frozen")
+        self.assertEqual(self.w35["status"], "in_progress_factorization_complete")
         self.assertEqual(self.w35["current_results"]["reasoning_contrast_corpus"], "frozen")
         self.assertEqual(self.w35["current_results"]["reasoning_discrimination"], "not_executed")
+        self.assertEqual(self.w35["current_results"]["fara_specificity"], "unresolved")
 
     def test_w35_registers_only_the_corpus_artifact_as_complete(self) -> None:
         self.assertGreaterEqual(len(self.w35["required_result_artifacts"]), 8)
         by_id = {artifact["id"]: artifact for artifact in self.w35["required_result_artifacts"]}
-        corpus = by_id["W35-CORPUS-RESULT"]
-        self.assertEqual(corpus["status"], "complete")
-        self.assertEqual(corpus["artifact_id"], "RCS-CORPUS-001")
-        self.assertRegex(corpus["content_sha256"], r"^[0-9a-f]{64}$")
-        self.assertTrue((ROOT / corpus["path"]).is_file())
+        for artifact_id in ("W35-CORPUS-RESULT", "W35-FACTOR-RESULT"):
+            artifact = by_id[artifact_id]
+            self.assertEqual(artifact["status"], "complete")
+            self.assertRegex(artifact["content_sha256"], r"^[0-9a-f]{64}$")
+            self.assertTrue((ROOT / artifact["path"]).is_file())
+        self.assertEqual(by_id["W35-CORPUS-RESULT"]["artifact_id"], "RCS-CORPUS-001")
+        self.assertEqual(by_id["W35-FACTOR-RESULT"]["artifact_id"], "W35-FACTOR-RESULT-001")
         for artifact_id, artifact in by_id.items():
             self.assertIn("path", artifact)
             self.assertIn("artifact_id", artifact)
             self.assertIn("content_sha256", artifact)
-            if artifact_id != "W35-CORPUS-RESULT":
+            if artifact_id not in {"W35-CORPUS-RESULT", "W35-FACTOR-RESULT"}:
                 self.assertEqual(artifact["status"], "missing")
                 self.assertIsNone(artifact["path"])
                 self.assertIsNone(artifact["artifact_id"])
@@ -125,7 +139,8 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         self.assertEqual(by_name["reasoning-contrast-scope-framework-frozen"]["status"], "satisfied")
         self.assertEqual(by_name["reasoning-contrast-corpus-frozen"]["status"], "satisfied")
         self.assertTrue(by_name["reasoning-contrast-corpus-frozen"]["evidence"])
-        self.assertEqual(by_name["baseline-factorization-resolved"]["status"], "not_satisfied")
+        self.assertEqual(by_name["baseline-factorization-resolved"]["status"], "satisfied")
+        self.assertTrue(by_name["baseline-factorization-resolved"]["evidence"])
         self.assertEqual(by_name["fara-specificity-resolved"]["status"], "not_satisfied")
         self.assertEqual(by_name["reasoning-contrast-execution"]["status"], "not_satisfied")
         self.assertEqual(by_name["formal-negative-controls"]["status"], "satisfied")
@@ -153,18 +168,19 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         joined = "\n".join(errors)
         self.assertNotIn("OBS-SC-010 must have a terminal", joined)
         self.assertNotIn("concrete reasoning and contrast corpus must be frozen", joined)
+        self.assertNotIn("factorization dimension", joined)
         self.assertIn("is not complete", joined)
-        self.assertIn("factorization dimension", joined)
-        self.assertIn("baseline-factorization-resolved", joined)
+        self.assertIn("fara-specificity-resolved", joined)
         self.assertIn("reasoning-contrast-execution", joined)
 
     def test_makefile_runs_separation_and_corpus_checkers_three_times(self) -> None:
         text = (ROOT / "Makefile").read_text(encoding="utf-8")
         self.assertEqual(text.count("python tools/check_representation_discovery_separation.py"), 3)
         self.assertEqual(text.count("python tools/check_w3_5_corpus_freeze.py"), 3)
+        self.assertEqual(text.count("python tools/check_w3_5_factorization.py"), 3)
 
     # Legacy regression names are retained so the weakening audit can track the
-    # stronger post-freeze assertions without treating the state transition as
+    # stronger post-factorization assertions without treating the state transition as
     # test deletion.
     def test_makefile_runs_separation_checker_three_times(self) -> None:
         text = (ROOT / "Makefile").read_text(encoding="utf-8")
@@ -186,7 +202,8 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         errors = authorization_errors(w35, target, self.scope, self.gates, self.ledger, ROOT)
         self.assertTrue(errors)
         self.assertTrue(any("is not complete" in error for error in errors))
-        self.assertTrue(any("factorization dimension" in error for error in errors))
+        self.assertTrue(any("fara-specificity-resolved" in error for error in errors))
+        self.assertTrue(any("reasoning-contrast-execution" in error for error in errors))
 
     def test_w35_registers_immutable_evidence_fields(self) -> None:
         by_id = {artifact["id"]: artifact for artifact in self.w35["required_result_artifacts"]}
@@ -194,14 +211,16 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
             self.assertIn("path", artifact)
             self.assertIn("artifact_id", artifact)
             self.assertIn("content_sha256", artifact)
-        self.assertEqual(by_id["W35-CORPUS-RESULT"]["status"], "complete")
-        self.assertRegex(by_id["W35-CORPUS-RESULT"]["content_sha256"], r"^[0-9a-f]{64}$")
+        for artifact_id in ("W35-CORPUS-RESULT", "W35-FACTOR-RESULT"):
+            self.assertEqual(by_id[artifact_id]["status"], "complete")
+            self.assertRegex(by_id[artifact_id]["content_sha256"], r"^[0-9a-f]{64}$")
 
     def test_w4_completion_does_not_resolve_w35(self) -> None:
         by_id = {item["id"]: item for item in self.ledger["obligations"]}
         self.assertEqual(by_id["OBS-SC-010"]["status"], "obstruction_established")
-        self.assertEqual(self.w35["status"], "in_progress_corpus_frozen")
+        self.assertEqual(self.w35["status"], "in_progress_factorization_complete")
         self.assertFalse(self.w35["w5_authorized"])
+        self.assertEqual(self.w35["current_results"]["fara_specificity"], "unresolved")
 
 
 if __name__ == "__main__":

@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
-"""Validate the frozen S_core dependency ledger through completed W4."""
 from __future__ import annotations
 import json
 from collections import Counter, defaultdict, deque
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DOC=ROOT/'docs/research/s-core-construction-obstruction-ledger-v1.0.md'; REG=ROOT/'theory/evaluation/s-core-construction-obstruction-ledger.json'; TARGET=ROOT/'theory/evaluation/thm-target-001.json'; GATES=ROOT/'theory/evaluation/research-gates.json'; MAKE=ROOT/'Makefile'
-PROOFS={
-'W0':(ROOT/'docs/research/s-core-w0-normalization-proof-v1.0.md',ROOT/'theory/evaluation/s-core-w0-normalization-proof.json'),
-'W1':(ROOT/'docs/research/s-core-w1-direct-axis-proof-v1.0.md',ROOT/'theory/evaluation/s-core-w1-direct-axis-proof.json'),
-'W2':(ROOT/'docs/research/s-core-w2-dynamics-history-proof-v1.0.md',ROOT/'theory/evaluation/s-core-w2-dynamics-history-proof.json'),
-'W3':(ROOT/'docs/research/s-core-w3-global-witness-proof-v1.0.md',ROOT/'theory/evaluation/s-core-w3-global-witness-proof.json'),
-'W4':(ROOT/'docs/research/s-core-w4-negative-control-proof-v1.0.md',ROOT/'theory/evaluation/s-core-w4-negative-control-proof.json')}
+PROOFS={'W0':(ROOT/'docs/research/s-core-w0-normalization-proof-v1.0.md',ROOT/'theory/evaluation/s-core-w0-normalization-proof.json'),'W1':(ROOT/'docs/research/s-core-w1-direct-axis-proof-v1.0.md',ROOT/'theory/evaluation/s-core-w1-direct-axis-proof.json'),'W2':(ROOT/'docs/research/s-core-w2-dynamics-history-proof-v1.0.md',ROOT/'theory/evaluation/s-core-w2-dynamics-history-proof.json'),'W3':(ROOT/'docs/research/s-core-w3-global-witness-proof-v1.0.md',ROOT/'theory/evaluation/s-core-w3-global-witness-proof.json'),'W4':(ROOT/'docs/research/s-core-w4-negative-control-proof-v1.0.md',ROOT/'theory/evaluation/s-core-w4-negative-control-proof.json')}
 WAVE_ORDER={f'W{i}':i for i in range(6)}; TERMINAL={'proved','refuted','obstruction_established','scope_boundary_established','superseded'}
 def load(p): return json.loads(p.read_text(encoding='utf-8'))
 def dag(items):
@@ -41,11 +35,10 @@ def main()->int:
         else: assert x['evidence']==[]
     counts=Counter(x['status'] for x in items); s=d['execution_summary']; assert s=={'total':37,'construction':24,'obstruction':10,'assembly':3,'proved':24,'obstruction_established':1,'scope_boundary_established':1,'refuted':8,'open':3}; assert counts['proved']==24 and counts['refuted']==8 and counts['obstruction_established']==1 and counts['scope_boundary_established']==1 and counts['registered_unproved']==3
     t=load(TARGET)['lemma_program']; assert t['status']=='w0_w1_w2_w3_w4_complete_w5_blocked_by_w3_5' and t['proved_obligations']==24 and t['established_obstructions']==1 and t['refuted_obstruction_hypotheses']==8 and t['open_obligations']==3 and t['active_obligations']==[]
-    gates=load(GATES); req=set(gates['required_canonical_artifacts'])
-    canonical_paths=[DOC,REG,TARGET]+[p for pair in PROOFS.values() for p in pair]
+    gates=load(GATES); req=set(gates['required_canonical_artifacts']); canonical_paths=[DOC,REG,TARGET]+[p for pair in PROOFS.values() for p in pair]
     for p in canonical_paths: assert p.relative_to(ROOT).as_posix() in req,p
-    g={x['name']:x for x in gates['gates']}; assert g['formal-negative-controls']['status']=='satisfied'; assert g['scoped-representation-proof']['status']=='not_satisfied' and g['scoped-representation-proof']['evidence']==[]; assert g['baseline-factorization-resolved']['status']=='not_satisfied'
+    g={x['name']:x for x in gates['gates']}; assert g['formal-negative-controls']['status']=='satisfied'; assert g['scoped-representation-proof']['status']=='not_satisfied' and g['scoped-representation-proof']['evidence']==[]; assert g['baseline-factorization-resolved']['status']=='satisfied' and g['baseline-factorization-resolved']['evidence']; assert g['fara-specificity-resolved']['status']=='not_satisfied'; assert g['reasoning-contrast-execution']['status']=='not_satisfied'
     make=MAKE.read_text(encoding='utf-8')
     for checker in ('check_s_core_lemma_ledger.py','check_s_core_w0.py','check_s_core_w1.py','check_s_core_w2.py','check_s_core_w3.py','check_s_core_w4.py'): assert make.count(f'python tools/{checker}')==3
-    print('S_core lemma ledger: PASS (W0-W4 complete; 24 proved; 1 obstruction established; 8 refuted; 1 boundary; 3 assembly obligations blocked by W3.5)'); return 0
+    print('S_core lemma ledger: PASS'); return 0
 if __name__=='__main__': raise SystemExit(main())
