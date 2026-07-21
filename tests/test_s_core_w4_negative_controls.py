@@ -2,13 +2,16 @@ from __future__ import annotations
 
 import copy
 import json
+import sys
 import unittest
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
 
 from s_core_w3_reference import construct_witness, semantic_agreement, validate_package, verify_witness, W3Error
 from s_core_w4_negative_controls import CONTROL_IDS, CONTROL_SPEC, apply_control, evaluate_control, run_suite, suite_passes
 
-ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "theory/evaluation/s-core-w3-reference-fixtures.json"
 
 
