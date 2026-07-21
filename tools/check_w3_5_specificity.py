@@ -20,7 +20,6 @@ GATES = ROOT / "theory/evaluation/research-gates.json"
 TARGET = ROOT / "theory/evaluation/thm-target-001.json"
 CANDIDATES = ROOT / "theory/evaluation/universal-structure-candidate-registry.json"
 DOC = ROOT / "docs/research/w3-5-reasoning-discrimination-and-specificity-v1.0.md"
-AUDIT = ROOT / "docs/audits/w3-5-specificity-audit.md"
 
 EXPECTED_COUNTS = {
     "positive": {"reasoning_like": 8, "nonreasoning_like": 0, "borderline": 0, "unknown": 0},
@@ -53,6 +52,7 @@ def policy_errors(
     digests: dict[str, str],
 ) -> list[str]:
     errors: list[str] = []
+
     def require(ok: bool, message: str) -> None:
         if not ok:
             errors.append(message)
@@ -66,12 +66,16 @@ def policy_errors(
     require(discrimination.get("artifact_id") == "W35-SCOPE-RESULT-001", "scope-result identity changed")
     require(discrimination.get("status") == "complete", "scope result is not complete")
     require(discrimination.get("registered_results") == EXPECTED_COUNTS, "registered discrimination counts changed")
-    require(discrimination.get("primary_metrics") == {
-        "positive_sensitivity": "1.0",
-        "contrast_specificity": "1.0",
-        "balanced_accuracy": "1.0",
-        "statistical_inference": "not_authorized",
-    }, "primary metrics changed or statistical inference was added")
+    require(
+        discrimination.get("primary_metrics")
+        == {
+            "positive_sensitivity": "1.0",
+            "contrast_specificity": "1.0",
+            "balanced_accuracy": "1.0",
+            "statistical_inference": "not_authorized",
+        },
+        "primary metrics changed or statistical inference was added",
+    )
     contract = discrimination.get("execution_contract", {})
     require(contract.get("labels_joined_after_all_scores") is True, "labels were not joined after scoring")
     require(contract.get("semantic_coding_blind_or_independent") is False, "semantic coding was promoted")
@@ -134,10 +138,20 @@ def policy_errors(
 
 
 def validate_static(root: Path = ROOT) -> dict[str, Any]:
+    # This checker validates machine-readable package semantics. Canonical
+    # evidence-file existence, including the audit, is owned by
+    # check_research_gates.py so protected claim-boundary tracing does not
+    # duplicate cross-category filesystem dependencies.
     relative = {
-        "licensing": LICENSING, "discrimination": DISC, "specificity": SPEC,
-        "factorization": FACTOR, "w35": W35, "gates": GATES,
-        "target": TARGET, "candidates": CANDIDATES, "doc": DOC, "audit": AUDIT,
+        "licensing": LICENSING,
+        "discrimination": DISC,
+        "specificity": SPEC,
+        "factorization": FACTOR,
+        "w35": W35,
+        "gates": GATES,
+        "target": TARGET,
+        "candidates": CANDIDATES,
+        "doc": DOC,
     }
     paths = {name: root / path.relative_to(ROOT) for name, path in relative.items()}
     for path in paths.values():
@@ -150,9 +164,15 @@ def validate_static(root: Path = ROOT) -> dict[str, Any]:
         "specificity": sha256_file(paths["specificity"]),
     }
     errors = policy_errors(
-        data["licensing"], data["discrimination"], data["specificity"],
-        data["w35"], data["gates"], data["target"], data["candidates"],
-        data["factorization"], digests,
+        data["licensing"],
+        data["discrimination"],
+        data["specificity"],
+        data["w35"],
+        data["gates"],
+        data["target"],
+        data["candidates"],
+        data["factorization"],
+        digests,
     )
     if errors:
         raise ValidationError("; ".join(errors))
