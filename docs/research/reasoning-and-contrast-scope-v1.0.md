@@ -2,7 +2,7 @@
 
 ## Status
 
-Frozen prospective admission framework. The concrete positive and contrast corpora are not yet frozen, and execution remains blocked.
+Frozen prospective admission framework with frozen concrete corpus `RCS-CORPUS-001`. Candidate scoring and reasoning/contrast execution have not begun.
 
 Identifier: `RCS-001`.
 
@@ -10,11 +10,11 @@ Identifier: `RCS-001`.
 
 Universal-structure discovery requires positive and contrast classes whose membership is not defined by FARA compatibility or by possession of the candidate structure under test.
 
-This artifact freezes the family taxonomy, admission rules, required instance records, and anti-selection constraints. It does not freeze the actual systems that will constitute the comparison corpus.
+This artifact freezes the family taxonomy, admission rules, required instance records, and anti-selection constraints. The concrete corpus is frozen separately in [W3.5 Concrete Reasoning and Contrast Corpus Freeze v1.0](w3-5-concrete-corpus-freeze-v1.0.md).
 
-## What is frozen
+## Frozen framework
 
-The following are frozen prospectively:
+The following remain frozen prospectively:
 
 - positive and contrast family categories;
 - candidate-independent admission rules;
@@ -23,22 +23,24 @@ The following are frozen prospectively:
 - required fields for every concrete instance;
 - the distinction between framework freeze, corpus freeze, and execution.
 
-## What is not frozen
+## Frozen concrete corpus
 
-The following remain open:
+`RCS-CORPUS-001` freezes:
 
-- the identities of concrete positive instances;
-- the identities of concrete contrast instances;
+- eight positive instances from eight materially different reasoning families;
+- eight contrast instances from eight materially different structured-system families;
+- two disputed borderline instances;
 - instance-specific admission decisions and rationales;
-- source contracts and observation boundaries;
-- corpus balance and coverage;
-- any candidate-invariant score or classification.
+- source or observation contracts;
+- formalization boundaries;
+- candidate-exposure status;
+- immutable source and registry digests.
 
-The repository must not describe `RCS-001` as a frozen concrete scope until immutable instance registries satisfy the corpus-freeze requirements.
+The corpus freeze does not expose candidate scores or factorization results to admission.
 
 ## Positive reasoning families
 
-The first discovery program must draw formally specified instances from materially different families:
+The discovery program may draw formally specified instances from materially different families:
 
 - deductive proof;
 - probabilistic inference;
@@ -57,7 +59,7 @@ Inclusion requires an independently defended reasoning classification, an explic
 
 ## Contrast families
 
-The contrast program must draw structured systems that are not admitted merely because they lack FARA labels:
+The contrast program draws structured systems that are not admitted merely because they lack FARA labels:
 
 - passive databases;
 - event logs;
@@ -77,22 +79,7 @@ A system may not enter the positive class because it satisfies FARA, PB-001, a c
 
 A system may not enter the contrast class solely because it fails FARA or lacks the candidate invariant.
 
-Admission decisions and rationales must be frozen before candidate scoring or factorization results are exposed to the admission process.
-
-## Concrete corpus freeze
-
-The concrete corpus is frozen only when every admitted instance has:
-
-- a stable instance identifier and version;
-- a family classification;
-- an explicit positive, contrast, or disputed admission decision;
-- a written admission rationale independent of FARA and the tested candidate;
-- a source contract or observation contract;
-- a formalization boundary;
-- a recorded candidate-exposure status;
-- an immutable registry entry.
-
-Execution remains blocked while either the positive or contrast instance registry is empty.
+Admission decisions and rationales are frozen before candidate scoring or factorization results are exposed to the admission process.
 
 ## Candidate-neutral observations
 
@@ -109,7 +96,11 @@ For each admitted system the program records:
 - uncertainty and revision, if any;
 - provenance and correspondence limits.
 
-A field may be absent, inapplicable, or unresolved.
+A field may be absent, inapplicable, or unresolved only when that status is explicit. The frozen primary corpus supplies every field.
+
+## Execution status
+
+The concrete corpus is frozen and ready for candidate-neutral execution. No candidate-invariant score, GREL–FARA factorization, ablation, reconstruction, or reasoning-specificity result has been recorded.
 
 ## Decision use
 
@@ -124,10 +115,14 @@ A contrast occurrence does not automatically refute necessity. It may show that 
 
 ## Nonclaims
 
-Freezing this framework does not establish that:
+Freezing the framework and `RCS-CORPUS-001` does not establish that:
 
-- the concrete positive or contrast corpus is frozen;
-- any listed family is represented adequately;
-- every future admitted positive instance is reasoning;
+- the corpus is statistically representative;
+- the family lists are exhaustive;
+- every admitted positive instance is reasoning under every defensible definition;
 - contrast systems cannot reason;
-- the family lists are exhaustive.
+- candidate scoring or reasoning discrimination is complete;
+- FARA is specific to reasoning;
+- a universal structure exists;
+- W3.5 is resolved;
+- W5 is authorized.
