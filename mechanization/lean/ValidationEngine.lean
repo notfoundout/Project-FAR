@@ -34,7 +34,9 @@ theorem decide_passed_iff
     (checkSucceeds : Bool) :
     decide dependencies checkSucceeds = Status.passed ↔
       dependenciesPassed dependencies = true ∧ checkSucceeds = true := by
-  simp [decide, dependenciesPassed]
+  by_cases hDependencies : dependenciesPassed dependencies = true
+  · cases checkSucceeds <;> simp [decide, hDependencies]
+  · cases checkSucceeds <;> simp [decide, hDependencies]
 
 /-- Any failed dependency forces the dependent check into the blocked state. -/
 theorem failed_dependency_forces_block
