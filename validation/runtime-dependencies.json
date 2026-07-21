@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "checks": {
+    "adj.candidate-architectures": {
+      "inputs": [
+        "docs/architecture/architecture-neutral-research-engine-blueprint.md",
+        "docs/governance/candidate-architecture-standard-v1.0.md",
+        "docs/governance/research-architecture.md",
+        "docs/planning/architecture-neutral-research-roadmap.md"
+      ],
+      "outputs": []
+    },
+    "adj.pbts-package": {
+      "inputs": [
+        "docs/audits/pbts001-independent-replication-freeze-audit.md",
+        "docs/governance/anti-self-validation-standard.md",
+        "docs/governance/evidence-replication-and-freeze-standard-v1.0.md"
+      ],
+      "outputs": []
+    },
+    "governance.claim-boundaries": {
+      "inputs": [
+        "README.md",
+        "docs/governance/central-research-program.md",
+        "docs/governance/representation-discovery-separation-standard-v1.0.md",
+        "docs/planning/architecture-neutral-research-roadmap.md",
+        "docs/planning/deduction-first-proof-roadmap.md"
+      ],
+      "outputs": []
+    },
+    "governance.research-gates": {
+      "inputs": ["docs/**"],
+      "outputs": []
+    },
+    "generator.next-actions": {
+      "inputs": [
+        "README.md",
+        "docs/reports/**",
+        "docs/research/**",
+        "theory/**"
+      ],
+      "outputs": ["docs/planning/next-actions.md"]
+    },
+    "generator.project-status": {
+      "inputs": ["README.md"],
+      "outputs": ["docs/reports/project-status-generated.md"]
+    },
+    "generator.dashboard": {
+      "inputs": ["README.md"],
+      "outputs": ["README.md"]
+    }
+  }
+}
