@@ -23,6 +23,7 @@ jobs:
       - name: Run complete diagnostic matrix
         shell: bash
         run: |
+          set +e
           set -u
           mkdir -p diagnostic-logs
           : > diagnostic-logs/summary.txt
