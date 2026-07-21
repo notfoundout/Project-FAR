@@ -5,31 +5,13 @@ from pathlib import Path
 from typing import Any, Literal
 
 CheckStatus = Literal[
-    "not_started",
-    "running",
-    "passed",
-    "terminal_positive_result",
-    "terminal_negative_result",
-    "unresolved",
-    "blocked",
-    "blocked_by_root_failure",
-    "inapplicable",
-    "skipped",
-    "cancelled",
-    "timed_out",
-    "validation_failure",
-    "infrastructure_error",
+    "not_started", "running", "passed", "terminal_positive_result", "terminal_negative_result",
+    "unresolved", "blocked", "blocked_by_root_failure", "inapplicable", "skipped", "cancelled",
+    "timed_out", "validation_failure", "infrastructure_error",
 ]
 
 ACCEPTABLE_TERMINAL_STATUSES: frozenset[str] = frozenset(
-    {
-        "passed",
-        "terminal_positive_result",
-        "terminal_negative_result",
-        "unresolved",
-        "inapplicable",
-        "skipped",
-    }
+    {"passed", "terminal_positive_result", "terminal_negative_result", "unresolved", "inapplicable", "skipped"}
 )
 
 
@@ -45,11 +27,14 @@ class CheckDefinition:
     profiles: tuple[str, ...] = ()
     depends_on: tuple[str, ...] = ()
     inputs: tuple[str, ...] = ()
+    outputs: tuple[str, ...] = ()
     timeout_seconds: int = 300
     cacheable: bool = True
     deterministic: bool = True
     sandbox_copy: bool = False
     expect_no_changes: bool = False
+    trace_dependencies: bool = True
+    allow_network: bool = False
     protected: bool = False
     failure_code: str = "FAR-VAL-TEST-001"
     description: str = ""
@@ -71,7 +56,15 @@ class CheckResult:
     input_hashes: dict[str, str] = field(default_factory=dict)
     cache_key: str | None = None
     cache_hit: bool = False
+    cache_signature_verified: bool = False
+    cache_trust_domain: str = ""
     changed_files: list[str] = field(default_factory=list)
+    observed_reads: list[str] = field(default_factory=list)
+    observed_writes: list[str] = field(default_factory=list)
+    observed_executables: list[str] = field(default_factory=list)
+    network_attempts: list[str] = field(default_factory=list)
+    dependency_violations: list[str] = field(default_factory=list)
+    trace_backend: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
 
     @property
@@ -111,11 +104,12 @@ class RunSummary:
     selection_fallback_to_full: bool = False
     selection_notes: list[str] = field(default_factory=list)
     environment: dict[str, Any] = field(default_factory=dict)
+    assurance: dict[str, Any] = field(default_factory=dict)
 
     @property
     def successful(self) -> bool:
-        required = [r for r in self.results if r.status != "skipped"]
-        return bool(required) and all(r.successful for r in required)
+        required = [result for result in self.results if result.status != "skipped"]
+        return bool(required) and all(result.successful for result in required)
 
     def to_dict(self) -> dict[str, Any]:
         payload = asdict(self)
@@ -127,8 +121,14 @@ class RunSummary:
             and not result.dependency_failures
         ]
         payload["blocked_checks"] = [
-            result.check_id
+            result.check_id for result in self.results if result.status in {"blocked", "blocked_by_root_failure"}
+        ]
+        payload["trace_violations"] = {
+            result.check_id: result.dependency_violations
             for result in self.results
-            if result.status in {"blocked", "blocked_by_root_failure"}
+            if result.dependency_violations
+        }
+        payload["signed_cache_hits"] = [
+            result.check_id for result in self.results if result.cache_hit and result.cache_signature_verified
         ]
         return payload
