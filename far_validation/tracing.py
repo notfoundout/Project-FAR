@@ -268,6 +268,10 @@ def _derived_python_cache(path: str) -> bool:
     return "__pycache__" in parts or path.endswith((".pyc", ".pyo"))
 
 
+def _directory_metadata(path: str) -> bool:
+    return (Path.cwd() / path).is_dir()
+
+
 def audit_trace(
     report: TraceReport,
     *,
@@ -280,7 +284,7 @@ def audit_trace(
     command_paths = [item for item in command if "/" in item or item.endswith(".py")]
     read_patterns = tuple(declared_inputs) + policy.allow_read_patterns + tuple(command_paths)
     for path in report.reads:
-        if _derived_python_cache(path):
+        if _derived_python_cache(path) or _directory_metadata(path):
             continue
         if not _matches(path, read_patterns):
             report.violations.append(f"undeclared read: {path}")
