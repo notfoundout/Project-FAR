@@ -6,13 +6,13 @@ R=Path(__file__).resolve().parents[1]; P=R/'README.md'; B='<!-- BEGIN GENERATED 
 def j(p): return json.loads((R/p).read_text())
 def generate_index(): return None
 def block():
- s=j('theory/evaluation/reasoning-and-contrast-scope-v1.0.json'); d=j('theory/evaluation/w3-5-factorization-result-v1.0.json')['dimensions']; x=j('theory/evaluation/w3-5-reasoning-discrimination-result-v1.0.json')['registered_results']; q=j('theory/evaluation/w3-5-fara-specificity-result-v1.0.json')['result']; n=(len(s['positive_instances']),len(s['contrast_instances']),len(s['disputed_instances']))
+ s=j('theory/evaluation/reasoning-and-contrast-scope-v1.0.json'); d=j('theory/evaluation/w3-5-factorization-result-v1.0.json')['dimensions']; x=j('theory/evaluation/w3-5-reasoning-discrimination-result-v1.0.json')['registered_results']; q=j('theory/evaluation/w3-5-fara-specificity-result-v1.0.json')['result']; c=j('theory/evaluation/w3-5-candidate-test-result-v1.0.json'); n=(len(s['positive_instances']),len(s['contrast_instances']),len(s['disputed_instances'])); cc=c['classification_counts']
  return f'''{B}
 
 ## Repository Status
 
 - Current release: [docs/releases/project-far-v0.4.0.md](docs/releases/project-far-v0.4.0.md)
-- Current project phase: W3.5 candidate testing, reconstruction, full cost accounting, and claim closure
+- Current project phase: W3.5 machinery/cost, claim-impact, and preserved-failure closure
 - Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
 - Planner status: CURRENT ([planner](tools/self_advancement_plan.py))
 
@@ -21,8 +21,8 @@ def block():
 | Track | Status | Current boundary |
 |---|---|---|
 | REP | W0-W4 complete | Bounded construction and registered controls; theorem unproved |
-| ADJ | W3.5 in progress; corpus, factorization, discrimination, and specificity complete | {n[0]} positive, {n[1]} contrast, {n[2]} disputed; candidate, cost, and claim closure pending |
-| USD | Target frozen, unexecuted | No universal-structure candidate classified |
+| ADJ | W3.5 in progress; corpus, factorization, discrimination, specificity, and candidate tests complete | {n[0]} positive, {n[1]} contrast, {n[2]} disputed; cost, claim-impact, and failure closure pending |
+| USD | Target frozen; registered candidate list tested | No candidate indispensable within frozen class; universal structure unresolved |
 | W5 | Blocked | Requires complete evidence-backed `W3.5-SDG-001` |
 
 No aggregate completion percentage is authorized across REP, ADJ, and USD.
@@ -38,21 +38,19 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 - Reasoning discrimination: {x['positive']['reasoning_like']}/8 positives reasoning-like; {x['contrast']['nonreasoning_like']}/8 contrasts nonreasoning-like; {x['disputed']['borderline']}/2 disputed borderline.
 - FARA-specificity classification: `{q['classification']}`.
 - Unique FARA discriminative capacity: `{q['unique_discriminative_capacity_of_fara']}`.
-- Boundary: project-authored, non-blind semantic licensing over a finite synthetic corpus; no population inference, FARA necessity, or universal definition is claimed.
+- Candidate result: `{c['aggregate_result']}`.
+- Candidate classifications: derivable {cc['derivable']}; replaceable {cc['replaceable']}; architecture-dependent {cc['architecture_dependent']}; scope-dependent {cc['scope_dependent']}; generic-system-property {cc['generic_system_property']}; indispensable 0.
+- Boundary: project-authored, non-blind evaluation over a finite synthetic corpus; no population inference, exhaustive candidate coverage, FARA necessity, or universal nonexistence is claimed.
 
 ## Top Priority Tasks
 
-### STRATEGIC-003: Execute candidate ablation and reconstruction
+### STRATEGIC-004: Complete W3.5 machinery cost, claim-impact, and preserved-failure closure
 
-- Test every universal-structure hypothesis across the frozen corpus and alternative conceptual bases, counting equivalent reintroduction and preserving counterexamples.
-
-### STRATEGIC-004: Complete W3.5 cost and claim-impact audit
-
-- Produce complete machinery accounting, preserved failures, immutable links, and track-specific claim effects without erasing the qualified-negative specificity result.
+- Produce complete architecture and derived-machinery accounting, immutable claim effects, and preserved negative-result/nonclaim evidence.
 
 ### STRATEGIC-005: Assemble W5
 
-- Blocked until all remaining W3.5 artifacts are complete.
+- Blocked until all remaining W3.5 artifacts are complete and W3.5 is evidence-backed resolved.
 
 ## Universal-Structure Discovery
 
@@ -61,8 +59,9 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 - Frozen concrete corpus: [RCS-CORPUS-001](docs/research/w3-5-concrete-corpus-freeze-v1.0.md)
 - Factorization result: [W35-FACTOR-RESULT-001](docs/research/w3-5-grel-fara-factorization-v1.0.md)
 - Discrimination and specificity result: [W35-SCOPE-RESULT-001 / W35-SPEC-RESULT-001](docs/research/w3-5-reasoning-discrimination-and-specificity-v1.0.md)
+- Candidate result: [W35-CANDIDATE-RESULT-001](docs/research/w3-5-candidate-ablation-and-reconstruction-v1.0.md)
 - Candidate registry: [US-CANDIDATES-001](theory/evaluation/universal-structure-candidate-registry.json)
-- Current candidate result: unresolved
+- Current candidate result: no registered candidate indispensable within the frozen class; universal structure remains unresolved.
 
 ## Repository Navigation
 
@@ -70,6 +69,7 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 - [Next Actions](docs/planning/next-actions.md)
 - [GREL-FARA Factorization](docs/research/w3-5-grel-fara-factorization-v1.0.md)
 - [Reasoning Discrimination and Specificity](docs/research/w3-5-reasoning-discrimination-and-specificity-v1.0.md)
+- [Candidate Ablation and Reconstruction](docs/research/w3-5-candidate-ablation-and-reconstruction-v1.0.md)
 - [W3.5 Gate](docs/research/w3-5-specificity-and-discovery-gate-v1.0.md)
 - [Central Claim Registry](theory/evaluation/central-claim-registry.json)
 - [Research Gates](theory/evaluation/research-gates.json)
@@ -77,8 +77,8 @@ No aggregate completion percentage is authorized across REP, ADJ, and USD.
 ## Current Roadmap
 
 - REP: W0-W4 complete at bounded `S_core` scope.
-- ADJ: corpus, factorization, registered discrimination, and qualified specificity complete; execute candidate testing, reconstruction, full cost, failure, and claim closure.
-- USD: keep every candidate unresolved until candidate-neutral execution.
+- ADJ: corpus, factorization, registered discrimination, qualified specificity, and candidate testing complete; execute full cost, claim-impact, and preserved-failure closure.
+- USD: preserve the bounded no-indispensable-candidate result without promoting universal nonexistence.
 - W5: blocked until W3.5 resolves with immutable evidence.
 
 ## Command Center
@@ -97,7 +97,7 @@ make dashboard
 1. Run `make research-check` and `make health-fast`.
 2. Work only on an authorized REP, ADJ, or USD obligation.
 3. Preserve countermodels, equivalences, reductions, failures, assumptions, and nonclaims.
-4. Do not promote bounded discrimination into universal-structure or necessity status.
+4. Do not promote bounded candidate failure into universal nonexistence, necessity, or minimality status.
 5. Run full health before merge.
 
 {E}
