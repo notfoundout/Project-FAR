@@ -1,5 +1,4 @@
 {
-  "schema_version": "1.0",
   "checks": {
     "adj.candidate-architectures": {
       "inputs": [
@@ -18,6 +17,33 @@
       ],
       "outputs": []
     },
+    "generator.dashboard": {
+      "inputs": [
+        "README.md"
+      ],
+      "outputs": [
+        "README.md"
+      ]
+    },
+    "generator.next-actions": {
+      "inputs": [
+        "README.md",
+        "docs/reports/**",
+        "docs/research/**",
+        "theory/**"
+      ],
+      "outputs": [
+        "docs/planning/next-actions.md"
+      ]
+    },
+    "generator.project-status": {
+      "inputs": [
+        "README.md"
+      ],
+      "outputs": [
+        "docs/reports/project-status-generated.md"
+      ]
+    },
     "governance.claim-boundaries": {
       "inputs": [
         "README.md",
@@ -29,25 +55,29 @@
       "outputs": []
     },
     "governance.research-gates": {
-      "inputs": ["docs/**"],
+      "inputs": [
+        "docs/**"
+      ],
       "outputs": []
     },
-    "generator.next-actions": {
+    "governance.w5-authorization": {
       "inputs": [
-        "README.md",
-        "docs/reports/**",
-        "docs/research/**",
-        "theory/**"
+        "docs/audits/s-core-w4-proof-audit.md",
+        "docs/research/s-core-w4-negative-control-proof-v1.0.md",
+        "tests/**",
+        "theory/evaluation/**"
       ],
-      "outputs": ["docs/planning/next-actions.md"]
+      "outputs": []
     },
-    "generator.project-status": {
-      "inputs": ["README.md"],
-      "outputs": ["docs/reports/project-status-generated.md"]
-    },
-    "generator.dashboard": {
-      "inputs": ["README.md"],
-      "outputs": ["README.md"]
+    "repository.health-full": {
+      "inputs": [],
+      "outputs": [
+        ".git/index.lock",
+        "docs/planning/next-actions.md",
+        "docs/reports/**",
+        "theory/evaluation/comparative-representation/experiments/CRE-001/deterministic-verifier/**"
+      ]
     }
-  }
+  },
+  "schema_version": "1.0"
 }
