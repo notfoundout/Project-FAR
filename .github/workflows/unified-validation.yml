@@ -37,7 +37,8 @@ jobs:
         with:
           name: unified-validation-failures
           path: .far
-          if-no-files-found: ignore
+          include-hidden-files: true
+          if-no-files-found: error
           retention-days: 7
       - name: Enforce fast-profile result
         if: always() && steps.fast.outcome == 'failure'
@@ -68,7 +69,8 @@ jobs:
         with:
           name: unified-validation-full-failures
           path: .far
-          if-no-files-found: ignore
+          include-hidden-files: true
+          if-no-files-found: error
           retention-days: 7
       - name: Enforce full-profile result
         if: always() && steps.full.outcome == 'failure'
