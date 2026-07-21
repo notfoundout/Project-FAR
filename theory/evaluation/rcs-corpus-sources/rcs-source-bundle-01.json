@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "bundle_id": "RCS-SOURCE-BUNDLE-01",
+  "status": "frozen",
+  "records": [
+    {
+      "source_record_id": "RCS-POS-001-SRC",
+      "instance_id": "RCS-POS-001",
+      "title": "Natural-deduction proof episode",
+      "family": "deductive_proof",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance derives a theorem from stated premises through explicit inference rules and a checkable proof trace.",
+      "source_or_observation_contract": {"kind":"formal_source_contract","source_type":"candidate_registry_exposed_synthetic_formal_specification","authoritative_fields":["formal_system","candidate_neutral_observations","formalization_boundary"],"observation_boundary":"Only the enumerated states, transitions, rules, inputs, outputs, and recorded history are in scope.","excluded_processes":["implementation timing","hardware behavior","unstated operator intent","unrecorded external context"],"replay_requirement":"A conforming evaluator must be able to replay every enumerated transition from the frozen initial state."},
+      "formalization_boundary": "One finite natural-deduction derivation; metatheoretic completeness and human proof search are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true,
+      "candidate_neutral_observations": {"observable_or_formal_states":["goal_open","premises_registered","subproof_open","conclusion_derived","goal_closed"],"transitions_and_constraints":["assumption opens subproof","modus ponens derives consequence","discharge closes implication proof"],"represented_distinctions":["premise","temporary assumption","derived line","discharged dependency"],"declared_semantics":"Formulas denote ordinary classical propositions; a proof state is valid only when each step is licensed by the registered calculus.","history_and_path_dependence":"The final theorem depends on the order and nesting of assumption and discharge events.","objectives_or_tasks":"Derive Q→P from premise P and close the proof with a replayable derivation.","grounds_or_dependencies":["premise P","temporary assumption Q","implication-introduction rule"],"commitment_or_alternative_structure":"A closed theorem is distinguished from open assumptions and rejected proof branches.","uncertainty_and_revision":"No probabilistic uncertainty; revision is limited to backtracking before proof closure.","provenance_and_correspondence_limits":"The record establishes only the stated derivation, not the behavior of all deductive reasoners."},
+      "formal_system": {"initial_state":"goal Q -> P with premise P","rules":["assumption","reiteration","implication_introduction"],"trace":["assume Q","reiterate P","discharge Q"],"result":"Q -> P","represented_distinctions":["premise","temporary assumption","derived line","discharged dependency"],"commitment_or_alternative_structure":"A closed theorem is distinguished from open assumptions and rejected proof branches."}
+    },
+    {
+      "source_record_id": "RCS-POS-002-SRC",
+      "instance_id": "RCS-POS-002",
+      "title": "Bayesian diagnostic update",
+      "family": "probabilistic_inference",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance updates explicit competing fault hypotheses from observed evidence using a frozen probabilistic model.",
+      "source_or_observation_contract": {"kind":"formal_source_contract","source_type":"candidate_registry_exposed_synthetic_formal_specification","authoritative_fields":["formal_system","candidate_neutral_observations","formalization_boundary"],"observation_boundary":"Only the enumerated states, transitions, rules, inputs, outputs, and recorded history are in scope.","excluded_processes":["implementation timing","hardware behavior","unstated operator intent","unrecorded external context"],"replay_requirement":"A conforming evaluator must be able to replay every enumerated transition from the frozen initial state."},
+      "formalization_boundary": "Single exact Bayesian update over two hypotheses; parameter learning and causal discovery are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true,
+      "candidate_neutral_observations": {"observable_or_formal_states":["prior_distribution","evidence_observed","likelihoods_applied","posterior_distribution","decision_recorded"],"transitions_and_constraints":["Bayes update must normalize probabilities","decision threshold is fixed before evidence"],"represented_distinctions":["hypothesis","prior","likelihood","evidence","posterior","decision"],"declared_semantics":"Hypotheses are mutually exclusive faults; probabilities quantify modeled uncertainty under the frozen likelihood table.","history_and_path_dependence":"The posterior and decision depend on the recorded prior and evidence sequence.","objectives_or_tasks":"Determine whether sensor failure or valve failure is the better-supported diagnosis after alarm evidence.","grounds_or_dependencies":["prior probabilities","likelihood table","observed alarm","Bayes rule"],"commitment_or_alternative_structure":"Competing diagnoses remain alternatives until the frozen decision rule selects one.","uncertainty_and_revision":"Uncertainty is explicit and revised by conditionalization; model uncertainty is outside scope.","provenance_and_correspondence_limits":"The result is conditional on the frozen model and does not establish real-world diagnostic accuracy."},
+      "formal_system": {"hypotheses":["sensor_failure","valve_failure"],"priors":{"sensor_failure":0.4,"valve_failure":0.6},"likelihood_alarm":{"sensor_failure":0.2,"valve_failure":0.8},"observation":"alarm","decision_rule":"select posterior >= 0.7","represented_distinctions":["hypothesis","prior","likelihood","evidence","posterior","decision"],"commitment_or_alternative_structure":"Competing diagnoses remain alternatives until the frozen decision rule selects one."}
+    },
+    {
+      "source_record_id": "RCS-POS-003-SRC",
+      "instance_id": "RCS-POS-003",
+      "title": "Defeasible bird classification",
+      "family": "defeasible_reasoning",
+      "admission_decision": "positive",
+      "admission_rationale": "The instance applies defaults, records an exception, retracts an earlier conclusion, and preserves the reason for revision.",
+      "source_or_observation_contract": {"kind":"formal_source_contract","source_type":"candidate_registry_exposed_synthetic_formal_specification","authoritative_fields":["formal_system","candidate_neutral_observations","formalization_boundary"],"observation_boundary":"Only the enumerated states, transitions, rules, inputs, outputs, and recorded history are in scope.","excluded_processes":["implementation timing","hardware behavior","unstated operator intent","unrecorded external context"],"replay_requirement":"A conforming evaluator must be able to replay every enumerated transition from the frozen initial state."},
+      "formalization_boundary": "One finite priority-ordered default theory; open-world semantics beyond listed predicates are excluded.",
+      "candidate_exposure_status": "candidate_registry_preexisted_admission_rationale_independent_no_scores_or_results_exposed",
+      "candidate_independence_attestation": true,
+      "candidate_neutral_observations": {"observable_or_formal_states":["facts_loaded","default_applied","exception_observed","conclusion_retracted","exception_conclusion_accepted"],"transitions_and_constraints":["specific exception defeats general default","retraction must cite the defeated support"],"represented_distinctions":["fact","default","exception","defeated conclusion","revised conclusion"],"declared_semantics":"Defaults license provisional conclusions; explicit exception facts defeat less specific rules.","history_and_path_dependence":"The accepted conclusion changes only after the exception event; both support histories are retained.","objectives_or_tasks":"Classify whether Tweety flies after learning that Tweety is a penguin.","grounds_or_dependencies":["bird(Tweety)","default birds_fly","penguin(Tweety)","exception penguins_do_not_fly"],"commitment_or_alternative_structure":"Provisional and defeated conclusions are distinguished from the final accepted conclusion.","uncertainty_and_revision":"Revision is explicit: flies is retracted and not_flies is adopted.","provenance_and_correspondence_limits":"The example demonstrates revision under the frozen priority rule, not universal adequacy of that rule."},
+      "formal_system": {"facts":["bird(tweety)","penguin(tweety)"],"rules":["bird(x) normally_implies flies(x)","penguin(x) implies not_flies(x)","penguin exception outranks bird default"],"trace":["derive flies(tweety) defeasibly","observe penguin(tweety)","retract flies(tweety)","derive not_flies(tweety)"],"represented_distinctions":["fact","default","exception","defeated conclusion","revised conclusion"],"commitment_or_alternative_structure":"Provisional and defeated conclusions are distinguished from the final accepted conclusion."}
+    }
+  ]
+}
