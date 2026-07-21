@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "protected_checks": [
+    "bootstrap.manifest",
+    "selection.completeness",
+    "governance.research-gates",
+    "governance.claim-boundaries",
+    "governance.w5-authorization"
+  ],
+  "required_profiles": ["pr-fast", "pr-full", "full", "release"],
+  "forbidden_status_defaults": ["passed", "satisfied", "resolved", "authorized"],
+  "assurance_lock": "validation_bootstrap/assurance-lock.json"
+}

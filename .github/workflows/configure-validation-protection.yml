@@ -1,0 +1,21 @@
+name: Configure Validation Protection
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  configure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Configure strict main protection
+        env:
+          FAR_GITHUB_ADMIN_TOKEN: ${{ secrets.FAR_GITHUB_ADMIN_TOKEN }}
+        run: python tools/configure_validation_protection.py --repository "${{ github.repository }}" --branch main

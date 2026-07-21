@@ -1,0 +1,126 @@
+name: Unified Validation Shadow
+
+on:
+  pull_request:
+  merge_group:
+    types: [checks_requested]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bootstrap-and-fast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Verify independent bootstrap
+        run: python validation_bootstrap/verify.py
+      - name: Test unified validation engine
+        run: python -m unittest discover -s tests -p "test_unified_validation.py" -v
+      - name: Run unified fast profile without cache
+        id: fast
+        continue-on-error: true
+        run: python -m far_validation validate --profile pr-fast --no-cache
+      - name: Print fast-profile root failures
+        if: always() && steps.fast.outcome == 'failure'
+        run: python tools/print_validation_failures.py
+      - name: Stage fast-profile failure bundles
+        if: always() && steps.fast.outcome == 'failure'
+        run: |
+          rm -rf artifacts/validation/runtime
+          mkdir -p artifacts/validation/runtime
+          cp -R .far/. artifacts/validation/runtime/
+      - name: Upload fast-profile failure bundles
+        if: always() && steps.fast.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-validation-failures
+          path: artifacts/validation
+          if-no-files-found: error
+          retention-days: 7
+      - name: Enforce fast-profile result
+        if: always() && steps.fast.outcome == 'failure'
+        run: exit 1
+
+  python311-compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run Python 3.11 fast profile
+        id: py311
+        continue-on-error: true
+        run: python -m far_validation validate --profile pr-fast --no-cache
+      - name: Print Python 3.11 root failures
+        if: always() && steps.py311.outcome == 'failure'
+        run: python tools/print_validation_failures.py
+      - name: Stage Python 3.11 failure bundles
+        if: always() && steps.py311.outcome == 'failure'
+        run: |
+          rm -rf artifacts/validation/runtime
+          mkdir -p artifacts/validation/runtime
+          cp -R .far/. artifacts/validation/runtime/
+      - name: Upload Python 3.11 failure bundles
+        if: always() && steps.py311.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-validation-python311-failures
+          path: artifacts/validation
+          if-no-files-found: error
+          retention-days: 7
+      - name: Enforce Python 3.11 result
+        if: always() && steps.py311.outcome == 'failure'
+        run: exit 1
+
+  full-shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run unified full PR profile
+        id: full
+        continue-on-error: true
+        run: python -m far_validation validate --profile pr-full --no-cache
+      - name: Print full-profile root failures
+        if: always() && steps.full.outcome == 'failure'
+        run: python tools/print_validation_failures.py
+      - name: Stage full-profile failure bundles
+        if: always() && steps.full.outcome == 'failure'
+        run: |
+          rm -rf artifacts/validation/runtime
+          mkdir -p artifacts/validation/runtime
+          cp -R .far/. artifacts/validation/runtime/
+      - name: Upload full-profile failure bundles
+        if: always() && steps.full.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-validation-full-failures
+          path: artifacts/validation
+          if-no-files-found: error
+          retention-days: 7
+      - name: Enforce full-profile result
+        if: always() && steps.full.outcome == 'failure'
+        run: exit 1

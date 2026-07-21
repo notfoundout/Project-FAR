@@ -1,0 +1,59 @@
+{
+  "files": {
+    ".github/workflows/configure-validation-protection.yml": "31b93c343445911d6674349df94f79a96ec57e0452d76d577098fd5c486c9fc2",
+    ".github/workflows/lean.yml": "3faf789061c10b49f5c8b26dcd130a216d5507559a40429bc9fdbe3e454f56e3",
+    ".github/workflows/repo-health.yml": "8e85ad1b4f490cbc15e81c92f82768b44b00255a4ed0981f7007e17f234933f5",
+    ".github/workflows/specification-export.yml": "2aa19214981ed97c418a375063879cbe20494f215032f7afe5f7d5cd45968b0d",
+    ".github/workflows/unified-validation.yml": "62854b9bf73e018f53454a3edfe606b786d33726becc9f5adf4d4fd25389061b",
+    ".github/workflows/validator-assurance.yml": "fad753ce390df9ce78414e774db361aab1f7ac330601eff76e132fe85300118f",
+    "far_validation/__main__.py": "0cc78d06ee9221ab165d0f2ff804b5180cad62c72b9fcb448c0e4b875314b36e",
+    "far_validation/assured_engine.py": "3daddc9bd13af064f27f624e731c65d483b57c4936c0e27d7b1dcc83a537666d",
+    "far_validation/certificate.py": "3b289c6f92f8d339d9b56b937bd0101af4ab3c815d24b0d7bce97194cf51ff76",
+    "far_validation/formal_model.py": "52e6c8734fd5830233e00f2a5d94f1bc1f1aa33eeae91c9e9b348b9ced6b0f9e",
+    "far_validation/manifest.py": "097d4b1ac252dd8c5c505ef1fcd4b5b8e7099f411142762bfb46dbe23d67a9dd",
+    "far_validation/model.py": "a7dd1281cb6fc3e2ec9a9d9ef77bb005e26a6c412daa513edd9adc710c2d40e7",
+    "far_validation/mutations.py": "e626148264d9fb0101f4f1229fea3728efa78f596566645e6ea48b7bd59f04b8",
+    "far_validation/oracle.py": "5e3a5652323f715d8370ef2e03cb28821e2dd84b5359e29389e5ed6dec485800",
+    "far_validation/tracing.py": "3cd16ac267cc450d93db7a0939621b2ba71473fac42ca3507613c59153423830",
+    "far_validation/trust.py": "9be0833e8d30f8245317601efc8637b1f7d9989556752f3554dba140276cd07a",
+    "far_validation/weakening.py": "aae88e582f096015e5246ffb079ae263b212e66177a5a4e041176253990b0fde",
+    "formal/ValidationEngine.tla": "73697921f7f34efc4acc10a224e1ac1aae75a821b9f6b366cc3f669b374a6a40",
+    "mechanization/lean/ValidationEngine.lean": "54372afeb15f9025ea477d33aab9a4714a34f223862c27b37ad292ee63208269",
+    "tests/test_validation_assurance.py": "edbd3610ca7def54b75bab7e982cf669273fb291a9125b2c16f90daac3b4073c",
+    "tests/test_validation_trace_regression.py": "e7e6b68884c98fcfbf548a03b416b9226d47969b91420742a427be03a2e2fac3",
+    "tools/assemble_validation_certificate.py": "8d2e3692e5530879d7e9d183cbe27981d0c2e3444d6fce05b52888beaf47dec8",
+    "tools/configure_validation_protection.py": "c4d8b59d54c04c489979a7b4b3ebaeb26fcff39d6c15dc0c178453c810960f38",
+    "validation/runtime-dependencies.json": "7454b08c9923a275b95a50e60ccd98bd2f5b4bb29e4fbb6a269fa013c6cb6977",
+    "validation/runtime-policy.json": "fe6d98faa56f4f096f56d1d28d04fe20fd0b189f3842e9b465343b9aad78b79a",
+    "validation/test-weakening-waivers.json": "87f021cfe95a27fbf469e4c8176260c02251f53d6d16ef1fabb89882cfd5c6ad",
+    "validation_bootstrap/verify.py": "ce4e899f22fc6d752e816255959d204670247661fe21a9b27f776243c52774b1"
+  },
+  "required_evidence": [
+    "independent-oracle",
+    "test-weakening",
+    "lean-proof",
+    "formal-model",
+    "mutation-campaign"
+  ],
+  "runtime_policy": "validation/runtime-policy.json",
+  "schema_version": "1.0",
+  "workflow": {
+    "path": ".github/workflows/validator-assurance.yml",
+    "required_fragments": [
+      "merge_group:",
+      "merge-authority:",
+      "signed-cache-producer:",
+      "signed-cache-consumer:",
+      "uses: actions/attest@v4",
+      "gh attestation verify",
+      "--trace-dependencies --require-trace --require-signed-cache",
+      "python -m far_validation oracle",
+      "python -m far_validation weakening",
+      "lean\" mechanization/lean/ValidationEngine.lean",
+      "python -m far_validation formal",
+      "python -m far_validation mutations",
+      "python tools/assemble_validation_certificate.py",
+      "--expected-tree \"$(git rev-parse HEAD^{tree})\""
+    ]
+  }
+}

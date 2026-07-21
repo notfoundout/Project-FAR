@@ -256,7 +256,7 @@ def main() -> int:
             "Multiple paths created by one person, one assistant context, or one organization count as R2 at most",
             "RUN-001 is not used as the answer key",
             "Package freeze alone satisfies none of these gates",
-            "does not establish FARA compliance",
+            "- FARA compliance;",
             "Register qualified independent replicators",
         ]
         for phrase in required_phrases:
