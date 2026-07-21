@@ -53,23 +53,24 @@ def validate(root:Path=ROOT):
     require(result['trial_artifact']['materialized_atomic_trials']==648,'materialized count mismatch')
     require(result['execution']=={'expected_atomic_trials':648,'preserved_atomic_trials':648,'ablation_evidence_complete':True,'reconstruction_evidence_complete':True,'equivalent_reintroduction_evidence_complete':True,'machinery_cost_complete':True},'execution completeness invalid')
     require(result['aggregate_result']=='registered_candidate_axes_resolved_at_frozen_internal_scope','aggregate invalid')
-    require(result['claim_effect']['W5_authorized'] is False and result['claim_effect']['universal_structure']=='unresolved','claim boundary violated')
+    require(result['claim_effect']['W5_authorized'] is False and result['claim_effect']['universal_structure']=='unresolved','historical candidate claim boundary violated')
     rb={x['id']:x for x in registry['candidates']}
     require(set(rb)==set(recorded),'registry mismatch')
     require(registry['result_artifact']['content_sha256']==sha(paths['result']),'registry result digest mismatch')
     require(registry['trial_artifact']['content_sha256']==sha(paths['execution']),'registry execution digest mismatch')
     for cid,r in recorded.items():
         for axis in AXES: require(rb[cid][axis]==r[axis],f'{cid} registry mismatch')
-    current=w35['current_results']
-    require(current['candidate_invariants']=='complete_registered_scope_internal_execution','gate candidate state invalid')
-    require(w35['status']=='in_progress_candidate_complete' and w35['w5_authorized'] is False,'gate/W5 state invalid')
+    current=w35['current_results']; resolved=w35['status']=='resolved'
+    expected_candidate='complete' if resolved else 'complete_registered_scope_internal_execution'
+    require(current['candidate_invariants']==expected_candidate,'gate candidate state invalid')
+    require(w35['status'] in {'in_progress_candidate_complete','resolved'} and w35['w5_authorized'] is resolved,'gate/W5 state invalid')
     artifact={x['id']:x for x in w35['required_result_artifacts']}['W35-CANDIDATE-RESULT']
     require(artifact['status']=='complete' and artifact['artifact_id']=='W35-CANDIDATE-RESULT-001','candidate result not complete')
     require(artifact['content_sha256']==sha(paths['result']),'gate digest mismatch')
-    return {'status':'pass','atomic_trials':648,'candidates':12,'axis_counts':counts,'aggregate_result':result['aggregate_result']}
+    return {'status':'pass','atomic_trials':648,'candidates':12,'axis_counts':counts,'aggregate_result':result['aggregate_result'],'w5_authorized':w35['w5_authorized']}
 def main():
     try: report=validate()
     except (OSError,KeyError,TypeError,ValueError,json.JSONDecodeError) as exc:
         print(f'FAR-VAL-CAND-001: {exc}'); return 1
-    print("W3.5 candidate execution: PASS (648 atomic trials; five axes mechanically derived; W5 blocked)"); return 0
+    print(f"W3.5 candidate execution: PASS (648 atomic trials; five axes mechanically derived; W5 authorized={report['w5_authorized']})"); return 0
 if __name__=='__main__': raise SystemExit(main())
