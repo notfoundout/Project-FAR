@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 from far_validation.assured_engine import ValidationEngine
-from far_validation.oracle import analyze_checker_path, analyze_checker_source
+from far_validation.oracle import _manifest_commands, analyze_checker_path, analyze_checker_source
 from far_validation.tracing import (
     RuntimePolicy,
     TraceReport,
@@ -153,6 +153,31 @@ class OracleDelegationRegressionTests(unittest.TestCase):
         self.assertTrue(finding.accepted, finding.failures)
         trivial = analyze_checker_source("print('PASS')\n", "generator.py", role="generator")
         self.assertFalse(trivial.accepted)
+
+    def test_canonical_tests_use_stable_manifest_default_failure_code(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "validation").mkdir()
+            (root / "tools").mkdir()
+            (root / "tools" / "run_tests.py").write_text("print('tests')\n", encoding="utf-8")
+            manifest = {
+                "schema_version": "1.0",
+                "profiles": {"pr-fast": ["tests.canonical"]},
+                "protected_checks": [],
+                "global_invalidation_paths": [],
+                "checks": [{
+                    "id": "tests.canonical",
+                    "title": "tests",
+                    "category": "tests",
+                    "command": [sys.executable, "tools/run_tests.py"],
+                    "profiles": ["pr-fast"],
+                    "inputs": ["tests/**"],
+                }],
+            }
+            (root / "validation" / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+            commands, failures = _manifest_commands(root)
+            self.assertIn("tests.canonical", commands)
+            self.assertEqual(failures, [])
 
 
 if __name__ == "__main__":
