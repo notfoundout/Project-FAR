@@ -24,6 +24,8 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Compile FARCore
         run: lean mechanization/lean/FARCore.lean
+      - name: Compile bounded W5 theorem
+        run: lean mechanization/lean/SCoreW5.lean
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
@@ -47,3 +49,5 @@ jobs:
         run: exit 1
       - name: Check T-003 alignment
         run: python -m unittest tests.test_t003_lean_alignment
+      - name: Check bounded W5 alignment
+        run: python -m unittest tests.test_s_core_w5_lean_alignment
