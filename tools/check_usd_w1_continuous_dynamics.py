@@ -19,10 +19,7 @@ def load(path: Path) -> dict:
 def main() -> int:
     for path in (SCOPE, FIXTURES, RESULT, PROOF, AUDIT):
         assert path.is_file(), path
-
-    scope = load(SCOPE)
-    fixtures = load(FIXTURES)
-    result = load(RESULT)
+    scope, fixtures, result = load(SCOPE), load(FIXTURES), load(RESULT)
     proof = PROOF.read_text(encoding="utf-8")
     audit = AUDIT.read_text(encoding="utf-8")
 
@@ -41,35 +38,31 @@ def main() -> int:
     assert "nonunique flows" in admission["exclusions"]
     assert "Zeno event accumulation" in admission["exclusions"]
     prohibited = set(scope["observation_boundary"]["prohibited"])
-    assert "future-trajectory oracle" in prohibited
-    assert "exact-real equality oracle" in prohibited
-    assert "unregistered search for missed guard crossings" in prohibited
-    assert "finite time grid treated as the exact trajectory" in prohibited
+    assert {"future-trajectory oracle", "exact-real equality oracle", "unregistered search for missed guard crossings", "finite time grid treated as the exact trajectory"} <= prohibited
 
     obligations = set(scope["preservation_obligations"])
     expected_obligations = {f"CD-EXT-{i:03d}_{suffix}" for i, suffix in [
-        (1, "total_uniform_constructor"),
-        (2, "flow_semantics_preserved"),
-        (3, "time_and_order_preserved"),
-        (4, "guard_and_reset_semantics_preserved"),
-        (5, "commitment_ground_dependency_preserved"),
-        (6, "history_and_revision_preserved"),
-        (7, "error_refinement_coherent"),
-        (8, "no_discretization_collapse"),
+        (1, "total_uniform_constructor"), (2, "flow_semantics_preserved"),
+        (3, "time_and_order_preserved"), (4, "guard_and_reset_semantics_preserved"),
+        (5, "commitment_ground_dependency_preserved"), (6, "history_and_revision_preserved"),
+        (7, "error_refinement_coherent"), (8, "no_discretization_collapse"),
         (9, "registered_negative_controls_rejected"),
     ]}
     assert obligations == expected_obligations
 
     by_id = {item["id"]: item for item in fixtures["fixtures"]}
     assert set(by_id) == {
-        "CD-LIN-001", "CD-NLIN-001", "CD-HYB-001",
-        "CD-NEG-GRID-001", "CD-NEG-ORACLE-001",
+        "CD-LIN-001", "CD-NLIN-001", "CD-HYB-001", "CD-NEG-GRID-001",
+        "CD-NEG-ORACLE-001", "CD-BOUND-UNCERT-EVENT-001",
         "CD-BOUND-NONUNIQ-001", "CD-BOUND-ZENO-001",
     }
     assert all(by_id[item]["kind"] == "positive" for item in ("CD-LIN-001", "CD-NLIN-001", "CD-HYB-001"))
     assert all(by_id[item]["kind"] == "negative" for item in ("CD-NEG-GRID-001", "CD-NEG-ORACLE-001"))
-    assert all(by_id[item]["kind"] == "scope_boundary" for item in ("CD-BOUND-NONUNIQ-001", "CD-BOUND-ZENO-001"))
+    boundaries = ("CD-BOUND-UNCERT-EVENT-001", "CD-BOUND-NONUNIQ-001", "CD-BOUND-ZENO-001")
+    assert all(by_id[item]["kind"] == "scope_boundary" for item in boundaries)
     mutations = set(fixtures["mutation_targets"])
+    assert "remove_event_completeness_certificate_requirement" in mutations
+    assert "permit_undeclared_missed_event_search" in mutations
     assert "accept_fixed_grid_as_exact" in mutations
     assert "promote_terminal_outcome_to_extension_proved" in mutations
     assert "promote_universal_structure_claim" in mutations
@@ -85,13 +78,11 @@ def main() -> int:
     fixture_results = result["fixture_results"]
     assert all(fixture_results[item] == "pass" for item in ("CD-LIN-001", "CD-NLIN-001", "CD-HYB-001"))
     assert all(fixture_results[item] == "rejected" for item in ("CD-NEG-GRID-001", "CD-NEG-ORACLE-001"))
-    assert all(fixture_results[item] == "excluded" for item in ("CD-BOUND-NONUNIQ-001", "CD-BOUND-ZENO-001"))
+    assert all(fixture_results[item] == "excluded" for item in boundaries)
 
     theorem_effect = result["theorem_effect"]
     assert theorem_effect["THM-IRD-EXT-001"] == "partial_progress_third_feature_subclass_resolved"
-    assert all(theorem_effect[key] == "unresolved" for key in (
-        "THM-US-EXIST-001", "THM-US-INV-001", "THM-US-NEC-001", "THM-US-MIN-001"
-    ))
+    assert all(theorem_effect[key] == "unresolved" for key in ("THM-US-EXIST-001", "THM-US-INV-001", "THM-US-NEC-001", "THM-US-MIN-001"))
     claim_effect = result["claim_effect"]
     assert claim_effect["effective_lipschitz_continuous_dynamics_representation"] == "proved_for_certificate_bounded_S_cd_lip_eff"
     assert claim_effect["all_continuous_dynamics_representation"] == "unresolved"
