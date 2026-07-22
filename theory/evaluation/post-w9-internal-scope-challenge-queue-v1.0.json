@@ -5,9 +5,10 @@
   "status":"frozen",
   "completed_workstreams":[
     {"target_pr":270,"workstream":"SC-W1-SCOPE-NEUTRALITY","result":"scope_challenge_protocol_and_neutrality_controls_frozen"},
-    {"target_pr":271,"workstream":"SC-W2-BOUNDARY-REASONING","result":"no_boundary_case_yet_requires_new_kernel_primitive_but_evidential_boundary_must_remain_open"}
+    {"target_pr":271,"workstream":"SC-W2-BOUNDARY-REASONING","result":"no_boundary_case_yet_requires_new_kernel_primitive_but_evidential_boundary_must_remain_open"},
+    {"target_pr":272,"workstream":"SC-W3-CONTRACT-LADDER","result":"rccd_is_contract_relative_but_not_shown_construct_loaded_under_independently_justified_full_contract"}
   ],
-  "next_action":{"target_pr":272,"workstream":"SC-W3-CONTRACT-LADDER","title":"Execute weaker and alternative preservation contracts","branch":"research/execute-sc-w3-contract-ladder"},
-  "ordered_followups":[273,274,275],
+  "next_action":{"target_pr":273,"workstream":"SC-W4-REPRESENTATION-ESCAPE","title":"Search broader effective representation families for RCCD escape","branch":"research/execute-sc-w4-representation-escape"},
+  "ordered_followups":[274,275],
   "blocked_actions":["external proof review","independent replication","claim final unrestricted answer","add supportive mappings outside the frozen challenge design"]
 }
