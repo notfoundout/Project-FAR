@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "TUE-W1-UNKNOWN-BOUNDARY-001",
+  "status": "complete_internal_unknown_boundary_adjudication",
+  "parent_program": "POST-SC-TUE-001",
+  "target_pr": 277,
+  "question": "Can the registered evidential Unknowns be made assessable without redefining success after observation?",
+  "frozen_measurement_contract": {
+    "pre_mapping_source_distinctions_required": true,
+    "candidate_generation_trace_required_for_creative_case": true,
+    "reason_or_salience_elicitation_required_for_moral_case": true,
+    "selective_ground_defeat_intervention_required": true,
+    "path_sensitive_retest_required": true,
+    "uniform_query_interface_required": true,
+    "missing_evidence_is_unknown_not_pass": true,
+    "retrospective_rationalization_not_equivalent_to_process_ground": true,
+    "all_prompting_logging_elicitation_and_decoder_machinery_charged": true
+  },
+  "cases": [
+    {
+      "id": "UB-CREATIVE-INSTRUMENTED",
+      "case": "instrumented creative hypothesis generation",
+      "source_distinctions": ["candidate generation", "candidate rejection", "constraint-sensitive selection", "ground revision", "search lineage"],
+      "instrumentation": ["time-ordered candidate log", "rejection-reason capture", "constraint perturbation", "selective ground removal", "branch-preserving replay"],
+      "observed_result": "assessable_rccd_realization",
+      "rccd_realization": {
+        "R1": "candidate and selected hypothesis commitments",
+        "R2": "generation, rejection, and acceptance constraints",
+        "R3": "support, conflict, and defeater relations",
+        "R4": "search branch and revision lineage",
+        "R5": "uniform recovery of candidates, grounds, constraints, and lineage"
+      },
+      "extension_test": "No distinction required a sixth primitive after search operators, similarity functions, stochastic proposal mechanisms, and evaluators were charged as domain machinery.",
+      "classification": "unknown_resolved_within_rccd"
+    },
+    {
+      "id": "UB-MORAL-ELICITED",
+      "case": "elicited tacit moral salience",
+      "source_distinctions": ["salient considerations", "permitted and forbidden actions", "defeasible reasons", "case-history dependence", "response to selective reason defeat"],
+      "instrumentation": ["structured contrast cases", "confidence and salience elicitation", "selective reason defeat", "order reversal", "delayed consistency retest"],
+      "observed_result": "partially_assessable_rccd_realization_with_residual_tacit_boundary",
+      "rccd_realization": {
+        "R1": "action, value, and case commitments",
+        "R2": "normative permissibility and comparison constraints",
+        "R3": "reasons, defeaters, and authority or value dependencies",
+        "R4": "judgment and reconsideration history",
+        "R5": "uniform recovery of articulated commitments and reasons"
+      },
+      "extension_test": "No articulated distinction required a sixth primitive, but some reported salience remained unavailable to reliable recovery and therefore cannot be counted as a complete pass.",
+      "classification": "principled_inaccessibility_boundary"
+    },
+    {
+      "id": "UB-INACCESSIBLE-GENERAL",
+      "case": "systems with inaccessible reasoning distinctions",
+      "source_distinctions": ["internal grounds", "counterfactual admissibility", "revision-sensitive dependencies", "path identity"],
+      "instrumentation": ["input-output intervention", "state perturbation where available", "trace request", "counterfactual query"],
+      "observed_result": "insufficient_access_for_full_preservation_adjudication",
+      "rccd_realization": null,
+      "extension_test": "Inaccessibility does not establish a sixth primitive or an RCCD counterexample because the relevant preservation facts cannot be tested.",
+      "classification": "principled_inaccessibility_boundary"
+    }
+  ],
+  "counts": {
+    "unknowns_resolved_within_rccd": 1,
+    "genuine_extension_required": 0,
+    "principled_inaccessibility_boundary": 2,
+    "mixed_or_unresolved": 0
+  },
+  "terminal_result": "instrumentation_resolves_creative_generation_within_rccd_while_tacit_and_inaccessible_cases_define_a_principled_evidential_boundary_without_kernel_extension",
+  "program_outcome_mapping": "principled_inaccessibility_boundary",
+  "claim_effect": {
+    "creative_generation_unknown": "resolved_for_instrumented_cases",
+    "tacit_moral_salience_unknown": "partially_resolved_with_residual_inaccessibility",
+    "inaccessible_processes": "outside_adjudicable_preservation_scope_until_access_improves",
+    "sixth_primitive": "not_found",
+    "faithful_rccd_counterexample": "not_found"
+  },
+  "next_decisive_workstream": "TUE-W2-DEFEATING-CONDITION-CAMPAIGN",
+  "nonclaims": [
+    "all creative processes are instrumentable",
+    "all moral salience is articulable",
+    "inaccessible systems satisfy RCCD",
+    "inaccessible systems refute RCCD",
+    "actual cognitive or physical implementation of RCCD",
+    "external validation"
+  ]
+}
