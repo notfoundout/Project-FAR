@@ -16,7 +16,6 @@ minimality, uniqueness, reasoning specificity, or universal structure.
 
 namespace FAR.SCoreW5
 
-/-- Finite explicit source presentations used by the bounded theorem. -/
 structure Source where
   configurations : List String
   commitments : List String
@@ -28,7 +27,6 @@ structure Source where
   evidentialStatus : List String
   deriving Repr, DecidableEq
 
-/-- The fixed theorem-facing FARA interface used for every bounded source. -/
 structure Target where
   universe : List String
   positions : List String
@@ -46,19 +44,12 @@ structure Target where
   provenance : List String
   deriving Repr, DecidableEq
 
-/-- Explicit witness connecting each source preservation axis to the target. -/
-structure Witness (source : Source) (target : Target) where
-  configuration : target.state = source.configurations
-  commitment : target.positions = source.commitments
-  stake : target.investigation = source.stakes
-  ground : target.provenance = source.grounds
-  admissibility : target.calculus = source.admissibleTransitions
-  consequence : target.result = source.consequences
-  historical : target.history = source.history
-  evidential : target.interpretation = source.evidentialStatus
+structure Witness where
+  constructorId : String
+  deriving Repr, DecidableEq
 
-/-- Internal faithful-representation predicate used by the W5 bounded theorem. -/
-def FaithfulSplit (source : Source) (target : Target) (_witness : Witness source target) : Prop :=
+def FaithfulSplit (source : Source) (target : Target) (witness : Witness) : Prop :=
+  witness.constructorId = "uniform-S_core-v1" ∧
   target.state = source.configurations ∧
   target.positions = source.commitments ∧
   target.investigation = source.stakes ∧
@@ -68,7 +59,6 @@ def FaithfulSplit (source : Source) (target : Target) (_witness : Witness source
   target.history = source.history ∧
   target.interpretation = source.evidentialStatus
 
-/-- One uniform constructor into the same fixed target structure for all sources. -/
 def encode (source : Source) : Target :=
   {
     universe := source.configurations ++ source.commitments ++ source.stakes
@@ -87,61 +77,45 @@ def encode (source : Source) : Target :=
     provenance := source.grounds
   }
 
-/-- Canonical preservation witness produced by the uniform constructor. -/
-def encodeWitness (source : Source) : Witness source (encode source) :=
-  {
-    configuration := rfl
-    commitment := rfl
-    stake := rfl
-    ground := rfl
-    admissibility := rfl
-    consequence := rfl
-    historical := rfl
-    evidential := rfl
-  }
+def encodeWitness : Witness :=
+  { constructorId := "uniform-S_core-v1" }
 
-/-- The canonical witness satisfies all eight internal preservation clauses. -/
 theorem encode_is_faithful (source : Source) :
-    FaithfulSplit source (encode source) (encodeWitness source) := by
-  exact ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
+    FaithfulSplit source (encode source) encodeWitness := by
+  simp [FaithfulSplit, encode, encodeWitness]
 
-/-- ASM-SC-001: one fixed target schema and one uniform constructor cover `S_core`. -/
 theorem asm_sc_001_common_schema :
-    ∀ source : Source, Nonempty (Target × Witness source (encode source)) := by
+    ∀ source : Source, Nonempty (Target × Witness) := by
   intro source
-  exact ⟨(encode source, encodeWitness source)⟩
+  exact ⟨(encode source, encodeWitness)⟩
 
-/-- ASM-SC-002 / THM-CORE-REP-001: every bounded source has a faithful target witness. -/
 theorem asm_sc_002_bounded_faithful_representation :
     ∀ source : Source,
-      ∃ target : Target, ∃ witness : Witness source target,
+      ∃ target : Target, ∃ witness : Witness,
         FaithfulSplit source target witness := by
   intro source
-  exact ⟨encode source, encodeWitness source, encode_is_faithful source⟩
+  exact ⟨encode source, encodeWitness, encode_is_faithful source⟩
 
-/-- The bounded impossibility alternative is refuted by the constructive witness. -/
 theorem bounded_impossibility_refuted (source : Source) :
-    ¬ (∀ target : Target, ∀ witness : Witness source target,
+    ¬ (∀ target : Target, ∀ witness : Witness,
         ¬ FaithfulSplit source target witness) := by
   intro impossible
-  exact impossible (encode source) (encodeWitness source) (encode_is_faithful source)
+  exact impossible (encode source) encodeWitness (encode_is_faithful source)
 
-/-- ASM-SC-003: bounded theorem-family adjudication. -/
 theorem asm_sc_003_theorem_family :
     (∀ source : Source,
-      ∃ target : Target, ∃ witness : Witness source target,
+      ∃ target : Target, ∃ witness : Witness,
         FaithfulSplit source target witness) ∧
     (∀ source : Source,
-      ¬ (∀ target : Target, ∀ witness : Witness source target,
+      ¬ (∀ target : Target, ∀ witness : Witness,
           ¬ FaithfulSplit source target witness)) := by
   constructor
   · exact asm_sc_002_bounded_faithful_representation
   · exact bounded_impossibility_refuted
 
-/-- Exact quantified result registered by the W5 proof artifact. -/
 theorem thm_core_rep_001 :
     ∀ source : Source,
-      ∃ target : Target, ∃ witness : Witness source target,
+      ∃ target : Target, ∃ witness : Witness,
         FaithfulSplit source target witness :=
   asm_sc_002_bounded_faithful_representation
 
