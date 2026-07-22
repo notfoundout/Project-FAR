@@ -1,41 +1,28 @@
 {
   "schema_version": "1.0",
   "queue_id": "POST-USD-IKD-QUEUE-001",
-  "version": "1.8",
-  "status": "frozen",
+  "version": "1.9",
+  "status": "internal_program_complete",
   "parent_program": "POST-USD-IKD-001",
   "registration_pr": 260,
   "completed_workstreams": [
-    {"target_pr": 261, "workstream": "IKD-W1-CANDIDATE-ARCHITECTURES", "result": "candidate_architecture_universe_frozen_unexecuted"},
-    {"target_pr": 262, "workstream": "IKD-W2-EXPANDED-COMPETITION", "result": "three_incomparable_successful_architectures_in_frozen_bounded_scope"},
-    {"target_pr": 263, "workstream": "IKD-W3-COMMON-FACTOR", "result": "one_bounded_nontrivial_common_factor_candidate_supported"},
-    {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION", "result": "bounded_cross_feature_compositional_closure_supported_with_explicit_compatibility_conditions"},
-    {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE", "result": "bounded_expanded_representation_invariance_supported"},
-    {"target_pr": 266, "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION", "result": "no_strictly_cheaper_non_equivalent_reconstruction_found_in_expanded_registered_search"},
-    {"target_pr": 267, "workstream": "IKD-W7-LOWER-BOUNDS", "result": "all_five_rccd_components_have_conditional_lower_bounds_on_defined_class"},
-    {"target_pr": 268, "workstream": "IKD-W8-MINIMAL-FRONTIER", "result": "one_nontrivial_common_kernel_on_defined_class_pending_terminal_adjudication"}
+    {"target_pr":261,"workstream":"IKD-W1-CANDIDATE-ARCHITECTURES","result":"candidate_architecture_universe_frozen_unexecuted"},
+    {"target_pr":262,"workstream":"IKD-W2-EXPANDED-COMPETITION","result":"three_incomparable_successful_architectures_in_frozen_bounded_scope"},
+    {"target_pr":263,"workstream":"IKD-W3-COMMON-FACTOR","result":"one_bounded_nontrivial_common_factor_candidate_supported"},
+    {"target_pr":264,"workstream":"IKD-W4-CROSS-FEATURE-COMPOSITION","result":"bounded_cross_feature_compositional_closure_supported_with_explicit_compatibility_conditions"},
+    {"target_pr":265,"workstream":"IKD-W5-EXPANDED-INVARIANCE","result":"bounded_expanded_representation_invariance_supported"},
+    {"target_pr":266,"workstream":"IKD-W6-GLOBAL-RECONSTRUCTION","result":"no_strictly_cheaper_non_equivalent_reconstruction_found_in_expanded_registered_search"},
+    {"target_pr":267,"workstream":"IKD-W7-LOWER-BOUNDS","result":"all_five_rccd_components_have_conditional_lower_bounds_on_defined_class"},
+    {"target_pr":268,"workstream":"IKD-W8-MINIMAL-FRONTIER","result":"one_nontrivial_common_kernel_on_defined_class_pending_terminal_adjudication"},
+    {"target_pr":269,"workstream":"IKD-W9-TERMINAL-ADJUDICATION","result":"bounded_rccd_universality_theorem_supported_internally"}
   ],
   "next_action": {
-    "target_pr": 269,
-    "workstream": "IKD-W9-TERMINAL-ADJUDICATION",
-    "title": "Issue the bounded internal answer to the universal-structure question",
-    "branch": "research/execute-ikd-w9-terminal-adjudication",
-    "deliverables": [
-      "integrated W1-W8 evidence ledger",
-      "explicit C P E theorem scope",
-      "terminal outcome selection",
-      "bounded necessity and common-kernel theorem statement",
-      "unrestricted-universality nonclaim",
-      "external and empirical bridge requirements",
-      "declared post-internal stopping rule"
-    ]
+    "phase":"external_validation_and_empirical_bridge",
+    "status":"not_authorized_by_internal_queue",
+    "requirements":["independent proof review","independent technical reconstruction","adversarial conceptual replication","held-out cross-context testing","empirical correspondence studies"]
   },
   "ordered_followups": [],
-  "blocked_actions": [
-    "release EVC-W1 external review package before W9 adjudication",
-    "release EVC-W2 R3 replication package before W9 adjudication",
-    "release EVC-W3 R4 adversarial package before W9 adjudication",
-    "claim independent validation",
-    "claim unrestricted universality"
-  ]
+  "blocked_actions": ["claim independent validation","claim unrestricted universality","claim actual-process correspondence without empirical evidence"],
+  "terminal_outcome":"one_nontrivial_common_kernel",
+  "terminal_result":"bounded_rccd_universality_theorem_supported_internally"
 }
