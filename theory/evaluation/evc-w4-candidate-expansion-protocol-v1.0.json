@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "EVC-W4-CANDIDATE-EXPANSION-001",
+  "version": "1.0",
+  "status": "frozen_unexecuted",
+  "parent_program": "POST-USD-EVC-001",
+  "purpose": "Test whether materially new candidate architectures alter the frozen FARA/LTS-PROV minimal frontier without treating failure to find a candidate as proof of exhaustiveness.",
+  "minimum_requirement": "At least one materially new architecture that is neither FARA nor LTS-PROV and was selected without optimizing against their known scores.",
+  "candidate_independence": {
+    "required": [
+      "architecture proposal precedes access to candidate-specific frontier scores where practicable",
+      "proposer records conceptual source, primitives, operations, invariants, and intended reasoning commitments",
+      "candidate is evaluated under the same preservation contract and componentwise cost preorder",
+      "all adapters, decoders, bridges, canonicalizers, hidden state, and derived machinery are charged"
+    ],
+    "disallowed": [
+      "mere renaming or syntactic refactoring of FARA or LTS-PROV",
+      "hybrid that imports either winner wholesale without charging the imported machinery",
+      "candidate-specific benchmark exceptions",
+      "post-hoc primitive changes made only after seeing failed obligations",
+      "selective omission of negative controls or unresolved gates"
+    ]
+  },
+  "material_novelty_tests": [
+    "primitive ontology differs in more than names or grouping",
+    "state and transition commitments are not commitment-equivalent to an existing candidate by a low-cost bidirectional translation",
+    "history, semantics, dependency, and revision mechanisms are independently specified",
+    "candidate has at least one discriminating architectural commitment that could change preservation or cost results"
+  ],
+  "evaluation_stages": [
+    "admission and novelty review",
+    "frozen candidate declaration",
+    "canonical mapping to the existing bounded benchmark",
+    "preservation evaluation",
+    "full machinery ledger construction",
+    "commitment-equivalence and translation analysis",
+    "invariance and ablation stress tests",
+    "minimal-frontier recomputation",
+    "counterexample and negative-control review",
+    "terminal classification"
+  ],
+  "decision_rules": {
+    "admission": "A candidate enters only if every material-novelty test is resolved pass or an explicit unresolved admission is reported.",
+    "repair": "Substantive post-freeze repair creates a new candidate version and cannot overwrite the original result.",
+    "frontier": "The frontier is recomputed componentwise with no scalar score and no preferred-vocabulary tie breaker.",
+    "failure": "No successful new candidate means only that this registered expansion did not alter the frontier.",
+    "weakest_gate": "The terminal outcome cannot be stronger than the least-resolved mandatory stage."
+  },
+  "terminal_outcomes": [
+    "frontier_unchanged",
+    "new_equivalent_minimum",
+    "new_incomparable_minimum",
+    "new_dominant_candidate",
+    "no_successful_new_candidate",
+    "unresolved"
+  ],
+  "required_outputs": [
+    "candidate declaration",
+    "novelty dossier",
+    "mapping artifacts",
+    "preservation vector",
+    "complete machinery ledger",
+    "translation and equivalence report",
+    "invariance and ablation results",
+    "updated frontier",
+    "negative-control results",
+    "machine-readable terminal result"
+  ],
+  "nonclaims": [
+    "the candidate universe is exhaustive",
+    "failure to alter the frontier proves global minimality",
+    "an admitted candidate is successful",
+    "the current FARA/LTS-PROV frontier is universal",
+    "actual-process correspondence follows from formal fit"
+  ]
+}
