@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W1-OH-RESULT-001",
+  "version": "1.0",
+  "status": "complete_bounded_extension_proved",
+  "parent_program": "POST-W5-USD-001",
+  "scope_contract": "USD-W1-OH-SCOPE-001",
+  "source_class": "S_hist_eff",
+  "target_class": "A_FARA",
+  "new_target_primitive": false,
+  "construction": {
+    "history": "represented as one coherent directed family of finite prefix objects rather than a completed finite trace",
+    "extension": "one uniform constructor maps every requested source prefix and its next-step interface into a compatible target prefix",
+    "identity": "stable event names and prefix embeddings preserve event identity and order across extensions",
+    "dependencies": "each finite dependency cone is represented explicitly and commutes with prefix extension",
+    "revisions": "finitely supported revisions and rule changes retain before-and-after records without deleting superseded history",
+    "recovery": "one uniform recovery map reconstructs every requested finite source prefix without future-history access or source-specific decoding"
+  },
+  "proved_obligations": [
+    "OH-EXT-001_total_uniform_prefix_constructor",
+    "OH-EXT-002_prefix_coherence_preserved",
+    "OH-EXT-003_event_identity_and_order_preserved",
+    "OH-EXT-004_dependency_cones_preserved",
+    "OH-EXT-005_commitment_ground_dependency_preserved",
+    "OH-EXT-006_revision_and_rule_change_history_preserved",
+    "OH-EXT-007_unbounded_extension_remains_available",
+    "OH-EXT-008_no_fixed_horizon_collapse",
+    "OH-EXT-009_registered_negative_controls_rejected"
+  ],
+  "fixture_results": {
+    "OH-LINEAR-001": "pass",
+    "OH-BRANCH-001": "pass",
+    "OH-REV-001": "pass",
+    "OH-NEG-HORIZON-001": "rejected",
+    "OH-NEG-FUTURE-001": "rejected",
+    "OH-BOUND-INFINITE-PAST-001": "excluded",
+    "OH-BOUND-GLOBAL-REWRITE-001": "excluded"
+  },
+  "terminal_outcome": "proper_subclass_only",
+  "reason": "The construction proves faithful representation for effectively presented countably open-ended histories with finite recoverable dependency cones and coherent prefix extension. It does not cover non-effective histories, unrecoverable infinite-past dependence, unbounded retroactive rewrites, or future-complete oracle access.",
+  "theorem_effect": {
+    "THM-IRD-EXT-001": "partial_progress_fourth_feature_subclass_resolved",
+    "THM-US-EXIST-001": "unresolved",
+    "THM-US-INV-001": "unresolved",
+    "THM-US-NEC-001": "unresolved",
+    "THM-US-MIN-001": "unresolved"
+  },
+  "claim_effect": {
+    "effective_open_ended_history_representation": "proved_for_S_hist_eff",
+    "all_open_ended_history_representation": "unresolved",
+    "S_IRD_representation": "unresolved",
+    "universal_structure": "unresolved",
+    "primitive_necessity": "not_established",
+    "minimality": "not_established",
+    "uniqueness": "not_established",
+    "actual_process_correspondence": "unresolved"
+  },
+  "machine_check_status": "not_mechanized",
+  "independent_review_status": "not_started",
+  "nonclaims": [
+    "all infinite histories are represented",
+    "the future-complete history is available at each stage",
+    "non-effective or uncountable histories are covered",
+    "open-ended history representation establishes a universal kernel",
+    "FARA is necessary minimal or unique",
+    "independent verification has occurred"
+  ]
+}

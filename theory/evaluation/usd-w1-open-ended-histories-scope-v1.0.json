@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "USD-W1-OH-SCOPE-001",
+  "version": "1.0",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W1-SCOPE-EXT",
+  "feature_family": "open_ended_histories",
+  "source_class": "S_hist_eff",
+  "admission_rule": {
+    "candidate_independent": true,
+    "history_domain": "a finite or countably unbounded sequence of effectively indexed events with no frozen terminal length",
+    "prefix_access": "a total uniform procedure returns every requested finite prefix and its declared annotations",
+    "transition_locality": "each next event, admissibility judgment, and revision effect is determined from a finite effectively recoverable dependency cone",
+    "persistence": "prefix embeddings preserve prior event identity, order, grounds, dependencies, and revision records",
+    "reasoning_layer": "commitments, grounds, dependencies, revisions, evidential states, and rule changes are finitely described at every finite stage",
+    "presentation": "uniform algorithms for prefix enumeration, dependency-cone recovery, transition checking, and prefix extension",
+    "exclusions": [
+      "histories requiring a future-complete oracle",
+      "non-effective event indexing",
+      "steps whose declared justification depends on an unrecoverable infinite past",
+      "global revisions that rewrite an unbounded past without an effective finite change certificate",
+      "uncountable event domains without effective names",
+      "actual-process correspondence"
+    ]
+  },
+  "observation_boundary": {
+    "analyst_access": "the frozen effective presentation and any requested finite prefix",
+    "represented_agent_access": "only source-declared observations and history available at the represented stage",
+    "prohibited": [
+      "future-history oracle",
+      "fixed terminal horizon presented as total coverage",
+      "source-instance-specific decoder",
+      "undeclared compression that loses event identity or dependency history"
+    ]
+  },
+  "preservation_obligations": [
+    "OH-EXT-001_total_uniform_prefix_constructor",
+    "OH-EXT-002_prefix_coherence_preserved",
+    "OH-EXT-003_event_identity_and_order_preserved",
+    "OH-EXT-004_dependency_cones_preserved",
+    "OH-EXT-005_commitment_ground_dependency_preserved",
+    "OH-EXT-006_revision_and_rule_change_history_preserved",
+    "OH-EXT-007_unbounded_extension_remains_available",
+    "OH-EXT-008_no_fixed_horizon_collapse",
+    "OH-EXT-009_registered_negative_controls_rejected"
+  ],
+  "counterexample_policy": {
+    "one_valid_countermodel_blocks_extension_proved": true,
+    "unknown_is_not_pass": true,
+    "post_freeze_scope_repair_requires_new_version": true,
+    "failure_to_find_counterexample_is_not_proof": true
+  },
+  "allowed_terminal_outcomes": [
+    "extension_proved",
+    "proper_subclass_only",
+    "countermodel",
+    "new_assumption_required",
+    "unresolved"
+  ],
+  "nonclaims": [
+    "all infinite histories are admitted",
+    "the complete future exists as a represented object at every stage",
+    "non-effective or uncountable histories are covered",
+    "open-ended histories establish universal structure",
+    "necessity minimality or uniqueness is established"
+  ]
+}
