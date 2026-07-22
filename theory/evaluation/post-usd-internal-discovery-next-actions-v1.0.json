@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "queue_id": "POST-USD-IKD-QUEUE-001",
+  "version": "1.0",
+  "status": "frozen",
+  "parent_program": "POST-USD-IKD-001",
+  "registration_pr": 260,
+  "next_action": {
+    "target_pr": 261,
+    "workstream": "IKD-W1-CANDIDATE-ARCHITECTURES",
+    "title": "Freeze materially new universal-kernel candidate architectures",
+    "branch": "research/freeze-ikd-w1-candidate-architectures",
+    "deliverables": [
+      "candidate-independent admission contract",
+      "at least six materially different architecture families",
+      "anti-derivative and hidden-reconstruction tests",
+      "independent motivation record for each candidate",
+      "unchanged preservation and failure contract",
+      "complete machinery and equivalent-reintroduction ledger",
+      "frozen terminal outcomes for candidate admission"
+    ]
+  },
+  "ordered_followups": [
+    {"target_pr": 262, "workstream": "IKD-W2-EXPANDED-COMPETITION"},
+    {"target_pr": 263, "workstream": "IKD-W3-COMMON-FACTOR"},
+    {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION"},
+    {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE"},
+    {"target_pr": 266, "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION"},
+    {"target_pr": 267, "workstream": "IKD-W7-LOWER-BOUNDS"},
+    {"target_pr": 268, "workstream": "IKD-W8-MINIMAL-FRONTIER"},
+    {"target_pr": 269, "workstream": "IKD-W9-TERMINAL-ADJUDICATION"}
+  ],
+  "blocked_actions": [
+    "release EVC-W1 external review package",
+    "release EVC-W2 R3 replication package",
+    "release EVC-W3 R4 adversarial package",
+    "claim independent validation",
+    "claim a universal kernel before IKD-W9"
+  ]
+}
