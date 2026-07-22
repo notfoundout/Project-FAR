@@ -55,9 +55,14 @@ class PostUSDInternalDiscoveryContinuationTests(unittest.TestCase):
     def test_next_action_is_candidate_architecture_freeze(self):
         queue = self.load(QUEUE)
         self.assertEqual(queue["registration_pr"], 260)
-        self.assertEqual(queue["next_action"]["target_pr"], 261)
-        self.assertEqual(queue["next_action"]["workstream"], "IKD-W1-CANDIDATE-ARCHITECTURES")
-        self.assertIn("anti-derivative and hidden-reconstruction tests", queue["next_action"]["deliverables"])
+        next_pr = queue["next_action"]["target_pr"]
+        self.assertIn(next_pr, {261, 262})
+        if next_pr == 261:
+            self.assertEqual(queue["next_action"]["workstream"], "IKD-W1-CANDIDATE-ARCHITECTURES")
+            self.assertIn("anti-derivative and hidden-reconstruction tests", queue["next_action"]["deliverables"])
+        else:
+            self.assertEqual(queue["next_action"]["workstream"], "IKD-W2-EXPANDED-COMPETITION")
+            self.assertEqual(queue["completed_workstreams"][0]["target_pr"], 261)
 
     def test_terminal_outcomes_include_positive_negative_and_unresolved(self):
         program = self.load(PROGRAM)

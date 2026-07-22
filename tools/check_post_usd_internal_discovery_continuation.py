@@ -10,6 +10,7 @@ QUEUE = ROOT / "theory/evaluation/post-usd-internal-discovery-next-actions-v1.0.
 RESEARCH = ROOT / "docs/research/post-usd-internal-discovery-continuation-v1.0.md"
 AUDIT = ROOT / "docs/audits/post-usd-internal-discovery-continuation-audit.md"
 EVC = ROOT / "theory/evaluation/post-w5-usd-next-program-v1.0.json"
+W1_FREEZE = ROOT / "theory/evaluation/ikd-w1-candidate-architecture-freeze-v1.0.json"
 
 
 def load(path: Path) -> dict:
@@ -70,20 +71,28 @@ def main() -> int:
     assert queue["queue_id"] == "POST-USD-IKD-QUEUE-001"
     assert queue["parent_program"] == program["program_id"]
     assert queue["registration_pr"] == 260
-    assert queue["next_action"]["target_pr"] == 261
-    assert queue["next_action"]["workstream"] == "IKD-W1-CANDIDATE-ARCHITECTURES"
-    assert [item["target_pr"] for item in queue["ordered_followups"]] == list(range(262, 270))
+    next_pr = queue["next_action"]["target_pr"]
+    assert next_pr in {261, 262}
+    if next_pr == 261:
+        assert queue["next_action"]["workstream"] == "IKD-W1-CANDIDATE-ARCHITECTURES"
+        assert [item["target_pr"] for item in queue["ordered_followups"]] == list(range(262, 270))
+    else:
+        assert W1_FREEZE.is_file()
+        freeze = load(W1_FREEZE)
+        assert freeze["status"] == "frozen_unexecuted"
+        assert queue["next_action"]["workstream"] == "IKD-W2-EXPANDED-COMPETITION"
+        assert queue["completed_workstreams"][0]["target_pr"] == 261
+        assert [item["target_pr"] for item in queue["ordered_followups"]] == list(range(263, 270))
     assert "release EVC-W1 external review package" in queue["blocked_actions"]
 
     assert evc["program_id"] == "POST-USD-EVC-001"
     assert evc["status"] == "registered_unexecuted"
     assert "External-package hold" in research
-    assert "PR #261 must freeze" in research
     assert "Separate featurewise success is not treated as compositional closure" in audit
     assert "Failure to find a common factor is not global proof of nonexistence" in audit
     assert "internal_discovery_continuation_registered_external_execution_deferred" in audit
 
-    print("POST-USD internal discovery continuation: PASS (external execution deferred; PR #261 authorized)")
+    print(f"POST-USD internal discovery continuation: PASS (external execution deferred; PR #{next_pr} authorized)")
     return 0
 
 
