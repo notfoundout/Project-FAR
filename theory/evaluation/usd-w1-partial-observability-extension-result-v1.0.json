@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W1-PO-RESULT-001",
+  "version": "1.0",
+  "status": "complete_bounded_extension_proved",
+  "parent_program": "POST-W5-USD-001",
+  "scope_contract": "USD-W1-PO-SCOPE-001",
+  "source_class": "S_po_fin",
+  "target_class": "A_FARA",
+  "new_target_primitive": false,
+  "construction": {
+    "latent_states": "represented as target state objects not exposed to the policy interface",
+    "observations": "represented through an explicit observation relation or finite-support kernel",
+    "information_state": "represented as the set or finite-support belief over latent states compatible with observation history",
+    "policy": "represented as a transition constraint measurable with respect to observation history",
+    "history": "observation, information-state, commitment, dependency, and revision histories remain distinct",
+    "evidential_status": "internal evidential status is indexed to available observations rather than analyst-visible latent state"
+  },
+  "proved_obligations": [
+    "PO-EXT-001_total_uniform_constructor",
+    "PO-EXT-002_observation_indistinguishability_preserved",
+    "PO-EXT-003_information_state_preserved",
+    "PO-EXT-004_policy_measurability_preserved",
+    "PO-EXT-005_transition_observation_update_preserved",
+    "PO-EXT-006_commitment_ground_dependency_preserved",
+    "PO-EXT-007_history_and_revision_preserved",
+    "PO-EXT-008_no_true_state_leakage",
+    "PO-EXT-009_registered_negative_controls_rejected"
+  ],
+  "fixture_results": {
+    "PO-DET-001": "pass",
+    "PO-STOCH-001": "pass",
+    "PO-HIST-001": "pass",
+    "PO-NEG-LEAK-001": "rejected",
+    "PO-NEG-COLLAPSE-001": "rejected"
+  },
+  "terminal_outcome": "proper_subclass_only",
+  "reason": "The construction proves faithful representation for the frozen finite explicit partial-observability subclass, not for infinite, continuous, open-ended, semantically changing, non-finite-support, or actual-process cases.",
+  "theorem_effect": {
+    "THM-IRD-EXT-001": "partial_progress_one_feature_subclass_resolved",
+    "THM-US-EXIST-001": "unresolved",
+    "THM-US-INV-001": "unresolved",
+    "THM-US-NEC-001": "unresolved",
+    "THM-US-MIN-001": "unresolved"
+  },
+  "claim_effect": {
+    "finite_partial_observability_representation": "proved_for_S_po_fin",
+    "S_IRD_representation": "unresolved",
+    "universal_structure": "unresolved",
+    "primitive_necessity": "not_established",
+    "minimality": "not_established",
+    "uniqueness": "not_established",
+    "actual_process_correspondence": "unresolved"
+  },
+  "machine_check_status": "not_mechanized",
+  "independent_review_status": "not_started",
+  "nonclaims": [
+    "all partially observable reasoning systems are represented",
+    "partial observability establishes a universal kernel",
+    "FARA is necessary minimal or unique",
+    "the observation model corresponds to an actual process",
+    "independent verification has occurred"
+  ]
+}
