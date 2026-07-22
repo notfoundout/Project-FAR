@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "queue_id": "POST-USD-IKD-QUEUE-001",
-  "version": "1.7",
+  "version": "1.8",
   "status": "frozen",
   "parent_program": "POST-USD-IKD-001",
   "registration_pr": 260,
@@ -12,31 +12,30 @@
     {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION", "result": "bounded_cross_feature_compositional_closure_supported_with_explicit_compatibility_conditions"},
     {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE", "result": "bounded_expanded_representation_invariance_supported"},
     {"target_pr": 266, "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION", "result": "no_strictly_cheaper_non_equivalent_reconstruction_found_in_expanded_registered_search"},
-    {"target_pr": 267, "workstream": "IKD-W7-LOWER-BOUNDS", "result": "all_five_rccd_components_have_conditional_lower_bounds_on_defined_class"}
+    {"target_pr": 267, "workstream": "IKD-W7-LOWER-BOUNDS", "result": "all_five_rccd_components_have_conditional_lower_bounds_on_defined_class"},
+    {"target_pr": 268, "workstream": "IKD-W8-MINIMAL-FRONTIER", "result": "one_nontrivial_common_kernel_on_defined_class_pending_terminal_adjudication"}
   ],
   "next_action": {
-    "target_pr": 268,
-    "workstream": "IKD-W8-MINIMAL-FRONTIER",
-    "title": "Recompute the commitment and Pareto frontier after RCCD lower bounds",
-    "branch": "research/execute-ikd-w8-minimal-frontier",
+    "target_pr": 269,
+    "workstream": "IKD-W9-TERMINAL-ADJUDICATION",
+    "title": "Issue the bounded internal answer to the universal-structure question",
+    "branch": "research/execute-ikd-w9-terminal-adjudication",
     "deliverables": [
-      "bidirectional reconstruction of FARA LTS-PROV COALG-DYN and RCCD",
-      "hidden machinery accounting",
-      "commitment-equivalence classes",
-      "additional-essential-commitment search",
-      "RCCD reducibility test after lower bounds",
-      "incomparable-kernel detection",
-      "non-scalar Pareto frontier classification"
+      "integrated W1-W8 evidence ledger",
+      "explicit C P E theorem scope",
+      "terminal outcome selection",
+      "bounded necessity and common-kernel theorem statement",
+      "unrestricted-universality nonclaim",
+      "external and empirical bridge requirements",
+      "declared post-internal stopping rule"
     ]
   },
-  "ordered_followups": [
-    {"target_pr": 269, "workstream": "IKD-W9-TERMINAL-ADJUDICATION"}
-  ],
+  "ordered_followups": [],
   "blocked_actions": [
-    "release EVC-W1 external review package",
-    "release EVC-W2 R3 replication package",
-    "release EVC-W3 R4 adversarial package",
+    "release EVC-W1 external review package before W9 adjudication",
+    "release EVC-W2 R3 replication package before W9 adjudication",
+    "release EVC-W3 R4 adversarial package before W9 adjudication",
     "claim independent validation",
-    "claim a universal kernel before IKD-W9"
+    "claim unrestricted universality"
   ]
 }
