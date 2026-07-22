@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W1-NFS-RESULT-001",
+  "version": "1.0",
+  "status": "complete_bounded_extension_proved",
+  "parent_program": "POST-W5-USD-001",
+  "scope_contract": "USD-W1-NFS-SCOPE-001",
+  "source_class": "S_stoch_eff",
+  "target_class": "A_FARA",
+  "new_target_primitive": false,
+  "construction": {
+    "distribution": "represented intensionally by effective point-mass or kernel interfaces plus certified tail or summation moduli",
+    "queries": "finite cylinder probabilities and bounded computable expectations are recovered by coherent rational approximants",
+    "conditioning": "positive-probability updates are represented with effective numerator and denominator certificates",
+    "reasoning_history": "belief states, commitments, grounds, dependencies, revisions, and evidential annotations remain distinct and indexed",
+    "recovery": "one uniform finite-query recovery interface is shared across the admitted source class without exact-sum or future-outcome oracles"
+  },
+  "proved_obligations": [
+    "NFS-EXT-001_total_uniform_constructor",
+    "NFS-EXT-002_probability_mass_preserved",
+    "NFS-EXT-003_expectation_queries_preserved",
+    "NFS-EXT-004_conditioning_and_update_preserved",
+    "NFS-EXT-005_commitment_ground_dependency_preserved",
+    "NFS-EXT-006_history_and_revision_preserved",
+    "NFS-EXT-007_tail_refinement_coherent",
+    "NFS-EXT-008_no_finite_support_collapse",
+    "NFS-EXT-009_registered_negative_controls_rejected"
+  ],
+  "fixture_results": {
+    "NFS-GEO-001": "pass",
+    "NFS-POISSON-001": "pass",
+    "NFS-MARKOV-001": "pass",
+    "NFS-NEG-TRUNC-001": "rejected",
+    "NFS-NEG-ORACLE-001": "rejected",
+    "NFS-BOUND-NULL-001": "excluded",
+    "NFS-BOUND-NONCOMP-001": "excluded",
+    "NFS-BOUND-UNBOUNDED-001": "excluded"
+  },
+  "terminal_outcome": "proper_subclass_only",
+  "reason": "The construction proves faithful representation for countable effectively presented stochastic reasoning systems with certified tails, bounded computable queries, and effective positive-probability conditioning. It does not cover arbitrary measures, null-event conditioning, noncomputable kernels, uncertified unbounded observables, or unrestricted infinite horizons.",
+  "theorem_effect": {
+    "THM-IRD-EXT-001": "partial_progress_sixth_feature_subclass_resolved",
+    "THM-US-EXIST-001": "unresolved",
+    "THM-US-INV-001": "unresolved",
+    "THM-US-NEC-001": "unresolved",
+    "THM-US-MIN-001": "unresolved"
+  },
+  "claim_effect": {
+    "effective_nonfinite_stochastic_representation": "proved_for_S_stoch_eff",
+    "all_stochastic_reasoning_representation": "unresolved",
+    "S_IRD_representation": "unresolved",
+    "universal_structure": "unresolved",
+    "primitive_necessity": "not_established",
+    "minimality": "not_established",
+    "uniqueness": "not_established",
+    "actual_process_correspondence": "unresolved"
+  },
+  "machine_check_status": "not_mechanized",
+  "independent_review_status": "not_started",
+  "nonclaims": [
+    "all stochastic reasoning systems are represented",
+    "all probability measures and kernels are computable",
+    "finite support truncation is exact",
+    "conditioning on arbitrary null events is represented",
+    "stochastic representation establishes a universal kernel",
+    "FARA is necessary minimal or unique",
+    "independent verification has occurred"
+  ]
+}
