@@ -12,103 +12,91 @@ The reasoning domain, IRD-001, PB-001 investigation, PBTS packages, `THM-TARGET-
 
 ## Milestone 8 — REP construction and controls
 
-**Status:** W0-W4 complete as project-authored bounded proof packages.
+**Status:** complete for `S_core`.
 
-Current REP ledger:
-
-- 37 obligations;
-- 24 construction lemmas proved;
-- 1 source boundary established;
-- 8 obstruction hypotheses refuted;
-- 1 registered negative-control obstruction established;
-- 3 assembly obligations open and blocked.
-
-W3 proves finite target-only recovery, semantic agreement, coherence, machinery accounting, uniformity, composition, and witness assembly.
-
-W4 proves that every applicable registered NC-01 through NC-10 family violates at least one frozen faithful-representation clause for its registered reason.
-
-Neither result establishes complete `Faithful_split`, FARA-specificity, or universal structure.
+W0 through W4 established the normalization, direct-axis, dynamics/history, global-witness, and registered formal negative-control packages.
 
 ## Milestone 8.5 — W3.5 adjudication bridge
 
-**Status:** frozen, not executed; sole blocker before W5.
+**Status:** complete at the frozen internal scope.
 
-### Concrete corpus freeze
-
-Populate RCS-001 with prospectively admitted, nonempty positive and contrast instances. Record inclusion, exclusion, source contracts, and observation boundaries before candidate scoring.
-
-### Generic baseline factorization
-
-Execute fixed translations among `S_core`, `GREL-001`, and FARA. Preserve failed translations and prohibit case-specific repair.
-
-### Dimensioned result
-
-Report independently:
-
-- expressiveness;
-- translation direction;
-- constraint strength;
-- reasoning specificity;
-- cost relation;
-- overall interpretation.
-
-### Candidate program
-
-Execute `US-CANDIDATES-001` through ablation and alternative reconstruction. Count equivalent reintroductions and preserve counterexamples.
-
-### Cost and machinery
-
-Count semantic bridges, recovery, normalization, verifier logic, metadata, hidden assumptions, and translation machinery.
-
-### Exit condition
-
-W3.5 closes only with linked immutable artifacts, stable identifiers, matching SHA-256 digests, terminal dimensions, frozen nonempty corpora, completed discrimination and candidate classifications, complete cost accounting, preserved failures, and claim-impact output.
+The concrete corpus, generic-baseline factorization, reasoning discrimination, FARA specificity, candidate ablation and reconstruction, machinery accounting, claim-impact audit, and preserved-failure audit are complete. These are project-authored internal results and do not constitute independent replication.
 
 ## Milestone 9 — W5 bounded representation result
 
-**Status:** blocked by W3.5.
+**Status:** proved for `S_core` and machine-checked in Lean.
 
-Assembly may produce a FARA-specific theorem, generic representation theorem, equivalence result, proper-subclass theorem, countermodel, impossibility result, or unresolved result. No W5 result automatically advances USD.
+`THM-CORE-COMMON-001` and `THM-CORE-REP-001` are established for the frozen finite explicit source class. The bounded impossibility alternative is refuted under the frozen target. The result does not establish `S_IRD` representation, actual-process correspondence, reasoning specificity, necessity, minimality, uniqueness, or universal structure.
+
+The independent proof-review package is frozen but review has not yet occurred.
 
 ## Milestone 10 — THM-US-TARGET-001
 
-**Status:** frozen prospectively; unexecuted.
+**Status:** frozen prospectively; no theorem in the family is proved.
 
 The universal-structure program asks whether an unknown kernel `K*` satisfies coverage, representation invariance, nondefinitionality, reasoning-relevant discrimination, ablation resistance, reconstruction resistance, full machinery accounting, and minimality or equivalence classification.
 
 Valid outcomes include one kernel, a proper-subclass kernel, equivalent kernels, incomparable kernels, generic properties only, no single kernel, or unresolved.
 
-## Milestone 11 — Reasoning and contrast execution
+The controlling execution registration is `POST-W5-USD-001`.
 
-Execute positive and contrast classes using candidate-independent admission rules and explicit observation or formalization boundaries.
+## Milestone 11 — Featurewise scope extension
 
-## Milestone 12 — Representation invariance
+**Status:** registered, unexecuted.
 
-Translate candidates through materially different formalisms and determine whether the structural commitment survives rather than merely its label.
+Resolve the blocked extension families separately:
 
-## Milestone 13 — Ablation and alternative reconstruction
+- infinite carriers;
+- continuous dynamics;
+- partial observability;
+- open-ended histories;
+- semantic change;
+- non-finite-support stochasticity;
+- actual-process correspondence.
 
-Attempt to eliminate every candidate and recover the same reasoning commitments through different bases. Count equivalent reintroduction.
+Each execution must freeze its source contract, candidate-independent admission rule, observation boundary, preservation obligations, and counterexample policy.
 
-## Milestone 14 — S_IRD extension
+## Milestone 12 — Alternative-vocabulary competition
 
-Resolve infinite, continuous, partially observed, open-ended, semantically changing, and non-finite-support cases separately.
+**Status:** registered, unexecuted.
+
+Compare FARA, `GREL-001`, and at least two independently motivated non-FARA candidates under the same source objects, preservation contract, failure rules, and machinery ledger. Report preservation and each cost coordinate separately. Use Pareto comparison only; do not manufacture a scalar overall winner.
+
+## Milestone 13 — Representation invariance
+
+**Status:** registered, unexecuted.
+
+Translate candidate commitments through materially different formalisms and determine whether the commitment survives rather than merely its label.
+
+## Milestone 14 — Ablation and alternative reconstruction
+
+**Status:** registered, unexecuted.
+
+Attempt to eliminate every candidate and recover the same reasoning commitments through different bases. Count helper logic, metadata, interpreters, evaluator repair, and equivalent reintroduction.
 
 ## Milestone 15 — Necessity and lower bounds
 
-Freeze a reconstruction class before proving indispensability, derivability, replaceability, or scope dependence.
+**Status:** registered, blocked by reconstruction-class freeze and execution.
+
+Classify each candidate as necessary in the declared class, derivable, replaceable by an equivalent, architecture-dependent, scope-dependent, refuted, or unresolved.
 
 ## Milestone 16 — Minimality, equivalence, and no-go alternatives
 
-Freeze candidate universes, equivalence relations, and cost preorders. Permit multiple minima, incomparable solutions, no minimum, or no universal kernel.
+**Status:** registered, blocked by candidate-universe and preorder freeze.
+
+Freeze candidate universes, commitment and translation equivalence, cost preorders, helper policies, and incomparability rules. Permit a unique minimum, multiple equivalent minima, incomparable minima, no minimum, no successful kernel, or unresolved.
 
 ## Milestone 17 — Mechanized verification
 
+**Status:** bounded REP fragment complete; USD mechanization pending substantive results.
+
 Mechanize the largest sound REP, ADJ, and USD fragments while keeping trusted assumptions explicit.
 
-## Milestone 18 — Independent proof review
+## Milestone 18 — Independent proof review and replication
 
-Invite qualified reviewers to reconstruct proofs and search for generic factorizations, hidden machinery, countermodels, reductions, and alternative kernels.
+**Status:** W5 review package frozen; review and replication not started.
+
+Keep independent proof review, R3 independent technical replication, R4 adversarial conceptual replication, and R5 cross-context replication separate.
 
 ## Milestone 19 — Central decision
 
@@ -116,12 +104,16 @@ Update each central claim independently. Do not aggregate REP and USD into one c
 
 ## Dependency order
 
-`domain → IRD → REP target → W0 → W1 → W2 → W3 → W4 → W3.5 → W5 bounded REP result`
+Completed REP path:
 
-and independently:
+`domain → IRD → REP target → W0 → W1 → W2 → W3 → W4 → W3.5 → W5 bounded REP theorem → Lean mechanization → review-package freeze`
 
-`THM-US-TARGET-001 → concrete RCS corpus → invariance → ablation/reconstruction → necessity/minimality/equivalence/no-kernel result`.
+Active USD path:
+
+`THM-US-TARGET-001 → POST-W5-USD-001 → featurewise scope extension → alternative-vocabulary competition → invariance → ablation/reconstruction → necessity → minimality/equivalence/no-kernel adjudication`
+
+Independent review and adversarial counterexample search may proceed in parallel but do not substitute for unresolved deductive obligations.
 
 ## Immediate next action
 
-Execute W3.5. W5 remains blocked until its complete evidence contract resolves.
+Freeze and execute one `USD-W1-SCOPE-EXT` feature family. The recommended first unit is partial observability because it directly tests whether the explicit-state construction survives restricted access without hidden-state smuggling.
