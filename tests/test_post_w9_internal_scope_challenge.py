@@ -23,6 +23,8 @@ class PostW9InternalScopeChallengeTests(unittest.TestCase):
             self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271]); self.assertEqual(queue['ordered_followups'],[273,274,275]); self.assertEqual(queue['next_action']['workstream'],'SC-W3-CONTRACT-LADDER')
         if next_pr==273:
             self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272]); self.assertEqual(queue['ordered_followups'],[274,275]); self.assertEqual(queue['next_action']['workstream'],'SC-W4-REPRESENTATION-ESCAPE')
-        if next_pr>=274:
+        if next_pr==274:
             self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272,273]); self.assertEqual(queue['ordered_followups'],[275]); self.assertEqual(queue['next_action']['workstream'],'SC-W5-HELD-OUT-CONTEXTS')
+        if next_pr==275:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272,273,274]); self.assertEqual(queue['ordered_followups'],[]); self.assertEqual(queue['next_action']['workstream'],'SC-W6-FINAL-INTERNAL-ADJUDICATION')
 if __name__=='__main__':unittest.main()
