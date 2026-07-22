@@ -23,9 +23,12 @@ class PostUSDInternalDiscoveryContinuationTests(unittest.TestCase):
         next_pr=queue['next_action']['target_pr']; self.assertIn(next_pr,{261,262,263,264,265,266,267,268})
         expected={261:'IKD-W1-CANDIDATE-ARCHITECTURES',262:'IKD-W2-EXPANDED-COMPETITION',263:'IKD-W3-COMMON-FACTOR',264:'IKD-W4-CROSS-FEATURE-COMPOSITION',265:'IKD-W5-EXPANDED-INVARIANCE',266:'IKD-W6-GLOBAL-RECONSTRUCTION',267:'IKD-W7-LOWER-BOUNDS',268:'IKD-W8-MINIMAL-FRONTIER'}
         self.assertEqual(queue['next_action']['workstream'],expected[next_pr])
-        shapes={266:([261,262,263,264,265],[267,268,269]),267:([261,262,263,264,265,266],[268,269]),268:([261,262,263,264,265,266,267],[269])}
-        if next_pr in shapes:
-            completed,followups=shapes[next_pr]; self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],completed); self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],followups)
+        if next_pr==266:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[261,262,263,264,265]); self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],list(range(267,270)))
+        if next_pr==267:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[261,262,263,264,265,266]); self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],[268,269])
+        if next_pr==268:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[261,262,263,264,265,266,267]); self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],[269])
     def test_terminal_outcomes_include_positive_negative_and_unresolved(self):
         outcomes=set(self.load(PROGRAM)['terminal_outcomes']); self.assertIn('one_nontrivial_common_kernel',outcomes); self.assertIn('bounded_no_single_kernel',outcomes); self.assertIn('unresolved',outcomes)
 if __name__=='__main__': unittest.main()
