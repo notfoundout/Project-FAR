@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "result_template_id": "EVC-W1-REVIEW-RESULT-TEMPLATE-001",
+  "protocol": "EVC-W1-EXTERNAL-PROOF-REVIEW-001",
+  "package_manifest": "EVC-W1-REVIEW-PACKAGE-001",
+  "package_release_identifier": null,
+  "reviewer_declaration": {
+    "reviewer_name_or_persistent_identifier": null,
+    "affiliation": null,
+    "expertise_basis": [],
+    "independence_declaration": null,
+    "conflicts": [],
+    "first_access_timestamp": null,
+    "substantive_author_contact_before_initial_verdict": false
+  },
+  "obligation_matrix": [
+    {"id": "W1-Q01", "status": null, "finding_ids": []},
+    {"id": "W1-Q02", "status": null, "finding_ids": []},
+    {"id": "W1-Q03", "status": null, "finding_ids": []},
+    {"id": "W1-Q04", "status": null, "finding_ids": []},
+    {"id": "W1-Q05", "status": null, "finding_ids": []},
+    {"id": "W1-Q06", "status": null, "finding_ids": []},
+    {"id": "W1-Q07", "status": null, "finding_ids": []},
+    {"id": "W1-Q08", "status": null, "finding_ids": []},
+    {"id": "W1-Q09", "status": null, "finding_ids": []},
+    {"id": "W1-Q10", "status": null, "finding_ids": []}
+  ],
+  "findings": [],
+  "initial_verdict": null,
+  "initial_verdict_timestamp": null,
+  "author_response_received": false,
+  "author_response_reference": null,
+  "amended_verdict": null,
+  "amendment_rationale": null,
+  "report_reference": null,
+  "attribution_or_signature": null,
+  "allowed_status_values": ["pass", "qualified", "fail", "unresolved"],
+  "allowed_severities": ["blocking", "major_nonblocking", "minor", "observation"],
+  "allowed_verdicts": ["confirmed", "confirmed_with_nonblocking_qualifications", "blocking_objection", "unresolved"],
+  "validation_rules": [
+    "all ten obligation records must be resolved before a confirmed verdict",
+    "a blocking finding forbids confirmed and confirmed_with_nonblocking_qualifications",
+    "initial verdict and timestamp must precede any author response",
+    "amendment may not erase the initial verdict",
+    "reviewer eligibility and package release identifier are mandatory for an external-validation claim"
+  ]
+}

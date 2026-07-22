@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "EVC-W1-EXTERNAL-PROOF-REVIEW-001",
+  "version": "1.0",
+  "status": "frozen_unexecuted",
+  "parent_program": "POST-USD-EVC-001",
+  "workstream": "EVC-W1-EXTERNAL-PROOF-REVIEW",
+  "purpose": "Obtain a genuinely external proof review of the bounded post-W5 USD result without allowing package repair, author coaching, or internal implementation diversity to substitute for reviewer independence.",
+  "review_target": {
+    "primary_claim": "Within the frozen candidate universe and registered benchmark, FARA and LTS-PROV are successful, non-equivalent, incomparable bounded minima; no universal kernel is established.",
+    "included_layers": [
+      "USD-W1 bounded scope extensions",
+      "USD-W2 alternative-vocabulary comparison",
+      "USD-W3 bounded invariance",
+      "USD-W4 local ablation and reconstruction",
+      "USD-W5 minimality and equivalence classification",
+      "USD-W6 internal robustness boundaries",
+      "terminal synthesis POST-W5-USD-SYN-001"
+    ],
+    "excluded_claims": [
+      "global universality",
+      "global necessity",
+      "global minimality",
+      "unique universal kernel",
+      "actual-process correspondence",
+      "external validation already completed"
+    ]
+  },
+  "reviewer_eligibility": {
+    "required": [
+      "ability to read formal specifications and proof obligations",
+      "familiarity with state-transition systems, formal reasoning, or equivalent technical methods",
+      "no authorship or implementation role in Project FAR or the reviewed USD artifacts",
+      "no access to private author reasoning or unpublished repair guidance",
+      "disclosure of financial, professional, personal, and intellectual conflicts",
+      "agreement to evaluate the frozen package before any author response"
+    ],
+    "disqualifying": [
+      "participation in construction of any reviewed mapping, validator, proof, or synthesis",
+      "shared generation of reviewed artifacts under the same agent-controlled workflow",
+      "acceptance of substantive author coaching before filing the initial verdict",
+      "undisclosed conflict materially affecting independence"
+    ]
+  },
+  "freeze_and_access": {
+    "release_unit": "one immutable Git commit or signed archive containing the complete manifest",
+    "freeze_event": "reviewer access to any substantive package artifact",
+    "post_access_rule": "no reviewed artifact may be repaired in place after freeze; corrections require a new package version and the original verdict remains preserved",
+    "communication_log_required": true,
+    "reviewer_identity_record_required": true,
+    "access_timestamp_required": true
+  },
+  "mandatory_review_questions": [
+    "Are all source scopes frozen independently of the winning vocabularies?",
+    "Do the constructions preserve the registered structural, semantic, operational, dependency, information, and historical obligations?",
+    "Are derived machinery, adapters, decoders, canonicalizers, and invariants fully charged?",
+    "Are equivalence and Pareto comparisons applied consistently without scalarization or hidden tie-breaking?",
+    "Do ablation results establish only bounded local necessity rather than global necessity?",
+    "Does the minimality result depend on a non-exhaustive candidate universe?",
+    "Are invariance transformations genuine commitment-preserving changes rather than semantic alterations?",
+    "Are actual-process and external-independence claims correctly withheld?",
+    "Is any theorem, fixture, validator, or prose statement stronger than the evidence supports?",
+    "Can a concrete counterexample, omitted cost, invalid equivalence, or scope dependency block the primary claim?"
+  ],
+  "required_outputs": {
+    "reviewer_declaration": "identity, expertise, independence, conflicts, access date, and package identifier",
+    "finding_register": "one record per finding with severity, artifact, exact location, rationale, and claim effect",
+    "obligation_matrix": "pass, qualified, fail, or unresolved for every mandatory review question",
+    "verdict": [
+      "confirmed",
+      "confirmed_with_nonblocking_qualifications",
+      "blocking_objection",
+      "unresolved"
+    ],
+    "signed_or_attributed_report": true,
+    "machine_readable_result": true
+  },
+  "severity_rules": {
+    "blocking": "invalidates the primary bounded claim, changes the minimal frontier, defeats preservation, exposes uncharged required machinery, or shows independence ineligible",
+    "major_nonblocking": "materially narrows interpretation or requires prominent qualification without invalidating the bounded result",
+    "minor": "clarity, notation, documentation, or non-load-bearing implementation issue",
+    "observation": "suggestion not affecting the registered claim"
+  },
+  "decision_rule": {
+    "confirmed": "all mandatory questions resolved pass and no blocking finding",
+    "confirmed_with_nonblocking_qualifications": "no blocking finding and at least one qualified result requiring preserved caveat",
+    "blocking_objection": "one or more unresolved blocking findings supported by a reproducible argument or counterexample",
+    "unresolved": "eligibility, evidence access, or technical ambiguity prevents a justified terminal verdict",
+    "weakest_gate_applies": true
+  },
+  "author_response_boundary": {
+    "initial_verdict_before_response": true,
+    "responses_may_explain_but_not_rewrite_frozen_evidence": true,
+    "accepted_correction_requires_new_version": true,
+    "reviewer_may_amend_report_but_original_report_is_retained": true
+  },
+  "claim_effect": {
+    "protocol_frozen": true,
+    "external_review_completed": false,
+    "independent_verification_established": false,
+    "universal_structure_established": false
+  },
+  "nonclaims": [
+    "an eligible reviewer has been recruited",
+    "the package has been externally accessed",
+    "the bounded result has been independently confirmed",
+    "R3 technical replication has occurred",
+    "global universality or actual-process correspondence is established"
+  ]
+}
