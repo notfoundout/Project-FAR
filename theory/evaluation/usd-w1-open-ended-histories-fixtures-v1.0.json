@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "USD-W1-OH-FIXTURES-001",
+  "scope_contract": "USD-W1-OH-SCOPE-001",
+  "fixtures": [
+    {
+      "id": "OH-LINEAR-001",
+      "kind": "positive",
+      "description": "An indefinitely extensible linear reasoning history with finite dependency cones and monotone prefix identity.",
+      "expected": "pass"
+    },
+    {
+      "id": "OH-BRANCH-001",
+      "kind": "positive",
+      "description": "An effectively indexed branching deliberation whose selected run exposes every finite prefix and preserves rejected alternatives as history.",
+      "expected": "pass"
+    },
+    {
+      "id": "OH-REV-001",
+      "kind": "positive",
+      "description": "An unbounded history containing finitely supported revisions and rule changes with explicit before-and-after dependency records.",
+      "expected": "pass"
+    },
+    {
+      "id": "OH-NEG-HORIZON-001",
+      "kind": "negative",
+      "description": "A fixed finite horizon is asserted to represent the entire open-ended history and loses a later revision.",
+      "expected": "rejected"
+    },
+    {
+      "id": "OH-NEG-FUTURE-001",
+      "kind": "negative",
+      "description": "The constructor reads future events to encode the current prefix or decide present admissibility.",
+      "expected": "rejected"
+    },
+    {
+      "id": "OH-BOUND-INFINITE-PAST-001",
+      "kind": "scope_boundary",
+      "description": "A step requires an unrecoverable property of the entire infinite past and has no finite dependency certificate.",
+      "expected": "excluded"
+    },
+    {
+      "id": "OH-BOUND-GLOBAL-REWRITE-001",
+      "kind": "scope_boundary",
+      "description": "One revision rewrites an unbounded past without a finite effective change certificate.",
+      "expected": "excluded"
+    }
+  ],
+  "mutation_targets": [
+    "accept_fixed_terminal_horizon",
+    "permit_future_history_oracle",
+    "drop_prefix_coherence",
+    "drop_dependency_cone_preservation",
+    "erase_rejected_or_superseded_history",
+    "promote_terminal_outcome_to_extension_proved",
+    "promote_universal_structure_claim"
+  ]
+}
