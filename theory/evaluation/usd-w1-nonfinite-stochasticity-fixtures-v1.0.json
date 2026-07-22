@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "USD-W1-NFS-FIXTURES-001",
+  "version": "1.0",
+  "scope_contract": "USD-W1-NFS-SCOPE-001",
+  "fixtures": [
+    {"id": "NFS-GEO-001", "kind": "positive", "description": "Geometric countable-support belief with a computable tail bound and threshold-triggered commitment update.", "expected": "pass"},
+    {"id": "NFS-POISSON-001", "kind": "positive", "description": "Poisson countable-support model with certified tail approximants and bounded observable expectations.", "expected": "pass"},
+    {"id": "NFS-MARKOV-001", "kind": "positive", "description": "Countable-state computable Markov kernel with finite-horizon conditioning and revision history.", "expected": "pass"},
+    {"id": "NFS-NEG-TRUNC-001", "kind": "negative", "description": "A finite support truncation is asserted to be the exact infinite-support distribution and drops certified tail mass.", "expected": "rejected"},
+    {"id": "NFS-NEG-ORACLE-001", "kind": "negative", "description": "The representation invokes an undeclared exact infinite-sum oracle or future random-outcome oracle.", "expected": "rejected"},
+    {"id": "NFS-BOUND-NULL-001", "kind": "scope_boundary", "description": "Conditioning is requested on a null or effectively undecidable zero-probability event without a declared regular conditional interface.", "expected": "excluded"},
+    {"id": "NFS-BOUND-NONCOMP-001", "kind": "scope_boundary", "description": "The source measure or transition kernel is noncomputable and supplies no effective approximation interface.", "expected": "excluded"},
+    {"id": "NFS-BOUND-UNBOUNDED-001", "kind": "scope_boundary", "description": "An unbounded observable is queried without a certified integrability or convergence modulus.", "expected": "excluded"}
+  ],
+  "mutation_targets": [
+    "remove_tail_certificate_requirement",
+    "accept_finite_truncation_as_exact",
+    "permit_exact_infinite_sum_oracle",
+    "permit_future_random_outcome_oracle",
+    "permit_null_event_conditioning_without_interface",
+    "drop_probability_mass_preservation",
+    "promote_terminal_outcome_to_extension_proved",
+    "promote_universal_structure_claim"
+  ]
+}
