@@ -26,7 +26,7 @@ def main()->int:
     assert data['terminal_result']=='no_strictly_cheaper_non_equivalent_reconstruction_found_in_expanded_registered_search'
     effect=data['claim_effect']; assert effect['rccd_survives_expanded_alternative_basis_search']=='supported'; assert effect['global_necessity']=='not_yet_proved'
     assert data['next_decisive_workstream']=='IKD-W7-LOWER-BOUNDS'
-    nonclaims='\n'.join(data['nonclaims']); assert 'every logically possible vocabulary' in nonclaims; assert 'global necessity' in nonclaims
+    nonclaims='\n'.join(data['nonclaims']); assert 'every logically possible vocabulary' in nonclaims; assert 'globally necessary' in nonclaims
     research=RESEARCH.read_text(encoding='utf-8'); audit=AUDIT.read_text(encoding='utf-8')
     assert 'Failure to find a replacement is not treated as a proof of global nonexistence' in audit
     assert 'no_strictly_cheaper_non_equivalent_reconstruction_found_in_expanded_registered_search' in research
