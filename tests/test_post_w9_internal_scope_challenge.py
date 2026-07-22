@@ -14,5 +14,11 @@ class PostW9InternalScopeChallengeTests(unittest.TestCase):
     def test_external_work_is_deferred(self):
         data=self.load(PROGRAM); self.assertEqual(data['external_disposition'],'deferred_until_final_internal_adjudication'); self.assertIn('No external review or replication is authorized by this program.',data['frozen_principles'])
     def test_queue_begins_with_scope_neutrality(self):
-        queue=self.load(QUEUE); self.assertEqual(queue['next_action']['target_pr'],270); self.assertEqual(queue['next_action']['workstream'],'SC-W1-SCOPE-NEUTRALITY'); self.assertEqual(queue['ordered_followups'],[271,272,273,274,275])
+        queue=self.load(QUEUE); next_pr=queue['next_action']['target_pr']; self.assertIn(next_pr,{270,271,272,273,274,275})
+        expected={270:'SC-W1-SCOPE-NEUTRALITY',271:'SC-W2-BOUNDARY-REASONING',272:'SC-W3-CONTRACT-LADDER',273:'SC-W4-REPRESENTATION-ESCAPE',274:'SC-W5-HELD-OUT-CONTEXTS',275:'SC-W6-FINAL-INTERNAL-ADJUDICATION'}
+        self.assertEqual(queue['next_action']['workstream'],expected[next_pr])
+        if next_pr==270:
+            self.assertEqual(queue['ordered_followups'],[271,272,273,274,275])
+        if next_pr>=272:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271]); self.assertEqual(queue['ordered_followups'],[273,274,275]); self.assertEqual(queue['next_action']['workstream'],'SC-W3-CONTRACT-LADDER')
 if __name__=='__main__':unittest.main()

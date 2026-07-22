@@ -1,0 +1,34 @@
+{
+  "schema_version":"1.0",
+  "result_id":"SC-W2-BOUNDARY-REASONING-001",
+  "status":"complete_internal_boundary_adjudication",
+  "parent_program":"POST-W9-SCOPE-CHALLENGE-001",
+  "target_pr":271,
+  "question":"Do plausible reasoning systems excluded or marginal under W9 require a non-RCCD primitive, evade an RCCD commitment, or expose construct-loading in C/P/E?",
+  "membership_rule":"A case is presumptively reasoning when it performs normatively assessable selection, inference, revision, planning, comparison, or justification over distinguishable alternatives; membership may not require RCCD vocabulary or internal-state access.",
+  "cases":[
+    {"id":"BR-01","name":"reactive policy without proposition labels","classification":"reasoning_boundary_in_scope_after_semantic_reconstruction","rccd_result":"R1-R5 recoverable from policy commitments, constrained actions, update dependencies, trajectory identity, and finite queries","primitive_extension":false},
+    {"id":"BR-02","name":"model-free reinforcement learner with instrumented value and update traces","classification":"reasoning_in_scope","rccd_result":"R1-R5 instantiated at policy/value commitment level","primitive_extension":false},
+    {"id":"BR-03","name":"analogical retrieval with similarity-driven transfer","classification":"reasoning_in_scope_when source-target commitments and transfer grounds are recoverable","rccd_result":"similarity geometry is a domain parameter; revision dependencies remain RCCD","primitive_extension":false},
+    {"id":"BR-04","name":"embodied controller with continuous dynamics","classification":"reasoning_in_scope only when normatively assessable alternatives are independently identified","rccd_result":"continuous state is not a new kernel primitive","primitive_extension":false},
+    {"id":"BR-05","name":"opaque input-output oracle","classification":"unassessable_not_disproved","rccd_result":"excluded for evidential insufficiency, not defined as non-reasoning","primitive_extension":null},
+    {"id":"BR-06","name":"swarm coordination with distributed commitments","classification":"reasoning_in_scope at collective level when joint constraints and dependencies are recoverable","rccd_result":"distribution changes realization, not kernel","primitive_extension":false},
+    {"id":"BR-07","name":"nonmonotonic legal reasoning","classification":"reasoning_in_scope","rccd_result":"authority, defeasibility, and jurisdiction are domain parameters over R1-R5","primitive_extension":false},
+    {"id":"BR-08","name":"scientific Bayesian revision","classification":"reasoning_in_scope","rccd_result":"probability is domain machinery; dependency-sensitive revision and history remain required","primitive_extension":false},
+    {"id":"BR-09","name":"creative hypothesis generation without explicit grounds","classification":"partial_or_unassessable","rccd_result":"generated candidate commitments are representable, but grounds may be absent or inaccessible; no new primitive established","primitive_extension":null},
+    {"id":"BR-10","name":"pure associative transformation with no normatively assessable alternatives","classification":"not independently established as reasoning","rccd_result":"excluded by neutral membership criterion rather than RCCD absence","primitive_extension":false},
+    {"id":"BR-11","name":"temporally extended intention with self-modifying policy","classification":"reasoning_in_scope","rccd_result":"policy revisions and supersession require R2-R4","primitive_extension":false},
+    {"id":"BR-12","name":"interactive multi-agent negotiation","classification":"reasoning_in_scope","rccd_result":"agent-indexed commitments and common-ground updates are parameters and adapters, not new kernel commitments","primitive_extension":false}
+  ],
+  "anti_construct_loading_findings":[
+    "Reasoning membership is defined by normatively assessable cognitive operations, not by possession of R1-R5.",
+    "Opaque cases are classified unassessable rather than excluded as non-reasoning merely because RCCD cannot be recovered.",
+    "Semantic reconstruction must be independently warranted and may not invent latent commitments solely to force RCCD fit.",
+    "Distributed, continuous, probabilistic, embodied, and analogical machinery is charged explicitly."
+  ],
+  "counterexample_search":{"genuine_new_primitive_found":false,"rccd_component_evaded_by_assessable_faithful_case":false,"blocking_cases":["opaque input-output oracle","creative generation with inaccessible grounds"],"interpretation":"blocking cases limit evidential reach but do not yet refute the bounded kernel"},
+  "terminal_result":"no_boundary_case_yet_requires_new_kernel_primitive_but_evidential_boundary_must_remain_open",
+  "claim_effect":"The naturalized reasoning boundary can be stated independently of RCCD and currently contains no demonstrated faithful counterexample to R1-R5; the W9 theorem remains provisional pending contract and representation escape tests.",
+  "nonclaims":["all reasoning is covered","opaque systems instantiate RCCD","creative generation has complete recoverable grounds","final internal answer established"],
+  "next_decisive_workstream":"SC-W3-CONTRACT-LADDER"
+}

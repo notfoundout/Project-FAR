@@ -6,6 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 PROGRAM=ROOT/'theory/evaluation/post-w9-internal-scope-challenge-v1.0.json'
 QUEUE=ROOT/'theory/evaluation/post-w9-internal-scope-challenge-queue-v1.0.json'
 DOC=ROOT/'docs/research/post-w9-internal-scope-challenge-v1.0.md'
+W2=ROOT/'theory/evaluation/sc-w2-boundary-reasoning-v1.0.json'
 def load(path:Path)->dict:return json.loads(path.read_text(encoding='utf-8'))
 def main()->int:
     for path in (PROGRAM,QUEUE,DOC): assert path.is_file(),path
@@ -20,12 +21,20 @@ def main()->int:
     assert 'current_theorem_scope_construct_loaded' in program['terminal_outcomes']
     assert len(program['downgrade_rules'])==6
     assert queue['queue_id']=='POST-W9-SCOPE-CHALLENGE-QUEUE-001'
-    assert queue['next_action']['target_pr']==270
-    assert queue['next_action']['workstream']=='SC-W1-SCOPE-NEUTRALITY'
-    assert queue['ordered_followups']==[271,272,273,274,275]
+    next_pr=queue['next_action']['target_pr']; assert next_pr in {270,271,272,273,274,275}
+    expected={270:'SC-W1-SCOPE-NEUTRALITY',271:'SC-W2-BOUNDARY-REASONING',272:'SC-W3-CONTRACT-LADDER',273:'SC-W4-REPRESENTATION-ESCAPE',274:'SC-W5-HELD-OUT-CONTEXTS',275:'SC-W6-FINAL-INTERNAL-ADJUDICATION'}
+    assert queue['next_action']['workstream']==expected[next_pr]
+    if next_pr==270:
+        assert queue['ordered_followups']==[271,272,273,274,275]
+    if next_pr>=272:
+        assert W2.is_file(); result=load(W2)
+        assert result['status']=='complete_internal_boundary_adjudication'
+        assert result['terminal_result']=='no_boundary_case_yet_requires_new_kernel_primitive_but_evidential_boundary_must_remain_open'
+        assert [x['target_pr'] for x in queue['completed_workstreams']]==[270,271]
+        assert queue['ordered_followups']==[273,274,275]
     text=DOC.read_text(encoding='utf-8')
     assert 'External hold' in text
     assert 'construct-loaded' in text
-    print('POST-W9 internal scope challenge: PASS (PR #270 authorized; external work deferred)')
+    print(f'POST-W9 internal scope challenge: PASS (PR #{next_pr} authorized; external work deferred)')
     return 0
 if __name__=='__main__': raise SystemExit(main())
