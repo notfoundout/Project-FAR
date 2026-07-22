@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "USD-W1-SC-FIXTURES-001",
+  "scope_contract": "USD-W1-SC-SCOPE-001",
+  "fixtures": [
+    {"id": "SC-RENAME-001", "kind": "positive", "description": "A proposition is renamed while denotation and inferential role are explicitly preserved.", "expected": "pass"},
+    {"id": "SC-SPLIT-001", "kind": "positive", "description": "One coarse category splits into two versioned categories with declared commitment migration and unresolved legacy cases.", "expected": "pass"},
+    {"id": "SC-RULE-001", "kind": "positive", "description": "A rule changes admissibility conditions while prior conclusions and dependency history remain version-indexed.", "expected": "pass"},
+    {"id": "SC-NEG-LABEL-001", "kind": "negative", "description": "An unchanged label is treated as unchanged meaning despite altered denotation and downstream inferences.", "expected": "rejected"},
+    {"id": "SC-NEG-ERASE-001", "kind": "negative", "description": "A new interpretation overwrites the old semantic state and erases why earlier commitments were licensed.", "expected": "rejected"},
+    {"id": "SC-BOUND-ORACLE-001", "kind": "scope_boundary", "description": "Cross-version equivalence is available only through an undeclared external semantic oracle.", "expected": "excluded"},
+    {"id": "SC-BOUND-GLOBAL-001", "kind": "scope_boundary", "description": "A global reinterpretation changes unbounded prior commitments without a finite recoverable dependency account.", "expected": "excluded"}
+  ],
+  "mutation_targets": [
+    "treat_label_identity_as_semantic_identity",
+    "erase_prior_semantic_versions",
+    "convert_unresolved_translation_to_equivalent",
+    "permit_future_semantics_oracle",
+    "drop_inferential_role_preservation",
+    "promote_terminal_outcome_to_extension_proved",
+    "promote_universal_structure_claim"
+  ]
+}
