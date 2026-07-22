@@ -27,17 +27,23 @@ def main() -> int:
     audit = AUDIT.read_text(encoding="utf-8")
 
     assert scope["scope_id"] == "USD-W1-CD-SCOPE-001"
+    assert scope["version"] == "1.1"
     assert scope["status"] == "frozen_executed"
     assert scope["feature_family"] == "continuous_dynamics"
     assert scope["source_class"] == "S_cd_lip_eff"
     admission = scope["admission_rule"]
     assert admission["candidate_independent"] is True
     assert "Lipschitz" in admission["dynamics"]
+    assert "computable finite event enumerator" in admission["events"]
+    assert "certified rational crossing brackets" in admission["events"]
+    assert "proving that no crossing is omitted" in admission["events"]
+    assert "isolated guard crossings without computable completeness certificates" in admission["exclusions"]
     assert "nonunique flows" in admission["exclusions"]
     assert "Zeno event accumulation" in admission["exclusions"]
     prohibited = set(scope["observation_boundary"]["prohibited"])
     assert "future-trajectory oracle" in prohibited
     assert "exact-real equality oracle" in prohibited
+    assert "unregistered search for missed guard crossings" in prohibited
     assert "finite time grid treated as the exact trajectory" in prohibited
 
     obligations = set(scope["preservation_obligations"])
@@ -69,6 +75,7 @@ def main() -> int:
     assert "promote_universal_structure_claim" in mutations
 
     assert result["result_id"] == "USD-W1-CD-RESULT-001"
+    assert result["version"] == "1.1"
     assert result["status"] == "complete_bounded_extension_proved"
     assert result["scope_contract"] == scope["scope_id"]
     assert result["source_class"] == scope["source_class"]
@@ -86,20 +93,21 @@ def main() -> int:
         "THM-US-EXIST-001", "THM-US-INV-001", "THM-US-NEC-001", "THM-US-MIN-001"
     ))
     claim_effect = result["claim_effect"]
-    assert claim_effect["effective_lipschitz_continuous_dynamics_representation"] == "proved_for_S_cd_lip_eff"
+    assert claim_effect["effective_lipschitz_continuous_dynamics_representation"] == "proved_for_certificate_bounded_S_cd_lip_eff"
     assert claim_effect["all_continuous_dynamics_representation"] == "unresolved"
     assert claim_effect["S_IRD_representation"] == "unresolved"
     assert claim_effect["universal_structure"] == "unresolved"
     assert result["machine_check_status"] == "not_mechanized"
     assert result["independent_review_status"] == "not_started"
 
-    assert "fixed finite time grid" in proof
+    assert "Isolatedness alone is not treated as an effective recovery theorem" in proof
+    assert "computable completeness evidence" in proof
     assert "proper_subclass_only" in proof
     assert "does not establish all continuous dynamics" in proof
     assert "candidate vocabulary" in audit
     assert "The correct terminal outcome is `proper_subclass_only`" in audit
 
-    print("USD-W1 continuous-dynamics extension: PASS (S_cd_lip_eff proved; broader claims unresolved)")
+    print("USD-W1 continuous-dynamics extension: PASS (certificate-bounded S_cd_lip_eff proved; broader claims unresolved)")
     return 0
 
 
