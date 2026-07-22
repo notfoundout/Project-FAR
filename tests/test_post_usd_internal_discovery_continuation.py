@@ -20,13 +20,13 @@ class PostUSDInternalDiscoveryContinuationTests(unittest.TestCase):
         nonclaims=set(self.load(PROGRAM)['nonclaims']); self.assertIn('a universal structure has been discovered',nonclaims); self.assertIn('existing external packages have been executed',nonclaims); self.assertIn('failure to find a common kernel proves global nonexistence',nonclaims)
     def test_next_action_is_candidate_architecture_freeze(self):
         queue=self.load(QUEUE); self.assertEqual(queue['registration_pr'],260); self.assertEqual(queue['queue_id'],'POST-USD-IKD-QUEUE-001')
-        next_pr=queue['next_action']['target_pr']; self.assertIn(next_pr,{261,262,263,264,265,266})
-        expected={261:'IKD-W1-CANDIDATE-ARCHITECTURES',262:'IKD-W2-EXPANDED-COMPETITION',263:'IKD-W3-COMMON-FACTOR',264:'IKD-W4-CROSS-FEATURE-COMPOSITION',265:'IKD-W5-EXPANDED-INVARIANCE',266:'IKD-W6-GLOBAL-RECONSTRUCTION'}
+        next_pr=queue['next_action']['target_pr']; self.assertIn(next_pr,{261,262,263,264,265,266,267})
+        expected={261:'IKD-W1-CANDIDATE-ARCHITECTURES',262:'IKD-W2-EXPANDED-COMPETITION',263:'IKD-W3-COMMON-FACTOR',264:'IKD-W4-CROSS-FEATURE-COMPOSITION',265:'IKD-W5-EXPANDED-INVARIANCE',266:'IKD-W6-GLOBAL-RECONSTRUCTION',267:'IKD-W7-LOWER-BOUNDS'}
         self.assertEqual(queue['next_action']['workstream'],expected[next_pr])
-        if next_pr==265:
-            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[261,262,263,264]); self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],list(range(266,270)))
         if next_pr==266:
             self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[261,262,263,264,265]); self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],list(range(267,270)))
+        if next_pr==267:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[261,262,263,264,265,266]); self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],[268,269])
     def test_terminal_outcomes_include_positive_negative_and_unresolved(self):
         outcomes=set(self.load(PROGRAM)['terminal_outcomes']); self.assertIn('one_nontrivial_common_kernel',outcomes); self.assertIn('bounded_no_single_kernel',outcomes); self.assertIn('unresolved',outcomes)
 if __name__=='__main__': unittest.main()

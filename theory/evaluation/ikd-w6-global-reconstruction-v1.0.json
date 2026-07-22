@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "result_id": "IKD-W6-GLOBAL-RECONSTRUCTION-001",
+  "status": "complete_expanded_registered_reconstruction_search",
+  "parent_program": "POST-USD-IKD-001",
+  "parent_invariance": "IKD-W5-EXPANDED-INVARIANCE-001",
+  "target_pr": 266,
+  "kernel_under_test": "RCCD-001",
+  "scope": "Expanded registered alternative-basis search over effectively specifiable reconstructions of the frozen bounded source and cross-feature classes. The search is broader than the original candidate universe but is not mathematically exhaustive over every possible language or ontology.",
+  "reconstruction_contract": {
+    "candidate_neutral_primitive_bases": true,
+    "semantic_and_operational_preservation_required": true,
+    "dependency_revision_and_historical_identity_preserved": true,
+    "uniform_bounded_query_recovery_required": true,
+    "strict_cost_improvement_required_for_replacement": true,
+    "all_synthesis_search_decoding_and_certificate_machinery_charged": true,
+    "equivalent_reintroduction_counted_as_rccd": true,
+    "source_specific_decoders_prohibited": true,
+    "unrestricted_interpreters_prohibited": true,
+    "future_information_oracles_prohibited": true
+  },
+  "searched_bases": [
+    {"id":"RB-REL","name":"pure_relational_incidence","result":"fail","reason":"Cannot recover commitment content, admissibility, or revision without reintroducing typed labels and transition constraints."},
+    {"id":"RB-TRANS","name":"bare_transition_system","result":"fail","reason":"Operational reachability is preserved but grounds, dependency, semantic version, and historical identity are lost."},
+    {"id":"RB-PROV","name":"provenance_only","result":"fail","reason":"Ground and history records do not determine admissible evolution or current commitment content."},
+    {"id":"RB-CAUSAL","name":"structural_causal_primitives","result":"equivalent_reintroduction","reason":"Successful reconstruction requires typed endogenous commitments, intervention admissibility, dependency provenance, and versioned history matching RCCD commitments."},
+    {"id":"RB-PROOF","name":"proof_theoretic_primitives","result":"equivalent_reintroduction","reason":"Premises, discharge rules, proof-state transitions, supersession, and queryable derivation history reintroduce RCCD structure."},
+    {"id":"RB-TYPE","name":"dependent_type_primitives","result":"equivalent_reintroduction","reason":"Indexed commitments, admissible transports, dependency indices, and versioned historical witnesses reintroduce RCCD structure."},
+    {"id":"RB-PROC","name":"process_algebra_primitives","result":"equivalent_reintroduction","reason":"Observable commitments, synchronization constraints, explicit schedulers, and trace provenance reintroduce RCCD structure."},
+    {"id":"RB-COALG","name":"coalgebraic_behavior_primitives","result":"equivalent_reintroduction","reason":"Observation maps, constrained evolution, dependency observations, and historical recovery reintroduce RCCD structure."},
+    {"id":"RB-INFO","name":"information_flow_primitives","result":"fail","reason":"Flows and channels alone do not distinguish accepted commitment revision from arbitrary state change."},
+    {"id":"RB-ALG","name":"algebraic_rewriting_primitives","result":"equivalent_reintroduction","reason":"Typed terms, guarded rewrites, dependency certificates, and persistent rewrite history reintroduce RCCD structure."},
+    {"id":"RB-CAT","name":"categorical_process_primitives","result":"equivalent_reintroduction","reason":"Objects and morphisms become adequate only after commitment interpretation, admissibility substructure, dependency decoration, and history indexing are supplied."},
+    {"id":"RB-DYN","name":"dynamical_system_primitives","result":"equivalent_reintroduction","reason":"State and flow require commitment observables, admissibility constraints, explicit revision events, and history recovery."},
+    {"id":"RB-DB","name":"event_sourced_database_primitives","result":"equivalent_reintroduction","reason":"Schemas, invariants, dependency links, append-only revision semantics, and query contracts instantiate RCCD directly."},
+    {"id":"RB-MDL","name":"minimum_description_synthesized_basis","result":"no_strict_improvement","reason":"Compression reduced surface syntax but moved equivalent commitments into decoder tables, canonicalizers, and certificates; total charged cost did not strictly improve."}
+  ],
+  "automated_search": {
+    "families": ["primitive_ablation", "relation_synthesis", "transition_schema_synthesis", "decoder_minimization", "history_factorization", "query_interface_minimization", "cost_guided_equivalence_search"],
+    "adversarial_objectives": ["erase_dependency", "merge_semantic_versions", "hide_scheduler", "replace_history_with_final_state", "collapse_observational_equivalence", "shift_structure_into_decoder"],
+    "outcome": "No successful strictly cheaper non-equivalent reconstruction was found under the registered preservation and charging rules."
+  },
+  "surviving_countermodels": [
+    {"id":"CM-DEP","description":"Two systems with identical reachable states and outputs but different grounds and dependency-sensitive revision permissions.","effect":"Rejects bare behavioral or transition equivalence."},
+    {"id":"CM-HIST","description":"Two systems with the same current commitments but different supersession histories and future admissibility.","effect":"Rejects final-state-only reconstruction."},
+    {"id":"CM-SEM","description":"Two systems with extensionally equal current transitions but different semantic-version identities and later revision consequences.","effect":"Rejects semantic-version collapse."},
+    {"id":"CM-OBS","description":"Two hidden processes with equal observation traces but different commitment and intervention structure.","effect":"Rejects observational equivalence as full identity."},
+    {"id":"CM-SCHED","description":"Two concurrent systems differing only in a hidden scheduler that changes accepted revision order.","effect":"Rejects uncharged scheduler hiding."}
+  ],
+  "machinery_ledger": [
+    "primitive declarations and typing rules",
+    "encoders and decoders",
+    "semantic bridges and interpretation tables",
+    "admissibility predicates and transition schemas",
+    "dependency and provenance stores",
+    "history indices and canonicalizers",
+    "schedulers, filters, and observation maps",
+    "probability and tail certificates",
+    "synthesis search programs and objective functions",
+    "equivalence and preservation certificates"
+  ],
+  "terminal_result": "no_strictly_cheaper_non_equivalent_reconstruction_found_in_expanded_registered_search",
+  "claim_effect": {
+    "rccd_survives_expanded_alternative_basis_search": "supported",
+    "strictly_cheaper_non_equivalent_replacement": "not_found",
+    "equivalent_reintroduction_across_successful_bases": "supported_on_registered_search",
+    "global_necessity": "not_yet_proved",
+    "global_minimality": "not_yet_proved",
+    "unique_or_universal_kernel": "unresolved"
+  },
+  "next_decisive_workstream": "IKD-W7-LOWER-BOUNDS",
+  "nonclaims": [
+    "every logically possible vocabulary has been searched",
+    "failure to find a replacement proves global impossibility",
+    "RCCD is already globally necessary or minimal",
+    "RCCD is unique or universally instantiated",
+    "actual-process correspondence",
+    "external validation"
+  ]
+}
