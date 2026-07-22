@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W6-IND-RESULT-001",
+  "status": "complete_internal_robustness_only",
+  "contract": "USD-W6-IND-CONTRACT-001",
+  "layer_results": {
+    "independent_proof_review": "not_executed",
+    "R3_independent_technical_replication": "not_executed",
+    "R4_adversarial_conceptual_replication": "not_executed",
+    "R5_cross_context_replication": "not_executed",
+    "internal_multi_implementation_robustness": "pass"
+  },
+  "internal_execution": {
+    "isolated_implementations": 3,
+    "artifact_cross_access": false,
+    "separate_verifier": true,
+    "deterministic_comparison": "pass",
+    "mutation_campaign": "pass",
+    "adversarial_controls": [
+      "equivalence-collapse mutation rejected",
+      "hidden-cost deletion rejected",
+      "future-information access rejected",
+      "unique-minimum promotion rejected",
+      "independence-label inflation rejected"
+    ]
+  },
+  "terminal_outcome": "internal_robustness_only",
+  "claim_effect": {
+    "implementation_path_robustness": "supported_for_registered_internal_paths",
+    "independent_proof_review": "unresolved",
+    "independent_technical_replication": "unresolved",
+    "adversarial_conceptual_replication": "unresolved",
+    "cross_context_replication": "unresolved",
+    "independent_verification_claim": "prohibited",
+    "universal_structure": "unresolved"
+  },
+  "next_action": "release frozen external review and replication package without claiming completion",
+  "nonclaims": [
+    "genuine human independence",
+    "organizational independence",
+    "external verification",
+    "conceptual correctness from implementation agreement",
+    "global or universal validity"
+  ]
+}
