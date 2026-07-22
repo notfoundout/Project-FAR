@@ -2,7 +2,7 @@
 
 ## Scope integrity
 
-Admission is defined by effective versioned semantic interfaces, explicit transition maps, append-only history, and finite recoverable dependency cones. No FARA primitive appears in the admission rule.
+Admission is defined independently of the candidate vocabulary by effective versioned semantic interfaces, explicit transition maps, append-only history, and finite recoverable dependency cones. No FARA primitive appears in the admission rule.
 
 ## Construction audit
 
