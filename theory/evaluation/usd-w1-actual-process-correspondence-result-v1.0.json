@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W1-APC-RESULT-001",
+  "version": "1.0",
+  "status": "complete_boundary_result",
+  "parent_program": "POST-W5-USD-001",
+  "scope_contract": "USD-W1-APC-SCOPE-001",
+  "source_class": "S_apc_evid",
+  "target_class": "A_FARA",
+  "new_target_primitive": false,
+  "proved_obligations": [
+    "APC-001_formal_representation_separated_from_empirical_correspondence",
+    "APC-002_external_evidence_requirements_explicit",
+    "APC-003_observational_equivalence_controlled",
+    "APC-004_trace_provenance_classified",
+    "APC-005_identity_bridge_not_assumed",
+    "APC-006_negative_controls_rejected",
+    "APC-007_terminal_outcome_claim_bounded"
+  ],
+  "fixture_results": {
+    "APC-FORMAL-001": "insufficient_for_correspondence",
+    "APC-TRACE-001": "insufficient_nonindependent_evidence",
+    "APC-OBS-EQUIV-001": "blocks_identity_inference",
+    "APC-MEAS-001": "eligible_for_future_empirical_test",
+    "APC-NEG-REP-001": "rejected",
+    "APC-NEG-LABEL-001": "rejected"
+  },
+  "terminal_outcome": "new_assumption_required",
+  "required_new_assumption": "Independent empirical access must be supplied through a preregistered measurement and intervention protocol linking actual process states to the formal source variables with error bounds and alternative explanations.",
+  "reason": "Formal representability, mechanized preservation, and repository-generated traces cannot by themselves identify an external actual process. Observationally equivalent but internally distinct processes remain possible, so a positive correspondence result requires evidence not present in the repository execution.",
+  "workstream_effect": {
+    "USD-W1-SCOPE-EXT": "all_registered_feature_families_executed",
+    "actual_process_correspondence": "resolved_as_new_assumption_required",
+    "formal_scope_extensions": "six_proper_subclass_results_retained"
+  },
+  "theorem_effect": {
+    "THM-IRD-EXT-001": "no_additional_representation_theorem",
+    "THM-US-EXIST-001": "unresolved",
+    "THM-US-INV-001": "unresolved",
+    "THM-US-NEC-001": "unresolved",
+    "THM-US-MIN-001": "unresolved"
+  },
+  "claim_effect": {
+    "actual_process_correspondence": "not_established_new_empirical_assumption_required",
+    "formal_faithful_representation": "does_not_entail_actual_process_correspondence",
+    "S_IRD_representation": "unresolved",
+    "universal_structure": "unresolved",
+    "primitive_necessity": "not_established",
+    "minimality": "not_established",
+    "uniqueness": "not_established"
+  },
+  "machine_check_status": "boundary_logic_validated_not_empirical_claim",
+  "independent_review_status": "not_started",
+  "next_decisive_workstream": "USD-W2-ALT-VOCAB",
+  "nonclaims": [
+    "an actual reasoning process corresponds to A_FARA",
+    "formal proof establishes empirical identity",
+    "behavioral equivalence establishes internal-process identity",
+    "repository traces are independent observations",
+    "the required empirical protocol has been executed",
+    "universal structure is established"
+  ]
+}
