@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W5-MIN-EQUIV-RESULT-001",
+  "status": "complete_bounded_classification",
+  "contract": "USD-W5-MIN-EQUIV-CONTRACT-001",
+  "candidate_results": {
+    "FARA-001": {
+      "success": true,
+      "equivalence_class": "EC-FARA-001",
+      "minimal_in_frozen_universe": true,
+      "dominated_by": []
+    },
+    "LTS-PROV-001": {
+      "success": true,
+      "equivalence_class": "EC-LTS-PROV-001",
+      "minimal_in_frozen_universe": true,
+      "dominated_by": []
+    },
+    "GREL-001": {
+      "success": false,
+      "equivalence_class": "EC-GREL-001",
+      "minimal_in_frozen_universe": false,
+      "dominated_by": ["FARA-001", "LTS-PROV-001"]
+    },
+    "ARG-HIST-001": {
+      "success": false,
+      "equivalence_class": "EC-ARG-HIST-001",
+      "minimal_in_frozen_universe": false,
+      "dominated_by": ["FARA-001"]
+    }
+  },
+  "translation_tests": {
+    "FARA_to_LTS_PROV": "partial_translation_not_commitment_equivalent",
+    "LTS_PROV_to_FARA": "partial_translation_not_commitment_equivalent",
+    "round_trip_equivalence": "fail",
+    "reason": "Each candidate preserves the benchmark through a distinct commitment organization and retains at least one registered cost advantage; the translations require nontrivial reconstruction and do not preserve all commitments without added machinery."
+  },
+  "pareto_relations": {
+    "FARA_vs_LTS_PROV": "incomparable",
+    "FARA_vs_GREL": "FARA_dominates",
+    "LTS_PROV_vs_GREL": "LTS_PROV_dominates",
+    "FARA_vs_ARG_HIST": "FARA_dominates",
+    "LTS_PROV_vs_ARG_HIST": "incomparable"
+  },
+  "obligation_results": {
+    "MIN-001_candidate_universe_frozen": "pass",
+    "MIN-002_equivalence_checked_bidirectionally": "pass",
+    "MIN-003_all_helpers_charged": "pass",
+    "MIN-004_cost_preorder_applied_without_scalarization": "pass",
+    "MIN-005_dominated_candidates_removed_only_by_registered_dominance": "pass",
+    "MIN-006_incomparability_preserved_as_terminal_result": "pass",
+    "MIN-007_no_universal_claim_from_bounded_minimum": "pass",
+    "MIN-008_negative_shortcuts_rejected": "pass"
+  },
+  "negative_control_results": {
+    "treat_same_outputs_as_translation_equivalence": "rejected",
+    "ignore_hidden_interpreter_cost": "rejected",
+    "scalarize_tradeoffs_into_one_score": "rejected",
+    "declare_fara_unique_after_excluding_lts_prov": "rejected",
+    "promote_bounded_minima_to_universal_structure": "rejected"
+  },
+  "terminal_outcome": "multiple_incomparable_minima",
+  "claim_effect": {
+    "USD-H-MIN": "resolved_for_frozen_candidate_universe",
+    "THM-US-MIN-001": "bounded_support_only",
+    "THM-US-EXIST-001": "unresolved",
+    "THM-US-INV-001": "bounded_support_only",
+    "THM-US-NEC-001": "bounded_support_only",
+    "universal_structure": "unresolved",
+    "unique_minimum": "refuted_in_frozen_candidate_universe",
+    "global_minimality": "unresolved",
+    "actual_process_correspondence": "unresolved"
+  },
+  "program_effect": "The sequential USD-W1 through USD-W5 execution ends with two bounded, non-equivalent, incomparable minimal successful classes. This rules out a unique minimum inside the frozen universe but does not establish exhaustive no-go or universal structure.",
+  "machine_check_status": "validator_checked_not_formally_mechanized",
+  "independent_review_status": "not_started",
+  "next_workstream": "USD-W6-INDEPENDENCE",
+  "nonclaims": [
+    "FARA or LTS-PROV is globally minimal",
+    "the frozen candidate universe is exhaustive",
+    "no future candidate can dominate both minima",
+    "multiple bounded minima prove no universal structure",
+    "independent verification has occurred"
+  ]
+}
