@@ -1,0 +1,33 @@
+{
+  "schema_version":"1.0",
+  "artifact_id":"TUE-W3-DEEPER-KERNEL-RESULT-001",
+  "status":"complete_internal_adjudication",
+  "parent_program":"POST-SC-TUE-001",
+  "target_pr":279,
+  "candidate_count":10,
+  "accepted_strictly_deeper_kernels":0,
+  "rccd_equivalent_compressions":3,
+  "rejected_candidates":6,
+  "vacuous_candidates":1,
+  "paired_distinction_tests_passed_by_strictly_smaller_candidate":0,
+  "component_results":[
+    {"component":"R1","result":"not_derived_without_commitment_equivalent_content_typing"},
+    {"component":"R2","result":"not_derived_without_admissibility_equivalent_constraints"},
+    {"component":"R3","result":"not_derived_without_ground_or_dependency_equivalent_structure"},
+    {"component":"R4","result":"not_derived_without_lineage_or_history_equivalent_structure"},
+    {"component":"R5","result":"not_derived_without_uniform_recovery_equivalent_interface"}
+  ],
+  "strongest_compression":"effective preservation of revision-relevant distinctions",
+  "compression_adjudication":"explanatory_summary_not_strict_reduction",
+  "compression_reason":"To state which distinctions are revision-relevant and preserve them effectively, the substrate must specify recoverable content, admissibility, dependency, historical identity, and a uniform recovery procedure. The five RCCD commitments are therefore relocated rather than derived from fewer independent commitments.",
+  "terminal_outcome":"rccd_irreducible_at_registered_level",
+  "interpretation":"Within C*, P*, the broadened uniform effective representation family, and the frozen cost and machinery rules, no tested non-vacuous substrate strictly below RCCD derives R1-R5. RCCD remains the lowest internally justified kernel level.",
+  "remaining_limits":[
+    "the candidate search is broad but not logically exhaustive over every conceivable ontology",
+    "principled inaccessibility remains neither support nor defeat",
+    "registered-level irreducibility is not metaphysical fundamentality",
+    "external review and actual-process correspondence remain unexecuted"
+  ],
+  "next_decisive_workstream":"TUE-W4-FINAL-QUESTION-ANSWER",
+  "nonclaims":["global metaphysical irreducibility","unrestricted universality","actual-process correspondence","external validation"]
+}

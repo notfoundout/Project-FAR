@@ -1,0 +1,23 @@
+{
+  "schema_version":"1.0",
+  "artifact_id":"TUE-W3-DEEPER-KERNEL-CANDIDATES-001",
+  "candidates":[
+    {"id":"DK-01","name":"discriminable normative state","primitive":"states carrying normatively discriminable content","result":"rejected","reason":"deriving admissible evolution, dependency-sensitive revision, historical identity, and uniform recovery requires R2-R5 bridge machinery"},
+    {"id":"DK-02","name":"constrained information transformation","primitive":"information states plus lawful transformation","result":"rccd_equivalent_compression","reason":"content identity, constraint semantics, dependency grounds, lineage, and recovery interface reconstruct R1-R5"},
+    {"id":"DK-03","name":"counterfactual difference preservation","primitive":"preservation of intervention-relevant differences","result":"rejected","reason":"cannot distinguish commitment content, historical identity, and grounds without charged annotations"},
+    {"id":"DK-04","name":"path-sensitive normative distinction","primitive":"normative distinctions indexed by paths","result":"rccd_equivalent_compression","reason":"path labels encode R1, R3, and R4 while admissibility and effective queries encode R2 and R5"},
+    {"id":"DK-05","name":"effective revision-relevant recoverability","primitive":"effective recovery of every distinction relevant to permissible revision","result":"rccd_equivalent_compression","reason":"its expansion is exactly commitments, admissibility, dependencies, histories, and recovery"},
+    {"id":"DK-06","name":"typed transition relation","primitive":"typed states and transitions","result":"rejected","reason":"types and edges alone underdetermine grounds, supersession identity, and uniform bounded recovery"},
+    {"id":"DK-07","name":"proof-relevant update algebra","primitive":"proof-carrying update operations","result":"rejected","reason":"proof objects omit non-proof commitments and require histories and query semantics to satisfy P*"},
+    {"id":"DK-08","name":"causal intervention substrate","primitive":"variables, interventions, and causal dependence","result":"rejected","reason":"semantic commitments and normative admissibility are not derivable from causal structure alone"},
+    {"id":"DK-09","name":"coalgebraic observation kernel","primitive":"state observations and successor behavior","result":"rejected","reason":"behavioral equivalence collapses dependency and history distinctions unless RCCD-equivalent observations are added"},
+    {"id":"DK-10","name":"universal interpreter","primitive":"one interpreter capable of decoding arbitrary encodings","result":"vacuous","reason":"violates non-vacuity and hides all five components in the interpreter and codebook"}
+  ],
+  "paired_distinction_tests":[
+    "same conclusion, different grounds",
+    "same current state, different revision history",
+    "same extension, different semantic version",
+    "same observations, different hidden admissibility",
+    "same components, different scheduler-sensitive revision order"
+  ]
+}

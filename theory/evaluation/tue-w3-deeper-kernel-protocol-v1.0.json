@@ -1,0 +1,28 @@
+{
+  "schema_version":"1.0",
+  "artifact_id":"TUE-W3-DEEPER-KERNEL-PROTOCOL-001",
+  "status":"frozen_executed",
+  "parent_program":"POST-SC-TUE-001",
+  "target_pr":279,
+  "question":"Can R1-R5 be uniformly and effectively derived from a strictly smaller non-vacuous substrate without hidden reintroduction?",
+  "rccd_components":["R1 recoverable commitments","R2 constrained admissible evolution","R3 dependency-sensitive revision","R4 historical identity","R5 uniform effective recovery"],
+  "success_conditions":[
+    "the substrate has fewer independent primitive commitments than RCCD under the frozen cost preorder",
+    "all five RCCD components are derived uniformly for every system in C* satisfying P*",
+    "the derivation is effective and uses no system-specific oracle",
+    "all decoders, schedulers, histories, codebooks, proof objects, closure rules, query interfaces, and interpretation maps are charged",
+    "the substrate is non-vacuous and excludes at least one non-reasoning structure",
+    "the derivation preserves paired distinctions used in the RCCD lower bounds"
+  ],
+  "failure_conditions":[
+    "an RCCD component is assumed in a bridge axiom",
+    "a component is relocated into charged machinery",
+    "the substrate is equivalent to an unrestricted interpreter",
+    "the derivation is only system-by-system rather than uniform",
+    "the substrate cannot preserve a registered paired distinction",
+    "the substrate is merely a conjunction or renaming of R1-R5"
+  ],
+  "terminal_outcomes":["rccd_irreducible_at_registered_level","strictly_deeper_kernel_found","multiple_deeper_foundations","unresolved"],
+  "decision_rule":"A deeper kernel is accepted only if every success condition holds and no failure condition holds. Otherwise the candidate is rejected, classified as RCCD-equivalent compression, or unresolved.",
+  "nonclaims":["irreducibility beneath every conceivable ontology","metaphysical fundamentality","actual-process correspondence","external validation"]
+}
