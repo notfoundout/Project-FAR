@@ -1,0 +1,233 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-W5-USD-001",
+  "version": "1.0",
+  "status": "frozen_prospective_unexecuted",
+  "program_track": "USD",
+  "governing_target": "THM-US-TARGET-001",
+  "representation_result_input": {
+    "theorem": "THM-CORE-REP-001",
+    "scope": "S_core",
+    "status": "proved_and_mechanized",
+    "logical_effect_on_usd": "none"
+  },
+  "central_question": "Whether an independently defined reasoning scope instantiates a nontrivial representation-invariant kernel that survives contrast, ablation, reconstruction, cost accounting, and equivalence or minimality analysis.",
+  "frozen_hypotheses": [
+    {
+      "id": "USD-H-EXIST",
+      "statement": "At least one nontrivial common kernel exists over the declared post-W5 reasoning scope.",
+      "status": "unresolved"
+    },
+    {
+      "id": "USD-H-INV",
+      "statement": "A successful kernel survives every transformation in the frozen admissible-representation class up to declared equivalence.",
+      "status": "unresolved"
+    },
+    {
+      "id": "USD-H-DISC",
+      "statement": "A successful kernel performs a reasoning-relevant role not discharged by the frozen contrast class or GREL-001 alone.",
+      "status": "unresolved"
+    },
+    {
+      "id": "USD-H-NEC",
+      "statement": "A successful kernel cannot be removed without loss or recovered only through an explicitly equivalent reintroduction under the frozen reconstruction class.",
+      "status": "unresolved"
+    },
+    {
+      "id": "USD-H-MIN",
+      "statement": "Successful kernels admit a minimality, equivalence, incomparability, or no-minimum classification under a frozen candidate universe and cost preorder.",
+      "status": "unresolved"
+    },
+    {
+      "id": "USD-H-NO",
+      "statement": "No single nontrivial universal kernel exists under the frozen assumptions.",
+      "status": "unresolved"
+    }
+  ],
+  "workstreams": [
+    {
+      "id": "USD-W1-SCOPE-EXT",
+      "name": "scope_extension",
+      "purpose": "Extend beyond the bounded S_core theorem one feature family at a time without importing the desired kernel into admission rules.",
+      "feature_families": [
+        "infinite_carriers",
+        "continuous_dynamics",
+        "partial_observability",
+        "open_ended_histories",
+        "semantic_change",
+        "non_finite_support_stochasticity",
+        "actual_process_correspondence"
+      ],
+      "entry_requirements": [
+        "frozen_source_contract",
+        "candidate_independent_admission",
+        "explicit_observation_boundary",
+        "registered_preservation_obligations",
+        "counterexample_preservation"
+      ],
+      "terminal_outcomes": [
+        "extension_proved",
+        "proper_subclass_only",
+        "countermodel",
+        "new_assumption_required",
+        "unresolved"
+      ],
+      "status": "registered_unexecuted"
+    },
+    {
+      "id": "USD-W2-ALT-VOCAB",
+      "name": "alternative_vocabulary_competition",
+      "purpose": "Test materially different non-FARA vocabularies against the same frozen commitments, preservation contract, and full machinery ledger.",
+      "minimum_competition": {
+        "fara_candidate": 1,
+        "generic_relational_baseline": 1,
+        "independently_motivated_non_fara_candidates": 2
+      },
+      "decision_dimensions": [
+        "coverage",
+        "preservation",
+        "constraint_strength",
+        "reasoning_discrimination",
+        "derived_machinery",
+        "operations",
+        "semantic_description_length",
+        "equivalent_reintroduction"
+      ],
+      "aggregation_rule": "pareto_only_no_scalar_overall_winner",
+      "status": "registered_unexecuted"
+    },
+    {
+      "id": "USD-W3-INVARIANCE",
+      "name": "representation_invariance",
+      "purpose": "Determine whether candidate commitments survive materially different encodings rather than merely retaining labels.",
+      "required_transformation_classes": [
+        "renaming_and_reindexing",
+        "definitional_expansion_and_contraction",
+        "relational_reification",
+        "state_transition_reencoding",
+        "history_factoring",
+        "semantic_interface_replacement"
+      ],
+      "failure_rule": "Any admissible transformation that destroys the commitment without violating the frozen source contract refutes invariance for that candidate and scope.",
+      "status": "registered_unexecuted"
+    },
+    {
+      "id": "USD-W4-NECESSITY",
+      "name": "global_necessity_and_reconstruction",
+      "purpose": "Search for elimination, derivation, replacement, and equivalent reintroduction across the declared reconstruction class.",
+      "required_controls": [
+        "primitive_ablation",
+        "commitment_ablation",
+        "alternative_basis_reconstruction",
+        "hidden_machinery_audit",
+        "equivalent_reintroduction_accounting",
+        "minimal_counterexample_search"
+      ],
+      "allowed_classifications": [
+        "necessary_in_declared_class",
+        "derivable",
+        "replaceable_by_equivalent",
+        "architecture_dependent",
+        "scope_dependent",
+        "refuted",
+        "unresolved"
+      ],
+      "status": "registered_unexecuted"
+    },
+    {
+      "id": "USD-W5-MIN-EQUIV",
+      "name": "minimality_equivalence_and_no_go",
+      "purpose": "Classify successful candidates under a frozen universe, equivalence relation, and cost preorder.",
+      "required_freezes": [
+        "candidate_universe",
+        "commitment_equivalence",
+        "translation_equivalence",
+        "cost_preorder",
+        "admissible_helpers",
+        "tie_and_incomparability_rules"
+      ],
+      "valid_results": [
+        "unique_minimum",
+        "multiple_equivalent_minima",
+        "multiple_incomparable_minima",
+        "no_minimum",
+        "no_successful_kernel",
+        "unresolved"
+      ],
+      "status": "registered_unexecuted"
+    },
+    {
+      "id": "USD-W6-INDEPENDENCE",
+      "name": "independent_review_replication_and_adversarial_search",
+      "purpose": "Separate independent proof review, independent technical replication, adversarial conceptual replication, and cross-context replication.",
+      "layers": [
+        "independent_proof_review",
+        "R3_independent_technical_replication",
+        "R4_adversarial_conceptual_replication",
+        "R5_cross_context_replication"
+      ],
+      "status": "registered_unexecuted"
+    }
+  ],
+  "execution_order": [
+    "USD-W1-SCOPE-EXT",
+    "USD-W2-ALT-VOCAB",
+    "USD-W3-INVARIANCE",
+    "USD-W4-NECESSITY",
+    "USD-W5-MIN-EQUIV"
+  ],
+  "parallel_work": [
+    "USD-W6-INDEPENDENCE",
+    "independent_review_of_THM-CORE-REP-001"
+  ],
+  "decision_rules": {
+    "unknown_is_not_pass": true,
+    "bounded_success_is_not_universality": true,
+    "representation_is_not_necessity": true,
+    "failure_to_find_counterexample_is_not_proof": true,
+    "candidate_specific_scope_selection_is_prohibited": true,
+    "hidden_interpreters_and_metadata_smuggling_are_prohibited": true,
+    "equivalent_reintroduction_counts_against_elimination": true,
+    "tradeoffs_are_not_wins": true,
+    "pareto_dominance_requires_no_worse_preservation_and_no_greater_registered_cost_with_at_least_one_strict_improvement": true,
+    "material_post_freeze_change_creates_new_version": true,
+    "negative_and_no_go_results_are_terminal_scientific_results": true
+  },
+  "release_gate": {
+    "universal_structure_claim": [
+      "coverage_resolved_for_declared_scope",
+      "representation_invariance_resolved",
+      "reasoning_discrimination_resolved",
+      "reconstruction_and_necessity_resolved",
+      "full_cost_accounting_complete",
+      "minimality_or_equivalence_classified",
+      "all_blocking_counterexamples_resolved_or_scope_limiting",
+      "claim_scope_matches_proof_scope"
+    ],
+    "independent_verification_claim": [
+      "eligible_external_review_completed",
+      "blocking_objections_resolved_without_retroactive_package_repair"
+    ]
+  },
+  "next_decisive_execution": "USD-W1-SCOPE-EXT",
+  "first_execution_unit": "Freeze and execute one extension-feature family before broadening the scope further.",
+  "valid_program_outcomes": [
+    "one_universal_kernel",
+    "proper_subclass_kernel",
+    "translation_equivalent_kernels",
+    "incomparable_kernels",
+    "generic_structured_system_properties_only",
+    "no_single_nontrivial_kernel",
+    "unresolved"
+  ],
+  "nonclaims": [
+    "A universal structure exists",
+    "FARA is the universal structure",
+    "S_core contains all reasoning",
+    "The current candidate registry is exhaustive",
+    "Any FARA primitive is globally necessary",
+    "FARA is minimal or unique",
+    "The W5 representation theorem advances USD by logical implication",
+    "Independent review or independent replication has occurred"
+  ]
+}
