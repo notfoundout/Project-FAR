@@ -5,6 +5,7 @@
 - The search is described as expanded and registered, not literally exhaustive over every possible ontology.
 - A reconstruction must preserve commitments, operational consequences, dependencies, revisions, historical identity, and bounded queries.
 - Surface compression is not a cost reduction when equivalent structure moves into decoders, schedulers, canonicalizers, certificates, or synthesis machinery.
+- Every search procedure, generated helper, decoder table, objective function, adapter, scheduler, canonicalizer, and preservation certificate is included in the charged machinery ledger.
 - Unrestricted interpreters, source-specific decoders, future-information oracles, hidden schedulers, and retroactive history rewriting are prohibited.
 - Failure to find a replacement is not treated as a proof of global nonexistence.
 
