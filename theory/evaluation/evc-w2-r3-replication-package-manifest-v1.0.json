@@ -20,6 +20,7 @@
       "artifacts": [
         "theory/evaluation/evc-w2-r3-technical-replication-protocol-v1.0.json",
         "theory/evaluation/evc-w2-r3-replication-result-template-v1.0.json",
+        "theory/evaluation/evc-w2-r3-mutation-corpus-v1.0.json",
         "docs/research/evc-w2-r3-replicator-guide-v1.0.md"
       ]
     },
@@ -29,7 +30,10 @@
     },
     {
       "group": "mutation_and_negative_controls",
-      "selection_rule": "all registered negative controls plus an explicit R3 mutation corpus covering equivalence collapse, hidden-cost deletion, claim inflation, counterexample deletion, unique-minimum promotion, and independence-label inflation"
+      "artifacts": [
+        "theory/evaluation/evc-w2-r3-mutation-corpus-v1.0.json"
+      ],
+      "selection_rule": "all registered negative controls plus the explicit R3 mutation corpus covering equivalence collapse, hidden-cost deletion, claim inflation, counterexample deletion, unique-minimum promotion, and independence-label inflation"
     },
     {
       "group": "schemas_without_original_implementation",
