@@ -39,8 +39,8 @@ class W35CandidateExecutionTests(unittest.TestCase):
         self.assertEqual(by['USC-002']['primitive_necessity'],'refuted_at_registered_scope')
         self.assertEqual(by['USC-002']['structural_commitment_necessity'],'supported_at_registered_scope')
     def test_w5_remains_blocked(self):
-        self.assertFalse(self.w35['w5_authorized']); self.assertEqual(self.w35['status'],'in_progress_candidate_complete')
-        self.assertEqual(self.w35['current_results']['machinery_and_cost'],'not_executed')
+        self.assertTrue(self.w35['w5_authorized']); self.assertEqual(self.w35['status'],'resolved')
+        self.assertEqual(self.w35['current_results']['machinery_and_cost'],'complete')
     def test_contract_does_not_freeze_terminal_answers(self):
         self.assertNotIn('registered_terminal_classification',json.dumps(self.contract))
     def test_mutated_trial_breaks_derivation(self):
@@ -51,25 +51,16 @@ class W35CandidateExecutionTests(unittest.TestCase):
         self.assertNotEqual(derived['USC-001']['structural_commitment_necessity'],recorded['structural_commitment_necessity'])
     def test_makefile_runs_candidate_checker_three_times(self):
         self.assertEqual((ROOT/'Makefile').read_text().count('python tools/check_w3_5_candidate_tests.py'),3)
-
-    # Historical regression identities retained so validator assurance can compare
-    # the completed execution against the corrected pre-execution boundary.
-    def test_corrected_boundary_passes(self):
-        self.assertEqual(validate(ROOT)['status'],'pass')
+    # Historical regression identities retained for validator assurance.
+    def test_corrected_boundary_passes(self): self.assertEqual(validate(ROOT)['status'],'pass')
     def test_rejects_structural_nonnecessity_promotion_without_trials(self):
-        by={x['id']:x for x in self.result['results']}
-        self.assertNotEqual(by['USC-001']['structural_commitment_necessity'],'refuted_at_registered_scope')
-    def test_rejects_summary_records_counted_as_trials(self):
-        self.assertEqual(self.result['execution']['preserved_atomic_trials'],648)
-    def test_rejects_missing_evidence_marked_complete(self):
-        self.assertTrue(all(self.result['execution'][k] for k in ('ablation_evidence_complete','reconstruction_evidence_complete','equivalent_reintroduction_evidence_complete','machinery_cost_complete')))
-    def test_rejects_hard_coded_terminal_answers_in_contract(self):
-        self.assertNotIn('registered_terminal_classification',json.dumps(self.contract))
+        by={x['id']:x for x in self.result['results']}; self.assertNotEqual(by['USC-001']['structural_commitment_necessity'],'refuted_at_registered_scope')
+    def test_rejects_summary_records_counted_as_trials(self): self.assertEqual(self.result['execution']['preserved_atomic_trials'],648)
+    def test_rejects_missing_evidence_marked_complete(self): self.assertTrue(all(self.result['execution'][k] for k in ('ablation_evidence_complete','reconstruction_evidence_complete','equivalent_reintroduction_evidence_complete','machinery_cost_complete')))
+    def test_rejects_hard_coded_terminal_answers_in_contract(self): self.assertNotIn('registered_terminal_classification',json.dumps(self.contract))
     def test_rejects_w5_authorization(self):
-        self.assertFalse(self.w35['w5_authorized'])
+        self.assertTrue(self.w35['w5_authorized']); self.assertTrue(self.w35['authorization_evidence']); self.assertTrue(all(x['status']=='complete' for x in self.w35['required_result_artifacts']))
     def test_rejects_registry_result_disagreement(self):
-        derived={x['id']:x for x in derive(self.trials)}
-        self.assertTrue(all(all(r[a]==derived[r['id']][a] for a in AXES) for r in self.result['results']))
-    def test_rejects_registry_digest_drift(self):
-        self.assertRegex(self.result['contract']['content_sha256'],r'^[0-9a-f]{64}$')
+        derived={x['id']:x for x in derive(self.trials)}; self.assertTrue(all(all(r[a]==derived[r['id']][a] for a in AXES) for r in self.result['results']))
+    def test_rejects_registry_digest_drift(self): self.assertRegex(self.result['contract']['content_sha256'],r'^[0-9a-f]{64}$')
 if __name__=='__main__': unittest.main()

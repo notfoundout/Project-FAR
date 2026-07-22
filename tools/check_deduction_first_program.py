@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate deduction-first dependencies after bounded W4 and ADJ stage progress."""
+"""Validate deduction-first dependencies after bounded W4 and W3.5 closure."""
 from __future__ import annotations
 import json
 from pathlib import Path
@@ -9,8 +9,9 @@ def load(p): return json.loads(p.read_text(encoding='utf-8'))
 def main()->int:
     for p in F.values(): assert p.is_file(),p
     standard=F['standard'].read_text(encoding='utf-8'); assert 'The primary route to an answer is therefore deductive' in standard and 'It is not required before attempting a mathematical proof' in standard
-    target=load(F['target']); assert target['status']=='frozen_unproved' and target['proof_status']=='partial_lemma_progress_only' and target['next_required_artifact'].startswith('Evidence-backed W3.5')
-    p=target['lemma_program']; assert p['status']=='w0_w1_w2_w3_w4_complete_w5_blocked_by_w3_5' and (p['proved_obligations'],p['established_obstructions'],p['scope_boundaries_established'],p['refuted_obstructions'],p['open_obligations'])==(24,1,1,8,3) and p['completed_waves']==['W0','W1','W2','W3','W4'] and p['active_obligations']==[] and p['active_wave']=='W5_blocked'
+    target=load(F['target']); assert target['status']=='frozen_unproved' and target['proof_status']=='partial_lemma_progress_only' and target['next_required_artifact'].startswith('W5 theorem assembly')
+    p=target['lemma_program']; assert p['status']=='w0_w1_w2_w3_w4_complete_w5_authorized' and (p['proved_obligations'],p['established_obstructions'],p['scope_boundaries_established'],p['refuted_obstructions'],p['open_obligations'])==(24,1,1,8,3) and p['completed_waves']==['W0','W1','W2','W3','W4'] and set(p['active_obligations'])=={'ASM-SC-001','ASM-SC-002','ASM-SC-003'} and p['active_wave']=='W5'
+    assert target['w5_authorization']['authorized'] is True and target['w5_authorization']['blocked_by']==[]
     premises=load(F['premises']); assert premises['version']=='1.7' and premises['proof_progress']['premise_change'] is False and premises['proof_progress']['theorem_status_change'] is False
     faithful=load(F['faithful']); assert faithful['recovery_contract']['proof_status']=='proved_LEM-SC-018' and faithful['nontriviality']['formal_negative_control_status']=='proved_OBS-SC-010' and faithful['nontriviality']['global_nontrivial_status']=='proved_for_registered_control_families_over_S_core'
     p8=load(F['p8']); assert p8['selected_mode']=='split' and p8['internal_obligation']['target_recovery_status']=='proved_LEM-SC-018' and p8['external_obligation']['not_implied_by_formal_representation'] is True
@@ -22,5 +23,5 @@ def main()->int:
         if claim['id'] in {'CLM-EXISTENCE','CLM-UNIVERSALITY','CLM-UNIVERSAL-STRUCTURE','CLM-NECESSITY','CLM-MINIMALITY'}: assert claim['current_status'] not in {'supported','supported_at_registered_control_scope'}
     make=F['make'].read_text(encoding='utf-8')
     for checker in ('check_faithful_representation.py','check_p8_theorem_role.py','check_s_core_lemma_ledger.py','check_s_core_w0.py','check_s_core_w1.py','check_s_core_w2.py','check_s_core_w3.py','check_s_core_w4.py'): assert make.count(f'python tools/{checker}')==3
-    print('Deduction-first research program: PASS (W0-W4 frozen; bounded factorization and registered specificity complete; candidate/cost/claim closure still blocks W5; theorem gate closed)'); return 0
+    print('Deduction-first research program: PASS (W0-W4 frozen; W3.5 resolved; W5 authorized; theorem unproved)'); return 0
 if __name__=='__main__': raise SystemExit(main())

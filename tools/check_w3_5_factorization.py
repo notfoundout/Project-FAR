@@ -22,7 +22,7 @@ def validate_static(root:Path)->dict[str,Any]:
     if contract.get('primitive_reduction_established') is not False: raise ValidationError('operational factorization was promoted to a primitive reduction')
     required_reintroduced={'fixed FARA-oriented compile_projection source adapter','accepted SCORE-W3 construct_witness implementation'}
     if not required_reintroduced<=set(contract.get('reintroduced_machinery',[])): raise ValidationError('reintroduced FARA adapter/constructor machinery is not fully declared')
-    if result.get('gate_effect',{}).get('w5_authorized') is not False: raise ValidationError('factorization result prematurely authorizes W5')
+    if result.get('gate_effect',{}).get('w5_authorized') is not False: raise ValidationError('factorization result retrospectively authorizes W5')
     registry=result.get('witness_registry',{})
     if registry.get('path')!=WITNESSES.relative_to(ROOT).as_posix() or registry.get('artifact_id')!='W35-GREL-FARA-FACTOR-WITNESSES-001': raise ValidationError('factorization witness identity changed')
     if registry.get('content_sha256')!=sha256_file(paths['witnesses']): raise ValidationError('factorization witness digest mismatch')
@@ -36,14 +36,15 @@ def validate_static(root:Path)->dict[str,Any]:
     if baseline_result.get('artifact_id')!='W35-FACTOR-RESULT-001' or baseline_result.get('content_sha256')!=sha256_file(paths['result']): raise ValidationError('GREL-001 factorization result link is invalid')
     artifacts={item['id']:item for item in w35.get('required_result_artifacts',[])}; factor=artifacts.get('W35-FACTOR-RESULT')
     if not factor or factor.get('status')!='complete' or factor.get('path')!=RESULT.relative_to(ROOT).as_posix() or factor.get('artifact_id')!='W35-FACTOR-RESULT-001' or factor.get('content_sha256')!=sha256_file(paths['result']): raise ValidationError('W35-FACTOR-RESULT linkage is invalid')
-    current=w35.get('current_results',{}); allowed={'in_progress_factorization_complete','in_progress_specificity_complete','in_progress_candidate_complete'}
-    if current.get('factorization')!=EXPECTED_DIMENSIONS or w35.get('status') not in allowed or w35.get('w5_authorized') is not False: raise ValidationError('W3.5 factorization state is inconsistent')
-    if w35.get('status')=='in_progress_candidate_complete':
+    current=w35.get('current_results',{}); allowed={'in_progress_factorization_complete','in_progress_specificity_complete','in_progress_candidate_complete','resolved'}; resolved=w35.get('status')=='resolved'
+    if current.get('factorization')!=EXPECTED_DIMENSIONS or w35.get('status') not in allowed or w35.get('w5_authorized') is not resolved: raise ValidationError('W3.5 factorization state is inconsistent')
+    if w35.get('status') in {'in_progress_candidate_complete','resolved'}:
         c=artifacts.get('W35-CANDIDATE-RESULT',{})
         if c.get('status')!='complete' or c.get('artifact_id')!='W35-CANDIDATE-RESULT-001' or c.get('content_sha256')!=sha256_file(paths['candidate']): raise ValidationError('candidate result linkage is invalid')
     elif artifacts.get('W35-CANDIDATE-RESULT',{}).get('status')!='missing': raise ValidationError('W35-CANDIDATE-RESULT was promoted before its own execution')
     for artifact_id in ('W35-COST-RESULT','W35-CLAIM-RESULT','W35-FAILURE-RESULT'):
-        if artifacts.get(artifact_id,{}).get('status')!='missing': raise ValidationError(f'{artifact_id} was promoted before its own execution')
+        expected='complete' if resolved else 'missing'
+        if artifacts.get(artifact_id,{}).get('status')!=expected: raise ValidationError(f'{artifact_id} closure stage is inconsistent')
     gate_map={item['name']:item for item in gates.get('gates',[])}; baseline_gate=gate_map.get('baseline-factorization-resolved')
     expected_evidence={'docs/research/w3-5-grel-fara-factorization-v1.0.md','docs/audits/w3-5-factorization-audit.md',RESULT.relative_to(ROOT).as_posix(),WITNESSES.relative_to(ROOT).as_posix()}
     if not baseline_gate or baseline_gate.get('status')!='satisfied' or not expected_evidence<=set(baseline_gate.get('evidence',[])): raise ValidationError('baseline factorization gate lacks immutable evidence')
@@ -54,7 +55,9 @@ def validate_static(root:Path)->dict[str,Any]:
         for name in ('fara-specificity-resolved','reasoning-contrast-execution'):
             if gate_map.get(name,{}).get('status')!='satisfied' or not gate_map.get(name,{}).get('evidence'): raise ValidationError(f'{name} lacks later-stage evidence')
     authorization=target.get('w5_authorization',{})
-    if authorization.get('authorized') is not False or authorization.get('blocked_by')!=['W3.5-SDG-001']: raise ValidationError('THM-TARGET-001 no longer blocks W5')
+    if resolved:
+        if authorization.get('authorized') is not True or authorization.get('blocked_by')!=[]: raise ValidationError('THM-TARGET-001 did not clear W5 after resolved closure')
+    elif authorization.get('authorized') is not False or authorization.get('blocked_by')!=['W3.5-SDG-001']: raise ValidationError('THM-TARGET-001 no longer blocks W5 before closure')
     return {'result':result,'witnesses':witnesses,'baseline':baseline,'w35':w35,'gates':gates,'target':target}
 def validate_runtime(root:Path,witnesses:dict[str,Any])->dict[str,Any]:
     report=run_factorization(root)

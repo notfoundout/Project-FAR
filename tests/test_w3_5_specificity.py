@@ -39,7 +39,7 @@ class W35SpecificityTests(unittest.TestCase):
     def test_candidate_aggregate_promotion_is_rejected(self):
         candidates=copy.deepcopy(self.candidates); candidates['aggregate_result']='no_registered_candidate_indispensable_within_frozen_class'; self.assertTrue(any('candidate aggregate changed' in error for error in self.errors(candidates=candidates)))
     def test_status_only_w5_promotion_is_rejected(self):
-        w35=copy.deepcopy(self.w35); target=copy.deepcopy(self.target); w35['w5_authorized']=True; target['w5_authorization']['authorized']=True; self.assertIn('authorized W5','\n'.join(self.errors(w35=w35,target=target)))
+        w35=copy.deepcopy(self.w35); target=copy.deepcopy(self.target); w35['w5_authorized']=False; target['w5_authorization']['authorized']=False; target['w5_authorization']['blocked_by']=['W3.5-SDG-001']; joined='\n'.join(self.errors(w35=w35,target=target)); self.assertIn('authorization stage is inconsistent',joined); self.assertIn('blocker stage is inconsistent',joined)
     def test_missing_gate_evidence_is_rejected(self):
         gates=copy.deepcopy(self.gates); next(item for item in gates['gates'] if item['name']=='fara-specificity-resolved')['evidence']=[]; self.assertTrue(any('lacks complete evidence' in error for error in self.errors(gates=gates)))
 if __name__=='__main__': unittest.main()

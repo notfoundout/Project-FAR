@@ -30,5 +30,5 @@ class W35CorpusFreezeTests(unittest.TestCase):
     def test_status_only_gate_is_rejected(self):
         gates=copy.deepcopy(self.gates); next(g for g in gates['gates'] if g['name']=='reasoning-contrast-corpus-frozen')['evidence']=[]; self.assertTrue(any('gate evidence is incomplete' in x for x in self.errors(gates=gates)))
     def test_candidate_execution_and_w5_promotion_are_rejected(self):
-        w=copy.deepcopy(self.w35); w['current_results']['candidate_invariants']='complete'; w['w5_authorized']=True; errors=self.errors(w35=w); self.assertTrue(any('W5 must remain unauthorized' in x for x in errors)); self.assertTrue(any('candidate stage is inconsistent' in x for x in errors))
+        w=copy.deepcopy(self.w35); w['w5_authorized']=False; w['W5_blocked_until_resolved']=True; w['current_results']['candidate_invariants']='not_executed'; errors=self.errors(w35=w); self.assertTrue(any('W5 authorization state is inconsistent' in x for x in errors)); self.assertTrue(any('candidate stage is inconsistent' in x for x in errors))
 if __name__=='__main__': unittest.main()
