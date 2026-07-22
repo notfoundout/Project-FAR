@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "EVC-W3-R4-ADVERSARIAL-REPLICATION-001",
+  "version": "1.0",
+  "status": "frozen_unexecuted",
+  "parent_program": "POST-USD-EVC-001",
+  "purpose": "Test whether the bounded incomparable-kernel result survives a genuinely adversarial conceptual challenge to scope, preservation, equivalence, costs, candidate construction, invariance, ablation, minimality, and claim boundaries.",
+  "independence": {
+    "required": "A separate human or organization not involved in constructing the USD artifacts, with authority to redefine objections and produce countermodels within the frozen challenge rules.",
+    "eligible": [
+      "formal-methods, logic, knowledge-representation, philosophy-of-science, or adjacent experts able to audit the complete package",
+      "teams permitted to argue that the registered scope, preservation contract, equivalence relation, cost accounting, or candidate universe is defective",
+      "challengers who disclose relevant prior exposure and conflicts"
+    ],
+    "disqualified": [
+      "authors or builders of the challenged artifacts",
+      "a nominally separate run controlled by the same person, organization, or agent workflow",
+      "challengers coached toward a preferred verdict",
+      "teams denied access to negative controls, failed cases, or unresolved gates"
+    ]
+  },
+  "freeze_and_access": {
+    "release_identifier": "immutable Git commit SHA or signed archive digest",
+    "first_access_timestamp_required": true,
+    "communication_log_required": true,
+    "post_access_repairs": "Any substantive repair after first access creates a new protocol/package version; the original challenge record remains immutable.",
+    "author_response_order": "The adversarial team freezes its initial report before receiving an author rebuttal."
+  },
+  "mandatory_attack_domains": [
+    "scope admission and excluded classes",
+    "preservation obligations and canonicalization",
+    "commitment-equivalence and translation criteria",
+    "primitive and derived machinery cost accounting",
+    "candidate-family construction and hidden winner bias",
+    "invariance transformations and inadmissible equivalences",
+    "ablation, reconstruction, and equivalent reintroduction",
+    "minimal-frontier computation and frozen-universe dependence",
+    "counterexamples, negative controls, and unresolved theorem gates",
+    "independence labels and universal-structure claim boundaries"
+  ],
+  "required_outputs": [
+    "an attributable machine-readable result",
+    "a prose adversarial report",
+    "at least one attempted countermodel or impossibility argument for each mandatory attack domain",
+    "explicit separation of blocking defects, scope limitations, nonblocking qualifications, and rejected attacks",
+    "a record of all author contact and all deviations from the frozen package"
+  ],
+  "decision_rules": {
+    "survived": "Every mandatory attack domain is completed; no blocking defect or valid scope-limiting counterexample defeats the registered bounded result; nonblocking qualifications are preserved.",
+    "scope_limited": "At least one valid adversarial result narrows a registered scope, preservation claim, invariance class, necessity claim, or minimal-frontier claim without refuting the entire bounded result.",
+    "refuted": "A blocking defect, valid countermodel, invalid equivalence/cost rule, or reproducible contradiction defeats a load-bearing registered conclusion.",
+    "unresolved": "Independence, package completeness, attack coverage, or evidence is insufficient for another verdict.",
+    "weakest_gate": "The terminal verdict may not be stronger than the weakest completed mandatory attack domain."
+  },
+  "terminal_outcomes": ["survived", "scope_limited", "refuted", "unresolved"],
+  "nonclaims": [
+    "R4 adversarial replication has occurred",
+    "the bounded result has survived external criticism",
+    "the candidate universe is exhaustive",
+    "universal structure is established",
+    "actual-process correspondence is established"
+  ]
+}

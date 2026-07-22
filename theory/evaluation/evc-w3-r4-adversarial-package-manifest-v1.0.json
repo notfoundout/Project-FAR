@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "manifest_id": "EVC-W3-R4-PACKAGE-001",
+  "version": "1.0",
+  "status": "frozen_unreleased",
+  "protocol": "EVC-W3-R4-ADVERSARIAL-REPLICATION-001",
+  "release_rule": "Release only an immutable Git commit SHA or signed archive digest and record the identifier before first challenger access.",
+  "required_artifact_groups": [
+    {
+      "group": "program_and_terminal_synthesis",
+      "artifacts": [
+        "theory/evaluation/post-w5-usd-next-program-v1.0.json",
+        "theory/evaluation/post-w5-usd-terminal-synthesis-v1.0.json",
+        "docs/research/post-w5-usd-terminal-synthesis-v1.0.md",
+        "docs/audits/post-w5-usd-terminal-synthesis-audit.md"
+      ]
+    },
+    {
+      "group": "adversarial_instruments",
+      "artifacts": [
+        "theory/evaluation/evc-w3-r4-adversarial-replication-protocol-v1.0.json",
+        "theory/evaluation/evc-w3-r4-adversarial-challenge-corpus-v1.0.json",
+        "theory/evaluation/evc-w3-r4-adversarial-result-template-v1.0.json",
+        "docs/research/evc-w3-r4-adversarial-team-guide-v1.0.md"
+      ]
+    },
+    {
+      "group": "challenged_usd_chain",
+      "selection_rule": "all USD-W1 through USD-W6 scope, fixture, candidate, result, proof, audit, checker, test, equivalence, cost, invariance, ablation, minimality, and independence artifacts"
+    },
+    {
+      "group": "negative_and_boundary_evidence",
+      "selection_rule": "all failed controls, boundary cases, rejected transformations, unresolved gates, actual-process limitations, and mutation corpora"
+    },
+    {
+      "group": "formal_and_validation_evidence",
+      "selection_rule": "all referenced Lean sources, mechanization reports, validators, regression tests, workflow definitions, and assurance artifacts required to audit machine-check claims"
+    }
+  ],
+  "completeness_checks": [
+    "the parent POST-USD-EVC-001 registration artifact is included",
+    "all twelve adversarial challenges are included",
+    "every challenged conclusion resolves to source evidence",
+    "all cost ledgers and commitment-equivalence definitions are included",
+    "all failed, negative, boundary, and unresolved results are included",
+    "internal robustness and external independence remain distinct",
+    "release and first-access state remain false before delivery"
+  ],
+  "prohibited_omissions": [
+    "incomparable FARA and LTS-PROV results",
+    "scope exclusions and proper-subclass-only classifications",
+    "charged helper machinery",
+    "rejected invariance transformations",
+    "failed ablations or reconstructed equivalents",
+    "non-exhaustive candidate-universe boundary",
+    "actual-process correspondence limitation",
+    "internal-only independence classification"
+  ],
+  "release_state": {
+    "adversarial_team_recruited": false,
+    "team_eligible": null,
+    "release_commit": null,
+    "signed_archive_digest": null,
+    "first_access_timestamp": null,
+    "initial_report_frozen": false,
+    "author_response_released": false,
+    "replication_started": false,
+    "replication_completed": false
+  },
+  "nonclaims": [
+    "the manifest proves substantive correctness",
+    "an adversarial team has received the package",
+    "R4 replication has occurred",
+    "the bounded result survived adversarial criticism"
+  ]
+}

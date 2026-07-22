@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "result_template_id": "EVC-W3-R4-RESULT-TEMPLATE-001",
+  "version": "1.0",
+  "status": "blank_template",
+  "protocol": "EVC-W3-R4-ADVERSARIAL-REPLICATION-001",
+  "release_identifier": null,
+  "team": {
+    "members": [],
+    "organization": null,
+    "expertise": [],
+    "conflicts": [],
+    "independence_declaration": null,
+    "eligibility_determination": null
+  },
+  "timeline": {
+    "first_access_timestamp": null,
+    "initial_report_frozen_timestamp": null,
+    "author_response_timestamp": null,
+    "final_result_timestamp": null
+  },
+  "challenge_results": [
+    {"challenge_id":"R4-C01-SCOPE-LEAK","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C02-PRESERVATION-UNDERDETERMINATION","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C03-EQUIVALENCE-COLLAPSE","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C04-HIDDEN-COST","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C05-WINNER-BIAS","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C06-INVARIANCE-FABRICATION","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C07-ABLATION-SUBSTITUTE","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C08-FRONTIER-ERROR","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C09-COUNTEREXAMPLE-SUPPRESSION","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C10-CLAIM-INFLATION","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C11-NOVEL-ARCHITECTURE-STRESS","disposition":null,"evidence":[],"reason":null},
+    {"challenge_id":"R4-C12-ACTUAL-PROCESS-CONFLATION","disposition":null,"evidence":[],"reason":null}
+  ],
+  "findings": [],
+  "initial_verdict": null,
+  "author_response": null,
+  "final_verdict": null,
+  "allowed_dispositions": ["sustained", "rejected", "unresolved"],
+  "allowed_severities": ["blocking", "scope_limiting", "major_nonblocking", "minor", "observation"],
+  "allowed_verdicts": ["survived", "scope_limited", "refuted", "unresolved"],
+  "deviations": [],
+  "communication_log": [],
+  "amendment_history": [],
+  "nonclaims": [
+    "a blank template is an adversarial result",
+    "author disagreement invalidates a sustained finding",
+    "failure to discover a new candidate proves exhaustiveness"
+  ]
+}

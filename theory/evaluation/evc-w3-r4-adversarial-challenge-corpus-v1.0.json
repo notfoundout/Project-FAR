@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "corpus_id": "EVC-W3-R4-CHALLENGE-CORPUS-001",
+  "version": "1.0",
+  "status": "frozen",
+  "protocol": "EVC-W3-R4-ADVERSARIAL-REPLICATION-001",
+  "challenges": [
+    {"id":"R4-C01-SCOPE-LEAK","domain":"scope","task":"Construct a candidate-independent source admitted by the published scope language but not faithfully handled by the claimed result, or prove the attempted construction inadmissible."},
+    {"id":"R4-C02-PRESERVATION-UNDERDETERMINATION","domain":"preservation","task":"Show that two commitment-distinct sources can receive the same canonical preservation record, or document why the registered commitments separate them."},
+    {"id":"R4-C03-EQUIVALENCE-COLLAPSE","domain":"equivalence","task":"Find a pair classified as commitment-equivalent despite differing ontology, hidden state, admissibility, dependency, history, or termination commitments."},
+    {"id":"R4-C04-HIDDEN-COST","domain":"costs","task":"Identify an interpreter, adapter, decoder, invariant, canonicalizer, oracle, or semantic bridge omitted from a candidate ledger."},
+    {"id":"R4-C05-WINNER-BIAS","domain":"candidate_construction","task":"Determine whether candidate definitions, helper allowances, or benchmark construction privilege FARA or LTS-PROV; provide a concrete biased rule or reject the attack."},
+    {"id":"R4-C06-INVARIANCE-FABRICATION","domain":"invariance","task":"Construct an allegedly admissible representation change that alters commitments or an excluded change that is genuinely commitment-preserving."},
+    {"id":"R4-C07-ABLATION-SUBSTITUTE","domain":"ablation","task":"Produce a strictly cheaper non-equivalent reconstruction after removing a load-bearing unit, or establish that all repairs restore commitment-equivalent machinery."},
+    {"id":"R4-C08-FRONTIER-ERROR","domain":"minimality","task":"Challenge a dominance edge, translation-equivalence judgment, or frontier exclusion using the frozen componentwise preorder."},
+    {"id":"R4-C09-COUNTEREXAMPLE-SUPPRESSION","domain":"controls","task":"Locate a failed, boundary, negative-control, or unresolved result omitted or weakened in the terminal synthesis."},
+    {"id":"R4-C10-CLAIM-INFLATION","domain":"claims","task":"Identify any passage that upgrades bounded subclass, local necessity, frozen-universe minimality, or internal robustness into a global or externally validated claim."},
+    {"id":"R4-C11-NOVEL-ARCHITECTURE-STRESS","domain":"candidate_universe","task":"Sketch at least one materially new non-FARA/non-LTS-PROV architecture and state which current conclusions it could alter; evaluation belongs to EVC-W4, but omission risk must be recorded here."},
+    {"id":"R4-C12-ACTUAL-PROCESS-CONFLATION","domain":"correspondence","task":"Find any inference from formal fit, generated traces, or label agreement to identity with an independently existing reasoning process."}
+  ],
+  "completion_rule": "All twelve challenges require an attempted construction, evidence references, and a disposition of sustained, rejected, or unresolved.",
+  "prohibited_shortcuts": [
+    "treating inability to find a counterexample as proof of universality",
+    "using author assertions as the only rejection evidence",
+    "omitting unsuccessful attacks",
+    "combining scope limitation with full refutation without justification",
+    "counting internal red-team simulation as R4 independence"
+  ]
+}
