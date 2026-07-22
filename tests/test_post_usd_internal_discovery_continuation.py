@@ -13,7 +13,7 @@ class PostUSDInternalDiscoveryContinuationTests(unittest.TestCase):
         disposition=self.load(PROGRAM)['external_package_disposition']
         for key in ('EVC-W1-EXTERNAL-PROOF-REVIEW','EVC-W2-R3-TECHNICAL-REPLICATION','EVC-W3-R4-ADVERSARIAL-REPLICATION'): self.assertEqual(disposition[key],'frozen_preserved_execution_deferred')
         self.assertIn('not withdrawn',disposition['rule'])
-        self.assertIn('not released',disposition['rule'])
+        self.assertIn('No external package is released',disposition['rule'])
     def test_execution_order_is_complete_and_contiguous(self):
         program=self.load(PROGRAM); streams=program['workstreams']
         self.assertEqual(program['registration_pr'],260); self.assertEqual(program['program_id'],'POST-USD-IKD-001')
