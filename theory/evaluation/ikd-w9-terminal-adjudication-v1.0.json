@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "result_id": "IKD-W9-TERMINAL-ADJUDICATION-001",
+  "status": "complete_internal_terminal_adjudication",
+  "parent_program": "POST-USD-IKD-001",
+  "target_pr": 269,
+  "evidence_basis": [
+    "IKD-W1-CANDIDATE-FREEZE-001",
+    "IKD-W2-EXPANDED-COMP-001",
+    "IKD-W3-COMMON-FACTOR-001",
+    "IKD-W4-CROSS-FEATURE-COMPOSITION-001",
+    "IKD-W5-EXPANDED-INVARIANCE-001",
+    "IKD-W6-GLOBAL-RECONSTRUCTION-001",
+    "IKD-W7-LOWER-BOUNDS-001",
+    "IKD-W8-MINIMAL-FRONTIER-001"
+  ],
+  "scope": {
+    "universality_class": {
+      "id": "C-EFFECTIVE-REASONING-001",
+      "definition": "effectively describable systems that maintain distinguishable commitments, permit constrained commitment or state change, preserve grounds or dependencies relevant to revision, and support finite recovery queries over histories"
+    },
+    "preservation_contract": {
+      "id": "P-RCCD-FAITHFUL-001",
+      "requires": [
+        "commitment content",
+        "admissible evolution",
+        "dependency-sensitive revision",
+        "supersession and historical identity",
+        "uniform finite recovery of registered distinctions"
+      ]
+    },
+    "representation_family": {
+      "id": "E-EFFECTIVE-REP-001",
+      "definition": "finite or recursively presented encodings with effective construction and one uniform terminating recovery procedure for each registered finite query"
+    }
+  },
+  "terminal_outcome": "one_nontrivial_common_kernel",
+  "kernel": {
+    "id": "RCCD-001",
+    "name": "Recoverable Constrained Commitment Dynamics",
+    "necessary_commitments": [
+      "R1_RECOVERABLE_COMMITMENTS",
+      "R2_CONSTRAINED_EVOLUTION",
+      "R3_DEPENDENCY_SENSITIVE_REVISION",
+      "R4_HISTORICAL_IDENTITY",
+      "R5_UNIFORM_BOUNDED_RECOVERY"
+    ]
+  },
+  "bounded_theorem": "For every system in C-EFFECTIVE-REASONING-001 and every P-RCCD-FAITHFUL-001 faithful representation in E-EFFECTIVE-REP-001, the representation must encode distinctions equivalent to RCCD components R1-R5. Every successful materially distinct registered architecture is bidirectionally reconstructible with RCCD plus domain-specific parameters and no additional necessary kernel commitment. Therefore RCCD is a necessary nontrivial common kernel for C relative to P and E.",
+  "supporting_findings": {
+    "candidate_competition": "three successful materially distinct architectures",
+    "common_factor": "RCCD extracted without selecting a scalar winner",
+    "cross_feature_composition": "all registered six-feature conjunction preserved on the frozen effectively presented subclass",
+    "representation_invariance": "twelve broader representation transformations preserved RCCD commitments",
+    "alternative_basis_search": "no strictly cheaper non-equivalent reconstruction found in the expanded registered search",
+    "lower_bounds": "each R1-R5 component has a paired-countermodel conditional lower bound",
+    "frontier": "RCCD FARA LTS-PROV and COALG-DYN form one commitment-equivalence class with three Pareto-incomparable realizations"
+  },
+  "excluded_claims": [
+    "unrestricted universality over every possible form of reasoning",
+    "uniqueness outside the defined C P E scope",
+    "actual brains language models courts scientists or other systems internally implement RCCD",
+    "held-out cross-context validation",
+    "independent proof review or replication",
+    "empirical process correspondence",
+    "global ontological minimality"
+  ],
+  "external_requirements": [
+    "independent external proof review",
+    "independent technical reconstruction",
+    "adversarial conceptual replication",
+    "held-out cross-context studies with frozen mappings",
+    "empirical bridge studies using discriminating interventions"
+  ],
+  "post_internal_stopping_rule": {
+    "internal_exploration": "stop adding broad supportive mappings as a substitute for falsification",
+    "reopen_conditions": [
+      "a valid counterexample inside C violates the theorem",
+      "an alternative basis preserves P within E while omitting an RCCD-equivalent commitment",
+      "a held-out context requires a genuine new primitive rather than a domain parameter or derived adapter",
+      "external review identifies circularity unfair machinery accounting or an invalid lower bound"
+    ],
+    "next_phase": "external review replication held-out validation and empirical correspondence"
+  },
+  "internal_answer": "Yes. Relative to the explicitly defined class C, preservation contract P, and effective representation family E, RCCD is a universal structural kernel. An unrestricted claim about all possible reasoning remains unsupported.",
+  "terminal_result": "bounded_rccd_universality_theorem_supported_internally",
+  "program_status": "internal_discovery_program_complete_external_validation_pending"
+}
