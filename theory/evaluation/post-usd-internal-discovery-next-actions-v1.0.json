@@ -1,30 +1,30 @@
 {
   "schema_version": "1.0",
   "queue_id": "POST-USD-IKD-QUEUE-001",
-  "version": "1.1",
+  "version": "1.2",
   "status": "frozen",
   "parent_program": "POST-USD-IKD-001",
   "registration_pr": 260,
   "completed_workstreams": [
-    {"target_pr": 261, "workstream": "IKD-W1-CANDIDATE-ARCHITECTURES", "result": "candidate_architecture_universe_frozen_unexecuted"}
+    {"target_pr": 261, "workstream": "IKD-W1-CANDIDATE-ARCHITECTURES", "result": "candidate_architecture_universe_frozen_unexecuted"},
+    {"target_pr": 262, "workstream": "IKD-W2-EXPANDED-COMPETITION", "result": "three_incomparable_successful_architectures_in_frozen_bounded_scope"}
   ],
   "next_action": {
-    "target_pr": 262,
-    "workstream": "IKD-W2-EXPANDED-COMPETITION",
-    "title": "Execute expanded universal-kernel candidate competition",
-    "branch": "research/execute-ikd-w2-expanded-competition",
+    "target_pr": 263,
+    "workstream": "IKD-W3-COMMON-FACTOR",
+    "title": "Search for a candidate-neutral common kernel",
+    "branch": "research/execute-ikd-w3-common-factor-search",
     "deliverables": [
-      "atomic candidate-case preservation results",
-      "complete machinery and equivalent-reintroduction ledgers",
-      "negative-control outcomes",
-      "componentwise Pareto relations",
-      "successful and failed candidate classifications",
-      "no scalar overall score",
-      "frozen inputs for common-factor search"
+      "commitment decompositions for FARA LTS-PROV and COALG-DYN",
+      "candidate-neutral factor hypotheses",
+      "reasoning-discrimination tests",
+      "generic-structure negative controls",
+      "equivalent-reintroduction accounting",
+      "minimal common-factor counterexamples",
+      "terminal common-factor classification"
     ]
   },
   "ordered_followups": [
-    {"target_pr": 263, "workstream": "IKD-W3-COMMON-FACTOR"},
     {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION"},
     {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE"},
     {"target_pr": 266, "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION"},
