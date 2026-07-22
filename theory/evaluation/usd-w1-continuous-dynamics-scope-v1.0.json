@@ -1,8 +1,9 @@
 {
   "schema_version": "1.0",
   "scope_id": "USD-W1-CD-SCOPE-001",
-  "version": "1.0",
+  "version": "1.1",
   "status": "frozen_executed",
+  "revision_note": "Pre-merge narrowing after adversarial review: isolated crossings are admitted only with a computable finite event enumerator or certified crossing brackets and separation data.",
   "parent_program": "POST-W5-USD-001",
   "workstream": "USD-W1-SCOPE-EXT",
   "feature_family": "continuous_dynamics",
@@ -13,12 +14,13 @@
     "time_domain": "nonnegative real time over a declared compact horizon",
     "dynamics": "autonomous or input-indexed vector field with an explicit computable global Lipschitz bound on the admitted domain",
     "inputs": "piecewise-rational controls with finite descriptions and declared switching times",
-    "events": "finite effectively decidable guard family with isolated crossings and declared reset maps",
+    "events": "finite effectively decidable guard family with declared reset maps and either a computable finite event enumerator or certified rational crossing brackets plus effective separation or transversality data proving that no crossing is omitted",
     "reasoning_layer": "finite commitments, grounds, dependencies, revisions, and evidential annotations indexed to continuous trajectories or event history",
-    "presentation": "algorithms for evaluating vector fields, guards, resets, and certified rational error bounds",
+    "presentation": "algorithms for evaluating vector fields, guards, resets, certified rational error bounds, and the declared event-completeness certificate",
     "exclusions": [
       "non-Lipschitz dynamics without a declared solution-selection rule",
       "nonunique flows",
+      "isolated guard crossings without computable completeness certificates",
       "Zeno event accumulation",
       "unbounded horizons without an effective continuation argument",
       "infinite-dimensional state spaces",
@@ -33,6 +35,7 @@
       "future-trajectory oracle",
       "exact-real equality oracle",
       "source-instance-specific decoder",
+      "unregistered search for missed guard crossings",
       "finite time grid treated as the exact trajectory"
     ]
   },
@@ -63,6 +66,7 @@
   "nonclaims": [
     "all continuous reasoning systems are admitted",
     "all differential equations have unique computable flows",
+    "isolated crossings are computably recoverable without declared certificates",
     "certified approximation is exact physical correspondence",
     "continuous dynamics establishes a universal structure",
     "necessity minimality or uniqueness is established"
