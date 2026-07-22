@@ -11,6 +11,7 @@ health:
 	python tools/check_s_core_w2.py
 	python tools/check_s_core_w3.py
 	python tools/check_s_core_w4.py
+	python tools/check_s_core_w5.py
 	python tools/check_w3_5_corpus_freeze.py
 	python tools/check_w3_5_factorization.py
 	python tools/check_w3_5_specificity.py
@@ -38,6 +39,7 @@ health-fast:
 	python tools/check_s_core_w2.py
 	python tools/check_s_core_w3.py
 	python tools/check_s_core_w4.py
+	python tools/check_s_core_w5.py
 	python tools/check_w3_5_corpus_freeze.py
 	python tools/check_w3_5_factorization.py
 	python tools/check_w3_5_specificity.py
@@ -76,6 +78,7 @@ research-check:
 	python tools/check_s_core_w2.py
 	python tools/check_s_core_w3.py
 	python tools/check_s_core_w4.py
+	python tools/check_s_core_w5.py
 	python tools/check_w3_5_corpus_freeze.py
 	python tools/check_w3_5_factorization.py
 	python tools/check_w3_5_specificity.py
