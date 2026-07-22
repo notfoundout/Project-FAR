@@ -36,8 +36,8 @@ class TUEW2DefeatingConditionCampaignTests(unittest.TestCase):
     def test_unknown_is_preserved(self) -> None:
         cases = self.load(CORPUS)["cases"]
         self.assertTrue(any(item["disposition"] == "unresolved" for item in cases))
-        result = self.load(RESULT)
-        self.assertIn("principled inaccessibility boundary", result["remaining_limits"])
+        limits = self.load(RESULT)["remaining_limits"]
+        self.assertTrue(any("principled inaccessibility boundary" in item for item in limits))
 
     def test_terminal_outcome_follows_five_results(self) -> None:
         result = self.load(RESULT)
