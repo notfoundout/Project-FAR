@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "queue_id": "POST-SC-TUE-QUEUE-001",
+  "parent_program": "POST-SC-TUE-001",
+  "status": "frozen",
+  "completed_workstreams": [
+    {
+      "target_pr": 276,
+      "workstream": "TUE-W0-REGISTRATION",
+      "result": "terminal_universality_extension_program_registered"
+    }
+  ],
+  "next_action": {
+    "target_pr": 277,
+    "workstream": "TUE-W1-UNKNOWN-BOUNDARY",
+    "title": "Resolve registered evidential Unknown boundaries",
+    "branch": "research/execute-tue-w1-unknown-boundary"
+  },
+  "ordered_followups": [278, 279, 280],
+  "blocked_actions": [
+    "external proof review before PR 280",
+    "independent replication before PR 280",
+    "insert additional supportive workstreams",
+    "treat Unknown as evidence for RCCD",
+    "claim unrestricted universality",
+    "claim actual-process correspondence"
+  ]
+}
