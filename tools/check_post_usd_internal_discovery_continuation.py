@@ -32,6 +32,13 @@ def main()->int:
     if next_pr>=264: assert W3_RESULT.is_file(); assert load(W3_RESULT)['terminal_result']=='one_bounded_nontrivial_common_factor_candidate_supported'
     if next_pr>=265: assert W4_RESULT.is_file(); assert load(W4_RESULT)['terminal_result']=='bounded_cross_feature_compositional_closure_supported_with_explicit_compatibility_conditions'
     if next_pr>=266: assert W5_RESULT.is_file(); assert load(W5_RESULT)['terminal_result']=='bounded_expanded_representation_invariance_supported'
+    if next_pr==266:
+        result=load(W5_RESULT)
+        assert result['status']=='complete_bounded_expanded_invariance_analysis'
+        assert result['next_decisive_workstream']=='IKD-W6-GLOBAL-RECONSTRUCTION'
+        assert queue['next_action']['workstream']=='IKD-W6-GLOBAL-RECONSTRUCTION'
+        assert [x['target_pr'] for x in queue['completed_workstreams']]==[261,262,263,264,265]
+        assert [x['target_pr'] for x in queue['ordered_followups']]==[267,268,269]
     if next_pr==267:
         assert W6_RESULT.is_file(); result=load(W6_RESULT)
         assert result['status']=='complete_expanded_registered_reconstruction_search'
