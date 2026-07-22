@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "SC-W5-HELD-OUT-CONTEXTS-001",
+  "status": "complete_internal_held_out_context_adjudication",
+  "parent_program": "POST-W9-SCOPE-CHALLENGE-001",
+  "purpose": "Test RCCD against reasoning contexts not used to construct the W7-W9 lower-bound and frontier results, with a frozen primitive-extension rule and explicit unresolved classifications.",
+  "selection_controls": {
+    "eligible": "A context is eligible only if it presents normatively assessable selection, inference, revision, planning, comparison, or justification over distinguishable alternatives and was not used as an architecture-discovery witness in IKD-W1 through IKD-W9.",
+    "strata": ["causal intervention", "proof repair", "clinical diagnosis", "security incident response", "resource replanning", "translation ambiguity", "robotic affordance reasoning", "policy exception reasoning", "distributed partial-observation coordination", "creative hypothesis generation", "scientific instrument diagnosis", "counterfactual moral deliberation"],
+    "mapping_rule": "Map independently stated domain facts into candidate commitments only after the source distinctions and queries are frozen.",
+    "anti_selection_bias": "No context may be discarded because it maps poorly, appears redundant, or produces an unresolved result.",
+    "independence_limit": "This is an internal held-out test. Contexts are held out from prior architecture discovery, but selection and adjudication are not independent external replication."
+  },
+  "primitive_extension_rule": {
+    "required_conditions": [
+      "The context contains a reasoning distinction required by the full reasoning-faithfulness contract.",
+      "The distinction cannot be represented as domain content attached to R1 commitments.",
+      "The distinction cannot be represented as an admissibility condition or transition constraint under R2.",
+      "The distinction cannot be represented as a ground, dependency, defeater, or revision relation under R3.",
+      "The distinction cannot be represented as historical identity, supersession, or path dependence under R4.",
+      "The distinction cannot be recovered by the uniform effective query discipline under R5.",
+      "The proposed primitive is necessary across at least one faithful mapping after all derived relations and charged adapters are exposed."
+    ],
+    "not_extensions": ["domain-specific value type", "probability or utility annotation", "geometry or topology", "agent index", "authority hierarchy", "causal edge label", "similarity metric", "sensor model", "resource constraint", "language-specific semantic feature", "implementation scheduler", "decoder or canonicalizer"]
+  },
+  "contexts": [
+    {"id":"HO-01","context":"causal intervention planning","source_distinctions":["candidate causal models","permitted interventions","evidence-sensitive model revision","counterfactual history"],"rccd_realization":{"R1":"model and intervention commitments","R2":"intervention admissibility","R3":"evidence and causal support","R4":"model succession and counterfactual branch identity","R5":"uniform recovery of model, intervention, and support queries"},"extension_candidate":"causal direction","classification":"domain_parameter_or_derived_relation","result":"pass_no_new_primitive"},
+    {"id":"HO-02","context":"mathematical proof repair","source_distinctions":["theorem obligations","licensed proof steps","dependency-sensitive invalidation","versioned proof states"],"rccd_realization":{"R1":"claims and obligations","R2":"proof-rule admissibility","R3":"premise and lemma dependencies","R4":"proof version and supersession history","R5":"uniform proof-state queries"},"extension_candidate":"proof modality","classification":"domain_parameter_or_derived_relation","result":"pass_no_new_primitive"},
+    {"id":"HO-03","context":"clinical differential diagnosis","source_distinctions":["candidate diagnoses","test and treatment constraints","evidence-sensitive revision","longitudinal case history"],"rccd_realization":{"R1":"diagnostic commitments","R2":"clinical action admissibility","R3":"symptom, test, and causal grounds","R4":"diagnostic course and supersession","R5":"uniform case recovery"},"extension_candidate":"uncertainty and risk","classification":"annotation_on_commitments_and_constraints","result":"pass_no_new_primitive"},
+    {"id":"HO-04","context":"cybersecurity incident response","source_distinctions":["competing incident hypotheses","containment constraints","artifact-sensitive revision","timeline and provenance"],"rccd_realization":{"R1":"incident and response commitments","R2":"operational admissibility","R3":"forensic grounds and defeaters","R4":"timeline and hypothesis succession","R5":"uniform incident queries"},"extension_candidate":"adversarial agency","classification":"domain_parameter_with_agent_index","result":"pass_no_new_primitive"},
+    {"id":"HO-05","context":"supply-chain replanning under disruption","source_distinctions":["plans and obligations","capacity and timing constraints","dependency-sensitive replanning","plan lineage"],"rccd_realization":{"R1":"plan commitments","R2":"resource and temporal admissibility","R3":"supplier and dependency grounds","R4":"plan versions and supersession","R5":"uniform plan recovery"},"extension_candidate":"quantitative resource flow","classification":"domain_state_and_constraint_structure","result":"pass_no_new_primitive"},
+    {"id":"HO-06","context":"translation ambiguity resolution","source_distinctions":["candidate readings","grammar and discourse constraints","evidence-sensitive interpretation","revision across context"],"rccd_realization":{"R1":"interpretive commitments","R2":"linguistic admissibility","R3":"lexical, syntactic, and discourse grounds","R4":"reading revision history","R5":"uniform interpretation queries"},"extension_candidate":"semantic similarity","classification":"domain_metric_or_ground_weight","result":"pass_no_new_primitive"},
+    {"id":"HO-07","context":"robotic manipulation with affordances","source_distinctions":["object and action hypotheses","physical feasibility constraints","sensor-sensitive revision","world-model history"],"rccd_realization":{"R1":"world and action commitments","R2":"affordance and safety admissibility","R3":"sensor and model grounds","R4":"state-estimate lineage","R5":"uniform recovery of plans and grounds"},"extension_candidate":"continuous geometry","classification":"domain_state_space_not_kernel_primitive","result":"pass_no_new_primitive"},
+    {"id":"HO-08","context":"institutional policy exception reasoning","source_distinctions":["rules and case classifications","authority and exception constraints","precedent-sensitive revision","decision lineage"],"rccd_realization":{"R1":"policy and case commitments","R2":"authority-sensitive admissibility","R3":"rule, precedent, and exception grounds","R4":"policy and decision supersession","R5":"uniform case recovery"},"extension_candidate":"authority hierarchy","classification":"domain_order_on_grounds_and_rules","result":"pass_no_new_primitive"},
+    {"id":"HO-09","context":"distributed partial-observation coordination","source_distinctions":["local beliefs and joint commitments","communication and action constraints","message-sensitive revision","distributed history"],"rccd_realization":{"R1":"agent-indexed local and joint commitments","R2":"local and joint admissibility","R3":"message and observation dependencies","R4":"distributed event and commitment history","R5":"uniform recovery requires an effective aggregation procedure"},"extension_candidate":"common knowledge","classification":"derived_fixed_point_or_domain_relation","result":"pass_no_new_primitive"},
+    {"id":"HO-10","context":"creative hypothesis generation","source_distinctions":["generated candidates","selection constraints","post-generation support and rejection","idea lineage"],"rccd_realization":{"R1":"candidate and evaluative commitments","R2":"selection and revision admissibility","R3":"available evaluative grounds","R4":"candidate lineage","R5":"uniform recovery only for captured artifacts"},"extension_candidate":"generation source","classification":"unresolved_when_generation_process_is_not_instrumented","result":"unresolved_evidential_boundary"},
+    {"id":"HO-11","context":"scientific instrument fault diagnosis","source_distinctions":["fault hypotheses","test constraints","measurement-sensitive revision","maintenance history"],"rccd_realization":{"R1":"fault commitments","R2":"test and intervention admissibility","R3":"measurement and model grounds","R4":"fault-state and repair lineage","R5":"uniform diagnostic queries"},"extension_candidate":"measurement model","classification":"domain_parameter_and_ground_structure","result":"pass_no_new_primitive"},
+    {"id":"HO-12","context":"counterfactual moral deliberation","source_distinctions":["candidate acts and judgments","norm and feasibility constraints","reason-sensitive revision","identity of prior commitments"],"rccd_realization":{"R1":"normative and action commitments","R2":"normative and practical admissibility","R3":"reasons, conflicts, and defeaters","R4":"judgment revision history","R5":"uniform deliberation queries for articulated reasons"},"extension_candidate":"phenomenal or tacit moral salience","classification":"unresolved_when_relevant_reasons_are_inaccessible","result":"unresolved_evidential_boundary"}
+  ],
+  "counts": {"total":12,"pass_no_new_primitive":10,"unresolved_evidential_boundary":2,"genuine_primitive_extension":0,"faithful_rccd_failure":0},
+  "stress_tests": [
+    "Remove agent indexing and verify that distributed coordination loses local-versus-joint content rather than exposing a new kernel primitive.",
+    "Remove probability, utility, geometry, and authority annotations and verify that domain fidelity decreases while the kernel distinction types remain unchanged.",
+    "Charge common-knowledge closure, causal-model comparison, proof checking, and history aggregation as derived procedures rather than free primitives.",
+    "Treat inaccessible creative generation and tacit moral salience as Unknown rather than forcing Pass or Fail.",
+    "Search each passing context for a required distinction outside content, admissibility, grounds, history, and effective recovery. None was found."
+  ],
+  "terminal_result": "held_out_contexts_add_no_genuine_kernel_primitive_and_produce_no_faithful_rccd_counterexample_with_two_evidential_unknowns",
+  "claim_boundary": [
+    "This is internal held-out testing, not external replication or independent adjudication.",
+    "The two unresolved contexts are not counted as positive RCCD evidence.",
+    "No claim is made that every possible reasoning context has been sampled.",
+    "No claim is made that actual cognitive or computational processes implement RCCD.",
+    "The result supports final internal adjudication but does not itself issue the final answer."
+  ],
+  "next_decisive_workstream": "SC-W6-FINAL-INTERNAL-ADJUDICATION"
+}
