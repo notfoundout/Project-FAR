@@ -1,27 +1,29 @@
 {
   "schema_version": "1.0",
   "queue_id": "POST-USD-IKD-QUEUE-001",
-  "version": "1.0",
+  "version": "1.1",
   "status": "frozen",
   "parent_program": "POST-USD-IKD-001",
   "registration_pr": 260,
+  "completed_workstreams": [
+    {"target_pr": 261, "workstream": "IKD-W1-CANDIDATE-ARCHITECTURES", "result": "candidate_architecture_universe_frozen_unexecuted"}
+  ],
   "next_action": {
-    "target_pr": 261,
-    "workstream": "IKD-W1-CANDIDATE-ARCHITECTURES",
-    "title": "Freeze materially new universal-kernel candidate architectures",
-    "branch": "research/freeze-ikd-w1-candidate-architectures",
+    "target_pr": 262,
+    "workstream": "IKD-W2-EXPANDED-COMPETITION",
+    "title": "Execute expanded universal-kernel candidate competition",
+    "branch": "research/execute-ikd-w2-expanded-competition",
     "deliverables": [
-      "candidate-independent admission contract",
-      "at least six materially different architecture families",
-      "anti-derivative and hidden-reconstruction tests",
-      "independent motivation record for each candidate",
-      "unchanged preservation and failure contract",
-      "complete machinery and equivalent-reintroduction ledger",
-      "frozen terminal outcomes for candidate admission"
+      "atomic candidate-case preservation results",
+      "complete machinery and equivalent-reintroduction ledgers",
+      "negative-control outcomes",
+      "componentwise Pareto relations",
+      "successful and failed candidate classifications",
+      "no scalar overall score",
+      "frozen inputs for common-factor search"
     ]
   },
   "ordered_followups": [
-    {"target_pr": 262, "workstream": "IKD-W2-EXPANDED-COMPETITION"},
     {"target_pr": 263, "workstream": "IKD-W3-COMMON-FACTOR"},
     {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION"},
     {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE"},
