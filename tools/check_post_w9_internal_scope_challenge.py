@@ -7,6 +7,7 @@ PROGRAM=ROOT/'theory/evaluation/post-w9-internal-scope-challenge-v1.0.json'
 QUEUE=ROOT/'theory/evaluation/post-w9-internal-scope-challenge-queue-v1.0.json'
 DOC=ROOT/'docs/research/post-w9-internal-scope-challenge-v1.0.md'
 W2=ROOT/'theory/evaluation/sc-w2-boundary-reasoning-v1.0.json'
+W3=ROOT/'theory/evaluation/sc-w3-contract-ladder-v1.0.json'
 def load(path:Path)->dict:return json.loads(path.read_text(encoding='utf-8'))
 def main()->int:
     for path in (PROGRAM,QUEUE,DOC): assert path.is_file(),path
@@ -26,12 +27,22 @@ def main()->int:
     assert queue['next_action']['workstream']==expected[next_pr]
     if next_pr==270:
         assert queue['ordered_followups']==[271,272,273,274,275]
-    if next_pr>=272:
+    if next_pr==272:
         assert W2.is_file(); result=load(W2)
         assert result['status']=='complete_internal_boundary_adjudication'
         assert result['terminal_result']=='no_boundary_case_yet_requires_new_kernel_primitive_but_evidential_boundary_must_remain_open'
         assert [x['target_pr'] for x in queue['completed_workstreams']]==[270,271]
         assert queue['ordered_followups']==[273,274,275]
+    if next_pr>=273:
+        assert W2.is_file(); boundary=load(W2)
+        assert boundary['status']=='complete_internal_boundary_adjudication'
+        assert boundary['terminal_result']=='no_boundary_case_yet_requires_new_kernel_primitive_but_evidential_boundary_must_remain_open'
+        assert W3.is_file(); contract=load(W3)
+        assert contract['status']=='complete_internal_contract_ladder'
+        assert contract['terminal_result']=='rccd_is_contract_relative_but_not_shown_construct_loaded_under_independently_justified_full_contract'
+        assert contract['next_decisive_workstream']=='SC-W4-REPRESENTATION-ESCAPE'
+        assert [x['target_pr'] for x in queue['completed_workstreams']]==[270,271,272]
+        assert queue['ordered_followups']==[274,275]
     text=DOC.read_text(encoding='utf-8')
     assert 'External hold' in text
     assert 'construct-loaded' in text
