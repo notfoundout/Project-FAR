@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "competition_id": "USD-W2-ALT-001",
+  "status": "complete_bounded_comparison",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W2-ALT-VOCAB",
+  "scope": "S_core plus the six formally represented USD-W1 subclasses; actual-process correspondence excluded as empirically unresolved",
+  "aggregation_rule": "pareto_only_no_scalar_overall_winner",
+  "candidates": [
+    {
+      "id": "FARA-001",
+      "family": "typed_reasoning_vocabulary",
+      "independently_motivated": false,
+      "coverage": "pass",
+      "preservation": "pass",
+      "constraint_strength": "high",
+      "reasoning_discrimination": "high",
+      "derived_machinery": 2,
+      "operations": 7,
+      "semantic_description_length": 34,
+      "equivalent_reintroduction": "not_applicable"
+    },
+    {
+      "id": "GREL-001",
+      "family": "generic_relational_vocabulary",
+      "independently_motivated": true,
+      "coverage": "pass",
+      "preservation": "pass",
+      "constraint_strength": "low",
+      "reasoning_discrimination": "low",
+      "derived_machinery": 11,
+      "operations": 9,
+      "semantic_description_length": 61,
+      "equivalent_reintroduction": "reasoning distinctions reintroduced through typed predicates constraints and transition conventions"
+    },
+    {
+      "id": "LTS-PROV-001",
+      "family": "labeled_transition_system_with_provenance",
+      "independently_motivated": true,
+      "coverage": "pass",
+      "preservation": "pass",
+      "constraint_strength": "medium",
+      "reasoning_discrimination": "medium",
+      "derived_machinery": 7,
+      "operations": 6,
+      "semantic_description_length": 49,
+      "equivalent_reintroduction": "grounds commitments and rule status reintroduced as provenance labels and state invariants"
+    },
+    {
+      "id": "ARG-HIST-001",
+      "family": "structured_argumentation_with_history",
+      "independently_motivated": true,
+      "coverage": "partial",
+      "preservation": "partial",
+      "constraint_strength": "high",
+      "reasoning_discrimination": "high",
+      "derived_machinery": 8,
+      "operations": 8,
+      "semantic_description_length": 53,
+      "equivalent_reintroduction": "continuous stochastic and observation semantics require external transition and numeric interfaces"
+    }
+  ],
+  "pairwise_results": [
+    {"left": "FARA-001", "right": "GREL-001", "classification": "FARA_pareto_dominates_on_registered_bounded_scope"},
+    {"left": "FARA-001", "right": "LTS-PROV-001", "classification": "incomparable_tradeoff"},
+    {"left": "FARA-001", "right": "ARG-HIST-001", "classification": "FARA_pareto_dominates_on_coverage_and_preservation"},
+    {"left": "LTS-PROV-001", "right": "GREL-001", "classification": "LTS-PROV_pareto_dominates_on_registered_bounded_scope"},
+    {"left": "LTS-PROV-001", "right": "ARG-HIST-001", "classification": "incomparable_tradeoff"}
+  ],
+  "terminal_result": "multiple_incomparable_successful_vocabularies",
+  "winner": null,
+  "result_summary": "FARA is not uniquely established. It dominates the generic relational baseline and the incomplete argumentation candidate on the frozen bounded comparison, but LTS-PROV-001 remains incomparable because it uses fewer operations while requiring more derived machinery and semantic description. Tradeoffs are not wins.",
+  "hypothesis_effect": {
+    "USD-H-DISC": "supported_boundedly_against_GREL_001",
+    "USD-H-EXIST": "unresolved",
+    "USD-H-INV": "unresolved",
+    "USD-H-NEC": "unresolved",
+    "USD-H-MIN": "unresolved",
+    "USD-H-NO": "unresolved"
+  },
+  "next_decisive_workstream": "USD-W3-INVARIANCE",
+  "nonclaims": [
+    "FARA is globally best",
+    "FARA is unique",
+    "FARA is necessary or minimal",
+    "the candidate universe is exhaustive",
+    "the bounded comparison establishes universal structure",
+    "actual-process correspondence is established",
+    "independent review or replication has occurred"
+  ]
+}
