@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "result_id": "IKD-W8-MINIMAL-FRONTIER-001",
+  "status": "complete_bounded_frontier_recomputation",
+  "parent_program": "POST-USD-IKD-001",
+  "parent_lower_bounds": "IKD-W7-LOWER-BOUNDS-001",
+  "target_pr": 268,
+  "scope": {
+    "universality_class": "C-EFFECTIVE-REASONING-001",
+    "preservation_contract": "P-RCCD-FAITHFUL-001",
+    "representation_family": "E-EFFECTIVE-REP-001"
+  },
+  "comparison_rule": "componentwise_commitment_and_pareto_only_no_scalar_score",
+  "architectures": ["RCCD-001", "FARA-001", "LTS-PROV-001", "COALG-DYN-001"],
+  "bidirectional_reconstructions": [
+    {
+      "architecture": "FARA-001",
+      "from_rccd": "RCCD plus finite domain signatures, rule schemas, and interpretation parameters reconstructs FARA without a new kernel commitment",
+      "to_rccd": "FARA recovers R1-R5 through explicit representations, admissibility rules, dependency calculus, history, and bounded query operations",
+      "hidden_machinery_charged": ["interpretation map", "rule compiler", "history normalizer"],
+      "classification": "rccd_equivalent_realization"
+    },
+    {
+      "architecture": "LTS-PROV-001",
+      "from_rccd": "RCCD plus transition labeling, provenance schema, and observation parameters reconstructs LTS-PROV without a new kernel commitment",
+      "to_rccd": "LTS-PROV recovers R1-R5 through labeled state commitments, admissibility, provenance-sensitive revision, path identity, and effective queries",
+      "hidden_machinery_charged": ["label decoder", "provenance closure", "path canonicalizer"],
+      "classification": "rccd_equivalent_realization"
+    },
+    {
+      "architecture": "COALG-DYN-001",
+      "from_rccd": "RCCD plus functor, observation algebra, and dynamics parameters reconstructs the coalgebraic realization without a new kernel commitment",
+      "to_rccd": "COALG-DYN recovers R1-R5 through observable commitments, constrained coalgebraic evolution, dependency annotations, behavioral history, and bounded observations",
+      "hidden_machinery_charged": ["behavioral decoder", "observation algebra", "history coalgebra"],
+      "classification": "rccd_equivalent_realization"
+    }
+  ],
+  "commitment_equivalence_classes": [
+    {
+      "id": "CEC-RCCD-001",
+      "members": ["RCCD-001", "FARA-001", "LTS-PROV-001", "COALG-DYN-001"],
+      "shared_necessary_commitments": [
+        "R1_RECOVERABLE_COMMITMENTS",
+        "R2_CONSTRAINED_EVOLUTION",
+        "R3_DEPENDENCY_SENSITIVE_REVISION",
+        "R4_HISTORICAL_IDENTITY",
+        "R5_UNIFORM_BOUNDED_RECOVERY"
+      ],
+      "differences": "representation form and domain parameters only within the registered C/P/E scope"
+    }
+  ],
+  "additional_essential_commitment_search": {
+    "tested_candidates": ["global proof objects", "primitive causality", "primitive probability", "primitive temporal continuity", "primitive agency", "primitive modality"],
+    "result": "none_required_across_all_successful_architectures",
+    "reason": "each candidate is domain-specific, derivable, or absent from at least one faithful realization"
+  },
+  "rccd_reducibility": {
+    "result": "not_reducible_under_registered_contract",
+    "basis": "W7 supplies a separating lower bound for each R1-R5 component; removal of any component violates at least one P obligation",
+    "scope_limit": "relative to C, P, and E only"
+  },
+  "incomparable_kernel_search": {
+    "result": "no_surviving_incomparable_kernel_in_registered_successful_set",
+    "note": "this does not quantify over every logically possible future architecture"
+  },
+  "pareto_frontier": {
+    "kernel_level": ["CEC-RCCD-001"],
+    "realization_level": ["FARA-001", "LTS-PROV-001", "COALG-DYN-001"],
+    "interpretation": "the three formerly incomparable architectures are incomparable implementations inside one commitment-equivalence class, not distinct necessary kernels"
+  },
+  "terminal_result": "one_nontrivial_common_kernel_on_defined_class_pending_terminal_adjudication",
+  "next_decisive_workstream": "IKD-W9-TERMINAL-ADJUDICATION",
+  "nonclaims": [
+    "unrestricted universality over all possible reasoning",
+    "global uniqueness outside C/P/E",
+    "actual-process correspondence",
+    "successful held-out cross-context validation",
+    "independent external validation"
+  ]
+}
