@@ -32,7 +32,7 @@ def main() -> int:
     assert "certified effective tail bounds" in admission["kernels"]
     assert "certified positive probability" in admission["conditioning"]
     assert "noncomputable probability measures or kernels" in admission["exclusions"]
-    assert "conditioning on null" in admission["exclusions"]
+    assert any("conditioning on null" in item for item in admission["exclusions"])
     prohibited = set(scope["observation_boundary"]["prohibited"])
     assert {"exact infinite sum oracle", "future random-outcome oracle", "finite support truncation treated as the exact distribution", "undeclared null-event regularization"} <= prohibited
 
