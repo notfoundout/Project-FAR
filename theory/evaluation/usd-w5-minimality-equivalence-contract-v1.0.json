@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "USD-W5-MIN-EQUIV-CONTRACT-001",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W5-MIN-EQUIV",
+  "candidate_universe": ["FARA-001", "LTS-PROV-001", "GREL-001", "ARG-HIST-001"],
+  "successful_candidates": ["FARA-001", "LTS-PROV-001"],
+  "commitment_equivalence": "Two candidates are equivalent only when a bidirectional translation preserves all frozen commitments, admissibility conditions, transitions, dependencies, revisions, semantic versions, and history without hidden machinery.",
+  "translation_equivalence": {
+    "requires_total_bidirectional_translation": true,
+    "requires_round_trip_commitment_equivalence": true,
+    "decoder_specific_shortcuts_forbidden": true,
+    "hidden_state_and_metadata_smuggling_forbidden": true
+  },
+  "cost_preorder": {
+    "dimensions": ["required_primitive_commitments", "derived_machinery", "operations", "semantic_description_length"],
+    "comparison": "componentwise_no_greater_with_at_least_one_strict_for_dominance",
+    "scalarization_forbidden": true,
+    "tradeoffs_count_as_incomparability": true
+  },
+  "admissible_helpers": [
+    "uniform_candidate_independent_abbreviations",
+    "derived_relations_charged_to_derived_machinery",
+    "canonicalization_preserving_commitment_equivalence"
+  ],
+  "forbidden_helpers": [
+    "candidate_specific_decoder",
+    "uncharged semantic interpreter",
+    "future-history oracle",
+    "source-instance-specific reconstruction",
+    "post-freeze candidate addition"
+  ],
+  "tie_and_incomparability_rules": {
+    "equivalent_minima": "mutually translation-equivalent and cost-equivalent",
+    "incomparable_minima": "neither dominates the other and neither is translation-equivalent",
+    "unique_minimum": "one successful equivalence class dominates every other successful class",
+    "no_minimum": "every successful class has a strictly cheaper successful predecessor"
+  },
+  "obligations": [
+    "MIN-001_candidate_universe_frozen",
+    "MIN-002_equivalence_checked_bidirectionally",
+    "MIN-003_all_helpers_charged",
+    "MIN-004_cost_preorder_applied_without_scalarization",
+    "MIN-005_dominated_candidates_removed_only_by_registered_dominance",
+    "MIN-006_incomparability_preserved_as_terminal_result",
+    "MIN-007_no_universal_claim_from_bounded_minimum",
+    "MIN-008_negative_shortcuts_rejected"
+  ],
+  "negative_controls": [
+    "treat_same_outputs_as_translation_equivalence",
+    "ignore_hidden_interpreter_cost",
+    "scalarize_tradeoffs_into_one_score",
+    "declare_fara_unique_after_excluding_lts_prov",
+    "promote_bounded_minima_to_universal_structure"
+  ],
+  "valid_results": [
+    "unique_minimum",
+    "multiple_equivalent_minima",
+    "multiple_incomparable_minima",
+    "no_minimum",
+    "no_successful_kernel",
+    "unresolved"
+  ],
+  "nonclaims": [
+    "the candidate universe is exhaustive",
+    "a global minimum exists",
+    "FARA is uniquely minimal",
+    "bounded minimality proves universal structure",
+    "actual-process correspondence or independent verification is established"
+  ]
+}
