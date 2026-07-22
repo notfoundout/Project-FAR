@@ -19,4 +19,8 @@ class IKDW6GlobalReconstructionTests(unittest.TestCase):
         self.assertEqual(ids,{'CM-DEP','CM-HIST','CM-SEM','CM-OBS','CM-SCHED'})
     def test_terminal_result_and_next_workstream(self):
         data=self.load(); self.assertEqual(data['terminal_result'],'no_strictly_cheaper_non_equivalent_reconstruction_found_in_expanded_registered_search'); self.assertEqual(data['next_decisive_workstream'],'IKD-W7-LOWER-BOUNDS')
+    def test_global_claims_remain_unresolved(self):
+        data=self.load(); effect=data['claim_effect']; nonclaims='\n'.join(data['nonclaims'])
+        self.assertEqual(effect['global_necessity'],'not_yet_proved'); self.assertEqual(effect['global_minimality'],'not_yet_proved'); self.assertEqual(effect['unique_or_universal_kernel'],'unresolved')
+        self.assertIn('globally necessary or minimal',nonclaims); self.assertIn('external validation',nonclaims)
 if __name__=='__main__':unittest.main()
