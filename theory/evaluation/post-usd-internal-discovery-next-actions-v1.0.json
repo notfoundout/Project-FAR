@@ -4,8 +4,9 @@
   "version": "1.0",
   "status": "frozen",
   "parent_program": "POST-USD-IKD-001",
+  "registration_pr": 260,
   "next_action": {
-    "target_pr": 260,
+    "target_pr": 261,
     "workstream": "IKD-W1-CANDIDATE-ARCHITECTURES",
     "title": "Freeze materially new universal-kernel candidate architectures",
     "branch": "research/freeze-ikd-w1-candidate-architectures",
@@ -20,14 +21,14 @@
     ]
   },
   "ordered_followups": [
-    {"target_pr": 261, "workstream": "IKD-W2-EXPANDED-COMPETITION"},
-    {"target_pr": 262, "workstream": "IKD-W3-COMMON-FACTOR"},
-    {"target_pr": 263, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION"},
-    {"target_pr": 264, "workstream": "IKD-W5-EXPANDED-INVARIANCE"},
-    {"target_pr": 265, "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION"},
-    {"target_pr": 266, "workstream": "IKD-W7-LOWER-BOUNDS"},
-    {"target_pr": 267, "workstream": "IKD-W8-MINIMAL-FRONTIER"},
-    {"target_pr": 268, "workstream": "IKD-W9-TERMINAL-ADJUDICATION"}
+    {"target_pr": 262, "workstream": "IKD-W2-EXPANDED-COMPETITION"},
+    {"target_pr": 263, "workstream": "IKD-W3-COMMON-FACTOR"},
+    {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION"},
+    {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE"},
+    {"target_pr": 266, "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION"},
+    {"target_pr": 267, "workstream": "IKD-W7-LOWER-BOUNDS"},
+    {"target_pr": 268, "workstream": "IKD-W8-MINIMAL-FRONTIER"},
+    {"target_pr": 269, "workstream": "IKD-W9-TERMINAL-ADJUDICATION"}
   ],
   "blocked_actions": [
     "release EVC-W1 external review package",
