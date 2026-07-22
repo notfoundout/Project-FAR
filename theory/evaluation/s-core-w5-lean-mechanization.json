@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "mechanization_id": "SCORE-W5-LEAN-001",
+  "version": "1.0",
+  "status": "machine_checked_bounded_theorem",
+  "source_scope": "S_core",
+  "target_class": "A_FARA",
+  "faithful_predicate": "Faithful_split",
+  "lean_file": "mechanization/lean/SCoreW5.lean",
+  "source_proof": "theory/evaluation/s-core-w5-theorem-assembly-proof.json",
+  "theorem_target": "theory/evaluation/thm-target-001.json",
+  "compiled_theorems": {
+    "ASM-SC-001": "FAR.SCoreW5.asm_sc_001_common_schema",
+    "ASM-SC-002": "FAR.SCoreW5.asm_sc_002_bounded_faithful_representation",
+    "ASM-SC-003": "FAR.SCoreW5.asm_sc_003_theorem_family",
+    "THM-CORE-REP-001": "FAR.SCoreW5.thm_core_rep_001",
+    "THM-IMP-001-S_core": "FAR.SCoreW5.bounded_impossibility_refuted"
+  },
+  "proof_character": "constructive Lean 4 proof over an explicit bounded source type and fixed target interface",
+  "assumption_boundary": {
+    "source_type_encodes_frozen_S_core_axes": true,
+    "target_type_encodes_fixed_theorem_facing_FARA_interface": true,
+    "constructor_is_uniform": true,
+    "no_axiom_declarations": true,
+    "no_sorry_or_admit": true,
+    "does_not_validate_source_scope_completeness": true,
+    "does_not_validate_external_correspondence": true
+  },
+  "claim_effect": {
+    "bounded_faithful_representation": "machine_checked",
+    "bounded_common_schema_existence": "machine_checked",
+    "bounded_impossibility_alternative": "machine_checked_refuted",
+    "S_IRD_representation": "unresolved",
+    "actual_process_correspondence": "unresolved",
+    "primitive_necessity": "not_established",
+    "minimality": "not_established",
+    "uniqueness": "not_established",
+    "reasoning_specificity": "not_established",
+    "universal_structure": "unresolved",
+    "independent_proof_review": "not_started"
+  },
+  "nonclaims": [
+    "S_core contains all reasoning",
+    "S_IRD is representable",
+    "actual cognitive processes correspond to the formal source type",
+    "FARA primitives are necessary",
+    "FARA is minimal or unique",
+    "FARA is reasoning-specific",
+    "universal structure is proved",
+    "the proof has independent external review"
+  ]
+}
