@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "result_template_id": "EVC-W2-R3-RESULT-TEMPLATE-001",
+  "protocol": "EVC-W2-R3-TECHNICAL-REPLICATION-001",
+  "status": "template_unexecuted",
+  "release_identity": {
+    "commit_sha_or_archive_digest": null,
+    "first_access_timestamp": null,
+    "reference_results_unsealed_timestamp": null
+  },
+  "replicator_declaration": {
+    "name_or_organization": null,
+    "attribution_public": null,
+    "eligibility_confirmed": null,
+    "conflicts": [],
+    "prior_project_access": null,
+    "original_implementation_used": false,
+    "shared_agent_or_author_control": false,
+    "declaration_signed_at": null
+  },
+  "environment": {
+    "repository_or_archive": null,
+    "implementation_commit": null,
+    "implementation_frozen_at": null,
+    "operating_system": null,
+    "language_and_toolchain": [],
+    "dependencies_with_versions": [],
+    "clean_environment_procedure": null,
+    "determinism_check": null
+  },
+  "target_results": [
+    {"target_id": "R3-T1-W2-FRONTIER", "observed_classification": null, "matches_reference": null, "witnesses": [], "notes": null},
+    {"target_id": "R3-T2-W3-INVARIANCE", "observed_classification": null, "matches_reference": null, "witnesses": [], "notes": null},
+    {"target_id": "R3-T3-W4-ABLATION", "observed_classification": null, "matches_reference": null, "witnesses": [], "notes": null},
+    {"target_id": "R3-T4-W5-MIN-EQUIV", "observed_classification": null, "matches_reference": null, "witnesses": [], "notes": null},
+    {"target_id": "R3-T5-TERMINAL-SYNTHESIS", "observed_classification": null, "matches_reference": null, "witnesses": [], "notes": null}
+  ],
+  "mutation_results": [
+    {"mutation_id": "R3-MUT-EQUIV-COLLAPSE", "detected": null, "failure_mode": null, "evidence": []},
+    {"mutation_id": "R3-MUT-HIDDEN-COST-DELETE", "detected": null, "failure_mode": null, "evidence": []},
+    {"mutation_id": "R3-MUT-INVARIANCE-INFLATE", "detected": null, "failure_mode": null, "evidence": []},
+    {"mutation_id": "R3-MUT-NECESSITY-INFLATE", "detected": null, "failure_mode": null, "evidence": []},
+    {"mutation_id": "R3-MUT-UNIQUE-MINIMUM", "detected": null, "failure_mode": null, "evidence": []},
+    {"mutation_id": "R3-MUT-COUNTEREXAMPLE-DROP", "detected": null, "failure_mode": null, "evidence": []},
+    {"mutation_id": "R3-MUT-INDEPENDENCE-INFLATE", "detected": null, "failure_mode": null, "evidence": []}
+  ],
+  "deviations": [],
+  "ambiguities": [],
+  "manual_interventions": [],
+  "author_contacts": [],
+  "package_completeness_failures": [],
+  "initial_outcome": null,
+  "initial_outcome_rationale": null,
+  "initial_result_published_at": null,
+  "author_response": null,
+  "amendments": [],
+  "allowed_outcomes": ["replicated", "partially_replicated", "not_replicated", "unresolved"],
+  "nonclaims": [
+    "technical replication establishes conceptual correctness",
+    "technical replication establishes cross-context validity",
+    "technical replication establishes actual-process correspondence",
+    "matching outputs establish candidate exhaustiveness"
+  ]
+}
