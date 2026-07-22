@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-USD-EVC-001",
+  "version": "1.0",
+  "status": "registered_unexecuted",
+  "parent_synthesis": "POST-W5-USD-SYN-001",
+  "purpose": "Test whether the bounded incomparable-kernel result survives genuinely external criticism, independent implementation, new candidate architectures, new contexts, and empirical correspondence requirements.",
+  "workstreams": [
+    {
+      "id": "EVC-W1-EXTERNAL-PROOF-REVIEW",
+      "required_independence": "eligible reviewer uninvolved in package construction",
+      "terminal_outcomes": ["confirmed", "confirmed_with_nonblocking_qualifications", "blocking_objection", "unresolved"]
+    },
+    {
+      "id": "EVC-W2-R3-TECHNICAL-REPLICATION",
+      "required_independence": "separate human or organization and independently implemented pipeline",
+      "terminal_outcomes": ["replicated", "partially_replicated", "not_replicated", "unresolved"]
+    },
+    {
+      "id": "EVC-W3-R4-ADVERSARIAL-REPLICATION",
+      "required_independence": "adversarial conceptual team permitted to challenge scope, equivalence, costs, and candidate construction",
+      "terminal_outcomes": ["survived", "scope_limited", "refuted", "unresolved"]
+    },
+    {
+      "id": "EVC-W4-CANDIDATE-EXPANSION",
+      "minimum_requirement": "at least one materially new non-FARA and non-LTS-PROV architecture selected independently of current winners",
+      "terminal_outcomes": ["frontier_unchanged", "new_equivalent_minimum", "new_incomparable_minimum", "new_dominant_candidate", "no_successful_new_candidate", "unresolved"]
+    },
+    {
+      "id": "EVC-W5-R5-CROSS-CONTEXT",
+      "minimum_requirement": "new reasoning contexts not used to construct the frozen benchmark",
+      "terminal_outcomes": ["replicated", "scope_limited", "refuted", "unresolved"]
+    },
+    {
+      "id": "EVC-W6-EMPIRICAL-BRIDGE",
+      "minimum_requirement": "independent observations, measurement error model, state bridge, alternative-process controls, and discriminating interventions",
+      "terminal_outcomes": ["correspondence_supported", "observational_equivalence_only", "correspondence_refuted", "unresolved"]
+    }
+  ],
+  "decision_rules": [
+    "internal implementation diversity does not satisfy external independence",
+    "review packages may not be repaired after reviewer access without a new version",
+    "candidate expansion may change the minimal frontier",
+    "failure to find a new candidate is not proof of exhaustiveness",
+    "cross-context failure limits scope rather than being discarded",
+    "formal fit alone cannot establish actual-process correspondence"
+  ],
+  "claim_gate": {
+    "external_validation": ["EVC-W1-EXTERNAL-PROOF-REVIEW", "EVC-W2-R3-TECHNICAL-REPLICATION"],
+    "broader_kernel_claim": ["EVC-W3-R4-ADVERSARIAL-REPLICATION", "EVC-W4-CANDIDATE-EXPANSION", "EVC-W5-R5-CROSS-CONTEXT"],
+    "actual_process_claim": ["EVC-W6-EMPIRICAL-BRIDGE"]
+  },
+  "nonclaims": [
+    "external validation has occurred",
+    "the current frontier is stable under candidate expansion",
+    "cross-context replication has occurred",
+    "actual-process correspondence is established"
+  ]
+}
