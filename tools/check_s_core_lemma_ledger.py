@@ -12,7 +12,9 @@ def dag(items):
  by={x['id']:x for x in items}; incoming={k:set(v.get('depends_on',[])) for k,v in by.items()}; outgoing=defaultdict(set)
  for k,deps in incoming.items():
   assert deps<=set(by) and k not in deps
-  for d in deps: assert WAVE_ORDER[by[d]['wave']]<=WAVE_ORDER[by[k]['wave']]; outgoing[d].add(k)
+  for dep in deps:
+   assert WAVE_ORDER[by[dep]['wave']]<=WAVE_ORDER[by[k]['wave']]
+   outgoing[dep].add(k)
  ready=deque(sorted(k for k,v in incoming.items() if not v)); seen=[]
  while ready:
   k=ready.popleft(); seen.append(k)
@@ -23,15 +25,20 @@ def dag(items):
 def main()->int:
  paths=[DOC,REG,TARGET,GATES,MAKE]+[p for pair in PROOFS.values() for p in pair]
  for p in paths: assert p.is_file(),p
- d=load(REG); assert d['schema_version']=='1.0' and d['ledger_id']=='SCORE-LEMMA-LEDGER-001' and d['version']=='1.1'; assert d['status']=='w0_w1_w2_w3_w4_w5_complete_bounded_theorem_proved'; assert d['completed_waves']==['W0','W1','W2','W3','W4','W5']; assert d['active_wave']=='complete'; assert d['active_obligations']==[] and d['blocked_obligations']==[] and d['external_blockers']==[]; assert d['proof_packages']==[PROOFS[x][1].relative_to(ROOT).as_posix() for x in ('W0','W1','W2','W3','W4','W5')]
+ d=load(REG); assert d['schema_version']=='1.0' and d['ledger_id']=='SCORE-LEMMA-LEDGER-001' and d['version']=='1.1'
+ if d['status']=='w0_w1_w2_w3_w4_w5_complete_bounded_theorem_proved':
+  assert d['completed_waves']==['W0','W1','W2','W3','W4','W5']; assert d['active_wave']=='complete'; assert d['active_obligations']==[] and d['blocked_obligations']==[] and d['external_blockers']==[]
+ else:
+  raise AssertionError('unexpected ledger status')
+ assert d['proof_packages']==[PROOFS[x][1].relative_to(ROOT).as_posix() for x in ('W0','W1','W2','W3','W4','W5')]
  items=d['obligations']; assert len(items)==37; dag(items); by={x['id']:x for x in items}; assert all(by[f'LEM-SC-{i:03d}']['status']=='proved' for i in range(1,25)); assert by['OBS-SC-001']['status']=='scope_boundary_established'; assert all(by[f'OBS-SC-{i:03d}']['status']=='refuted' for i in range(2,10)); assert by['OBS-SC-010']['status']=='obstruction_established'; assert all(by[f'ASM-SC-{i:03d}']['status']=='proved' for i in range(1,4))
- for x in items:
-  assert isinstance(x.get('evidence'),list)
-  if x['status'] in TERMINAL:
-   assert x['evidence']
-   for rel in x['evidence']: assert (ROOT/rel).is_file(),rel
- counts=Counter(x['status'] for x in items); s=d['execution_summary']; assert s=={'total':37,'construction':24,'obstruction':10,'assembly':3,'proved':27,'obstruction_established':1,'scope_boundary_established':1,'refuted':8,'open':0}; assert counts['proved']==27
- t=load(TARGET)['lemma_program']; assert t['status']=='w0_w1_w2_w3_w4_w5_complete_bounded_theorem_proved' and t['proved_obligations']==27 and t['open_obligations']==0 and t['active_wave']=='complete'
+ for item in items:
+  assert isinstance(item.get('evidence'),list)
+  if item['status'] in TERMINAL:
+   assert item['evidence']
+   for rel in item['evidence']: assert (ROOT/rel).is_file(),rel
+ counts=Counter(x['status'] for x in items); summary=d['execution_summary']; assert summary=={'total':37,'construction':24,'obstruction':10,'assembly':3,'proved':27,'obstruction_established':1,'scope_boundary_established':1,'refuted':8,'open':0}; assert counts['proved']==27; assert counts['obstruction_established']==1; assert counts['scope_boundary_established']==1; assert counts['refuted']==8
+ target=load(TARGET)['lemma_program']; assert target['status']=='w0_w1_w2_w3_w4_w5_complete_bounded_theorem_proved'; assert target['proved_obligations']==27; assert target['open_obligations']==0; assert target['active_wave']=='complete'; assert target['active_obligations']==[]; assert target['blocked_obligations']==[]
  make=MAKE.read_text(encoding='utf-8')
  for checker in ('check_s_core_lemma_ledger.py','check_s_core_w0.py','check_s_core_w1.py','check_s_core_w2.py','check_s_core_w3.py','check_s_core_w4.py','check_s_core_w5.py'): assert make.count(f'python tools/{checker}')==3
  print('S_core lemma ledger: PASS (W5 complete)'); return 0
