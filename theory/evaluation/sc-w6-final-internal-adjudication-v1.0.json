@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "adjudication_id": "SC-W6-FINAL-INTERNAL-ADJUDICATION-001",
+  "status": "complete_final_internal_adjudication",
+  "program": "POST-W9-SCOPE-CHALLENGE-001",
+  "question": "What is the strongest internally justified answer to Project FAR's universal-structure question after the full scope challenge?",
+  "terminal_outcome": "rccd_necessary_kernel_for_natural_class",
+  "final_internal_answer": "RCCD is the strongest currently justified nontrivial universal kernel for the naturalized class of normatively assessable reasoning systems whose reasoning facts include recoverable commitments, constrained change, dependency-sensitive revision, historical identity, and uniform effective recovery.",
+  "theorem": {
+    "name": "Final bounded RCCD universality theorem",
+    "statement": "For every system in the naturalized reasoning class C*, every representation that satisfies the independently justified full reasoning-faithfulness contract P* within the broadened effective family E* must encode distinctions equivalent to RCCD commitments R1-R5. No additional universal primitive is required by any resolved registered case, no faithful effective non-equivalent escape was found, and materially different successful realizations remain representationally plural.",
+    "kernel": ["R1 recoverable commitments","R2 constrained evolution","R3 dependency-sensitive revision","R4 historical identity","R5 uniform bounded recovery"],
+    "scope": {
+      "C_star": "Systems performing normatively assessable selection, inference, revision, planning, comparison, or justification over distinguishable alternatives, where relevant reasoning facts are evidentially accessible enough to test preservation.",
+      "P_star": "Preserve current content, permitted and forbidden change, grounds and defeaters, supersession and path-sensitive identity, and uniform effective recovery.",
+      "E_star": "The broadened registered family of effective uniform representations with all decoders, schedulers, histories, closure procedures, codebooks, and adapters charged."
+    }
+  },
+  "evidence_synthesis": [
+    {"workstream":"SC-W1","result":"scope and neutrality controls frozen before challenge execution"},
+    {"workstream":"SC-W2","result":"no assessable boundary case required a sixth primitive; opaque cases remained Unknown"},
+    {"workstream":"SC-W3","result":"RCCD necessity is contract-relative, but the full contract is independently justified and not shown construct-loaded"},
+    {"workstream":"SC-W4","result":"no faithful effective representation escape survived hidden-machinery accounting"},
+    {"workstream":"SC-W5","result":"ten held-out contexts passed without extension; two remained evidential Unknown; zero faithful counterexamples"}
+  ],
+  "adjudicated_alternatives": {
+    "multiple_incomparable_kernels": "rejected because no faithful kernel was found that is not commitment-equivalent to RCCD after hidden machinery is charged",
+    "generic_only_commonality": "rejected for the full independently justified contract, though accepted for weaker outcome-only contracts",
+    "bounded_no_single_kernel": "rejected within C*/P*/E*",
+    "current_theorem_scope_construct_loaded": "rejected because class membership and preservation duties were independently stated and survived boundary and ablation tests",
+    "unresolved": "rejected as the program-level outcome; retained only for opaque creative-generation and tacit-salience cases"
+  },
+  "realization_plurality": "RCCD is a commitment kernel, not a unique syntax, ontology, implementation, calculus, or physical architecture. Multiple realizations remain Pareto-incomparable.",
+  "unknowns": ["uninstrumented creative hypothesis generation","tacit moral salience","systems whose relevant reasoning distinctions are inaccessible in principle or practice"],
+  "nonclaims": ["unrestricted universality over every conceivable process","actual cognitive or physical implementation of RCCD","uniqueness of representation or realization","necessity under outcome-only or prediction-only contracts","coverage of non-effective or oracle encodings","external validation or independent replication"],
+  "defeating_conditions": ["an assessable in-scope reasoning system requiring a genuine sixth irreducible primitive","a faithful uniform effective representation satisfying P* without RCCD-equivalent commitments","a demonstration that C* or P* is circularly defined by R1-R5","two successful kernels not bidirectionally reconstructible without hidden primitive machinery","evidence that one of R1-R5 is removable under P* without loss"],
+  "internal_program_disposition": "closed_with_final_internal_answer",
+  "external_disposition": "not_started_and_not_required_for_the_internal_answer"
+}
