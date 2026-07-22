@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "template_id": "EVC-W4-CANDIDATE-ADMISSION-001",
+  "protocol": "EVC-W4-CANDIDATE-EXPANSION-001",
+  "candidate_id": null,
+  "candidate_version": null,
+  "proposer": {
+    "identity": null,
+    "affiliation": null,
+    "independence_declaration": null,
+    "conflicts": []
+  },
+  "selection_provenance": {
+    "conceptual_source": null,
+    "selection_timestamp": null,
+    "access_to_existing_frontier_scores_before_selection": null,
+    "selection_rationale": null
+  },
+  "architecture": {
+    "primitive_ontology": [],
+    "operations": [],
+    "state_commitments": [],
+    "transition_commitments": [],
+    "semantic_commitments": [],
+    "dependency_commitments": [],
+    "history_and_revision_commitments": [],
+    "termination_or_admissibility_conditions": []
+  },
+  "novelty_assessment": {
+    "not_renaming_of_FARA": null,
+    "not_renaming_of_LTS_PROV": null,
+    "not_low_cost_commitment_equivalent_to_existing_candidate": null,
+    "independently_specified_semantics_dependencies_and_history": null,
+    "discriminating_architectural_commitment": null,
+    "evidence": []
+  },
+  "freeze": {
+    "candidate_commit": null,
+    "declaration_digest": null,
+    "frozen_before_benchmark_execution": false,
+    "post_freeze_changes": []
+  },
+  "admission_outcome": null,
+  "allowed_admission_outcomes": ["admitted", "rejected_not_materially_new", "unresolved"],
+  "nonclaims": [
+    "admission implies benchmark success",
+    "novelty implies superiority",
+    "one new candidate exhausts the architecture space"
+  ]
+}
