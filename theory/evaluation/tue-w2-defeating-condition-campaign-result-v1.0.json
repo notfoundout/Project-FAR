@@ -1,5 +1,5 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "result_id":"TUE-W2-DEFEATING-CONDITION-CAMPAIGN-RESULT-001",
   "campaign":"TUE-W2-DEFEATING-CONDITION-CAMPAIGN-001",
   "status":"complete",
@@ -12,15 +12,10 @@
     {"condition":"DC-4-PLURAL-KERNEL","result":"not_established","support":{"rccd_equivalent_reintroduction":2,"preservation_failure":1},"qualification":"realization plurality and Pareto incomparability remain; kernel plurality was not established"},
     {"condition":"DC-5-ABLATION","result":"not_established","support":{"preservation_failure":4,"rccd_equivalent_reintroduction":1},"qualification":"necessity remains relative to C*, P* and E*"}
   ],
-  "decisive_witnesses":[
-    "identical conclusions with selectively defeated different grounds require R3",
-    "identical current commitments with different supersession paths require R4",
-    "identical external behavior with different semantic and dependency commitments defeats behavior-only quotients",
-    "extensional tables and proof transformers recover faithfulness only through charged RCCD-equivalent annotations and interfaces",
-    "case-specific recovery oracles implement rather than eliminate R5"
-  ],
+  "decisive_witnesses":["identical conclusions with selectively defeated different grounds require R3","identical current commitments with different supersession paths require R4","identical external behavior with different semantic and dependency commitments defeats behavior-only quotients","extensional tables and proof transformers recover faithfulness only through charged RCCD-equivalent annotations and interfaces","case-specific recovery oracles implement rather than eliminate R5"],
   "impact_on_starting_result":"The SC-W6 result survives this registered internal adversarial campaign. The result is strengthened only against the five tested defeating routes; it is not converted into unrestricted universality.",
   "remaining_limits":["principled inaccessibility boundary from TUE-W1","non-exhaustiveness over every possible ontology and representation","no external adversarial independence","no actual-process correspondence"],
+  "historical_queue_checkpoint":{"completed_workstreams":[276,277,278],"next_pr":279,"next_workstream":"TUE-W3-DEEPER-KERNEL","ordered_followups":[280]},
   "next_workstream":"TUE-W3-DEEPER-KERNEL",
   "next_pr":279
 }
