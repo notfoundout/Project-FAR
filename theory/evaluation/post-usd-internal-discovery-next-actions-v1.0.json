@@ -1,31 +1,30 @@
 {
   "schema_version": "1.0",
   "queue_id": "POST-USD-IKD-QUEUE-001",
-  "version": "1.2",
+  "version": "1.3",
   "status": "frozen",
   "parent_program": "POST-USD-IKD-001",
   "registration_pr": 260,
   "completed_workstreams": [
     {"target_pr": 261, "workstream": "IKD-W1-CANDIDATE-ARCHITECTURES", "result": "candidate_architecture_universe_frozen_unexecuted"},
-    {"target_pr": 262, "workstream": "IKD-W2-EXPANDED-COMPETITION", "result": "three_incomparable_successful_architectures_in_frozen_bounded_scope"}
+    {"target_pr": 262, "workstream": "IKD-W2-EXPANDED-COMPETITION", "result": "three_incomparable_successful_architectures_in_frozen_bounded_scope"},
+    {"target_pr": 263, "workstream": "IKD-W3-COMMON-FACTOR", "result": "one_bounded_nontrivial_common_factor_candidate_supported"}
   ],
   "next_action": {
-    "target_pr": 263,
-    "workstream": "IKD-W3-COMMON-FACTOR",
-    "title": "Search for a candidate-neutral common kernel",
-    "branch": "research/execute-ikd-w3-common-factor-search",
+    "target_pr": 264,
+    "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION",
+    "title": "Execute RCCD cross-feature composition tests",
+    "branch": "research/execute-ikd-w4-cross-feature-composition",
     "deliverables": [
-      "commitment decompositions for FARA LTS-PROV and COALG-DYN",
-      "candidate-neutral factor hypotheses",
-      "reasoning-discrimination tests",
-      "generic-structure negative controls",
-      "equivalent-reintroduction accounting",
-      "minimal common-factor counterexamples",
-      "terminal common-factor classification"
+      "direct multi-feature source constructions",
+      "RCCD recovery results for each conjunction",
+      "interaction-specific preservation failures",
+      "machinery growth and equivalent-reintroduction ledger",
+      "negative controls for featurewise-to-compositional inference",
+      "closure or bounded-failure classification"
     ]
   },
   "ordered_followups": [
-    {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION"},
     {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE"},
     {"target_pr": 266, "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION"},
     {"target_pr": 267, "workstream": "IKD-W7-LOWER-BOUNDS"},
