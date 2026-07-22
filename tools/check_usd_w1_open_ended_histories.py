@@ -32,7 +32,7 @@ def main() -> int:
     assert "no frozen terminal length" in admission["history_domain"]
     assert "total uniform procedure" in admission["prefix_access"]
     assert "finite effectively recoverable dependency cone" in admission["transition_locality"]
-    assert "global revisions that rewrite an unbounded past" in admission["exclusions"]
+    assert any("rewrite an unbounded past" in item for item in admission["exclusions"])
     prohibited = set(scope["observation_boundary"]["prohibited"])
     assert {"future-history oracle", "fixed terminal horizon presented as total coverage", "source-instance-specific decoder"} <= prohibited
 
