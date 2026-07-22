@@ -1,31 +1,33 @@
 {
   "schema_version": "1.0",
   "queue_id": "POST-USD-IKD-QUEUE-001",
-  "version": "1.3",
+  "version": "1.4",
   "status": "frozen",
   "parent_program": "POST-USD-IKD-001",
   "registration_pr": 260,
   "completed_workstreams": [
     {"target_pr": 261, "workstream": "IKD-W1-CANDIDATE-ARCHITECTURES", "result": "candidate_architecture_universe_frozen_unexecuted"},
     {"target_pr": 262, "workstream": "IKD-W2-EXPANDED-COMPETITION", "result": "three_incomparable_successful_architectures_in_frozen_bounded_scope"},
-    {"target_pr": 263, "workstream": "IKD-W3-COMMON-FACTOR", "result": "one_bounded_nontrivial_common_factor_candidate_supported"}
+    {"target_pr": 263, "workstream": "IKD-W3-COMMON-FACTOR", "result": "one_bounded_nontrivial_common_factor_candidate_supported"},
+    {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION", "result": "bounded_cross_feature_compositional_closure_supported_with_explicit_compatibility_conditions"}
   ],
   "next_action": {
-    "target_pr": 264,
-    "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION",
-    "title": "Execute RCCD cross-feature composition tests",
-    "branch": "research/execute-ikd-w4-cross-feature-composition",
+    "target_pr": 265,
+    "workstream": "IKD-W5-EXPANDED-INVARIANCE",
+    "title": "Execute expanded representation-invariance tests for RCCD",
+    "branch": "research/execute-ikd-w5-expanded-invariance",
     "deliverables": [
-      "direct multi-feature source constructions",
-      "RCCD recovery results for each conjunction",
-      "interaction-specific preservation failures",
-      "machinery growth and equivalent-reintroduction ledger",
-      "negative controls for featurewise-to-compositional inference",
-      "closure or bounded-failure classification"
+      "event-state interchange tests",
+      "semantic dualization tests",
+      "causal and intervention encodings",
+      "proof-object and type-theoretic encodings",
+      "process-algebra and coalgebraic encodings",
+      "history and probability representation changes",
+      "machinery and equivalence ledger",
+      "terminal expanded-invariance classification"
     ]
   },
   "ordered_followups": [
-    {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE"},
     {"target_pr": 266, "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION"},
     {"target_pr": 267, "workstream": "IKD-W7-LOWER-BOUNDS"},
     {"target_pr": 268, "workstream": "IKD-W8-MINIMAL-FRONTIER"},
