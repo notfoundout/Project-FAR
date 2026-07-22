@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-W9-SCOPE-CHALLENGE-001",
+  "status": "registered_unexecuted",
+  "parent_result": "IKD-W9-TERMINAL-ADJUDICATION-001",
+  "purpose": "Determine whether the bounded RCCD theorem rests on a natural independently justified target class and neutral preservation contract, or on scope choices that encode RCCD into necessity.",
+  "controlling_question": "Can a faithful representation of a naturally justified reasoning class avoid RCCD-equivalent commitments without losing independently specified reasoning facts?",
+  "frozen_principles": [
+    "The current W9 theorem remains valid for its registered C/P/E scope unless directly refuted.",
+    "No external review or replication is authorized by this program.",
+    "The target is the strongest defensible internal answer, not accumulation of further supportive examples.",
+    "Class membership criteria must be justified independently of RCCD vocabulary.",
+    "Preservation obligations must be stated as domain-neutral reasoning distinctions and tested for construct-loading.",
+    "Adapters may not conceal primitive extensions or nonuniform recovery machinery.",
+    "Positive, plural-kernel, generic-only, bounded-negative, and unresolved outcomes remain admissible."
+  ],
+  "workstreams": [
+    {"sequence":1,"id":"SC-W1-SCOPE-NEUTRALITY","target_pr":270,"title":"Freeze and audit neutrality of C P and E"},
+    {"sequence":2,"id":"SC-W2-BOUNDARY-REASONING","target_pr":271,"title":"Execute reasoning boundary-case adjudication"},
+    {"sequence":3,"id":"SC-W3-CONTRACT-LADDER","target_pr":272,"title":"Execute weaker and alternative preservation contracts"},
+    {"sequence":4,"id":"SC-W4-REPRESENTATION-ESCAPE","target_pr":273,"title":"Search broader effective representation families for RCCD escape"},
+    {"sequence":5,"id":"SC-W5-HELD-OUT-CONTEXTS","target_pr":274,"title":"Execute frozen held-out cross-context primitive-extension tests"},
+    {"sequence":6,"id":"SC-W6-FINAL-INTERNAL-ADJUDICATION","target_pr":275,"title":"Issue the strongest final internal answer"}
+  ],
+  "terminal_outcomes": [
+    "rccd_necessary_kernel_for_natural_class",
+    "multiple_incomparable_kernels",
+    "generic_only_commonality",
+    "bounded_no_single_kernel",
+    "current_theorem_scope_construct_loaded",
+    "unresolved"
+  ],
+  "downgrade_rules": [
+    "If C cannot be defined independently of R1-R5, the W9 result remains formally true but is not accepted as the final universal-structure answer.",
+    "If P contains an obligation equivalent to a candidate component without independent justification, necessity for that component is classified as contract-relative and potentially construct-loaded.",
+    "If a plausible reasoning boundary case requires a genuine new primitive, RCCD universality over the naturalized class fails unless the class exclusion is independently justified.",
+    "If two faithful kernels are not bidirectionally reconstructible without hidden machinery, select a plural-kernel outcome.",
+    "If only generic transition, relation, or information-bearing structure survives all neutral contracts, select generic-only commonality.",
+    "If evidence cannot resolve naturalness, neutrality, or faithful reduction, select unresolved."
+  ],
+  "external_disposition": "deferred_until_final_internal_adjudication",
+  "nonclaims": [
+    "the W9 theorem has been externally validated",
+    "the W9 theorem is already the final answer to unrestricted universal structure",
+    "held-out contexts have passed",
+    "actual reasoning processes implement RCCD"
+  ]
+}
