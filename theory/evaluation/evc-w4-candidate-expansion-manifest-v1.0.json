@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "manifest_id": "EVC-W4-CANDIDATE-EXPANSION-PACKAGE-001",
+  "version": "1.0",
+  "status": "frozen_unreleased",
+  "protocol": "EVC-W4-CANDIDATE-EXPANSION-001",
+  "required_artifacts": [
+    "theory/evaluation/post-w5-usd-next-program-v1.0.json",
+    "theory/evaluation/post-w5-usd-terminal-synthesis-v1.0.json",
+    "theory/evaluation/evc-w4-candidate-expansion-protocol-v1.0.json",
+    "theory/evaluation/evc-w4-candidate-admission-template-v1.0.json",
+    "theory/evaluation/evc-w4-candidate-expansion-result-template-v1.0.json",
+    "docs/research/evc-w4-candidate-expansion-guide-v1.0.md",
+    "docs/audits/evc-w4-candidate-expansion-package-audit.md"
+  ],
+  "benchmark_inputs": "All frozen USD-W2 through USD-W5 scopes, candidates, fixtures, preservation obligations, cost ledgers, equivalence definitions, invariance transformations, ablation controls, results, proofs, and audits.",
+  "required_controls": [
+    "renaming presented as novelty",
+    "uncharged winner import",
+    "candidate-specific benchmark exception",
+    "post-result primitive repair",
+    "scalar-score winner manufacture",
+    "negative-control deletion",
+    "failure-to-find converted into exhaustiveness"
+  ],
+  "release_state": {
+    "candidate_call_released": false,
+    "candidate_received": false,
+    "candidate_admitted": false,
+    "candidate_frozen": false,
+    "benchmark_started": false,
+    "benchmark_completed": false
+  },
+  "nonclaims": ["candidate expansion has occurred", "the frontier is stable", "the search space is exhaustive"]
+}
