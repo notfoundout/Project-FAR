@@ -29,6 +29,7 @@ def main() -> int:
     assert program["program_id"] == "POST-USD-IKD-001"
     assert program["status"] == "registered_unexecuted"
     assert program["parent_synthesis"] == "POST-W5-USD-SYN-001"
+    assert program["registration_pr"] == 260
     assert program["supersedes_as_active_program"] == "POST-USD-EVC-001"
 
     disposition = program["external_package_disposition"]
@@ -40,7 +41,7 @@ def main() -> int:
     streams = program["workstreams"]
     assert len(streams) == 9
     assert [item["sequence"] for item in streams] == list(range(1, 10))
-    assert [item["target_pr"] for item in streams] == list(range(260, 269))
+    assert [item["target_pr"] for item in streams] == list(range(261, 270))
     assert streams[0]["id"] == "IKD-W1-CANDIDATE-ARCHITECTURES"
     assert len(streams[0]["minimum_families"]) >= 6
     assert streams[-1]["id"] == "IKD-W9-TERMINAL-ADJUDICATION"
@@ -68,19 +69,21 @@ def main() -> int:
 
     assert queue["queue_id"] == "POST-USD-IKD-QUEUE-001"
     assert queue["parent_program"] == program["program_id"]
-    assert queue["next_action"]["target_pr"] == 260
+    assert queue["registration_pr"] == 260
+    assert queue["next_action"]["target_pr"] == 261
     assert queue["next_action"]["workstream"] == "IKD-W1-CANDIDATE-ARCHITECTURES"
-    assert [item["target_pr"] for item in queue["ordered_followups"]] == list(range(261, 269))
+    assert [item["target_pr"] for item in queue["ordered_followups"]] == list(range(262, 270))
     assert "release EVC-W1 external review package" in queue["blocked_actions"]
 
     assert evc["program_id"] == "POST-USD-EVC-001"
     assert evc["status"] == "registered_unexecuted"
     assert "External-package hold" in research
+    assert "PR #261 must freeze" in research
     assert "Separate featurewise success is not compositional closure" in audit
     assert "Failure to find a common factor is not global proof of nonexistence" in audit
     assert "internal_discovery_continuation_registered_external_execution_deferred" in audit
 
-    print("POST-USD internal discovery continuation: PASS (external execution deferred; PR #260 authorized)")
+    print("POST-USD internal discovery continuation: PASS (external execution deferred; PR #261 authorized)")
     return 0
 
 
