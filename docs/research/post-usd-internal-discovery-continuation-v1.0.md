@@ -2,7 +2,7 @@
 
 ## Status
 
-Registered prospectively and unexecuted.
+Registered prospectively and unexecuted by PR #260.
 
 ## Reason for continuation
 
@@ -38,13 +38,7 @@ A candidate is not materially new merely because it uses different names, serial
 
 ## Common-factor standard
 
-A common factor must do more than intersect labels or retain generic graph structure. It must:
-
-- preserve the registered reasoning commitments;
-- survive the expanded admissible representation class;
-- discriminate against the registered contrast class or discharge another frozen reasoning-relevant role;
-- survive alternative reconstruction without uncounted equivalent reintroduction;
-- retain a complete machinery and cost ledger.
+A common factor must do more than intersect labels or retain generic graph structure. It must preserve the registered reasoning commitments, survive the expanded admissible representation class, discriminate against the registered contrast class or discharge another frozen reasoning-relevant role, survive alternative reconstruction without uncounted equivalent reintroduction, and retain a complete machinery and cost ledger.
 
 An unrestricted interpreter, source-specific decoder, arbitrary metadata layer, or post-hoc scope restriction is a failed common-factor construction.
 
@@ -56,16 +50,9 @@ Actual-process correspondence remains outside purely formal composition and cont
 
 ## Terminal outcomes
 
-The internal program may terminate as:
+The internal program may terminate as one nontrivial common kernel, multiple translation-equivalent kernels, multiple incomparable kernels with no deeper factor found within the declared search, generic structured-system properties only, a bounded no-single-kernel result, or unresolved.
 
-- one nontrivial common kernel;
-- multiple translation-equivalent kernels;
-- multiple incomparable kernels with no deeper factor found within the declared search;
-- generic structured-system properties only;
-- a bounded no-single-kernel result;
-- unresolved.
-
-Negative, equivalence, incomparability, and unresolved outcomes remain valid. Failure to discover a deeper kernel is not a global nonexistence proof unless a valid closure or lower-bound argument covers the declared search class.
+Failure to discover a deeper kernel is not a global nonexistence proof unless a valid closure or lower-bound argument covers the declared search class.
 
 ## External-package hold
 
@@ -73,7 +60,7 @@ The EVC-W1, EVC-W2, and EVC-W3 packages remain frozen and immutable. They are no
 
 ## Immediate next action
 
-PR #260 must freeze the materially new candidate-architecture universe and its admission controls. It must not execute candidate scoring or select candidates by compatibility with the current FARA/LTS-PROV frontier.
+PR #261 must freeze the materially new candidate-architecture universe and its admission controls. It must not execute candidate scoring or select candidates by compatibility with the current FARA/LTS-PROV frontier.
 
 ## Nonclaims
 
