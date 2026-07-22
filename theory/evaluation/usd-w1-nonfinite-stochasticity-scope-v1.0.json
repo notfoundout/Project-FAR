@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "USD-W1-NFS-SCOPE-001",
+  "version": "1.0",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W1-SCOPE-EXT",
+  "feature_family": "non_finite_support_stochasticity",
+  "source_class": "S_stoch_eff",
+  "admission_rule": {
+    "candidate_independent": true,
+    "state_space": "countable effectively presented state and outcome carriers",
+    "kernels": "computable probability kernels with certified effective tail bounds or computable summation moduli",
+    "queries": "finite rational-cylinder events, bounded computable observables, and finite stopping-horizon questions",
+    "conditioning": "conditioning only on events with certified positive probability and an effective denominator bound",
+    "reasoning_layer": "finite commitments, grounds, dependencies, revisions, evidential annotations, and declared probabilistic updates",
+    "presentation": "uniform algorithms for point masses, cylinder probabilities, tail certificates, expectation approximants, and update certificates",
+    "exclusions": [
+      "noncomputable probability measures or kernels",
+      "uncountable carriers without an effective presentation and computable integration interface",
+      "conditioning on null or effectively undecidable zero-probability events",
+      "unbounded observables without certified integrability moduli",
+      "infinite-horizon claims without effective convergence certificates",
+      "actual-process correspondence"
+    ]
+  },
+  "observation_boundary": {
+    "analyst_access": "full frozen effective presentation and certificates",
+    "represented_agent_access": "only source-declared observations, beliefs, commitments, and history",
+    "prohibited": [
+      "exact infinite sum oracle",
+      "future random-outcome oracle",
+      "source-instance-specific decoder",
+      "finite support truncation treated as the exact distribution",
+      "undeclared null-event regularization"
+    ]
+  },
+  "preservation_obligations": [
+    "NFS-EXT-001_total_uniform_constructor",
+    "NFS-EXT-002_probability_mass_preserved",
+    "NFS-EXT-003_expectation_queries_preserved",
+    "NFS-EXT-004_conditioning_and_update_preserved",
+    "NFS-EXT-005_commitment_ground_dependency_preserved",
+    "NFS-EXT-006_history_and_revision_preserved",
+    "NFS-EXT-007_tail_refinement_coherent",
+    "NFS-EXT-008_no_finite_support_collapse",
+    "NFS-EXT-009_registered_negative_controls_rejected"
+  ],
+  "counterexample_policy": {
+    "one_valid_countermodel_blocks_extension_proved": true,
+    "unknown_is_not_pass": true,
+    "post_freeze_scope_repair_requires_new_version": true,
+    "failure_to_find_counterexample_is_not_proof": true
+  },
+  "allowed_terminal_outcomes": ["extension_proved", "proper_subclass_only", "countermodel", "new_assumption_required", "unresolved"],
+  "nonclaims": [
+    "all stochastic reasoning systems are admitted",
+    "all probability measures are computable",
+    "finite truncations are exact infinite-support distributions",
+    "conditioning on arbitrary null events is defined",
+    "stochastic representation establishes a universal structure",
+    "necessity minimality or uniqueness is established"
+  ]
+}
