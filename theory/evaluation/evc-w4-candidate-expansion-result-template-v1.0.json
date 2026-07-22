@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "template_id": "EVC-W4-CANDIDATE-EXPANSION-RESULT-001",
+  "protocol": "EVC-W4-CANDIDATE-EXPANSION-001",
+  "release_identifier": null,
+  "candidate_results": [],
+  "frontier_before": ["FARA-001", "LTS-PROV-001"],
+  "frontier_after": [],
+  "pairwise_relations": [],
+  "failed_negative_controls": [],
+  "unresolved_stages": [],
+  "terminal_outcome": null,
+  "allowed_terminal_outcomes": ["frontier_unchanged", "new_equivalent_minimum", "new_incomparable_minimum", "new_dominant_candidate", "no_successful_new_candidate", "unresolved"],
+  "claim_boundary": null,
+  "amendments": [],
+  "nonclaims": ["global exhaustiveness", "global minimality", "universal structure", "actual-process correspondence"]
+}
