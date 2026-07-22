@@ -58,15 +58,15 @@ structure Witness (source : Source) (target : Target) where
   evidential : target.interpretation = source.evidentialStatus
 
 /-- Internal faithful-representation predicate used by the W5 bounded theorem. -/
-def FaithfulSplit (source : Source) (target : Target) (witness : Witness source target) : Prop :=
-  witness.configuration = rfl ∧
-  witness.commitment = rfl ∧
-  witness.stake = rfl ∧
-  witness.ground = rfl ∧
-  witness.admissibility = rfl ∧
-  witness.consequence = rfl ∧
-  witness.historical = rfl ∧
-  witness.evidential = rfl
+def FaithfulSplit (source : Source) (target : Target) (_witness : Witness source target) : Prop :=
+  target.state = source.configurations ∧
+  target.positions = source.commitments ∧
+  target.investigation = source.stakes ∧
+  target.provenance = source.grounds ∧
+  target.calculus = source.admissibleTransitions ∧
+  target.result = source.consequences ∧
+  target.history = source.history ∧
+  target.interpretation = source.evidentialStatus
 
 /-- One uniform constructor into the same fixed target structure for all sources. -/
 def encode (source : Source) : Target :=
@@ -103,8 +103,7 @@ def encodeWitness (source : Source) : Witness source (encode source) :=
 /-- The canonical witness satisfies all eight internal preservation clauses. -/
 theorem encode_is_faithful (source : Source) :
     FaithfulSplit source (encode source) (encodeWitness source) := by
-  repeat' apply And.intro rfl
-  exact rfl
+  exact ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
 
 /-- ASM-SC-001: one fixed target schema and one uniform constructor cover `S_core`. -/
 theorem asm_sc_001_common_schema :
