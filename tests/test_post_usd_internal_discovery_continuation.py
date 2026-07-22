@@ -40,8 +40,9 @@ class PostUSDInternalDiscoveryContinuationTests(unittest.TestCase):
     def test_execution_order_is_complete_and_contiguous(self):
         program = self.load(PROGRAM)
         streams = program["workstreams"]
+        self.assertEqual(program["registration_pr"], 260)
         self.assertEqual([item["sequence"] for item in streams], list(range(1, 10)))
-        self.assertEqual([item["target_pr"] for item in streams], list(range(260, 269)))
+        self.assertEqual([item["target_pr"] for item in streams], list(range(261, 270)))
         self.assertEqual(streams[-1]["id"], "IKD-W9-TERMINAL-ADJUDICATION")
 
     def test_no_premature_universal_or_external_claim(self):
@@ -53,7 +54,8 @@ class PostUSDInternalDiscoveryContinuationTests(unittest.TestCase):
 
     def test_next_action_is_candidate_architecture_freeze(self):
         queue = self.load(QUEUE)
-        self.assertEqual(queue["next_action"]["target_pr"], 260)
+        self.assertEqual(queue["registration_pr"], 260)
+        self.assertEqual(queue["next_action"]["target_pr"], 261)
         self.assertEqual(queue["next_action"]["workstream"], "IKD-W1-CANDIDATE-ARCHITECTURES")
         self.assertIn("anti-derivative and hidden-reconstruction tests", queue["next_action"]["deliverables"])
 
