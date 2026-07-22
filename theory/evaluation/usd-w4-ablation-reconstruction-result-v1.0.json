@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W4-ABL-RESULT-001",
+  "status": "complete_bounded_local_necessity_supported",
+  "contract": "USD-W4-ABL-CONTRACT-001",
+  "vocabulary_results": {
+    "FARA-001": {
+      "representation": "equivalently_reintroduced",
+      "structure": "locally_load_bearing",
+      "interpretation": "equivalently_reintroduced",
+      "calculus": "locally_load_bearing",
+      "provenance_history": "locally_load_bearing"
+    },
+    "LTS-PROV-001": {
+      "state": "locally_load_bearing",
+      "transition": "locally_load_bearing",
+      "label_semantics": "equivalently_reintroduced",
+      "provenance": "locally_load_bearing",
+      "history_revision": "equivalently_reintroduced"
+    }
+  },
+  "direct_removal_summary": {
+    "FARA-001": "every ablation caused at least one registered preservation failure",
+    "LTS-PROV-001": "every ablation caused at least one registered preservation failure"
+  },
+  "reconstruction_summary": {
+    "successful_strictly_cheaper_non_equivalent_reconstructions": [],
+    "equivalent_reintroductions": [
+      "FARA representation via typed carrier and identity machinery",
+      "FARA interpretation via denotation and semantic-version machinery",
+      "LTS-PROV label semantics via typed interpretation constraints",
+      "LTS-PROV history revision via explicit event and supersession machinery"
+    ],
+    "all_reintroduced_machinery_charged": true
+  },
+  "obligation_results": {
+    "ABL-001_commitments": "pass",
+    "ABL-002_operational_admissibility": "pass",
+    "ABL-003_dependencies": "pass",
+    "ABL-004_revision_effects": "pass",
+    "ABL-005_historical_distinctions": "pass",
+    "ABL-006_semantic_versions": "pass",
+    "ABL-007_hidden_state_boundaries": "pass",
+    "ABL-008_uniform_recovery": "pass"
+  },
+  "comparison_effect": {
+    "FARA_vs_LTS_PROV": "bounded_incomparability_preserved",
+    "winner": "none"
+  },
+  "terminal_outcome": "bounded_local_necessity_supported",
+  "claim_effect": {
+    "H_N_local": "supported_on_frozen_benchmark_for_tested_units",
+    "H_N_global": "unresolved",
+    "THM-US-NEC-001": "bounded_support_only",
+    "THM-US-MIN-001": "unresolved",
+    "universal_structure": "unresolved",
+    "actual_process_correspondence": "unresolved"
+  },
+  "machine_check_status": "validator_checked_not_formally_mechanized",
+  "independent_review_status": "not_started",
+  "next_workstream": "USD-W5-MIN-EQUIV",
+  "nonclaims": [
+    "global necessity",
+    "global minimality",
+    "unique best vocabulary",
+    "universal structure",
+    "actual-process correspondence",
+    "independent verification"
+  ]
+}

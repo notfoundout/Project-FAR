@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "USD-W4-ABL-CONTRACT-001",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W4-ABLATION",
+  "scope": "bounded canonical benchmark inherited from USD-W2 and stabilized by USD-W3",
+  "tested_vocabularies": ["FARA-001", "LTS-PROV-001"],
+  "ablation_modes": [
+    "direct_removal",
+    "alternative_reconstruction",
+    "equivalent_reintroduction"
+  ],
+  "fara_units": [
+    "representation",
+    "structure",
+    "interpretation",
+    "calculus",
+    "provenance_history"
+  ],
+  "lts_prov_units": [
+    "state",
+    "transition",
+    "label_semantics",
+    "provenance",
+    "history_revision"
+  ],
+  "preservation_obligations": [
+    "ABL-001_commitments",
+    "ABL-002_operational_admissibility",
+    "ABL-003_dependencies",
+    "ABL-004_revision_effects",
+    "ABL-005_historical_distinctions",
+    "ABL-006_semantic_versions",
+    "ABL-007_hidden_state_boundaries",
+    "ABL-008_uniform_recovery"
+  ],
+  "complete_cost_accounting": [
+    "new primitive categories",
+    "derived predicates and relation schemas",
+    "state variables and hidden state",
+    "transition and admissibility conventions",
+    "semantic declarations and invariants",
+    "provenance and history machinery",
+    "decoders recovery maps and source-specific adapters"
+  ],
+  "decision_rules": {
+    "locally_load_bearing": "direct removal causes at least one preservation failure and no cheaper reconstruction succeeds",
+    "equivalently_reintroduced": "preservation is restored only by machinery commitment-equivalent to the removed unit and that machinery is fully charged",
+    "locally_redundant": "removal or a strictly cheaper non-equivalent reconstruction preserves every obligation",
+    "unknown": "recovery or commitment-equivalence remains unresolved"
+  },
+  "global_boundary": "Local load-bearing status over this frozen benchmark is not global necessity over all vocabularies, representations, or S_IRD.",
+  "nonclaims": [
+    "global necessity",
+    "global minimality",
+    "unique decomposition",
+    "universal structure",
+    "actual-process correspondence",
+    "independent verification"
+  ]
+}
