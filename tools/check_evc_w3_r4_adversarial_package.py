@@ -57,10 +57,13 @@ def main() -> None:
     assert set(template["allowed_verdicts"]) == set(protocol["terminal_outcomes"])
     assert template["initial_verdict"] is None and template["final_verdict"] is None
 
+    assert "No adversarial team has been recruited" in audit
+    assert "Failure to find an attack does not establish universality" in guide
     for text in (guide, audit):
-        assert "frozen_unexecuted" in text
-        assert "universal" in text.lower()
-        assert "actual-process" in text.lower()
+        lowered = text.lower()
+        assert "universal" in lowered
+        assert "actual-process" in lowered
+        assert "r4" in lowered
 
     print("EVC-W3 R4 adversarial replication package: PASS")
 
