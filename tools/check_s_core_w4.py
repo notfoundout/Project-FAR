@@ -17,7 +17,10 @@ def main()->int:
  for cid in CONTROL_IDS:
   assert controls[cid]['family_status']=='proved_rejected_when_applicable'; assert controls[cid]['diagnostic']==CONTROL_SPEC[cid]['diagnostic']; assert controls[cid]['violated_clauses']==CONTROL_SPEC[cid]['violated_clauses']
  fixture=load(FIX); assert fixture['fixture_set_id']=='SCORE-W4-NEGATIVE-CONTROLS-001' and fixture['status']=='frozen_executed'; assert fixture['execution_summary']=={'total_controls':10,'rejected_expected_reason':10,'unexpected_pass':0,'wrong_reason':0,'not_applicable':0,'implementation_defect':0}
- manifest={x['id']:x for x in fixture['controls']}; executable=run_suite(load(SOURCE_FIX)['source']); assert len(executable)==10 and {x['id'] for x in executable}==set(CONTROL_IDS)
+ manifest={x['id']:x for x in fixture['controls']}; executable=run_suite(load(SOURCE_FIX)['source'])
+ if len(executable)!=10:
+  raise AssertionError(f'expected 10 controls, got {len(executable)}')
+ assert {x['id'] for x in executable}==set(CONTROL_IDS)
  for item in executable:
   expected=manifest[item['id']]; assert item['status']=='rejected_expected_reason'; assert item['diagnostic']==expected['expected_diagnostic']; assert item['violated_clauses']==expected['expected_violated_clauses']
  ledger=load(LEDGER); by={x['id']:x for x in ledger['obligations']}; assert by['OBS-SC-010']['status']=='obstruction_established'; assert by['OBS-SC-010']['evidence']==['docs/research/s-core-w4-negative-control-proof-v1.0.md','theory/evaluation/s-core-w4-negative-control-proof.json']
