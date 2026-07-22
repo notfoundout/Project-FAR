@@ -16,6 +16,7 @@ W5_RESULT=ROOT/'theory/evaluation/ikd-w5-expanded-invariance-v1.0.json'
 W6_RESULT=ROOT/'theory/evaluation/ikd-w6-global-reconstruction-v1.0.json'
 W7_RESULT=ROOT/'theory/evaluation/ikd-w7-lower-bounds-v1.0.json'
 W8_RESULT=ROOT/'theory/evaluation/ikd-w8-minimal-frontier-v1.0.json'
+W9_RESULT=ROOT/'theory/evaluation/ikd-w9-terminal-adjudication-v1.0.json'
 def load(path:Path)->dict:return json.loads(path.read_text(encoding='utf-8'))
 def main()->int:
     for path in (PROGRAM,QUEUE,RESEARCH,AUDIT,EVC): assert path.is_file(),path
@@ -28,6 +29,19 @@ def main()->int:
     assert streams[0]['id']=='IKD-W1-CANDIDATE-ARCHITECTURES'; assert streams[-1]['id']=='IKD-W9-TERMINAL-ADJUDICATION'
     rules='\n'.join(program['decision_rules']); assert 'Cross-feature conjunctions' in rules; assert 'Equivalent reintroduction' in rules; assert 'External validation remains deferred' in rules
     assert queue['queue_id']=='POST-USD-IKD-QUEUE-001'; assert queue['parent_program']==program['program_id']; assert queue['registration_pr']==260
+    if queue['status']=='internal_program_complete':
+        for path in (W1_FREEZE,W2_RESULT,W3_RESULT,W4_RESULT,W5_RESULT,W6_RESULT,W7_RESULT,W8_RESULT,W9_RESULT): assert path.is_file(),path
+        assert [x['target_pr'] for x in queue['completed_workstreams']]==list(range(261,270))
+        assert queue['ordered_followups']==[]
+        assert queue['terminal_outcome']=='one_nontrivial_common_kernel'
+        assert queue['terminal_result']=='bounded_rccd_universality_theorem_supported_internally'
+        assert queue['next_action']['phase']=='external_validation_and_empirical_bridge'
+        assert queue['next_action']['status']=='not_authorized_by_internal_queue'
+        result=load(W9_RESULT); assert result['status']=='complete_internal_terminal_adjudication'; assert result['terminal_outcome']=='one_nontrivial_common_kernel'; assert result['program_status']=='internal_discovery_program_complete_external_validation_pending'
+        assert evc['status']=='registered_unexecuted'
+        assert 'External-package hold' in RESEARCH.read_text(encoding='utf-8'); assert 'Separate featurewise success is not treated as compositional closure' in AUDIT.read_text(encoding='utf-8')
+        print('POST-USD internal discovery continuation: PASS (internal program complete; external validation pending)')
+        return 0
     next_pr=queue['next_action']['target_pr']; assert next_pr in {261,262,263,264,265,266,267,268,269}
     if next_pr>=262: assert W1_FREEZE.is_file(); assert queue['completed_workstreams'][0]['target_pr']==261
     if next_pr>=263: assert W2_RESULT.is_file(); assert load(W2_RESULT)['status']=='complete_bounded_comparison'; assert queue['completed_workstreams'][1]['target_pr']==262
