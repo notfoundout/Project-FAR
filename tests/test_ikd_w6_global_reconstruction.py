@@ -1,13 +1,14 @@
 from __future__ import annotations
-import json,subprocess,sys,unittest
+import json,runpy,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 RESULT=ROOT/'theory/evaluation/ikd-w6-global-reconstruction-v1.0.json'
+CHECKER=ROOT/'tools/check_ikd_w6_global_reconstruction.py'
 class IKDW6GlobalReconstructionTests(unittest.TestCase):
     def load(self)->dict:return json.loads(RESULT.read_text(encoding='utf-8'))
     def test_validator_passes(self):
-        cp=subprocess.run([sys.executable,str(ROOT/'tools/check_ikd_w6_global_reconstruction.py')],cwd=ROOT,text=True,capture_output=True)
-        self.assertEqual(cp.returncode,0,cp.stdout+cp.stderr); self.assertIn('PASS',cp.stdout)
+        namespace=runpy.run_path(str(CHECKER))
+        self.assertEqual(namespace['main'](),0)
     def test_search_is_broad_but_not_overclaimed(self):
         data=self.load(); self.assertGreaterEqual(len(data['searched_bases']),14); self.assertIn('not mathematically exhaustive',data['scope'])
         self.assertIn('every logically possible vocabulary has been searched',data['nonclaims'])
