@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W1-SC-RESULT-001",
+  "version": "1.0",
+  "status": "complete_bounded_extension_proved",
+  "parent_program": "POST-W5-USD-001",
+  "scope_contract": "USD-W1-SC-SCOPE-001",
+  "source_class": "S_sem_eff",
+  "target_class": "A_FARA",
+  "new_target_primitive": false,
+  "construction": {
+    "semantic_versions": "each declared semantic interface is represented as a distinct versioned interpretation object",
+    "change_events": "renames, splits, merges, introductions, retirements, and inferential-role changes are explicit transitions",
+    "translation": "one uniform constructor carries declared partial-correspondence maps and preserves unresolved cases as unresolved",
+    "history": "prior meanings, reasons, rejected alternatives, commitments, grounds, and downstream dependencies remain recoverable",
+    "recovery": "one uniform query interface reconstructs any finite semantic version and dependency cone without future access or source-specific decoding"
+  },
+  "proved_obligations": [
+    "SC-EXT-001_total_uniform_constructor",
+    "SC-EXT-002_versioned_denotation_preserved",
+    "SC-EXT-003_inferential_role_preserved",
+    "SC-EXT-004_translation_effects_preserved",
+    "SC-EXT-005_commitment_ground_dependency_preserved",
+    "SC-EXT-006_semantic_history_and_revision_preserved",
+    "SC-EXT-007_unresolved_translation_remains_explicit",
+    "SC-EXT-008_no_label_identity_collapse",
+    "SC-EXT-009_registered_negative_controls_rejected"
+  ],
+  "fixture_results": {
+    "SC-RENAME-001": "pass",
+    "SC-SPLIT-001": "pass",
+    "SC-RULE-001": "pass",
+    "SC-NEG-LABEL-001": "rejected",
+    "SC-NEG-ERASE-001": "rejected",
+    "SC-BOUND-ORACLE-001": "excluded",
+    "SC-BOUND-GLOBAL-001": "excluded"
+  },
+  "terminal_outcome": "proper_subclass_only",
+  "reason": "The construction proves faithful representation for effectively presented versioned semantic changes with explicit finite transition maps and recoverable dependency effects. It does not cover oracle-defined, noncomputable, or unbounded retroactive semantic change.",
+  "theorem_effect": {
+    "THM-IRD-EXT-001": "partial_progress_fifth_feature_subclass_resolved",
+    "THM-US-EXIST-001": "unresolved",
+    "THM-US-INV-001": "unresolved",
+    "THM-US-NEC-001": "unresolved",
+    "THM-US-MIN-001": "unresolved"
+  },
+  "claim_effect": {
+    "effective_semantic_change_representation": "proved_for_S_sem_eff",
+    "all_semantic_change_representation": "unresolved",
+    "S_IRD_representation": "unresolved",
+    "universal_structure": "unresolved",
+    "primitive_necessity": "not_established",
+    "minimality": "not_established",
+    "uniqueness": "not_established",
+    "actual_process_correspondence": "unresolved"
+  },
+  "machine_check_status": "not_mechanized",
+  "independent_review_status": "not_started",
+  "nonclaims": [
+    "all semantic change is represented",
+    "semantic equivalence is globally decidable",
+    "unchanged labels imply unchanged meaning",
+    "FARA is necessary minimal unique or universal",
+    "actual semantic practice has been captured",
+    "independent verification has occurred"
+  ]
+}
