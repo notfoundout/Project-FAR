@@ -12,26 +12,21 @@ class PostUSDInternalDiscoveryContinuationTests(unittest.TestCase):
     def test_external_packages_are_preserved_but_deferred(self):
         disposition=self.load(PROGRAM)['external_package_disposition']
         for key in ('EVC-W1-EXTERNAL-PROOF-REVIEW','EVC-W2-R3-TECHNICAL-REPLICATION','EVC-W3-R4-ADVERSARIAL-REPLICATION'): self.assertEqual(disposition[key],'frozen_preserved_execution_deferred')
-        self.assertIn('not withdrawn',disposition['rule'])
-        self.assertIn('No external package is released',disposition['rule'])
+        self.assertIn('not withdrawn',disposition['rule']); self.assertIn('No external package is released',disposition['rule'])
     def test_execution_order_is_complete_and_contiguous(self):
         program=self.load(PROGRAM); streams=program['workstreams']
-        self.assertEqual(program['registration_pr'],260); self.assertEqual(program['program_id'],'POST-USD-IKD-001')
-        self.assertEqual(len(streams),9); self.assertEqual([x['sequence'] for x in streams],list(range(1,10)))
-        self.assertEqual([x['target_pr'] for x in streams],list(range(261,270))); self.assertEqual(streams[0]['id'],'IKD-W1-CANDIDATE-ARCHITECTURES'); self.assertEqual(streams[-1]['id'],'IKD-W9-TERMINAL-ADJUDICATION')
+        self.assertEqual(program['registration_pr'],260); self.assertEqual(program['program_id'],'POST-USD-IKD-001'); self.assertEqual(len(streams),9); self.assertEqual([x['sequence'] for x in streams],list(range(1,10))); self.assertEqual([x['target_pr'] for x in streams],list(range(261,270))); self.assertEqual(streams[0]['id'],'IKD-W1-CANDIDATE-ARCHITECTURES'); self.assertEqual(streams[-1]['id'],'IKD-W9-TERMINAL-ADJUDICATION')
     def test_no_premature_universal_or_external_claim(self):
         nonclaims=set(self.load(PROGRAM)['nonclaims']); self.assertIn('a universal structure has been discovered',nonclaims); self.assertIn('existing external packages have been executed',nonclaims); self.assertIn('failure to find a common kernel proves global nonexistence',nonclaims)
     def test_next_action_is_candidate_architecture_freeze(self):
         queue=self.load(QUEUE); self.assertEqual(queue['registration_pr'],260); self.assertEqual(queue['queue_id'],'POST-USD-IKD-QUEUE-001')
-        next_pr=queue['next_action']['target_pr']; self.assertIn(next_pr,{261,262,263,264,265})
-        expected={261:'IKD-W1-CANDIDATE-ARCHITECTURES',262:'IKD-W2-EXPANDED-COMPETITION',263:'IKD-W3-COMMON-FACTOR',264:'IKD-W4-CROSS-FEATURE-COMPOSITION',265:'IKD-W5-EXPANDED-INVARIANCE'}
+        next_pr=queue['next_action']['target_pr']; self.assertIn(next_pr,{261,262,263,264,265,266})
+        expected={261:'IKD-W1-CANDIDATE-ARCHITECTURES',262:'IKD-W2-EXPANDED-COMPETITION',263:'IKD-W3-COMMON-FACTOR',264:'IKD-W4-CROSS-FEATURE-COMPOSITION',265:'IKD-W5-EXPANDED-INVARIANCE',266:'IKD-W6-GLOBAL-RECONSTRUCTION'}
         self.assertEqual(queue['next_action']['workstream'],expected[next_pr])
-        if next_pr==264:
-            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[261,262,263])
-            self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],list(range(265,270)))
         if next_pr==265:
-            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[261,262,263,264])
-            self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],list(range(266,270)))
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[261,262,263,264]); self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],list(range(266,270)))
+        if next_pr==266:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[261,262,263,264,265]); self.assertEqual([x['target_pr'] for x in queue['ordered_followups']],list(range(267,270)))
     def test_terminal_outcomes_include_positive_negative_and_unresolved(self):
         outcomes=set(self.load(PROGRAM)['terminal_outcomes']); self.assertIn('one_nontrivial_common_kernel',outcomes); self.assertIn('bounded_no_single_kernel',outcomes); self.assertIn('unresolved',outcomes)
 if __name__=='__main__': unittest.main()

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "queue_id": "POST-USD-IKD-QUEUE-001",
-  "version": "1.4",
+  "version": "1.5",
   "status": "frozen",
   "parent_program": "POST-USD-IKD-001",
   "registration_pr": 260,
@@ -9,26 +9,25 @@
     {"target_pr": 261, "workstream": "IKD-W1-CANDIDATE-ARCHITECTURES", "result": "candidate_architecture_universe_frozen_unexecuted"},
     {"target_pr": 262, "workstream": "IKD-W2-EXPANDED-COMPETITION", "result": "three_incomparable_successful_architectures_in_frozen_bounded_scope"},
     {"target_pr": 263, "workstream": "IKD-W3-COMMON-FACTOR", "result": "one_bounded_nontrivial_common_factor_candidate_supported"},
-    {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION", "result": "bounded_cross_feature_compositional_closure_supported_with_explicit_compatibility_conditions"}
+    {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION", "result": "bounded_cross_feature_compositional_closure_supported_with_explicit_compatibility_conditions"},
+    {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE", "result": "bounded_expanded_representation_invariance_supported"}
   ],
   "next_action": {
-    "target_pr": 265,
-    "workstream": "IKD-W5-EXPANDED-INVARIANCE",
-    "title": "Execute expanded representation-invariance tests for RCCD",
-    "branch": "research/execute-ikd-w5-expanded-invariance",
+    "target_pr": 266,
+    "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION",
+    "title": "Execute global alternative-basis reconstruction against RCCD",
+    "branch": "research/execute-ikd-w6-global-reconstruction",
     "deliverables": [
-      "event-state interchange tests",
-      "semantic dualization tests",
-      "causal and intervention encodings",
-      "proof-object and type-theoretic encodings",
-      "process-algebra and coalgebraic encodings",
-      "history and probability representation changes",
-      "machinery and equivalence ledger",
-      "terminal expanded-invariance classification"
+      "broader alternative primitive bases",
+      "automated and adversarial reconstruction attempts",
+      "strictly cheaper non-equivalent replacement search",
+      "equivalent-reintroduction detection",
+      "complete helper and synthesis machinery ledger",
+      "preservation failures and surviving countermodels",
+      "terminal global-reconstruction classification"
     ]
   },
   "ordered_followups": [
-    {"target_pr": 266, "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION"},
     {"target_pr": 267, "workstream": "IKD-W7-LOWER-BOUNDS"},
     {"target_pr": 268, "workstream": "IKD-W8-MINIMAL-FRONTIER"},
     {"target_pr": 269, "workstream": "IKD-W9-TERMINAL-ADJUDICATION"}
