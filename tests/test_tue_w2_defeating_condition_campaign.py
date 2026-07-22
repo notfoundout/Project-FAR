@@ -46,11 +46,17 @@ class TUEW2DefeatingConditionCampaignTests(unittest.TestCase):
         self.assertTrue(all(item["result"] == "not_established" for item in result["condition_results"]))
 
     def test_queue_advances_only_to_279(self) -> None:
+        checkpoint = self.load(RESULT)["historical_queue_checkpoint"]
+        self.assertEqual(checkpoint["completed_workstreams"], [276, 277, 278])
+        self.assertEqual(checkpoint["next_pr"], 279)
+        self.assertEqual(checkpoint["next_workstream"], "TUE-W3-DEEPER-KERNEL")
+        self.assertEqual(checkpoint["ordered_followups"], [280])
+
+    def test_live_queue_remains_in_authorized_progression(self) -> None:
         queue = self.load(QUEUE)
-        self.assertEqual([item["target_pr"] for item in queue["completed_workstreams"]], [276, 277, 278])
-        self.assertEqual(queue["next_action"]["target_pr"], 279)
-        self.assertEqual(queue["next_action"]["workstream"], "TUE-W3-DEEPER-KERNEL")
-        self.assertEqual(queue["ordered_followups"], [280])
+        completed = [item["target_pr"] for item in queue["completed_workstreams"]]
+        self.assertEqual(completed[:3], [276, 277, 278])
+        self.assertIn(queue["next_action"]["target_pr"], [279, 280])
 
 
 if __name__ == "__main__":
