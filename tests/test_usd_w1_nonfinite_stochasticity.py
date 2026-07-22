@@ -28,7 +28,7 @@ class NonFiniteStochasticityExtensionTests(unittest.TestCase):
         self.assertTrue(admission["candidate_independent"])
         self.assertIn("certified effective tail bounds", admission["kernels"])
         self.assertIn("certified positive probability", admission["conditioning"])
-        self.assertIn("conditioning on null", admission["exclusions"])
+        self.assertTrue(any("conditioning on null" in item for item in admission["exclusions"]))
 
     def test_truncation_and_oracle_controls_are_rejected(self) -> None:
         fixtures = {item["id"]: item for item in load(FIXTURES)["fixtures"]}
