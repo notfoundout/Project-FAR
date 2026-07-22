@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W1-INF-RESULT-001",
+  "version": "1.0",
+  "status": "complete_bounded_extension_proved",
+  "parent_program": "POST-W5-USD-001",
+  "scope_contract": "USD-W1-INF-SCOPE-001",
+  "source_class": "S_inf_eff",
+  "target_class": "A_FARA",
+  "new_target_primitive": false,
+  "construction": {
+    "carrier": "represented by a uniform effective enumeration rather than materializing a completed infinite set",
+    "states": "represented by indexed target state objects generated on demand",
+    "transitions": "represented by a uniform computable transition schema",
+    "commitments": "finite-support commitments at each stage are represented with their grounds and dependencies",
+    "history": "represented as a coherent directed family of finite prefixes",
+    "recovery": "every source finite prefix is recovered from its target image by one uniform decoder"
+  },
+  "proved_obligations": [
+    "INF-EXT-001_uniform_effective_constructor",
+    "INF-EXT-002_finite_prefix_faithfulness",
+    "INF-EXT-003_transition_and_admissibility_preservation",
+    "INF-EXT-004_commitment_ground_dependency_preservation",
+    "INF-EXT-005_history_and_revision_prefix_coherence",
+    "INF-EXT-006_no_finite_truncation_disguised_as_totality",
+    "INF-EXT-007_no_oracle_or_decoder_smuggling",
+    "INF-EXT-008_registered_negative_controls_rejected"
+  ],
+  "fixture_results": {
+    "INF-NAT-STEP-001": "pass",
+    "INF-TREE-001": "pass",
+    "INF-PREFIX-001": "pass",
+    "INF-NEG-TRUNC-001": "rejected",
+    "INF-NEG-ORACLE-001": "rejected",
+    "INF-BOUNDARY-NONCOMP-001": "excluded_preserved"
+  },
+  "terminal_outcome": "proper_subclass_only",
+  "reason": "The construction proves faithful representation for countably infinite effectively presented systems with uniform finite-prefix semantics. It does not cover uncountable, non-effective, oracle-dependent, continuous, semantically changing, or actual-process cases.",
+  "theorem_effect": {
+    "THM-IRD-EXT-001": "partial_progress_second_feature_subclass_resolved",
+    "THM-US-EXIST-001": "unresolved",
+    "THM-US-INV-001": "unresolved",
+    "THM-US-NEC-001": "unresolved",
+    "THM-US-MIN-001": "unresolved"
+  },
+  "claim_effect": {
+    "effective_countable_infinite_carrier_representation": "proved_for_S_inf_eff",
+    "S_IRD_representation": "unresolved",
+    "universal_structure": "unresolved",
+    "primitive_necessity": "not_established",
+    "minimality": "not_established",
+    "uniqueness": "not_established",
+    "actual_process_correspondence": "unresolved"
+  },
+  "machine_check_status": "not_mechanized",
+  "independent_review_status": "not_started",
+  "nonclaims": [
+    "all infinite-carrier reasoning systems are represented",
+    "uncountable or non-effective systems are covered",
+    "finite-prefix success alone proves completed-infinite semantics",
+    "FARA is necessary minimal or unique",
+    "independent verification has occurred"
+  ]
+}
