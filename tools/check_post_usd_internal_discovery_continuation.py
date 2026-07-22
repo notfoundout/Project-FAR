@@ -19,7 +19,7 @@ def main()->int:
     assert program['program_id']=='POST-USD-IKD-001'; assert program['registration_pr']==260
     disposition=program['external_package_disposition']
     for key in ('EVC-W1-EXTERNAL-PROOF-REVIEW','EVC-W2-R3-TECHNICAL-REPLICATION','EVC-W3-R4-ADVERSARIAL-REPLICATION'): assert disposition[key]=='frozen_preserved_execution_deferred'
-    assert 'not withdrawn' in disposition['rule']; assert 'not released' in disposition['rule']
+    assert 'not withdrawn' in disposition['rule']; assert 'No external package is released' in disposition['rule']
     streams=program['workstreams']; assert len(streams)==9; assert [x['sequence'] for x in streams]==list(range(1,10)); assert [x['target_pr'] for x in streams]==list(range(261,270))
     assert streams[0]['id']=='IKD-W1-CANDIDATE-ARCHITECTURES'; assert streams[-1]['id']=='IKD-W9-TERMINAL-ADJUDICATION'
     rules='\n'.join(program['decision_rules']); assert 'Cross-feature conjunctions' in rules; assert 'Equivalent reintroduction' in rules; assert 'External validation remains deferred' in rules
