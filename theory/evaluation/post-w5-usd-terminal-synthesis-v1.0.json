@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "synthesis_id": "POST-W5-USD-SYN-001",
+  "version": "1.0",
+  "status": "complete_bounded_synthesis",
+  "parent_program": "POST-W5-USD-001",
+  "inputs": {
+    "USD-W1-SCOPE-EXT": {
+      "terminal_status": "complete",
+      "feature_results": {
+        "partial_observability": "proper_subclass_only",
+        "infinite_carriers": "proper_subclass_only",
+        "continuous_dynamics": "proper_subclass_only",
+        "open_ended_histories": "proper_subclass_only",
+        "semantic_change": "proper_subclass_only",
+        "non_finite_support_stochasticity": "proper_subclass_only",
+        "actual_process_correspondence": "new_assumption_required"
+      }
+    },
+    "USD-W2-ALT-VOCAB": "multiple_incomparable_successful_vocabularies",
+    "USD-W3-INVARIANCE": "bounded_invariance_supported",
+    "USD-W4-NECESSITY": "bounded_local_necessity_supported",
+    "USD-W5-MIN-EQUIV": "multiple_incomparable_minima",
+    "USD-W6-INDEPENDENCE": "internal_robustness_only"
+  },
+  "hypothesis_disposition": {
+    "USD-H-EXIST": "supported_only_for_multiple_bounded_candidate_kernels",
+    "USD-H-INV": "supported_only_for_registered_transformations_and_scope",
+    "USD-H-DISC": "supported_for_FARA_against_GREL_and_ARG-HIST_but_not_unique_against_LTS-PROV",
+    "USD-H-NEC": "supported_locally_in_declared_ablation_class_only",
+    "USD-H-MIN": "resolved_as_multiple_incomparable_minima_in_frozen_universe",
+    "USD-H-NO": "unresolved_globally"
+  },
+  "release_gate_evaluation": {
+    "coverage_resolved_for_declared_scope": "partial",
+    "representation_invariance_resolved": "bounded_only",
+    "reasoning_discrimination_resolved": "bounded_only",
+    "reconstruction_and_necessity_resolved": "local_only",
+    "full_cost_accounting_complete": "complete_for_frozen_candidate_universe",
+    "minimality_or_equivalence_classified": "complete_for_frozen_candidate_universe",
+    "all_blocking_counterexamples_resolved_or_scope_limiting": "partial",
+    "claim_scope_matches_proof_scope": "pass",
+    "eligible_external_review_completed": "fail",
+    "blocking_objections_resolved_without_retroactive_package_repair": "unknown"
+  },
+  "terminal_program_classification": "bounded_incomparable_kernels_external_validation_pending",
+  "valid_program_outcome_mapping": "incomparable_kernels",
+  "positive_results": [
+    "six bounded feature subclasses admit faithful representation",
+    "FARA and LTS-PROV remain successful under registered invariance transformations",
+    "both successful candidates survive registered local ablation only through load-bearing commitments or equivalent reintroduction",
+    "FARA and LTS-PROV are non-equivalent incomparable minima in the frozen candidate universe",
+    "the bounded result survives three isolated internal implementation paths"
+  ],
+  "blocking_results": [
+    "actual-process correspondence requires an empirical bridge layer",
+    "coverage is not exhaustive",
+    "global necessity is not established",
+    "the candidate universe is not exhaustive",
+    "external proof review and R3-R5 replication are incomplete",
+    "no unique universal kernel is established"
+  ],
+  "claim_effect": {
+    "one_universal_kernel": "not_established",
+    "FARA_is_universal": "not_established",
+    "LTS_PROV_is_universal": "not_established",
+    "translation_equivalent_kernels": "refuted_for_FARA_vs_LTS_PROV_in_frozen_universe",
+    "incomparable_kernels": "supported_in_frozen_universe",
+    "no_single_nontrivial_kernel": "not_established_globally",
+    "actual_process_correspondence": "unresolved_new_empirical_assumptions_required",
+    "independent_verification": "not_established"
+  },
+  "next_decisive_program": "external_validation_and_candidate_universe_expansion",
+  "next_units": [
+    "eligible_external proof review of POST-W5-USD-SYN-001",
+    "R3 independent technical replication",
+    "R4 adversarial conceptual replication",
+    "R5 cross-context replication",
+    "candidate-universe expansion with at least one materially new non-FARA architecture",
+    "empirical bridge protocol for actual-process correspondence"
+  ],
+  "nonclaims": [
+    "a universal reasoning structure has been discovered",
+    "FARA is necessary minimal unique or universal globally",
+    "LTS-PROV is necessary minimal unique or universal globally",
+    "the frozen candidate universe is exhaustive",
+    "internal robustness is independent verification",
+    "formal representation establishes actual-process identity"
+  ]
+}
