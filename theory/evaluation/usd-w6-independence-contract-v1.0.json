@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "USD-W6-IND-CONTRACT-001",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W6-INDEPENDENCE",
+  "subject_results": [
+    "USD-W2 alternative-vocabulary competition",
+    "USD-W3 bounded invariance",
+    "USD-W4 bounded local necessity",
+    "USD-W5 multiple incomparable minima"
+  ],
+  "layers": {
+    "independent_proof_review": {
+      "requires": ["eligible reviewer independent of package construction", "frozen evidence package", "blocking objection register", "no retroactive package repair"],
+      "status": "not_executed"
+    },
+    "R3_independent_technical_replication": {
+      "requires": ["separate implementation team or organization", "no access to generated artifacts", "independent verifier", "deterministic output comparison"],
+      "status": "not_executed"
+    },
+    "R4_adversarial_conceptual_replication": {
+      "requires": ["independently designed candidate universe", "independently designed counterexamples", "precommitted decision rules"],
+      "status": "not_executed"
+    },
+    "R5_cross_context_replication": {
+      "requires": ["new reasoning context", "independent source contract", "same claim-boundary discipline"],
+      "status": "not_executed"
+    },
+    "internal_multi_implementation_robustness": {
+      "requires": ["isolated compiler implementations", "artifact isolation", "separate verifier implementation", "mutation and adversarial tests", "deterministic comparison"],
+      "status": "executed"
+    }
+  },
+  "independence_rules": [
+    "one agent cannot establish human or organizational independence",
+    "isolated implementations by one agent count only as internal implementation replication",
+    "CI success is not independent proof review",
+    "signed provenance is not independent conceptual replication",
+    "reviewer eligibility and prior access must be recorded",
+    "blocking objections cannot be resolved by silently changing the frozen package"
+  ],
+  "terminal_outcomes": [
+    "independent_verification_complete",
+    "internal_robustness_only",
+    "blocking_objection",
+    "replication_failure",
+    "unresolved"
+  ],
+  "nonclaims": [
+    "external independent review occurred",
+    "organizationally independent replication occurred",
+    "the USD results are universally valid",
+    "internal multi-implementation agreement proves conceptual correctness"
+  ]
+}
