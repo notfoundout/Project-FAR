@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "TUE-W2-DEFEATING-CONDITION-CAMPAIGN-001",
+  "status": "complete",
+  "parent_program": "POST-SC-TUE-001",
+  "execution_pr": 278,
+  "purpose": "Attempt to establish every SC-W6 defeating condition under fixed adversarial procedures, with one genuine defeat overriding accumulated supportive evidence.",
+  "frozen_conditions": [
+    {"id":"DC-1-SIXTH-PRIMITIVE","claim":"an assessable in-scope reasoning system requires a genuine sixth irreducible primitive"},
+    {"id":"DC-2-RCCD-ESCAPE","claim":"a faithful uniform effective representation satisfies P* without RCCD-equivalent commitments"},
+    {"id":"DC-3-CIRCULARITY","claim":"C* or P* is circularly defined by R1-R5"},
+    {"id":"DC-4-PLURAL-KERNEL","claim":"two successful kernels are not bidirectionally reconstructible without hidden primitive machinery"},
+    {"id":"DC-5-ABLATION","claim":"one of R1-R5 is removable under P* without loss"}
+  ],
+  "precommitted_attack_families": {
+    "DC-1-SIXTH-PRIMITIVE": ["indexical-self-location","value-salience","creative-novelty","resource-bounded-attention","multi-agent-authority","continuous-confidence"],
+    "DC-2-RCCD-ESCAPE": ["pure-policy-oracle","extensional-transition-table","predictive-state-representation","stateless-proof-transformer","category-theoretic-black-box","behavioral-equivalence-quotient"],
+    "DC-3-CIRCULARITY": ["definition-substitution","blind-class-membership","contract-ladder","independent-language-paraphrase","negative-control-system"],
+    "DC-4-PLURAL-KERNEL": ["proof-theoretic-kernel","causal-intervention-kernel","predictive-control-kernel","social-authority-kernel","phenomenological-salience-kernel"],
+    "DC-5-ABLATION": ["remove-R1","remove-R2","remove-R3","remove-R4","remove-R5"]
+  },
+  "evidence_rules": [
+    "Each attack must specify source facts, preservation obligations, candidate machinery, exact failure witness, and disposition.",
+    "A proposed sixth primitive is genuine only if it cannot be represented as domain content, a parameter, a relation among R1-R5, or charged derived machinery.",
+    "An RCCD escape succeeds only if P* is fully preserved uniformly and effectively after every decoder, scheduler, history, codebook, oracle, closure rule, proof object, adapter, and interpretation map is charged.",
+    "Circularity is established only if neutral class or contract criteria cannot be stated or applied without presupposing the RCCD conclusion.",
+    "Plural kernels are genuine only if both are independently faithful and no bidirectional reconstruction exists without adding primitive machinery.",
+    "Ablation succeeds only if the removed component is neither explicitly present nor recoverably reintroduced and all P* distinctions remain preserved.",
+    "Unknown is neither success nor failure.",
+    "A single established defeating condition changes the campaign outcome regardless of the other four results."
+  ],
+  "dispositions": ["defeating_condition_established","rccd_equivalent_reintroduction","preservation_failure","not_independently_motivated","unresolved"],
+  "campaign_outcomes": ["no_defeating_condition_established","rccd_defeated_or_extended","plural_kernel_required","unresolved"],
+  "nonclaims": ["exhaustive search over every possible system or ontology","external adversarial independence","actual-process correspondence","unrestricted universality"]
+}
