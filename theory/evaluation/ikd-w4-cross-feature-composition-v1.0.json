@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "result_id": "IKD-W4-CROSS-FEATURE-COMP-001",
+  "status": "complete_bounded_composition_analysis",
+  "parent_program": "POST-USD-IKD-001",
+  "parent_common_factor": "IKD-W3-COMMON-FACTOR-001",
+  "target_pr": 264,
+  "kernel_under_test": "RCCD-001",
+  "feature_families": [
+    "infinite_carriers",
+    "continuous_dynamics",
+    "partial_observability",
+    "open_ended_histories",
+    "semantic_change",
+    "nonfinite_support_stochasticity"
+  ],
+  "scope": "Effectively presented systems formed by simultaneous conjunctions of the six positively represented USD-W1 feature subclasses, subject to explicit interface-compatibility conditions; actual-process correspondence excluded.",
+  "composition_contract": {
+    "direct_execution_required": true,
+    "featurewise_success_not_closure": true,
+    "shared_state_identity_required": true,
+    "semantic_versions_total_on_reachable_states": true,
+    "observation_and_probability_interfaces_measurable_and_computable": true,
+    "history_queries_finite_and_prefix_coherent": true,
+    "continuous_and_discrete_events_use_declared_hybrid_semantics": true,
+    "dependency_and_ground_updates_are_explicit": true,
+    "all_adapters_schedulers_tail_certificates_and_canonicalizers_charged": true,
+    "future_information_oracles_prohibited": true
+  },
+  "executed_case_classes": {
+    "pairwise": {
+      "count": 15,
+      "case_ids": ["IC-CD","IC-PO","IC-OH","IC-SC","IC-NS","CD-PO","CD-OH","CD-SC","CD-NS","PO-OH","PO-SC","PO-NS","OH-SC","OH-NS","SC-NS"],
+      "result": "15_pass_under_registered_compatibility_conditions"
+    },
+    "triple": {
+      "count": 20,
+      "case_ids": ["IC-CD-PO","IC-CD-OH","IC-CD-SC","IC-CD-NS","IC-PO-OH","IC-PO-SC","IC-PO-NS","IC-OH-SC","IC-OH-NS","IC-SC-NS","CD-PO-OH","CD-PO-SC","CD-PO-NS","CD-OH-SC","CD-OH-NS","CD-SC-NS","PO-OH-SC","PO-OH-NS","PO-SC-NS","OH-SC-NS"],
+      "result": "20_pass_under_registered_compatibility_conditions"
+    },
+    "leave_one_out_five_feature": {
+      "count": 6,
+      "case_ids": ["ALL-minus-IC","ALL-minus-CD","ALL-minus-PO","ALL-minus-OH","ALL-minus-SC","ALL-minus-NS"],
+      "result": "6_pass_under_registered_compatibility_conditions"
+    },
+    "all_six": {
+      "count": 1,
+      "case_ids": ["IC-CD-PO-OH-SC-NS"],
+      "result": "pass_on_frozen_effective_hybrid_subclass"
+    }
+  },
+  "all_six_construction": {
+    "state": "A countably presented hybrid configuration carrying semantic-versioned commitments, dependency records, observation state, probability-kernel state, and append-only revision history.",
+    "evolution": "Declared hybrid flow and jump semantics with computable guards, measurable stochastic kernels, explicit semantic-version transitions, and prefix-coherent history extension.",
+    "observation": "A computable observation interface that may be partial but exposes certified bounded queries without revealing hidden or future state.",
+    "recovery": "One uniform finite-query interface recovers current commitments, admissibility, grounds, dependencies, semantic versions, probability queries, and finite historical prefixes to requested certified precision.",
+    "rccd_preservation": [
+      "recoverable commitment content",
+      "constrained admissible evolution",
+      "dependency-preserving explicit revision",
+      "queryable historical identity",
+      "uniform bounded-query recovery"
+    ]
+  },
+  "interaction_findings": [
+    {"interaction":"continuous_dynamics_x_semantic_change","finding":"pass_with_versioned_hybrid_guards","boundary":"semantic switches must occur at declared events or through an effectively specified continuous semantic interface"},
+    {"interaction":"partial_observability_x_semantic_change","finding":"pass_with_observation_version_provenance","boundary":"observational equivalence cannot be promoted to semantic identity"},
+    {"interaction":"stochasticity_x_open_ended_history","finding":"pass_for_finite_prefix_and_bounded_queries","boundary":"unrestricted infinite-horizon exact queries remain excluded"},
+    {"interaction":"infinite_carriers_x_stochasticity","finding":"pass_with_effective_enumeration_and_certified_tails","boundary":"noncomputable measures and uncertified tails remain excluded"},
+    {"interaction":"continuous_dynamics_x_partial_observability_x_stochasticity","finding":"pass_for_effectively presented partially observed stochastic hybrid systems","boundary":"filtering and conditioning require computable positive-evidence interfaces"},
+    {"interaction":"all_six","finding":"pass_on_frozen_effective_hybrid_subclass","boundary":"compatibility conditions are substantive assumptions and are not automatic for arbitrary conjunctions"}
+  ],
+  "negative_controls": [
+    "independent_feature_encodings_without_shared_identity_rejected",
+    "incompatible_time_bases_rejected",
+    "nonmeasurable_observation_kernel_rejected",
+    "retroactive_semantic_history_rewrite_rejected",
+    "finite_truncation_as_exact_infinite_support_rejected",
+    "future_history_access_rejected",
+    "hidden_scheduler_or_adapter_rejected",
+    "featurewise_passes_multiplied_without_joint_construction_rejected"
+  ],
+  "terminal_result": "bounded_cross_feature_compositional_closure_supported_with_explicit_compatibility_conditions",
+  "claim_effect": {
+    "rccd_joint_realizability_on_frozen_effective_scope": "supported",
+    "arbitrary_feature_conjunctions": "not_supported",
+    "compatibility_conditions_necessary_globally": "unresolved",
+    "expanded_representation_invariance": "unresolved",
+    "global_necessity": "unresolved",
+    "global_minimality": "unresolved",
+    "universal_structure": "unresolved"
+  },
+  "next_decisive_workstream": "IKD-W5-EXPANDED-INVARIANCE",
+  "nonclaims": [
+    "all mathematically possible feature conjunctions compose",
+    "compatibility conditions are globally minimal or necessary",
+    "actual-process correspondence",
+    "RCCD-001 is unique",
+    "RCCD-001 is globally universal",
+    "external validation"
+  ]
+}
