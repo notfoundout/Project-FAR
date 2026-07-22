@@ -1,16 +1,19 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "queue_id":"POST-W9-SCOPE-CHALLENGE-QUEUE-001",
   "parent_program":"POST-W9-SCOPE-CHALLENGE-001",
-  "status":"frozen",
+  "status":"complete",
   "completed_workstreams":[
     {"target_pr":270,"workstream":"SC-W1-SCOPE-NEUTRALITY","result":"scope_challenge_protocol_and_neutrality_controls_frozen"},
     {"target_pr":271,"workstream":"SC-W2-BOUNDARY-REASONING","result":"no_boundary_case_yet_requires_new_kernel_primitive_but_evidential_boundary_must_remain_open"},
     {"target_pr":272,"workstream":"SC-W3-CONTRACT-LADDER","result":"rccd_is_contract_relative_but_not_shown_construct_loaded_under_independently_justified_full_contract"},
     {"target_pr":273,"workstream":"SC-W4-REPRESENTATION-ESCAPE","result":"no_faithful_effective_representation_escape_found_across_broadened_families_without_rccd_equivalent_reintroduction"},
-    {"target_pr":274,"workstream":"SC-W5-HELD-OUT-CONTEXTS","result":"held_out_contexts_add_no_genuine_kernel_primitive_and_produce_no_faithful_rccd_counterexample_with_two_evidential_unknowns"}
+    {"target_pr":274,"workstream":"SC-W5-HELD-OUT-CONTEXTS","result":"held_out_contexts_add_no_genuine_kernel_primitive_and_produce_no_faithful_rccd_counterexample_with_two_evidential_unknowns"},
+    {"target_pr":275,"workstream":"SC-W6-FINAL-INTERNAL-ADJUDICATION","result":"rccd_necessary_kernel_for_natural_class"}
   ],
-  "next_action":{"target_pr":275,"workstream":"SC-W6-FINAL-INTERNAL-ADJUDICATION","title":"Issue strongest final internal answer","branch":"research/execute-sc-w6-final-internal-adjudication"},
+  "next_action":null,
   "ordered_followups":[],
-  "blocked_actions":["external proof review","independent replication","claim final unrestricted answer","add supportive mappings outside the frozen challenge design"]
+  "final_result":"rccd_necessary_kernel_for_natural_class",
+  "program_disposition":"closed_with_final_internal_answer",
+  "blocked_actions":["claim unrestricted universality","treat opaque Unknowns as passes","add supportive mappings as if they strengthen the closed internal theorem"]
 }
