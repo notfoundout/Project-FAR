@@ -28,7 +28,7 @@ structure Source where
   deriving Repr, DecidableEq
 
 structure Target where
-  universe : List String
+  universeField : List String
   positions : List String
   relations : List String
   representations : List String
@@ -61,7 +61,7 @@ def FaithfulSplit (source : Source) (target : Target) (witness : Witness) : Prop
 
 def encode (source : Source) : Target :=
   {
-    universe := source.configurations ++ source.commitments ++ source.stakes
+    universeField := source.configurations ++ source.commitments ++ source.stakes
     positions := source.commitments
     relations := source.grounds
     representations := source.configurations ++ source.commitments
