@@ -79,7 +79,7 @@ def main() -> int:
     assert evc["status"] == "registered_unexecuted"
     assert "External-package hold" in research
     assert "PR #261 must freeze" in research
-    assert "Separate featurewise success is not compositional closure" in audit
+    assert "Separate featurewise success is not treated as compositional closure" in audit
     assert "Failure to find a common factor is not global proof of nonexistence" in audit
     assert "internal_discovery_continuation_registered_external_execution_deferred" in audit
 
