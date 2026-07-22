@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W3-INV-RESULT-001",
+  "status": "complete_bounded_invariance_supported",
+  "contract": "USD-W3-INV-CONTRACT-001",
+  "tested_vocabularies": ["FARA-001", "LTS-PROV-001"],
+  "transformation_results": {
+    "entity_renaming": "pass",
+    "event_reindexing": "pass",
+    "rule_order_permutation": "pass",
+    "history_chunking": "pass",
+    "state_factorization": "pass",
+    "derived_relation_materialization": "pass",
+    "equivalent_transition_normalization": "pass",
+    "irrelevant_annotation_insertion": "pass"
+  },
+  "negative_control_results": {
+    "dependency_erasure": "rejected",
+    "revision_retroactivity": "rejected",
+    "hidden_state_collapse": "rejected",
+    "semantic_version_merge": "rejected",
+    "future_history_oracle": "rejected"
+  },
+  "obligation_results": {
+    "INV-001_source_transform_preserves_commitments": "pass",
+    "INV-002_source_transform_preserves_dependencies": "pass",
+    "INV-003_source_transform_preserves_revision_history": "pass",
+    "INV-004_mapping_result_commutes_with_transform": "pass",
+    "INV-005_canonical_comparison_is_decoder_independent": "pass",
+    "INV-006_cost_ledger_is_transform_stable": "pass",
+    "INV-007_negative_non_equivalences_rejected": "pass",
+    "INV-008_vocabulary_ranking_not_reversed_by_admissible_transform": "pass"
+  },
+  "terminal_outcome": "bounded_invariance_supported",
+  "comparison_effect": {
+    "FARA_vs_LTS_PROV": "incomparability_preserved_under_all_registered_admissible_transformations",
+    "FARA_vs_GREL": "bounded_dominance_preserved",
+    "LTS_PROV_vs_GREL": "bounded_dominance_preserved"
+  },
+  "claim_effect": {
+    "THM-US-INV-001": "bounded_support_only",
+    "THM-US-EXIST-001": "unresolved",
+    "THM-US-NEC-001": "unresolved",
+    "THM-US-MIN-001": "unresolved",
+    "universal_structure": "unresolved",
+    "actual_process_correspondence": "unresolved"
+  },
+  "machine_check_status": "validator_checked_not_formally_mechanized",
+  "independent_review_status": "not_started",
+  "next_workstream": "USD-W4-ABLATION",
+  "nonclaims": [
+    "global representation invariance",
+    "invariance over every vocabulary or source family",
+    "unique superiority of FARA",
+    "primitive necessity minimality or universality",
+    "independent verification"
+  ]
+}

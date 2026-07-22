@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "USD-W3-INV-CONTRACT-001",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W3-INVARIANCE",
+  "scope": "bounded canonical benchmark family inherited from USD-W2",
+  "tested_vocabularies": ["FARA-001", "LTS-PROV-001"],
+  "equivalence_relation": {
+    "source_equivalence": "bijection on source entities and events preserving admissibility, transition behavior, commitments, grounds, dependencies, revision effects, and history",
+    "target_equivalence": "commitment-equivalence after canonicalization; behaviorally similar encodings with different hidden state or ontology are not merged unless the registered correspondence preserves all obligations",
+    "forbidden_shortcuts": [
+      "shared labels treated as identity",
+      "decoder-specific equivalence",
+      "discarding hidden state",
+      "collapsing unresolved correspondence to equality"
+    ]
+  },
+  "transformations": [
+    "entity_renaming",
+    "event_reindexing",
+    "rule_order_permutation",
+    "history_chunking",
+    "state_factorization",
+    "derived_relation_materialization",
+    "equivalent_transition_normalization",
+    "irrelevant_annotation_insertion"
+  ],
+  "obligations": [
+    "INV-001_source_transform_preserves_commitments",
+    "INV-002_source_transform_preserves_dependencies",
+    "INV-003_source_transform_preserves_revision_history",
+    "INV-004_mapping_result_commutes_with_transform",
+    "INV-005_canonical_comparison_is_decoder_independent",
+    "INV-006_cost_ledger_is_transform_stable",
+    "INV-007_negative_non_equivalences_rejected",
+    "INV-008_vocabulary_ranking_not_reversed_by_admissible_transform"
+  ],
+  "negative_controls": [
+    "dependency_erasure",
+    "revision_retroactivity",
+    "hidden_state_collapse",
+    "semantic_version_merge",
+    "future_history_oracle"
+  ],
+  "decision_rule": {
+    "bounded_invariance_supported": "all registered admissible transformations satisfy every obligation for every tested vocabulary and every negative control is rejected",
+    "invariance_failure": "one admissible transformation changes a preservation judgment or reverses a Pareto relation without a registered cost change",
+    "unresolved": "equivalence or recovery remains Unknown"
+  },
+  "nonclaims": [
+    "all possible representations were tested",
+    "representation invariance holds over S_IRD",
+    "FARA is uniquely invariant",
+    "invariance proves necessity minimality or universality",
+    "actual-process correspondence is established"
+  ]
+}
