@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "USD-W1-CD-SCOPE-001",
+  "version": "1.0",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W1-SCOPE-EXT",
+  "feature_family": "continuous_dynamics",
+  "source_class": "S_cd_lip_eff",
+  "admission_rule": {
+    "candidate_independent": true,
+    "state_space": "finite-dimensional effectively presented compact rational box in R^n",
+    "time_domain": "nonnegative real time over a declared compact horizon",
+    "dynamics": "autonomous or input-indexed vector field with an explicit computable global Lipschitz bound on the admitted domain",
+    "inputs": "piecewise-rational controls with finite descriptions and declared switching times",
+    "events": "finite effectively decidable guard family with isolated crossings and declared reset maps",
+    "reasoning_layer": "finite commitments, grounds, dependencies, revisions, and evidential annotations indexed to continuous trajectories or event history",
+    "presentation": "algorithms for evaluating vector fields, guards, resets, and certified rational error bounds",
+    "exclusions": [
+      "non-Lipschitz dynamics without a declared solution-selection rule",
+      "nonunique flows",
+      "Zeno event accumulation",
+      "unbounded horizons without an effective continuation argument",
+      "infinite-dimensional state spaces",
+      "noncomputable vector fields or guards",
+      "actual-process correspondence"
+    ]
+  },
+  "observation_boundary": {
+    "analyst_access": "full frozen mathematical presentation and certified bounds",
+    "represented_agent_access": "only source-declared observations, commitments, and history",
+    "prohibited": [
+      "future-trajectory oracle",
+      "exact-real equality oracle",
+      "source-instance-specific decoder",
+      "finite time grid treated as the exact trajectory"
+    ]
+  },
+  "preservation_obligations": [
+    "CD-EXT-001_total_uniform_constructor",
+    "CD-EXT-002_flow_semantics_preserved",
+    "CD-EXT-003_time_and_order_preserved",
+    "CD-EXT-004_guard_and_reset_semantics_preserved",
+    "CD-EXT-005_commitment_ground_dependency_preserved",
+    "CD-EXT-006_history_and_revision_preserved",
+    "CD-EXT-007_error_refinement_coherent",
+    "CD-EXT-008_no_discretization_collapse",
+    "CD-EXT-009_registered_negative_controls_rejected"
+  ],
+  "counterexample_policy": {
+    "one_valid_countermodel_blocks_extension_proved": true,
+    "unknown_is_not_pass": true,
+    "post_freeze_scope_repair_requires_new_version": true,
+    "failure_to_find_counterexample_is_not_proof": true
+  },
+  "allowed_terminal_outcomes": [
+    "extension_proved",
+    "proper_subclass_only",
+    "countermodel",
+    "new_assumption_required",
+    "unresolved"
+  ],
+  "nonclaims": [
+    "all continuous reasoning systems are admitted",
+    "all differential equations have unique computable flows",
+    "certified approximation is exact physical correspondence",
+    "continuous dynamics establishes a universal structure",
+    "necessity minimality or uniqueness is established"
+  ]
+}
