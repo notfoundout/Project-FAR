@@ -12,9 +12,9 @@ class PostW9InternalScopeChallengeTests(unittest.TestCase):
         self.assertEqual(cp.returncode,0,cp.stdout+cp.stderr); self.assertIn('PASS',cp.stdout)
     def test_program_forces_terminal_outcome(self):
         data=self.load(PROGRAM); self.assertEqual(len(data['workstreams']),6); self.assertIn('multiple_incomparable_kernels',data['terminal_outcomes']); self.assertIn('generic_only_commonality',data['terminal_outcomes']); self.assertIn('current_theorem_scope_construct_loaded',data['terminal_outcomes'])
-    def test_external_work_was_deferred_during_internal_program(self):
+    def test_external_work_is_deferred(self):
         data=self.load(PROGRAM); self.assertEqual(data['external_disposition'],'deferred_until_final_internal_adjudication'); self.assertIn('No external review or replication is authorized by this program.',data['frozen_principles'])
-    def test_queue_historical_or_complete_state(self):
+    def test_queue_begins_with_scope_neutrality(self):
         queue=self.load(QUEUE)
         if queue['status']=='complete':
             self.assertIsNone(queue['next_action']); self.assertEqual(queue['ordered_followups'],[])
@@ -24,11 +24,16 @@ class PostW9InternalScopeChallengeTests(unittest.TestCase):
         next_pr=queue['next_action']['target_pr']; self.assertIn(next_pr,{270,271,272,273,274,275})
         expected={270:'SC-W1-SCOPE-NEUTRALITY',271:'SC-W2-BOUNDARY-REASONING',272:'SC-W3-CONTRACT-LADDER',273:'SC-W4-REPRESENTATION-ESCAPE',274:'SC-W5-HELD-OUT-CONTEXTS',275:'SC-W6-FINAL-INTERNAL-ADJUDICATION'}
         self.assertEqual(queue['next_action']['workstream'],expected[next_pr])
-        if next_pr==270:self.assertEqual(queue['ordered_followups'],[271,272,273,274,275])
-        if next_pr==272:self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271]); self.assertEqual(queue['ordered_followups'],[273,274,275]); self.assertEqual(queue['next_action']['workstream'],'SC-W3-CONTRACT-LADDER')
-        if next_pr==273:self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272]); self.assertEqual(queue['ordered_followups'],[274,275]); self.assertEqual(queue['next_action']['workstream'],'SC-W4-REPRESENTATION-ESCAPE')
-        if next_pr==274:self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272,273]); self.assertEqual(queue['ordered_followups'],[275]); self.assertEqual(queue['next_action']['workstream'],'SC-W5-HELD-OUT-CONTEXTS')
-        if next_pr==275:self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272,273,274]); self.assertEqual(queue['ordered_followups'],[]); self.assertEqual(queue['next_action']['workstream'],'SC-W6-FINAL-INTERNAL-ADJUDICATION')
+        if next_pr==270:
+            self.assertEqual(queue['ordered_followups'],[271,272,273,274,275])
+        if next_pr==272:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271]); self.assertEqual(queue['ordered_followups'],[273,274,275]); self.assertEqual(queue['next_action']['workstream'],'SC-W3-CONTRACT-LADDER')
+        if next_pr==273:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272]); self.assertEqual(queue['ordered_followups'],[274,275]); self.assertEqual(queue['next_action']['workstream'],'SC-W4-REPRESENTATION-ESCAPE')
+        if next_pr==274:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272,273]); self.assertEqual(queue['ordered_followups'],[275]); self.assertEqual(queue['next_action']['workstream'],'SC-W5-HELD-OUT-CONTEXTS')
+        if next_pr==275:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272,273,274]); self.assertEqual(queue['ordered_followups'],[]); self.assertEqual(queue['next_action']['workstream'],'SC-W6-FINAL-INTERNAL-ADJUDICATION')
     def test_final_answer_is_bounded_and_defeasible(self):
         data=self.load(FINAL)
         self.assertEqual(data['terminal_outcome'],'rccd_necessary_kernel_for_natural_class')
