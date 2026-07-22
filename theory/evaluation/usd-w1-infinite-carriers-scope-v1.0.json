@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "USD-W1-INF-SCOPE-001",
+  "version": "1.0",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "feature_family": "infinite_carriers",
+  "source_class": "S_inf_eff",
+  "admission_rule": "Admit reasoning systems with countably infinite carrier sets only when states, admissible transitions, observations, commitments, grounds, dependencies, and finite prefixes are given by uniform effective descriptions independent of any candidate kernel.",
+  "excluded_cases": [
+    "uncountable_carriers",
+    "non_effectively_presented_countable_carriers",
+    "oracles_without_declared_interface",
+    "noncomputable_transition_or_admissibility_relations",
+    "open_ended_semantic_change",
+    "actual_process_correspondence"
+  ],
+  "observation_boundary": "The analyst may inspect the effective presentation and any finite generated prefix; no completed infinite history, hidden oracle, or extension-specific decoder is available to the constructor.",
+  "preservation_obligations": [
+    "INF-EXT-001_uniform_effective_constructor",
+    "INF-EXT-002_finite_prefix_faithfulness",
+    "INF-EXT-003_transition_and_admissibility_preservation",
+    "INF-EXT-004_commitment_ground_dependency_preservation",
+    "INF-EXT-005_history_and_revision_prefix_coherence",
+    "INF-EXT-006_no_finite_truncation_disguised_as_totality",
+    "INF-EXT-007_no_oracle_or_decoder_smuggling",
+    "INF-EXT-008_registered_negative_controls_rejected"
+  ],
+  "counterexample_policy": "Preserve any effective source for which no uniform target constructor or finite-prefix commuting family can be produced. A constructor that works only up to a preregistered finite bound counts as failure.",
+  "terminal_outcomes": [
+    "extension_proved",
+    "proper_subclass_only",
+    "countermodel",
+    "new_assumption_required",
+    "unresolved"
+  ],
+  "candidate_independent": true,
+  "material_change_requires_new_version": true
+}
