@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "USD-W1-APC-SCOPE-001",
+  "version": "1.0",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W1-SCOPE-EXT",
+  "feature_family": "actual_process_correspondence",
+  "source_class": "S_apc_evid",
+  "question": "Can repository-internal formal artifacts alone establish that a target representation corresponds to an actual external reasoning process?",
+  "admission_rule": {
+    "candidate_independent": true,
+    "formal_artifacts": "frozen source specification, target representation, preservation proof, execution traces, and provenance records",
+    "external_evidence": "independently collected observations or interventions linking the actual process to the formal source variables",
+    "identity_link": "a declared and testable bridge from observed process states to source states and transitions",
+    "required_for_positive_correspondence": [
+      "independent process observations",
+      "measurement model with error bounds",
+      "identity or tracking criteria across time",
+      "intervention or discriminating prediction where feasible",
+      "registered alternative-process explanations",
+      "replication or independent confirmation"
+    ],
+    "exclusions": [
+      "purely formal representability without external evidence",
+      "self-authored trace labels treated as process identity",
+      "behavioral fit with no discrimination among observationally equivalent processes",
+      "unverifiable proprietary or inaccessible internal process claims",
+      "metaphysical identity claims beyond the declared evidence model"
+    ]
+  },
+  "observation_boundary": {
+    "repository_access": "formal artifacts and declared traces only",
+    "external_access": "not supplied in this execution",
+    "prohibited": [
+      "infer actual-process identity from representability alone",
+      "treat generated traces as independent observations",
+      "collapse observational equivalence into ontological identity",
+      "invent unavailable measurements or interventions"
+    ]
+  },
+  "preservation_obligations": [
+    "APC-001_formal_representation_separated_from_empirical_correspondence",
+    "APC-002_external_evidence_requirements_explicit",
+    "APC-003_observational_equivalence_controlled",
+    "APC-004_trace_provenance_classified",
+    "APC-005_identity_bridge_not_assumed",
+    "APC-006_negative_controls_rejected",
+    "APC-007_terminal_outcome_claim_bounded"
+  ],
+  "allowed_terminal_outcomes": [
+    "extension_proved",
+    "proper_subclass_only",
+    "countermodel",
+    "new_assumption_required",
+    "unresolved"
+  ],
+  "counterexample_policy": {
+    "observationally_equivalent_distinct_processes_block_identity_inference": true,
+    "unknown_is_not_pass": true,
+    "failure_to_observe_counterexample_is_not_proof": true,
+    "material_scope_repair_requires_new_version": true
+  },
+  "nonclaims": [
+    "an actual reasoning process has been identified",
+    "formal faithfulness entails empirical correspondence",
+    "behavioral equivalence entails internal identity",
+    "repository traces are independent evidence",
+    "universal structure is established"
+  ]
+}

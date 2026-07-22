@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "USD-W1-APC-FIXTURES-001",
+  "version": "1.0",
+  "scope_contract": "USD-W1-APC-SCOPE-001",
+  "fixtures": [
+    {"id": "APC-FORMAL-001", "kind": "diagnostic", "description": "A formally faithful model with no independent external observations.", "expected": "insufficient_for_correspondence"},
+    {"id": "APC-TRACE-001", "kind": "diagnostic", "description": "A system-generated trace labeled as the internal reasoning process but produced by the same implementation under test.", "expected": "insufficient_nonindependent_evidence"},
+    {"id": "APC-OBS-EQUIV-001", "kind": "negative", "description": "Two distinct internal processes produce the same admitted observable trace and predictions.", "expected": "blocks_identity_inference"},
+    {"id": "APC-MEAS-001", "kind": "positive_template", "description": "Independent measurements, declared error model, temporal identity criteria, discriminating intervention, alternatives, and replication are all supplied.", "expected": "eligible_for_future_empirical_test"},
+    {"id": "APC-NEG-REP-001", "kind": "negative", "description": "Representability is asserted to entail actual-process identity.", "expected": "rejected"},
+    {"id": "APC-NEG-LABEL-001", "kind": "negative", "description": "Matching labels or self-authored provenance are asserted to establish correspondence.", "expected": "rejected"}
+  ],
+  "mutation_targets": [
+    "promote_formal_faithfulness_to_empirical_correspondence",
+    "treat_generated_trace_as_independent_evidence",
+    "drop_observational_equivalence_control",
+    "remove_measurement_error_requirement",
+    "promote_terminal_outcome_to_extension_proved",
+    "promote_actual_process_claim"
+  ]
+}
