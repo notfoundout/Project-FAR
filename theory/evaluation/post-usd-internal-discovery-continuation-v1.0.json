@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-USD-IKD-001",
+  "version": "1.0",
+  "status": "registered_unexecuted",
+  "parent_synthesis": "POST-W5-USD-SYN-001",
+  "supersedes_as_active_program": "POST-USD-EVC-001",
+  "external_package_disposition": {
+    "EVC-W1-EXTERNAL-PROOF-REVIEW": "frozen_preserved_execution_deferred",
+    "EVC-W2-R3-TECHNICAL-REPLICATION": "frozen_preserved_execution_deferred",
+    "EVC-W3-R4-ADVERSARIAL-REPLICATION": "frozen_preserved_execution_deferred",
+    "rule": "No external package is released or executed until this internal discovery program reaches a terminal adjudication. Existing frozen artifacts remain immutable and are not withdrawn."
+  },
+  "purpose": "Continue internal discovery until the strongest preregistered search can distinguish one common kernel, equivalent kernels, genuinely incomparable kernels, generic structure only, a bounded no-single-kernel result, or unresolved.",
+  "controlling_question": "Do FARA, LTS-PROV, and materially different successful architectures instantiate a deeper nontrivial commitment that survives expanded scope, representation, reconstruction, and cost tests?",
+  "workstreams": [
+    {
+      "sequence": 1,
+      "id": "IKD-W1-CANDIDATE-ARCHITECTURES",
+      "target_pr": 260,
+      "action": "freeze materially new candidate architectures",
+      "minimum_families": ["process_or_category_theoretic", "causal_model", "proof_or_type_theoretic", "information_flow", "dynamical_or_coalgebraic", "algebraic"],
+      "anti_derivative_rule": "A candidate fails admission if its operative commitments are merely a relabeling, direct compilation, or hidden reconstruction of FARA or LTS-PROV without independently motivated primitives and constraints."
+    },
+    {
+      "sequence": 2,
+      "id": "IKD-W2-EXPANDED-COMPETITION",
+      "target_pr": 261,
+      "action": "execute candidate competition under the unchanged preservation contract and complete machinery ledger"
+    },
+    {
+      "sequence": 3,
+      "id": "IKD-W3-COMMON-FACTOR",
+      "target_pr": 262,
+      "action": "search for a candidate-neutral common kernel beneath all successful minima",
+      "failure_controls": ["label_intersection", "generic_graph_structure", "unrestricted_interpreter", "equivalent_reintroduction", "post_hoc_scope_selection"]
+    },
+    {
+      "sequence": 4,
+      "id": "IKD-W4-CROSS-FEATURE-COMPOSITION",
+      "target_pr": 263,
+      "action": "test simultaneous combinations of the six positively represented feature subclasses",
+      "rule": "Separate featurewise success is not compositional closure."
+    },
+    {
+      "sequence": 5,
+      "id": "IKD-W5-EXPANDED-INVARIANCE",
+      "target_pr": 264,
+      "action": "test materially broader representation transformations including event-state interchange, semantic dualization, causal, proof-object, process-algebra, coalgebraic, and type-theoretic encodings"
+    },
+    {
+      "sequence": 6,
+      "id": "IKD-W6-GLOBAL-RECONSTRUCTION",
+      "target_pr": 265,
+      "action": "expand alternative-basis reconstruction and synthesis while charging all helpers, interpreters, metadata, decoders, and generated invariants"
+    },
+    {
+      "sequence": 7,
+      "id": "IKD-W7-LOWER-BOUNDS",
+      "target_pr": 266,
+      "action": "establish declared-class lower bounds or preserve explicit countermodels and failed necessity claims"
+    },
+    {
+      "sequence": 8,
+      "id": "IKD-W8-MINIMAL-FRONTIER",
+      "target_pr": 267,
+      "action": "recompute the Pareto-minimal frontier under the expanded candidate universe and cost preorder"
+    },
+    {
+      "sequence": 9,
+      "id": "IKD-W9-TERMINAL-ADJUDICATION",
+      "target_pr": 268,
+      "action": "issue the strongest internally justified universal-kernel classification"
+    }
+  ],
+  "terminal_outcomes": [
+    "one_nontrivial_common_kernel",
+    "multiple_translation_equivalent_kernels",
+    "multiple_incomparable_kernels_no_deeper_factor_within_search",
+    "generic_structured_system_properties_only",
+    "bounded_no_single_kernel",
+    "unresolved"
+  ],
+  "decision_rules": [
+    "Search architecture must be derived from accepted dependencies rather than imposed to favor an existing vocabulary.",
+    "No universal claim may be based on a non-exhaustive candidate universe without an explicit lower-bound or closure argument.",
+    "A common factor must preserve reasoning-relevant commitments and discriminate against the registered contrast class; syntactic intersection is insufficient.",
+    "Cross-feature conjunctions must be executed directly; featurewise success cannot be multiplied into combined coverage.",
+    "Equivalent reintroduction and hidden machinery count against elimination.",
+    "Tradeoffs remain incomparable and are not scalarized.",
+    "Failure to discover a deeper kernel is not global proof of nonexistence unless the declared search class is closed by a valid argument.",
+    "External validation remains deferred, not completed or waived."
+  ],
+  "release_condition_for_external_packages": {
+    "required_terminal_artifact": "IKD-W9-TERMINAL-ADJUDICATION",
+    "allowed_internal_statuses": [
+      "one_nontrivial_common_kernel",
+      "multiple_translation_equivalent_kernels",
+      "multiple_incomparable_kernels_no_deeper_factor_within_search",
+      "generic_structured_system_properties_only",
+      "bounded_no_single_kernel",
+      "unresolved"
+    ],
+    "rule": "External release may begin only after the terminal artifact freezes the exact claim, scope, assumptions, counterexamples, and unresolved boundaries."
+  },
+  "nonclaims": [
+    "a universal structure has been discovered",
+    "FARA or LTS-PROV is universal",
+    "the candidate universe is exhaustive",
+    "existing external packages have been executed",
+    "external validation is unnecessary",
+    "failure to find a common kernel proves global nonexistence"
+  ]
+}
