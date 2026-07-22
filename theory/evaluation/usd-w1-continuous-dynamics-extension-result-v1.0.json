@@ -34,6 +34,7 @@
     "CD-HYB-001": "pass",
     "CD-NEG-GRID-001": "rejected",
     "CD-NEG-ORACLE-001": "rejected",
+    "CD-BOUND-UNCERT-EVENT-001": "excluded",
     "CD-BOUND-NONUNIQ-001": "excluded",
     "CD-BOUND-ZENO-001": "excluded"
   },
