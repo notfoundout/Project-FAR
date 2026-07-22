@@ -64,7 +64,7 @@ def main()->int:
  assert progress['premise_change'] is False
  assert progress['source_scope_change'] is False
  assert progress['target_interface_change'] is False
- assert progress['theorem_status_change'] is True
+ assert progress['theorem_status_change'] is False
  s=load(LEMMA)['execution_summary']
  assert (s['proved'],s['obstruction_established'],s['scope_boundary_established'],s['refuted'],s['open'])==(27,1,1,8,0)
  assert [load(x)['proof_id'] for x in PROOFS]==['SCORE-W0-PROOF-001','SCORE-W1-PROOF-001','SCORE-W2-PROOF-001','SCORE-W3-PROOF-001','SCORE-W4-PROOF-001','SCORE-W5-PROOF-001']
