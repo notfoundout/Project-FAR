@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "USD-W1-SC-SCOPE-001",
+  "version": "1.0",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W1-SCOPE-EXT",
+  "feature_family": "semantic_change",
+  "source_class": "S_sem_eff",
+  "admission_rule": {
+    "candidate_independent": true,
+    "carrier": "countable effectively named symbols, propositions, rules, and observations",
+    "semantic_states": "an effectively presented sequence of finite semantic-interface versions",
+    "change_events": "explicit finite updates to denotation, admissibility, interpretation, or inferential role",
+    "translation_contract": "every version transition supplies a total computable partial-correspondence map with declared preserved, split, merged, introduced, retired, and unresolved commitments",
+    "history": "all semantic versions, change reasons, rejected alternatives, and downstream dependency effects remain append-only",
+    "locality": "each finite query has an effectively recoverable finite semantic dependency cone",
+    "exclusions": [
+      "undeclared reinterpretation",
+      "noncomputable semantic transition",
+      "retroactive erasure of prior semantic states",
+      "global semantic rewrite without a finite recoverable dependency account",
+      "semantic identity determined only by an external oracle",
+      "actual-process correspondence"
+    ]
+  },
+  "observation_boundary": {
+    "analyst_access": "frozen versioned semantic interfaces, transition maps, and finite histories",
+    "represented_agent_access": "only source-declared meanings, observations, commitments, and change notices",
+    "prohibited": [
+      "timeless label identity treated as semantic identity",
+      "future-semantics oracle",
+      "source-instance-specific decoder",
+      "silent replacement of unresolved translation by equivalence"
+    ]
+  },
+  "preservation_obligations": [
+    "SC-EXT-001_total_uniform_constructor",
+    "SC-EXT-002_versioned_denotation_preserved",
+    "SC-EXT-003_inferential_role_preserved",
+    "SC-EXT-004_translation_effects_preserved",
+    "SC-EXT-005_commitment_ground_dependency_preserved",
+    "SC-EXT-006_semantic_history_and_revision_preserved",
+    "SC-EXT-007_unresolved_translation_remains_explicit",
+    "SC-EXT-008_no_label_identity_collapse",
+    "SC-EXT-009_registered_negative_controls_rejected"
+  ],
+  "counterexample_policy": {
+    "one_valid_countermodel_blocks_extension_proved": true,
+    "unknown_is_not_pass": true,
+    "post_freeze_scope_repair_requires_new_version": true,
+    "failure_to_find_counterexample_is_not_proof": true
+  },
+  "allowed_terminal_outcomes": ["extension_proved", "proper_subclass_only", "countermodel", "new_assumption_required", "unresolved"],
+  "nonclaims": [
+    "all semantic change is effectively translatable",
+    "labels preserve meaning across versions",
+    "semantic equivalence is globally decidable",
+    "semantic change establishes a universal structure",
+    "necessity minimality or uniqueness is established"
+  ]
+}
