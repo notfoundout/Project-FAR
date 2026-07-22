@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "result_id": "IKD-W3-COMMON-FACTOR-001",
+  "status": "complete_bounded_common_factor_search",
+  "parent_program": "POST-USD-IKD-001",
+  "parent_competition": "IKD-W2-EXPANDED-COMP-001",
+  "target_pr": 263,
+  "scope": "The three successful architectures on the frozen bounded IKD-W2 source class; cross-feature conjunctions and actual-process correspondence excluded.",
+  "successful_architectures": ["FARA-001", "LTS-PROV-001", "COALG-DYN-001"],
+  "method": {
+    "candidate_neutral": true,
+    "semantic_commitment_equivalence_required": true,
+    "label_intersection_insufficient": true,
+    "generic_graph_or_state_transition_structure_insufficient": true,
+    "all_helpers_and_decoders_charged": true,
+    "failure_to_find_not_global_nonexistence": true
+  },
+  "tested_factor_candidates": [
+    {"id":"CF-GRAPH","classification":"rejected_generic","reason":"Graph incidence alone does not preserve reasoning-relevant commitments, admissibility, dependency, or revision."},
+    {"id":"CF-TRANSITION","classification":"rejected_underpowered","reason":"Transitions alone do not recover grounds, semantic commitments, supersession, or historical dependency."},
+    {"id":"CF-PROVENANCE","classification":"rejected_underpowered","reason":"Provenance alone does not determine admissible evolution or operational consequences."},
+    {"id":"CF-INTERPRETER","classification":"rejected_escape_hatch","reason":"An unrestricted interpreter can reconstruct any source and therefore supplies no nontrivial constraint."},
+    {"id":"RCCD-001","classification":"supported_boundedly","name":"recoverable constrained commitment dynamics"}
+  ],
+  "common_factor": {
+    "id": "RCCD-001",
+    "name": "recoverable constrained commitment dynamics",
+    "commitments": [
+      "A distinguishable configuration carries recoverable commitment content.",
+      "Declared admissibility conditions constrain which evolutions are permitted.",
+      "Each accepted evolution preserves or explicitly revises dependency and ground information.",
+      "Supersession and revision preserve queryable historical identity rather than retroactively rewriting prior states.",
+      "A uniform bounded-query recovery interface exposes commitments, admissible evolution, dependencies, and history without source-specific or future-information oracles."
+    ],
+    "reasoning_relevant_role": "Separates a reasoning process from an arbitrary labeled transition structure by requiring recoverable commitments, constrained evolution, and dependency-preserving revision.",
+    "architecture_realizations": {
+      "FARA-001": ["typed commitments and interpretations", "calculus-governed admissible transitions", "grounds, dependencies, and revision history"],
+      "LTS-PROV-001": ["commitment-bearing labeled states", "invariant-constrained transitions", "provenance and supersession event history"],
+      "COALG-DYN-001": ["observable commitment behavior", "coalgebraic evolution map and behavioral constraints", "charged dependency and history observations"]
+    },
+    "translation_rule": "Realizations need not share labels or ontology; they must support the same registered recovery queries and preserve the same operational and historical distinctions.",
+    "cost_rule": "Adapters, observation maps, provenance projections, semantic interfaces, canonicalizers, and equivalent reintroductions are charged."
+  },
+  "negative_controls": [
+    "unchanged_label_without_commitment_recovery_rejected",
+    "dependency_erasure_rejected",
+    "retroactive_history_rewrite_rejected",
+    "unrestricted_interpreter_rejected",
+    "source_specific_decoder_rejected",
+    "future_history_access_rejected",
+    "generic_transition_structure_rejected_as_sufficient"
+  ],
+  "terminal_result": "one_bounded_nontrivial_common_factor_candidate_supported",
+  "claim_effect": {
+    "common_factor_existence_on_frozen_scope": "supported",
+    "unique_kernel": "unresolved",
+    "cross_feature_compositional_closure": "unresolved",
+    "global_necessity": "unresolved",
+    "global_minimality": "unresolved",
+    "universal_structure": "unresolved"
+  },
+  "next_decisive_workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION",
+  "nonclaims": ["RCCD-001 is globally universal", "RCCD-001 is unique", "RCCD-001 is globally minimal or necessary", "the candidate search is exhaustive", "separate featurewise success composes", "actual-process correspondence", "external validation"]
+}
