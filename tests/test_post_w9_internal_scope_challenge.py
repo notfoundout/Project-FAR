@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 PROGRAM=ROOT/'theory/evaluation/post-w9-internal-scope-challenge-v1.0.json'
 QUEUE=ROOT/'theory/evaluation/post-w9-internal-scope-challenge-queue-v1.0.json'
+FINAL=ROOT/'theory/evaluation/sc-w6-final-internal-adjudication-v1.0.json'
 class PostW9InternalScopeChallengeTests(unittest.TestCase):
     def load(self,path:Path)->dict:return json.loads(path.read_text(encoding='utf-8'))
     def test_validator_passes(self):
@@ -14,7 +15,13 @@ class PostW9InternalScopeChallengeTests(unittest.TestCase):
     def test_external_work_is_deferred(self):
         data=self.load(PROGRAM); self.assertEqual(data['external_disposition'],'deferred_until_final_internal_adjudication'); self.assertIn('No external review or replication is authorized by this program.',data['frozen_principles'])
     def test_queue_begins_with_scope_neutrality(self):
-        queue=self.load(QUEUE); next_pr=queue['next_action']['target_pr']; self.assertIn(next_pr,{270,271,272,273,274,275})
+        queue=self.load(QUEUE)
+        if queue['status']=='complete':
+            self.assertIsNone(queue['next_action']); self.assertEqual(queue['ordered_followups'],[])
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272,273,274,275])
+            self.assertEqual(queue['final_result'],'rccd_necessary_kernel_for_natural_class')
+            return
+        next_pr=queue['next_action']['target_pr']; self.assertIn(next_pr,{270,271,272,273,274,275})
         expected={270:'SC-W1-SCOPE-NEUTRALITY',271:'SC-W2-BOUNDARY-REASONING',272:'SC-W3-CONTRACT-LADDER',273:'SC-W4-REPRESENTATION-ESCAPE',274:'SC-W5-HELD-OUT-CONTEXTS',275:'SC-W6-FINAL-INTERNAL-ADJUDICATION'}
         self.assertEqual(queue['next_action']['workstream'],expected[next_pr])
         if next_pr==270:
@@ -27,4 +34,12 @@ class PostW9InternalScopeChallengeTests(unittest.TestCase):
             self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272,273]); self.assertEqual(queue['ordered_followups'],[275]); self.assertEqual(queue['next_action']['workstream'],'SC-W5-HELD-OUT-CONTEXTS')
         if next_pr==275:
             self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272,273,274]); self.assertEqual(queue['ordered_followups'],[]); self.assertEqual(queue['next_action']['workstream'],'SC-W6-FINAL-INTERNAL-ADJUDICATION')
+    def test_final_answer_is_bounded_and_defeasible(self):
+        data=self.load(FINAL)
+        self.assertEqual(data['terminal_outcome'],'rccd_necessary_kernel_for_natural_class')
+        self.assertEqual(len(data['theorem']['kernel']),5)
+        self.assertGreaterEqual(len(data['nonclaims']),6)
+        self.assertEqual(len(data['defeating_conditions']),5)
+        self.assertIn('uninstrumented creative hypothesis generation',data['unknowns'])
+        self.assertEqual(data['internal_program_disposition'],'closed_with_final_internal_answer')
 if __name__=='__main__':unittest.main()
