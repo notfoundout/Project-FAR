@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "result_id": "IKD-W7-LOWER-BOUNDS-001",
+  "status": "complete_conditional_lower_bound_program",
+  "parent_program": "POST-USD-IKD-001",
+  "parent_reconstruction": "IKD-W6-GLOBAL-RECONSTRUCTION-001",
+  "target_pr": 267,
+  "kernel_under_test": "RCCD-001",
+  "universality_class": {
+    "id": "C-EFFECTIVE-REASONING-001",
+    "definition": "effectively describable systems that maintain distinguishable commitments, permit constrained commitment or state change, preserve grounds or dependencies relevant to revision, and support finite recovery queries over histories",
+    "inclusions": ["formal reasoning systems", "instrumented planning and revision systems", "effectively presented stochastic or hybrid reasoning systems"],
+    "exclusions": ["systems with no recoverable semantics", "input-output-only proprietary processes without adequate traces", "non-effective representations", "systems whose relevant distinctions are inaccessible even in principle", "purely physical systems not independently identified as reasoning"]
+  },
+  "preservation_contract": {
+    "id": "P-RCCD-FAITHFUL-001",
+    "requires": ["commitment content", "admissible evolution", "grounds and dependency-sensitive revision", "supersession and historical identity", "uniform finite recovery of registered distinctions"],
+    "anti_circularity_rule": "the contract states reasoning facts to preserve, not RCCD vocabulary or implementation primitives"
+  },
+  "effective_representation_family": {
+    "id": "E-EFFECTIVE-REP-001",
+    "definition": "finite or recursively presented encodings with effective construction and a uniform terminating recovery procedure for every registered finite query",
+    "prohibitions": ["source-specific hidden decoders", "future-information oracles", "unrestricted interpreters", "uncharged schedulers or proof machinery"]
+  },
+  "lower_bounds": [
+    {
+      "component": "R1_RECOVERABLE_COMMITMENTS",
+      "paired_countermodel": "two systems share the same carrier and transition graph but assign different commitment content to one reachable configuration",
+      "indistinguishable_under_ablation": "transition-only encodings identify the pair",
+      "separating_query": "what proposition or commitment is held at the reachable configuration",
+      "theorem": "every P-faithful representation in E must encode a distinction sufficient to recover commitment content",
+      "classification": "conditionally_necessary"
+    },
+    {
+      "component": "R2_CONSTRAINED_EVOLUTION",
+      "paired_countermodel": "two systems share states and realized history but differ in the permitted next-step set",
+      "indistinguishable_under_ablation": "state-only and realized-trace-only encodings identify the pair",
+      "separating_query": "which next transitions are admissible before execution",
+      "theorem": "every P-faithful representation in E must encode admissibility constraints equivalent to constrained evolution",
+      "classification": "conditionally_necessary"
+    },
+    {
+      "component": "R3_DEPENDENCY_SENSITIVE_REVISION",
+      "paired_countermodel": "two systems hold the same conclusion but derive it from different grounds, one of which is later defeated",
+      "indistinguishable_under_ablation": "conclusion-only encodings identify the pair",
+      "separating_query": "which commitments must be revised after defeat of a specified ground",
+      "theorem": "every P-faithful representation in E must encode grounds or dependency structure sufficient to determine revision consequences",
+      "classification": "conditionally_necessary"
+    },
+    {
+      "component": "R4_HISTORICAL_IDENTITY",
+      "paired_countermodel": "two systems have the same current visible commitments but different supersession histories that alter later admissibility",
+      "indistinguishable_under_ablation": "current-state-only encodings identify the pair",
+      "separating_query": "which prior commitment was superseded and what future revisions remain admissible",
+      "theorem": "every P-faithful representation in E must encode historical identity and supersession information sufficient for path-dependent consequences",
+      "classification": "conditionally_necessary"
+    },
+    {
+      "component": "R5_UNIFORM_BOUNDED_RECOVERY",
+      "paired_countermodel": "a uniform effective encoding family and a source-indexed oracle family agree extensionally on sampled behavior, but only the former provides one representation-independent terminating recovery procedure",
+      "indistinguishable_under_ablation": "finite observation samples alone identify the pair",
+      "separating_query": "whether one fixed effective method recovers every registered finite distinction for every member of the class",
+      "theorem": "every representation counted as P-faithful in E must supply a uniform terminating recovery method; source-specific oracle access is not a faithful effective representation",
+      "classification": "conditionally_necessary_as_representation_admissibility_condition"
+    }
+  ],
+  "equivalent_reintroduction_bound": "any basis that omits an RCCD component from its declared primitives but preserves the associated separating query must reintroduce an equivalent distinction in derived machinery; that machinery is charged",
+  "joint_theorem": "For C-EFFECTIVE-REASONING-001, preservation contract P-RCCD-FAITHFUL-001, and effective representation family E-EFFECTIVE-REP-001, every faithful representation requires commitments equivalent to RCCD components R1 through R5.",
+  "proof_scope": "conditional information-separation lower bounds over the registered class and representation family; not unrestricted logical necessity",
+  "terminal_result": "all_five_rccd_components_have_conditional_lower_bounds_on_defined_class",
+  "claim_effect": {
+    "rccd_component_necessity_relative_to_C_P_E": "supported",
+    "global_necessity": "not_supported",
+    "global_minimality": "unresolved_pending_W8",
+    "single_common_kernel": "unresolved_pending_W8",
+    "unrestricted_universality": "not_supported"
+  },
+  "next_decisive_workstream": "IKD-W8-MINIMAL-FRONTIER",
+  "nonclaims": [
+    "RCCD is necessary for every possible conception of reasoning",
+    "the preservation contract is the only legitimate contract",
+    "actual brains or language models internally implement RCCD",
+    "RCCD is globally minimal, unique, or universally instantiated",
+    "external validation has occurred"
+  ]
+}
