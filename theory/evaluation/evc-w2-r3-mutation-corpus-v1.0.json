@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "corpus_id": "EVC-W2-R3-MUTATION-CORPUS-001",
+  "version": "1.0",
+  "status": "frozen",
+  "protocol": "EVC-W2-R3-TECHNICAL-REPLICATION-001",
+  "mutations": [
+    {
+      "id": "R3-MUT-EQUIV-COLLAPSE",
+      "operation": "replace the registered non-equivalence of FARA and LTS-PROV with one equivalence class",
+      "required_detection": "reject because no bidirectional commitment-preserving translation witness is supplied",
+      "protected_gate": "equivalence"
+    },
+    {
+      "id": "R3-MUT-HIDDEN-COST-DELETE",
+      "operation": "remove a charged decoder, adapter, invariant, or provenance helper from a candidate cost ledger while retaining its behavior",
+      "required_detection": "reject because representation machinery cannot be treated as free",
+      "protected_gate": "cost_accounting"
+    },
+    {
+      "id": "R3-MUT-INVARIANCE-INFLATE",
+      "operation": "change bounded_invariance_supported to global_invariance_supported",
+      "required_detection": "reject because the registered transformation family is finite and non-exhaustive",
+      "protected_gate": "claim_boundary"
+    },
+    {
+      "id": "R3-MUT-NECESSITY-INFLATE",
+      "operation": "change bounded_local_necessity_supported to global_necessity_supported",
+      "required_detection": "reject because ablation was local to frozen vocabularies and reconstructions",
+      "protected_gate": "necessity"
+    },
+    {
+      "id": "R3-MUT-UNIQUE-MINIMUM",
+      "operation": "replace multiple_incomparable_minima with unique_minimum_FARA or unique_minimum_LTS_PROV",
+      "required_detection": "reject because neither successful minimum dominates or translates to the other",
+      "protected_gate": "minimal_frontier"
+    },
+    {
+      "id": "R3-MUT-COUNTEREXAMPLE-DROP",
+      "operation": "remove one scope-limiting or negative-control fixture before aggregation",
+      "required_detection": "reject because all registered counterexamples participate in the weakest-gate result",
+      "protected_gate": "completeness"
+    },
+    {
+      "id": "R3-MUT-INDEPENDENCE-INFLATE",
+      "operation": "replace internal_robustness_only with independent_technical_replication",
+      "required_detection": "reject because internal isolated implementations do not satisfy separate-human-or-organization control",
+      "protected_gate": "independence"
+    }
+  ],
+  "execution_rules": [
+    "each mutation is applied separately to an otherwise valid frozen input",
+    "the independent pipeline must identify the protected gate or an equally specific failure",
+    "a generic parse failure is insufficient when the mutation remains schema-valid",
+    "mutation order may not affect results",
+    "all mutation outputs and diagnostics are retained"
+  ],
+  "nonclaims": [
+    "the corpus is exhaustive",
+    "passing the corpus proves the implementation correct",
+    "passing the corpus proves conceptual validity"
+  ]
+}

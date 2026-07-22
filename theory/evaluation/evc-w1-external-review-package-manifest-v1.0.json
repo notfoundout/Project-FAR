@@ -10,6 +10,7 @@
       "group": "program_and_synthesis",
       "artifacts": [
         "theory/evaluation/post-w5-universal-structure-program-v1.0.json",
+        "theory/evaluation/post-w5-usd-next-program-v1.0.json",
         "theory/evaluation/post-w5-usd-terminal-synthesis-v1.0.json",
         "docs/research/post-w5-usd-terminal-synthesis-v1.0.md",
         "docs/audits/post-w5-usd-terminal-synthesis-audit.md"
@@ -43,6 +44,7 @@
     "every cost ledger and equivalence definition is included",
     "every claim boundary and nonclaim is included",
     "all validators and tests referenced by the package are present",
+    "the parent POST-USD-EVC-001 registration artifact is included",
     "the release commit has no uncommitted or generated-only evidence"
   ],
   "prohibited_omissions": [

@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "manifest_id": "EVC-W2-R3-PACKAGE-001",
+  "version": "1.0",
+  "status": "frozen_unreleased",
+  "protocol": "EVC-W2-R3-TECHNICAL-REPLICATION-001",
+  "release_rule": "Release only an immutable Git commit SHA or signed archive digest. The replicator must receive the same artifact set and the release identifier must be recorded before first execution.",
+  "required_artifact_groups": [
+    {
+      "group": "program_and_terminal_synthesis",
+      "artifacts": [
+        "theory/evaluation/post-w5-usd-next-program-v1.0.json",
+        "theory/evaluation/post-w5-usd-terminal-synthesis-v1.0.json",
+        "docs/research/post-w5-usd-terminal-synthesis-v1.0.md",
+        "docs/audits/post-w5-usd-terminal-synthesis-audit.md"
+      ]
+    },
+    {
+      "group": "replication_instruments",
+      "artifacts": [
+        "theory/evaluation/evc-w2-r3-technical-replication-protocol-v1.0.json",
+        "theory/evaluation/evc-w2-r3-replication-result-template-v1.0.json",
+        "theory/evaluation/evc-w2-r3-mutation-corpus-v1.0.json",
+        "docs/research/evc-w2-r3-replicator-guide-v1.0.md"
+      ]
+    },
+    {
+      "group": "w2_through_w5_inputs",
+      "selection_rule": "all frozen USD-W2 through USD-W5 scopes, candidate definitions, fixtures, obligation definitions, equivalence rules, cost ledgers, results, proofs, audits, and theorem-boundary artifacts"
+    },
+    {
+      "group": "mutation_and_negative_controls",
+      "artifacts": [
+        "theory/evaluation/evc-w2-r3-mutation-corpus-v1.0.json"
+      ],
+      "selection_rule": "all registered negative controls plus the explicit R3 mutation corpus covering equivalence collapse, hidden-cost deletion, claim inflation, counterexample deletion, unique-minimum promotion, and independence-label inflation"
+    },
+    {
+      "group": "schemas_without_original_implementation",
+      "selection_rule": "public machine-readable schemas and source artifacts required to reconstruct the pipeline; original generated intermediates and executable implementation code are excluded unless independently justified as part of the frozen specification"
+    },
+    {
+      "group": "verification_evidence",
+      "selection_rule": "canonical validators and tests used to check package structure, but clearly marked as reference checks rather than code the replicator may reuse for the independent implementation"
+    }
+  ],
+  "replicator_delivery_views": {
+    "specification_view": "required; contains scopes, obligations, fixtures, schemas, costs, equivalence definitions, and claim boundaries",
+    "reference_result_view": "sealed until the replicator freezes its implementation; contains terminal reference outputs and witness comparisons",
+    "original_code_view": "not delivered for implementation reuse; may be released only after the initial result for forensic comparison"
+  },
+  "completeness_checks": [
+    "the parent POST-USD-EVC-001 registration artifact is included",
+    "every mandatory target resolves to frozen source artifacts",
+    "every expected classification resolves to a registered result",
+    "the mutation corpus includes all seven mandatory mutations",
+    "all cost and equivalence definitions needed for independent reconstruction are included",
+    "reference outputs are separable from the initial specification view",
+    "original executable implementations are not silently included as dependencies",
+    "all unresolved gates and nonclaims are preserved",
+    "release state and first-access state remain false before delivery"
+  ],
+  "prohibited_omissions": [
+    "failed or scope-limiting controls",
+    "incomparable FARA and LTS-PROV results",
+    "charged helper machinery",
+    "unresolved global-necessity and exhaustiveness gates",
+    "actual-process limitations",
+    "internal-only robustness classification",
+    "package defects discovered before release"
+  ],
+  "release_state": {
+    "replicator_recruited": false,
+    "replicator_eligible": null,
+    "release_commit": null,
+    "signed_archive_digest": null,
+    "first_access_timestamp": null,
+    "implementation_frozen": false,
+    "reference_results_unsealed": false,
+    "replication_started": false,
+    "replication_completed": false
+  },
+  "nonclaims": [
+    "the manifest itself proves package completeness",
+    "an independent replicator has received the package",
+    "R3 replication has occurred",
+    "the original implementation is independently validated"
+  ]
+}
