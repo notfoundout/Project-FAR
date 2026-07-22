@@ -25,7 +25,7 @@ class PostSCTerminalUniversalityExtensionTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
         self.assertIn("PASS", completed.stdout)
 
-    def test_program_is_new_and_unexecuted(self) -> None:
+    def test_program_registration_remains_frozen(self) -> None:
         program = self.load(PROGRAM)
         self.assertEqual(program["program_id"], "POST-SC-TUE-001")
         self.assertEqual(program["status"], "registered_unexecuted")
@@ -36,7 +36,19 @@ class PostSCTerminalUniversalityExtensionTests(unittest.TestCase):
         workstreams = self.load(PROGRAM)["workstreams"]
         self.assertEqual([item["target_pr"] for item in workstreams], [277, 278, 279, 280])
         self.assertEqual([item["sequence"] for item in workstreams], [1, 2, 3, 4])
-        self.assertEqual(self.load(QUEUE)["ordered_followups"], [278, 279, 280])
+
+    def test_current_queue_is_contiguous_and_authorized(self) -> None:
+        queue = self.load(QUEUE)
+        completed = [item["target_pr"] for item in queue["completed_workstreams"]]
+        self.assertEqual(completed, list(range(276, 276 + len(completed))))
+        if queue["status"] == "complete":
+            self.assertEqual(completed, [276, 277, 278, 279, 280])
+            self.assertIsNone(queue["next_action"])
+            self.assertEqual(queue["ordered_followups"], [])
+        else:
+            expected_next = completed[-1] + 1
+            self.assertEqual(queue["next_action"]["target_pr"], expected_next)
+            self.assertEqual(queue["ordered_followups"], list(range(expected_next + 1, 281)))
 
     def test_all_defeating_conditions_are_frozen(self) -> None:
         program = self.load(PROGRAM)
