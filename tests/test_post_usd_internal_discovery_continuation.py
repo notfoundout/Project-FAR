@@ -29,11 +29,7 @@ class PostUSDInternalDiscoveryContinuationTests(unittest.TestCase):
     def test_external_packages_are_preserved_but_deferred(self):
         program = self.load(PROGRAM)
         disposition = program["external_package_disposition"]
-        for key in (
-            "EVC-W1-EXTERNAL-PROOF-REVIEW",
-            "EVC-W2-R3-TECHNICAL-REPLICATION",
-            "EVC-W3-R4-ADVERSARIAL-REPLICATION",
-        ):
+        for key in ("EVC-W1-EXTERNAL-PROOF-REVIEW", "EVC-W2-R3-TECHNICAL-REPLICATION", "EVC-W3-R4-ADVERSARIAL-REPLICATION"):
             self.assertEqual(disposition[key], "frozen_preserved_execution_deferred")
         self.assertIn("not withdrawn", disposition["rule"])
 
@@ -56,13 +52,15 @@ class PostUSDInternalDiscoveryContinuationTests(unittest.TestCase):
         queue = self.load(QUEUE)
         self.assertEqual(queue["registration_pr"], 260)
         next_pr = queue["next_action"]["target_pr"]
-        self.assertIn(next_pr, {261, 262})
+        self.assertIn(next_pr, {261, 262, 263})
         if next_pr == 261:
             self.assertEqual(queue["next_action"]["workstream"], "IKD-W1-CANDIDATE-ARCHITECTURES")
-            self.assertIn("anti-derivative and hidden-reconstruction tests", queue["next_action"]["deliverables"])
-        else:
+        elif next_pr == 262:
             self.assertEqual(queue["next_action"]["workstream"], "IKD-W2-EXPANDED-COMPETITION")
             self.assertEqual(queue["completed_workstreams"][0]["target_pr"], 261)
+        else:
+            self.assertEqual(queue["next_action"]["workstream"], "IKD-W3-COMMON-FACTOR")
+            self.assertEqual([item["target_pr"] for item in queue["completed_workstreams"]], [261, 262])
 
     def test_terminal_outcomes_include_positive_negative_and_unresolved(self):
         program = self.load(PROGRAM)

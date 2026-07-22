@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "competition_id": "IKD-W2-EXPANDED-COMP-001",
+  "status": "complete_bounded_comparison",
+  "parent_program": "POST-USD-IKD-001",
+  "parent_freeze": "IKD-W1-CANDIDATE-FREEZE-001",
+  "target_pr": 262,
+  "scope": "S_core plus six separately frozen effective USD-W1 subclasses; actual-process correspondence and cross-feature conjunctions excluded",
+  "aggregation": "pareto_only_no_scalar_score",
+  "successful_set": ["FARA-001", "LTS-PROV-001", "COALG-DYN-001"],
+  "candidate_results": {
+    "FARA-001": {"coverage":"pass","preservation":"pass","costs":[5,2,7,34,0]},
+    "LTS-PROV-001": {"coverage":"pass","preservation":"pass","costs":[4,7,6,49,3]},
+    "PROC-CAT-001": {"coverage":"partial","preservation":"partial","boundary":"history and information require added provenance and observation machinery","costs":[5,10,8,58,5]},
+    "CAUSAL-SCM-001": {"coverage":"partial","preservation":"partial","boundary":"semantic change and revision history require external ledgers","costs":[5,12,9,63,6]},
+    "PROOF-TYPE-001": {"coverage":"partial","preservation":"partial","boundary":"continuous stochastic and observation behavior require imported interfaces","costs":[5,9,8,55,4]},
+    "INFO-FLOW-001": {"coverage":"partial","preservation":"partial","boundary":"semantic versioning and supersession require external commitment structure","costs":[5,11,8,57,5]},
+    "COALG-DYN-001": {"coverage":"pass","preservation":"pass","costs":[5,8,6,47,3]},
+    "ALG-REWRITE-001": {"coverage":"partial","preservation":"partial","boundary":"observation stochastic queries and revision provenance require added machinery","costs":[5,10,7,54,4]}
+  },
+  "negative_controls": ["hidden_provenance_rejected","unrestricted_interpreter_rejected","finite_truncation_as_exact_rejected","future_access_rejected","post_hoc_repair_rejected","scalar_winner_rejected"],
+  "frontier_relations": [
+    ["FARA-001","LTS-PROV-001","incomparable"],
+    ["FARA-001","COALG-DYN-001","incomparable"],
+    ["LTS-PROV-001","COALG-DYN-001","incomparable"]
+  ],
+  "terminal_result": "three_incomparable_successful_architectures_in_frozen_bounded_scope",
+  "winner": null,
+  "next_decisive_workstream": "IKD-W3-COMMON-FACTOR",
+  "nonclaims": ["candidate exhaustiveness","global minimality","cross-feature closure","actual-process correspondence","universal structure","global no-go","external validation"]
+}
