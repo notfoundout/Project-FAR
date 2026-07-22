@@ -25,7 +25,7 @@ class PostSCTerminalUniversalityExtensionTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
         self.assertIn("PASS", completed.stdout)
 
-    def test_program_registration_remains_frozen(self) -> None:
+    def test_program_is_new_and_unexecuted(self) -> None:
         program = self.load(PROGRAM)
         self.assertEqual(program["program_id"], "POST-SC-TUE-001")
         self.assertEqual(program["status"], "registered_unexecuted")
