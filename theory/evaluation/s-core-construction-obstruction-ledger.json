@@ -1,8 +1,8 @@
 {
   "schema_version":"1.0",
   "ledger_id":"SCORE-LEMMA-LEDGER-001",
-  "version":"1.0",
-  "status":"frozen_dependency_decomposition_w0_w1_w2_w3_w4_complete_w5_blocked_by_w3_5",
+  "version":"1.1",
+  "status":"w0_w1_w2_w3_w4_w5_complete_bounded_theorem_proved",
   "theorem_target":"THM-TARGET-001",
   "source_scope":"S_core",
   "faithful_predicate":"Faithful_split",
@@ -13,7 +13,8 @@
     "theory/evaluation/s-core-w1-direct-axis-proof.json",
     "theory/evaluation/s-core-w2-dynamics-history-proof.json",
     "theory/evaluation/s-core-w3-global-witness-proof.json",
-    "theory/evaluation/s-core-w4-negative-control-proof.json"
+    "theory/evaluation/s-core-w4-negative-control-proof.json",
+    "theory/evaluation/s-core-w5-theorem-assembly-proof.json"
   ],
   "waves":{"W0":"source_normalization_kernel","W1":"base_carriers_and_direct_axes","W2":"dynamics_history_and_revision","W3":"global_witness_obligations","W4":"obstruction_and_negative_controls","W5":"theorem_assembly"},
   "obligations":[
@@ -51,18 +52,18 @@
     {"id":"OBS-SC-008","class":"obstruction","wave":"W4","depends_on":["LEM-SC-017","LEM-SC-023"],"status":"refuted","evidence":["docs/research/s-core-w3-global-witness-proof-v1.0.md","theory/evaluation/s-core-w3-global-witness-proof.json"]},
     {"id":"OBS-SC-009","class":"obstruction","wave":"W4","depends_on":["LEM-SC-005","LEM-SC-024"],"status":"refuted","evidence":["docs/research/s-core-w3-global-witness-proof-v1.0.md","theory/evaluation/s-core-w3-global-witness-proof.json"]},
     {"id":"OBS-SC-010","class":"obstruction","wave":"W4","depends_on":["LEM-SC-018","LEM-SC-019","LEM-SC-020","LEM-SC-021","LEM-SC-022"],"status":"obstruction_established","evidence":["docs/research/s-core-w4-negative-control-proof-v1.0.md","theory/evaluation/s-core-w4-negative-control-proof.json"]},
-    {"id":"ASM-SC-001","class":"assembly","wave":"W5","depends_on":["LEM-SC-005","LEM-SC-018","LEM-SC-021","LEM-SC-022","LEM-SC-024"],"status":"registered_unproved","evidence":[]},
-    {"id":"ASM-SC-002","class":"assembly","wave":"W5","depends_on":["LEM-SC-006","LEM-SC-007","LEM-SC-008","LEM-SC-009","LEM-SC-010","LEM-SC-011","LEM-SC-012","LEM-SC-013","LEM-SC-014","LEM-SC-015","LEM-SC-016","LEM-SC-017","LEM-SC-018","LEM-SC-019","LEM-SC-020","LEM-SC-021","LEM-SC-022","LEM-SC-023","LEM-SC-024"],"status":"registered_unproved","evidence":[]},
-    {"id":"ASM-SC-003","class":"assembly","wave":"W5","depends_on":["ASM-SC-001","ASM-SC-002","OBS-SC-001","OBS-SC-002","OBS-SC-003","OBS-SC-004","OBS-SC-005","OBS-SC-006","OBS-SC-007","OBS-SC-008","OBS-SC-009","OBS-SC-010"],"status":"registered_unproved","evidence":[]}
+    {"id":"ASM-SC-001","class":"assembly","wave":"W5","depends_on":["LEM-SC-005","LEM-SC-018","LEM-SC-021","LEM-SC-022","LEM-SC-024"],"status":"proved","evidence":["docs/research/s-core-w5-theorem-assembly-proof-v1.0.md","theory/evaluation/s-core-w5-theorem-assembly-proof.json"]},
+    {"id":"ASM-SC-002","class":"assembly","wave":"W5","depends_on":["LEM-SC-006","LEM-SC-007","LEM-SC-008","LEM-SC-009","LEM-SC-010","LEM-SC-011","LEM-SC-012","LEM-SC-013","LEM-SC-014","LEM-SC-015","LEM-SC-016","LEM-SC-017","LEM-SC-018","LEM-SC-019","LEM-SC-020","LEM-SC-021","LEM-SC-022","LEM-SC-023","LEM-SC-024"],"status":"proved","evidence":["docs/research/s-core-w5-theorem-assembly-proof-v1.0.md","theory/evaluation/s-core-w5-theorem-assembly-proof.json"]},
+    {"id":"ASM-SC-003","class":"assembly","wave":"W5","depends_on":["ASM-SC-001","ASM-SC-002","OBS-SC-001","OBS-SC-002","OBS-SC-003","OBS-SC-004","OBS-SC-005","OBS-SC-006","OBS-SC-007","OBS-SC-008","OBS-SC-009","OBS-SC-010"],"status":"proved","evidence":["docs/research/s-core-w5-theorem-assembly-proof-v1.0.md","theory/evaluation/s-core-w5-theorem-assembly-proof.json"]}
   ],
-  "execution_summary":{"total":37,"construction":24,"obstruction":10,"assembly":3,"proved":24,"obstruction_established":1,"scope_boundary_established":1,"refuted":8,"open":3},
-  "completed_waves":["W0","W1","W2","W3","W4"],
-  "active_wave":"W5_blocked",
+  "execution_summary":{"total":37,"construction":24,"obstruction":10,"assembly":3,"proved":27,"obstruction_established":1,"scope_boundary_established":1,"refuted":8,"open":0},
+  "completed_waves":["W0","W1","W2","W3","W4","W5"],
+  "active_wave":"complete",
   "active_obligations":[],
-  "blocked_obligations":["ASM-SC-001","ASM-SC-002","ASM-SC-003"],
-  "external_blockers":["W3.5-SDG-001"],
-  "exit_condition":"resolve evidence-backed W3.5-SDG-001 then execute ASM-SC-001 through ASM-SC-003",
-  "gate_effect":{"formal-theorem-target":"satisfied","premise-ledger-and-semantics":"satisfied","faithful-representation-definition":"satisfied","formal-negative-controls":"satisfied","scoped-representation-proof":"not_satisfied","baseline-factorization-resolved":"not_satisfied"},
-  "nonclaims":["Faithful_split proved","W5 assembly proved","S_core representation theorem proved","all invalid representations rejected","FARA-specificity established","universality necessity or minimality proved"],
-  "next_required_artifact":"Evidence-backed W3.5-SDG-001 resolution before W5 theorem assembly"
+  "blocked_obligations":[],
+  "external_blockers":[],
+  "exit_condition":"satisfied_bounded_theorem_assembly_complete",
+  "gate_effect":{"formal-theorem-target":"satisfied","premise-ledger-and-semantics":"satisfied","faithful-representation-definition":"satisfied","formal-negative-controls":"satisfied","scoped-representation-proof":"satisfied","baseline-factorization-resolved":"satisfied"},
+  "nonclaims":["S_core contains all reasoning","FARA-specificity established","S_IRD representation proved","actual-process correspondence proved","universality necessity minimality or uniqueness proved"],
+  "next_required_artifact":"Mechanize the bounded W5 theorem and prepare independent proof review"
 }
