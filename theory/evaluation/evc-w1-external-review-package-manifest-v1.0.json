@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "manifest_id": "EVC-W1-REVIEW-PACKAGE-001",
+  "version": "1.0",
+  "status": "frozen_unreleased",
+  "protocol": "EVC-W1-EXTERNAL-PROOF-REVIEW-001",
+  "release_rule": "The package is released only by immutable Git commit SHA or signed archive digest. The release identifier must be inserted into the reviewer declaration without modifying reviewed artifacts.",
+  "required_artifact_groups": [
+    {
+      "group": "program_and_synthesis",
+      "artifacts": [
+        "theory/evaluation/post-w5-universal-structure-program-v1.0.json",
+        "theory/evaluation/post-w5-usd-terminal-synthesis-v1.0.json",
+        "docs/research/post-w5-usd-terminal-synthesis-v1.0.md",
+        "docs/audits/post-w5-usd-terminal-synthesis-audit.md"
+      ]
+    },
+    {
+      "group": "scope_extensions",
+      "selection_rule": "all USD-W1 scope, fixture, result, proof, and audit artifacts for partial observability, infinite carriers, continuous dynamics, unbounded history, semantic evolution, stochastic reasoning, and actual-process correspondence"
+    },
+    {
+      "group": "comparative_workstreams",
+      "selection_rule": "all USD-W2 through USD-W6 protocol, result, proof, audit, checker, and test artifacts"
+    },
+    {
+      "group": "formal_and_validation_evidence",
+      "selection_rule": "all referenced Lean sources, mechanization reports, canonical validators, regression tests, mutation controls, and CI workflow definitions needed to reproduce registered machine checks"
+    },
+    {
+      "group": "review_instruments",
+      "artifacts": [
+        "theory/evaluation/evc-w1-external-proof-review-protocol-v1.0.json",
+        "docs/research/evc-w1-external-reviewer-guide-v1.0.md",
+        "theory/evaluation/evc-w1-external-review-result-template-v1.0.json"
+      ]
+    }
+  ],
+  "completeness_checks": [
+    "every result identifier resolves to a source artifact",
+    "every claimed proof obligation resolves to proof prose or mechanized evidence",
+    "every fixture and negative control is included",
+    "every cost ledger and equivalence definition is included",
+    "every claim boundary and nonclaim is included",
+    "all validators and tests referenced by the package are present",
+    "the release commit has no uncommitted or generated-only evidence"
+  ],
+  "prohibited_omissions": [
+    "failed or scope-limiting controls",
+    "incomparable candidate results",
+    "unresolved theorem gates",
+    "actual-process limitations",
+    "internal-only independence classification",
+    "reviewer-facing artifacts that disclose a preferred verdict"
+  ],
+  "release_state": {
+    "reviewer_accessed": false,
+    "release_commit": null,
+    "signed_archive_digest": null,
+    "external_review_started": false,
+    "external_review_completed": false
+  },
+  "nonclaims": [
+    "the manifest itself proves package completeness",
+    "an external reviewer has received the package",
+    "external validation is complete"
+  ]
+}
