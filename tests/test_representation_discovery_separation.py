@@ -25,7 +25,6 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
     def test_w35_is_between_w3_and_w5(self): self.assertEqual(self.w35['position'],'after_W3_before_W5'); self.assertTrue(self.w35['w5_authorized']); self.assertEqual(self.w35['status'],'resolved'); self.assertFalse(self.w35['W5_blocked_until_resolved'])
     def test_w4_and_corpus_freeze_do_not_resolve_w35(self):
         by_id={item['id']:item for item in self.ledger['obligations']}; self.assertEqual(by_id['OBS-SC-010']['status'],'obstruction_established'); self.assertEqual(self.w35['status'],'resolved'); self.assertEqual(self.w35['current_results']['reasoning_contrast_corpus'],'frozen'); self.assertEqual(self.w35['current_results']['reasoning_discrimination'],'bounded_role_conjunctive_discrimination_established'); self.assertEqual(self.w35['current_results']['fara_specificity'],'not_unique_at_registered_scope'); self.assertEqual(self.w35['current_results']['candidate_invariants'],'complete'); self.assertEqual(self.w35['current_results']['machinery_and_cost'],'complete'); self.assertEqual(self.w35['current_results']['claim_impact'],'complete_registered_scope_no_universal_promotion'); self.assertEqual(self.w35['current_results']['preserved_failures'],'complete'); self.assertTrue(self.w35['w5_authorized'])
-    # Historical test name retained for validator-assurance continuity.
     def test_w35_registers_only_the_corpus_artifact_as_complete(self):
         self.assertEqual(len(self.w35['required_result_artifacts']),8)
         for a in self.w35['required_result_artifacts']:
@@ -35,9 +34,12 @@ class RepresentationDiscoverySeparationTests(unittest.TestCase):
         self.assertTrue(all(item['structural_commitment_necessity'] in allowed for item in self.candidates['candidates'])); self.assertTrue(all(item['trial_evidence_status']=='complete' for item in self.candidates['candidates'])); self.assertEqual(sum(item['trial_count'] for item in self.candidates['candidates']),648); self.assertEqual(self.candidates['aggregate_result'],'registered_candidate_axes_resolved_at_frozen_internal_scope'); self.assertEqual(self.candidates['status'],'complete_project_authored_internal_execution'); self.assertEqual(self.candidate_result['status'],'complete_project_authored_internal_execution'); self.assertEqual(self.candidate_result['claim_effect']['universal_structure'],'unresolved'); self.assertEqual(self.candidate_result['execution']['preserved_atomic_trials'],648); self.assertFalse(self.candidate_result['claim_effect']['W5_authorized'])
     def test_representation_target_is_rep_track(self): self.assertEqual(self.rep_target['program_track'],'REP'); self.assertIn('universal_structure',self.rep_target['does_not_imply'])
     def test_w5_now_requires_only_w35(self): self.assertEqual(self.rep_target['w5_authorization']['blocked_by'],[]); self.assertIn('W3.5-SDG-001',self.rep_target['w5_authorization']['resolved_dependencies']); self.assertTrue(self.rep_target['w5_authorization']['authorized'])
-    def test_rep_theorems_are_blocked_by_specificity_bridge(self):
+    def test_rep_theorems_advance_without_promoting_usd(self):
         by_id={item['id']:item for item in self.rep_target['theorem_family']}
-        for tid in ('THM-CORE-COMMON-001','THM-CORE-REP-001','THM-IMP-001'): self.assertNotIn('specificity_discovery_bridge',by_id[tid]['blocked_by']); self.assertIn('theorem_assembly',by_id[tid]['blocked_by']); self.assertNotIn('formal_negative_controls',by_id[tid]['blocked_by'])
+        self.assertEqual(by_id['THM-CORE-COMMON-001']['status'],'proved_for_S_core'); self.assertEqual(by_id['THM-CORE-COMMON-001']['blocked_by'],[])
+        self.assertEqual(by_id['THM-CORE-REP-001']['status'],'proved_for_S_core'); self.assertEqual(by_id['THM-CORE-REP-001']['blocked_by'],[])
+        self.assertEqual(by_id['THM-IMP-001']['status'],'refuted_for_S_core_under_frozen_target'); self.assertEqual(by_id['THM-IMP-001']['blocked_by'],[])
+        self.assertEqual({i['id']:i for i in self.claims['claims']}['CLM-UNIVERSAL-STRUCTURE']['current_status'],'unresolved')
     def test_research_gates_separate_framework_corpus_and_results(self):
         by={item['name']:item for item in self.gates['gates']}
         for name in ('generic-baseline-frozen','reasoning-contrast-scope-framework-frozen','reasoning-contrast-corpus-frozen','baseline-factorization-resolved','fara-specificity-resolved','reasoning-contrast-execution','formal-negative-controls'): self.assertEqual(by[name]['status'],'satisfied'); self.assertTrue(by[name]['evidence'])
