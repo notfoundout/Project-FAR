@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "EVC-W2-R3-TECHNICAL-REPLICATION-001",
+  "version": "1.0",
+  "status": "frozen_unexecuted",
+  "parent_program": "POST-USD-EVC-001",
+  "purpose": "Test whether an independently implemented pipeline operated by a separate human or organization reproduces the bounded USD-W2 through USD-W5 classifications and detects registered adversarial mutations.",
+  "evidence_layer": "R3_independent_technical_replication",
+  "distinctions": {
+    "not_external_proof_review": "R3 tests independent reconstruction and execution, not only inspection of supplied proofs.",
+    "not_internal_robustness": "Separate code paths under one agent, author, or organization do not satisfy R3 independence.",
+    "not_R4": "R3 may challenge implementation choices but does not replace adversarial conceptual reconstruction of the theory.",
+    "not_R5": "R3 uses the frozen benchmark and does not establish cross-context generalization."
+  },
+  "replicator_eligibility": {
+    "required": [
+      "a separate human or organization controls the implementation and execution",
+      "no contributor to the original candidate implementations writes replication code",
+      "replicator can read formal specifications and implement deterministic validators",
+      "replicator declares financial, supervisory, institutional, and authorship conflicts",
+      "replicator receives the frozen package only after protocol release"
+    ],
+    "disqualifying": [
+      "shared agent-controlled artifact generation with the original implementation",
+      "copying original executable implementation beyond explicitly permitted schemas and fixtures",
+      "author-supplied patches after first access",
+      "undisclosed use of original generated outputs as implementation guidance",
+      "same organization presenting an internal rewrite as independent replication"
+    ]
+  },
+  "frozen_inputs": [
+    "POST-USD-EVC-001 program registration",
+    "terminal USD synthesis and all source results",
+    "canonical scopes, fixtures, obligation definitions, equivalence rules, and cost ledgers",
+    "machine-readable expected result identifiers but not hidden implementation intermediates",
+    "registered mutation corpus",
+    "replication result schema and reporting guide"
+  ],
+  "prohibited_inputs": [
+    "original generated intermediate representations not registered as public evidence",
+    "private author explanations that resolve implementation ambiguity after access",
+    "expected per-fixture intermediate outputs before the replicator freezes its implementation",
+    "original source code imported as a library or translated mechanically",
+    "future workstream results"
+  ],
+  "implementation_requirements": [
+    "independently parse the frozen machine-readable artifacts",
+    "independently implement commitment-equivalence and cost accounting",
+    "independently reconstruct Pareto and minimal-frontier comparisons",
+    "independently implement invariance and ablation decision rules",
+    "produce deterministic outputs from a clean environment",
+    "record dependency, toolchain, platform, and source provenance",
+    "retain all deviations, ambiguities, failures, and manual interventions"
+  ],
+  "mandatory_replication_targets": [
+    {
+      "id": "R3-T1-W2-FRONTIER",
+      "expected_classification": "multiple_incomparable_successful_vocabularies"
+    },
+    {
+      "id": "R3-T2-W3-INVARIANCE",
+      "expected_classification": "bounded_invariance_supported"
+    },
+    {
+      "id": "R3-T3-W4-ABLATION",
+      "expected_classification": "bounded_local_necessity_supported"
+    },
+    {
+      "id": "R3-T4-W5-MIN-EQUIV",
+      "expected_classification": "multiple_incomparable_minima"
+    },
+    {
+      "id": "R3-T5-TERMINAL-SYNTHESIS",
+      "expected_classification": "bounded_incomparable_kernels_external_validation_pending"
+    }
+  ],
+  "mandatory_mutations": [
+    "collapse FARA and LTS-PROV into one equivalence class",
+    "delete charged helper machinery from one candidate",
+    "convert a bounded invariance result into global invariance",
+    "treat local ablation as global necessity",
+    "promote multiple minima to a unique minimum",
+    "discard a scope-limiting counterexample",
+    "label internal robustness as R3 replication"
+  ],
+  "execution_phases": [
+    "release frozen package and record first access",
+    "replicator records environment and implementation plan before execution",
+    "replicator freezes implementation commit before seeing reference comparison outputs",
+    "run clean-room baseline reconstruction",
+    "run registered mutation campaign",
+    "compare only terminal outputs and registered witness traces",
+    "publish initial result before author response",
+    "preserve original result and append any later amendment"
+  ],
+  "deviation_policy": {
+    "ambiguity": "record and resolve by a preregistered conservative rule or classify the target unresolved",
+    "missing_artifact": "do not obtain an informal substitute; record a package-completeness failure",
+    "manual_intervention": "report the exact intervention and whether it changes independence or determinism",
+    "author_contact": "log all contact; substantive repair after access requires a new package version"
+  },
+  "target_outcomes": [
+    "replicated",
+    "partially_replicated",
+    "not_replicated",
+    "unresolved"
+  ],
+  "decision_rules": {
+    "replicated": "all mandatory targets match, all mandatory mutations are detected, provenance is complete, and no disqualifying dependence occurs",
+    "partially_replicated": "at least one target matches but one or more targets, mutations, or provenance requirements fail without invalidating the entire run",
+    "not_replicated": "a material registered classification differs or a required adversarial mutation is accepted after a valid independent execution",
+    "unresolved": "independence, package completeness, determinism, or interpretive ambiguity prevents a defensible technical verdict"
+  },
+  "claim_effect": {
+    "replicated": "supports R3 technical reproducibility only",
+    "partially_replicated": "limits the reproducible subset and blocks full external validation",
+    "not_replicated": "creates a blocking technical discrepancy requiring adjudication",
+    "unresolved": "leaves R3 unsatisfied"
+  },
+  "nonclaims": [
+    "an R3 replicator has been recruited",
+    "independent replication has occurred",
+    "R3 establishes conceptual validity, cross-context validity, or actual-process correspondence",
+    "matching outputs prove the candidate universe is exhaustive",
+    "this protocol alone satisfies the external-validation gate"
+  ]
+}
