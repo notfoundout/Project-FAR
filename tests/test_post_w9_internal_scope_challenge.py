@@ -19,6 +19,8 @@ class PostW9InternalScopeChallengeTests(unittest.TestCase):
         self.assertEqual(queue['next_action']['workstream'],expected[next_pr])
         if next_pr==270:
             self.assertEqual(queue['ordered_followups'],[271,272,273,274,275])
-        if next_pr>=272:
+        if next_pr==272:
             self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271]); self.assertEqual(queue['ordered_followups'],[273,274,275]); self.assertEqual(queue['next_action']['workstream'],'SC-W3-CONTRACT-LADDER')
+        if next_pr>=273:
+            self.assertEqual([x['target_pr'] for x in queue['completed_workstreams']],[270,271,272]); self.assertEqual(queue['ordered_followups'],[274,275]); self.assertEqual(queue['next_action']['workstream'],'SC-W4-REPRESENTATION-ESCAPE')
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,112 @@
+{
+  "schema_version":"1.0",
+  "result_id":"SC-W3-CONTRACT-LADDER-001",
+  "status":"complete_internal_contract_ladder",
+  "parent_program":"POST-W9-SCOPE-CHALLENGE-001",
+  "target_pr":272,
+  "question":"Which RCCD-equivalent commitments remain necessary as independently stated preservation duties are weakened, replaced, or recombined?",
+  "method":{
+    "unit":"preservation contract",
+    "kernel_rule":"A component is required only when paired systems agreeing on every representation omitting that component differ on a query authorized by the contract.",
+    "no_smuggling_controls":[
+      "Contract clauses are stated as observable or normatively assessable reasoning distinctions, not RCCD primitive names.",
+      "A decoder, oracle, lookup table, canonicalizer, provenance closure, scheduler, or query-specific reconstruction is charged as representation machinery.",
+      "A component is not called necessary when the contract does not ask for the distinction it carries.",
+      "The same system pairs are evaluated across contracts before kernel recomputation.",
+      "No scalar score combines preservation strength with machinery cost."
+    ]
+  },
+  "components":{
+    "R1":"recoverable commitment content",
+    "R2":"constrained admissible evolution",
+    "R3":"dependency-sensitive revision",
+    "R4":"historical identity and supersession",
+    "R5":"uniform bounded recovery"
+  },
+  "contract_ladder":[
+    {
+      "id":"P0-EXTENSIONAL-OUTCOME",
+      "duties":["recover registered input-output outcomes"],
+      "required_rccd":[],
+      "surviving_generic_structure":["distinguishable observations","effective input-output association"],
+      "classification":"generic_only_commonality_at_this_contract"
+    },
+    {
+      "id":"P1-CONTENT-SNAPSHOT",
+      "duties":["recover what is currently accepted, rejected, or undecided","answer the registered finite content queries by one effective procedure"],
+      "required_rccd":["R1","R5"],
+      "classification":"partial_rccd_kernel"
+    },
+    {
+      "id":"P2-CONTENT-ADMISSIBILITY",
+      "duties":["recover current commitment content","distinguish permitted from forbidden next changes","uniformly answer registered finite queries"],
+      "required_rccd":["R1","R2","R5"],
+      "classification":"partial_rccd_kernel"
+    },
+    {
+      "id":"P3-REVISION-RESPONSIVENESS",
+      "duties":["recover current commitment content","preserve permitted change","distinguish revision consequences when supporting considerations are defeated","uniformly answer registered finite queries"],
+      "required_rccd":["R1","R2","R3","R5"],
+      "classification":"partial_rccd_kernel"
+    },
+    {
+      "id":"P4-FULL-REASONING-FAITHFULNESS",
+      "duties":["recover current commitment content","preserve permitted and forbidden change","preserve revision consequences of differing grounds","distinguish supersession histories that alter future admissibility","uniformly answer every registered finite query"],
+      "required_rccd":["R1","R2","R3","R4","R5"],
+      "classification":"full_rccd_kernel"
+    }
+  ],
+  "single_duty_ablations":[
+    {"removed_duty":"content identity","component_no_longer_forced":"R1","remaining_required":["R2","R3","R4","R5"]},
+    {"removed_duty":"admissibility distinction","component_no_longer_forced":"R2","remaining_required":["R1","R3","R4","R5"]},
+    {"removed_duty":"ground-sensitive revision","component_no_longer_forced":"R3","remaining_required":["R1","R2","R4","R5"]},
+    {"removed_duty":"history and supersession identity","component_no_longer_forced":"R4","remaining_required":["R1","R2","R3","R5"]},
+    {"removed_duty":"one uniform effective finite-query procedure","component_no_longer_forced":"R5","remaining_required":["R1","R2","R3","R4"],"warning":"query-by-query existential decoding may still recover each distinction nonuniformly"}
+  ],
+  "alternative_contracts":[
+    {
+      "id":"PA-BEHAVIORAL-PREDICTION",
+      "duties":["predict registered observable trajectories to tolerance"],
+      "required_rccd":[],
+      "result":"behavioral equivalence can collapse semantic, dependency, and historical distinctions"
+    },
+    {
+      "id":"PB-PROVENANCE-WITHOUT-SEMANTICS",
+      "duties":["preserve labeled causal or justificatory ancestry and allowed graph updates without interpreting node content"],
+      "required_rccd":["R2","R3","R4","R5"],
+      "result":"R1 is not forced when content identity is expressly outside scope"
+    },
+    {
+      "id":"PC-SEMANTIC-TRAJECTORY-WITHOUT-GROUNDS",
+      "duties":["preserve content-labeled states, admissible transitions, history, and uniform queries but not grounds"],
+      "required_rccd":["R1","R2","R4","R5"],
+      "result":"R3 is not forced when counterfactual revision by grounds is outside scope"
+    },
+    {
+      "id":"PD-LOCAL-QUERY-FAMILY",
+      "duties":["for each registered query there exists some terminating recovery method"],
+      "required_rccd":["R1","R2","R3","R4"],
+      "result":"R5 is not forced without a uniformity obligation; machinery cost and generalization weaken materially"
+    }
+  ],
+  "neutrality_findings":[
+    "RCCD is not contract-independent: weaker contracts correctly support weaker kernels.",
+    "The full P4 duties are independently intelligible reasoning facts and each has a paired-system separation witness.",
+    "No P4 duty is justified merely by naming an RCCD component; each changes an authorized prediction, revision, admissibility, identity, or recovery judgment.",
+    "Necessity under P4 is therefore contract-relative without being shown construct-loaded by this analysis.",
+    "Across all tested contracts, only generic distinguishability plus some effective association survives universally; that generic residue is too weak to answer the full reasoning-structure question."
+  ],
+  "terminal_result":"rccd_is_contract_relative_but_not_shown_construct_loaded_under_independently_justified_full_contract",
+  "implications":[
+    "The W9 theorem must always name P4 or an extensionally equivalent preservation profile.",
+    "Project FAR cannot infer the five-component kernel from outcome-only or prediction-only notions of faithfulness.",
+    "The final internal adjudication must distinguish universality for rich reasoning faithfulness from generic commonality across all contract strengths."
+  ],
+  "next_decisive_workstream":"SC-W4-REPRESENTATION-ESCAPE",
+  "nonclaims":[
+    "RCCD is necessary under every conceivable preservation contract",
+    "the P4 contract has been externally validated",
+    "generic-only contracts are defective for their own purposes",
+    "the final internal answer has been issued"
+  ]
+}
