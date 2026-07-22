@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "package_id": "SCORE-W5-REVIEW-001",
+  "version": "1.0",
+  "status": "frozen_review_package",
+  "effective_on_merge": true,
+  "evidence_class": "implementation",
+  "replication_layer": "none_review_not_executed",
+  "freeze_base_commit": "dff3d52e9e14e21c72fef379856fa6e7f203077a",
+  "theorem_id": "THM-CORE-REP-001",
+  "theorem_scope": "S_core",
+  "theorem_statement": "forall (P,J) in S_core, exists A in A_FARA, exists W, Faithful_split(P,J,A,W)",
+  "proof_status": "proved_for_S_core",
+  "machine_check_status": "lean_checked_bounded_encoding",
+  "independent_review_status": "not_started",
+  "review_outcomes": ["verified", "verified_with_errata", "not_verified", "inconclusive"],
+  "required_source_artifacts": [
+    {"path": "docs/research/thm-target-001-v1.0.md"},
+    {"path": "theory/evaluation/thm-target-001.json"},
+    {"path": "theory/evaluation/thm-target-001-premise-ledger.json"},
+    {"path": "docs/research/faithful-representation-specification-v1.0.md"},
+    {"path": "theory/evaluation/faithful-representation-specification-v1.0.json"},
+    {"path": "docs/research/p8-theorem-role-decision-v1.0.md"},
+    {"path": "theory/evaluation/p8-theorem-role-decision.json"},
+    {"path": "docs/research/s-core-construction-obstruction-ledger-v1.0.md"},
+    {"path": "theory/evaluation/s-core-construction-obstruction-ledger.json"},
+    {"path": "docs/research/s-core-w5-theorem-assembly-proof-v1.0.md"},
+    {"path": "theory/evaluation/s-core-w5-theorem-assembly-proof.json", "git_blob_sha": "f51409aff1b27ea08e1876ff7f760edc4ec12439"},
+    {"path": "docs/research/s-core-w5-lean-mechanization-v1.0.md"},
+    {"path": "theory/evaluation/s-core-w5-lean-mechanization.json", "git_blob_sha": "7089104b7395d3d8fca024dbf639c8b7547dd707"},
+    {"path": "mechanization/lean/SCoreW5.lean"}
+  ],
+  "review_dimensions": [
+    "scope_and_quantification",
+    "definition_independence_and_non_circularity",
+    "assumption_completeness",
+    "uniform_constructor_totality",
+    "P1_through_P8I_preservation",
+    "history_and_dependency_fidelity",
+    "nontriviality_and_hidden_machinery",
+    "proof_dependency_soundness",
+    "lean_statement_alignment",
+    "countermodel_and_boundary_search",
+    "claim_boundary_compliance"
+  ],
+  "mandatory_adversarial_tests": [
+    "construct_an_in_scope_counterexample",
+    "identify_an_unstated_axiom",
+    "test_source_definition_for_FARA_circularity",
+    "test_uniformity_for_source_specific_decoding",
+    "test_history_or_evidential_status_collapse",
+    "compare_human_proof_with_Lean_statement",
+    "attempt_strictly_simpler_equivalent_target"
+  ],
+  "reviewer_independence_requirements": [
+    "no_authorship_of_W0_through_W5_or_mechanization_artifacts",
+    "no_access_to_unpublished_repair_guidance",
+    "declare_conflicts_and_prior_FAR_involvement",
+    "record_all_material_objections_and_failed_reconstructions"
+  ],
+  "supported_claims": [
+    "a complete review package is frozen",
+    "the bounded theorem and mechanization are independently inspectable"
+  ],
+  "unsupported_claims": [
+    "independent_proof_verification",
+    "independent_replication",
+    "S_IRD_representation",
+    "actual_process_correspondence",
+    "primitive_necessity",
+    "minimality",
+    "uniqueness",
+    "reasoning_specificity",
+    "universal_structure"
+  ],
+  "decision_rule": "RG-15 remains not_satisfied until an eligible independent reviewer submits a complete signed review record and all blocking objections are resolved without retrospective alteration of the frozen package.",
+  "package_document": "docs/review/s-core-w5-independent-proof-review-package-v1.0.md",
+  "review_form": "docs/templates/s-core-w5-independent-proof-review-form-v1.0.md",
+  "package_audit": "docs/audits/s-core-w5-independent-review-package-audit.md"
+}
