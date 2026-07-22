@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "queue_id": "POST-USD-IKD-QUEUE-001",
-  "version": "1.5",
+  "version": "1.6",
   "status": "frozen",
   "parent_program": "POST-USD-IKD-001",
   "registration_pr": 260,
@@ -10,25 +10,25 @@
     {"target_pr": 262, "workstream": "IKD-W2-EXPANDED-COMPETITION", "result": "three_incomparable_successful_architectures_in_frozen_bounded_scope"},
     {"target_pr": 263, "workstream": "IKD-W3-COMMON-FACTOR", "result": "one_bounded_nontrivial_common_factor_candidate_supported"},
     {"target_pr": 264, "workstream": "IKD-W4-CROSS-FEATURE-COMPOSITION", "result": "bounded_cross_feature_compositional_closure_supported_with_explicit_compatibility_conditions"},
-    {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE", "result": "bounded_expanded_representation_invariance_supported"}
+    {"target_pr": 265, "workstream": "IKD-W5-EXPANDED-INVARIANCE", "result": "bounded_expanded_representation_invariance_supported"},
+    {"target_pr": 266, "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION", "result": "no_strictly_cheaper_non_equivalent_reconstruction_found_in_expanded_registered_search"}
   ],
   "next_action": {
-    "target_pr": 266,
-    "workstream": "IKD-W6-GLOBAL-RECONSTRUCTION",
-    "title": "Execute global alternative-basis reconstruction against RCCD",
-    "branch": "research/execute-ikd-w6-global-reconstruction",
+    "target_pr": 267,
+    "workstream": "IKD-W7-LOWER-BOUNDS",
+    "title": "Establish RCCD lower bounds or decisive countermodels",
+    "branch": "research/execute-ikd-w7-lower-bounds",
     "deliverables": [
-      "broader alternative primitive bases",
-      "automated and adversarial reconstruction attempts",
-      "strictly cheaper non-equivalent replacement search",
-      "equivalent-reintroduction detection",
-      "complete helper and synthesis machinery ledger",
-      "preservation failures and surviving countermodels",
-      "terminal global-reconstruction classification"
+      "formal ablation obligations for each RCCD commitment",
+      "paired countermodels indistinguishable after each ablation",
+      "query and operational separation arguments",
+      "equivalent-reintroduction lower bounds",
+      "scope-indexed necessity classifications",
+      "failed lower-bound obligations recorded as unresolved",
+      "terminal lower-bound classification"
     ]
   },
   "ordered_followups": [
-    {"target_pr": 267, "workstream": "IKD-W7-LOWER-BOUNDS"},
     {"target_pr": 268, "workstream": "IKD-W8-MINIMAL-FRONTIER"},
     {"target_pr": 269, "workstream": "IKD-W9-TERMINAL-ADJUDICATION"}
   ],
