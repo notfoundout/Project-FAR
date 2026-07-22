@@ -9,6 +9,7 @@ DOC=ROOT/'docs/research/post-w9-internal-scope-challenge-v1.0.md'
 W2=ROOT/'theory/evaluation/sc-w2-boundary-reasoning-v1.0.json'
 W3=ROOT/'theory/evaluation/sc-w3-contract-ladder-v1.0.json'
 W4=ROOT/'theory/evaluation/sc-w4-representation-escape-v1.0.json'
+W5=ROOT/'theory/evaluation/sc-w5-held-out-contexts-v1.0.json'
 def load(path:Path)->dict:return json.loads(path.read_text(encoding='utf-8'))
 def main()->int:
     for path in (PROGRAM,QUEUE,DOC): assert path.is_file(),path
@@ -44,7 +45,7 @@ def main()->int:
         assert contract['next_decisive_workstream']=='SC-W4-REPRESENTATION-ESCAPE'
         assert [x['target_pr'] for x in queue['completed_workstreams']]==[270,271,272]
         assert queue['ordered_followups']==[274,275]
-    if next_pr>=274:
+    if next_pr==274:
         assert W2.is_file(); boundary=load(W2)
         assert boundary['status']=='complete_internal_boundary_adjudication'
         assert boundary['terminal_result']=='no_boundary_case_yet_requires_new_kernel_primitive_but_evidential_boundary_must_remain_open'
@@ -57,6 +58,15 @@ def main()->int:
         assert escape['next_decisive_workstream']=='SC-W5-HELD-OUT-CONTEXTS'
         assert [x['target_pr'] for x in queue['completed_workstreams']]==[270,271,272,273]
         assert queue['ordered_followups']==[275]
+    if next_pr==275:
+        assert W2.is_file() and W3.is_file() and W4.is_file() and W5.is_file()
+        held=load(W5)
+        assert held['status']=='complete_internal_held_out_context_adjudication'
+        assert held['terminal_result']=='held_out_contexts_add_no_genuine_kernel_primitive_and_produce_no_faithful_rccd_counterexample_with_two_evidential_unknowns'
+        assert held['next_decisive_workstream']=='SC-W6-FINAL-INTERNAL-ADJUDICATION'
+        assert held['counts']=={'total':12,'pass_no_new_primitive':10,'unresolved_evidential_boundary':2,'genuine_primitive_extension':0,'faithful_rccd_failure':0}
+        assert [x['target_pr'] for x in queue['completed_workstreams']]==[270,271,272,273,274]
+        assert queue['ordered_followups']==[]
     text=DOC.read_text(encoding='utf-8')
     assert 'External hold' in text
     assert 'construct-loaded' in text
