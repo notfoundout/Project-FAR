@@ -1,0 +1,18 @@
+from __future__ import annotations
+import json,subprocess,sys,unittest
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
+PROGRAM=ROOT/'theory/evaluation/post-w9-internal-scope-challenge-v1.0.json'
+QUEUE=ROOT/'theory/evaluation/post-w9-internal-scope-challenge-queue-v1.0.json'
+class PostW9InternalScopeChallengeTests(unittest.TestCase):
+    def load(self,path:Path)->dict:return json.loads(path.read_text(encoding='utf-8'))
+    def test_validator_passes(self):
+        cp=subprocess.run([sys.executable,str(ROOT/'tools/check_post_w9_internal_scope_challenge.py')],cwd=ROOT,text=True,capture_output=True)
+        self.assertEqual(cp.returncode,0,cp.stdout+cp.stderr); self.assertIn('PASS',cp.stdout)
+    def test_program_forces_terminal_outcome(self):
+        data=self.load(PROGRAM); self.assertEqual(len(data['workstreams']),6); self.assertIn('multiple_incomparable_kernels',data['terminal_outcomes']); self.assertIn('generic_only_commonality',data['terminal_outcomes']); self.assertIn('current_theorem_scope_construct_loaded',data['terminal_outcomes'])
+    def test_external_work_is_deferred(self):
+        data=self.load(PROGRAM); self.assertEqual(data['external_disposition'],'deferred_until_final_internal_adjudication'); self.assertIn('No external review or replication is authorized by this program.',data['frozen_principles'])
+    def test_queue_begins_with_scope_neutrality(self):
+        queue=self.load(QUEUE); self.assertEqual(queue['next_action']['target_pr'],270); self.assertEqual(queue['next_action']['workstream'],'SC-W1-SCOPE-NEUTRALITY'); self.assertEqual(queue['ordered_followups'],[271,272,273,274,275])
+if __name__=='__main__':unittest.main()
