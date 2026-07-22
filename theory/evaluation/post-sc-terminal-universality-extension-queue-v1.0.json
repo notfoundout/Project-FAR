@@ -1,33 +1,27 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "queue_id": "POST-SC-TUE-QUEUE-001",
   "parent_program": "POST-SC-TUE-001",
   "status": "frozen",
   "completed_workstreams": [
-    {
-      "target_pr": 276,
-      "workstream": "TUE-W0-REGISTRATION",
-      "result": "terminal_universality_extension_program_registered"
-    },
-    {
-      "target_pr": 277,
-      "workstream": "TUE-W1-UNKNOWN-BOUNDARY",
-      "result": "instrumentation_resolves_creative_generation_within_rccd_while_tacit_and_inaccessible_cases_define_a_principled_evidential_boundary_without_kernel_extension"
-    }
+    {"target_pr":276,"workstream":"TUE-W0-REGISTRATION","result":"terminal_universality_extension_program_registered"},
+    {"target_pr":277,"workstream":"TUE-W1-UNKNOWN-BOUNDARY","result":"instrumentation_resolves_creative_generation_within_rccd_while_tacit_and_inaccessible_cases_define_a_principled_evidential_boundary_without_kernel_extension"},
+    {"target_pr":278,"workstream":"TUE-W2-DEFEATING-CONDITION-CAMPAIGN","result":"no_defeating_condition_established"}
   ],
   "next_action": {
-    "target_pr": 278,
-    "workstream": "TUE-W2-DEFEATING-CONDITION-CAMPAIGN",
-    "title": "Attack all five SC-W6 defeating conditions",
-    "branch": "research/execute-tue-w2-defeating-condition-campaign"
+    "target_pr": 279,
+    "workstream": "TUE-W3-DEEPER-KERNEL",
+    "title": "Test RCCD irreducibility and deeper-kernel derivation",
+    "branch": "research/execute-tue-w3-deeper-kernel"
   },
-  "ordered_followups": [279, 280],
+  "ordered_followups": [280],
   "blocked_actions": [
     "external proof review before PR 280",
     "independent replication before PR 280",
     "insert additional supportive workstreams",
     "treat Unknown as evidence for RCCD",
     "convert principled inaccessibility into RCCD support",
+    "claim exhaustive defeat of every possible counterexample",
     "claim unrestricted universality",
     "claim actual-process correspondence"
   ]
