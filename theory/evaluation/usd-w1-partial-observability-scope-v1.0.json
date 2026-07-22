@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "USD-W1-PO-SCOPE-001",
+  "version": "1.0",
+  "status": "frozen_executed",
+  "parent_program": "POST-W5-USD-001",
+  "workstream": "USD-W1-SCOPE-EXT",
+  "feature_family": "partial_observability",
+  "source_class": "S_po_fin",
+  "candidate_independent_admission": true,
+  "requirements": [
+    "finite_nonempty_latent_state_set",
+    "finite_nonempty_observation_set",
+    "explicit_total_observation_relation_or_finite_support_kernel",
+    "explicit_initial_information_state",
+    "finite_action_or_transition_interface",
+    "policy_depends_only_on_observation_history",
+    "explicit_commitments_grounds_dependencies_and_revision_history",
+    "declared_source_interpretation"
+  ],
+  "observation_boundary": {
+    "agent_access": "observation_history_and_derived_information_state_only",
+    "analyst_access": "full_frozen_source_contract_for_proof_checking",
+    "prohibited": [
+      "policy_access_to_true_latent_state",
+      "target_decoder_with_source_specific_oracle",
+      "metadata_smuggling_of_true_state_into_observed_commitment",
+      "evaluator_repair"
+    ]
+  },
+  "preservation_obligations": [
+    "latent_state_distinction",
+    "observation_indistinguishability",
+    "information_state_or_belief_support",
+    "observation_history",
+    "policy_measurability",
+    "admissible_transition_and_observation_update",
+    "commitment_and_ground",
+    "dependency_and_revision_history",
+    "internal_evidential_status"
+  ],
+  "excluded_cases": [
+    "infinite_latent_or_observation_carriers",
+    "continuous_observation_spaces",
+    "non_finite_support_observation_kernels",
+    "open_ended_unbounded_histories",
+    "semantic_change",
+    "actual_process_correspondence"
+  ],
+  "terminal_outcomes": [
+    "extension_proved",
+    "proper_subclass_only",
+    "countermodel",
+    "new_assumption_required",
+    "unresolved"
+  ],
+  "counterexample_policy": "Any admitted source requiring prohibited true-state access, hidden interpretation, or loss of observation-equivalence is preserved as a countermodel."
+}

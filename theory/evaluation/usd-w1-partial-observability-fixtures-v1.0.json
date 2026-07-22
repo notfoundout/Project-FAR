@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "USD-W1-PO-FIXTURES-001",
+  "scope": "S_po_fin",
+  "fixtures": [
+    {
+      "id": "PO-DET-001",
+      "kind": "deterministic_observation_aliasing",
+      "latent_states": ["safe", "unsafe"],
+      "observations": ["green"],
+      "observation_relation": {"safe": ["green"], "unsafe": ["green"]},
+      "expected": "represented_without_latent_state_leakage"
+    },
+    {
+      "id": "PO-STOCH-001",
+      "kind": "finite_support_noisy_observation",
+      "latent_states": ["low", "high"],
+      "observations": ["l", "h"],
+      "observation_kernel": {"low": {"l": "3/4", "h": "1/4"}, "high": {"l": "1/4", "h": "3/4"}},
+      "expected": "represented_with_belief_support_update"
+    },
+    {
+      "id": "PO-HIST-001",
+      "kind": "history_dependent_information_state",
+      "latent_states": ["a", "b", "c"],
+      "observations": ["x", "y"],
+      "expected": "distinct_observation_histories_preserved_even_when_current_observation_matches"
+    },
+    {
+      "id": "PO-NEG-LEAK-001",
+      "kind": "negative_control_true_state_policy",
+      "violation": "policy_selects_action_from_unobserved_true_state",
+      "expected": "rejected_as_out_of_scope_or_unfaithful"
+    },
+    {
+      "id": "PO-NEG-COLLAPSE-001",
+      "kind": "negative_control_information_collapse",
+      "violation": "target_merges_distinct_information_states_with_different_admissible_actions",
+      "expected": "rejected_as_unfaithful"
+    }
+  ]
+}
