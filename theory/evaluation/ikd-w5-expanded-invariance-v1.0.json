@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "result_id": "IKD-W5-EXPANDED-INVARIANCE-001",
+  "status": "complete_bounded_expanded_invariance_analysis",
+  "parent_program": "POST-USD-IKD-001",
+  "parent_composition": "IKD-W4-CROSS-FEATURE-COMP-001",
+  "target_pr": 265,
+  "kernel_under_test": "RCCD-001",
+  "scope": "RCCD realizations on the frozen bounded candidate and cross-feature composition scope; transformations must be commitment-equivalent and effectively recoverable.",
+  "invariance_contract": {
+    "bidirectional_commitment_recovery_required": true,
+    "operational_consequences_preserved": true,
+    "dependency_and_ground_structure_preserved": true,
+    "revision_and_historical_identity_preserved": true,
+    "bounded_query_interface_preserved": true,
+    "probability_and_observation_queries_preserved_to_certified_precision": true,
+    "all_encoders_decoders_adapters_canonicalizers_and_proof_objects_charged": true,
+    "unrestricted_interpreters_prohibited": true,
+    "future_information_oracles_prohibited": true
+  },
+  "executed_transformations": [
+    {"id":"INV-ESI","name":"event_state_interchange","result":"pass","obligation":"events reified as states and states factored as event boundaries preserve commitments, admissibility, dependencies, supersession, and recovery"},
+    {"id":"INV-SD","name":"semantic_dualization","result":"pass","obligation":"intensional rules and extensional admissible-transition sets are bidirectionally recoverable without collapsing semantic versions"},
+    {"id":"INV-CAUSAL","name":"causal_intervention_encoding","result":"pass","obligation":"grounds and dependencies mapped to structural assignments and interventions preserve counterfactual distinctions and revision provenance"},
+    {"id":"INV-PROOF","name":"proof_object_encoding","result":"pass","obligation":"accepted evolutions represented by proof objects preserve premises, discharge conditions, rejected alternatives, and supersession"},
+    {"id":"INV-TYPE","name":"type_theoretic_encoding","result":"pass","obligation":"commitments and admissibility represented by indexed types preserve semantic versions, dependency indices, and historical identity"},
+    {"id":"INV-PROC","name":"process_algebra_encoding","result":"pass","obligation":"parallel composition, synchronization, hiding, and labeled actions preserve observable commitments and do not hide charged schedulers"},
+    {"id":"INV-COALG","name":"coalgebraic_encoding","result":"pass","obligation":"behavioral observations and evolution maps preserve finite-query recovery, dependencies, and non-equivalent hidden-state distinctions"},
+    {"id":"INV-HIST","name":"history_event_sourcing_encoding","result":"pass","obligation":"snapshot and append-only event-sourced forms are bidirectionally recoverable without retroactive rewriting"},
+    {"id":"INV-PROB","name":"probability_representation_change","result":"pass","obligation":"kernel, sampler-with-certificate, and cylinder-measure forms preserve bounded expectations, conditioning, and certified tails"},
+    {"id":"INV-OBS","name":"partial_observation_factorization","result":"pass","obligation":"hidden-state, belief-state, and observation-history forms preserve declared epistemic limits and do not promote observational equivalence to identity"},
+    {"id":"INV-TIME","name":"continuous_discrete_time_normalization","result":"pass","obligation":"hybrid flow/jump, timed-transition, and sampled-trace forms preserve guards, clocks, interpolation obligations, and semantic events"},
+    {"id":"INV-CHUNK","name":"history_rechunking_and_state_factorization","result":"pass","obligation":"chunk boundaries and factorization choices preserve all registered recovery queries and cost ledgers"}
+  ],
+  "rejected_non_equivalences": [
+    "dependency_erasure",
+    "retroactive_revision_rewrite",
+    "semantic_version_merging",
+    "hidden_state_collapse_without_commitment_equivalence",
+    "observation_equivalence_promoted_to_process_identity",
+    "nonmeasurable_probability_reencoding",
+    "scheduler_hiding",
+    "proof_irrelevance_used_to_erase_distinct_grounds",
+    "future_history_access",
+    "unrestricted_interpreter_or_source_specific_decoder"
+  ],
+  "machinery_ledger": [
+    "event-state boundary maps",
+    "semantic dualization bridges",
+    "causal intervention adapters",
+    "proof constructors and eliminators",
+    "type indices and transport proofs",
+    "process synchronization and scheduler declarations",
+    "coalgebraic observation maps",
+    "snapshot-event canonicalizers",
+    "probability tail and conditioning certificates",
+    "belief-state filters",
+    "hybrid time interpolation witnesses"
+  ],
+  "terminal_result": "bounded_expanded_representation_invariance_supported",
+  "claim_effect": {
+    "rccd_invariance_under_registered_transformations": "supported",
+    "presentation_artifact_explanation_of_rccd": "disfavored_on_frozen_scope",
+    "all_possible_representation_changes": "not_supported",
+    "global_necessity": "unresolved",
+    "global_minimality": "unresolved",
+    "unique_or_universal_kernel": "unresolved"
+  },
+  "next_decisive_workstream": "IKD-W6-GLOBAL-RECONSTRUCTION",
+  "nonclaims": [
+    "RCCD is invariant under every conceivable encoding",
+    "all listed transformations are cost-free",
+    "behavioral equivalence implies internal identity",
+    "RCCD is globally necessary, minimal, unique, or universal",
+    "actual-process correspondence",
+    "external validation"
+  ]
+}
