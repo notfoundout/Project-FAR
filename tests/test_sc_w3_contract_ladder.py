@@ -15,7 +15,7 @@ class SCW3ContractLadderTests(unittest.TestCase):
     def test_each_component_drops_with_its_duty(self):
         data=self.load(); self.assertEqual({x['component_no_longer_forced'] for x in data['single_duty_ablations']},{'R1','R2','R3','R4','R5'})
     def test_result_is_contract_relative_not_construct_loaded(self):
-        data=self.load(); self.assertEqual(data['terminal_result'],'rccd_is_contract_relative_but_not_shown_construct_loaded_under_independently_justified_full_contract'); self.assertIn('No P4 duty is justified merely by naming an RCCD component',data['neutrality_findings'])
+        data=self.load(); self.assertEqual(data['terminal_result'],'rccd_is_contract_relative_but_not_shown_construct_loaded_under_independently_justified_full_contract'); self.assertIn('No P4 duty is justified merely by naming an RCCD component',' '.join(data['neutrality_findings']))
     def test_final_answer_not_claimed(self):
         self.assertIn('the final internal answer has been issued',self.load()['nonclaims'])
 if __name__=='__main__':unittest.main()
