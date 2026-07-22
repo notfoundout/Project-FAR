@@ -107,8 +107,8 @@ def main()->int:
  assert gates['premise-ledger-and-semantics']['status']=='satisfied'
  assert gates['faithful-representation-definition']['status']=='satisfied'
  assert gates['formal-negative-controls']['status']=='satisfied'
- assert gates['scoped-representation-proof']['status']=='satisfied'
- assert gates['scoped-representation-proof']['evidence']==['docs/research/s-core-w5-theorem-assembly-proof-v1.0.md','theory/evaluation/s-core-w5-theorem-assembly-proof.json']
+ assert gates['scoped-representation-proof']['status']=='not_satisfied'
+ assert gates['scoped-representation-proof']['evidence']==[]
  assert gates['reasoning-contrast-scope-framework-frozen']['status']=='satisfied'
  assert gates['reasoning-contrast-corpus-frozen']['status']=='satisfied' and gates['reasoning-contrast-corpus-frozen']['evidence']
  assert gates['baseline-factorization-resolved']['status']=='satisfied' and gates['baseline-factorization-resolved']['evidence']
