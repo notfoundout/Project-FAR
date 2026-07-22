@@ -24,7 +24,7 @@ def main()->int:
     assert data['next_decisive_workstream']=='SC-W4-REPRESENTATION-ESCAPE'
     findings=' '.join(data['neutrality_findings'])
     assert 'not contract-independent' in findings
-    assert 'not shown construct-loaded' in findings
+    assert 'without being shown construct-loaded' in findings
     assert 'RCCD is necessary under every conceivable preservation contract' in data['nonclaims']
     text=DOC.read_text(encoding='utf-8'); audit=AUDIT.read_text(encoding='utf-8')
     assert 'Generic residue' in text
