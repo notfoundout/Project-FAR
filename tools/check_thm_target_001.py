@@ -74,9 +74,10 @@ def main()->int:
  assert w['claim_effect']['bounded_faithful_representation']=='proved'
  assert w['claim_effect']['S_IRD_representation']=='unresolved'
  assert w['claim_effect']['actual_process_correspondence']=='unresolved'
- assert w['claim_effect']['primitive_necessity']=='unresolved'
- assert w['claim_effect']['minimality']=='unresolved'
- assert w['claim_effect']['uniqueness']=='unresolved'
+ assert w['claim_effect']['primitive_necessity']=='not_established'
+ assert w['claim_effect']['minimality']=='not_established'
+ assert w['claim_effect']['uniqueness']=='not_established'
+ assert w['claim_effect']['reasoning_specificity']=='not_established'
  assert w['claim_effect']['universal_structure']=='unresolved'
  corpus=load(CORPUS)
  assert corpus['status']=='complete'
