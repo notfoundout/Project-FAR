@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "result_id": "USD-W1-CD-RESULT-001",
+  "version": "1.1",
+  "status": "complete_bounded_extension_proved",
+  "revision_note": "Pre-merge adversarial correction narrows admitted event systems to those carrying computable completeness certificates.",
+  "parent_program": "POST-W5-USD-001",
+  "scope_contract": "USD-W1-CD-SCOPE-001",
+  "source_class": "S_cd_lip_eff",
+  "target_class": "A_FARA",
+  "new_target_primitive": false,
+  "construction": {
+    "continuous_state": "represented by an effectively named state object together with certified rational enclosures",
+    "flow": "represented by one uniform refinement procedure yielding coherent trajectory enclosures for requested rational times and tolerances",
+    "time": "represented as an ordered real parameter through effective rational names rather than a fixed finite grid",
+    "events": "guard crossings and declared resets are represented only when accompanied by a finite event enumerator or certified crossing brackets and effective completeness data",
+    "reasoning_history": "commitments, grounds, dependencies, revisions, and evidential annotations remain distinct and time-indexed",
+    "recovery": "one uniform recovery interface reconstructs every finite requested observation and event certificate without source-specific decoding or undeclared missed-event search"
+  },
+  "proved_obligations": [
+    "CD-EXT-001_total_uniform_constructor",
+    "CD-EXT-002_flow_semantics_preserved",
+    "CD-EXT-003_time_and_order_preserved",
+    "CD-EXT-004_guard_and_reset_semantics_preserved",
+    "CD-EXT-005_commitment_ground_dependency_preserved",
+    "CD-EXT-006_history_and_revision_preserved",
+    "CD-EXT-007_error_refinement_coherent",
+    "CD-EXT-008_no_discretization_collapse",
+    "CD-EXT-009_registered_negative_controls_rejected"
+  ],
+  "fixture_results": {
+    "CD-LIN-001": "pass",
+    "CD-NLIN-001": "pass",
+    "CD-HYB-001": "pass",
+    "CD-NEG-GRID-001": "rejected",
+    "CD-NEG-ORACLE-001": "rejected",
+    "CD-BOUND-UNCERT-EVENT-001": "excluded",
+    "CD-BOUND-NONUNIQ-001": "excluded",
+    "CD-BOUND-ZENO-001": "excluded"
+  },
+  "terminal_outcome": "proper_subclass_only",
+  "reason": "The construction proves faithful representation for a frozen effectively presented finite-dimensional Lipschitz continuous-dynamics subclass with computably certified finite event recovery. It does not cover uncertified isolated crossings, nonunique, Zeno, infinite-dimensional, noncomputable, or unrestricted continuous systems.",
+  "theorem_effect": {
+    "THM-IRD-EXT-001": "partial_progress_third_feature_subclass_resolved",
+    "THM-US-EXIST-001": "unresolved",
+    "THM-US-INV-001": "unresolved",
+    "THM-US-NEC-001": "unresolved",
+    "THM-US-MIN-001": "unresolved"
+  },
+  "claim_effect": {
+    "effective_lipschitz_continuous_dynamics_representation": "proved_for_certificate_bounded_S_cd_lip_eff",
+    "all_continuous_dynamics_representation": "unresolved",
+    "S_IRD_representation": "unresolved",
+    "universal_structure": "unresolved",
+    "primitive_necessity": "not_established",
+    "minimality": "not_established",
+    "uniqueness": "not_established",
+    "actual_process_correspondence": "unresolved"
+  },
+  "machine_check_status": "not_mechanized",
+  "independent_review_status": "not_started",
+  "nonclaims": [
+    "all continuous reasoning systems are represented",
+    "isolated guard crossings are computably recoverable without declared completeness evidence",
+    "finite numerical approximation is exact trajectory identity",
+    "all differential equations admit unique computable solutions",
+    "continuous dynamics establishes a universal kernel",
+    "FARA is necessary minimal or unique",
+    "the model corresponds to an actual physical process",
+    "independent verification has occurred"
+  ]
+}

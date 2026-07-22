@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "USD-W1-CD-FIXTURES-001",
+  "version": "1.1",
+  "scope_contract": "USD-W1-CD-SCOPE-001",
+  "fixtures": [
+    {
+      "id": "CD-LIN-001",
+      "kind": "positive",
+      "description": "One-dimensional rational linear flow with a threshold-triggered commitment update and a certified unique crossing bracket.",
+      "expected": "pass"
+    },
+    {
+      "id": "CD-NLIN-001",
+      "kind": "positive",
+      "description": "Two-dimensional computable globally Lipschitz nonlinear flow with certified interval refinement and no guards.",
+      "expected": "pass"
+    },
+    {
+      "id": "CD-HYB-001",
+      "kind": "positive",
+      "description": "Piecewise-rational control and a declared finite event enumerator for isolated guard crossings, resets, and revision history.",
+      "expected": "pass"
+    },
+    {
+      "id": "CD-NEG-GRID-001",
+      "kind": "negative",
+      "description": "A fixed finite time grid is asserted to be the exact continuous trajectory and misses an intervening guard crossing.",
+      "expected": "rejected"
+    },
+    {
+      "id": "CD-NEG-ORACLE-001",
+      "kind": "negative",
+      "description": "The representation invokes undeclared exact-real equality, missed-event search, and future-trajectory oracles.",
+      "expected": "rejected"
+    },
+    {
+      "id": "CD-BOUND-UNCERT-EVENT-001",
+      "kind": "scope_boundary",
+      "description": "A guard is known abstractly to have isolated crossings but supplies no computable finite enumerator, certified brackets, or effective separation data.",
+      "expected": "excluded"
+    },
+    {
+      "id": "CD-BOUND-NONUNIQ-001",
+      "kind": "scope_boundary",
+      "description": "A non-Lipschitz initial-value problem with multiple solutions and no frozen selection rule.",
+      "expected": "excluded"
+    },
+    {
+      "id": "CD-BOUND-ZENO-001",
+      "kind": "scope_boundary",
+      "description": "A hybrid system with infinitely many events in finite time.",
+      "expected": "excluded"
+    }
+  ],
+  "mutation_targets": [
+    "remove_lipschitz_requirement",
+    "remove_event_completeness_certificate_requirement",
+    "accept_fixed_grid_as_exact",
+    "permit_future_trajectory_oracle",
+    "permit_undeclared_missed_event_search",
+    "drop_guard_crossing_preservation",
+    "promote_terminal_outcome_to_extension_proved",
+    "promote_universal_structure_claim"
+  ]
+}
