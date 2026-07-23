@@ -1,0 +1,52 @@
+{
+  "schema_version": "g1-semantic-kernel/1.0",
+  "obligation": "G1",
+  "status": "implemented_pending_validation",
+  "trusted_kernel": "Lean 4 pinned by lean-toolchain",
+  "entrypoint": "mechanization/lean/UPPSemanticKernel.lean",
+  "terminal_theorem": "FAR.UPPSemanticKernel.g1_end_to_end_relative_semantic_theorem",
+  "constructor": "FAR.UPPSemanticKernel.constructSourceSemanticResult",
+  "preservation_dimensions": [
+    "structural",
+    "semantic",
+    "operational",
+    "dependency",
+    "informational",
+    "historical",
+    "queryTotality",
+    "failureUnknown"
+  ],
+  "rccd_component_fields": [
+    "recoverableCommitment",
+    "constrainedEvolution",
+    "dependencyStructure",
+    "semanticInterpretation",
+    "historicalTrace"
+  ],
+  "composed_obligations": [
+    "independent_target_class_membership",
+    "admissible_representation",
+    "machinery_closure",
+    "eight_dimension_preservation",
+    "bidirectional_round_trip",
+    "commitment_equivalence",
+    "five_component_recoverability",
+    "component_independence",
+    "nontriviality",
+    "relative_maximality"
+  ],
+  "claims": {
+    "single_kernel_semantic_composition": true,
+    "relative_operational_semantic_theorem": true,
+    "open_world_maximality": false,
+    "metaphysical_universality": false,
+    "inaccessible_reasoning_resolved": false,
+    "finite_testing_implies_universality": false
+  },
+  "remaining_obligations": ["G2", "G3"],
+  "validation": {
+    "lean_compile": "lean mechanization/lean/UPPSemanticKernel.lean",
+    "alignment_test": "python -m unittest tests.test_upp_semantic_kernel_alignment",
+    "forbidden_constructs": ["axiom", "sorry", "admit", "unsafe"]
+  }
+}
