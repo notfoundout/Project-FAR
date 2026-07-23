@@ -1,0 +1,15 @@
+{
+  "schema_version":"1.0",
+  "program_id":"POST-TERM-EVAL-001",
+  "workstream":"PTE-W1-INDEPENDENT-REVIEW",
+  "status":"protocol_frozen_external_execution_pending",
+  "object":"UPP-W15-v1.0 strictly weakened relative RCCD theorem",
+  "required_claims":["target_class_and_scope","faithfulness_contract","machinery_closure","commitment_equivalence","five_component_necessity","component_independence","relative_sufficiency","relative_maximality","terminal_weakened_outcome","mechanization_boundary","open_world_boundary","unknown_discipline"],
+  "reviewer_eligibility":["formal-methods competence","no project authorship","conflicts disclosed","tools disclosed","independent organization","prior artifact exposure disclosed"],
+  "verdicts":["admissible","inadmissible","blocked","confirmed","defect"],
+  "impact_rules":{"confirmed":"upgrade independent-proof-review evidence only","defect":"revise, narrow, or retract according to materiality","blocked":"Unknown; no support or defeat","inadmissible":"exclude from evidential aggregation but preserve record"},
+  "anti_self_validation":true,
+  "internal_agent_execution_counts_as_independent_review":false,
+  "next_action":{"workstream":"PTE-W1-EXTERNAL-REVIEW-EXECUTION"},
+  "ordered_followups":["PTE-W2-KERNEL-RECONSTRUCTION","PTE-W3-COUNTERMODEL-SEARCH","PTE-W4-EMPIRICAL-REPLICATION"]
+}
