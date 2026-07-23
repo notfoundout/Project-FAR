@@ -1,0 +1,38 @@
+name: FAR OIDC and OTLP
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-oidc-otlp.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  oidc-otlp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: python -m pip install ./commercial/far-decision-integrity
+      - name: Run OIDC and OTLP tests
+        run: python -m unittest commercial/far-decision-integrity/tests/test_oidc_otlp.py
+      - name: Run full package tests
+        run: python -m unittest discover -s commercial/far-decision-integrity/tests -p "test_*.py"
+      - name: Validate installed deployment options
+        run: |
+          far-secured-service --help | grep -- "--identity-config"
+          far-secured-service --help | grep -- "--otlp-endpoint"
+      - name: Stage evidence
+        run: |
+          mkdir -p far-evidence/oidc-otlp
+          printf '%s\n' '{"schema_version":"far-oidc-jwks/0.1","tests":"passed","otlp":"validated"}' > far-evidence/oidc-otlp/result.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: far-oidc-otlp-evidence
+          path: far-evidence/oidc-otlp

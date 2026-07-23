@@ -1,0 +1,9 @@
+{
+  "issuer": "https://identity.example.com",
+  "audience": "far-api",
+  "tenant_claim": "tenant_id",
+  "scopes_claim": "scope",
+  "subject_claim": "sub",
+  "max_lifetime_seconds": 3600,
+  "clock_skew_seconds": 30
+}
