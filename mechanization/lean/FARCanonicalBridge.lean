@@ -2,13 +2,11 @@ import Std
 
 namespace FAR.CanonicalUniversality.Bridge
 
-/-- What the already-proved G1-G3 stack directly supports. -/
 structure DirectlySupported where
   relativeSemanticComposition : Prop
   openWorldStructuralLowerBound : Prop
   epistemicMaximalityBoundary : Prop
 
-/-- Canonical-strengthening bridges not derivable from G1-G3 alone. -/
 structure RemainingBridges where
   uniqueFactorizationForFAR : Prop
   representationInvariantRecovery : Prop
@@ -23,50 +21,45 @@ inductive BridgeVerdict where
   | blocked
   deriving Repr, DecidableEq
 
-def adjudicate (direct : DirectlySupported) (remaining : RemainingBridges) : BridgeVerdict :=
-  if direct.relativeSemanticComposition ∧
-     direct.openWorldStructuralLowerBound ∧
-     direct.epistemicMaximalityBoundary then
-    if remaining.uniqueFactorizationForFAR ∧
-       remaining.representationInvariantRecovery ∧
-       remaining.quotientSeparationForFAR ∧
-       remaining.allReasoningInvariantsDefinable ∧
-       remaining.everyAdmissibleExtensionConservative ∧
-       remaining.warrantedScopeEmbedsIntoFAR then
-      .full
-    else
-      .partial
-  else
-    .blocked
+def DirectlySupported.all (d : DirectlySupported) : Prop :=
+  d.relativeSemanticComposition ∧
+  d.openWorldStructuralLowerBound ∧
+  d.epistemicMaximalityBoundary
 
-/-- Existing G1-G3 evidence warrants partial strengthening, not full canonicality. -/
+def RemainingBridges.all (r : RemainingBridges) : Prop :=
+  r.uniqueFactorizationForFAR ∧
+  r.representationInvariantRecovery ∧
+  r.quotientSeparationForFAR ∧
+  r.allReasoningInvariantsDefinable ∧
+  r.everyAdmissibleExtensionConservative ∧
+  r.warrantedScopeEmbedsIntoFAR
+
+noncomputable def adjudicate
+    (direct : DirectlySupported) (remaining : RemainingBridges) : BridgeVerdict := by
+  classical
+  exact if direct.all then
+    if remaining.all then .full else .partial
+  else .blocked
+
 theorem g1_g2_g3_only_adjudicates_partial
     (direct : DirectlySupported)
-    (hDirect : direct.relativeSemanticComposition ∧
-      direct.openWorldStructuralLowerBound ∧
-      direct.epistemicMaximalityBoundary)
+    (hDirect : direct.all)
     (remaining : RemainingBridges)
-    (hMissing : ¬ (remaining.uniqueFactorizationForFAR ∧
-      remaining.representationInvariantRecovery ∧
-      remaining.quotientSeparationForFAR ∧
-      remaining.allReasoningInvariantsDefinable ∧
-      remaining.everyAdmissibleExtensionConservative ∧
-      remaining.warrantedScopeEmbedsIntoFAR)) :
+    (hMissing : ¬ remaining.all) :
     adjudicate direct remaining = .partial := by
+  classical
   simp [adjudicate, hDirect, hMissing]
 
-/-- Full canonical universality requires all six FAR-specific bridge witnesses. -/
 theorem full_requires_every_far_bridge
     (direct : DirectlySupported)
     (remaining : RemainingBridges)
     (hFull : adjudicate direct remaining = .full) :
-    remaining.uniqueFactorizationForFAR ∧
-    remaining.representationInvariantRecovery ∧
-    remaining.quotientSeparationForFAR ∧
-    remaining.allReasoningInvariantsDefinable ∧
-    remaining.everyAdmissibleExtensionConservative ∧
-    remaining.warrantedScopeEmbedsIntoFAR := by
-  unfold adjudicate at hFull
-  split at hFull <;> simp_all
+    remaining.all := by
+  classical
+  by_contra hMissing
+  have hNotFull : adjudicate direct remaining ≠ .full := by
+    unfold adjudicate
+    split <;> simp_all
+  exact hNotFull hFull
 
 end FAR.CanonicalUniversality.Bridge
