@@ -11,9 +11,10 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from far_release_assurance.cli import main
+from far_release_assurance.cli import GATE_EXIT_CODES, main
 from far_release_assurance.compare import compare_releases
 from far_release_assurance.io import write_package
+from far_release_assurance.model import Decision
 from far_release_assurance.reference_agent import (
     AgentConfiguration,
     baseline_configuration,
@@ -100,6 +101,63 @@ class TestReleaseReports(unittest.TestCase):
             )
             payload = json.loads((output_directory / "report.json").read_text(encoding="utf-8"))
             self.assertEqual(payload["decision"], "blocked")
+
+    def test_gate_exit_codes_are_stable_and_distinct(self):
+        self.assertEqual(
+            GATE_EXIT_CODES,
+            {
+                Decision.PASS: 0,
+                Decision.REVIEW_REQUIRED: 20,
+                Decision.BLOCKED: 30,
+                Decision.UNKNOWN: 40,
+            },
+        )
+
+    def test_cli_gate_writes_bundle_before_blocking(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            baseline_path = root / "baseline.json"
+            candidate_path = root / "candidate.json"
+            output_directory = root / "gate"
+            write_package(self.baseline, baseline_path)
+            write_package(self.candidate, candidate_path)
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                code = main(
+                    [
+                        "gate",
+                        "--baseline",
+                        str(baseline_path),
+                        "--candidate",
+                        str(candidate_path),
+                        "--output-directory",
+                        str(output_directory),
+                    ]
+                )
+            self.assertEqual(code, 30)
+            self.assertIn("GATE candidate-report blocked", stdout.getvalue())
+            self.assertTrue((output_directory / "manifest.json").is_file())
+
+    def test_cli_gate_passes_identical_release(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            baseline_path = root / "baseline.json"
+            output_directory = root / "gate"
+            write_package(self.baseline, baseline_path)
+            code = main(
+                [
+                    "gate",
+                    "--baseline",
+                    str(baseline_path),
+                    "--candidate",
+                    str(baseline_path),
+                    "--output-directory",
+                    str(output_directory),
+                ]
+            )
+            self.assertEqual(code, 0)
+            payload = json.loads((output_directory / "report.json").read_text(encoding="utf-8"))
+            self.assertEqual(payload["decision"], "pass")
 
     def test_pass_report_has_no_findings(self):
         summary = compare_releases(self.baseline, self.baseline)
