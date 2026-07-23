@@ -1,0 +1,65 @@
+name: FAR Persistent Evidence Store
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-evidence-store.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  store:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: python -m pip install ./commercial/far-decision-integrity
+      - name: Run store tests
+        run: python -m unittest discover -s commercial/far-decision-integrity/tests -p "test_store.py"
+      - name: Exercise installed store
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p far-evidence/store/source
+          printf '%s\n' '{"decision_id":"ci-store"}' > far-evidence/store/source/decision-package.json
+          printf '%s\n' '{"disposition":"allow"}' > far-evidence/store/source/authorization.json
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path("far-evidence/store/source")
+          files = {
+              name: hashlib.sha256((root / name).read_bytes()).hexdigest()
+              for name in ("decision-package.json", "authorization.json")
+          }
+          manifest = {
+              "schema_version": "far-authorization-evidence/0.2",
+              "evidence_id": "ci-store-evidence",
+              "decision_id": "ci-store",
+              "input_type": "decision_package",
+              "disposition": "allow",
+              "files": files,
+          }
+          (root / "manifest.json").write_text(
+              json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+          common=(--database far-evidence/store/evidence.db --blob-root far-evidence/store/blobs)
+          far-evidence-store "${common[@]}" put far-evidence/store/source --retention-days 30
+          far-evidence-store "${common[@]}" get ci-store-evidence
+          far-evidence-store "${common[@]}" list-decision ci-store
+          far-evidence-store "${common[@]}" verify ci-store-evidence
+      - name: Upload persistent store evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-persistent-evidence-store
+          path: far-evidence/store
