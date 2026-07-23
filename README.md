@@ -5,76 +5,52 @@
 
 Project FAR is a foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
 
-This root README is the canonical command center for repository status, health, evidence, planning, and navigation.
+## Central result
 
-## Central Research Program
+The registered Universal Proof Program `POST-TUE-UPP-001` is complete. Its terminal adjudication is:
 
-Project FAR's primary objective is to determine whether every reasoning process necessarily instantiates a common underlying structure and, if so, whether that structure is universal and minimal.
+`strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary`
 
-The project does not assume that a universal structure exists or that FAR is that structure.
+The proved result is relative and operational. For systems and representations satisfying the independently frozen target-class, admissibility, faithfulness, machinery-closure, and commitment-equivalence premises, the registered construction recovers an RCCD-equivalent package preserving structural, semantic, operational, dependency, informational, historical, registered-query, and failure/Unknown commitments.
 
-**[Read the Central Research Program](docs/governance/central-research-program.md)**
+The result is deliberately weaker than unrestricted universality because:
 
-## Current Research State
+- maximality is established only under frozen extension rules and a finite registered challenge ledger;
+- the end-to-end semantic theorem is compositionally and executably checked, but not represented as one kernel-checked proof object;
+- no metaphysical, open-world, uniqueness, consciousness, or final-ontology claim is licensed.
 
-The project separates three tracks:
+Public evaluation is authorized only when the exact theorem, premises, mechanization status, open-world boundary, Unknown discipline, and nonclaims are disclosed together.
 
-- **REP:** finite representation capacity and fidelity;
-- **ADJ:** generic-baseline factorization, FARA-specificity, contrast, ablation, reconstruction, and cost;
-- **USD:** representation-independent universal-structure discovery.
+- [Terminal theorem disclosure](docs/research/upp-w15-terminal-theorem-v1.0.md)
+- [Terminal theorem audit](docs/audits/upp-w15-terminal-theorem-audit.md)
+- [Post-terminal public-evaluation program](docs/governance/post-terminal-public-evaluation-program-v1.0.md)
+- [Central research program](docs/governance/central-research-program.md)
 
-`SCORE-W0-PROOF-001` through `SCORE-W4-PROOF-001` are project-authored bounded REP packages. W3 establishes all 24 finite construction lemmas, target-only recovery, semantic agreement, coherence, machinery accounting, uniformity, composition, and witness assembly. W4 establishes that every applicable registered NC-01 through NC-10 family violates at least one frozen faithful-representation clause for its registered reason.
+## Research tracks
 
-These results do not establish complete `Faithful_split`, rejection of every invalid representation, a representation theorem, universal structure, necessity, or minimality.
+Project FAR retains three distinct evidence tracks:
 
-`RCS-CORPUS-001` freezes 8 positive, 8 contrast, and 2 disputed candidate-independent formal instances with declared candidate-registry exposure. Bounded GREL-FARA factorization establishes equivalent expressiveness, bidirectional translation, stricter FARA constraints, no factorization-level reasoning-specificity result, and a cost tradeoff. A project-authored seven-criterion discriminator classifies all 8 positives as reasoning-like, all 8 contrasts as nonreasoning-like, and preserves both disputed cases as borderline. Because the same criterion inputs exist in the candidate-neutral source and survive exact GREL recovery, unique FARA discriminative capacity is refuted at this registered scope. Candidate ablation and reconstruction now preserve all 648 required candidate × case × representation trials. The mechanically derived registered-scope result supports structural-commitment necessity for 7 candidates and refutes it for 5, while preserving primitive necessity, explicit representation, reasoning specificity, and architecture invariance as separate axes. This project-authored internal execution is not independent replication and does not establish universal necessity, nonexistence, minimality, or uniqueness. `W3.5-SDG-001` remains the sole live blocker before W5 because cross-package machinery/cost, claim-impact, and preserved-failure closure remain incomplete.
+- **REP:** bounded representation capacity and fidelity;
+- **ADJ:** baseline factorization, specificity, ablation, reconstruction, and cost;
+- **USD/UPP:** architecture-neutral universal-structure discovery and the completed relative RCCD theorem program.
 
-Run `make research-check` to validate the frozen REP program, representation-discovery separation, W3.5 gates, corpus freeze, factorization, registered discrimination, qualified specificity result, complete registered-scope candidate execution, universal target, and conservative claim boundaries.
+Earlier REP and ADJ artifacts remain bounded evidence. They are not retroactively promoted into the terminal theorem and remain governed by their original assumptions and nonclaims.
 
-<!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
+## Current phase
 
-## Repository Status
+The deductive queue is closed. The repository is now in **post-terminal evaluation and replication**.
 
-- Current project phase: W3.5 machinery/cost, claim-impact, and preserved-failure closure
-- Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
-- W5 status: blocked by incomplete `W3.5-SDG-001`
+Current priorities:
 
-## Track Status
+1. expose the exact weakened theorem to independent criticism and countermodel search;
+2. obtain independent proof review and, where possible, kernel-checked reconstruction of the complete semantic composition;
+3. execute independent empirical replication tracks without treating them as deductive proof;
+4. register every counterexample, failed reconstruction, ambiguity, and scope challenge as immutable evidence;
+5. revise or retract claims when registered evidence defeats a premise or construction.
 
-| Track | Status | Current boundary |
-|---|---|---|
-| REP | W0-W4 complete | Bounded construction and registered controls; theorem unproved |
-| ADJ | Corpus, factorization, discrimination, specificity, and candidate execution complete | 8 positive, 8 contrast, 2 disputed; 648/648 candidate trials preserved |
-| USD | Target frozen | Registered-scope candidate axes resolved; universal structure unresolved |
-| W5 | Blocked | Requires complete evidence-backed `W3.5-SDG-001` |
+The next phase does not add a fictitious `UPP-W16`. Any new deductive claim requires a new registered program with independently frozen scope, assumptions, outcomes, and stopping rules.
 
-## Registered ADJ Results
-
-- Factorization interpretation: `fara_constrained_equivalent`.
-- Reasoning discrimination: 8/8 positives reasoning-like; 8/8 contrasts nonreasoning-like; 2/2 disputed borderline.
-- FARA-specificity classification: `fara_role_directness_without_unique_discriminative_capacity`.
-- Candidate result: `registered_candidate_axes_resolved_at_frozen_internal_scope`.
-- Structural necessity: unresolved 0; supported 7; refuted 5; partial 0.
-- Candidate evidence: complete project-authored internal execution; not independent replication.
-
-## Top Priority Tasks
-
-### STRATEGIC-004: Complete W3.5 closure
-
-- Complete cross-package machinery/cost, claim-impact, and preserved-failure artifacts without promoting registered-scope results to universal claims.
-
-### STRATEGIC-005: Assemble W5
-
-- Remains blocked until every required W3.5 artifact is complete and the gate is evidence-backed resolved.
-
-## Current Roadmap
-
-- REP: W0-W4 complete at bounded `S_core` scope.
-- ADJ: close machinery/cost, claim-impact, and preserved-failure evidence.
-- USD: universal structure remains unresolved.
-- W5: blocked until W3.5 resolves with immutable evidence.
-
-## Command Center
+## Repository commands
 
 ```bash
 make research-check
@@ -83,23 +59,8 @@ make health
 make docs-check
 make plan
 make dashboard
+python tools/check_post_terminal_public_evaluation.py
 ```
-
-<!-- END GENERATED PROJECT FAR DASHBOARD -->
-
-## Certification and Architecture Navigation
-
-- Repository certification governance: [docs/governance/repository-certification-standard.md](docs/governance/repository-certification-standard.md).
-- Repository certification inventory baseline: [docs/audits/repository-certification-inventory-audit.md](docs/audits/repository-certification-inventory-audit.md).
-- Semantic certification and terminology baseline: [docs/audits/semantic-certification-report.md](docs/audits/semantic-certification-report.md).
-- Canonical vocabulary index: [docs/glossary/canonical-vocabulary-index.md](docs/glossary/canonical-vocabulary-index.md).
-- Repository architecture certification and report-root policy: [docs/audits/repository-architecture-certification-report.md](docs/audits/repository-architecture-certification-report.md).
-- Repository Certification Index: [docs/certification/README.md](docs/certification/README.md).
-- Repository Domain Registry: [docs/architecture/repository-domain-registry.md](docs/architecture/repository-domain-registry.md).
-- Documentation standardization report: [docs/audits/documentation-standardization-report.md](docs/audits/documentation-standardization-report.md).
-- Repository compliance enforcement report: [docs/audits/repository-compliance-enforcement-report.md](docs/audits/repository-compliance-enforcement-report.md).
-- Independent repository certification audit: [docs/audits/independent-repository-certification-audit.md](docs/audits/independent-repository-certification-audit.md).
-- Repository certification status: [docs/certification/repository-certification-status.md](docs/certification/repository-certification-status.md).
 
 ## Mechanization MVP
 
@@ -115,4 +76,4 @@ far graph examples/mechanization/minimal-investigation.json
 python -m mechanization.far_mechanization.conformance
 ```
 
-The MVP intentionally defers proof verification, automated reasoning, operation execution, REST APIs, persistent storage, web interfaces, plugin systems, production hardening, and independent external implementation.
+The MVP does not by itself verify the terminal theorem or establish application correspondence.
