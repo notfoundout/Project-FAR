@@ -48,6 +48,10 @@ def main() -> int:
         fail("terminal identity mismatch")
     if specification.get("terminal_result") != EXPECTED or result.get("terminal_result") != EXPECTED:
         fail("terminal result mismatch")
+    if specification.get("queue_closed") is not True or result.get("queue_closed") is not True:
+        fail("terminal artifacts do not record queue closure")
+    if result.get("release_gate_adjudicated") is not True:
+        fail("result does not record release-gate adjudication")
     adjudication = model.adjudicate(model.canonical_evidence())
     if adjudication.outcome is not model.Outcome.WEAKENED or adjudication.verdict is not model.Verdict.PROVED:
         fail("canonical adjudication is not the registered weakened proof outcome")
