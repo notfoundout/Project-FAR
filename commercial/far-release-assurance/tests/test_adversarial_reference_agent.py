@@ -42,13 +42,22 @@ class TestReferenceAgent(unittest.TestCase):
         self.assertEqual(decisions["benchmark-leakage"], Decision.BLOCKED)
         self.assertEqual(decisions["same-output-different-integrity"], Decision.UNKNOWN)
 
+    def test_expected_closure_outcomes(self):
+        closures = {result.scenario_id: result.comparison.candidate_closure.status for result in run_all_scenarios()}
+        self.assertEqual(closures["unauthorized-dependency"], ClosureStatus.OPEN)
+        self.assertEqual(closures["hidden-memory"], ClosureStatus.OPEN)
+        self.assertEqual(closures["benchmark-leakage"], ClosureStatus.OPEN)
+        self.assertEqual(closures["same-output-different-integrity"], ClosureStatus.UNKNOWN)
+        self.assertEqual(closures["stale-policy"], ClosureStatus.CLOSED)
+        self.assertEqual(closures["invalidated-support"], ClosureStatus.CLOSED)
+        self.assertEqual(closures["identity-drift"], ClosureStatus.CLOSED)
+
     def test_each_scenario_has_actionable_evidence(self):
         for result in run_all_scenarios():
             with self.subTest(result.scenario_id):
                 self.assertTrue(result.comparison.findings)
                 self.assertTrue(all(finding.rationale for finding in result.comparison.findings))
                 self.assertTrue(all(finding.affected_ids for finding in result.comparison.findings))
-                self.assertNotEqual(result.comparison.candidate_closure.status, ClosureStatus.CLOSED if result.scenario_id in {"unauthorized-dependency", "hidden-memory", "same-output-different-integrity"} else ClosureStatus.OPEN)
 
     def test_scenario_order_and_results_are_stable(self):
         first = run_all_scenarios()
