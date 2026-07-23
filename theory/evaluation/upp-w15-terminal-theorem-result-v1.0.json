@@ -13,6 +13,7 @@
   "mechanization_status":{"executable_terminal_adjudicator":true,"deterministic_artifact_checker":true,"adversarial_regression_suite":true,"single_kernel_checked_full_semantic_theorem":false},
   "proved_scope":"frozen relative operational theorem over C*, E*, P*, machinery closure, commitment equivalence, the five registered components, bidirectional sufficiency reconstruction, registered irreducibility evidence, and frozen-extension maximality",
   "nonclaims":["unrestricted metaphysical universality","open-world maximality","unique or final ontology","proof from finite testing","kernel-checked full semantic terminal theorem"],
+  "queue_closed":true,
   "public_evaluation_authorized":true,
   "public_evaluation_condition":"The exact weakened theorem, premises, mechanization status, open-world boundary, Unknown discipline, and nonclaims must accompany every evaluation-facing claim.",
   "terminal_result":"strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary",
