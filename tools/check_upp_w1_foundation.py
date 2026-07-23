@@ -16,6 +16,11 @@ REQUIRED_SORTS = {
     "Dependency", "HistoryEvent", "ReasoningFact", "Observation",
     "RecoveryWitness", "ReasoningSystem",
 }
+REQUIRED_PRIMITIVES = {
+    "identifier", "time_index", "commitment", "state", "transition",
+    "dependency", "history_event", "reasoning_fact", "observation",
+    "recovery_witness", "reasoning_system",
+}
 REQUIRED_SEPARATIONS = {
     "object identity is distinct from content equality",
     "state is distinct from observation of state",
@@ -73,7 +78,7 @@ def main() -> int:
         fail("anti-inflation controls are incomplete")
     if set(foundation.get("assumption_kinds", [])) != {x.value for x in module.AssumptionKind}:
         fail("assumption kinds disagree with executable model")
-    if module.FOUNDATION_PRIMITIVES != frozenset(x.lower() for x in REQUIRED_SORTS):
+    if module.FOUNDATION_PRIMITIVES != frozenset(REQUIRED_PRIMITIVES):
         fail("executable primitive set disagrees with specification")
     if result.get("status") != "complete" or result.get("unknowns_promoted") is not False:
         fail("result status or Unknown discipline invalid")
