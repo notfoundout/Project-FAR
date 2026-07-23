@@ -8,7 +8,7 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from far_decision_integrity.evidence_store import EvidenceStore, EvidenceStoreError
+from far_decision_integrity.store import EvidenceStore, EvidenceStoreError
 from far_decision_integrity.model import SCHEMA_VERSION
 from far_decision_integrity.secured_service import SecuredRuntime
 from far_decision_integrity.security import Principal, SecurityError, TenantSecurityStore
@@ -59,23 +59,16 @@ class TestSecuredService(unittest.TestCase):
     def test_authorization_uses_tenant_policy_and_persists_evidence(self):
         with tempfile.TemporaryDirectory() as directory:
             runtime, principal, _ = self.runtime(directory)
-            result = runtime.authorize(
-                principal,
-                {"policy_id": "refund", "input_type": "decision_package", "payload": package_payload()},
-            )
+            result = runtime.authorize(principal, {"policy_id": "refund", "input_type": "decision_package", "payload": package_payload()})
             self.assertEqual(result["tenant_id"], "tenant-a")
             self.assertEqual(result["policy"]["version"], "2026-07")
             self.assertTrue(result["evidence_id"].startswith("tenant-a-"))
-            record = runtime.evidence_record(principal, result["evidence_id"])
-            self.assertTrue(record["verification"]["valid"])
+            self.assertTrue(runtime.evidence_record(principal, result["evidence_id"])["verification"]["valid"])
 
     def test_cross_tenant_evidence_access_is_denied(self):
         with tempfile.TemporaryDirectory() as directory:
             runtime, tenant_a, tenant_b = self.runtime(directory)
-            result = runtime.authorize(
-                tenant_a,
-                {"policy_id": "refund", "input_type": "decision_package", "payload": package_payload()},
-            )
+            result = runtime.authorize(tenant_a, {"policy_id": "refund", "input_type": "decision_package", "payload": package_payload()})
             with self.assertRaises(EvidenceStoreError):
                 runtime.evidence_record(tenant_b, result["evidence_id"])
 
@@ -88,12 +81,8 @@ class TestSecuredService(unittest.TestCase):
     def test_missing_authorize_scope_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             runtime, _, _ = self.runtime(directory)
-            principal = Principal("tenant-a", "readonly", ("policy:read",))
             with self.assertRaises(SecurityError):
-                runtime.authorize(
-                    principal,
-                    {"policy_id": "refund", "input_type": "decision_package", "payload": package_payload()},
-                )
+                runtime.authorize(Principal("tenant-a", "readonly", ("policy:read",)), {"policy_id": "refund", "input_type": "decision_package", "payload": package_payload()})
 
     def test_invalid_bearer_header_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -104,15 +93,7 @@ class TestSecuredService(unittest.TestCase):
     def test_explicit_policy_version_is_supported(self):
         with tempfile.TemporaryDirectory() as directory:
             runtime, principal, _ = self.runtime(directory)
-            result = runtime.authorize(
-                principal,
-                {
-                    "policy_id": "refund",
-                    "policy_version": "2026-07",
-                    "input_type": "decision_package",
-                    "payload": package_payload(),
-                },
-            )
+            result = runtime.authorize(principal, {"policy_id": "refund", "policy_version": "2026-07", "input_type": "decision_package", "payload": package_payload()})
             self.assertEqual(result["policy"]["sha256"], runtime.policy(principal, "refund", "2026-07")["sha256"])
 
 
