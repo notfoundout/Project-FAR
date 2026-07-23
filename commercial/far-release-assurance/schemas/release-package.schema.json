@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.example/schemas/release-package-0.1.json",
+  "title": "FAR Release Assurance Release Package 0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "release_id", "source_commit", "machinery", "events", "decision_roots", "release_roots"],
+  "properties": {
+    "schema_version": {"const": "far-release-package/0.1"},
+    "release_id": {"type": "string", "minLength": 1},
+    "source_commit": {"type": "string", "minLength": 1},
+    "machinery": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/machinery"}
+    },
+    "events": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/event"}
+    },
+    "decision_roots": {"$ref": "#/$defs/stringArray"},
+    "release_roots": {"$ref": "#/$defs/stringArray"},
+    "replay_completeness": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "output_metrics": {
+      "type": "object",
+      "additionalProperties": {"type": "number"}
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "evidenceStatus": {
+      "enum": ["confirmed", "inferred", "disclosed_unverified", "missing", "contradictory", "ineffective", "invalid", "unknown"]
+    },
+    "machinery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["machinery_id", "kind", "name", "evidence_status", "declared", "effective", "valid"],
+      "properties": {
+        "machinery_id": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "minLength": 1},
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": ["string", "null"]},
+        "digest": {"type": ["string", "null"]},
+        "required_dependencies": {"$ref": "#/$defs/stringArray"},
+        "evidence_status": {"$ref": "#/$defs/evidenceStatus"},
+        "declared": {"type": "boolean"},
+        "effective": {"type": ["boolean", "null"]},
+        "valid": {"type": ["boolean", "null"]},
+        "mutable": {"type": "boolean"},
+        "external": {"type": "boolean"},
+        "attributes": {"type": "object"}
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "run_id", "release_id", "sequence", "event_type", "subject_id", "status"],
+      "properties": {
+        "event_id": {"type": "string", "minLength": 1},
+        "run_id": {"type": "string", "minLength": 1},
+        "release_id": {"type": "string", "minLength": 1},
+        "sequence": {"type": "integer", "minimum": 0},
+        "event_type": {"type": "string", "minLength": 1},
+        "subject_id": {"type": "string", "minLength": 1},
+        "object_ids": {"$ref": "#/$defs/stringArray"},
+        "evidence_refs": {"$ref": "#/$defs/stringArray"},
+        "dependency_refs": {"$ref": "#/$defs/stringArray"},
+        "machinery_refs": {"$ref": "#/$defs/stringArray"},
+        "identity_context": {"type": "object", "additionalProperties": {"type": "string"}},
+        "status": {"$ref": "#/$defs/evidenceStatus"},
+        "source_ref": {"type": ["string", "null"]},
+        "attributes": {"type": "object"}
+      }
+    }
+  }
+}
