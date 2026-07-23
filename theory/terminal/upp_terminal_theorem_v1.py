@@ -71,8 +71,6 @@ def adjudicate(e: TerminalEvidence) -> Adjudication:
         return Adjudication(Verdict.UNKNOWN, Outcome.BLOCKED, (f"missing_workstreams:{sorted(missing)}",), False)
     if e.refuted_properties:
         return Adjudication(Verdict.REFUTED, Outcome.DEFEATED, tuple(sorted(e.refuted_properties)), False)
-    if e.open_world_maximality_claimed or e.unrestricted_metaphysical_claimed:
-        return Adjudication(Verdict.REFUTED, Outcome.DEFEATED, ("claim_exceeds_registered_scope",), False)
     if not all((e.theorem_scope_frozen, e.definitions_non_circular, e.hidden_machinery_charged, e.unknown_preserved)):
         return Adjudication(Verdict.UNKNOWN, Outcome.BLOCKED, ("proof_standard_not_satisfied",), False)
     unresolved = set(e.unresolved_properties)
@@ -81,6 +79,8 @@ def adjudicate(e: TerminalEvidence) -> Adjudication:
         unresolved.update(absent)
     if unresolved:
         return Adjudication(Verdict.UNKNOWN, Outcome.BLOCKED, tuple(sorted(unresolved)), False)
+    if e.open_world_maximality_claimed or e.unrestricted_metaphysical_claimed:
+        return Adjudication(Verdict.REFUTED, Outcome.DEFEATED, ("claim_exceeds_registered_scope",), False)
     if e.central_semantic_theorem_kernel_checked:
         return Adjudication(Verdict.PROVED, Outcome.FULL, ("all_registered_properties_and_kernel_checked_terminal_theorem",), True)
     if e.executable_composition_verified:
@@ -95,8 +95,6 @@ def adjudicate(e: TerminalEvidence) -> Adjudication:
 
 def canonical_evidence() -> TerminalEvidence:
     established = set(REQUIRED_PROPERTIES)
-    established.remove("mechanized_terminal_theorem")
-    established.add("mechanized_terminal_theorem")
     return TerminalEvidence(
         completed_workstreams=frozenset(REQUIRED_WORKSTREAMS),
         established_properties=frozenset(established),
