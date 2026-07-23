@@ -1,0 +1,65 @@
+name: FAR Instrumentation SDK
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-instrumentation-sdk.yml"
+  push:
+    branches:
+      - "commercial/**"
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-instrumentation-sdk.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  instrumentation-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install FAR decision integrity
+        run: python -m pip install --disable-pip-version-check ./commercial/far-decision-integrity
+      - name: Run full package tests
+        run: python -m unittest discover -s commercial/far-decision-integrity/tests -p "test_*.py" -v
+      - name: Verify instrumentation to ingestion to adjudication
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from far_decision_integrity.adjudicate import adjudicate
+          from far_decision_integrity.instrumentation import DecisionSession
+          from far_decision_integrity.trace_ingest import ingest_trace, package_payload
+
+          ids = iter(["root-span", "payment-span", "policy-span", "decision-span"])
+          sdk = DecisionSession(
+              "ci-refund", "issue_refund", "refund-policy/2026-07", "approve",
+              {"kind": "financial_action", "amount": 100},
+              trace_id="ci-trace", span_id_factory=lambda: next(ids),
+          )
+          sdk.record_evidence("payment", "Payment confirmed.", supports="approve", authorization_required=True)
+          sdk.record_rule("policy", "Policy authorizes refund.", supports="approve", relation="authorizes", authorization_required=True)
+          sdk.record_conclusion("approve", "Approve refund.")
+          trace = sdk.finish(claim_complete=True)
+          package = ingest_trace(trace)
+          result = adjudicate(package)
+          assert result.status.value == "justified"
+          output = Path("far-evidence/instrumentation-sdk")
+          output.mkdir(parents=True, exist_ok=True)
+          (output / "trace.json").write_text(json.dumps(trace, indent=2, sort_keys=True) + "\n")
+          (output / "decision-package.json").write_text(json.dumps(package_payload(package), indent=2, sort_keys=True) + "\n")
+          (output / "adjudication.json").write_text(json.dumps({"status": result.status.value}, indent=2, sort_keys=True) + "\n")
+          PY
+      - name: Upload round-trip evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-instrumentation-sdk-evidence
+          path: far-evidence/instrumentation-sdk
+          if-no-files-found: error
+          retention-days: 7
