@@ -32,6 +32,20 @@ jobs:
         run: lean mechanization/lean/G2OpenWorldLowerBound.lean
       - name: Compile G3 epistemic maximality theorem
         run: lean mechanization/lean/G3EpistemicMaximality.lean
+      - name: Compile canonicality
+        run: lean mechanization/lean/Canonicality.lean
+      - name: Compile representation invariance
+        run: lean mechanization/lean/RepresentationInvariance.lean
+      - name: Compile quotient minimality
+        run: lean mechanization/lean/QuotientMinimality.lean
+      - name: Compile definitional completeness
+        run: lean mechanization/lean/DefinitionalCompleteness.lean
+      - name: Compile conservative extensibility
+        run: lean mechanization/lean/ConservativeExtensibility.lean
+      - name: Compile maximal knowability
+        run: lean mechanization/lean/MaximalKnowability.lean
+      - name: Compile canonical universality terminal theorem
+        run: lean mechanization/lean/CanonicalUniversalityTerminal.lean
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
@@ -63,3 +77,5 @@ jobs:
         run: python -m unittest tests.test_g2_open_world_lower_bound_alignment
       - name: Check G3 epistemic maximality alignment
         run: python -m unittest tests.test_g3_epistemic_maximality_alignment
+      - name: Check canonical universality alignment
+        run: python -m unittest tests.test_canonical_universality_alignment
