@@ -1,4 +1,9 @@
 from .adjudicate import Adjudication, Finding, adjudicate
+from .authorization import (
+    AuthorizationResult,
+    authorize_refund,
+    load_refund_request,
+)
 from .authorize import AuthorizationDecision, RuntimeDisposition, authorize
 from .io import load_package
 from .model import (
@@ -16,6 +21,7 @@ __all__ = [
     "SCHEMA_VERSION",
     "Adjudication",
     "AuthorizationDecision",
+    "AuthorizationResult",
     "DecisionNode",
     "DecisionPackage",
     "Dependency",
@@ -27,8 +33,10 @@ __all__ = [
     "RuntimeDisposition",
     "adjudicate",
     "authorize",
+    "authorize_refund",
     "build_refund_package",
     "load_package",
+    "load_refund_request",
     "report_payload",
     "write_report",
 ]
