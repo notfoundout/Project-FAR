@@ -46,6 +46,8 @@ jobs:
         run: lean mechanization/lean/MaximalKnowability.lean
       - name: Compile canonical universality terminal theorem
         run: lean mechanization/lean/CanonicalUniversalityTerminal.lean
+      - name: Compile FAR canonical bridge adjudication
+        run: lean mechanization/lean/FARCanonicalBridge.lean
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
@@ -79,3 +81,5 @@ jobs:
         run: python -m unittest tests.test_g3_epistemic_maximality_alignment
       - name: Check canonical universality alignment
         run: python -m unittest tests.test_canonical_universality_alignment
+      - name: Check FAR canonical bridge alignment
+        run: python -m unittest tests.test_far_canonical_bridge_alignment

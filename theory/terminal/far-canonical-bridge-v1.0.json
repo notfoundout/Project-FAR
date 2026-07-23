@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "claim": "far_canonical_universality_bridge",
+  "directly_supported_by": ["G1", "G2", "G3"],
+  "direct_results": [
+    "relative_semantic_composition",
+    "open_world_structural_lower_bound",
+    "epistemic_maximality_boundary"
+  ],
+  "remaining_far_specific_bridges": [
+    "unique_factorization_for_far",
+    "representation_invariant_recovery",
+    "quotient_separation_for_far",
+    "all_reasoning_invariants_definable",
+    "every_admissible_extension_conservative",
+    "warranted_scope_embeds_into_far"
+  ],
+  "decision_rule": {
+    "full": "all direct results and all six FAR-specific bridges are proved",
+    "partial": "all direct results are proved but at least one FAR-specific bridge is unproved",
+    "blocked": "at least one direct G1-G3 result is absent"
+  },
+  "current_adjudication": "partial",
+  "nonclaims": [
+    "abstract theorem instantiation alone proves FAR canonicality",
+    "G1-G3 entail definitional completeness",
+    "G1-G3 entail quotient minimality",
+    "unrestricted metaphysical universality"
+  ]
+}
