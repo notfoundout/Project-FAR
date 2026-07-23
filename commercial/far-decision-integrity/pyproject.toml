@@ -4,9 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "far-decision-integrity"
-version = "0.1.0"
-description = "Machine-checkable decision package contracts for Project FAR"
+version = "0.2.0"
+description = "Machine-checkable decision integrity for Project FAR"
 requires-python = ">=3.11"
+
+[project.scripts]
+far-decision = "far_decision_integrity.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
