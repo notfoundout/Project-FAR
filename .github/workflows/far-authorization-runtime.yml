@@ -31,6 +31,7 @@ jobs:
       - name: Verify installed evidence-first authorization
         shell: bash
         run: |
+          mkdir -p far-evidence/authorization
           cat > "$RUNNER_TEMP/refund.json" <<'JSON'
           {
             "request_id": "ci-refund-1",
@@ -44,18 +45,18 @@ jobs:
           }
           JSON
           set +e
-          far-decision authorize-refund "$RUNNER_TEMP/refund.json" --output-directory "$RUNNER_TEMP/evidence"
+          far-decision authorize-refund "$RUNNER_TEMP/refund.json" --output-directory far-evidence/authorization
           status=$?
           set -e
           test "$status" -eq 30
-          test -f "$RUNNER_TEMP/evidence/decision-package.json"
-          test -f "$RUNNER_TEMP/evidence/authorization.json"
-          test -f "$RUNNER_TEMP/evidence/manifest.json"
+          test -f far-evidence/authorization/decision-package.json
+          test -f far-evidence/authorization/authorization.json
+          test -f far-evidence/authorization/manifest.json
       - name: Upload authorization evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: far-authorization-runtime-evidence
-          path: ${{ runner.temp }}/evidence
+          path: far-evidence
           if-no-files-found: error
           retention-days: 7
