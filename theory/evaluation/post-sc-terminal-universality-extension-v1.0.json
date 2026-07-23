@@ -1,40 +1,48 @@
 {
-  "schema_version":"1.1",
-  "program_id":"POST-SC-TUE-001",
-  "status":"complete",
-  "registration_pr":276,
-  "terminal_pr":280,
-  "parent_adjudication":"SC-W6-FINAL-INTERNAL-ADJUDICATION-001",
-  "purpose":"Resolve the remaining evidential and structural limits on Project FAR's final internal answer through one preregistered terminal extension program, then stop internal discovery at PR 280.",
-  "starting_result":"rccd_necessary_kernel_for_natural_class",
-  "workstreams":[
-    {"sequence":1,"target_pr":277,"id":"TUE-W1-UNKNOWN-BOUNDARY","terminal_outcomes":["unknowns_resolved_within_rccd","genuine_extension_required","principled_inaccessibility_boundary","mixed_or_unresolved"],"observed_result":"principled_inaccessibility_boundary"},
-    {"sequence":2,"target_pr":278,"id":"TUE-W2-DEFEATING-CONDITION-CAMPAIGN","terminal_outcomes":["no_defeating_condition_established","rccd_defeated_or_extended","plural_kernel_required","unresolved"],"observed_result":"no_defeating_condition_established"},
-    {"sequence":3,"target_pr":279,"id":"TUE-W3-DEEPER-KERNEL","terminal_outcomes":["rccd_irreducible_at_registered_level","strictly_deeper_kernel_found","multiple_deeper_foundations","unresolved"],"observed_result":"rccd_irreducible_at_registered_level"},
-    {"sequence":4,"target_pr":280,"id":"TUE-W4-FINAL-QUESTION-ANSWER","terminal_outcomes":["maximal_effective_rccd_universality","rccd_requires_extension_or_plural_kernel","unrestricted_question_evidentially_underdetermined"],"observed_result":"maximal_effective_rccd_universality"}
+  "schema_version": "1.0",
+  "program_id": "POST-SC-TUE-001",
+  "status": "registered_unexecuted",
+  "registration_pr": 276,
+  "parent_adjudication": "SC-W6-FINAL-INTERNAL-ADJUDICATION-001",
+  "purpose": "Resolve the remaining evidential and structural limits on Project FAR's final internal answer through one preregistered terminal extension program, then stop internal discovery at PR 280.",
+  "starting_result": "rccd_necessary_kernel_for_natural_class",
+  "starting_answer": "RCCD is the strongest internally justified nontrivial universal kernel for the naturalized class of normatively assessable reasoning systems under the full reasoning-faithfulness contract and broadened uniform effective representation family.",
+  "remaining_questions": [
+    "Can the registered evidential Unknowns be made assessable without redefining success after observation?",
+    "Can any of the five defeating conditions from SC-W6 be established under a frozen adversarial campaign?",
+    "Is RCCD the terminal kernel level or derivable from a strictly smaller non-vacuous substrate?"
   ],
-  "frozen_sc_w6_defeating_conditions":[
+  "workstreams": [
+    {"sequence":1,"target_pr":277,"id":"TUE-W1-UNKNOWN-BOUNDARY","purpose":"Instrument and adjudicate creative generation, tacit moral salience, and inaccessible-process boundaries without counting missing evidence as support.","terminal_outcomes":["unknowns_resolved_within_rccd","genuine_extension_required","principled_inaccessibility_boundary","mixed_or_unresolved"]},
+    {"sequence":2,"target_pr":278,"id":"TUE-W2-DEFEATING-CONDITION-CAMPAIGN","purpose":"Attempt to trigger every SC-W6 defeating condition using preregistered adversarial synthesis, ablation, escape, and plural-kernel searches.","terminal_outcomes":["no_defeating_condition_established","rccd_defeated_or_extended","plural_kernel_required","unresolved"]},
+    {"sequence":3,"target_pr":279,"id":"TUE-W3-DEEPER-KERNEL","purpose":"Test whether R1-R5 are irreducible at the registered level or derivable from a strictly smaller non-vacuous kernel without hidden reintroduction.","terminal_outcomes":["rccd_irreducible_at_registered_level","strictly_deeper_kernel_found","multiple_deeper_foundations","unresolved"]},
+    {"sequence":4,"target_pr":280,"id":"TUE-W4-FINAL-QUESTION-ANSWER","purpose":"Issue the strongest final internal answer and close all further supportive internal discovery.","terminal_outcomes":["maximal_effective_rccd_universality","rccd_requires_extension_or_plural_kernel","unrestricted_question_evidentially_underdetermined"]}
+  ],
+  "frozen_sc_w6_defeating_conditions": [
     "an assessable in-scope reasoning system requiring a genuine sixth irreducible primitive",
     "a faithful uniform effective representation satisfying P* without RCCD-equivalent commitments",
     "a demonstration that C* or P* is circularly defined by R1-R5",
     "two successful kernels not bidirectionally reconstructible without hidden primitive machinery",
     "evidence that one of R1-R5 is removable under P* without loss"
   ],
-  "decision_rules":[
+  "decision_rules": [
     "Unknown is not Pass or Fail.",
-    "All required machinery is charged.",
+    "All source distinctions, measurement rules, costs, and terminal outcomes are frozen before execution of each workstream.",
+    "A hidden decoder, scheduler, history, codebook, oracle, proof object, closure procedure, or interpretation table is charged as machinery.",
+    "A deeper kernel must derive R1-R5 uniformly and effectively without merely renaming or relocating them.",
     "A genuine counterexample or extension overrides accumulated supportive mappings.",
-    "No additional supportive workstream may be inserted after PR 280."
+    "PR 280 must adjudicate from the observed W1-W3 results; no additional supportive workstream may be inserted."
   ],
-  "final_result":"maximal_effective_rccd_universality",
-  "program_disposition":"closed_with_final_internal_answer",
-  "next_action":null,
-  "ordered_followups":[],
-  "reopening_rule":"Reopen only for concrete evidence satisfying a preserved defeating condition or a separately registered empirical actual-process question.",
-  "external_review_disposition":"eligible_after_pr_280_but_not_executed",
-  "nonclaims":[
+  "hard_stopping_rule": {
+    "terminal_pr": 280,
+    "rule": "After PR 280, no further internal work is authorized merely to add favorable mappings, candidate families, or representation tests. Reopening requires concrete new evidence satisfying a registered defeating condition or a new empirical actual-process question.",
+    "external_review_disposition": "deferred_until_pr_280_final_answer"
+  },
+  "nonclaims": [
+    "the registered Unknowns have been resolved",
+    "all defeating conditions have already failed",
+    "RCCD is irreducible beneath every possible ontology",
     "unrestricted universality over inaccessible or non-effective processes",
-    "metaphysical fundamentality beneath every possible ontology",
     "actual-process correspondence",
     "external validation or independent replication"
   ]
