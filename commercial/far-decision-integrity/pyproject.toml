@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "far-decision-integrity"
-version = "1.1.0"
+version = "1.2.0"
 description = "Machine-checkable decision integrity for Project FAR"
 requires-python = ">=3.11"
 
