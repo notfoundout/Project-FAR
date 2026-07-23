@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W13-SUFFICIENCY-CONSTRUCTION",
+  "target_pr": 294,
+  "theorem": "For every S in C* and admissible machinery-closed R that satisfies P*, there exists an effective RCCD package K and effective assembly/reconstruction maps such that K preserves every frozen contract dimension and reconstructs R up to frozen commitment equivalence.",
+  "antecedents": [
+    "target_class_membership",
+    "representation_admissibility",
+    "machinery_closure",
+    "full_faithfulness_contract",
+    "commitment_equivalence",
+    "five_component_necessity",
+    "relative_component_independence"
+  ],
+  "components": [
+    "recoverable_commitment",
+    "constrained_evolution",
+    "dependency_structure",
+    "semantic_interpretation",
+    "historical_trace"
+  ],
+  "construction_obligations": [
+    "typed_component_interfaces",
+    "effective_assembly",
+    "complete_machinery_accounting",
+    "total_registered_queries",
+    "stable_cross_component_identity",
+    "equivalence_invariance",
+    "bidirectional_round_trip_reconstruction",
+    "structural_preservation",
+    "semantic_preservation",
+    "operational_preservation",
+    "dependency_preservation",
+    "information_preservation",
+    "historical_preservation",
+    "failure_unknown_separation"
+  ],
+  "anti_trivialization": [
+    "component_presence_without_interfaces",
+    "untyped_tuple_bag",
+    "final_output_only",
+    "hidden_cross_component_decoder",
+    "non_effective_reconstruction",
+    "partial_registered_query_interface",
+    "identity_collapse",
+    "history_erasure",
+    "dependency_erasure",
+    "semantic_erasure",
+    "constraint_erasure",
+    "failure_unknown_collapse"
+  ],
+  "verdicts": ["proved", "refuted", "unknown"],
+  "terminal_result": "relative_rccd_sufficiency_established_by_effective_compositional_construction_and_bidirectional_reconstruction",
+  "claim_boundary": "Relative operational sufficiency only; no unrestricted metaphysical completeness, global minimality, maximality, or uniqueness claim.",
+  "next_workstream": {"target_pr": 295, "workstream": "UPP-W14-IRREDUCIBILITY-MAXIMALITY"},
+  "public_evaluation_authorized": false
+}
