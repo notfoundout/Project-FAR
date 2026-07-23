@@ -13,34 +13,10 @@
     "Is RCCD the terminal kernel level or derivable from a strictly smaller non-vacuous substrate?"
   ],
   "workstreams": [
-    {
-      "sequence": 1,
-      "target_pr": 277,
-      "id": "TUE-W1-UNKNOWN-BOUNDARY",
-      "purpose": "Instrument and adjudicate creative generation, tacit moral salience, and inaccessible-process boundaries without counting missing evidence as support.",
-      "terminal_outcomes": ["unknowns_resolved_within_rccd", "genuine_extension_required", "principled_inaccessibility_boundary", "mixed_or_unresolved"]
-    },
-    {
-      "sequence": 2,
-      "target_pr": 278,
-      "id": "TUE-W2-DEFEATING-CONDITION-CAMPAIGN",
-      "purpose": "Attempt to trigger every SC-W6 defeating condition using preregistered adversarial synthesis, ablation, escape, and plural-kernel searches.",
-      "terminal_outcomes": ["no_defeating_condition_established", "rccd_defeated_or_extended", "plural_kernel_required", "unresolved"]
-    },
-    {
-      "sequence": 3,
-      "target_pr": 279,
-      "id": "TUE-W3-DEEPER-KERNEL",
-      "purpose": "Test whether R1-R5 are irreducible at the registered level or derivable from a strictly smaller non-vacuous kernel without hidden reintroduction.",
-      "terminal_outcomes": ["rccd_irreducible_at_registered_level", "strictly_deeper_kernel_found", "multiple_deeper_foundations", "unresolved"]
-    },
-    {
-      "sequence": 4,
-      "target_pr": 280,
-      "id": "TUE-W4-FINAL-QUESTION-ANSWER",
-      "purpose": "Issue the strongest final internal answer and close all further supportive internal discovery.",
-      "terminal_outcomes": ["maximal_effective_rccd_universality", "rccd_requires_extension_or_plural_kernel", "unrestricted_question_evidentially_underdetermined"]
-    }
+    {"sequence":1,"target_pr":277,"id":"TUE-W1-UNKNOWN-BOUNDARY","purpose":"Instrument and adjudicate creative generation, tacit moral salience, and inaccessible-process boundaries without counting missing evidence as support.","terminal_outcomes":["unknowns_resolved_within_rccd","genuine_extension_required","principled_inaccessibility_boundary","mixed_or_unresolved"]},
+    {"sequence":2,"target_pr":278,"id":"TUE-W2-DEFEATING-CONDITION-CAMPAIGN","purpose":"Attempt to trigger every SC-W6 defeating condition using preregistered adversarial synthesis, ablation, escape, and plural-kernel searches.","terminal_outcomes":["no_defeating_condition_established","rccd_defeated_or_extended","plural_kernel_required","unresolved"]},
+    {"sequence":3,"target_pr":279,"id":"TUE-W3-DEEPER-KERNEL","purpose":"Test whether R1-R5 are irreducible at the registered level or derivable from a strictly smaller non-vacuous kernel without hidden reintroduction.","terminal_outcomes":["rccd_irreducible_at_registered_level","strictly_deeper_kernel_found","multiple_deeper_foundations","unresolved"]},
+    {"sequence":4,"target_pr":280,"id":"TUE-W4-FINAL-QUESTION-ANSWER","purpose":"Issue the strongest final internal answer and close all further supportive internal discovery.","terminal_outcomes":["maximal_effective_rccd_universality","rccd_requires_extension_or_plural_kernel","unrestricted_question_evidentially_underdetermined"]}
   ],
   "frozen_sc_w6_defeating_conditions": [
     "an assessable in-scope reasoning system requiring a genuine sixth irreducible primitive",

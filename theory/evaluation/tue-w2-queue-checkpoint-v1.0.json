@@ -1,0 +1,11 @@
+{
+  "schema_version":"1.0",
+  "status":"historical_checkpoint",
+  "completed_workstreams":[
+    {"target_pr":276},
+    {"target_pr":277},
+    {"target_pr":278}
+  ],
+  "next_action":{"target_pr":279,"workstream":"TUE-W3-DEEPER-KERNEL"},
+  "ordered_followups":[280]
+}

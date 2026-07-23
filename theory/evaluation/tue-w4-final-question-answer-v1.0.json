@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "TUE-W4-FINAL-QUESTION-ANSWER-001",
+  "status": "complete_terminal_internal_adjudication",
+  "parent_program": "POST-SC-TUE-001",
+  "target_pr": 280,
+  "inputs": {
+    "starting_result": "rccd_necessary_kernel_for_natural_class",
+    "tue_w1": "principled_inaccessibility_boundary",
+    "tue_w2": "no_defeating_condition_established",
+    "tue_w3": "rccd_irreducible_at_registered_level"
+  },
+  "terminal_outcome": "maximal_effective_rccd_universality",
+  "answer": "For the maximal internally adjudicable natural class of normatively assessable reasoning systems whose relevant reasoning facts are uniformly and effectively recoverable under the full reasoning-faithfulness contract, RCCD is the necessary, nontrivial, and registered-level irreducible universal kernel. RCCD consists of recoverable commitments, constrained admissible evolution, dependency-sensitive revision, historical identity, and uniform effective recovery.",
+  "scope": {
+    "class": "normatively assessable reasoning systems with relevant reasoning facts that can be specified and tested",
+    "preservation_contract": "full reasoning-faithfulness contract P*",
+    "representation_family": "broadened uniform effective family E* with all required machinery charged",
+    "maximality": "maximal relative to the internally registered assessable effective scope, not every conceivable inaccessible or non-effective process"
+  },
+  "decisive_support": [
+    "materially distinct successful architectures reconstruct one RCCD-equivalence class",
+    "all five RCCD components have conditional lower-bound witnesses under P*",
+    "RCCD survived registered composition, invariance, reconstruction, scope, contract, representation, and held-out-context challenges",
+    "instrumented creative generation became assessable within RCCD without a sixth primitive",
+    "none of the five registered defeating conditions was established in the adversarial campaign",
+    "no tested strictly smaller non-vacuous substrate derived R1-R5 without preservation loss or charged RCCD-equivalent reintroduction"
+  ],
+  "evidential_boundary": {
+    "tacit_salience": "partially assessable with residual Unknown",
+    "inaccessible_processes": "neither support nor defeat until relevant reasoning facts become testable",
+    "consequence": "unrestricted universality over inaccessible or non-effective processes is evidentially underdetermined"
+  },
+  "defeating_conditions_preserved": [
+    "an assessable in-scope reasoning system requiring a genuine sixth irreducible primitive",
+    "a faithful uniform effective representation satisfying P* without RCCD-equivalent commitments",
+    "a demonstration that C* or P* is circularly defined by R1-R5",
+    "two successful kernels not bidirectionally reconstructible without hidden primitive machinery",
+    "evidence that one of R1-R5 is removable under P* without loss"
+  ],
+  "program_disposition": "closed_with_final_internal_answer",
+  "next_action": null,
+  "authorized_internal_followups": [],
+  "reopening_rule": "Reopen internal discovery only for concrete new evidence satisfying a preserved defeating condition or for a separately registered empirical actual-process program.",
+  "nonclaims": [
+    "unrestricted universality over every conceivable reasoning process",
+    "metaphysical fundamentality beneath every ontology",
+    "actual cognitive, computational, or physical process correspondence",
+    "external validation or independent replication",
+    "inaccessible systems satisfy RCCD",
+    "inaccessible systems refute RCCD",
+    "logical exhaustiveness over all future candidate architectures"
+  ]
+}
