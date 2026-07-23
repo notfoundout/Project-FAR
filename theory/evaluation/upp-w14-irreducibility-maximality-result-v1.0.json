@@ -1,17 +1,17 @@
 {
   "schema_version":"1.0",
   "program_id":"POST-TUE-UPP-001",
-  "workstream":"UPP-W14-IRREDUCIBILITY-MAXIMALITY",
+  "workstream":"UPP-W14-MAXIMALITY",
   "target_pr":295,
   "status":"complete",
-  "irreducibility_verdict":"proved",
   "maximality_verdict":"proved",
-  "aggregate_verdict":"proved",
+  "supporting_irreducibility_evidence":"proved_relative_to_registered_reduction_space",
   "proper_component_subset_total":31,
   "extension_challenge_total":5,
-  "terminal_result":"rccd_irreducible_and_target_class_maximal_relative_to_frozen_candidate_and_extension_search_spaces_with_open_world_boundary",
-  "scope":"frozen_registered_search_spaces_only",
+  "terminal_result":"relative_rccd_maximality_established_under_frozen_extension_rules_with_registered_countermodel_closure_and_open_world_boundary",
+  "scope":"maximality_relative_to_frozen_extension_rules_and_registered_challenge_space",
   "unrestricted_global_claim":false,
+  "absence_of_unregistered_counterexample_treated_as_proof":false,
   "next_workstream":{"target_pr":296,"workstream":"UPP-W15-TERMINAL-THEOREM"},
   "public_evaluation_authorized":false
 }
