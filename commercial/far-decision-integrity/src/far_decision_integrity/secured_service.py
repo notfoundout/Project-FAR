@@ -6,21 +6,20 @@ from dataclasses import dataclass
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from typing import Any
+from typing import Any, Protocol
 from urllib.parse import parse_qs, urlparse
 
-from .operations import (
-    FixedWindowRateLimiter,
-    OperationsError,
-    OperationsStore,
-    RuntimeMetrics,
-    audit_payload,
-)
+from .external_identity import ExternalIdentityError, IdentityProvider
+from .operations import FixedWindowRateLimiter, OperationsError, OperationsStore, RuntimeMetrics, audit_payload
 from .store import EvidenceStore, EvidenceStoreError, record_payload
 from .security import Principal, SecurityError, TenantSecurityStore, tenant_evidence_id
 from .service import MAX_REQUEST_BYTES, ServiceRequestError, authorize_payload
 
-SECURED_SERVICE_SCHEMA_VERSION = "far-secured-authorization-service/0.2"
+SECURED_SERVICE_SCHEMA_VERSION = "far-secured-authorization-service/0.3"
+
+
+class EventExporter(Protocol):
+    def emit(self, event_type: str, payload: dict[str, Any], *, occurred_at: int | None = None) -> dict[str, Any]: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -31,28 +30,41 @@ class SecuredRuntime:
     operations: OperationsStore | None = None
     limiter: FixedWindowRateLimiter | None = None
     metrics: RuntimeMetrics | None = None
+    identity_provider: IdentityProvider | None = None
+    exporters: tuple[EventExporter, ...] = ()
 
     def authenticate(self, authorization: str | None, scope: str) -> Principal:
         if not authorization or not authorization.startswith("Bearer "):
             self.metric("authentication.failed")
             raise SecurityError("Authorization must use Bearer token")
+        token = authorization[7:].strip()
         try:
-            principal = self.security.authenticate(authorization[7:].strip())
+            principal = self.identity_provider.verify(token).principal() if self.identity_provider else self.security.authenticate(token)
             principal.require(scope)
         except SecurityError:
             self.metric("authentication.failed")
+            self.observe("authentication.failed", {"required_scope": scope})
             raise
         self.metric("authentication.succeeded")
+        self.observe("authentication.succeeded", {"tenant_id": principal.tenant_id, "subject": principal.key_id, "required_scope": scope})
         return principal
 
     def enforce_rate_limit(self, principal: Principal) -> None:
         if self.limiter is not None and not self.limiter.allow(f"{principal.tenant_id}:{principal.key_id}"):
             self.metric("requests.rate_limited")
+            self.observe("request.rate_limited", {"tenant_id": principal.tenant_id, "subject": principal.key_id})
             raise OperationsError("rate limit exceeded")
 
     def metric(self, name: str) -> None:
         if self.metrics is not None:
             self.metrics.increment(name)
+
+    def observe(self, event_type: str, payload: dict[str, Any]) -> None:
+        for exporter in self.exporters:
+            try:
+                exporter.emit(event_type, payload)
+            except (ExternalIdentityError, OSError, ValueError):
+                self.metric("observability.export_failed")
 
     def authorize(self, principal: Principal, request: dict[str, Any]) -> dict[str, Any]:
         principal.require("authorize")
@@ -83,7 +95,9 @@ class SecuredRuntime:
         manifest["files"]["authorization.json"] = hashlib.sha256(authorization_path.read_bytes()).hexdigest()
         _write_json(manifest_path, manifest)
         self.evidence.put_directory(secured_directory)
-        self.metric(f"authorization.{result.payload['disposition']}")
+        disposition = result.payload["disposition"]
+        self.metric(f"authorization.{disposition}")
+        self.observe("authorization.completed", {"tenant_id": principal.tenant_id, "subject": principal.key_id, "evidence_id": secured_id, "disposition": disposition, **policy_data})
         response = dict(result.payload)
         response.update({"schema_version": SECURED_SERVICE_SCHEMA_VERSION, "tenant_id": principal.tenant_id, "evidence_id": secured_id, "policy": policy_data, "evidence": {"record": f"/v1/evidence/{secured_id}", "manifest": f"/v1/evidence/{secured_id}/manifest"}})
         return response
@@ -121,6 +135,7 @@ class SecuredRuntime:
         else:
             raise OperationsError("unknown administration action")
         self.metric(f"admin.{record.action}")
+        self.observe("administration.completed", {"tenant_id": principal.tenant_id, "subject": principal.key_id, "action": record.action, "target": record.target})
         return audit_payload(record)
 
     def audit(self, principal: Principal, limit: int) -> dict[str, Any]:
@@ -131,8 +146,7 @@ class SecuredRuntime:
 
 def make_secured_handler(runtime: SecuredRuntime) -> type[BaseHTTPRequestHandler]:
     class Handler(BaseHTTPRequestHandler):
-        server_version = "FARSecuredAuthorizationService/0.2"
-
+        server_version = "FARSecuredAuthorizationService/0.3"
         def do_GET(self) -> None:  # noqa: N802
             parsed = urlparse(self.path)
             if parsed.path == "/healthz":
@@ -162,7 +176,6 @@ def make_secured_handler(runtime: SecuredRuntime) -> type[BaseHTTPRequestHandler
             except ValueError as exc:
                 self._send(HTTPStatus.BAD_REQUEST, {"error": "invalid_request", "detail": str(exc)}); return
             self._send(HTTPStatus.NOT_FOUND, {"error": "not_found"})
-
         def do_POST(self) -> None:  # noqa: N802
             try:
                 if self.path == "/v1/authorize":
@@ -186,15 +199,12 @@ def make_secured_handler(runtime: SecuredRuntime) -> type[BaseHTTPRequestHandler
             except (UnicodeDecodeError, json.JSONDecodeError, ServiceRequestError, EvidenceStoreError, ValueError) as exc:
                 self._send(HTTPStatus.BAD_REQUEST, {"error": "invalid_request", "detail": str(exc)}); return
             self._send(HTTPStatus.OK, payload)
-
         def log_message(self, format: str, *args: Any) -> None:
             return
-
         def _send(self, status: int, payload: dict[str, Any]) -> None:
             runtime.metric(f"http.{int(status)}")
             body = (json.dumps(payload, sort_keys=True) + "\n").encode("utf-8")
             self.send_response(status); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
-
     return Handler
 
 
