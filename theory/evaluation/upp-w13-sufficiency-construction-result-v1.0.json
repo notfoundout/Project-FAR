@@ -25,6 +25,6 @@
     "does_not_establish_uniqueness_of_RCCD_realization",
     "does_not_establish_unrestricted_metaphysical_completeness"
   ],
-  "next_workstream": {"target_pr": 295, "workstream": "UPP-W14-IRREDUCIBILITY-MAXIMALITY"},
+  "next_workstream": {"target_pr": 295, "workstream": "UPP-W14-MAXIMALITY"},
   "public_evaluation_authorized": false
 }
