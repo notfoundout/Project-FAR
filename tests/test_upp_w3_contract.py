@@ -1,8 +1,11 @@
-import importlib.util, unittest
+import importlib.util, sys, unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 P=ROOT/'theory/contract/upp_faithfulness_contract_v1.py'
-s=importlib.util.spec_from_file_location('upp_contract_test',P); m=importlib.util.module_from_spec(s); s.loader.exec_module(m)
+s=importlib.util.spec_from_file_location('upp_contract_test',P)
+m=importlib.util.module_from_spec(s)
+sys.modules[s.name]=m
+s.loader.exec_module(m)
 
 class ContractTests(unittest.TestCase):
     def assessments(self, verdict=m.Verdict.PASS):
