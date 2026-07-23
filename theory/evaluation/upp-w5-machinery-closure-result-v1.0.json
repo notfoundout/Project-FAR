@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W5-MACHINERY-CLOSURE",
+  "target_pr": 286,
+  "status": "completed",
+  "terminal_result": "transitive_machinery_closure_frozen_with_fixed_point_and_hidden_dependency_failure",
+  "established": [
+    "finite support packages admit deterministic least-fixed-point traversal",
+    "all transitively required support machinery is included in the adjudicated package",
+    "concealed required support is a closure failure",
+    "absent or ineffective required support is a closure failure",
+    "unresolved required support remains Unknown",
+    "closed packages satisfy registered idempotence and monotonicity checks"
+  ],
+  "defeat_conditions": [
+    "a finite required support dependency can affect a registered answer while evading the closure relation",
+    "the closure procedure is nonterminating on a valid finite package",
+    "closure is not idempotent on a closed package",
+    "adding disclosed effective support removes previously reached required support",
+    "a concealed required dependency can be classified closed"
+  ],
+  "unresolved": [
+    "equivalence between distinct closed representation packages",
+    "commitment-equivalence criteria",
+    "necessity of any RCCD component",
+    "sufficiency and reconstruction",
+    "irreducibility and maximality",
+    "the terminal universal theorem"
+  ],
+  "public_evaluation_authorized": false,
+  "next_action": {"target_pr": 287, "workstream": "UPP-W6-EQUIVALENCE"}
+}
