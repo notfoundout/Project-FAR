@@ -1,7 +1,7 @@
 {
   "files": {
     ".github/workflows/configure-validation-protection.yml": "31b93c343445911d6674349df94f79a96ec57e0452d76d577098fd5c486c9fc2",
-    ".github/workflows/lean.yml": "7efc91d93a319860bd4a7265d0e756a1e667f66d72d3af1180275fe99967e462",
+    ".github/workflows/lean.yml": "564f4e9f2884f7c6f77e1e4f76dd3efc4878fc0197c916c24ac3ad1a91b71d66",
     ".github/workflows/repo-health.yml": "8e85ad1b4f490cbc15e81c92f82768b44b00255a4ed0981f7007e17f234933f5",
     ".github/workflows/specification-export.yml": "2aa19214981ed97c418a375063879cbe20494f215032f7afe5f7d5cd45968b0d",
     ".github/workflows/unified-validation.yml": "62854b9bf73e018f53454a3edfe606b786d33726becc9f5adf4d4fd25389061b",
