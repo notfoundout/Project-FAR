@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W5-MACHINERY-CLOSURE",
+  "target_pr": 286,
+  "closure_operator": "least_fixed_point_of_required_disclosed_effective_support",
+  "support_kinds": [
+    "representation_core",
+    "decoder",
+    "interpreter",
+    "scheduler",
+    "query_interface",
+    "codebook",
+    "external_store",
+    "oracle_realization",
+    "proof_object",
+    "runtime",
+    "configuration",
+    "training_artifact",
+    "randomness_source",
+    "identity_registry"
+  ],
+  "required_properties": [
+    "transitive_support_capture",
+    "effective_availability",
+    "disclosure_of_required_edges",
+    "registered_query_support",
+    "identity_stability",
+    "failure_and_unknown_separation",
+    "least_fixed_point_termination_for_finite_packages",
+    "idempotence",
+    "monotonicity_under_disclosed_effective_support"
+  ],
+  "verdicts": {
+    "closed": "every transitively required support dependency is disclosed, present, effective, and reached",
+    "open": "a required dependency is concealed, absent, ineffective, invalid, or unsupported",
+    "unknown": "no failure is established but at least one required dependency remains unresolved"
+  },
+  "anti_evasion_rules": [
+    "moving a decoder outside the visible representation does not remove it from closure",
+    "an oracle name is not support unless an effective realization is available",
+    "external state stores and identity registries are support machinery",
+    "scheduler and randomness semantics are included when they affect registered answers",
+    "proof objects and codebooks are included when required to interpret outputs",
+    "learned parameters and training artifacts are included only when operationally required for registered use"
+  ],
+  "theorem_boundary": {
+    "established": [
+      "finite-package closure procedure",
+      "transitive hidden-machinery accounting rule",
+      "closed-open-unknown adjudication",
+      "idempotence test",
+      "monotonicity test"
+    ],
+    "not_established": [
+      "representation equivalence",
+      "commitment equivalence",
+      "RCCD necessity",
+      "RCCD sufficiency",
+      "irreducibility",
+      "maximality",
+      "unrestricted universality"
+    ]
+  },
+  "public_evaluation_authorized": false,
+  "next_action": {"target_pr": 287, "workstream": "UPP-W6-EQUIVALENCE"}
+}
