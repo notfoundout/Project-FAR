@@ -12,7 +12,7 @@ from .adjudicate import adjudicate
 from .authorization import DISPOSITIONS
 from .model import DecisionPackage, PackageValidationError
 from .report import report_payload
-from .trace import TraceIngestionError, ingest_trace
+from .trace_ingest import TraceIngestionError, ingest_trace
 
 SERVICE_SCHEMA_VERSION = "far-authorization-service/0.1"
 EVIDENCE_SCHEMA_VERSION = "far-authorization-evidence/0.2"
