@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W8-CONSTRAINED-EVOLUTION",
+  "target_pr": 289,
+  "terminal_result": "constrained_evolution_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence",
+  "theorem_status": "proved_relative_to_registered_premises",
+  "established": [
+    "effective history-sensitive admissibility relation",
+    "nontrivial permitted-forbidden separation",
+    "recoverable governing constraints or reasons",
+    "equivalence-stable admissibility verdicts",
+    "closure-charged decision machinery",
+    "failure-Unknown separation"
+  ],
+  "not_established": [
+    "R3-R5 necessity",
+    "RCCD sufficiency",
+    "RCCD irreducibility",
+    "relative maximality",
+    "the terminal universal theorem",
+    "unrestricted metaphysical laws of rational change"
+  ],
+  "next_action": {"target_pr": 290, "workstream": "UPP-W9-DEPENDENCY-STRUCTURE"},
+  "public_evaluation_authorized": false
+}
