@@ -225,6 +225,13 @@ class TestTraceIngestion(unittest.TestCase):
             self.assertEqual(main([str(source), "--output", str(output)]), 40)
             self.assertFalse(output.exists())
 
+    def test_cli_output_error_exit_code(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / "trace.json"
+            source.write_text(json.dumps(flat_trace()), encoding="utf-8")
+            self.assertEqual(main([str(source), "--output", str(root)]), 41)
+
 
 if __name__ == "__main__":
     unittest.main()
