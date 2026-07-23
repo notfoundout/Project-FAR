@@ -1,0 +1,101 @@
+{
+  "schema": "universality-remainder-theorem/1.0",
+  "program_id": "POST-UPP-URT-001",
+  "status": "frozen",
+  "inherits_terminal_result": "strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary",
+  "frozen_predecessors": {
+    "foundation": 282,
+    "target_class": 283,
+    "faithfulness_contract": 284,
+    "representation_universe": 285,
+    "machinery_closure": 286,
+    "equivalence": 287,
+    "component_necessity_start": 288,
+    "component_independence": 293,
+    "sufficiency": 294,
+    "relative_maximality": 295,
+    "terminal_adjudication": 296,
+    "post_terminal_evaluation": 297
+  },
+  "obligations": [
+    {
+      "id": "G1",
+      "name": "single_kernel_semantic_composition",
+      "initial_status": "unresolved",
+      "required_result": "one_end_to_end_trusted_kernel_proof_object",
+      "disallowed_substitutes": [
+        "python_checker_orchestration",
+        "repository_status_aggregation",
+        "test_suite_success",
+        "finite_artifact_consistency"
+      ],
+      "maximum_conclusion_if_satisfied_alone": "semantic_composition_boundary_closed"
+    },
+    {
+      "id": "G2",
+      "name": "open_world_structural_maximality",
+      "initial_status": "unresolved",
+      "required_result": "quantified_lower_bound_over_arbitrary_admissible_representations",
+      "disallowed_substitutes": [
+        "additional_finite_candidate_search",
+        "absence_of_unregistered_counterexamples",
+        "finite_domain_expansion",
+        "renamed_relative_maximality"
+      ],
+      "maximum_conclusion_if_satisfied_alone": "open_world_maximality_over_frozen_admissible_class"
+    },
+    {
+      "id": "G3",
+      "name": "inaccessibility_and_epistemic_maximality",
+      "initial_status": "unresolved",
+      "permitted_terminal_results": [
+        "boundary_lifted",
+        "boundary_proved_unavoidable",
+        "unresolved"
+      ],
+      "disallowed_substitutes": [
+        "unknown_as_pass",
+        "unknown_as_fail",
+        "opaque_case_as_rccd_support",
+        "opaque_case_as_rccd_counterexample",
+        "retrospective_rationalization_as_process_access"
+      ],
+      "maximum_conclusion_if_satisfied_alone": "epistemic_scope_boundary_adjudicated"
+    }
+  ],
+  "completed_work_not_to_reopen_without_delta": [
+    "typed_semantic_foundation",
+    "rccd_independent_target_class",
+    "independent_faithfulness_contract",
+    "admissible_representation_universe",
+    "machinery_closure",
+    "representation_and_commitment_equivalence",
+    "component_necessity",
+    "component_independence",
+    "constructive_sufficiency",
+    "finite_representation_escape_search",
+    "primitive_ablation",
+    "defeating_condition_campaign",
+    "finite_relative_maximality",
+    "terminal_adjudication",
+    "public_evaluation_registration"
+  ],
+  "allowed_reopening_labels": [
+    "replication",
+    "mechanization",
+    "defect_correction",
+    "premise_strengthening"
+  ],
+  "successor_order": [
+    "G1",
+    "G2",
+    "G3_and_terminal_adjudication"
+  ],
+  "global_nonclaims": [
+    "unrestricted_metaphysical_universality",
+    "open_world_maximality_from_finite_search",
+    "hidden_cognition_recovery_without_warrant",
+    "unique_final_ontology",
+    "predetermined_confirmation"
+  ]
+}
