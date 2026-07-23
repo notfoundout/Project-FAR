@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "workstream": "UPP-W2-CLASS",
+  "class_id": "C-STAR-V1",
+  "result": "rccd_independent_target_class_defined_with_neutral_membership_and_unknown_boundary",
+  "definition": "A system is in C* exactly when accessible evidence establishes that it presents alternatives, those alternatives admit standards-based appraisal, appraisal can alter which response is permitted or warranted, the assessment-relevant facts are finitely specifiable, and the assessment is repeatable in principle.",
+  "membership_criteria": [
+    {"id":"alternative_options","statement":"the system presents at least two distinguishable response options in some assessment context"},
+    {"id":"normative_appraisability","statement":"at least one option can be assessed as permitted, prohibited, better supported, or worse supported under an explicitly supplied standard"},
+    {"id":"appraisal_sensitive_response","statement":"changing the supplied grounds or standard can change which response is permitted or warranted"},
+    {"id":"finite_specifiability","statement":"the facts required for one membership adjudication can be stated in a finite test instance"},
+    {"id":"repeatable_assessment","statement":"the same stated instance and standard determine the same membership result in principle"}
+  ],
+  "exclusion_rules": [
+    "mere physical change without assessable alternatives is outside C*",
+    "mere prediction without standards-based appraisal is outside C*",
+    "mere behavioral complexity is insufficient",
+    "mere use of language or symbols is insufficient",
+    "membership cannot depend on an RCCD label or RCCD-equivalent vocabulary"
+  ],
+  "unknown_rule": "If evidence needed to evaluate any criterion is inaccessible, the case is Unknown rather than in scope or out of scope.",
+  "neutrality_obligations": [
+    "no RCCD component appears in the membership definition",
+    "membership is decidable from criterion evidence without inspecting an RCCD mapping",
+    "both RCCD-positive and RCCD-unadjudicated systems can satisfy the membership predicate",
+    "failure of an RCCD proof cannot retroactively remove a system from C*",
+    "class membership and theorem satisfaction are separate predicates"
+  ],
+  "closure_rules": [
+    "isomorphism of the finite membership instance preserves membership",
+    "renaming symbols preserves membership",
+    "implementation medium does not determine membership",
+    "composition preserves membership only when the composed system itself satisfies all criteria",
+    "subsystems are not inherited into C* automatically"
+  ],
+  "nonclaims": [
+    "C* contains every conceivable form of reasoning",
+    "C* membership proves RCCD",
+    "inaccessible systems satisfy or refute RCCD",
+    "the criteria are metaphysically necessary for all meanings of reasoning",
+    "actual human or machine cognition is fully captured"
+  ]
+}
