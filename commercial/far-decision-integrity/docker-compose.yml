@@ -1,0 +1,16 @@
+services:
+  far:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - far-data:/var/lib/far
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  far-data:
