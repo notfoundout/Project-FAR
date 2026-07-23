@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W11-HISTORICAL-TRACE",
+  "target_pr": 292,
+  "status": "complete",
+  "theorem_id": "UPP-W11-HISTORICAL-TRACE-NECESSITY",
+  "statement": "For every target-class system S and admissible machinery-closed representation R satisfying P* and preserving commitment equivalence, if the represented behavior is history-sensitive and registered history queries are total, then R admits an effective recoverable historical-trace witness.",
+  "antecedents": [
+    "target_class_membership",
+    "representation_admissibility",
+    "machinery_closure",
+    "full_faithfulness",
+    "commitment_equivalence_preservation",
+    "history_sensitive_behavior",
+    "registered_history_query_totality"
+  ],
+  "witness_obligations": [
+    "nontrivial_structurally_valid_trace",
+    "effective_recovery",
+    "stable_event_identity",
+    "registered_temporal_order_totality",
+    "complete_predecessor_links",
+    "complete_dependency_lineage",
+    "complete_revision_lineage",
+    "recoverable_reasons",
+    "rollback_or_replay_fidelity",
+    "equivalence_invariance",
+    "complete_machinery_accounting",
+    "registered_query_totality",
+    "failure_unknown_separation"
+  ],
+  "event_kinds": [
+    "assert", "deny", "derive", "revise", "retract", "replace",
+    "accept", "reject", "query", "answer", "failure", "unknown"
+  ],
+  "anti_trivialization": [
+    "final_snapshot_only",
+    "timestamped_log_without_identity",
+    "unordered_event_bag",
+    "history_reconstructed_post_hoc",
+    "revision_without_supersession_lineage",
+    "hidden_external_audit_log",
+    "rollback_that_changes_commitments",
+    "unknown_history_answer_collapsed_to_absence"
+  ],
+  "adjudication": {
+    "proved": "all antecedents and witness obligations are positively established",
+    "refuted": "at least one antecedent or witness obligation is false",
+    "unknown": "none is false and at least one remains unresolved"
+  },
+  "claim_boundary": "Operational relative necessity only; no unrestricted metaphysical theory of time, causation, memory, or personal identity is asserted.",
+  "terminal_result": "historical_trace_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence",
+  "next_workstream": {"target_pr": 293, "workstream": "UPP-W12-COMPONENT-INDEPENDENCE"},
+  "public_evaluation_authorized": false
+}
