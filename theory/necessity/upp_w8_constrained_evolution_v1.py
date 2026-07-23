@@ -73,19 +73,20 @@ def assess_constrained_evolution(assessment: EvolutionAssessment) -> Verdict:
     if not changing:
         return Verdict.UNKNOWN
 
-    transition_facts = tuple(
+    support_facts = tuple(
         fact
         for t in changing
         for fact in (
-            t.admissible,
             t.reason_recoverable,
             t.equivalence_stable,
             t.machinery_charged,
         )
     )
-    if _any_no(transition_facts):
+    if _any_no(support_facts):
         return Verdict.REFUTED
-    if not _all_yes(transition_facts):
+    if not _all_yes(support_facts):
+        return Verdict.UNKNOWN
+    if any(t.admissible is Truth.UNKNOWN for t in changing):
         return Verdict.UNKNOWN
 
     for transition in changing:
@@ -97,7 +98,7 @@ def assess_constrained_evolution(assessment: EvolutionAssessment) -> Verdict:
             return Verdict.REFUTED
 
     admissible_values = {t.admissible for t in changing}
-    if Truth.YES not in admissible_values:
+    if admissible_values != {Truth.YES, Truth.NO}:
         return Verdict.REFUTED
 
     return Verdict.PROVED
@@ -126,4 +127,4 @@ def theorem_witness_exists(assessment: EvolutionAssessment) -> bool:
     if assess_constrained_evolution(assessment) is not Verdict.PROVED:
         return False
     relation = construct_admissibility_relation(assessment.transitions)
-    return bool(relation)
+    return bool(relation) and set(relation.values()) == {Truth.YES, Truth.NO}
