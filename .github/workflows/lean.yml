@@ -28,6 +28,8 @@ jobs:
         run: lean mechanization/lean/SCoreW5.lean
       - name: Compile G1 end-to-end semantic kernel
         run: lean mechanization/lean/UPPSemanticKernel.lean
+      - name: Compile G2 open-world lower-bound theorem
+        run: lean mechanization/lean/G2OpenWorldLowerBound.lean
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
@@ -55,3 +57,5 @@ jobs:
         run: python -m unittest tests.test_s_core_w5_lean_alignment
       - name: Check G1 semantic-kernel alignment
         run: python -m unittest tests.test_upp_semantic_kernel_alignment
+      - name: Check G2 open-world lower-bound alignment
+        run: python -m unittest tests.test_g2_open_world_lower_bound_alignment
