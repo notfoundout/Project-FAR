@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W8-CONSTRAINED-EVOLUTION",
+  "target_pr": 289,
+  "component": "R2_constrained_evolution",
+  "theorem": "For every S in C* and every machinery-closed R in E*, if P*(S,R) holds and the system admits commitment-changing transitions, then R exposes an effective, history-sensitive admissibility relation that distinguishes permitted from forbidden commitment evolution and is invariant under frozen commitment equivalence.",
+  "antecedent_premises": [
+    "target_class_membership",
+    "representation_admissibility",
+    "machinery_closure",
+    "full_faithfulness",
+    "commitment_equivalence_preservation",
+    "at_least_one_commitment_changing_transition"
+  ],
+  "witness_obligations": [
+    "time_indexed_commitment_states",
+    "effective_admissibility_decision_or_explicit_unknown",
+    "history_sensitive_transition_context",
+    "permitted_forbidden_separation",
+    "reasons_or_constraints_recoverable",
+    "equivalence_stable_verdicts",
+    "failure_unknown_separation",
+    "all_decision_machinery_charged_to_closure"
+  ],
+  "verdicts": ["proved", "refuted", "unknown"],
+  "proof_strategy": [
+    "recover successive commitment states through the registered faithful interface",
+    "recover transition admissibility answers and their governing constraints",
+    "construct the admissibility relation from those total registered answers",
+    "show that denial of the relation contradicts operational, historical, dependency, or query-totality preservation",
+    "quotient only by the frozen bidirectional commitment-equivalence relation"
+  ],
+  "anti_trivialization_rules": [
+    "mere state change is not constrained evolution",
+    "post hoc acceptance of every observed transition is not a constraint",
+    "final-output equality does not preserve evolution constraints",
+    "an always-true admissibility predicate is insufficient when forbidden transitions exist",
+    "an always-false predicate is insufficient when permitted transitions exist",
+    "unrecorded external policy machinery is prohibited",
+    "future-only reconstruction cannot replace historical admissibility",
+    "failure may not be collapsed into Unknown"
+  ],
+  "separating_countermodels": [
+    "same outputs_with_different_transition_permissions",
+    "unconstrained_mutation_sequence",
+    "hidden_external_policy_oracle",
+    "history_erased_transition_log",
+    "non_effective_admissibility_claim",
+    "failure_unknown_collapse",
+    "representation_dependent_permission_verdict"
+  ],
+  "nonclaims": [
+    "R3-R5 necessity",
+    "RCCD sufficiency",
+    "RCCD irreducibility",
+    "relative maximality",
+    "the terminal universal theorem",
+    "unrestricted metaphysical laws of rational change"
+  ],
+  "next_action": {"target_pr": 290, "workstream": "UPP-W9-DEPENDENCY-STRUCTURE"},
+  "public_evaluation_authorized": false
+}
