@@ -1,5 +1,5 @@
 import Std
-import mechanization.lean.UPPSemanticKernel
+import UPPSemanticKernel
 
 /-!
 # Grounded FAR canonicality countermodel
@@ -80,15 +80,10 @@ def groundedModel : FrozenUPPSemantics :=
     relativelyMaximal := fun _ => True
     classConstruction := by intro source h; trivial
     representationAdmissible := by intro source h; trivial
-    preservationComplete := by
-      intro source h
-      subst source
-      decide
+    preservationComplete := by intro source h; subst source; decide
     sourceRoundTrip := by intro source; rfl
     packageRoundTrip := by intro package; rfl
-    equivalenceReflexive := by
-      intro package
-      exact Or.inl rfl
+    equivalenceReflexive := by intro package; exact Or.inl rfl
     commitmentNecessary := by intro source h; trivial
     evolutionNecessary := by intro source h; trivial
     dependencyNecessary := by intro source h; trivial
@@ -99,7 +94,6 @@ def groundedModel : FrozenUPPSemantics :=
     frozenRuleMaximality := by intro source h; trivial
     faithfulCandidateEquivalent := by
       intro source candidate hClass hAdmissible hClosed hPreserved
-      have hSource : source = Node.center := hClass
       subst source
       exact Or.inr rfl }
 
@@ -111,9 +105,7 @@ def QualifiedForCenter (candidate : Node) : Prop :=
 
 
 def PairwiseUniqueUpToRegisteredEquivalence : Prop :=
-  ∀ a b,
-    QualifiedForCenter a →
-    QualifiedForCenter b →
+  ∀ a b, QualifiedForCenter a → QualifiedForCenter b →
     groundedModel.commitmentEquivalent a b
 
 
@@ -125,12 +117,9 @@ theorem grounded_model_is_actual_g1_model :
   decide
 
 
-theorem left_is_fully_qualified : QualifiedForCenter .left := by
-  decide
+theorem left_is_fully_qualified : QualifiedForCenter .left := by decide
 
-
-theorem right_is_fully_qualified : QualifiedForCenter .right := by
-  decide
+theorem right_is_fully_qualified : QualifiedForCenter .right := by decide
 
 
 theorem left_equivalent_to_canonical :
@@ -146,22 +135,19 @@ theorem right_equivalent_to_canonical :
 
 
 theorem left_not_equivalent_to_right :
-    ¬ groundedModel.commitmentEquivalent .left .right := by
-  decide
+    ¬ groundedModel.commitmentEquivalent .left .right := by decide
 
-/-- Genuine countermodel against pairwise uniqueness under the registered G1
-relation, using the actual G1 structure and predicates. -/
+
 theorem unique_factorization_counterexample :
     ¬ PairwiseUniqueUpToRegisteredEquivalence := by
   intro hUnique
   exact left_not_equivalent_to_right
     (hUnique .left .right left_is_fully_qualified right_is_fully_qualified)
 
-/-- The exact scoped answer earned by the current formalization. -/
+
 theorem current_g1_semantics_do_not_entail_canonical_uniqueness :
     groundedModel.inTargetClass .center ∧
-    QualifiedForCenter .left ∧
-    QualifiedForCenter .right ∧
+    QualifiedForCenter .left ∧ QualifiedForCenter .right ∧
     groundedModel.commitmentEquivalent .left (groundedModel.encode .center) ∧
     groundedModel.commitmentEquivalent .right (groundedModel.encode .center) ∧
     ¬ groundedModel.commitmentEquivalent .left .right ∧
