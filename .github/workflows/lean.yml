@@ -26,6 +26,8 @@ jobs:
         run: lean mechanization/lean/FARCore.lean
       - name: Compile bounded W5 theorem
         run: lean mechanization/lean/SCoreW5.lean
+      - name: Compile G1 end-to-end semantic kernel
+        run: lean mechanization/lean/UPPSemanticKernel.lean
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
@@ -51,3 +53,5 @@ jobs:
         run: python -m unittest tests.test_t003_lean_alignment
       - name: Check bounded W5 alignment
         run: python -m unittest tests.test_s_core_w5_lean_alignment
+      - name: Check G1 semantic-kernel alignment
+        run: python -m unittest tests.test_upp_semantic_kernel_alignment
