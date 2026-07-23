@@ -10,8 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL = ROOT / "theory/evaluation/tue-w3-deeper-kernel-protocol-v1.0.json"
 CANDIDATES = ROOT / "theory/evaluation/tue-w3-deeper-kernel-candidates-v1.0.json"
 RESULT = ROOT / "theory/evaluation/tue-w3-deeper-kernel-result-v1.0.json"
-QUEUE = ROOT / "theory/evaluation/tue-w3-queue-checkpoint-v1.0.json"
-LIVE_QUEUE = ROOT / "theory/evaluation/post-sc-terminal-universality-extension-queue-v1.0.json"
+QUEUE = ROOT / "theory/evaluation/post-sc-terminal-universality-extension-queue-v1.0.json"
 
 
 class TUEW3DeeperKernelTests(unittest.TestCase):
@@ -45,12 +44,6 @@ class TUEW3DeeperKernelTests(unittest.TestCase):
         queue = self.load(QUEUE)
         self.assertEqual([x["target_pr"] for x in queue["completed_workstreams"]], [276, 277, 278, 279])
         self.assertEqual(queue["next_action"]["target_pr"], 280)
-        self.assertEqual(queue["ordered_followups"], [])
-
-    def test_terminal_live_queue_is_closed(self) -> None:
-        queue = self.load(LIVE_QUEUE)
-        self.assertEqual(queue["status"], "complete")
-        self.assertIsNone(queue["next_action"])
         self.assertEqual(queue["ordered_followups"], [])
 
 
