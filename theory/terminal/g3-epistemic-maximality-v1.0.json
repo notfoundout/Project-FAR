@@ -1,0 +1,39 @@
+{
+  "schema_version": "g3-epistemic-maximality/1.0",
+  "obligation": "G3",
+  "status": "implemented_pending_validation",
+  "entrypoint": "mechanization/lean/G3EpistemicMaximality.lean",
+  "terminal_theorem": "FAR.G3EpistemicMaximality.g3_epistemic_maximality_theorem",
+  "impossibility_theorem": "FAR.G3EpistemicMaximality.indistinguishable_incompatible_sources_block_joint_soundness",
+  "boundary": {
+    "inaccessible_cases": "unknown",
+    "unknown_counts_as_support": false,
+    "unknown_counts_as_refutation": false,
+    "additional_discriminating_access_can_lift_boundary": true
+  },
+  "result": {
+    "metaphysical_structure_of_inaccessible_systems": "not_determined",
+    "warranted_determinate_classification_without_discriminating_access": false,
+    "epistemic_maximality_boundary_proved": true,
+    "symmetrical_for_fAR_and_competitors": true
+  },
+  "final_claim_taxonomy": {
+    "unrestricted_metaphysical_universality": false,
+    "open_world_universality_over_admissible_faithful_candidates": true,
+    "maximal_epistemically_establishable_universality": true,
+    "inaccessible_cases_resolved_as_rccd": false
+  },
+  "claims": {
+    "inaccessibility_is_evidence_for_rccd": false,
+    "inaccessibility_is_evidence_against_rccd": false,
+    "observation_only_soundness_blocked_by_incompatible_twins": true,
+    "unknown_preserved": true,
+    "unique_ontology": false
+  },
+  "remaining_obligations": [],
+  "validation": {
+    "lean_compile": "lean mechanization/lean/G3EpistemicMaximality.lean",
+    "alignment_test": "python -m unittest tests.test_g3_epistemic_maximality_alignment",
+    "forbidden_constructs": ["axiom", "sorry", "admit", "unsafe"]
+  }
+}
