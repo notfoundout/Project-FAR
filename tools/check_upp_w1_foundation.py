@@ -67,8 +67,7 @@ def main() -> int:
     sorts = {entry["id"] for entry in foundation.get("sorts", [])}
     if sorts != REQUIRED_SORTS:
         fail(f"foundation sorts differ: missing={sorted(REQUIRED_SORTS - sorts)} extra={sorted(sorts - REQUIRED_SORTS)}")
-    separations = set(foundation.get("semantic_separations", []))
-    if separations != REQUIRED_SEPARATIONS:
+    if set(foundation.get("semantic_separations", [])) != REQUIRED_SEPARATIONS:
         fail("semantic separations are incomplete or changed")
     neutrality = foundation.get("foundation_neutrality", {})
     forbidden_true = [key for key, value in neutrality.items() if key.endswith(("_defined", "_proved", "_asserted")) and value is True]
@@ -84,14 +83,20 @@ def main() -> int:
         fail("result status or Unknown discipline invalid")
     if result.get("public_evaluation_authorized") is not False:
         fail("release gate opened prematurely")
-    if queue.get("next_action") != {"target_pr": 283, "workstream": "UPP-W2-CLASS"}:
-        fail("queue does not advance exactly to UPP-W2")
-    if queue.get("ordered_followups") != list(range(284, 297)):
-        fail("ordered followups changed")
+
+    completed = {(x.get("target_pr"), x.get("workstream"), x.get("result")) for x in queue.get("completed_workstreams", [])}
+    required_completion = (282, "UPP-W1-FOUNDATION", "typed_foundation_established_without_rccd_entailment")
+    if required_completion not in completed:
+        fail("UPP-W1 is not preserved in completed queue history")
+    next_action = queue.get("next_action")
+    if next_action is not None and next_action.get("target_pr", 0) < 283:
+        fail("queue regressed behind UPP-W2")
+    if 282 in queue.get("ordered_followups", []):
+        fail("completed UPP-W1 remains in ordered followups")
     if queue.get("public_evaluation_authorized") is not False:
         fail("queue release gate opened prematurely")
 
-    print("PASS: UPP-W1 foundation artifacts are complete, neutral, and queue-consistent")
+    print("PASS: UPP-W1 foundation artifacts are complete, neutral, and preserved in monotonic queue history")
     return 0
 
 
