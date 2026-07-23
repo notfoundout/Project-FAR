@@ -11,9 +11,10 @@
     {"target_pr":286,"workstream":"UPP-W5-MACHINERY-CLOSURE","result":"transitive_machinery_closure_frozen_with_fixed_point_and_hidden_dependency_failure"},
     {"target_pr":287,"workstream":"UPP-W6-EQUIVALENCE","result":"bidirectional_commitment_equivalence_frozen_with_anti_collapse_and_unknown_boundary"},
     {"target_pr":288,"workstream":"UPP-W7-RECOVERABLE-COMMITMENT","result":"recoverable_commitment_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"},
-    {"target_pr":289,"workstream":"UPP-W8-CONSTRAINED-EVOLUTION","result":"constrained_evolution_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"}
+    {"target_pr":289,"workstream":"UPP-W8-CONSTRAINED-EVOLUTION","result":"constrained_evolution_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"},
+    {"target_pr":290,"workstream":"UPP-W9-DEPENDENCY-STRUCTURE","result":"dependency_structure_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"}
   ],
-  "next_action":{"target_pr":290,"workstream":"UPP-W9-DEPENDENCY-STRUCTURE"},
-  "ordered_followups":[291,292,293,294,295,296],
+  "next_action":{"target_pr":291,"workstream":"UPP-W10-SEMANTIC-INTERPRETATION"},
+  "ordered_followups":[292,293,294,295,296],
   "public_evaluation_authorized":false
 }
