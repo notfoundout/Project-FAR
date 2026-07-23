@@ -18,7 +18,6 @@ inductive Verdict where
   | unknown
   deriving Repr, DecidableEq
 
-/-- A source model, its accessible observations, and the structural label at issue. -/
 structure ObservationModel where
   Source : Type
   Observation : Type
@@ -26,25 +25,18 @@ structure ObservationModel where
   observe : Source → Observation
   trueLabel : Source → Label
 
-/-- An observation-only classifier has no hidden access to the source. -/
 def Classifier (M : ObservationModel) := M.Observation → Option M.Label
 
-/-- Soundness for one source requires the classifier to return its true label. -/
 def SoundFor (M : ObservationModel) (classifier : Classifier M) (source : M.Source) : Prop :=
   classifier (M.observe source) = some (M.trueLabel source)
 
-/-- Two sources are observationally indistinguishable. -/
 def ObservationallyEquivalent (M : ObservationModel) (left right : M.Source) : Prop :=
   M.observe left = M.observe right
 
-/-- The underlying structural classifications disagree. -/
 def StructurallyIncompatible (M : ObservationModel) (left right : M.Source) : Prop :=
   M.trueLabel left ≠ M.trueLabel right
 
-/--
-No observation-only classifier can be sound for two observationally equivalent
-sources whose true structural labels differ.
--/
+/-- No observation-only classifier is sound for incompatible observational twins. -/
 theorem indistinguishable_incompatible_sources_block_joint_soundness
     (M : ObservationModel)
     (classifier : Classifier M)
@@ -53,14 +45,15 @@ theorem indistinguishable_incompatible_sources_block_joint_soundness
     (hIncompatible : StructurallyIncompatible M left right) :
     ¬ (SoundFor M classifier left ∧ SoundFor M classifier right) := by
   intro hSound
-  have hLeft := hSound.1
-  have hRight := hSound.2
-  unfold SoundFor at hLeft hRight
+  unfold SoundFor at hSound
   unfold ObservationallyEquivalent at hObserved
-  rw [hObserved] at hLeft
-  rw [hLeft] at hRight
-  injection hRight with hLabels
-  exact hIncompatible hLabels.symm
+  have hSome : some (M.trueLabel left) = some (M.trueLabel right) := by
+    calc
+      some (M.trueLabel left) = classifier (M.observe left) := hSound.1.symm
+      _ = classifier (M.observe right) := congrArg classifier hObserved
+      _ = some (M.trueLabel right) := hSound.2
+  have hLabels : M.trueLabel left = M.trueLabel right := Option.some.inj hSome
+  exact hIncompatible hLabels
 
 /-- Evidence access sufficient to distinguish every incompatible alternative. -/
 def DiscriminatingAccess (M : ObservationModel) (source : M.Source) : Prop :=
@@ -68,17 +61,14 @@ def DiscriminatingAccess (M : ObservationModel) (source : M.Source) : Prop :=
     StructurallyIncompatible M source alternative →
     ¬ ObservationallyEquivalent M source alternative
 
-/--
-A determinate observation-only classification is warranted only when all
-structurally incompatible alternatives are observationally distinguishable.
--/
+/-- A determinate verdict requires discriminating access and source-level soundness. -/
 def DeterminateWarranted
     (M : ObservationModel)
     (classifier : Classifier M)
     (source : M.Source) : Prop :=
   DiscriminatingAccess M source ∧ SoundFor M classifier source
 
-/-- Explicit adjudication preserves inaccessible or underdetermined cases as Unknown. -/
+/-- Inaccessible or underdetermined cases remain Unknown. -/
 def adjudicate
     (hasDiscriminatingAccess : Bool)
     (positiveEvidence : Bool)
@@ -90,28 +80,22 @@ def adjudicate
   else
     .unknown
 
-/-- Lack of discriminating access mechanically yields Unknown. -/
 theorem inaccessible_adjudicates_unknown
     (positiveEvidence defeatingEvidence : Bool) :
     adjudicate false positiveEvidence defeatingEvidence = .unknown := by
   rfl
 
-/-- Unknown is not silently promoted to Pass. -/
 theorem inaccessible_never_adjudicates_pass
     (positiveEvidence defeatingEvidence : Bool) :
     adjudicate false positiveEvidence defeatingEvidence ≠ .pass := by
-  decide
+  simp [adjudicate]
 
-/-- Unknown is not silently promoted to Fail. -/
 theorem inaccessible_never_adjudicates_fail
     (positiveEvidence defeatingEvidence : Bool) :
     adjudicate false positiveEvidence defeatingEvidence ≠ .fail := by
-  decide
+  simp [adjudicate]
 
-/--
-Epistemic maximality boundary: if an incompatible observational twin exists,
-then discriminating access is absent for that source.
--/
+/-- An incompatible observational twin refutes discriminating access. -/
 theorem incompatible_twin_refutes_discriminating_access
     (M : ObservationModel)
     (source twin : M.Source)
@@ -121,10 +105,7 @@ theorem incompatible_twin_refutes_discriminating_access
   intro hAccess
   exact (hAccess twin hIncompatible) hObserved
 
-/--
-Consequently no determinate warranted classification can be established for a
-source with an incompatible observational twin.
--/
+/-- G3 terminal epistemic-maximality boundary. -/
 theorem g3_epistemic_maximality_theorem
     (M : ObservationModel)
     (classifier : Classifier M)
