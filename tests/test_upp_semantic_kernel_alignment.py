@@ -25,7 +25,7 @@ class UPPSemanticKernelAlignmentTests(unittest.TestCase):
             self.assertIsNone(re.search(pattern, code), pattern)
 
     def test_terminal_theorem_and_constructor_exist(self) -> None:
-        self.assertIn("def constructSourceSemanticResult", self.lean)
+        self.assertIn("def constructRelativeSemanticConclusion", self.lean)
         self.assertIn("theorem g1_end_to_end_relative_semantic_theorem", self.lean)
         self.assertIn("theorem faithful_candidate_equivalent_to_canonical", self.lean)
 
@@ -36,6 +36,19 @@ class UPPSemanticKernelAlignmentTests(unittest.TestCase):
     def test_all_rccd_components_are_explicit(self) -> None:
         for component in self.registry["rccd_component_fields"]:
             self.assertRegex(self.lean, rf"\b{re.escape(component)}\b")
+
+    def test_complete_relative_chain_is_explicit(self) -> None:
+        for obligation in [
+            "inTargetClass",
+            "admissible",
+            "machineryClosed",
+            "sourceRoundTrip",
+            "packageRoundTrip",
+            "componentIndependent",
+            "nontrivial",
+            "relativelyMaximal",
+        ]:
+            self.assertIn(obligation, self.lean)
 
     def test_unknown_and_failure_noninflation_theorems_exist(self) -> None:
         self.assertIn("unknown_semantic_dimension_not_all_pass", self.lean)
