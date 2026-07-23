@@ -40,11 +40,11 @@ class TUEW3DeeperKernelTests(unittest.TestCase):
         self.assertEqual(result["terminal_outcome"], "rccd_irreducible_at_registered_level")
         self.assertIn("registered-level irreducibility is not metaphysical fundamentality", result["remaining_limits"])
 
-    def test_queue_advances_exactly_to_terminal_pr(self) -> None:
+    def test_historical_queue_checkpoint_is_immutable(self) -> None:
+        result = self.load(RESULT)
+        self.assertEqual(result["historical_queue_checkpoint"], {"completed_prs":[276,277,278,279],"next_pr":280,"ordered_followups":[]})
         queue = self.load(QUEUE)
-        self.assertEqual([x["target_pr"] for x in queue["completed_workstreams"]], [276, 277, 278, 279])
-        self.assertEqual(queue["next_action"]["target_pr"], 280)
-        self.assertEqual(queue["ordered_followups"], [])
+        self.assertIn(queue["status"], {"frozen", "complete"})
 
 
 if __name__ == "__main__":
