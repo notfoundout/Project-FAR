@@ -47,13 +47,17 @@ def main() -> int:
         fail("three-valued classifier is invalid")
     if result["rccd_necessity_proved"] or result["class_maximality_proved"] or result["unknowns_promoted"]:
         fail("downstream result inflated")
-    if queue["next_action"] != {"target_pr": 284, "workstream": "UPP-W3-CONTRACT"}:
-        fail("queue does not advance to PR 284")
-    if queue["ordered_followups"] != list(range(285, 297)):
-        fail("ordered followups changed")
+    completed = {x["target_pr"]: x for x in queue.get("completed_workstreams", [])}
+    if completed.get(283, {}).get("result") != result.get("terminal_result"):
+        fail("queue does not preserve completed PR 283 result")
+    next_action = queue.get("next_action")
+    if next_action is not None and next_action.get("target_pr", 0) < 284:
+        fail("queue regressed before PR 284")
+    if any(pr < 284 for pr in queue.get("ordered_followups", [])):
+        fail("ordered followups regressed")
     if queue["public_evaluation_authorized"]:
         fail("release gate opened")
-    print("PASS: UPP-W2 class is neutral, executable, three-valued, and queue-consistent")
+    print("PASS: UPP-W2 class is neutral, executable, three-valued, and history-consistent")
     return 0
 
 

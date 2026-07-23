@@ -1,0 +1,16 @@
+{
+  "schema_version":"1.0",
+  "program_id":"POST-TUE-UPP-001",
+  "workstream":"UPP-W3-CONTRACT",
+  "status":"complete",
+  "result":"independent_full_faithfulness_contract_frozen_with_visible_assumptions",
+  "clause_count":8,
+  "assumption_count":6,
+  "all_assumption_kinds_represented":true,
+  "clause_independence_witnesses_registered":true,
+  "rccd_necessity_proved":false,
+  "representation_universe_defined":false,
+  "unknowns_promoted":false,
+  "public_evaluation_authorized":false,
+  "next_action":{"target_pr":285,"workstream":"UPP-W4-REPRESENTATIONS"}
+}

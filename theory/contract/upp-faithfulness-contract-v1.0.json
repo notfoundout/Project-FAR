@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W3-CONTRACT",
+  "contract_id": "P_STAR_V1",
+  "result": "independent_full_faithfulness_contract_frozen_with_visible_assumptions",
+  "scope": "Evaluate whether a representation preserves the registered reasoning facts of an in-scope system; do not infer any preferred kernel from the contract definition.",
+  "aggregation": {
+    "rule": "fail_if_any_fail_unknown_if_none_fail_and_any_unknown_pass_only_if_all_pass",
+    "unknown_is_not_partial": true,
+    "pass_requires_positive_evidence": true
+  },
+  "clauses": [
+    {"id":"structural_fidelity","question":"Are registered entities, relations, state variables, and admissibility distinctions recoverable without collapse?","assumption_kinds":["definitional","methodological"]},
+    {"id":"semantic_fidelity","question":"Are the registered meanings and commitment contents recoverable up to the frozen semantic equivalence relation?","assumption_kinds":["normative","methodological"]},
+    {"id":"operational_fidelity","question":"Can registered permitted, forbidden, and realized changes be correctly answered?","assumption_kinds":["definitional","computational"]},
+    {"id":"dependency_fidelity","question":"Can registered support, defeat, and revision-relevant dependence questions be correctly answered?","assumption_kinds":["definitional","normative"]},
+    {"id":"information_fidelity","question":"Does recovery avoid both omission and fabrication for every registered reasoning fact?","assumption_kinds":["logical","methodological"]},
+    {"id":"historical_fidelity","question":"Can registered provenance and path-sensitive identity questions be correctly answered?","assumption_kinds":["definitional","normative"]},
+    {"id":"query_totality_on_registered_questions","question":"Does the recovery procedure return passable answers or explicit failure for every registered query rather than silently declining?","assumption_kinds":["computational","methodological"]},
+    {"id":"error_and_unknown_separation","question":"Are false answers, unavailable answers, unresolved evidence, and out-of-domain queries kept distinct?","assumption_kinds":["logical","methodological"]}
+  ],
+  "assumptions": [
+    {"id":"A-P-001","kind":"definitional","statement":"The registered reasoning-fact inventory fixes what must be preserved for a case."},
+    {"id":"A-P-002","kind":"logical","statement":"Contradictory answers cannot both count as faithful to the same registered fact under one interpretation."},
+    {"id":"A-P-003","kind":"computational","statement":"Registered queries and recovery procedures are finitely specifiable for adjudicable cases."},
+    {"id":"A-P-004","kind":"normative","statement":"Reasoning appraisal may depend on meaning, support, revision, and provenance rather than output behavior alone."},
+    {"id":"A-P-005","kind":"methodological","statement":"A preservation claim bears the burden of positive evidence; missing access remains Unknown."},
+    {"id":"A-P-006","kind":"empirical","statement":"Whether an actual artifact exposes the evidence required by the contract is case-specific and is never settled by this definition."}
+  ],
+  "independence_controls": {
+    "membership_in_c_star_does_not_imply_contract_pass": true,
+    "contract_pass_does_not_imply_any_kernel": true,
+    "contract_failure_does_not_identify_missing_machinery": true,
+    "clause_names_may_not_use_target_conclusion_vocabulary": true,
+    "definitions_may_not_reference_pr_280_result": true,
+    "behavioral_equivalence_alone_is_not_semantic_fidelity": true,
+    "unknown_may_not_be_promoted": true
+  },
+  "clause_independence_witnesses": [
+    {"clause":"structural_fidelity","witness":"correct answers stored in an opaque lookup table with no recoverable registered relational organization"},
+    {"clause":"semantic_fidelity","witness":"isomorphic symbols with a systematically wrong interpretation"},
+    {"clause":"operational_fidelity","witness":"accurate static description with incorrect permitted-successor answers"},
+    {"clause":"dependency_fidelity","witness":"correct temporal order but fabricated support and defeat relations"},
+    {"clause":"information_fidelity","witness":"accurate recovered subset that omits one registered fact"},
+    {"clause":"historical_fidelity","witness":"same current state while conflating registered path-sensitive identities"},
+    {"clause":"query_totality_on_registered_questions","witness":"correct answers only for a favorable unregistered subset of queries"},
+    {"clause":"error_and_unknown_separation","witness":"uses one null value for false, inaccessible, unresolved, and out-of-domain"}
+  ],
+  "nonclaims": [
+    "No RCCD component is established by defining these clauses.",
+    "No clause is claimed logically primitive or irreducible.",
+    "No representation universe or machinery closure is defined here.",
+    "No empirical system is declared faithful without separate evidence.",
+    "No universal theorem is proved."
+  ]
+}
