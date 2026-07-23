@@ -26,6 +26,18 @@ class TestUPPTerminalTheorem(unittest.TestCase):
         e = m.TerminalEvidence(**{**e.__dict__, "central_semantic_theorem_kernel_checked": True})
         self.assertEqual(m.adjudicate(e).outcome, m.Outcome.FULL)
 
+    def test_kernel_checked_without_composition_blocks(self):
+        e = m.canonical_evidence()
+        e = m.TerminalEvidence(**{
+            **e.__dict__,
+            "central_semantic_theorem_kernel_checked": True,
+            "executable_composition_verified": False,
+        })
+        a = m.adjudicate(e)
+        self.assertEqual(a.verdict, m.Verdict.UNKNOWN)
+        self.assertEqual(a.outcome, m.Outcome.BLOCKED)
+        self.assertFalse(a.public_evaluation_authorized)
+
     def test_missing_workstream_blocks(self):
         e = m.canonical_evidence()
         e = m.TerminalEvidence(**{**e.__dict__, "completed_workstreams": frozenset(range(281, 295))})
@@ -40,6 +52,17 @@ class TestUPPTerminalTheorem(unittest.TestCase):
         e = m.canonical_evidence()
         e = m.TerminalEvidence(**{**e.__dict__, "unresolved_properties": frozenset({"relative_maximality"})})
         self.assertEqual(m.adjudicate(e).verdict, m.Verdict.UNKNOWN)
+
+    def test_unresolved_precedes_overclaim(self):
+        e = m.canonical_evidence()
+        e = m.TerminalEvidence(**{
+            **e.__dict__,
+            "unresolved_properties": frozenset({"relative_maximality"}),
+            "open_world_maximality_claimed": True,
+        })
+        a = m.adjudicate(e)
+        self.assertEqual(a.verdict, m.Verdict.UNKNOWN)
+        self.assertEqual(a.outcome, m.Outcome.BLOCKED)
 
     def test_open_world_overclaim_defeats(self):
         e = m.canonical_evidence()
