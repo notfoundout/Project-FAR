@@ -15,12 +15,6 @@ structure RemainingBridges where
   everyAdmissibleExtensionConservative : Prop
   warrantedScopeEmbedsIntoFAR : Prop
 
-inductive BridgeVerdict where
-  | full
-  | partial
-  | blocked
-  deriving Repr, DecidableEq
-
 def DirectlySupported.all (d : DirectlySupported) : Prop :=
   d.relativeSemanticComposition ∧
   d.openWorldStructuralLowerBound ∧
@@ -34,32 +28,35 @@ def RemainingBridges.all (r : RemainingBridges) : Prop :=
   r.everyAdmissibleExtensionConservative ∧
   r.warrantedScopeEmbedsIntoFAR
 
-noncomputable def adjudicate
-    (direct : DirectlySupported) (remaining : RemainingBridges) : BridgeVerdict := by
-  classical
-  exact if direct.all then
-    if remaining.all then .full else .partial
-  else .blocked
+def FullCanonicalBridge
+    (direct : DirectlySupported) (remaining : RemainingBridges) : Prop :=
+  direct.all ∧ remaining.all
 
-theorem g1_g2_g3_only_adjudicates_partial
+def PartialCanonicalBridge
+    (direct : DirectlySupported) (remaining : RemainingBridges) : Prop :=
+  direct.all ∧ ¬ remaining.all
+
+theorem g1_g2_g3_only_support_partial_bridge
     (direct : DirectlySupported)
-    (hDirect : direct.all)
     (remaining : RemainingBridges)
+    (hDirect : direct.all)
     (hMissing : ¬ remaining.all) :
-    adjudicate direct remaining = .partial := by
-  classical
-  simp [adjudicate, hDirect, hMissing]
+    PartialCanonicalBridge direct remaining := by
+  exact ⟨hDirect, hMissing⟩
 
 theorem full_requires_every_far_bridge
     (direct : DirectlySupported)
     (remaining : RemainingBridges)
-    (hFull : adjudicate direct remaining = .full) :
+    (hFull : FullCanonicalBridge direct remaining) :
     remaining.all := by
-  classical
-  by_contra hMissing
-  have hNotFull : adjudicate direct remaining ≠ .full := by
-    unfold adjudicate
-    split <;> simp_all
-  exact hNotFull hFull
+  exact hFull.2
+
+theorem partial_excludes_full
+    (direct : DirectlySupported)
+    (remaining : RemainingBridges)
+    (hPartial : PartialCanonicalBridge direct remaining) :
+    ¬ FullCanonicalBridge direct remaining := by
+  intro hFull
+  exact hPartial.2 hFull.2
 
 end FAR.CanonicalUniversality.Bridge
