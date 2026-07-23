@@ -93,7 +93,7 @@ class TestReleaseComparison(unittest.TestCase):
         self.assertEqual(summary.comparison.decision, Decision.BLOCKED)
         self.assertEqual(summary.event_type_deltas["identity_changed"], 1)
 
-    def test_unresolved_external_state_is_unknown(self):
+    def test_unresolved_external_state_with_replay_regression_requires_review(self):
         from far_release_assurance.model import EvidenceStatus
 
         summary = self.compare(
@@ -104,9 +104,10 @@ class TestReleaseComparison(unittest.TestCase):
                 external_state_status=EvidenceStatus.UNKNOWN,
             )
         )
-        self.assertEqual(summary.comparison.decision, Decision.UNKNOWN)
+        self.assertEqual(summary.comparison.decision, Decision.REVIEW_REQUIRED)
         self.assertIn("external-state", summary.machinery.added)
         self.assertIn("external-state", summary.machinery.newly_unresolved)
+        self.assertLess(summary.replay_delta, 0)
 
     def test_replay_regression_requires_review(self):
         from dataclasses import replace
