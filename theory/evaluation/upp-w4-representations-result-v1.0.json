@@ -1,0 +1,40 @@
+{
+  "schema_version":"1.0",
+  "workstream":"UPP-W4-REPRESENTATIONS",
+  "target_pr":285,
+  "status":"complete",
+  "terminal_result":"admissible_representation_universe_frozen_with_effective_use_and_complete_support_inventory",
+  "proof_obligations_disposed":{
+    "representation_domain_typed":"pass",
+    "encoding_family_breadth":"pass",
+    "effective_construction_boundary":"pass",
+    "effective_use_boundary":"pass",
+    "support_inventory_boundary":"pass",
+    "registered_query_totality":"pass",
+    "identity_stability":"pass",
+    "medium_neutrality":"pass",
+    "unknown_boundary":"pass"
+  },
+  "registered_positive_cases":[
+    "finite symbolic transition package with total decoder",
+    "distributed graph encoding with inventoried scheduler and stores",
+    "probabilistic representation with effective sampling and exact query semantics",
+    "learned finite-parameter model with effective inference and declared codebook"
+  ],
+  "registered_negative_cases":[
+    "representation requiring an unimplemented oracle",
+    "package with a hidden external history store",
+    "decoder that silently diverges on a registered query",
+    "encoding whose object identities change between equivalent executions"
+  ],
+  "registered_unknown_cases":[
+    "opaque learned representation with unresolved support inventory",
+    "claimed effective package whose construction procedure is unavailable"
+  ],
+  "rccd_necessity_proved":false,
+  "machinery_closure_proved":false,
+  "representation_equivalence_proved":false,
+  "unknowns_promoted":false,
+  "public_evaluation_authorized":false,
+  "next_action":{"target_pr":286,"workstream":"UPP-W5-MACHINERY-CLOSURE"}
+}
