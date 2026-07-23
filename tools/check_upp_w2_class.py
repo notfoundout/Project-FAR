@@ -48,7 +48,7 @@ def main() -> int:
     if result["rccd_necessity_proved"] or result["class_maximality_proved"] or result["unknowns_promoted"]:
         fail("downstream result inflated")
     completed = {x["target_pr"]: x for x in queue.get("completed_workstreams", [])}
-    if completed.get(283, {}).get("result") != result.get("result"):
+    if completed.get(283, {}).get("result") != result.get("terminal_result"):
         fail("queue does not preserve completed PR 283 result")
     next_action = queue.get("next_action")
     if next_action is not None and next_action.get("target_pr", 0) < 284:
