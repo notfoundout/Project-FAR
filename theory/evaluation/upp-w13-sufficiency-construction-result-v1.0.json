@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W13-SUFFICIENCY-CONSTRUCTION",
+  "target_pr": 294,
+  "status": "completed",
+  "terminal_result": "relative_rccd_sufficiency_established_by_effective_compositional_construction_and_bidirectional_reconstruction",
+  "verdict": "proved",
+  "construction": {
+    "components": 5,
+    "typed_interfaces": 7,
+    "preservation_dimensions": 8,
+    "anti_trivialization_cases": 12,
+    "assembly_effective": true,
+    "machinery_closed": true,
+    "round_trip_reconstruction": true,
+    "equivalence_invariant": true,
+    "registered_query_totality": true,
+    "failure_unknown_separated": true
+  },
+  "claim_boundary": [
+    "relative_to_frozen_C_star_P_star_E_star_closure_and_equivalence",
+    "does_not_establish_global_irreducibility",
+    "does_not_establish_target_class_maximality",
+    "does_not_establish_uniqueness_of_RCCD_realization",
+    "does_not_establish_unrestricted_metaphysical_completeness"
+  ],
+  "next_workstream": {"target_pr": 295, "workstream": "UPP-W14-IRREDUCIBILITY-MAXIMALITY"},
+  "public_evaluation_authorized": false
+}
