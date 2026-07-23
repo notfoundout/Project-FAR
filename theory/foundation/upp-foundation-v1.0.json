@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "UPP-W1-FOUNDATION-001",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W1-FOUNDATION",
+  "status": "complete",
+  "purpose": "Define the typed ontology and formal semantic objects required by later universal-proof workstreams without proving RCCD or defining the target class through RCCD vocabulary.",
+  "sorts": [
+    {"id": "Identifier", "carrier": "nonempty finite strings", "role": "stable reference identity"},
+    {"id": "TimeIndex", "carrier": "natural numbers", "role": "ordered event and state index"},
+    {"id": "Commitment", "fields": ["id", "content_key", "bearer", "introduced_at"]},
+    {"id": "State", "fields": ["id", "time_index", "commitments", "metadata"]},
+    {"id": "Transition", "fields": ["id", "source_state", "target_state", "status", "grounds"]},
+    {"id": "Dependency", "fields": ["source", "target", "kind", "active_from", "active_until"]},
+    {"id": "HistoryEvent", "fields": ["id", "time_index", "event_type", "before_state", "after_state", "causes"]},
+    {"id": "ReasoningFact", "fields": ["id", "fact_type", "payload_key", "time_index", "revision_relevant"]},
+    {"id": "Observation", "fields": ["id", "query_key", "result_key", "observed_at"]},
+    {"id": "RecoveryWitness", "fields": ["fact_id", "representation_id", "procedure_id", "status", "output_key", "finite_steps"]},
+    {"id": "ReasoningSystem", "fields": ["id", "states", "transitions", "commitments", "dependencies", "history", "reasoning_facts", "observations"]}
+  ],
+  "relations": [
+    {"id": "references", "domain": ["State", "Transition", "HistoryEvent", "Dependency"], "codomain": ["State", "Commitment", "ReasoningFact"]},
+    {"id": "precedes", "domain": ["TimeIndex"], "codomain": ["TimeIndex"], "properties": ["irreflexive", "transitive"]},
+    {"id": "grounds", "domain": ["Commitment", "ReasoningFact"], "codomain": ["Commitment", "ReasoningFact"]},
+    {"id": "observes", "domain": ["Observation"], "codomain": ["ReasoningFact"]},
+    {"id": "recovers", "domain": ["RecoveryWitness"], "codomain": ["ReasoningFact"]}
+  ],
+  "transition_status": ["admissible", "inadmissible", "undetermined"],
+  "recovery_status": ["recovered", "not_recovered", "unknown"],
+  "well_formedness": [
+    "all identifiers are nonempty",
+    "identifiers are globally unique across identity-bearing objects within a system",
+    "all references resolve",
+    "all time indices are nonnegative",
+    "history is stored in nondecreasing time order",
+    "dependency endpoints reference commitments or reasoning facts",
+    "a recovered witness has an output and a named procedure",
+    "unknown recovery is not converted into recovered or not_recovered",
+    "executed transitions and rejected proposals are not conflated"
+  ],
+  "semantic_separations": [
+    "object identity is distinct from content equality",
+    "state is distinct from observation of state",
+    "transition occurrence is distinct from transition admissibility",
+    "dependency is distinct from mere temporal succession",
+    "history event is distinct from an enlarged present-state encoding",
+    "representation is distinct from recovery procedure",
+    "recovery failure is distinct from evidential unknown",
+    "normative classification is distinct from empirical occurrence"
+  ],
+  "assumption_kinds": ["definitional", "logical", "computational", "normative", "empirical", "methodological"],
+  "foundation_neutrality": {
+    "rccd_asserted": false,
+    "target_class_defined": false,
+    "faithfulness_contract_defined": false,
+    "representation_universe_defined": false,
+    "necessity_claim_proved": false,
+    "sufficiency_claim_proved": false,
+    "reason": "UPP-W1 supplies common typed objects only; later workstreams must justify class, contract, representations, and theorems independently."
+  },
+  "prohibited_inferences": [
+    "existence of a typed Commitment object proves recoverable-commitment necessity",
+    "existence of TransitionStatus proves constrained-evolution necessity",
+    "existence of Dependency proves dependency-sensitive-revision necessity",
+    "existence of HistoryEvent proves historical-identity necessity",
+    "existence of RecoveryWitness proves uniform-effective-recovery necessity",
+    "well-formedness validation proves universality"
+  ],
+  "completion_criteria": {
+    "typed_domain_complete_for_registered_downstream_obligations": true,
+    "executable_validation_model_present": true,
+    "machine_readable_specification_present": true,
+    "neutrality_and_nonproof_boundaries_explicit": true,
+    "queue_advanced_only_to_upp_w2": true
+  },
+  "result": "typed_foundation_established_without_rccd_entailment",
+  "next_action": {"target_pr": 283, "workstream": "UPP-W2-CLASS"}
+}
