@@ -1,0 +1,14 @@
+{
+  "schema_version":"1.0",
+  "program_id":"POST-TUE-UPP-001",
+  "workstream":"UPP-W7-RECOVERABLE-COMMITMENT",
+  "target_pr":288,
+  "theorem_id":"UPP-R1-NECESSITY-001",
+  "terminal_result":"recoverable_commitment_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence",
+  "proved":"Under the frozen C*, E*, P*, machinery-closure, and commitment-equivalence assumptions, every faithful admissible representation carries an effective, registered-query-total, equivalence-stable recoverable commitment domain that preserves the distinction between failure and Unknown.",
+  "proof_boundary":"The lemma is relative to the previously frozen formal assumptions and does not establish unrestricted or metaphysical commitment realism.",
+  "countermodel_status":"All registered attacks defeat at least one explicit premise or witness obligation rather than preserving the antecedent while denying the conclusion.",
+  "not_established":["R2 necessity","R3 necessity","R4 necessity","R5 necessity","RCCD sufficiency","RCCD irreducibility","maximality","the terminal universal theorem"],
+  "next_action":{"target_pr":289,"workstream":"UPP-W8-CONSTRAINED-EVOLUTION"},
+  "public_evaluation_authorized":false
+}
