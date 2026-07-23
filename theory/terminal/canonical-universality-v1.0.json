@@ -1,0 +1,26 @@
+{
+  "schema_version": "canonical-universality/1.0",
+  "status": "implemented_pending_validation",
+  "modules": [
+    "Canonicality",
+    "RepresentationInvariance",
+    "QuotientMinimality",
+    "DefinitionalCompleteness",
+    "ConservativeExtensibility",
+    "MaximalKnowability"
+  ],
+  "terminal_theorem": "FAR.CanonicalUniversality.Terminal.canonical_universality_terminal_theorem",
+  "claims": {
+    "unique_factorization_under_registered_category_model": true,
+    "representation_invariance_under_registered_equivalence": true,
+    "quotient_minimality_under_faithfulness_completeness_and_separation": true,
+    "definitional_completeness_for_registered_reasoning_invariants": true,
+    "conservative_extensibility_for_registered_extensions": true,
+    "maximal_knowability_under_registered_scope_embedding": true,
+    "unrestricted_metaphysical_universality": false,
+    "unique_physical_ontology": false,
+    "inaccessible_systems_classified": false
+  },
+  "decision_rule": "Full canonical universality is reported only when all six independent obligations are established; otherwise report the exact partial result or blocking obligation.",
+  "depends_on": ["G1", "G2", "G3"]
+}
