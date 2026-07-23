@@ -1,0 +1,42 @@
+{
+  "schema_version": "far-release-package/0.1",
+  "release_id": "e2e-candidate-blocked",
+  "source_commit": "fixture-candidate-blocked-001",
+  "machinery": [
+    {
+      "machinery_id": "runtime",
+      "kind": "runtime",
+      "name": "python-runtime",
+      "version": "3.11",
+      "digest": null,
+      "required_dependencies": [],
+      "evidence_status": "confirmed",
+      "declared": true,
+      "effective": true,
+      "valid": true,
+      "mutable": false,
+      "external": false,
+      "attributes": {}
+    },
+    {
+      "machinery_id": "model",
+      "kind": "model",
+      "name": "deterministic-reference-model",
+      "version": "1",
+      "digest": null,
+      "required_dependencies": ["runtime"],
+      "evidence_status": "confirmed",
+      "declared": false,
+      "effective": true,
+      "valid": true,
+      "mutable": false,
+      "external": false,
+      "attributes": {}
+    }
+  ],
+  "events": [],
+  "decision_roots": ["model"],
+  "release_roots": ["runtime"],
+  "replay_completeness": 0.8,
+  "output_metrics": {"accuracy": 1.0}
+}
