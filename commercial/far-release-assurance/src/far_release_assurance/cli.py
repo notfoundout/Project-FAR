@@ -1,4 +1,4 @@
-"""Local CLI for validating and normalizing FAR release packages."""
+"""Local CLI for FAR release-package operations."""
 
 from __future__ import annotations
 
@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from .closure import assess_closure
+from .compare import compare_releases, comparison_to_dict
 from .io import ReleasePackageError, canonical_json, load_package, package_digest, package_to_dict
 
 
@@ -29,6 +30,11 @@ def build_parser() -> argparse.ArgumentParser:
     digest = subparsers.add_parser("digest", help="emit canonical SHA-256 digest")
     digest.add_argument("package")
 
+    compare = subparsers.add_parser("compare", help="compare baseline and candidate packages")
+    compare.add_argument("--baseline", required=True)
+    compare.add_argument("--candidate", required=True)
+    compare.add_argument("--output")
+
     return parser
 
 
@@ -42,6 +48,13 @@ def _write(text: str, output: str | None) -> None:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
+        if args.command == "compare":
+            baseline = load_package(args.baseline)
+            candidate = load_package(args.candidate)
+            payload = comparison_to_dict(compare_releases(baseline, candidate))
+            _write(json.dumps(payload, sort_keys=True, indent=2) + "\n", args.output)
+            return 0
+
         package = load_package(args.package)
         if args.command == "validate":
             sys.stdout.write(f"VALID {package.release_id} {package_digest(package)}\n")

@@ -27,4 +27,11 @@ jobs:
       - name: Compile commercial package
         run: python -m compileall -q commercial/far-release-assurance/src
       - name: Run deterministic foundation tests
-        run: python -m unittest discover -s commercial/far-release-assurance/tests -p "test_*.py" -v
+        shell: bash
+        run: |
+          set +e
+          log_file="${RUNNER_TEMP}/commercial-test.log"
+          python -m unittest discover -s commercial/far-release-assurance/tests -p "test_*.py" -v > "$log_file" 2>&1
+          status=$?
+          tail -c 6000 "$log_file"
+          exit "$status"
