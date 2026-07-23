@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W11-HISTORICAL-TRACE",
+  "target_pr": 292,
+  "status": "complete",
+  "theorem_status": "proved_relative_to_registered_antecedents",
+  "terminal_result": "historical_trace_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence",
+  "evidence": {
+    "executable_model": "theory/history/upp_historical_trace_v1.py",
+    "machine_readable_specification": "theory/history/upp-historical-trace-v1.0.json",
+    "research_note": "docs/research/upp-w11-historical-trace-v1.0.md",
+    "audit": "docs/audits/upp-w11-historical-trace-audit.md",
+    "tests": "tests/test_upp_w11_historical_trace.py",
+    "checker": "tools/check_upp_w11_historical_trace.py"
+  },
+  "separating_countermodels": [
+    "final_snapshot_only",
+    "timestamped_log_without_identity",
+    "unordered_event_bag",
+    "history_reconstructed_post_hoc",
+    "revision_without_supersession_lineage",
+    "hidden_external_audit_log",
+    "rollback_that_changes_commitments",
+    "unknown_history_answer_collapsed_to_absence"
+  ],
+  "unresolved": [
+    "component_independence",
+    "joint_sufficiency",
+    "irreducibility",
+    "class_maximality",
+    "terminal_universal_theorem"
+  ],
+  "next_workstream": {"target_pr": 293, "workstream": "UPP-W12-COMPONENT-INDEPENDENCE"},
+  "public_evaluation_authorized": false
+}
