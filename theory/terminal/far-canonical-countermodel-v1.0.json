@@ -1,33 +1,49 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "claim_id": "FAR-CANONICAL-COUNTERMODEL-001",
-  "status": "refuted_under_frozen_framework",
-  "question": "Do the currently registered Project FAR assumptions entail FAR-specific canonical universality?",
-  "answer": "No",
+  "status": "grounded_refutation_of_g1_canonical_uniqueness",
+  "question": "Do the current registered G1 semantics entail pairwise unique FAR recovery up to the registered commitment-equivalence relation?",
+  "answer": "No under the current G1 semantics",
   "counterexample": {
     "proof_object": "mechanization/lean/FARCanonicalCountermodel.lean",
-    "theorem": "current_assumptions_refute_canonical_entailment",
-    "candidate_count": 1,
-    "recovery_count": 2,
-    "base_evidence_satisfied": true,
-    "candidate_admissible": true,
-    "machinery_closed": true,
-    "fully_faithful": true,
-    "both_recoveries_preserve_commitments": true,
-    "recoveries_equal": false
+    "theorem": "current_g1_semantics_do_not_entail_canonical_uniqueness",
+    "model_type": "FrozenUPPSemantics",
+    "uses_actual_registered_predicates": true,
+    "source_count": 3,
+    "package_count": 3,
+    "target_class_source": "center",
+    "candidate_packages": ["left", "right"],
+    "both_candidates_admissible": true,
+    "both_candidates_machinery_closed": true,
+    "both_candidates_fully_preserved": true,
+    "each_candidate_equivalent_to_canonical": true,
+    "candidates_equivalent_to_each_other": false
   },
-  "decisive_failure": "unique_factorization",
-  "terminal_consequence": "full_canonical_universality_fails_as_a_theorem_of_the_frozen_assumptions",
+  "decisive_failure": "pairwise_unique_recovery_up_to_registered_equivalence",
+  "formal_cause": {
+    "commitment_equivalence_reflexive_required": true,
+    "commitment_equivalence_symmetric_required": false,
+    "commitment_equivalence_transitive_required": false,
+    "forked_equivalence_to_canonical_permitted": true
+  },
+  "terminal_consequence": "canonical_uniqueness_does_not_follow_from_the_current_G1_FrozenUPPSemantics_contract",
+  "relation_to_G2_G3": "G2 and G3 remain valid and do not add symmetry, transitivity, or pairwise uniqueness to the G1 commitment-equivalence relation.",
   "claim_boundaries": {
     "does_not_refute_strengthened_far": true,
     "does_not_refute_relative_semantic_composition": true,
     "does_not_refute_open_world_structural_lower_bound": true,
     "does_not_refute_epistemic_maximality": true,
     "does_not_claim_metaphysical_nonuniversality": true,
+    "does_not_establish_unique_physical_ontology": true,
     "requires_new_constraints_to_reopen": [
-      "independently justified commitment-equivalence quotient",
-      "recovery-map extensionality",
-      "or stronger admissibility conditions that exclude the countermodel"
+      "prove commitmentEquivalent is an equivalence relation",
+      "define recovery equality or quotient equality extensionally",
+      "prove all faithful candidates lie in one equivalence class",
+      "then re-run quotient minimality and representation invariance"
     ]
+  },
+  "supersedes": {
+    "previous_status": "refuted_under_frozen_framework",
+    "reason": "The previous Boolean proxy did not instantiate substantive FAR definitions. This version replaces it with an actual FrozenUPPSemantics model."
   }
 }
