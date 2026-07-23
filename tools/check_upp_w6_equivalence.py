@@ -61,7 +61,7 @@ def main() -> int:
         require(phrase in audit, f"audit missing {phrase!r}")
 
     proc = subprocess.run(
-        [sys.executable, "-m", "unittest", "tests.test_upp_w6_equivalence"],
+        [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_upp_w6_equivalence.py"],
         cwd=ROOT,
         text=True,
         capture_output=True,
