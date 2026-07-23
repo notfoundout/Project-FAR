@@ -1,0 +1,46 @@
+name: FAR Production Operations
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-production-operations.yml"
+
+jobs:
+  production-operations:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: python -m pip install ./commercial/far-decision-integrity
+      - name: Run full package tests
+        run: python -m unittest discover -s commercial/far-decision-integrity/tests -p "test_*.py"
+      - name: Verify installed command
+        run: far-operations --help
+      - name: Exercise backup verification
+        run: |
+          mkdir -p far-evidence/operations/blobs
+          python - <<'PY'
+          import sqlite3
+          from pathlib import Path
+          root = Path('far-evidence/operations')
+          for name in ('security.db', 'evidence.db'):
+              with sqlite3.connect(root / name) as connection:
+                  connection.execute('CREATE TABLE sample (id TEXT PRIMARY KEY)')
+          (root / 'blobs' / 'sample.json').write_text('{}\n', encoding='utf-8')
+          PY
+          far-operations --security-db far-evidence/operations/security.db backup \
+            --evidence-db far-evidence/operations/evidence.db \
+            --blob-root far-evidence/operations/blobs \
+            --output far-evidence/operations/backup
+          far-operations --security-db far-evidence/operations/security.db verify-backup \
+            far-evidence/operations/backup
+      - name: Upload operations evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-production-operations-evidence
+          path: far-evidence/operations
