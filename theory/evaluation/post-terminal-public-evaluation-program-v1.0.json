@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TERM-EVAL-001",
+  "status": "registered",
+  "predecessor_program": "POST-TUE-UPP-001",
+  "predecessor_terminal_pr": 296,
+  "predecessor_terminal_result": "strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary",
+  "purpose": "Expose the exact weakened relative operational theorem to independent criticism, countermodel search, proof review, mechanization strengthening, and bounded empirical replication without widening the proved claim.",
+  "authorized_claim": "The registered relative RCCD theorem is proved at the executable compositional level under its frozen premises and finite maximality boundary; the complete semantic theorem is not one kernel-checked proof object.",
+  "required_disclosures": [
+    "exact theorem and version",
+    "all frozen premises",
+    "finite registered maximality boundary",
+    "non-kernel-checked end-to-end semantic composition",
+    "Unknown is neither support nor defeat",
+    "all nonclaims",
+    "evidence-type labels"
+  ],
+  "evidence_types": [
+    "project_authored_deductive",
+    "executable_corroboration",
+    "proof_assistant_checked",
+    "independent_proof_review",
+    "independent_empirical_replication",
+    "application_correspondence"
+  ],
+  "evaluation_channels": [
+    "independent_proof_review",
+    "countermodel_and_scope_challenge",
+    "kernel_checked_reconstruction",
+    "independent_bounded_replication",
+    "application_correspondence_study"
+  ],
+  "admissible_challenges": [
+    "premise_counterexample",
+    "non_effective_reconstruction",
+    "hidden_machinery",
+    "equivalence_failure",
+    "identity_instability",
+    "query_incompleteness",
+    "failure_unknown_collapse",
+    "unregistered_extension_countermodel",
+    "semantic_composition_gap",
+    "application_mismatch"
+  ],
+  "prohibited_promotions": [
+    "unrestricted_metaphysical_universality",
+    "open_world_maximality",
+    "unique_or_final_ontology",
+    "consciousness_criterion",
+    "proof_by_finite_testing",
+    "proof_by_absence_of_counterexamples",
+    "ci_success_as_mathematical_proof",
+    "internal_execution_as_independent_replication"
+  ],
+  "decision_rules": {
+    "confirmed_defect": "open a versioned claim-impact record and revise or retract the affected claim",
+    "unresolved_challenge": "record Unknown; do not count as support or defeat",
+    "failed_independent_replication": "preserve the failure and assess its impact without repairing the protocol post hoc",
+    "successful_independent_review": "upgrade only the evidence dimension actually reviewed",
+    "kernel_checked_terminal_reconstruction": "may support reconsideration of the full registered outcome through a newly registered adjudication program"
+  },
+  "workstreams": [
+    {"id": "PTE-W0-DISCLOSURE", "state": "complete", "deliverable": "canonical public disclosure and repository integration"},
+    {"id": "PTE-W1-INDEPENDENT-REVIEW", "state": "open", "deliverable": "independent proof review package and findings"},
+    {"id": "PTE-W2-KERNEL-RECONSTRUCTION", "state": "open", "deliverable": "single proof-assistant reconstruction or explicit obstruction report"},
+    {"id": "PTE-W3-COUNTERMODEL-SEARCH", "state": "open", "deliverable": "registered external challenge ledger"},
+    {"id": "PTE-W4-EMPIRICAL-REPLICATION", "state": "open", "deliverable": "independent bounded replication evidence"}
+  ],
+  "next_action": {"workstream": "PTE-W1-INDEPENDENT-REVIEW"},
+  "public_evaluation_authorized": true,
+  "new_deductive_claim_requires_new_program": true
+}
