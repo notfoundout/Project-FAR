@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W9-DEPENDENCY-STRUCTURE",
+  "target_pr": 290,
+  "status": "complete",
+  "verdict": "proved",
+  "terminal_result": "dependency_structure_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence",
+  "evidence": {
+    "executable_model": "theory/foundation/upp_dependency_structure_v1.py",
+    "machine_specification": "theory/foundation/upp-dependency-structure-v1.0.json",
+    "tests": "tests/test_upp_dependency_structure.py",
+    "checker": "tools/check_upp_w9_dependency_structure.py",
+    "research_note": "docs/research/upp-w9-dependency-structure-v1.0.md",
+    "audit": "docs/audits/upp-w9-dependency-structure-audit.md"
+  },
+  "proved_scope": "Relative operational necessity of a recoverable typed, time-scoped, equivalence-stable dependency relation under the frozen antecedents.",
+  "not_proved": [
+    "unrestricted metaphysical dependency realism",
+    "semantic interpretation necessity",
+    "historical identity necessity",
+    "RCCD sufficiency",
+    "RCCD irreducibility",
+    "RCCD maximality",
+    "the terminal universal theorem"
+  ],
+  "next_action": {
+    "target_pr": 291,
+    "workstream": "UPP-W10-SEMANTIC-INTERPRETATION"
+  },
+  "public_evaluation_authorized": false
+}

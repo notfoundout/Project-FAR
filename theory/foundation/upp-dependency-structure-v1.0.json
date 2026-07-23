@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W9-DEPENDENCY-STRUCTURE",
+  "target_pr": 290,
+  "status": "complete",
+  "theorem_id": "UPP-R3-DEPENDENCY-NECESSITY-001",
+  "statement": "For every target-class system and admissible machinery-closed fully faithful representation preserving commitment equivalence, if dependency queries are registered, then a recoverable typed dependency relation exists over represented commitments and operations.",
+  "antecedents": [
+    "target_class_member",
+    "representation_admissible",
+    "machinery_closed",
+    "fully_faithful",
+    "equivalence_preserved",
+    "dependency_queries_total",
+    "failure_unknown_separated"
+  ],
+  "witness_requirements": [
+    "nonempty identified node domain",
+    "nonempty typed dependency edge set",
+    "edge endpoints resolve to represented identities",
+    "each edge has explicit temporal scope",
+    "each edge is effectively recoverable",
+    "each edge is operationally relevant",
+    "edge identity and kind are stable under frozen equivalence",
+    "all decoders, graph stores, indexes, reason extractors, and oracles are charged to machinery closure",
+    "at least one support or defeat edge exists"
+  ],
+  "dependency_kinds": [
+    "support",
+    "defeat",
+    "revision",
+    "replacement",
+    "admissibility",
+    "provenance"
+  ],
+  "anti_trivialization": [
+    "temporal succession is not dependency",
+    "statistical correlation is not dependency",
+    "shared output is not dependency",
+    "a flat set of commitments is not dependency structure",
+    "untyped reachability is insufficient",
+    "post hoc explanations are insufficient",
+    "hidden external graphs or reason services are inadmissible",
+    "failure may not be collapsed into Unknown"
+  ],
+  "countermodels": [
+    "same commitments with different support graphs",
+    "same outputs with one defeating dependency removed",
+    "temporally ordered events without operational dependence",
+    "correlated facts without recoverable direction",
+    "hidden external provenance service",
+    "representation-dependent edge typing",
+    "unknown dependency answer reported as absence"
+  ],
+  "outcomes": ["proved", "refuted", "unknown"],
+  "terminal_result": "dependency_structure_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence",
+  "claim_boundary": "Operational relative necessity only; no unrestricted metaphysical claim that every relation is an objective dependency.",
+  "release_gate": {
+    "public_evaluation_authorized": false,
+    "next_pr": 291,
+    "next_workstream": "UPP-W10-SEMANTIC-INTERPRETATION"
+  }
+}
