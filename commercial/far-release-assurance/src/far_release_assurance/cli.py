@@ -10,6 +10,7 @@ from pathlib import Path
 from .closure import assess_closure
 from .compare import compare_releases, comparison_to_dict
 from .io import ReleasePackageError, canonical_json, load_package, package_digest, package_to_dict
+from .report import build_report_bundle, write_report_bundle
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -35,6 +36,11 @@ def build_parser() -> argparse.ArgumentParser:
     compare.add_argument("--candidate", required=True)
     compare.add_argument("--output")
 
+    report = subparsers.add_parser("report", help="write report.json, report.md, and manifest.json")
+    report.add_argument("--baseline", required=True)
+    report.add_argument("--candidate", required=True)
+    report.add_argument("--output-directory", required=True)
+
     return parser
 
 
@@ -48,11 +54,19 @@ def _write(text: str, output: str | None) -> None:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        if args.command == "compare":
+        if args.command in {"compare", "report"}:
             baseline = load_package(args.baseline)
             candidate = load_package(args.candidate)
-            payload = comparison_to_dict(compare_releases(baseline, candidate))
-            _write(json.dumps(payload, sort_keys=True, indent=2) + "\n", args.output)
+            summary = compare_releases(baseline, candidate)
+            if args.command == "compare":
+                payload = comparison_to_dict(summary)
+                _write(json.dumps(payload, sort_keys=True, indent=2) + "\n", args.output)
+                return 0
+            bundle = build_report_bundle(baseline, candidate, summary)
+            write_report_bundle(bundle, args.output_directory)
+            sys.stdout.write(
+                f"REPORT {candidate.release_id} {summary.comparison.decision.value} {args.output_directory}\n"
+            )
             return 0
 
         package = load_package(args.package)
