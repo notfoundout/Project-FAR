@@ -1,0 +1,30 @@
+{
+  "schema_version":"1.0",
+  "program_id":"POST-TUE-UPP-001",
+  "workstream":"UPP-W7-RECOVERABLE-COMMITMENT",
+  "target_pr":288,
+  "theorem_id":"UPP-R1-NECESSITY-001",
+  "statement":"For every S in C* and every machinery-closed admissible representation R satisfying P*, there exists an effective, registered-query-total, equivalence-stable domain of recoverable reasoning commitments with distinct failure and Unknown outcomes.",
+  "formal_shape":"forall S in C*, forall R in E*: P*(S,R) and Closed(R) -> exists K_R RecoverableCommitmentDomain(K_R,S,R)",
+  "premises":["target_class_membership","representation_admissibility","machinery_closure","full_faithfulness","commitment_equivalence"],
+  "witness_obligations":["effective_commitment_domain","registered_query_totality","stable_commitment_identity","failure_unknown_separation"],
+  "proof_strategy":[
+    "extract commitment-denoting answers from the registered faithful query interface",
+    "quotient only by the frozen bidirectional commitment-equivalence relation",
+    "use machinery closure to charge every extraction procedure to the representation package",
+    "use semantic, information, query-totality, and error/Unknown fidelity clauses of P* to establish effectiveness and totality",
+    "construct a contradiction witness whenever a faithful query lacks a recoverable commitment referent"
+  ],
+  "separating_countermodels":[
+    "same final output but two incompatible internal commitments",
+    "query answers produced by a concealed decoder",
+    "commitment identity changes under a permitted renaming",
+    "failed recovery silently encoded as Unknown",
+    "per-instance non-effective commitment selector",
+    "partial query interface omitting a registered commitment question"
+  ],
+  "verdicts":["proved","refuted","unknown"],
+  "nonclaims":["R2 necessity","R3 necessity","R4 necessity","R5 necessity","RCCD sufficiency","RCCD irreducibility","maximality","the terminal universal theorem"],
+  "next_action":{"target_pr":289,"workstream":"UPP-W8-CONSTRAINED-EVOLUTION"},
+  "public_evaluation_authorized":false
+}
