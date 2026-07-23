@@ -1,0 +1,49 @@
+name: FAR Authorization Service
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-authorization-service.yml"
+  workflow_dispatch:
+
+jobs:
+  service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: python -m pip install ./commercial/far-decision-integrity
+      - name: Run service tests
+        run: python -m unittest discover -s commercial/far-decision-integrity/tests -p "test_service.py"
+      - name: Exercise installed HTTP service
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p far-evidence/service
+          far-authorization-service --host 127.0.0.1 --port 8088 --evidence-root far-evidence/service &
+          service_pid=$!
+          trap 'kill "$service_pid" 2>/dev/null || true' EXIT
+          python - <<'PY'
+          import json
+          import time
+          import urllib.request
+
+          for _ in range(30):
+              try:
+                  with urllib.request.urlopen("http://127.0.0.1:8088/healthz") as response:
+                      assert json.load(response)["status"] == "ok"
+                  break
+              except Exception:
+                  time.sleep(0.2)
+          else:
+              raise SystemExit("service did not become healthy")
+          PY
+      - name: Upload service evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-authorization-service-evidence
+          path: far-evidence/service
