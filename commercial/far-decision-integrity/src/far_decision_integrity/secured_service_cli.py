@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 from typing import Sequence
 
-from .evidence_store import EvidenceStore
+from .store import EvidenceStore
 from .secured_service import SecuredRuntime, serve_secured
 from .security import TenantSecurityStore
 
