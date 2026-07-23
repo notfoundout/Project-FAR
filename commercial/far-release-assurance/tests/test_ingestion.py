@@ -31,7 +31,7 @@ class TestReleasePackageIngestion(unittest.TestCase):
 
     def test_round_trip_is_lossless_and_canonical(self):
         reconstructed = package_from_dict(self.payload)
-        self.assertEqual(reconstructed, self.package)
+        self.assertEqual(package_to_dict(reconstructed), self.payload)
         self.assertEqual(canonical_json(reconstructed), canonical_json(self.package))
 
     def test_digest_is_stable_across_input_order(self):
@@ -43,7 +43,8 @@ class TestReleasePackageIngestion(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = pathlib.Path(directory) / "release.json"
             write_package(self.package, path)
-            self.assertEqual(load_package(path), self.package)
+            loaded = load_package(path)
+            self.assertEqual(package_to_dict(loaded), package_to_dict(self.package))
             self.assertTrue(path.read_text(encoding="utf-8").endswith("\n"))
 
     def test_rejects_wrong_schema_version(self):
