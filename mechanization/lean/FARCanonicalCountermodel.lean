@@ -1,86 +1,80 @@
 import Std
-import mechanization.lean.FARCanonicalBridge
 import mechanization.lean.FARCanonicalUniversalityDecision
 
 /-!
 # FAR canonicality countermodel
 
-This file gives a concrete finite countermodel to the claim that the currently
-registered G1--G3 evidence and FAR bridge vocabulary entail unique canonical
-factorization.  The model deliberately satisfies the registered base evidence,
-admissibility, machinery closure, full faithfulness, and commitment preservation,
-while admitting two distinct FAR-recovery maps.
+A concrete finite countermodel to the claim that the currently registered G1--G3
+base evidence entails FAR-specific unique factorization. The model satisfies the
+registered qualification flags and commitment-preservation condition while
+admitting two distinct qualified recovery maps.
 
-The conclusion is scoped to the frozen formal framework: canonical universality
-is false as a theorem of the current assumptions.  This is not a metaphysical
-claim that no strengthened FAR theory could be canonical.
+The result is scoped to the frozen framework. It does not preclude a strengthened
+FAR theory from adding independently justified extensionality or quotient rules.
 -/
 
 namespace FAR.CanonicalUniversality.Countermodel
-
-structure Candidate where
-  token : Unit
-  deriving DecidableEq
 
 inductive Recovery where
   | left
   | right
   deriving Repr, DecidableEq
 
-structure FrozenAssumptions where
-  g1RelativeSemantics : Prop
-  g2OpenWorldLowerBound : Prop
-  g3EpistemicBoundary : Prop
-  admissible : Candidate → Prop
-  machineryClosed : Candidate → Prop
-  fullyFaithful : Candidate → Prop
-  preservesCommitments : Candidate → Recovery → Prop
+structure FrozenModel where
+  g1RelativeSemantics : Bool
+  g2OpenWorldLowerBound : Bool
+  g3EpistemicBoundary : Bool
+  admissible : Bool
+  machineryClosed : Bool
+  fullyFaithful : Bool
+  leftPreservesCommitments : Bool
+  rightPreservesCommitments : Bool
+  deriving Repr, DecidableEq
 
 
-def witnessCandidate : Candidate := ⟨()⟩
+def countermodel : FrozenModel :=
+  { g1RelativeSemantics := true
+    g2OpenWorldLowerBound := true
+    g3EpistemicBoundary := true
+    admissible := true
+    machineryClosed := true
+    fullyFaithful := true
+    leftPreservesCommitments := true
+    rightPreservesCommitments := true }
 
 
-def frozenModel : FrozenAssumptions :=
-  { g1RelativeSemantics := True
-    g2OpenWorldLowerBound := True
-    g3EpistemicBoundary := True
-    admissible := fun _ => True
-    machineryClosed := fun _ => True
-    fullyFaithful := fun _ => True
-    preservesCommitments := fun _ _ => True }
+def baseSatisfied (m : FrozenModel) : Bool :=
+  m.g1RelativeSemantics && m.g2OpenWorldLowerBound && m.g3EpistemicBoundary
 
 
-def BaseSatisfied (m : FrozenAssumptions) : Prop :=
-  m.g1RelativeSemantics ∧ m.g2OpenWorldLowerBound ∧ m.g3EpistemicBoundary
+def candidateQualified (m : FrozenModel) : Bool :=
+  m.admissible && m.machineryClosed && m.fullyFaithful
 
 
-def CandidateQualified (m : FrozenAssumptions) (c : Candidate) : Prop :=
-  m.admissible c ∧ m.machineryClosed c ∧ m.fullyFaithful c
+def recoveryQualified (m : FrozenModel) : Recovery → Bool
+  | .left => m.leftPreservesCommitments
+  | .right => m.rightPreservesCommitments
 
 
-def RecoveryQualified (m : FrozenAssumptions) (c : Candidate) (r : Recovery) : Prop :=
-  m.preservesCommitments c r
-
-
-def UniqueRecovery (m : FrozenAssumptions) (c : Candidate) : Prop :=
+def uniqueRecovery (m : FrozenModel) : Prop :=
   ∀ r₁ r₂ : Recovery,
-    RecoveryQualified m c r₁ →
-    RecoveryQualified m c r₂ →
+    recoveryQualified m r₁ = true →
+    recoveryQualified m r₂ = true →
     r₁ = r₂
 
 
-theorem frozen_base_is_satisfied : BaseSatisfied frozenModel := by
-  exact ⟨trivial, trivial, trivial⟩
+theorem frozen_base_is_satisfied : baseSatisfied countermodel = true := by
+  decide
 
 
-theorem witness_is_qualified : CandidateQualified frozenModel witnessCandidate := by
-  exact ⟨trivial, trivial, trivial⟩
+theorem witness_is_qualified : candidateQualified countermodel = true := by
+  decide
 
 
 theorem both_recoveries_are_qualified :
-    RecoveryQualified frozenModel witnessCandidate .left ∧
-    RecoveryQualified frozenModel witnessCandidate .right := by
-  exact ⟨trivial, trivial⟩
+    recoveryQualified countermodel .left = true ∧
+    recoveryQualified countermodel .right = true := by
+  decide
 
 
 theorem recoveries_are_distinct : Recovery.left ≠ Recovery.right := by
@@ -88,29 +82,25 @@ theorem recoveries_are_distinct : Recovery.left ≠ Recovery.right := by
 
 
 theorem unique_factorization_counterexample :
-    ¬ UniqueRecovery frozenModel witnessCandidate := by
-  intro hUnique
-  have hEq : Recovery.left = Recovery.right :=
-    hUnique .left .right trivial trivial
+    ¬ uniqueRecovery countermodel := by
+  intro h
+  have hEq : Recovery.left = Recovery.right := h .left .right (by decide) (by decide)
   exact recoveries_are_distinct hEq
 
-/-- The current registered assumptions do not entail FAR-specific unique factorization. -/
+/-- The frozen base and qualification assumptions coexist with failed uniqueness. -/
 theorem current_assumptions_refute_canonical_entailment :
-    BaseSatisfied frozenModel ∧
-    CandidateQualified frozenModel witnessCandidate ∧
-    ¬ UniqueRecovery frozenModel witnessCandidate := by
+    baseSatisfied countermodel = true ∧
+    candidateQualified countermodel = true ∧
+    ¬ uniqueRecovery countermodel := by
   exact ⟨frozen_base_is_satisfied, witness_is_qualified, unique_factorization_counterexample⟩
 
-/-- One failed necessary bridge is sufficient to defeat the six-bridge conjunction. -/
+/-- Failure of the necessary unique-factorization bridge defeats the full conjunction. -/
 theorem full_canonical_bridge_fails_in_countermodel :
-    ¬ (
-      UniqueRecovery frozenModel witnessCandidate ∧
-      True ∧ True ∧ True ∧ True ∧ True
-    ) := by
+    ¬ (uniqueRecovery countermodel ∧ True ∧ True ∧ True ∧ True ∧ True) := by
   intro h
   exact unique_factorization_counterexample h.1
 
-/-- The terminal adjudicator returns refuted when supplied the certified counterexample. -/
+/-- The existing terminal adjudicator classifies a certified counterexample as refutation. -/
 theorem terminal_verdict_with_counterexample :
     FAR.CanonicalUniversality.Decision.adjudicate
       FAR.CanonicalUniversality.Decision.completeBase
