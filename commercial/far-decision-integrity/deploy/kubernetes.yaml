@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: far-secured-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: far-secured-service
+  template:
+    metadata:
+      labels:
+        app: far-secured-service
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: far
+          image: ghcr.io/notfoundout/project-far:1.6.0
+          args:
+            - --host
+            - 0.0.0.0
+            - --port
+            - "8080"
+            - --identity-config
+            - /etc/far/oidc.json
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: config
+              mountPath: /etc/far
+              readOnly: true
+            - name: temporary
+              mountPath: /tmp
+      volumes:
+        - name: config
+          configMap:
+            name: far-runtime-config
+        - name: temporary
+          emptyDir:
+            sizeLimit: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: far-secured-service
+spec:
+  selector:
+    app: far-secured-service
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: far-secured-service
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: far-secured-service
