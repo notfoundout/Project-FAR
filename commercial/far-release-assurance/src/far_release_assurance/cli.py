@@ -1,0 +1,81 @@
+"""Local CLI for validating and normalizing FAR release packages."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+from .closure import assess_closure
+from .io import ReleasePackageError, canonical_json, load_package, package_digest, package_to_dict
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="far-release")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    validate = subparsers.add_parser("validate", help="validate one release package")
+    validate.add_argument("package")
+
+    normalize = subparsers.add_parser("normalize", help="write canonical JSON")
+    normalize.add_argument("package")
+    normalize.add_argument("--output")
+
+    inventory = subparsers.add_parser("inventory", help="emit machinery inventory and closure")
+    inventory.add_argument("package")
+    inventory.add_argument("--output")
+
+    digest = subparsers.add_parser("digest", help="emit canonical SHA-256 digest")
+    digest.add_argument("package")
+
+    return parser
+
+
+def _write(text: str, output: str | None) -> None:
+    if output:
+        Path(output).write_text(text, encoding="utf-8")
+    else:
+        sys.stdout.write(text)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    try:
+        package = load_package(args.package)
+        if args.command == "validate":
+            sys.stdout.write(f"VALID {package.release_id} {package_digest(package)}\n")
+            return 0
+        if args.command == "normalize":
+            _write(canonical_json(package), args.output)
+            return 0
+        if args.command == "digest":
+            sys.stdout.write(package_digest(package) + "\n")
+            return 0
+        if args.command == "inventory":
+            closure = assess_closure(package.machinery, package.decision_roots + package.release_roots)
+            payload = {
+                "schema_version": "far-machinery-inventory/0.1",
+                "release_id": package.release_id,
+                "source_commit": package.source_commit,
+                "package_digest": package_digest(package),
+                "closure": {
+                    "status": closure.status.value,
+                    "reached": list(closure.reached),
+                    "unresolved": list(closure.unresolved),
+                    "defects": list(closure.defects),
+                    "duplicates": list(closure.duplicates),
+                    "undeclared_roots": list(closure.undeclared_roots),
+                },
+                "machinery": package_to_dict(package)["machinery"],
+            }
+            _write(json.dumps(payload, sort_keys=True, indent=2) + "\n", args.output)
+            return 0
+    except ReleasePackageError as exc:
+        sys.stderr.write(f"INVALID: {exc}\n")
+        return 10
+    return 11
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
