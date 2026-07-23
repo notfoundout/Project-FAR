@@ -4,6 +4,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -38,6 +39,10 @@ def load_model():
     return module
 
 
+def normalize(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
+
+
 def main() -> int:
     for path in (PROGRAM, MODEL, GOVERNANCE, DISCLOSURE, QUEUE, README):
         if not path.is_file():
@@ -59,15 +64,16 @@ def main() -> int:
         fail("evaluation or new-program gate malformed")
 
     required = set(model.REQUIRED_DISCLOSURES)
-    normalized = {x.replace(" ", "_") for x in program.get("required_disclosures", [])}
     aliases = {
         "exact_theorem_and_version": "exact_theorem",
         "all_frozen_premises": "frozen_premises",
+        "finite_registered_maximality_boundary": "finite_maximality_boundary",
+        "non_kernel_checked_end_to_end_semantic_composition": "non_kernel_checked_terminal_composition",
         "unknown_is_neither_support_nor_defeat": "unknown_discipline",
         "all_nonclaims": "nonclaims",
-        "evidence-type_labels": "evidence_type",
+        "evidence_type_labels": "evidence_type",
     }
-    normalized = {aliases.get(x, x) for x in normalized}
+    normalized = {aliases.get(normalize(x), normalize(x)) for x in program.get("required_disclosures", [])}
     if required - normalized:
         fail(f"program omits disclosure controls: {sorted(required - normalized)}")
 
