@@ -1,0 +1,30 @@
+{
+  "schema_version":"1.0",
+  "workstream":"UPP-W4-REPRESENTATIONS",
+  "target_pr":285,
+  "universe_id":"E_STAR_V1",
+  "scope":"finite, effectively constructible and effectively usable representation systems with fully inventoried support machinery",
+  "admissibility_criteria":[
+    {"id":"E1","statement":"the complete representation package has a finite public description"},
+    {"id":"E2","statement":"the representation package can be constructed by an effective procedure"},
+    {"id":"E3","statement":"all registered uses of the package are performed by effective procedures"},
+    {"id":"E4","statement":"every decoder, interpreter, scheduler, query interface, codebook, external store, oracle claim, and proof object required for use is inventoried"},
+    {"id":"E5","statement":"the interface is total over the registered query domain or explicitly returns a distinguished failure or Unknown result"},
+    {"id":"E6","statement":"identity conditions for represented objects and support artifacts are stable across executions"}
+  ],
+  "included_encoding_families":["symbolic","graph","relational","functional","distributed","probabilistic","learned","hybrid"],
+  "permitted_variation":[
+    "entity decomposition","state granularity","temporal granularity","centralized or distributed storage",
+    "eager or lazy computation","deterministic or probabilistic encoding","explicit or learned internal parameters",
+    "graph, relational, functional, symbolic, or hybrid surface form"
+  ],
+  "support_kinds":["decoder","interpreter","scheduler","query_interface","codebook","external_store","oracle","proof_object"],
+  "exclusions":[
+    "non-effective existence claims","unbounded hidden support machinery","appeals to unanalyzed semantic intuition",
+    "oracle use without an effective realization","interfaces that silently omit registered cases",
+    "representations whose identity conditions change between equivalent runs"
+  ],
+  "three_valued_rule":{"admissible":"all six criteria established","inadmissible":"at least one criterion is false","unknown":"none false and at least one unresolved"},
+  "neutrality":{"rccd_necessity_asserted":false,"faithfulness_asserted":false,"machinery_closure_proved":false,"representation_equivalence_proved":false},
+  "public_evaluation_authorized":false
+}
