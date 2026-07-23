@@ -5,7 +5,7 @@
   "trusted_kernel": "Lean 4 pinned by lean-toolchain",
   "entrypoint": "mechanization/lean/UPPSemanticKernel.lean",
   "terminal_theorem": "FAR.UPPSemanticKernel.g1_end_to_end_relative_semantic_theorem",
-  "constructor": "FAR.UPPSemanticKernel.constructSourceSemanticResult",
+  "constructor": "FAR.UPPSemanticKernel.constructRelativeSemanticConclusion",
   "preservation_dimensions": [
     "structural",
     "semantic",
