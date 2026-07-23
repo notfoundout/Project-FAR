@@ -51,7 +51,27 @@ jobs:
       - name: Compile FAR canonical-universality decision
         run: lean mechanization/lean/FARCanonicalUniversalityDecision.lean
       - name: Compile FAR canonicality countermodel
-        run: lean mechanization/lean/FARCanonicalCountermodel.lean
+        id: grounded_countermodel
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts/validation/lean
+          lean mechanization/lean/FARCanonicalCountermodel.lean 2>&1 | tee artifacts/validation/lean/far-canonical-grounded.log
+      - name: Print grounded countermodel failure
+        if: always() && steps.grounded_countermodel.outcome == 'failure'
+        run: tail -n 160 artifacts/validation/lean/far-canonical-grounded.log
+      - name: Upload grounded countermodel failure
+        if: always() && steps.grounded_countermodel.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-canonical-grounded-lean-failure
+          path: artifacts/validation/lean/far-canonical-grounded.log
+          if-no-files-found: error
+          retention-days: 7
+      - name: Enforce grounded countermodel result
+        if: always() && steps.grounded_countermodel.outcome == 'failure'
+        run: exit 1
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
