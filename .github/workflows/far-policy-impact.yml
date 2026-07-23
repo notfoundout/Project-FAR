@@ -1,0 +1,50 @@
+name: FAR Policy Impact Gate
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-policy-impact.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  policy-impact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install decision integrity package
+        run: python -m pip install --disable-pip-version-check ./commercial/far-decision-integrity
+      - name: Run tests
+        run: python -m unittest discover -s commercial/far-decision-integrity/tests -p "test_*.py" -v
+      - name: Verify authorization expansion is blocked
+        shell: bash
+        run: |
+          cat > baseline.json <<'JSON'
+          {"version":"refund/1","auto_approval_limit":500.0,"approval_window_days":30}
+          JSON
+          cat > candidate.json <<'JSON'
+          {"version":"refund/2","auto_approval_limit":1000.0,"approval_window_days":30}
+          JSON
+          cat > cases.json <<'JSON'
+          [{"request_id":"high","order_id":"order-high","amount":750.0,"order_exists":true,"payment_confirmed":true,"days_since_purchase":10,"previous_refund":false,"agent_authorized":true}]
+          JSON
+          set +e
+          far-policy-impact --baseline baseline.json --candidate candidate.json --cases cases.json --output policy-impact.json
+          status=$?
+          set -e
+          test "$status" -eq 30
+          python -c 'import json; assert json.load(open("policy-impact.json"))["decision"] == "blocked"'
+      - name: Upload impact evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-policy-impact
+          path: policy-impact.json
+          if-no-files-found: error
+          retention-days: 7
