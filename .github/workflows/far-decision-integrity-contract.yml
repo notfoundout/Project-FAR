@@ -1,0 +1,30 @@
+name: FAR Decision Integrity Contract
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-decision-integrity-contract.yml"
+  push:
+    branches:
+      - "commercial/**"
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-decision-integrity-contract.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  contract-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install decision integrity package
+        run: python -m pip install --disable-pip-version-check ./commercial/far-decision-integrity
+      - name: Run package contract tests
+        run: python -m unittest discover -s commercial/far-decision-integrity/tests -p "test_*.py" -v
