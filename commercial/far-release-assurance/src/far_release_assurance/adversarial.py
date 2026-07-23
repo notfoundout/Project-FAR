@@ -4,10 +4,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from .closure import compute_closure
+from .closure import assess_closure
 from .decision import adjudicate
 from .model import (
-    Decision,
     EvidenceStatus,
     Finding,
     FindingDisposition,
@@ -52,10 +51,6 @@ def _events(run: AgentRun, event_type: str):
     return tuple(event for event in run.package.events if event.event_type == event_type)
 
 
-def _machinery(run: AgentRun, machinery_id: str):
-    return next(item for item in run.package.machinery if item.machinery_id == machinery_id)
-
-
 def evaluate_pair(scenario_id: str, baseline: AgentRun, candidate: AgentRun) -> ScenarioResult:
     findings: list[Finding] = []
     candidate_items = {item.machinery_id: item for item in candidate.package.machinery}
@@ -74,15 +69,14 @@ def evaluate_pair(scenario_id: str, baseline: AgentRun, candidate: AgentRun) -> 
     invalidated = {event.subject_id for event in _events(candidate, "support_invalidated")}
     withdrawn = {event.subject_id for event in _events(candidate, "commitment_withdrawn")}
     for conclusion in _events(candidate, "conclusion_derived"):
-        if invalidated.intersection(conclusion.evidence_refs) and conclusion.subject_id not in withdrawn:
-            findings.append(_finding(scenario_id, "invalidated-support-not-propagated", "An active conclusion retained support that was subsequently invalidated.", affected_ids=(conclusion.subject_id, *tuple(sorted(invalidated.intersection(conclusion.evidence_refs))))))
+        invalidated_support = tuple(sorted(invalidated.intersection(conclusion.evidence_refs)))
+        if invalidated_support and conclusion.subject_id not in withdrawn:
+            findings.append(_finding(scenario_id, "invalidated-support-not-propagated", "An active conclusion retained support that was subsequently invalidated.", affected_ids=(conclusion.subject_id, *invalidated_support)))
 
     if "memory" in candidate_items and not candidate_items["memory"].declared:
         findings.append(_finding(scenario_id, "hidden-memory", "Candidate replay depends on an undeclared memory store.", affected_ids=("memory",)))
 
-    identity_changes = _events(candidate, "identity_changed")
-    identity_revalidations = _events(candidate, "identity_revalidated")
-    if identity_changes and not identity_revalidations:
+    if _events(candidate, "identity_changed") and not _events(candidate, "identity_revalidated"):
         findings.append(_finding(scenario_id, "identity-drift", "Customer identity changed during handoff without revalidation before the consequential conclusion.", affected_ids=("customer-identity",)))
 
     if "benchmark" in candidate_items:
@@ -93,8 +87,8 @@ def evaluate_pair(scenario_id: str, baseline: AgentRun, candidate: AgentRun) -> 
     if "external-state" in candidate_items and candidate_items["external-state"].evidence_status in {EvidenceStatus.UNKNOWN, EvidenceStatus.DISCLOSED_UNVERIFIED}:
         findings.append(_finding(scenario_id, "unresolved-external-state", "Candidate output depends on unresolved external state.", severity=Severity.HIGH, disposition=FindingDisposition.UNKNOWN, blocking=False, affected_ids=("external-state",)))
 
-    baseline_closure = compute_closure(baseline.package.machinery, baseline.package.decision_roots + baseline.package.release_roots)
-    candidate_closure = compute_closure(candidate.package.machinery, candidate.package.decision_roots + candidate.package.release_roots)
+    baseline_closure = assess_closure(baseline.package.machinery, baseline.package.decision_roots + baseline.package.release_roots)
+    candidate_closure = assess_closure(candidate.package.machinery, candidate.package.decision_roots + candidate.package.release_roots)
     decision, rationale = adjudicate(tuple(findings), candidate_closure.status)
     comparison = ReleaseComparison(
         baseline_release_id=baseline.package.release_id,
