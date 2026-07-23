@@ -52,7 +52,7 @@ def authorize_payload(request: dict[str, Any], evidence_root: str | Path) -> Ser
     disposition = DISPOSITIONS[adjudication.status]
     evidence_id = _evidence_id(input_type, payload, package.decision_id)
     evidence_directory = Path(evidence_root) / evidence_id
-    evidence_directory.mkdir(parents=True, exist_ok=False)
+    evidence_directory.mkdir(parents=True, exist_ok=True)
 
     package_data = _package_payload(package)
     authorization_data = {
@@ -102,7 +102,10 @@ def make_handler(evidence_root: str | Path) -> type[BaseHTTPRequestHandler]:
 
         def do_GET(self) -> None:  # noqa: N802
             if self.path == "/healthz":
-                self._send(HTTPStatus.OK, {"status": "ok", "schema_version": SERVICE_SCHEMA_VERSION})
+                self._send(
+                    HTTPStatus.OK,
+                    {"status": "ok", "schema_version": SERVICE_SCHEMA_VERSION},
+                )
                 return
             self._send(HTTPStatus.NOT_FOUND, {"error": "not_found"})
 
@@ -111,6 +114,9 @@ def make_handler(evidence_root: str | Path) -> type[BaseHTTPRequestHandler]:
                 self._send(HTTPStatus.NOT_FOUND, {"error": "not_found"})
                 return
             try:
+                content_type = self.headers.get("Content-Type", "").split(";", 1)[0]
+                if content_type != "application/json":
+                    raise ServiceRequestError("Content-Type must be application/json")
                 length = int(self.headers.get("Content-Length", "0"))
                 if length <= 0 or length > MAX_REQUEST_BYTES:
                     raise ServiceRequestError(
@@ -119,8 +125,11 @@ def make_handler(evidence_root: str | Path) -> type[BaseHTTPRequestHandler]:
                 raw = self.rfile.read(length)
                 request = json.loads(raw.decode("utf-8"))
                 result = authorize_payload(request, root)
-            except (UnicodeDecodeError, json.JSONDecodeError, ServiceRequestError, FileExistsError) as exc:
-                self._send(HTTPStatus.BAD_REQUEST, {"error": "invalid_request", "detail": str(exc)})
+            except (UnicodeDecodeError, json.JSONDecodeError, ServiceRequestError, ValueError) as exc:
+                self._send(
+                    HTTPStatus.BAD_REQUEST,
+                    {"error": "invalid_request", "detail": str(exc)},
+                )
                 return
             self._send(result.status_code, result.payload)
 
@@ -152,7 +161,10 @@ def _evidence_id(input_type: str, payload: dict[str, Any], decision_id: str) -> 
         separators=(",", ":"),
     ).encode("utf-8")
     digest = hashlib.sha256(canonical).hexdigest()[:20]
-    safe_decision = "".join(character if character.isalnum() or character in "-_" else "-" for character in decision_id)
+    safe_decision = "".join(
+        character if character.isalnum() or character in "-_" else "-"
+        for character in decision_id
+    )
     return f"{safe_decision}-{digest}"
 
 
@@ -166,7 +178,10 @@ def _package_payload(package: DecisionPackage) -> dict[str, Any]:
 
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
-    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
 
 
 def _sha256(path: Path) -> str:
