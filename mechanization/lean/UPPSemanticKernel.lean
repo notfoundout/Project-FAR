@@ -39,11 +39,6 @@ def PreservationVector.AllPass (p : PreservationVector) : Prop :=
   p.queryTotality = .pass ∧
   p.failureUnknown = .pass
 
-/--
-A single frozen semantic interface for the complete relative UPP dependency
-chain. Each field is a declared theorem premise inherited from the completed
-UPP workstreams. The terminal theorem below only composes these premises.
--/
 structure FrozenUPPSemantics where
   Source : Type
   Package : Type
@@ -106,7 +101,6 @@ structure FrozenUPPSemantics where
       (preservation source candidate).AllPass →
       commitmentEquivalent candidate (encode source)
 
-/-- The complete registered per-source relative semantic conclusion. -/
 structure RelativeSemanticConclusion
     (M : FrozenUPPSemantics) (source : M.Source) : Prop where
   admissible : M.admissible (M.encode source)
@@ -126,18 +120,13 @@ structure RelativeSemanticConclusion
   nontrivial : M.nontrivial source
   relativelyMaximal : M.relativelyMaximal source
 
-/--
-G1 terminal semantic composition.
-
-For every source already admitted by the independently frozen target-class
-predicate, the existing UPP premises compose into one kernel-checked relative
-semantic conclusion.
--/
-theorem g1_end_to_end_relative_semantic_theorem
-    (M : FrozenUPPSemantics) :
-    ∀ source, M.inTargetClass source → RelativeSemanticConclusion M source := by
-  intro source hClass
-  exact {
+/-- Construct the complete registered relative semantic conclusion. -/
+def constructRelativeSemanticConclusion
+    (M : FrozenUPPSemantics)
+    (source : M.Source)
+    (hClass : M.inTargetClass source) :
+    RelativeSemanticConclusion M source :=
+  {
     admissible := M.representationAdmissible source hClass
     closed := M.classConstruction source hClass
     preserved := M.preservationComplete source hClass
@@ -153,6 +142,13 @@ theorem g1_end_to_end_relative_semantic_theorem
     nontrivial := M.nontrivialityEstablished source hClass
     relativelyMaximal := M.frozenRuleMaximality source hClass
   }
+
+/-- G1 terminal semantic composition. -/
+theorem g1_end_to_end_relative_semantic_theorem
+    (M : FrozenUPPSemantics) :
+    ∀ source, M.inTargetClass source → RelativeSemanticConclusion M source := by
+  intro source hClass
+  exact constructRelativeSemanticConclusion M source hClass
 
 /-- Every faithful candidate is equivalent to the canonical encoding. -/
 theorem faithful_candidate_equivalent_to_canonical
