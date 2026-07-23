@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W10-SEMANTIC-INTERPRETATION",
+  "target_pr": 291,
+  "status": "complete",
+  "verdict": "proved_relative_to_frozen_premises",
+  "terminal_result": "semantic_interpretation_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence",
+  "evidence": {
+    "executable_model": "theory/foundation/upp_semantic_interpretation_v1.py",
+    "machine_specification": "theory/foundation/upp-semantic-interpretation-v1.0.json",
+    "regression_tests": "tests/test_upp_w10_semantic_interpretation.py",
+    "deterministic_checker": "tools/check_upp_w10_semantic_interpretation.py"
+  },
+  "claim_boundary": "Operational relative necessity only; no unrestricted metaphysical theory of meaning.",
+  "public_evaluation_authorized": false
+}
