@@ -26,6 +26,10 @@ Tests cover missing workstreams, refuted and unresolved properties, hidden machi
 
 The public-evaluation gate opens only because this is the terminal workstream. Authorization is scoped to evaluation of the disclosed weakened theorem. Any claim omitting the premises, finite maximality boundary, mechanization limitation, or nonclaims is unauthorized by the artifact.
 
+## Synchronization audit
+
+The pull-request head must equal the final terminal artifact commit before workflow results are accepted. Validation evidence from an earlier merge ref or superseded head is not transferable to the terminal result.
+
 ## Nonclaims
 
 No unrestricted metaphysical universality, open-world maximality, unique final ontology, or proof by absence of counterexamples is established.
