@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W6-EQUIVALENCE",
+  "target_pr": 287,
+  "status": "complete",
+  "terminal_result": "bidirectional_commitment_equivalence_frozen_with_anti_collapse_and_unknown_boundary",
+  "established": [
+    "equivalence is assessed only between machinery-closed representation packages",
+    "positive equivalence requires effective total bidirectional correspondences",
+    "round-trip identity is required for facts, states, relations, queries, and machinery",
+    "structural, semantic, operational, dependency, informational, historical, query, error, identity, and machinery dimensions must all be resolved",
+    "behavioral or final-output equality alone is insufficient",
+    "dependency, history, identity, error/Unknown, and support-machinery distinctions cannot be erased by canonicalization",
+    "demonstrated mismatch yields non-equivalence",
+    "unresolved totality, effectivity, or dimensions yield Unknown absent positive failure"
+  ],
+  "not_established": [
+    "RCCD necessity",
+    "recoverable-commitment necessity",
+    "constrained-evolution necessity",
+    "dependency-sensitive-revision necessity",
+    "historical-identity necessity",
+    "uniform-effective-recovery necessity",
+    "RCCD sufficiency",
+    "irreducibility",
+    "maximality",
+    "the terminal universal theorem",
+    "authorization for public evaluation"
+  ],
+  "next_action": {"target_pr": 288, "workstream": "UPP-W7-RECOVERABLE-COMMITMENT"},
+  "public_evaluation_authorized": false
+}
