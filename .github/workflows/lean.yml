@@ -51,7 +51,27 @@ jobs:
       - name: Compile FAR canonical-universality decision
         run: lean mechanization/lean/FARCanonicalUniversalityDecision.lean
       - name: Compile FAR canonicality countermodel
-        run: lean mechanization/lean/FARCanonicalCountermodel.lean
+        id: countermodel_lean
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts/validation/lean
+          lean mechanization/lean/FARCanonicalCountermodel.lean 2>&1 | tee artifacts/validation/lean/far-canonical-countermodel.log
+      - name: Print FAR canonicality countermodel failure
+        if: always() && steps.countermodel_lean.outcome == 'failure'
+        run: tail -n 160 artifacts/validation/lean/far-canonical-countermodel.log
+      - name: Upload FAR canonicality countermodel failure
+        if: always() && steps.countermodel_lean.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-canonical-countermodel-lean-failure
+          path: artifacts/validation/lean/far-canonical-countermodel.log
+          if-no-files-found: error
+          retention-days: 7
+      - name: Enforce FAR canonicality countermodel result
+        if: always() && steps.countermodel_lean.outcome == 'failure'
+        run: exit 1
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
