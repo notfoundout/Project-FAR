@@ -89,10 +89,19 @@ def main() -> int:
         fail("queue records wrong PR #292 workstream")
     if entry.get("result") != EXPECTED_RESULT:
         fail("queue records wrong PR #292 result")
-    if queue.get("next_action") != EXPECTED_NEXT:
-        fail("queue does not advance exactly to PR #293")
-    if queue.get("ordered_followups") != [294, 295, 296]:
-        fail("queue followups are not exactly PRs #294-#296")
+
+    next_action = queue.get("next_action", {})
+    next_pr = next_action.get("target_pr")
+    if not isinstance(next_pr, int) or next_pr < EXPECTED_NEXT["target_pr"]:
+        fail("queue regresses before PR #293")
+    followups = queue.get("ordered_followups", [])
+    completed_prs = {item.get("target_pr") for item in completed}
+    if any(pr in completed_prs for pr in followups):
+        fail("queue leaves completed PRs in ordered followups")
+    if any(not isinstance(pr, int) or pr <= next_pr for pr in followups):
+        fail("queue followups are not strictly after next action")
+    if followups != sorted(set(followups)):
+        fail("queue followups are not unique and ordered")
     if queue.get("public_evaluation_authorized") is not False:
         fail("queue improperly opens public evaluation")
 

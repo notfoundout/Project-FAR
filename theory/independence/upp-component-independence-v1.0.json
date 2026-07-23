@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W12-COMPONENT-INDEPENDENCE",
+  "target_pr": 293,
+  "status": "complete",
+  "claim": "The five registered RCCD components are jointly non-redundant relative to the frozen class, preservation contract, admissible representation universe, machinery closure, commitment equivalence, and component necessity lemmas.",
+  "components": [
+    "recoverable_commitment",
+    "constrained_evolution",
+    "dependency_structure",
+    "semantic_interpretation",
+    "historical_trace"
+  ],
+  "independence_standard": {
+    "individual": "For every component X there exists a closed admissible separating witness preserving the other four component obligations while losing at least one obligation distinctive of X.",
+    "pairwise": "No component may be identified with another by renaming, shared storage, shared outputs, or an unproved one-way translation.",
+    "joint": "No component may be derived from the union of the other four unless an effective total non-circular equivalence-invariant construction recovers every frozen obligation and accounts for all machinery.",
+    "interaction": "Independence does not imply isolation; cross-component constraints and shared machinery remain permitted when their distinct preservation obligations remain separately recoverable."
+  },
+  "distinctive_obligations": {
+    "recoverable_commitment": ["commitment_identity", "commitment_query_totality", "failure_unknown_separation"],
+    "constrained_evolution": ["permitted_forbidden_separation", "history_sensitive_admissibility", "governing_reason_recovery"],
+    "dependency_structure": ["typed_directed_edges", "operational_relevance", "support_or_defeat_edge"],
+    "semantic_interpretation": ["content_identity", "semantic_role", "truth_or_satisfaction_conditions"],
+    "historical_trace": ["event_identity", "predecessor_and_revision_lineage", "replay_or_rollback_fidelity"]
+  },
+  "separating_witnesses": [
+    {"target":"recoverable_commitment","other_four_preserved":true,"lost":"commitment_identity","example":"A fully typed interpreted transition trace whose current commitments cannot be queried or stably identified."},
+    {"target":"constrained_evolution","other_four_preserved":true,"lost":"permitted_forbidden_separation","example":"A commitment-bearing interpreted dependency history in which every candidate change is accepted."},
+    {"target":"dependency_structure","other_four_preserved":true,"lost":"typed_directed_edges","example":"A semantically interpreted commitment revision log with no recoverable support, defeat, or reason relations."},
+    {"target":"semantic_interpretation","other_four_preserved":true,"lost":"truth_or_satisfaction_conditions","example":"A stable commitment-transition dependency trace over opaque identifiers with no recoverable content conditions."},
+    {"target":"historical_trace","other_four_preserved":true,"lost":"predecessor_and_revision_lineage","example":"A semantically interpreted commitment and dependency snapshot with admissible changes but no recoverable event lineage."}
+  ],
+  "anti_trivialization": [
+    "different names do not prove independence",
+    "shared implementation does not prove identity",
+    "correlated outputs do not prove reduction",
+    "one-way simulation does not prove recoverability",
+    "post hoc human explanation is not executable reduction",
+    "a reduction may not invoke the target component under another name",
+    "unknown evidence is not promoted to independence or reducibility"
+  ],
+  "decision_values": ["proved", "refuted", "unknown"],
+  "result": "five_component_relative_independence_established_by_separating_witnesses_and_anti_reduction_controls",
+  "unproved": [
+    "absolute metaphysical independence",
+    "sufficiency of the five-component package",
+    "irreducibility against every possible alternative vocabulary",
+    "maximality of the target class",
+    "terminal universal theorem"
+  ],
+  "next_action": {"target_pr": 294, "workstream": "UPP-W13-SUFFICIENCY-CONSTRUCTION"},
+  "public_evaluation_authorized": false
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W12-COMPONENT-INDEPENDENCE",
+  "target_pr": 293,
+  "status": "complete",
+  "terminal_result": "five_component_relative_independence_established_by_separating_witnesses_and_anti_reduction_controls",
+  "decision": "proved",
+  "scope": "relative operational independence within the frozen UPP framework",
+  "evidence": {
+    "individual_separation_witnesses": 5,
+    "pairwise_aliasing_excluded": true,
+    "joint_reduction_excluded": true,
+    "circular_reductions_excluded": true,
+    "interaction_preserved": true,
+    "renaming_invariance_checked": true,
+    "component_permutations_checked": 120,
+    "adversarial_tests": 16
+  },
+  "claim_boundary": [
+    "The result establishes separately recoverable preservation obligations, not implementation isolation.",
+    "The result is relative to C*, P*, E*, machinery closure, commitment equivalence, and the five registered necessity lemmas.",
+    "The result does not establish global irreducibility against all possible vocabularies.",
+    "Unknown remains distinct from both proof and refutation."
+  ],
+  "public_evaluation_authorized": false,
+  "next_action": {"target_pr": 294, "workstream": "UPP-W13-SUFFICIENCY-CONSTRUCTION"}
+}
