@@ -1,0 +1,75 @@
+name: FAR Release Assurance End-to-End Gate
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-release-assurance/**"
+      - ".github/workflows/far-release-assurance-e2e-gate.yml"
+  push:
+    branches:
+      - "commercial/**"
+    paths:
+      - "commercial/far-release-assurance/**"
+      - ".github/workflows/far-release-assurance-e2e-gate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  installed-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install FAR Release Assurance
+        run: python -m pip install --disable-pip-version-check ./commercial/far-release-assurance
+      - name: Run passing release gate
+        run: |
+          far-release gate \
+            --baseline commercial/far-release-assurance/fixtures/e2e/baseline.json \
+            --candidate commercial/far-release-assurance/fixtures/e2e/candidate-pass.json \
+            --output-directory "$RUNNER_TEMP/far-pass"
+      - name: Verify blocked release gate
+        shell: bash
+        run: |
+          set +e
+          far-release gate \
+            --baseline commercial/far-release-assurance/fixtures/e2e/baseline.json \
+            --candidate commercial/far-release-assurance/fixtures/e2e/candidate-blocked.json \
+            --output-directory "$RUNNER_TEMP/far-blocked"
+          status=$?
+          set -e
+          test "$status" -eq 30
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ["RUNNER_TEMP"])
+          expected = {"report.json", "report.md", "manifest.json"}
+          for directory, decision in (("far-pass", "pass"), ("far-blocked", "blocked")):
+              target = root / directory
+              assert {path.name for path in target.iterdir()} == expected
+              report = json.loads((target / "report.json").read_text(encoding="utf-8"))
+              manifest = json.loads((target / "manifest.json").read_text(encoding="utf-8"))
+              assert report["decision"] == decision
+              assert manifest["decision"] == decision
+          PY
+      - name: Stage evidence bundles
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p far-evidence
+          test ! -d "$RUNNER_TEMP/far-pass" || cp -R "$RUNNER_TEMP/far-pass" far-evidence/pass
+          test ! -d "$RUNNER_TEMP/far-blocked" || cp -R "$RUNNER_TEMP/far-blocked" far-evidence/blocked
+      - name: Upload evidence bundles
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-release-assurance-e2e-evidence
+          path: far-evidence
+          if-no-files-found: error
+          retention-days: 7
