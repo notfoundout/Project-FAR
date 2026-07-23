@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "claim_id": "FAR-CANONICAL-COUNTERMODEL-001",
+  "status": "refuted_under_frozen_framework",
+  "question": "Do the currently registered Project FAR assumptions entail FAR-specific canonical universality?",
+  "answer": "No",
+  "counterexample": {
+    "proof_object": "mechanization/lean/FARCanonicalCountermodel.lean",
+    "theorem": "current_assumptions_refute_canonical_entailment",
+    "candidate_count": 1,
+    "recovery_count": 2,
+    "base_evidence_satisfied": true,
+    "candidate_admissible": true,
+    "machinery_closed": true,
+    "fully_faithful": true,
+    "both_recoveries_preserve_commitments": true,
+    "recoveries_equal": false
+  },
+  "decisive_failure": "unique_factorization",
+  "terminal_consequence": "full_canonical_universality_fails_as_a_theorem_of_the_frozen_assumptions",
+  "claim_boundaries": {
+    "does_not_refute_strengthened_far": true,
+    "does_not_refute_relative_semantic_composition": true,
+    "does_not_refute_open_world_structural_lower_bound": true,
+    "does_not_refute_epistemic_maximality": true,
+    "does_not_claim_metaphysical_nonuniversality": true,
+    "requires_new_constraints_to_reopen": [
+      "independently justified commitment-equivalence quotient",
+      "recovery-map extensionality",
+      "or stronger admissibility conditions that exclude the countermodel"
+    ]
+  }
+}
