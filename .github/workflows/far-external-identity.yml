@@ -1,0 +1,43 @@
+name: FAR External Identity
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-external-identity.yml"
+      - "far-evidence/external-identity/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  external-identity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: python -m pip install ./commercial/far-decision-integrity
+      - name: Run focused tests
+        run: python -m unittest commercial/far-decision-integrity/tests/test_external_identity.py
+      - name: Exercise installed observability command
+        run: |
+          mkdir -p far-evidence/external-identity
+          far-external-identity emit-event \
+            --log far-evidence/external-identity/events.jsonl \
+            --event-type identity.verified \
+            --payload '{"tenant_id":"tenant-ci","subject":"ci"}' \
+            > far-evidence/external-identity/emitted.json
+          far-external-identity verify-log far-evidence/external-identity/events.jsonl \
+            > far-evidence/external-identity/verification.json
+      - name: Run full package tests
+        run: python -m unittest discover -s commercial/far-decision-integrity/tests -p "test_*.py"
+      - name: Upload external identity evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-external-identity-evidence
+          path: far-evidence/external-identity

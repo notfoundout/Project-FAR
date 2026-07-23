@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "far-decision-integrity"
-version = "1.3.0"
+version = "1.4.0"
 description = "Machine-checkable decision integrity for Project FAR"
 requires-python = ">=3.11"
 
@@ -17,6 +17,7 @@ far-authorization-service = "far_decision_integrity.service_cli:main"
 far-secured-service = "far_decision_integrity.secured_service_cli:main"
 far-evidence-store = "far_decision_integrity.store_cli:main"
 far-operations = "far_decision_integrity.operations_cli:main"
+far-external-identity = "far_decision_integrity.external_identity_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
