@@ -6,7 +6,7 @@ import Std
 A concrete finite countermodel to the claim that the currently registered G1--G3
 base evidence entails FAR-specific unique factorization. The model satisfies the
 registered qualification flags and commitment-preservation condition while
-admitting two distinct qualified recovery maps.
+allowing two distinct qualified recovery maps.
 
 The result is scoped to the frozen framework. It does not preclude a strengthened
 FAR theory from adding independently justified extensionality or quotient rules.
