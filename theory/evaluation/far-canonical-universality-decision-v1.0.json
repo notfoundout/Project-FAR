@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "decision_id": "FAR-CANONICAL-UNIVERSALITY-DECISION-001",
+  "status": "terminal_for_current_evidence",
+  "base_evidence": {
+    "g1_relative_semantic_composition": "established",
+    "g2_open_world_structural_lower_bound": "established",
+    "g3_epistemic_maximality_boundary": "established"
+  },
+  "canonical_bridges": {
+    "unique_factorization": "not_established",
+    "representation_invariance": "not_established",
+    "quotient_minimality": "not_established",
+    "definitional_completeness": "not_established",
+    "conservative_extensibility": "not_established",
+    "maximal_knowability": "not_established"
+  },
+  "verdict": "not_derivable",
+  "meaning": "Full FAR-specific canonical universality does not follow from the currently registered G1-G3 evidence and abstract theorem schemas.",
+  "nonclaims": [
+    "canonical universality is false",
+    "a counterexample to FAR has been found",
+    "unrestricted metaphysical universality has been adjudicated",
+    "missing bridge witnesses count as negative evidence"
+  ],
+  "reopening_condition": "The verdict may change only when one or more FAR-specific bridge witnesses or a genuine counterexample is registered and machine-checked.",
+  "terminal_question": "Is FAR currently proved to be the unique canonical normal form of accessible reasoning?",
+  "terminal_answer": "No. The stronger conclusion is presently underdetermined: not proved and not refuted."
+}
