@@ -120,5 +120,10 @@ def main(argv: list[str] | None = None) -> int:
     return 11
 
 
-if __name__ == "__main__":
+def entrypoint() -> None:
+    """Installed console-script entry point."""
     raise SystemExit(main())
+
+
+if __name__ == "__main__":
+    entrypoint()
