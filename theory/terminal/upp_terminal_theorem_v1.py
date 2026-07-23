@@ -79,18 +79,18 @@ def adjudicate(e: TerminalEvidence) -> Adjudication:
         unresolved.update(absent)
     if unresolved:
         return Adjudication(Verdict.UNKNOWN, Outcome.BLOCKED, tuple(sorted(unresolved)), False)
+    if not e.executable_composition_verified:
+        return Adjudication(Verdict.UNKNOWN, Outcome.BLOCKED, ("terminal_composition_not_verified",), False)
     if e.open_world_maximality_claimed or e.unrestricted_metaphysical_claimed:
         return Adjudication(Verdict.REFUTED, Outcome.DEFEATED, ("claim_exceeds_registered_scope",), False)
     if e.central_semantic_theorem_kernel_checked:
         return Adjudication(Verdict.PROVED, Outcome.FULL, ("all_registered_properties_and_kernel_checked_terminal_theorem",), True)
-    if e.executable_composition_verified:
-        reasons.extend((
-            "all_registered_relative_operational_lemmas_composed",
-            "terminal_semantic_theorem_not_kernel_checked",
-            "maximality_limited_to_frozen_extension_rules",
-        ))
-        return Adjudication(Verdict.PROVED, Outcome.WEAKENED, tuple(reasons), True)
-    return Adjudication(Verdict.UNKNOWN, Outcome.BLOCKED, ("terminal_composition_not_verified",), False)
+    reasons.extend((
+        "all_registered_relative_operational_lemmas_composed",
+        "terminal_semantic_theorem_not_kernel_checked",
+        "maximality_limited_to_frozen_extension_rules",
+    ))
+    return Adjudication(Verdict.PROVED, Outcome.WEAKENED, tuple(reasons), True)
 
 
 def canonical_evidence() -> TerminalEvidence:
