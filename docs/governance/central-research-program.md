@@ -108,3 +108,25 @@ Counterexamples, equivalences, reductions, hidden machinery, failed translations
 ## Immediate central work
 
 Execute the post-terminal evaluation program without widening the theorem. Prioritize independent review, countermodel search, kernel-checked reconstruction, and explicit claim-impact handling.
+
+## Historical bounded-program note
+
+The earlier REP/ADJ/W3.5 materials remain part of the repository record.
+
+They continue to describe bounded source classes, candidate registries, factorization results, and incomplete assembly obligations at the time those artifacts were frozen.
+
+They must not be silently rewritten as though they had originally contained the later UPP theorem.
+
+Their historical line anchors and generated reports remain supported for repository navigation.
+
+Where an earlier document says a universal theorem was unresolved, that statement is interpreted as the status of that earlier bounded program at its frozen version.
+
+The later UPP result supersedes repository-wide status only within its own independently frozen premises and claim boundary.
+
+No bounded artifact is promoted into an independent proof review merely because the terminal theorem references related concepts.
+
+No terminal result erases negative evidence, unresolved empirical questions, or application-correspondence gaps.
+
+Historical preservation is part of the audit trail, not a competing current program state.
+
+Post-terminal work should therefore cite both the relevant historical artifact and the terminal disclosure when the distinction matters.
