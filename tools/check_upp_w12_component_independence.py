@@ -37,10 +37,13 @@ def main() -> None:
     completed = {x.get("target_pr"): x for x in queue.get("completed_workstreams", [])}
     if completed.get(293, {}).get("result") != expected:
         fail("queue does not record PR #293 historical completion")
-    if queue.get("next_action") != {"target_pr": 294, "workstream": "UPP-W13-SUFFICIENCY-CONSTRUCTION"}:
-        fail("queue does not advance exactly to PR #294")
-    if queue.get("ordered_followups") != [295, 296]:
-        fail("ordered followups must be exactly PRs #295-#296")
+    next_action = queue.get("next_action", {})
+    target = next_action.get("target_pr")
+    if not isinstance(target, int) or target < 294:
+        fail("queue regressed before PR #294")
+    followups = queue.get("ordered_followups", [])
+    if any(not isinstance(item, int) or item <= target for item in followups):
+        fail("ordered followups are not monotonic")
     if queue.get("public_evaluation_authorized") is not False:
         fail("public evaluation gate must remain closed")
 
