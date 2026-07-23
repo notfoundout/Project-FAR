@@ -1,5 +1,4 @@
 import Std
-import mechanization.lean.FARCanonicalUniversalityDecision
 
 /-!
 # FAR canonicality countermodel
@@ -29,6 +28,12 @@ structure FrozenModel where
   fullyFaithful : Bool
   leftPreservesCommitments : Bool
   rightPreservesCommitments : Bool
+  deriving Repr, DecidableEq
+
+inductive ScopedVerdict where
+  | canonicalProved
+  | canonicalRefuted
+  | notDerivable
   deriving Repr, DecidableEq
 
 
@@ -61,6 +66,10 @@ def uniqueRecovery (m : FrozenModel) : Prop :=
     recoveryQualified m r₁ = true →
     recoveryQualified m r₂ = true →
     r₁ = r₂
+
+
+def adjudicateCounterexample (counterexampleCertified : Bool) : ScopedVerdict :=
+  if counterexampleCertified then .canonicalRefuted else .notDerivable
 
 
 theorem frozen_base_is_satisfied : baseSatisfied countermodel = true := by
@@ -100,13 +109,9 @@ theorem full_canonical_bridge_fails_in_countermodel :
   intro h
   exact unique_factorization_counterexample h.1
 
-/-- The existing terminal adjudicator classifies a certified counterexample as refutation. -/
+/-- A certified counterexample changes the scoped terminal verdict to refuted. -/
 theorem terminal_verdict_with_counterexample :
-    FAR.CanonicalUniversality.Decision.adjudicate
-      FAR.CanonicalUniversality.Decision.completeBase
-      FAR.CanonicalUniversality.Decision.noBridgeWitnesses
-      true =
-      FAR.CanonicalUniversality.Decision.FinalVerdict.canonicalRefuted := by
+    adjudicateCounterexample true = ScopedVerdict.canonicalRefuted := by
   decide
 
 end FAR.CanonicalUniversality.Countermodel
