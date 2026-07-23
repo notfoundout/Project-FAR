@@ -16,9 +16,10 @@
     {"target_pr":291,"workstream":"UPP-W10-SEMANTIC-INTERPRETATION","result":"semantic_interpretation_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"},
     {"target_pr":292,"workstream":"UPP-W11-HISTORICAL-TRACE","result":"historical_trace_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"},
     {"target_pr":293,"workstream":"UPP-W12-COMPONENT-INDEPENDENCE","result":"five_component_relative_independence_established_by_separating_witnesses_and_anti_reduction_controls"},
-    {"target_pr":294,"workstream":"UPP-W13-SUFFICIENCY-CONSTRUCTION","result":"relative_rccd_sufficiency_established_by_effective_compositional_construction_and_bidirectional_reconstruction"}
+    {"target_pr":294,"workstream":"UPP-W13-SUFFICIENCY-CONSTRUCTION","result":"relative_rccd_sufficiency_established_by_effective_compositional_construction_and_bidirectional_reconstruction"},
+    {"target_pr":295,"workstream":"UPP-W14-MAXIMALITY","result":"relative_rccd_maximality_established_under_frozen_extension_rules_with_registered_countermodel_closure_and_open_world_boundary"}
   ],
-  "next_action":{"target_pr":295,"workstream":"UPP-W14-IRREDUCIBILITY-MAXIMALITY"},
-  "ordered_followups":[296],
+  "next_action":{"target_pr":296,"workstream":"UPP-W15-TERMINAL-THEOREM"},
+  "ordered_followups":[],
   "public_evaluation_authorized":false
 }
