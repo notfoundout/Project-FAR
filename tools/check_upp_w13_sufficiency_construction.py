@@ -15,7 +15,7 @@ QUEUE = ROOT / "theory" / "evaluation" / "post-tue-universal-proof-queue-checkpo
 DOC = ROOT / "docs" / "research" / "upp-w13-sufficiency-construction-v1.0.md"
 AUDIT = ROOT / "docs" / "audits" / "upp-w13-sufficiency-construction-audit.md"
 EXPECTED = "relative_rccd_sufficiency_established_by_effective_compositional_construction_and_bidirectional_reconstruction"
-NEXT = {"target_pr": 295, "workstream": "UPP-W14-IRREDUCIBILITY-MAXIMALITY"}
+NEXT = {"target_pr": 295, "workstream": "UPP-W14-MAXIMALITY"}
 
 def fail(message: str) -> None:
     print("FAIL:", message)

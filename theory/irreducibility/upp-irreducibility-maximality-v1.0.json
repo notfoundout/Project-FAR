@@ -1,0 +1,19 @@
+{
+  "schema_version":"1.0",
+  "program_id":"POST-TUE-UPP-001",
+  "workstream":"UPP-W14-MAXIMALITY",
+  "target_pr":295,
+  "status":"complete",
+  "scope":"maximality_relative_to_frozen_extension_rules_and_registered_challenge_space",
+  "supporting_prior_result":"UPP-W13-IRREDUCIBILITY",
+  "components":["recoverable_commitment","constrained_evolution","dependency_structure","semantic_interpretation","historical_trace"],
+  "preservation_dimensions":["structural","semantic","operational","dependency","information","historical","query_totality","failure_unknown_separation"],
+  "maximality_rule":"proved iff every registered extension challenge either embeds with all preservation dimensions or is excluded by the frozen target-class contract, with no unresolved challenge",
+  "reduction_evidence_rule":"proper-subset and alternative-vocabulary failures are supporting nontriviality evidence and do not redefine this registered workstream",
+  "anti_smuggling":["hidden decoder","external semantic repair","unregistered oracle","circular reconstruction","cost shifted into omitted machinery","unknown treated as refutation","output equality treated as preservation"],
+  "registered_extension_challenges":["distributed-medium","probabilistic-transition-policy","opaque-output-only-device","learned-semantic-decoder","branching-revision-history"],
+  "terminal_result":"relative_rccd_maximality_established_under_frozen_extension_rules_with_registered_countermodel_closure_and_open_world_boundary",
+  "claim_boundary":"No unrestricted open-world maximality, metaphysical completeness, uniqueness, or proof by absence of unregistered counterexamples is claimed.",
+  "next_workstream":{"target_pr":296,"workstream":"UPP-W15-TERMINAL-THEOREM"},
+  "public_evaluation_authorized":false
+}
