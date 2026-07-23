@@ -15,6 +15,8 @@
   "program_disposition":"closed_with_final_internal_answer",
   "reopening_rule":"Concrete new evidence must satisfy a preserved defeating condition or belong to a separately registered empirical actual-process program.",
   "blocked_actions":[
+    "external proof review before PR 280",
+    "independent replication before PR 280",
     "insert additional supportive internal workstreams",
     "treat Unknown as evidence for RCCD",
     "convert principled inaccessibility into RCCD support",
