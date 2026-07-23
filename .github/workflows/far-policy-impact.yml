@@ -25,6 +25,7 @@ jobs:
       - name: Verify authorization expansion is blocked
         shell: bash
         run: |
+          mkdir -p far-evidence
           cat > baseline.json <<'JSON'
           {"version":"refund/1","auto_approval_limit":500.0,"approval_window_days":30}
           JSON
@@ -35,16 +36,16 @@ jobs:
           [{"request_id":"high","order_id":"order-high","amount":750.0,"order_exists":true,"payment_confirmed":true,"days_since_purchase":10,"previous_refund":false,"agent_authorized":true}]
           JSON
           set +e
-          far-policy-impact --baseline baseline.json --candidate candidate.json --cases cases.json --output policy-impact.json
+          far-policy-impact --baseline baseline.json --candidate candidate.json --cases cases.json --output far-evidence/policy-impact.json
           status=$?
           set -e
           test "$status" -eq 30
-          python -c 'import json; assert json.load(open("policy-impact.json"))["decision"] == "blocked"'
+          python -c 'import json; assert json.load(open("far-evidence/policy-impact.json"))["decision"] == "blocked"'
       - name: Upload impact evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: far-policy-impact
-          path: policy-impact.json
+          path: far-evidence
           if-no-files-found: error
           retention-days: 7
