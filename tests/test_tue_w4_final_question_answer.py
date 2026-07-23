@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULT = ROOT / "theory/evaluation/tue-w4-final-question-answer-v1.0.json"
-QUEUE = ROOT / "theory/evaluation/post-sc-terminal-universality-extension-queue-v1.0.json"
+CLOSURE = ROOT / "theory/evaluation/post-sc-terminal-universality-extension-closure-v1.0.json"
 
 
 class TUEW4FinalQuestionAnswerTests(unittest.TestCase):
@@ -31,12 +31,12 @@ class TUEW4FinalQuestionAnswerTests(unittest.TestCase):
         self.assertIn("neither support nor defeat", boundary["inaccessible_processes"])
         self.assertIn("underdetermined", boundary["consequence"])
 
-    def test_queue_is_terminal(self) -> None:
-        queue = self.load(QUEUE)
-        self.assertEqual(queue["status"], "complete")
-        self.assertIsNone(queue["next_action"])
-        self.assertEqual(queue["ordered_followups"], [])
-        self.assertEqual([x["target_pr"] for x in queue["completed_workstreams"]], [276, 277, 278, 279, 280])
+    def test_program_closure_is_terminal(self) -> None:
+        closure = self.load(CLOSURE)
+        self.assertEqual(closure["status"], "complete")
+        self.assertIsNone(closure["next_action"])
+        self.assertEqual(closure["ordered_followups"], [])
+        self.assertEqual([x["target_pr"] for x in closure["completed_workstreams"]], [276, 277, 278, 279, 280])
 
     def test_nonclaims_preserved(self) -> None:
         nonclaims = set(self.load(RESULT)["nonclaims"])
