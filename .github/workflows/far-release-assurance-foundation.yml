@@ -1,0 +1,29 @@
+name: FAR Release Assurance Foundation
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-release-assurance/**"
+      - ".github/workflows/far-release-assurance-foundation.yml"
+  push:
+    branches:
+      - "commercial/**"
+    paths:
+      - "commercial/far-release-assurance/**"
+      - ".github/workflows/far-release-assurance-foundation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  foundation-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile commercial package
+        run: python -m compileall -q commercial/far-release-assurance/src
+      - name: Run deterministic foundation tests
+        run: python -m unittest discover -s commercial/far-release-assurance/tests -p "test_*.py" -v
