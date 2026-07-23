@@ -9,8 +9,7 @@ CORPUS = ROOT / "theory/evaluation/tue-w2-defeating-condition-campaign-corpus-v1
 RESULT = ROOT / "theory/evaluation/tue-w2-defeating-condition-campaign-result-v1.0.json"
 DOC = ROOT / "docs/research/tue-w2-defeating-condition-campaign-v1.0.md"
 AUDIT = ROOT / "docs/audits/tue-w2-defeating-condition-campaign-audit.md"
-QUEUE = ROOT / "theory/evaluation/tue-w2-queue-checkpoint-v1.0.json"
-LIVE_QUEUE = ROOT / "theory/evaluation/post-sc-terminal-universality-extension-queue-v1.0.json"
+QUEUE = ROOT / "theory/evaluation/post-sc-terminal-universality-extension-queue-v1.0.json"
 
 
 def require(condition: bool, message: str) -> None:
@@ -23,10 +22,9 @@ def load(path: Path) -> dict:
 
 
 def main() -> int:
-    for path in (PROTOCOL, CORPUS, RESULT, DOC, AUDIT, QUEUE, LIVE_QUEUE):
+    for path in (PROTOCOL, CORPUS, RESULT, DOC, AUDIT, QUEUE):
         require(path.exists(), f"missing artifact: {path.relative_to(ROOT)}")
     protocol, corpus, result, queue = map(load, (PROTOCOL, CORPUS, RESULT, QUEUE))
-    live_queue = load(LIVE_QUEUE)
     require(protocol["campaign_id"] == "TUE-W2-DEFEATING-CONDITION-CAMPAIGN-001", "wrong campaign")
     conditions = [item["id"] for item in protocol["frozen_conditions"]]
     require(conditions == ["DC-1-SIXTH-PRIMITIVE", "DC-2-RCCD-ESCAPE", "DC-3-CIRCULARITY", "DC-4-PLURAL-KERNEL", "DC-5-ABLATION"], "five conditions changed")
@@ -41,11 +39,12 @@ def main() -> int:
     require(result["terminal_outcome"] == "no_defeating_condition_established", "unexpected result")
     require(len(result["condition_results"]) == 5, "five condition results required")
     require(all(item["result"] == "not_established" for item in result["condition_results"]), "a condition result conflicts with terminal outcome")
-    require(queue["next_action"]["target_pr"] == 279, "PR 279 must be next")
-    require(queue["next_action"]["workstream"] == "TUE-W3-DEEPER-KERNEL", "wrong next workstream")
-    require(queue["ordered_followups"] == [280], "wrong follow-up sequence")
-    require(live_queue["status"] == "complete", "live queue did not reach authorized terminal state")
-    require(live_queue["next_action"] is None and live_queue["ordered_followups"] == [], "terminal live queue malformed")
+    checkpoint = result["historical_queue_checkpoint"]
+    require(checkpoint == {"completed_workstreams":[276,277,278],"next_pr":279,"next_workstream":"TUE-W3-DEEPER-KERNEL","ordered_followups":[280]}, "W2 historical queue checkpoint changed")
+    completed = [item["target_pr"] for item in queue["completed_workstreams"]]
+    require(completed[:3] == checkpoint["completed_workstreams"], "live queue lost W2 history")
+    require(queue["next_action"]["target_pr"] in (279, 280), "live queue escaped authorized sequence")
+    require(queue["next_action"]["workstream"] in ("TUE-W3-DEEPER-KERNEL", "TUE-W4-FINAL-QUESTION-ANSWER"), "live queue has unauthorized workstream")
     prose = DOC.read_text(encoding="utf-8") + AUDIT.read_text(encoding="utf-8")
     for token in ("Unknown", "not established", "PR #279", "External review"):
         require(token in prose, f"missing prose control: {token}")
