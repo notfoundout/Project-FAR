@@ -1,0 +1,12 @@
+{
+  "postgres_dsn_secret": "far-postgres-dsn",
+  "object_store": {
+    "type": "s3-compatible",
+    "bucket": "far-evidence",
+    "endpoint": "https://object.example.com"
+  },
+  "coordination": {
+    "type": "redis-compatible",
+    "endpoint_secret": "far-redis-url"
+  }
+}
