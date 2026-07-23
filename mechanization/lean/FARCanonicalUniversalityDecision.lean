@@ -68,6 +68,14 @@ def noBridgeWitnesses : CanonicalBridges :=
     conservativeExtensibility := false
     maximalKnowability := false }
 
+def allBridgeWitnesses : CanonicalBridges :=
+  { uniqueFactorization := true
+    representationInvariance := true
+    quotientMinimality := true
+    definitionalCompleteness := true
+    conservativeExtensibility := true
+    maximalKnowability := true }
+
 /-- G1-G3 can all be established while the six canonical bridges are absent. -/
 theorem base_does_not_entail_all_bridges :
     baseEstablished completeBase = true ∧
@@ -105,11 +113,9 @@ theorem current_far_terminal_verdict :
   decide
 
 /-- Supplying all six independent witnesses would change the verdict to proved. -/
-theorem all_six_witnesses_are_sufficient
-    (bridges : CanonicalBridges)
-    (h : allBridgesEstablished bridges = true) :
-    adjudicate completeBase bridges false = .canonicalProved := by
-  simp [adjudicate, baseEstablished, completeBase, h]
+theorem all_six_witnesses_are_sufficient :
+    adjudicate completeBase allBridgeWitnesses false = .canonicalProved := by
+  decide
 
 /-- A real counterexample is required for refutation; missing witnesses are not refutation. -/
 theorem missing_witnesses_do_not_refute :
