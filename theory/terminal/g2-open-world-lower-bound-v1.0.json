@@ -1,0 +1,49 @@
+{
+  "schema_version": "g2-open-world-lower-bound/1.0",
+  "obligation": "G2",
+  "status": "implemented_pending_validation",
+  "entrypoint": "mechanization/lean/G2OpenWorldLowerBound.lean",
+  "terminal_theorem": "FAR.G2OpenWorldLowerBound.g2_open_world_structural_lower_bound",
+  "quantification": {
+    "candidate_types": "arbitrary",
+    "candidates": "all",
+    "finite_candidate_ledger_required": false,
+    "vocabulary_enumeration_required": false
+  },
+  "independent_preservation_dimensions": [
+    "structural",
+    "semantic",
+    "operational",
+    "dependency",
+    "informational",
+    "historical",
+    "queryTotality",
+    "failureUnknownSeparated"
+  ],
+  "derived_rccd_obligations": [
+    "recoverableCommitment",
+    "constrainedEvolution",
+    "dependencyStructure",
+    "semanticInterpretation",
+    "historicalTrace"
+  ],
+  "bridge_status": {
+    "explicit": true,
+    "vocabulary_neutral_inputs": true,
+    "rccd_labels_in_target_class_membership": false,
+    "hidden_machinery_allowed": false
+  },
+  "claims": {
+    "open_world_over_admissible_faithful_candidates": true,
+    "metaphysical_universality": false,
+    "inaccessible_reasoning_resolved": false,
+    "finite_search_implies_universality": false,
+    "unique_ontology": false
+  },
+  "remaining_obligations": ["G3"],
+  "validation": {
+    "lean_compile": "lean mechanization/lean/G2OpenWorldLowerBound.lean",
+    "alignment_test": "python -m unittest tests.test_g2_open_world_lower_bound_alignment",
+    "forbidden_constructs": ["axiom", "sorry", "admit", "unsafe"]
+  }
+}
