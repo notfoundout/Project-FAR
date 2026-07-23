@@ -57,7 +57,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p artifacts/validation/lean
-          lean mechanization/lean/FARCanonicalCountermodel.lean 2>&1 | tee artifacts/validation/lean/far-canonical-grounded.log
+          LEAN_PATH=mechanization/lean lean mechanization/lean/FARCanonicalCountermodel.lean 2>&1 | tee artifacts/validation/lean/far-canonical-grounded.log
       - name: Print grounded countermodel failure
         if: always() && steps.grounded_countermodel.outcome == 'failure'
         run: tail -n 160 artifacts/validation/lean/far-canonical-grounded.log
