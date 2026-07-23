@@ -12,6 +12,8 @@ All predecessor workstreams PR #281 through PR #295 are required. The terminal c
 
 The selected outcome is `strictly_weakened_universal_theorem_proved`. The full outcome is withheld because there is no single kernel-checked proof object for the entire semantic terminal theorem. The weaker result is supported by executable composition and deterministic cross-artifact checks. This distinction prevents repository CI success from being misrepresented as a foundational proof assistant theorem.
 
+Outcome precedence is explicit: a refuted required dependency defeats the theorem; an unresolved or missing dependency blocks proof; an overclaim beyond the registered scope defeats the attempted claim; complete relative evidence with executable composition proves the weakened theorem; and only a complete kernel-checked terminal semantic theorem upgrades the outcome to the full registered theorem.
+
 ## Three-valued discipline
 
 `Unknown` is neither support nor defeat. Any missing workstream, unresolved required property, incomplete proof standard, or absent terminal composition produces a blocked outcome. A refuted dependency produces defeat. Only complete evidence within the declared scope produces a proved outcome.
