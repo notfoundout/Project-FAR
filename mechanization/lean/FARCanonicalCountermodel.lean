@@ -1,117 +1,173 @@
 import Std
+import mechanization.lean.UPPSemanticKernel
 
 /-!
-# FAR canonicality countermodel
+# Grounded FAR canonicality countermodel
 
-A concrete finite countermodel to the claim that the currently registered G1--G3
-base evidence entails FAR-specific unique factorization. The model satisfies the
-registered qualification flags and commitment-preservation condition while
-allowing two distinct qualified recovery maps.
+This file instantiates the actual `FrozenUPPSemantics` structure from G1. It does
+not replace substantive predicates with Boolean labels.
 
-The result is scoped to the frozen framework. It does not preclude a strengthened
-FAR theory from adding independently justified extensionality or quotient rules.
+The model has one target-class source (`center`) and three package values. Both
+`left` and `right` are admissible, machinery-closed, and fully preserved for the
+same source. Each is commitment-equivalent to the canonical encoding, exactly as
+G1 requires, but they are not commitment-equivalent to each other.
+
+The countermodel therefore shows that the frozen G1 semantics do not entail
+pairwise equivalence, unique recovery, or unique factorization. The gap is caused
+by the fact that `commitmentEquivalent` is required to be reflexive but is not
+required to be symmetric or transitive.
 -/
 
 namespace FAR.CanonicalUniversality.Countermodel
 
-inductive Recovery where
+open FAR.UPPSemanticKernel
+
+inductive Node where
+  | center
   | left
   | right
   deriving Repr, DecidableEq
 
-structure FrozenModel where
-  g1RelativeSemantics : Bool
-  g2OpenWorldLowerBound : Bool
-  g3EpistemicBoundary : Bool
-  admissible : Bool
-  machineryClosed : Bool
-  fullyFaithful : Bool
-  leftPreservesCommitments : Bool
-  rightPreservesCommitments : Bool
-  deriving Repr, DecidableEq
 
-inductive ScopedVerdict where
-  | canonicalProved
-  | canonicalRefuted
-  | notDerivable
-  deriving Repr, DecidableEq
+def allPass : PreservationVector :=
+  { structural := .pass
+    semantic := .pass
+    operational := .pass
+    dependency := .pass
+    informational := .pass
+    historical := .pass
+    queryTotality := .pass
+    failureUnknown := .pass }
 
 
-def countermodel : FrozenModel :=
-  { g1RelativeSemantics := true
-    g2OpenWorldLowerBound := true
-    g3EpistemicBoundary := true
-    admissible := true
-    machineryClosed := true
-    fullyFaithful := true
-    leftPreservesCommitments := true
-    rightPreservesCommitments := true }
+def notAllPass : PreservationVector :=
+  { structural := .fail
+    semantic := .fail
+    operational := .fail
+    dependency := .fail
+    informational := .fail
+    historical := .fail
+    queryTotality := .fail
+    failureUnknown := .fail }
+
+/-- A directed relation: every node relates to itself and every node relates to
+`center`, but `left` and `right` do not relate to each other. -/
+def groundedEquivalent (a b : Node) : Prop := a = b ∨ b = .center
 
 
-def baseSatisfied (m : FrozenModel) : Bool :=
-  m.g1RelativeSemantics && m.g2OpenWorldLowerBound && m.g3EpistemicBoundary
+def groundedPreservation (source candidate : Node) : PreservationVector :=
+  if source = .center then allPass else
+  if candidate = source then allPass else notAllPass
 
 
-def candidateQualified (m : FrozenModel) : Bool :=
-  m.admissible && m.machineryClosed && m.fullyFaithful
+def groundedModel : FrozenUPPSemantics :=
+  { Source := Node
+    Package := Node
+    inTargetClass := fun source => source = .center
+    admissible := fun _ => True
+    machineryClosed := fun _ => True
+    preservation := groundedPreservation
+    commitmentEquivalent := groundedEquivalent
+    encode := id
+    decode := id
+    recoverableCommitment := fun _ => True
+    constrainedEvolution := fun _ => True
+    dependencyStructure := fun _ => True
+    semanticInterpretation := fun _ => True
+    historicalTrace := fun _ => True
+    componentIndependent := fun _ => True
+    nontrivial := fun _ => True
+    relativelyMaximal := fun _ => True
+    classConstruction := by intro source h; trivial
+    representationAdmissible := by intro source h; trivial
+    preservationComplete := by
+      intro source h
+      subst source
+      decide
+    sourceRoundTrip := by intro source; rfl
+    packageRoundTrip := by intro package; rfl
+    equivalenceReflexive := by
+      intro package
+      exact Or.inl rfl
+    commitmentNecessary := by intro source h; trivial
+    evolutionNecessary := by intro source h; trivial
+    dependencyNecessary := by intro source h; trivial
+    meaningNecessary := by intro source h; trivial
+    historyNecessary := by intro source h; trivial
+    independenceEstablished := by intro source h; trivial
+    nontrivialityEstablished := by intro source h; trivial
+    frozenRuleMaximality := by intro source h; trivial
+    faithfulCandidateEquivalent := by
+      intro source candidate hClass hAdmissible hClosed hPreserved
+      have hSource : source = Node.center := hClass
+      subst source
+      exact Or.inr rfl }
 
 
-def recoveryQualified (m : FrozenModel) : Recovery → Bool
-  | .left => m.leftPreservesCommitments
-  | .right => m.rightPreservesCommitments
+def QualifiedForCenter (candidate : Node) : Prop :=
+  groundedModel.admissible candidate ∧
+  groundedModel.machineryClosed candidate ∧
+  (groundedModel.preservation .center candidate).AllPass
 
 
-def uniqueRecovery (m : FrozenModel) : Prop :=
-  ∀ r₁ r₂ : Recovery,
-    recoveryQualified m r₁ = true →
-    recoveryQualified m r₂ = true →
-    r₁ = r₂
+def PairwiseUniqueUpToRegisteredEquivalence : Prop :=
+  ∀ a b,
+    QualifiedForCenter a →
+    QualifiedForCenter b →
+    groundedModel.commitmentEquivalent a b
 
 
-def adjudicateCounterexample (counterexampleCertified : Bool) : ScopedVerdict :=
-  if counterexampleCertified then .canonicalRefuted else .notDerivable
-
-
-theorem frozen_base_is_satisfied : baseSatisfied countermodel = true := by
+theorem grounded_model_is_actual_g1_model :
+    groundedModel.inTargetClass .center ∧
+    groundedModel.admissible (groundedModel.encode .center) ∧
+    groundedModel.machineryClosed (groundedModel.encode .center) ∧
+    (groundedModel.preservation .center (groundedModel.encode .center)).AllPass := by
   decide
 
 
-theorem witness_is_qualified : candidateQualified countermodel = true := by
+theorem left_is_fully_qualified : QualifiedForCenter .left := by
   decide
 
 
-theorem both_recoveries_are_qualified :
-    recoveryQualified countermodel .left = true ∧
-    recoveryQualified countermodel .right = true := by
+theorem right_is_fully_qualified : QualifiedForCenter .right := by
   decide
 
 
-theorem recoveries_are_distinct : Recovery.left ≠ Recovery.right := by
+theorem left_equivalent_to_canonical :
+    groundedModel.commitmentEquivalent .left (groundedModel.encode .center) := by
+  exact groundedModel.faithfulCandidateEquivalent
+    .center .left rfl trivial trivial left_is_fully_qualified.2.2
+
+
+theorem right_equivalent_to_canonical :
+    groundedModel.commitmentEquivalent .right (groundedModel.encode .center) := by
+  exact groundedModel.faithfulCandidateEquivalent
+    .center .right rfl trivial trivial right_is_fully_qualified.2.2
+
+
+theorem left_not_equivalent_to_right :
+    ¬ groundedModel.commitmentEquivalent .left .right := by
   decide
 
-
+/-- Genuine countermodel against pairwise uniqueness under the registered G1
+relation, using the actual G1 structure and predicates. -/
 theorem unique_factorization_counterexample :
-    ¬ uniqueRecovery countermodel := by
-  intro h
-  have hEq : Recovery.left = Recovery.right := h .left .right (by decide) (by decide)
-  exact recoveries_are_distinct hEq
+    ¬ PairwiseUniqueUpToRegisteredEquivalence := by
+  intro hUnique
+  exact left_not_equivalent_to_right
+    (hUnique .left .right left_is_fully_qualified right_is_fully_qualified)
 
-/-- The frozen base and qualification assumptions coexist with failed uniqueness. -/
-theorem current_assumptions_refute_canonical_entailment :
-    baseSatisfied countermodel = true ∧
-    candidateQualified countermodel = true ∧
-    ¬ uniqueRecovery countermodel := by
-  exact ⟨frozen_base_is_satisfied, witness_is_qualified, unique_factorization_counterexample⟩
-
-/-- Failure of the necessary unique-factorization bridge defeats the full conjunction. -/
-theorem full_canonical_bridge_fails_in_countermodel :
-    ¬ (uniqueRecovery countermodel ∧ True ∧ True ∧ True ∧ True ∧ True) := by
-  intro h
-  exact unique_factorization_counterexample h.1
-
-/-- A certified counterexample changes the scoped terminal verdict to refuted. -/
-theorem terminal_verdict_with_counterexample :
-    adjudicateCounterexample true = ScopedVerdict.canonicalRefuted := by
-  decide
+/-- The exact scoped answer earned by the current formalization. -/
+theorem current_g1_semantics_do_not_entail_canonical_uniqueness :
+    groundedModel.inTargetClass .center ∧
+    QualifiedForCenter .left ∧
+    QualifiedForCenter .right ∧
+    groundedModel.commitmentEquivalent .left (groundedModel.encode .center) ∧
+    groundedModel.commitmentEquivalent .right (groundedModel.encode .center) ∧
+    ¬ groundedModel.commitmentEquivalent .left .right ∧
+    ¬ PairwiseUniqueUpToRegisteredEquivalence := by
+  exact ⟨rfl, left_is_fully_qualified, right_is_fully_qualified,
+    left_equivalent_to_canonical, right_equivalent_to_canonical,
+    left_not_equivalent_to_right, unique_factorization_counterexample⟩
 
 end FAR.CanonicalUniversality.Countermodel
