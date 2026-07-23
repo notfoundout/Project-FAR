@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W6-EQUIVALENCE",
+  "target_pr": 287,
+  "status": "executed",
+  "object": "closed representation packages produced after UPP-W5 machinery closure",
+  "verdicts": ["equivalent", "non_equivalent", "unknown"],
+  "required_dimensions": [
+    "structure",
+    "semantics",
+    "operation",
+    "dependency",
+    "information",
+    "history",
+    "query",
+    "error",
+    "identity",
+    "machinery"
+  ],
+  "positive_equivalence_conditions": {
+    "bidirectional": true,
+    "total": true,
+    "effective": true,
+    "injective": true,
+    "round_trip_identity": true,
+    "facts_bijective": true,
+    "transitions_preserved": true,
+    "dependencies_preserved": true,
+    "histories_preserved": true,
+    "query_answers_preserved": true,
+    "failure_and_unknown_preserved": true,
+    "identity_classes_preserved": true,
+    "closed_machinery_preserved": true,
+    "all_dimensions_resolved": true
+  },
+  "anti_collapse_rules": [
+    "matching final outputs is insufficient",
+    "matching extensional behavior is insufficient when dependencies differ",
+    "matching current state is insufficient when histories differ",
+    "renaming is allowed only through explicit bijections",
+    "hidden-state expansion is allowed only when identity and query commitments round-trip",
+    "ontology compression is forbidden when it merges distinguishable commitments",
+    "error and Unknown outcomes may not be collapsed",
+    "support machinery may not be ignored after closure",
+    "canonicalization may normalize syntax but may not erase commitment-relevant distinctions"
+  ],
+  "unknown_rules": [
+    "unproved totality yields Unknown absent a positive failure",
+    "unproved effectivity yields Unknown absent a positive failure",
+    "an unresolved required dimension yields Unknown absent a positive failure",
+    "a missing positive bijection or preservation witness yields non-equivalence when the mismatch is demonstrated"
+  ],
+  "invariance_scope": [
+    "renaming",
+    "serialization order",
+    "graph versus relational presentation",
+    "centralized versus distributed storage",
+    "eager versus lazy execution",
+    "temporal refinement and coarsening only with reversible history-preserving maps"
+  ],
+  "nonclaims": [
+    "not every behaviorally equivalent package is commitment-equivalent",
+    "no RCCD component is proved necessary",
+    "no sufficiency or irreducibility theorem is established",
+    "no universal theorem is established",
+    "public evaluation remains unauthorized"
+  ],
+  "next_action": {"target_pr": 288, "workstream": "UPP-W7-RECOVERABLE-COMMITMENT"}
+}
