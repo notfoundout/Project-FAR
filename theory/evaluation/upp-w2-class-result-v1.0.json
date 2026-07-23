@@ -1,0 +1,25 @@
+{
+  "schema_version":"1.0",
+  "workstream":"UPP-W2-CLASS",
+  "target_pr":283,
+  "status":"complete",
+  "terminal_result":"rccd_independent_target_class_defined_with_neutral_membership_and_unknown_boundary",
+  "proof_obligations_disposed":{
+    "syntactic_independence":"pass",
+    "decision_procedure_independence":"pass",
+    "membership_theorem_separation":"pass",
+    "unknown_boundary":"pass",
+    "renaming_invariance":"pass",
+    "implementation_medium_invariance":"pass"
+  },
+  "adversarial_cases":{
+    "included":["finite rule adjudicator","Bayesian choice updater","legal permission evaluator","self-modifying planning agent"],
+    "excluded":["thermostat without appraisal standard","random symbol generator","fixed lookup response with no alternatives","uninterpreted state machine"],
+    "unknown":["opaque learned system with inaccessible assessment facts","human tacit judgment lacking discriminating evidence"]
+  },
+  "rccd_necessity_proved":false,
+  "class_maximality_proved":false,
+  "unknowns_promoted":false,
+  "public_evaluation_authorized":false,
+  "next_action":{"target_pr":284,"workstream":"UPP-W3-CONTRACT"}
+}
