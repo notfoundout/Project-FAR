@@ -1,13 +1,14 @@
 {
-  "schema_version": "1.0",
-  "program_id": "POST-TUE-UPP-001",
-  "status": "active",
-  "completed_workstreams": [
+  "schema_version":"1.0",
+  "program_id":"POST-TUE-UPP-001",
+  "status":"active",
+  "completed_workstreams":[
     {"target_pr":281,"workstream":"UPP-W0-REGISTRATION","result":"universal_proof_program_registered"},
     {"target_pr":282,"workstream":"UPP-W1-FOUNDATION","result":"typed_foundation_established_without_rccd_entailment"},
-    {"target_pr":283,"workstream":"UPP-W2-CLASS","result":"rccd_independent_target_class_defined_with_neutral_membership_and_unknown_boundary"}
+    {"target_pr":283,"workstream":"UPP-W2-CLASS","result":"rccd_independent_target_class_defined_with_neutral_membership_and_unknown_boundary"},
+    {"target_pr":284,"workstream":"UPP-W3-CONTRACT","result":"independent_full_faithfulness_contract_frozen_with_visible_assumptions"}
   ],
-  "next_action": {"target_pr":284,"workstream":"UPP-W3-CONTRACT"},
-  "ordered_followups": [285,286,287,288,289,290,291,292,293,294,295,296],
-  "public_evaluation_authorized": false
+  "next_action":{"target_pr":285,"workstream":"UPP-W4-REPRESENTATIONS"},
+  "ordered_followups":[286,287,288,289,290,291,292,293,294,295,296],
+  "public_evaluation_authorized":false
 }
