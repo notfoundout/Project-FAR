@@ -1,0 +1,13 @@
+{
+  "schema_version":"1.0",
+  "program_id":"POST-TERM-EVAL-001",
+  "workstream":"PTE-W1-INDEPENDENT-REVIEW",
+  "outcome":"independent_review_protocol_frozen_external_review_not_yet_executed",
+  "evidential_status":"Unknown",
+  "package_complete":true,
+  "independent_reviewer_present":false,
+  "claim_impact":"none_pending_external_execution",
+  "reason":"A project-authored agent can freeze and adversarially validate the review protocol but cannot manufacture organizational or human independence.",
+  "next_action":"PTE-W1-EXTERNAL-REVIEW-EXECUTION",
+  "nonclaims":["independent proof review completed","theorem independently confirmed","kernel-checked reconstruction completed","external countermodel search completed"]
+}
