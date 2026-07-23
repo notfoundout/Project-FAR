@@ -27,7 +27,6 @@ jobs:
       - name: Compile commercial package
         run: python -m compileall -q commercial/far-release-assurance/src
       - name: Run deterministic foundation tests
-        id: commercial-tests
         shell: bash
         run: |
           set +e
@@ -36,11 +35,3 @@ jobs:
           status=$?
           tail -c 6000 "$log_file"
           exit "$status"
-      - name: Upload commercial test diagnostics
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: far-release-assurance-test-log
-          path: ${{ runner.temp }}/commercial-test.log
-          if-no-files-found: error
-          retention-days: 7
