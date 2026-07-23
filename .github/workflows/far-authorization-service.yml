@@ -18,12 +18,18 @@ jobs:
       - name: Install package
         run: python -m pip install ./commercial/far-decision-integrity
       - name: Run service tests
-        run: python -m unittest discover -s commercial/far-decision-integrity/tests -p "test_service.py"
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p far-evidence/service
+          python -m unittest discover \
+            -s commercial/far-decision-integrity/tests \
+            -p "test_service.py" \
+            2>&1 | tee far-evidence/service/test.log
       - name: Exercise installed HTTP service
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p far-evidence/service
           far-authorization-service --host 127.0.0.1 --port 8088 --evidence-root far-evidence/service &
           service_pid=$!
           trap 'kill "$service_pid" 2>/dev/null || true' EXIT
@@ -43,6 +49,7 @@ jobs:
               raise SystemExit("service did not become healthy")
           PY
       - name: Upload service evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: far-authorization-service-evidence
