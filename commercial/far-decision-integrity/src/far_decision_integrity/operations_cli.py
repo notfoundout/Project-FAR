@@ -4,6 +4,13 @@ import argparse
 import json
 from pathlib import Path
 
+from .hardening import (
+    enforce_retention,
+    migrate_database,
+    readiness_report,
+    restore_backup,
+    restore_payload,
+)
 from .operations import OperationsError, OperationsStore, audit_payload, create_backup, verify_backup
 from .security import SecurityError, TenantSecurityStore
 
@@ -38,6 +45,23 @@ def build_parser() -> argparse.ArgumentParser:
 
     verify = subparsers.add_parser("verify-backup")
     verify.add_argument("directory", type=Path)
+
+    restore = subparsers.add_parser("restore-backup")
+    restore.add_argument("directory", type=Path)
+    restore.add_argument("--destination", type=Path, required=True)
+
+    migrate = subparsers.add_parser("migrate")
+    migrate.add_argument("--evidence-db", type=Path, required=True)
+
+    retention = subparsers.add_parser("enforce-retention")
+    retention.add_argument("--evidence-db", type=Path, required=True)
+    retention.add_argument("--blob-root", type=Path, required=True)
+    retention.add_argument("--dry-run", action="store_true")
+
+    readiness = subparsers.add_parser("readiness")
+    readiness.add_argument("--evidence-db", type=Path, required=True)
+    readiness.add_argument("--blob-root", type=Path, required=True)
+    readiness.add_argument("--staging-root", type=Path, required=True)
     return parser
 
 
@@ -50,6 +74,26 @@ def main(argv: list[str] | None = None) -> int:
             payload = verify_backup(args.directory)
             print(json.dumps(payload, sort_keys=True))
             return 0 if payload["valid"] else VERIFY_FAILURE_EXIT
+        elif args.command == "restore-backup":
+            payload = restore_payload(restore_backup(args.directory, args.destination))
+        elif args.command == "migrate":
+            payload = {
+                "security": migrate_database(args.security_db, "security"),
+                "evidence": migrate_database(args.evidence_db, "evidence"),
+            }
+        elif args.command == "enforce-retention":
+            payload = enforce_retention(
+                args.evidence_db, args.blob_root, dry_run=args.dry_run
+            )
+        elif args.command == "readiness":
+            payload = readiness_report(
+                args.security_db,
+                args.evidence_db,
+                args.blob_root,
+                args.staging_root,
+            )
+            print(json.dumps(payload, sort_keys=True))
+            return 0 if payload["ready"] else VERIFY_FAILURE_EXIT
         else:
             security = TenantSecurityStore(args.security_db)
             actor = security.authenticate(args.token)
@@ -67,7 +111,12 @@ def main(argv: list[str] | None = None) -> int:
             elif args.command == "revoke-key":
                 payload = audit_payload(operations.revoke_key(actor, args.key_id))
             else:
-                payload = {"records": [audit_payload(record) for record in operations.audit_log(actor, limit=args.limit)]}
+                payload = {
+                    "records": [
+                        audit_payload(record)
+                        for record in operations.audit_log(actor, limit=args.limit)
+                    ]
+                }
     except (OperationsError, SecurityError, OSError) as exc:
         print(json.dumps({"error": str(exc), "status": "invalid"}, sort_keys=True))
         return INVALID_INPUT_EXIT
