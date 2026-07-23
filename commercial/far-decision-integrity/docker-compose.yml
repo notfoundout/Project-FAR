@@ -5,12 +5,21 @@ services:
       - "8080:8080"
     volumes:
       - far-data:/var/lib/far
+    read_only: true
+    tmpfs:
+      - /tmp/far:size=64m,mode=1770
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    stop_grace_period: 30s
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz')"]
+      test: ["CMD", "far-operations", "--security-db", "/var/lib/far/security.db", "readiness", "--evidence-db", "/var/lib/far/evidence.db", "--blob-root", "/var/lib/far/blobs", "--staging-root", "/var/lib/far/staging"]
       interval: 10s
-      timeout: 3s
+      timeout: 5s
       retries: 5
+      start_period: 10s
 
 volumes:
   far-data:
