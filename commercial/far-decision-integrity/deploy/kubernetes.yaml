@@ -27,19 +27,16 @@ items:
                 - 0.0.0.0
                 - --port
                 - "8080"
-                - --identity-config
-                - /etc/far/oidc.json
               ports:
-                - containerPort: 8080
+                - name: http
+                  containerPort: 8080
               readinessProbe:
-                httpGet:
-                  path: /healthz
-                  port: 8080
+                tcpSocket:
+                  port: http
                 periodSeconds: 5
               livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: 8080
+                tcpSocket:
+                  port: http
                 periodSeconds: 15
               resources:
                 requests:
@@ -53,19 +50,14 @@ items:
                 readOnlyRootFilesystem: true
                 capabilities:
                   drop: ["ALL"]
-              volumeMounts:
-                - name: config
-                  mountPath: /etc/far
-                  readOnly: true
-                - name: temporary
-                  mountPath: /tmp
-          volumes:
-            - name: config
-              configMap:
-                name: far-runtime-config
-            - name: temporary
-              emptyDir:
-                sizeLimit: 64Mi
+              env:
+                - name: FAR_RUNTIME_MODE
+                  value: distributed
+                - name: FAR_RUNTIME_CONFIG_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: far-runtime-secrets
+                      key: runtime-config
   - apiVersion: v1
     kind: Service
     metadata:
@@ -75,7 +67,7 @@ items:
         app: far-secured-service
       ports:
         - port: 80
-          targetPort: 8080
+          targetPort: http
   - apiVersion: policy/v1
     kind: PodDisruptionBudget
     metadata:
