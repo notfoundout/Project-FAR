@@ -1,5 +1,5 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "artifact_id":"TUE-W3-DEEPER-KERNEL-RESULT-001",
   "status":"complete_internal_adjudication",
   "parent_program":"POST-SC-TUE-001",
@@ -22,6 +22,7 @@
   "compression_reason":"To state which distinctions are revision-relevant and preserve them effectively, the substrate must specify recoverable content, admissibility, dependency, historical identity, and a uniform recovery procedure. The five RCCD commitments are therefore relocated rather than derived from fewer independent commitments.",
   "terminal_outcome":"rccd_irreducible_at_registered_level",
   "interpretation":"Within C*, P*, the broadened uniform effective representation family, and the frozen cost and machinery rules, no tested non-vacuous substrate strictly below RCCD derives R1-R5. RCCD remains the lowest internally justified kernel level.",
+  "historical_queue_checkpoint":{"completed_prs":[276,277,278,279],"next_pr":280,"ordered_followups":[]},
   "remaining_limits":[
     "the candidate search is broad but not logically exhaustive over every conceivable ontology",
     "principled inaccessibility remains neither support nor defeat",
