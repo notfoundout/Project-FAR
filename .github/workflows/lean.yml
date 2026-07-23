@@ -49,7 +49,27 @@ jobs:
       - name: Compile FAR canonical bridge adjudication
         run: lean mechanization/lean/FARCanonicalBridge.lean
       - name: Compile FAR canonical-universality decision
-        run: lean mechanization/lean/FARCanonicalUniversalityDecision.lean
+        id: canonical_decision_lean
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts/validation/lean
+          lean mechanization/lean/FARCanonicalUniversalityDecision.lean 2>&1 | tee artifacts/validation/lean/far-canonical-universality-decision.log
+      - name: Print FAR canonical decision Lean failure
+        if: always() && steps.canonical_decision_lean.outcome == 'failure'
+        run: cat artifacts/validation/lean/far-canonical-universality-decision.log
+      - name: Upload FAR canonical decision Lean failure
+        if: always() && steps.canonical_decision_lean.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-canonical-universality-decision-lean-failure
+          path: artifacts/validation/lean/far-canonical-universality-decision.log
+          if-no-files-found: error
+          retention-days: 7
+      - name: Enforce FAR canonical decision Lean result
+        if: always() && steps.canonical_decision_lean.outcome == 'failure'
+        run: exit 1
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
