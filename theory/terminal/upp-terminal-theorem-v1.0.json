@@ -17,6 +17,7 @@
   "preservation_dimensions":["structural","semantic","operational","dependency","information","historical","query_totality","failure_unknown_separation"],
   "proof_standard":{"finite_testing_is_not_universal_proof":true,"absence_of_counterexample_is_not_universality":true,"definitions_do_not_encode_terminal_outcome":true,"hidden_machinery_is_charged":true,"unknown_is_neither_support_nor_defeat":true},
   "mechanization":{"executable_composition":true,"artifact_checkers":true,"adversarial_tests":true,"single_kernel_checked_semantic_terminal_theorem":false},
+  "queue_closed":true,
   "public_evaluation":{"authorized":true,"scope":"evaluation of the disclosed strictly weakened relative operational theorem only","required_disclosures":["exact theorem","all frozen premises","relative maximality boundary","non-kernel-checked terminal semantic composition","Unknown discipline","nonclaims"]},
   "terminal_result":"strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary",
   "next_workstream":null
