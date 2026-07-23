@@ -1,0 +1,40 @@
+name: FAR Recovery Hardening
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/far-recovery-hardening.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  recovery-hardening:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: python -m pip install commercial/far-decision-integrity
+      - name: Run hardening tests
+        run: python -m unittest commercial/far-decision-integrity/tests/test_hardening.py -v
+      - name: Verify installed commands
+        run: |
+          set -euo pipefail
+          mkdir -p far-evidence/recovery-hardening/live/blobs
+          far-operations --security-db far-evidence/recovery-hardening/live/security.db migrate --evidence-db far-evidence/recovery-hardening/live/evidence.db
+          far-operations --security-db far-evidence/recovery-hardening/live/security.db readiness --evidence-db far-evidence/recovery-hardening/live/evidence.db --blob-root far-evidence/recovery-hardening/live/blobs --staging-root far-evidence/recovery-hardening/live/staging
+          far-operations --security-db far-evidence/recovery-hardening/live/security.db backup --evidence-db far-evidence/recovery-hardening/live/evidence.db --blob-root far-evidence/recovery-hardening/live/blobs --output far-evidence/recovery-hardening/backup
+          far-operations --security-db far-evidence/recovery-hardening/live/security.db verify-backup far-evidence/recovery-hardening/backup
+          far-operations --security-db far-evidence/recovery-hardening/live/security.db restore-backup far-evidence/recovery-hardening/backup --destination far-evidence/recovery-hardening/restored
+      - name: Build hardened container
+        run: docker build -t far-recovery-hardened commercial/far-decision-integrity
+      - name: Upload recovery evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-recovery-hardening
+          path: far-evidence/recovery-hardening
