@@ -10,7 +10,15 @@ from pathlib import Path
 from .closure import assess_closure
 from .compare import compare_releases, comparison_to_dict
 from .io import ReleasePackageError, canonical_json, load_package, package_digest, package_to_dict
+from .model import Decision
 from .report import build_report_bundle, write_report_bundle
+
+GATE_EXIT_CODES = {
+    Decision.PASS: 0,
+    Decision.REVIEW_REQUIRED: 20,
+    Decision.BLOCKED: 30,
+    Decision.UNKNOWN: 40,
+}
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -41,6 +49,11 @@ def build_parser() -> argparse.ArgumentParser:
     report.add_argument("--candidate", required=True)
     report.add_argument("--output-directory", required=True)
 
+    gate = subparsers.add_parser("gate", help="write a report bundle and exit by FAR decision")
+    gate.add_argument("--baseline", required=True)
+    gate.add_argument("--candidate", required=True)
+    gate.add_argument("--output-directory", required=True)
+
     return parser
 
 
@@ -54,7 +67,7 @@ def _write(text: str, output: str | None) -> None:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        if args.command in {"compare", "report"}:
+        if args.command in {"compare", "report", "gate"}:
             baseline = load_package(args.baseline)
             candidate = load_package(args.candidate)
             summary = compare_releases(baseline, candidate)
@@ -65,8 +78,11 @@ def main(argv: list[str] | None = None) -> int:
             bundle = build_report_bundle(baseline, candidate, summary)
             write_report_bundle(bundle, args.output_directory)
             sys.stdout.write(
-                f"REPORT {candidate.release_id} {summary.comparison.decision.value} {args.output_directory}\n"
+                f"{args.command.upper()} {candidate.release_id} "
+                f"{summary.comparison.decision.value} {args.output_directory}\n"
             )
+            if args.command == "gate":
+                return GATE_EXIT_CODES[summary.comparison.decision]
             return 0
 
         package = load_package(args.package)
