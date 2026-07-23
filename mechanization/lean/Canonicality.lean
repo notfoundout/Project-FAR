@@ -14,9 +14,8 @@ structure CanonicalKernel (C : CategoryModel) where
 
 theorem unique_factorization
     (C : CategoryModel) (K : CanonicalKernel C) (x : C.Object) :
-    ∃! f : C.Hom x K.kernel, True := by
-  refine ⟨K.factors x, trivial, ?_⟩
-  intro f _
+    ∀ f : C.Hom x K.kernel, f = K.factors x := by
+  intro f
   exact K.unique x f
 
 end FAR.CanonicalUniversality.Canonicality
