@@ -27,10 +27,10 @@ jobs:
         run: |
           mkdir -p far-evidence/trace-ingestion
           cat > far-evidence/trace-ingestion/trace.json <<'JSON'
-          {"spans":[{"trace_id":"trace-ci","span_id":"root","attributes":{"far.decision.root_span":true,"far.decision.id":"ci-decision","far.decision.type":"issue_refund","far.policy.version":"refund-policy/2026-07","far.decision.root":"approve-refund","far.action.kind":"financial_action","far.action.target":"order-ci","far.trace.completeness":1.0}},{"trace_id":"trace-ci","span_id":"evidence","attributes":{"far.node.id":"payment-confirmed","far.node.kind":"evidence","far.node.statement":"Payment is confirmed.","far.dependency.target":"approve-refund","far.dependency.relation":"supports","far.authorization.required":true}},{"trace_id":"trace-ci","span_id":"decision","attributes":{"far.node.id":"approve-refund","far.node.kind":"conclusion","far.node.statement":"Approve refund."}}]}
+          {"spans":[{"trace_id":"trace-ci","span_id":"root","attributes":{"far.decision.root_span":true,"far.decision.id":"ci-decision","far.decision.type":"issue_refund","far.policy.version":"refund-policy/2026-07","far.decision.root":"approve-refund","far.action.kind":"financial_action","far.action.target":"order-ci","far.trace.completeness":1.0}},{"trace_id":"trace-ci","span_id":"evidence","parent_span_id":"root","attributes":{"far.node.id":"payment-confirmed","far.node.kind":"evidence","far.node.statement":"Payment is confirmed.","far.dependency.target":"approve-refund","far.dependency.relation":"supports","far.authorization.required":true}},{"trace_id":"trace-ci","span_id":"decision","parent_span_id":"root","attributes":{"far.node.id":"approve-refund","far.node.kind":"conclusion","far.node.statement":"Approve refund."}}]}
           JSON
           far-trace-ingest far-evidence/trace-ingestion/trace.json --output far-evidence/trace-ingestion/decision-package.json
-          python -c 'import json; p=json.load(open("far-evidence/trace-ingestion/decision-package.json")); assert p["decision_id"] == "ci-decision"'
+          python -c 'import json; p=json.load(open("far-evidence/trace-ingestion/decision-package.json")); assert p["decision_id"] == "ci-decision"; assert p["metadata"]["semantic_completeness_verified"] is False; assert p["metadata"]["semantic_convention"] == "far-agent-semconv/0.1"'
       - name: Upload normalized package
         uses: actions/upload-artifact@v4
         with:
