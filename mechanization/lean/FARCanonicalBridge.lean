@@ -1,7 +1,4 @@
-import mechanization.lean.UPPSemanticKernel
-import mechanization.lean.G2OpenWorldLowerBound
-import mechanization.lean.G3EpistemicMaximality
-import mechanization.lean.CanonicalUniversalityTerminal
+import Std
 
 namespace FAR.CanonicalUniversality.Bridge
 
