@@ -36,9 +36,11 @@ def main() -> None:
     require(result["accepted_strictly_deeper_kernels"] == 0, "strict deeper kernel count inconsistent")
     require(result["candidate_count"] == len(corpus["candidates"]), "candidate count inconsistent")
     require(len(result["component_results"]) == 5, "component adjudication incomplete")
-    require(queue["next_action"]["target_pr"] == 280, "queue did not advance to PR 280")
-    require(queue["ordered_followups"] == [], "follow-up queue must contain only terminal action")
-    require([x["target_pr"] for x in queue["completed_workstreams"]] == [276, 277, 278, 279], "completed sequence incorrect")
+    checkpoint = result["historical_queue_checkpoint"]
+    require(checkpoint == {"completed_prs":[276,277,278,279],"next_pr":280,"ordered_followups":[]}, "historical PR 280 checkpoint changed")
+    require(queue["status"] in {"frozen", "complete"}, "invalid live queue status")
+    if queue["status"] == "complete":
+        require(queue["next_action"] is None and queue["ordered_followups"] == [], "terminal queue not closed")
     prose = DOC.read_text(encoding="utf-8") + AUDIT.read_text(encoding="utf-8")
     for phrase in ("rccd_irreducible_at_registered_level", "not proof of metaphysical fundamentality", "queue advances exactly once"):
         require(phrase in prose, f"missing boundary phrase: {phrase}")
