@@ -50,6 +50,8 @@ jobs:
         run: lean mechanization/lean/FARCanonicalBridge.lean
       - name: Compile FAR canonical-universality decision
         run: lean mechanization/lean/FARCanonicalUniversalityDecision.lean
+      - name: Compile FAR canonicality countermodel
+        run: lean mechanization/lean/FARCanonicalCountermodel.lean
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
@@ -87,3 +89,5 @@ jobs:
         run: python -m unittest tests.test_far_canonical_bridge_alignment
       - name: Check FAR canonical-universality decision
         run: python -m unittest tests.test_far_canonical_universality_decision
+      - name: Check FAR canonicality countermodel
+        run: python -m unittest tests.test_far_canonical_countermodel_alignment
