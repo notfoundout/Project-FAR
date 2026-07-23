@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "title": "Universal Proof Program",
+  "status": "registered",
+  "starting_checkpoint": {
+    "source_pr": 280,
+    "result": "maximal_effective_rccd_universality",
+    "classification": "terminal_finite_internal_adjudication_evidence_not_universal_proof"
+  },
+  "research_question": "Is there a nontrivial universal structure underlying reasoning?",
+  "target_theorem": "For every system S in the independently defined target class C*, and every admissible effective representation R in E*, if R satisfies the independently defined full reasoning-faithfulness contract P* for S, then the machinery closure M(R,S) contains an RCCD-equivalent kernel; RCCD is sufficient for P*, nontrivial, componentwise irreducible, and maximal relative to the frozen extension rules.",
+  "required_properties": [
+    "typed_formal_domain",
+    "rccd_independent_class_definition",
+    "independent_faithfulness_contract",
+    "admissible_representation_universe",
+    "machinery_closure",
+    "representation_and_commitment_equivalence",
+    "recoverable_commitment_necessity",
+    "constrained_evolution_necessity",
+    "dependency_sensitive_revision_necessity",
+    "historical_identity_necessity",
+    "uniform_effective_recovery_necessity",
+    "rccd_sufficiency_by_reconstruction",
+    "component_independence_and_irreducibility",
+    "nontriviality",
+    "relative_maximality",
+    "mechanized_terminal_theorem"
+  ],
+  "workstreams": [
+    {"sequence": 1, "target_pr": 281, "id": "UPP-W0-REGISTRATION", "purpose": "Freeze the theorem, proof standard, outcomes, dependencies, and release gate."},
+    {"sequence": 2, "target_pr": 282, "id": "UPP-W1-FOUNDATION", "purpose": "Define the typed ontology and formal semantic objects."},
+    {"sequence": 3, "target_pr": 283, "id": "UPP-W2-CLASS", "purpose": "Define C* independently of RCCD and prove neutrality obligations."},
+    {"sequence": 4, "target_pr": 284, "id": "UPP-W3-CONTRACT", "purpose": "Formalize P* independently and classify all assumptions."},
+    {"sequence": 5, "target_pr": 285, "id": "UPP-W4-REPRESENTATIONS", "purpose": "Define E* and its admissibility and effectiveness boundaries."},
+    {"sequence": 6, "target_pr": 286, "id": "UPP-W5-MACHINERY-CLOSURE", "purpose": "Define M(R,S) and prove hidden machinery cannot evade accounting."},
+    {"sequence": 7, "target_pr": 287, "id": "UPP-W6-EQUIVALENCE", "purpose": "Formalize representation and commitment equivalence."},
+    {"sequence": 8, "target_pr": 288, "id": "UPP-W7-R1", "purpose": "Prove recoverable-commitment necessity."},
+    {"sequence": 9, "target_pr": 289, "id": "UPP-W8-R2", "purpose": "Prove constrained-evolution necessity."},
+    {"sequence": 10, "target_pr": 290, "id": "UPP-W9-R3", "purpose": "Prove dependency-sensitive-revision necessity."},
+    {"sequence": 11, "target_pr": 291, "id": "UPP-W10-R4", "purpose": "Prove historical-identity necessity."},
+    {"sequence": 12, "target_pr": 292, "id": "UPP-W11-R5", "purpose": "Prove uniform-effective-recovery necessity."},
+    {"sequence": 13, "target_pr": 293, "id": "UPP-W12-SUFFICIENCY", "purpose": "Prove RCCD sufficiency by explicit reconstruction."},
+    {"sequence": 14, "target_pr": 294, "id": "UPP-W13-IRREDUCIBILITY", "purpose": "Prove component independence, irreducibility, and nontriviality."},
+    {"sequence": 15, "target_pr": 295, "id": "UPP-W14-MAXIMALITY", "purpose": "Execute adversarial countermodel closure and prove the strongest supportable maximality result."},
+    {"sequence": 16, "target_pr": 296, "id": "UPP-W15-TERMINAL-THEOREM", "purpose": "Assemble, mechanize, audit, and adjudicate the universal theorem."}
+  ],
+  "terminal_outcomes": [
+    "full_registered_universal_theorem_proved",
+    "strictly_weakened_universal_theorem_proved",
+    "rccd_requires_extension_or_revision",
+    "rccd_universality_defeated",
+    "proof_blocked_by_indispensable_unproved_assumption"
+  ],
+  "proof_standard": {
+    "finite_testing_is_not_proof": true,
+    "absence_of_counterexample_is_not_universality": true,
+    "central_claims_must_be_mechanized": true,
+    "definitions_must_not_encode_the_conclusion": true,
+    "hidden_machinery_is_charged": true,
+    "unknown_is_neither_support_nor_defeat": true,
+    "failed_lemma_requires_revision_or_weakening": true,
+    "supportive_work_may_not_be_inserted_to_force_the_preferred_outcome": true
+  },
+  "release_gate": {
+    "public_evaluation_authorized": false,
+    "authorization_condition": "Only a terminal UPP-W15 outcome may authorize public evaluation, and only if the exact theorem, assumptions, machine-checked proof status, unresolved obligations, and nonclaims are disclosed together.",
+    "blocked_before_authorization": [
+      "claim that PR 280 is a universal proof",
+      "claim unrestricted metaphysical universality",
+      "release the project as proof-complete",
+      "hide unresolved axioms or assumptions",
+      "promote failed counterexample searches into deductive proof"
+    ]
+  },
+  "next_action": {"target_pr": 282, "workstream": "UPP-W1-FOUNDATION"},
+  "ordered_followups": [283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296]
+}
