@@ -13,9 +13,10 @@
     {"target_pr":288,"workstream":"UPP-W7-RECOVERABLE-COMMITMENT","result":"recoverable_commitment_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"},
     {"target_pr":289,"workstream":"UPP-W8-CONSTRAINED-EVOLUTION","result":"constrained_evolution_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"},
     {"target_pr":290,"workstream":"UPP-W9-DEPENDENCY-STRUCTURE","result":"dependency_structure_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"},
-    {"target_pr":291,"workstream":"UPP-W10-SEMANTIC-INTERPRETATION","result":"semantic_interpretation_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"}
+    {"target_pr":291,"workstream":"UPP-W10-SEMANTIC-INTERPRETATION","result":"semantic_interpretation_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"},
+    {"target_pr":292,"workstream":"UPP-W11-HISTORICAL-TRACE","result":"historical_trace_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"}
   ],
-  "next_action":{"target_pr":292,"workstream":"UPP-W11-HISTORICAL-TRACE"},
-  "ordered_followups":[293,294,295,296],
+  "next_action":{"target_pr":293,"workstream":"UPP-W12-COMPONENT-INDEPENDENCE"},
+  "ordered_followups":[294,295,296],
   "public_evaluation_authorized":false
 }
