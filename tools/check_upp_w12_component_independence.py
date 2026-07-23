@@ -21,7 +21,6 @@ def main() -> None:
     result = json.loads(RESULT.read_text())
     queue = json.loads(QUEUE.read_text())
     expected = "five_component_relative_independence_established_by_separating_witnesses_and_anti_reduction_controls"
-
     if spec.get("target_pr") != 293 or spec.get("result") != expected:
         fail("registered theorem identity or result mismatch")
     components = spec.get("components", [])
@@ -37,22 +36,21 @@ def main() -> None:
     completed = {x.get("target_pr"): x for x in queue.get("completed_workstreams", [])}
     if completed.get(293, {}).get("result") != expected:
         fail("queue does not record PR #293 historical completion")
-    next_action = queue.get("next_action", {})
-    target = next_action.get("target_pr")
-    if not isinstance(target, int) or target < 294:
-        fail("queue regressed before PR #294")
-    followups = queue.get("ordered_followups", [])
-    if any(not isinstance(item, int) or item <= target for item in followups):
-        fail("ordered followups are not monotonic")
-    if queue.get("public_evaluation_authorized") is not False:
-        fail("public evaluation gate must remain closed")
-
-    test = subprocess.run(
-        [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_upp_w12_component_independence.py"],
-        cwd=ROOT,
-        text=True,
-        capture_output=True,
-    )
+    terminal_complete = 296 in completed
+    if terminal_complete:
+        if queue.get("status") != "complete" or queue.get("next_action") is not None or queue.get("ordered_followups") != []:
+            fail("terminal queue closure malformed")
+    else:
+        next_action = queue.get("next_action", {})
+        target = next_action.get("target_pr")
+        if not isinstance(target, int) or target < 294:
+            fail("queue regressed before PR #294")
+        followups = queue.get("ordered_followups", [])
+        if any(not isinstance(item, int) or item <= target for item in followups):
+            fail("ordered followups are not monotonic")
+        if queue.get("public_evaluation_authorized") is not False:
+            fail("public evaluation gate opened before terminal completion")
+    test = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_upp_w12_component_independence.py"], cwd=ROOT, text=True, capture_output=True)
     if test.returncode:
         sys.stderr.write(test.stdout + test.stderr)
         fail("component independence tests failed")

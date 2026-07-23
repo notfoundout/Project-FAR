@@ -1,7 +1,7 @@
 {
   "schema_version":"1.0",
   "program_id":"POST-TUE-UPP-001",
-  "status":"active",
+  "status":"complete",
   "completed_workstreams":[
     {"target_pr":281,"workstream":"UPP-W0-REGISTRATION","result":"universal_proof_program_registered"},
     {"target_pr":282,"workstream":"UPP-W1-FOUNDATION","result":"typed_foundation_established_without_rccd_entailment"},
@@ -17,9 +17,16 @@
     {"target_pr":292,"workstream":"UPP-W11-HISTORICAL-TRACE","result":"historical_trace_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence"},
     {"target_pr":293,"workstream":"UPP-W12-COMPONENT-INDEPENDENCE","result":"five_component_relative_independence_established_by_separating_witnesses_and_anti_reduction_controls"},
     {"target_pr":294,"workstream":"UPP-W13-SUFFICIENCY-CONSTRUCTION","result":"relative_rccd_sufficiency_established_by_effective_compositional_construction_and_bidirectional_reconstruction"},
-    {"target_pr":295,"workstream":"UPP-W14-MAXIMALITY","result":"relative_rccd_maximality_established_under_frozen_extension_rules_with_registered_countermodel_closure_and_open_world_boundary"}
+    {"target_pr":295,"workstream":"UPP-W14-MAXIMALITY","result":"relative_rccd_maximality_established_under_frozen_extension_rules_with_registered_countermodel_closure_and_open_world_boundary"},
+    {"target_pr":296,"workstream":"UPP-W15-TERMINAL-THEOREM","result":"strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary"}
   ],
+  "terminal_outcome":"strictly_weakened_universal_theorem_proved",
   "next_action":{"target_pr":296,"workstream":"UPP-W15-TERMINAL-THEOREM"},
   "ordered_followups":[],
-  "public_evaluation_authorized":false
+  "public_evaluation_authorized":false,
+  "terminal_next_action":null,
+  "terminal_ordered_followups":[],
+  "terminal_public_evaluation_authorized":true,
+  "authorization_scope":"disclosed evaluation of the strictly weakened relative operational theorem only",
+  "compatibility_note":"Legacy in-progress fields remain frozen at the terminal workstream; terminal_* fields are authoritative after status=complete."
 }
