@@ -21,8 +21,12 @@
     {"target_pr":296,"workstream":"UPP-W15-TERMINAL-THEOREM","result":"strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary"}
   ],
   "terminal_outcome":"strictly_weakened_universal_theorem_proved",
-  "next_action":null,
+  "next_action":{"target_pr":296,"workstream":"UPP-W15-TERMINAL-THEOREM"},
   "ordered_followups":[],
-  "public_evaluation_authorized":true,
-  "authorization_scope":"disclosed evaluation of the strictly weakened relative operational theorem only"
+  "public_evaluation_authorized":false,
+  "terminal_next_action":null,
+  "terminal_ordered_followups":[],
+  "terminal_public_evaluation_authorized":true,
+  "authorization_scope":"disclosed evaluation of the strictly weakened relative operational theorem only",
+  "compatibility_note":"Legacy in-progress fields remain frozen at the terminal workstream; terminal_* fields are authoritative after status=complete."
 }
