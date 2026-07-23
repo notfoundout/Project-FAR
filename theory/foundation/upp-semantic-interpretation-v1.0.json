@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-TUE-UPP-001",
+  "workstream": "UPP-W10-SEMANTIC-INTERPRETATION",
+  "target_pr": 291,
+  "status": "complete",
+  "theorem": "For every target-class system and admissible machinery-closed fully faithful representation preserving commitment equivalence, there exists an effective recoverable context-indexed interpretation function for every registered semantically operative item.",
+  "antecedent_premises": [
+    "target_class_membership",
+    "representation_admissibility",
+    "machinery_closure",
+    "full_faithfulness",
+    "commitment_equivalence_preservation",
+    "registered_semantic_query_totality",
+    "failure_unknown_separation"
+  ],
+  "witness_requirements": [
+    "effective_context_indexed_interpretation",
+    "stable_item_content_and_role_identity",
+    "truth_or_satisfaction_conditions",
+    "context_sensitivity",
+    "compositional_or_explicit_assembly",
+    "operational_relevance",
+    "equivalence_invariance",
+    "complete_machinery_accounting"
+  ],
+  "semantic_roles": [
+    "assertion", "denial", "question", "rule", "condition", "reason", "defeater", "revision_directive"
+  ],
+  "anti_trivialization": [
+    "raw_syntax_is_not_semantics",
+    "token_identity_is_not_content_identity",
+    "output_equivalence_is_not_interpretation_equivalence",
+    "dictionary_lookup_without_context_is_insufficient",
+    "post_hoc_glosses_are_insufficient",
+    "hidden_external_interpreters_are_inadmissible",
+    "unknown_meaning_is_not_absence_of_meaning",
+    "constant_interpretation_functions_are_insufficient"
+  ],
+  "countermodels": [
+    "same_tokens_different_contexts",
+    "different_tokens_same_commitment",
+    "identical_outputs_different_truth_conditions",
+    "syntax_only_representation",
+    "hidden_external_dictionary",
+    "post_hoc_human_gloss",
+    "unknown_collapsed_to_empty_content",
+    "representation_dependent_semantic_role"
+  ],
+  "claim_boundary": "Operational relative necessity only; no unrestricted metaphysical theory of meaning is asserted.",
+  "terminal_result": "semantic_interpretation_necessity_lemma_established_relative_to_frozen_class_contract_representation_closure_and_equivalence",
+  "unresolved": ["R5", "sufficiency", "irreducibility", "maximality", "terminal_universal_theorem"],
+  "next_action": {"target_pr": 292, "workstream": "UPP-W11-HISTORICAL-TRACE"},
+  "public_evaluation_authorized": false
+}
