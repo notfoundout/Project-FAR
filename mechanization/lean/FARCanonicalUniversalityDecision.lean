@@ -1,5 +1,4 @@
 import Std
-import mechanization.lean.FARCanonicalBridge
 
 /-!
 # FAR canonical-universality decision
