@@ -16,11 +16,14 @@ AUDIT = ROOT / "docs" / "audits" / "upp-w14-maximality-audit.md"
 EXPECTED = "relative_rccd_maximality_established_under_frozen_extension_rules_with_registered_countermodel_closure_and_open_world_boundary"
 NEXT = {"target_pr": 296, "workstream": "UPP-W15-TERMINAL-THEOREM"}
 
+
 def fail(message: str) -> None:
     raise SystemExit(f"FAIL: {message}")
 
+
 def load_json(path: pathlib.Path):
     return json.loads(path.read_text(encoding="utf-8"))
+
 
 def load_model():
     spec = importlib.util.spec_from_file_location("upp_w14_checker", MODEL)
@@ -30,6 +33,7 @@ def load_model():
     sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
+
 
 def main() -> int:
     for path in (MODEL, SPEC, RESULT, QUEUE, DOC, AUDIT):
@@ -42,19 +46,21 @@ def main() -> int:
     if specification.get("terminal_result") != EXPECTED or result.get("terminal_result") != EXPECTED:
         fail("terminal result mismatch")
     ledger = model.canonical_ledger()
-    if model.validate_ledger(ledger):
-        fail("canonical search ledger is incomplete")
-    if model.maximality_verdict(ledger) is not model.Verdict.PROVED:
+    if model.validate_ledger(ledger) or model.maximality_verdict(ledger) is not model.Verdict.PROVED:
         fail("canonical maximality assessment does not prove")
     if specification.get("next_workstream") != NEXT or result.get("next_workstream") != NEXT:
-        fail("terminal theorem successor mismatch")
+        fail("historical terminal-theorem successor mismatch")
     entry = next((x for x in queue.get("completed_workstreams", []) if x.get("target_pr") == 295), None)
     if entry is None or entry.get("workstream") != "UPP-W14-MAXIMALITY" or entry.get("result") != EXPECTED:
         fail("queue omits PR #295 completion")
-    if queue.get("next_action") != NEXT or queue.get("ordered_followups") != []:
-        fail("queue does not advance exactly to PR #296")
-    if any(x.get("public_evaluation_authorized") is not False for x in (specification, result, queue)):
-        fail("public evaluation gate opened early")
+    terminal_complete = any(x.get("target_pr") == 296 for x in queue.get("completed_workstreams", []))
+    if terminal_complete:
+        if queue.get("status") != "complete" or queue.get("next_action") is not None or queue.get("ordered_followups") != []:
+            fail("terminal queue closure is malformed")
+    elif queue.get("next_action") != NEXT or queue.get("ordered_followups") != []:
+        fail("queue neither advances to nor completes PR #296")
+    if specification.get("public_evaluation_authorized") is not False or result.get("public_evaluation_authorized") is not False:
+        fail("UPP-W14 artifacts opened the gate early")
     text = DOC.read_text(encoding="utf-8").lower() + AUDIT.read_text(encoding="utf-8").lower()
     for phrase in ("frozen extension", "open-world", "unknown", "absence of counterexample"):
         if phrase not in text:
@@ -64,6 +70,7 @@ def main() -> int:
         fail("maximality tests failed")
     print("PASS: UPP-W14 maximality package is internally consistent")
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
