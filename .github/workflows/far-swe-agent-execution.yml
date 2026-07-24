@@ -8,7 +8,7 @@ on:
         required: true
         type: choice
         options:
-          - resolve-image
+          - prepare-environment
           - preflight
           - plan
       confirmation:
@@ -21,6 +21,7 @@ permissions:
 
 env:
   CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1
+  SWEBENCH_HARNESS_COMMIT: f7bbbb2ccdf479001d6467c9e34af59e44a840f9
 
 concurrency:
   group: far-swe-agent-external-comparison
@@ -54,6 +55,28 @@ jobs:
           python validate_manifest.py
           python -m unittest -v test_validate_manifest.py test_run_comparison.py
 
+      - name: Checkout pinned SWE-bench harness
+        if: inputs.stage == 'prepare-environment'
+        run: |
+          git clone --filter=blob:none https://github.com/SWE-bench/SWE-bench.git "$RUNNER_TEMP/swebench-harness"
+          git -C "$RUNNER_TEMP/swebench-harness" checkout --detach "$SWEBENCH_HARNESS_COMMIT"
+          test "$(git -C "$RUNNER_TEMP/swebench-harness" rev-parse HEAD)" = "$SWEBENCH_HARNESS_COMMIT"
+
+      - name: Install pinned SWE-bench harness
+        if: inputs.stage == 'prepare-environment'
+        run: python -m pip install "$RUNNER_TEMP/swebench-harness"
+
+      - name: Build and freeze local SWE-bench environment
+        if: inputs.stage == 'prepare-environment'
+        working-directory: ${{ env.CASE_DIR }}
+        env:
+          SWEBENCH_HARNESS_DIR: ${{ runner.temp }}/swebench-harness
+        run: |
+          python prepare_environment.py
+          test -s execution-output/environment-freeze/environment-lock.json
+          test -s execution-output/environment-freeze/environment-lock.sha256
+          grep -Eq '^[0-9a-f]{64}$' execution-output/environment-freeze/environment-lock.sha256
+
       - name: Enforce free-tier execution confirmation
         if: inputs.stage == 'plan'
         env:
@@ -63,15 +86,6 @@ jobs:
             echo "Plan stage requires the exact confirmation phrase." >&2
             exit 1
           }
-
-      - name: Resolve immutable image digest
-        if: inputs.stage == 'resolve-image'
-        working-directory: ${{ env.CASE_DIR }}
-        run: |
-          python run_comparison.py resolve-image
-          test -s resolved-image-digest.txt
-          grep -Eq '^sha256:[0-9a-f]{64}$' resolved-image-digest.txt
-          cat resolved-image-digest.txt
 
       - name: Run frozen-input preflight
         if: inputs.stage == 'preflight'
@@ -97,7 +111,6 @@ jobs:
         with:
           name: far-swe-agent-${{ inputs.stage }}-${{ github.run_id }}
           path: |
-            ${{ env.CASE_DIR }}/resolved-image-digest.txt
             ${{ env.CASE_DIR }}/execution-output/
           if-no-files-found: ignore
           retention-days: 30
