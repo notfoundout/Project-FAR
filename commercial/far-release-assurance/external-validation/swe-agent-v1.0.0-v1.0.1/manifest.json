@@ -1,5 +1,5 @@
 {
-  "schema": "far-external-release-comparison/0.1",
+  "schema": "far-external-release-comparison/0.2",
   "case_id": "swe-agent-v1.0.0-v1.0.1",
   "status": "execution_inputs_selected_environment_digest_pending",
   "source": {
@@ -24,17 +24,22 @@
   "frozen_inputs": {
     "task_selector": "previously_frozen_blind_candidate_002",
     "task_id": "scikit-learn__scikit-learn-14125",
-    "model": "anthropic/claude-opus-4-5",
-    "model_selection_basis": "highest_resolved_rate_on_official_swe_bench_verified_leaderboard_at_selection_time",
+    "model": "claude-opus-4-5-20251101",
+    "model_selection_basis": "strongest_officially_documented_anthropic_software_engineering_model_available_at_selection_time",
+    "model_selection_sources": [
+      "https://www.anthropic.com/news/claude-opus-4-5",
+      "https://www.swebench.com/verified.html",
+      "https://swe-agent.com/latest/config/models/"
+    ],
     "model_parameters": {
-      "temperature": 0.0,
-      "top_p": 1.0,
+      "temperature": 1.0,
+      "top_p": null,
       "reasoning_effort": "high",
       "per_instance_cost_limit_usd": 25.0,
       "total_cost_limit_usd": 100.0
     },
     "agent_config_path": "agent-config.yaml",
-    "agent_config_sha256": "0d80a69e26b3098de66c9914af0a74d378dcf393d0b410e9d41dc53b8c4af9a8",
+    "agent_config_sha256": "264b9611bc8632298fbf53dd5cd048c48f4c4934210b29c836ee4da6f1be4a9d",
     "environment_image_reference": "swebench/sweb.eval.x86_64.scikit-learn__scikit-learn-14125",
     "environment_image_digest": null,
     "task_seed": 14125
@@ -43,18 +48,21 @@
     "required_secret": "ANTHROPIC_API_KEY",
     "docker_required": true,
     "resolve_and_freeze_image_digest_before_first_model_call": true,
+    "maximum_total_model_cost_usd": 100.0,
     "runs": [
-      {"release": "v1.0.0", "repetition": 1},
-      {"release": "v1.0.0", "repetition": 2},
-      {"release": "v1.0.1", "repetition": 1},
-      {"release": "v1.0.1", "repetition": 2}
+      {"release": "v1.0.0", "commit": "8ed382c", "repetition": 1},
+      {"release": "v1.0.0", "commit": "8ed382c", "repetition": 2},
+      {"release": "v1.0.1", "commit": "6aff215", "repetition": 1},
+      {"release": "v1.0.1", "commit": "6aff215", "repetition": 2}
     ]
   },
   "required_artifacts": [
     "source_manifest",
     "environment_manifest",
-    "baseline_trajectory",
-    "candidate_trajectory",
+    "baseline_trajectory_run_1",
+    "baseline_trajectory_run_2",
+    "candidate_trajectory_run_1",
+    "candidate_trajectory_run_2",
     "baseline_far_package",
     "candidate_far_package",
     "comparison_report",
@@ -72,8 +80,8 @@
   "decision_policy": {
     "PASS": "No material dependency regression and sufficient evidence for the frozen claims.",
     "BLOCKED": "A required authorization, policy, or admissibility dependency is removed or bypassed.",
-    "REVIEW_REQUIRED": "Material ambiguity, underdetermination, or incomplete evidence prevents a release decision.",
-    "UNKNOWN": "The required claim cannot be resolved from supplied artifacts."
+    "REVIEW_REQUIRED": "Material ambiguity or underdetermination prevents a release decision.",
+    "UNKNOWN": "Evidence completeness is insufficient to resolve a required claim."
   },
   "forbidden_before_primary_freeze": [
     "benchmark_resolution_status",
