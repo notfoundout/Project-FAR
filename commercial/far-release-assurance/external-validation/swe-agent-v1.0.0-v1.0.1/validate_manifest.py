@@ -11,8 +11,9 @@ CONFIG = CASE_DIR / "agent-config.yaml"
 
 REQUIRED_TOP_LEVEL = {
     "schema", "case_id", "status", "source", "comparison_design", "frozen_inputs",
-    "execution_requirements", "required_artifacts", "primary_questions", "decision_policy",
-    "forbidden_before_primary_freeze", "claim_boundary",
+    "execution_environment", "execution_requirements", "required_artifacts",
+    "primary_questions", "decision_policy", "forbidden_before_primary_freeze",
+    "claim_boundary",
 }
 REQUIRED_DECISIONS = {"PASS", "BLOCKED", "REVIEW_REQUIRED", "UNKNOWN"}
 REQUIRED_BLINDED_FIELDS = {
@@ -21,10 +22,10 @@ REQUIRED_BLINDED_FIELDS = {
 }
 DECLARATION_PATH = ("forbidden_before_primary_freeze",)
 EXPECTED_RUNS = {
-    ("v1.0.0", "8ed382c", 1),
-    ("v1.0.0", "8ed382c", 2),
-    ("v1.0.1", "6aff215", 1),
-    ("v1.0.1", "6aff215", 2),
+    ("v1.0.0", "8ed382c", 1, "baseline-run-1.traj"),
+    ("v1.0.0", "8ed382c", 2, "baseline-run-2.traj"),
+    ("v1.0.1", "6aff215", 1, "candidate-run-1.traj"),
+    ("v1.0.1", "6aff215", 2, "candidate-run-2.traj"),
 }
 
 
@@ -47,8 +48,7 @@ def validate(payload: dict) -> None:
     assert not missing, f"missing top-level fields: {sorted(missing)}"
     assert payload["schema"] == "far-external-release-comparison/0.2"
 
-    source = payload["source"]
-    assert source == {
+    assert payload["source"] == {
         "repository": "https://github.com/SWE-agent/SWE-agent",
         "baseline_ref": "v1.0.0",
         "baseline_commit": "8ed382c",
@@ -73,14 +73,22 @@ def validate(payload: dict) -> None:
 
     frozen = payload["frozen_inputs"]
     assert frozen["task_id"] == "scikit-learn__scikit-learn-14125"
-    assert frozen["model"] == "claude-opus-4-5-20251101"
+    assert frozen["model"] == "gemini/gemini-2.5-pro"
+    assert frozen["provider_model"] == "gemini-2.5-pro"
     assert frozen["model_parameters"] == {
-        "temperature": 1.0,
-        "top_p": None,
-        "reasoning_effort": "high",
-        "per_instance_cost_limit_usd": 25.0,
-        "total_cost_limit_usd": 100.0,
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "per_instance_cost_limit_usd": 0.0,
+        "total_cost_limit_usd": 0.0,
+        "per_instance_call_limit": 30,
+        "minimum_delay_seconds": 15.0,
+        "retry_min_wait_seconds": 30,
+        "retry_max_wait_seconds": 600,
     }
+    constraints = frozen["free_tier_constraints"]
+    assert constraints["billing_required"] is False
+    assert constraints["quota_not_guaranteed"] is True
+    assert constraints["provider_may_use_inputs_and_outputs_to_improve_products"] is True
     assert frozen["task_seed"] == 14125
     assert len(frozen["model_selection_sources"]) >= 3
     actual_config_hash = hashlib.sha256(CONFIG.read_bytes()).hexdigest()
@@ -94,17 +102,28 @@ def validate(payload: dict) -> None:
         assert status == "execution_inputs_selected_environment_digest_pending"
         assert frozen["environment_image_digest"] is None
 
+    environment = payload["execution_environment"]
+    assert environment["provider"] == "github_actions"
+    assert environment["runner"] == "ubuntu-24.04"
+    assert environment["credential_secret"] == "GEMINI_API_KEY"
+    assert environment["manual_dispatch_only"] is True
+
     requirements = payload["execution_requirements"]
-    assert requirements["required_secret"] == "ANTHROPIC_API_KEY"
-    assert requirements["maximum_total_model_cost_usd"] == 100.0
+    assert requirements["required_secret"] == "GEMINI_API_KEY"
+    assert requirements["maximum_total_model_cost_usd"] == 0.0
+    assert requirements["sequential_runs_required"] is True
+    assert requirements["resume_after_rate_limit"] is True
     runs = requirements["runs"]
     assert len(runs) == 4
-    assert {(r["release"], r["commit"], r["repetition"]) for r in runs} == EXPECTED_RUNS
+    assert {
+        (r["release"], r["commit"], r["repetition"], r["trajectory_artifact"])
+        for r in runs
+    } == EXPECTED_RUNS
 
     artifacts = set(payload["required_artifacts"])
     assert {
-        "baseline_trajectory_run_1", "baseline_trajectory_run_2",
-        "candidate_trajectory_run_1", "candidate_trajectory_run_2",
+        "baseline-run-1.traj", "baseline-run-2.traj",
+        "candidate-run-1.traj", "candidate-run-2.traj",
         "primary_freeze_manifest", "post_freeze_outcome_reveal",
         "bundle_sha256_manifest",
     } <= artifacts
