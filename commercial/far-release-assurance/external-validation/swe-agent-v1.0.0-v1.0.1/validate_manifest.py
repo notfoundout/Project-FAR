@@ -1,39 +1,28 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
 
-MANIFEST = Path(__file__).with_name("manifest.json")
+CASE_DIR = Path(__file__).parent
+MANIFEST = CASE_DIR / "manifest.json"
+CONFIG = CASE_DIR / "agent-config.yaml"
 
 REQUIRED_TOP_LEVEL = {
-    "schema",
-    "case_id",
-    "status",
-    "source",
-    "comparison_design",
-    "frozen_inputs",
-    "required_artifacts",
-    "primary_questions",
-    "decision_policy",
-    "forbidden_before_primary_freeze",
-    "claim_boundary",
+    "schema", "case_id", "status", "source", "comparison_design", "frozen_inputs",
+    "execution_requirements", "required_artifacts", "primary_questions", "decision_policy",
+    "forbidden_before_primary_freeze", "claim_boundary",
 }
-
 REQUIRED_DECISIONS = {"PASS", "BLOCKED", "REVIEW_REQUIRED", "UNKNOWN"}
 REQUIRED_BLINDED_FIELDS = {
-    "benchmark_resolution_status",
-    "test_pass_fail",
-    "reward",
-    "grader_output",
-    "human_success_label",
-    "candidate_preference",
+    "benchmark_resolution_status", "test_pass_fail", "reward", "grader_output",
+    "human_success_label", "candidate_preference",
 }
 DECLARATION_PATH = ("forbidden_before_primary_freeze",)
 
 
 def _forbidden_paths(value: Any, path: tuple[str, ...] = ()) -> list[str]:
-    """Return forbidden outcome-field paths outside the declaration list."""
     found: list[str] = []
     if isinstance(value, dict):
         for key, child in value.items():
@@ -60,13 +49,8 @@ def validate(payload: dict) -> None:
 
     design = payload["comparison_design"]
     for field in (
-        "same_task",
-        "same_model",
-        "same_model_parameters",
-        "same_agent_configuration",
-        "same_environment_image",
-        "same_task_seed",
-        "isolated_workspaces",
+        "same_task", "same_model", "same_model_parameters", "same_agent_configuration",
+        "same_environment_image", "same_task_seed", "isolated_workspaces",
         "outcome_blinded_until_primary_freeze",
     ):
         assert design[field] is True, f"{field} must remain true"
@@ -74,19 +58,30 @@ def validate(payload: dict) -> None:
 
     assert set(payload["decision_policy"]) == REQUIRED_DECISIONS
     assert set(payload["forbidden_before_primary_freeze"]) == REQUIRED_BLINDED_FIELDS
-
     leaked_paths = _forbidden_paths(payload)
-    assert not leaked_paths, (
-        "pre-freeze manifest contains forbidden outcome fields outside the declaration list: "
-        f"{sorted(leaked_paths)}"
-    )
+    assert not leaked_paths, f"pre-freeze outcome leakage: {sorted(leaked_paths)}"
 
-    frozen_inputs = payload["frozen_inputs"]
-    if payload["status"] == "execution_inputs_frozen":
-        unresolved = [key for key, value in frozen_inputs.items() if value is None]
-        assert not unresolved, f"execution freeze contains null fields: {unresolved}"
+    frozen = payload["frozen_inputs"]
+    assert frozen["task_id"] == "scikit-learn__scikit-learn-14125"
+    assert frozen["model"] == "anthropic/claude-opus-4-5"
+    assert frozen["model_parameters"]["temperature"] == 0.0
+    assert frozen["model_parameters"]["reasoning_effort"] == "high"
+    assert frozen["task_seed"] == 14125
+    actual_config_hash = hashlib.sha256(CONFIG.read_bytes()).hexdigest()
+    assert actual_config_hash == frozen["agent_config_sha256"], "agent config hash mismatch"
+
+    status = payload["status"]
+    if status == "execution_inputs_frozen":
+        assert frozen["environment_image_digest"], "frozen execution requires image digest"
     else:
-        assert payload["status"] == "protocol_frozen_execution_inputs_pending"
+        assert status == "execution_inputs_selected_environment_digest_pending"
+        assert frozen["environment_image_digest"] is None
+
+    runs = payload["execution_requirements"]["runs"]
+    assert len(runs) == 4
+    assert {(run["release"], run["repetition"]) for run in runs} == {
+        ("v1.0.0", 1), ("v1.0.0", 2), ("v1.0.1", 1), ("v1.0.1", 2)
+    }
 
     forbidden_text = json.dumps(payload).lower()
     assert "hidden chain of thought" not in forbidden_text
