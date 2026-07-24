@@ -28,23 +28,27 @@ class ExecuteControllerTests(unittest.TestCase):
             "outcome_fields_included": False,
             "redacted_fields": ["patch", "test_patch", "FAIL_TO_PASS", "PASS_TO_PASS"],
         }
+        controller.write_json(self.environment / "task-record.public.json", self.task)
         self.lock = {
             "task_id": self.task["instance_id"],
             "swebench_harness_commit": "f7bbbb2ccdf479001d6467c9e34af59e44a840f9",
             "immutable_image_reference": "ghcr.io/notfoundout/image@sha256:" + "b" * 64,
             "registry_repository": "ghcr.io/notfoundout/image",
             "registry_digest": "sha256:" + "b" * 64,
+            "file_sha256": {
+                "task-record.public.json": controller.sha256_file(self.environment / "task-record.public.json")
+            },
             "outcome_data_exported": False,
             "model_call_started": False,
         }
         controller.write_json(self.environment / "environment-lock.json", self.lock)
-        controller.write_json(self.environment / "task-record.public.json", self.task)
         self.manifest = {
             "case_id": "swe-agent-v1.0.0-v1.0.1",
             "status": "execution_inputs_frozen",
             "frozen_inputs": {
                 "task_id": self.task["instance_id"],
                 "environment_lock_sha256": controller.sha256_file(self.environment / "environment-lock.json"),
+                "agent_config_sha256": controller.sha256_file(self.config),
             },
             "execution_requirements": {
                 "runs": [
@@ -87,6 +91,11 @@ class ExecuteControllerTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "lock hash mismatch"):
             controller.frozen_inputs()
 
+    def test_public_task_hash_drift_is_fatal(self) -> None:
+        (self.environment / "task-record.public.json").write_text("{}\n", encoding="utf-8")
+        with self.assertRaisesRegex(SystemExit, "task-record hash mismatch"):
+            controller.frozen_inputs()
+
     def test_run_order_is_frozen_and_sequential(self) -> None:
         state = controller.initial_state(self.manifest, self.lock)
         self.assertEqual(controller.next_pending(state)["run_id"], "v1.0.0-r1")
@@ -94,6 +103,11 @@ class ExecuteControllerTests(unittest.TestCase):
         self.assertEqual(controller.next_pending(state)["run_id"], "v1.0.0-r2")
         state["runs"][1]["state"] = "complete"
         self.assertEqual(controller.next_pending(state)["run_id"], "v1.0.1-r1")
+
+    def test_running_state_retries_same_slot(self) -> None:
+        state = controller.initial_state(self.manifest, self.lock)
+        state["runs"][0]["state"] = "running"
+        self.assertEqual(controller.next_pending(state)["run_id"], "v1.0.0-r1")
 
     def test_resume_rejects_manifest_drift(self) -> None:
         state = controller.initial_state(self.manifest, self.lock)
@@ -106,7 +120,7 @@ class ExecuteControllerTests(unittest.TestCase):
 
     def test_quota_failure_classification(self) -> None:
         self.assertEqual(controller.classify_failure("", "HTTP 429 RESOURCE_EXHAUSTED"), "quota_paused")
-        self.assertEqual(controller.classify_failure("bad config", ""), "failed")
+        self.assertEqual(controller.classify_failure("bad config", ""), "failed_retryable")
 
     def test_instance_file_contains_no_gold_outcomes(self) -> None:
         target = self.root / "instance.json"
@@ -125,6 +139,16 @@ class ExecuteControllerTests(unittest.TestCase):
         controller.save_state(state)
         with self.assertRaisesRegex(SystemExit, "Execution state drift"):
             controller.load_state(self.manifest, self.lock)
+
+    def test_state_rejects_completed_run_after_incomplete_run(self) -> None:
+        state = controller.initial_state(self.manifest, self.lock)
+        state["runs"][1]["state"] = "complete"
+        controller.save_state(state)
+        with self.assertRaisesRegex(SystemExit, "sequential ordering"):
+            controller.load_state(self.manifest, self.lock)
+
+    def test_secret_redaction(self) -> None:
+        self.assertEqual(controller.redact("before secret after", "secret"), "before [REDACTED] after")
 
 
 if __name__ == "__main__":
