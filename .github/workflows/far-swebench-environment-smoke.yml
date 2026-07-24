@@ -23,7 +23,7 @@ env:
   SWEBENCH_HARNESS_COMMIT: f7bbbb2ccdf479001d6467c9e34af59e44a840f9
 
 jobs:
-  exact-interface-smoke:
+  exact-environment-contract:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -39,7 +39,12 @@ jobs:
         working-directory: ${{ env.CASE_DIR }}
         run: |
           python validate_manifest.py
-          python -m unittest -v test_validate_manifest.py test_run_comparison.py test_prepare_environment_contract.py
+          python -m unittest -v \
+            test_validate_manifest.py \
+            test_run_comparison.py \
+            test_prepare_environment_contract.py \
+            test_execute_controller.py
+          python execute_controller.py validate
 
       - name: Checkout exact SWE-bench revision
         run: |
@@ -48,7 +53,7 @@ jobs:
           test "$(git -C "$RUNNER_TEMP/swebench-harness" rev-parse HEAD)" = "$SWEBENCH_HARNESS_COMMIT"
           test -s "$RUNNER_TEMP/swebench-harness/swebench/harness/constants/fixtures/tokio-rs__tokio-6724.Cargo.lock"
 
-      - name: Install exact source checkout
+      - name: Install exact SWE-bench source checkout
         run: |
           python -m pip install --upgrade pip
           python -m pip install --editable "$RUNNER_TEMP/swebench-harness"
@@ -66,11 +71,7 @@ jobs:
           import swebench
           from datasets import load_dataset
           from prepare_environment import REQUIRED_FIXTURE, verify_harness_checkout
-          from test_spec_contract import (
-              REQUIRED_TEST_SPEC_PROPERTIES,
-              verify_build_result,
-              verify_test_spec_contract,
-          )
+          from test_spec_contract import REQUIRED_TEST_SPEC_PROPERTIES, verify_build_result, verify_test_spec_contract
           from swebench.harness.test_spec.test_spec import make_test_spec
 
           case_dir = Path.cwd()
@@ -78,16 +79,12 @@ jobs:
           frozen = manifest['frozen_inputs']
           harness = Path(os.environ['SWEBENCH_HARNESS_DIR']).resolve()
           verify_harness_checkout(harness, frozen['swebench_harness_commit'])
-
           dataset = load_dataset(frozen['swebench_dataset'], split=frozen['swebench_split'])
           records = [dict(row) for row in dataset if row['instance_id'] == frozen['task_id']]
           assert len(records) == 1, len(records)
           spec = make_test_spec(
-              records[0],
-              namespace=None,
-              base_image_tag='far-frozen',
-              env_image_tag='far-frozen',
-              instance_image_tag='far-frozen',
+              records[0], namespace=None, base_image_tag='far-frozen',
+              env_image_tag='far-frozen', instance_image_tag='far-frozen',
           )
           verify_test_spec_contract(spec)
           verify_build_result([(spec, None)], [], frozen['task_id'])
@@ -97,5 +94,59 @@ jobs:
           assert 'setup_repo_script' not in REQUIRED_TEST_SPEC_PROPERTIES
           assert (harness / REQUIRED_FIXTURE).is_file()
           assert harness in Path(swebench.__file__).resolve().parents
-          print('Manifest, unit tests, pinned source, fixture, task, TestSpec, and build-result contracts verified.')
+          PY
+
+  exact-swe-agent-release-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - release: v1.0.0
+            commit: 8ed382c1af1a21f63410b9a0cda14759e64b49c0
+          - release: v1.0.1
+            commit: 6aff2155dd6fb2a8d19069f5c344f85a54f6c2fa
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Checkout exact SWE-agent release
+        run: |
+          git clone --filter=blob:none https://github.com/SWE-agent/SWE-agent.git "$RUNNER_TEMP/swe-agent"
+          git -C "$RUNNER_TEMP/swe-agent" checkout --detach "${{ matrix.commit }}"
+          test "$(git -C "$RUNNER_TEMP/swe-agent" rev-parse HEAD)" = "${{ matrix.commit }}"
+          test -s "$RUNNER_TEMP/swe-agent/pyproject.toml"
+          test -s "$RUNNER_TEMP/swe-agent/config/default.yaml"
+          test -s "$RUNNER_TEMP/swe-agent/sweagent/run/run_batch.py"
+          test ! -e "$RUNNER_TEMP/swe-agent/run.py"
+
+      - name: Install exact SWE-agent release
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --editable "$RUNNER_TEMP/swe-agent"
+
+      - name: Verify packaged run-batch and frozen config contract
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          command -v sweagent
+          sweagent run-batch --help > "$RUNNER_TEMP/run-batch-help.txt"
+          grep -q -- '--config' "$RUNNER_TEMP/run-batch-help.txt"
+          grep -q -- '--instances' "$RUNNER_TEMP/run-batch-help.txt"
+          grep -q -- '--output_dir' "$RUNNER_TEMP/run-batch-help.txt"
+          grep -q -- '--num_workers' "$RUNNER_TEMP/run-batch-help.txt"
+          python - <<'PY'
+          import subprocess
+          result = subprocess.run([
+              'sweagent', 'run-batch',
+              '--config', '${{ runner.temp }}/swe-agent/config/default.yaml',
+              '--config', 'agent-config.yaml',
+              '--help',
+          ], text=True, capture_output=True)
+          assert result.returncode == 0, result.stdout + result.stderr
           PY
