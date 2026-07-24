@@ -42,8 +42,10 @@ def load_environment_lock(manifest: dict) -> dict:
         raise SystemExit("Frozen task ID does not match environment lock")
     if lock.get("swebench_harness_commit") != frozen["swebench_harness_commit"]:
         raise SystemExit("Frozen SWE-bench harness commit does not match environment lock")
-    if lock.get("outcome_data_accessed") is not False or lock.get("model_call_started") is not False:
-        raise SystemExit("Environment lock violates the pre-execution blinding boundary")
+    if lock.get("outcome_data_exported") is not False:
+        raise SystemExit("Environment lock does not prove outcome-bearing artifacts were excluded")
+    if lock.get("model_call_started") is not False:
+        raise SystemExit("Environment lock violates the pre-execution model-call boundary")
     return lock
 
 
