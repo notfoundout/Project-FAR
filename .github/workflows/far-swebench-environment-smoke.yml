@@ -133,4 +133,19 @@ jobs:
 
       - name: Parse exact live configuration without a model call
         working-directory: ${{ env.CASE_DIR }}
-        run: python validate_agent_config.py --release-default "$RUNNER_TEMP/swe-agent/config/default.yaml"
+        run: |
+          set +e
+          python validate_agent_config.py --release-default "$RUNNER_TEMP/swe-agent/config/default.yaml" > "$RUNNER_TEMP/config-validation-${{ matrix.release }}.log" 2>&1
+          RC=$?
+          set -e
+          cat "$RUNNER_TEMP/config-validation-${{ matrix.release }}.log"
+          exit "$RC"
+
+      - name: Upload configuration diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: config-validation-${{ matrix.release }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/config-validation-${{ matrix.release }}.log
+          if-no-files-found: warn
+          retention-days: 7
