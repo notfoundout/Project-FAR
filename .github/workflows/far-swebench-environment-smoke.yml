@@ -131,22 +131,47 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --editable "$RUNNER_TEMP/swe-agent"
 
-      - name: Verify packaged run-batch and frozen config contract
+      - name: Parse exact frozen agent configuration without a model call
         working-directory: ${{ env.CASE_DIR }}
         run: |
           command -v sweagent
-          sweagent run-batch --help > "$RUNNER_TEMP/run-batch-help.txt"
-          grep -q -- '--config' "$RUNNER_TEMP/run-batch-help.txt"
-          grep -q -- '--instances' "$RUNNER_TEMP/run-batch-help.txt"
-          grep -q -- '--output_dir' "$RUNNER_TEMP/run-batch-help.txt"
-          grep -q -- '--num_workers' "$RUNNER_TEMP/run-batch-help.txt"
           python - <<'PY'
-          import subprocess
-          result = subprocess.run([
-              'sweagent', 'run-batch',
-              '--config', '${{ runner.temp }}/swe-agent/config/default.yaml',
-              '--config', 'agent-config.yaml',
-              '--help',
-          ], text=True, capture_output=True)
-          assert result.returncode == 0, result.stdout + result.stderr
+          import json
+          from pathlib import Path
+
+          case = Path.cwd()
+          task = json.loads((case / 'environment-freeze/task-record.public.json').read_text())
+          lock = json.loads((case / 'environment-freeze/environment-lock.json').read_text())
+          instance = [{
+              'image_name': lock['immutable_image_reference'],
+              'problem_statement': task['problem_statement'],
+              'id': task['instance_id'],
+              'repo_name': 'testbed',
+              'base_commit': task['base_commit'],
+              'extra_fields': {'outcome_data_accessible': False},
+          }]
+          Path('/tmp/far-instance.json').write_text(json.dumps(instance))
+          PY
+          sweagent run-batch \
+            --config agent-config.yaml \
+            --instances.type=file \
+            --instances.path=/tmp/far-instance.json \
+            --output_dir=/tmp/far-config-parse \
+            --num_workers=1 \
+            --progress_bar=False \
+            --random_delay_multiplier=0 \
+            --raise_exceptions=True \
+            --redo_existing=False \
+            --print_config > /tmp/far-parsed-config.yaml
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          frozen = yaml.safe_load(Path('agent-config.yaml').read_text())
+          parsed = yaml.safe_load(Path('/tmp/far-parsed-config.yaml').read_text())
+          assert parsed['agent'] == frozen['agent']
+          assert parsed['num_workers'] == 1
+          assert parsed['redo_existing'] is False
+          assert parsed['instances']['type'] == 'file'
+          print('Exact frozen agent object parsed without drift or model access.')
           PY
