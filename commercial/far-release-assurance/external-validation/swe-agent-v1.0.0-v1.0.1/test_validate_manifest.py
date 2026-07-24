@@ -28,15 +28,23 @@ class ManifestValidationTests(unittest.TestCase):
         self.assertIn("reward", declared["forbidden_before_primary_freeze"])
         validate(declared)
 
-    def test_rejects_mutable_model_alias(self) -> None:
+    def test_rejects_non_frozen_model_choice(self) -> None:
         changed = copy.deepcopy(self.payload)
-        changed["frozen_inputs"]["model"] = "claude-opus-4-5"
+        changed["frozen_inputs"]["model"] = "gemini/gemini-flash-latest"
         with self.assertRaises(AssertionError):
             validate(changed)
 
-    def test_rejects_wrong_extended_thinking_temperature(self) -> None:
+    def test_rejects_nonzero_cost_limit(self) -> None:
         changed = copy.deepcopy(self.payload)
-        changed["frozen_inputs"]["model_parameters"]["temperature"] = 0.0
+        changed["frozen_inputs"]["model_parameters"]["total_cost_limit_usd"] = 1.0
+        with self.assertRaises(AssertionError):
+            validate(changed)
+
+    def test_rejects_false_free_tier_privacy_claim(self) -> None:
+        changed = copy.deepcopy(self.payload)
+        changed["frozen_inputs"]["free_tier_constraints"][
+            "provider_may_use_inputs_and_outputs_to_improve_products"
+        ] = False
         with self.assertRaises(AssertionError):
             validate(changed)
 
@@ -50,6 +58,12 @@ class ManifestValidationTests(unittest.TestCase):
     def test_run_matrix_is_commit_bound(self) -> None:
         changed = copy.deepcopy(self.payload)
         changed["execution_requirements"]["runs"][0]["commit"] = "deadbee"
+        with self.assertRaises(AssertionError):
+            validate(changed)
+
+    def test_rejects_parallel_free_tier_execution(self) -> None:
+        changed = copy.deepcopy(self.payload)
+        changed["execution_requirements"]["sequential_runs_required"] = False
         with self.assertRaises(AssertionError):
             validate(changed)
 
