@@ -115,7 +115,9 @@ def execute(output_directory: Path) -> dict[str, Any]:
         "files": [
             {"path": str(path.relative_to(output_directory)), "sha256": _sha256(path)}
             for path in sorted(output_directory.rglob("*"))
-            if path.is_file() and path.name != "bundle-manifest.json"
+            if path.is_file()
+            and path.name != "bundle-manifest.json"
+            and path.suffix != ".log"
         ],
     }
     _write_json(evidence / "bundle-manifest.json", bundle_manifest)
