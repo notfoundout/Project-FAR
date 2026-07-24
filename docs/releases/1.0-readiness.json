@@ -4,21 +4,23 @@
   "previous_public_version": "0.4.0",
   "baseline_correction": "The cumulative release baseline is 0.4.0; earlier 0.3.1 references were erroneous.",
   "intermediate_public_releases_permitted": false,
-  "status": "consolidation-required",
+  "status": "exact-release-validation-required",
   "completed": {
     "repository_convergence_baseline": true,
     "decision_integrity_core": true,
     "regression_and_evidence_bundles": true,
     "external_trace_adapter": true,
     "candidate_001_completed": true,
-    "candidate_002_blind_stage_completed": true
-  },
-  "remaining": {
+    "candidate_002_blind_stage_completed": true,
     "canonical_package_cli_schema_documentation": true,
     "cumulative_release_notes_0_4_0_to_1_0_0": true,
     "clean_install_golden_reproduction": true,
+    "frozen_1_0_claim_boundary": true,
+    "package_metadata_bound_to_1_0_0": true
+  },
+  "remaining": {
     "exact_release_commit_validation": true,
-    "frozen_1_0_claim_boundary": true
+    "explicit_publication_authorization": true
   },
   "release_allowed": false
 }
