@@ -1,0 +1,37 @@
+{
+  "schema_version": "far-operational-claims/0.1",
+  "candidate_id": "trace-candidate-001",
+  "frozen_before_acquisition": true,
+  "claims": [
+    {
+      "claim_id": "C001",
+      "statement": "The disclosed trajectory contains at least one recorded agent action or tool invocation.",
+      "required_evidence": ["observed-action"],
+      "absence_rule": "unverifiable-not-false"
+    },
+    {
+      "claim_id": "C002",
+      "statement": "The disclosed trajectory contains at least one recorded environment or tool observation.",
+      "required_evidence": ["observed-output"],
+      "absence_rule": "unverifiable-not-false"
+    },
+    {
+      "claim_id": "C003",
+      "statement": "The source record contains a non-empty submitted patch associated with this trajectory.",
+      "required_evidence": ["observed-submission"],
+      "absence_rule": "missing-not-false"
+    },
+    {
+      "claim_id": "C004",
+      "statement": "The ordinary external trajectory does not independently establish semantic or event completeness.",
+      "required_evidence": ["declared-source-limit", "adapter-completeness-boundary"],
+      "expected_status": "unverifiable"
+    },
+    {
+      "claim_id": "C005",
+      "statement": "Candidate 001 cannot support a decisive blind detection-value claim because its benchmark outcome was exposed before freeze.",
+      "required_evidence": ["declared-contamination-record"],
+      "expected_status": "justified"
+    }
+  ]
+}

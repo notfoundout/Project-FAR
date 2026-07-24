@@ -1,0 +1,37 @@
+{
+  "schema_version": "far-external-candidate/0.1",
+  "candidate_id": "trace-candidate-001",
+  "instance_id": "django__django-15044",
+  "trajectory_filename": "django__django-15044.traj",
+  "submission": "20240402_sweagent_gpt4",
+  "source": {
+    "kind": "huggingface-dataset",
+    "repository": "sailplane/swe-agent-trajs",
+    "revision": "04eb93d",
+    "file": "data/train-00000-of-00001.parquet",
+    "selection": {
+      "filename": "django__django-15044.traj",
+      "20240402_sweagent_gpt4": true
+    }
+  },
+  "known_metadata": {
+    "resolved": false,
+    "steps": 10,
+    "api_calls": 10
+  },
+  "contamination": {
+    "outcome_exposed_before_freeze": true,
+    "decisive_blind_detection_claim_permitted": false,
+    "permitted_uses": [
+      "acquisition-chain validation",
+      "artifact hashing",
+      "external-trace ingestion",
+      "provenance classification",
+      "decision-package compilation",
+      "evidence-sufficiency analysis",
+      "determinism testing",
+      "cost and effort measurement"
+    ]
+  },
+  "claim_boundary": "Candidate 001 may validate the pipeline but cannot establish blind detection value because its benchmark outcome was already exposed."
+}

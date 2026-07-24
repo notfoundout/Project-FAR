@@ -1,0 +1,28 @@
+name: Trace Candidate 001 Freeze
+
+on:
+  pull_request:
+    paths:
+      - "research/external-validation/trace-candidate-001/**"
+      - "tests/test_trace_candidate_001_freeze.py"
+      - ".github/workflows/trace-candidate-001-freeze.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/external-validation/trace-candidate-001/**"
+      - "tests/test_trace_candidate_001_freeze.py"
+      - ".github/workflows/trace-candidate-001-freeze.yml"
+
+jobs:
+  validate-freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate frozen candidate and claims
+        run: python -m unittest tests.test_trace_candidate_001_freeze
+      - name: Compile acquisition script
+        run: python -m py_compile research/external-validation/trace-candidate-001/acquire_candidate.py
