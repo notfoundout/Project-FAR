@@ -5,13 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "far-decision-integrity"
 version = "0.2.0"
-description = "Deterministic decision-package validation, adjudication, and regression for Project FAR"
+description = "Deterministic decision-package validation, adjudication, regression, and external trace compilation for Project FAR"
 requires-python = ">=3.11"
 dependencies = []
 
 [project.scripts]
 far-decision = "far_decision_integrity.cli:main"
 far-reasoning-regression = "far_decision_integrity.regression_cli:main"
+far-external-trace = "far_decision_integrity.external_trace_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
