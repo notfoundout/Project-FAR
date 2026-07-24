@@ -1,0 +1,23 @@
+{
+  "schema_version": "far-release-readiness/0.1",
+  "target_version": "1.0.0",
+  "previous_public_version": "0.3.1",
+  "intermediate_public_releases_permitted": false,
+  "status": "consolidation-required",
+  "completed": {
+    "repository_convergence_baseline": true,
+    "decision_integrity_core": true,
+    "regression_and_evidence_bundles": true,
+    "external_trace_adapter": true,
+    "candidate_001_completed": true,
+    "candidate_002_blind_stage_completed": true
+  },
+  "remaining": {
+    "canonical_package_cli_schema_documentation": true,
+    "cumulative_release_notes_0_3_1_to_1_0_0": true,
+    "clean_install_golden_reproduction": true,
+    "exact_release_commit_validation": true,
+    "frozen_1_0_claim_boundary": true
+  },
+  "release_allowed": false
+}
