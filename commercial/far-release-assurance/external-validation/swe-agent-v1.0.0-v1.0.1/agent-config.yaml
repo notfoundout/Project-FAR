@@ -1,12 +1,13 @@
 agent:
   model:
-    name: claude-opus-4-5-20251101
-    temperature: 1.0
-    top_p: null
-    per_instance_cost_limit: 25.0
-    total_cost_limit: 100.0
-    completion_kwargs:
-      reasoning_effort: high
-  history_processors:
-    - type: cache_control
-      last_n_messages: 2
+    name: gemini/gemini-2.5-pro
+    temperature: 0.0
+    top_p: 1.0
+    per_instance_cost_limit: 0.0
+    total_cost_limit: 0.0
+    per_instance_call_limit: 30
+    delay: 15.0
+    retry:
+      retries: 12
+      min_wait: 30
+      max_wait: 600
