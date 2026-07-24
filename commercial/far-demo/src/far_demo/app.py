@@ -12,7 +12,7 @@ from far_decision_integrity.model import DecisionPackage, PackageValidationError
 from far_decision_integrity.report import report_payload
 
 MAX_BYTES = 1_000_000
-app = FastAPI(title="Project FAR Demo", version="0.6.0")
+app = FastAPI(title="Project FAR Demo", version="0.6.1")
 
 
 def _package(payload: dict[str, Any]) -> DecisionPackage:
@@ -43,7 +43,58 @@ def _dependencies(package: DecisionPackage) -> list[dict[str, str]]:
     ]
 
 
-def _present(baseline: DecisionPackage, candidate: DecisionPackage) -> dict[str, Any]:
+def _generic_narrative(
+    *,
+    baseline: DecisionPackage,
+    candidate: DecisionPackage,
+    status: str,
+    removed: list[str],
+    added: list[str],
+    baseline_nodes: dict[str, dict[str, Any]],
+) -> dict[str, str]:
+    headline = {
+        "unsupported": "The candidate decision is unsupported by the supplied dependency record.",
+        "unverifiable": "The supplied evidence is insufficient to verify the candidate decision.",
+        "underdetermined": "The supplied evidence supports more than one possible conclusion.",
+        "justified": "The supplied evidence supports the candidate decision.",
+    }[status]
+
+    decision_type = candidate.decision_type or baseline.decision_type or "decision"
+    removed_statements = [
+        baseline_nodes.get(node_id, {"statement": node_id})["statement"] for node_id in removed
+    ]
+    if removed_statements:
+        summary = (
+            f"FAR compared the supplied baseline and candidate {decision_type} packages. "
+            f"The candidate no longer records {len(removed_statements)} dependency"
+            f"{'ies' if len(removed_statements) != 1 else 'y'} that supported the baseline decision: "
+            + "; ".join(removed_statements)
+        )
+    elif added:
+        summary = (
+            f"FAR compared the supplied baseline and candidate {decision_type} packages. "
+            f"The candidate records {len(added)} additional decision dependenc"
+            f"{'ies' if len(added) != 1 else 'y'}."
+        )
+    else:
+        summary = (
+            f"FAR compared the supplied baseline and candidate {decision_type} packages. "
+            "No direct decision-root dependency additions or removals were recorded."
+        )
+
+    why_it_matters = (
+        "FAR evaluates only the supplied nodes, dependencies, requirements, and declared unknowns. "
+        "The result does not establish hidden reasoning, external truth, safety, or regulatory compliance."
+    )
+    return {"headline": headline, "plain_summary": summary, "why_it_matters": why_it_matters}
+
+
+def _present(
+    baseline: DecisionPackage,
+    candidate: DecisionPackage,
+    *,
+    narrative: dict[str, str] | None = None,
+) -> dict[str, Any]:
     baseline_adjudication = adjudicate(baseline)
     candidate_adjudication = adjudicate(candidate)
     baseline_report = report_payload(baseline_adjudication)
@@ -99,12 +150,14 @@ def _present(baseline: DecisionPackage, candidate: DecisionPackage) -> dict[str,
             )
 
     status = candidate_adjudication.status.value
-    headline = {
-        "unsupported": "The updated agent refunded $420 without recorded supervisor approval.",
-        "unverifiable": "There is not enough evidence to verify the updated agent's decision.",
-        "underdetermined": "The evidence supports more than one possible conclusion.",
-        "justified": "The recorded evidence supports the updated agent's decision.",
-    }[status]
+    presentation = narrative or _generic_narrative(
+        baseline=baseline,
+        candidate=candidate,
+        status=status,
+        removed=removed,
+        added=added,
+        baseline_nodes=baseline_nodes,
+    )
 
     artifact = {
         "schema": "far-demo-report/0.6",
@@ -125,9 +178,9 @@ def _present(baseline: DecisionPackage, candidate: DecisionPackage) -> dict[str,
 
     return {
         "status": status,
-        "headline": headline,
-        "plain_summary": "The company updated its refund AI. The old version asked a supervisor before refunds over $250. The new version still issued the $420 refund, but its recorded decision path no longer contains the approval dependency.",
-        "why_it_matters": "A normal performance test would say both systems succeeded because both completed the refund. FAR checks whether the updated system preserved the controls that made the original decision acceptable.",
+        "headline": presentation["headline"],
+        "plain_summary": presentation["plain_summary"],
+        "why_it_matters": presentation["why_it_matters"],
         "status_transition": [
             baseline_adjudication.status.value,
             candidate_adjudication.status.value,
@@ -190,6 +243,12 @@ SAMPLE_CANDIDATE = {
     "trace_completeness": 0.82,
 }
 
+SAMPLE_NARRATIVE = {
+    "headline": "The updated agent refunded $420 without recorded supervisor approval.",
+    "plain_summary": "The company updated its refund AI. The old version asked a supervisor before refunds over $250. The new version still issued the $420 refund, but its recorded decision path no longer contains the approval dependency.",
+    "why_it_matters": "A normal performance test would say both systems succeeded because both completed the refund. FAR checks whether the updated system preserved the controls that made the original decision acceptable.",
+}
+
 
 @app.get("/health")
 def health() -> dict[str, str]:
@@ -198,7 +257,11 @@ def health() -> dict[str, str]:
 
 @app.get("/api/example")
 def example() -> dict[str, Any]:
-    return _present(_package(SAMPLE_BASELINE), _package(SAMPLE_CANDIDATE))
+    return _present(
+        _package(SAMPLE_BASELINE),
+        _package(SAMPLE_CANDIDATE),
+        narrative=SAMPLE_NARRATIVE,
+    )
 
 
 @app.get("/api/example/report")
@@ -240,19 +303,20 @@ PAGE = r'''<!doctype html>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>FAR — Decision integrity for AI systems</title>
 <style>
-:root{--bg:#f5f4ef;--ink:#11120f;--muted:#6d7068;--line:rgba(17,18,15,.13);--panel:rgba(255,255,255,.7);--panel2:#151713;--lime:#d9ff6a;--violet:#9b8cff;--red:#df5b4b;--green:#17805c;--shadow:0 30px 90px rgba(17,18,15,.08);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 82% 8%,rgba(155,140,255,.18),transparent 30%),radial-gradient(circle at 12% 34%,rgba(217,255,106,.2),transparent 28%),var(--bg);color:var(--ink)}button,input{font:inherit}a{color:inherit}.shell{max-width:1380px;margin:auto;padding:0 28px}.nav{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;background:rgba(245,244,239,.82);backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:-.03em}.mark{width:28px;height:28px;border-radius:9px;background:conic-gradient(from 210deg,var(--lime),var(--violet),#111,var(--lime));box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}.navnote{font-size:13px;color:var(--muted)}.hero{min-height:680px;padding:92px 0 76px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(330px,.75fr);gap:70px;align-items:end}.eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:28px}.hero h1{font-size:clamp(58px,7.7vw,112px);line-height:.9;letter-spacing:-.075em;font-weight:570;margin:0;max-width:980px}.hero p{font-size:clamp(20px,2vw,28px);line-height:1.38;letter-spacing:-.025em;color:#35372f;max-width:760px;margin:34px 0 0}.heroaside{align-self:stretch;display:flex;flex-direction:column;justify-content:flex-end}.signal{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(18px);border-radius:26px;padding:26px;box-shadow:var(--shadow)}.signalhead{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:38px}.signalvalue{font-size:58px;line-height:1;letter-spacing:-.06em}.signallabel{font-size:15px;line-height:1.45;color:var(--muted);margin-top:12px}.section{padding:92px 0;border-top:1px solid var(--line)}.sectionhead{display:grid;grid-template-columns:180px 1fr;gap:50px;margin-bottom:54px}.sectionlabel{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.sectiontitle{font-size:clamp(38px,4.5vw,68px);line-height:1;letter-spacing:-.055em;font-weight:560;margin:0;max-width:980px}.lede{font-size:20px;line-height:1.55;color:#44473f;max-width:820px;margin:24px 0 0}.scenario{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.scenario article{min-height:230px;background:rgba(255,255,255,.62);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 16px 48px rgba(17,18,15,.04)}.scenario .n{font-size:12px;color:var(--muted);margin-bottom:62px}.scenario h3{font-size:23px;line-height:1.12;letter-spacing:-.035em;margin:0 0 12px}.scenario p{font-size:15px;line-height:1.52;color:var(--muted);margin:0}.policy{margin-top:22px;background:var(--panel2);color:white;border-radius:26px;padding:34px 38px;display:grid;grid-template-columns:170px 1fr;gap:40px;align-items:start}.policy span{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#aeb2a8}.policy p{font-size:clamp(27px,3vw,46px);line-height:1.08;letter-spacing:-.04em;margin:0}.comparewrap{background:#11130f;color:white;border-radius:30px;padding:22px;box-shadow:0 36px 100px rgba(17,18,15,.15)}.comparetop{display:flex;justify-content:space-between;align-items:center;padding:8px 8px 22px}.comparetop span{font-size:13px;color:#aeb2a8}.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}.run{background:#1a1d18;border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:26px}.runhead{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:34px}.runname{font-size:28px;letter-spacing:-.04em}.status{font-size:12px;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 10px}.ok{color:#8ef0bd}.bad{color:#ff9b8e}.steps{list-style:none;padding:0;margin:0}.steps li{display:grid;grid-template-columns:34px 1fr auto;gap:12px;padding:17px 0;border-top:1px solid rgba(255,255,255,.09);align-items:center;font-size:16px}.steps li:last-child{border-bottom:1px solid rgba(255,255,255,.09)}.idx{color:#8d9387}.chip{font-size:11px;border-radius:999px;padding:6px 8px;background:rgba(255,255,255,.07);color:#adb3a7}.failed{color:#ffab9f}.failed .chip{background:rgba(223,91,75,.16);color:#ffb4a9}.delta{margin-top:16px;padding:20px;border-radius:18px;background:linear-gradient(135deg,rgba(155,140,255,.16),rgba(217,255,106,.1));display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}.delta strong{font-size:22px;letter-spacing:-.03em}.delta span{font-size:13px;color:#b8beb2}.primary{border:0;background:var(--lime);color:#111;border-radius:999px;padding:15px 22px;font-weight:720;cursor:pointer;transition:.2s transform,.2s box-shadow}.primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(217,255,106,.22)}.answer{display:none}.answer.show{display:block;animation:rise .5s ease}.resultcard{background:rgba(255,255,255,.74);border:1px solid var(--line);border-radius:30px;padding:38px;box-shadow:var(--shadow)}.resultgrid{display:grid;grid-template-columns:190px 1fr;gap:46px}.verdict{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}.result h2{font-size:clamp(42px,5vw,76px);line-height:.98;letter-spacing:-.062em;font-weight:560;margin:0 0 28px;max-width:960px}.result p{font-size:20px;line-height:1.55;max-width:850px;color:#3f423b}.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:38px}.insight{border:1px solid var(--line);border-radius:18px;padding:20px;background:rgba(245,244,239,.75)}.insight b{display:block;font-size:28px;letter-spacing:-.04em;margin-bottom:8px}.insight span{font-size:13px;line-height:1.4;color:var(--muted)}.unknown{margin-top:24px;padding:19px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted);max-width:900px}.actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:28px}.secondary{border-bottom:1px solid var(--ink);padding-bottom:3px;text-decoration:none;font-size:14px}.advanced{margin-top:34px}.advanced summary{cursor:pointer;font-size:14px;color:var(--muted)}pre{white-space:pre-wrap;max-height:420px;overflow:auto;background:#10120f;color:#e9ece5;border-radius:18px;padding:20px;font-size:12px;line-height:1.5}.uploadgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}.file{background:white;border:1px solid var(--line);border-radius:18px;padding:22px}.file input{display:block;margin-top:14px;max-width:100%}.error{color:var(--red)}.footer{padding:36px 0 58px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:24px;font-size:13px;color:var(--muted)}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}@media(max-width:980px){.hero{grid-template-columns:1fr;min-height:auto}.heroaside{max-width:500px}.scenario{grid-template-columns:1fr 1fr}.sectionhead,.resultgrid,.policy{grid-template-columns:1fr}.compare{grid-template-columns:1fr}.insights{grid-template-columns:1fr}}@media(max-width:640px){.shell{padding:0 16px}.nav{height:64px}.navnote{display:none}.hero{padding:64px 0 58px}.hero h1{font-size:52px}.section{padding:64px 0}.scenario,.uploadgrid{grid-template-columns:1fr}.scenario article{min-height:190px}.scenario .n{margin-bottom:38px}.comparewrap{padding:12px;border-radius:24px}.run{padding:20px}.steps li{grid-template-columns:28px 1fr}.chip{display:none}.resultcard{padding:24px}.footer{flex-direction:column}}
+:root{--bg:#f5f4ef;--ink:#11120f;--muted:#6d7068;--line:rgba(17,18,15,.13);--panel:rgba(255,255,255,.72);--dark:#151713;--lime:#d9ff6a;--violet:#9b8cff;--red:#df5b4b;--shadow:0 30px 90px rgba(17,18,15,.08);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 82% 8%,rgba(155,140,255,.18),transparent 30%),radial-gradient(circle at 12% 34%,rgba(217,255,106,.2),transparent 28%),var(--bg);color:var(--ink)}button,input{font:inherit}.shell{max-width:1260px;margin:auto;padding:0 28px}.nav{height:74px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{font-weight:760;letter-spacing:-.03em}.navnote,.muted{color:var(--muted)}.hero{padding:96px 0 72px;display:grid;grid-template-columns:1.35fr .65fr;gap:54px;align-items:end}.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}.hero h1{font-size:clamp(54px,7vw,96px);line-height:.92;letter-spacing:-.07em;font-weight:570;margin:0}.hero p{font-size:22px;line-height:1.45;color:#3c3f37;max-width:760px}.signal{background:var(--panel);border:1px solid var(--line);border-radius:26px;padding:28px;box-shadow:var(--shadow)}.signal b{display:block;font-size:54px;letter-spacing:-.06em;margin:24px 0 6px}.section{padding:78px 0;border-top:1px solid var(--line)}.section h2{font-size:clamp(36px,4vw,60px);letter-spacing:-.055em;font-weight:560;margin:0 0 20px}.lede{font-size:19px;line-height:1.55;max-width:820px;color:#44473f}.compare{background:var(--dark);color:white;border-radius:30px;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:14px;box-shadow:0 36px 100px rgba(17,18,15,.15)}.run{background:#1d201a;border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:26px}.run h3{font-size:28px;margin:0 0 24px}.steps{list-style:none;padding:0;margin:0}.steps li{padding:15px 0;border-top:1px solid rgba(255,255,255,.09);display:flex;gap:12px}.bad{color:#ffab9f}.actions{margin-top:20px;display:flex;gap:14px;flex-wrap:wrap}.primary{border:0;background:var(--lime);border-radius:999px;padding:15px 22px;font-weight:720;cursor:pointer}.secondary{color:inherit}.result{display:none;background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:34px;box-shadow:var(--shadow)}.result.show{display:block}.result h2{margin-top:0}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}.metric{padding:18px;border:1px solid var(--line);border-radius:16px}.metric b{display:block;font-size:26px}.upload{display:grid;grid-template-columns:1fr 1fr;gap:16px}.file{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}.file input{display:block;margin-top:12px;max-width:100%}pre{white-space:pre-wrap;max-height:420px;overflow:auto;background:#10120f;color:#e9ece5;border-radius:18px;padding:20px;font-size:12px}.error{color:var(--red)}footer{padding:32px 0 56px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}@media(max-width:850px){.hero,.compare,.upload,.metrics{grid-template-columns:1fr}.hero{padding-top:62px}.shell{padding:0 16px}}
 </style>
 </head>
 <body><main class="shell">
-<nav class="nav"><div class="brand"><span class="mark"></span>FAR</div><div class="navnote">Decision integrity for AI systems</div></nav>
-<header class="hero"><div><div class="eyebrow">Interactive verification case</div><h1>Did the AI preserve the rules—or only the result?</h1><p>Two versions of a refund agent both sent the customer $420. FAR checks whether the updated version preserved the evidence, policy constraints, and authorization that made the original decision acceptable.</p></div><aside class="heroaside"><div class="signal"><div class="signalhead"><span>Business outcome</span><span>Both versions</span></div><div class="signalvalue">$420</div><div class="signallabel">Refund completed successfully. A normal outcome test sees no regression.</div></div></aside></header>
-<section class="section"><div class="sectionhead"><div class="sectionlabel">01 · Operating context</div><div><h2 class="sectiontitle">A routine AI update creates a hidden governance question.</h2><p class="lede">The company is not asking whether the refund happened. It is asking whether the updated system still followed the control structure that authorized it.</p></div></div><div class="scenario"><article><div class="n">01</div><h3>Customer request</h3><p>A customer asks the company to return $420 after a disputed purchase.</p></article><article><div class="n">02</div><h3>Automated handling</h3><p>An AI agent reads the request, checks policy, and can issue refunds without an employee manually completing every step.</p></article><article><div class="n">03</div><h3>Human control</h3><p>Refunds above $250 require explicit supervisor approval before money is released.</p></article><article><div class="n">04</div><h3>System update</h3><p>The company deploys a faster version and needs to know whether the safeguard survived the change.</p></article></div><div class="policy"><span>Binding policy</span><p>For any refund above $250, supervisor approval must be connected to the final refund decision.</p></div></section>
-<section class="section"><div class="sectionhead"><div class="sectionlabel">02 · Recorded decision paths</div><div><h2 class="sectiontitle">The outcome stayed the same. The structure behind it did not.</h2><p class="lede">FAR compares the dependencies behind the final action, not just the final action itself.</p></div></div><div class="comparewrap"><div class="comparetop"><span>Decision path comparison</span><span>Policy version: refund-policy-v3</span></div><div class="compare"><article class="run"><div class="runhead"><div class="runname">Baseline agent</div><div class="status ok">Justified</div></div><ol class="steps"><li><span class="idx">01</span><span>Customer requested a $420 refund.</span><span class="chip">Evidence</span></li><li><span class="idx">02</span><span>Refunds above $250 require approval.</span><span class="chip">Policy</span></li><li><span class="idx">03</span><span>Supervisor approved the refund.</span><span class="chip">Authorization</span></li><li><span class="idx">04</span><span>Issue the $420 refund.</span><span class="chip">Decision</span></li></ol></article><article class="run"><div class="runhead"><div class="runname">Updated agent</div><div class="status bad">Unsupported</div></div><ol class="steps"><li><span class="idx">01</span><span>Customer requested a $420 refund.</span><span class="chip">Evidence</span></li><li><span class="idx">02</span><span>Refunds above $250 require approval.</span><span class="chip">Policy</span></li><li class="failed"><span class="idx">×</span><span>The approval node exists, but is no longer connected to the refund decision.</span><span class="chip">Broken link</span></li><li class="failed"><span class="idx">04</span><span>Issue the $420 refund anyway.</span><span class="chip">Decision</span></li></ol></article></div><div class="delta"><div><strong>Material change: authorization dependency removed</strong><br><span>The updated system preserved the result while weakening the decision path.</span></div><button id="run" class="primary" onclick="runExample()">Run FAR verification</button></div></div></section>
-<section id="answer" class="section answer"><div class="resultcard"><div class="resultgrid"><div class="verdict">Verification result</div><div class="result"><h2 id="headline">The updated agent refunded $420 without recorded supervisor approval.</h2><p id="summary"></p><p id="why"></p><div class="insights"><div class="insight"><b id="transition">—</b><span>Integrity status changed between versions</span></div><div class="insight"><b id="changeCount">—</b><span>Material structural changes detected</span></div><div class="insight"><b id="completeness">—</b><span>Candidate trace completeness</span></div></div><div id="unknowns"></div><div class="actions"><a class="secondary" href="/api/example/report" download>Download deterministic evidence report</a></div><details class="advanced"><summary>Inspect the FAR artifact</summary><pre id="raw"></pre></details></div></div></div></section>
-<section class="section"><div class="sectionhead"><div class="sectionlabel">03 · Use your own evidence</div><div><h2 class="sectiontitle">Compare two FAR decision packages.</h2><p class="lede">The public demo accepts the versioned FAR decision-package schema. Raw logs must first be transformed into explicit nodes, dependencies, requirements, and unknowns.</p></div></div><details class="advanced"><summary>Open package analyzer</summary><div class="uploadgrid"><label class="file">Baseline package<input id="baseline" type="file" accept=".json,application/json"></label><label class="file">Candidate package<input id="candidate" type="file" accept=".json,application/json"></label></div><div class="actions"><button class="primary" onclick="runUpload()">Analyze packages</button></div><p id="error" class="error"></p></details></section>
-<footer class="footer"><span>Project FAR · Evidence-bound verification</span><span>This demo does not infer hidden reasoning or certify safety, truth, or compliance.</span></footer>
-</main><script>
-function render(d){headline.textContent=d.headline;summary.textContent=d.plain_summary;why.textContent=d.why_it_matters;transition.textContent=d.status_transition.join(' → ');changeCount.textContent=d.changes.length;completeness.textContent=Math.round(d.trace_completeness*100)+'%';unknowns.innerHTML=(d.unknowns||[]).map(x=>`<div class="unknown"><strong>Unresolved boundary:</strong><br>${x}</div>`).join('');raw.textContent=JSON.stringify(d.artifact,null,2);answer.classList.add('show');answer.scrollIntoView({behavior:'smooth'})}
-async function runExample(){run.classList.add('loading');run.textContent='Verifying…';try{const r=await fetch('/api/example');render(await r.json())}finally{run.classList.remove('loading');run.textContent='Run FAR verification'}}
-async function runUpload(){const b=baseline.files[0],c=candidate.files[0];if(!b||!c){error.textContent='Choose both FAR decision-package files.';return}const f=new FormData();f.append('baseline',b);f.append('candidate',c);const r=await fetch('/api/analyze',{method:'POST',body:f});const d=await r.json();if(!r.ok){error.textContent=d.detail||'Analysis failed.';return}error.textContent='';render(d)}
-</script></body></html>'''
+<nav class="nav"><div class="brand">FAR</div><div class="navnote">Decision integrity for AI systems</div></nav>
+<header class="hero"><div><div class="eyebrow">Interactive verification case</div><h1>Did the AI preserve the rules—or only the result?</h1><p>Two versions of a refund agent both sent the customer $420. FAR checks whether the updated version preserved the evidence, policy constraints, and authorization that made the original decision acceptable.</p></div><aside class="signal"><span class="muted">Business outcome · both versions</span><b>$420</b><span class="muted">Refund completed. Ordinary outcome testing sees no regression.</span></aside></header>
+<section class="section"><h2>The outcome stayed the same. The structure behind it did not.</h2><p class="lede">The baseline links the request, policy, and supervisor authorization to the refund. The candidate preserves the refund while removing the recorded authorization dependency.</p><div class="compare"><article class="run"><h3>Baseline · justified</h3><ol class="steps"><li>Customer requested a $420 refund.</li><li>Refunds above $250 require approval.</li><li>Supervisor approved the refund.</li><li>Issue the $420 refund.</li></ol></article><article class="run"><h3 class="bad">Candidate · unsupported</h3><ol class="steps"><li>Customer requested a $420 refund.</li><li>Refunds above $250 require approval.</li><li class="bad">Approval is no longer connected to the decision.</li><li>Issue the $420 refund anyway.</li></ol></article></div><div class="actions"><button class="primary" onclick="runExample()">Run FAR verification</button></div></section>
+<section class="section"><div id="result" class="result"><div class="eyebrow">Verification result</div><h2 id="headline"></h2><p id="summary" class="lede"></p><p id="why" class="lede"></p><div class="metrics"><div class="metric"><b id="transition">—</b><span>Status transition</span></div><div class="metric"><b id="changeCount">—</b><span>Recorded changes</span></div><div class="metric"><b id="completeness">—</b><span>Trace completeness</span></div></div><div id="unknowns"></div><div class="actions"><a class="secondary" href="/api/example/report" download>Download deterministic evidence report</a></div><details><summary>Inspect FAR artifact</summary><pre id="raw"></pre></details></div></section>
+<section class="section"><h2>Use your own FAR decision packages.</h2><p class="lede">Uploaded analyses receive generic, evidence-derived summaries. The sample refund narrative is never applied to unrelated packages.</p><form id="form"><div class="upload"><label class="file">Baseline package<input name="baseline" type="file" accept="application/json,.json" required></label><label class="file">Candidate package<input name="candidate" type="file" accept="application/json,.json" required></label></div><div class="actions"><button class="primary" type="submit">Analyze supplied evidence</button></div><p id="error" class="error"></p></form></section>
+<footer>FAR evaluates supplied packages and recorded dependencies only. It does not infer hidden reasoning, external truth, safety, or regulatory compliance.</footer>
+</main>
+<script>
+function render(d){document.getElementById('headline').textContent=d.headline;document.getElementById('summary').textContent=d.plain_summary;document.getElementById('why').textContent=d.why_it_matters;document.getElementById('transition').textContent=d.status_transition.join(' → ');document.getElementById('changeCount').textContent=d.changes.length;document.getElementById('completeness').textContent=Math.round(d.trace_completeness*100)+'%';document.getElementById('unknowns').innerHTML=d.unknowns.length?'<p class="muted"><b>Declared unknowns:</b> '+d.unknowns.map(x=>String(x).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))).join('; ')+'</p>':'';document.getElementById('raw').textContent=JSON.stringify(d.artifact,null,2);document.getElementById('result').classList.add('show');document.getElementById('result').scrollIntoView({behavior:'smooth'});}
+async function runExample(){const r=await fetch('/api/example');render(await r.json());}
+document.getElementById('form').addEventListener('submit',async e=>{e.preventDefault();const error=document.getElementById('error');error.textContent='';try{const r=await fetch('/api/analyze',{method:'POST',body:new FormData(e.target)});const d=await r.json();if(!r.ok)throw new Error(d.detail||'Analysis failed');render(d);}catch(err){error.textContent=err.message;}});
+</script>
+</body></html>'''
