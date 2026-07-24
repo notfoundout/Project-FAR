@@ -12,7 +12,7 @@ on:
           - preflight
           - plan
       confirmation:
-        description: Type RUN-FAR-EXTERNAL-COMPARISON for plan
+        description: Type RUN-FAR-FREE-TIER-COMPARISON for plan
         required: false
         type: string
 
@@ -29,7 +29,7 @@ concurrency:
 jobs:
   execute-stage:
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 240
     environment: far-swe-agent-execution
     steps:
       - name: Checkout exact selected revision
@@ -54,12 +54,12 @@ jobs:
           python validate_manifest.py
           python -m unittest -v test_validate_manifest.py
 
-      - name: Enforce paid-stage confirmation
+      - name: Enforce free-tier execution confirmation
         if: inputs.stage == 'plan'
         env:
           CONFIRMATION: ${{ inputs.confirmation }}
         run: |
-          test "$CONFIRMATION" = "RUN-FAR-EXTERNAL-COMPARISON" || {
+          test "$CONFIRMATION" = "RUN-FAR-FREE-TIER-COMPARISON" || {
             echo "Plan stage requires the exact confirmation phrase." >&2
             exit 1
           }
@@ -74,17 +74,17 @@ jobs:
         working-directory: ${{ env.CASE_DIR }}
         run: python run_comparison.py preflight
 
-      - name: Generate credential-gated execution plan
+      - name: Generate free-tier execution plan
         if: inputs.stage == 'plan'
         working-directory: ${{ env.CASE_DIR }}
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          test -n "$ANTHROPIC_API_KEY" || {
-            echo "Repository or environment secret ANTHROPIC_API_KEY is missing." >&2
+          test -n "$GEMINI_API_KEY" || {
+            echo "Repository or environment secret GEMINI_API_KEY is missing." >&2
             exit 1
           }
-          echo "::add-mask::$ANTHROPIC_API_KEY"
+          echo "::add-mask::$GEMINI_API_KEY"
           python run_comparison.py plan
 
       - name: Upload non-secret execution artifacts
