@@ -27,9 +27,10 @@ class TestFarDemo(unittest.TestCase):
             first["headline"],
             "The updated agent refunded $420 without recorded supervisor approval.",
         )
-        self.assertTrue(
-            any(item["type"] == "authorization_dependency_removed" for item in first["changes"])
-        )
+        self.assertEqual(len(first["structural_changes"]), 1)
+        self.assertEqual(first["structural_changes"][0]["type"], "authorization_dependency_removed")
+        self.assertGreaterEqual(len(first["rule_findings"]), 1)
+        self.assertEqual(first["changes"], first["structural_changes"] + first["rule_findings"])
         self.assertTrue(
             any(
                 item["rule_id"] == "authorization-dependency-missing"
@@ -62,8 +63,11 @@ class TestFarDemo(unittest.TestCase):
             "The candidate decision is unsupported by the supplied dependency record.",
         )
         self.assertIn("customer-refund", payload["plain_summary"])
+        self.assertIn("1 dependency", payload["plain_summary"])
+        self.assertNotIn("dependencyy", payload["plain_summary"])
         self.assertNotIn("$420", payload["headline"])
         self.assertNotIn("supervisor", payload["headline"].lower())
+        self.assertEqual(len(payload["structural_changes"]), 1)
 
     def test_uploaded_non_refund_packages_never_receive_sample_facts(self) -> None:
         baseline = {
@@ -125,9 +129,13 @@ class TestFarDemo(unittest.TestCase):
         ).lower()
         self.assertIn("database-access", combined)
         self.assertIn("data owner approved access", combined)
+        self.assertIn("1 dependency", combined)
+        self.assertNotIn("dependencyy", combined)
         self.assertNotIn("refund", combined)
         self.assertNotIn("$420", combined)
         self.assertNotIn("supervisor", combined)
+        self.assertEqual(len(payload["structural_changes"]), 1)
+        self.assertGreaterEqual(len(payload["rule_findings"]), 1)
 
     def test_rejects_non_far_json(self) -> None:
         response = self.client.post(
