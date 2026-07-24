@@ -18,10 +18,12 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 env:
   CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1
   SWEBENCH_HARNESS_COMMIT: f7bbbb2ccdf479001d6467c9e34af59e44a840f9
+  GHCR_IMAGE: ghcr.io/notfoundout/project-far-swebench-scikit-learn-14125
 
 concurrency:
   group: far-swe-agent-external-comparison
@@ -95,21 +97,39 @@ jobs:
           assert fixture.is_file() and fixture.stat().st_size > 0, fixture
           assert required <= set(dir(TestSpec)), sorted(required - set(dir(TestSpec)))
           assert "setup_repo_script" not in dir(TestSpec)
-          print(f"verified editable SWE-bench source import: {imported}")
-          print(f"verified required fixture: {fixture}")
-          print(f"verified exact TestSpec interface: {sorted(required)}")
           PY
 
-      - name: Build and freeze local SWE-bench environment
+      - name: Build local SWE-bench environment
         if: inputs.stage == 'prepare-environment'
         working-directory: ${{ env.CASE_DIR }}
         env:
           SWEBENCH_HARNESS_DIR: ${{ runner.temp }}/swebench-harness
+        run: python prepare_environment.py
+
+      - name: Publish immutable environment image to GHCR
+        if: inputs.stage == 'prepare-environment'
+        working-directory: ${{ env.CASE_DIR }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python prepare_environment.py
-          test -s execution-output/environment-freeze/environment-lock.json
-          test -s execution-output/environment-freeze/environment-lock.sha256
+          echo "$GH_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          LOCAL_IMAGE="$(python -c 'import json; print(json.load(open("execution-output/environment-freeze/environment-lock.json"))["image_key"])')"
+          TAG="task-14125-harness-${SWEBENCH_HARNESS_COMMIT::12}"
+          docker tag "$LOCAL_IMAGE" "$GHCR_IMAGE:$TAG"
+          docker push "$GHCR_IMAGE:$TAG"
+          docker pull "$GHCR_IMAGE:$TAG"
+          IMMUTABLE="$(docker inspect --format='{{index .RepoDigests 0}}' "$GHCR_IMAGE:$TAG")"
+          DIGEST="${IMMUTABLE##*@}"
+          test "$IMMUTABLE" = "$GHCR_IMAGE@$DIGEST"
+          python finalize_registry_lock.py --reference "$GHCR_IMAGE" --digest "$DIGEST"
           grep -Eq '^[0-9a-f]{64}$' execution-output/environment-freeze/environment-lock.sha256
+          python - <<'PY'
+          import json
+          lock=json.load(open('execution-output/environment-freeze/environment-lock.json'))
+          assert lock['cross_runner_portable'] is True
+          assert lock['immutable_image_reference'] == lock['registry_repository'] + '@' + lock['registry_digest']
+          print(lock['immutable_image_reference'])
+          PY
 
       - name: Enforce free-tier execution confirmation
         if: inputs.stage == 'plan'
