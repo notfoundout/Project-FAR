@@ -60,7 +60,7 @@
       "retry_max_wait_seconds": 600
     },
     "agent_config_path": "agent-config.yaml",
-    "agent_config_sha256": "af83f741da13a40afbb4af395627284a1f890dac058cac2717292c04800b2382",
+    "agent_config_sha256": "d979eca3fa22afdff57c2894698018649ef94b7c6199ec253f976f2f3f852654",
     "task_seed": 14125
   },
   "execution_environment": {
