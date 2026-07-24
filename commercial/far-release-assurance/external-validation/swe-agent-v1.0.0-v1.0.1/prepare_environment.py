@@ -16,6 +16,18 @@ CASE_DIR = Path(__file__).parent
 OUTPUT_DIR = CASE_DIR / "execution-output" / "environment-freeze"
 MANIFEST_PATH = CASE_DIR / "manifest.json"
 REQUIRED_FIXTURE = Path("swebench/harness/constants/fixtures/tokio-rs__tokio-6724.Cargo.lock")
+REQUIRED_TEST_SPEC_PROPERTIES = {
+    "base_dockerfile",
+    "env_dockerfile",
+    "instance_dockerfile",
+    "setup_env_script",
+    "install_repo_script",
+    "eval_script",
+    "base_image_key",
+    "env_image_key",
+    "instance_image_key",
+    "platform",
+}
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -56,6 +68,16 @@ def verify_harness_checkout(harness_dir: Path, expected_commit: str) -> str:
     return actual_commit
 
 
+def verify_test_spec_contract(spec: object) -> None:
+    missing = sorted(name for name in REQUIRED_TEST_SPEC_PROPERTIES if not hasattr(spec, name))
+    if missing:
+        raise SystemExit(f"Pinned SWE-bench TestSpec contract mismatch; missing: {missing}")
+    for name in REQUIRED_TEST_SPEC_PROPERTIES:
+        value = getattr(spec, name)
+        if isinstance(value, str) and not value.strip():
+            raise SystemExit(f"Pinned SWE-bench TestSpec property is empty: {name}")
+
+
 def main() -> None:
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     frozen = manifest["frozen_inputs"]
@@ -72,20 +94,29 @@ def main() -> None:
     task_bytes = canonical_json(record)
     (OUTPUT_DIR / "task-record.json").write_bytes(task_bytes)
 
-    spec = make_test_spec(record, namespace=None, instance_image_tag="far-frozen", env_image_tag="far-frozen")
+    spec = make_test_spec(
+        record,
+        namespace=None,
+        base_image_tag="far-frozen",
+        env_image_tag="far-frozen",
+        instance_image_tag="far-frozen",
+    )
+    verify_test_spec_contract(spec)
     spec_summary = {
         "instance_id": spec.instance_id,
         "platform": spec.platform,
         "base_image_key": spec.base_image_key,
         "env_image_key": spec.env_image_key,
         "instance_image_key": spec.instance_image_key,
+        "test_spec_properties": sorted(REQUIRED_TEST_SPEC_PROPERTIES),
     }
     (OUTPUT_DIR / "test-spec.json").write_bytes(canonical_json(spec_summary))
     (OUTPUT_DIR / "Dockerfile.base").write_text(spec.base_dockerfile, encoding="utf-8")
     (OUTPUT_DIR / "Dockerfile.env").write_text(spec.env_dockerfile, encoding="utf-8")
     (OUTPUT_DIR / "Dockerfile.instance").write_text(spec.instance_dockerfile, encoding="utf-8")
     (OUTPUT_DIR / "setup-env.sh").write_text(spec.setup_env_script, encoding="utf-8")
-    (OUTPUT_DIR / "setup-repo.sh").write_text(spec.setup_repo_script, encoding="utf-8")
+    (OUTPUT_DIR / "install-repo.sh").write_text(spec.install_repo_script, encoding="utf-8")
+    (OUTPUT_DIR / "eval.sh").write_text(spec.eval_script, encoding="utf-8")
 
     client = docker.from_env()
     successful, failed = build_instance_images(
