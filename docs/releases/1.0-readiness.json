@@ -2,6 +2,7 @@
   "schema_version": "far-release-readiness/0.1",
   "target_version": "1.0.0",
   "previous_public_version": "0.4.0",
+  "baseline_correction": "The cumulative release baseline is 0.4.0; earlier 0.3.1 references were erroneous.",
   "intermediate_public_releases_permitted": false,
   "status": "consolidation-required",
   "completed": {
