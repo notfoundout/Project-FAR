@@ -5,7 +5,11 @@ import json
 import unittest
 from pathlib import Path
 
-from validate_manifest import validate
+from validate_manifest import (
+    FORBIDDEN_ENVIRONMENT_ARTIFACTS,
+    REQUIRED_ENVIRONMENT_ARTIFACTS,
+    validate,
+)
 
 MANIFEST = Path(__file__).with_name("manifest.json")
 
@@ -16,6 +20,28 @@ class ManifestValidationTests(unittest.TestCase):
 
     def test_selected_inputs_manifest_is_valid(self) -> None:
         validate(self.payload)
+
+    def test_environment_artifact_contract_is_current(self) -> None:
+        artifacts = set(self.payload["required_artifacts"])
+        self.assertTrue(REQUIRED_ENVIRONMENT_ARTIFACTS <= artifacts)
+        self.assertFalse(FORBIDDEN_ENVIRONMENT_ARTIFACTS & artifacts)
+        self.assertIn("task-record.public.json", artifacts)
+        self.assertIn("install-repo.sh", artifacts)
+        self.assertNotIn("task-record.json", artifacts)
+        self.assertNotIn("setup-repo.sh", artifacts)
+        self.assertNotIn("eval.sh", artifacts)
+
+    def test_missing_redacted_environment_artifact_is_rejected(self) -> None:
+        changed = copy.deepcopy(self.payload)
+        changed["required_artifacts"].remove("task-record.public.json")
+        with self.assertRaisesRegex(AssertionError, "missing required environment artifacts"):
+            validate(changed)
+
+    def test_obsolete_or_outcome_bearing_artifact_is_rejected(self) -> None:
+        changed = copy.deepcopy(self.payload)
+        changed["required_artifacts"].append("eval.sh")
+        with self.assertRaisesRegex(AssertionError, "outcome-bearing or obsolete"):
+            validate(changed)
 
     def test_rejects_nested_pre_freeze_outcome_field(self) -> None:
         leaked = copy.deepcopy(self.payload)
