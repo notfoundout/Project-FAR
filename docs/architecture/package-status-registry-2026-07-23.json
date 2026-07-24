@@ -1,0 +1,62 @@
+{
+  "schema": "project-far-package-status/1.0",
+  "generated_on": "2026-07-23",
+  "canonical_branch": "main",
+  "frameworks": [
+    {"id":"FAR","role":"investigation_methodology","status":"stable","canonical_path":"frameworks/FAR/","change_policy":"downstream_requirement_only"},
+    {"id":"FARA","role":"representational_architecture","status":"stable","canonical_path":"frameworks/FARA/","change_policy":"downstream_requirement_only"},
+    {"id":"FARE","role":"formal_evaluation_support","status":"frozen_requirement_driven","canonical_path":"frameworks/FARE/","change_policy":"reviewed_requirement_only"},
+    {"id":"FARM","role":"cross_framework_coordination","status":"stable","canonical_path":"frameworks/FARM/","change_policy":"validated_coordination_defect_only"},
+    {"id":"FARO","role":"operations","status":"active","canonical_path":"frameworks/FARO/","change_policy":"downstream_requirement_only"}
+  ],
+  "packages": [
+    {
+      "id":"project-far-mechanization",
+      "layer":"verification_core",
+      "canonical_path":"mechanization/far_mechanization/",
+      "branch_state":"present_on_main",
+      "status":"canonical_active",
+      "capabilities":["far-ir/1.0","json_yaml_parsing","deterministic_normalization","serialization","graph_construction","dependency_validation","diagnostics","cli","conformance"]
+    },
+    {
+      "id":"far-release-assurance",
+      "layer":"application_product",
+      "canonical_path_candidate":"commercial/far-release-assurance/",
+      "branch_state":"present_on_research_execute_pte_w1_independent_review_only",
+      "status":"implemented_stranded_requires_port",
+      "capabilities":["release_package_ingestion","canonical_hashing","baseline_candidate_comparison","release_gate","deterministic_reports","evidence_manifest","reference_agent_adversarial_cases"]
+    },
+    {
+      "id":"far-decision-integrity",
+      "layer":"application_product",
+      "canonical_path_candidate":"commercial/far-decision-integrity/",
+      "branch_state":"present_on_research_execute_pte_w1_independent_review_only",
+      "status":"implemented_stranded_requires_port",
+      "capabilities":["decision_package","four_state_adjudication","policy_impact","reasoning_regression","far_instrumented_trace_ingestion","instrumentation_sdk","authorization_service","evidence_store","tenant_security","operations","oidc_otlp","distributed_runtime_contracts"]
+    },
+    {
+      "id":"trace-candidate-001",
+      "layer":"research_evidence",
+      "canonical_path_candidate":"research/external-validation/trace-candidate-001/",
+      "branch_state":"documented_branch_not_present_on_remote",
+      "status":"must_recreate_from_current_main_after_minimum_core_port",
+      "capabilities":["acquisition_chain_plan","preregistration_plan","candidate_scope_boundary"]
+    }
+  ],
+  "branch_divergence": {
+    "base":"main",
+    "head":"research/execute-pte-w1-independent-review",
+    "status":"diverged",
+    "ahead_by":70,
+    "behind_by":79,
+    "merge_base":"396eedcc3ddf5085057c9ea6a7b64ea6069b4f7e",
+    "policy":"do_not_merge_wholesale; port commercial capabilities in dependency-ordered tranches"
+  },
+  "next_capability": {
+    "id":"ordinary-external-trace-adapter",
+    "source":"SWE-agent trajectory",
+    "target":"existing FAR decision or release package contract",
+    "required_provenance_states":["observed","mechanically_derived","human_declared","inferred","contradicted","missing","unverifiable"],
+    "nonclaim":"does not infer hidden reasoning or establish trace completeness"
+  }
+}
