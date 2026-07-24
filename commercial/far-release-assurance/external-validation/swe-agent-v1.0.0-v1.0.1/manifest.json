@@ -1,7 +1,7 @@
 {
-  "schema": "far-external-release-comparison/0.1",
+  "schema": "far-external-release-comparison/0.2",
   "case_id": "swe-agent-v1.0.0-v1.0.1",
-  "status": "protocol_frozen_execution_inputs_pending",
+  "status": "execution_inputs_selected_environment_digest_pending",
   "source": {
     "repository": "https://github.com/SWE-agent/SWE-agent",
     "baseline_ref": "v1.0.0",
@@ -22,19 +22,69 @@
     "minimum_repetitions_per_release": 2
   },
   "frozen_inputs": {
-    "task_selector": "deterministic_from_eligible_public_swe_bench_instances",
-    "task_id": null,
-    "model": null,
-    "model_parameters": null,
-    "agent_config_sha256": null,
+    "task_selector": "previously_frozen_blind_candidate_002",
+    "task_id": "scikit-learn__scikit-learn-14125",
+    "model": "gemini/gemini-2.5-pro",
+    "provider_model": "gemini-2.5-pro",
+    "model_selection_basis": "strongest_stable_coding_and_complex_reasoning_model_documented_on_the_gemini_api_free_tier_at_selection_time",
+    "model_selection_sources": [
+      "google_gemini_2_5_pro_official_model_card",
+      "google_gemini_developer_api_official_free_tier_pricing",
+      "swe_agent_litellm_model_support_documentation"
+    ],
+    "free_tier_constraints": {
+      "billing_required": false,
+      "quota_not_guaranteed": true,
+      "rate_limits_may_change": true,
+      "provider_may_use_inputs_and_outputs_to_improve_products": true,
+      "runs_may_be_spread_across_quota_reset_windows": true
+    },
+    "model_parameters": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "per_instance_cost_limit_usd": 0.0,
+      "total_cost_limit_usd": 0.0,
+      "per_instance_call_limit": 30,
+      "minimum_delay_seconds": 15.0,
+      "retry_min_wait_seconds": 30,
+      "retry_max_wait_seconds": 600
+    },
+    "agent_config_path": "agent-config.yaml",
+    "agent_config_sha256": "af83f741da13a40afbb4af395627284a1f890dac058cac2717292c04800b2382",
+    "environment_image_reference": "swebench/sweb.eval.x86_64.scikit-learn__scikit-learn-14125",
     "environment_image_digest": null,
-    "task_seed": null
+    "task_seed": 14125
+  },
+  "execution_environment": {
+    "provider": "github_actions",
+    "workflow": ".github/workflows/far-swe-agent-execution.yml",
+    "runner": "ubuntu-24.04",
+    "runner_cost_basis": "free_for_standard_github_hosted_runners_in_public_repositories",
+    "credential_secret": "GEMINI_API_KEY",
+    "manual_dispatch_only": true,
+    "execution_confirmation": "RUN-FAR-FREE-TIER-COMPARISON"
+  },
+  "execution_requirements": {
+    "required_secret": "GEMINI_API_KEY",
+    "docker_required": true,
+    "resolve_and_freeze_image_digest_before_first_model_call": true,
+    "sequential_runs_required": true,
+    "resume_after_rate_limit": true,
+    "maximum_total_model_cost_usd": 0.0,
+    "runs": [
+      {"release": "v1.0.0", "commit": "8ed382c", "repetition": 1, "trajectory_artifact": "baseline-run-1.traj"},
+      {"release": "v1.0.0", "commit": "8ed382c", "repetition": 2, "trajectory_artifact": "baseline-run-2.traj"},
+      {"release": "v1.0.1", "commit": "6aff215", "repetition": 1, "trajectory_artifact": "candidate-run-1.traj"},
+      {"release": "v1.0.1", "commit": "6aff215", "repetition": 2, "trajectory_artifact": "candidate-run-2.traj"}
+    ]
   },
   "required_artifacts": [
     "source_manifest",
     "environment_manifest",
-    "baseline_trajectory",
-    "candidate_trajectory",
+    "baseline-run-1.traj",
+    "baseline-run-2.traj",
+    "candidate-run-1.traj",
+    "candidate-run-2.traj",
     "baseline_far_package",
     "candidate_far_package",
     "comparison_report",
@@ -52,8 +102,8 @@
   "decision_policy": {
     "PASS": "No material dependency regression and sufficient evidence for the frozen claims.",
     "BLOCKED": "A required authorization, policy, or admissibility dependency is removed or bypassed.",
-    "REVIEW_REQUIRED": "Material ambiguity, underdetermination, or incomplete evidence prevents a release decision.",
-    "UNKNOWN": "The required claim cannot be resolved from supplied artifacts."
+    "REVIEW_REQUIRED": "Evidence exists but material ambiguity or conflicting findings require human adjudication.",
+    "UNKNOWN": "The required claim cannot be resolved because necessary evidence is absent or unverifiable."
   },
   "forbidden_before_primary_freeze": [
     "benchmark_resolution_status",
@@ -63,5 +113,5 @@
     "human_success_label",
     "candidate_preference"
   ],
-  "claim_boundary": "This single external release comparison can test reproducible version-to-version evidence reconstruction and dependency preservation. It cannot establish universal accuracy, safety, compliance, or general superiority."
+  "claim_boundary": "This single external release comparison can test reproducible version-to-version evidence reconstruction and dependency preservation. Free-tier execution may be throttled or distributed across quota windows. It cannot establish universal accuracy, safety, compliance, or general superiority."
 }
