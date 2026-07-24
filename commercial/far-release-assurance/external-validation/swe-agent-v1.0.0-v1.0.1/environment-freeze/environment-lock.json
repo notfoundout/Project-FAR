@@ -1,0 +1,28 @@
+{
+  "cross_runner_portable": true,
+  "dataset": "princeton-nlp/SWE-bench",
+  "file_sha256": {
+    "Dockerfile.base": "3a58534fdcffc93b1033411b47c0ecf8a4700c8c6deaa902a92afbe799d68bc6",
+    "Dockerfile.env": "fad50dba6a8e2f346f34c7722fe2ade3451d22f97df3907c40e12934edc90fde",
+    "Dockerfile.instance": "309e98800720bbf86e079c1487430f9b6f9b5a35cb2ddec191d9316107f8e178",
+    "install-repo.sh": "da6eda9e42f65a0866539964e727073af253ee0d83c8cbd080b61ed80376f078",
+    "setup-env.sh": "437918b9cd24690e5e9c568b81ed0b0750a77d6cec89ed7532699e767f215e23",
+    "task-record.public.json": "5edf563ca380c895703f43f85f30852253b88f45e66d405b49772e1a6ad4826c",
+    "test-spec.json": "8d8545612322255e75a489ea6a12785ecc2fea1258583f86a50fd18a5d1e1322"
+  },
+  "image_key": "sweb.eval.x86_64.scikit-learn__scikit-learn-14125:far-frozen",
+  "immutable_image_reference": "ghcr.io/notfoundout/project-far-swebench-scikit-learn-14125@sha256:66615e837a9fdc6faf75dab3db90bf469364204b068af9da4d570fba8ab00ab4",
+  "local_image_id": "sha256:cfd8abd0e5c2670669d259ce1ba2787581fb7aedbcf15c195a8a9d6ce28af103",
+  "model_call_started": false,
+  "outcome_data_accessed_for_build_only": true,
+  "outcome_data_exported": false,
+  "platform": "linux/x86_64",
+  "registry_digest": "sha256:66615e837a9fdc6faf75dab3db90bf469364204b068af9da4d570fba8ab00ab4",
+  "registry_repository": "ghcr.io/notfoundout/project-far-swebench-scikit-learn-14125",
+  "required_fixture_sha256": "3f1c19edec69a9278317785853aad32b52f7c074c84fe1935a9b477aec41d16b",
+  "schema": "far-swebench-environment-lock/1.2",
+  "split": "test",
+  "swebench_harness_commit": "f7bbbb2ccdf479001d6467c9e34af59e44a840f9",
+  "swebench_import_path": "/home/runner/work/_temp/swebench-harness/swebench/__init__.py",
+  "task_id": "scikit-learn__scikit-learn-14125"
+}
