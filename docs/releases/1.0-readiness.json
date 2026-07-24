@@ -4,7 +4,7 @@
   "previous_public_version": "0.4.0",
   "baseline_correction": "The cumulative release baseline is 0.4.0; earlier 0.3.1 references were erroneous.",
   "intermediate_public_releases_permitted": false,
-  "status": "exact-release-validation-required",
+  "status": "publication-authorized",
   "completed": {
     "repository_convergence_baseline": true,
     "decision_integrity_core": true,
@@ -16,11 +16,12 @@
     "cumulative_release_notes_0_4_0_to_1_0_0": true,
     "clean_install_golden_reproduction": true,
     "frozen_1_0_claim_boundary": true,
-    "package_metadata_bound_to_1_0_0": true
-  },
-  "remaining": {
+    "package_metadata_bound_to_1_0_0": true,
     "exact_release_commit_validation": true,
     "explicit_publication_authorization": true
   },
-  "release_allowed": false
+  "remaining": {},
+  "release_allowed": true,
+  "authorization_scope": "Create the 1.0.0 tag and GitHub release from the exact commit produced by this authorization PR only after all required workflows pass on that commit.",
+  "authorization_parent_commit": "33228ba9148ddb2156d0b85f91091eff509326c6"
 }
