@@ -1,23 +1,6 @@
 import Std
 import UPPSemanticKernel
 
-/-!
-# Grounded FAR canonicality countermodel
-
-This file instantiates the actual `FrozenUPPSemantics` structure from G1. It does
-not replace substantive predicates with Boolean labels.
-
-The model has one target-class source (`center`) and three package values. Both
-`left` and `right` are admissible, machinery-closed, and fully preserved for the
-same source. Each is commitment-equivalent to the canonical encoding, exactly as
-G1 requires, but they are not commitment-equivalent to each other.
-
-The countermodel therefore shows that the frozen G1 semantics do not entail
-pairwise equivalence, unique recovery, or unique factorization. The gap is caused
-by the fact that `commitmentEquivalent` is required to be reflexive but is not
-required to be symmetric or transitive.
--/
-
 namespace FAR.CanonicalUniversality.Countermodel
 
 open FAR.UPPSemanticKernel
@@ -50,14 +33,17 @@ def notAllPass : PreservationVector :=
     queryTotality := .fail
     failureUnknown := .fail }
 
-/-- A directed relation: every node relates to itself and every node relates to
-`center`, but `left` and `right` do not relate to each other. -/
+
 def groundedEquivalent (a b : Node) : Prop := a = b ∨ b = .center
 
 
 def groundedPreservation (source candidate : Node) : PreservationVector :=
   if source = .center then allPass else
   if candidate = source then allPass else notAllPass
+
+
+theorem allPass_is_all_pass : allPass.AllPass := by
+  exact ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
 
 
 def groundedModel : FrozenUPPSemantics :=
@@ -80,7 +66,10 @@ def groundedModel : FrozenUPPSemantics :=
     relativelyMaximal := fun _ => True
     classConstruction := by intro source h; trivial
     representationAdmissible := by intro source h; trivial
-    preservationComplete := by intro source h; subst source; decide
+    preservationComplete := by
+      intro source h
+      subst source
+      simpa [groundedPreservation] using allPass_is_all_pass
     sourceRoundTrip := by intro source; rfl
     packageRoundTrip := by intro package; rfl
     equivalenceReflexive := by intro package; exact Or.inl rfl
@@ -114,12 +103,15 @@ theorem grounded_model_is_actual_g1_model :
     groundedModel.admissible (groundedModel.encode .center) ∧
     groundedModel.machineryClosed (groundedModel.encode .center) ∧
     (groundedModel.preservation .center (groundedModel.encode .center)).AllPass := by
-  decide
+  exact ⟨rfl, trivial, trivial, by simpa [groundedModel, groundedPreservation] using allPass_is_all_pass⟩
 
 
-theorem left_is_fully_qualified : QualifiedForCenter .left := by decide
+theorem left_is_fully_qualified : QualifiedForCenter .left := by
+  exact ⟨trivial, trivial, by simpa [groundedModel, groundedPreservation] using allPass_is_all_pass⟩
 
-theorem right_is_fully_qualified : QualifiedForCenter .right := by decide
+
+theorem right_is_fully_qualified : QualifiedForCenter .right := by
+  exact ⟨trivial, trivial, by simpa [groundedModel, groundedPreservation] using allPass_is_all_pass⟩
 
 
 theorem left_equivalent_to_canonical :
@@ -135,7 +127,11 @@ theorem right_equivalent_to_canonical :
 
 
 theorem left_not_equivalent_to_right :
-    ¬ groundedModel.commitmentEquivalent .left .right := by decide
+    ¬ groundedModel.commitmentEquivalent .left .right := by
+  intro h
+  cases h with
+  | inl hEq => cases hEq
+  | inr hCenter => cases hCenter
 
 
 theorem unique_factorization_counterexample :
