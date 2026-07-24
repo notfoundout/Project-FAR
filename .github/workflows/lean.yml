@@ -27,7 +27,7 @@ jobs:
       - name: Compile bounded W5 theorem
         run: lean mechanization/lean/SCoreW5.lean
       - name: Compile G1 end-to-end semantic kernel
-        run: lean mechanization/lean/UPPSemanticKernel.lean
+        run: lean -o mechanization/lean/UPPSemanticKernel.olean mechanization/lean/UPPSemanticKernel.lean
       - name: Compile G2 open-world lower-bound theorem
         run: lean mechanization/lean/G2OpenWorldLowerBound.lean
       - name: Compile G3 epistemic maximality theorem
@@ -51,7 +51,7 @@ jobs:
       - name: Compile FAR canonical-universality decision
         run: lean mechanization/lean/FARCanonicalUniversalityDecision.lean
       - name: Compile FAR canonicality countermodel
-        run: lean mechanization/lean/FARCanonicalCountermodel.lean
+        run: LEAN_PATH=mechanization/lean lean mechanization/lean/FARCanonicalCountermodel.lean
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
