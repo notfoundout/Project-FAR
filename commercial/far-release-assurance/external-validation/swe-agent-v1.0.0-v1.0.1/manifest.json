@@ -1,0 +1,67 @@
+{
+  "schema": "far-external-release-comparison/0.1",
+  "case_id": "swe-agent-v1.0.0-v1.0.1",
+  "status": "frozen_not_executed",
+  "source": {
+    "repository": "https://github.com/SWE-agent/SWE-agent",
+    "baseline_ref": "v1.0.0",
+    "baseline_commit": "8ed382c",
+    "candidate_ref": "v1.0.1",
+    "candidate_commit": null,
+    "release_notes_source": "official_github_releases"
+  },
+  "comparison_design": {
+    "same_task": true,
+    "same_model": true,
+    "same_model_parameters": true,
+    "same_agent_configuration": true,
+    "same_environment_image": true,
+    "same_task_seed": true,
+    "isolated_workspaces": true,
+    "outcome_blinded_until_primary_freeze": true,
+    "minimum_repetitions_per_release": 2
+  },
+  "frozen_inputs": {
+    "task_selector": "deterministic_from_eligible_public_swe_bench_instances",
+    "task_id": null,
+    "model": null,
+    "model_parameters": null,
+    "agent_config_sha256": null,
+    "environment_image_digest": null,
+    "task_seed": null
+  },
+  "required_artifacts": [
+    "source_manifest",
+    "environment_manifest",
+    "baseline_trajectory",
+    "candidate_trajectory",
+    "baseline_far_package",
+    "candidate_far_package",
+    "comparison_report",
+    "primary_freeze_manifest",
+    "post_freeze_outcome_reveal",
+    "bundle_sha256_manifest"
+  ],
+  "primary_questions": [
+    "Did the candidate preserve the recorded decision dependencies used by the baseline?",
+    "Did the candidate add, remove, or bypass authorization or policy constraints?",
+    "Did the candidate introduce undeclared external state, memory, or tool behavior?",
+    "Can both releases be compared without converting missing evidence into confidence?",
+    "Does FAR identify a material integrity change that ordinary outcome comparison misses?"
+  ],
+  "decision_policy": {
+    "PASS": "No material dependency regression and sufficient evidence for the frozen claims.",
+    "BLOCKED": "A required authorization, policy, or admissibility dependency is removed or bypassed.",
+    "REVIEW_REQUIRED": "Material ambiguity, underdetermination, or incomplete evidence prevents a release decision.",
+    "UNKNOWN": "The required claim cannot be resolved from supplied artifacts."
+  },
+  "forbidden_before_primary_freeze": [
+    "benchmark_resolution_status",
+    "test_pass_fail",
+    "reward",
+    "grader_output",
+    "human_success_label",
+    "candidate_preference"
+  ],
+  "claim_boundary": "This single external release comparison can test reproducible version-to-version evidence reconstruction and dependency preservation. It cannot establish universal accuracy, safety, compliance, or general superiority."
+}
