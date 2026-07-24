@@ -18,7 +18,7 @@ class FARCanonicalCountermodelAlignmentTests(unittest.TestCase):
     def test_countermodel_instantiates_actual_g1_semantics(self):
         text = LEAN.read_text(encoding="utf-8")
         required = (
-            "import mechanization.lean.UPPSemanticKernel",
+            "import UPPSemanticKernel",
             "def groundedModel : FrozenUPPSemantics",
             "PreservationVector",
             "commitmentEquivalent := groundedEquivalent",
