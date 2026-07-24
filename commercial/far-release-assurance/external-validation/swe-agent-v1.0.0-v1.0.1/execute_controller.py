@@ -17,11 +17,12 @@ LOCK_PATH = CASE_DIR / "environment-freeze" / "environment-lock.json"
 TASK_PATH = CASE_DIR / "environment-freeze" / "task-record.public.json"
 CONFIG_PATH = CASE_DIR / "agent-config.yaml"
 OUTPUT_DIR = CASE_DIR / "execution-output"
+PLAN_PATH = OUTPUT_DIR / "execution-plan.json"
 STATE_PATH = OUTPUT_DIR / "execution-state.json"
 TRAJECTORY_DIR = OUTPUT_DIR / "trajectories"
 RUNS_DIR = OUTPUT_DIR / "runs"
 
-STATE_SCHEMA = "far-swe-agent-execution-state/1.0"
+STATE_SCHEMA = "far-swe-agent-execution-state/1.1"
 RUN_RECORD_SCHEMA = "far-swe-agent-run-record/1.0"
 FULL_COMMITS = {
     "8ed382c": "8ed382c1af1a21f63410b9a0cda14759e64b49c0",
@@ -100,6 +101,38 @@ def frozen_inputs() -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     return manifest, lock, task
 
 
+def validate_plan(manifest: dict[str, Any], lock: dict[str, Any]) -> str:
+    plan = read_json(PLAN_PATH)
+    if plan.get("schema") != "far-external-execution-plan/0.4":
+        raise SystemExit("Execution plan schema mismatch")
+    checks = {
+        "case_id": manifest["case_id"],
+        "manifest_sha256": sha256_file(MANIFEST_PATH),
+        "agent_config_sha256": sha256_file(CONFIG_PATH),
+        "environment_lock_sha256": sha256_file(LOCK_PATH),
+        "immutable_image_reference": lock["immutable_image_reference"],
+        "registry_digest": lock["registry_digest"],
+        "task_id": manifest["frozen_inputs"]["task_id"],
+        "model": manifest["frozen_inputs"]["model"],
+        "maximum_model_cost_usd": 0.0,
+        "sequential_only": True,
+    }
+    for key, expected in checks.items():
+        if plan.get(key) != expected:
+            raise SystemExit(f"Execution plan mismatch: {key}")
+    plan_runs = plan.get("runs")
+    frozen_runs = manifest["execution_requirements"]["runs"]
+    if not isinstance(plan_runs, list) or len(plan_runs) != 4:
+        raise SystemExit("Execution plan must contain exactly four runs")
+    for planned, frozen in zip(plan_runs, frozen_runs, strict=True):
+        for key in ("release", "commit", "repetition", "trajectory_artifact"):
+            if planned.get(key) != frozen.get(key):
+                raise SystemExit(f"Execution plan run drift: {key}")
+        if planned.get("outcomes_accessible") is not False or planned.get("state") != "pending":
+            raise SystemExit("Execution plan violates pre-outcome or initial-state boundary")
+    return sha256_file(PLAN_PATH)
+
+
 def expected_runs(manifest: dict[str, Any]) -> list[dict[str, Any]]:
     runs = manifest["execution_requirements"]["runs"]
     if len(runs) != 4:
@@ -113,12 +146,13 @@ def expected_runs(manifest: dict[str, Any]) -> list[dict[str, Any]]:
     return result
 
 
-def initial_state(manifest: dict[str, Any], lock: dict[str, Any]) -> dict[str, Any]:
+def initial_state(manifest: dict[str, Any], lock: dict[str, Any], plan_sha256: str) -> dict[str, Any]:
     return {
         "schema": STATE_SCHEMA,
         "case_id": manifest["case_id"],
         "manifest_sha256": sha256_file(MANIFEST_PATH),
         "environment_lock_sha256": sha256_file(LOCK_PATH),
+        "execution_plan_sha256": plan_sha256,
         "immutable_image_reference": lock["immutable_image_reference"],
         "created_at": utc_now(),
         "updated_at": utc_now(),
@@ -129,9 +163,9 @@ def initial_state(manifest: dict[str, Any], lock: dict[str, Any]) -> dict[str, A
     }
 
 
-def load_state(manifest: dict[str, Any], lock: dict[str, Any]) -> dict[str, Any]:
+def load_state(manifest: dict[str, Any], lock: dict[str, Any], plan_sha256: str) -> dict[str, Any]:
     if not STATE_PATH.is_file():
-        return initial_state(manifest, lock)
+        return initial_state(manifest, lock, plan_sha256)
     state = read_json(STATE_PATH)
     if state.get("schema") != STATE_SCHEMA or state.get("case_id") != manifest.get("case_id"):
         raise SystemExit("Execution state schema or case mismatch")
@@ -139,6 +173,8 @@ def load_state(manifest: dict[str, Any], lock: dict[str, Any]) -> dict[str, Any]
         raise SystemExit("Execution state was created for a different manifest")
     if state.get("environment_lock_sha256") != sha256_file(LOCK_PATH):
         raise SystemExit("Execution state was created for a different environment lock")
+    if state.get("execution_plan_sha256") != plan_sha256:
+        raise SystemExit("Execution state was created for a different execution plan")
     if state.get("immutable_image_reference") != lock.get("immutable_image_reference"):
         raise SystemExit("Execution state image mismatch")
     expected = expected_runs(manifest)
@@ -235,8 +271,9 @@ def locate_trajectory(output_dir: Path, task_id: str) -> Path:
 
 def execute_one(agent_repo: Path) -> int:
     manifest, lock, task = frozen_inputs()
+    plan_sha256 = validate_plan(manifest, lock)
     verify_local_image(lock)
-    state = load_state(manifest, lock)
+    state = load_state(manifest, lock, plan_sha256)
     run = next_pending(state)
     if run is None:
         print("All four frozen runs are complete.")
@@ -268,9 +305,9 @@ def execute_one(agent_repo: Path) -> int:
     invocation = {
         "schema": "far-swe-agent-invocation/1.0", "run_id": run["run_id"], "release": run["release"],
         "commit": run["full_commit"], "task_id": task["instance_id"], "image": lock["immutable_image_reference"],
-        "agent_config_sha256": sha256_file(CONFIG_PATH), "command": command,
-        "environment_variables_present": {"GEMINI_API_KEY": True}, "benchmark_outcomes_accessible": False,
-        "started_at": utc_now(),
+        "agent_config_sha256": sha256_file(CONFIG_PATH), "execution_plan_sha256": plan_sha256,
+        "command": command, "environment_variables_present": {"GEMINI_API_KEY": True},
+        "benchmark_outcomes_accessible": False, "started_at": utc_now(),
     }
     write_json(run_dir / "invocation.json", invocation)
     run["attempts"] += 1
@@ -291,8 +328,9 @@ def execute_one(agent_repo: Path) -> int:
     record: dict[str, Any] = {
         "schema": RUN_RECORD_SCHEMA, "run_id": run["run_id"], "release": run["release"],
         "commit": run["full_commit"], "repetition": run["repetition"], "task_id": task["instance_id"],
-        "image": lock["immutable_image_reference"], "returncode": result.returncode,
-        "duration_seconds": round(duration, 3), "completed_at": utc_now(), "benchmark_outcomes_accessed": False,
+        "image": lock["immutable_image_reference"], "execution_plan_sha256": plan_sha256,
+        "returncode": result.returncode, "duration_seconds": round(duration, 3),
+        "completed_at": utc_now(), "benchmark_outcomes_accessed": False,
     }
     if result.returncode != 0:
         failure_state = classify_failure(stdout, stderr)
@@ -319,12 +357,19 @@ def execute_one(agent_repo: Path) -> int:
 
 def validate_only(agent_repo: Path | None) -> None:
     manifest, lock, _ = frozen_inputs()
-    state = load_state(manifest, lock)
-    pending = next_pending(state)
+    plan_sha256 = validate_plan(manifest, lock) if PLAN_PATH.is_file() else None
+    state = load_state(manifest, lock, plan_sha256) if plan_sha256 is not None else None
+    pending = next_pending(state) if state is not None else None
     if agent_repo is not None and pending is not None:
         verify_agent_checkout(agent_repo, pending["full_commit"])
         verify_cli_contract()
-    print(json.dumps({"next_run": pending, "state": state}, indent=2, sort_keys=True))
+    print(json.dumps({"execution_plan_present": plan_sha256 is not None, "next_run": pending, "state": state}, indent=2, sort_keys=True))
+
+
+def status() -> dict[str, Any]:
+    manifest, lock, _ = frozen_inputs()
+    plan_sha256 = validate_plan(manifest, lock)
+    return load_state(manifest, lock, plan_sha256)
 
 
 def main() -> None:
@@ -339,8 +384,7 @@ def main() -> None:
     if args.command == "validate":
         validate_only(args.agent_repo)
     elif args.command == "status":
-        manifest, lock, _ = frozen_inputs()
-        print(json.dumps(load_state(manifest, lock), indent=2, sort_keys=True))
+        print(json.dumps(status(), indent=2, sort_keys=True))
     else:
         raise SystemExit(execute_one(args.agent_repo.resolve()))
 
