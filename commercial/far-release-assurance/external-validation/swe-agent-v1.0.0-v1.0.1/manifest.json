@@ -24,22 +24,33 @@
   "frozen_inputs": {
     "task_selector": "previously_frozen_blind_candidate_002",
     "task_id": "scikit-learn__scikit-learn-14125",
-    "model": "claude-opus-4-5-20251101",
-    "model_selection_basis": "strongest_documented_software_engineering_fit_at_selection_time",
+    "model": "gemini/gemini-2.5-pro",
+    "provider_model": "gemini-2.5-pro",
+    "model_selection_basis": "strongest_stable_coding_and_complex_reasoning_model_documented_on_the_gemini_api_free_tier_at_selection_time",
     "model_selection_sources": [
-      "anthropic_opus_4_5_official_release",
-      "official_swe_bench_verified_evaluation_context",
-      "swe_agent_anthropic_extended_thinking_documentation"
+      "google_gemini_2_5_pro_official_model_card",
+      "google_gemini_developer_api_official_free_tier_pricing",
+      "swe_agent_litellm_model_support_documentation"
     ],
+    "free_tier_constraints": {
+      "billing_required": false,
+      "quota_not_guaranteed": true,
+      "rate_limits_may_change": true,
+      "provider_may_use_inputs_and_outputs_to_improve_products": true,
+      "runs_may_be_spread_across_quota_reset_windows": true
+    },
     "model_parameters": {
-      "temperature": 1.0,
-      "reasoning_effort": "high",
-      "per_instance_cost_limit_usd": 25.0,
-      "total_cost_limit_usd": 100.0,
-      "prompt_caching": true
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "per_instance_cost_limit_usd": 0.0,
+      "total_cost_limit_usd": 0.0,
+      "per_instance_call_limit": 30,
+      "minimum_delay_seconds": 15.0,
+      "retry_min_wait_seconds": 30,
+      "retry_max_wait_seconds": 600
     },
     "agent_config_path": "agent-config.yaml",
-    "agent_config_sha256": "5dc07fe113ec57762832d04d03f2f03592c831c11890f4159c899b28e8ecaef9",
+    "agent_config_sha256": "af83f741da13a40afbb4af395627284a1f890dac058cac2717292c04800b2382",
     "environment_image_reference": "swebench/sweb.eval.x86_64.scikit-learn__scikit-learn-14125",
     "environment_image_digest": null,
     "task_seed": 14125
@@ -48,14 +59,17 @@
     "provider": "github_actions",
     "workflow": ".github/workflows/far-swe-agent-execution.yml",
     "runner": "ubuntu-24.04",
-    "credential_secret": "ANTHROPIC_API_KEY",
+    "runner_cost_basis": "free_for_standard_github_hosted_runners_in_public_repositories",
+    "credential_secret": "GEMINI_API_KEY",
     "manual_dispatch_only": true,
-    "paid_stage_confirmation": "RUN-FAR-EXTERNAL-COMPARISON"
+    "execution_confirmation": "RUN-FAR-FREE-TIER-COMPARISON"
   },
   "execution_requirements": {
-    "required_secret": "ANTHROPIC_API_KEY",
+    "required_secret": "GEMINI_API_KEY",
     "docker_required": true,
     "resolve_and_freeze_image_digest_before_first_model_call": true,
+    "sequential_runs_required": true,
+    "resume_after_rate_limit": true,
     "runs": [
       {"release": "v1.0.0", "commit": "8ed382c", "repetition": 1, "trajectory_artifact": "baseline-run-1.traj"},
       {"release": "v1.0.0", "commit": "8ed382c", "repetition": 2, "trajectory_artifact": "baseline-run-2.traj"},
@@ -98,5 +112,5 @@
     "human_success_label",
     "candidate_preference"
   ],
-  "claim_boundary": "This single external release comparison can test reproducible version-to-version evidence reconstruction and dependency preservation. It cannot establish universal accuracy, safety, compliance, or general superiority."
+  "claim_boundary": "This single external release comparison can test reproducible version-to-version evidence reconstruction and dependency preservation. Free-tier execution may be throttled or distributed across quota windows. It cannot establish universal accuracy, safety, compliance, or general superiority."
 }
