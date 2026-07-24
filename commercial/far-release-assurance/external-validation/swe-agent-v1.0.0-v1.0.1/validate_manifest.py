@@ -27,6 +27,7 @@ EXPECTED_RUNS = {
     ("v1.0.1", "6aff215", 1, "candidate-run-1.traj"),
     ("v1.0.1", "6aff215", 2, "candidate-run-2.traj"),
 }
+HARNESS_COMMIT = "f7bbbb2ccdf479001d6467c9e34af59e44a840f9"
 
 
 def _forbidden_paths(value: Any, path: tuple[str, ...] = ()) -> list[str]:
@@ -43,10 +44,18 @@ def _forbidden_paths(value: Any, path: tuple[str, ...] = ()) -> list[str]:
     return found
 
 
+def _valid_sha256(value: object, *, prefixed: bool = False) -> bool:
+    if not isinstance(value, str):
+        return False
+    if prefixed:
+        return len(value) == 71 and value.startswith("sha256:") and all(c in "0123456789abcdef" for c in value[7:])
+    return len(value) == 64 and all(c in "0123456789abcdef" for c in value)
+
+
 def validate(payload: dict) -> None:
     missing = REQUIRED_TOP_LEVEL - payload.keys()
     assert not missing, f"missing top-level fields: {sorted(missing)}"
-    assert payload["schema"] == "far-external-release-comparison/0.2"
+    assert payload["schema"] == "far-external-release-comparison/0.3"
 
     assert payload["source"] == {
         "repository": "https://github.com/SWE-agent/SWE-agent",
@@ -73,6 +82,12 @@ def validate(payload: dict) -> None:
 
     frozen = payload["frozen_inputs"]
     assert frozen["task_id"] == "scikit-learn__scikit-learn-14125"
+    assert frozen["swebench_repository"] == "https://github.com/SWE-bench/SWE-bench"
+    assert frozen["swebench_harness_commit"] == HARNESS_COMMIT
+    assert frozen["swebench_dataset"] == "princeton-nlp/SWE-bench"
+    assert frozen["swebench_split"] == "test"
+    assert frozen["environment_construction"] == "official_swebench_local_build_namespace_none"
+    assert frozen["environment_lock_path"] == "environment-freeze/environment-lock.json"
     assert frozen["model"] == "gemini/gemini-2.5-pro"
     assert frozen["provider_model"] == "gemini-2.5-pro"
     assert frozen["model_parameters"] == {
@@ -96,11 +111,15 @@ def validate(payload: dict) -> None:
 
     status = payload["status"]
     if status == "execution_inputs_frozen":
-        digest = frozen["environment_image_digest"]
-        assert isinstance(digest, str) and digest.startswith("sha256:") and len(digest) == 71
+        assert _valid_sha256(frozen["environment_lock_sha256"])
+        assert _valid_sha256(frozen["local_image_id"], prefixed=True)
     else:
-        assert status == "execution_inputs_selected_environment_digest_pending"
-        assert frozen["environment_image_digest"] is None
+        assert status == "execution_inputs_selected_local_environment_build_pending"
+        assert frozen["environment_lock_sha256"] is None
+        assert frozen["local_image_id"] is None
+
+    assert "environment_image_reference" not in frozen
+    assert "environment_image_digest" not in frozen
 
     environment = payload["execution_environment"]
     assert environment["provider"] == "github_actions"
@@ -111,6 +130,8 @@ def validate(payload: dict) -> None:
     requirements = payload["execution_requirements"]
     assert requirements["required_secret"] == "GEMINI_API_KEY"
     assert requirements["maximum_total_model_cost_usd"] == 0.0
+    assert requirements["build_and_freeze_local_environment_before_first_model_call"] is True
+    assert requirements["remote_image_resolution_forbidden"] is True
     assert requirements["sequential_runs_required"] is True
     assert requirements["resume_after_rate_limit"] is True
     runs = requirements["runs"]
@@ -122,10 +143,11 @@ def validate(payload: dict) -> None:
 
     artifacts = set(payload["required_artifacts"])
     assert {
-        "baseline-run-1.traj", "baseline-run-2.traj",
-        "candidate-run-1.traj", "candidate-run-2.traj",
-        "primary_freeze_manifest", "post_freeze_outcome_reveal",
-        "bundle_sha256_manifest",
+        "task-record.json", "test-spec.json", "Dockerfile.base", "Dockerfile.env",
+        "Dockerfile.instance", "setup-env.sh", "setup-repo.sh", "environment-lock.json",
+        "environment-lock.sha256", "baseline-run-1.traj", "baseline-run-2.traj",
+        "candidate-run-1.traj", "candidate-run-2.traj", "primary_freeze_manifest",
+        "post_freeze_outcome_reveal", "bundle_sha256_manifest",
     } <= artifacts
 
     forbidden_text = json.dumps(payload).lower()
