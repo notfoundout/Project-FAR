@@ -174,6 +174,20 @@ jobs:
           echo "::add-mask::$GEMINI_API_KEY"
           python run_comparison.py plan
 
+      - name: Regenerate current frozen execution plan
+        if: inputs.stage == 'execute'
+        working-directory: ${{ env.CASE_DIR }}
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          test -n "$GEMINI_API_KEY" || {
+            echo "GEMINI_API_KEY is missing; no model call was started." >&2
+            exit 1
+          }
+          echo "::add-mask::$GEMINI_API_KEY"
+          rm -f execution-output/execution-plan.json
+          python run_comparison.py plan
+
       - name: Restore latest validated execution state
         if: inputs.stage == 'execute'
         env:
@@ -188,6 +202,7 @@ jobs:
           else
             echo "No prior execution artifact found; starting from the frozen initial state."
           fi
+          python run_comparison.py plan
 
       - name: Resolve next frozen SWE-agent release
         if: inputs.stage == 'execute'
@@ -212,45 +227,7 @@ jobs:
       - name: Parse exact frozen configuration without a model call
         if: inputs.stage == 'execute' && steps.next-run.outputs.run_id != 'complete'
         working-directory: ${{ env.CASE_DIR }}
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          task = json.loads(Path('environment-freeze/task-record.public.json').read_text())
-          lock = json.loads(Path('environment-freeze/environment-lock.json').read_text())
-          instance = [{
-              'image_name': lock['immutable_image_reference'],
-              'problem_statement': task['problem_statement'],
-              'id': task['instance_id'],
-              'repo_name': 'testbed',
-              'base_commit': task['base_commit'],
-              'extra_fields': {'outcome_data_accessible': False},
-          }]
-          Path('/tmp/far-instance.json').write_text(json.dumps(instance))
-          PY
-          sweagent run-batch \
-            --config "$RUNNER_TEMP/swe-agent/config/default.yaml" \
-            --config agent-config.yaml \
-            --instances.type=file \
-            --instances.path=/tmp/far-instance.json \
-            --output_dir=/tmp/far-config-parse \
-            --num_workers=1 \
-            --progress_bar=False \
-            --random_delay_multiplier=0 \
-            --raise_exceptions=True \
-            --redo_existing=False \
-            --print_config > /tmp/far-parsed-config.yaml
-          python - <<'PY'
-          from pathlib import Path
-          import yaml
-          frozen = yaml.safe_load(Path('agent-config.yaml').read_text())
-          parsed = yaml.safe_load(Path('/tmp/far-parsed-config.yaml').read_text())
-          assert parsed['agent'] == frozen['agent']
-          assert parsed['num_workers'] == 1
-          assert parsed['redo_existing'] is False
-          assert parsed['instances']['type'] == 'file'
-          PY
+        run: python validate_agent_config.py --release-default "$RUNNER_TEMP/swe-agent/config/default.yaml"
 
       - name: Pull and verify frozen environment image
         if: inputs.stage == 'execute' && steps.next-run.outputs.run_id != 'complete'
