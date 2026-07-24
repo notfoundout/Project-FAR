@@ -9,6 +9,9 @@ INTENTIONALLY_MALFORMED_YAML={
     'conformance/far-ir-1.0/invalid/malformed.yaml',
     'tests/fixtures/mechanization/parser/invalid/malformed.yaml',
 }
+EXTERNAL_RUNTIME_REFERENCE_FILES={
+    'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1/agent-config.yaml',
+}
 
 def resolve_ref(p, v):
     cands=[(p.parent/v).resolve(), (ROOT/v).resolve()]
@@ -33,13 +36,19 @@ for p in iter_files({'.yaml','.yml'}):
     def walk(x, parent_key=''):
         if isinstance(x, dict):
             if any(n in p.name for n in REGISTRY_NAMES) and isinstance(x.get('id'), (str,int)):
-                key=(relative, str(x['id']))
                 registry_ids[str(x['id'])].append(p)
             for k,v in x.items():
                 kl=str(k).lower()
-                if isinstance(v,str) and (kl.endswith('path') or kl.endswith('file') or kl in {'path','file','fixture','report','source'}):
-                    if not is_dynamic_ref(v) and not v.startswith(('http://','https://')) and ('/' in v or '.' in v) and not resolve_ref(p, v):
-                        errors.append(f'{relative}: referenced path missing: {v}')
+                if (
+                    relative not in EXTERNAL_RUNTIME_REFERENCE_FILES
+                    and isinstance(v,str)
+                    and (kl.endswith('path') or kl.endswith('file') or kl in {'path','file','fixture','report','source'})
+                    and not is_dynamic_ref(v)
+                    and not v.startswith(('http://','https://'))
+                    and ('/' in v or '.' in v)
+                    and not resolve_ref(p, v)
+                ):
+                    errors.append(f'{relative}: referenced path missing: {v}')
                 walk(v, kl)
         elif isinstance(x, list):
             for v in x: walk(v, parent_key)
