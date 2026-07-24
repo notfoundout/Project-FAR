@@ -1,0 +1,61 @@
+name: Project FAR 1.0 Golden Clean Install
+
+on:
+  pull_request:
+    paths:
+      - "commercial/far-decision-integrity/**"
+      - "docs/releases/1.0*"
+      - "tools/validate_1_0_release_materials.py"
+      - ".github/workflows/1-0-golden-clean-install.yml"
+  workflow_dispatch:
+
+jobs:
+  clean-install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate frozen release materials
+        run: python tools/validate_1_0_release_materials.py
+      - name: Build distribution artifacts
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build commercial/far-decision-integrity --outdir "$RUNNER_TEMP/dist"
+          test -n "$(find "$RUNNER_TEMP/dist" -maxdepth 1 -name '*.whl' -print -quit)"
+          test -n "$(find "$RUNNER_TEMP/dist" -maxdepth 1 -name '*.tar.gz' -print -quit)"
+      - name: Install wheel into a fresh environment
+        run: |
+          python -m venv "$RUNNER_TEMP/far-golden-venv"
+          "$RUNNER_TEMP/far-golden-venv/bin/python" -m pip install --upgrade pip
+          "$RUNNER_TEMP/far-golden-venv/bin/python" -m pip install "$RUNNER_TEMP"/dist/*.whl
+      - name: Verify installed public CLI surface
+        run: |
+          "$RUNNER_TEMP/far-golden-venv/bin/far-decision" --help
+          "$RUNNER_TEMP/far-golden-venv/bin/far-reasoning-regression" --help
+          "$RUNNER_TEMP/far-golden-venv/bin/far-external-trace" --help
+      - name: Verify imports resolve from the installed wheel
+        run: |
+          "$RUNNER_TEMP/far-golden-venv/bin/python" - <<'PY'
+          from pathlib import Path
+          import far_decision_integrity
+
+          installed = Path(far_decision_integrity.__file__).resolve()
+          repository = Path.cwd().resolve()
+          assert repository not in installed.parents, installed
+          print(installed)
+          PY
+      - name: Run decision-integrity tests
+        run: python -m unittest discover -s commercial/far-decision-integrity/tests -p "test_*.py"
+      - name: Record golden artifact hashes
+        run: |
+          cd "$RUNNER_TEMP/dist"
+          sha256sum * | sort > golden-artifact-sha256.txt
+          cat golden-artifact-sha256.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: project-far-1-0-golden-distributions
+          path: ${{ runner.temp }}/dist
+          if-no-files-found: error
