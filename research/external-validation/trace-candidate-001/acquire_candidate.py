@@ -43,6 +43,12 @@ def acquire(output_directory: Path) -> dict[str, Any]:
         )
     )
 
+    generator_columns = [
+        "20240402_sweagent_gpt4",
+        "20240620_sweagent_claude3.5sonnet",
+        "20240721_amazon-q-developer-agent-20240719-dev",
+        "20240628_autocoderover-v20240620",
+    ]
     table = pq.read_table(
         parquet_path,
         columns=[
@@ -54,13 +60,12 @@ def acquire(output_directory: Path) -> dict[str, Any]:
             "api_calls",
             "exit_status",
             "model_stats",
-            "20240402_sweagent_gpt4",
+            *generator_columns,
         ],
     )
-    mask = pc.and_(
-        pc.equal(table["filename"], candidate["trajectory_filename"]),
-        pc.equal(table["20240402_sweagent_gpt4"], True),
-    )
+    # The filename is the stable row identity. Generator flags are preserved as
+    # observed metadata rather than used as an unverified selection predicate.
+    mask = pc.equal(table["filename"], candidate["trajectory_filename"])
     selected = table.filter(mask)
     if selected.num_rows != 1:
         raise RuntimeError(f"expected exactly one candidate row, found {selected.num_rows}")
@@ -81,6 +86,8 @@ def acquire(output_directory: Path) -> dict[str, Any]:
             "source_repository": source["repository"],
             "source_revision": source["revision"],
             "source_file": source["file"],
+            "selection_basis": {"filename": row["filename"]},
+            "generator_flags": {column: row[column] for column in generator_columns},
             "filename": row["filename"],
             "resolved": row["resolved"],
             "steps": row["steps"],
