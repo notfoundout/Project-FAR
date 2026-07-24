@@ -13,7 +13,7 @@ class TestRelease10Readiness(unittest.TestCase):
     def test_next_public_release_is_1_0_0(self):
         payload = json.loads(READINESS.read_text(encoding="utf-8"))
         self.assertEqual(payload["target_version"], "1.0.0")
-        self.assertEqual(payload["previous_public_version"], "0.3.1")
+        self.assertEqual(payload["previous_public_version"], "0.4.0")
         self.assertFalse(payload["intermediate_public_releases_permitted"])
         self.assertFalse(payload["release_allowed"])
 
