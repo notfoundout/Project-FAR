@@ -8,6 +8,7 @@ on:
       - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1/**'
   push:
     branches:
+      - main
       - 'agent/swebench-interface-final'
     paths:
       - '.github/workflows/far-swe-agent-execution.yml'
@@ -34,6 +35,12 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Validate manifest and dependency-free regression tests
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python validate_manifest.py
+          python -m unittest -v test_validate_manifest.py test_run_comparison.py test_prepare_environment_contract.py
+
       - name: Checkout exact SWE-bench revision
         run: |
           git clone --filter=blob:none https://github.com/SWE-bench/SWE-bench.git "$RUNNER_TEMP/swebench-harness"
@@ -46,7 +53,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --editable "$RUNNER_TEMP/swebench-harness"
 
-      - name: Exercise pinned TestSpec contract on frozen task
+      - name: Exercise pinned TestSpec and build-result contracts on frozen task
         env:
           SWEBENCH_HARNESS_DIR: ${{ runner.temp }}/swebench-harness
         working-directory: ${{ env.CASE_DIR }}
@@ -58,7 +65,12 @@ jobs:
 
           import swebench
           from datasets import load_dataset
-          from prepare_environment import REQUIRED_FIXTURE, REQUIRED_TEST_SPEC_PROPERTIES, verify_harness_checkout, verify_test_spec_contract
+          from prepare_environment import REQUIRED_FIXTURE, verify_harness_checkout
+          from test_spec_contract import (
+              REQUIRED_TEST_SPEC_PROPERTIES,
+              verify_build_result,
+              verify_test_spec_contract,
+          )
           from swebench.harness.test_spec.test_spec import make_test_spec
 
           case_dir = Path.cwd()
@@ -78,11 +90,12 @@ jobs:
               instance_image_tag='far-frozen',
           )
           verify_test_spec_contract(spec)
+          verify_build_result([(spec, None)], [], frozen['task_id'])
           assert spec.install_repo_script.startswith('#!/bin/bash')
           assert spec.setup_env_script.startswith('#!/bin/bash')
           assert spec.eval_script.startswith('#!/bin/bash')
           assert 'setup_repo_script' not in REQUIRED_TEST_SPEC_PROPERTIES
           assert (harness / REQUIRED_FIXTURE).is_file()
           assert harness in Path(swebench.__file__).resolve().parents
-          print('Exact pinned source, fixture, dataset task, TestSpec interface, and script exports verified.')
+          print('Manifest, unit tests, pinned source, fixture, task, TestSpec, and build-result contracts verified.')
           PY
