@@ -1,4 +1,4 @@
-# Credentialed execution setup
+# Zero-cost execution setup
 
 ## What is already provisioned
 
@@ -8,18 +8,18 @@ It provides three explicit stages:
 
 1. `resolve-image` — pulls the selected SWE-bench image and reports its immutable digest without using an API key or making a model call.
 2. `preflight` — validates the committed digest, manifest, configuration hash, run matrix, and local tool availability.
-3. `plan` — requires the Anthropic secret and the exact confirmation phrase `RUN-FAR-EXTERNAL-COMPARISON`, then writes the deterministic four-run plan. It does not reveal benchmark outcomes.
+3. `plan` — requires the Gemini secret and the exact confirmation phrase `RUN-FAR-FREE-TIER-COMPARISON`, then writes the deterministic four-run plan. It does not reveal benchmark outcomes or start model calls.
 
-The workflow uses `ubuntu-24.04`, serializes runs through a concurrency lock, removes unused runner packages for disk capacity, masks the API key, uses read-only repository permissions, and uploads only non-secret execution artifacts.
+The workflow uses a standard `ubuntu-24.04` GitHub-hosted runner. Standard runners are free for public repositories. It serializes runs through a concurrency lock, removes unused runner packages for disk capacity, masks the API key, uses read-only repository permissions, and uploads only non-secret execution artifacts.
 
-## One account-bound prerequisite
+## Free account-bound prerequisite
 
-Create an Anthropic API key from the Anthropic Console under the account that will pay for the experiment. The key must not be committed, pasted into issues, included in artifacts, or sent through chat.
+Create a Gemini Developer API key in Google AI Studio. A new Gemini API project begins on the free tier and does not require a billing account for supported free-tier models. The key must not be committed, pasted into issues, included in artifacts, or sent through chat.
 
 Add it to GitHub as either:
 
-- an environment secret named `ANTHROPIC_API_KEY` in the `far-swe-agent-execution` environment; or
-- a repository Actions secret named `ANTHROPIC_API_KEY`.
+- an environment secret named `GEMINI_API_KEY` in the `far-swe-agent-execution` environment; or
+- a repository Actions secret named `GEMINI_API_KEY`.
 
 Environment-scoped storage is preferred because it can require reviewer approval before the credential becomes available to a job.
 
@@ -31,10 +31,15 @@ Environment-scoped storage is preferred because it can require reviewer approval
 4. Download the artifact and copy the reported `sha256:...` digest into `manifest.json`.
 5. Change manifest status to `execution_inputs_frozen` in a new reviewed commit.
 6. Run `preflight` and require success.
-7. Ensure Anthropic billing can cover the frozen maximum of $100.
-8. Run `plan` with confirmation `RUN-FAR-EXTERNAL-COMPARISON`.
-9. Execute the four isolated release runs only from the frozen plan and preserve each raw trajectory separately.
-10. Compile trajectories into FAR packages, write the primary comparison, and hash-freeze it before accessing benchmark outcome fields.
+7. Create and store the free `GEMINI_API_KEY` secret.
+8. Run `plan` with confirmation `RUN-FAR-FREE-TIER-COMPARISON`.
+9. Execute one frozen release run at a time. If Google returns a quota or rate-limit error, stop cleanly and resume the same run after the quota window resets. Never substitute another model.
+10. Preserve each raw trajectory separately.
+11. Compile trajectories into FAR packages, write the primary comparison, and hash-freeze it before accessing benchmark outcome fields.
+
+## Free-tier limitations
+
+The selected model is `gemini-2.5-pro`, accessed through LiteLLM as `gemini/gemini-2.5-pro`. Google lists free input and output tokens for this stable model, but free-tier quotas are limited and can change. Four complete SWE-agent runs may require multiple quota windows. Free-tier prompts and outputs may be used by Google to improve its products, so this path is only appropriate for the selected public SWE-bench task and must not be used with confidential customer artifacts.
 
 ## Security boundary
 
@@ -42,4 +47,4 @@ The API key is never stored in source control. GitHub Actions injects it only in
 
 ## Cost boundary
 
-The frozen configuration limits each run to $25 and the experiment to $100 total. A failed or interrupted run still consumes provider charges already incurred. Do not rerun automatically; record the failure and make a separate, explicit decision.
+The model configuration has zero monetary cost limits and a 30-call ceiling per run. The workflow uses free public-repository GitHub Actions capacity. The experiment must stop rather than fall back to a paid tier or another model. Zero cash cost does not imply unlimited quota, guaranteed availability, or identical backend behavior across quota windows.
