@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import hashlib
 import json
-import shutil
+import os
+import subprocess
 from pathlib import Path
 
 import docker
@@ -31,12 +32,6 @@ def one_task(dataset_name: str, split: str, task_id: str) -> dict:
     return matches[0]
 
 
-def copy_build_context(source: Path, target: Path) -> None:
-    if target.exists():
-        shutil.rmtree(target)
-    shutil.copytree(source, target)
-
-
 def main() -> None:
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     frozen = manifest["frozen_inputs"]
@@ -45,10 +40,11 @@ def main() -> None:
     dataset_split = frozen["swebench_split"]
     expected_harness = frozen["swebench_harness_commit"]
 
-    import subprocess
-
+    harness_dir = Path(os.environ.get("SWEBENCH_HARNESS_DIR", "")).resolve()
+    if not harness_dir.is_dir():
+        raise SystemExit("SWEBENCH_HARNESS_DIR must point to the pinned SWE-bench checkout")
     actual_harness = subprocess.run(
-        ["git", "-C", str(Path(__file__).resolve().parents[5] / "swebench-harness"), "rev-parse", "HEAD"],
+        ["git", "-C", str(harness_dir), "rev-parse", "HEAD"],
         check=True,
         text=True,
         capture_output=True,
@@ -89,8 +85,7 @@ def main() -> None:
     if failed or spec.instance_image_key not in successful:
         raise SystemExit(f"Local SWE-bench image build failed: successful={successful!r}, failed={failed!r}")
 
-    image = client.images.get(spec.instance_image_key)
-    image_id = image.id
+    image_id = client.images.get(spec.instance_image_key).id
     if not image_id.startswith("sha256:") or len(image_id) != 71:
         raise SystemExit(f"Malformed local image ID: {image_id!r}")
 
@@ -107,7 +102,7 @@ def main() -> None:
         "platform": spec.platform,
         "file_sha256": file_hashes,
         "outcome_data_accessed": False,
-        "model_call_started": False,
+        "model_call_started": False
     }
     lock_bytes = canonical_json(lock)
     (OUTPUT_DIR / "environment-lock.json").write_bytes(lock_bytes)
