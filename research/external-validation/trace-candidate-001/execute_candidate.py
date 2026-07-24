@@ -81,7 +81,7 @@ def execute(output_directory: Path) -> dict[str, Any]:
         "schema_version": "far-trace-candidate-execution/0.1",
         "candidate_id": candidate["candidate_id"],
         "instance_id": candidate["instance_id"],
-        "contamination_status": candidate["contamination_status"],
+        "contamination": candidate["contamination"],
         "blind_detection_value_permitted": False,
         "source_manifest": artifact_manifest,
         "claims_sha256": _sha256(CANDIDATE_DIR / "claims.json"),
