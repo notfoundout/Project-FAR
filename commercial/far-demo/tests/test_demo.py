@@ -57,9 +57,13 @@ class TestFarDemo(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         payload = response.json()
         self.assertEqual(payload["status"], "unsupported")
+        self.assertEqual(
+            payload["headline"],
+            "The candidate decision is unsupported by the supplied dependency record.",
+        )
+        self.assertIn("customer-refund", payload["plain_summary"])
         self.assertNotIn("$420", payload["headline"])
-        self.assertNotIn("refund", payload["plain_summary"].lower())
-        self.assertNotIn("supervisor", payload["plain_summary"].lower())
+        self.assertNotIn("supervisor", payload["headline"].lower())
 
     def test_uploaded_non_refund_packages_never_receive_sample_facts(self) -> None:
         baseline = {
