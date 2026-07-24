@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "far-decision-integrity"
-version = "0.2.0"
+version = "1.0.0"
 description = "Deterministic decision-package validation, adjudication, regression, and external trace compilation for Project FAR"
 requires-python = ">=3.11"
 dependencies = []
