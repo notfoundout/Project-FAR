@@ -1,0 +1,99 @@
+name: FAR SWE-agent External Comparison
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: Execution stage
+        required: true
+        type: choice
+        options:
+          - resolve-image
+          - preflight
+          - plan
+      confirmation:
+        description: Type RUN-FAR-EXTERNAL-COMPARISON for plan
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1
+
+concurrency:
+  group: far-swe-agent-external-comparison
+  cancel-in-progress: false
+
+jobs:
+  execute-stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    environment: far-swe-agent-execution
+    steps:
+      - name: Checkout exact selected revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Reclaim runner disk space
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc || true
+          docker system prune --all --force || true
+          df -h
+
+      - name: Validate manifest and regression tests
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python validate_manifest.py
+          python -m unittest -v test_validate_manifest.py
+
+      - name: Enforce paid-stage confirmation
+        if: inputs.stage == 'plan'
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          test "$CONFIRMATION" = "RUN-FAR-EXTERNAL-COMPARISON" || {
+            echo "Plan stage requires the exact confirmation phrase." >&2
+            exit 1
+          }
+
+      - name: Resolve immutable image digest
+        if: inputs.stage == 'resolve-image'
+        working-directory: ${{ env.CASE_DIR }}
+        run: python run_comparison.py resolve-image | tee resolved-image-digest.txt
+
+      - name: Run frozen-input preflight
+        if: inputs.stage == 'preflight'
+        working-directory: ${{ env.CASE_DIR }}
+        run: python run_comparison.py preflight
+
+      - name: Generate credential-gated execution plan
+        if: inputs.stage == 'plan'
+        working-directory: ${{ env.CASE_DIR }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          test -n "$ANTHROPIC_API_KEY" || {
+            echo "Repository or environment secret ANTHROPIC_API_KEY is missing." >&2
+            exit 1
+          }
+          echo "::add-mask::$ANTHROPIC_API_KEY"
+          python run_comparison.py plan
+
+      - name: Upload non-secret execution artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-swe-agent-${{ inputs.stage }}-${{ github.run_id }}
+          path: |
+            ${{ env.CASE_DIR }}/resolved-image-digest.txt
+            ${{ env.CASE_DIR }}/execution-output/
+          if-no-files-found: ignore
+          retention-days: 30
