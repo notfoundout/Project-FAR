@@ -1,20 +1,12 @@
 agent:
   model:
-    name: anthropic/claude-opus-4-5
-    temperature: 0.0
-    top_p: 1.0
+    name: claude-opus-4-5-20251101
+    temperature: 1.0
+    top_p: null
     per_instance_cost_limit: 25.0
     total_cost_limit: 100.0
     completion_kwargs:
       reasoning_effort: high
-  config_file: config/default_from_url.yaml
-environment:
-  deployment:
-    type: docker
-  repo:
-    type: github
-execution:
-  repetitions_per_release: 2
-  task_seed: 14125
-  isolated_workspaces: true
-  outcome_blinded_until_primary_freeze: true
+  history_processors:
+    - type: cache_control
+      last_n_messages: 2
