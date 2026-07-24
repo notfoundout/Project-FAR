@@ -1,7 +1,7 @@
 {
   "schema_version": "far-release-readiness/0.1",
   "target_version": "1.0.0",
-  "previous_public_version": "0.3.1",
+  "previous_public_version": "0.4.0",
   "intermediate_public_releases_permitted": false,
   "status": "consolidation-required",
   "completed": {
@@ -14,7 +14,7 @@
   },
   "remaining": {
     "canonical_package_cli_schema_documentation": true,
-    "cumulative_release_notes_0_3_1_to_1_0_0": true,
+    "cumulative_release_notes_0_4_0_to_1_0_0": true,
     "clean_install_golden_reproduction": true,
     "exact_release_commit_validation": true,
     "frozen_1_0_claim_boundary": true
