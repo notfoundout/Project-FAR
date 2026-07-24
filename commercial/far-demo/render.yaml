@@ -5,5 +5,4 @@ services:
     rootDir: .
     buildCommand: pip install -e commercial/far-decision-integrity && pip install -e commercial/far-demo
     startCommand: uvicorn far_demo.app:app --host 0.0.0.0 --port $PORT
-    healthCheckPath: /health
     autoDeploy: false
