@@ -131,7 +131,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --editable "$RUNNER_TEMP/swe-agent"
 
-      - name: Parse exact frozen agent configuration without a model call
+      - name: Parse exact live configuration without a model call
         working-directory: ${{ env.CASE_DIR }}
         run: |
           command -v sweagent
@@ -153,6 +153,7 @@ jobs:
           Path('/tmp/far-instance.json').write_text(json.dumps(instance))
           PY
           sweagent run-batch \
+            --config "$RUNNER_TEMP/swe-agent/config/default.yaml" \
             --config agent-config.yaml \
             --instances.type=file \
             --instances.path=/tmp/far-instance.json \
@@ -173,5 +174,5 @@ jobs:
           assert parsed['num_workers'] == 1
           assert parsed['redo_existing'] is False
           assert parsed['instances']['type'] == 'file'
-          print('Exact frozen agent object parsed without drift or model access.')
+          print('Exact live two-config agent object parsed without drift or model access.')
           PY
