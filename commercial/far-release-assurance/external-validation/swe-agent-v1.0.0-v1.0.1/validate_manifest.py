@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 MANIFEST = Path(__file__).with_name("manifest.json")
 
@@ -28,6 +29,22 @@ REQUIRED_BLINDED_FIELDS = {
     "human_success_label",
     "candidate_preference",
 }
+DECLARATION_PATH = ("forbidden_before_primary_freeze",)
+
+
+def _forbidden_paths(value: Any, path: tuple[str, ...] = ()) -> list[str]:
+    """Return forbidden outcome-field paths outside the declaration list."""
+    found: list[str] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            child_path = path + (str(key),)
+            if key in REQUIRED_BLINDED_FIELDS and path != DECLARATION_PATH:
+                found.append(".".join(child_path))
+            found.extend(_forbidden_paths(child, child_path))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            found.extend(_forbidden_paths(child, path + (str(index),)))
+    return found
 
 
 def validate(payload: dict) -> None:
@@ -57,6 +74,12 @@ def validate(payload: dict) -> None:
 
     assert set(payload["decision_policy"]) == REQUIRED_DECISIONS
     assert set(payload["forbidden_before_primary_freeze"]) == REQUIRED_BLINDED_FIELDS
+
+    leaked_paths = _forbidden_paths(payload)
+    assert not leaked_paths, (
+        "pre-freeze manifest contains forbidden outcome fields outside the declaration list: "
+        f"{sorted(leaked_paths)}"
+    )
 
     frozen_inputs = payload["frozen_inputs"]
     if payload["status"] == "execution_inputs_frozen":
