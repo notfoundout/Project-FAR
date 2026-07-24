@@ -15,7 +15,14 @@ class TestRelease10Readiness(unittest.TestCase):
         self.assertEqual(payload["target_version"], "1.0.0")
         self.assertEqual(payload["previous_public_version"], "0.4.0")
         self.assertFalse(payload["intermediate_public_releases_permitted"])
-        self.assertFalse(payload["release_allowed"])
+
+        if payload["status"] == "publication-authorized":
+            self.assertTrue(payload["release_allowed"])
+            self.assertEqual(payload["remaining"], {})
+            self.assertTrue(payload["completed"]["exact_release_commit_validation"])
+            self.assertTrue(payload["completed"]["explicit_publication_authorization"])
+        else:
+            self.assertFalse(payload["release_allowed"])
 
     def test_external_candidates_are_completed(self):
         payload = json.loads(READINESS.read_text(encoding="utf-8"))
