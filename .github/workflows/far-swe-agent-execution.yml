@@ -131,6 +131,12 @@ jobs:
           print(lock['immutable_image_reference'])
           PY
 
+      - name: Authenticate to GHCR for frozen image pull
+        if: inputs.stage == 'preflight' || inputs.stage == 'plan'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "$GH_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
       - name: Enforce free-tier execution confirmation
         if: inputs.stage == 'plan'
         env:
