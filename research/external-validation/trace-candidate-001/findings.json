@@ -1,0 +1,22 @@
+{
+  "schema_version": "far-external-validation-findings/0.1",
+  "candidate_id": "trace-candidate-001",
+  "instance_id": "django__django-15044",
+  "result": "unverifiable",
+  "finding_ids": ["declared-unknowns", "trace-incomplete"],
+  "trace_completeness": 0.0,
+  "semantic_completeness_verified": false,
+  "blind_detection_value_permitted": false,
+  "interpretation": "The pipeline acquired, hashed, compiled, adjudicated, and reproduced the external artifact deterministically. The ordinary trajectory did not establish event or semantic completeness, so FAR correctly returned unverifiable rather than treating absent information as false.",
+  "evidence": {
+    "workflow_artifact_digest": "sha256:89a9b8e72912a986e612a3069d66a3c39bb348079b4b5dc383840f917429abf7",
+    "source_dataset_sha256": "ed6c7d9a0f39fcfbb890eedd72bdf0ccfe295ac7a1f17b468f787515bdbe201e",
+    "trajectory_sha256": "31d05bc196de7c977330388fa874e984aa79e0b903b9a0410973e3ddd9b7c997",
+    "submission_sha256": "75f077c45701d4435128ae4d5175d682de4fc4c6b8fcf9facf64b674da069acd",
+    "source_metadata_sha256": "3d9667ce3504a39a7e3059c8eb37c249630bedea0fb3ccde12108a8b9e1e562f",
+    "decision_package_sha256": "b4ca533f90449b9bd096caa1eb3d4c825b567837f121dbd8e6600d18c60d4e96",
+    "adjudication_report_sha256": "c29c3de35d2c3980280c91efa7fa6df42accfdc4dffb9c69c81fc9175f7065d2",
+    "claims_sha256": "7c4bbbd105de2832c12087313c2a0a8527af9dd971f7092cf6426de894270b95"
+  },
+  "claim_boundary": "Candidate 001 supports pipeline validity and deterministic evidence handling only. Its outcome was exposed before freeze, so it does not support a decisive blind-detection claim."
+}

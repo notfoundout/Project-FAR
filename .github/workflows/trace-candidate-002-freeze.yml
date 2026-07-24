@@ -1,0 +1,28 @@
+name: Trace Candidate 002 Freeze
+
+on:
+  pull_request:
+    paths:
+      - "research/external-validation/trace-candidate-001/findings.json"
+      - "research/external-validation/trace-candidate-002/**"
+      - "tests/test_trace_candidate_002_freeze.py"
+      - ".github/workflows/trace-candidate-002-freeze.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/external-validation/trace-candidate-001/findings.json"
+      - "research/external-validation/trace-candidate-002/**"
+      - "tests/test_trace_candidate_002_freeze.py"
+      - ".github/workflows/trace-candidate-002-freeze.yml"
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate Candidate 001 findings and Candidate 002 freeze
+        run: python -m unittest tests.test_trace_candidate_002_freeze

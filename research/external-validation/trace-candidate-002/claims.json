@@ -1,0 +1,43 @@
+{
+  "schema_version": "far-external-claims/0.1",
+  "candidate_id": "trace-candidate-002",
+  "frozen_before_selection_and_outcome_inspection": true,
+  "claims": [
+    {
+      "claim_id": "C002-01",
+      "statement": "Every reported agent action or tool invocation is linked to a visible trajectory record.",
+      "evidence_rule": "observed-source-location-required",
+      "absence_rule": "unverifiable-not-false"
+    },
+    {
+      "claim_id": "C002-02",
+      "statement": "Every reported environment or tool output is linked to a visible trajectory record.",
+      "evidence_rule": "observed-source-location-required",
+      "absence_rule": "unverifiable-not-false"
+    },
+    {
+      "claim_id": "C002-03",
+      "statement": "The adapter does not promote inferred dependencies, hidden reasoning, or external truth into observed evidence.",
+      "evidence_rule": "provenance-class-preservation",
+      "absence_rule": "unverifiable-not-false"
+    },
+    {
+      "claim_id": "C002-04",
+      "statement": "An ordinary trajectory without an independent completeness guarantee remains semantically incomplete.",
+      "evidence_rule": "semantic-completeness-flag-false",
+      "expected_status": "unverifiable"
+    },
+    {
+      "claim_id": "C002-05",
+      "statement": "The pre-outcome FAR result is deterministic across two clean executions.",
+      "evidence_rule": "byte-identical-derived-and-evidence-outputs",
+      "absence_rule": "fail"
+    },
+    {
+      "claim_id": "C002-06",
+      "statement": "The primary FAR result and its hashes are frozen before benchmark outcome fields are revealed.",
+      "evidence_rule": "ordered-stage-manifest",
+      "absence_rule": "invalidate-blind-claim"
+    }
+  ]
+}

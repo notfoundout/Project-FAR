@@ -1,0 +1,40 @@
+{
+  "schema_version": "far-external-candidate-protocol/0.1",
+  "candidate_id": "trace-candidate-002",
+  "status": "frozen-before-outcome-inspection",
+  "blind_execution_required": true,
+  "selection": {
+    "source_repository": "sailplane/swe-agent-trajs",
+    "source_revision": "04eb93d",
+    "source_file": "data/train-00000-of-00001.parquet",
+    "eligible_population": "rows with a non-empty trajectory and submission, excluding django__django-15044.traj",
+    "selection_rule": "Sort eligible trajectory filenames lexicographically, hash the UTF-8 string 'Project-FAR-trace-candidate-002', interpret the first eight hexadecimal digits as an unsigned integer, and select index modulo eligible-row count.",
+    "outcome_fields_forbidden_before_freeze": [
+      "resolved",
+      "exit_status",
+      "benchmark score",
+      "grader result",
+      "post-hoc failure classification"
+    ]
+  },
+  "execution_roles": {
+    "selector": "deterministic acquisition code",
+    "adapter": "far-external-trace",
+    "adjudicator": "far-decision",
+    "outcome_revealer": "separate post-adjudication comparison step"
+  },
+  "decision_rules": {
+    "absence": "unverifiable-not-false",
+    "unknown_trace_completeness": "preserve-as-unknown",
+    "hidden_reasoning": "do-not-infer",
+    "external_factual_truth": "do-not-assume",
+    "primary_result": "pre-outcome FAR adjudication status and registered claim resolutions",
+    "secondary_result": "agreement or disagreement with outcome revealed only after the primary result is hash-frozen"
+  },
+  "contamination": {
+    "candidate_identity_known_before_freeze": false,
+    "outcome_known_before_freeze": false,
+    "invalidate_blind_claim_if_violated": true
+  },
+  "claim_boundary": "Candidate 002 may test blind operational detection value only if selection, acquisition, compilation, adjudication, and primary-result hashing occur before any forbidden outcome field is inspected."
+}
