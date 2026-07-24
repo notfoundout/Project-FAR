@@ -20,6 +20,12 @@ REQUIRED_BLINDED_FIELDS = {
     "human_success_label", "candidate_preference",
 }
 DECLARATION_PATH = ("forbidden_before_primary_freeze",)
+EXPECTED_RUNS = {
+    ("v1.0.0", "8ed382c", 1),
+    ("v1.0.0", "8ed382c", 2),
+    ("v1.0.1", "6aff215", 1),
+    ("v1.0.1", "6aff215", 2),
+}
 
 
 def _forbidden_paths(value: Any, path: tuple[str, ...] = ()) -> list[str]:
@@ -39,13 +45,17 @@ def _forbidden_paths(value: Any, path: tuple[str, ...] = ()) -> list[str]:
 def validate(payload: dict) -> None:
     missing = REQUIRED_TOP_LEVEL - payload.keys()
     assert not missing, f"missing top-level fields: {sorted(missing)}"
+    assert payload["schema"] == "far-external-release-comparison/0.2"
 
     source = payload["source"]
-    assert source["repository"] == "https://github.com/SWE-agent/SWE-agent"
-    assert source["baseline_ref"] == "v1.0.0"
-    assert source["baseline_commit"] == "8ed382c"
-    assert source["candidate_ref"] == "v1.0.1"
-    assert source["candidate_commit"] == "6aff215"
+    assert source == {
+        "repository": "https://github.com/SWE-agent/SWE-agent",
+        "baseline_ref": "v1.0.0",
+        "baseline_commit": "8ed382c",
+        "candidate_ref": "v1.0.1",
+        "candidate_commit": "6aff215",
+        "release_notes_source": "official_github_releases",
+    }
 
     design = payload["comparison_design"]
     for field in (
@@ -54,7 +64,7 @@ def validate(payload: dict) -> None:
         "outcome_blinded_until_primary_freeze",
     ):
         assert design[field] is True, f"{field} must remain true"
-    assert design["minimum_repetitions_per_release"] >= 2
+    assert design["minimum_repetitions_per_release"] == 2
 
     assert set(payload["decision_policy"]) == REQUIRED_DECISIONS
     assert set(payload["forbidden_before_primary_freeze"]) == REQUIRED_BLINDED_FIELDS
@@ -63,25 +73,41 @@ def validate(payload: dict) -> None:
 
     frozen = payload["frozen_inputs"]
     assert frozen["task_id"] == "scikit-learn__scikit-learn-14125"
-    assert frozen["model"] == "anthropic/claude-opus-4-5"
-    assert frozen["model_parameters"]["temperature"] == 0.0
-    assert frozen["model_parameters"]["reasoning_effort"] == "high"
+    assert frozen["model"] == "claude-opus-4-5-20251101"
+    assert frozen["model_parameters"] == {
+        "temperature": 1.0,
+        "top_p": None,
+        "reasoning_effort": "high",
+        "per_instance_cost_limit_usd": 25.0,
+        "total_cost_limit_usd": 100.0,
+    }
     assert frozen["task_seed"] == 14125
+    assert len(frozen["model_selection_sources"]) >= 3
     actual_config_hash = hashlib.sha256(CONFIG.read_bytes()).hexdigest()
     assert actual_config_hash == frozen["agent_config_sha256"], "agent config hash mismatch"
 
     status = payload["status"]
     if status == "execution_inputs_frozen":
-        assert frozen["environment_image_digest"], "frozen execution requires image digest"
+        digest = frozen["environment_image_digest"]
+        assert isinstance(digest, str) and digest.startswith("sha256:") and len(digest) == 71
     else:
         assert status == "execution_inputs_selected_environment_digest_pending"
         assert frozen["environment_image_digest"] is None
 
-    runs = payload["execution_requirements"]["runs"]
+    requirements = payload["execution_requirements"]
+    assert requirements["required_secret"] == "ANTHROPIC_API_KEY"
+    assert requirements["maximum_total_model_cost_usd"] == 100.0
+    runs = requirements["runs"]
     assert len(runs) == 4
-    assert {(run["release"], run["repetition"]) for run in runs} == {
-        ("v1.0.0", 1), ("v1.0.0", 2), ("v1.0.1", 1), ("v1.0.1", 2)
-    }
+    assert {(r["release"], r["commit"], r["repetition"]) for r in runs} == EXPECTED_RUNS
+
+    artifacts = set(payload["required_artifacts"])
+    assert {
+        "baseline_trajectory_run_1", "baseline_trajectory_run_2",
+        "candidate_trajectory_run_1", "candidate_trajectory_run_2",
+        "primary_freeze_manifest", "post_freeze_outcome_reveal",
+        "bundle_sha256_manifest",
+    } <= artifacts
 
     forbidden_text = json.dumps(payload).lower()
     assert "hidden chain of thought" not in forbidden_text
