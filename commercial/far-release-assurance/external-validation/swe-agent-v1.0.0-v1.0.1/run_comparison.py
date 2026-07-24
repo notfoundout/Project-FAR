@@ -56,8 +56,9 @@ def preflight(manifest: dict, *, require_secret: bool) -> None:
         raise SystemExit("git is required")
     if shutil.which("docker") is None:
         raise SystemExit("Docker is required")
-    if require_secret and not os.environ.get(manifest["execution_requirements"]["required_secret"]):
-        raise SystemExit("ANTHROPIC_API_KEY is required; no run was started")
+    secret_name = manifest["execution_requirements"]["required_secret"]
+    if require_secret and not os.environ.get(secret_name):
+        raise SystemExit(f"{secret_name} is required; no run was started")
     config_hash = hashlib.sha256(CONFIG_PATH.read_bytes()).hexdigest()
     if config_hash != manifest["frozen_inputs"]["agent_config_sha256"]:
         raise SystemExit("agent-config.yaml does not match the frozen hash")
@@ -66,23 +67,28 @@ def preflight(manifest: dict, *, require_secret: bool) -> None:
 def write_execution_plan(manifest: dict, digest: str) -> Path:
     OUTPUT_DIR.mkdir(exist_ok=True)
     plan = {
-        "schema": "far-external-execution-plan/0.1",
+        "schema": "far-external-execution-plan/0.2",
         "case_id": manifest["case_id"],
         "manifest_sha256": hashlib.sha256(MANIFEST_PATH.read_bytes()).hexdigest(),
         "agent_config_sha256": hashlib.sha256(CONFIG_PATH.read_bytes()).hexdigest(),
         "environment_image": f"{manifest['frozen_inputs']['environment_image_reference']}@{digest}",
         "task_id": manifest["frozen_inputs"]["task_id"],
         "model": manifest["frozen_inputs"]["model"],
+        "free_tier": True,
+        "maximum_model_cost_usd": 0.0,
+        "sequential_only": True,
+        "quota_policy": "Stop cleanly on provider quota exhaustion and resume the same frozen run after reset; never substitute another model.",
         "runs": [
             {
                 **item,
                 "workspace": f"workspaces/{item['release']}-run-{item['repetition']}",
-                "trajectory": f"trajectories/{item['release']}-run-{item['repetition']}.traj",
+                "trajectory": f"trajectories/{item['trajectory_artifact']}",
                 "outcomes_accessible": False,
+                "state": "pending",
             }
             for item in manifest["execution_requirements"]["runs"]
         ],
-        "next_gate": "Execute each run in an isolated checkout, then compile trajectories and hash-freeze the primary FAR comparison before outcome reveal.",
+        "next_gate": "Execute one frozen run at a time, preserve raw trajectories, compile FAR packages, and hash-freeze the primary comparison before outcome reveal.",
     }
     target = OUTPUT_DIR / "execution-plan.json"
     target.write_text(json.dumps(plan, indent=2, sort_keys=True) + "\n", encoding="utf-8")
