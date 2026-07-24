@@ -1,0 +1,57 @@
+name: Trace Candidate 001 Execution
+
+on:
+  pull_request:
+    paths:
+      - "research/external-validation/trace-candidate-001/**"
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/trace-candidate-001-execution.yml"
+  workflow_dispatch:
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install execution dependencies
+        run: |
+          python -m pip install ./commercial/far-decision-integrity
+          python -m pip install huggingface_hub pyarrow
+      - name: Execute Candidate 001
+        run: |
+          mkdir -p build/trace-candidate-001
+          set +e
+          python research/external-validation/trace-candidate-001/execute_candidate.py \
+            --output-directory build/trace-candidate-001 \
+            > build/trace-candidate-001/execution.log 2>&1
+          status=$?
+          cat build/trace-candidate-001/execution.log
+          exit $status
+      - name: Re-run for determinism
+        run: |
+          python research/external-validation/trace-candidate-001/execute_candidate.py \
+            --output-directory build/trace-candidate-001-repeat
+          diff -ru build/trace-candidate-001/derived build/trace-candidate-001-repeat/derived
+          diff -ru build/trace-candidate-001/evidence build/trace-candidate-001-repeat/evidence
+      - name: Validate claim boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("build/trace-candidate-001/evidence/execution-report.json").read_text())
+          assert report["blind_detection_value_permitted"] is False
+          assert report["decision_package"]["semantic_completeness_verified"] is False
+          assert report["adjudication"]["status"] in {
+              "justified", "unsupported", "underdetermined", "unverifiable"
+          }
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: trace-candidate-001-evidence
+          path: ${{ github.workspace }}/build/trace-candidate-001
+          if-no-files-found: error

@@ -14,6 +14,9 @@ def resolve_ref(p, v):
     cands=[(p.parent/v).resolve(), (ROOT/v).resolve()]
     return any(c.exists() for c in cands)
 
+def is_dynamic_ref(v):
+    return '${{' in v or '$(' in v
+
 for p in iter_files({'.yaml','.yml'}):
     relative=rel(p)
     try:
@@ -35,7 +38,7 @@ for p in iter_files({'.yaml','.yml'}):
             for k,v in x.items():
                 kl=str(k).lower()
                 if isinstance(v,str) and (kl.endswith('path') or kl.endswith('file') or kl in {'path','file','fixture','report','source'}):
-                    if not v.startswith(('http://','https://')) and ('/' in v or '.' in v) and not resolve_ref(p, v):
+                    if not is_dynamic_ref(v) and not v.startswith(('http://','https://')) and ('/' in v or '.' in v) and not resolve_ref(p, v):
                         errors.append(f'{relative}: referenced path missing: {v}')
                 walk(v, kl)
         elif isinstance(x, list):
