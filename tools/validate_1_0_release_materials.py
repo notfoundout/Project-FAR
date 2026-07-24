@@ -5,6 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "docs" / "releases" / "1.0-interface-registry.json"
+READINESS = ROOT / "docs" / "releases" / "1.0-readiness.json"
 NOTES = ROOT / "docs" / "releases" / "1.0.0-draft.md"
 
 REQUIRED_COMMANDS = {
@@ -48,12 +49,18 @@ def main() -> int:
     if missing_commands:
         raise SystemExit(f"interface registry missing commands: {missing_commands}")
 
+    readiness = json.loads(READINESS.read_text(encoding="utf-8"))
+    if readiness.get("previous_public_version") != "0.4.0":
+        raise SystemExit("release baseline must be 0.4.0")
+
     notes = NOTES.read_text(encoding="utf-8")
     missing_headings = sorted(REQUIRED_NOTE_HEADINGS - set(notes.splitlines()))
     if missing_headings:
         raise SystemExit(f"release notes missing headings: {missing_headings}")
     if "Status: unreleased" not in notes:
         raise SystemExit("draft release notes must remain explicitly unreleased")
+    if "0.4.0" not in notes or "0.3.1" in notes:
+        raise SystemExit("release notes must cover 0.4.0 to 1.0.0")
     if "unrestricted universality" not in notes:
         raise SystemExit("release notes must preserve the universality nonclaim")
 
