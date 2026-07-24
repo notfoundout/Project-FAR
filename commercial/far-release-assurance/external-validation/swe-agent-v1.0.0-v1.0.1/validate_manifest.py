@@ -28,6 +28,22 @@ EXPECTED_RUNS = {
     ("v1.0.1", "6aff215", 2, "candidate-run-2.traj"),
 }
 HARNESS_COMMIT = "f7bbbb2ccdf479001d6467c9e34af59e44a840f9"
+REQUIRED_ENVIRONMENT_ARTIFACTS = {
+    "task-record.public.json",
+    "test-spec.json",
+    "Dockerfile.base",
+    "Dockerfile.env",
+    "Dockerfile.instance",
+    "setup-env.sh",
+    "install-repo.sh",
+    "environment-lock.json",
+    "environment-lock.sha256",
+}
+FORBIDDEN_ENVIRONMENT_ARTIFACTS = {
+    "task-record.json",
+    "setup-repo.sh",
+    "eval.sh",
+}
 
 
 def _forbidden_paths(value: Any, path: tuple[str, ...] = ()) -> list[str]:
@@ -142,12 +158,19 @@ def validate(payload: dict) -> None:
     } == EXPECTED_RUNS
 
     artifacts = set(payload["required_artifacts"])
+    assert REQUIRED_ENVIRONMENT_ARTIFACTS <= artifacts, (
+        "missing required environment artifacts: "
+        f"{sorted(REQUIRED_ENVIRONMENT_ARTIFACTS - artifacts)}"
+    )
+    assert not (FORBIDDEN_ENVIRONMENT_ARTIFACTS & artifacts), (
+        "outcome-bearing or obsolete environment artifacts declared: "
+        f"{sorted(FORBIDDEN_ENVIRONMENT_ARTIFACTS & artifacts)}"
+    )
     assert {
-        "task-record.json", "test-spec.json", "Dockerfile.base", "Dockerfile.env",
-        "Dockerfile.instance", "setup-env.sh", "setup-repo.sh", "environment-lock.json",
-        "environment-lock.sha256", "baseline-run-1.traj", "baseline-run-2.traj",
-        "candidate-run-1.traj", "candidate-run-2.traj", "primary_freeze_manifest",
-        "post_freeze_outcome_reveal", "bundle_sha256_manifest",
+        "baseline-run-1.traj", "baseline-run-2.traj",
+        "candidate-run-1.traj", "candidate-run-2.traj",
+        "primary_freeze_manifest", "post_freeze_outcome_reveal",
+        "bundle_sha256_manifest",
     } <= artifacts
 
     forbidden_text = json.dumps(payload).lower()
