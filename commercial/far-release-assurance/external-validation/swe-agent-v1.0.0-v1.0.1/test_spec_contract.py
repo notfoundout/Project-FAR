@@ -29,14 +29,24 @@ def verify_test_spec_contract(spec: object) -> None:
             raise SystemExit(f"Pinned SWE-bench TestSpec property is empty: {name}")
 
 
-def successful_instance_ids(successful: object) -> set[str]:
-    """Normalize the pinned harness build result into instance IDs.
+def _result_spec(item: object) -> object:
+    """Extract the TestSpec from the exact pinned build-result shapes.
 
-    At the pinned SWE-bench revision, build_instance_images returns an iterable
-    of TestSpec objects, not image-key strings. This function deliberately
-    accepts only objects exposing a non-empty instance_id so an API drift fails
-    closed instead of being misclassified as a build failure.
+    The pinned harness has returned both direct TestSpec objects and tuples with
+    the TestSpec as element zero across adjacent helper paths. Accept only those
+    explicit forms and fail closed on anything else.
     """
+    if hasattr(item, "instance_id"):
+        return item
+    if isinstance(item, tuple) and item and hasattr(item[0], "instance_id"):
+        return item[0]
+    raise SystemExit(
+        "Pinned SWE-bench build result contract mismatch; expected a TestSpec "
+        "or a tuple whose first element is a TestSpec"
+    )
+
+
+def successful_instance_ids(successful: object) -> set[str]:
     try:
         items = list(successful)  # type: ignore[arg-type]
     except TypeError as exc:
@@ -44,11 +54,12 @@ def successful_instance_ids(successful: object) -> set[str]:
 
     instance_ids: set[str] = set()
     for item in items:
-        instance_id = getattr(item, "instance_id", None)
+        spec = _result_spec(item)
+        instance_id = getattr(spec, "instance_id", None)
         if not isinstance(instance_id, str) or not instance_id.strip():
             raise SystemExit(
                 "Pinned SWE-bench build result contract mismatch; "
-                "expected TestSpec objects with non-empty instance_id"
+                "TestSpec instance_id is missing or empty"
             )
         instance_ids.add(instance_id)
     return instance_ids
