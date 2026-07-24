@@ -128,7 +128,7 @@ def main() -> None:
     args = parser.parse_args()
 
     manifest = load_manifest()
-    lock = preflight(manifest, require_secret=args.mode == "plan")
+    lock = preflight(manifest, require_secret=False)
     if args.mode == "preflight":
         print("Frozen digest-pinned SWE-bench environment and inputs verified. No model call was started.")
         return
