@@ -43,18 +43,23 @@ class TestSpecContractTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "empty"):
             verify_test_spec_contract(BrokenSpec())
 
-    def test_successful_build_result_is_testspec_objects(self) -> None:
+    def test_direct_testspec_build_result_is_supported(self) -> None:
         successful = [FakeSpec()]
         self.assertEqual(successful_instance_ids(successful), {FakeSpec.instance_id})
         verify_build_result(successful, [], FakeSpec.instance_id)
 
+    def test_exact_observed_tuple_build_result_is_supported(self) -> None:
+        successful = [(FakeSpec(), "build metadata")]
+        self.assertEqual(successful_instance_ids(successful), {FakeSpec.instance_id})
+        verify_build_result(successful, [], FakeSpec.instance_id)
+
     def test_string_build_result_is_rejected(self) -> None:
-        with self.assertRaisesRegex(SystemExit, "TestSpec objects"):
+        with self.assertRaisesRegex(SystemExit, "tuple whose first element"):
             verify_build_result(["instance-image-key"], [], FakeSpec.instance_id)
 
     def test_failed_build_result_is_fatal(self) -> None:
         with self.assertRaisesRegex(SystemExit, "reported failures"):
-            verify_build_result([FakeSpec()], {FakeSpec.instance_id: "failure"}, FakeSpec.instance_id)
+            verify_build_result([(FakeSpec(), "metadata")], {FakeSpec.instance_id: "failure"}, FakeSpec.instance_id)
 
     def test_public_task_record_redacts_outcome_fields(self) -> None:
         record = {
