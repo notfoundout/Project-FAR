@@ -52,7 +52,7 @@ jobs:
         working-directory: ${{ env.CASE_DIR }}
         run: |
           python validate_manifest.py
-          python -m unittest -v test_validate_manifest.py
+          python -m unittest -v test_validate_manifest.py test_run_comparison.py
 
       - name: Enforce free-tier execution confirmation
         if: inputs.stage == 'plan'
