@@ -1,0 +1,52 @@
+name: Trace Candidate 002 Execution
+
+on:
+  pull_request:
+    paths:
+      - "research/external-validation/trace-candidate-002/**"
+      - "commercial/far-decision-integrity/**"
+      - ".github/workflows/trace-candidate-002-execution.yml"
+  workflow_dispatch:
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install ./commercial/far-decision-integrity
+          python -m pip install huggingface_hub pyarrow
+      - name: Execute pre-outcome stage twice
+        run: |
+          python research/external-validation/trace-candidate-002/execute_staged.py \
+            --stage pre-outcome --output-directory "$RUNNER_TEMP/candidate-002-a"
+          python research/external-validation/trace-candidate-002/execute_staged.py \
+            --stage pre-outcome --output-directory "$RUNNER_TEMP/candidate-002-b"
+          diff -ru "$RUNNER_TEMP/candidate-002-a/derived" "$RUNNER_TEMP/candidate-002-b/derived"
+          diff -ru "$RUNNER_TEMP/candidate-002-a/evidence" "$RUNNER_TEMP/candidate-002-b/evidence"
+      - name: Verify freeze precedes reveal
+        run: |
+          test -f "$RUNNER_TEMP/candidate-002-a/evidence/primary-freeze.json"
+          test ! -f "$RUNNER_TEMP/candidate-002-a/evidence/outcome-reveal.json"
+          python research/external-validation/trace-candidate-002/execute_staged.py \
+            --stage reveal --output-directory "$RUNNER_TEMP/candidate-002-a"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ["RUNNER_TEMP"]) / "candidate-002-a" / "evidence"
+          primary = json.loads((root / "primary-result.json").read_text())
+          reveal = json.loads((root / "outcome-reveal.json").read_text())
+          assert primary["forbidden_outcome_fields_read"] is False
+          assert reveal["blind_order_preserved"] is True
+          assert primary["adjudication_status"] in {"justified", "unsupported", "underdetermined", "unverifiable"}
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: trace-candidate-002-evidence
+          path: ${{ runner.temp }}/candidate-002-a
+          if-no-files-found: error
