@@ -7,6 +7,7 @@ import subprocess
 from pathlib import Path
 
 import docker
+import swebench
 from datasets import load_dataset
 from swebench.harness.docker_build import build_instance_images
 from swebench.harness.test_spec.test_spec import make_test_spec
@@ -14,6 +15,7 @@ from swebench.harness.test_spec.test_spec import make_test_spec
 CASE_DIR = Path(__file__).parent
 OUTPUT_DIR = CASE_DIR / "execution-output" / "environment-freeze"
 MANIFEST_PATH = CASE_DIR / "manifest.json"
+REQUIRED_FIXTURE = Path("swebench/harness/constants/fixtures/tokio-rs__tokio-6724.Cargo.lock")
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -32,6 +34,28 @@ def one_task(dataset_name: str, split: str, task_id: str) -> dict:
     return matches[0]
 
 
+def verify_harness_checkout(harness_dir: Path, expected_commit: str) -> str:
+    if not harness_dir.is_dir():
+        raise SystemExit("SWEBENCH_HARNESS_DIR must point to the pinned SWE-bench checkout")
+    actual_commit = subprocess.run(
+        ["git", "-C", str(harness_dir), "rev-parse", "HEAD"],
+        check=True,
+        text=True,
+        capture_output=True,
+    ).stdout.strip()
+    if actual_commit != expected_commit:
+        raise SystemExit(f"SWE-bench harness mismatch: expected {expected_commit}, got {actual_commit}")
+
+    imported = Path(swebench.__file__).resolve()
+    if harness_dir not in imported.parents:
+        raise SystemExit(f"SWE-bench import is not sourced from pinned checkout: {imported}")
+
+    fixture = harness_dir / REQUIRED_FIXTURE
+    if not fixture.is_file() or fixture.stat().st_size == 0:
+        raise SystemExit(f"Required SWE-bench fixture is missing or empty: {fixture}")
+    return actual_commit
+
+
 def main() -> None:
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     frozen = manifest["frozen_inputs"]
@@ -41,16 +65,7 @@ def main() -> None:
     expected_harness = frozen["swebench_harness_commit"]
 
     harness_dir = Path(os.environ.get("SWEBENCH_HARNESS_DIR", "")).resolve()
-    if not harness_dir.is_dir():
-        raise SystemExit("SWEBENCH_HARNESS_DIR must point to the pinned SWE-bench checkout")
-    actual_harness = subprocess.run(
-        ["git", "-C", str(harness_dir), "rev-parse", "HEAD"],
-        check=True,
-        text=True,
-        capture_output=True,
-    ).stdout.strip()
-    if actual_harness != expected_harness:
-        raise SystemExit(f"SWE-bench harness mismatch: expected {expected_harness}, got {actual_harness}")
+    actual_harness = verify_harness_checkout(harness_dir, expected_harness)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     record = one_task(dataset_name, dataset_split, task_id)
@@ -97,12 +112,14 @@ def main() -> None:
         "dataset": dataset_name,
         "split": dataset_split,
         "swebench_harness_commit": actual_harness,
+        "swebench_import_path": str(Path(swebench.__file__).resolve()),
+        "required_fixture_sha256": sha256_bytes((harness_dir / REQUIRED_FIXTURE).read_bytes()),
         "image_key": spec.instance_image_key,
         "local_image_id": image_id,
         "platform": spec.platform,
         "file_sha256": file_hashes,
         "outcome_data_accessed": False,
-        "model_call_started": False
+        "model_call_started": False,
     }
     lock_bytes = canonical_json(lock)
     (OUTPUT_DIR / "environment-lock.json").write_bytes(lock_bytes)
