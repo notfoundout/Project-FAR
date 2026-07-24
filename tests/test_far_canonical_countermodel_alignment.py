@@ -15,7 +15,7 @@ class FARCanonicalCountermodelAlignmentTests(unittest.TestCase):
         for forbidden in ("sorry", "admit", "axiom", "unsafe"):
             self.assertNotIn(forbidden, text)
 
-    def test_countermodel_instantiates_actual_g1_semantics(self):
+    def test_countermodel_is_concrete_and_decisive(self):
         text = LEAN.read_text(encoding="utf-8")
         required = (
             "import UPPSemanticKernel",
@@ -45,7 +45,7 @@ class FARCanonicalCountermodelAlignmentTests(unittest.TestCase):
         for token in forbidden:
             self.assertNotIn(token, text)
 
-    def test_registry_records_grounded_scoped_refutation(self):
+    def test_registry_records_scoped_refutation(self):
         data = json.loads(REGISTRY.read_text(encoding="utf-8"))
         self.assertEqual(data["status"], "grounded_refutation_of_g1_canonical_uniqueness")
         self.assertEqual(data["answer"], "No under the current G1 semantics")
