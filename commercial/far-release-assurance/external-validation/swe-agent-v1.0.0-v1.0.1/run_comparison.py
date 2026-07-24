@@ -14,6 +14,7 @@ CASE_DIR = Path(__file__).parent
 MANIFEST_PATH = CASE_DIR / "manifest.json"
 CONFIG_PATH = CASE_DIR / "agent-config.yaml"
 OUTPUT_DIR = CASE_DIR / "execution-output"
+RESOLVED_DIGEST_PATH = CASE_DIR / "resolved-image-digest.txt"
 
 
 def run(command: list[str], *, cwd: Path | None = None) -> str:
@@ -34,7 +35,20 @@ def resolve_image_digest(reference: str) -> str:
     value = run(["docker", "image", "inspect", reference, "--format", "{{index .RepoDigests 0}}"])
     if "@sha256:" not in value:
         raise SystemExit("Docker did not return an immutable image digest")
-    return value.split("@", 1)[1]
+    digest = value.split("@", 1)[1]
+    if not digest.startswith("sha256:") or len(digest) != 71:
+        raise SystemExit(f"Docker returned a malformed image digest: {digest!r}")
+    return digest
+
+
+def write_resolved_digest(digest: str) -> Path:
+    temporary = RESOLVED_DIGEST_PATH.with_suffix(".txt.tmp")
+    temporary.write_text(digest + "\n", encoding="utf-8")
+    temporary.replace(RESOLVED_DIGEST_PATH)
+    persisted = RESOLVED_DIGEST_PATH.read_text(encoding="utf-8").strip()
+    if persisted != digest:
+        raise SystemExit("Resolved image digest was not persisted exactly")
+    return RESOLVED_DIGEST_PATH
 
 
 def verify_frozen_environment(manifest: dict) -> str:
@@ -103,7 +117,8 @@ def main() -> None:
     manifest = load_manifest()
     if args.mode == "resolve-image":
         digest = resolve_image_digest(manifest["frozen_inputs"]["environment_image_reference"])
-        print(digest)
+        target = write_resolved_digest(digest)
+        print(f"Resolved and persisted {digest} to {target}")
         return
 
     preflight(manifest, require_secret=args.mode == "plan")
