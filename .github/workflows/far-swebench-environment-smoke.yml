@@ -1,0 +1,81 @@
+name: FAR SWE-bench Environment Smoke
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/far-swe-agent-execution.yml'
+      - '.github/workflows/far-swebench-environment-smoke.yml'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1/**'
+
+permissions:
+  contents: read
+
+env:
+  CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1
+  SWEBENCH_HARNESS_COMMIT: f7bbbb2ccdf479001d6467c9e34af59e44a840f9
+
+jobs:
+  exact-interface-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Checkout exact SWE-bench revision
+        run: |
+          git clone --filter=blob:none https://github.com/SWE-bench/SWE-bench.git "$RUNNER_TEMP/swebench-harness"
+          git -C "$RUNNER_TEMP/swebench-harness" checkout --detach "$SWEBENCH_HARNESS_COMMIT"
+          test "$(git -C "$RUNNER_TEMP/swebench-harness" rev-parse HEAD)" = "$SWEBENCH_HARNESS_COMMIT"
+          test -s "$RUNNER_TEMP/swebench-harness/swebench/harness/constants/fixtures/tokio-rs__tokio-6724.Cargo.lock"
+
+      - name: Install exact source checkout
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --editable "$RUNNER_TEMP/swebench-harness"
+
+      - name: Exercise pinned TestSpec contract on frozen task
+        env:
+          SWEBENCH_HARNESS_DIR: ${{ runner.temp }}/swebench-harness
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          import swebench
+          from datasets import load_dataset
+          from prepare_environment import REQUIRED_FIXTURE, REQUIRED_TEST_SPEC_PROPERTIES, verify_harness_checkout, verify_test_spec_contract
+          from swebench.harness.test_spec.test_spec import make_test_spec
+
+          case_dir = Path.cwd()
+          manifest = json.loads((case_dir / 'manifest.json').read_text())
+          frozen = manifest['frozen_inputs']
+          harness = Path(os.environ['SWEBENCH_HARNESS_DIR']).resolve()
+          verify_harness_checkout(harness, frozen['swebench_harness_commit'])
+
+          dataset = load_dataset(frozen['swebench_dataset'], split=frozen['swebench_split'])
+          records = [dict(row) for row in dataset if row['instance_id'] == frozen['task_id']]
+          assert len(records) == 1, len(records)
+          spec = make_test_spec(
+              records[0],
+              namespace=None,
+              base_image_tag='far-frozen',
+              env_image_tag='far-frozen',
+              instance_image_tag='far-frozen',
+          )
+          verify_test_spec_contract(spec)
+          assert spec.install_repo_script.startswith('#!/bin/bash')
+          assert spec.setup_env_script.startswith('#!/bin/bash')
+          assert spec.eval_script.startswith('#!/bin/bash')
+          assert 'setup_repo_script' not in REQUIRED_TEST_SPEC_PROPERTIES
+          assert (harness / REQUIRED_FIXTURE).is_file()
+          assert harness in Path(swebench.__file__).resolve().parents
+          print('Exact pinned source, fixture, dataset task, TestSpec interface, and script exports verified.')
+          PY
