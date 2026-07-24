@@ -6,12 +6,34 @@ import os
 import subprocess
 from pathlib import Path
 
-from test_spec_contract import REQUIRED_TEST_SPEC_PROPERTIES, verify_test_spec_contract
+from test_spec_contract import (
+    REQUIRED_TEST_SPEC_PROPERTIES,
+    verify_build_result,
+    verify_test_spec_contract,
+)
 
 CASE_DIR = Path(__file__).parent
 OUTPUT_DIR = CASE_DIR / "execution-output" / "environment-freeze"
 MANIFEST_PATH = CASE_DIR / "manifest.json"
 REQUIRED_FIXTURE = Path("swebench/harness/constants/fixtures/tokio-rs__tokio-6724.Cargo.lock")
+OUTCOME_BEARING_FIELDS = frozenset(
+    {
+        "patch",
+        "test_patch",
+        "FAIL_TO_PASS",
+        "PASS_TO_PASS",
+        "fail_to_pass",
+        "pass_to_pass",
+    }
+)
+SAFE_TASK_FIELDS = (
+    "instance_id",
+    "repo",
+    "base_commit",
+    "version",
+    "problem_statement",
+    "environment_setup_commit",
+)
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -30,6 +52,14 @@ def one_task(dataset_name: str, split: str, task_id: str) -> dict:
     if len(matches) != 1:
         raise SystemExit(f"Expected exactly one task record for {task_id}, found {len(matches)}")
     return matches[0]
+
+
+def public_task_record(record: dict) -> dict:
+    leaked = sorted(OUTCOME_BEARING_FIELDS.intersection(record))
+    public = {key: record[key] for key in SAFE_TASK_FIELDS if key in record}
+    public["redacted_fields"] = leaked
+    public["outcome_fields_included"] = False
+    return public
 
 
 def verify_harness_checkout(harness_dir: Path, expected_commit: str) -> str:
@@ -73,8 +103,12 @@ def main() -> None:
     actual_harness = verify_harness_checkout(harness_dir, expected_harness)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    for stale in OUTPUT_DIR.iterdir():
+        if stale.is_file():
+            stale.unlink()
+
     record = one_task(dataset_name, dataset_split, task_id)
-    (OUTPUT_DIR / "task-record.json").write_bytes(canonical_json(record))
+    (OUTPUT_DIR / "task-record.public.json").write_bytes(canonical_json(public_task_record(record)))
 
     spec = make_test_spec(
         record,
@@ -91,6 +125,7 @@ def main() -> None:
         "env_image_key": spec.env_image_key,
         "instance_image_key": spec.instance_image_key,
         "test_spec_properties": sorted(REQUIRED_TEST_SPEC_PROPERTIES),
+        "eval_script_exported": False,
     }
     (OUTPUT_DIR / "test-spec.json").write_bytes(canonical_json(spec_summary))
     exports = {
@@ -99,7 +134,6 @@ def main() -> None:
         "Dockerfile.instance": spec.instance_dockerfile,
         "setup-env.sh": spec.setup_env_script,
         "install-repo.sh": spec.install_repo_script,
-        "eval.sh": spec.eval_script,
     }
     for name, content in exports.items():
         (OUTPUT_DIR / name).write_text(content, encoding="utf-8")
@@ -114,17 +148,17 @@ def main() -> None:
         tag="far-frozen",
         env_image_tag="far-frozen",
     )
-    if failed or spec.instance_image_key not in successful:
-        raise SystemExit(f"Local SWE-bench image build failed: successful={successful!r}, failed={failed!r}")
+    verify_build_result(successful, failed, spec.instance_id)
 
-    image_id = client.images.get(spec.instance_image_key).id
+    image = client.images.get(spec.instance_image_key)
+    image_id = image.id
     if not image_id.startswith("sha256:") or len(image_id) != 71:
         raise SystemExit(f"Malformed local image ID: {image_id!r}")
 
     files = sorted(path for path in OUTPUT_DIR.iterdir() if path.is_file())
     file_hashes = {path.name: sha256_bytes(path.read_bytes()) for path in files}
     lock = {
-        "schema": "far-swebench-local-environment-lock/1.0",
+        "schema": "far-swebench-local-environment-lock/1.1",
         "task_id": task_id,
         "dataset": dataset_name,
         "split": dataset_split,
@@ -135,7 +169,8 @@ def main() -> None:
         "local_image_id": image_id,
         "platform": spec.platform,
         "file_sha256": file_hashes,
-        "outcome_data_accessed": False,
+        "outcome_data_accessed_for_build_only": True,
+        "outcome_data_exported": False,
         "model_call_started": False,
     }
     lock_bytes = canonical_json(lock)
