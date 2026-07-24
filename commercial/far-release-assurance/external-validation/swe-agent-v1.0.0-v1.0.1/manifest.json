@@ -1,5 +1,5 @@
 {
-  "schema": "far-external-release-comparison/0.1",
+  "schema": "far-external-release-comparison/0.2",
   "case_id": "swe-agent-v1.0.0-v1.0.1",
   "status": "execution_inputs_selected_environment_digest_pending",
   "source": {
@@ -70,6 +70,7 @@
     "resolve_and_freeze_image_digest_before_first_model_call": true,
     "sequential_runs_required": true,
     "resume_after_rate_limit": true,
+    "maximum_total_model_cost_usd": 0.0,
     "runs": [
       {"release": "v1.0.0", "commit": "8ed382c", "repetition": 1, "trajectory_artifact": "baseline-run-1.traj"},
       {"release": "v1.0.0", "commit": "8ed382c", "repetition": 2, "trajectory_artifact": "baseline-run-2.traj"},
