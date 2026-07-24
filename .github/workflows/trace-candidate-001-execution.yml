@@ -23,8 +23,14 @@ jobs:
           python -m pip install huggingface_hub pyarrow
       - name: Execute Candidate 001
         run: |
+          mkdir -p build/trace-candidate-001
+          set +e
           python research/external-validation/trace-candidate-001/execute_candidate.py \
-            --output-directory build/trace-candidate-001
+            --output-directory build/trace-candidate-001 \
+            > build/trace-candidate-001/execution.log 2>&1
+          status=$?
+          cat build/trace-candidate-001/execution.log
+          exit $status
       - name: Re-run for determinism
         run: |
           python research/external-validation/trace-candidate-001/execute_candidate.py \
@@ -44,6 +50,7 @@ jobs:
           }
           PY
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: trace-candidate-001-evidence
           path: build/trace-candidate-001
