@@ -27,8 +27,12 @@ def assert_subset(expected: Any, actual: Any, path: str = "root") -> None:
             assert_subset(value, actual[key], f"{path}.{key}")
         return
     if isinstance(expected, list):
-        if actual != expected:
-            raise AssertionError(f"{path}: list drift: expected {expected!r}, got {actual!r}")
+        if not isinstance(actual, list):
+            raise AssertionError(f"{path}: expected list, got {type(actual).__name__}")
+        if len(actual) != len(expected):
+            raise AssertionError(f"{path}: list length drift: expected {len(expected)}, got {len(actual)}")
+        for index, (expected_item, actual_item) in enumerate(zip(expected, actual, strict=True)):
+            assert_subset(expected_item, actual_item, f"{path}[{index}]")
         return
     if actual != expected:
         raise AssertionError(f"{path}: expected {expected!r}, got {actual!r}")
