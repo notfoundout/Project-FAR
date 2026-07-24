@@ -29,21 +29,11 @@ EXPECTED_RUNS = {
 }
 HARNESS_COMMIT = "f7bbbb2ccdf479001d6467c9e34af59e44a840f9"
 REQUIRED_ENVIRONMENT_ARTIFACTS = {
-    "task-record.public.json",
-    "test-spec.json",
-    "Dockerfile.base",
-    "Dockerfile.env",
-    "Dockerfile.instance",
-    "setup-env.sh",
-    "install-repo.sh",
-    "environment-lock.json",
+    "task-record.public.json", "test-spec.json", "Dockerfile.base", "Dockerfile.env",
+    "Dockerfile.instance", "setup-env.sh", "install-repo.sh", "environment-lock.json",
     "environment-lock.sha256",
 }
-FORBIDDEN_ENVIRONMENT_ARTIFACTS = {
-    "task-record.json",
-    "setup-repo.sh",
-    "eval.sh",
-}
+FORBIDDEN_ENVIRONMENT_ARTIFACTS = {"task-record.json", "setup-repo.sh", "eval.sh"}
 
 
 def _forbidden_paths(value: Any, path: tuple[str, ...] = ()) -> list[str]:
@@ -72,7 +62,6 @@ def validate(payload: dict) -> None:
     missing = REQUIRED_TOP_LEVEL - payload.keys()
     assert not missing, f"missing top-level fields: {sorted(missing)}"
     assert payload["schema"] == "far-external-release-comparison/0.3"
-
     assert payload["source"] == {
         "repository": "https://github.com/SWE-agent/SWE-agent",
         "baseline_ref": "v1.0.0",
@@ -129,10 +118,15 @@ def validate(payload: dict) -> None:
     if status == "execution_inputs_frozen":
         assert _valid_sha256(frozen["environment_lock_sha256"])
         assert _valid_sha256(frozen["local_image_id"], prefixed=True)
+        assert _valid_sha256(frozen["registry_digest"], prefixed=True)
+        expected_ref = "ghcr.io/notfoundout/project-far-swebench-scikit-learn-14125@" + frozen["registry_digest"]
+        assert frozen["immutable_image_reference"] == expected_ref
     else:
         assert status == "execution_inputs_selected_local_environment_build_pending"
         assert frozen["environment_lock_sha256"] is None
         assert frozen["local_image_id"] is None
+        assert "immutable_image_reference" not in frozen
+        assert "registry_digest" not in frozen
 
     assert "environment_image_reference" not in frozen
     assert "environment_image_digest" not in frozen
@@ -167,9 +161,8 @@ def validate(payload: dict) -> None:
         f"{sorted(FORBIDDEN_ENVIRONMENT_ARTIFACTS & artifacts)}"
     )
     assert {
-        "baseline-run-1.traj", "baseline-run-2.traj",
-        "candidate-run-1.traj", "candidate-run-2.traj",
-        "primary_freeze_manifest", "post_freeze_outcome_reveal",
+        "baseline-run-1.traj", "baseline-run-2.traj", "candidate-run-1.traj",
+        "candidate-run-2.traj", "primary_freeze_manifest", "post_freeze_outcome_reveal",
         "bundle_sha256_manifest",
     } <= artifacts
 
