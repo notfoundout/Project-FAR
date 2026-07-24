@@ -195,8 +195,8 @@ jobs:
         working-directory: ${{ env.CASE_DIR }}
         run: |
           python execute_controller.py status > "$RUNNER_TEMP/execution-status.json"
-          FULL_COMMIT="$(python -c 'import json,sys; s=json.load(open(sys.argv[1])); r=next((x for x in s["runs"] if x["state"] in {"pending","quota_paused","failed_retryable"}), None); print("" if r is None else r["full_commit"])' "$RUNNER_TEMP/execution-status.json")"
-          RUN_ID="$(python -c 'import json,sys; s=json.load(open(sys.argv[1])); r=next((x for x in s["runs"] if x["state"] in {"pending","quota_paused","failed_retryable"}), None); print("complete" if r is None else r["run_id"])' "$RUNNER_TEMP/execution-status.json")"
+          FULL_COMMIT="$(python -c 'import json,sys; s=json.load(open(sys.argv[1])); r=next((x for x in s["runs"] if x["state"] in {"pending","running","quota_paused","failed_retryable"}), None); print("" if r is None else r["full_commit"])' "$RUNNER_TEMP/execution-status.json")"
+          RUN_ID="$(python -c 'import json,sys; s=json.load(open(sys.argv[1])); r=next((x for x in s["runs"] if x["state"] in {"pending","running","quota_paused","failed_retryable"}), None); print("complete" if r is None else r["run_id"])' "$RUNNER_TEMP/execution-status.json")"
           echo "full_commit=$FULL_COMMIT" >> "$GITHUB_OUTPUT"
           echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
 
@@ -208,6 +208,49 @@ jobs:
           test "$(git -C "$RUNNER_TEMP/swe-agent" rev-parse HEAD)" = "${{ steps.next-run.outputs.full_commit }}"
           python -m pip install --upgrade pip
           python -m pip install --editable "$RUNNER_TEMP/swe-agent"
+
+      - name: Parse exact frozen configuration without a model call
+        if: inputs.stage == 'execute' && steps.next-run.outputs.run_id != 'complete'
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          task = json.loads(Path('environment-freeze/task-record.public.json').read_text())
+          lock = json.loads(Path('environment-freeze/environment-lock.json').read_text())
+          instance = [{
+              'image_name': lock['immutable_image_reference'],
+              'problem_statement': task['problem_statement'],
+              'id': task['instance_id'],
+              'repo_name': 'testbed',
+              'base_commit': task['base_commit'],
+              'extra_fields': {'outcome_data_accessible': False},
+          }]
+          Path('/tmp/far-instance.json').write_text(json.dumps(instance))
+          PY
+          sweagent run-batch \
+            --config "$RUNNER_TEMP/swe-agent/config/default.yaml" \
+            --config agent-config.yaml \
+            --instances.type=file \
+            --instances.path=/tmp/far-instance.json \
+            --output_dir=/tmp/far-config-parse \
+            --num_workers=1 \
+            --progress_bar=False \
+            --random_delay_multiplier=0 \
+            --raise_exceptions=True \
+            --redo_existing=False \
+            --print_config > /tmp/far-parsed-config.yaml
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+          frozen = yaml.safe_load(Path('agent-config.yaml').read_text())
+          parsed = yaml.safe_load(Path('/tmp/far-parsed-config.yaml').read_text())
+          assert parsed['agent'] == frozen['agent']
+          assert parsed['num_workers'] == 1
+          assert parsed['redo_existing'] is False
+          assert parsed['instances']['type'] == 'file'
+          PY
 
       - name: Pull and verify frozen environment image
         if: inputs.stage == 'execute' && steps.next-run.outputs.run_id != 'complete'
