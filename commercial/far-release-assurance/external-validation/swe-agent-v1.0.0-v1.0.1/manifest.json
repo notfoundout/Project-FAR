@@ -1,7 +1,7 @@
 {
-  "schema": "far-external-release-comparison/0.2",
+  "schema": "far-external-release-comparison/0.3",
   "case_id": "swe-agent-v1.0.0-v1.0.1",
-  "status": "execution_inputs_selected_environment_digest_pending",
+  "status": "execution_inputs_selected_local_environment_build_pending",
   "source": {
     "repository": "https://github.com/SWE-agent/SWE-agent",
     "baseline_ref": "v1.0.0",
@@ -24,6 +24,14 @@
   "frozen_inputs": {
     "task_selector": "previously_frozen_blind_candidate_002",
     "task_id": "scikit-learn__scikit-learn-14125",
+    "swebench_repository": "https://github.com/SWE-bench/SWE-bench",
+    "swebench_harness_commit": "f7bbbb2ccdf479001d6467c9e34af59e44a840f9",
+    "swebench_dataset": "princeton-nlp/SWE-bench",
+    "swebench_split": "test",
+    "environment_construction": "official_swebench_local_build_namespace_none",
+    "environment_lock_path": "environment-freeze/environment-lock.json",
+    "environment_lock_sha256": null,
+    "local_image_id": null,
     "model": "gemini/gemini-2.5-pro",
     "provider_model": "gemini-2.5-pro",
     "model_selection_basis": "strongest_stable_coding_and_complex_reasoning_model_documented_on_the_gemini_api_free_tier_at_selection_time",
@@ -51,8 +59,6 @@
     },
     "agent_config_path": "agent-config.yaml",
     "agent_config_sha256": "af83f741da13a40afbb4af395627284a1f890dac058cac2717292c04800b2382",
-    "environment_image_reference": "swebench/sweb.eval.x86_64.scikit-learn__scikit-learn-14125",
-    "environment_image_digest": null,
     "task_seed": 14125
   },
   "execution_environment": {
@@ -67,7 +73,8 @@
   "execution_requirements": {
     "required_secret": "GEMINI_API_KEY",
     "docker_required": true,
-    "resolve_and_freeze_image_digest_before_first_model_call": true,
+    "build_and_freeze_local_environment_before_first_model_call": true,
+    "remote_image_resolution_forbidden": true,
     "sequential_runs_required": true,
     "resume_after_rate_limit": true,
     "maximum_total_model_cost_usd": 0.0,
@@ -80,7 +87,15 @@
   },
   "required_artifacts": [
     "source_manifest",
-    "environment_manifest",
+    "task-record.json",
+    "test-spec.json",
+    "Dockerfile.base",
+    "Dockerfile.env",
+    "Dockerfile.instance",
+    "setup-env.sh",
+    "setup-repo.sh",
+    "environment-lock.json",
+    "environment-lock.sha256",
     "baseline-run-1.traj",
     "baseline-run-2.traj",
     "candidate-run-1.traj",
@@ -113,5 +128,5 @@
     "human_success_label",
     "candidate_preference"
   ],
-  "claim_boundary": "This single external release comparison can test reproducible version-to-version evidence reconstruction and dependency preservation. Free-tier execution may be throttled or distributed across quota windows. It cannot establish universal accuracy, safety, compliance, or general superiority."
+  "claim_boundary": "This single external release comparison can test reproducible version-to-version evidence reconstruction and dependency preservation. The SWE-bench environment is constructed locally from a pinned harness revision and frozen task record because the presumed public task image does not exist. Free-tier execution may be throttled or distributed across quota windows. It cannot establish universal accuracy, safety, compliance, or general superiority."
 }

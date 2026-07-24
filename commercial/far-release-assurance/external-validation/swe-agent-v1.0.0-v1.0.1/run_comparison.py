@@ -4,9 +4,7 @@ import argparse
 import hashlib
 import json
 import os
-import re
 import shutil
-import subprocess
 from pathlib import Path
 
 from validate_manifest import validate
@@ -15,13 +13,6 @@ CASE_DIR = Path(__file__).parent
 MANIFEST_PATH = CASE_DIR / "manifest.json"
 CONFIG_PATH = CASE_DIR / "agent-config.yaml"
 OUTPUT_DIR = CASE_DIR / "execution-output"
-RESOLVED_DIGEST_PATH = CASE_DIR / "resolved-image-digest.txt"
-DIGEST_RE = re.compile(r"sha256:[0-9a-f]{64}")
-
-
-def run(command: list[str], *, cwd: Path | None = None) -> str:
-    completed = subprocess.run(command, cwd=cwd, check=True, text=True, capture_output=True)
-    return completed.stdout.strip()
 
 
 def load_manifest() -> dict:
@@ -30,80 +21,33 @@ def load_manifest() -> dict:
     return payload
 
 
-def tagged_reference(reference: str) -> str:
-    final = reference.rsplit("/", 1)[-1]
-    return reference if (":" in final or "@" in final) else f"{reference}:latest"
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def parse_digest(text: str) -> str:
-    matches = DIGEST_RE.findall(text)
-    unique = list(dict.fromkeys(matches))
-    if len(unique) != 1:
-        raise ValueError(f"Expected exactly one immutable digest, found {unique!r}")
-    return unique[0]
-
-
-def resolve_image_digest(reference: str) -> str:
-    if shutil.which("docker") is None:
-        raise SystemExit("Docker is required to resolve the immutable environment image")
-
-    tagged = tagged_reference(reference)
-    errors: list[str] = []
-
-    # Primary path: query the registry descriptor without downloading image layers.
-    try:
-        output = run(["docker", "buildx", "imagetools", "inspect", tagged])
-        return parse_digest(output)
-    except (subprocess.CalledProcessError, ValueError) as exc:
-        errors.append(f"buildx imagetools inspect: {exc}")
-
-    # Independent fallback: Docker manifest inspection also avoids layer downloads.
-    try:
-        output = run(["docker", "manifest", "inspect", "--verbose", tagged])
-        payload = json.loads(output)
-        descriptors = payload if isinstance(payload, list) else [payload]
-        candidates = []
-        for item in descriptors:
-            descriptor = item.get("Descriptor", {}) if isinstance(item, dict) else {}
-            digest = descriptor.get("digest")
-            if isinstance(digest, str):
-                candidates.append(digest)
-        return parse_digest("\n".join(candidates))
-    except (subprocess.CalledProcessError, json.JSONDecodeError, ValueError) as exc:
-        errors.append(f"docker manifest inspect: {exc}")
-
-    raise SystemExit(
-        "Could not resolve the registry digest without downloading image layers. "
-        + " | ".join(errors)
-    )
-
-
-def write_resolved_digest(digest: str) -> Path:
-    parse_digest(digest)
-    temporary = RESOLVED_DIGEST_PATH.with_suffix(".txt.tmp")
-    temporary.write_text(digest + "\n", encoding="utf-8")
-    temporary.replace(RESOLVED_DIGEST_PATH)
-    persisted = RESOLVED_DIGEST_PATH.read_text(encoding="utf-8").strip()
-    if persisted != digest:
-        raise SystemExit("Resolved image digest was not persisted exactly")
-    return RESOLVED_DIGEST_PATH
-
-
-def verify_frozen_environment(manifest: dict) -> str:
+def load_environment_lock(manifest: dict) -> dict:
     frozen = manifest["frozen_inputs"]
-    actual = resolve_image_digest(frozen["environment_image_reference"])
-    expected = frozen["environment_image_digest"]
-    if expected is None:
-        raise SystemExit(
-            f"Resolved {actual}. Commit it to manifest.json and change status to "
-            "execution_inputs_frozen. No model call was started."
-        )
-    if actual != expected:
-        raise SystemExit(f"Environment digest mismatch: expected {expected}, resolved {actual}")
-    return actual
+    if manifest["status"] != "execution_inputs_frozen":
+        raise SystemExit("Local SWE-bench environment is not frozen; run prepare-environment and commit its lock first")
+    lock_path = CASE_DIR / frozen["environment_lock_path"]
+    if not lock_path.is_file():
+        raise SystemExit(f"Missing frozen environment lock: {lock_path}")
+    actual_hash = sha256_file(lock_path)
+    if actual_hash != frozen["environment_lock_sha256"]:
+        raise SystemExit("Frozen environment lock hash mismatch")
+    lock = json.loads(lock_path.read_text(encoding="utf-8"))
+    if lock.get("local_image_id") != frozen["local_image_id"]:
+        raise SystemExit("Frozen local image ID does not match environment lock")
+    if lock.get("task_id") != frozen["task_id"]:
+        raise SystemExit("Frozen task ID does not match environment lock")
+    if lock.get("swebench_harness_commit") != frozen["swebench_harness_commit"]:
+        raise SystemExit("Frozen SWE-bench harness commit does not match environment lock")
+    if lock.get("outcome_data_accessed") is not False or lock.get("model_call_started") is not False:
+        raise SystemExit("Environment lock violates the pre-execution blinding boundary")
+    return lock
 
 
-def preflight(manifest: dict, *, require_secret: bool) -> None:
+def preflight(manifest: dict, *, require_secret: bool) -> dict:
     if shutil.which("git") is None:
         raise SystemExit("git is required")
     if shutil.which("docker") is None:
@@ -111,19 +55,22 @@ def preflight(manifest: dict, *, require_secret: bool) -> None:
     secret_name = manifest["execution_requirements"]["required_secret"]
     if require_secret and not os.environ.get(secret_name):
         raise SystemExit(f"{secret_name} is required; no run was started")
-    config_hash = hashlib.sha256(CONFIG_PATH.read_bytes()).hexdigest()
+    config_hash = sha256_file(CONFIG_PATH)
     if config_hash != manifest["frozen_inputs"]["agent_config_sha256"]:
         raise SystemExit("agent-config.yaml does not match the frozen hash")
+    return load_environment_lock(manifest)
 
 
-def write_execution_plan(manifest: dict, digest: str) -> Path:
+def write_execution_plan(manifest: dict, lock: dict) -> Path:
     OUTPUT_DIR.mkdir(exist_ok=True)
     plan = {
-        "schema": "far-external-execution-plan/0.2",
+        "schema": "far-external-execution-plan/0.3",
         "case_id": manifest["case_id"],
-        "manifest_sha256": hashlib.sha256(MANIFEST_PATH.read_bytes()).hexdigest(),
-        "agent_config_sha256": hashlib.sha256(CONFIG_PATH.read_bytes()).hexdigest(),
-        "environment_image": f"{manifest['frozen_inputs']['environment_image_reference']}@{digest}",
+        "manifest_sha256": sha256_file(MANIFEST_PATH),
+        "agent_config_sha256": sha256_file(CONFIG_PATH),
+        "environment_lock_sha256": manifest["frozen_inputs"]["environment_lock_sha256"],
+        "local_image_id": lock["local_image_id"],
+        "image_key": lock["image_key"],
         "task_id": manifest["frozen_inputs"]["task_id"],
         "model": manifest["frozen_inputs"]["model"],
         "free_tier": True,
@@ -149,23 +96,16 @@ def write_execution_plan(manifest: dict, digest: str) -> Path:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=("resolve-image", "preflight", "plan"))
+    parser.add_argument("mode", choices=("preflight", "plan"))
     args = parser.parse_args()
 
     manifest = load_manifest()
-    if args.mode == "resolve-image":
-        digest = resolve_image_digest(manifest["frozen_inputs"]["environment_image_reference"])
-        target = write_resolved_digest(digest)
-        print(f"Resolved and persisted {digest} to {target}")
-        return
-
-    preflight(manifest, require_secret=args.mode == "plan")
-    digest = verify_frozen_environment(manifest)
+    lock = preflight(manifest, require_secret=args.mode == "plan")
     if args.mode == "preflight":
-        print("Execution environment and frozen inputs verified. No model call was started.")
+        print("Frozen local SWE-bench environment and inputs verified. No model call was started.")
         return
 
-    target = write_execution_plan(manifest, digest)
+    target = write_execution_plan(manifest, lock)
     print(f"Wrote {target}. No benchmark outcome was accessed and no model call was started.")
 
 
