@@ -6,6 +6,13 @@ on:
       - '.github/workflows/far-swe-agent-execution.yml'
       - '.github/workflows/far-swebench-environment-smoke.yml'
       - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1/**'
+  push:
+    branches:
+      - 'agent/swebench-interface-final'
+    paths:
+      - '.github/workflows/far-swe-agent-execution.yml'
+      - '.github/workflows/far-swebench-environment-smoke.yml'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1/**'
 
 permissions:
   contents: read
