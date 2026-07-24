@@ -67,7 +67,11 @@ jobs:
       - name: Resolve immutable image digest
         if: inputs.stage == 'resolve-image'
         working-directory: ${{ env.CASE_DIR }}
-        run: python run_comparison.py resolve-image | tee resolved-image-digest.txt
+        run: |
+          python run_comparison.py resolve-image
+          test -s resolved-image-digest.txt
+          grep -Eq '^sha256:[0-9a-f]{64}$' resolved-image-digest.txt
+          cat resolved-image-digest.txt
 
       - name: Run frozen-input preflight
         if: inputs.stage == 'preflight'
