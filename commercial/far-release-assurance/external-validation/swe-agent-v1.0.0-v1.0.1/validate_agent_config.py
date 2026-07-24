@@ -9,6 +9,7 @@ from typing import Any
 import yaml
 from sweagent.run.common import BasicCLI
 from sweagent.run.run_batch import RunBatchConfig
+from sweagent.utils.config import _strip_abspath_from_dict
 
 CASE_DIR = Path(__file__).parent
 CONFIG_PATH = CASE_DIR / "agent-config.yaml"
@@ -27,13 +28,18 @@ def assert_subset(expected: Any, actual: Any, path: str = "root") -> None:
         return
     if isinstance(expected, list):
         if actual != expected:
-            raise AssertionError(f"{path}: list drift")
+            raise AssertionError(f"{path}: list drift: expected {expected!r}, got {actual!r}")
         return
     if actual != expected:
         raise AssertionError(f"{path}: expected {expected!r}, got {actual!r}")
 
 
 def validate(release_default: Path) -> None:
+    release_default = release_default.resolve()
+    release_root = release_default.parent.parent
+    if not release_default.is_file() or not (release_root / "pyproject.toml").is_file():
+        raise SystemExit(f"Invalid pinned SWE-agent checkout: {release_root}")
+
     task = json.loads(TASK_PATH.read_text(encoding="utf-8"))
     lock = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
     frozen = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
@@ -55,7 +61,7 @@ def validate(release_default: Path) -> None:
             encoding="utf-8",
         )
         args = [
-            "--config", str(release_default.resolve()),
+            "--config", str(release_default),
             "--config", str(CONFIG_PATH.resolve()),
             "--instances.type=file",
             f"--instances.path={instance_path}",
@@ -67,12 +73,17 @@ def validate(release_default: Path) -> None:
             "--redo_existing=False",
         ]
         parsed = BasicCLI(RunBatchConfig).get_config(args).model_dump(mode="json")
-    assert_subset(frozen["agent"], parsed["agent"], "agent")
-    assert parsed["num_workers"] == 1
-    assert parsed["redo_existing"] is False
-    assert parsed["instances"]["type"] == "file"
-    assert parsed["instances"]["path"] == str(instance_path)
-    print("Exact live SWE-agent configuration parsed without model access.")
+        normalized_agent = _strip_abspath_from_dict(parsed["agent"], root=release_root)
+        assert_subset(frozen["agent"], normalized_agent, "agent")
+        assert parsed["num_workers"] == 1
+        assert parsed["redo_existing"] is False
+        assert parsed["progress_bar"] is False
+        assert parsed["random_delay_multiplier"] == 0
+        assert parsed["raise_exceptions"] is True
+        assert parsed["instances"]["type"] == "file"
+        assert parsed["instances"]["path"] == str(instance_path)
+        assert parsed["output_dir"] == str(output_path)
+    print("Exact live SWE-agent configuration parsed without model access or semantic path drift.")
 
 
 def main() -> None:
