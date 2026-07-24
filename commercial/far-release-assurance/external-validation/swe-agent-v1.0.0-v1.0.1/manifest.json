@@ -1,13 +1,13 @@
 {
   "schema": "far-external-release-comparison/0.1",
   "case_id": "swe-agent-v1.0.0-v1.0.1",
-  "status": "frozen_not_executed",
+  "status": "protocol_frozen_execution_inputs_pending",
   "source": {
     "repository": "https://github.com/SWE-agent/SWE-agent",
     "baseline_ref": "v1.0.0",
     "baseline_commit": "8ed382c",
     "candidate_ref": "v1.0.1",
-    "candidate_commit": null,
+    "candidate_commit": "6aff215",
     "release_notes_source": "official_github_releases"
   },
   "comparison_design": {
