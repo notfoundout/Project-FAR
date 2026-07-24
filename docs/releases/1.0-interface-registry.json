@@ -1,0 +1,29 @@
+{
+  "schema_version": "far-release-interface-registry/0.1",
+  "release": "1.0.0",
+  "status": "candidate",
+  "framework_roles": ["FAR", "FARA", "FARE", "FARM", "FARO"],
+  "commands": [
+    "far-decision",
+    "far-external-trace",
+    "far-reasoning-regression"
+  ],
+  "schemas": [
+    "far-decision-package/0.1",
+    "far-evidence-bundle/0.1",
+    "far-external-trace/0.1",
+    "far-reasoning-regression/0.1"
+  ],
+  "adjudication_states": [
+    "justified",
+    "unsupported",
+    "underdetermined",
+    "unverifiable"
+  ],
+  "documentation": {
+    "interfaces": "docs/releases/1.0-canonical-interfaces.md",
+    "claim_boundary": "docs/releases/1.0-claim-boundary.md",
+    "release_gate": "docs/releases/1.0-release-gate.md"
+  },
+  "public_release_permitted": false
+}
