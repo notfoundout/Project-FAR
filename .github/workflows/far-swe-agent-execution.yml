@@ -53,7 +53,7 @@ jobs:
         working-directory: ${{ env.CASE_DIR }}
         run: |
           python validate_manifest.py
-          python -m unittest -v test_validate_manifest.py test_run_comparison.py
+          python -m unittest -v test_validate_manifest.py test_run_comparison.py test_prepare_environment_contract.py
 
       - name: Checkout pinned SWE-bench harness
         if: inputs.stage == 'prepare-environment'
@@ -69,7 +69,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --editable "$RUNNER_TEMP/swebench-harness"
 
-      - name: Verify SWE-bench import provenance and fixtures
+      - name: Verify SWE-bench import provenance, fixtures, and exact TestSpec interface
         if: inputs.stage == 'prepare-environment'
         env:
           SWEBENCH_HARNESS_DIR: ${{ runner.temp }}/swebench-harness
@@ -79,16 +79,25 @@ jobs:
           from pathlib import Path
           import swebench
           import swebench.harness.constants.rust as rust
+          from swebench.harness.test_spec.test_spec import TestSpec
 
           expected = Path(os.environ["SWEBENCH_HARNESS_DIR"]).resolve()
           imported = Path(swebench.__file__).resolve()
           rust_file = Path(rust.__file__).resolve()
           fixture = expected / "swebench/harness/constants/fixtures/tokio-rs__tokio-6724.Cargo.lock"
+          required = {
+              "base_dockerfile", "env_dockerfile", "instance_dockerfile",
+              "setup_env_script", "install_repo_script", "eval_script",
+              "base_image_key", "env_image_key", "instance_image_key", "platform",
+          }
           assert expected in imported.parents, (expected, imported)
           assert expected in rust_file.parents, (expected, rust_file)
           assert fixture.is_file() and fixture.stat().st_size > 0, fixture
+          assert required <= set(dir(TestSpec)), sorted(required - set(dir(TestSpec)))
+          assert "setup_repo_script" not in dir(TestSpec)
           print(f"verified editable SWE-bench source import: {imported}")
           print(f"verified required fixture: {fixture}")
+          print(f"verified exact TestSpec interface: {sorted(required)}")
           PY
 
       - name: Build and freeze local SWE-bench environment
