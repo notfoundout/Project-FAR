@@ -6,28 +6,12 @@ import os
 import subprocess
 from pathlib import Path
 
-import docker
-import swebench
-from datasets import load_dataset
-from swebench.harness.docker_build import build_instance_images
-from swebench.harness.test_spec.test_spec import make_test_spec
+from test_spec_contract import REQUIRED_TEST_SPEC_PROPERTIES, verify_test_spec_contract
 
 CASE_DIR = Path(__file__).parent
 OUTPUT_DIR = CASE_DIR / "execution-output" / "environment-freeze"
 MANIFEST_PATH = CASE_DIR / "manifest.json"
 REQUIRED_FIXTURE = Path("swebench/harness/constants/fixtures/tokio-rs__tokio-6724.Cargo.lock")
-REQUIRED_TEST_SPEC_PROPERTIES = {
-    "base_dockerfile",
-    "env_dockerfile",
-    "instance_dockerfile",
-    "setup_env_script",
-    "install_repo_script",
-    "eval_script",
-    "base_image_key",
-    "env_image_key",
-    "instance_image_key",
-    "platform",
-}
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -39,6 +23,8 @@ def canonical_json(value: object) -> bytes:
 
 
 def one_task(dataset_name: str, split: str, task_id: str) -> dict:
+    from datasets import load_dataset
+
     dataset = load_dataset(dataset_name, split=split)
     matches = [dict(row) for row in dataset if row.get("instance_id") == task_id]
     if len(matches) != 1:
@@ -47,6 +33,8 @@ def one_task(dataset_name: str, split: str, task_id: str) -> dict:
 
 
 def verify_harness_checkout(harness_dir: Path, expected_commit: str) -> str:
+    import swebench
+
     if not harness_dir.is_dir():
         raise SystemExit("SWEBENCH_HARNESS_DIR must point to the pinned SWE-bench checkout")
     actual_commit = subprocess.run(
@@ -68,17 +56,12 @@ def verify_harness_checkout(harness_dir: Path, expected_commit: str) -> str:
     return actual_commit
 
 
-def verify_test_spec_contract(spec: object) -> None:
-    missing = sorted(name for name in REQUIRED_TEST_SPEC_PROPERTIES if not hasattr(spec, name))
-    if missing:
-        raise SystemExit(f"Pinned SWE-bench TestSpec contract mismatch; missing: {missing}")
-    for name in REQUIRED_TEST_SPEC_PROPERTIES:
-        value = getattr(spec, name)
-        if isinstance(value, str) and not value.strip():
-            raise SystemExit(f"Pinned SWE-bench TestSpec property is empty: {name}")
-
-
 def main() -> None:
+    import docker
+    import swebench
+    from swebench.harness.docker_build import build_instance_images
+    from swebench.harness.test_spec.test_spec import make_test_spec
+
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     frozen = manifest["frozen_inputs"]
     task_id = frozen["task_id"]
@@ -91,8 +74,7 @@ def main() -> None:
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     record = one_task(dataset_name, dataset_split, task_id)
-    task_bytes = canonical_json(record)
-    (OUTPUT_DIR / "task-record.json").write_bytes(task_bytes)
+    (OUTPUT_DIR / "task-record.json").write_bytes(canonical_json(record))
 
     spec = make_test_spec(
         record,
@@ -111,12 +93,16 @@ def main() -> None:
         "test_spec_properties": sorted(REQUIRED_TEST_SPEC_PROPERTIES),
     }
     (OUTPUT_DIR / "test-spec.json").write_bytes(canonical_json(spec_summary))
-    (OUTPUT_DIR / "Dockerfile.base").write_text(spec.base_dockerfile, encoding="utf-8")
-    (OUTPUT_DIR / "Dockerfile.env").write_text(spec.env_dockerfile, encoding="utf-8")
-    (OUTPUT_DIR / "Dockerfile.instance").write_text(spec.instance_dockerfile, encoding="utf-8")
-    (OUTPUT_DIR / "setup-env.sh").write_text(spec.setup_env_script, encoding="utf-8")
-    (OUTPUT_DIR / "install-repo.sh").write_text(spec.install_repo_script, encoding="utf-8")
-    (OUTPUT_DIR / "eval.sh").write_text(spec.eval_script, encoding="utf-8")
+    exports = {
+        "Dockerfile.base": spec.base_dockerfile,
+        "Dockerfile.env": spec.env_dockerfile,
+        "Dockerfile.instance": spec.instance_dockerfile,
+        "setup-env.sh": spec.setup_env_script,
+        "install-repo.sh": spec.install_repo_script,
+        "eval.sh": spec.eval_script,
+    }
+    for name, content in exports.items():
+        (OUTPUT_DIR / name).write_text(content, encoding="utf-8")
 
     client = docker.from_env()
     successful, failed = build_instance_images(
