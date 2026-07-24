@@ -23,6 +23,10 @@ class TestFarDemo(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertEqual(first["status_transition"], ["justified", "unsupported"])
         self.assertEqual(first["status"], "unsupported")
+        self.assertEqual(
+            first["headline"],
+            "The updated agent refunded $420 without recorded supervisor approval.",
+        )
         self.assertTrue(
             any(item["type"] == "authorization_dependency_removed" for item in first["changes"])
         )
@@ -51,7 +55,79 @@ class TestFarDemo(unittest.TestCase):
             },
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["status"], "unsupported")
+        payload = response.json()
+        self.assertEqual(payload["status"], "unsupported")
+        self.assertEqual(
+            payload["headline"],
+            "The candidate decision is unsupported by the supplied dependency record.",
+        )
+        self.assertIn("customer-refund", payload["plain_summary"])
+        self.assertNotIn("$420", payload["headline"])
+        self.assertNotIn("supervisor", payload["headline"].lower())
+
+    def test_uploaded_non_refund_packages_never_receive_sample_facts(self) -> None:
+        baseline = {
+            "schema_version": "far-decision-package/0.1",
+            "decision_id": "access-baseline",
+            "decision_type": "database-access",
+            "policy_version": "access-policy-v2",
+            "decision_root": "grant-access",
+            "proposed_action": {"type": "grant_database_access", "resource": "analytics"},
+            "nodes": [
+                {
+                    "node_id": "request",
+                    "kind": "evidence",
+                    "statement": "An analyst requested analytics database access.",
+                    "attributes": {"valid": True},
+                },
+                {
+                    "node_id": "approval",
+                    "kind": "authorization",
+                    "statement": "The data owner approved access.",
+                    "attributes": {"valid": True},
+                },
+                {
+                    "node_id": "grant-access",
+                    "kind": "decision",
+                    "statement": "Grant analytics database access.",
+                    "attributes": {"valid": True},
+                },
+            ],
+            "dependencies": [
+                {"source_id": "request", "target_id": "grant-access", "relation": "supports"},
+                {"source_id": "approval", "target_id": "grant-access", "relation": "authorizes"},
+            ],
+            "authorization_requirements": ["approval"],
+            "unknowns": [],
+            "trace_completeness": 1.0,
+            "metadata": {},
+        }
+        candidate = {
+            **baseline,
+            "decision_id": "access-candidate",
+            "dependencies": [
+                {"source_id": "request", "target_id": "grant-access", "relation": "supports"},
+            ],
+            "unknowns": ["Whether approval was recorded elsewhere."],
+            "trace_completeness": 0.8,
+        }
+        response = self.client.post(
+            "/api/analyze",
+            files={
+                "baseline": ("baseline.json", json.dumps(baseline), "application/json"),
+                "candidate": ("candidate.json", json.dumps(candidate), "application/json"),
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        combined = " ".join(
+            [payload["headline"], payload["plain_summary"], payload["why_it_matters"]]
+        ).lower()
+        self.assertIn("database-access", combined)
+        self.assertIn("data owner approved access", combined)
+        self.assertNotIn("refund", combined)
+        self.assertNotIn("$420", combined)
+        self.assertNotIn("supervisor", combined)
 
     def test_rejects_non_far_json(self) -> None:
         response = self.client.post(
