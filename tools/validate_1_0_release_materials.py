@@ -52,6 +52,8 @@ def main() -> int:
     readiness = json.loads(READINESS.read_text(encoding="utf-8"))
     if readiness.get("previous_public_version") != "0.4.0":
         raise SystemExit("release baseline must be 0.4.0")
+    if "0.4.0" not in readiness.get("baseline_correction", ""):
+        raise SystemExit("readiness metadata must preserve the baseline correction")
 
     notes = NOTES.read_text(encoding="utf-8")
     missing_headings = sorted(REQUIRED_NOTE_HEADINGS - set(notes.splitlines()))
@@ -59,8 +61,10 @@ def main() -> int:
         raise SystemExit(f"release notes missing headings: {missing_headings}")
     if "Status: unreleased" not in notes:
         raise SystemExit("draft release notes must remain explicitly unreleased")
-    if "0.4.0" not in notes or "0.3.1" in notes:
+    if "from 0.4.0" not in notes:
         raise SystemExit("release notes must cover 0.4.0 to 1.0.0")
+    if "the public baseline for these cumulative notes is `0.4.0`, not `0.3.1`" not in notes:
+        raise SystemExit("release notes must record the corrected baseline")
     if "unrestricted universality" not in notes:
         raise SystemExit("release notes must preserve the universality nonclaim")
 
