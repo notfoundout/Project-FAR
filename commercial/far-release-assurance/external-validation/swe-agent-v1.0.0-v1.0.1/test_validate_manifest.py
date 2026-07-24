@@ -48,10 +48,17 @@ class ManifestValidationTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             validate(changed)
 
-    def test_frozen_status_requires_valid_sha256_digest(self) -> None:
+    def test_frozen_status_requires_lock_hash_and_image_id(self) -> None:
         changed = copy.deepcopy(self.payload)
         changed["status"] = "execution_inputs_frozen"
-        changed["frozen_inputs"]["environment_image_digest"] = "sha256:bad"
+        changed["frozen_inputs"]["environment_lock_sha256"] = "bad"
+        changed["frozen_inputs"]["local_image_id"] = "sha256:bad"
+        with self.assertRaises(AssertionError):
+            validate(changed)
+
+    def test_rejects_remote_image_assumption(self) -> None:
+        changed = copy.deepcopy(self.payload)
+        changed["frozen_inputs"]["environment_image_reference"] = "swebench/nonexistent:latest"
         with self.assertRaises(AssertionError):
             validate(changed)
 
