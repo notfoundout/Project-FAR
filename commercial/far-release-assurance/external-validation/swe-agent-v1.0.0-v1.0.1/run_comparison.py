@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -15,6 +16,7 @@ MANIFEST_PATH = CASE_DIR / "manifest.json"
 CONFIG_PATH = CASE_DIR / "agent-config.yaml"
 OUTPUT_DIR = CASE_DIR / "execution-output"
 RESOLVED_DIGEST_PATH = CASE_DIR / "resolved-image-digest.txt"
+DIGEST_RE = re.compile(r"sha256:[0-9a-f]{64}")
 
 
 def run(command: list[str], *, cwd: Path | None = None) -> str:
@@ -28,20 +30,56 @@ def load_manifest() -> dict:
     return payload
 
 
+def tagged_reference(reference: str) -> str:
+    final = reference.rsplit("/", 1)[-1]
+    return reference if (":" in final or "@" in final) else f"{reference}:latest"
+
+
+def parse_digest(text: str) -> str:
+    matches = DIGEST_RE.findall(text)
+    unique = list(dict.fromkeys(matches))
+    if len(unique) != 1:
+        raise ValueError(f"Expected exactly one immutable digest, found {unique!r}")
+    return unique[0]
+
+
 def resolve_image_digest(reference: str) -> str:
     if shutil.which("docker") is None:
         raise SystemExit("Docker is required to resolve the immutable environment image")
-    run(["docker", "pull", reference])
-    value = run(["docker", "image", "inspect", reference, "--format", "{{index .RepoDigests 0}}"])
-    if "@sha256:" not in value:
-        raise SystemExit("Docker did not return an immutable image digest")
-    digest = value.split("@", 1)[1]
-    if not digest.startswith("sha256:") or len(digest) != 71:
-        raise SystemExit(f"Docker returned a malformed image digest: {digest!r}")
-    return digest
+
+    tagged = tagged_reference(reference)
+    errors: list[str] = []
+
+    # Primary path: query the registry descriptor without downloading image layers.
+    try:
+        output = run(["docker", "buildx", "imagetools", "inspect", tagged])
+        return parse_digest(output)
+    except (subprocess.CalledProcessError, ValueError) as exc:
+        errors.append(f"buildx imagetools inspect: {exc}")
+
+    # Independent fallback: Docker manifest inspection also avoids layer downloads.
+    try:
+        output = run(["docker", "manifest", "inspect", "--verbose", tagged])
+        payload = json.loads(output)
+        descriptors = payload if isinstance(payload, list) else [payload]
+        candidates = []
+        for item in descriptors:
+            descriptor = item.get("Descriptor", {}) if isinstance(item, dict) else {}
+            digest = descriptor.get("digest")
+            if isinstance(digest, str):
+                candidates.append(digest)
+        return parse_digest("\n".join(candidates))
+    except (subprocess.CalledProcessError, json.JSONDecodeError, ValueError) as exc:
+        errors.append(f"docker manifest inspect: {exc}")
+
+    raise SystemExit(
+        "Could not resolve the registry digest without downloading image layers. "
+        + " | ".join(errors)
+    )
 
 
 def write_resolved_digest(digest: str) -> Path:
+    parse_digest(digest)
     temporary = RESOLVED_DIGEST_PATH.with_suffix(".txt.tmp")
     temporary.write_text(digest + "\n", encoding="utf-8")
     temporary.replace(RESOLVED_DIGEST_PATH)
