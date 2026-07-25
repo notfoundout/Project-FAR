@@ -16,6 +16,14 @@ class ValidatedExecutionSmokeContractTests(unittest.TestCase):
         self.assertIn("provider_quota_exhaustion", text)
         self.assertNotIn("import execute_controller as controller", text)
 
+    def test_rehearsal_checks_only_the_failed_run_trajectory(self) -> None:
+        text = (CASE_DIR / "rehearse_execute_boundary.py").read_text(encoding="utf-8")
+        self.assertIn(
+            'failed_trajectory = base.TRAJECTORY_DIR / run["trajectory_artifact"]',
+            text,
+        )
+        self.assertNotIn('base.TRAJECTORY_DIR.glob("*.traj")', text)
+
 
 if __name__ == "__main__":
     unittest.main()
