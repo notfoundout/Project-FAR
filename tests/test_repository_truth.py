@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
-import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -56,19 +55,23 @@ class RepositoryTruthTests(unittest.TestCase):
                 truth.main()
         self.assertIn("historical W3.5 dashboard", str(caught.exception))
 
-    def test_stale_release_pin_fails_closed(self) -> None:
+    def test_release_badge_tag_pin_fails_closed(self) -> None:
         original = truth.read_text
 
         def mutated(path: str) -> str:
             text = original(path)
             if path == "README.md":
-                return text + "\nhttps://github.com/notfoundout/Project-FAR/releases/tag/v0.4.0\n"
+                return text.replace(
+                    "](https://github.com/notfoundout/Project-FAR/releases)\n",
+                    "](https://github.com/notfoundout/Project-FAR/releases/tag/v0.4.0)\n",
+                    1,
+                )
             return text
 
         with mock.patch.object(truth, "read_text", side_effect=mutated):
             with self.assertRaises(SystemExit) as caught:
                 truth.main()
-        self.assertIn("pins stale v0.4.0", str(caught.exception))
+        self.assertIn("release badge pins", str(caught.exception))
 
 
 if __name__ == "__main__":
