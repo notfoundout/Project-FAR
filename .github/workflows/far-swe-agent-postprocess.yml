@@ -1,0 +1,140 @@
+name: FAR SWE-agent Evidence Freeze and Reveal
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/far-swe-agent-postprocess.yml'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1/evidence_pipeline.py'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1/test_evidence_pipeline.py'
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: Post-execution stage
+        required: true
+        type: choice
+        options:
+          - compile-primary
+          - freeze-primary
+          - verify-freeze
+          - reveal-outcomes
+      confirmation:
+        description: Exact confirmation phrase required for freeze and reveal
+        required: false
+        type: string
+      outcomes_json:
+        description: Exact JSON object keyed by the four frozen run IDs; reveal stage only
+        required: false
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+env:
+  CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1
+
+concurrency:
+  group: far-swe-agent-postprocess
+  cancel-in-progress: false
+
+jobs:
+  tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run evidence-pipeline tests
+        working-directory: ${{ env.CASE_DIR }}
+        run: python -m unittest -v test_evidence_pipeline.py
+
+  postprocess:
+    if: github.event_name == 'workflow_dispatch'
+    needs: tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: far-swe-agent-execution
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Restore latest non-expired FAR execution or postprocess artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p "$CASE_DIR/execution-output"
+          ARTIFACT_ID="$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?per_page=100" --jq '[.artifacts[] | select(.expired == false and ((.name | startswith("far-swe-agent-execute-")) or (.name | startswith("far-swe-agent-postprocess-"))))] | sort_by(.created_at) | reverse | .[0].id // empty')"
+          test -n "$ARTIFACT_ID" || {
+            echo "No execution/postprocess artifact exists; four completed runs are required." >&2
+            exit 1
+          }
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > "$RUNNER_TEMP/far-state.zip"
+          unzip -o "$RUNNER_TEMP/far-state.zip" -d "$CASE_DIR/execution-output"
+
+      - name: Enforce freeze confirmation
+        if: inputs.stage == 'freeze-primary'
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          test "$CONFIRMATION" = "FREEZE-FAR-PRIMARY-BEFORE-OUTCOMES" || {
+            echo "freeze-primary requires FREEZE-FAR-PRIMARY-BEFORE-OUTCOMES exactly." >&2
+            exit 1
+          }
+
+      - name: Enforce reveal confirmation
+        if: inputs.stage == 'reveal-outcomes'
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          test "$CONFIRMATION" = "REVEAL-FAR-OUTCOMES-AFTER-FREEZE" || {
+            echo "reveal-outcomes requires REVEAL-FAR-OUTCOMES-AFTER-FREEZE exactly." >&2
+            exit 1
+          }
+
+      - name: Compile outcome-blind primary evidence
+        if: inputs.stage == 'compile-primary'
+        working-directory: ${{ env.CASE_DIR }}
+        run: python evidence_pipeline.py compile
+
+      - name: Compile and cryptographically freeze primary evidence
+        if: inputs.stage == 'freeze-primary'
+        working-directory: ${{ env.CASE_DIR }}
+        run: python evidence_pipeline.py freeze
+
+      - name: Independently verify frozen primary artifacts
+        if: inputs.stage == 'verify-freeze'
+        working-directory: ${{ env.CASE_DIR }}
+        run: python evidence_pipeline.py verify-freeze
+
+      - name: Materialize explicit post-freeze outcome input
+        if: inputs.stage == 'reveal-outcomes'
+        env:
+          OUTCOMES_JSON: ${{ inputs.outcomes_json }}
+        run: |
+          test -n "$OUTCOMES_JSON" || {
+            echo "reveal-outcomes requires a non-empty outcomes_json object." >&2
+            exit 1
+          }
+          printf '%s\n' "$OUTCOMES_JSON" > "$RUNNER_TEMP/far-outcomes.json"
+          python -m json.tool "$RUNNER_TEMP/far-outcomes.json" >/dev/null
+
+      - name: Verify freeze before outcome reveal and attach outcomes
+        if: inputs.stage == 'reveal-outcomes'
+        working-directory: ${{ env.CASE_DIR }}
+        run: python evidence_pipeline.py reveal --outcomes "$RUNNER_TEMP/far-outcomes.json"
+
+      - name: Upload non-secret postprocess artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-swe-agent-postprocess-${{ inputs.stage }}-${{ github.run_id }}
+          path: ${{ env.CASE_DIR }}/execution-output/
+          if-no-files-found: error
+          retention-days: 90
