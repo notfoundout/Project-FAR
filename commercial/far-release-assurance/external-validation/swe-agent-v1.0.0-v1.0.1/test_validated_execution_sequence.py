@@ -85,6 +85,12 @@ class RecoverySequenceTests(unittest.TestCase):
             first = running("v1.0.0-r1")
             second = running("v1.0.0-r2")
             second["recovery"] = "recoveries/stale.json"
+            prior_recovery = (
+                base.OUTPUT_DIR
+                / "recoveries"
+                / "v1.0.0-r1-attempt-001-running-to-complete.json"
+            )
+            write_json(prior_recovery, {"preserved": True})
             records = {}
             for run in (first, second):
                 record = {
@@ -110,6 +116,8 @@ class RecoverySequenceTests(unittest.TestCase):
                 second["outcome_category"], "protocol_sequence_violation"
             )
             self.assertEqual(len(state["recoveries"]), 1)
+            self.assertTrue(first["recovery"].endswith("-recovery-01.json"))
+            self.assertEqual(read_json(prior_recovery), {"preserved": True})
             self.assertNotIn("recovery", second)
 
     def test_complete_persist_saves_all_completion_metadata_atomically(self) -> None:

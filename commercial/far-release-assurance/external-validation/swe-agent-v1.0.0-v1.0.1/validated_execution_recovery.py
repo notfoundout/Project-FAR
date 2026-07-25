@@ -15,6 +15,21 @@ def _read_record(base: Any, path: Path) -> dict[str, Any] | None:
     return value if isinstance(value, dict) else None
 
 
+def _next_recovery_path(base: Any, run: dict[str, Any]) -> Path:
+    recovery_dir = base.OUTPUT_DIR / "recoveries"
+    attempt = int(run.get("attempts", 0))
+    stem = f"{run['run_id']}-attempt-{attempt:03d}-running-to-complete"
+    candidate = recovery_dir / f"{stem}.json"
+    if not candidate.exists():
+        return candidate
+    index = 1
+    while True:
+        candidate = recovery_dir / f"{stem}-recovery-{index:02d}.json"
+        if not candidate.exists():
+            return candidate
+        index += 1
+
+
 def _recover_complete(
     core: Any,
     state: dict[str, Any],
@@ -33,8 +48,7 @@ def _recover_complete(
         raise SystemExit(
             f"Validated completed record lacks trajectory_sha256: {run['run_id']}"
         )
-    recovery_dir = base.OUTPUT_DIR / "recoveries"
-    recovery_path = recovery_dir / f"{run['run_id']}-running-to-complete.json"
+    recovery_path = _next_recovery_path(base, run)
     recovery = {
         "schema": "far-swe-agent-state-recovery/1.0",
         "recovered_at": base.utc_now(),
