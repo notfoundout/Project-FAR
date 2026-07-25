@@ -71,7 +71,7 @@ def main() -> int:
         fail("historical W3.5 dashboard is still presented as the current project phase")
 
     badge_pattern = re.compile(
-        r'^\[!\[Releases\]\([^\n]+\)\]\(([^\n]+)\)$', re.MULTILINE
+        r'^\[!\[Release[^\]]*\]\([^\n]+\)\]\(([^\n]+)\)$', re.MULTILINE
     )
     badge = badge_pattern.search(readme)
     if not badge:
