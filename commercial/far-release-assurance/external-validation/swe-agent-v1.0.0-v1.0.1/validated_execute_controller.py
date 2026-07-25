@@ -3,18 +3,18 @@ from __future__ import annotations
 import importlib
 import sys
 
-_name = "validated_execute_controller_core"
-if _name in sys.modules:
-    _legacy = importlib.reload(sys.modules[_name])
+_core_name = "validated_execute_controller_core"
+if _core_name in sys.modules:
+    _core = importlib.reload(sys.modules[_core_name])
 else:
-    _legacy = importlib.import_module(_name)
+    _core = importlib.import_module(_core_name)
 
 from validated_execution_hardening import install
 
-install(_legacy)
-for _key in dir(_legacy):
+install(_core)
+for _key in dir(_core):
     if not _key.startswith("__"):
-        globals()[_key] = getattr(_legacy, _key)
+        globals()[_key] = getattr(_core, _key)
 
 if __name__ == "__main__":
-    _legacy.main()
+    _core.main()
