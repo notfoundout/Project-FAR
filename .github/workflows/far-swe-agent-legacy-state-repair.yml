@@ -1,0 +1,111 @@
+name: FAR SWE-agent Legacy State Repair
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/far-swe-agent-legacy-state-repair.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+env:
+  CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1
+  LEGACY_ARTIFACT_ID: '8622982313'
+  LEGACY_ARTIFACT_DIGEST: e337ff441978e6ffbdc5987c1f6e3913fe5017d71ebb18d085a789343e1038dd
+  LEGACY_RUN_RECORD_SHA256: a19fdaa858414705aa50095e1de2b2897203a46599271158d977149bfd3bedfb
+
+jobs:
+  repair-legacy-state:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout merged repair controller
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install exact parser dependency
+        run: python -m pip install PyYAML==6.0.2
+
+      - name: Download exact preserved execution artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$LEGACY_ARTIFACT_ID/zip" > "$RUNNER_TEMP/legacy-execution.zip"
+          echo "$LEGACY_ARTIFACT_DIGEST  $RUNNER_TEMP/legacy-execution.zip" | sha256sum --check --status
+          mkdir -p "$CASE_DIR/execution-output"
+          unzip -o "$RUNNER_TEMP/legacy-execution.zip" -d "$CASE_DIR/execution-output"
+
+      - name: Verify exact legacy misclassification
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          state = json.loads(Path('execution-output/execution-state.json').read_text())
+          matches = [run for run in state['runs'] if run['run_id'] == 'v1.0.0-r1']
+          assert len(matches) == 1, matches
+          run = matches[0]
+          assert run['state'] == 'complete', run
+          assert run['attempts'] == 1, run
+          assert not run.get('outcome_category'), run
+
+          record = Path('execution-output/runs/v1.0.0-r1/run-record.json')
+          digest = hashlib.sha256(record.read_bytes()).hexdigest()
+          assert digest == os.environ['LEGACY_RUN_RECORD_SHA256'], digest
+          PY
+
+      - name: Repair v1.0.0-r1 from preserved internal evidence
+        working-directory: ${{ env.CASE_DIR }}
+        run: python validated_execute_controller.py repair-run --run-id v1.0.0-r1
+
+      - name: Verify corrected state and immutable evidence
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          state_path = Path('execution-output/execution-state.json')
+          state = json.loads(state_path.read_text())
+          run = next(run for run in state['runs'] if run['run_id'] == 'v1.0.0-r1')
+          assert run['state'] == 'failed_retryable', run
+          assert run['attempts'] == 1, run
+          assert run['outcome_category'] == 'provider_quota_exhaustion', run
+          assert run['corrected_from'] == 'complete', run
+          corrections = [item for item in state.get('corrections', []) if item['run_id'] == 'v1.0.0-r1']
+          assert len(corrections) == 1, corrections
+          assert corrections[0]['before_run_record_sha256'] == os.environ['LEGACY_RUN_RECORD_SHA256']
+
+          record = Path('execution-output/runs/v1.0.0-r1/run-record.json')
+          assert hashlib.sha256(record.read_bytes()).hexdigest() == os.environ['LEGACY_RUN_RECORD_SHA256']
+          print(json.dumps({
+              'run_id': run['run_id'],
+              'state': run['state'],
+              'attempts': run['attempts'],
+              'outcome_category': run['outcome_category'],
+              'execution_state_sha256': hashlib.sha256(state_path.read_bytes()).hexdigest(),
+          }, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload corrected execution state for the normal rerun workflow
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-swe-agent-execute-${{ github.run_id }}
+          path: ${{ env.CASE_DIR }}/execution-output/
+          if-no-files-found: error
+          retention-days: 30
