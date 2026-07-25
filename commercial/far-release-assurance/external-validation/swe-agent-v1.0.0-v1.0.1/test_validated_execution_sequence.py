@@ -84,6 +84,7 @@ class RecoverySequenceTests(unittest.TestCase):
 
             first = running("v1.0.0-r1")
             second = running("v1.0.0-r2")
+            second["recovery"] = "recoveries/stale.json"
             records = {}
             for run in (first, second):
                 record = {
@@ -109,6 +110,24 @@ class RecoverySequenceTests(unittest.TestCase):
                 second["outcome_category"], "protocol_sequence_violation"
             )
             self.assertEqual(len(state["recoveries"]), 1)
+            self.assertNotIn("recovery", second)
+
+    def test_persisted_new_attempt_clears_stale_recovery_pointer(self) -> None:
+        core = types.SimpleNamespace()
+        core.reconcile_completed_runs = lambda state, task_id: False
+        core._apply_state_correction = lambda state, run, result, record: None
+
+        def persist(state, run, record, result):
+            run["persisted"] = True
+
+        core._persist_outcome = persist
+        install(core)
+        run = {"recovery": "recoveries/stale.json"}
+
+        core._persist_outcome({}, run, {}, success())
+
+        self.assertNotIn("recovery", run)
+        self.assertTrue(run["persisted"])
 
 
 if __name__ == "__main__":

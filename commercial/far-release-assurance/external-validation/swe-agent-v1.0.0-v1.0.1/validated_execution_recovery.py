@@ -61,6 +61,21 @@ def _recover_complete(
 
 def install(core: Any) -> Any:
     original_reconcile = core.reconcile_completed_runs
+    original_apply_correction = core._apply_state_correction
+    original_persist_outcome = getattr(core, "_persist_outcome", None)
+
+    def apply_state_correction(state, run, outcome, record):
+        run.pop("recovery", None)
+        return original_apply_correction(state, run, outcome, record)
+
+    core._apply_state_correction = apply_state_correction
+
+    if original_persist_outcome is not None:
+        def persist_outcome(state, run, record, outcome):
+            run.pop("recovery", None)
+            return original_persist_outcome(state, run, record, outcome)
+
+        core._persist_outcome = persist_outcome
 
     def reconcile(state: dict[str, Any], task_id: str) -> bool:
         changed = original_reconcile(state, task_id)
