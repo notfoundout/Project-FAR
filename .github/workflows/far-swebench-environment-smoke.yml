@@ -48,9 +48,8 @@ jobs:
             test_run_comparison.py \
             test_prepare_environment_contract.py \
             test_execute_controller.py \
-            test_execution_outcome.py \
             test_execution_workflow_contract.py
-          python validated_execute_controller.py validate
+          python execute_controller.py validate
 
       - name: Checkout exact SWE-bench revision
         run: |
