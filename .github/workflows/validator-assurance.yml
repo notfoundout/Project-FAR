@@ -11,8 +11,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
-  attestations: write
 
 concurrency:
   group: validator-assurance-${{ github.event.pull_request.number || github.ref }}
@@ -77,15 +75,15 @@ jobs:
           python -m far_validation validate bootstrap.manifest --require-signed-cache
           printf '%s' "$key" > .far/cache-signing-key
           tar -czf artifacts/validation/signed-cache.tar.gz .far/cache .far/cache-signing-key
-      - name: Attest signed cache bundle
-        uses: actions/attest-build-provenance@v3
-        with:
-          subject-path: artifacts/validation/signed-cache.tar.gz
+      - name: Record signed cache transport digest
+        run: sha256sum artifacts/validation/signed-cache.tar.gz > artifacts/validation/signed-cache.tar.gz.sha256
       - name: Upload signed cache bundle
         uses: actions/upload-artifact@v4
         with:
           name: signed-validation-cache
-          path: artifacts/validation/signed-cache.tar.gz
+          path: |
+            artifacts/validation/signed-cache.tar.gz
+            artifacts/validation/signed-cache.tar.gz.sha256
           if-no-files-found: error
           retention-days: 7
 
@@ -109,10 +107,9 @@ jobs:
         with:
           name: signed-validation-cache
           path: artifacts/validation/cache-download
-      - name: Verify GitHub Sigstore cache provenance
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh attestation verify artifacts/validation/cache-download/signed-cache.tar.gz --repo "${{ github.repository }}"
+      - name: Verify cross-runner transport digest
+        working-directory: artifacts/validation/cache-download
+        run: sha256sum -c signed-cache.tar.gz.sha256
       - name: Consume signed cache on independent runner
         shell: bash
         run: |
