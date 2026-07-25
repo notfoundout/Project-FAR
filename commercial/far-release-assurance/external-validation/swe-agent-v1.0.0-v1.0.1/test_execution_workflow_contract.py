@@ -44,6 +44,16 @@ class ExecutionWorkflowContractTests(unittest.TestCase):
         self.assertLess(validation, execution)
         self.assertIn("test_execution_workflow_contract.py", text[validation:execution])
 
+    def test_controller_parser_dependency_precedes_controller_imports(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        install = text.index("- name: Install controller parser dependency")
+        validation = text.index("- name: Validate manifest and regression tests")
+        status = text.index("- name: Resolve next frozen SWE-agent release")
+        self.assertLess(install, validation)
+        self.assertLess(install, status)
+        install_block = text[install:validation]
+        self.assertIn("python -m pip install PyYAML==6.0.2", install_block)
+
 
 class PinnedCliContractTests(unittest.TestCase):
     def setUp(self) -> None:
