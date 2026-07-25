@@ -47,12 +47,25 @@ class ExecutionOutcomeTests(unittest.TestCase):
         self.assertTrue(outcome.retryable)
         self.assertFalse(outcome.patch_present)
 
+    def test_quota_without_status_file_remains_retryable(self) -> None:
+        outcome = self.classify(rc=1, stderr="HTTP 429 RESOURCE_EXHAUSTED request-per-day")
+        self.assertEqual(outcome.category, "provider_quota_exhaustion")
+        self.assertEqual(outcome.state, "failed_retryable")
+
     def test_outer_zero_internal_exit_error_without_provider_signal_is_terminal(self) -> None:
         self.write_status("exit_error")
         self.write_prediction("")
         outcome = self.classify()
         self.assertEqual(outcome.category, "terminal_agent_error")
         self.assertEqual(outcome.state, "failed_terminal")
+
+    def test_nonzero_outer_with_internal_agent_error_is_terminal(self) -> None:
+        self.write_status("exit_error")
+        self.write_prediction("")
+        outcome = self.classify(rc=2, stderr="deterministic agent failure")
+        self.assertEqual(outcome.category, "terminal_agent_error")
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertFalse(outcome.retryable)
 
     def test_success_requires_non_empty_patch(self) -> None:
         self.write_status("submitted")
@@ -65,6 +78,13 @@ class ExecutionOutcomeTests(unittest.TestCase):
         self.write_status("submitted")
         self.write_prediction("")
         self.assertEqual(self.classify().state, "failed_terminal")
+
+    def test_nonzero_outer_cannot_complete_even_with_success_status_and_patch(self) -> None:
+        self.write_status("submitted")
+        self.write_prediction("non-empty patch")
+        outcome = self.classify(rc=3)
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertEqual(outcome.category, "terminal_agent_error")
 
     def test_no_change_requires_explicit_protocol_permission(self) -> None:
         self.write_status("submitted")
