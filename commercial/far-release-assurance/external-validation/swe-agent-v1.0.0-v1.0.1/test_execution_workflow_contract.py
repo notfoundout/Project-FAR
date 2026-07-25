@@ -110,8 +110,6 @@ class PinnedCliContractTests(unittest.TestCase):
     @patch("execute_controller.subprocess.run")
     def test_exact_command_is_parse_validated_without_model_execution(self, run, _which) -> None:
         run.return_value.returncode = 0
-        # JSON is a valid YAML subset, so this exercises the controller's parser
-        # without adding PyYAML as a dependency to the dependency-free test job.
         run.return_value.stdout = json.dumps(self.parsed_config())
         run.return_value.stderr = ""
         parsed = controller.verify_cli_contract(self.command, self.agent_repo, self.instance, self.output)
