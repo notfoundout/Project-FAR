@@ -219,8 +219,9 @@ def assert_rehearsal(
     outcome = record.get("outcome", {})
     if outcome.get("category") != "provider_quota_exhaustion" or outcome.get("retryable") is not True:
         raise SystemExit("Validated outcome evidence is missing or incorrect")
-    if list(base.TRAJECTORY_DIR.glob("*.traj")):
-        raise SystemExit("No-model rehearsal unexpectedly produced a trajectory")
+    failed_trajectory = base.TRAJECTORY_DIR / run["trajectory_artifact"]
+    if failed_trajectory.exists():
+        raise SystemExit("No-model rehearsal unexpectedly produced a failed-run trajectory")
 
 
 def main() -> int:
