@@ -22,20 +22,23 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - name: Capture signed-cache producer output
+      - name: Capture workflow digest and signed-cache producer output
         run: |
+          sha256sum .github/workflows/validator-assurance.yml | awk '{print $1}' > "$RUNNER_TEMP/validator-assurance.sha256"
           key="$(openssl rand -hex 32)"
           export FAR_VALIDATION_CACHE_SIGNING_KEY="$key"
           set +e
           python -m far_validation validate bootstrap.manifest --require-signed-cache > "$RUNNER_TEMP/signed-cache.log" 2>&1
           RC=$?
           echo "$RC" > "$RUNNER_TEMP/signed-cache.exit-code"
+          cat "$RUNNER_TEMP/validator-assurance.sha256"
           cat "$RUNNER_TEMP/signed-cache.log"
           exit 0
       - uses: actions/upload-artifact@v4
         with:
           name: pr-validator-diagnostic-${{ github.run_id }}
           path: |
+            ${{ runner.temp }}/validator-assurance.sha256
             ${{ runner.temp }}/signed-cache.log
             ${{ runner.temp }}/signed-cache.exit-code
           retention-days: 3
