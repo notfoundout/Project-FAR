@@ -64,6 +64,46 @@ class PredictionFileScanTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "missing model_patch"):
             read_prediction(self.output, TASK_ID)
 
+    def test_malformed_keyed_noncanonical_target_prediction_is_rejected(self) -> None:
+        self.write(f"{TASK_ID}.pred", TASK_ID, "target-patch")
+        (self.output / "other.pred").write_text(
+            json.dumps({TASK_ID: {"unexpected": "value"}}),
+            encoding="utf-8",
+        )
+
+        with self.assertRaisesRegex(ValueError, "missing model_patch"):
+            read_prediction(self.output, TASK_ID)
+
+    def test_malformed_keyed_target_prediction_in_aggregate_is_rejected(self) -> None:
+        (self.output / "preds.json").write_text(
+            json.dumps({"predictions": {TASK_ID: {"unexpected": "value"}}}),
+            encoding="utf-8",
+        )
+
+        with self.assertRaisesRegex(ValueError, "missing model_patch"):
+            read_prediction(self.output, TASK_ID)
+
+    def test_unrelated_keyed_prediction_is_ignored(self) -> None:
+        (self.output / "other.pred").write_text(
+            json.dumps({"other-task": {"unexpected": "value"}}),
+            encoding="utf-8",
+        )
+
+        self.assertEqual(read_prediction(self.output, TASK_ID), (None, False, ""))
+
+    def test_valid_keyed_target_prediction_is_accepted(self) -> None:
+        path = self.output / "other.pred"
+        path.write_text(
+            json.dumps({TASK_ID: {"model_patch": "target-patch"}}),
+            encoding="utf-8",
+        )
+
+        patch, no_change, evidence = read_prediction(self.output, TASK_ID)
+
+        self.assertEqual(patch, "target-patch")
+        self.assertFalse(no_change)
+        self.assertEqual(evidence, str(path))
+
 
 if __name__ == "__main__":
     unittest.main()
