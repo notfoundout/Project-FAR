@@ -59,6 +59,10 @@ class ExecutionOutcome:
         return asdict(self)
 
 
+class MissingPredictionEvidence(ValueError):
+    """No prediction artifact was produced for an interrupted provider attempt."""
+
+
 class _UniqueKeyLoader(yaml.SafeLoader):
     """Safe YAML loader that rejects mappings whose meaning is ambiguous."""
 
@@ -198,8 +202,9 @@ def _read_json(path: Path) -> Any:
 
 
 def read_prediction(swe_output: Path, task_id: str) -> tuple[str | None, bool, str]:
+    all_prediction_files = sorted(swe_output.rglob("*.pred"))
     exact_files = sorted(
-        path for path in swe_output.rglob("*.pred") if path.stem == task_id
+        path for path in all_prediction_files if path.stem == task_id
     )
     aggregate_files = sorted(swe_output.rglob("preds.json"))
     matches: list[tuple[str | None, bool, str]] = []
@@ -220,7 +225,9 @@ def read_prediction(swe_output: Path, task_id: str) -> tuple[str | None, bool, s
             matches.append((patch, no_change, str(path)))
 
     if not matches:
-        raise ValueError("missing prediction evidence for target instance")
+        if all_prediction_files or aggregate_files:
+            raise ValueError("prediction evidence does not identify target instance")
+        raise MissingPredictionEvidence("missing prediction evidence for target instance")
     if len(matches) != 1:
         signatures = {(patch, no_change) for patch, no_change, _ in matches}
         kind = "conflicting" if len(signatures) != 1 else "duplicate"
@@ -298,7 +305,7 @@ def classify_execution(
         "status_files": [str(path) for path in status_files],
     }
 
-    if len(status_files) != 1 or unsafe_status_files:
+    if not status_files:
         provider = _provider_outcome(
             quota_detected=quota_detected,
             retryable_provider_detected=retryable_provider_detected,
@@ -310,6 +317,7 @@ def classify_execution(
         )
         if provider is not None:
             return provider
+    if len(status_files) != 1 or unsafe_status_files:
         return ExecutionOutcome(
             "terminal_agent_error",
             "failed_terminal",
@@ -341,6 +349,35 @@ def classify_execution(
 
     try:
         patch, no_change, prediction_path = read_prediction(swe_output, task_id)
+    except MissingPredictionEvidence as exc:
+        evidence = {
+            "outer_returncode": outer_returncode,
+            "status_file": str(status_files[0]),
+            "internal_status": internal_status,
+            "prediction_error": str(exc),
+            "internal_summary": status_payload,
+        }
+        provider = _provider_outcome(
+            quota_detected=quota_detected,
+            retryable_provider_detected=retryable_provider_detected,
+            internal_status=internal_status,
+            patch_present=False,
+            no_change=False,
+            evidence=evidence,
+            context="before prediction evidence was produced",
+        )
+        if provider is not None:
+            return provider
+        return ExecutionOutcome(
+            "terminal_agent_error",
+            "failed_terminal",
+            False,
+            internal_status,
+            False,
+            False,
+            str(exc),
+            evidence,
+        )
     except ValueError as exc:
         evidence = {
             "outer_returncode": outer_returncode,

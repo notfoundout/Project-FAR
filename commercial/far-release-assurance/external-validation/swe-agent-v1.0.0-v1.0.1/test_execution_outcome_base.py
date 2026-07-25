@@ -170,11 +170,45 @@ class ExecutionOutcomeTests(unittest.TestCase):
         self.assertEqual(outcome.state, "failed_terminal")
         self.assertFalse(outcome.patch_present)
 
-    def test_missing_prediction_with_provider_marker_fails_closed(self) -> None:
+    def test_missing_prediction_with_provider_marker_is_retryable(self) -> None:
         self.write_status("exit_error")
         outcome = self.classify(stderr="HTTP 429 RESOURCE_EXHAUSTED")
+        self.assertEqual(outcome.state, "failed_retryable")
+        self.assertEqual(outcome.category, "provider_quota_exhaustion")
+
+    def test_missing_prediction_without_provider_marker_is_terminal(self) -> None:
+        self.write_status("exit_error")
+        outcome = self.classify(stderr="agent stopped without a prediction")
         self.assertEqual(outcome.state, "failed_terminal")
         self.assertIn("missing prediction evidence", outcome.reason)
+
+    def test_missing_prediction_with_transient_provider_marker_is_retryable(self) -> None:
+        self.write_status("exit_error")
+        outcome = self.classify(stderr="HTTP 503 service unavailable")
+        self.assertEqual(outcome.state, "failed_retryable")
+        self.assertEqual(outcome.category, "retryable_provider_error")
+
+    def test_unrelated_prediction_with_provider_marker_is_terminal(self) -> None:
+        self.write_status("exit_error")
+        self.write_prediction(
+            None, task_id="another-task", filename="another-task.pred"
+        )
+        outcome = self.classify(stderr="HTTP 429 RESOURCE_EXHAUSTED")
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("does not identify target instance", outcome.reason)
+
+    def test_duplicate_status_files_with_provider_marker_are_terminal(self) -> None:
+        self.write_status("exit_error")
+        nested = self.output / "nested"
+        nested.mkdir()
+        (nested / "run_batch_exit_statuses.yaml").write_text(
+            "instances_by_exit_status:\n"
+            f"  exit_error: [{TASK_ID}]\n",
+            encoding="utf-8",
+        )
+        outcome = self.classify(stderr="HTTP 503 service unavailable")
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("expected exactly one", outcome.reason)
 
     def test_malformed_status_with_provider_marker_fails_closed(self) -> None:
         (self.output / "run_batch_exit_statuses.yaml").write_text(
@@ -244,7 +278,7 @@ class ExecutionOutcomeTests(unittest.TestCase):
             encoding="utf-8",
         )
         (self.output / f"{TASK_ID}.pred").symlink_to(external)
-        outcome = self.classify()
+        outcome = self.classify(stderr="HTTP 429 RESOURCE_EXHAUSTED")
         self.assertEqual(outcome.state, "failed_terminal")
         self.assertIn("not a regular file", outcome.reason)
 
