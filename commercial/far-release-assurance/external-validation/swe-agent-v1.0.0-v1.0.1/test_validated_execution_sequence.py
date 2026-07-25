@@ -112,22 +112,55 @@ class RecoverySequenceTests(unittest.TestCase):
             self.assertEqual(len(state["recoveries"]), 1)
             self.assertNotIn("recovery", second)
 
-    def test_persisted_new_attempt_clears_stale_recovery_pointer(self) -> None:
-        core = types.SimpleNamespace()
-        core.reconcile_completed_runs = lambda state, task_id: False
-        core._apply_state_correction = lambda state, run, result, record: None
+    def test_complete_persist_saves_all_completion_metadata_atomically(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            base = types.SimpleNamespace()
+            base.OUTPUT_DIR = root / "execution-output"
+            base.RUNS_DIR = base.OUTPUT_DIR / "runs"
+            saved = []
 
-        def persist(state, run, record, result):
-            run["persisted"] = True
+            def write_json(path, value):
+                path = Path(path)
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(json.dumps(value, sort_keys=True) + "\n", encoding="utf-8")
 
-        core._persist_outcome = persist
-        install(core)
-        run = {"recovery": "recoveries/stale.json"}
+            base.write_json = write_json
+            base.save_state = lambda state: saved.append(json.loads(json.dumps(state)))
 
-        core._persist_outcome({}, run, {}, success())
+            core = types.SimpleNamespace()
+            core.base = base
+            core.reconcile_completed_runs = lambda state, task_id: False
+            core._apply_state_correction = lambda state, run, result, record: None
+            core._persist_outcome = lambda state, run, record, result: self.fail(
+                "non-atomic core persistence must be replaced"
+            )
+            core._current_artifact_hashes = lambda run_dir: {"stdout.log": "hash"}
+            core._clear_completion_metadata = lambda run: (
+                run.pop("completed_at", None),
+                run.pop("trajectory_sha256", None),
+            )
+            install(core)
+            run = {
+                "run_id": "v1.0.0-r1",
+                "recovery": "recoveries/stale.json",
+            }
+            state = {"runs": [run]}
+            record = {
+                "completed_at": "completed-now",
+                "trajectory_sha256": "trajectory-hash",
+            }
 
-        self.assertNotIn("recovery", run)
-        self.assertTrue(run["persisted"])
+            core._persist_outcome(state, run, record, success())
+
+            self.assertEqual(run["state"], "complete")
+            self.assertEqual(run["completed_at"], "completed-now")
+            self.assertEqual(run["trajectory_sha256"], "trajectory-hash")
+            self.assertNotIn("recovery", run)
+            self.assertEqual(len(saved), 1)
+            self.assertEqual(saved[0]["runs"][0]["trajectory_sha256"], "trajectory-hash")
+            persisted = base.RUNS_DIR / run["run_id"] / "run-record.json"
+            self.assertTrue(persisted.is_file())
 
 
 if __name__ == "__main__":

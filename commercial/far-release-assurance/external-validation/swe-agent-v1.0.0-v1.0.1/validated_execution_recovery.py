@@ -72,8 +72,41 @@ def install(core: Any) -> Any:
 
     if original_persist_outcome is not None:
         def persist_outcome(state, run, record, outcome):
+            base = core.base
+            run_dir = base.RUNS_DIR / run["run_id"]
+            if outcome.state == "complete":
+                completed_at = record.get("completed_at")
+                trajectory_sha256 = record.get("trajectory_sha256")
+                if not isinstance(completed_at, str) or not completed_at:
+                    raise SystemExit(
+                        f"Completed outcome lacks completed_at: {run['run_id']}"
+                    )
+                if not isinstance(trajectory_sha256, str) or not trajectory_sha256:
+                    raise SystemExit(
+                        f"Completed outcome lacks trajectory_sha256: {run['run_id']}"
+                    )
+
+            record["state"] = outcome.state
+            record["outcome"] = outcome.to_dict()
+            record["artifact_sha256"] = core._current_artifact_hashes(run_dir)
+            record_path = run_dir / "run-record.json"
+            base.write_json(record_path, record)
+            run.update(
+                {
+                    "state": outcome.state,
+                    "record": str(record_path.relative_to(base.OUTPUT_DIR)),
+                    "outcome_category": outcome.category,
+                }
+            )
             run.pop("recovery", None)
-            return original_persist_outcome(state, run, record, outcome)
+            run.pop("correction", None)
+            run.pop("corrected_from", None)
+            if outcome.state == "complete":
+                run["completed_at"] = record["completed_at"]
+                run["trajectory_sha256"] = record["trajectory_sha256"]
+            else:
+                core._clear_completion_metadata(run)
+            base.save_state(state)
 
         core._persist_outcome = persist_outcome
 
