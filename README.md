@@ -5,7 +5,7 @@
 
 Project FAR is a foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
 
-## Latest release
+## Latest release: v0.4.0
 
 The newest documented GitHub repository release is [v0.4.0](https://github.com/notfoundout/Project-FAR/releases/tag/v0.4.0). The executable package metadata currently declares version `0.6.0`. These are separate version surfaces: the release tag records the newest published repository release, while `pyproject.toml` is authoritative for the installable package version.
 
