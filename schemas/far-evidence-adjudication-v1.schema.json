@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.invalid/schemas/far-evidence-adjudication-v1.schema.json",
+  "title": "FAR Evidence Adjudication v1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "comparison_sha256", "adjudicator", "decisions", "dissent"],
+  "properties": {
+    "schema": {"const": "far-evidence-adjudication/1.0"},
+    "adjudication_id": {"type": "string", "pattern": "^adjudication-[0-9a-f]{24}$"},
+    "comparison_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "adjudicator": {"type": "string", "minLength": 1},
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["finding_id", "disposition", "rationale", "support", "limitations"],
+        "properties": {
+          "finding_id": {"type": "string", "pattern": "^finding-[0-9a-f]{24}$"},
+          "disposition": {"enum": ["accept_left", "accept_right", "combine", "unresolved", "out_of_scope"]},
+          "rationale": {"type": "string", "minLength": 1},
+          "support": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "limitations": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "dissent": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {"type": ["string", "number", "integer", "boolean", "null"]}
+    },
+    "claim_boundary": {"const": "Human or policy adjudication record; not a truth certificate."}
+  }
+}
