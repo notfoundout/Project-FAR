@@ -182,7 +182,24 @@ jobs:
       - name: Rehearse full execution path through the final launch boundary
         working-directory: ${{ env.CASE_DIR }}
         run: |
+          set +e
           python rehearse_execute_boundary.py \
             --agent-repo "$RUNNER_TEMP/swe-agent" \
             --release "${{ matrix.release }}" \
-            --commit "${{ matrix.commit }}"
+            --commit "${{ matrix.commit }}" \
+            > "$RUNNER_TEMP/rehearsal.log" 2>&1
+          RC=$?
+          set -e
+          cat "$RUNNER_TEMP/rehearsal.log"
+          exit "$RC"
+
+      - name: Upload rehearsal diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-no-model-rehearsal-${{ matrix.release }}-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/rehearsal.log
+            ${{ env.CASE_DIR }}/execution-output/
+          if-no-files-found: warn
+          retention-days: 7
