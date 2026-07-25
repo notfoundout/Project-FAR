@@ -17,6 +17,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 env:
   CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1
@@ -138,3 +139,50 @@ jobs:
       - name: Parse exact live configuration without a model call
         working-directory: ${{ env.CASE_DIR }}
         run: python validate_agent_config.py --release-default "$RUNNER_TEMP/swe-agent/config/default.yaml"
+
+  full-no-model-execution-rehearsal:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - release: v1.0.0
+            commit: 8ed382c1af1a21f63410b9a0cda14759e64b49c0
+          - release: v1.0.1
+            commit: 6aff2155dd6fb2a8d19069f5c344f85a54f6c2fa
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install controller and pinned release dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install PyYAML==6.0.2
+          git clone --filter=blob:none https://github.com/SWE-agent/SWE-agent.git "$RUNNER_TEMP/swe-agent"
+          git -C "$RUNNER_TEMP/swe-agent" checkout --detach "${{ matrix.commit }}"
+          test "$(git -C "$RUNNER_TEMP/swe-agent" rev-parse HEAD)" = "${{ matrix.commit }}"
+          python -m pip install --editable "$RUNNER_TEMP/swe-agent"
+
+      - name: Pull the exact frozen environment image
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          echo "$GH_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          IMAGE="$(python -c 'import json; print(json.load(open("environment-freeze/environment-lock.json"))["immutable_image_reference"])')"
+          docker pull "$IMAGE"
+          docker image inspect "$IMAGE" >/dev/null
+
+      - name: Rehearse full execution path through the final launch boundary
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python rehearse_execute_boundary.py \
+            --agent-repo "$RUNNER_TEMP/swe-agent" \
+            --release "${{ matrix.release }}" \
+            --commit "${{ matrix.commit }}"
