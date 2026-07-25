@@ -14,3 +14,4 @@ dependencies = [
 
 [project.scripts]
 far = "mechanization.far_mechanization.cli:main"
+far-evidence = "mechanization.far_mechanization.compare_adjudication:main"
