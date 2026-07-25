@@ -197,6 +197,51 @@ class ExecutionOutcomeTests(unittest.TestCase):
         self.assertEqual(outcome.state, "failed_terminal")
         self.assertIn("does not identify target instance", outcome.reason)
 
+    def test_keyed_target_without_model_patch_is_terminal_despite_provider_marker(self) -> None:
+        self.write_status("exit_error")
+        (self.output / f"{TASK_ID}.pred").write_text(
+            json.dumps({TASK_ID: {"submission_type": "patch"}}),
+            encoding="utf-8",
+        )
+        outcome = self.classify(stderr="HTTP 429 RESOURCE_EXHAUSTED")
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("does not identify target instance", outcome.reason)
+
+    def test_aggregate_keyed_target_without_model_patch_is_terminal(self) -> None:
+        self.write_status("submitted")
+        (self.output / "preds.json").write_text(
+            json.dumps({TASK_ID: {"instance_id": TASK_ID}}),
+            encoding="utf-8",
+        )
+        outcome = self.classify()
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("does not identify target instance", outcome.reason)
+
+    def test_valid_keyed_target_ignores_malformed_unrelated_key(self) -> None:
+        self.write_status("submitted")
+        (self.output / "preds.json").write_text(
+            json.dumps(
+                {
+                    "another-task": {"model_patch": ["malformed", "unrelated"]},
+                    TASK_ID: {"model_patch": "target patch"},
+                }
+            ),
+            encoding="utf-8",
+        )
+        outcome = self.classify(stderr="earlier HTTP 503 service unavailable")
+        self.assertEqual(outcome.state, "complete")
+        self.assertEqual(outcome.category, "success_with_patch")
+
+    def test_valid_target_keyed_exact_prediction_is_accepted(self) -> None:
+        self.write_status("submitted")
+        (self.output / f"{TASK_ID}.pred").write_text(
+            json.dumps({TASK_ID: {"model_patch": "target patch"}}),
+            encoding="utf-8",
+        )
+        outcome = self.classify()
+        self.assertEqual(outcome.state, "complete")
+        self.assertEqual(outcome.category, "success_with_patch")
+
     def test_duplicate_status_files_with_provider_marker_are_terminal(self) -> None:
         self.write_status("exit_error")
         nested = self.output / "nested"
