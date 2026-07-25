@@ -37,6 +37,8 @@ A restored run is not trusted merely because its prior state says `complete`. Be
 
 If preserved evidence disproves completion, the controller writes `run-record-correction.json`, appends the correction to execution state, removes completion-only metadata, and reclassifies the same slot. The original run record and raw evidence remain preserved.
 
+If execution produced a durable final run record but the process was interrupted before `execution-state.json` was finalized, the controller validates the complete execution and provenance chain before recovering `running` to `complete`. It writes a separate recovery record outside the hashed run directory so the recovery remains auditable without invalidating the original artifact manifest. A durable failure is reclassified before retry; an interrupted attempt with no final record remains resumable and is archived by the normal retry path.
+
 Before a retry, the controller moves the previous attempt's instance, invocation, logs, run record, correction record, SWE-agent output, and copied trajectory into an attempt archive. The new attempt therefore cannot inherit stale status or prediction files while prior evidence remains auditable.
 
 Transient 429, quota, timeout, or 5xx messages do not override a final internally successful run with return code zero and a non-empty target patch. They control classification only when the final status, return code, or prediction evidence is unsuccessful.
