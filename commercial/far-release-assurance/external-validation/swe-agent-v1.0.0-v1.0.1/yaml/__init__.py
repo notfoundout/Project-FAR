@@ -1,10 +1,11 @@
 """Transparent PyYAML shim for pinned SWE-agent configuration output.
 
-The pinned releases serialize ``Path`` objects with Python-specific YAML tags
-and may write deterministic deployment diagnostics before the final
-``--print_config`` mapping. FAR accepts only the exact pathlib tags and only a
-suffix that has the complete RunBatchConfig shape. Arbitrary Python object
-construction remains rejected.
+The pinned releases serialize ``Path`` objects with Python-specific YAML tags,
+may emit sets, and may write deterministic deployment diagnostics before the
+final ``--print_config`` mapping. FAR accepts only the exact pathlib tags, only
+a suffix with the complete RunBatchConfig shape, and normalizes that mapping to
+deterministic JSON-safe evidence. Arbitrary Python object construction remains
+rejected.
 """
 
 from __future__ import annotations
@@ -70,10 +71,27 @@ def _is_complete_run_batch_config(value) -> bool:
     return isinstance(value, dict) and _REQUIRED_RUN_BATCH_KEYS <= set(value)
 
 
+def _json_safe(value):
+    if isinstance(value, _Path):
+        return str(value)
+    if isinstance(value, dict):
+        return {str(key): _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item) for item in value]
+    if isinstance(value, (set, frozenset)):
+        normalized = [_json_safe(item) for item in value]
+        return sorted(normalized, key=lambda item: repr(item))
+    return value
+
+
+def _validated_config(value):
+    return _json_safe(value) if _is_complete_run_batch_config(value) else value
+
+
 def safe_load(stream):
-    """Load normal YAML, or one complete pinned config after stdout diagnostics."""
+    """Load ordinary YAML, or one complete pinned config after diagnostics."""
     try:
-        return _REAL_SAFE_LOAD(stream)
+        return _validated_config(_REAL_SAFE_LOAD(stream))
     except YAMLError as original_error:
         text = stream.read() if hasattr(stream, "read") else str(stream)
         lines = text.splitlines()
@@ -87,7 +105,7 @@ def safe_load(stream):
             except YAMLError:
                 continue
             if _is_complete_run_batch_config(parsed):
-                candidates.append(parsed)
+                candidates.append(_json_safe(parsed))
         if len(candidates) == 1:
             return candidates[0]
         raise original_error
