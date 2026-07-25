@@ -5,7 +5,7 @@
     ".github/workflows/repo-health.yml": "8e85ad1b4f490cbc15e81c92f82768b44b00255a4ed0981f7007e17f234933f5",
     ".github/workflows/specification-export.yml": "2aa19214981ed97c418a375063879cbe20494f215032f7afe5f7d5cd45968b0d",
     ".github/workflows/unified-validation.yml": "62854b9bf73e018f53454a3edfe606b786d33726becc9f5adf4d4fd25389061b",
-    ".github/workflows/validator-assurance.yml": "16703f3e5dfc6f6ddcba2d2029683ef609553e439f21b15662afc1a9bc2a6e01",
+    ".github/workflows/validator-assurance.yml": "f6c8c11f8123930a492209ed7d5f116360e810c1439be119a46b084a092c8906",
     "far_validation/__main__.py": "0cc78d06ee9221ab165d0f2ff804b5180cad62c72b9fcb448c0e4b875314b36e",
     "far_validation/assured_engine.py": "3daddc9bd13af064f27f624e731c65d483b57c4936c0e27d7b1dcc83a537666d",
     "far_validation/certificate.py": "3b289c6f92f8d339d9b56b937bd0101af4ab3c815d24b0d7bce97194cf51ff76",
@@ -28,11 +28,32 @@
     "validation/test-weakening-waivers.json": "87f021cfe95a27fbf469e4c8176260c02251f53d6d16ef1fabb89882cfd5c6ad",
     "validation_bootstrap/verify.py": "ce4e899f22fc6d752e816255959d204670247661fe21a9b27f776243c52774b1"
   },
-  "required_evidence": ["independent-oracle", "test-weakening", "lean-proof", "formal-model", "mutation-campaign"],
+  "required_evidence": [
+    "independent-oracle",
+    "test-weakening",
+    "lean-proof",
+    "formal-model",
+    "mutation-campaign"
+  ],
   "runtime_policy": "validation/runtime-policy.json",
   "schema_version": "1.0",
   "workflow": {
     "path": ".github/workflows/validator-assurance.yml",
-    "required_fragments": ["merge_group:", "merge-authority:", "signed-cache-producer:", "signed-cache-consumer:", "uses: actions/attest@v4", "gh attestation verify", "--trace-dependencies --require-trace --require-signed-cache", "python -m far_validation oracle", "python -m far_validation weakening", "lean\" mechanization/lean/ValidationEngine.lean", "python -m far_validation formal", "python -m far_validation mutations", "python tools/assemble_validation_certificate.py", "--expected-tree \"$(git rev-parse HEAD^{tree})\""]
+    "required_fragments": [
+      "merge_group:",
+      "merge-authority:",
+      "signed-cache-producer:",
+      "signed-cache-consumer:",
+      "uses: actions/attest-build-provenance@v3",
+      "gh attestation verify",
+      "--trace-dependencies --require-trace --require-signed-cache",
+      "python -m far_validation oracle",
+      "python -m far_validation weakening",
+      "lean\" mechanization/lean/ValidationEngine.lean",
+      "python -m far_validation formal",
+      "python -m far_validation mutations",
+      "python tools/assemble_validation_certificate.py",
+      "--expected-tree \"$(git rev-parse HEAD^{tree})\""
+    ]
   }
 }
