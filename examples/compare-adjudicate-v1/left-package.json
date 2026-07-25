@@ -1,0 +1,43 @@
+{
+  "boundaries": [
+    "No benchmark outcome access",
+    "Single recorded execution"
+  ],
+  "claims": [
+    {
+      "assumptions": [
+        "sensor-1 calibrated"
+      ],
+      "boundaries": [
+        "recorded sample only"
+      ],
+      "claim_id": "claim.temperature",
+      "contradicts": [],
+      "statement": "Temperature exceeded the configured threshold",
+      "status": "observed",
+      "support": [
+        "trace.sensor-1"
+      ]
+    },
+    {
+      "assumptions": [],
+      "boundaries": [
+        "recorded transition only"
+      ],
+      "claim_id": "claim.action",
+      "contradicts": [],
+      "statement": "The controller entered caution mode",
+      "status": "derived",
+      "support": [
+        "rule.R4",
+        "trace.transition-9"
+      ]
+    }
+  ],
+  "metadata": {
+    "producer": "example"
+  },
+  "package_id": "example-left-v1",
+  "schema": "far-evidence-package/1.0",
+  "subject_id": "run-001"
+}
