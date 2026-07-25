@@ -118,7 +118,9 @@ def _extract_prediction(
                 or value.get("submission_type") == "no_change"
             )
             if isinstance(patch, str) and patch.strip() and no_change:
-                raise ValueError("prediction cannot contain both a non-empty patch and no-change")
+                raise ValueError(
+                    "prediction cannot contain both a non-empty patch and no-change"
+                )
             return True, patch if isinstance(patch, str) else None, no_change
         if task_id in value:
             return _extract_prediction(
@@ -153,19 +155,31 @@ def _read_json(path: Path) -> Any:
 
 
 def read_prediction(swe_output: Path, task_id: str) -> tuple[str | None, bool, str]:
-    exact_files = sorted(
-        path for path in swe_output.rglob("*.pred") if path.stem == task_id
-    )
+    prediction_files = sorted(swe_output.rglob("*.pred"))
     aggregate_files = sorted(swe_output.rglob("preds.json"))
     matches: list[tuple[str | None, bool, str]] = []
+    target_prediction_files: list[str] = []
 
-    for path in exact_files:
+    for path in prediction_files:
         found, patch, no_change = _extract_prediction(
-            _read_json(path), task_id, allow_implicit_instance=True
+            _read_json(path),
+            task_id,
+            allow_implicit_instance=path.stem == task_id,
         )
+        if path.stem == task_id and not found:
+            raise ValueError(
+                f"exact prediction file does not identify target instance: {path}"
+            )
         if not found:
-            raise ValueError(f"exact prediction file does not identify target instance: {path}")
+            continue
+        target_prediction_files.append(str(path))
         matches.append((patch, no_change, str(path)))
+
+    if len(target_prediction_files) > 1:
+        raise ValueError(
+            "multiple .pred files identify the target instance: "
+            + ", ".join(target_prediction_files)
+        )
 
     for path in aggregate_files:
         found, patch, no_change = _extract_prediction(

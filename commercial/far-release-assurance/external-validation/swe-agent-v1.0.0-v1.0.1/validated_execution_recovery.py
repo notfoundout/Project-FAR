@@ -75,8 +75,64 @@ def _recover_complete(
     run.pop("corrected_from", None)
 
 
+def _load_reconcilable_state(
+    base: Any,
+    manifest: dict[str, Any],
+    lock: dict[str, Any],
+    plan_sha256: str,
+) -> dict[str, Any]:
+    if not base.STATE_PATH.is_file():
+        return base.initial_state(manifest, lock, plan_sha256)
+    state = base.read_json(base.STATE_PATH)
+    if (
+        state.get("schema") != base.STATE_SCHEMA
+        or state.get("case_id") != manifest.get("case_id")
+    ):
+        raise SystemExit("Execution state schema or case mismatch")
+    if state.get("manifest_sha256") != base.sha256_file(base.MANIFEST_PATH):
+        raise SystemExit("Execution state was created for a different manifest")
+    if state.get("environment_lock_sha256") != base.sha256_file(base.LOCK_PATH):
+        raise SystemExit(
+            "Execution state was created for a different environment lock"
+        )
+    if state.get("execution_plan_sha256") != plan_sha256:
+        raise SystemExit("Execution state was created for a different execution plan")
+    if state.get("immutable_image_reference") != lock.get(
+        "immutable_image_reference"
+    ):
+        raise SystemExit("Execution state image mismatch")
+
+    expected = base.expected_runs(manifest)
+    actual = state.get("runs")
+    if not isinstance(actual, list) or len(actual) != len(expected):
+        raise SystemExit("Execution state run matrix mismatch")
+    for frozen, recorded in zip(expected, actual, strict=True):
+        for key in (
+            "slot",
+            "run_id",
+            "release",
+            "commit",
+            "full_commit",
+            "repetition",
+            "trajectory_artifact",
+        ):
+            if recorded.get(key) != frozen.get(key):
+                raise SystemExit(
+                    f"Execution state drift at run {frozen['run_id']}: {key}"
+                )
+        if recorded.get("state") not in base.ALLOWED_STATES:
+            raise SystemExit(
+                f"Invalid execution state for {frozen['run_id']}: "
+                f"{recorded.get('state')!r}"
+            )
+    return state
+
+
 def install(core: Any) -> Any:
     original_reconcile = core.reconcile_completed_runs
+    core.base.load_state = lambda manifest, lock, plan_sha256: (
+        _load_reconcilable_state(core.base, manifest, lock, plan_sha256)
+    )
     original_apply_correction = core._apply_state_correction
     original_persist_outcome = getattr(core, "_persist_outcome", None)
 
@@ -106,6 +162,7 @@ def install(core: Any) -> Any:
     core._apply_state_correction = apply_state_correction
 
     if original_persist_outcome is not None:
+
         def persist_outcome(state, run, record, outcome):
             base = core.base
             run_dir = base.RUNS_DIR / run["run_id"]
