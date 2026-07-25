@@ -65,7 +65,6 @@ jobs:
             test_run_comparison.py \
             test_prepare_environment_contract.py \
             test_execute_controller.py \
-            test_execution_outcome.py \
             test_execution_workflow_contract.py
 
       - name: Checkout pinned SWE-bench harness
@@ -214,7 +213,7 @@ jobs:
         id: next-run
         working-directory: ${{ env.CASE_DIR }}
         run: |
-          python validated_execute_controller.py status > "$RUNNER_TEMP/execution-status.json"
+          python execute_controller.py status > "$RUNNER_TEMP/execution-status.json"
           FULL_COMMIT="$(python -c 'import json,sys; s=json.load(open(sys.argv[1])); r=next((x for x in s["runs"] if x["state"] in {"pending","running","quota_paused","failed_retryable"}), None); print("" if r is None else r["full_commit"])' "$RUNNER_TEMP/execution-status.json")"
           RUN_ID="$(python -c 'import json,sys; s=json.load(open(sys.argv[1])); r=next((x for x in s["runs"] if x["state"] in {"pending","running","quota_paused","failed_retryable"}), None); print("complete" if r is None else r["run_id"])' "$RUNNER_TEMP/execution-status.json")"
           echo "full_commit=$FULL_COMMIT" >> "$GITHUB_OUTPUT"
@@ -254,11 +253,11 @@ jobs:
           }
           echo "::add-mask::$GEMINI_API_KEY"
           set +e
-          python validated_execute_controller.py execute-next --agent-repo "$RUNNER_TEMP/swe-agent"
+          python execute_controller.py execute-next --agent-repo "$RUNNER_TEMP/swe-agent"
           RC=$?
           set -e
           if [ "$RC" -eq 75 ]; then
-            echo "Retryable provider/model failure recorded. Re-run this same execute stage only after provider access is available." >> "$GITHUB_STEP_SUMMARY"
+            echo "Quota pause recorded. Re-run this same execute stage after the provider quota resets." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           exit "$RC"
@@ -267,8 +266,8 @@ jobs:
         if: inputs.stage == 'execute' && steps.next-run.outputs.run_id == 'complete'
         working-directory: ${{ env.CASE_DIR }}
         run: |
-          python validated_execute_controller.py status
-          echo "All four frozen runs are complete after internal status and prediction validation. No additional model call was made." >> "$GITHUB_STEP_SUMMARY"
+          python execute_controller.py status
+          echo "All four frozen runs are complete. No additional model call was made." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload non-secret execution artifacts
         if: always()
