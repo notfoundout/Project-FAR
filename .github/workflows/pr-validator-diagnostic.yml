@@ -1,0 +1,41 @@
+name: PR Validator Diagnostic
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/pr-validator-diagnostic.yml'
+      - '.github/workflows/validator-assurance.yml'
+      - '.github/workflows/far-swe-agent-postprocess.yml'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1/**'
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      FAR_VALIDATION_TRUST_DOMAIN: project-far:${{ github.repository }}:attested-cache
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Capture signed-cache producer output
+        run: |
+          key="$(openssl rand -hex 32)"
+          export FAR_VALIDATION_CACHE_SIGNING_KEY="$key"
+          set +e
+          python -m far_validation validate bootstrap.manifest --require-signed-cache > "$RUNNER_TEMP/signed-cache.log" 2>&1
+          RC=$?
+          echo "$RC" > "$RUNNER_TEMP/signed-cache.exit-code"
+          cat "$RUNNER_TEMP/signed-cache.log"
+          exit 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr-validator-diagnostic-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/signed-cache.log
+            ${{ runner.temp }}/signed-cache.exit-code
+          retention-days: 3
