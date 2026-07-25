@@ -61,7 +61,8 @@ jobs:
             test_validate_manifest.py \
             test_run_comparison.py \
             test_prepare_environment_contract.py \
-            test_execute_controller.py
+            test_execute_controller.py \
+            test_execution_workflow_contract.py
 
       - name: Checkout pinned SWE-bench harness
         if: inputs.stage == 'prepare-environment'
@@ -202,7 +203,7 @@ jobs:
           else
             echo "No prior execution artifact found; starting from the frozen initial state."
           fi
-          python run_comparison.py plan
+          python "$CASE_DIR/run_comparison.py" plan
 
       - name: Resolve next frozen SWE-agent release
         if: inputs.stage == 'execute'
