@@ -54,6 +54,16 @@ class PredictionFileScanTests(unittest.TestCase):
         self.assertFalse(no_change)
         self.assertNotIn("other.pred", evidence)
 
+    def test_malformed_noncanonical_target_prediction_is_rejected(self) -> None:
+        self.write(f"{TASK_ID}.pred", TASK_ID, "target-patch")
+        (self.output / "other.pred").write_text(
+            json.dumps({"instance_id": TASK_ID, "unexpected": "value"}),
+            encoding="utf-8",
+        )
+
+        with self.assertRaisesRegex(ValueError, "missing model_patch"):
+            read_prediction(self.output, TASK_ID)
+
 
 if __name__ == "__main__":
     unittest.main()

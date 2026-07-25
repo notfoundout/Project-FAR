@@ -104,6 +104,10 @@ def _extract_prediction(
     allow_implicit_instance: bool,
 ) -> tuple[bool, str | None, bool]:
     if isinstance(value, dict):
+        if value.get("instance_id") == task_id and "model_patch" not in value:
+            raise ValueError(
+                "prediction for target instance is missing model_patch"
+            )
         if "model_patch" in value:
             instance_id = value.get("instance_id")
             if instance_id is not None and instance_id != task_id:
