@@ -25,6 +25,7 @@ class RepositoryTruthTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertTrue(payload["successful"])
         self.assertEqual(payload["package_version"], "0.6.0")
+        self.assertEqual(payload["latest_release"], "v1.0.0")
         self.assertEqual(payload["current_phase"], "post-terminal independent evaluation")
 
     def test_version_drift_fails_closed(self) -> None:
@@ -55,23 +56,33 @@ class RepositoryTruthTests(unittest.TestCase):
                 truth.main()
         self.assertIn("historical W3.5 dashboard", str(caught.exception))
 
-    def test_release_badge_tag_pin_fails_closed(self) -> None:
+    def test_release_badge_version_drift_fails_closed(self) -> None:
         original = truth.read_text
 
         def mutated(path: str) -> str:
             text = original(path)
             if path == "README.md":
-                return text.replace(
-                    "](https://github.com/notfoundout/Project-FAR/releases)\n",
-                    "](https://github.com/notfoundout/Project-FAR/releases/tag/v0.4.0)\n",
-                    1,
-                )
+                return text.replace("Release v1.0.0", "Release v0.4.0", 1)
             return text
 
         with mock.patch.object(truth, "read_text", side_effect=mutated):
             with self.assertRaises(SystemExit) as caught:
                 truth.main()
-        self.assertIn("release badge pins", str(caught.exception))
+        self.assertIn("release badge drift", str(caught.exception))
+
+    def test_release_record_drift_fails_closed(self) -> None:
+        original = truth.read_text
+
+        def mutated(path: str) -> str:
+            text = original(path)
+            if path == "docs/releases/project-far-v1.0.0.md":
+                return text.replace("v1.0.0", "v0.4.0")
+            return text
+
+        with mock.patch.object(truth, "read_text", side_effect=mutated):
+            with self.assertRaises(SystemExit) as caught:
+                truth.main()
+        self.assertIn("release record", str(caught.exception))
 
 
 if __name__ == "__main__":
