@@ -1,0 +1,33 @@
+name: PR Bootstrap Diagnostic
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/pr-bootstrap-diagnostic.yml'
+      - '.github/workflows/validator-assurance.yml'
+      - 'validation_bootstrap/assurance-lock.json'
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Capture bootstrap verifier output
+        run: |
+          set +e
+          python validation_bootstrap/verify.py > "$RUNNER_TEMP/bootstrap.log" 2>&1
+          RC=$?
+          echo "$RC" > "$RUNNER_TEMP/bootstrap.exit-code"
+          cat "$RUNNER_TEMP/bootstrap.log"
+          exit 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr-bootstrap-diagnostic-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/bootstrap.log
+            ${{ runner.temp }}/bootstrap.exit-code
+          retention-days: 3
