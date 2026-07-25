@@ -52,11 +52,11 @@ class HardeningTests(unittest.TestCase):
         self.saved = {name: sys.modules.get(name) for name in (
             "execute_controller",
             "validated_execute_controller",
-            "validated_execute_controller_legacy",
+            "validated_execute_controller_core",
         )}
         self.base = _base(self.root)
         sys.modules["execute_controller"] = self.base
-        for name in ("validated_execute_controller", "validated_execute_controller_legacy"):
+        for name in ("validated_execute_controller", "validated_execute_controller_core"):
             sys.modules.pop(name, None)
         self.controller = importlib.import_module("validated_execute_controller")
 

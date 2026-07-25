@@ -3,7 +3,7 @@ from __future__ import annotations
 import importlib
 import sys
 
-_name = "validated_execute_controller_legacy"
+_name = "validated_execute_controller_core"
 if _name in sys.modules:
     _legacy = importlib.reload(sys.modules[_name])
 else:
