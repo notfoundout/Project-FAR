@@ -1,12 +1,11 @@
 from __future__ import annotations
 
+import json
 import re
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
-
-import yaml
 
 import execute_controller as controller
 
@@ -111,7 +110,9 @@ class PinnedCliContractTests(unittest.TestCase):
     @patch("execute_controller.subprocess.run")
     def test_exact_command_is_parse_validated_without_model_execution(self, run, _which) -> None:
         run.return_value.returncode = 0
-        run.return_value.stdout = yaml.safe_dump(self.parsed_config())
+        # JSON is a valid YAML subset, so this exercises the controller's parser
+        # without adding PyYAML as a dependency to the dependency-free test job.
+        run.return_value.stdout = json.dumps(self.parsed_config())
         run.return_value.stderr = ""
         parsed = controller.verify_cli_contract(self.command, self.agent_repo, self.instance, self.output)
         self.assertEqual(parsed["num_workers"], 1)
