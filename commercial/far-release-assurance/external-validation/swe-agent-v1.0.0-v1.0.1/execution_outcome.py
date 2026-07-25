@@ -130,19 +130,46 @@ def classify_execution(
     allow_no_change: bool = False,
 ) -> ExecutionOutcome:
     combined = (stdout + "\n" + stderr).lower()
+    quota_detected = any(marker in combined for marker in QUOTA_MARKERS)
+    retryable_provider_detected = any(marker in combined for marker in RETRYABLE_PROVIDER_MARKERS)
     status_files = sorted(swe_output.rglob("run_batch_exit_statuses.yaml"))
+    base_evidence: dict[str, Any] = {
+        "outer_returncode": outer_returncode,
+        "status_files": [str(path) for path in status_files],
+    }
+
     if len(status_files) != 1:
+        if quota_detected:
+            return ExecutionOutcome(
+                "provider_quota_exhaustion", "failed_retryable", True, None, False, False,
+                "provider quota exhaustion detected before a unique internal status file was available", base_evidence,
+            )
+        if retryable_provider_detected:
+            return ExecutionOutcome(
+                "retryable_provider_error", "failed_retryable", True, None, False, False,
+                "retryable provider/model error detected before a unique internal status file was available", base_evidence,
+            )
         return ExecutionOutcome(
             "terminal_agent_error", "failed_terminal", False, None, False, False,
-            f"expected exactly one run_batch_exit_statuses.yaml, found {len(status_files)}",
-            {"outer_returncode": outer_returncode, "status_files": [str(path) for path in status_files]},
+            f"expected exactly one run_batch_exit_statuses.yaml, found {len(status_files)}", base_evidence,
         )
+
     try:
         internal_status, status_payload = parse_internal_status(status_files[0], task_id)
     except ValueError as exc:
+        evidence = {**base_evidence, "status_file": str(status_files[0])}
+        if quota_detected:
+            return ExecutionOutcome(
+                "provider_quota_exhaustion", "failed_retryable", True, None, False, False,
+                "provider quota exhaustion detected with malformed internal status evidence", evidence,
+            )
+        if retryable_provider_detected:
+            return ExecutionOutcome(
+                "retryable_provider_error", "failed_retryable", True, None, False, False,
+                "retryable provider/model error detected with malformed internal status evidence", evidence,
+            )
         return ExecutionOutcome(
-            "terminal_agent_error", "failed_terminal", False, None, False, False, str(exc),
-            {"outer_returncode": outer_returncode, "status_file": str(status_files[0])},
+            "terminal_agent_error", "failed_terminal", False, None, False, False, str(exc), evidence,
         )
 
     patch, no_change, prediction_path = read_prediction(swe_output, task_id)
@@ -157,16 +184,16 @@ def classify_execution(
         "internal_summary": status_payload,
     }
 
-    if any(marker in combined for marker in QUOTA_MARKERS):
+    if quota_detected:
         return ExecutionOutcome("provider_quota_exhaustion", "failed_retryable", True, internal_status, patch_present, no_change, "provider quota exhaustion detected", evidence)
-    if any(marker in combined for marker in RETRYABLE_PROVIDER_MARKERS):
+    if retryable_provider_detected:
         return ExecutionOutcome("retryable_provider_error", "failed_retryable", True, internal_status, patch_present, no_change, "retryable provider/model error detected", evidence)
-    if outer_returncode != 0:
-        return ExecutionOutcome("retryable_provider_error", "failed_retryable", True, internal_status, patch_present, no_change, f"outer process returned {outer_returncode}", evidence)
     if internal_status in ERROR_STATUSES:
         return ExecutionOutcome("terminal_agent_error", "failed_terminal", False, internal_status, patch_present, no_change, "SWE-agent reported an internal error", evidence)
     if internal_status not in SUCCESS_STATUSES:
         return ExecutionOutcome("terminal_agent_error", "failed_terminal", False, internal_status, patch_present, no_change, "unrecognized or non-success SWE-agent status", evidence)
+    if outer_returncode != 0:
+        return ExecutionOutcome("terminal_agent_error", "failed_terminal", False, internal_status, patch_present, no_change, f"outer process returned {outer_returncode} despite a success-like internal status", evidence)
     if patch_present:
         return ExecutionOutcome("success_with_patch", "complete", False, internal_status, True, False, "successful internal status with non-empty patch", evidence)
     if no_change and allow_no_change:
