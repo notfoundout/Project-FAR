@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed repository status/version authority check."""
+"""Fail-closed repository status/version/release authority check."""
 from __future__ import annotations
 
 import json
@@ -55,9 +55,15 @@ def main() -> int:
     if len(set(versions.values())) != 1:
         fail("package version drift: " + json.dumps(versions, sort_keys=True))
 
+    release = authority.get("release_surface", {})
+    latest_release = release.get("latest_release")
+    if not isinstance(latest_release, str) or not re.fullmatch(r"v\d+\.\d+\.\d+", latest_release):
+        fail("release authority latest_release is missing or malformed")
+
     readme = read_text("README.md")
     required_phrases = (
-        "The newest documented GitHub repository release is",
+        f"## Latest release: {latest_release}",
+        f"The latest published GitHub repository release is [{latest_release}]",
         "These are separate version surfaces",
         "The deductive UPP queue is closed.",
         "The active phase is independent criticism, countermodel search, proof review, kernel-checked reconstruction, bounded replication, and application-correspondence testing.",
@@ -71,18 +77,28 @@ def main() -> int:
         fail("historical W3.5 dashboard is still presented as the current project phase")
 
     badge_pattern = re.compile(
-        r'^\[!\[Release[^\]]*\]\([^\n]+\)\]\(([^\n]+)\)$', re.MULTILINE
+        r'^\[!\[Release ([^\]]+)\]\([^\n]+\)\]\(([^\n]+)\)$', re.MULTILINE
     )
     badge = badge_pattern.search(readme)
     if not badge:
         fail("README release badge is missing or malformed")
-    if "/releases/tag/" in badge.group(1):
-        fail("README release badge pins a specific release tag instead of the releases index")
+    if badge.group(1) != latest_release:
+        fail(f"README release badge drift: {badge.group(1)} != {latest_release}")
+    if badge.group(2) != "https://github.com/notfoundout/Project-FAR/releases/latest":
+        fail("README release badge must target the GitHub latest-release route")
+
+    release_record = str(release.get("release_record", ""))
+    record = read_text(release_record)
+    if f"# Project FAR {latest_release}" not in record:
+        fail("release record does not match latest release authority")
+    if f"/releases/tag/{latest_release}" not in record:
+        fail("release record does not link to the authoritative GitHub release")
 
     report = {
         "schema": authority["schema"],
         "successful": True,
         "package_version": package_version,
+        "latest_release": latest_release,
         "status_authority": authority["project_status"]["authority"],
         "current_phase": authority["project_status"]["current_phase"],
     }

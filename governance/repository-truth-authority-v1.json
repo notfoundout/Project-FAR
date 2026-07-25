@@ -15,12 +15,14 @@
     ]
   },
   "release_surface": {
-    "authority": "GitHub releases index",
-    "readme_link_must_not_pin_stale_tag": true
+    "authority": "GitHub latest release",
+    "latest_release": "v1.0.0",
+    "readme_heading": "README.md:Latest release",
+    "release_record": "docs/releases/project-far-v1.0.0.md"
   },
   "claim_boundaries": [
     "No historical dashboard may identify itself as the current repository phase.",
     "Package metadata versions must match executable version declarations.",
-    "A repository release link must not imply that package version and latest GitHub release are identical unless separately verified."
+    "Repository release version and installable package version are distinct authorities and must not be inferred from one another."
   ]
 }

@@ -1,13 +1,13 @@
 # Project FAR
 
-[![Release v0.4.0](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases)
+[![Release v1.0.0](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases/latest)
 [![Verify Theory](https://github.com/notfoundout/Project-FAR/actions/workflows/repo-health.yml/badge.svg)](https://github.com/notfoundout/Project-FAR/actions/workflows/repo-health.yml)
 
 Project FAR is a foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
 
-## Latest release: v0.4.0
+## Latest release: v1.0.0
 
-The newest documented GitHub repository release is [v0.4.0](https://github.com/notfoundout/Project-FAR/releases/tag/v0.4.0). The executable package metadata currently declares version `0.6.0`. These are separate version surfaces: the release tag records the newest published repository release, while `pyproject.toml` is authoritative for the installable package version.
+The latest published GitHub repository release is [v1.0.0](https://github.com/notfoundout/Project-FAR/releases/tag/v1.0.0). The executable package metadata currently declares version `0.6.0`. These are separate version surfaces: the release tag records the published repository release, while `pyproject.toml` is authoritative for the installable package version.
 
 ## Central result
 
