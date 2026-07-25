@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from execution_outcome import ExecutionOutcome
+
 
 def _read_record(base: Any, path: Path) -> dict[str, Any] | None:
     try:
@@ -64,6 +66,25 @@ def install(core: Any) -> Any:
     original_apply_correction = core._apply_state_correction
     original_persist_outcome = getattr(core, "_persist_outcome", None)
 
+    def sequence_violation_outcome(run):
+        return ExecutionOutcome(
+            "protocol_sequence_violation",
+            "failed_terminal",
+            False,
+            None,
+            False,
+            False,
+            "run contains execution state after an earlier frozen slot became incomplete",
+            {
+                "run_id": run["run_id"],
+                "slot": run.get("slot"),
+                "state": run.get("state"),
+                "attempts": run.get("attempts"),
+            },
+        )
+
+    core._sequence_violation_outcome = sequence_violation_outcome
+
     def apply_state_correction(state, run, outcome, record):
         run.pop("recovery", None)
         return original_apply_correction(state, run, outcome, record)
@@ -112,46 +133,56 @@ def install(core: Any) -> Any:
 
     def reconcile(state: dict[str, Any], task_id: str) -> bool:
         changed = original_reconcile(state, task_id)
-        earlier_invalid = False
-        active_seen = False
+        frontier_seen = False
         for run in state["runs"]:
-            if run["state"] == "complete":
-                continue
-            if run["state"] != "running":
-                earlier_invalid = True
-                continue
-            if earlier_invalid or active_seen:
-                outcome = core._sequence_violation_outcome(run)
-                core._apply_state_correction(state, run, outcome, {})
+            if not frontier_seen:
+                if run["state"] == "complete":
+                    continue
+                frontier_seen = True
+                if run["state"] != "running":
+                    continue
+
+                record_path = core._record_path(run)
+                record = _read_record(core.base, record_path)
+                if record is None:
+                    # No durable final record exists. Leave the run resumable so
+                    # the core retry path archives it before retrying.
+                    continue
+
+                candidate = dict(run)
+                candidate["record"] = str(
+                    record_path.relative_to(core.base.OUTPUT_DIR)
+                )
+                if isinstance(record.get("trajectory_sha256"), str):
+                    candidate["trajectory_sha256"] = record["trajectory_sha256"]
+                preserved_record, outcome = core._classify_preserved_run(
+                    candidate, task_id
+                )
+                if outcome.state == "complete":
+                    _recover_complete(core, state, run, preserved_record, outcome)
+                    changed = True
+                    continue
+
+                core._apply_state_correction(
+                    state, run, outcome, preserved_record
+                )
                 changed = True
                 continue
 
-            active_seen = True
-            record_path = core._record_path(run)
-            record = _read_record(core.base, record_path)
-            if record is None:
-                # No durable final record exists. Leave the run resumable so the
-                # core retry path archives the interrupted attempt before retrying.
-                earlier_invalid = True
+            untouched_pending = (
+                run["state"] == "pending"
+                and int(run.get("attempts", 0)) == 0
+            )
+            already_sequence_blocked = (
+                run["state"] == "failed_terminal"
+                and run.get("outcome_category") == "protocol_sequence_violation"
+            )
+            if untouched_pending or already_sequence_blocked:
                 continue
 
-            candidate = dict(run)
-            candidate["record"] = str(record_path.relative_to(core.base.OUTPUT_DIR))
-            if isinstance(record.get("trajectory_sha256"), str):
-                candidate["trajectory_sha256"] = record["trajectory_sha256"]
-            preserved_record, outcome = core._classify_preserved_run(
-                candidate, task_id
-            )
-            if outcome.state == "complete":
-                _recover_complete(core, state, run, preserved_record, outcome)
-                changed = True
-                continue
-
-            core._apply_state_correction(
-                state, run, outcome, preserved_record
-            )
+            outcome = core._sequence_violation_outcome(run)
+            core._apply_state_correction(state, run, outcome, {})
             changed = True
-            earlier_invalid = True
 
         if changed:
             core.base.save_state(state)

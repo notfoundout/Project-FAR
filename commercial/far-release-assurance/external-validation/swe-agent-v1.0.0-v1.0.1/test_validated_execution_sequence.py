@@ -162,6 +162,45 @@ class RecoverySequenceTests(unittest.TestCase):
             persisted = base.RUNS_DIR / run["run_id"] / "run-record.json"
             self.assertTrue(persisted.is_file())
 
+    def test_later_retryable_slot_is_sequence_violation(self) -> None:
+        core = types.SimpleNamespace()
+        core.base = types.SimpleNamespace(save_state=lambda state: None)
+        core.reconcile_completed_runs = lambda state, task_id: False
+        core._persist_outcome = None
+
+        def apply_correction(state, run, result, record):
+            run["state"] = result.state
+            run["outcome_category"] = result.category
+
+        core._apply_state_correction = apply_correction
+        install(core)
+        first = {
+            "run_id": "v1.0.0-r1",
+            "state": "failed_retryable",
+            "attempts": 1,
+        }
+        second = {
+            "run_id": "v1.0.0-r2",
+            "state": "failed_retryable",
+            "attempts": 1,
+        }
+        pending = {
+            "run_id": "v1.0.1-r1",
+            "state": "pending",
+            "attempts": 0,
+        }
+        state = {"runs": [first, second, pending]}
+
+        changed = core.reconcile_completed_runs(state, TASK_ID)
+
+        self.assertTrue(changed)
+        self.assertEqual(first["state"], "failed_retryable")
+        self.assertEqual(second["state"], "failed_terminal")
+        self.assertEqual(
+            second["outcome_category"], "protocol_sequence_violation"
+        )
+        self.assertEqual(pending["state"], "pending")
+
 
 if __name__ == "__main__":
     unittest.main()
