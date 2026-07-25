@@ -205,7 +205,10 @@ class ExecutionOutcomeTests(unittest.TestCase):
         )
         outcome = self.classify(stderr="HTTP 429 RESOURCE_EXHAUSTED")
         self.assertEqual(outcome.state, "failed_terminal")
-        self.assertIn("does not identify target instance", outcome.reason)
+        self.assertEqual(
+            outcome.reason,
+            "prediction for target instance is missing model_patch",
+        )
 
     def test_aggregate_keyed_target_without_model_patch_is_terminal(self) -> None:
         self.write_status("submitted")
@@ -215,7 +218,10 @@ class ExecutionOutcomeTests(unittest.TestCase):
         )
         outcome = self.classify()
         self.assertEqual(outcome.state, "failed_terminal")
-        self.assertIn("does not identify target instance", outcome.reason)
+        self.assertEqual(
+            outcome.reason,
+            "prediction for target instance is missing model_patch",
+        )
 
     def test_valid_keyed_target_ignores_malformed_unrelated_key(self) -> None:
         self.write_status("submitted")

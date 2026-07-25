@@ -150,6 +150,7 @@ def _extract_prediction(
     task_id: str,
     *,
     allow_implicit_instance: bool,
+    target_bound: bool = False,
 ) -> tuple[bool, str | None, bool]:
     if isinstance(value, dict):
         if "model_patch" in value:
@@ -170,12 +171,20 @@ def _extract_prediction(
             return True, patch if isinstance(patch, str) else None, no_change
         if task_id in value:
             return _extract_prediction(
-                value[task_id], task_id, allow_implicit_instance=True
+                value[task_id],
+                task_id,
+                allow_implicit_instance=True,
+                target_bound=True,
             )
         if "predictions" in value:
             return _extract_prediction(
-                value["predictions"], task_id, allow_implicit_instance=False
+                value["predictions"],
+                task_id,
+                allow_implicit_instance=False,
+                target_bound=False,
             )
+        if target_bound:
+            raise ValueError("prediction for target instance is missing model_patch")
     if isinstance(value, list):
         matches = [
             item
@@ -186,8 +195,15 @@ def _extract_prediction(
             raise ValueError("prediction collection contains duplicate target entries")
         if len(matches) == 1:
             return _extract_prediction(
-                matches[0], task_id, allow_implicit_instance=True
+                matches[0],
+                task_id,
+                allow_implicit_instance=True,
+                target_bound=True,
             )
+        if target_bound:
+            raise ValueError("prediction for target instance is missing model_patch")
+    elif target_bound:
+        raise ValueError("prediction for target instance is missing model_patch")
     return False, None, False
 
 
@@ -211,7 +227,10 @@ def read_prediction(swe_output: Path, task_id: str) -> tuple[str | None, bool, s
 
     for path in exact_files:
         found, patch, no_change = _extract_prediction(
-            _read_json(path), task_id, allow_implicit_instance=True
+            _read_json(path),
+            task_id,
+            allow_implicit_instance=True,
+            target_bound=True,
         )
         if not found:
             raise ValueError(f"exact prediction file does not identify target instance: {path}")
@@ -219,7 +238,10 @@ def read_prediction(swe_output: Path, task_id: str) -> tuple[str | None, bool, s
 
     for path in aggregate_files:
         found, patch, no_change = _extract_prediction(
-            _read_json(path), task_id, allow_implicit_instance=False
+            _read_json(path),
+            task_id,
+            allow_implicit_instance=False,
+            target_bound=False,
         )
         if found:
             matches.append((patch, no_change, str(path)))
