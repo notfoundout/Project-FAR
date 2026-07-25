@@ -76,7 +76,8 @@ jobs:
           printf '%s' "$key" > .far/cache-signing-key
           tar -czf artifacts/validation/signed-cache.tar.gz .far/cache .far/cache-signing-key
       - name: Record signed cache transport digest
-        run: sha256sum artifacts/validation/signed-cache.tar.gz > artifacts/validation/signed-cache.tar.gz.sha256
+        working-directory: artifacts/validation
+        run: sha256sum signed-cache.tar.gz > signed-cache.tar.gz.sha256
       - name: Upload signed cache bundle
         uses: actions/upload-artifact@v4
         with:
