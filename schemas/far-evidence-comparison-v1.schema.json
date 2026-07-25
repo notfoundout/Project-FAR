@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.invalid/schemas/far-evidence-comparison-v1.schema.json",
+  "title": "FAR Evidence Comparison v1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "comparison_id", "subject_match", "left", "right", "boundary_differences", "findings", "summary", "claim_boundary"],
+  "properties": {
+    "schema": {"const": "far-evidence-comparison/1.0"},
+    "comparison_id": {"type": "string", "pattern": "^comparison-[0-9a-f]{24}$"},
+    "subject_match": {"type": "boolean"},
+    "left": {"$ref": "#/$defs/packageRef"},
+    "right": {"$ref": "#/$defs/packageRef"},
+    "boundary_differences": {"$ref": "#/$defs/stringDiff"},
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["finding_id", "claim_id", "classification", "left", "right", "mechanical_differences"],
+        "properties": {
+          "finding_id": {"type": "string", "pattern": "^finding-[0-9a-f]{24}$"},
+          "claim_id": {"type": "string", "minLength": 1},
+          "classification": {"enum": ["agreement", "contradiction", "left_only", "right_only", "unresolved"]},
+          "left": {"type": ["object", "null"]},
+          "right": {"type": ["object", "null"]},
+          "mechanical_differences": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["statement_equal", "status_equal", "support_only_left", "support_only_right", "assumptions_only_left", "assumptions_only_right", "boundaries_only_left", "boundaries_only_right"],
+            "properties": {
+              "statement_equal": {"type": "boolean"},
+              "status_equal": {"type": "boolean"},
+              "support_only_left": {"$ref": "#/$defs/stringArray"},
+              "support_only_right": {"$ref": "#/$defs/stringArray"},
+              "assumptions_only_left": {"$ref": "#/$defs/stringArray"},
+              "assumptions_only_right": {"$ref": "#/$defs/stringArray"},
+              "boundaries_only_left": {"$ref": "#/$defs/stringArray"},
+              "boundaries_only_right": {"$ref": "#/$defs/stringArray"}
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "claim_boundary": {"const": "Mechanical comparison only; no truth, policy, or normative determination."}
+  },
+  "$defs": {
+    "packageRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package_id", "sha256"],
+      "properties": {
+        "package_id": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "stringArray": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "stringDiff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["only_left", "only_right"],
+      "properties": {
+        "only_left": {"$ref": "#/$defs/stringArray"},
+        "only_right": {"$ref": "#/$defs/stringArray"}
+      }
+    }
+  }
+}
