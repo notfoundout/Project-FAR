@@ -57,6 +57,33 @@ jobs:
         working-directory: ${{ env.CASE_DIR }}
         run: python -m unittest -v test_execute_controller.py
 
+      - name: Diagnose execution outcome modules
+        if: always()
+        working-directory: ${{ env.CASE_DIR }}
+        shell: bash
+        run: |
+          set +e
+          RC=0
+          for MODULE in \
+            test_execution_outcome_base.py \
+            test_prediction_file_scan.py \
+            test_validated_execution_hardening.py \
+            test_validated_execution_loader.py \
+            test_validated_execution_recovery.py \
+            test_validated_execution_sequence.py
+          do
+            echo "=== $MODULE ==="
+            python -m unittest -q "$MODULE"
+            MODULE_RC=$?
+            if [ "$MODULE_RC" -ne 0 ]; then
+              echo "FAILED_MODULE=$MODULE"
+              RC=1
+            else
+              echo "PASSED_MODULE=$MODULE"
+            fi
+          done
+          exit "$RC"
+
       - name: Run execution outcome and recovery regressions
         if: always()
         working-directory: ${{ env.CASE_DIR }}
