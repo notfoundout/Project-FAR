@@ -39,18 +39,38 @@ jobs:
       - name: Install controller parser dependency
         run: python -m pip install PyYAML==6.0.2
 
-      - name: Validate manifest and regression tests
+      - name: Validate frozen manifest
+        working-directory: ${{ env.CASE_DIR }}
+        run: python validate_manifest.py
+
+      - name: Run manifest, comparison, and environment regressions
+        if: always()
         working-directory: ${{ env.CASE_DIR }}
         run: |
-          python validate_manifest.py
           python -m unittest -v \
             test_validate_manifest.py \
             test_run_comparison.py \
-            test_prepare_environment_contract.py \
-            test_execute_controller.py \
-            test_execution_outcome.py \
-            test_execution_workflow_contract.py
-          python validated_execute_controller.py validate
+            test_prepare_environment_contract.py
+
+      - name: Run execution controller regressions
+        if: always()
+        working-directory: ${{ env.CASE_DIR }}
+        run: python -m unittest -v test_execute_controller.py
+
+      - name: Run execution outcome and recovery regressions
+        if: always()
+        working-directory: ${{ env.CASE_DIR }}
+        run: python -m unittest -v test_execution_outcome.py
+
+      - name: Run execution workflow contract regressions
+        if: always()
+        working-directory: ${{ env.CASE_DIR }}
+        run: python -m unittest -v test_execution_workflow_contract.py
+
+      - name: Validate restored execution state contract
+        if: always()
+        working-directory: ${{ env.CASE_DIR }}
+        run: python validated_execute_controller.py validate
 
       - name: Checkout exact SWE-bench revision
         run: |
