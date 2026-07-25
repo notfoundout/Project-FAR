@@ -203,7 +203,8 @@ def install(core: Any) -> Any:
         core._persist_outcome = persist_outcome
 
     def reconcile(state: dict[str, Any], task_id: str) -> bool:
-        changed = original_reconcile(state, task_id)
+        inherited_changed = original_reconcile(state, task_id)
+        recovery_changed = False
         frontier_seen = False
         for run in state["runs"]:
             if not frontier_seen:
@@ -231,13 +232,13 @@ def install(core: Any) -> Any:
                 )
                 if outcome.state == "complete":
                     _recover_complete(core, state, run, preserved_record, outcome)
-                    changed = True
+                    recovery_changed = True
                     continue
 
                 core._apply_state_correction(
                     state, run, outcome, preserved_record
                 )
-                changed = True
+                recovery_changed = True
                 continue
 
             untouched_pending = (
@@ -253,11 +254,11 @@ def install(core: Any) -> Any:
 
             outcome = core._sequence_violation_outcome(run)
             core._apply_state_correction(state, run, outcome, {})
-            changed = True
+            recovery_changed = True
 
-        if changed:
+        if recovery_changed:
             core.base.save_state(state)
-        return changed
+        return inherited_changed or recovery_changed
 
     core.reconcile_completed_runs = reconcile
     return core
