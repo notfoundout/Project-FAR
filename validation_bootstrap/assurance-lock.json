@@ -5,7 +5,7 @@
     ".github/workflows/repo-health.yml": "8e85ad1b4f490cbc15e81c92f82768b44b00255a4ed0981f7007e17f234933f5",
     ".github/workflows/specification-export.yml": "2aa19214981ed97c418a375063879cbe20494f215032f7afe5f7d5cd45968b0d",
     ".github/workflows/unified-validation.yml": "62854b9bf73e018f53454a3edfe606b786d33726becc9f5adf4d4fd25389061b",
-    ".github/workflows/validator-assurance.yml": "65254337da12c252d1703daa90af9c77a3fc011d190c11cd70735e8136f5e9b0",
+    ".github/workflows/validator-assurance.yml": "02fd5b0e92615a85e8dc0d68a62ba19c440bc0fd47eb761798f6a16afbf498d1",
     "far_validation/__main__.py": "0cc78d06ee9221ab165d0f2ff804b5180cad62c72b9fcb448c0e4b875314b36e",
     "far_validation/assured_engine.py": "3daddc9bd13af064f27f624e731c65d483b57c4936c0e27d7b1dcc83a537666d",
     "far_validation/certificate.py": "3b289c6f92f8d339d9b56b937bd0101af4ab3c815d24b0d7bce97194cf51ff76",
