@@ -1,0 +1,42 @@
+{
+  "boundaries": [
+    "No benchmark outcome access",
+    "Single recorded execution"
+  ],
+  "claims": [
+    {
+      "assumptions": [
+        "sensor-1 calibrated"
+      ],
+      "boundaries": [
+        "recorded sample only"
+      ],
+      "claim_id": "claim.temperature",
+      "contradicts": [],
+      "statement": "Temperature did not exceed the configured threshold",
+      "status": "contradicted",
+      "support": [
+        "trace.sensor-1"
+      ]
+    },
+    {
+      "assumptions": [],
+      "boundaries": [
+        "proposal, not acceptance"
+      ],
+      "claim_id": "claim.new",
+      "contradicts": [],
+      "statement": "A new rule was proposed",
+      "status": "declared",
+      "support": [
+        "proposal.P1"
+      ]
+    }
+  ],
+  "metadata": {
+    "producer": "example"
+  },
+  "package_id": "example-right-v1",
+  "schema": "far-evidence-package/1.0",
+  "subject_id": "run-001"
+}

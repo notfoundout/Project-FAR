@@ -1,0 +1,138 @@
+{
+  "boundary_differences": {
+    "only_left": [],
+    "only_right": []
+  },
+  "claim_boundary": "Mechanical comparison only; no truth, policy, or normative determination.",
+  "comparison_id": "comparison-ce95e80929fa3ab912fcac9d",
+  "findings": [
+    {
+      "claim_id": "claim.action",
+      "classification": "left_only",
+      "finding_id": "finding-886ce26c01ce8b1e69663bf6",
+      "left": {
+        "assumptions": [],
+        "boundaries": [
+          "recorded transition only"
+        ],
+        "claim_id": "claim.action",
+        "contradicts": [],
+        "statement": "The controller entered caution mode",
+        "status": "derived",
+        "support": [
+          "rule.R4",
+          "trace.transition-9"
+        ]
+      },
+      "mechanical_differences": {
+        "assumptions_only_left": [],
+        "assumptions_only_right": [],
+        "boundaries_only_left": [
+          "recorded transition only"
+        ],
+        "boundaries_only_right": [],
+        "statement_equal": false,
+        "status_equal": false,
+        "support_only_left": [
+          "rule.R4",
+          "trace.transition-9"
+        ],
+        "support_only_right": []
+      },
+      "right": null
+    },
+    {
+      "claim_id": "claim.new",
+      "classification": "right_only",
+      "finding_id": "finding-4237c0d637d2fb5d10a276fc",
+      "left": null,
+      "mechanical_differences": {
+        "assumptions_only_left": [],
+        "assumptions_only_right": [],
+        "boundaries_only_left": [],
+        "boundaries_only_right": [
+          "proposal, not acceptance"
+        ],
+        "statement_equal": false,
+        "status_equal": false,
+        "support_only_left": [],
+        "support_only_right": [
+          "proposal.P1"
+        ]
+      },
+      "right": {
+        "assumptions": [],
+        "boundaries": [
+          "proposal, not acceptance"
+        ],
+        "claim_id": "claim.new",
+        "contradicts": [],
+        "statement": "A new rule was proposed",
+        "status": "declared",
+        "support": [
+          "proposal.P1"
+        ]
+      }
+    },
+    {
+      "claim_id": "claim.temperature",
+      "classification": "contradiction",
+      "finding_id": "finding-6f10682dda402773c3f98c01",
+      "left": {
+        "assumptions": [
+          "sensor-1 calibrated"
+        ],
+        "boundaries": [
+          "recorded sample only"
+        ],
+        "claim_id": "claim.temperature",
+        "contradicts": [],
+        "statement": "Temperature exceeded the configured threshold",
+        "status": "observed",
+        "support": [
+          "trace.sensor-1"
+        ]
+      },
+      "mechanical_differences": {
+        "assumptions_only_left": [],
+        "assumptions_only_right": [],
+        "boundaries_only_left": [],
+        "boundaries_only_right": [],
+        "statement_equal": false,
+        "status_equal": false,
+        "support_only_left": [],
+        "support_only_right": []
+      },
+      "right": {
+        "assumptions": [
+          "sensor-1 calibrated"
+        ],
+        "boundaries": [
+          "recorded sample only"
+        ],
+        "claim_id": "claim.temperature",
+        "contradicts": [],
+        "statement": "Temperature did not exceed the configured threshold",
+        "status": "contradicted",
+        "support": [
+          "trace.sensor-1"
+        ]
+      }
+    }
+  ],
+  "left": {
+    "package_id": "example-left-v1",
+    "sha256": "cedc1f121f8a7d8f2c9eb3241bc53698023cd7216bfa6ea06a82bec8c1c52c38"
+  },
+  "right": {
+    "package_id": "example-right-v1",
+    "sha256": "4abf3cc46890a83ad368c4b3b4ba4b477f33ebffa6d62969dcb9bc8c5effcab4"
+  },
+  "schema": "far-evidence-comparison/1.0",
+  "subject_match": true,
+  "summary": {
+    "contradiction": 1,
+    "left_only": 1,
+    "right_only": 1
+  }
+}
