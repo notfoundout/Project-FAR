@@ -2,10 +2,20 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 import tempfile
+import types
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+
+try:
+    import yaml  # type: ignore  # noqa: F401
+except ModuleNotFoundError:
+    yaml_stub = types.ModuleType("yaml")
+    yaml_stub.safe_load = json.loads  # type: ignore[attr-defined]
+    yaml_stub.YAMLError = ValueError  # type: ignore[attr-defined]
+    sys.modules["yaml"] = yaml_stub
 
 import execute_controller as controller
 
