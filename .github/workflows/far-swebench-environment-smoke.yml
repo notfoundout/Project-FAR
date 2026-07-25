@@ -35,7 +35,10 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Validate manifest and dependency-free regression tests
+      - name: Install controller parser dependency
+        run: python -m pip install PyYAML==6.0.2
+
+      - name: Validate manifest and regression tests
         working-directory: ${{ env.CASE_DIR }}
         run: |
           python validate_manifest.py
@@ -43,7 +46,8 @@ jobs:
             test_validate_manifest.py \
             test_run_comparison.py \
             test_prepare_environment_contract.py \
-            test_execute_controller.py
+            test_execute_controller.py \
+            test_execution_workflow_contract.py
           python execute_controller.py validate
 
       - name: Checkout exact SWE-bench revision

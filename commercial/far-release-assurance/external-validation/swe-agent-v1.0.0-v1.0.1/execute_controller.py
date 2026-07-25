@@ -11,6 +11,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 CASE_DIR = Path(__file__).parent
 MANIFEST_PATH = CASE_DIR / "manifest.json"
 LOCK_PATH = CASE_DIR / "environment-freeze" / "environment-lock.json"
@@ -209,17 +211,86 @@ def verify_agent_checkout(agent_repo: Path, full_commit: str) -> None:
             raise SystemExit(f"Pinned SWE-agent interface file is missing: {relative}")
 
 
-def verify_cli_contract() -> None:
+def build_cli_command(executable: str, agent_repo: Path, instance_path: Path, output_path: Path) -> list[str]:
+    return [
+        executable,
+        "run-batch",
+        "--config",
+        str((agent_repo / "config" / "default.yaml").resolve()),
+        "--config",
+        str(CONFIG_PATH.resolve()),
+        "--instances.type=file",
+        f"--instances.path={instance_path.resolve()}",
+        f"--output_dir={output_path.resolve()}",
+        "--num_workers=1",
+        "--progress_bar=False",
+        "--random_delay_multiplier=0",
+        "--raise_exceptions=True",
+        "--redo_existing=False",
+    ]
+
+
+def validate_command_contract(command: list[str], agent_repo: Path, instance_path: Path, output_path: Path) -> None:
     executable = shutil.which("sweagent")
     if executable is None:
         raise SystemExit("Installed SWE-agent console entry point is missing")
-    result = subprocess.run([executable, "run-batch", "--help"], text=True, capture_output=True)
-    combined = result.stdout + "\n" + result.stderr
+    expected = build_cli_command(executable, agent_repo, instance_path, output_path)
+    if command != expected:
+        raise SystemExit("SWE-agent invocation drifted from the canonical command")
+    config_values = [command[index + 1] for index, token in enumerate(command[:-1]) if token == "--config"]
+    expected_configs = [
+        str((agent_repo / "config" / "default.yaml").resolve()),
+        str(CONFIG_PATH.resolve()),
+    ]
+    if config_values != expected_configs:
+        raise SystemExit("SWE-agent invocation does not bind both frozen configuration files in order")
+
+
+def parse_print_config(stdout: str) -> dict[str, Any]:
+    try:
+        parsed = yaml.safe_load(stdout)
+    except yaml.YAMLError as exc:
+        raise SystemExit(f"Pinned SWE-agent --print_config emitted invalid YAML: {exc}") from exc
+    if not isinstance(parsed, dict):
+        raise SystemExit("Pinned SWE-agent --print_config did not emit a configuration mapping")
+    return parsed
+
+
+def validate_parsed_config(parsed: dict[str, Any], instance_path: Path, output_path: Path) -> None:
+    expected = {
+        "output_dir": str(output_path.resolve()),
+        "num_workers": 1,
+        "progress_bar": False,
+        "random_delay_multiplier": 0,
+        "raise_exceptions": True,
+        "redo_existing": False,
+    }
+    for key, value in expected.items():
+        actual = parsed.get(key)
+        if key == "output_dir" and actual is not None:
+            actual = str(Path(str(actual)).resolve())
+        if actual != value:
+            raise SystemExit(f"Pinned SWE-agent parsed configuration mismatch: {key}")
+    instances = parsed.get("instances")
+    if not isinstance(instances, dict):
+        raise SystemExit("Pinned SWE-agent parsed configuration is missing instances")
+    if instances.get("type") != "file":
+        raise SystemExit("Pinned SWE-agent parsed configuration did not preserve file instance source")
+    actual_path = instances.get("path")
+    if actual_path is None or Path(str(actual_path)).resolve() != instance_path.resolve():
+        raise SystemExit("Pinned SWE-agent parsed configuration did not preserve the frozen instance path")
+
+
+def verify_cli_contract(command: list[str], agent_repo: Path, instance_path: Path, output_path: Path) -> dict[str, Any]:
+    validate_command_contract(command, agent_repo, instance_path, output_path)
+    parse_command = [*command, "--print_config"]
+    result = subprocess.run(parse_command, cwd=agent_repo, text=True, capture_output=True)
     if result.returncode != 0:
-        raise SystemExit(f"Pinned SWE-agent run-batch help failed:\n{combined[-4000:]}")
-    missing = [token for token in ("--config", "--instances", "--output_dir", "--num_workers") if token not in combined]
-    if missing:
-        raise SystemExit(f"Pinned SWE-agent CLI contract mismatch; missing {missing}")
+        combined = result.stdout + "\n" + result.stderr
+        raise SystemExit(f"Pinned SWE-agent invocation failed parse-only validation:\n{combined[-4000:]}")
+    parsed = parse_print_config(result.stdout)
+    validate_parsed_config(parsed, instance_path, output_path)
+    return parsed
 
 
 def verify_local_image(lock: dict[str, Any]) -> None:
@@ -282,7 +353,6 @@ def execute_one(agent_repo: Path) -> int:
     if not secret:
         raise SystemExit("GEMINI_API_KEY is required; no model call was started")
     verify_agent_checkout(agent_repo, run["full_commit"])
-    verify_cli_contract()
 
     run_dir = RUNS_DIR / run["run_id"]
     swe_output = run_dir / "sweagent-output"
@@ -291,23 +361,25 @@ def execute_one(agent_repo: Path) -> int:
     instance_path = run_dir / "instance.json"
     build_instance_file(task, lock, instance_path)
     executable = shutil.which("sweagent")
-    assert executable is not None
-    command = [
-        executable, "run-batch",
-        "--config", str(agent_repo / "config" / "default.yaml"),
-        "--config", str(CONFIG_PATH.resolve()),
-        "--instances.type=file",
-        f"--instances.path={instance_path.resolve()}",
-        f"--output_dir={swe_output.resolve()}",
-        "--num_workers=1", "--progress_bar=False", "--random_delay_multiplier=0",
-        "--raise_exceptions=True", "--redo_existing=False",
-    ]
+    if executable is None:
+        raise SystemExit("Installed SWE-agent console entry point is missing")
+    command = build_cli_command(executable, agent_repo, instance_path, swe_output)
+    parsed_config = verify_cli_contract(command, agent_repo, instance_path, swe_output)
+
     invocation = {
-        "schema": "far-swe-agent-invocation/1.0", "run_id": run["run_id"], "release": run["release"],
-        "commit": run["full_commit"], "task_id": task["instance_id"], "image": lock["immutable_image_reference"],
-        "agent_config_sha256": sha256_file(CONFIG_PATH), "execution_plan_sha256": plan_sha256,
-        "command": command, "environment_variables_present": {"GEMINI_API_KEY": True},
-        "benchmark_outcomes_accessible": False, "started_at": utc_now(),
+        "schema": "far-swe-agent-invocation/1.1",
+        "run_id": run["run_id"],
+        "release": run["release"],
+        "commit": run["full_commit"],
+        "task_id": task["instance_id"],
+        "image": lock["immutable_image_reference"],
+        "agent_config_sha256": sha256_file(CONFIG_PATH),
+        "execution_plan_sha256": plan_sha256,
+        "command": command,
+        "parsed_contract": parsed_config,
+        "environment_variables_present": {"GEMINI_API_KEY": True},
+        "benchmark_outcomes_accessible": False,
+        "started_at": utc_now(),
     }
     write_json(run_dir / "invocation.json", invocation)
     run["attempts"] += 1
@@ -326,11 +398,18 @@ def execute_one(agent_repo: Path) -> int:
     (run_dir / "stdout.log").write_text(stdout, encoding="utf-8", errors="replace")
     (run_dir / "stderr.log").write_text(stderr, encoding="utf-8", errors="replace")
     record: dict[str, Any] = {
-        "schema": RUN_RECORD_SCHEMA, "run_id": run["run_id"], "release": run["release"],
-        "commit": run["full_commit"], "repetition": run["repetition"], "task_id": task["instance_id"],
-        "image": lock["immutable_image_reference"], "execution_plan_sha256": plan_sha256,
-        "returncode": result.returncode, "duration_seconds": round(duration, 3),
-        "completed_at": utc_now(), "benchmark_outcomes_accessed": False,
+        "schema": RUN_RECORD_SCHEMA,
+        "run_id": run["run_id"],
+        "release": run["release"],
+        "commit": run["full_commit"],
+        "repetition": run["repetition"],
+        "task_id": task["instance_id"],
+        "image": lock["immutable_image_reference"],
+        "execution_plan_sha256": plan_sha256,
+        "returncode": result.returncode,
+        "duration_seconds": round(duration, 3),
+        "completed_at": utc_now(),
+        "benchmark_outcomes_accessed": False,
     }
     if result.returncode != 0:
         failure_state = classify_failure(stdout, stderr)
@@ -362,7 +441,6 @@ def validate_only(agent_repo: Path | None) -> None:
     pending = next_pending(state) if state is not None else None
     if agent_repo is not None and pending is not None:
         verify_agent_checkout(agent_repo, pending["full_commit"])
-        verify_cli_contract()
     print(json.dumps({"execution_plan_present": plan_sha256 is not None, "next_run": pending, "state": state}, indent=2, sort_keys=True))
 
 
