@@ -85,6 +85,7 @@ class PinnedCliContractTests(unittest.TestCase):
 
     def parsed_config(self) -> dict[str, object]:
         return {
+            "agent": {},
             "output_dir": str(self.output.resolve()),
             "num_workers": 1,
             "progress_bar": False,
@@ -134,6 +135,18 @@ class PinnedCliContractTests(unittest.TestCase):
         payload["instances"] = {"type": "file", "path": self.instance.resolve()}
         parsed = controller.parse_print_config(yaml.dump(payload))
         controller.validate_parsed_config(parsed, self.instance, self.output)
+
+    def test_pinned_diagnostic_preamble_is_removed_before_safe_parse(self) -> None:
+        payload = self.parsed_config()
+        payload["output_dir"] = self.output.resolve()
+        payload["instances"] = {"type": "file", "path": self.instance.resolve()}
+        stdout = "image: Pulling from frozen/repository\nStatus: Image is up to date\n" + yaml.dump(payload)
+        parsed = controller.parse_print_config(stdout)
+        controller.validate_parsed_config(parsed, self.instance, self.output)
+
+    def test_incomplete_mapping_after_preamble_is_rejected(self) -> None:
+        with self.assertRaises(SystemExit):
+            controller.parse_print_config("diagnostic\nagent:\n  model: {}\n")
 
     def test_arbitrary_python_object_yaml_tag_remains_rejected(self) -> None:
         malicious = "value: !!python/object/apply:os.system ['echo forbidden']\n"
