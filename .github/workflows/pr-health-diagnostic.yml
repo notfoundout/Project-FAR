@@ -1,0 +1,33 @@
+name: PR Health Diagnostic
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/pr-health-diagnostic.yml'
+      - '.github/workflows/far-swe-agent-postprocess.yml'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1/**'
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml
+      - name: Capture full canonical health output
+        run: |
+          set +e
+          python tools/repo_health_check.py --full > "$RUNNER_TEMP/repo-health.log" 2>&1
+          RC=$?
+          echo "$RC" > "$RUNNER_TEMP/repo-health.exit-code"
+          cat "$RUNNER_TEMP/repo-health.log"
+          exit 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr-health-diagnostic-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/repo-health.log
+            ${{ runner.temp }}/repo-health.exit-code
+          retention-days: 3
