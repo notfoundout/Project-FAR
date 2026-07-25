@@ -56,6 +56,24 @@ class RepositoryTruthTests(unittest.TestCase):
                 truth.main()
         self.assertIn("historical W3.5 dashboard", str(caught.exception))
 
+    def test_release_badge_tag_pin_fails_closed(self) -> None:
+        original = truth.read_text
+
+        def mutated(path: str) -> str:
+            text = original(path)
+            if path == "README.md":
+                return text.replace(
+                    "](https://github.com/notfoundout/Project-FAR/releases/latest)\n",
+                    "](https://github.com/notfoundout/Project-FAR/releases/tag/v1.0.0)\n",
+                    1,
+                )
+            return text
+
+        with mock.patch.object(truth, "read_text", side_effect=mutated):
+            with self.assertRaises(SystemExit) as caught:
+                truth.main()
+        self.assertIn("latest-release route", str(caught.exception))
+
     def test_release_badge_version_drift_fails_closed(self) -> None:
         original = truth.read_text
 
