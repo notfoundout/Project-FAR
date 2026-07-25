@@ -10,12 +10,14 @@ from pathlib import Path
 from unittest.mock import patch
 
 try:
-    import yaml  # type: ignore  # noqa: F401
+    import yaml  # type: ignore
 except ModuleNotFoundError:
     yaml_stub = types.ModuleType("yaml")
     yaml_stub.safe_load = json.loads  # type: ignore[attr-defined]
+    yaml_stub.dump = json.dumps  # type: ignore[attr-defined]
     yaml_stub.YAMLError = ValueError  # type: ignore[attr-defined]
     sys.modules["yaml"] = yaml_stub
+    yaml = yaml_stub  # type: ignore[assignment]
 
 import execute_controller as controller
 
@@ -125,6 +127,18 @@ class PinnedCliContractTests(unittest.TestCase):
         parsed["instances"] = {"type": "file", "path": str(self.root / "other.json")}
         with self.assertRaisesRegex(SystemExit, "instance path"):
             controller.validate_parsed_config(parsed, self.instance, self.output)
+
+    def test_pinned_pathlib_yaml_tags_are_safe_loadable(self) -> None:
+        payload = self.parsed_config()
+        payload["output_dir"] = self.output.resolve()
+        payload["instances"] = {"type": "file", "path": self.instance.resolve()}
+        parsed = controller.parse_print_config(yaml.dump(payload))
+        controller.validate_parsed_config(parsed, self.instance, self.output)
+
+    def test_arbitrary_python_object_yaml_tag_remains_rejected(self) -> None:
+        malicious = "value: !!python/object/apply:os.system ['echo forbidden']\n"
+        with self.assertRaises(SystemExit):
+            controller.parse_print_config(malicious)
 
     @patch("execute_controller.shutil.which", return_value="/usr/bin/sweagent")
     @patch("execute_controller.subprocess.run")
