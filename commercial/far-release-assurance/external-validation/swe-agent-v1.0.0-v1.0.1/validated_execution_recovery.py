@@ -65,18 +65,20 @@ def install(core: Any) -> Any:
     def reconcile(state: dict[str, Any], task_id: str) -> bool:
         changed = original_reconcile(state, task_id)
         earlier_invalid = False
+        active_seen = False
         for run in state["runs"]:
             if run["state"] == "complete":
                 continue
             if run["state"] != "running":
                 earlier_invalid = True
                 continue
-            if earlier_invalid:
+            if earlier_invalid or active_seen:
                 outcome = core._sequence_violation_outcome(run)
                 core._apply_state_correction(state, run, outcome, {})
                 changed = True
                 continue
 
+            active_seen = True
             record_path = core._record_path(run)
             record = _read_record(core.base, record_path)
             if record is None:
