@@ -297,7 +297,7 @@ class ValidatedControllerTests(unittest.TestCase):
             "run_id": run_id,
             "slot": slot,
             "state": state,
-            "attempts": 1,
+            "attempts": 0 if state == "pending" else 1,
             "trajectory_artifact": f"{run_id}.traj",
             "completed_at": "old",
             "trajectory_sha256": "old-hash",
