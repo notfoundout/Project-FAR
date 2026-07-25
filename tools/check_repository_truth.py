@@ -57,18 +57,27 @@ def main() -> int:
 
     readme = read_text("README.md")
     required_phrases = (
+        "The newest documented GitHub repository release is",
+        "These are separate version surfaces",
         "The deductive UPP queue is closed.",
         "The active phase is independent criticism, countermodel search, proof review, kernel-checked reconstruction, bounded replication, and application-correspondence testing.",
         "Historical bounded-program status",
     )
     for phrase in required_phrases:
         if phrase not in readme:
-            fail(f"README missing required status authority phrase: {phrase}")
+            fail(f"README missing required authority phrase: {phrase}")
 
     if "Current project phase: W3.5" in readme:
         fail("historical W3.5 dashboard is still presented as the current project phase")
-    if "/releases/tag/v0.4.0" in readme:
-        fail("README release surface pins stale v0.4.0 tag")
+
+    badge_pattern = re.compile(
+        r'^\[!\[Releases\]\([^\n]+\)\]\(([^\n]+)\)$', re.MULTILINE
+    )
+    badge = badge_pattern.search(readme)
+    if not badge:
+        fail("README release badge is missing or malformed")
+    if "/releases/tag/" in badge.group(1):
+        fail("README release badge pins a specific release tag instead of the releases index")
 
     report = {
         "schema": authority["schema"],
