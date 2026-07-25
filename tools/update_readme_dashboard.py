@@ -9,11 +9,11 @@ def block():
  s=j('theory/evaluation/reasoning-and-contrast-scope-v1.0.json'); d=j('theory/evaluation/w3-5-factorization-result-v1.0.json')['dimensions']; x=j('theory/evaluation/w3-5-reasoning-discrimination-result-v1.0.json')['registered_results']; q=j('theory/evaluation/w3-5-fara-specificity-result-v1.0.json')['result']; c=j('theory/evaluation/w3-5-candidate-test-result-v1.0.json'); a=c['axis_counts']['structural_commitment_necessity']; n=(len(s['positive_instances']),len(s['contrast_instances']),len(s['disputed_instances']))
  return f'''{B}
 
-## Repository Status
+## Historical bounded-program status
 
-- Current project phase: W3.5 machinery/cost, claim-impact, and preserved-failure closure
-- Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
-- W5 status: blocked by incomplete `W3.5-SDG-001`
+- Historical bounded-program phase: W3.5 machinery/cost, claim-impact, and preserved-failure closure
+- Repository health status at generation: PASS ([health checks](docs/maintenance/repository-health-checks.md))
+- Historical W5 status: blocked by incomplete `W3.5-SDG-001`
 
 ## Track Status
 
@@ -33,7 +33,7 @@ def block():
 - Structural necessity: unresolved {a['unresolved']}; supported {a['supported_at_registered_scope']}; refuted {a['refuted_at_registered_scope']}; partial {a['partial']}.
 - Candidate evidence: complete project-authored internal execution; not independent replication.
 
-## Top Priority Tasks
+## Historical Priority Tasks
 
 ### STRATEGIC-004: Complete W3.5 closure
 
@@ -43,7 +43,7 @@ def block():
 
 - Remains blocked until every required W3.5 artifact is complete and the gate is evidence-backed resolved.
 
-## Current Roadmap
+## Historical Roadmap
 
 - REP: W0-W4 complete at bounded `S_core` scope.
 - ADJ: close machinery/cost, claim-impact, and preserved-failure evidence.

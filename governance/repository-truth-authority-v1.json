@@ -1,0 +1,26 @@
+{
+  "schema": "project-far/repository-truth-authority/1.0",
+  "package_version": {
+    "authority": "pyproject.toml:[project].version",
+    "mirrors": [
+      "mechanization/far_mechanization/__init__.py:__version__",
+      "mechanization/far_mechanization/cli.py:CLI_VERSION"
+    ]
+  },
+  "project_status": {
+    "authority": "README.md:Central result and Post-terminal phase",
+    "current_phase": "post-terminal independent evaluation",
+    "historical_surfaces": [
+      "README.md:generated bounded REP/ADJ/W3.5 dashboard"
+    ]
+  },
+  "release_surface": {
+    "authority": "GitHub releases index",
+    "readme_link_must_not_pin_stale_tag": true
+  },
+  "claim_boundaries": [
+    "No historical dashboard may identify itself as the current repository phase.",
+    "Package metadata versions must match executable version declarations.",
+    "A repository release link must not imply that package version and latest GitHub release are identical unless separately verified."
+  ]
+}

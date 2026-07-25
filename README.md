@@ -1,9 +1,13 @@
 # Project FAR
 
-[![Release](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases/tag/v0.4.0)
+[![Release v0.4.0](https://img.shields.io/github/v/release/notfoundout/Project-FAR?include_prereleases&label=release)](https://github.com/notfoundout/Project-FAR/releases)
 [![Verify Theory](https://github.com/notfoundout/Project-FAR/actions/workflows/repo-health.yml/badge.svg)](https://github.com/notfoundout/Project-FAR/actions/workflows/repo-health.yml)
 
 Project FAR is a foundational framework for representing, analyzing, and comparing structured, explicit, and auditable reasoning.
+
+## Latest release: v0.4.0
+
+The newest documented GitHub repository release is [v0.4.0](https://github.com/notfoundout/Project-FAR/releases/tag/v0.4.0). The executable package metadata currently declares version `0.6.0`. These are separate version surfaces: the release tag records the newest published repository release, while `pyproject.toml` is authoritative for the installable package version.
 
 ## Central result
 
@@ -24,15 +28,15 @@ Public evaluation is authorized only when the exact theorem, premises, mechaniza
 
 The deductive UPP queue is closed. The active phase is independent criticism, countermodel search, proof review, kernel-checked reconstruction, bounded replication, and application-correspondence testing. There is no `UPP-W16`; any stronger deductive claim requires a newly registered program.
 
-The generated dashboard below remains the canonical status surface for the older bounded REP/ADJ/W3.5 program and must not be read as overriding the later UPP terminal adjudication.
+The generated dashboard below is a historical status surface for the older bounded REP/ADJ/W3.5 program. It does not override the later UPP terminal adjudication or define the repository's current phase.
 
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
-## Repository Status
+## Historical bounded-program status
 
-- Current project phase: W3.5 machinery/cost, claim-impact, and preserved-failure closure
-- Repository health status: PASS ([health checks](docs/maintenance/repository-health-checks.md))
-- W5 status: blocked by incomplete `W3.5-SDG-001`
+- Historical bounded-program phase: W3.5 machinery/cost, claim-impact, and preserved-failure closure
+- Repository health status at generation: PASS ([health checks](docs/maintenance/repository-health-checks.md))
+- Historical W5 status: blocked by incomplete `W3.5-SDG-001`
 
 ## Track Status
 
@@ -52,7 +56,7 @@ The generated dashboard below remains the canonical status surface for the older
 - Structural necessity: unresolved 0; supported 7; refuted 5; partial 0.
 - Candidate evidence: complete project-authored internal execution; not independent replication.
 
-## Top Priority Tasks
+## Historical Priority Tasks
 
 ### STRATEGIC-004: Complete W3.5 closure
 
@@ -62,7 +66,7 @@ The generated dashboard below remains the canonical status surface for the older
 
 - Remains blocked until every required W3.5 artifact is complete and the gate is evidence-backed resolved.
 
-## Current Roadmap
+## Historical Roadmap
 
 - REP: W0-W4 complete at bounded `S_core` scope.
 - ADJ: close machinery/cost, claim-impact, and preserved-failure evidence.
