@@ -30,11 +30,13 @@ At most three remediation tracks may be active simultaneously:
 
 New frameworks and major product categories remain deferred unless a recorded external-evidence trigger justifies activation.
 
-## Current active queue
+## Current queue
 
-- Research: original ID 3, complete the frozen SWE-agent release-assurance case. Environment construction, immutable image publication, preflight, and planning are complete. Four sequential runs, FAR evidence compilation, blinded comparison freeze, outcome reveal, and final publication remain.
-- Commercial: original ID 2, define one stable compare/adjudicate CLI/API, initially bounded to the SWE-agent case requirements.
-- Maintenance: validate original IDs 13 and 23–25 against current `main`, then remove confirmed repository-truth defects.
+- Research — active: original ID 3, complete the frozen SWE-agent release-assurance case. Environment construction, immutable image publication, preflight, planning, execution control, and post-execution boundary tooling are implemented. The first live run produced a retryable provider/quota failure rather than an accepted completion. Four internally validated runs, primary freeze verification, outcome reveal, and bounded publication remain incomplete.
+- Commercial — resolved for the registered item: original ID 2 was completed through the bounded compare/adjudicate interface in PR #369 and issue #368. No replacement commercial remediation item is active under this control.
+- Maintenance — resolved for the registered items: original IDs 13 and 23–25 were revalidated and completed in PR #371 and issue #370. No replacement maintenance remediation item is active under this control.
+
+Issue #364 is the operational queue authority. This document must be updated when that issue accepts a new active item or records a closure that changes the queue above.
 
 ## Release gates
 
