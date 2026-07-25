@@ -1,10 +1,11 @@
-"""Transparent PyYAML shim with narrow pathlib-tag support.
+"""Transparent PyYAML shim for pinned SWE-agent configuration output.
 
-The pinned SWE-agent releases serialize ``Path`` objects in ``--print_config``
-using Python-specific YAML tags. FAR must parse those exact tags while still
-rejecting arbitrary Python object construction. This module delegates to the
-installed PyYAML package, then adds only the required pathlib constructors to
-``SafeLoader``.
+The pinned releases serialize ``Path`` objects with Python-specific YAML tags,
+may emit sets, and may write deterministic deployment diagnostics before the
+final ``--print_config`` mapping. FAR accepts only the exact pathlib tags, only
+a suffix with the complete RunBatchConfig shape, and normalizes that mapping to
+deterministic JSON-safe evidence. Arbitrary Python object construction remains
+rejected.
 """
 
 from __future__ import annotations
@@ -51,3 +52,60 @@ for _module in _PATHLIB_MODULES:
             f"tag:yaml.org,2002:python/object/apply:{_module}.{_class_name}",
             _construct_path,
         )
+
+
+_REAL_SAFE_LOAD = safe_load
+_REQUIRED_RUN_BATCH_KEYS = {
+    "agent",
+    "instances",
+    "output_dir",
+    "num_workers",
+    "progress_bar",
+    "random_delay_multiplier",
+    "raise_exceptions",
+    "redo_existing",
+}
+
+
+def _is_complete_run_batch_config(value) -> bool:
+    return isinstance(value, dict) and _REQUIRED_RUN_BATCH_KEYS <= set(value)
+
+
+def _json_safe(value):
+    if isinstance(value, _Path):
+        return str(value)
+    if isinstance(value, dict):
+        return {str(key): _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item) for item in value]
+    if isinstance(value, (set, frozenset)):
+        normalized = [_json_safe(item) for item in value]
+        return sorted(normalized, key=lambda item: repr(item))
+    return value
+
+
+def _validated_config(value):
+    return _json_safe(value) if _is_complete_run_batch_config(value) else value
+
+
+def safe_load(stream):
+    """Load ordinary YAML, or one complete pinned config after diagnostics."""
+    try:
+        return _validated_config(_REAL_SAFE_LOAD(stream))
+    except YAMLError as original_error:
+        text = stream.read() if hasattr(stream, "read") else str(stream)
+        lines = text.splitlines()
+        candidates = []
+        for index, line in enumerate(lines):
+            if line != "agent:":
+                continue
+            suffix = "\n".join(lines[index:]) + "\n"
+            try:
+                parsed = _REAL_SAFE_LOAD(suffix)
+            except YAMLError:
+                continue
+            if _is_complete_run_batch_config(parsed):
+                candidates.append(_json_safe(parsed))
+        if len(candidates) == 1:
+            return candidates[0]
+        raise original_error
