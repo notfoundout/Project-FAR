@@ -7,6 +7,7 @@ import sys
 import tempfile
 import types
 import unittest
+from unittest import mock
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -169,6 +170,21 @@ class ExecutionOutcomeTests(unittest.TestCase):
         self.assertEqual(outcome.state, "failed_terminal")
         self.assertFalse(outcome.patch_present)
 
+    def test_missing_prediction_with_provider_marker_fails_closed(self) -> None:
+        self.write_status("exit_error")
+        outcome = self.classify(stderr="HTTP 429 RESOURCE_EXHAUSTED")
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("missing prediction evidence", outcome.reason)
+
+    def test_malformed_status_with_provider_marker_fails_closed(self) -> None:
+        (self.output / "run_batch_exit_statuses.yaml").write_text(
+            "instances_by_exit_status: [not-a-mapping]\n", encoding="utf-8"
+        )
+        self.write_prediction(None)
+        outcome = self.classify(stderr="HTTP 503 service unavailable")
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("not a mapping", outcome.reason)
+
     def test_conflicting_duplicate_prediction_evidence_is_terminal(self) -> None:
         self.write_status("submitted")
         self.write_prediction("patch-a")
@@ -190,7 +206,7 @@ class ExecutionOutcomeTests(unittest.TestCase):
         self.assertEqual(outcome.state, "failed_terminal")
         self.assertIn("conflicting prediction evidence", outcome.reason)
 
-    def test_consistent_duplicate_prediction_evidence_is_accepted(self) -> None:
+    def test_consistent_duplicate_prediction_evidence_is_terminal(self) -> None:
         self.write_status("submitted")
         self.write_prediction("patch-a")
         (self.output / "preds.json").write_text(
@@ -205,8 +221,56 @@ class ExecutionOutcomeTests(unittest.TestCase):
             encoding="utf-8",
         )
         outcome = self.classify()
-        self.assertEqual(outcome.state, "complete")
-        self.assertIn(";", outcome.evidence["prediction_path"])
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("duplicate prediction evidence", outcome.reason)
+
+    def test_duplicate_yaml_status_key_is_terminal(self) -> None:
+        (self.output / "run_batch_exit_statuses.yaml").write_text(
+            "instances_by_exit_status:\n"
+            f"  submitted: [{TASK_ID}]\n"
+            f"  submitted: [{TASK_ID}]\n",
+            encoding="utf-8",
+        )
+        self.write_prediction("patch")
+        outcome = self.classify()
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("duplicate key", outcome.reason)
+
+    def test_symlinked_prediction_is_terminal(self) -> None:
+        self.write_status("submitted")
+        external = self.output.parent / "external.pred"
+        external.write_text(
+            json.dumps({"instance_id": TASK_ID, "model_patch": "patch"}),
+            encoding="utf-8",
+        )
+        (self.output / f"{TASK_ID}.pred").symlink_to(external)
+        outcome = self.classify()
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("not a regular file", outcome.reason)
+
+    def test_symlinked_output_directory_is_terminal(self) -> None:
+        external = self.output / "external-output"
+        external.mkdir()
+        (external / "run_batch_exit_statuses.yaml").write_text(
+            "instances_by_exit_status:\n"
+            f"  submitted: [{TASK_ID}]\n",
+            encoding="utf-8",
+        )
+        (external / f"{TASK_ID}.pred").write_text(
+            json.dumps({"instance_id": TASK_ID, "model_patch": "patch"}),
+            encoding="utf-8",
+        )
+        linked = self.output / "linked"
+        linked.symlink_to(external, target_is_directory=True)
+        outcome = classify_execution(
+            outer_returncode=0,
+            swe_output=linked,
+            task_id=TASK_ID,
+            stdout="",
+            stderr="",
+        )
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("not a local regular directory", outcome.reason)
 
     def test_malformed_exact_prediction_is_terminal(self) -> None:
         self.write_status("submitted")
@@ -418,6 +482,40 @@ class ValidatedControllerTests(unittest.TestCase):
         hashes = self.controller._current_artifact_hashes(run_dir)
 
         self.assertEqual(set(hashes), {"stdout.log"})
+
+    def test_current_hashes_reject_symlinked_external_evidence(self) -> None:
+        run_dir = self.base.RUNS_DIR / "run"
+        run_dir.mkdir(parents=True)
+        external = self.root / "external.log"
+        external.write_text("external", encoding="utf-8")
+        (run_dir / "stdout.log").symlink_to(external)
+        with self.assertRaisesRegex(SystemExit, "contains a symlink"):
+            self.controller._current_artifact_hashes(run_dir)
+
+    def test_interrupted_archive_rolls_back_all_moved_evidence(self) -> None:
+        run = self.make_run("v1.0.0-r1", 1, "failed_retryable")
+        run_dir = self.base.RUNS_DIR / run["run_id"]
+        run_dir.mkdir(parents=True)
+        first = run_dir / "instance.json"
+        second = run_dir / "stdout.log"
+        first.write_text("instance", encoding="utf-8")
+        second.write_text("stdout", encoding="utf-8")
+        real_move = self.controller.shutil.move
+        calls = 0
+
+        def interrupted(source, destination):
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise OSError("simulated interruption")
+            return real_move(source, destination)
+
+        with mock.patch.object(self.controller.shutil, "move", side_effect=interrupted):
+            with self.assertRaisesRegex(OSError, "simulated interruption"):
+                self.controller._archive_previous_attempt(run, run_dir)
+        self.assertEqual(first.read_text(encoding="utf-8"), "instance")
+        self.assertEqual(second.read_text(encoding="utf-8"), "stdout")
+        self.assertFalse((run_dir / "attempts").exists())
 
 
 if __name__ == "__main__":

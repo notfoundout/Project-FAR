@@ -37,6 +37,8 @@ def _current_artifact_hashes(run_dir: Path) -> dict[str, str]:
         relative = path.relative_to(run_dir)
         if relative.parts[0] == "attempts" or relative.name in _CURRENT_HASH_EXCLUSIONS:
             continue
+        if path.is_symlink():
+            raise SystemExit(f"Current attempt contains a symlink: {relative}")
         hashes[str(relative)] = base.sha256_file(path)
     return hashes
 
@@ -266,14 +268,32 @@ def _archive_previous_attempt(
             f"Run {run['run_id']} has execution artifacts but no recorded attempt"
         )
     archive_dir = _next_archive_dir(run_dir, previous_attempt)
+    unsafe = [path for path in existing if path.is_symlink()]
+    if unsafe:
+        raise SystemExit(
+            "Refusing to archive symlinked attempt evidence: "
+            + ", ".join(str(path) for path in unsafe)
+        )
     archive_dir.mkdir(parents=True, exist_ok=False)
-    for path in existing:
-        if path == trajectory:
-            destination = archive_dir / "trajectory" / path.name
-        else:
-            destination = archive_dir / path.name
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(path), str(destination))
+    moved: list[tuple[Path, Path]] = []
+    try:
+        for path in existing:
+            if path == trajectory:
+                destination = archive_dir / "trajectory" / path.name
+            else:
+                destination = archive_dir / path.name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(path), str(destination))
+            moved.append((path, destination))
+    except BaseException:
+        for source, destination in reversed(moved):
+            source.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(destination), str(source))
+        shutil.rmtree(archive_dir, ignore_errors=True)
+        attempts_root = run_dir / "attempts"
+        if attempts_root.is_dir() and not any(attempts_root.iterdir()):
+            attempts_root.rmdir()
+        raise
     return str(archive_dir.relative_to(base.OUTPUT_DIR))
 
 

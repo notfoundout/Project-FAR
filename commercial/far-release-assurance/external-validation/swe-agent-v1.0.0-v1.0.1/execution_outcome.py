@@ -59,11 +59,55 @@ class ExecutionOutcome:
         return asdict(self)
 
 
+class _UniqueKeyLoader(yaml.SafeLoader):
+    """Safe YAML loader that rejects mappings whose meaning is ambiguous."""
+
+
+def _construct_unique_mapping(loader: yaml.SafeLoader, node: yaml.MappingNode):
+    loader.flatten_mapping(node)
+    mapping: dict[Any, Any] = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=False)
+        try:
+            duplicate = key in mapping
+        except TypeError as exc:
+            raise yaml.constructor.ConstructorError(
+                "while constructing a mapping",
+                node.start_mark,
+                "found an unhashable mapping key",
+                key_node.start_mark,
+            ) from exc
+        if duplicate:
+            raise yaml.constructor.ConstructorError(
+                "while constructing a mapping",
+                node.start_mark,
+                f"found duplicate key {key!r}",
+                key_node.start_mark,
+            )
+        mapping[key] = loader.construct_object(value_node, deep=False)
+    return mapping
+
+
+_UniqueKeyLoader.add_constructor(
+    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _construct_unique_mapping
+)
+
+
+def _require_local_regular_file(path: Path, root: Path, label: str) -> None:
+    if path.is_symlink() or not path.is_file():
+        raise ValueError(f"{label} is not a regular file: {path}")
+    try:
+        path.resolve().relative_to(root.resolve())
+    except ValueError as exc:
+        raise ValueError(f"{label} escapes execution output: {path}") from exc
+
+
 def _read_yaml_mapping(path: Path) -> dict[str, Any]:
     if not path.is_file():
         raise ValueError(f"missing internal status file: {path}")
     try:
-        value = yaml.safe_load(path.read_text(encoding="utf-8"))
+        _require_local_regular_file(path, path.parent, "internal status file")
+        value = yaml.load(path.read_text(encoding="utf-8"), Loader=_UniqueKeyLoader)
     except (OSError, yaml.YAMLError) as exc:
         raise ValueError(f"cannot parse internal status file: {path}: {exc}") from exc
     if not isinstance(value, dict):
@@ -145,6 +189,7 @@ def _extract_prediction(
 
 def _read_json(path: Path) -> Any:
     try:
+        _require_local_regular_file(path, path.parent, "prediction file")
         return json.loads(path.read_text(encoding="utf-8"))
     except OSError as exc:
         raise ValueError(f"cannot read prediction file: {path}: {exc}") from exc
@@ -175,16 +220,15 @@ def read_prediction(swe_output: Path, task_id: str) -> tuple[str | None, bool, s
             matches.append((patch, no_change, str(path)))
 
     if not matches:
-        return None, False, ""
-
-    signatures = {(patch, no_change) for patch, no_change, _ in matches}
-    if len(signatures) != 1:
+        raise ValueError("missing prediction evidence for target instance")
+    if len(matches) != 1:
+        signatures = {(patch, no_change) for patch, no_change, _ in matches}
+        kind = "conflicting" if len(signatures) != 1 else "duplicate"
         raise ValueError(
-            "conflicting prediction evidence for target instance: "
+            f"{kind} prediction evidence for target instance: "
             + ", ".join(path for _, _, path in matches)
         )
-    patch, no_change = next(iter(signatures))
-    return patch, no_change, ";".join(path for _, _, path in matches)
+    return matches[0]
 
 
 def _provider_outcome(
@@ -236,13 +280,25 @@ def classify_execution(
     retryable_provider_detected = any(
         marker in combined for marker in RETRYABLE_PROVIDER_MARKERS
     )
+    if swe_output.is_symlink() or not swe_output.is_dir():
+        return ExecutionOutcome(
+            "terminal_agent_error",
+            "failed_terminal",
+            False,
+            None,
+            False,
+            False,
+            f"SWE-agent output is not a local regular directory: {swe_output}",
+            {"outer_returncode": outer_returncode, "swe_output": str(swe_output)},
+        )
     status_files = sorted(swe_output.rglob("run_batch_exit_statuses.yaml"))
+    unsafe_status_files = [path for path in status_files if path.is_symlink()]
     base_evidence: dict[str, Any] = {
         "outer_returncode": outer_returncode,
         "status_files": [str(path) for path in status_files],
     }
 
-    if len(status_files) != 1:
+    if len(status_files) != 1 or unsafe_status_files:
         provider = _provider_outcome(
             quota_detected=quota_detected,
             retryable_provider_detected=retryable_provider_detected,
@@ -261,7 +317,8 @@ def classify_execution(
             None,
             False,
             False,
-            f"expected exactly one run_batch_exit_statuses.yaml, found {len(status_files)}",
+            "expected exactly one regular run_batch_exit_statuses.yaml, "
+            f"found {len(status_files)} with {len(unsafe_status_files)} symlinks",
             base_evidence,
         )
 
@@ -271,17 +328,6 @@ def classify_execution(
         )
     except ValueError as exc:
         evidence = {**base_evidence, "status_file": str(status_files[0])}
-        provider = _provider_outcome(
-            quota_detected=quota_detected,
-            retryable_provider_detected=retryable_provider_detected,
-            internal_status=None,
-            patch_present=False,
-            no_change=False,
-            evidence=evidence,
-            context="with malformed internal status evidence",
-        )
-        if provider is not None:
-            return provider
         return ExecutionOutcome(
             "terminal_agent_error",
             "failed_terminal",
@@ -303,17 +349,6 @@ def classify_execution(
             "prediction_error": str(exc),
             "internal_summary": status_payload,
         }
-        provider = _provider_outcome(
-            quota_detected=quota_detected,
-            retryable_provider_detected=retryable_provider_detected,
-            internal_status=internal_status,
-            patch_present=False,
-            no_change=False,
-            evidence=evidence,
-            context="before valid prediction evidence was available",
-        )
-        if provider is not None:
-            return provider
         return ExecutionOutcome(
             "terminal_agent_error",
             "failed_terminal",
