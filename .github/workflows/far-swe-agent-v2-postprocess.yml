@@ -34,7 +34,6 @@ env:
   SOURCE_ARTIFACT_SHA256: 7277987300d4204c5108997b3ac6c0cde02c9a4d498178a702ea7a6cb0c19756
   HARNESS_COMMIT: f7bbbb2ccdf479001d6467c9e34af59e44a840f9
   FROZEN_IMAGE: ghcr.io/notfoundout/project-far-swebench-scikit-learn-14125@sha256:66615e837a9fdc6faf75dab3db90bf469364204b068af9da4d570fba8ab00ab4
-  FROZEN_IMAGE_ID: sha256:cfd8abd0e5c2670669d259ce1ba2787581fb7aedbcf15c195a8a9d6ce28af103
   EVAL_IMAGE_TAG: far-v2-frozen/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14125:locked
 
 concurrency:
@@ -156,12 +155,14 @@ jobs:
           echo "$GH_TOKEN" | docker login ghcr.io \
             -u "${{ github.actor }}" --password-stdin
           docker pull "$FROZEN_IMAGE"
-          test "$(docker image inspect "$FROZEN_IMAGE" --format '{{.Id}}')" = "$FROZEN_IMAGE_ID"
           docker image inspect "$FROZEN_IMAGE" \
             --format '{{json .RepoDigests}}' \
-            | grep -F "'$FROZEN_IMAGE'"
+            | grep -F "\"$FROZEN_IMAGE\""
+          SOURCE_IMAGE_ID="$(docker image inspect "$FROZEN_IMAGE" --format '{{.Id}}')"
+          test -n "$SOURCE_IMAGE_ID"
           docker tag "$FROZEN_IMAGE" "$EVAL_IMAGE_TAG"
-          test "$(docker image inspect "$EVAL_IMAGE_TAG" --format '{{.Id}}')" = "$FROZEN_IMAGE_ID"
+          TAGGED_IMAGE_ID="$(docker image inspect "$EVAL_IMAGE_TAG" --format '{{.Id}}')"
+          test "$TAGGED_IMAGE_ID" = "$SOURCE_IMAGE_ID"
       - name: Materialize four hash-locked prediction files
         working-directory: ${{ env.CASE_DIR }}
         run: |
