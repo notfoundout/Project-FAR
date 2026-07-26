@@ -132,6 +132,13 @@
     "probe_model": "gemini-3.1-pro-preview",
     "probe_prompt": "Return exactly FAR_ACCESS_OK and nothing else.",
     "probe_prompt_sha256": "4a5d2318b18ef566469fc7c01810871dc0655bb298c2c3a4626003c939312007",
+    "probe_request_contract": {
+      "maxOutputTokens": 1024,
+      "temperature": 0.0,
+      "thinkingConfig": {
+        "thinkingLevel": "low"
+      }
+    },
     "required_before_execution_freeze": true,
     "required_exact_response": "FAR_ACCESS_OK",
     "verified_at": null
