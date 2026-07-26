@@ -63,6 +63,7 @@ docs-check:
 
 links-check:
 	python tools/check_internal_links.py
+	python tools/check_post_swe_agent_v2_stabilization.py
 
 math-check:
 	python tools/check_math_rendering.py

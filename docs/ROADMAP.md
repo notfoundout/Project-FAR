@@ -1,5 +1,14 @@
 # Project Roadmap
 
+## Post–SWE-agent v2 gates
+
+1. Preserve the completed four-run evidence and keep execution/reveal mutation paths closed.
+2. Resolve provenance gaps (notably unverifiable SWE-ReX revisions) before any new comparison.
+3. Preregister additional tasks, independent repetitions, infrastructure-failure classes, and an analysis rule before execution.
+4. Treat replication as a new experiment; never pool it with the frozen v2 case without a separately justified aggregation protocol.
+
+These are gates, not commitments that the additional experiments will validate FAR or either SWE-agent release.
+
 ## Purpose
 
 This document describes the long-term development plan of Project FAR.

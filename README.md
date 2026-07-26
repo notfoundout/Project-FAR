@@ -30,6 +30,10 @@ The deductive UPP queue is closed. The active phase is independent criticism, co
 
 The generated dashboard below is a historical status surface for the older bounded REP/ADJ/W3.5 program. It does not override the later UPP terminal adjudication or define the repository's current phase.
 
+## Latest bounded external evaluation
+
+The frozen SWE-agent v2 comparison observed **0/2 resolved runs for v1.0.0 and 0/2 for v1.0.1** on one task. The recorded observation is `no_observed_resolution_difference`, and the bounded decision remains `REVIEW_REQUIRED`. This does **not** demonstrate equivalence, superiority, safety, readiness, or general performance. See the [post-experiment audit](docs/audits/post-swe-agent-v2-stabilization-audit.md) and [reproducibility guide](docs/reproducibility/swe-agent-v2.md).
+
 <!-- BEGIN GENERATED PROJECT FAR DASHBOARD -->
 
 ## Historical bounded-program status

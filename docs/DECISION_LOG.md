@@ -1,5 +1,17 @@
 # Decision Log
 
+## 2026-07-26 — Stabilize the completed SWE-agent v2 evidence boundary
+
+**Question:** How should the repository represent and protect the completed comparison after outcome reveal?
+
+**Execution:** Compared frozen manifests, source and primary locks, reveal outcomes, generated reports, workflows, tests, and current navigation/status surfaces; ran deterministic verification and mutation-oriented repository checks.
+
+**Observation:** The evidence agrees on four unresolved runs and `REVIEW_REQUIRED`, while the mutable execution-status page still described the pre-reveal phase. Execution remained dispatchable after completion, retryable internal failure was converted to outer success, and report verification could silently skip.
+
+**Decision:** Preserve every frozen evidence artifact; update only mutable status/navigation surfaces; close mutation-capable stages after a final bundle exists; propagate internal failure; require committed reveal verification; and make the bounded claim machine-enforced. Historical provenance and dependency limitations remain registered rather than rewritten.
+
+**Claim boundary:** This maintenance decision does not adjudicate equivalence, superiority, safety, readiness, general performance, or unresolved FAR/FARA/FARO theory.
+
 ## Purpose
 
 This document records significant architectural and theoretical decisions made during the development of Project FAR.

@@ -56,13 +56,12 @@ jobs:
         run: |
           python -m unittest -v test_evidence_pipeline_v2.py
           python evidence_pipeline_v2.py verify-freeze
-      - name: Verify committed final report when present
+      - name: Verify committed final report
         working-directory: ${{ env.CASE_DIR }}
         run: |
-          if [ -f post-freeze-reveal/outcome-reveal.json ]; then
-            python evidence_pipeline_v2.py verify-reveal \
-              --output-dir post-freeze-reveal
-          fi
+          test -f post-freeze-reveal/outcome-reveal.json
+          python evidence_pipeline_v2.py verify-reveal \
+            --output-dir post-freeze-reveal
 
   verify-source:
     needs: contracts

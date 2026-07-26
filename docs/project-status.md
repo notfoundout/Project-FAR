@@ -6,6 +6,10 @@ The root [README Command Center](../README.md) is the canonical entry point for 
 
 ## Current Status
 
+### SWE-agent v2 bounded comparison (completed)
+
+The frozen comparison is complete: v1.0.0 resolved 0/2 runs and v1.0.1 resolved 0/2 runs on the single preregistered task. The observation is `no_observed_resolution_difference`; both the outcome-blind integrity decision and bounded case decision are `REVIEW_REQUIRED`. No equivalence, superiority, safety, readiness, or general performance conclusion follows. The [audit](audits/post-swe-agent-v2-stabilization-audit.md), [limitations register](governance/limitations-register.md), and [reproducibility guide](reproducibility/swe-agent-v2.md) are the current interpretive surfaces; frozen evidence remains authoritative for the recorded runs.
+
 Project FAR has completed the v0.4.0 external-validation milestone. The current baseline includes the v0.3.0 internal-validation milestone, the v0.3.1 repository-maturity maintenance release, preliminary external validation EV-001 through EV-029, frozen CRP v1.0 methodology, and a merged deterministic CRE-001 result.
 
 The v0.4.0 release does not change FAR primitives, definitions, axioms, theorem statements, proof objects, parser behavior, reasoning-engine behavior, metadata schemas, or accepted doctrine.
