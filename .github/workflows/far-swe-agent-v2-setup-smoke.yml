@@ -49,11 +49,38 @@ jobs:
           cat "$RUNNER_TEMP/v2-preregistration.log"
           exit "$RC"
 
-      - name: Verify fresh-state boundary
+      - name: Verify untouched execution and valid access lifecycle
         working-directory: ${{ env.CASE_DIR }}
         run: |
           test ! -e execution-output/execution-state.json
-          test ! -e access-freeze/provider-access-attestation.json
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path("manifest.json").read_text())
+          status = manifest["status"]
+          attestation = Path("access-freeze/provider-access-attestation.json")
+          attestation_hash = Path("access-freeze/provider-access-attestation.sha256")
+          gate = manifest["provider_access_gate"]
+
+          if status == "preregistered_access_pending":
+              assert not attestation.exists()
+              assert not attestation_hash.exists()
+              assert gate["attestation_path"] is None
+              assert gate["attestation_sha256"] is None
+              assert gate["verified_at"] is None
+          elif status == "execution_inputs_frozen":
+              assert attestation.is_file()
+              assert attestation_hash.is_file()
+              actual = hashlib.sha256(attestation.read_bytes()).hexdigest()
+              assert gate["attestation_path"] == str(attestation)
+              assert gate["attestation_sha256"] == actual
+              assert attestation_hash.read_text().strip() == actual
+              assert isinstance(gate["verified_at"], str) and gate["verified_at"]
+          else:
+              raise AssertionError(f"Unexpected v2 lifecycle status: {status}")
+          PY
 
       - name: Upload preregistration diagnostics
         if: always()
@@ -110,11 +137,34 @@ jobs:
           cat "$RUNNER_TEMP/v2-config-${{ matrix.release }}.log"
           exit "$RC"
 
-      - name: Prove no execution state or access attestation was created
+      - name: Prove parser preserved execution and access evidence
         working-directory: ${{ env.CASE_DIR }}
         run: |
           test ! -e execution-output/execution-state.json
-          test ! -e access-freeze/provider-access-attestation.json
+          git diff --exit-code -- manifest.json access-freeze/
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path("manifest.json").read_text())
+          status = manifest["status"]
+          attestation = Path("access-freeze/provider-access-attestation.json")
+          attestation_hash = Path("access-freeze/provider-access-attestation.sha256")
+          gate = manifest["provider_access_gate"]
+
+          if status == "preregistered_access_pending":
+              assert not attestation.exists()
+              assert not attestation_hash.exists()
+          elif status == "execution_inputs_frozen":
+              assert attestation.is_file()
+              assert attestation_hash.is_file()
+              actual = hashlib.sha256(attestation.read_bytes()).hexdigest()
+              assert gate["attestation_sha256"] == actual
+              assert attestation_hash.read_text().strip() == actual
+          else:
+              raise AssertionError(f"Unexpected v2 lifecycle status: {status}")
+          PY
 
       - name: Upload configuration diagnostics
         if: always()
