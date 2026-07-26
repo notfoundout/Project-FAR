@@ -1,0 +1,26 @@
+{
+  "api_key_persisted": false,
+  "benchmark_outcomes_accessed": false,
+  "benchmark_task_data_accessed": false,
+  "case_id": "swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2",
+  "exact_response": true,
+  "expected_response": "FAR_ACCESS_OK",
+  "http_status": 200,
+  "max_output_tokens": 1024,
+  "observed_at": "2026-07-26T11:35:01.064427+00:00",
+  "probe_is_nonbenchmark": true,
+  "probe_request_contract_sha256": "bd935532fdfd22db6a03f160a8f3f66a5a986b93817f3047a8eed64ce8adb40a",
+  "prompt_sha256": "4a5d2318b18ef566469fc7c01810871dc0655bb298c2c3a4626003c939312007",
+  "provider_endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent",
+  "provider_model_version": "gemini-3.1-pro-preview",
+  "requested_model": "gemini-3.1-pro-preview",
+  "response_text_sha256": "f5f506967bc8abb4c5ef8e3a422d10991e0b32773014cf67a134f83af5e1ab90",
+  "schema": "far-provider-access-attestation/1.0",
+  "thinking_level": "low",
+  "usage_metadata": {
+    "candidatesTokenCount": 5,
+    "promptTokenCount": 12,
+    "thoughtsTokenCount": 85,
+    "totalTokenCount": 102
+  }
+}
