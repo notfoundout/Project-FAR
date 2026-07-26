@@ -1,9 +1,16 @@
 from __future__ import annotations
 
+import importlib.util
+import unittest
+
+if importlib.util.find_spec("fastapi") is None:
+    raise unittest.SkipTest(
+        "far-demo tests require the optional dependencies declared by commercial/far-demo"
+    )
+
 import csv
 import io
 import json
-import unittest
 
 import yaml
 from fastapi.testclient import TestClient

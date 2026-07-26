@@ -1,0 +1,150 @@
+{
+  "requirements": [
+    {
+      "acceptance_criterion": "A fixture with wrapper zero and inner nonzero is classified infrastructure failure, not successful execution.",
+      "architecture_decision": null,
+      "evidence_class": "directly derived",
+      "failure_addressed": "internal-status masking",
+      "likely_cost": "low",
+      "negative_test": "wrapper=0, inner=75 must fail validation",
+      "priority": "P0",
+      "required_behavior": "Controller must reject outer success when any internal run status is nonzero or non-submitted.",
+      "requirement_id": "REQ-P0-001",
+      "residual_risk": "Does not improve task solving.",
+      "supporting_evidence": [
+        "primary-freeze/packages/*.json",
+        "post-freeze-reveal/outcome-reveal.json"
+      ]
+    },
+    {
+      "acceptance_criterion": "Validator rejects a bundle missing any required member and verifies member hashes.",
+      "architecture_decision": null,
+      "evidence_class": "directly derived",
+      "failure_addressed": "missing diagnostic source evidence",
+      "likely_cost": "medium",
+      "negative_test": "delete trajectory member; validation fails",
+      "priority": "P0",
+      "required_behavior": "Every completed run must retain immutable stdout, stderr, trajectory, commands, patch, prediction, internal status, timing, usage, and grader logs in a durable evidence bundle.",
+      "requirement_id": "REQ-P0-002",
+      "residual_risk": "Storage can expire or expose sensitive content.",
+      "supporting_evidence": [
+        "primary-freeze/packages/*.json",
+        "post-freeze-reveal/outcome-reveal.json"
+      ]
+    },
+    {
+      "acceptance_criterion": "Budget autosubmission is labeled budget_exhausted and resolution remains grader-derived only.",
+      "architecture_decision": null,
+      "evidence_class": "directly derived",
+      "failure_addressed": "budget termination ambiguity",
+      "likely_cost": "low",
+      "negative_test": "autosubmitted patch labeled solved must fail",
+      "priority": "P0",
+      "required_behavior": "Budget exhaustion must be a distinct terminal reason and must not imply patch correctness.",
+      "requirement_id": "REQ-P0-003",
+      "residual_risk": "A useful patch can still be produced at the boundary.",
+      "supporting_evidence": [
+        "primary-freeze/packages/*.json",
+        "post-freeze-reveal/outcome-reveal.json"
+      ]
+    },
+    {
+      "acceptance_criterion": "Submission gate records a passing target test or explicit test_unavailable failure; no silent success.",
+      "architecture_decision": null,
+      "evidence_class": "directly derived",
+      "failure_addressed": "target test remained failing",
+      "likely_cost": "medium",
+      "negative_test": "submit while target test is recorded failing",
+      "priority": "P1",
+      "required_behavior": "Before submission, the agent must run the identified FAIL_TO_PASS or document why execution is unavailable.",
+      "requirement_id": "REQ-P1-001",
+      "residual_risk": "Hidden tests and environment divergence remain.",
+      "supporting_evidence": [
+        "primary-freeze/packages/*.json",
+        "post-freeze-reveal/outcome-reveal.json"
+      ]
+    },
+    {
+      "acceptance_criterion": "Trace contains reproduction command/result and hypothesis/evidence link before first repository edit.",
+      "architecture_decision": null,
+      "evidence_class": "inferred",
+      "failure_addressed": "insufficient hypothesis discrimination",
+      "likely_cost": "medium",
+      "negative_test": "edit precedes any reproduction evidence",
+      "priority": "P1",
+      "required_behavior": "Before editing, retain a bug reproduction and at least one discriminating observation tied to the proposed causal hypothesis.",
+      "requirement_id": "REQ-P1-002",
+      "residual_risk": "Some tasks cannot be reproduced locally.",
+      "supporting_evidence": [
+        "primary-freeze/packages/*.json",
+        "post-freeze-reveal/outcome-reveal.json"
+      ]
+    },
+    {
+      "acceptance_criterion": "At least one intended repository path is changed unless explicit no-patch failure is emitted.",
+      "architecture_decision": null,
+      "evidence_class": "directly derived",
+      "failure_addressed": "exploratory files dominated three patches",
+      "likely_cost": "low",
+      "negative_test": "patch changes only test_sparse_series.py at root",
+      "priority": "P1",
+      "required_behavior": "Patch contract must reject changes containing only untracked exploratory root files.",
+      "requirement_id": "REQ-P1-003",
+      "residual_risk": "Tracked changes may still be irrelevant.",
+      "supporting_evidence": [
+        "primary-freeze/packages/*.json",
+        "post-freeze-reveal/outcome-reveal.json"
+      ]
+    },
+    {
+      "acceptance_criterion": "Trace includes target plus configured neighborhood, with results attached.",
+      "architecture_decision": null,
+      "evidence_class": "inferred",
+      "failure_addressed": "limited test breadth",
+      "likely_cost": "medium",
+      "negative_test": "only ad-hoc script is run",
+      "priority": "P2",
+      "required_behavior": "After a target passes, run declared neighboring tests and record the selection rationale.",
+      "requirement_id": "REQ-P2-001",
+      "residual_risk": "Broader suites consume budget.",
+      "supporting_evidence": [
+        "primary-freeze/packages/*.json",
+        "post-freeze-reveal/outcome-reveal.json"
+      ]
+    },
+    {
+      "acceptance_criterion": "Protocol states population, sample-size rationale, repetitions, failure handling, and estimand before execution.",
+      "architecture_decision": null,
+      "evidence_class": "directly derived",
+      "failure_addressed": "repeated single-task floor",
+      "likely_cost": "high",
+      "negative_test": "one-task result used for general equivalence",
+      "priority": "P2",
+      "required_behavior": "Future comparative studies must preregister a multi-task sample and analysis adequate to the claim.",
+      "requirement_id": "REQ-P2-002",
+      "residual_risk": "Cost and task heterogeneity remain.",
+      "supporting_evidence": [
+        "primary-freeze/packages/*.json",
+        "post-freeze-reveal/outcome-reveal.json"
+      ]
+    },
+    {
+      "acceptance_criterion": "Each tool transition has timestamp, state, budget and checkpoint reference.",
+      "architecture_decision": null,
+      "evidence_class": "directly derived",
+      "failure_addressed": "unknown trajectory-level recovery opportunities",
+      "likely_cost": "high",
+      "negative_test": "aggregate command counts without ordered events",
+      "priority": "P3",
+      "required_behavior": "Checkpoint enough state to permit policy evaluation without rerunning frozen tasks.",
+      "requirement_id": "REQ-P3-001",
+      "residual_risk": "Checkpointing changes runtime behavior and cost.",
+      "supporting_evidence": [
+        "primary-freeze/packages/*.json",
+        "post-freeze-reveal/outcome-reveal.json"
+      ]
+    }
+  ],
+  "schema": "far-swe-agent-future-requirements/1.0",
+  "scope": "requirements only; no v3 design or implementation"
+}

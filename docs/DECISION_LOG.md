@@ -213,3 +213,11 @@ The repository now follows the dependency order:
 **Observation:** Authority was dispersed; independent procedures could be read as derived; strong claims and counterexample classes lacked one consolidated classification.
 **Discovery/acceptance:** Preserve the dependency order foundations → shared theory → FARA → FAR → FARO; centralize terminology/status registers; keep unsupported global claims unresolved; freeze CRP v1.0 and record design-changing clarifications for v1.1.
 **Repository change:** Added canonical specifications, audit/registers, navigation, and semantic checks. No frozen SWE-agent v2 evidence changed.
+
+## 2026-07-26 — SWE-agent v2 forensic boundary
+
+**Question:** Can the failed comparison support exact causal attribution from committed evidence?
+**Execution:** Inventoried committed/frozen and hash-locked external artifacts; reconciled four identities/outcomes; reconstructed all required stages with explicit gaps; classified causes, alternatives, controls and falsifiers.
+**Observation:** All applied patches failed the same target and all runs stopped at call-budget autosubmission, while exact trajectories and patch text remain external-only. The experiment contains one task, not two.
+**Discovery/acceptance:** Preserve `no_observed_resolution_difference` and `REVIEW_REQUIRED`; accept patch failure, budget termination and diagnostic artifact loss as bounded facts; leave first agent mistakes and deepest patch causes Unknown.
+**Repository change:** Add derived forensic records and fail-closed validation only. No v3 implementation, frozen rerun, held-out execution, or frozen evidence change is authorized.

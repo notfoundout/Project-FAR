@@ -1,0 +1,25 @@
+{
+  "baseline_commit": "b03b2b9b059fd9a1f376a83b789be72f7aa66d87",
+  "held_out_evaluation_executed": false,
+  "inputs": [
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/source-artifact-lock.json",
+      "sha256": "0653065cbf8cbcf8f911a5ec9c68a4fea66ce73d3b04ed511dad644387d296b9"
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/post-freeze-reveal/outcome-reveal.json",
+      "sha256": "0938b41fd28da12af32b586121fff4b105c87fb13a24cee3c4d3685ad0fb3097"
+    }
+  ],
+  "outputs": [
+    "evidence-inventory.json",
+    "timelines/*.json",
+    "failure-taxonomy.json",
+    "cause-to-control.json",
+    "future-v3-requirements.json"
+  ],
+  "rerun_frozen_experiment": false,
+  "schema": "far-swe-agent-v2-forensic-provenance/1.0",
+  "status": "Research",
+  "transform": "deterministic extraction and explicit analysis; frozen inputs never rewritten"
+}

@@ -1,0 +1,71 @@
+{
+  "base_commit": "b03b2b9b059fd9a1f376a83b789be72f7aa66d87",
+  "files": [
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/blinded-comparison.json",
+      "sha256": "6787c64ffb979cafaab54b8e3c3b2e6a19b0b3dba792c70e2d70e14f644fea98",
+      "size_bytes": 2889
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/outcome-blind-adjudication.json",
+      "sha256": "68736f1d64dad3a7efb86fd14dc848bba82c33b4c72bf1555e761b1fa34d5f8c",
+      "size_bytes": 4579
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/packages/System-A-r1.json",
+      "sha256": "2a85ea4d9cb8f2c14178d305fcbc7b6c7b2b2c639b99fa89c2d6aacce8632d04",
+      "size_bytes": 2430
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/packages/System-A-r2.json",
+      "sha256": "03af714b9b97400a06115aa9f35f579320d45754ef777430fa426542dba90b6a",
+      "size_bytes": 2559
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/packages/System-B-r1.json",
+      "sha256": "08cd87f405531faa51adb370ccba1d95454d4bac9dce3b1b77849ae3743a36c4",
+      "size_bytes": 2518
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/packages/System-B-r2.json",
+      "sha256": "2ccf0badf1512e087af431627cf635bbc1fa441d8c7cd74a3b0cc327d22f0c3c",
+      "size_bytes": 2517
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/primary-freeze.json",
+      "sha256": "b0c1ffcc804edd656e742b9fb02f16941feaa439a93d98687c13b964ccd1cb97",
+      "size_bytes": 2022
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/primary-freeze.sha256",
+      "sha256": "e15fcd409c5c7c77e67adc783bcee2fa348ddb99c9d71e70cd7f3f792a6a07eb",
+      "size_bytes": 65
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/source-artifact-lock.json",
+      "sha256": "0653065cbf8cbcf8f911a5ec9c68a4fea66ce73d3b04ed511dad644387d296b9",
+      "size_bytes": 16891
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/post-freeze-reveal/bundle-sha256.json",
+      "sha256": "88e3215bd19611b5ed06b4f0ad95b272b4dc9ac17ccf364f92444503402106a0",
+      "size_bytes": 769
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/post-freeze-reveal/final-comparison-report.json",
+      "sha256": "e513d72489e79387b896b44cc974b245aa6ad65de203f5464a7f8c5215281e0a",
+      "size_bytes": 3800
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/post-freeze-reveal/final-comparison-report.md",
+      "sha256": "3772e4e549275b8e247d743d2ee4d8a75e95d1bda2fde5009618edb82a360874",
+      "size_bytes": 1456
+    },
+    {
+      "path": "commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/post-freeze-reveal/outcome-reveal.json",
+      "sha256": "0938b41fd28da12af32b586121fff4b105c87fb13a24cee3c4d3685ad0fb3097",
+      "size_bytes": 8188
+    }
+  ],
+  "schema": "far-swe-agent-v2-frozen-baseline/1.0"
+}

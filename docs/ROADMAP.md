@@ -6,6 +6,7 @@
 2. Resolve provenance gaps (notably unverifiable SWE-ReX revisions) before any new comparison.
 3. Preregister additional tasks, independent repetitions, infrastructure-failure classes, and an analysis rule before execution.
 4. Treat replication as a new experiment; never pool it with the frozen v2 case without a separately justified aggregation protocol.
+5. Apply the forensic P0/P1/P2/P3 requirements as constraints for any separately authorized architecture phase; requirements do not select or implement v3.
 
 These are gates, not commitments that the additional experiments will validate FAR or either SWE-agent release.
 

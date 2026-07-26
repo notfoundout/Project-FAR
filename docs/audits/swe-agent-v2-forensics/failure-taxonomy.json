@@ -1,0 +1,441 @@
+{
+  "categories": [
+    {
+      "affected_runs": [],
+      "category": "Task-understanding failure",
+      "causal_role": "undetermined",
+      "code": "A",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Repository-navigation failure",
+      "causal_role": "undetermined",
+      "code": "B",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Fault-localization failure",
+      "causal_role": "undetermined",
+      "code": "C",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Incorrect causal hypothesis",
+      "causal_role": "undetermined",
+      "code": "D",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Failure to reproduce the bug",
+      "causal_role": "undetermined",
+      "code": "E",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Patch-design failure",
+      "causal_role": "undetermined; patch-design causation is not established",
+      "code": "F",
+      "direct_evidence": [
+        "Reveal proves patch-outcome failure only: each applied patch left the target failing. Patch content and ordered reasoning are unavailable, so design, implementation, environment, oracle, and interaction causes cannot be separated."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "A failed patch outcome must not be relabeled as a patch-design cause without direct distinguishing evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Implementation failure",
+      "causal_role": "undetermined",
+      "code": "G",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Regression failure",
+      "causal_role": "undetermined",
+      "code": "H",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Test-discovery failure",
+      "causal_role": "undetermined",
+      "code": "I",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Test-selection failure",
+      "causal_role": "undetermined",
+      "code": "J",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Hidden-test generalization failure",
+      "causal_role": "undetermined",
+      "code": "K",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Tool-use inefficiency",
+      "causal_role": "undetermined",
+      "code": "L",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Circular or repeated behavior",
+      "causal_role": "undetermined",
+      "code": "M",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Context-management failure",
+      "causal_role": "undetermined",
+      "code": "N",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [
+        "v1.0.0-r1",
+        "v1.0.0-r2",
+        "v1.0.1-r1",
+        "v1.0.1-r2"
+      ],
+      "category": "Timeout or budget exhaustion",
+      "causal_role": "terminal boundary",
+      "code": "O",
+      "direct_evidence": [
+        "All packages: api_calls=31 and submitted (exit_cost)."
+      ],
+      "occurrence": "yes",
+      "proposed_future_control": "REQ-P0-003",
+      "remediable": true,
+      "residual_risk": "Causal effect on resolution is uncertain.",
+      "severity": "high"
+    },
+    {
+      "affected_runs": [],
+      "category": "Provider failure",
+      "causal_role": "undetermined",
+      "code": "P",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Quota or rate-limit failure",
+      "causal_role": "undetermined",
+      "code": "Q",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Environment or dependency failure",
+      "causal_role": "undetermined",
+      "code": "R",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Controller-state failure",
+      "causal_role": "undetermined",
+      "code": "S",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Internal-status masking",
+      "causal_role": "undetermined",
+      "code": "T",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Prediction-contract failure",
+      "causal_role": "undetermined",
+      "code": "U",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Empty or malformed patch",
+      "causal_role": "undetermined",
+      "code": "V",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [
+        "v1.0.0-r1",
+        "v1.0.0-r2",
+        "v1.0.1-r1",
+        "v1.0.1-r2"
+      ],
+      "category": "Artifact-collection failure",
+      "causal_role": "diagnostic limitation",
+      "code": "W",
+      "direct_evidence": [
+        "Source lock lists external files absent from Git."
+      ],
+      "occurrence": "yes",
+      "proposed_future_control": "REQ-P0-002",
+      "remediable": true,
+      "residual_risk": "Hashes preserve identity but not inspectability.",
+      "severity": "high"
+    },
+    {
+      "affected_runs": [],
+      "category": "Workflow-classification failure",
+      "causal_role": "undetermined",
+      "code": "X",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [],
+      "category": "Grader or oracle mismatch",
+      "causal_role": "undetermined",
+      "code": "Y",
+      "direct_evidence": [
+        "Source trajectory content unavailable; absence is not evidence of non-occurrence."
+      ],
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Cannot classify from committed aggregate evidence.",
+      "severity": "unknown"
+    },
+    {
+      "affected_runs": [
+        "v1.0.0-r1",
+        "v1.0.0-r2",
+        "v1.0.1-r1",
+        "v1.0.1-r2"
+      ],
+      "category": "Experimental-design limitation",
+      "causal_role": "limits comparison inference",
+      "code": "Z",
+      "direct_evidence": [
+        "Final report: one task, two repetitions per release."
+      ],
+      "occurrence": "yes",
+      "proposed_future_control": "REQ-P2-002",
+      "remediable": true,
+      "residual_risk": "Better design still faces stochasticity.",
+      "severity": "high"
+    },
+    {
+      "affected_runs": [
+        "v1.0.0-r1",
+        "v1.0.0-r2",
+        "v1.0.1-r1",
+        "v1.0.1-r2"
+      ],
+      "category": "Task-set floor effect",
+      "causal_role": "competing explanation",
+      "code": "AA",
+      "direct_evidence": [
+        "All four runs unresolved on the same task."
+      ],
+      "occurrence": "plausible",
+      "proposed_future_control": "REQ-P2-002",
+      "remediable": true,
+      "residual_risk": "Difficulty relative to a population is unmeasured.",
+      "severity": "high"
+    },
+    {
+      "affected_runs": [
+        "v1.0.0-r1",
+        "v1.0.0-r2",
+        "v1.0.1-r1",
+        "v1.0.1-r2"
+      ],
+      "category": "Insufficient evidence",
+      "causal_role": "limits causal attribution",
+      "code": "AB",
+      "direct_evidence": [
+        "Exact ordered traces and patches are hash-locked but absent."
+      ],
+      "occurrence": "yes",
+      "proposed_future_control": "REQ-P0-002",
+      "remediable": true,
+      "residual_risk": "Historical missing evidence may be irrecoverable.",
+      "severity": "high"
+    },
+    {
+      "affected_runs": [
+        "v1.0.0-r1",
+        "v1.0.0-r2",
+        "v1.0.1-r1",
+        "v1.0.1-r2"
+      ],
+      "category": "Irreducible uncertainty",
+      "causal_role": "limits causal attribution",
+      "code": "AC",
+      "direct_evidence": [
+        "Exact ordered traces and patches are hash-locked but absent."
+      ],
+      "occurrence": "yes",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "Historical missing evidence may be irrecoverable.",
+      "severity": "high"
+    }
+  ],
+  "schema": "far-swe-agent-v2-failure-taxonomy/1.0"
+}
