@@ -45,7 +45,7 @@ jobs:
           set +e
           RC=0
           python case_tools.py validate > "$RUNNER_TEMP/v2-preregistration.log" 2>&1 || RC=1
-          python -m unittest -v test_case_v2.py test_access_probe_v2.py >> "$RUNNER_TEMP/v2-preregistration.log" 2>&1 || RC=1
+          python -m unittest -v test_case_v2.py test_access_probe_v2.py test_budget_limited_completion_v2.py >> "$RUNNER_TEMP/v2-preregistration.log" 2>&1 || RC=1
           cat "$RUNNER_TEMP/v2-preregistration.log"
           exit "$RC"
 
