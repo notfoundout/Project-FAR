@@ -1,0 +1,73 @@
+{
+  "behavioral_evidence": {
+    "api_calls": 31,
+    "command_counts": {
+      "<autosubmit>": 1,
+      "cat": 6,
+      "edit": 1,
+      "git": 4,
+      "grep": 4,
+      "open": 6,
+      "pytest": 1,
+      "python": 8
+    },
+    "environment": "scikit-learn__scikit-learn-14125",
+    "exit_status": "submitted (exit_cost)",
+    "exploratory_root_paths": [
+      "test_old_sparse_series.py",
+      "test_sparse_series.py",
+      "test_sparse_series_behavior.py",
+      "test_sparse_series_estimator.py",
+      "test_sparse_series_type.py"
+    ],
+    "history_messages": 85,
+    "modified_path_count": 5,
+    "network_or_remote_commands": [],
+    "submission_sha256": "d82c3a2da65bf7b0247503cbfc34b5eb7fe559e8e790810a7f68da125e2b8bad",
+    "submission_size_bytes": 2170,
+    "tracked_repository_paths": [],
+    "trajectory_steps": 31
+  },
+  "blind_system": "System-A",
+  "case_id": "swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2",
+  "execution": {
+    "attempts": 1,
+    "completion_category": "complete_with_budget_limited_patch",
+    "state": "complete"
+  },
+  "limitations": [
+    "Release identity is intentionally omitted from this package.",
+    "No benchmark resolution status, hidden test result, grader output, gold patch, reward, or candidate preference is included.",
+    "A completed budget-limited autosubmission is execution-complete but not evidence that the patch is correct."
+  ],
+  "outcomes_accessed": false,
+  "repetition": 1,
+  "run_id_blinded": "System-A-r1",
+  "schema": "far-swe-agent-v2-blinded-evidence-package/1.0",
+  "source": {
+    "invocation_sha256": "b0f832bfe953a5c9dfcd5b76ddcb1b177dd3cd5b16ec714a04f8c15d015b3baa",
+    "patch_sha256": "d82c3a2da65bf7b0247503cbfc34b5eb7fe559e8e790810a7f68da125e2b8bad",
+    "prediction_sha256": "16ec2d3e0b05353af96ab84e3c96f6f79c164441a636234565fc188a8cd86ebc",
+    "run_record_sha256": "b3baa28a8d338836786e310b0ab8fee131a204b07f40f60ad215dc1fe713bc6f",
+    "trajectory_sha256": "1e4ea901f984da69e77647b32fd3e5d0f3d4c44f317985777940be49e441236d"
+  },
+  "structural_evidence": {
+    "canonical_size_bytes": 3303397,
+    "list_count": 1779,
+    "mapping_count": 4209,
+    "max_depth": 8,
+    "root_type": "dict",
+    "scalar_field_count": 15509,
+    "top_level_keys": [
+      "environment",
+      "history",
+      "info",
+      "replay_config",
+      "trajectory"
+    ],
+    "top_level_list_lengths": {
+      "history": 85,
+      "trajectory": 31
+    }
+  }
+}
