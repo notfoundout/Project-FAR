@@ -1,0 +1,19 @@
+{
+  "files": {
+    "execute_controller.py": "c9743791ba1b6d896daa6e107f3a459d6cb048a1",
+    "execution_outcome.py": "a6b14fcb343d6327610dc6758c9357a30cbc01f9",
+    "validate_agent_config.py": "d9dc0e354c7200c0773258ee88bb5b24377fbe90",
+    "validated_execute_controller.py": "03d78610c4ec96e85b0ea4492e76b016683b2578",
+    "validated_execute_controller_core.py": "71f1661ebf1eadb5801f8fea14d4e7a7888c28d0",
+    "validated_execution_hardening.py": "60dc765cfe66c098792b2d8bc50148c20dd5bbe8",
+    "validated_execution_prediction_contract.py": "26431d19310e97411a9cfd97bbf4a35aa39d3ab0",
+    "validated_execution_provider_contract.py": "de6e6246c25a6d8e210dd1ab4e766255beeb3222",
+    "validated_execution_reclassification.py": "1f51fcd30f1f6f7e12612c953058fc9571c0a67a",
+    "validated_execution_recovery.py": "58cc6a5efb7d615f8b55bf9baa2f2e4a43a822e7",
+    "yaml/__init__.py": "762b6acdde9aabdd936038dbf7a68a4d548234f9"
+  },
+  "mutation_policy": "Any source blob change requires an explicit lock update and a new review; the wrapper fails closed on mismatch.",
+  "purpose": "Reuse the already validated execution controller without modifying the blocked historical case.",
+  "schema": "far-shared-controller-lock/1.0",
+  "source_case_path": "../swe-agent-v1.0.0-v1.0.1"
+}
