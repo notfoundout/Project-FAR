@@ -71,23 +71,18 @@
       "severity": "unknown"
     },
     {
-      "affected_runs": [
-        "v1.0.0-r1",
-        "v1.0.0-r2",
-        "v1.0.1-r1",
-        "v1.0.1-r2"
-      ],
+      "affected_runs": [],
       "category": "Patch-design failure",
-      "causal_role": "proximate",
+      "causal_role": "undetermined; patch-design causation is not established",
       "code": "F",
       "direct_evidence": [
-        "Reveal: patch applied, required FAIL_TO_PASS test failed."
+        "Reveal proves patch-outcome failure only: each applied patch left the target failing. Patch content and ordered reasoning are unavailable, so design, implementation, environment, oracle, and interaction causes cannot be separated."
       ],
-      "occurrence": "yes",
-      "proposed_future_control": "REQ-P1-001",
-      "remediable": true,
-      "residual_risk": "Does not distinguish design from implementation.",
-      "severity": "critical"
+      "occurrence": "unknown",
+      "proposed_future_control": null,
+      "remediable": false,
+      "residual_risk": "A failed patch outcome must not be relabeled as a patch-design cause without direct distinguishing evidence.",
+      "severity": "unknown"
     },
     {
       "affected_runs": [],

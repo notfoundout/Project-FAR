@@ -1,5 +1,34 @@
 {
   "agent_version": "v1.0.1",
+  "authoritative_facts": {
+    "agent_version": "v1.0.1",
+    "blind_identity": "System-B-r2",
+    "call_budget_limit": 31,
+    "evidence_class": "directly derived",
+    "execution_status": "complete_with_budget_limited_patch",
+    "final_classification": "unresolved",
+    "grader_result": {
+      "pass_to_pass_success_count": 9,
+      "required_test": "sklearn/utils/tests/test_multiclass.py::test_type_of_target_pandas_sparse",
+      "required_test_result": "failed"
+    },
+    "observed_call_count": 31,
+    "outcome": "unresolved",
+    "patch_exists": true,
+    "patch_successfully_applied": true,
+    "provider_status": "unknown",
+    "quota_status": "unknown",
+    "resolved": false,
+    "revealed_identity": "v1.0.1-r2",
+    "run_membership": true,
+    "sources": [
+      "primary-freeze/packages/System-B-r2.json",
+      "post-freeze-reveal/outcome-reveal.json"
+    ],
+    "task_id": "scikit-learn__scikit-learn-14125",
+    "termination_reason": "submitted (exit_cost)",
+    "timeout_status": "unknown"
+  },
   "events": [
     {
       "action": "ingest frozen task",
