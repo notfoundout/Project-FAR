@@ -19,3 +19,21 @@ Status: **Accepted classification index; source records remain authoritative**
 | Candidate provenance change is operationally material | Unresolved | `REVIEW_REQUIRED`; available evidence does not identify an effect. |
 
 Examples, methodology, research, validation, papers and archive are never prerequisites of canonical theory merely because they discuss these claims.
+
+## 2026-07-26 central-claim audit
+
+| Claim | Status | Required interpretation |
+|---|---|---|
+| All structured investigation shares one architecture | Conjecture outside the frozen UPP class | Counterexample register blocks unbounded wording. |
+| Construct/Differentiate/Restrict are sufficient or minimal | Unresolved globally | Bounded reconstruction does not establish irreducibility. |
+| Resolve is primitive | Rejected on current record | It is treated as rule application/procedure; a new necessity result could reopen it. |
+| A fourth or fifth irreducible operator exists | Unresolved | No accepted candidate/evidence. |
+| Admissibility is prior to valid transition (or conversely) | Unresolved | Both are context/calculus-relative in current definitions. |
+| FAR translates reasoning systems without expressive loss | Unresolved and not a current general claim | Every mapping must report preservation/loss. |
+| FARA is universal/minimal | Bounded theorem only under exact frozen premises; global claim unresolved | Never omit the target class and faithfulness/closure/equivalence assumptions. |
+| FAR protocols derive from FARA | Rejected | Procedures are independently chosen but compatible methodology. |
+| FARO follows necessarily from FAR/FARA | Rejected | FARO is a downstream independent operational layer. |
+| Successful bounded mappings establish generality | Rejected inference | They establish only registered-case observations. |
+| Fail reports are theoretically necessary | Unresolved; governance-required | Current requirement is methodological/governance. |
+| Comparative mappings establish representational sufficiency | Validated only for exact cases meeting CRP rules | No universality follows. |
+| Commercial/software claims imply theoretical validation | Rejected | Software behavior and commercial framing are downstream and bounded. |

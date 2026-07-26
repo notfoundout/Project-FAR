@@ -48,3 +48,7 @@ Project-level documentation lives here. This directory is for orientation, proje
 - Current release: [`releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md).
 - Previous maintenance release: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md).
 - Internal-validation baseline: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
+
+## Correction-phase entry points
+
+Use the [canonical map](CANONICAL_MAP.md) for authority, [canonical terminology](glossary/canonical-terminology.md) for terms, [framework boundaries](governance/framework-boundaries.md) and [dependency specification](governance/dependency-specification.md) for architecture, and the claim/limitations/unresolved/open-problem/counterexample/derivation/theorem registers under `governance/` for status.

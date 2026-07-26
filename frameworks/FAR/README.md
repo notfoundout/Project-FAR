@@ -101,3 +101,7 @@ Use canonical worked investigations to test whether the stable FAR methodology i
 - [FARO README](../FARO/README.md)
 - [FARE README](../FARE/README.md)
 - [FARM README](../FARM/README.md)
+
+## Derivation boundary
+
+FAR procedures are compatible independent methodology unless a cited derivation establishes otherwise. The workflow, selections, failure reporting, and claim-dimension analysis are not logical consequences of FARA. See the [derivation-status matrix](../../docs/governance/derivation-status-matrix.md).

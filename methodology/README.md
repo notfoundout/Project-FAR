@@ -27,3 +27,7 @@ They do not by themselves establish canonical theory, accepted primitives, accep
 ## Archived Methodology Material
 
 Superseded methodology documents are retained under `../archive/superseded/methodology/` when they contain meaningful historical content.
+
+## Authority and derivation
+
+Compatibility with FARA does not make a methodological choice derivable from FARA. Protocol results are evidence only within their declared scope. Procedure classifications are authoritative in the [derivation-status matrix](../docs/governance/derivation-status-matrix.md).

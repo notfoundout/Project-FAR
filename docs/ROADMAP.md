@@ -220,3 +220,11 @@ Project success is measured by answering that question rigorously, not by forcin
 ## Comparative Representation Evaluation Roadmap
 
 Comparative Representation Protocol v1.0 remains a registered baseline. Completed deterministic implementation and bounded experiments remain preserved evidence, but they do not satisfy the new prospective gates by themselves. Legacy external-validation evidence remains preliminary rather than prospective independent comparative evidence. Future confirmatory work must use the confirmatory research package, the research-gate registry, full-cost accounting, negative controls, and declared independence levels.
+
+## Post-audit gated research (not authorized by listing)
+
+1. Seek independent criticism and countermodels for the registered open problems.
+2. Propose CRP v1.1 only through preregistration, with executable decision fixtures and adjudication edge cases.
+3. Attempt end-to-end kernel reconstruction without strengthening the terminal theorem.
+4. Test changing-rule, continuous/probabilistic, embodied, nonclassical, and incompatible-ontology cases only after charter justification.
+5. Do not add product features, execution infrastructure, or another benchmark version in this correction phase.

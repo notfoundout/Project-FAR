@@ -102,3 +102,7 @@ Use FARO audit, comparison, disagreement-analysis, and reporting examples to tes
 - [FAR README](../FAR/README.md)
 - [FARE README](../FARE/README.md)
 - [FARM README](../FARM/README.md)
+
+## Derivation boundary
+
+FARO is downstream of FAR and FARA, but its operational interfaces and decision/reporting rules are independently selected methodology/governance rather than necessary consequences. See the [derivation-status matrix](../../docs/governance/derivation-status-matrix.md).

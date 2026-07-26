@@ -205,3 +205,11 @@ The repository now follows the dependency order:
 - FAR
 - FARO
 - Documentation
+
+## 2026-07-26 — Canonical theory and protocol correction
+
+**Question:** Could the active repository consistently distinguish upstream theory, downstream methods/evidence, and bounded claims?
+**Execution:** Repository-wide authority, terminology, dependency, claim, procedure, theorem, protocol, navigation, and counterexample audit.
+**Observation:** Authority was dispersed; independent procedures could be read as derived; strong claims and counterexample classes lacked one consolidated classification.
+**Discovery/acceptance:** Preserve the dependency order foundations → shared theory → FARA → FAR → FARO; centralize terminology/status registers; keep unsupported global claims unresolved; freeze CRP v1.0 and record design-changing clarifications for v1.1.
+**Repository change:** Added canonical specifications, audit/registers, navigation, and semantic checks. No frozen SWE-agent v2 evidence changed.
