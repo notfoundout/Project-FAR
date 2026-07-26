@@ -1,0 +1,196 @@
+{
+  "blind_mapping": {
+    "System-A": "v1.0.0",
+    "System-B": "v1.0.1"
+  },
+  "case_id": "swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2",
+  "claim_boundary": "Outcomes were attached only after primary-freeze verification. Two repetitions per release on one task do not establish general superiority.",
+  "observed_resolution_result": "no_observed_resolution_difference",
+  "outcomes": {
+    "v1.0.0-r1": {
+      "release": "v1.0.0",
+      "repetition": 1,
+      "report": {
+        "patch_exists": true,
+        "patch_is_None": false,
+        "patch_successfully_applied": true,
+        "resolved": false,
+        "tests_status": {
+          "FAIL_TO_FAIL": {
+            "failure": [],
+            "success": []
+          },
+          "FAIL_TO_PASS": {
+            "failure": [
+              "sklearn/utils/tests/test_multiclass.py::test_type_of_target_pandas_sparse"
+            ],
+            "success": []
+          },
+          "PASS_TO_FAIL": {
+            "failure": [],
+            "success": []
+          },
+          "PASS_TO_PASS": {
+            "failure": [],
+            "success": [
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels",
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels_non_specific",
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels_mixed_types",
+              "sklearn/utils/tests/test_multiclass.py::test_is_multilabel",
+              "sklearn/utils/tests/test_multiclass.py::test_check_classification_targets",
+              "sklearn/utils/tests/test_multiclass.py::test_type_of_target",
+              "sklearn/utils/tests/test_multiclass.py::test_class_distribution",
+              "sklearn/utils/tests/test_multiclass.py::test_safe_split_with_precomputed_kernel",
+              "sklearn/utils/tests/test_multiclass.py::test_ovr_decision_function"
+            ]
+          }
+        }
+      },
+      "report_sha256": "c5e6b1e6193457f290557c30ae585547967583e8ab2159766329f6b56dce65d2",
+      "resolved": false,
+      "run_instance_log_sha256": "7e80521e77765a287b7dd0998646a298648c51bfa70708fefea64950606788cb",
+      "test_output_sha256": "d109c9021e37e8bdd69ab4495022c0f59f835cb7975a4f27665f801e91967f84"
+    },
+    "v1.0.0-r2": {
+      "release": "v1.0.0",
+      "repetition": 2,
+      "report": {
+        "patch_exists": true,
+        "patch_is_None": false,
+        "patch_successfully_applied": true,
+        "resolved": false,
+        "tests_status": {
+          "FAIL_TO_FAIL": {
+            "failure": [],
+            "success": []
+          },
+          "FAIL_TO_PASS": {
+            "failure": [
+              "sklearn/utils/tests/test_multiclass.py::test_type_of_target_pandas_sparse"
+            ],
+            "success": []
+          },
+          "PASS_TO_FAIL": {
+            "failure": [],
+            "success": []
+          },
+          "PASS_TO_PASS": {
+            "failure": [],
+            "success": [
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels",
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels_non_specific",
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels_mixed_types",
+              "sklearn/utils/tests/test_multiclass.py::test_is_multilabel",
+              "sklearn/utils/tests/test_multiclass.py::test_check_classification_targets",
+              "sklearn/utils/tests/test_multiclass.py::test_type_of_target",
+              "sklearn/utils/tests/test_multiclass.py::test_class_distribution",
+              "sklearn/utils/tests/test_multiclass.py::test_safe_split_with_precomputed_kernel",
+              "sklearn/utils/tests/test_multiclass.py::test_ovr_decision_function"
+            ]
+          }
+        }
+      },
+      "report_sha256": "c5e6b1e6193457f290557c30ae585547967583e8ab2159766329f6b56dce65d2",
+      "resolved": false,
+      "run_instance_log_sha256": "f5be56f42444eb72b0fcff67002240ddbf3efb4261dfcea86bc2ae11f3491589",
+      "test_output_sha256": "e7c8110c8724bb0bbb28ffabbf7f0f1c3f156775952d6ed4cec3a299777eaadf"
+    },
+    "v1.0.1-r1": {
+      "release": "v1.0.1",
+      "repetition": 1,
+      "report": {
+        "patch_exists": true,
+        "patch_is_None": false,
+        "patch_successfully_applied": true,
+        "resolved": false,
+        "tests_status": {
+          "FAIL_TO_FAIL": {
+            "failure": [],
+            "success": []
+          },
+          "FAIL_TO_PASS": {
+            "failure": [
+              "sklearn/utils/tests/test_multiclass.py::test_type_of_target_pandas_sparse"
+            ],
+            "success": []
+          },
+          "PASS_TO_FAIL": {
+            "failure": [],
+            "success": []
+          },
+          "PASS_TO_PASS": {
+            "failure": [],
+            "success": [
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels",
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels_non_specific",
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels_mixed_types",
+              "sklearn/utils/tests/test_multiclass.py::test_is_multilabel",
+              "sklearn/utils/tests/test_multiclass.py::test_check_classification_targets",
+              "sklearn/utils/tests/test_multiclass.py::test_type_of_target",
+              "sklearn/utils/tests/test_multiclass.py::test_class_distribution",
+              "sklearn/utils/tests/test_multiclass.py::test_safe_split_with_precomputed_kernel",
+              "sklearn/utils/tests/test_multiclass.py::test_ovr_decision_function"
+            ]
+          }
+        }
+      },
+      "report_sha256": "c5e6b1e6193457f290557c30ae585547967583e8ab2159766329f6b56dce65d2",
+      "resolved": false,
+      "run_instance_log_sha256": "cfff9757e2562e90f77913989107cdfe8e9b3108a1e6a756528d17ff73b2aba1",
+      "test_output_sha256": "4b205ed459b17d13dd184c16aeb8741070b33483b17659215e63c8754d17a8df"
+    },
+    "v1.0.1-r2": {
+      "release": "v1.0.1",
+      "repetition": 2,
+      "report": {
+        "patch_exists": true,
+        "patch_is_None": false,
+        "patch_successfully_applied": true,
+        "resolved": false,
+        "tests_status": {
+          "FAIL_TO_FAIL": {
+            "failure": [],
+            "success": []
+          },
+          "FAIL_TO_PASS": {
+            "failure": [
+              "sklearn/utils/tests/test_multiclass.py::test_type_of_target_pandas_sparse"
+            ],
+            "success": []
+          },
+          "PASS_TO_FAIL": {
+            "failure": [],
+            "success": []
+          },
+          "PASS_TO_PASS": {
+            "failure": [],
+            "success": [
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels",
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels_non_specific",
+              "sklearn/utils/tests/test_multiclass.py::test_unique_labels_mixed_types",
+              "sklearn/utils/tests/test_multiclass.py::test_is_multilabel",
+              "sklearn/utils/tests/test_multiclass.py::test_check_classification_targets",
+              "sklearn/utils/tests/test_multiclass.py::test_type_of_target",
+              "sklearn/utils/tests/test_multiclass.py::test_class_distribution",
+              "sklearn/utils/tests/test_multiclass.py::test_safe_split_with_precomputed_kernel",
+              "sklearn/utils/tests/test_multiclass.py::test_ovr_decision_function"
+            ]
+          }
+        }
+      },
+      "report_sha256": "c5e6b1e6193457f290557c30ae585547967583e8ab2159766329f6b56dce65d2",
+      "resolved": false,
+      "run_instance_log_sha256": "7065e7f2d662c6ef6336439ce25042bcd95cf69eca9d7493c7104904895218f5",
+      "test_output_sha256": "6dd4cff09d6ed1635f05236e03e69c2b42d1497cb72a154b789629211272477b"
+    }
+  },
+  "primary_freeze_sha256": "b0c1ffcc804edd656e742b9fb02f16941feaa439a93d98687c13b964ccd1cb97",
+  "primary_root_sha256": "969fdcd1b2b40fafe3275bb28db3dec2b7d024640a55a3579c2c7c244b23e39e",
+  "resolved_counts": {
+    "v1.0.0": 0,
+    "v1.0.1": 0
+  },
+  "revealed_at": "2026-07-26T20:43:12.915220+00:00",
+  "schema": "far-swe-agent-v2-post-freeze-reveal/1.0",
+  "source_content_root_sha256": "53438d4e327fd79d895285ae21b2d241408710389913b8111739a362af19b814"
+}
