@@ -325,6 +325,16 @@ class BudgetLimitedReclassificationTests(unittest.TestCase):
         )
         self.assertEqual(self.state["runs"][1]["state"], "pending")
 
+    def test_existing_correction_is_never_silently_reapplied(self) -> None:
+        self.run["correction"] = "corrections/tampered.json"
+        self.run["corrected_from"] = "complete"
+        result = budget.reclassify_budget_limited_failure(
+            self.legacy._core, self.state, self.TASK_ID
+        )
+        self.assertFalse(result)
+        self.assertEqual(self.run["state"], "failed_terminal")
+        self.assertFalse((self.output / "corrections").exists())
+
     def test_corrected_completion_revalidates_from_sidecar(self) -> None:
         self.legacy._core.reconcile_only()
         record, outcome = self.legacy._core._classify_preserved_run(
