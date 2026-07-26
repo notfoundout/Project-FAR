@@ -240,6 +240,8 @@ def reclassify_budget_limited_failure(
         run is None
         or run.get("state") != "failed_terminal"
         or run.get("outcome_category") != "terminal_agent_error"
+        or run.get("correction") is not None
+        or run.get("corrected_from") is not None
     ):
         return False
 
