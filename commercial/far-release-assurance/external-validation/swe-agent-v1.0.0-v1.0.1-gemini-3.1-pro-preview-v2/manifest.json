@@ -30,6 +30,14 @@
     "runner": "ubuntu-24.04",
     "workflow": ".github/workflows/far-swe-agent-execution-v2.yml"
   },
+  "execution_freeze": {
+    "fresh_run_matrix_required": true,
+    "frozen_at": "2026-07-26T11:35:33.830395+00:00",
+    "prior_case_state_imported": false,
+    "provider_access_attestation_sha256": "c54ff70aee255d3c0c4d7e99413e7fcfb6c7bbecf555604495a5cec6ee943b39",
+    "schema": "far-execution-input-freeze/1.0",
+    "trigger": "successful_exact_provider_access_probe"
+  },
   "execution_requirements": {
     "cross_case_state_reuse_forbidden": true,
     "docker_required": true,
@@ -123,8 +131,8 @@
     "Does FAR identify a material integrity change that ordinary outcome comparison misses?"
   ],
   "provider_access_gate": {
-    "attestation_path": null,
-    "attestation_sha256": null,
+    "attestation_path": "access-freeze/provider-access-attestation.json",
+    "attestation_sha256": "c54ff70aee255d3c0c4d7e99413e7fcfb6c7bbecf555604495a5cec6ee943b39",
     "benchmark_outcomes_forbidden": true,
     "benchmark_task_data_forbidden": true,
     "credential_persistence_forbidden": true,
@@ -141,7 +149,7 @@
     },
     "required_before_execution_freeze": true,
     "required_exact_response": "FAR_ACCESS_OK",
-    "verified_at": null
+    "verified_at": "2026-07-26T11:35:33.753102+00:00"
   },
   "schema": "far-external-release-comparison/0.4",
   "source": {
@@ -152,7 +160,7 @@
     "release_notes_source": "official_github_releases",
     "repository": "https://github.com/SWE-agent/SWE-agent"
   },
-  "status": "preregistered_access_pending",
+  "status": "execution_inputs_frozen",
   "supersedes_case": {
     "case_id": "swe-agent-v1.0.0-v1.0.1",
     "disposition": "BLOCKED",
