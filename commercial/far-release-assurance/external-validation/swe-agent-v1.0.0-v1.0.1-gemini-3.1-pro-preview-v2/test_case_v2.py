@@ -15,14 +15,20 @@ CASE_DIR = Path(__file__).resolve().parent
 
 
 class CaseV2ContractTests(unittest.TestCase):
-    def test_preregistration_is_valid_and_access_pending(self) -> None:
+    def test_preregistration_or_access_freeze_is_valid(self) -> None:
         manifest = case_tools.validate_repository(require_frozen=False)
-        self.assertEqual(manifest["status"], case_tools.PENDING)
+        self.assertIn(manifest["status"], {case_tools.PENDING, case_tools.FROZEN})
         self.assertEqual(
             manifest["frozen_inputs"]["model"],
             "gemini/gemini-3.1-pro-preview",
         )
-        self.assertIsNone(manifest["provider_access_gate"]["attestation_sha256"])
+        gate = manifest["provider_access_gate"]
+        if manifest["status"] == case_tools.PENDING:
+            self.assertIsNone(gate["attestation_sha256"])
+        else:
+            self.assertIsInstance(gate["attestation_sha256"], str)
+            self.assertTrue(gate["attestation_sha256"])
+            self.assertIsNotNone(case_tools.validate_attestation(manifest, required=True))
 
     def test_new_case_has_a_fresh_four_run_matrix(self) -> None:
         runs = case_tools.load_manifest()["execution_requirements"]["runs"]
@@ -65,6 +71,7 @@ class CaseV2ContractTests(unittest.TestCase):
 
     def test_access_probe_is_nonbenchmark_and_does_not_read_task(self) -> None:
         source = inspect.getsource(access_probe_v2.access_probe)
+        source += inspect.getsource(access_probe_v2.base_failure)
         self.assertNotIn("TASK_PATH", source)
         self.assertIn("benchmark_task_data_accessed", source)
         self.assertIn("benchmark_outcomes_accessed", source)
