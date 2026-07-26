@@ -54,7 +54,7 @@ jobs:
         working-directory: ${{ env.CASE_DIR }}
         run: |
           python case_tools.py validate
-          python -m unittest -v test_case_v2.py
+          python -m unittest -v test_case_v2.py test_access_probe_v2.py
 
       - name: Enforce exact access-probe confirmation
         if: inputs.stage == 'access-probe'
@@ -81,10 +81,10 @@ jobs:
             exit 1
           }
           echo "::add-mask::$GEMINI_API_KEY"
-          python case_tools.py access-probe
+          python access_probe_v2.py
           python case_tools.py finalize-access-freeze
           python case_tools.py validate
-          python -m unittest -v test_case_v2.py
+          python -m unittest -v test_case_v2.py test_access_probe_v2.py
 
       - name: Open provider-access freeze pull request
         if: inputs.stage == 'access-probe'

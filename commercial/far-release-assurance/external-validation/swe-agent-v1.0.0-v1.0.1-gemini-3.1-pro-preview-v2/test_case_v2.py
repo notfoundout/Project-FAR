@@ -6,6 +6,7 @@ import json
 import unittest
 from pathlib import Path
 
+import access_probe_v2
 import case_tools
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -14,14 +15,20 @@ CASE_DIR = Path(__file__).resolve().parent
 
 
 class CaseV2ContractTests(unittest.TestCase):
-    def test_preregistration_is_valid_and_access_pending(self) -> None:
+    def test_preregistration_or_access_freeze_is_valid(self) -> None:
         manifest = case_tools.validate_repository(require_frozen=False)
-        self.assertEqual(manifest["status"], case_tools.PENDING)
+        self.assertIn(manifest["status"], {case_tools.PENDING, case_tools.FROZEN})
         self.assertEqual(
             manifest["frozen_inputs"]["model"],
             "gemini/gemini-3.1-pro-preview",
         )
-        self.assertIsNone(manifest["provider_access_gate"]["attestation_sha256"])
+        gate = manifest["provider_access_gate"]
+        if manifest["status"] == case_tools.PENDING:
+            self.assertIsNone(gate["attestation_sha256"])
+        else:
+            self.assertIsInstance(gate["attestation_sha256"], str)
+            self.assertTrue(gate["attestation_sha256"])
+            self.assertIsNotNone(case_tools.validate_attestation(manifest, required=True))
 
     def test_new_case_has_a_fresh_four_run_matrix(self) -> None:
         runs = case_tools.load_manifest()["execution_requirements"]["runs"]
@@ -63,7 +70,8 @@ class CaseV2ContractTests(unittest.TestCase):
         case_tools.verify_shared_implementation()
 
     def test_access_probe_is_nonbenchmark_and_does_not_read_task(self) -> None:
-        source = inspect.getsource(case_tools.access_probe)
+        source = inspect.getsource(access_probe_v2.access_probe)
+        source += inspect.getsource(access_probe_v2.base_failure)
         self.assertNotIn("TASK_PATH", source)
         self.assertIn("benchmark_task_data_accessed", source)
         self.assertIn("benchmark_outcomes_accessed", source)
@@ -73,6 +81,9 @@ class CaseV2ContractTests(unittest.TestCase):
             gate["probe_prompt_sha256"],
         )
         self.assertEqual(gate["required_exact_response"], "FAR_ACCESS_OK")
+        self.assertEqual(
+            gate["probe_request_contract"], access_probe_v2.REQUEST_CONTRACT
+        )
 
     def test_planning_never_reads_provider_secret(self) -> None:
         source = inspect.getsource(case_tools.plan)
@@ -127,10 +138,15 @@ class WorkflowV2ContractTests(unittest.TestCase):
         self.assertIn("GEMINI_API_KEY", self.text[execute_start:])
 
     def test_access_probe_creates_reviewable_freeze_pr(self) -> None:
-        self.assertIn("python case_tools.py access-probe", self.text)
+        self.assertIn("python access_probe_v2.py", self.text)
+        self.assertNotIn("python case_tools.py access-probe", self.text)
         self.assertIn("python case_tools.py finalize-access-freeze", self.text)
         self.assertIn("gh pr create", self.text)
         self.assertIn("pull-requests: write", self.text)
+
+    def test_access_probe_regressions_run_before_and_after_probe(self) -> None:
+        command = "python -m unittest -v test_case_v2.py test_access_probe_v2.py"
+        self.assertEqual(self.text.count(command), 2)
 
     def test_execution_restores_before_resolving_or_calling_model(self) -> None:
         restore = self.text.index(
