@@ -3,7 +3,7 @@
     "execute_controller.py": "c9743791ba1b6d896daa6e107f3a459d6cb048a1",
     "execution_outcome.py": "a6b14fcb343d6327610dc6758c9357a30cbc01f9",
     "validate_agent_config.py": "d9dc0e354c7200c0773258ee88bb5b24377fbe90",
-    "validated_execute_controller.py": "03d78610c4ec96e85b0ea4492e76b016683b2578",
+    "validated_execute_controller.py": "ce525ddf6bd3213b80d8d9a01a494c3d9f89f953",
     "validated_execute_controller_core.py": "71f1661ebf1eadb5801f8fea14d4e7a7888c28d0",
     "validated_execution_hardening.py": "60dc765cfe66c098792b2d8bc50148c20dd5bbe8",
     "validated_execution_prediction_contract.py": "26431d19310e97411a9cfd97bbf4a35aa39d3ab0",
