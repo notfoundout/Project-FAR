@@ -153,6 +153,10 @@ class PinnedCliContractTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             controller.parse_print_config(malicious)
 
+    def test_duplicate_yaml_keys_are_rejected(self) -> None:
+        with self.assertRaises(SystemExit):
+            controller.parse_print_config("agent: {}\nagent: {}\n")
+
     @patch("execute_controller.shutil.which", return_value="/usr/bin/sweagent")
     @patch("execute_controller.subprocess.run")
     def test_exact_command_is_parse_validated_without_model_execution(self, run, _which) -> None:
