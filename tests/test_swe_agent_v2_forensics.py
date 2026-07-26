@@ -21,7 +21,8 @@ class OptionalDemoCollectionContractTests(unittest.TestCase):
  def test_demo_tests_declare_optional_dependency_before_fastapi_import(self):
   for relative in ('commercial/far-demo/tests/test_demo.py','commercial/far-demo/tests/test_validation.py'):
    source=(ROOT/relative).read_text()
-   self.assertIn('pytest.importorskip(',source)
-   self.assertLess(source.index('pytest.importorskip('),source.index('from fastapi.testclient import TestClient'))
+   self.assertIn('raise unittest.SkipTest(',source)
+   self.assertLess(source.index('raise unittest.SkipTest('),source.index('from fastapi.testclient import TestClient'))
+   self.assertNotIn('import pytest',source)
 
 if __name__=='__main__': unittest.main()

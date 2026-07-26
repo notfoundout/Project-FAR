@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import pytest
-
-pytest.importorskip(
-    "fastapi",
-    reason="far-demo tests require the optional dependencies declared by commercial/far-demo",
-)
-
+import importlib.util
 import unittest
+
+if importlib.util.find_spec("fastapi") is None:
+    raise unittest.SkipTest(
+        "far-demo tests require the optional dependencies declared by commercial/far-demo"
+    )
 from unittest.mock import patch
 
 from fastapi.testclient import TestClient
