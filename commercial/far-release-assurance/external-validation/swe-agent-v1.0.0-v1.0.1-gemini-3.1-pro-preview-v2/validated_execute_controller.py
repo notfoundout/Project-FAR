@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 
+from budget_limited_completion_v2 import install as install_budget_completion
 from case_tools import CASE_DIR, load_manifest, verify_shared_implementation
 
 LEGACY_DIR = (CASE_DIR / "../swe-agent-v1.0.0-v1.0.1").resolve()
@@ -37,11 +39,16 @@ def load_legacy_controller():
     base.STATE_PATH = base.OUTPUT_DIR / "execution-state.json"
     base.TRAJECTORY_DIR = base.OUTPUT_DIR / "trajectories"
     base.RUNS_DIR = base.OUTPUT_DIR / "runs"
+    install_budget_completion(module)
     return module
 
 
 def main() -> None:
-    load_legacy_controller()._core.main()
+    module = load_legacy_controller()
+    if sys.argv[1:] == ["reconcile-only"]:
+        print(json.dumps(module._core.reconcile_only(), indent=2, sort_keys=True))
+        return
+    module._core.main()
 
 
 if __name__ == "__main__":
