@@ -1,0 +1,78 @@
+{
+  "behavioral_evidence": {
+    "api_calls": 31,
+    "command_counts": {
+      "<autosubmit>": 1,
+      "cat": 8,
+      "edit": 2,
+      "git": 2,
+      "grep": 7,
+      "open": 4,
+      "pytest": 1,
+      "python": 6
+    },
+    "environment": "scikit-learn__scikit-learn-14125",
+    "exit_status": "submitted (exit_cost)",
+    "exploratory_root_paths": [
+      "test_sparse_series.py",
+      "test_sparse_series2.py",
+      "test_sparse_series3.py",
+      "test_sparse_series4.py",
+      "test_sparse_series5.py",
+      "test_sparse_series6.py",
+      "test_sparse_series7.py"
+    ],
+    "history_messages": 87,
+    "modified_path_count": 9,
+    "network_or_remote_commands": [],
+    "submission_sha256": "6f90cc46bcfb14731972b33890c0454458d3ec0a6e71387c78d33ff7df3ff96e",
+    "submission_size_bytes": 3890,
+    "tracked_repository_paths": [
+      "sklearn/utils/multiclass.py",
+      "sklearn/utils/tests/test_multiclass.py"
+    ],
+    "trajectory_steps": 31
+  },
+  "blind_system": "System-A",
+  "case_id": "swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2",
+  "execution": {
+    "attempts": 1,
+    "completion_category": "complete_with_budget_limited_patch",
+    "state": "complete"
+  },
+  "limitations": [
+    "Release identity is intentionally omitted from this package.",
+    "No benchmark resolution status, hidden test result, grader output, gold patch, reward, or candidate preference is included.",
+    "A completed budget-limited autosubmission is execution-complete but not evidence that the patch is correct."
+  ],
+  "outcomes_accessed": false,
+  "repetition": 2,
+  "run_id_blinded": "System-A-r2",
+  "schema": "far-swe-agent-v2-blinded-evidence-package/1.0",
+  "source": {
+    "invocation_sha256": "d38128aded3dfb439c810b3446b2c4346af688c76f397904c253c8f0cfd81ba8",
+    "patch_sha256": "6f90cc46bcfb14731972b33890c0454458d3ec0a6e71387c78d33ff7df3ff96e",
+    "prediction_sha256": "2e09ac3ef63dd703369820345d0a80d5460f4366b360b7f66a3f9859ca9ce476",
+    "run_record_sha256": "d257d6ffa29577db806259186325bc96695da52a635fc23848cd87d31ff4833c",
+    "trajectory_sha256": "cbd7f2170d14fb2e400d03b4ab7899d51d3cb235b83acde13382d5ee7996698c"
+  },
+  "structural_evidence": {
+    "canonical_size_bytes": 3505424,
+    "list_count": 1787,
+    "mapping_count": 4229,
+    "max_depth": 8,
+    "root_type": "dict",
+    "scalar_field_count": 15577,
+    "top_level_keys": [
+      "environment",
+      "history",
+      "info",
+      "replay_config",
+      "trajectory"
+    ],
+    "top_level_list_lengths": {
+      "history": 87,
+      "trajectory": 31
+    }
+  }
+}
