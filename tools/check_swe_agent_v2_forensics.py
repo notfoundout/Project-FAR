@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail-closed validation for derived SWE-agent v2 forensic records."""
 from __future__ import annotations
-import argparse, hashlib, json, pathlib, subprocess, sys
+import argparse, hashlib, json, pathlib, sys
 
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 FORENSICS=ROOT/'docs/audits/swe-agent-v2-forensics'
@@ -50,12 +50,18 @@ def validate(root=ROOT, check_git=True):
  expected={'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC'}
  if {x.get('code') for x in taxonomy}!=expected: errors.append('taxonomy incomplete')
  base=load(f/'frozen-evidence-baseline.json')
+ expected_paths={item['path'] for item in base['files']}
+ actual_paths={
+  p.relative_to(root).as_posix()
+  for directory in (case/'primary-freeze',case/'post-freeze-reveal')
+  for p in directory.rglob('*') if p.is_file()
+ }
+ if actual_paths != expected_paths:
+  missing=sorted(expected_paths-actual_paths); unexpected=sorted(actual_paths-expected_paths)
+  errors.append(f'frozen evidence path set changed: missing={missing}; unexpected={unexpected}')
  for item in base['files']:
   p=root/item['path']
   if not p.is_file() or hashlib.sha256(p.read_bytes()).hexdigest()!=item['sha256']: errors.append(f"frozen hash mismatch: {item['path']}")
- if check_git and (root/'.git').exists():
-  cp=subprocess.run(['git','diff','--name-only',base['base_commit'],'--',str((case/'primary-freeze').relative_to(root)),str((case/'post-freeze-reveal').relative_to(root))],cwd=root,text=True,capture_output=True)
-  if cp.returncode or cp.stdout.strip(): errors.append('frozen evidence path edited relative to baseline')
  texts='\n'.join(p.read_text(errors='replace').lower() for p in [root/'docs/audits/swe-agent-v2-forensic-postmortem.md',*f.rglob('*.md')])
  for phrase in ('v1.0.0 and v1.0.1 are equivalent','v3 is guaranteed to succeed','held-out evaluation was executed'):
   if phrase in texts: errors.append(f'forbidden claim: {phrase}')

@@ -17,4 +17,11 @@ class ForensicValidationTests(unittest.TestCase):
   req={'requirements':[{'requirement_id':'R','failure_addressed':'x','supporting_evidence':['x'],'required_behavior':'x','acceptance_criterion':'x','negative_test':'x','likely_cost':'x','residual_risk':'x'}]}
   cause={'claim_id':'x','run':'v1.0.0-r1','evidence_class':'observed','remediable':True,'proposed_control':'R'}
   self.assertTrue(any('validation test' in e for e in mod.validate_records({'claims':[cause]},req)))
+class OptionalDemoCollectionContractTests(unittest.TestCase):
+ def test_demo_tests_declare_optional_dependency_before_fastapi_import(self):
+  for relative in ('commercial/far-demo/tests/test_demo.py','commercial/far-demo/tests/test_validation.py'):
+   source=(ROOT/relative).read_text()
+   self.assertIn('pytest.importorskip(',source)
+   self.assertLess(source.index('pytest.importorskip('),source.index('from fastapi.testclient import TestClient'))
+
 if __name__=='__main__': unittest.main()

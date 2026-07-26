@@ -1,5 +1,12 @@
 from __future__ import annotations
 
+import pytest
+
+pytest.importorskip(
+    "fastapi",
+    reason="far-demo tests require the optional dependencies declared by commercial/far-demo",
+)
+
 import csv
 import io
 import json
