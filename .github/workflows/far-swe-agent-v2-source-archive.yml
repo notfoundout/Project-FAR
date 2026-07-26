@@ -1,0 +1,111 @@
+name: FAR SWE-agent v2 Durable Source Archive
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/far-swe-agent-v2-source-archive.yml'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/source-artifact-lock.json'
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Exact authorization phrase
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: far-swe-agent-v2-durable-source-archive
+  cancel-in-progress: false
+
+env:
+  SOURCE_ARTIFACT_ID: '8635674915'
+  SOURCE_ARTIFACT_SHA256: 7277987300d4204c5108997b3ac6c0cde02c9a4d498178a702ea7a6cb0c19756
+  ARCHIVE_TAG: far-swe-agent-v2-source-53438d4e327f
+  ARCHIVE_NAME: far-swe-agent-v2-source-artifact-8635674915.zip
+  REQUIRED_CONFIRMATION: ARCHIVE-FAR-V2-SOURCE-BEFORE-EXPIRY
+
+jobs:
+  archive-and-verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Enforce authorized source and invocation
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          test "$GITHUB_REF" = "refs/heads/main" || {
+            echo "Durable archival must run from main." >&2
+            exit 1
+          }
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            test "$CONFIRMATION" = "$REQUIRED_CONFIRMATION" || {
+              echo "Manual archival requires $REQUIRED_CONFIRMATION exactly." >&2
+              exit 1
+            }
+          fi
+
+      - name: Download and verify exact expiring artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT_ID/zip" \
+            > "$RUNNER_TEMP/$ARCHIVE_NAME"
+          printf '%s  %s\n' \
+            "$SOURCE_ARTIFACT_SHA256" \
+            "$RUNNER_TEMP/$ARCHIVE_NAME" \
+            | sha256sum -c -
+
+      - name: Create immutable-identity release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "$ARCHIVE_TAG" >/dev/null 2>&1; then
+            echo "Release $ARCHIVE_TAG already exists; refusing silent replacement."
+          else
+            gh release create "$ARCHIVE_TAG" \
+              --target "$GITHUB_SHA" \
+              --title "FAR SWE-agent v2 frozen source artifact" \
+              --notes "Exact outcome-blind execution source. Artifact ID: $SOURCE_ARTIFACT_ID. ZIP SHA-256: $SOURCE_ARTIFACT_SHA256. Source content root: 53438d4e327fd79d895285ae21b2d241408710389913b8111739a362af19b814."
+          fi
+          if gh release view "$ARCHIVE_TAG" --json assets --jq '.assets[].name' | grep -Fx "$ARCHIVE_NAME"; then
+            echo "Archive asset already exists; preserving existing bytes."
+          else
+            gh release upload "$ARCHIVE_TAG" "$RUNNER_TEMP/$ARCHIVE_NAME#$ARCHIVE_NAME"
+          fi
+
+      - name: Redownload durable asset and verify bytes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/durable-check"
+          gh release download "$ARCHIVE_TAG" \
+            --pattern "$ARCHIVE_NAME" \
+            --dir "$RUNNER_TEMP/durable-check"
+          printf '%s  %s\n' \
+            "$SOURCE_ARTIFACT_SHA256" \
+            "$RUNNER_TEMP/durable-check/$ARCHIVE_NAME" \
+            | sha256sum -c -
+
+      - name: Publish archival attestation
+        run: |
+          cat > "$RUNNER_TEMP/durable-source-attestation.json" <<EOF
+          {
+            "schema": "far-swe-agent-v2-durable-source-attestation/1.0",
+            "source_artifact_id": $SOURCE_ARTIFACT_ID,
+            "archive_tag": "$ARCHIVE_TAG",
+            "archive_asset": "$ARCHIVE_NAME",
+            "archive_sha256": "$SOURCE_ARTIFACT_SHA256",
+            "source_content_root_sha256": "53438d4e327fd79d895285ae21b2d241408710389913b8111739a362af19b814",
+            "workflow_commit": "$GITHUB_SHA",
+            "workflow_run_id": "$GITHUB_RUN_ID"
+          }
+          EOF
+          cat "$RUNNER_TEMP/durable-source-attestation.json"

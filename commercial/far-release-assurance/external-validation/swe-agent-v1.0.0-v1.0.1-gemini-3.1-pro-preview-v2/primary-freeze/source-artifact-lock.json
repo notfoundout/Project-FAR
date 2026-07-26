@@ -1,0 +1,386 @@
+{
+  "case_id": "swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2",
+  "content_root_sha256": "53438d4e327fd79d895285ae21b2d241408710389913b8111739a362af19b814",
+  "created_at": "2026-07-26T19:16:32.962057+00:00",
+  "file_count": 73,
+  "files": [
+    {
+      "path": "access-freeze/provider-access-attestation.json",
+      "sha256": "c54ff70aee255d3c0c4d7e99413e7fcfb6c7bbecf555604495a5cec6ee943b39",
+      "size_bytes": 1110
+    },
+    {
+      "path": "access-freeze/provider-access-attestation.sha256",
+      "sha256": "29754dbbb6d91518fffb996e2e27dc224699ff23737b9a930f6e538578242343",
+      "size_bytes": 65
+    },
+    {
+      "path": "execution-output/corrections/v1.0.0-r1-attempt-001-budget-completion.json",
+      "sha256": "06a2644b6526ac51693a347c33b6ac2df298ff1ea80f5c5443f5b58a3e978dc8",
+      "size_bytes": 4812
+    },
+    {
+      "path": "execution-output/execution-plan.json",
+      "sha256": "d1e058ca744192c44dfc41443216d8db4563ddd2970518141c4e3780a61e95f7",
+      "size_bytes": 2501
+    },
+    {
+      "path": "execution-output/execution-state.json",
+      "sha256": "7bba33d59883c6362c74eac66e15ff3c465f5c93e4d071b937859400990b672e",
+      "size_bytes": 8628
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/instance.json",
+      "sha256": "bd6a7f581c827b41025cd0affbf253eae7e5e05a11b9e113b71fef012de37d38",
+      "size_bytes": 1986
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/invocation.json",
+      "sha256": "b0f832bfe953a5c9dfcd5b76ddcb1b177dd3cd5b16ec714a04f8c15d015b3baa",
+      "size_bytes": 19847
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/run-record.json",
+      "sha256": "b3baa28a8d338836786e310b0ab8fee131a204b07f40f60ad215dc1fe713bc6f",
+      "size_bytes": 4164
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/stderr.log",
+      "sha256": "089b3739a856b6b296cfea8bf51d0865760e544de2a59d83c687298c37982239",
+      "size_bytes": 10172
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/stdout.log",
+      "sha256": "0e419129194e5a59bb4cab66cc19fa5475634febacfbbef053ce8560fcbce5a4",
+      "size_bytes": 374594
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/preds.json",
+      "sha256": "0442fde8be9f773cbc95c3ccad89dd04ba87515b353f000f201ae4f6ac8a1d5d",
+      "size_bytes": 2449
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/run_batch.config.yaml",
+      "sha256": "185c05069a62a48d1f64659752bc3bbd57b03bbbeb65f13d755e5ab8a33a6a74",
+      "size_bytes": 16789
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/run_batch.log",
+      "sha256": "623b61b4e5e55d90d6277fd51283c683e12e33740bc8dabb42e7f95abef88229",
+      "size_bytes": 487
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/run_batch_exit_statuses.yaml",
+      "sha256": "17915d5cd795da130a966d0b43b735df1d8c1306c395f114f48b9279e2bce28c",
+      "size_bytes": 124
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.config.yaml",
+      "sha256": "e681122d3e11b68da8a4aa6c714acaeb080590bb150ae15bf3b6dcee9c352389",
+      "size_bytes": 18365
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.debug.log",
+      "sha256": "3dce07f5a9e4f893451a267efcccf2fe5fd9b0f6776903a16dd42ac55bc373ab",
+      "size_bytes": 224479
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.info.log",
+      "sha256": "abd71e8c85f66eb539288be88e624bb437d5b9e9e03b90cb26b0a30973694f1c",
+      "size_bytes": 207887
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.patch",
+      "sha256": "d82c3a2da65bf7b0247503cbfc34b5eb7fe559e8e790810a7f68da125e2b8bad",
+      "size_bytes": 2170
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.pred",
+      "sha256": "16ec2d3e0b05353af96ab84e3c96f6f79c164441a636234565fc188a8cd86ebc",
+      "size_bytes": 2375
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.trace.log",
+      "sha256": "946dd514c4fd8179ce13db6e9ce5ae1daff5b2cce1e1140633b80a5894596dca",
+      "size_bytes": 274255
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.traj",
+      "sha256": "1e4ea901f984da69e77647b32fd3e5d0f3d4c44f317985777940be49e441236d",
+      "size_bytes": 3303396
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/instance.json",
+      "sha256": "bd6a7f581c827b41025cd0affbf253eae7e5e05a11b9e113b71fef012de37d38",
+      "size_bytes": 1986
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/invocation.json",
+      "sha256": "d38128aded3dfb439c810b3446b2c4346af688c76f397904c253c8f0cfd81ba8",
+      "size_bytes": 19847
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/run-record.json",
+      "sha256": "d257d6ffa29577db806259186325bc96695da52a635fc23848cd87d31ff4833c",
+      "size_bytes": 4503
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/stderr.log",
+      "sha256": "4e8f7699e30275a9e9f32f57541d4139fa74c5dd3cde582da768426dd09949f8",
+      "size_bytes": 9862
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/stdout.log",
+      "sha256": "2afc7ad5f9319abb1ed3662ae4d178ace3d3202979d685a5a91bdbb3d364f7e7",
+      "size_bytes": 320965
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/preds.json",
+      "sha256": "4a1b5482167e8299877a433e16c4edd9f83efaf54e3fd71d7775e631eef40658",
+      "size_bytes": 4231
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/run_batch.config.yaml",
+      "sha256": "6914b3ff63accf852a680061f70b60584d03161cccfa8a3785d9093cdbe87a6f",
+      "size_bytes": 16789
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/run_batch.log",
+      "sha256": "b3d4b24f19c271e8e6959799b7646ed419d4b6723fedb35118918e23c0c9ae39",
+      "size_bytes": 487
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/run_batch_exit_statuses.yaml",
+      "sha256": "abf426d67f700c5da2537ba8f4e0f157c0c1d547c63617d2fd76e26cd8277df3",
+      "size_bytes": 124
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.config.yaml",
+      "sha256": "e681122d3e11b68da8a4aa6c714acaeb080590bb150ae15bf3b6dcee9c352389",
+      "size_bytes": 18365
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.debug.log",
+      "sha256": "3136c62b579860876e525beea9802693965fdb76666fdfabd105c697209f2bd1",
+      "size_bytes": 189878
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.info.log",
+      "sha256": "284a3af12c3110aeef8a9665d935281de60a05843eb842d956520cdb9b7fe3c3",
+      "size_bytes": 173286
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.patch",
+      "sha256": "6f90cc46bcfb14731972b33890c0454458d3ec0a6e71387c78d33ff7df3ff96e",
+      "size_bytes": 3890
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.pred",
+      "sha256": "2e09ac3ef63dd703369820345d0a80d5460f4366b360b7f66a3f9859ca9ce476",
+      "size_bytes": 4157
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.trace.log",
+      "sha256": "598beadfaf623c243cda4d058596724199fb64e477b40d245d7f5c82f1757daa",
+      "size_bytes": 238704
+    },
+    {
+      "path": "execution-output/runs/v1.0.0-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.traj",
+      "sha256": "cbd7f2170d14fb2e400d03b4ab7899d51d3cb235b83acde13382d5ee7996698c",
+      "size_bytes": 3505423
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/instance.json",
+      "sha256": "bd6a7f581c827b41025cd0affbf253eae7e5e05a11b9e113b71fef012de37d38",
+      "size_bytes": 1986
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/invocation.json",
+      "sha256": "553dd6830ca31be42f588c06f9f7e2423f8e2d117c4f095a6d12df7a43211cf1",
+      "size_bytes": 19881
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/run-record.json",
+      "sha256": "dfc9da87416e6f3f1ca1ed2631c577aa7181233cf863628ad09fd043fcee0f2b",
+      "size_bytes": 4494
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/stderr.log",
+      "sha256": "437903891d3c5b901dfcefbdf64579751b9fc75db08a7a9b9426b1d18a93dc2d",
+      "size_bytes": 9862
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/stdout.log",
+      "sha256": "f01b8f02710d10a80f9cc0c8ea9847c55e241649e532dceb169bc157d6eed663",
+      "size_bytes": 378361
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/preds.json",
+      "sha256": "6f2f630219ef2aa2734dccb5c32d0d449061985ba240ef3d57f59935a29c97c5",
+      "size_bytes": 3152
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/run_batch.config.yaml",
+      "sha256": "c7ee1d6bc64953db18a8089435b0361ee54c379997b1939d23c9b2ec46218e7e",
+      "size_bytes": 16813
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/run_batch.log",
+      "sha256": "a519f6e99dbf18f682edb5bde986dfa9b00e53f0223131fce896812178af1319",
+      "size_bytes": 487
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/run_batch_exit_statuses.yaml",
+      "sha256": "0c7f5e50a13b55bccb7fbcd5432f6cfb48fdb43d54959f04ab536f6ca5deb79b",
+      "size_bytes": 113
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.config.yaml",
+      "sha256": "5b2a5e644cc370f8a101e2a613855b528a2030445f0fa4c4a2a54e8708106529",
+      "size_bytes": 18424
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.debug.log",
+      "sha256": "4bcf491a9b0b882f237cda6634113f391c8109cc46e732f3aa74a3d80e5fcf1c",
+      "size_bytes": 222407
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.info.log",
+      "sha256": "910a79a9d29ffc41e1ba85d36504335890ae2a69671b5be77e3bd79ed066ae1d",
+      "size_bytes": 205826
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.patch",
+      "sha256": "27deb4b42d66bb8b12f7b2e42559173f9363928a040084d70c01c0754ec6bce1",
+      "size_bytes": 2843
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.pred",
+      "sha256": "11e6235bae68b8f835be2695c22e93bea528015e619a0c4c4b6630664920dbeb",
+      "size_bytes": 3078
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.trace.log",
+      "sha256": "51795a9f6da3a61e160fa6b86bccd0808e05e4aedaec9c8f421c60b269f6370b",
+      "size_bytes": 263396
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r1/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.traj",
+      "sha256": "f97ac52fdf7a7ae3f483770739d952aaf59ed42f3fd67b6b45077ecf5df8b91c",
+      "size_bytes": 3287216
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/instance.json",
+      "sha256": "bd6a7f581c827b41025cd0affbf253eae7e5e05a11b9e113b71fef012de37d38",
+      "size_bytes": 1986
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/invocation.json",
+      "sha256": "237fffee28632665c6ecad77578d756af55c0daa8ad17ccedd54e64d6aa47064",
+      "size_bytes": 19881
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/run-record.json",
+      "sha256": "d017a64efbcd7ada9c8c08759c0b3bd69882325f4cee3dd106a09de476684d03",
+      "size_bytes": 4504
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/stderr.log",
+      "sha256": "cd43cd5d1f66118767beb01a47e00f01c3a873bc4e889d4c934c9fbf9d93c2a7",
+      "size_bytes": 9862
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/stdout.log",
+      "sha256": "49c37c20f553020932ab9d1652a5db4acfb60a12d9683e4c952ee40732d6ef09",
+      "size_bytes": 337200
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/preds.json",
+      "sha256": "5d87077258940cf7e35f1bb87fead9b241bedeaf17087d572aaaeb1a64a8535b",
+      "size_bytes": 3618
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/run_batch.config.yaml",
+      "sha256": "6dd2290a4bcc3d34a5c9d93a9e986dd25112304fd9c3bb349b161b520b1c1790",
+      "size_bytes": 16813
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/run_batch.log",
+      "sha256": "906293656ca3f938c0b59d1e902dd95ec5033ab159f5330fa442ece5d2a2de93",
+      "size_bytes": 487
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/run_batch_exit_statuses.yaml",
+      "sha256": "25a400ae4045e20919e78bf4b63faacd87c2ebaddbde3a189af4ce45607807b1",
+      "size_bytes": 123
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.config.yaml",
+      "sha256": "5b2a5e644cc370f8a101e2a613855b528a2030445f0fa4c4a2a54e8708106529",
+      "size_bytes": 18424
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.debug.log",
+      "sha256": "56853696bd48b413746aeaf93a49e38cf5d70bf7eca65598ccd031f13214f512",
+      "size_bytes": 206257
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.info.log",
+      "sha256": "bbba63bcf355bf863764c29be7a1ddd174b2bd3c6744a0531b8e852b945a934e",
+      "size_bytes": 189642
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.patch",
+      "sha256": "6ee6ce33e1d309db717653a066ca2f5ed6041979b2d45b234df6edbe5af48b26",
+      "size_bytes": 3288
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.pred",
+      "sha256": "2cf2a11829cb309fd5128c40dffc1330bff36fa5749382dd9a159b09fcd724e3",
+      "size_bytes": 3544
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.trace.log",
+      "sha256": "9bf8e2dd6abe6fa166900cb31ae79c27bf29bba4d84a79827f575980186c408a",
+      "size_bytes": 239299
+    },
+    {
+      "path": "execution-output/runs/v1.0.1-r2/sweagent-output/scikit-learn__scikit-learn-14125/scikit-learn__scikit-learn-14125.traj",
+      "sha256": "c93b9d1c21299378a44bc9d0d8b992eb0ad6e110efc48488cdc7b9fd019753c8",
+      "size_bytes": 3471535
+    },
+    {
+      "path": "execution-output/trajectories/baseline-run-1.traj",
+      "sha256": "1e4ea901f984da69e77647b32fd3e5d0f3d4c44f317985777940be49e441236d",
+      "size_bytes": 3303396
+    },
+    {
+      "path": "execution-output/trajectories/baseline-run-2.traj",
+      "sha256": "cbd7f2170d14fb2e400d03b4ab7899d51d3cb235b83acde13382d5ee7996698c",
+      "size_bytes": 3505423
+    },
+    {
+      "path": "execution-output/trajectories/candidate-run-1.traj",
+      "sha256": "f97ac52fdf7a7ae3f483770739d952aaf59ed42f3fd67b6b45077ecf5df8b91c",
+      "size_bytes": 3287216
+    },
+    {
+      "path": "execution-output/trajectories/candidate-run-2.traj",
+      "sha256": "c93b9d1c21299378a44bc9d0d8b992eb0ad6e110efc48488cdc7b9fd019753c8",
+      "size_bytes": 3471535
+    }
+  ],
+  "outcomes_accessed": false,
+  "schema": "far-swe-agent-v2-source-artifact-lock/1.0",
+  "source": {
+    "artifact_created_at": "2026-07-26T18:47:47Z",
+    "artifact_digest": "sha256:7277987300d4204c5108997b3ac6c0cde02c9a4d498178a702ea7a6cb0c19756",
+    "artifact_expires_at": "2026-08-25T18:47:46Z",
+    "artifact_id": 8635674915,
+    "artifact_name": "far-swe-agent-v2-execute-30214963069",
+    "artifact_size_bytes": 6474833,
+    "repository": "notfoundout/Project-FAR",
+    "workflow_head_sha": "b0fc2e6d6bb8763a960679c445cc094e13fe8609",
+    "workflow_run_id": 30214963069
+  }
+}

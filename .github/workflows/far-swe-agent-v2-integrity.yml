@@ -1,0 +1,48 @@
+name: FAR SWE-agent v2 Reveal Integrity
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/far-swe-agent-v2-integrity.yml'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/evidence_pipeline_v2.py'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/verify_reveal_hardened.py'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/test_verify_reveal_hardened.py'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/**'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/post-freeze-reveal/**'
+  push:
+    branches:
+      - 'reveal/swe-agent-v2-*'
+    paths:
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/post-freeze-reveal/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: far-swe-agent-v2-reveal-integrity-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2
+
+jobs:
+  hardened-integrity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run reveal-integrity regression tests
+        working-directory: ${{ env.CASE_DIR }}
+        run: python -m unittest -v test_verify_reveal_hardened.py
+      - name: Verify committed reveal when present
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          if [ -f post-freeze-reveal/outcome-reveal.json ]; then
+            python verify_reveal_hardened.py --output-dir post-freeze-reveal
+          fi

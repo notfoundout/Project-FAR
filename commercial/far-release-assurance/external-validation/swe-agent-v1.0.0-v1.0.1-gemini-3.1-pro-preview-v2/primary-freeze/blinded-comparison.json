@@ -1,0 +1,111 @@
+{
+  "case_id": "swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2",
+  "common_constraints": {
+    "completion_boundary": "submitted (exit_cost) with a non-empty patch",
+    "environment_lock_sha256": "308559fbcb879b1a1a073a0086ba407f61492cd21d815ec8112d2434a0738366",
+    "execution_plan_sha256": "d1e058ca744192c44dfc41443216d8db4563ddd2970518141c4e3780a61e95f7",
+    "model": "gemini/gemini-3.1-pro-preview",
+    "per_instance_call_limit": 30,
+    "task_id": "scikit-learn__scikit-learn-14125",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "cross_system_configuration_differences": [
+    {
+      "System-A": "absent",
+      "System-B": null,
+      "path": "agent.model.max_input_tokens"
+    },
+    {
+      "System-A": "absent",
+      "System-B": 500,
+      "path": "env.post_startup_command_timeout"
+    }
+  ],
+  "decision_boundary": "Outcome-blind behavioral and provenance comparison only. No benchmark success, release preference, or superiority conclusion is permitted before the primary freeze is merged and verified.",
+  "generated_at": "2026-07-26T19:16:32.962057+00:00",
+  "outcomes_accessed": false,
+  "schema": "far-swe-agent-v2-blinded-comparison/1.0",
+  "systems": {
+    "System-A": {
+      "api_calls": [
+        31,
+        31
+      ],
+      "exploratory_root_path_counts": [
+        5,
+        7
+      ],
+      "history_messages": [
+        85,
+        87
+      ],
+      "modified_path_counts": [
+        5,
+        9
+      ],
+      "packages": [
+        {
+          "path": "packages/System-A-r1.json",
+          "repetition": 1,
+          "sha256": "2a85ea4d9cb8f2c14178d305fcbc7b6c7b2b2c639b99fa89c2d6aacce8632d04"
+        },
+        {
+          "path": "packages/System-A-r2.json",
+          "repetition": 2,
+          "sha256": "03af714b9b97400a06115aa9f35f579320d45754ef777430fa426542dba90b6a"
+        }
+      ],
+      "remote_command_count": 0,
+      "repetitions": 2,
+      "tracked_repository_path_counts": [
+        0,
+        2
+      ],
+      "trajectory_steps": [
+        31,
+        31
+      ]
+    },
+    "System-B": {
+      "api_calls": [
+        31,
+        31
+      ],
+      "exploratory_root_path_counts": [
+        8,
+        9
+      ],
+      "history_messages": [
+        85,
+        87
+      ],
+      "modified_path_counts": [
+        8,
+        9
+      ],
+      "packages": [
+        {
+          "path": "packages/System-B-r1.json",
+          "repetition": 1,
+          "sha256": "08cd87f405531faa51adb370ccba1d95454d4bac9dce3b1b77849ae3743a36c4"
+        },
+        {
+          "path": "packages/System-B-r2.json",
+          "repetition": 2,
+          "sha256": "2ccf0badf1512e087af431627cf635bbc1fa441d8c7cd74a3b0cc327d22f0c3c"
+        }
+      ],
+      "remote_command_count": 0,
+      "repetitions": 2,
+      "tracked_repository_path_counts": [
+        0,
+        0
+      ],
+      "trajectory_steps": [
+        31,
+        31
+      ]
+    }
+  }
+}

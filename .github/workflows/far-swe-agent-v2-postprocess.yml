@@ -1,0 +1,257 @@
+name: FAR SWE-agent v2 Primary Freeze and Outcome Reveal
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/far-swe-agent-v2-postprocess.yml'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/evidence_pipeline_v2.py'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/test_evidence_pipeline_v2.py'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/primary-freeze/**'
+      - 'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/post-freeze-reveal/**'
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: v2 post-execution stage
+        required: true
+        type: choice
+        options:
+          - verify-primary-freeze
+          - evaluate-reveal
+          - verify-final-report
+      confirmation:
+        description: Exact confirmation phrase required for outcome reveal
+        required: false
+        type: string
+
+permissions:
+  actions: read
+  contents: write
+  packages: read
+
+env:
+  CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2
+  SOURCE_ARTIFACT_ID: '8635674915'
+  SOURCE_ARTIFACT_SHA256: 7277987300d4204c5108997b3ac6c0cde02c9a4d498178a702ea7a6cb0c19756
+  HARNESS_COMMIT: f7bbbb2ccdf479001d6467c9e34af59e44a840f9
+  FROZEN_IMAGE: ghcr.io/notfoundout/project-far-swebench-scikit-learn-14125@sha256:66615e837a9fdc6faf75dab3db90bf469364204b068af9da4d570fba8ab00ab4
+  FROZEN_IMAGE_ID: sha256:cfd8abd0e5c2670669d259ce1ba2787581fb7aedbcf15c195a8a9d6ce28af103
+  EVAL_IMAGE_TAG: far-v2-frozen/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14125:locked
+
+concurrency:
+  group: far-swe-agent-v2-postprocess
+  cancel-in-progress: false
+
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run v2 evidence-pipeline contracts
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python -m unittest -v test_evidence_pipeline_v2.py
+          python evidence_pipeline_v2.py verify-freeze
+      - name: Verify committed final report when present
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          if [ -f post-freeze-reveal/outcome-reveal.json ]; then
+            python evidence_pipeline_v2.py verify-reveal \
+              --output-dir post-freeze-reveal
+          fi
+
+  verify-source:
+    needs: contracts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download exact completed execution artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api \
+            "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT_ID/zip" \
+            > "$RUNNER_TEMP/far-v2-source.zip"
+          printf '%s  %s\n' \
+            "$SOURCE_ARTIFACT_SHA256" \
+            "$RUNNER_TEMP/far-v2-source.zip" \
+            | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/far-v2-source"
+          unzip -q "$RUNNER_TEMP/far-v2-source.zip" \
+            -d "$RUNNER_TEMP/far-v2-source"
+      - name: Independently verify source tree and primary freeze
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python evidence_pipeline_v2.py verify-source \
+            --artifact-root "$RUNNER_TEMP/far-v2-source"
+          python evidence_pipeline_v2.py verify-freeze
+
+  evaluate-reveal:
+    if: github.event_name == 'workflow_dispatch' && inputs.stage == 'evaluate-reveal'
+    needs: verify-source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    environment: far-swe-agent-execution
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Enforce post-freeze outcome-reveal authorization
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          test "$GITHUB_REF" = "refs/heads/main" || {
+            echo "Outcome reveal must run from merged main." >&2
+            exit 1
+          }
+          test "$CONFIRMATION" = "REVEAL-FAR-V2-OUTCOMES-AFTER-PRIMARY-FREEZE" || {
+            echo "evaluate-reveal requires REVEAL-FAR-V2-OUTCOMES-AFTER-PRIMARY-FREEZE exactly." >&2
+            exit 1
+          }
+      - name: Restore and reverify exact primary source artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api \
+            "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT_ID/zip" \
+            > "$RUNNER_TEMP/far-v2-source.zip"
+          printf '%s  %s\n' \
+            "$SOURCE_ARTIFACT_SHA256" \
+            "$RUNNER_TEMP/far-v2-source.zip" \
+            | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/far-v2-source"
+          unzip -q "$RUNNER_TEMP/far-v2-source.zip" \
+            -d "$RUNNER_TEMP/far-v2-source"
+          python "$CASE_DIR/evidence_pipeline_v2.py" verify-source \
+            --artifact-root "$RUNNER_TEMP/far-v2-source"
+          python "$CASE_DIR/evidence_pipeline_v2.py" verify-freeze
+      - name: Checkout and install exact SWE-bench harness
+        run: |
+          git clone --filter=blob:none \
+            https://github.com/SWE-bench/SWE-bench.git \
+            "$RUNNER_TEMP/swebench-harness"
+          git -C "$RUNNER_TEMP/swebench-harness" \
+            checkout --detach "$HARNESS_COMMIT"
+          test "$(git -C "$RUNNER_TEMP/swebench-harness" rev-parse HEAD)" = "$HARNESS_COMMIT"
+          python -m pip install --upgrade pip
+          python -m pip install --editable "$RUNNER_TEMP/swebench-harness"
+      - name: Pull, verify, and locally retag frozen evaluation image
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "$GH_TOKEN" | docker login ghcr.io \
+            -u "${{ github.actor }}" --password-stdin
+          docker pull "$FROZEN_IMAGE"
+          test "$(docker image inspect "$FROZEN_IMAGE" --format '{{.Id}}')" = "$FROZEN_IMAGE_ID"
+          docker image inspect "$FROZEN_IMAGE" \
+            --format '{{json .RepoDigests}}' \
+            | grep -F "'$FROZEN_IMAGE'"
+          docker tag "$FROZEN_IMAGE" "$EVAL_IMAGE_TAG"
+          test "$(docker image inspect "$EVAL_IMAGE_TAG" --format '{{.Id}}')" = "$FROZEN_IMAGE_ID"
+      - name: Materialize four hash-locked prediction files
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python evidence_pipeline_v2.py materialize-predictions \
+            --artifact-root "$RUNNER_TEMP/far-v2-source" \
+            --output-dir "$RUNNER_TEMP/predictions"
+      - name: Evaluate each frozen run independently
+        working-directory: ${{ runner.temp }}/swebench-harness
+        run: |
+          mkdir -p "$RUNNER_TEMP/evaluation-results"
+          for RUN_ID in v1.0.0-r1 v1.0.0-r2 v1.0.1-r1 v1.0.1-r2; do
+            EVAL_ID="far-v2-${RUN_ID}"
+            python -m swebench.harness.run_evaluation \
+              --dataset_name princeton-nlp/SWE-bench \
+              --split test \
+              --instance_ids scikit-learn__scikit-learn-14125 \
+              --predictions_path "$RUNNER_TEMP/predictions/${RUN_ID}.jsonl" \
+              --max_workers 1 \
+              --timeout 1800 \
+              --namespace far-v2-frozen \
+              --instance_image_tag locked \
+              --cache_level instance \
+              --clean false \
+              --run_id "$EVAL_ID" \
+              --report_dir "$RUNNER_TEMP/evaluation-results/${RUN_ID}"
+            SOURCE_DIR="logs/run_evaluation/${EVAL_ID}/${RUN_ID}/scikit-learn__scikit-learn-14125"
+            test -s "$SOURCE_DIR/report.json"
+            test -s "$SOURCE_DIR/test_output.txt"
+            test -s "$SOURCE_DIR/run_instance.log"
+            mkdir -p "$RUNNER_TEMP/evaluation-results/${RUN_ID}"
+            cp "$SOURCE_DIR/report.json" "$RUNNER_TEMP/evaluation-results/${RUN_ID}/report.json"
+            cp "$SOURCE_DIR/test_output.txt" "$RUNNER_TEMP/evaluation-results/${RUN_ID}/test_output.txt"
+            cp "$SOURCE_DIR/run_instance.log" "$RUNNER_TEMP/evaluation-results/${RUN_ID}/run_instance.log"
+          done
+      - name: Attach outcomes and build bounded final report
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          rm -rf post-freeze-reveal
+          python evidence_pipeline_v2.py reveal \
+            --artifact-root "$RUNNER_TEMP/far-v2-source" \
+            --evaluation-root "$RUNNER_TEMP/evaluation-results" \
+            --output-dir post-freeze-reveal
+          python evidence_pipeline_v2.py verify-reveal \
+            --output-dir post-freeze-reveal
+      - name: Push reviewable outcome-reveal branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="reveal/swe-agent-v2-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add "$CASE_DIR/post-freeze-reveal"
+          git diff --cached --check
+          git commit -m "Publish SWE-agent v2 bounded outcome reveal"
+          git push \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            "HEAD:refs/heads/${BRANCH}"
+          echo "Reveal branch: $BRANCH" >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload evaluation and reveal evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-swe-agent-v2-outcome-reveal-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/evaluation-results/
+            ${{ env.CASE_DIR }}/post-freeze-reveal/
+          if-no-files-found: error
+          retention-days: 90
+
+  verify-dispatch:
+    if: github.event_name == 'workflow_dispatch' && inputs.stage == 'verify-primary-freeze'
+    needs: verify-source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - run: echo "Exact source artifact and merged primary freeze verified."
+
+  verify-final:
+    if: github.event_name == 'workflow_dispatch' && inputs.stage == 'verify-final-report'
+    needs: verify-source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify committed outcome reveal and final report
+        working-directory: ${{ env.CASE_DIR }}
+        run: python evidence_pipeline_v2.py verify-reveal --output-dir post-freeze-reveal
