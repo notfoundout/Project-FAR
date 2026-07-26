@@ -1,0 +1,377 @@
+{
+  "claims": [
+    {
+      "alternative_explanations": [
+        "grader/runtime divergence not inspectable because logs are absent"
+      ],
+      "causal_layer": [
+        "agent policy",
+        "model capability",
+        "test strategy"
+      ],
+      "claim_id": "v1.0.0-r1-C1",
+      "confidence": "high",
+      "confidence_reasoning": "The structured grader report directly records successful application and target failure for this exact patch.",
+      "confirmation_condition": "Retained grader output reproducing the named failure would confirm it.",
+      "contradictory_evidence": [
+        "nine PASS_TO_PASS tests passed"
+      ],
+      "cost": "medium",
+      "evidence_class": "directly derived",
+      "falsification_condition": "Authenticated grader detail showing the named target passed for this patch would falsify it.",
+      "observed_failure": "grader target FAIL_TO_PASS test remained failing",
+      "proposed_control": "REQ-P1-001",
+      "remediable": true,
+      "residual_risk": "Passing exposed test may not generalize.",
+      "root_cause_candidate": "submitted patch did not correct the benchmark-required behavior",
+      "run": "v1.0.0-r1",
+      "supporting_evidence": [
+        "post-freeze-reveal/outcome-reveal.json: patch applied; named FAIL_TO_PASS failed"
+      ],
+      "v3_priority": "P1",
+      "validation_test": "reject submission with recorded failing target"
+    },
+    {
+      "alternative_explanations": [
+        "incorrect hypothesis would persist under more budget",
+        "model or policy limitation rather than budget"
+      ],
+      "causal_layer": [
+        "controller architecture",
+        "experiment design"
+      ],
+      "claim_id": "v1.0.0-r1-C2",
+      "confidence": "medium",
+      "confidence_reasoning": "Budget termination is direct, but lost resolution opportunity is counterfactual and unobserved.",
+      "confirmation_condition": "A checkpoint showing a viable unexecuted correction at call 31 would strengthen it.",
+      "contradictory_evidence": [
+        "a patch was produced and applied; evidence does not show another call would resolve it"
+      ],
+      "cost": "low",
+      "evidence_class": "inferred",
+      "falsification_condition": "A complete trace showing the agent had intentionally finalized with no remaining diagnostic action would weaken this cause.",
+      "observed_failure": "all 31 calls ended in submitted (exit_cost)",
+      "proposed_control": "REQ-P0-003",
+      "remediable": true,
+      "residual_risk": "More or clearer budget does not assure resolution.",
+      "root_cause_candidate": "call budget truncated further diagnosis or correction",
+      "run": "v1.0.0-r1",
+      "supporting_evidence": [
+        "package records api_calls=31, trajectory_steps=31, submitted (exit_cost)"
+      ],
+      "v3_priority": "P0",
+      "validation_test": "budget terminal state cannot be classified as correctness evidence"
+    },
+    {
+      "alternative_explanations": [
+        "external artifact might still be retrievable, but availability is not evidenced here"
+      ],
+      "causal_layer": [
+        "artifact pipeline",
+        "infrastructure"
+      ],
+      "claim_id": "v1.0.0-r1-C3",
+      "confidence": "high",
+      "confidence_reasoning": "Filesystem inventory and source lock directly establish content absence and hash-only representation.",
+      "confirmation_condition": "Artifact service reports expiration/unavailability for artifact 8635674915.",
+      "contradictory_evidence": [
+        "hashes and aggregate packages preserve identity and bounded facts"
+      ],
+      "cost": "medium",
+      "evidence_class": "observed",
+      "falsification_condition": "The exact digest-matching external artifact becoming available would remove the content-access limitation.",
+      "observed_failure": "ordered source trace, logs, patch, and prediction are absent from Git",
+      "proposed_control": "REQ-P0-002",
+      "remediable": true,
+      "residual_risk": "Durability and confidentiality still require governance.",
+      "root_cause_candidate": "artifact retention design prevents repository-only forensic reconstruction",
+      "run": "v1.0.0-r1",
+      "supporting_evidence": [
+        "primary-freeze/source-artifact-lock.json identifies external-only files",
+        "post stabilization audit says completed source artifact is external"
+      ],
+      "v3_priority": "P0",
+      "validation_test": "bundle validation fails when source diagnostic member missing"
+    },
+    {
+      "alternative_explanations": [
+        "grader/runtime divergence not inspectable because logs are absent"
+      ],
+      "causal_layer": [
+        "agent policy",
+        "model capability",
+        "test strategy"
+      ],
+      "claim_id": "v1.0.0-r2-C1",
+      "confidence": "high",
+      "confidence_reasoning": "The structured grader report directly records successful application and target failure for this exact patch.",
+      "confirmation_condition": "Retained grader output reproducing the named failure would confirm it.",
+      "contradictory_evidence": [
+        "nine PASS_TO_PASS tests passed"
+      ],
+      "cost": "medium",
+      "evidence_class": "directly derived",
+      "falsification_condition": "Authenticated grader detail showing the named target passed for this patch would falsify it.",
+      "observed_failure": "grader target FAIL_TO_PASS test remained failing",
+      "proposed_control": "REQ-P1-001",
+      "remediable": true,
+      "residual_risk": "Passing exposed test may not generalize.",
+      "root_cause_candidate": "submitted patch did not correct the benchmark-required behavior",
+      "run": "v1.0.0-r2",
+      "supporting_evidence": [
+        "post-freeze-reveal/outcome-reveal.json: patch applied; named FAIL_TO_PASS failed"
+      ],
+      "v3_priority": "P1",
+      "validation_test": "reject submission with recorded failing target"
+    },
+    {
+      "alternative_explanations": [
+        "incorrect hypothesis would persist under more budget",
+        "model or policy limitation rather than budget"
+      ],
+      "causal_layer": [
+        "controller architecture",
+        "experiment design"
+      ],
+      "claim_id": "v1.0.0-r2-C2",
+      "confidence": "medium",
+      "confidence_reasoning": "Budget termination is direct, but lost resolution opportunity is counterfactual and unobserved.",
+      "confirmation_condition": "A checkpoint showing a viable unexecuted correction at call 31 would strengthen it.",
+      "contradictory_evidence": [
+        "a patch was produced and applied; evidence does not show another call would resolve it"
+      ],
+      "cost": "low",
+      "evidence_class": "inferred",
+      "falsification_condition": "A complete trace showing the agent had intentionally finalized with no remaining diagnostic action would weaken this cause.",
+      "observed_failure": "all 31 calls ended in submitted (exit_cost)",
+      "proposed_control": "REQ-P0-003",
+      "remediable": true,
+      "residual_risk": "More or clearer budget does not assure resolution.",
+      "root_cause_candidate": "call budget truncated further diagnosis or correction",
+      "run": "v1.0.0-r2",
+      "supporting_evidence": [
+        "package records api_calls=31, trajectory_steps=31, submitted (exit_cost)"
+      ],
+      "v3_priority": "P0",
+      "validation_test": "budget terminal state cannot be classified as correctness evidence"
+    },
+    {
+      "alternative_explanations": [
+        "external artifact might still be retrievable, but availability is not evidenced here"
+      ],
+      "causal_layer": [
+        "artifact pipeline",
+        "infrastructure"
+      ],
+      "claim_id": "v1.0.0-r2-C3",
+      "confidence": "high",
+      "confidence_reasoning": "Filesystem inventory and source lock directly establish content absence and hash-only representation.",
+      "confirmation_condition": "Artifact service reports expiration/unavailability for artifact 8635674915.",
+      "contradictory_evidence": [
+        "hashes and aggregate packages preserve identity and bounded facts"
+      ],
+      "cost": "medium",
+      "evidence_class": "observed",
+      "falsification_condition": "The exact digest-matching external artifact becoming available would remove the content-access limitation.",
+      "observed_failure": "ordered source trace, logs, patch, and prediction are absent from Git",
+      "proposed_control": "REQ-P0-002",
+      "remediable": true,
+      "residual_risk": "Durability and confidentiality still require governance.",
+      "root_cause_candidate": "artifact retention design prevents repository-only forensic reconstruction",
+      "run": "v1.0.0-r2",
+      "supporting_evidence": [
+        "primary-freeze/source-artifact-lock.json identifies external-only files",
+        "post stabilization audit says completed source artifact is external"
+      ],
+      "v3_priority": "P0",
+      "validation_test": "bundle validation fails when source diagnostic member missing"
+    },
+    {
+      "alternative_explanations": [
+        "grader/runtime divergence not inspectable because logs are absent"
+      ],
+      "causal_layer": [
+        "agent policy",
+        "model capability",
+        "test strategy"
+      ],
+      "claim_id": "v1.0.1-r1-C1",
+      "confidence": "high",
+      "confidence_reasoning": "The structured grader report directly records successful application and target failure for this exact patch.",
+      "confirmation_condition": "Retained grader output reproducing the named failure would confirm it.",
+      "contradictory_evidence": [
+        "nine PASS_TO_PASS tests passed"
+      ],
+      "cost": "medium",
+      "evidence_class": "directly derived",
+      "falsification_condition": "Authenticated grader detail showing the named target passed for this patch would falsify it.",
+      "observed_failure": "grader target FAIL_TO_PASS test remained failing",
+      "proposed_control": "REQ-P1-001",
+      "remediable": true,
+      "residual_risk": "Passing exposed test may not generalize.",
+      "root_cause_candidate": "submitted patch did not correct the benchmark-required behavior",
+      "run": "v1.0.1-r1",
+      "supporting_evidence": [
+        "post-freeze-reveal/outcome-reveal.json: patch applied; named FAIL_TO_PASS failed"
+      ],
+      "v3_priority": "P1",
+      "validation_test": "reject submission with recorded failing target"
+    },
+    {
+      "alternative_explanations": [
+        "incorrect hypothesis would persist under more budget",
+        "model or policy limitation rather than budget"
+      ],
+      "causal_layer": [
+        "controller architecture",
+        "experiment design"
+      ],
+      "claim_id": "v1.0.1-r1-C2",
+      "confidence": "medium",
+      "confidence_reasoning": "Budget termination is direct, but lost resolution opportunity is counterfactual and unobserved.",
+      "confirmation_condition": "A checkpoint showing a viable unexecuted correction at call 31 would strengthen it.",
+      "contradictory_evidence": [
+        "a patch was produced and applied; evidence does not show another call would resolve it"
+      ],
+      "cost": "low",
+      "evidence_class": "inferred",
+      "falsification_condition": "A complete trace showing the agent had intentionally finalized with no remaining diagnostic action would weaken this cause.",
+      "observed_failure": "all 31 calls ended in submitted (exit_cost)",
+      "proposed_control": "REQ-P0-003",
+      "remediable": true,
+      "residual_risk": "More or clearer budget does not assure resolution.",
+      "root_cause_candidate": "call budget truncated further diagnosis or correction",
+      "run": "v1.0.1-r1",
+      "supporting_evidence": [
+        "package records api_calls=31, trajectory_steps=31, submitted (exit_cost)"
+      ],
+      "v3_priority": "P0",
+      "validation_test": "budget terminal state cannot be classified as correctness evidence"
+    },
+    {
+      "alternative_explanations": [
+        "external artifact might still be retrievable, but availability is not evidenced here"
+      ],
+      "causal_layer": [
+        "artifact pipeline",
+        "infrastructure"
+      ],
+      "claim_id": "v1.0.1-r1-C3",
+      "confidence": "high",
+      "confidence_reasoning": "Filesystem inventory and source lock directly establish content absence and hash-only representation.",
+      "confirmation_condition": "Artifact service reports expiration/unavailability for artifact 8635674915.",
+      "contradictory_evidence": [
+        "hashes and aggregate packages preserve identity and bounded facts"
+      ],
+      "cost": "medium",
+      "evidence_class": "observed",
+      "falsification_condition": "The exact digest-matching external artifact becoming available would remove the content-access limitation.",
+      "observed_failure": "ordered source trace, logs, patch, and prediction are absent from Git",
+      "proposed_control": "REQ-P0-002",
+      "remediable": true,
+      "residual_risk": "Durability and confidentiality still require governance.",
+      "root_cause_candidate": "artifact retention design prevents repository-only forensic reconstruction",
+      "run": "v1.0.1-r1",
+      "supporting_evidence": [
+        "primary-freeze/source-artifact-lock.json identifies external-only files",
+        "post stabilization audit says completed source artifact is external"
+      ],
+      "v3_priority": "P0",
+      "validation_test": "bundle validation fails when source diagnostic member missing"
+    },
+    {
+      "alternative_explanations": [
+        "grader/runtime divergence not inspectable because logs are absent"
+      ],
+      "causal_layer": [
+        "agent policy",
+        "model capability",
+        "test strategy"
+      ],
+      "claim_id": "v1.0.1-r2-C1",
+      "confidence": "high",
+      "confidence_reasoning": "The structured grader report directly records successful application and target failure for this exact patch.",
+      "confirmation_condition": "Retained grader output reproducing the named failure would confirm it.",
+      "contradictory_evidence": [
+        "nine PASS_TO_PASS tests passed"
+      ],
+      "cost": "medium",
+      "evidence_class": "directly derived",
+      "falsification_condition": "Authenticated grader detail showing the named target passed for this patch would falsify it.",
+      "observed_failure": "grader target FAIL_TO_PASS test remained failing",
+      "proposed_control": "REQ-P1-001",
+      "remediable": true,
+      "residual_risk": "Passing exposed test may not generalize.",
+      "root_cause_candidate": "submitted patch did not correct the benchmark-required behavior",
+      "run": "v1.0.1-r2",
+      "supporting_evidence": [
+        "post-freeze-reveal/outcome-reveal.json: patch applied; named FAIL_TO_PASS failed"
+      ],
+      "v3_priority": "P1",
+      "validation_test": "reject submission with recorded failing target"
+    },
+    {
+      "alternative_explanations": [
+        "incorrect hypothesis would persist under more budget",
+        "model or policy limitation rather than budget"
+      ],
+      "causal_layer": [
+        "controller architecture",
+        "experiment design"
+      ],
+      "claim_id": "v1.0.1-r2-C2",
+      "confidence": "medium",
+      "confidence_reasoning": "Budget termination is direct, but lost resolution opportunity is counterfactual and unobserved.",
+      "confirmation_condition": "A checkpoint showing a viable unexecuted correction at call 31 would strengthen it.",
+      "contradictory_evidence": [
+        "a patch was produced and applied; evidence does not show another call would resolve it"
+      ],
+      "cost": "low",
+      "evidence_class": "inferred",
+      "falsification_condition": "A complete trace showing the agent had intentionally finalized with no remaining diagnostic action would weaken this cause.",
+      "observed_failure": "all 31 calls ended in submitted (exit_cost)",
+      "proposed_control": "REQ-P0-003",
+      "remediable": true,
+      "residual_risk": "More or clearer budget does not assure resolution.",
+      "root_cause_candidate": "call budget truncated further diagnosis or correction",
+      "run": "v1.0.1-r2",
+      "supporting_evidence": [
+        "package records api_calls=31, trajectory_steps=31, submitted (exit_cost)"
+      ],
+      "v3_priority": "P0",
+      "validation_test": "budget terminal state cannot be classified as correctness evidence"
+    },
+    {
+      "alternative_explanations": [
+        "external artifact might still be retrievable, but availability is not evidenced here"
+      ],
+      "causal_layer": [
+        "artifact pipeline",
+        "infrastructure"
+      ],
+      "claim_id": "v1.0.1-r2-C3",
+      "confidence": "high",
+      "confidence_reasoning": "Filesystem inventory and source lock directly establish content absence and hash-only representation.",
+      "confirmation_condition": "Artifact service reports expiration/unavailability for artifact 8635674915.",
+      "contradictory_evidence": [
+        "hashes and aggregate packages preserve identity and bounded facts"
+      ],
+      "cost": "medium",
+      "evidence_class": "observed",
+      "falsification_condition": "The exact digest-matching external artifact becoming available would remove the content-access limitation.",
+      "observed_failure": "ordered source trace, logs, patch, and prediction are absent from Git",
+      "proposed_control": "REQ-P0-002",
+      "remediable": true,
+      "residual_risk": "Durability and confidentiality still require governance.",
+      "root_cause_candidate": "artifact retention design prevents repository-only forensic reconstruction",
+      "run": "v1.0.1-r2",
+      "supporting_evidence": [
+        "primary-freeze/source-artifact-lock.json identifies external-only files",
+        "post stabilization audit says completed source artifact is external"
+      ],
+      "v3_priority": "P0",
+      "validation_test": "bundle validation fails when source diagnostic member missing"
+    }
+  ],
+  "schema": "far-swe-agent-v2-cause-control/1.0"
+}
