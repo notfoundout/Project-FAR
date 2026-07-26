@@ -1,6 +1,6 @@
 # SWE-agent External Comparison v2 Execution Status
 
-Authority: the merged access freeze, the completed execution artifact from workflow run `30214963069`, and the outcome-blind primary freeze in this directory.
+Authority: the immutable evidence locks, the completed execution artifact from workflow run `30214963069`, the outcome-blind primary freeze, and the post-freeze reveal bundle in this directory.
 
 ## Current verified state
 
@@ -12,7 +12,7 @@ Authority: the merged access freeze, the completed execution artifact from workf
 - Completion means execution evidence exists; it does not assert that a patch resolves the benchmark task.
 - The completed source artifact is GitHub Actions artifact `8635674915` from run `30214963069`, digest `sha256:7277987300d4204c5108997b3ac6c0cde02c9a4d498178a702ea7a6cb0c19756`.
 - Its exact 73-file content tree is locked by root `53438d4e327fd79d895285ae21b2d241408710389913b8111739a362af19b814`.
-- No benchmark outcome, grader output, gold patch, hidden-test result, reward, or release preference has been accessed.
+- Benchmark outcomes were accessed only after the primary freeze was merged and verified. The committed reveal records four unresolved runs: 0/2 for each release.
 
 ## Outcome-blind primary freeze
 
@@ -22,13 +22,12 @@ Authority: the merged access freeze, the completed execution artifact from workf
 - No authorization bypass or undeclared external-state use was observed.
 - Review remains required because behavior varied materially within releases and the candidate-side trajectories recorded additional configuration/provenance fields whose operational significance is not established by the available evidence.
 
-## Required next behavior
+## Final bounded disposition
 
-1. Merge the exact-head-green primary-freeze pull request.
-2. Independently verify the merged freeze and exact completed source artifact.
-3. Only then run the dedicated v2 postprocess workflow with explicit outcome-reveal confirmation.
-4. Evaluate all four hash-locked patches with the pinned SWE-bench harness and frozen image.
-5. Publish the outcome reveal and bounded final report through a separate pull request.
-6. Do not run the model-execution workflow again.
+- Both releases resolved **0/2** runs; the observation is `no_observed_resolution_difference`.
+- The outcome-blind and bounded-case decisions remain `REVIEW_REQUIRED`.
+- This is not evidence of equivalence or superiority: four budget-limited runs on one task cannot establish safety or readiness and cannot estimate general performance.
+- The model-execution and reveal stages are closed. Do not rerun or replace any frozen artifact.
+- Reproduction is limited to local integrity and deterministic-report verification unless the separately retained source artifact and pinned container remain externally available.
 
 This single task with two repetitions per release cannot establish general release superiority, universal accuracy, safety, compliance, commercial readiness, or enterprise readiness.

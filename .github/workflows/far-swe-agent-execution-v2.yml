@@ -56,6 +56,14 @@ jobs:
           python case_tools.py validate
           python -m unittest -v test_case_v2.py test_access_probe_v2.py test_budget_limited_completion_v2.py
 
+      - name: Refuse mutation of the completed frozen case
+        if: inputs.stage == 'access-probe' || inputs.stage == 'execute'
+        run: |
+          if [ -f "$CASE_DIR/post-freeze-reveal/bundle-sha256.json" ]; then
+            echo "The v2 case is complete and frozen; access-probe and execute are permanently closed." >&2
+            exit 1
+          fi
+
       - name: Enforce exact access-probe confirmation
         if: inputs.stage == 'access-probe'
         env:
@@ -256,7 +264,7 @@ jobs:
           set -e
           if [ "$RC" -eq 75 ]; then
             echo "Retryable provider/model failure recorded. Re-run only after the recorded blocker is resolved." >> "$GITHUB_STEP_SUMMARY"
-            exit 0
+            exit 75
           fi
           exit "$RC"
 

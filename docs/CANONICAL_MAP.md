@@ -19,6 +19,13 @@ Each concept should have one canonical source. Other documents should link to th
 | Central Research Program | [`governance/central-research-program.md`](governance/central-research-program.md) | Defines the central research question, research objectives, evidence standard, counterexample policy, and completion criteria. |
 | Architecture | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Describes the repository architecture. |
 | Project Status | [`project-status.md`](project-status.md) | Records current governance and milestone status. |
+| Canonical Terminology | [`glossary/canonical-vocabulary-index.md`](glossary/canonical-vocabulary-index.md) | Indexes authoritative terms and aliases. |
+| Decision Log | [`DECISION_LOG.md`](DECISION_LOG.md) | Records repository-level decisions and provenance. |
+| Validation Evidence | [`validation/README.md`](validation/README.md) | Indexes bounded validation evidence without promoting it to theory. |
+| Current Limitations | [`governance/limitations-register.md`](governance/limitations-register.md) | Records evidential, theoretical, and reproducibility limits. |
+| Open Problems | [`governance/unresolved-questions-register.md`](governance/unresolved-questions-register.md) | Records unresolved theoretical and empirical questions. |
+| Roadmap | [`ROADMAP.md`](ROADMAP.md) | Records gated future work. |
+| Claim Status | [`governance/claim-status-matrix.md`](governance/claim-status-matrix.md) | Classifies important claims by epistemic status. |
 | Repository Certification Standard | [`governance/repository-certification-standard.md`](governance/repository-certification-standard.md) | Defines repository certification governance, protected boundaries, criteria, and completion rules. |
 | Mission | [`../foundations/motivation/mission.md`](../foundations/motivation/mission.md) | Defines the project mission. |
 | Philosophy | [`../foundations/motivation/philosophy.md`](../foundations/motivation/philosophy.md) | Defines guiding philosophical principles. |
