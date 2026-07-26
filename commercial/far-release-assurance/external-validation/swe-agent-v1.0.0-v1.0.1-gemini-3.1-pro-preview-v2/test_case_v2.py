@@ -11,6 +11,7 @@ import case_tools
 
 ROOT = Path(__file__).resolve().parents[4]
 WORKFLOW = ROOT / ".github/workflows/far-swe-agent-execution-v2.yml"
+SETUP_SMOKE = ROOT / ".github/workflows/far-swe-agent-v2-setup-smoke.yml"
 CASE_DIR = Path(__file__).resolve().parent
 
 
@@ -99,9 +100,13 @@ class CaseV2ContractTests(unittest.TestCase):
     def test_frozen_manifest_requires_attestation_binding(self) -> None:
         manifest = copy.deepcopy(case_tools.load_manifest())
         manifest["status"] = case_tools.FROZEN
+        manifest.pop("execution_freeze", None)
+        gate = manifest["provider_access_gate"]
+        gate["attestation_path"] = None
+        gate["attestation_sha256"] = None
+        gate["verified_at"] = None
         with self.assertRaisesRegex(SystemExit, "attestation"):
             case_tools.validate_manifest(manifest)
-        gate = manifest["provider_access_gate"]
         gate["attestation_path"] = "access-freeze/provider-access-attestation.json"
         gate["attestation_sha256"] = "a" * 64
         gate["verified_at"] = "2026-07-26T00:00:00+00:00"
@@ -111,6 +116,7 @@ class CaseV2ContractTests(unittest.TestCase):
 class WorkflowV2ContractTests(unittest.TestCase):
     def setUp(self) -> None:
         self.text = WORKFLOW.read_text()
+        self.smoke_text = SETUP_SMOKE.read_text()
 
     def test_workflow_is_manual_and_uses_distinct_v2_artifacts(self) -> None:
         self.assertIn("workflow_dispatch:", self.text)
@@ -147,6 +153,15 @@ class WorkflowV2ContractTests(unittest.TestCase):
     def test_access_probe_regressions_run_before_and_after_probe(self) -> None:
         command = "python -m unittest -v test_case_v2.py test_access_probe_v2.py"
         self.assertEqual(self.text.count(command), 2)
+
+    def test_setup_smoke_accepts_pending_and_frozen_lifecycle(self) -> None:
+        self.assertIn('"preregistered_access_pending"', self.smoke_text)
+        self.assertIn('"execution_inputs_frozen"', self.smoke_text)
+        self.assertIn("git diff --exit-code", self.smoke_text)
+        self.assertNotIn(
+            "test ! -e access-freeze/provider-access-attestation.json",
+            self.smoke_text,
+        )
 
     def test_execution_restores_before_resolving_or_calling_model(self) -> None:
         restore = self.text.index(
