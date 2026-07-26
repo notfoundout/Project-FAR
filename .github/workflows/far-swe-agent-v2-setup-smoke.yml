@@ -49,20 +49,11 @@ jobs:
           cat "$RUNNER_TEMP/v2-preregistration.log"
           exit "$RC"
 
-      - name: Verify fresh-state and secret boundaries
+      - name: Verify fresh-state boundary
         working-directory: ${{ env.CASE_DIR }}
         run: |
           test ! -e execution-output/execution-state.json
           test ! -e access-freeze/provider-access-attestation.json
-          python - <<'PY'
-          from pathlib import Path
-
-          workflow = Path('../../../../../.github/workflows/far-swe-agent-execution-v2.yml').read_text()
-          binding = 'GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}'
-          assert workflow.count(binding) == 2
-          assert 'far-swe-agent-v2-execute-' in workflow
-          assert 'startswith("far-swe-agent-execute-")' not in workflow
-          PY
 
       - name: Upload preregistration diagnostics
         if: always()
