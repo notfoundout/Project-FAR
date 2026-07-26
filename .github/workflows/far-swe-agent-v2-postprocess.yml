@@ -110,7 +110,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
       - name: Enforce post-freeze outcome-reveal authorization
         env:
           CONFIRMATION: ${{ inputs.confirmation }}
@@ -123,7 +122,6 @@ jobs:
             echo "evaluate-reveal requires REVEAL-FAR-V2-OUTCOMES-AFTER-PRIMARY-FREEZE exactly." >&2
             exit 1
           }
-
       - name: Restore and reverify exact primary source artifact
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -141,7 +139,6 @@ jobs:
           python "$CASE_DIR/evidence_pipeline_v2.py" verify-source \
             --artifact-root "$RUNNER_TEMP/far-v2-source"
           python "$CASE_DIR/evidence_pipeline_v2.py" verify-freeze
-
       - name: Checkout and install exact SWE-bench harness
         run: |
           git clone --filter=blob:none \
@@ -152,7 +149,6 @@ jobs:
           test "$(git -C "$RUNNER_TEMP/swebench-harness" rev-parse HEAD)" = "$HARNESS_COMMIT"
           python -m pip install --upgrade pip
           python -m pip install --editable "$RUNNER_TEMP/swebench-harness"
-
       - name: Pull, verify, and locally retag frozen evaluation image
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -163,17 +159,15 @@ jobs:
           test "$(docker image inspect "$FROZEN_IMAGE" --format '{{.Id}}')" = "$FROZEN_IMAGE_ID"
           docker image inspect "$FROZEN_IMAGE" \
             --format '{{json .RepoDigests}}' \
-            | grep -F '"'"$FROZEN_IMAGE"'"'
+            | grep -F "'$FROZEN_IMAGE'"
           docker tag "$FROZEN_IMAGE" "$EVAL_IMAGE_TAG"
           test "$(docker image inspect "$EVAL_IMAGE_TAG" --format '{{.Id}}')" = "$FROZEN_IMAGE_ID"
-
       - name: Materialize four hash-locked prediction files
         working-directory: ${{ env.CASE_DIR }}
         run: |
           python evidence_pipeline_v2.py materialize-predictions \
             --artifact-root "$RUNNER_TEMP/far-v2-source" \
             --output-dir "$RUNNER_TEMP/predictions"
-
       - name: Evaluate each frozen run independently
         working-directory: ${{ runner.temp }}/swebench-harness
         run: |
@@ -198,14 +192,10 @@ jobs:
             test -s "$SOURCE_DIR/test_output.txt"
             test -s "$SOURCE_DIR/run_instance.log"
             mkdir -p "$RUNNER_TEMP/evaluation-results/${RUN_ID}"
-            cp "$SOURCE_DIR/report.json" \
-              "$RUNNER_TEMP/evaluation-results/${RUN_ID}/report.json"
-            cp "$SOURCE_DIR/test_output.txt" \
-              "$RUNNER_TEMP/evaluation-results/${RUN_ID}/test_output.txt"
-            cp "$SOURCE_DIR/run_instance.log" \
-              "$RUNNER_TEMP/evaluation-results/${RUN_ID}/run_instance.log"
+            cp "$SOURCE_DIR/report.json" "$RUNNER_TEMP/evaluation-results/${RUN_ID}/report.json"
+            cp "$SOURCE_DIR/test_output.txt" "$RUNNER_TEMP/evaluation-results/${RUN_ID}/test_output.txt"
+            cp "$SOURCE_DIR/run_instance.log" "$RUNNER_TEMP/evaluation-results/${RUN_ID}/run_instance.log"
           done
-
       - name: Attach outcomes and build bounded final report
         working-directory: ${{ env.CASE_DIR }}
         run: |
@@ -216,7 +206,6 @@ jobs:
             --output-dir post-freeze-reveal
           python evidence_pipeline_v2.py verify-reveal \
             --output-dir post-freeze-reveal
-
       - name: Push reviewable outcome-reveal branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -232,7 +221,6 @@ jobs:
             "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
             "HEAD:refs/heads/${BRANCH}"
           echo "Reveal branch: $BRANCH" >> "$GITHUB_STEP_SUMMARY"
-
       - name: Upload evaluation and reveal evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -248,6 +236,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && inputs.stage == 'verify-primary-freeze'
     needs: verify-source
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - run: echo "Exact source artifact and merged primary freeze verified."
 
@@ -255,6 +244,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && inputs.stage == 'verify-final-report'
     needs: verify-source
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
