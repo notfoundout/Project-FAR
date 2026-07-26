@@ -1,0 +1,251 @@
+name: FAR SWE-agent External Comparison v2
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: v2 case stage
+        required: true
+        type: choice
+        options:
+          - access-probe
+          - preflight
+          - plan
+          - execute
+      confirmation:
+        description: Use the exact confirmation phrase required by the selected stage
+        required: false
+        type: string
+
+permissions:
+  actions: read
+  contents: write
+  packages: read
+  pull-requests: write
+
+env:
+  CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2
+  GHCR_IMAGE: ghcr.io/notfoundout/project-far-swebench-scikit-learn-14125
+
+concurrency:
+  group: far-swe-agent-external-comparison-v2
+  cancel-in-progress: false
+
+jobs:
+  v2-stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    environment: far-swe-agent-execution
+    steps:
+      - name: Checkout exact selected revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install controller parser dependency
+        run: python -m pip install PyYAML==6.0.2
+
+      - name: Validate v2 preregistration and regression contracts
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python case_tools.py validate
+          python -m unittest -v test_case_v2.py
+
+      - name: Enforce exact access-probe confirmation
+        if: inputs.stage == 'access-probe'
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          test "$GITHUB_REF" = "refs/heads/main" || {
+            echo "Access freeze must be generated from main." >&2
+            exit 1
+          }
+          test "$CONFIRMATION" = "PROBE-FAR-GEMINI-3-1-PRO-PREVIEW" || {
+            echo "Access probe requires PROBE-FAR-GEMINI-3-1-PRO-PREVIEW exactly." >&2
+            exit 1
+          }
+
+      - name: Probe exact replacement-model access
+        if: inputs.stage == 'access-probe'
+        working-directory: ${{ env.CASE_DIR }}
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          test -n "$GEMINI_API_KEY" || {
+            echo "GEMINI_API_KEY is missing; no provider request was started." >&2
+            exit 1
+          }
+          echo "::add-mask::$GEMINI_API_KEY"
+          python case_tools.py access-probe
+          python case_tools.py finalize-access-freeze
+          python case_tools.py validate
+          python -m unittest -v test_case_v2.py
+
+      - name: Open provider-access freeze pull request
+        if: inputs.stage == 'access-probe'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="freeze/swe-agent-gemini-3-1-pro-preview-v2-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add \
+            "$CASE_DIR/manifest.json" \
+            "$CASE_DIR/EXECUTION-STATUS.md" \
+            "$CASE_DIR/access-freeze/provider-access-attestation.json" \
+            "$CASE_DIR/access-freeze/provider-access-attestation.sha256"
+          git diff --cached --check
+          git commit -m "Freeze SWE-agent v2 provider access"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            "HEAD:refs/heads/${BRANCH}"
+          cat > "$RUNNER_TEMP/freeze-pr-body.md" <<'EOF'
+          ## Purpose
+
+          Freeze the new SWE-agent v1.0.0 versus v1.0.1 case only after a successful, fixed, non-benchmark request to the exact preregistered `gemini-3.1-pro-preview` endpoint.
+
+          ## Evidence boundary
+
+          - no benchmark task data was sent to the provider;
+          - no benchmark outcome was accessed;
+          - no API credential was persisted;
+          - the earlier `gemini-2.5-pro` case remains blocked and unchanged;
+          - all four v2 comparison slots remain untouched and pending.
+
+          ## Merge gate
+
+          Merge only if the newest required checks on the exact final head are successful.
+          EOF
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "Freeze SWE-agent v2 after exact Gemini 3.1 Pro access probe" \
+            --body-file "$RUNNER_TEMP/freeze-pr-body.md"
+
+      - name: Authenticate to GHCR for frozen image pull
+        if: inputs.stage == 'preflight' || inputs.stage == 'plan' || inputs.stage == 'execute'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "$GH_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Run frozen v2 preflight
+        if: inputs.stage == 'preflight'
+        working-directory: ${{ env.CASE_DIR }}
+        run: python case_tools.py preflight --pull-image
+
+      - name: Enforce exact plan confirmation
+        if: inputs.stage == 'plan'
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          test "$CONFIRMATION" = "PLAN-FAR-GEMINI-3-1-PRO-PREVIEW-V2" || {
+            echo "Plan stage requires PLAN-FAR-GEMINI-3-1-PRO-PREVIEW-V2 exactly." >&2
+            exit 1
+          }
+
+      - name: Enforce exact execution confirmation
+        if: inputs.stage == 'execute'
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          test "$CONFIRMATION" = "EXECUTE-FAR-GEMINI-3-1-PRO-PREVIEW-V2-NEXT-RUN" || {
+            echo "Execute stage requires EXECUTE-FAR-GEMINI-3-1-PRO-PREVIEW-V2-NEXT-RUN exactly." >&2
+            exit 1
+          }
+
+      - name: Generate frozen v2 execution plan
+        if: inputs.stage == 'plan' || inputs.stage == 'execute'
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          rm -f execution-output/execution-plan.json
+          python case_tools.py plan
+
+      - name: Restore latest v2 validated execution state
+        if: inputs.stage == 'execute'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p "$CASE_DIR/execution-output"
+          ARTIFACT_ID="$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?per_page=100" --jq '[.artifacts[] | select(.expired == false and (.name | startswith("far-swe-agent-v2-execute-")))] | sort_by(.created_at) | reverse | .[0].id // empty')"
+          if [ -n "$ARTIFACT_ID" ]; then
+            echo "Restoring v2 execution state from artifact $ARTIFACT_ID"
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > "$RUNNER_TEMP/v2-execution-state.zip"
+            unzip -o "$RUNNER_TEMP/v2-execution-state.zip" -d "$CASE_DIR/execution-output"
+          else
+            echo "No prior v2 execution artifact found; starting from four untouched slots."
+          fi
+          python "$CASE_DIR/case_tools.py" plan
+
+      - name: Resolve next frozen v2 SWE-agent release
+        if: inputs.stage == 'execute'
+        id: next-run
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python validated_execute_controller.py status > "$RUNNER_TEMP/v2-execution-status.json"
+          FULL_COMMIT="$(python -c 'import json,sys; s=json.load(open(sys.argv[1])); r=next((x for x in s["runs"] if x["state"] in {"pending","running","quota_paused","failed_retryable"}), None); print("" if r is None else r["full_commit"])' "$RUNNER_TEMP/v2-execution-status.json")"
+          RUN_ID="$(python -c 'import json,sys; s=json.load(open(sys.argv[1])); r=next((x for x in s["runs"] if x["state"] in {"pending","running","quota_paused","failed_retryable"}), None); print("complete" if r is None else r["run_id"])' "$RUNNER_TEMP/v2-execution-status.json")"
+          echo "full_commit=$FULL_COMMIT" >> "$GITHUB_OUTPUT"
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout and install exact v2 SWE-agent release
+        if: inputs.stage == 'execute' && steps.next-run.outputs.run_id != 'complete'
+        run: |
+          git clone --filter=blob:none https://github.com/SWE-agent/SWE-agent.git "$RUNNER_TEMP/swe-agent"
+          git -C "$RUNNER_TEMP/swe-agent" checkout --detach "${{ steps.next-run.outputs.full_commit }}"
+          test "$(git -C "$RUNNER_TEMP/swe-agent" rev-parse HEAD)" = "${{ steps.next-run.outputs.full_commit }}"
+          python -m pip install --upgrade pip
+          python -m pip install --editable "$RUNNER_TEMP/swe-agent"
+
+      - name: Parse exact frozen v2 configuration without a model call
+        if: inputs.stage == 'execute' && steps.next-run.outputs.run_id != 'complete'
+        working-directory: ${{ env.CASE_DIR }}
+        run: python validate_agent_config.py --release-default "$RUNNER_TEMP/swe-agent/config/default.yaml"
+
+      - name: Pull and verify frozen v2 environment image
+        if: inputs.stage == 'execute' && steps.next-run.outputs.run_id != 'complete'
+        working-directory: ${{ env.CASE_DIR }}
+        run: python case_tools.py preflight --pull-image
+
+      - name: Execute exactly one next frozen v2 run
+        if: inputs.stage == 'execute' && steps.next-run.outputs.run_id != 'complete'
+        working-directory: ${{ env.CASE_DIR }}
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          test -n "$GEMINI_API_KEY" || {
+            echo "GEMINI_API_KEY is missing; no model call was started." >&2
+            exit 1
+          }
+          echo "::add-mask::$GEMINI_API_KEY"
+          set +e
+          python validated_execute_controller.py execute-next --agent-repo "$RUNNER_TEMP/swe-agent"
+          RC=$?
+          set -e
+          if [ "$RC" -eq 75 ]; then
+            echo "Retryable provider/model failure recorded. Re-run only after the recorded blocker is resolved." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          exit "$RC"
+
+      - name: Report completed v2 execution matrix
+        if: inputs.stage == 'execute' && steps.next-run.outputs.run_id == 'complete'
+        working-directory: ${{ env.CASE_DIR }}
+        run: |
+          python validated_execute_controller.py status
+          echo "All four v2 runs are internally validated. No additional model call was made." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload v2 non-secret artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-swe-agent-v2-${{ inputs.stage }}-${{ github.run_id }}
+          path: |
+            ${{ env.CASE_DIR }}/execution-output/
+            ${{ env.CASE_DIR }}/access-freeze/
+          if-no-files-found: ignore
+          retention-days: 30
