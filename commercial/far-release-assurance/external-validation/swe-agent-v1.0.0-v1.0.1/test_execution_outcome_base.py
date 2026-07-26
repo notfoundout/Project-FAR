@@ -7,6 +7,7 @@ import sys
 import tempfile
 import types
 import unittest
+from unittest import mock
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -190,7 +191,7 @@ class ExecutionOutcomeTests(unittest.TestCase):
         self.assertEqual(outcome.state, "failed_terminal")
         self.assertIn("conflicting prediction evidence", outcome.reason)
 
-    def test_consistent_duplicate_prediction_evidence_is_accepted(self) -> None:
+    def test_consistent_duplicate_prediction_evidence_is_terminal(self) -> None:
         self.write_status("submitted")
         self.write_prediction("patch-a")
         (self.output / "preds.json").write_text(
@@ -205,8 +206,8 @@ class ExecutionOutcomeTests(unittest.TestCase):
             encoding="utf-8",
         )
         outcome = self.classify()
-        self.assertEqual(outcome.state, "complete")
-        self.assertIn(";", outcome.evidence["prediction_path"])
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("duplicate or conflicting", outcome.reason)
 
     def test_malformed_exact_prediction_is_terminal(self) -> None:
         self.write_status("submitted")
@@ -214,6 +215,54 @@ class ExecutionOutcomeTests(unittest.TestCase):
         outcome = self.classify()
         self.assertEqual(outcome.state, "failed_terminal")
         self.assertIn("invalid JSON", outcome.reason)
+
+    def test_malformed_prediction_remains_terminal_with_provider_marker(self) -> None:
+        self.write_status("exit_error")
+        (self.output / f"{TASK_ID}.pred").write_text("not json", encoding="utf-8")
+        outcome = self.classify(stderr="HTTP 429 RESOURCE_EXHAUSTED")
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertFalse(outcome.retryable)
+
+    def test_absent_prediction_is_retryable_with_provider_marker(self) -> None:
+        self.write_status("exit_error")
+        outcome = self.classify(stderr="HTTP 503 service unavailable")
+        self.assertEqual(outcome.state, "failed_retryable")
+        self.assertEqual(outcome.category, "retryable_provider_error")
+
+    def test_duplicate_yaml_key_is_terminal(self) -> None:
+        (self.output / "run_batch_exit_statuses.yaml").write_text(
+            "instances_by_exit_status:\n  submitted: []\n  submitted: []\n",
+            encoding="utf-8",
+        )
+        outcome = self.classify()
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("duplicate key", outcome.reason)
+
+    def test_symlinked_status_file_is_terminal(self) -> None:
+        real = self.output / "status-real.yaml"
+        real.write_text(
+            f"instances_by_exit_status:\n  submitted:\n    - {TASK_ID}\n",
+            encoding="utf-8",
+        )
+        (self.output / "run_batch_exit_statuses.yaml").symlink_to(real)
+        outcome = self.classify(stderr="HTTP 429 RESOURCE_EXHAUSTED")
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertIn("local regular file", outcome.reason)
+
+    def test_symlinked_output_directory_is_terminal(self) -> None:
+        real_output = self.output / "real-output"
+        real_output.mkdir()
+        linked_output = self.output / "linked-output"
+        linked_output.symlink_to(real_output, target_is_directory=True)
+        outcome = classify_execution(
+            outer_returncode=1,
+            swe_output=linked_output,
+            task_id=TASK_ID,
+            stdout="",
+            stderr="HTTP 429 RESOURCE_EXHAUSTED",
+        )
+        self.assertEqual(outcome.state, "failed_terminal")
+        self.assertFalse(outcome.retryable)
 
     def test_non_empty_patch_and_no_change_is_rejected(self) -> None:
         self.write_status("submitted")
@@ -401,6 +450,32 @@ class ValidatedControllerTests(unittest.TestCase):
         self.assertTrue((archive / "trajectory" / trajectory.name).is_file())
         self.assertFalse(trajectory.exists())
         self.assertFalse((run_dir / "run-record.json").exists())
+
+    def test_archive_rolls_back_all_moves_after_interruption(self) -> None:
+        run = self.make_run("v1.0.0-r1", 1, "failed_retryable")
+        run_dir = self.base.RUNS_DIR / run["run_id"]
+        run_dir.mkdir(parents=True)
+        first = run_dir / "instance.json"
+        second = run_dir / "stdout.log"
+        first.write_text("instance", encoding="utf-8")
+        second.write_text("stdout", encoding="utf-8")
+        real_move = self.controller.shutil.move
+        calls = 0
+
+        def interrupted_move(source, destination):
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise KeyboardInterrupt
+            return real_move(source, destination)
+
+        with mock.patch.object(self.controller.shutil, "move", interrupted_move):
+            with self.assertRaises(KeyboardInterrupt):
+                self.controller._archive_previous_attempt(run, run_dir)
+
+        self.assertEqual(first.read_text(encoding="utf-8"), "instance")
+        self.assertEqual(second.read_text(encoding="utf-8"), "stdout")
+        self.assertFalse((run_dir / "attempts" / "attempt-001").exists())
 
     def test_current_hashes_exclude_records_and_archived_attempts(self) -> None:
         run_dir = self.base.RUNS_DIR / "run"

@@ -1,11 +1,59 @@
 from __future__ import annotations
 
 import json
+import stat
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
 import yaml
+
+
+class _UniqueKeyLoader(yaml.SafeLoader):
+    pass
+
+
+def _construct_unique_mapping(loader: yaml.SafeLoader, node: Any, deep: bool = False):
+    loader.flatten_mapping(node)
+    mapping: dict[Any, Any] = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=deep)
+        try:
+            duplicate = key in mapping
+        except TypeError as exc:
+            raise yaml.constructor.ConstructorError(
+                "while constructing a mapping", node.start_mark,
+                "found an unhashable key", key_node.start_mark,
+            ) from exc
+        if duplicate:
+            raise yaml.constructor.ConstructorError(
+                "while constructing a mapping", node.start_mark,
+                f"found duplicate key {key!r}", key_node.start_mark,
+            )
+        mapping[key] = loader.construct_object(value_node, deep=deep)
+    return mapping
+
+
+_UniqueKeyLoader.add_constructor(
+    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _construct_unique_mapping
+)
+
+
+def _is_local_regular_file(path: Path, root: Path) -> bool:
+    """Require a regular file reached without following links below root."""
+    try:
+        relative = path.relative_to(root)
+        current = root
+        if root.is_symlink() or not root.is_dir():
+            return False
+        for part in relative.parts:
+            current = current / part
+            mode = current.lstat().st_mode
+            if stat.S_ISLNK(mode):
+                return False
+        return stat.S_ISREG(path.lstat().st_mode)
+    except (OSError, ValueError):
+        return False
 
 SUCCESS_STATUSES = {"submitted", "completed", "success", "exit_success"}
 ERROR_STATUSES = {"exit_error", "error", "failed", "failure"}
@@ -60,10 +108,10 @@ class ExecutionOutcome:
 
 
 def _read_yaml_mapping(path: Path) -> dict[str, Any]:
-    if not path.is_file():
+    if not _is_local_regular_file(path, path.parent):
         raise ValueError(f"missing internal status file: {path}")
     try:
-        value = yaml.safe_load(path.read_text(encoding="utf-8"))
+        value = yaml.load(path.read_text(encoding="utf-8"), Loader=_UniqueKeyLoader)
     except (OSError, yaml.YAMLError) as exc:
         raise ValueError(f"cannot parse internal status file: {path}: {exc}") from exc
     if not isinstance(value, dict):
@@ -157,6 +205,8 @@ def _extract_prediction(
 
 
 def _read_json(path: Path) -> Any:
+    if not _is_local_regular_file(path, path.parent):
+        raise ValueError(f"prediction path is not a local regular file: {path}")
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except OSError as exc:
@@ -166,12 +216,16 @@ def _read_json(path: Path) -> Any:
 
 
 def read_prediction(swe_output: Path, task_id: str) -> tuple[str | None, bool, str]:
+    if swe_output.is_symlink() or not swe_output.is_dir():
+        raise ValueError(f"prediction output path is not a local directory: {swe_output}")
     prediction_files = sorted(swe_output.rglob("*.pred"))
     aggregate_files = sorted(swe_output.rglob("preds.json"))
     matches: list[tuple[str | None, bool, str]] = []
     target_prediction_files: list[str] = []
 
     for path in prediction_files:
+        if not _is_local_regular_file(path, swe_output):
+            raise ValueError(f"prediction path is not a local regular file: {path}")
         found, patch, no_change = _extract_prediction(
             _read_json(path),
             task_id,
@@ -193,6 +247,8 @@ def read_prediction(swe_output: Path, task_id: str) -> tuple[str | None, bool, s
         )
 
     for path in aggregate_files:
+        if not _is_local_regular_file(path, swe_output):
+            raise ValueError(f"prediction path is not a local regular file: {path}")
         found, patch, no_change = _extract_prediction(
             _read_json(path), task_id, allow_implicit_instance=False
         )
@@ -202,13 +258,12 @@ def read_prediction(swe_output: Path, task_id: str) -> tuple[str | None, bool, s
     if not matches:
         return None, False, ""
 
-    signatures = {(patch, no_change) for patch, no_change, _ in matches}
-    if len(signatures) != 1:
+    if len(matches) != 1:
         raise ValueError(
-            "conflicting prediction evidence for target instance: "
+            "duplicate or conflicting prediction evidence for target instance: "
             + ", ".join(path for _, _, path in matches)
         )
-    patch, no_change = next(iter(signatures))
+    patch, no_change, _ = matches[0]
     return patch, no_change, ";".join(path for _, _, path in matches)
 
 
@@ -261,6 +316,12 @@ def classify_execution(
     retryable_provider_detected = any(
         marker in combined for marker in RETRYABLE_PROVIDER_MARKERS
     )
+    if swe_output.is_symlink() or not swe_output.is_dir():
+        return ExecutionOutcome(
+            "terminal_agent_error", "failed_terminal", False, None, False,
+            False, f"execution output path is not a local directory: {swe_output}",
+            {"outer_returncode": outer_returncode, "status_files": []},
+        )
     status_files = sorted(swe_output.rglob("run_batch_exit_statuses.yaml"))
     base_evidence: dict[str, Any] = {
         "outer_returncode": outer_returncode,
@@ -287,6 +348,13 @@ def classify_execution(
             False,
             False,
             f"expected exactly one run_batch_exit_statuses.yaml, found {len(status_files)}",
+            base_evidence,
+        )
+
+    if not _is_local_regular_file(status_files[0], swe_output):
+        return ExecutionOutcome(
+            "terminal_agent_error", "failed_terminal", False, None, False,
+            False, f"internal status path is not a local regular file: {status_files[0]}",
             base_evidence,
         )
 
@@ -328,17 +396,6 @@ def classify_execution(
             "prediction_error": str(exc),
             "internal_summary": status_payload,
         }
-        provider = _provider_outcome(
-            quota_detected=quota_detected,
-            retryable_provider_detected=retryable_provider_detected,
-            internal_status=internal_status,
-            patch_present=False,
-            no_change=False,
-            evidence=evidence,
-            context="before valid prediction evidence was available",
-        )
-        if provider is not None:
-            return provider
         return ExecutionOutcome(
             "terminal_agent_error",
             "failed_terminal",

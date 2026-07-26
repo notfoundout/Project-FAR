@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import shutil
+import stat
 import subprocess
 import time
 from pathlib import Path
@@ -265,15 +266,33 @@ def _archive_previous_attempt(
         raise SystemExit(
             f"Run {run['run_id']} has execution artifacts but no recorded attempt"
         )
-    archive_dir = _next_archive_dir(run_dir, previous_attempt)
-    archive_dir.mkdir(parents=True, exist_ok=False)
     for path in existing:
-        if path == trajectory:
-            destination = archive_dir / "trajectory" / path.name
-        else:
-            destination = archive_dir / path.name
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(path), str(destination))
+        mode = path.lstat().st_mode
+        if stat.S_ISLNK(mode) or not (stat.S_ISREG(mode) or stat.S_ISDIR(mode)):
+            raise SystemExit(f"Attempt artifact is not a local regular path: {path}")
+
+    archive_dir = _next_archive_dir(run_dir, previous_attempt)
+    archive_dir.parent.mkdir(parents=True, exist_ok=True)
+    staging = archive_dir.parent / f".{archive_dir.name}.staging-{os.getpid()}"
+    staging.mkdir(exist_ok=False)
+    moved: list[tuple[Path, Path]] = []
+    try:
+        for path in existing:
+            if path == trajectory:
+                destination = staging / "trajectory" / path.name
+            else:
+                destination = staging / path.name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(path), str(destination))
+            moved.append((path, destination))
+        staging.replace(archive_dir)
+    except BaseException:
+        for source, destination in reversed(moved):
+            if destination.exists() and not source.exists():
+                source.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(destination), str(source))
+        shutil.rmtree(staging, ignore_errors=True)
+        raise
     return str(archive_dir.relative_to(base.OUTPUT_DIR))
 
 

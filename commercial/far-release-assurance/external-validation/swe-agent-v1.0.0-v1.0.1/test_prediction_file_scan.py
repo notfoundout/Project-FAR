@@ -104,6 +104,17 @@ class PredictionFileScanTests(unittest.TestCase):
         self.assertFalse(no_change)
         self.assertEqual(evidence, str(path))
 
+    def test_symlinked_prediction_is_rejected(self) -> None:
+        real = self.output / "real.json"
+        real.write_text(
+            json.dumps({"instance_id": TASK_ID, "model_patch": "patch"}),
+            encoding="utf-8",
+        )
+        (self.output / f"{TASK_ID}.pred").symlink_to(real)
+
+        with self.assertRaisesRegex(ValueError, "local regular file"):
+            read_prediction(self.output, TASK_ID)
+
 
 if __name__ == "__main__":
     unittest.main()
