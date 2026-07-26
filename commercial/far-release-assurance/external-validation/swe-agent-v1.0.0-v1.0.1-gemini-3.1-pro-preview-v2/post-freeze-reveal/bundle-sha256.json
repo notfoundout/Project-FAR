@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    {
+      "path": "final-comparison-report.json",
+      "sha256": "e513d72489e79387b896b44cc974b245aa6ad65de203f5464a7f8c5215281e0a",
+      "size_bytes": 3800
+    },
+    {
+      "path": "final-comparison-report.md",
+      "sha256": "3772e4e549275b8e247d743d2ee4d8a75e95d1bda2fde5009618edb82a360874",
+      "size_bytes": 1456
+    },
+    {
+      "path": "outcome-reveal.json",
+      "sha256": "0938b41fd28da12af32b586121fff4b105c87fb13a24cee3c4d3685ad0fb3097",
+      "size_bytes": 8188
+    }
+  ],
+  "case_id": "swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2",
+  "created_at": "2026-07-26T20:43:12.916216+00:00",
+  "root_sha256": "25cf467fb2602adaf34a7bd88cdf099c0285accb3e783b6fba4a49d1a6b346f3",
+  "schema": "far-swe-agent-v2-final-bundle/1.0"
+}
