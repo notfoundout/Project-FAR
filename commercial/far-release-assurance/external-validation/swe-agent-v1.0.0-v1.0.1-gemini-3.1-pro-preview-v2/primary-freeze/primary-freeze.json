@@ -1,0 +1,50 @@
+{
+  "artifact_count": 7,
+  "artifacts": [
+    {
+      "path": "blinded-comparison.json",
+      "sha256": "6787c64ffb979cafaab54b8e3c3b2e6a19b0b3dba792c70e2d70e14f644fea98",
+      "size_bytes": 2889
+    },
+    {
+      "path": "outcome-blind-adjudication.json",
+      "sha256": "68736f1d64dad3a7efb86fd14dc848bba82c33b4c72bf1555e761b1fa34d5f8c",
+      "size_bytes": 4579
+    },
+    {
+      "path": "packages/System-A-r1.json",
+      "sha256": "2a85ea4d9cb8f2c14178d305fcbc7b6c7b2b2c639b99fa89c2d6aacce8632d04",
+      "size_bytes": 2430
+    },
+    {
+      "path": "packages/System-A-r2.json",
+      "sha256": "03af714b9b97400a06115aa9f35f579320d45754ef777430fa426542dba90b6a",
+      "size_bytes": 2559
+    },
+    {
+      "path": "packages/System-B-r1.json",
+      "sha256": "08cd87f405531faa51adb370ccba1d95454d4bac9dce3b1b77849ae3743a36c4",
+      "size_bytes": 2518
+    },
+    {
+      "path": "packages/System-B-r2.json",
+      "sha256": "2ccf0badf1512e087af431627cf635bbc1fa441d8c7cd74a3b0cc327d22f0c3c",
+      "size_bytes": 2517
+    },
+    {
+      "path": "source-artifact-lock.json",
+      "sha256": "0653065cbf8cbcf8f911a5ec9c68a4fea66ce73d3b04ed511dad644387d296b9",
+      "size_bytes": 16891
+    }
+  ],
+  "case_id": "swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2",
+  "claim_boundary": "The freeze locks execution evidence and outcome-blind adjudication; it contains no benchmark outcome or release preference.",
+  "created_at": "2026-07-26T19:16:32.962057+00:00",
+  "outcome_blind_adjudication_sha256": "68736f1d64dad3a7efb86fd14dc848bba82c33b4c72bf1555e761b1fa34d5f8c",
+  "outcomes_accessed": false,
+  "reveal_permitted_only_after_merge_and_independent_verification": true,
+  "root_sha256": "969fdcd1b2b40fafe3275bb28db3dec2b7d024640a55a3579c2c7c244b23e39e",
+  "schema": "far-swe-agent-v2-primary-freeze/1.0",
+  "source_artifact_digest": "sha256:7277987300d4204c5108997b3ac6c0cde02c9a4d498178a702ea7a6cb0c19756",
+  "source_content_root_sha256": "53438d4e327fd79d895285ae21b2d241408710389913b8111739a362af19b814"
+}
