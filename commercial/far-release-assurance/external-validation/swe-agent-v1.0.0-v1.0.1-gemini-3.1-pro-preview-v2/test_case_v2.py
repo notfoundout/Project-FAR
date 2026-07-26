@@ -151,8 +151,12 @@ class WorkflowV2ContractTests(unittest.TestCase):
         self.assertIn("pull-requests: write", self.text)
 
     def test_access_probe_regressions_run_before_and_after_probe(self) -> None:
-        command = "python -m unittest -v test_case_v2.py test_access_probe_v2.py"
+        command = (
+            "python -m unittest -v test_case_v2.py test_access_probe_v2.py "
+            "test_budget_limited_completion_v2.py"
+        )
         self.assertEqual(self.text.count(command), 2)
+        self.assertIn(command, self.smoke_text)
 
     def test_setup_smoke_accepts_pending_and_frozen_lifecycle(self) -> None:
         self.assertIn('"preregistered_access_pending"', self.smoke_text)
@@ -162,6 +166,39 @@ class WorkflowV2ContractTests(unittest.TestCase):
             "test ! -e access-freeze/provider-access-attestation.json",
             self.smoke_text,
         )
+
+    def test_restore_uses_temporary_root_and_preserves_access_freeze(self) -> None:
+        self.assertIn(
+            'unzip -q -o "$RUNNER_TEMP/v2-execution-state.zip" -d "$RUNNER_TEMP/v2-restore"',
+            self.text,
+        )
+        self.assertNotIn(
+            'unzip -o "$RUNNER_TEMP/v2-execution-state.zip" -d "$CASE_DIR/execution-output"',
+            self.text,
+        )
+        self.assertIn(
+            'diff -ru "$CASE_DIR/access-freeze" "$RUNNER_TEMP/v2-restore/access-freeze"',
+            self.text,
+        )
+        self.assertIn(
+            'cp -a "$RUNNER_TEMP/v2-restore/execution-output/." "$CASE_DIR/execution-output/"',
+            self.text,
+        )
+
+    def test_reconciliation_precedes_release_install_and_blocks_model_call(self) -> None:
+        reconcile = self.text.index(
+            "python validated_execute_controller.py reconcile-only"
+        )
+        checkout = self.text.index(
+            "- name: Checkout and install exact v2 SWE-agent release"
+        )
+        execute = self.text.index("- name: Execute exactly one next frozen v2 run")
+        self.assertLess(reconcile, checkout)
+        self.assertLess(reconcile, execute)
+        gate = "steps.next-run.outputs.run_id != 'reclassified'"
+        self.assertEqual(self.text.count(gate), 4)
+        self.assertIn("run_id=reclassified", self.text)
+        self.assertIn("No new model call was made", self.text)
 
     def test_execution_restores_before_resolving_or_calling_model(self) -> None:
         restore = self.text.index(
