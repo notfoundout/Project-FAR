@@ -25,3 +25,7 @@ This directory contains the canonical theory of Project FAR. Research notes and 
 7. `proofs/proofs.md`
 8. `consistency/verification.md`
 9. `independence/primitive-independence-framework.md`
+
+## Canonical boundary
+
+Shared theory depends on foundations and precedes FARA. Framework procedures and validation outcomes are not theory premises. “Meta-Theory” is a retired historical label. Canonical terminology and epistemic classes are controlled by the [terminology authority](../docs/glossary/canonical-terminology.md).

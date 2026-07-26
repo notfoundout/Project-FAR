@@ -9,3 +9,11 @@
 
 ## v0.1.0
 - Initial public research draft.
+
+## Unreleased — Theory and protocol correction
+
+- Established a canonical terminology authority, framework boundaries, and machine-readable dependency/claim registry.
+- Classified FAR/FARO procedures by derivation status and theorem-like families by proof status.
+- Audited CRP v1.0 without changing its frozen design; recorded v1.1 proposals separately.
+- Added limitations, unresolved questions, open problems, and adversarial counterexample classes.
+- Added semantic consistency validation and navigation to all correction surfaces.

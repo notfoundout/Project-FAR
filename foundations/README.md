@@ -176,3 +176,7 @@ Work in `discovery/` is research unless explicitly promoted under the governing 
 Project FAR is committed to constructing a formally rigorous, explicitly defined, systematically justified, and self-correcting framework for reasoning.
 
 Every component of the project shall be developed according to these foundational principles.
+
+## Canonical boundary
+
+Foundations precede shared theory and do not depend on FAR, FARO, methodology, validation, examples, papers, commercial artifacts, or archive material as logical prerequisites. Historical “Accepted Root Theory” language is non-authoritative; the current term is **foundations**. See the [dependency specification](../docs/governance/dependency-specification.md).

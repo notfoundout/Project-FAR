@@ -99,3 +99,7 @@ Use worked examples to test whether the current representational architecture is
 - [FARO README](../FARO/README.md)
 - [FARE README](../FARE/README.md)
 - [FARM README](../FARM/README.md)
+
+## Epistemic boundary
+
+“Stable” is a maintenance status, not proof that FARA is universal, globally minimal, necessary, or lossless. Candidate primitives remain candidates; FAR methods and FARO operations are downstream and are not FARA axioms. See the [framework-boundary specification](../../docs/governance/framework-boundaries.md).

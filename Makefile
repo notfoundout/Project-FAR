@@ -172,3 +172,6 @@ cre001-deterministic:
 
 cre002-execute:
 	python tools/cre002_execute.py --write --check
+
+semantic-check:
+	python tools/check_semantic_consistency.py

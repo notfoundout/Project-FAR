@@ -15,3 +15,9 @@ Status: **Accepted governance register**
 | LIM-009 | Framework stability labels do not establish universal correctness, necessity or superiority. | Repository semantics | Enforced claim boundary. |
 
 New limitations require an evidence citation and may be closed only by a recorded execution, not by wording changes.
+| LIM-010 | Explicit-artifact assumptions may exclude embodied, tacit, continuous, or sensorimotor reasoning. | Theory scope | Open. |
+| LIM-011 | Fixed-rule representations may lose meaning when rules, semantics, or ontologies change. | Expressive scope | Open. |
+| LIM-012 | Incompatible ontologies may prevent commitment-equivalent translation. | Translation | Open; loss/failure must be reported. |
+| LIM-013 | Nonmonotonic, paraconsistent, probabilistic, causal, and higher-order systems have no general lossless-representation result. | Cross-domain | Open. |
+| LIM-014 | FAR/FARO procedures are independently selected methodology; uniqueness and necessity are unproved. | Derivation | Enforced boundary. |
+| LIM-015 | CRP v1.0 has adjudicated natural-language rules whose remaining compatibility clarifications require a new protocol version. | Protocol reproducibility | Proposed for v1.1. |

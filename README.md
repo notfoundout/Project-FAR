@@ -125,3 +125,7 @@ python -m mechanization.far_mechanization.conformance
 ```
 
 The MVP does not by itself verify the terminal theorem or establish application correspondence.
+
+## Canonical theory navigation
+
+The authoritative dependency order is **foundations → shared theory → FARA → FAR → FARO**. Start with the [canonical map](docs/CANONICAL_MAP.md), [terminology authority](docs/glossary/canonical-terminology.md), [framework boundaries](docs/governance/framework-boundaries.md), [claim-status matrix](docs/governance/claim-status-matrix.md), [limitations](docs/governance/limitations-register.md), and [open problems](docs/governance/open-problems-register.md). Methodology, evidence, examples, papers, software, commercial material, and archive records are downstream; none proves universality or supplies theory prerequisites.
