@@ -42,8 +42,12 @@ jobs:
       - name: Validate preregistration and workflow contracts
         working-directory: ${{ env.CASE_DIR }}
         run: |
-          python case_tools.py validate
-          python -m unittest -v test_case_v2.py
+          set +e
+          RC=0
+          python case_tools.py validate > "$RUNNER_TEMP/v2-preregistration.log" 2>&1 || RC=1
+          python -m unittest -v test_case_v2.py >> "$RUNNER_TEMP/v2-preregistration.log" 2>&1 || RC=1
+          cat "$RUNNER_TEMP/v2-preregistration.log"
+          exit "$RC"
 
       - name: Verify fresh-state and secret boundaries
         working-directory: ${{ env.CASE_DIR }}
@@ -59,6 +63,15 @@ jobs:
           assert 'far-swe-agent-v2-execute-' in workflow
           assert 'startswith("far-swe-agent-execute-")' not in workflow
           PY
+
+      - name: Upload preregistration diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-swe-agent-v2-preregistration-${{ github.run_id }}
+          path: ${{ runner.temp }}/v2-preregistration.log
+          if-no-files-found: warn
+          retention-days: 7
 
   exact-release-config-contract:
     runs-on: ubuntu-24.04
@@ -97,11 +110,26 @@ jobs:
       - name: Parse exact v2 configuration without provider access
         working-directory: ${{ env.CASE_DIR }}
         run: |
+          set +e
           python validate_agent_config.py \
-            --release-default "$RUNNER_TEMP/swe-agent/config/default.yaml"
+            --release-default "$RUNNER_TEMP/swe-agent/config/default.yaml" \
+            > "$RUNNER_TEMP/v2-config-${{ matrix.release }}.log" 2>&1
+          RC=$?
+          set -e
+          cat "$RUNNER_TEMP/v2-config-${{ matrix.release }}.log"
+          exit "$RC"
 
       - name: Prove no execution state or access attestation was created
         working-directory: ${{ env.CASE_DIR }}
         run: |
           test ! -e execution-output/execution-state.json
           test ! -e access-freeze/provider-access-attestation.json
+
+      - name: Upload configuration diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: far-swe-agent-v2-config-${{ matrix.release }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/v2-config-${{ matrix.release }}.log
+          if-no-files-found: warn
+          retention-days: 7
