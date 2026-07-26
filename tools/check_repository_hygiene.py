@@ -11,6 +11,7 @@ INTENTIONALLY_MALFORMED_YAML={
 }
 EXTERNAL_RUNTIME_REFERENCE_FILES={
     'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1/agent-config.yaml',
+    'commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2/agent-config.yaml',
 }
 
 def resolve_ref(p, v):

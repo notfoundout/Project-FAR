@@ -1,0 +1,156 @@
+{
+  "case_id": "swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2",
+  "claim_boundary": "This is a new preregistered case caused by provider access failure in the earlier frozen case. It preserves the task, releases, environment, repetitions, and outcome-blind procedure but changes the model to the provider's documented replacement. Results from the two cases must not be pooled. This single case cannot establish universal accuracy, safety, compliance, commercial readiness, enterprise readiness, or general superiority.",
+  "comparison_design": {
+    "cross_case_results_must_not_be_pooled": true,
+    "isolated_workspaces": true,
+    "minimum_repetitions_per_release": 2,
+    "outcome_blinded_until_primary_freeze": true,
+    "same_agent_configuration": true,
+    "same_environment_image": true,
+    "same_model_parameters": true,
+    "same_model_within_this_case": true,
+    "same_task": true,
+    "same_task_seed": true
+  },
+  "decision_policy": {
+    "BLOCKED": "A required authorization, policy, admissibility, provider-access, or execution dependency prevents a valid comparison.",
+    "PASS": "No material dependency regression and sufficient evidence for the frozen claims.",
+    "REVIEW_REQUIRED": "Evidence exists but material ambiguity or conflicting findings require human adjudication.",
+    "UNKNOWN": "The required claim cannot be resolved because necessary evidence is absent or unverifiable."
+  },
+  "execution_environment": {
+    "access_probe_confirmation": "PROBE-FAR-GEMINI-3-1-PRO-PREVIEW",
+    "credential_secret": "GEMINI_API_KEY",
+    "environment_name": "far-swe-agent-execution",
+    "execution_confirmation": "EXECUTE-FAR-GEMINI-3-1-PRO-PREVIEW-V2-NEXT-RUN",
+    "manual_dispatch_only": true,
+    "plan_confirmation": "PLAN-FAR-GEMINI-3-1-PRO-PREVIEW-V2",
+    "provider": "github_actions",
+    "runner": "ubuntu-24.04",
+    "workflow": ".github/workflows/far-swe-agent-execution-v2.yml"
+  },
+  "execution_requirements": {
+    "cross_case_state_reuse_forbidden": true,
+    "docker_required": true,
+    "project_spend_cap_recommended": true,
+    "provider_billing_may_apply": true,
+    "required_secret_only_for_probe_or_model_call": "GEMINI_API_KEY",
+    "resume_after_transient_provider_failure": true,
+    "runs": [
+      {
+        "commit": "8ed382c",
+        "release": "v1.0.0",
+        "repetition": 1,
+        "trajectory_artifact": "baseline-run-1.traj"
+      },
+      {
+        "commit": "8ed382c",
+        "release": "v1.0.0",
+        "repetition": 2,
+        "trajectory_artifact": "baseline-run-2.traj"
+      },
+      {
+        "commit": "6aff215",
+        "release": "v1.0.1",
+        "repetition": 1,
+        "trajectory_artifact": "candidate-run-1.traj"
+      },
+      {
+        "commit": "6aff215",
+        "release": "v1.0.1",
+        "repetition": 2,
+        "trajectory_artifact": "candidate-run-2.traj"
+      }
+    ],
+    "sequential_runs_required": true,
+    "silent_model_substitution_forbidden": true,
+    "zero_cost_fields_are_compatibility_values_not_a_free_execution_claim": true
+  },
+  "forbidden_before_primary_freeze": [
+    "benchmark_resolution_status",
+    "test_pass_fail",
+    "reward",
+    "grader_output",
+    "human_success_label",
+    "candidate_preference"
+  ],
+  "frozen_inputs": {
+    "agent_config_path": "agent-config.yaml",
+    "agent_config_sha256": "7b482292ec5288d8f56256bb07df16bb820e32641e51d7b09d42855391be4af9",
+    "environment_construction": "reuse_of_prior_digest_pinned_outcome_blind_environment",
+    "environment_lock_path": "environment-freeze/environment-lock.json",
+    "environment_lock_sha256": "308559fbcb879b1a1a073a0086ba407f61492cd21d815ec8112d2434a0738366",
+    "immutable_image_reference": "ghcr.io/notfoundout/project-far-swebench-scikit-learn-14125@sha256:66615e837a9fdc6faf75dab3db90bf469364204b068af9da4d570fba8ab00ab4",
+    "local_image_id": "sha256:cfd8abd0e5c2670669d259ce1ba2787581fb7aedbcf15c195a8a9d6ce28af103",
+    "model": "gemini/gemini-3.1-pro-preview",
+    "model_lifecycle": {
+      "availability_can_change": true,
+      "freeze_only_after_exact_endpoint_access_probe": true,
+      "shutdown_date_announced_at_preregistration": false,
+      "stage": "preview"
+    },
+    "model_parameters": {
+      "minimum_delay_seconds": 15.0,
+      "per_instance_call_limit": 30,
+      "per_instance_cost_limit": 0.0,
+      "retry_max_wait_seconds": 600,
+      "retry_min_wait_seconds": 30,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "total_cost_limit": 0.0
+    },
+    "model_selection_basis": "official_recommended_replacement_for_gemini_2_5_pro_after_the_prior_frozen_case_became_inaccessible",
+    "model_selection_sources": [
+      "https://ai.google.dev/gemini-api/docs/deprecations",
+      "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview"
+    ],
+    "provider_model": "gemini-3.1-pro-preview",
+    "registry_digest": "sha256:66615e837a9fdc6faf75dab3db90bf469364204b068af9da4d570fba8ab00ab4",
+    "swebench_dataset": "princeton-nlp/SWE-bench",
+    "swebench_harness_commit": "f7bbbb2ccdf479001d6467c9e34af59e44a840f9",
+    "swebench_repository": "https://github.com/SWE-bench/SWE-bench",
+    "swebench_split": "test",
+    "task_id": "scikit-learn__scikit-learn-14125",
+    "task_seed": 14125,
+    "task_selector": "previously_frozen_blind_candidate_002"
+  },
+  "primary_questions": [
+    "Did the candidate preserve the recorded decision dependencies used by the baseline?",
+    "Did the candidate add, remove, or bypass authorization or policy constraints?",
+    "Did the candidate introduce undeclared external state, memory, or tool behavior?",
+    "Can both releases be compared without converting missing evidence into confidence?",
+    "Does FAR identify a material integrity change that ordinary outcome comparison misses?"
+  ],
+  "provider_access_gate": {
+    "attestation_path": null,
+    "attestation_sha256": null,
+    "benchmark_outcomes_forbidden": true,
+    "benchmark_task_data_forbidden": true,
+    "credential_persistence_forbidden": true,
+    "probe_endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent",
+    "probe_model": "gemini-3.1-pro-preview",
+    "probe_prompt": "Return exactly FAR_ACCESS_OK and nothing else.",
+    "probe_prompt_sha256": "4a5d2318b18ef566469fc7c01810871dc0655bb298c2c3a4626003c939312007",
+    "required_before_execution_freeze": true,
+    "required_exact_response": "FAR_ACCESS_OK",
+    "verified_at": null
+  },
+  "schema": "far-external-release-comparison/0.4",
+  "source": {
+    "baseline_commit": "8ed382c",
+    "baseline_ref": "v1.0.0",
+    "candidate_commit": "6aff215",
+    "candidate_ref": "v1.0.1",
+    "release_notes_source": "official_github_releases",
+    "repository": "https://github.com/SWE-agent/SWE-agent"
+  },
+  "status": "preregistered_access_pending",
+  "supersedes_case": {
+    "case_id": "swe-agent-v1.0.0-v1.0.1",
+    "disposition": "BLOCKED",
+    "path": "../swe-agent-v1.0.0-v1.0.1",
+    "preservation_rule": "The superseded case, its three attempts, corrections, and terminal classification remain immutable and are not imported as evidence into this case.",
+    "reason": "The frozen gemini-2.5-pro endpoint returned provider_model_unavailable for the API project before any valid comparison run completed."
+  }
+}
