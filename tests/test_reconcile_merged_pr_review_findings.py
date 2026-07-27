@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import unittest
 from pathlib import Path
 
@@ -19,13 +20,26 @@ class ReconciliationTests(unittest.TestCase):
                 "risk": "high", "evidence": ["baseline evidence"],
             }]
         }
+        raw = json.dumps(self.baseline, sort_keys=True).encode("utf-8")
         self.decisions = {
             "source": "source.json", "baseline_commit": "a",
+            "baseline_git_blob_sha": reconcile.git_blob_sha(raw),
             "audited_main_commit": "b", "decisions": [],
         }
 
     def generate(self):
         return reconcile.reconcile(Path.cwd(), self.baseline, self.decisions)
+
+    def test_frozen_baseline_digest_is_required_and_verified(self):
+        raw = json.dumps(self.baseline, sort_keys=True).encode("utf-8")
+        reconcile.verify_frozen_baseline(raw, self.decisions)
+        missing = dict(self.decisions)
+        missing.pop("baseline_git_blob_sha")
+        with self.assertRaisesRegex(ValueError, "must pin"):
+            reconcile.verify_frozen_baseline(raw, missing)
+        changed = raw + b"\n"
+        with self.assertRaisesRegex(ValueError, "digest mismatch"):
+            reconcile.verify_frozen_baseline(changed, self.decisions)
 
     def test_unaudited_finding_fails_closed_to_cannot_verify(self):
         record = self.generate()["findings"][0]
@@ -108,6 +122,15 @@ class ReconciliationTests(unittest.TestCase):
         self.assertNotIn(records[0]["root_cause_id"], batches)
         self.assertNotIn(records[1]["root_cause_id"], batches)
 
+    def test_unaudited_batch_count_is_derived(self):
+        self.assertIn("The 1 unaudited findings remain", reconcile.render_batches(self.generate()))
+        self.decisions["decisions"] = [{
+            "finding_id": "PR1:T1", "disposition": "fixed_on_current_main",
+            "evidence": ["fixed"], "failure_mechanism": "fixed mechanism",
+            "root_cause_id": "cause:one",
+        }]
+        self.assertIn("The 0 unaudited findings remain", reconcile.render_batches(self.generate()))
+
     def test_verified_batch_renders_each_member_metadata(self):
         second = dict(self.baseline["findings"][0])
         second.update({"finding_id": "PR1:T2", "thread_id": "T2", "comment_id": "C2"})
@@ -137,6 +160,7 @@ class ReconciliationTests(unittest.TestCase):
         self.assertEqual(1, ledger["source_finding_count"])
         self.assertEqual("cannot_verify", ledger["default_disposition"])
         self.assertEqual("unknown", ledger["default_experiment_blocking_status"])
+        self.assertEqual(self.decisions["baseline_git_blob_sha"], ledger["baseline_git_blob_sha"])
         self.assertEqual([], ledger["explicit_findings"])
 
     def test_generation_is_deterministic(self):
