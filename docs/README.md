@@ -11,6 +11,8 @@ Project-level documentation lives here. This directory is for orientation, proje
 - `DECISION_LOG.md` — canonical project decision log.
 - `OVERVIEW.md` — project overview.
 - `CANONICAL_MAP.md` — canonical location map for major concepts.
+- [`planning/repository-index.md`](planning/repository-index.md) — generated
+  repository-wide artifact navigation; it is an index, not a source of authority.
 - `STYLE_GUIDE.md` — documentation style standards.
 - `SEMANTIC_AUDIT.md` — repository-wide semantic consistency audit and dependency graph.
 - `governance/central-research-program.md` — authoritative central research question, research objectives, evidence standard, and completion criteria.
@@ -52,3 +54,16 @@ Project-level documentation lives here. This directory is for orientation, proje
 ## Correction-phase entry points
 
 Use the [canonical map](CANONICAL_MAP.md) for authority, [canonical terminology](glossary/canonical-terminology.md) for terms, [framework boundaries](governance/framework-boundaries.md) and [dependency specification](governance/dependency-specification.md) for architecture, and the claim/limitations/unresolved/open-problem/counterexample/derivation/theorem registers under `governance/` for status.
+
+## Supporting documentation navigation
+
+These supporting records are non-canonical; the canonical map and governance
+registers above remain authoritative.
+
+- Architecture records: [repository convergence](architecture/repository-convergence-2026-07-23.md), [terminology status](architecture/terminology-status-2026-07-23.md), [validation architecture](architecture/unified-validation-architecture.md), and [validator assurance](architecture/validator-assurance-hardening.md).
+- Governance and operations: [CI responsibility matrix](ci/responsibility-matrix.md), [anti-self-validation clarification](governance/anti-self-validation-deduction-clarification.md), [fix-register control](governance/fix-register-control.md), and [repository-truth revalidation scope](governance/repository-truth-revalidation-scope.md).
+- Interfaces and mechanization: [compare/adjudicate contract](interfaces/compare-adjudicate-v1.md), [scope boundary](interfaces/compare-adjudicate-v1-scope.md), and [mechanization capability statement](mechanization/capability-statement.md).
+- Supporting methodology: [boundary discovery](methodology/boundary-discovery-program-v1.0.md), [comparative cost](methodology/comparative-cost-model-v1.0.md), [external observation](methodology/external-observation-contract-v1.0.md), [primitive necessity](methodology/primitive-necessity-and-reintroduction-protocol-v1.0.md), and the [proof-assurance taxonomy](proof-assurance-taxonomy.md).
+- Planning records: [anti-self-validation implementation](planning/anti-self-validation-implementation-plan.md), [deduction-first roadmap](planning/deduction-first-proof-roadmap.md), and [external-validation convergence](planning/external-validation-convergence-plan-2026-07-23.md).
+- Review and reusable controls: [S-core review package](review/s-core-w5-independent-proof-review-package-v1.0.md), [pipeline threat model](security/swe-agent-v2-pipeline-threat-model.md), [claim-ledger template](templates/claim-ledger-entry.md), and [S-core review form](templates/s-core-w5-independent-proof-review-form-v1.0.md).
+- Registered comparative packages: [CRE-002-EXT-001-REP-001 preregistration](../theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001-REP-001/preregistration.md) and [CRE-004-RUN-001](../theory/evaluation/comparative-representation/experiments/CRE-004/runs/CRE-004-RUN-001/README.md).

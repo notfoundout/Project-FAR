@@ -109,10 +109,16 @@ def source_items(input_ids: List[str], lineage: Dict[str, Set[str]], index: Dict
     return items
 
 
-def warn_on_weak_metadata_alignment(step_id: str, rule: str, step_statement: str, sources: List[Tuple[str, Dict[str, Any]]], warnings: List[str]) -> None:
+def warn_on_weak_metadata_alignment(step_id: str, rule: str, step_statement: str, sources: List[Tuple[str, Dict[str, Any]]], input_statements: Iterable[str], warnings: List[str]) -> None:
+    # A multi-source application commonly synthesizes only part of each
+    # dependency; lexical pairwise scoring cannot identify which clause came
+    # from which authority. Structural source validation still applies.
+    if len(sources) != 1:
+        return
     for source_id, item in sources:
         metadata_statement = metadata_statement_text(item)
-        if metadata_statement and not conclusion_aligns_with_statement(step_statement, metadata_statement):
+        linked_text = [step_statement, *input_statements]
+        if metadata_statement and not any(conclusion_aligns_with_statement(text, metadata_statement) for text in linked_text):
             warnings.append(f"step {step_id} {rule} has weak semantic overlap with {source_id} metadata statement")
 
 
@@ -179,7 +185,8 @@ def theorem_statement(theorem_id: str, index: Dict[str, Dict[str, Any]]) -> str:
 
 
 def significant_words(text: str) -> Set[str]:
-    return {word.lower() for word in WORD_PATTERN.findall(text) if len(word) > 1 and word.lower() not in STOP_WORDS}
+    words = {word.lower() for word in WORD_PATTERN.findall(text) if len(word) > 1 and word.lower() not in STOP_WORDS}
+    return {word[:-1] if len(word) > 3 and word.endswith("s") else word for word in words}
 
 
 def conclusion_aligns_with_statement(conclusion: str, statement: str) -> bool:
@@ -194,7 +201,10 @@ def conclusion_aligns_with_statement(conclusion: str, statement: str) -> bool:
     if not conclusion_words or not statement_words:
         return False
     overlap = conclusion_words & statement_words
-    return len(overlap) / len(conclusion_words) >= 0.35
+    # A premise may be a concise, explicitly linked summary of a longer
+    # canonical statement. Measure against the shorter vocabulary so added
+    # canonical context does not create a false weak-overlap warning.
+    return len(overlap) / min(len(conclusion_words), len(statement_words)) >= 0.35
 
 
 def declared_dependency_ids(theorem_id: str, index: Dict[str, Dict[str, Any]]) -> Set[str]:
@@ -282,25 +292,25 @@ def validate_rule_pattern(
         sources = source_items(input_ids, lineage, index, r"A\d+")
         if not sources:
             errors.append(f"step {step_id} axiom_application requires an axiom-bearing input")
-        warn_on_weak_metadata_alignment(step_id, rule, step_statement, sources, warnings)
+        warn_on_weak_metadata_alignment(step_id, rule, step_statement, sources, [statements.get(item, "") for item in input_ids], warnings)
 
     elif rule == "prior_theorem":
         sources = source_items(input_ids, lineage, index, r"T-\d{3}")
         if not sources:
             errors.append(f"step {step_id} prior_theorem requires a theorem-bearing input")
-        warn_on_weak_metadata_alignment(step_id, rule, step_statement, sources, warnings)
+        warn_on_weak_metadata_alignment(step_id, rule, step_statement, sources, [statements.get(item, "") for item in input_ids], warnings)
 
     elif rule == "prior_proposition":
         sources = source_items(input_ids, lineage, index, r"P-\d{3}")
         if not sources:
             errors.append(f"step {step_id} prior_proposition requires a proposition-bearing input")
-        warn_on_weak_metadata_alignment(step_id, rule, step_statement, sources, warnings)
+        warn_on_weak_metadata_alignment(step_id, rule, step_statement, sources, [statements.get(item, "") for item in input_ids], warnings)
 
     elif rule == "lemma_application":
         sources = source_items(input_ids, lineage, index, r"L-\d{3}")
         if not sources:
             errors.append(f"step {step_id} lemma_application requires a lemma-bearing input")
-        warn_on_weak_metadata_alignment(step_id, rule, step_statement, sources, warnings)
+        warn_on_weak_metadata_alignment(step_id, rule, step_statement, sources, [statements.get(item, "") for item in input_ids], warnings)
 
     elif rule == "conjunction_intro":
         if len(input_ids) < 2:

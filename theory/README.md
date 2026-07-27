@@ -29,3 +29,7 @@ This directory contains the canonical theory of Project FAR. Research notes and 
 ## Canonical boundary
 
 Shared theory depends on foundations and precedes FARA. Framework procedures and validation outcomes are not theory premises. “Meta-Theory” is a retired historical label. Canonical terminology and epistemic classes are controlled by the [terminology authority](../docs/glossary/canonical-terminology.md).
+
+## Supporting navigation
+
+- [Proof-step semantics](semantics/proof-step-semantics.md) records the semantic contract used by machine-readable proof objects; canonical proof authority remains with the registered theorem and proof sources.
