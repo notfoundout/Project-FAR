@@ -82,6 +82,12 @@ class ClassifierTests(unittest.TestCase):
         self.assertNotIn("](https://", report)
         self.assertNotIn("<sub>", report)
 
+    def test_legacy_project_status_token_is_neutralized_in_markdown(self):
+        findings = classifier.classify([self.thread(body="Replace PROJECT_STATUS.md now")], {})
+        report = classifier.render_markdown(findings, Path("threads.json"))
+        self.assertIn("PROJECT_STATUS[.]md", report)
+        self.assertNotIn("PROJECT_STATUS.md", report)
+
 
 if __name__ == "__main__":
     unittest.main()
