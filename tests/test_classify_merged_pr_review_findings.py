@@ -74,6 +74,14 @@ class ClassifierTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             classifier.classify([self.thread(), self.thread()], {})
 
+    def test_markdown_claim_is_rendered_as_inert_text(self):
+        body = "**<sub>![P1 Badge](https://img.example/badge.svg)</sub> Fix [link](https://example.test) and `code`**"
+        findings = classifier.classify([self.thread(body=body)], {})
+        report = classifier.render_markdown(findings, Path("threads.json"))
+        self.assertIn("P1 Badge Fix link and 'code'", report)
+        self.assertNotIn("](https://", report)
+        self.assertNotIn("<sub>", report)
+
 
 if __name__ == "__main__":
     unittest.main()
