@@ -14,14 +14,60 @@ PASS_RESULTS = {"pass", "passed"}
 COMPLETE_STATES = {"complete", "completed"}
 
 
+def execution_paths(root: Path = ROOT) -> list[Path]:
+    return sorted((root / "research/validation/executions").glob("*.execution.yaml"))
+
+
 def load_manifest_results(root: Path = ROOT) -> dict[str, str]:
+    """Load canonical results without allowing later duplicate files to shadow earlier ones."""
     results: dict[str, str] = {}
-    for path in sorted((root / "research/validation/executions").glob("*.execution.yaml")):
+    for path in execution_paths(root):
         data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-        investigation = data.get("investigation")
-        if investigation:
-            results[str(investigation)] = str(data.get("result", "")).lower()
+        investigation = str(data.get("investigation", "")).strip()
+        if investigation and investigation not in results:
+            results[investigation] = str(data.get("result", "")).lower()
     return results
+
+
+def validate_manifest_registry(root: Path = ROOT) -> list[str]:
+    """Require a one-to-one mapping between investigation IDs and canonical filenames."""
+    errors: list[str] = []
+    seen: dict[str, Path] = {}
+    for path in execution_paths(root):
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        investigation = str(data.get("investigation", "")).strip()
+        expected = path.name.removesuffix(".execution.yaml")
+        if not investigation:
+            errors.append(f"{path.name}: missing investigation ID")
+            continue
+        if investigation != expected:
+            errors.append(
+                f"{path.name}: investigation ID {investigation} does not match canonical filename {expected}"
+            )
+        previous = seen.get(investigation)
+        if previous is not None:
+            errors.append(
+                f"{investigation}: duplicate execution manifests {previous.name} and {path.name}"
+            )
+        else:
+            seen[investigation] = path
+    return errors
+
+
+def resolve_repository_artifact(root: Path, declared_path: object) -> tuple[Path | None, str | None]:
+    """Resolve an evidence path and reject absolute or repository-escaping locations."""
+    if not isinstance(declared_path, str) or not declared_path.strip():
+        return None, "<missing-path>"
+    relative = Path(declared_path)
+    if relative.is_absolute():
+        return None, declared_path
+    root_resolved = root.resolve()
+    artifact = (root_resolved / relative).resolve()
+    try:
+        artifact.relative_to(root_resolved)
+    except ValueError:
+        return None, declared_path
+    return artifact, None
 
 
 def validate_manifest(
@@ -45,14 +91,28 @@ def validate_manifest(
         required_steps = []
 
     for step in required_steps:
+        if not isinstance(step, dict):
+            errors.append(f"{investigation}: required step must be a mapping")
+            continue
         state = str(step.get("status", "")).lower()
         evidence = step.get("evidence", [])
+        if not isinstance(evidence, list):
+            errors.append(f"{investigation}: step {step.get('id')} evidence must be a list")
+            continue
         if state in COMPLETE_STATES and not evidence:
             errors.append(f"{investigation}: complete step {step.get('id')} has no evidence")
         for item in evidence:
-            artifact = root / item["path"]
-            if not artifact.is_file():
-                errors.append(f"{investigation}: missing evidence artifact {item['path']}")
+            if not isinstance(item, dict):
+                errors.append(f"{investigation}: step {step.get('id')} evidence entry must be a mapping")
+                continue
+            declared_path = item.get("path")
+            artifact, invalid_path = resolve_repository_artifact(root, declared_path)
+            if invalid_path is not None:
+                errors.append(
+                    f"{investigation}: evidence artifact must remain within repository root: {invalid_path}"
+                )
+            elif artifact is not None and not artifact.is_file():
+                errors.append(f"{investigation}: missing evidence artifact {declared_path}")
 
     if result in PASS_RESULTS:
         if not isinstance(required, list) or not required_steps:
@@ -61,12 +121,17 @@ def validate_manifest(
         incomplete = [
             str(step.get("id"))
             for step in required_steps
-            if str(step.get("status", "")).lower() not in COMPLETE_STATES
+            if not isinstance(step, dict)
+            or str(step.get("status", "")).lower() not in COMPLETE_STATES
         ]
         if incomplete:
             errors.append(f"{investigation}: PASS with incomplete required steps: {', '.join(incomplete)}")
 
-        missing_evidence = [str(step.get("id")) for step in required_steps if not step.get("evidence")]
+        missing_evidence = [
+            str(step.get("id"))
+            for step in required_steps
+            if not isinstance(step, dict) or not step.get("evidence")
+        ]
         if missing_evidence:
             errors.append(
                 f"{investigation}: PASS with required steps lacking evidence: {', '.join(missing_evidence)}"
@@ -74,7 +139,13 @@ def validate_manifest(
 
         canonical_results = manifest_results if manifest_results is not None else load_manifest_results(root)
         unresolved: list[str] = []
+        if not isinstance(upstream, list):
+            errors.append(f"{investigation}: upstream_dependencies must be a list")
+            upstream = []
         for dependency in upstream:
+            if not isinstance(dependency, dict):
+                unresolved.append("<invalid-dependency>")
+                continue
             dependency_id = str(dependency.get("id", "")).strip()
             if not dependency_id:
                 unresolved.append("<missing-id>")
@@ -109,13 +180,14 @@ def validate_declared_results(root: Path = ROOT) -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.parse_args()
-    paths = sorted(EXECUTIONS.glob("*.execution.yaml"))
+    paths = execution_paths()
     manifest_results = load_manifest_results()
-    errors = [
+    errors = validate_manifest_registry()
+    errors.extend(
         error
         for path in paths
         for error in validate_manifest(path, manifest_results=manifest_results)
-    ]
+    )
     errors.extend(validate_declared_results())
     if errors:
         print("Investigation execution validation: FAIL")
