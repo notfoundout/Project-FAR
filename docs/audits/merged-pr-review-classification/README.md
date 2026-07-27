@@ -20,6 +20,8 @@ Definitive dispositions—`resolved_correctly`, `resolved_incorrectly`, and `obs
 
 Each finding records the PR number, thread and comment identifiers, path and line where available, original reviewer claim, GitHub metadata, disposition, confidence, rationale, and evidence.
 
+The JSON preserves the original reviewer body exactly. The Markdown report renders that body as inert single-line text: embedded images, links, HTML tags, and code delimiters are removed before truncation so untrusted review syntax cannot create broken report links.
+
 ## Reproduction
 
 ```bash
