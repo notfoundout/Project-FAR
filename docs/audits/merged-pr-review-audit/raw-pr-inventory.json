@@ -1,0 +1,3258 @@
+{
+  "schema_version": 1,
+  "repository": "notfoundout/Project-FAR",
+  "audited_main_sha": "685251b4229e33b431b23e3b74de4ed1cc804ce0",
+  "generated_at": "2026-07-26T23:20:09Z",
+  "records": [
+    {
+      "pr_number": 16,
+      "title": "Move FARE meta-theorems into meta directory",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/16",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "cbd8697ef0349eda5c028ddbbb45cf36960f6bf9",
+      "created_at": null,
+      "merged_at": "2026-07-03T12:10:18-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 17,
+      "title": "Add FARE evaluation definitions MDEF-006 through MDEF-010",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/17",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "0bc111f1a2353898b8f864206d50dd8308f91060",
+      "created_at": null,
+      "merged_at": "2026-07-03T17:40:08-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 19,
+      "title": "Repair FARE mathematical definitions MDEF-002 through MDEF-009",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/19",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "9311e60ad36ab30558096d9be45864129791c3cb",
+      "created_at": null,
+      "merged_at": "2026-07-03T18:29:10-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 27,
+      "title": "Record FAR v1.0 Stable and initiate FARO planning",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/27",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "833671b881cfb0e5470496f8d11c154220901a6d",
+      "created_at": null,
+      "merged_at": "2026-07-04T20:56:05-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 28,
+      "title": "Complete FARO Phase 6 and initiate Phase 7",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/28",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "3161710abc06cab520bcb5ef21e334961f3333e3",
+      "created_at": null,
+      "merged_at": "2026-07-04T22:03:00-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 29,
+      "title": "Complete FARO Phase 7 and initiate Phase 8",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/29",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "f3f2442d5b49b793a0db367cce5e45135520ee6e",
+      "created_at": null,
+      "merged_at": "2026-07-04T22:15:44-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 31,
+      "title": "Complete FARO Phase 9 consistency audit",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/31",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "196fe2b8890ae79987d5c81111d3cc6c30fbc3c0",
+      "created_at": null,
+      "merged_at": "2026-07-04T22:49:00-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 34,
+      "title": "Complete FARM Phase 1 and initiate Phase 2",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/34",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "cb808d5d008cfd71fe9b0da40aa3fb7156be6562",
+      "created_at": null,
+      "merged_at": "2026-07-05T00:02:10-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 38,
+      "title": "Add Project FAR post-v1 repository audit",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/38",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "85c0cab181eb479809602859f4cb375fce11848a",
+      "created_at": null,
+      "merged_at": "2026-07-05T12:36:49-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 39,
+      "title": "Complete post-v1 repository audit",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/39",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "59947f2ffcf4151c7d1beb449ec035b57d620f85",
+      "created_at": null,
+      "merged_at": "2026-07-05T12:48:16-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 52,
+      "title": "Add T-001 proof object",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/52",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "f68911a414e322b80a43db392ff57a7f8a08c235",
+      "created_at": null,
+      "merged_at": "2026-07-06T03:01:34-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 53,
+      "title": "Add T-002 proof object",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/53",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "0ff366096368ef4b87db5e80f9735aa214262ffe",
+      "created_at": null,
+      "merged_at": "2026-07-06T03:06:44-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 54,
+      "title": "Expand T-003 proof object",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/54",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "50373f8ca0ac335d53d5e13803d90257fcccbd90",
+      "created_at": null,
+      "merged_at": "2026-07-06T03:14:09-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 55,
+      "title": "Add T-004 through T-006 proof objects",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/55",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "cadca40c63f05d79893d5a651be81a264926ba6a",
+      "created_at": null,
+      "merged_at": "2026-07-06T03:37:01-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 56,
+      "title": "Add T-007 through T-010 proof objects",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/56",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "dfaac4b9d58faf7ab096b8aa2b9bc71fa0a811c0",
+      "created_at": null,
+      "merged_at": "2026-07-06T04:09:24-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 57,
+      "title": "Add T-011 through T-015 proof objects",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/57",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "10878f284a0baaab5fa2854bbb01e0d258123f93",
+      "created_at": null,
+      "merged_at": "2026-07-06T12:06:39-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 74,
+      "title": "Analyze expanded primitive sufficiency fixtures",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/74",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "536f0c0ce39040f815555fc50bbb1a977e65cf3f",
+      "created_at": null,
+      "merged_at": "2026-07-06T20:25:41-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 79,
+      "title": "Update front matter for v0.3.0",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/79",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "3a76b8c51347aef690fc2a855dd98288745be492",
+      "created_at": null,
+      "merged_at": "2026-07-06T21:52:45-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 80,
+      "title": "Add internal link checker",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/80",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "67e548239b46cdd3811c25b7e388eeed379a1520",
+      "created_at": null,
+      "merged_at": "2026-07-06T23:26:33-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 81,
+      "title": "Evaluate hard external reasoning systems",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/81",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "2c2daee53cd27d3722ea5abed689c2dc979c6833",
+      "created_at": null,
+      "merged_at": "2026-07-07T10:59:53-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 82,
+      "title": "Evaluate second external reasoning batch",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/82",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "3b3ccf6b4be33c3765d1e0d85f0d1bdf3cb53a9f",
+      "created_at": null,
+      "merged_at": "2026-07-07T18:21:16-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 84,
+      "title": "Add repository health check tooling",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/84",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "f19edf8d8d9a7a40977c2a60cdc1e6fc6748f9ca",
+      "created_at": null,
+      "merged_at": "2026-07-07T19:06:03-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 85,
+      "title": "Add advisory self-advancement planner",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/85",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "e7fdb013293c1d0921fc0de349595bbac8678fbc",
+      "created_at": null,
+      "merged_at": "2026-07-07T19:17:30-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 86,
+      "title": "Add clickable links to generated planning reports",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/86",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "c7f766c21954b07d3a7c9dceb25508d1e4bcf8b0",
+      "created_at": null,
+      "merged_at": "2026-07-07T21:23:42-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 90,
+      "title": "Finalize v0.3 release verification",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/90",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "7ebd5a663abb08ed8d771ca9159dc62f9210738b",
+      "created_at": null,
+      "merged_at": "2026-07-08T11:03:48-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 91,
+      "title": "Publish Project FAR v0.3.1 maintenance release",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/91",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "31f297d3553358ff55d65febcc5c19ade67cfc6c",
+      "created_at": null,
+      "merged_at": "2026-07-08T11:22:08-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 92,
+      "title": "Introduce v0.4 dependency infrastructure: registry, schema, generators, and validation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/92",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "e73c6e1bea3d2e8e7bb877daa4f9524e3b7939bf",
+      "created_at": null,
+      "merged_at": "2026-07-08T12:20:49-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 94,
+      "title": "Validate AX-001 operation primitive",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/94",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "9c742b80c0b5f05253b0ae087e966eda8ef87df9",
+      "created_at": null,
+      "merged_at": "2026-07-08T14:51:03-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 95,
+      "title": "AX-001 foundation validation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/95",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "f89d06768d491078854f0a29ae1d055bb2aaab51",
+      "created_at": null,
+      "merged_at": "2026-07-08T15:40:03-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 96,
+      "title": "Resolve AX-001 circularity investigation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/96",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "c515056eb2f3117a019cc2ef8a0014f2bec98c34",
+      "created_at": null,
+      "merged_at": "2026-07-08T16:00:21-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 97,
+      "title": "Adjudicate AX-001 primitive candidates",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/97",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "46aaad46b10b43d69ddaea0b30c16b2af986f841",
+      "created_at": null,
+      "merged_at": "2026-07-08T16:06:18-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 98,
+      "title": "Revise AX-001 operation wording",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/98",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "f30e08af1ae4cd6c67322333c240d7007c18a227",
+      "created_at": null,
+      "merged_at": "2026-07-08T16:19:06-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 99,
+      "title": "Add AX-001 stability review",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/99",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "4e3c964a4bf6c640b4449bbb471165f647e11cd5",
+      "created_at": null,
+      "merged_at": "2026-07-08T16:25:01-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 100,
+      "title": "Validate L-001",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/100",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "7ca3a2d6c8c3d1b1b79c5c0328cbb0432cae8eea",
+      "created_at": null,
+      "merged_at": "2026-07-08T17:26:43-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 101,
+      "title": "Add isolation classification doctrine",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/101",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "794e1e372bafb4e2e9367bbed41abbb0fb6941ed",
+      "created_at": null,
+      "merged_at": "2026-07-08T17:42:20-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 102,
+      "title": "Validate L-002",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/102",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "2afd583644db50dddf11510bb0a258a75adc747c",
+      "created_at": null,
+      "merged_at": "2026-07-08T18:12:50-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 103,
+      "title": "Validate L-003",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/103",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "9286575874153964bb512b90c37774d47c9b2d13",
+      "created_at": null,
+      "merged_at": "2026-07-08T18:42:34-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 104,
+      "title": "Validate L-004",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/104",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "bfff9c3d53035418550af162839411ddc9503545",
+      "created_at": null,
+      "merged_at": "2026-07-08T19:12:45-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 105,
+      "title": "Validate L-005",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/105",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "44b355fba9f91eec7470978cb000000cc8b07da2",
+      "created_at": null,
+      "merged_at": "2026-07-08T19:59:42-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 106,
+      "title": "Validate L-006",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/106",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "bbdcb1d379c40a92c6ca50be5a47b267dcfe1eed",
+      "created_at": null,
+      "merged_at": "2026-07-08T20:17:03-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 107,
+      "title": "Validate L-007",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/107",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "60ac01fffc53b3ac6841c894f26f5bf2a9bf6f8c",
+      "created_at": null,
+      "merged_at": "2026-07-08T20:29:12-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 108,
+      "title": "Validate P-001",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/108",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "cc0f362dd7a8ab57d96379646ff50157fa6a1175",
+      "created_at": null,
+      "merged_at": "2026-07-08T21:17:02-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 110,
+      "title": "Consolidate Foundation Validation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/110",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "fad6500ab918b3766e3aa79d1ea9e7cc3fd4bc5a",
+      "created_at": null,
+      "merged_at": "2026-07-08T23:30:05-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 111,
+      "title": "Validate remaining theorem chain through T-002",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/111",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "5d480c83fd445d088ca34b1f881b77e9ef014423",
+      "created_at": null,
+      "merged_at": "2026-07-09T00:21:57-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 112,
+      "title": "Validate P-002 through P-005",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/112",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "72b81d50af47416fa75d5e99efb9840e68f534db",
+      "created_at": null,
+      "merged_at": "2026-07-09T00:27:12-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 113,
+      "title": "Validate T-004",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/113",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "00d3544b84413ad0ac7c036fb7596745aac8127b",
+      "created_at": null,
+      "merged_at": "2026-07-09T00:55:29-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 115,
+      "title": "Validate T-006",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/115",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "b257338a9683694f2f2acc259bf4f6e44a0b18df",
+      "created_at": null,
+      "merged_at": "2026-07-09T01:12:05-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 119,
+      "title": "Validate T-011",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/119",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "893700d5bddfe0de6827cfe7b24f4b09fcbbb186",
+      "created_at": null,
+      "merged_at": "2026-07-09T02:15:28-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 120,
+      "title": "Repair Verify Theory workflow",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/120",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "d3d396cbd9d8fc8eef36621be4e07872d9c4b1b7",
+      "created_at": null,
+      "merged_at": "2026-07-09T13:34:27-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 121,
+      "title": "Validate T-012",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/121",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "fbb0cebb9642c9e956198da4a9c8de8c70c97d10",
+      "created_at": null,
+      "merged_at": "2026-07-09T14:06:18-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 122,
+      "title": "Add foundation final consolidation report",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/122",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "2822ef55beadd226a6aa95016699379e0793f9af",
+      "created_at": null,
+      "merged_at": "2026-07-09T14:13:19-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 123,
+      "title": "Classify foundation consistency blockers",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/123",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "197fd47eca792dca1b71bffb44c50c1b56ef283f",
+      "created_at": null,
+      "merged_at": "2026-07-09T14:25:07-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 124,
+      "title": "Backfill missing validation artifacts",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/124",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "c32a498a4a22eac583ffce80fccd73e0f6646f3b",
+      "created_at": null,
+      "merged_at": "2026-07-09T14:43:08-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 125,
+      "title": "Validate T-012 phase 1 step 1 status",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/125",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "29ef7b1db842a4eb81e947a66504c94e940329d8",
+      "created_at": null,
+      "merged_at": "2026-07-09T15:29:40-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 126,
+      "title": "Verify foundation repository health",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/126",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "d17dc0f2c3d0bc436e0afc905e70df140b2f8981",
+      "created_at": null,
+      "merged_at": "2026-07-09T15:38:49-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 127,
+      "title": "Add foundation consistency audit",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/127",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "411692784a70791c793861e7d71f4e0ce6e99511",
+      "created_at": null,
+      "merged_at": "2026-07-09T15:47:33-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 128,
+      "title": "Add canonical mathematics audit",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/128",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "47e5439fb6e68c070a2c3e475727eb2f5f8a5fa1",
+      "created_at": null,
+      "merged_at": "2026-07-09T16:06:38-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 129,
+      "title": "Resolve foundation canonicalization",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/129",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "6702957d943d45c9886aeedb961af9afe8b5d9da",
+      "created_at": null,
+      "merged_at": "2026-07-09T16:15:09-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 130,
+      "title": "Add definition audit report",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/130",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "efa7f30f33d3037d4344bfa40ff5c36ce5787034",
+      "created_at": null,
+      "merged_at": "2026-07-09T16:58:57-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 131,
+      "title": "Repair Phase 1 dependency audit boundary",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/131",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "f46b20d013dda58366ef155d7bbc227db912ebff",
+      "created_at": null,
+      "merged_at": "2026-07-09T18:20:29-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 132,
+      "title": "Validate L-008",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/132",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "6495bda625668fea02cccb9498f408b89bf00709",
+      "created_at": null,
+      "merged_at": "2026-07-09T18:38:35-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 133,
+      "title": "Validate T-013",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/133",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "2fb1a8d52e13c1ccefee728e3e1985161807ce72",
+      "created_at": null,
+      "merged_at": "2026-07-09T18:49:10-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 134,
+      "title": "Validate T-014",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/134",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "e77d17bd97b4b30de6f3dbddb6f2a7c22359f34b",
+      "created_at": null,
+      "merged_at": "2026-07-09T18:58:12-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 135,
+      "title": "Validate T-015",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/135",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "864f745a4715cfa631ae528b0ac805c09bab164f",
+      "created_at": null,
+      "merged_at": "2026-07-09T19:13:54-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 136,
+      "title": "Rerun dependency audit",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/136",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "878c95e258ca9865588c22cb26add91a092a5315",
+      "created_at": null,
+      "merged_at": "2026-07-09T19:14:19-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 137,
+      "title": "Add theorem coverage audit",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/137",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "3dd65a1925cca96514000de8c2de80e8f561407c",
+      "created_at": null,
+      "merged_at": "2026-07-09T19:34:32-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 138,
+      "title": "Perform proof audit",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/138",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "a1004d5e41aacd7332b431dc5d78aa28dd26c6ee",
+      "created_at": null,
+      "merged_at": "2026-07-09T19:40:51-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 139,
+      "title": "Add minimality audit report",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/139",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "ef886d38945fd565086672bb3ee7db9f365cdb88",
+      "created_at": null,
+      "merged_at": "2026-07-09T19:55:13-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 141,
+      "title": "Resolve Minimality Audit Findings",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/141",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "7ae2d990bdc527927092a47932a967cde01fe4c4",
+      "created_at": null,
+      "merged_at": "2026-07-09T20:38:18-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 143,
+      "title": "Freeze Project FAR Foundation v1.0",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/143",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "df490092e3b88e9e36fd114f18fb743f19353c95",
+      "created_at": null,
+      "merged_at": "2026-07-09T21:15:13-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 144,
+      "title": "Phase 2 Campaign 1: Formal Systems External Validation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/144",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "35fce8a10df12570e97bcd3c12751150ef9409e2",
+      "created_at": null,
+      "merged_at": "2026-07-09T21:48:43-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 145,
+      "title": "Phase 2 Campaign 2: Mathematics External Validation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/145",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "bc2b184756b282906eee986ad34c068f5bb7eaac",
+      "created_at": null,
+      "merged_at": "2026-07-09T22:30:56-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 148,
+      "title": "Add philosophy external validation campaign",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/148",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "5242d269816424515246c8dd27e75911502bbc4f",
+      "created_at": null,
+      "merged_at": "2026-07-09T23:26:08-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 149,
+      "title": "Add practical reasoning external validation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/149",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "004ff0b2d485c18ae1b18197c53504017f30be71",
+      "created_at": null,
+      "merged_at": "2026-07-09T23:34:17-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 150,
+      "title": "Add AI reasoning external validation campaign",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/150",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "433bdc2a30a91ec2862af45a73a54da1c0a0b996",
+      "created_at": null,
+      "merged_at": "2026-07-09T23:55:29-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 151,
+      "title": "Add Phase 3 mechanization IR foundation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/151",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "e19b1aec49a83bb202bdeef3ee9881908b90985b",
+      "created_at": null,
+      "merged_at": "2026-07-10T00:02:14-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 153,
+      "title": "Add canonical FAR mechanization IR package, external schema, examples, and tests",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/153",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "3bc3d25cd929056c00b34974493eff4ca93826d5",
+      "created_at": null,
+      "merged_at": "2026-07-10T02:36:31-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 154,
+      "title": "Repository Standardization and Certification",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/154",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "00e33e7e906d00f5ff9a55f9a924daea0490ba84",
+      "created_at": null,
+      "merged_at": "2026-07-11T20:49:57-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 155,
+      "title": "Codify Project FAR Central Research Program",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/155",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "777fd0fe5b1f09897397cedcfe79e037a5cd69bb",
+      "created_at": null,
+      "merged_at": "2026-07-12T08:24:00-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 158,
+      "title": "Audit external validation evidence corpus",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/158",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "5a01f6b776d4d565bd65314c8524ec3d7eefc3bb",
+      "created_at": null,
+      "merged_at": "2026-07-13T00:37:24-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 159,
+      "title": "Add Comparative Representation Protocol v1.0 and register CRE-001",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/159",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "d88e18b4beb6f7310a0f03969df1cf43a32aefb1",
+      "created_at": null,
+      "merged_at": "2026-07-13T00:17:56-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 161,
+      "title": "Improve validation checks and status consistency reporting",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/161",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "719fc2fd7e8bdb862e003fd4b4d6966521a76e8f",
+      "created_at": null,
+      "merged_at": "2026-07-15T18:18:00-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 169,
+      "title": "Reconcile deterministic CRE-001 repository status",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/169",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "e706f126d0f951fcaa4f3be155552696d5e2d77a",
+      "created_at": null,
+      "merged_at": "2026-07-15T23:38:25-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 193,
+      "title": "Add versioned Project FAR specification export",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/193",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "bcd9f60be682f41b0a4ea6625e9e485013d7d038",
+      "created_at": null,
+      "merged_at": "2026-07-16T15:22:18-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 197,
+      "title": "Define formal primitive independence framework",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/197",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "8bf5d3b58f3313e25726fcdf54cf49472f7d08e4",
+      "created_at": null,
+      "merged_at": "2026-07-17T12:17:05-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 198,
+      "title": "Execute bounded primitive independence evaluation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/198",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "72617165ecc12fd9d24b036100e89b950f687f1c",
+      "created_at": null,
+      "merged_at": "2026-07-17T12:27:18-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 199,
+      "title": "Run bounded alternative vocabulary competition",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/199",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "9475498bb40157d23a5f00d21ae1b0228d0840da",
+      "created_at": null,
+      "merged_at": "2026-07-17T12:47:17-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 206,
+      "title": "Implement CRE-004 execution and replay pipeline",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/206",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "b19078a9a20e2d8a03be7313aab96e951dc887f3",
+      "created_at": null,
+      "merged_at": "2026-07-17T19:00:30-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 208,
+      "title": "Begin CRE-004 RUN-001 execution intake",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/208",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "83f4eccc7e3527a8ad6c2eb07847ee155c36a093",
+      "created_at": null,
+      "merged_at": "2026-07-18T10:41:55-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 209,
+      "title": "Freeze CRE-004 RUN-001 coordinator controls",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/209",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "a3d3ffdedbe54f1f950e6180a56ecbdd6a10c364",
+      "created_at": null,
+      "merged_at": "2026-07-18T12:58:53-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 211,
+      "title": "Complete the architecture-neutral Project FAR research reset",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/211",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "9c77b84ff0f0f14106dff0450785f8818a4aaccf",
+      "created_at": null,
+      "merged_at": "2026-07-18T13:35:06-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 225,
+      "title": "Prove S_core W0 normalization kernel",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/225",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "2a0507211221b8513f99b3046d1c009e9233f7e1",
+      "created_at": null,
+      "merged_at": "2026-07-20T15:31:06-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 229,
+      "title": "Separate representation from universal-structure discovery",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/229",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "2e616d1fe778d201221cbd59d7c2d78d33e9105b",
+      "created_at": null,
+      "merged_at": "2026-07-20T19:15:48-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 232,
+      "title": "Harden validation authority and merge enforcement",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/232",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "f91e83ff485f7df114b6b94960b72a3bf4bc52a6",
+      "created_at": null,
+      "merged_at": "2026-07-21T01:49:52-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 233,
+      "title": "Freeze W3.5 reasoning and contrast corpora",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/233",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "1f00d3a62253dff2be95b327fe773d38e2cedeeb",
+      "created_at": null,
+      "merged_at": "2026-07-21T03:35:47-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 237,
+      "title": "Execute evidence-complete W3.5 candidate tests",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/237",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "ac27d176c34089d4ee7129bccd638b8b5eafd14e",
+      "created_at": null,
+      "merged_at": "2026-07-21T19:33:06-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 250,
+      "title": "Execute USD-W2 alternative vocabulary competition",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/250",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "17bd56c305d1ab71fb70d766cee0b9e79f0d1a43",
+      "created_at": null,
+      "merged_at": "2026-07-22T02:39:35-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 260,
+      "title": "Register post-USD internal universal-kernel discovery continuation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/260",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "9e675e5d65a4d07c71017f0df5c75824e97e54d4",
+      "created_at": null,
+      "merged_at": "2026-07-22T11:44:02-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 261,
+      "title": "Freeze IKD-W1 materially new candidate architectures",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/261",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "e6e1a4c17d6725845c3407974c8c50adb54109c2",
+      "created_at": null,
+      "merged_at": "2026-07-22T11:56:49-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 266,
+      "title": "Execute IKD-W6 global reconstruction",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/266",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "e937c60c95b3d2d5b3532991115c674143c8101a",
+      "created_at": null,
+      "merged_at": "2026-07-22T14:20:02-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 285,
+      "title": "Execute UPP-W4 admissible representation universe",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/285",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "753b1115997048857b87b2a88ab99b617d4b778a",
+      "created_at": null,
+      "merged_at": "2026-07-22T23:32:51-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 291,
+      "title": "Execute UPP-W10 semantic interpretation necessity",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/291",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "1c34d4512fd75e3df5c85bc8f9d5887933fea707",
+      "created_at": null,
+      "merged_at": "2026-07-23T02:22:52-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 292,
+      "title": "Execute UPP-W11 historical trace necessity",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/292",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "f148cf194a3a07a7d679e75ee961e9f35e81e26b",
+      "created_at": null,
+      "merged_at": "2026-07-23T02:32:29-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 295,
+      "title": "Execute UPP-W14 relative maximality",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/295",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "f14a281975cc513704752c67a0ac6d2d7785376a",
+      "created_at": null,
+      "merged_at": "2026-07-23T03:13:13-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 332,
+      "title": "Ground canonical verdict in actual G1 semantics",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/332",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "e0f7dbd0e5b60b0ebab38645d50f57abe51e0808",
+      "created_at": null,
+      "merged_at": "2026-07-23T21:10:47-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 336,
+      "title": "Port FAR regression and evidence bundles",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/336",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "23188ac084b7279d3af3802d6d837389ae7c2069",
+      "created_at": null,
+      "merged_at": "2026-07-23T21:39:29-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 337,
+      "title": "Add external trace and SWE-agent adapter",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/337",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "a24bbba4db2b277b6dce298d95c8e8e23fbccb2c",
+      "created_at": null,
+      "merged_at": "2026-07-23T22:17:38-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 340,
+      "title": "Record Candidate 001 findings and freeze Candidate 002",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/340",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "1a2b0dd10ca39801a246096add0cb92a7141c437",
+      "created_at": null,
+      "merged_at": "2026-07-23T22:59:37-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 348,
+      "title": "Replace FAR demo mock with product-grade verification UI",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/348",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "5ab8eca2e2d11578f21c1ae775dad3660bd1fd64",
+      "created_at": null,
+      "merged_at": "2026-07-24T01:30:04-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 350,
+      "title": "Reapply FAR demo clarity and editorial redesign on current main",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/350",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "a263920c2878c9a37b99d101e52f0e8cc0835c91",
+      "created_at": null,
+      "merged_at": "2026-07-24T02:42:57-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 351,
+      "title": "Elevate FAR demo into a premium enterprise AI experience",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/351",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "be7e235a7c624eb540b2877dd6536eb6cdafc128",
+      "created_at": null,
+      "merged_at": "2026-07-24T03:41:08-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 353,
+      "title": "Replace FAR demo colors and add multi-format uploads",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/353",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "ed9cad75d1a38b4c91d7ebbef6c96fa5df645257",
+      "created_at": null,
+      "merged_at": "2026-07-24T04:18:58-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 354,
+      "title": "Rebuild FAR demo as frontier release-integrity experience",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/354",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "f69cf02d95f4bb2bb371e8607d59457d02a3a4cf",
+      "created_at": null,
+      "merged_at": "2026-07-24T12:10:24-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 355,
+      "title": "Add controlled validation feedback to FAR demo",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/355",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "5cef8b7ca78ad943fdb2f74604fc70886bde5310",
+      "created_at": null,
+      "merged_at": "2026-07-24T12:23:25-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 359,
+      "title": "Resolve SWE-bench image digest without pulling layers",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/359",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "6b2b0e41e4b0b80046e702b5788c813985f26b32",
+      "created_at": null,
+      "merged_at": "2026-07-24T14:30:56-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 361,
+      "title": "Run pinned SWE-bench directly from source checkout",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/361",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "63c9a2cf2e3452795e874126cfb650fdf7e639c1",
+      "created_at": null,
+      "merged_at": "2026-07-24T15:06:07-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 367,
+      "title": "Complete frozen SWE-agent evidence freeze and reveal boundary",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/367",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "770c0b1d2443f81df6f68a00c2a6eb63548a39f8",
+      "created_at": null,
+      "merged_at": "2026-07-24T22:27:28-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 375,
+      "title": "Fix SWE-agent execution-state restore path",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/375",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "e8932bf770b85b9ef9bf378dfaaf302bc436d4d8",
+      "created_at": null,
+      "merged_at": "2026-07-25T10:11:48-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 377,
+      "title": "Validate the exact pinned SWE-agent CLI invocation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/377",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "340b23b798fae3866fcffe46322414d1c4be645e",
+      "created_at": null,
+      "merged_at": "2026-07-25T12:20:33-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 378,
+      "title": "Install controller YAML dependency before execution status",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/378",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "a6ad9063e6f08d344850e8f72581e366a81d6f61",
+      "created_at": null,
+      "merged_at": "2026-07-25T13:13:18-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 379,
+      "title": "Parse pinned SWE-agent pathlib YAML safely",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/379",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "39e4d235b8dceef845c4121de250ed5012409b89",
+      "created_at": null,
+      "merged_at": "2026-07-25T13:55:31-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 380,
+      "title": "Rehearse the full frozen execution path without a model call",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/380",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "26accd541cee8e613ac32337abd5c986e899bc6a",
+      "created_at": null,
+      "merged_at": "2026-07-25T14:48:21-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 384,
+      "title": "Repair SWE-agent execution validation and retry integrity",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/384",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "cc2677d8c17323e57cca4c7744ff017e75d4c359",
+      "created_at": null,
+      "merged_at": "2026-07-25T20:57:57-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 394,
+      "title": "Fix v2 post-probe freeze validation",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/394",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "20a5a8405f2b150d3f848262c90bc08883dce203",
+      "created_at": null,
+      "merged_at": "2026-07-26T07:34:23-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 396,
+      "title": "Preserve v2 budget-limited SWE-agent completion",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/396",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "b0fc2e6d6bb8763a960679c445cc094e13fe8609",
+      "created_at": null,
+      "merged_at": "2026-07-26T11:56:41-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 397,
+      "title": "Freeze completed SWE-agent v2 primary comparison",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/397",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "5a736a22c4eb726dbf3fcf8b2299e444666c87a8",
+      "created_at": null,
+      "merged_at": "2026-07-26T16:24:12-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 398,
+      "title": "Publish SWE-agent v2 bounded outcome reveal",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/398",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "4173d145ac2b95a0ec5cfadb3180b849395777e6",
+      "created_at": null,
+      "merged_at": "2026-07-26T16:56:35-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 399,
+      "title": "Fix audit Markdown hygiene",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/399",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "dd46102bed6b9b40d47888e428f06f8efe837681",
+      "created_at": null,
+      "merged_at": "2026-07-26T17:18:07-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 400,
+      "title": "Audit and correct theory and protocol boundaries",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/400",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "b03b2b9b059fd9a1f376a83b789be72f7aa66d87",
+      "created_at": null,
+      "merged_at": "2026-07-26T17:34:18-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    },
+    {
+      "pr_number": 401,
+      "title": "Forensically reconstruct SWE-agent v2 failures",
+      "url": "https://github.com/notfoundout/Project-FAR/pull/401",
+      "author": "notfoundout",
+      "base_branch": "main",
+      "head_branch": null,
+      "base_sha": null,
+      "head_sha": null,
+      "merge_commit_sha": "685251b4229e33b431b23e3b74de4ed1cc804ce0",
+      "created_at": null,
+      "merged_at": "2026-07-26T19:18:16-04:00",
+      "changed_file_count": null,
+      "review_submissions": [],
+      "retrieval_status": {
+        "pr_metadata": "inferred_from_first_parent_git_history",
+        "review_submissions": "failed",
+        "inline_review_comments": "failed",
+        "review_threads": "failed",
+        "issue_comments": "failed"
+      },
+      "limitations": [
+        "GitHub returned 404 without repository credentials; only immutable local Git history metadata is recorded."
+      ]
+    }
+  ]
+}
