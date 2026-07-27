@@ -159,7 +159,13 @@ class ReasoningSystemMapping:
         ]:
             if not value:
                 errors.append(f"reasoning_system missing FAR primitive mapping: {name}")
-        if self.verdict not in {"fits FAR", "extends FAR", "falsifies FAR", "draft"}:
+        if self.verdict not in {
+            "fits FAR",
+            "extends FAR",
+            "outside FAR scope",
+            "falsifies FAR",
+            "draft",
+        }:
             errors.append(f"reasoning_system has invalid verdict: {self.verdict}")
         return errors
 

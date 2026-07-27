@@ -8,7 +8,7 @@ reasoning_system:
     Representational Structure: unsupported assertion relation
     Interpretation: opaque or inaccessible interpretation
     Reasoning Calculus: unavailable or non-inspectable transition standards
-  verdict: falsifies FAR
+  verdict: outside FAR scope
 
 representations:
   - id: oracle-output

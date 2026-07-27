@@ -17,6 +17,7 @@ DEFAULT_FIXTURE_DIR = ROOT / "examples" / "far" / "reasoning-systems"
 VALID_CLASSIFICATIONS = {
     "fits FAR",
     "extends FAR",
+    "outside FAR scope",
     "candidate counterexample",
     "fails fixture",
 }
@@ -24,6 +25,7 @@ VALID_CLASSIFICATIONS = {
 VERDICT_TO_CLASSIFICATION = {
     "fits FAR": "fits FAR",
     "extends FAR": "extends FAR",
+    "outside FAR scope": "outside FAR scope",
     "falsifies FAR": "candidate counterexample",
     "candidate counterexample": "candidate counterexample",
 }
@@ -150,7 +152,13 @@ def render_markdown(results: List[ReasoningSystemResult]) -> str:
         "| Classification | Count |",
         "|---|---:|",
     ]
-    for classification in ["fits FAR", "extends FAR", "candidate counterexample", "fails fixture"]:
+    for classification in [
+        "fits FAR",
+        "extends FAR",
+        "outside FAR scope",
+        "candidate counterexample",
+        "fails fixture",
+    ]:
         lines.append(f"| {classification} | {counts.get(classification, 0)} |")
 
     lines.extend([

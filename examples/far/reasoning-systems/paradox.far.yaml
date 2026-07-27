@@ -8,7 +8,7 @@ reasoning_system:
     Representational Structure: mutually defeating semantic dependencies
     Interpretation: unstable semantic interpretation
     Reasoning Calculus: paraconsistent, dialetheic, or rejection-based handling standards
-  verdict: falsifies FAR
+  verdict: extends FAR
 
 representations:
   - id: liar

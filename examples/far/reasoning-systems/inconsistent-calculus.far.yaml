@@ -8,7 +8,7 @@ reasoning_system:
     Representational Structure: contradiction, support, and containment relations
     Interpretation: inconsistency-tolerant interpretation
     Reasoning Calculus: paraconsistent or inconsistency-tolerant inference standards
-  verdict: falsifies FAR
+  verdict: extends FAR
 
 representations:
   - id: positive
