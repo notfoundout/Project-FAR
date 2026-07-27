@@ -12,11 +12,11 @@ The classifier is fail-closed:
 - GitHub's resolved flag is never treated as proof that a concern was fixed correctly;
 - GitHub's outdated flag is never treated as proof that a concern became obsolete.
 
-Definitive dispositions—`resolved_correctly`, `resolved_incorrectly`, and `obsolete_after_later_changes`—require a decision in `manual-decisions.json` containing concrete evidence and a rationale. Overrides that omit those fields fail validation.
+Definitive dispositions—`resolved_correctly`, `resolved_incorrectly`, and `obsolete_after_later_changes`—require a decision in `manual-decisions.json` containing concrete evidence, a rationale, and a risk rank. Overrides that omit those fields fail validation.
 
 ## Outputs
 
-`findings.json` is the machine-readable audit record. `FINDINGS.md` is the human-readable rendering. Both are generated from the same source inventory and decision registry.
+`findings.json` is the machine-readable audit record. `FINDINGS.md` is the human-readable rendering. `REMEDIATION_QUEUE.md` groups confirmed defects by descending risk without repairing them. All three are generated from the same source inventory and decision registry.
 
 Each finding records the PR number, thread and comment identifiers, path and line where available, original reviewer claim, GitHub metadata, disposition, confidence, rationale, and evidence.
 
@@ -29,7 +29,8 @@ python tools/classify_merged_pr_review_findings.py \
   --threads docs/audits/merged-pr-review-audit/raw-review-threads.json \
   --overrides docs/audits/merged-pr-review-classification/manual-decisions.json \
   --json-output docs/audits/merged-pr-review-classification/findings.json \
-  --markdown-output docs/audits/merged-pr-review-classification/FINDINGS.md
+  --markdown-output docs/audits/merged-pr-review-classification/FINDINGS.md \
+  --queue-output docs/audits/merged-pr-review-classification/REMEDIATION_QUEUE.md
 ```
 
 Run tests with:

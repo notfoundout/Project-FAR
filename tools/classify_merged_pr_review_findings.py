@@ -24,6 +24,7 @@ ALLOWED = {
     "non_actionable",
     "uncertain_manual_review_required",
 }
+RISKS = ("critical", "high", "medium", "low")
 
 
 @dataclass(frozen=True)
@@ -39,6 +40,7 @@ class Finding:
     github_is_resolved: bool
     github_is_outdated: bool
     disposition: str
+    risk: str
     confidence: str
     evidence: list[str]
     rationale: str
@@ -57,19 +59,22 @@ def load_overrides(path: Path | None) -> dict[str, dict[str, Any]]:
     if path is None or not path.exists():
         return {}
     data = load_json(path)
-    if data.get("schema_version") != 1 or not isinstance(data.get("decisions"), list):
-        raise SystemExit("override file must contain schema_version=1 and a decisions list")
+    if data.get("schema_version") not in {1, 2} or not isinstance(data.get("decisions"), list):
+        raise SystemExit("override file must contain schema_version=1 or 2 and a decisions list")
     result: dict[str, dict[str, Any]] = {}
     for decision in data["decisions"]:
         finding_id = decision.get("finding_id")
         disposition = decision.get("disposition")
         evidence = decision.get("evidence")
         rationale = decision.get("rationale")
+        risk = decision.get("risk")
         if not finding_id or disposition not in ALLOWED:
             raise SystemExit(f"invalid override decision: {decision!r}")
         if disposition in {"resolved_correctly", "resolved_incorrectly", "obsolete_after_later_changes"}:
             if not isinstance(evidence, list) or not evidence or not rationale:
                 raise SystemExit(f"evidence and rationale required for definitive override {finding_id}")
+        if data.get("schema_version") == 2 and risk not in RISKS:
+            raise SystemExit(f"risk required for schema v2 decision {finding_id}")
         if finding_id in result:
             raise SystemExit(f"duplicate override for {finding_id}")
         result[finding_id] = decision
@@ -128,11 +133,13 @@ def classify(threads: list[dict[str, Any]], overrides: dict[str, dict[str, Any]]
         seen.add(finding_id)
         disposition, confidence, evidence, rationale = default_disposition(thread, comment)
         override = overrides.get(finding_id)
+        risk = "medium"
         if override:
             disposition = override["disposition"]
             confidence = str(override.get("confidence") or "manual")
             evidence = [str(item) for item in override.get("evidence", [])]
             rationale = str(override.get("rationale") or "Manual decision recorded.")
+            risk = str(override.get("risk") or "medium")
         if disposition not in ALLOWED:
             raise SystemExit(f"unsupported disposition {disposition}")
         findings.append(
@@ -148,6 +155,7 @@ def classify(threads: list[dict[str, Any]], overrides: dict[str, dict[str, Any]]
                 github_is_resolved=bool(thread.get("is_resolved")),
                 github_is_outdated=bool(thread.get("is_outdated")),
                 disposition=disposition,
+                risk=risk,
                 confidence=confidence,
                 evidence=evidence,
                 rationale=rationale,
@@ -185,7 +193,7 @@ def render_markdown(findings: list[Finding], source: Path) -> str:
     for name in sorted(ALLOWED):
         lines.append(f"- `{name}`: {counts.get(name, 0)}")
     lines.extend(["", "## Findings", ""])
-    for item in findings:
+    for item in sorted(findings, key=lambda item: (RISKS.index(item.risk), item.pr_number, item.finding_id)):
         location = item.path or "no file"
         if item.line:
             location += f":{item.line}"
@@ -197,16 +205,43 @@ def render_markdown(findings: list[Finding], source: Path) -> str:
                 f"### {item.finding_id}",
                 "",
                 f"- Disposition: `{item.disposition}`",
+                f"- Risk: `{item.risk}`",
                 f"- Confidence: `{item.confidence}`",
                 f"- Location: `{location}`",
                 f"- GitHub resolved/outdated: `{item.github_is_resolved}` / `{item.github_is_outdated}`",
                 f"- Review URL: {item.url or 'unavailable'}",
                 f"- Claim: {claim or '[empty]'}",
-                f"- Rationale: {item.rationale}",
+                f"- Rationale: {markdown_plain_text(item.rationale)}",
                 "- Evidence:",
             ]
         )
-        lines.extend(f"  - {entry}" for entry in item.evidence)
+        lines.extend(f"  - {markdown_plain_text(entry)}" for entry in item.evidence)
+        lines.append("")
+    return "\n".join(lines)
+
+
+def render_remediation_queue(findings: list[Finding]) -> str:
+    confirmed = [item for item in findings if item.disposition == "resolved_incorrectly"]
+    lines = [
+        "# Merged-PR confirmed-defect remediation queue",
+        "",
+        "This is a triage queue, not a repair record. Items are ordered by risk, then PR and finding ID.",
+        "Only findings adjudicated `resolved_incorrectly` appear here.",
+        "",
+        f"Confirmed defects: {len(confirmed)}",
+        "",
+    ]
+    for risk in RISKS:
+        items = sorted((item for item in confirmed if item.risk == risk), key=lambda item: (item.pr_number, item.finding_id))
+        lines.extend([f"## {risk.title()} risk ({len(items)})", ""])
+        for item in items:
+            location = item.path or "no file"
+            if item.line:
+                location += f":{item.line}"
+            claim = markdown_plain_text(item.reviewer_claim)
+            if len(claim) > 180:
+                claim = claim[:177] + "..."
+            lines.append(f"- `{item.finding_id}` — `{location}` — {claim or '[empty]'}")
         lines.append("")
     return "\n".join(lines)
 
@@ -217,6 +252,7 @@ def main() -> int:
     parser.add_argument("--overrides", type=Path)
     parser.add_argument("--json-output", type=Path, required=True)
     parser.add_argument("--markdown-output", type=Path, required=True)
+    parser.add_argument("--queue-output", type=Path)
     args = parser.parse_args()
 
     payload = load_json(args.threads)
@@ -225,7 +261,7 @@ def main() -> int:
     overrides = load_overrides(args.overrides)
     findings = classify(payload["threads"], overrides)
     output = {
-        "schema_version": 1,
+        "schema_version": 2,
         "source": args.threads.as_posix(),
         "classification_policy": "fail_closed_v1",
         "counts": dict(sorted(Counter(item.disposition for item in findings).items())),
@@ -235,6 +271,9 @@ def main() -> int:
     args.markdown_output.parent.mkdir(parents=True, exist_ok=True)
     args.json_output.write_text(json.dumps(output, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     args.markdown_output.write_text(render_markdown(findings, args.threads) + "\n", encoding="utf-8")
+    if args.queue_output:
+        args.queue_output.parent.mkdir(parents=True, exist_ok=True)
+        args.queue_output.write_text(render_remediation_queue(findings) + "\n", encoding="utf-8")
     return 0
 
 
