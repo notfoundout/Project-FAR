@@ -90,10 +90,20 @@ def validate_manifest(
         errors.append(f"{investigation}: required_steps must be a list")
         required_steps = []
 
+    seen_step_ids: set[str] = set()
     for step in required_steps:
         if not isinstance(step, dict):
             errors.append(f"{investigation}: required step must be a mapping")
             continue
+        raw_step_id = step.get("id")
+        if not isinstance(raw_step_id, str) or not raw_step_id.strip():
+            errors.append(f"{investigation}: required step has missing, empty, or non-string id")
+        else:
+            step_id = raw_step_id.strip()
+            if step_id in seen_step_ids:
+                errors.append(f"{investigation}: duplicate required step id: {step_id}")
+            else:
+                seen_step_ids.add(step_id)
         state = str(step.get("status", "")).lower()
         evidence = step.get("evidence", [])
         if not isinstance(evidence, list):
