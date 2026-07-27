@@ -88,5 +88,5 @@ transitions:
     source: state0
     rule: inconsistency-test
     target: state1
-    status: accepted
+    status: admissible
     order: 1
