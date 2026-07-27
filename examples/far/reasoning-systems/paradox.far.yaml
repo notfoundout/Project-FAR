@@ -31,13 +31,13 @@ representations:
       claim: A bivalent truth assignment generates contradiction.
   - id: assessment
     kind: conclusion
-    content: This is a candidate counterexample unless FAR can model unstable interpretation without adding a new primitive.
+    content: FAR represents the paradox and resulting failure state, while resolution requires a specialized semantic policy.
     statement:
       kind: claim
       subject: paradoxical reasoning
-      predicate: is a candidate counterexample
+      predicate: extends FAR without requiring a new primitive
       scope: paradox fixture
-      claim: Paradoxical reasoning is a candidate counterexample for FAR.
+      claim: Paradoxical reasoning is representable as a conservative extension of FAR.
 
 relations:
   - id: rel1
@@ -55,19 +55,19 @@ interpretations:
   - representation: contradiction
     meaning: A failed stable assignment under ordinary bivalence.
   - representation: assessment
-    meaning: A candidate counterexample pending a stronger account of unstable interpretation.
+    meaning: Representation succeeds; stable resolution requires an explicit paradox-handling semantic policy.
 
 rules:
   - id: paradox-test
     name: paradox stress test
     inputs: [liar, contradiction]
     output: assessment
-    condition: Treat unresolved semantic instability as a candidate counterexample.
+    condition: Classify explicit paradox representation as an extension when specialized resolution policy is needed but no new primitive is required.
 
 transitions:
   - id: t1
     source: state0
     rule: paradox-test
     target: state1
-    status: draft
+    status: accepted
     order: 1
