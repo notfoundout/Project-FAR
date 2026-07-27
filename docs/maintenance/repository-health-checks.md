@@ -67,7 +67,7 @@ Keep IDs unique within machine-readable registries, adversarial suites, and proo
 
 ### Orphaned docs
 
-Run `python tools/check_orphaned_docs.py`. Add a navigation link from a relevant index, move intentional standalone notes under `archive/`, or mark the file with `orphan-ok` only when standalone status is intentional.
+Run `python tools/check_orphaned_docs.py`. Add a navigation link from a relevant index, move intentional standalone notes under `archive/`, or add the exact standalone marker `<!-- orphan-ok -->` on its own line only when standalone status is intentional. Incidental prose, quoted examples, and near-matches do not exempt a document.
 
 ### Malformed Markdown tables
 
