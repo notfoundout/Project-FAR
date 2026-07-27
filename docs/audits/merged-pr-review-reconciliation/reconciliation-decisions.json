@@ -1,7 +1,8 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source": "docs/audits/merged-pr-review-classification/findings.json",
   "baseline_commit": "cb55c50324a9912deb8c73b62d0fbb242f026933",
+  "baseline_git_blob_sha": "199970b0fcc5aaaef56d194a3e9e0ceefff4da26",
   "audited_main_commit": "5ca27d5c40281771cf74aa29704c2a06868a16ae",
   "decisions": [
     {
