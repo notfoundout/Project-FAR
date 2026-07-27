@@ -1,7 +1,7 @@
 schema_version: 1
 investigation: VI-001
 title: Cross-Domain Representation
-status: Completed
+status: Accepted
 result: pass
 scope: four registered reasoning domains
 canonical_investigation: research/validation/investigations/VI-001-cross-domain-representation.md
