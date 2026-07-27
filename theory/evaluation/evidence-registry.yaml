@@ -87,21 +87,21 @@ entries:
   - id: PS-010
     system: Paradoxical reasoning
     fixture: examples/far/reasoning-systems/paradox.far.yaml
-    classification: candidate counterexample
+    classification: extends FAR
     analysis_status: conservative extension
     registry_resolution: conservative extension
     confidence: provisional
-    review_status: analyzed in v0.2.0 baseline
-    notes: v0.2.0 resolved the candidate as requiring a specialized semantic policy rather than a sixth primitive.
+    review_status: repaired in reasoning-system boundary classification remediation
+    notes: Paradox is representable through explicit semantic dependencies and contradiction-handling policy; it is a resolution boundary, not a primitive counterexample.
   - id: PS-011
     system: Inconsistent calculus
     fixture: examples/far/reasoning-systems/inconsistent-calculus.far.yaml
-    classification: candidate counterexample
+    classification: extends FAR
     analysis_status: conservative extension
     registry_resolution: conservative extension
     confidence: provisional
-    review_status: analyzed in v0.2.0 baseline
-    notes: v0.2.0 resolved non-explosive inconsistency as representable by a calculus policy rather than a sixth primitive.
+    review_status: repaired in reasoning-system boundary classification remediation
+    notes: Non-explosive inconsistency is representable through contradiction relations and an explicit calculus policy rather than a sixth primitive.
   - id: PS-012
     system: Infinite reasoning
     fixture: examples/far/reasoning-systems/infinite-reasoning.far.yaml
@@ -114,12 +114,12 @@ entries:
   - id: PS-013
     system: Opaque intuition or oracle reasoning
     fixture: examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml
-    classification: candidate counterexample
+    classification: outside FAR scope
     analysis_status: outside FAR scope
     registry_resolution: outside scope
     confidence: provisional
-    review_status: analyzed in v0.2.0 baseline
-    notes: v0.2.0 resolved inaccessible oracle process as outside current FAR scope unless the hidden process is made explicit.
+    review_status: repaired in reasoning-system boundary classification remediation
+    notes: An inaccessible oracle process is outside current FAR scope unless reconstructed into explicit representations and transition standards.
   - id: PS-014
     system: Modal logic
     fixture: examples/far/reasoning-systems/modal-logic.far.yaml
