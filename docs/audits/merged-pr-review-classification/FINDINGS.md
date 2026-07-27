@@ -8,9 +8,9 @@ This report is fail-closed. A resolved GitHub thread is not labeled correctly re
 
 - Total review threads: 450
 - `non_actionable`: 0
-- `obsolete_after_later_changes`: 46
+- `obsolete_after_later_changes`: 45
 - `resolved_correctly`: 0
-- `resolved_incorrectly`: 404
+- `resolved_incorrectly`: 405
 - `uncertain_manual_review_required`: 0
 - `unresolved`: 0
 
@@ -2072,16 +2072,17 @@ This report is fail-closed. A resolved GitHub thread is not labeled correctly re
 
 ### PR12:PRRT_kwDOTH_vCM6OD6bY
 
-- Disposition: `obsolete_after_later_changes`
+- Disposition: `resolved_incorrectly`
 - Risk: `medium`
 - Confidence: `manual_high`
 - Location: `research/README.md:3`
 - GitHub resolved/outdated: `False` / `False`
 - Review URL: https://github.com/notfoundout/Project-FAR/pull/12#discussion_r3516891152
 - Claim: **P2 Badge Restore the research index or update its users** Deleting this index leaves existing repository navigation and audit evidence stale: 'README.md:31' and 'docs/README.md:24' still point readers to 'research/README.md', and 'docs...
-- Rationale: The artifact reviewed by finding PR12:PRRT_kwDOTH_vCM6OD6bY has been removed by later repository changes, so the path-specific condition cannot reproduce on current main. This does not claim that a differently located concern was repaired.
+- Rationale: The reviewer concern still reproduces on the audited commit: the research index is absent, but current repository documents still link to or rely on it. The finding is therefore a confirmed defect and must remain in the remediation queue until the index is restored or all dependent references are updated.
 - Evidence:
-  - At current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760, repository path 'research/README.md' does not exist ('test -e' is false).
+  - Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 does not contain 'research/README.md', while 'docs/README.md:29' still links to that missing research index.
+  - Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains 'docs/SEMANTIC_AUDIT.md:111', which relies on the missing research index as evidence.
 
 ### PR14:PRRT_kwDOTH_vCM6OE6cl
 

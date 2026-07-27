@@ -17,7 +17,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `research/validation/investigations/VI-002-primitive-minimality.md` (SHA-256 46933e607ba37e2ea72e84eefea584f3b7c250dc69437c57809bb35da220bb20).",
-        "Current repository evidence at `research/validation/investigations/VI-002-primitive-minimality.md:229`: '| Property | Pending | \u2014 |'."
+        "Current repository evidence at `research/validation/investigations/VI-002-primitive-minimality.md:229`: '| Property | Pending | — |'."
       ],
       "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bU",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR12:PRRT_kwDOTH_vCM6OD6bU found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -36,12 +36,13 @@
     },
     {
       "confidence": "manual_high",
-      "disposition": "obsolete_after_later_changes",
+      "disposition": "resolved_incorrectly",
       "evidence": [
-        "At current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760, repository path `research/README.md` does not exist (`test -e` is false)."
+        "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 does not contain `research/README.md`, while `docs/README.md:29` still links to that missing research index.",
+        "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `docs/SEMANTIC_AUDIT.md:111`, which relies on the missing research index as evidence."
       ],
       "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bY",
-      "rationale": "The artifact reviewed by finding PR12:PRRT_kwDOTH_vCM6OD6bY has been removed by later repository changes, so the path-specific condition cannot reproduce on current main. This does not claim that a differently located concern was repaired.",
+      "rationale": "The reviewer concern still reproduces on the audited commit: the research index is absent, but current repository documents still link to or rely on it. The finding is therefore a confirmed defect and must remain in the remediation queue until the index is restored or all dependent references are updated.",
       "risk": "medium"
     },
     {
@@ -60,7 +61,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `frameworks/FARE/definitions/graph-definitions.md` (SHA-256 1603803468d08638840962da067cc84d7586c87df20d11dbd8758b4e15d52f9c).",
-        "Current repository evidence at `frameworks/FARE/definitions/graph-definitions.md:86`: '# Definition 9 \u2014 Subgraph'."
+        "Current repository evidence at `frameworks/FARE/definitions/graph-definitions.md:86`: '# Definition 9 — Subgraph'."
       ],
       "finding_id": "PR15:PRRT_kwDOTH_vCM6OOImd",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR15:PRRT_kwDOTH_vCM6OOImd found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -181,7 +182,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `docs/audits/FAR-PHASE-2-STRUCTURAL-AUDIT.md` (SHA-256 b62a484b685bea9b0a084c78f72da8f3898bd512bca2d01a997b0bc49625b428).",
-        "Current repository evidence at `docs/audits/FAR-PHASE-2-STRUCTURAL-AUDIT.md:135`: 'Candidate generation is explicitly placed within Stage 6 \u2014 Perform Reasoning.'."
+        "Current repository evidence at `docs/audits/FAR-PHASE-2-STRUCTURAL-AUDIT.md:135`: 'Candidate generation is explicitly placed within Stage 6 — Perform Reasoning.'."
       ],
       "finding_id": "PR23:PRRT_kwDOTH_vCM6OWoTz",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR23:PRRT_kwDOTH_vCM6OWoTz found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -1038,7 +1039,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `docs/reports/appendices/l001-adversarial-review-raw.md` (SHA-256 7ec1db88534259985c79799260917d2dd8a76c50d2f1e468689e99cc9c4b30bf).",
-        "Current repository evidence at `docs/reports/appendices/l001-adversarial-review-raw.md:148`: '## Objection 11: \u201cOperation\u201d is not needed and may introduce dependency confusion'."
+        "Current repository evidence at `docs/reports/appendices/l001-adversarial-review-raw.md:148`: '## Objection 11: “Operation” is not needed and may introduce dependency confusion'."
       ],
       "finding_id": "PR100:PRRT_kwDOTH_vCM6PX2kS",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR100:PRRT_kwDOTH_vCM6PX2kS found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -1104,7 +1105,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `docs/reports/foundation-validation-consolidation.md` (SHA-256 da776b090e643e5efb3efe1db01cf828e1bdb1df4d24eb0331519e828dfd0764).",
-        "Current repository evidence at `docs/reports/foundation-validation-consolidation.md:48`: 'All independent evaluations were classified as I1 \u2014 Claimed Isolation unless otherwise stated in their reports. This means repository access was prohibited by instruction but not technically prevented by the execution environment.'."
+        "Current repository evidence at `docs/reports/foundation-validation-consolidation.md:48`: 'All independent evaluations were classified as I1 — Claimed Isolation unless otherwise stated in their reports. This means repository access was prohibited by instruction but not technically prevented by the execution environment.'."
       ],
       "finding_id": "PR110:PRRT_kwDOTH_vCM6PcQlI",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR110:PRRT_kwDOTH_vCM6PcQlI found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -1181,7 +1182,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `theory/proofs/T-006-primitive-sufficiency.md` (SHA-256 e934b08922bfc8dd6acc844cdd18b05748eb2643c9c69adca52a264db42d7b8f).",
-        "Current repository evidence at `theory/proofs/T-006-primitive-sufficiency.md:32`: '- D-CALC \u2014 Reasoning Calculus'."
+        "Current repository evidence at `theory/proofs/T-006-primitive-sufficiency.md:32`: '- D-CALC — Reasoning Calculus'."
       ],
       "finding_id": "PR115:PRRT_kwDOTH_vCM6PdLxu",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR115:PRRT_kwDOTH_vCM6PdLxu found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -2180,7 +2181,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `theory/README.md` (SHA-256 0aad43903cd38647857f274d6add9559a24c510074baaa1f6a3c8e6b5bab5b9a).",
-        "Current repository evidence at `theory/README.md:15`: '- `independence/` \u2014 falsifiable primitive-independence criteria, schemas, and future execution artifacts.'."
+        "Current repository evidence at `theory/README.md:15`: '- `independence/` — falsifiable primitive-independence criteria, schemas, and future execution artifacts.'."
       ],
       "finding_id": "PR197:PRRT_kwDOTH_vCM6RpiBO",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR197:PRRT_kwDOTH_vCM6RpiBO found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -2730,7 +2731,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `mechanization/lean/SCoreW5.lean` (SHA-256 e9e5e25b941a0648df13eea91bf19fcaa187d4d7854512ae893afd0a01681703).",
-        "Current repository evidence at `mechanization/lean/SCoreW5.lean:55`: 'target.investigation = source.stakes \u2227'."
+        "Current repository evidence at `mechanization/lean/SCoreW5.lean:55`: 'target.investigation = source.stakes ∧'."
       ],
       "finding_id": "PR240:PRRT_kwDOTH_vCM6Sxc8r",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR240:PRRT_kwDOTH_vCM6Sxc8r found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",

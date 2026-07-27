@@ -1,8 +1,8 @@
 {
   "classification_policy": "fail_closed_v1",
   "counts": {
-    "obsolete_after_later_changes": 46,
-    "resolved_incorrectly": 404
+    "obsolete_after_later_changes": 45,
+    "resolved_incorrectly": 405
   },
   "findings": [
     {
@@ -68,9 +68,10 @@
     {
       "comment_id": "PRRC_kwDOTH_vCM7Rn4AQ",
       "confidence": "manual_high",
-      "disposition": "obsolete_after_later_changes",
+      "disposition": "resolved_incorrectly",
       "evidence": [
-        "At current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760, repository path `research/README.md` does not exist (`test -e` is false)."
+        "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 does not contain `research/README.md`, while `docs/README.md:29` still links to that missing research index.",
+        "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `docs/SEMANTIC_AUDIT.md:111`, which relies on the missing research index as evidence."
       ],
       "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bY",
       "github_is_outdated": false,
@@ -78,7 +79,7 @@
       "line": 3,
       "path": "research/README.md",
       "pr_number": 12,
-      "rationale": "The artifact reviewed by finding PR12:PRRT_kwDOTH_vCM6OD6bY has been removed by later repository changes, so the path-specific condition cannot reproduce on current main. This does not claim that a differently located concern was repaired.",
+      "rationale": "The reviewer concern still reproduces on the audited commit: the research index is absent, but current repository documents still link to or rely on it. The finding is therefore a confirmed defect and must remain in the remediation queue until the index is restored or all dependent references are updated.",
       "reviewer_claim": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Restore the research index or update its users**\n\nDeleting this index leaves existing repository navigation and audit evidence stale: `README.md:31` and `docs/README.md:24` still point readers to `research/README.md`, and `docs/SEMANTIC_AUDIT.md:111` cites this file as evidence that research content is non-canonical until promoted. Keep the index or update those artifacts in the same change.\n\nUseful? React with \ud83d\udc4d\u00a0/ \ud83d\udc4e.",
       "risk": "medium",
       "thread_id": "PRRT_kwDOTH_vCM6OD6bY",
