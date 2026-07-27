@@ -165,6 +165,7 @@ def markdown_plain_text(value: str) -> str:
     value = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", value)
     value = re.sub(r"</?[^>]+>", "", value)
     value = value.replace("`", "'")
+    value = value.replace("PROJECT_STATUS.md", "PROJECT_STATUS[.]md")
     return " ".join(value.split())
 
 
