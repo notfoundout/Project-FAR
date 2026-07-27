@@ -26,15 +26,29 @@ class InvestigationExecutionGateTests(unittest.TestCase):
             executions.mkdir(parents=True, exist_ok=True)
             for step in payload.get("required_steps", []):
                 for evidence in step.get("evidence", []):
-                    artifact = root / evidence["path"]
-                    artifact.parent.mkdir(parents=True, exist_ok=True)
-                    artifact.write_text("evidence\n")
+                    declared = evidence.get("path")
+                    if isinstance(declared, str) and not Path(declared).is_absolute() and ".." not in Path(declared).parts:
+                        artifact = root / declared
+                        artifact.parent.mkdir(parents=True, exist_ok=True)
+                        artifact.write_text("evidence\n")
             path = executions / f"{payload.get('investigation', 'test')}.execution.yaml"
             path.write_text(yaml.safe_dump(payload), encoding="utf-8")
             for ident, result in (canonical_manifests or {}).items():
                 manifest_path = executions / f"{ident}.execution.yaml"
                 manifest_path.write_text(
-                    yaml.safe_dump({"investigation": ident, "result": result, "required_steps": [{"id": "x", "status": "complete", "evidence": [{"path": "evidence.md"}]}]}),
+                    yaml.safe_dump(
+                        {
+                            "investigation": ident,
+                            "result": result,
+                            "required_steps": [
+                                {
+                                    "id": "x",
+                                    "status": "complete",
+                                    "evidence": [{"path": "evidence.md"}],
+                                }
+                            ],
+                        }
+                    ),
                     encoding="utf-8",
                 )
             return gate.validate_manifest(path, root)
@@ -88,6 +102,39 @@ class InvestigationExecutionGateTests(unittest.TestCase):
         payload = self.passing_payload()
         payload["upstream_dependencies"] = [{"id": "VI-001", "status": "incomplete"}]
         self.assertEqual(self.validate(payload, {"VI-001": "pass"}), [])
+
+    def test_absolute_evidence_path_is_rejected(self):
+        payload = self.passing_payload()
+        payload["required_steps"][0]["evidence"] = [{"path": "/etc/passwd"}]
+        self.assertTrue(any("within repository root" in error for error in self.validate(payload)))
+
+    def test_parent_traversal_evidence_path_is_rejected(self):
+        payload = self.passing_payload()
+        payload["required_steps"][0]["evidence"] = [{"path": "../../outside.txt"}]
+        self.assertTrue(any("within repository root" in error for error in self.validate(payload)))
+
+    def test_duplicate_investigation_ids_are_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            executions = root / "research/validation/executions"
+            executions.mkdir(parents=True)
+            first = {"investigation": "VI-001", "result": "incomplete"}
+            second = {"investigation": "VI-001", "result": "pass"}
+            (executions / "VI-001.execution.yaml").write_text(yaml.safe_dump(first))
+            (executions / "VI-001-shadow.execution.yaml").write_text(yaml.safe_dump(second))
+            errors = gate.validate_manifest_registry(root)
+            self.assertTrue(any("duplicate execution manifests" in error for error in errors))
+
+    def test_manifest_filename_must_match_investigation_id(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            executions = root / "research/validation/executions"
+            executions.mkdir(parents=True)
+            (executions / "VI-999.execution.yaml").write_text(
+                yaml.safe_dump({"investigation": "VI-001", "result": "pass"})
+            )
+            errors = gate.validate_manifest_registry(root)
+            self.assertTrue(any("does not match canonical filename" in error for error in errors))
 
 
 if __name__ == "__main__":
