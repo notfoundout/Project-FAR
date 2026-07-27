@@ -10,9 +10,18 @@ findings.
 
 `disposition-ledger.json` is authoritative. `RECONCILIATION_REPORT.md` is its complete
 human-readable rendering. `RESIDUAL_REMEDIATION_QUEUE.md` contains only
-`still_reproducible` and `cannot_verify` records. `REMEDIATION_BATCHES.md` groups those
-records by subsystem and deduplicated root cause while retaining every original PR,
-thread, and comment identifier in the ledger.
+`still_reproducible` and `cannot_verify` records. `REMEDIATION_BATCHES.md` groups records
+only when a decision supplies a demonstrated shared `root_cause_id`; otherwise every
+finding retains a unique group and its own remediation boundary.
+
+The policy is fail-closed:
+
+- a finding without current-main reproduction, comparison, fix, obsolescence, or
+  supersession evidence is `cannot_verify`;
+- baseline evidence is never reused to justify a new definitive disposition;
+- `still_reproducible` requires disposition-specific evidence and a verified root-cause
+  mechanism;
+- a shared file path is not treated as a shared root cause.
 
 Regenerate the artifacts with:
 
@@ -24,4 +33,4 @@ python tools/reconcile_merged_pr_review_findings.py \
 ```
 
 Use `--check` for a read-only deterministic validation. A nonzero residual count is an
-active remediation state and must not be described as a clear queue.
+active verification or remediation state and must not be described as a clear queue.
