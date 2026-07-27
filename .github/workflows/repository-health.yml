@@ -19,6 +19,12 @@ jobs:
         python-version: 3.x
     - name: Install dependencies
       run: python -m pip install pyyaml
+    - name: Validate merged-PR residual reconciliation
+      run: >-
+        python tools/reconcile_merged_pr_review_findings.py
+        --baseline docs/audits/merged-pr-review-classification/findings.json
+        --decisions docs/audits/merged-pr-review-reconciliation/reconciliation-decisions.json
+        --output-dir docs/audits/merged-pr-review-reconciliation --check
     - name: Run full canonical repository health
       run: python tools/repo_health_check.py --full
     timeout-minutes: 60

@@ -36,6 +36,7 @@ python tools/repo_health_check.py --full
 - `tools/check_orphaned_docs.py` reports Markdown files that are not reachable from major navigation roots.
 - `tools/check_repository_hygiene.py` validates YAML parsing, duplicate machine-readable IDs, and registry-like file references.
 - `tools/check_markdown_hygiene.py` checks malformed tables, empty links, duplicate heading anchors, missing image alt text, and unclosed code fences.
+- `tools/reconcile_merged_pr_review_findings.py --check` fails closed if the complete frozen finding set, its one-disposition-per-finding ledger, residual queue, remediation batches, or deterministic generated reports diverge.
 
 ## Warnings vs failures
 
