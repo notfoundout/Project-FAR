@@ -1,0 +1,101 @@
+name: Classify frozen merged-PR review findings
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - audit/classify-frozen-merged-pr-reviews
+    paths:
+      - tools/classify_merged_pr_review_findings.py
+      - tests/test_classify_merged_pr_review_findings.py
+      - docs/audits/merged-pr-review-audit/raw-review-threads.json
+      - docs/audits/merged-pr-review-classification/manual-decisions.json
+      - .github/workflows/classify-merged-pr-review-findings.yml
+  pull_request:
+    paths:
+      - tools/classify_merged_pr_review_findings.py
+      - tests/test_classify_merged_pr_review_findings.py
+      - docs/audits/merged-pr-review-audit/raw-review-threads.json
+      - docs/audits/merged-pr-review-classification/**
+      - .github/workflows/classify-merged-pr-review-findings.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: classify-merged-pr-review-findings-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  classify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run unit tests
+        run: python -m unittest tests/test_classify_merged_pr_review_findings.py
+
+      - name: Generate machine and human findings
+        run: |
+          python tools/classify_merged_pr_review_findings.py \
+            --threads docs/audits/merged-pr-review-audit/raw-review-threads.json \
+            --overrides docs/audits/merged-pr-review-classification/manual-decisions.json \
+            --json-output docs/audits/merged-pr-review-classification/findings.json \
+            --markdown-output docs/audits/merged-pr-review-classification/FINDINGS.md
+
+      - name: Validate generated outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("docs/audits/merged-pr-review-classification")
+          payload = json.loads((root / "findings.json").read_text(encoding="utf-8"))
+          source = json.loads(Path(payload["source"]).read_text(encoding="utf-8"))
+          findings = payload.get("findings", [])
+          if payload.get("schema_version") != 1:
+              raise SystemExit("unexpected findings schema")
+          if len(findings) != len(source.get("threads", [])):
+              raise SystemExit("not every frozen review thread was classified")
+          ids = [item.get("finding_id") for item in findings]
+          if any(not item for item in ids) or len(ids) != len(set(ids)):
+              raise SystemExit("finding IDs must be present and unique")
+          required = {"pr_number", "thread_id", "reviewer_claim", "disposition", "evidence", "rationale"}
+          for item in findings:
+              missing = sorted(required - set(item))
+              if missing:
+                  raise SystemExit(f"finding {item.get('finding_id')} missing {missing}")
+          if not (root / "FINDINGS.md").is_file():
+              raise SystemExit("missing human-readable findings report")
+          print(f"validated {len(findings)} classified review threads")
+          PY
+
+      - name: Check deterministic generation
+        run: |
+          cp docs/audits/merged-pr-review-classification/findings.json /tmp/findings.json
+          cp docs/audits/merged-pr-review-classification/FINDINGS.md /tmp/FINDINGS.md
+          python tools/classify_merged_pr_review_findings.py \
+            --threads docs/audits/merged-pr-review-audit/raw-review-threads.json \
+            --overrides docs/audits/merged-pr-review-classification/manual-decisions.json \
+            --json-output docs/audits/merged-pr-review-classification/findings.json \
+            --markdown-output docs/audits/merged-pr-review-classification/FINDINGS.md
+          cmp /tmp/findings.json docs/audits/merged-pr-review-classification/findings.json
+          cmp /tmp/FINDINGS.md docs/audits/merged-pr-review-classification/FINDINGS.md
+
+      - name: Commit generated findings to source branch
+        if: github.event_name == 'push'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/audits/merged-pr-review-classification/findings.json \
+                  docs/audits/merged-pr-review-classification/FINDINGS.md
+          if git diff --cached --quiet; then
+            echo "Generated findings already current."
+            exit 0
+          fi
+          git commit -m "Generate frozen merged-PR review findings"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
