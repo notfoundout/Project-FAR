@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import Counter
 from dataclasses import dataclass, asdict
 from pathlib import Path
@@ -158,6 +159,15 @@ def classify(threads: list[dict[str, Any]], overrides: dict[str, dict[str, Any]]
     return findings
 
 
+def markdown_plain_text(value: str) -> str:
+    """Render untrusted review Markdown as inert single-line report text."""
+    value = re.sub(r"!\[([^\]]*)\]\([^)]*\)", r"\1", value)
+    value = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", value)
+    value = re.sub(r"</?[^>]+>", "", value)
+    value = value.replace("`", "'")
+    return " ".join(value.split())
+
+
 def render_markdown(findings: list[Finding], source: Path) -> str:
     counts = Counter(item.disposition for item in findings)
     lines = [
@@ -178,7 +188,7 @@ def render_markdown(findings: list[Finding], source: Path) -> str:
         location = item.path or "no file"
         if item.line:
             location += f":{item.line}"
-        claim = " ".join(item.reviewer_claim.split())
+        claim = markdown_plain_text(item.reviewer_claim)
         if len(claim) > 240:
             claim = claim[:237] + "..."
         lines.extend(
