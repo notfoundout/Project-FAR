@@ -221,59 +221,19 @@ Future investigations may establish a valid reduction.
 
 ---
 
-# Current Results
+# Interim Results (superseded)
 
-| Primitive | Status | Classification |
-|-----------|:------:|----------------|
-| Object | Scoped reduction study completed | Independent (Provisional) |
-| Property | Pending | — |
-| Relation | Pending | — |
-| Representation | Pending | — |
-| Interpretation | Pending | — |
-| Investigation | Pending | — |
-| Reasoning Calculus | Pending | — |
+This checkpoint originally followed Reduction Investigation 1. It is retained only as
+an execution-order marker; the canonical current result is the audited summary at the
+end of this document. It must not be read as a live status registry.
 
 ---
 
-# Conclusion
+# Interim Conclusion
 
-Current evidence supports retaining Object as a candidate primitive.
-
-Additional reduction investigations should be completed before any claim regarding the minimality of the primitive basis is accepted.
-
----
-
-# Future Work
-
-The remaining reduction investigations are:
-
-1. Property
-2. Relation
-3. Representation
-4. Interpretation
-5. Investigation
-6. Reasoning Calculus
-
-Each investigation should be conducted independently using the methodology defined in this document.
-
----
-
-# Research Status
-
-Research
-
-Scoped Reduction Work Completed:
-
-- Reduction Investigation 1 — Object
-
-Remaining Reduction Investigations:
-
-- Property
-- Relation
-- Representation
-- Interpretation
-- Investigation
-- Reasoning Calculus
+At this checkpoint, evidence supported retaining Object while the remaining conceptual
+reduction attempts were still unexecuted. Reduction Investigations 2–7 below supersede
+that interim state.
 
 ## Reduction Investigation 2 — Property
 
@@ -1340,18 +1300,50 @@ Future work should focus on:
 
 ---
 
-# Research Status
+# Execution Audit and Research Status
 
-Research
+**Lifecycle status:** Research
 
-Scoped Result:
+**Investigation result:** **INCOMPLETE — NON-PASSING**
 
-The current reduction study supports a provisional local result under the current Project FAR primitive basis and deletion-only standard. Global minimality remains unresolved.
+**Canonical execution record:** `research/validation/executions/VI-002.execution.yaml`
 
-- Local/conditional result: supported.
-- Full investigation: active.
-- Global minimality: unresolved.
+Full investigation: active.
 
-No successful reduction of the current candidate primitive basis was established within the completed scoped reduction work.
+The seven conceptual removal and definition attempts are recorded, as are their observed
+expressive losses. Repository evidence does **not** contain the required per-removal
+architectural reconstructions, dependent-FARA-document reconstructions, or VI-001
+re-executions. The hidden-assumption record is also incomplete. Therefore the
+investigation has not executed its own methodology and cannot validly be marked passed.
+
+## Required-Step Disposition
+
+| Required methodology step | Status | Evidence or missing evidence |
+|---|---|---|
+| Remove each primitive | Complete | Reduction Investigations 1–7. |
+| Attempt definition from the remaining candidates | Complete | Attempt sections in Reduction Investigations 1–7. |
+| Reconstruct every affected architectural definition | Not executed | No seven-case reconstruction artifacts or execution records exist. |
+| Reconstruct every dependent FARA document | Not executed | No dependency-complete consumer inventory or reconstructed document sets exist. |
+| Verify VI-001 remains executable | Not executed | No VI-001 logs tied to any reconstructed removal case exist. |
+| Record expressive-power loss | Complete | Evaluation and Observations sections in Reduction Investigations 1–7. |
+| Record hidden assumptions | Partial | Circularity and implicit reintroduction are noted, but no complete attempt-level ledger exists. |
+
+## Strongest Defensible Conclusion
+
+The completed conceptual attempts record no successful reduction. That is a scoped
+observation, not a PASS, minimality result, or independence result. All seven final
+classifications remain **Independent (Provisional)** only in the document's defined weak
+sense of “no successful reduction has been established”; they are not established
+independence findings.
+
+To unblock completion, the repository must contain, for every removal case: executable
+reconstructed definitions; a dependency-complete set of reconstructed FARA consumers;
+a reproducible VI-001 execution log; and a complete hidden-assumption audit. Only after
+all artifacts validate may VI-002 be reconsidered for a passing status.
+
+T-001 is not demoted by this audit: it is a distinct conditional theorem over a
+five-primitive basis under a deletion-only standard, and its canonical dependency graph
+does not declare VI-002 as an upstream dependency. VI-003 remains blocked from using
+VI-002 as completed execution.
 
 

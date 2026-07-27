@@ -1,5 +1,7 @@
 health:
 	python tools/repo_health_check.py --full
+	python tools/check_investigation_execution.py
+	python tools/generate_investigation_index.py --check
 	python tools/check_research_gates.py
 	python tools/check_deduction_first_program.py
 	python tools/check_thm_target_001.py
@@ -30,6 +32,8 @@ health:
 
 health-fast:
 	python tools/repo_health_check.py --fast
+	python tools/check_investigation_execution.py
+	python tools/generate_investigation_index.py --check
 	python tools/check_research_gates.py
 	python tools/check_deduction_first_program.py
 	python tools/check_thm_target_001.py
@@ -73,6 +77,8 @@ release-check:
 
 research-check:
 	python tools/check_research_gates.py
+	python tools/check_investigation_execution.py
+	python tools/generate_investigation_index.py --check
 	python tools/check_deduction_first_program.py
 	python tools/check_thm_target_001.py
 	python tools/check_faithful_representation.py

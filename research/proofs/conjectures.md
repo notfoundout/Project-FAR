@@ -49,7 +49,7 @@ Every conjecture shall possess exactly one status.
 | ID | Title | Status | Related Validation | Notes |
 |----|-------|--------|--------------------|-------|
 | CJ-001 | Primitive Independence | Under Investigation | VI-003 | Independence methodology established; formal proof pending. |
-| CJ-002 | Primitive Minimality | Under Investigation | VI-002 | No successful reductions identified; proof pending. |
+| CJ-002 | Primitive Minimality | Under Investigation | VI-002 | VI-002 is incomplete and non-passing; reconstruction and re-execution evidence is missing. |
 | CJ-003 | Architectural Sufficiency | Proposed | VI-007 | Validation investigation established; evaluation pending. |
 | CJ-004 | Architectural Completeness | Proposed | VI-009 | Validation investigation established; evaluation pending. |
 | CJ-005 | Universality Within Intended Scope | Proposed | VI-008 | Validation investigation established; evaluation pending. |
