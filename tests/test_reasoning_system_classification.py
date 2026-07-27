@@ -54,7 +54,7 @@ class ReasoningSystemClassificationTests(unittest.TestCase):
         ).lower()
         self.assertIn(expected_phrase.lower(), modeled_text)
         self.assertNotIn("candidate counterexample", modeled_text)
-        self.assertEqual(document["transitions"][0]["status"], "accepted")
+        self.assertEqual(document["transitions"][0]["status"], "admissible")
 
     def test_inconsistent_calculus_is_a_conservative_extension(self) -> None:
         self.assert_fixture_classification("inconsistent-calculus", "extends FAR")
