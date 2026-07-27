@@ -167,7 +167,7 @@ This report is fail-closed. A resolved GitHub thread is not labeled correctly re
 - Location: `docs/project-status.md:1`
 - GitHub resolved/outdated: `False` / `False`
 - Review URL: https://github.com/notfoundout/Project-FAR/pull/21#discussion_r3522698007
-- Claim: **P2 Badge Consolidate project status into the existing status file** This adds a second current-status artifact while 'docs/PROJECT_STATUS.md' already states that it records the current state and should be updated when a significant mil...
+- Claim: **P2 Badge Consolidate project status into the existing status file** This adds a second current-status artifact while 'docs/PROJECT_STATUS[.]md' already states that it records the current state and should be updated when a significant m...
 - Rationale: The frozen evidence directly establishes that the thread remained unresolved at export time.
 - Evidence:
   - GitHub review-thread metadata records is_resolved=false.
