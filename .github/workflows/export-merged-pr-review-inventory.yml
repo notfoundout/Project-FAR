@@ -1,0 +1,98 @@
+name: Export merged PR review inventory
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - tools/export_merged_pr_review_inventory.py
+      - .github/workflows/export-merged-pr-review-inventory.yml
+
+permissions:
+  contents: write
+  issues: read
+  pull-requests: read
+
+concurrency:
+  group: merged-pr-review-inventory-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out audited main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Export authenticated GitHub review inventory
+        id: export
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          python tools/export_merged_pr_review_inventory.py \
+            --repository "${GITHUB_REPOSITORY}" \
+            --audited-sha "${GITHUB_SHA}" \
+            --output docs/audits/merged-pr-review-audit
+          export_rc=$?
+          echo "export_rc=${export_rc}" >> "$GITHUB_OUTPUT"
+          if [[ "$export_rc" -ne 0 && "$export_rc" -ne 2 ]]; then
+            exit "$export_rc"
+          fi
+
+      - name: Validate generated JSON syntax
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("docs/audits/merged-pr-review-audit")
+          required = [
+              "raw-pr-inventory.json",
+              "raw-review-comments.json",
+              "raw-review-submissions.json",
+              "raw-review-threads.json",
+              "retrieval-manifest.json",
+          ]
+          for name in required:
+              path = root / name
+              if not path.is_file():
+                  raise SystemExit(f"missing generated artifact: {path}")
+              json.loads(path.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload raw authenticated export
+        uses: actions/upload-artifact@v4
+        with:
+          name: merged-pr-review-inventory-${{ github.run_id }}
+          path: docs/audits/merged-pr-review-audit/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Push generated inventory branch
+        env:
+          EXPORT_BRANCH: audit/authenticated-review-data-${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$EXPORT_BRANCH"
+          git add docs/audits/merged-pr-review-audit
+          if git diff --cached --quiet; then
+            echo "No generated inventory changes to commit."
+            exit 0
+          fi
+          git commit -m "Export authenticated merged-PR review inventory"
+          git push origin "HEAD:refs/heads/$EXPORT_BRANCH"
+          echo "Generated branch: $EXPORT_BRANCH"
+
+      - name: Enforce fail-closed completeness
+        if: steps.export.outputs.export_rc != '0'
+        run: |
+          echo "Authenticated export completed but the manifest is INCOMPLETE."
+          echo "The artifact and generated branch were preserved for diagnosis."
+          exit 1
