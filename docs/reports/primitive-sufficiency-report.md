@@ -14,7 +14,7 @@ Status: Regenerated from `theory/evaluation/evidence-registry.yaml`, `theory/fal
 - Fits FAR by registry resolution: 2
 - Conservative extensions by registry resolution: 10
 - Outside FAR scope: 1
-- Candidate counterexamples: 3
+- Candidate counterexamples: 0
 - Confirmed primitive counterexamples: 0
 - Adversarial tests: 14
 - Adversarial unresolved pressures: 1
@@ -24,10 +24,11 @@ Status: Regenerated from `theory/evaluation/evidence-registry.yaml`, `theory/fal
 
 | Classification | Count |
 |---|---:|
-| candidate counterexample | 3 |
+| candidate counterexample | 0 |
 | conservative extension | 8 |
-| extends FAR | 5 |
+| extends FAR | 7 |
 | fits FAR | 7 |
+| outside FAR scope | 1 |
 
 ## Analysis Outcome Counts
 
@@ -53,9 +54,13 @@ Status: Regenerated from `theory/evaluation/evidence-registry.yaml`, `theory/fal
 
 ## Candidate Counterexamples
 
-- PS-010: Paradoxical reasoning (`examples/far/reasoning-systems/paradox.far.yaml`) — conservative extension
-- PS-011: Inconsistent calculus (`examples/far/reasoning-systems/inconsistent-calculus.far.yaml`) — conservative extension
-- PS-013: Opaque intuition or oracle reasoning (`examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml`) — outside scope
+None.
+
+## Reconciled Boundary Cases
+
+- PS-010: Paradoxical reasoning (`examples/far/reasoning-systems/paradox.far.yaml`) — extends FAR; representable boundary for resolution.
+- PS-011: Inconsistent calculus (`examples/far/reasoning-systems/inconsistent-calculus.far.yaml`) — extends FAR; contradiction handling is an explicit calculus policy.
+- PS-013: Opaque intuition or oracle reasoning (`examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml`) — outside FAR scope unless reconstructed into explicit representations and transition standards.
 
 ## Current Conclusion
 

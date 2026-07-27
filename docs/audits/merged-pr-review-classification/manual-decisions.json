@@ -17,7 +17,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `research/validation/investigations/VI-002-primitive-minimality.md` (SHA-256 46933e607ba37e2ea72e84eefea584f3b7c250dc69437c57809bb35da220bb20).",
-        "Current repository evidence at `research/validation/investigations/VI-002-primitive-minimality.md:229`: '| Property | Pending | — |'."
+        "Current repository evidence at `research/validation/investigations/VI-002-primitive-minimality.md:229`: '| Property | Pending | \u2014 |'."
       ],
       "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bU",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR12:PRRT_kwDOTH_vCM6OD6bU found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -61,7 +61,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `frameworks/FARE/definitions/graph-definitions.md` (SHA-256 1603803468d08638840962da067cc84d7586c87df20d11dbd8758b4e15d52f9c).",
-        "Current repository evidence at `frameworks/FARE/definitions/graph-definitions.md:86`: '# Definition 9 — Subgraph'."
+        "Current repository evidence at `frameworks/FARE/definitions/graph-definitions.md:86`: '# Definition 9 \u2014 Subgraph'."
       ],
       "finding_id": "PR15:PRRT_kwDOTH_vCM6OOImd",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR15:PRRT_kwDOTH_vCM6OOImd found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -182,7 +182,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `docs/audits/FAR-PHASE-2-STRUCTURAL-AUDIT.md` (SHA-256 b62a484b685bea9b0a084c78f72da8f3898bd512bca2d01a997b0bc49625b428).",
-        "Current repository evidence at `docs/audits/FAR-PHASE-2-STRUCTURAL-AUDIT.md:135`: 'Candidate generation is explicitly placed within Stage 6 — Perform Reasoning.'."
+        "Current repository evidence at `docs/audits/FAR-PHASE-2-STRUCTURAL-AUDIT.md:135`: 'Candidate generation is explicitly placed within Stage 6 \u2014 Perform Reasoning.'."
       ],
       "finding_id": "PR23:PRRT_kwDOTH_vCM6OWoTz",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR23:PRRT_kwDOTH_vCM6OWoTz found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -618,35 +618,38 @@
     },
     {
       "confidence": "manual_high",
-      "disposition": "resolved_incorrectly",
+      "disposition": "resolved_correctly",
       "evidence": [
-        "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `examples/far/reasoning-systems/inconsistent-calculus.far.yaml` (SHA-256 6408b5a975f69e52f028c3ace16fb42aba2a70e695a763501741673e24f86593).",
-        "Current repository evidence at `examples/far/reasoning-systems/inconsistent-calculus.far.yaml:11`: 'verdict: falsifies FAR'."
+        "Repaired `examples/far/reasoning-systems/inconsistent-calculus.far.yaml:11` now records `verdict: extends FAR` (SHA-256 0e4e050e56339a6822e888231d9a7e8f6d8d23cc6a59d20736e4b9e3b4345958).",
+        "Regression test `tests/test_reasoning_system_classification.py` asserts that `examples/far/reasoning-systems/inconsistent-calculus.far.yaml` evaluates as `extends FAR` with a complete primitive mapping.",
+        "Regenerated `docs/reports/reasoning-system-evaluation-summary.md` records zero candidate counterexamples and the repaired fixture classification."
       ],
       "finding_id": "PR67:PRRT_kwDOTH_vCM6OuqYN",
-      "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR67:PRRT_kwDOTH_vCM6OuqYN found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
+      "rationale": "The fixture now uses the accepted conservative-extension classification, so the evaluator no longer promotes representable inconsistent calculi to candidate counterexamples.",
       "risk": "high"
     },
     {
       "confidence": "manual_high",
-      "disposition": "resolved_incorrectly",
+      "disposition": "resolved_correctly",
       "evidence": [
-        "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml` (SHA-256 ccbb4980348bcedecc9d05a1bee815dc07073e3b0cb46b9946e4c8f178ac5bb8).",
-        "Current repository evidence at `examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml:11`: 'verdict: falsifies FAR'."
+        "Repaired `examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml:11` now records `verdict: outside FAR scope` (SHA-256 403f9a845d04dfb8f7521f532eddbdda81056963abaa1bf1eb5708d4693c11f7).",
+        "Regression test `tests/test_reasoning_system_classification.py` asserts that `examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml` evaluates as `outside FAR scope` with a complete primitive mapping.",
+        "Regenerated `docs/reports/reasoning-system-evaluation-summary.md` records zero candidate counterexamples and the repaired fixture classification."
       ],
       "finding_id": "PR67:PRRT_kwDOTH_vCM6OuqYV",
-      "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR67:PRRT_kwDOTH_vCM6OuqYV found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
+      "rationale": "The fixture and evaluator now preserve the accepted out-of-scope boundary instead of converting inaccessible reasoning into falsification evidence.",
       "risk": "high"
     },
     {
       "confidence": "manual_high",
-      "disposition": "resolved_incorrectly",
+      "disposition": "resolved_correctly",
       "evidence": [
-        "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `examples/far/reasoning-systems/paradox.far.yaml` (SHA-256 d0ab59720114860d3b9424d3540d38a6e331d03ce70c4e1e0a805a7cf1c55b8d).",
-        "Current repository evidence at `examples/far/reasoning-systems/paradox.far.yaml:11`: 'verdict: falsifies FAR'."
+        "Repaired `examples/far/reasoning-systems/paradox.far.yaml:11` now records `verdict: extends FAR` (SHA-256 02ed9c26ad8cc50e3eb9cc677a89967ce67edddecc1e808415bdb1333437cf13).",
+        "Regression test `tests/test_reasoning_system_classification.py` asserts that `examples/far/reasoning-systems/paradox.far.yaml` evaluates as `extends FAR` with a complete primitive mapping.",
+        "Regenerated `docs/reports/reasoning-system-evaluation-summary.md` records zero candidate counterexamples and the repaired fixture classification."
       ],
       "finding_id": "PR67:PRRT_kwDOTH_vCM6OuqYa",
-      "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR67:PRRT_kwDOTH_vCM6OuqYa found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
+      "rationale": "The fixture now uses the accepted conservative-extension classification, so representable paradox boundary evidence is no longer promoted to a candidate counterexample.",
       "risk": "high"
     },
     {
@@ -1039,7 +1042,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `docs/reports/appendices/l001-adversarial-review-raw.md` (SHA-256 7ec1db88534259985c79799260917d2dd8a76c50d2f1e468689e99cc9c4b30bf).",
-        "Current repository evidence at `docs/reports/appendices/l001-adversarial-review-raw.md:148`: '## Objection 11: “Operation” is not needed and may introduce dependency confusion'."
+        "Current repository evidence at `docs/reports/appendices/l001-adversarial-review-raw.md:148`: '## Objection 11: \u201cOperation\u201d is not needed and may introduce dependency confusion'."
       ],
       "finding_id": "PR100:PRRT_kwDOTH_vCM6PX2kS",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR100:PRRT_kwDOTH_vCM6PX2kS found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -1105,7 +1108,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `docs/reports/foundation-validation-consolidation.md` (SHA-256 da776b090e643e5efb3efe1db01cf828e1bdb1df4d24eb0331519e828dfd0764).",
-        "Current repository evidence at `docs/reports/foundation-validation-consolidation.md:48`: 'All independent evaluations were classified as I1 — Claimed Isolation unless otherwise stated in their reports. This means repository access was prohibited by instruction but not technically prevented by the execution environment.'."
+        "Current repository evidence at `docs/reports/foundation-validation-consolidation.md:48`: 'All independent evaluations were classified as I1 \u2014 Claimed Isolation unless otherwise stated in their reports. This means repository access was prohibited by instruction but not technically prevented by the execution environment.'."
       ],
       "finding_id": "PR110:PRRT_kwDOTH_vCM6PcQlI",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR110:PRRT_kwDOTH_vCM6PcQlI found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -1182,7 +1185,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `theory/proofs/T-006-primitive-sufficiency.md` (SHA-256 e934b08922bfc8dd6acc844cdd18b05748eb2643c9c69adca52a264db42d7b8f).",
-        "Current repository evidence at `theory/proofs/T-006-primitive-sufficiency.md:32`: '- D-CALC — Reasoning Calculus'."
+        "Current repository evidence at `theory/proofs/T-006-primitive-sufficiency.md:32`: '- D-CALC \u2014 Reasoning Calculus'."
       ],
       "finding_id": "PR115:PRRT_kwDOTH_vCM6PdLxu",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR115:PRRT_kwDOTH_vCM6PdLxu found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -2181,7 +2184,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `theory/README.md` (SHA-256 0aad43903cd38647857f274d6add9559a24c510074baaa1f6a3c8e6b5bab5b9a).",
-        "Current repository evidence at `theory/README.md:15`: '- `independence/` — falsifiable primitive-independence criteria, schemas, and future execution artifacts.'."
+        "Current repository evidence at `theory/README.md:15`: '- `independence/` \u2014 falsifiable primitive-independence criteria, schemas, and future execution artifacts.'."
       ],
       "finding_id": "PR197:PRRT_kwDOTH_vCM6RpiBO",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR197:PRRT_kwDOTH_vCM6RpiBO found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
@@ -2731,7 +2734,7 @@
       "disposition": "resolved_incorrectly",
       "evidence": [
         "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `mechanization/lean/SCoreW5.lean` (SHA-256 e9e5e25b941a0648df13eea91bf19fcaa187d4d7854512ae893afd0a01681703).",
-        "Current repository evidence at `mechanization/lean/SCoreW5.lean:55`: 'target.investigation = source.stakes ∧'."
+        "Current repository evidence at `mechanization/lean/SCoreW5.lean:55`: 'target.investigation = source.stakes \u2227'."
       ],
       "finding_id": "PR240:PRRT_kwDOTH_vCM6Sxc8r",
       "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR240:PRRT_kwDOTH_vCM6Sxc8r found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",

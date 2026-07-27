@@ -9,8 +9,8 @@ This report is fail-closed. A resolved GitHub thread is not labeled correctly re
 - Total review threads: 450
 - `non_actionable`: 0
 - `obsolete_after_later_changes`: 45
-- `resolved_correctly`: 0
-- `resolved_incorrectly`: 405
+- `resolved_correctly`: 3
+- `resolved_incorrectly`: 402
 - `uncertain_manual_review_required`: 0
 - `unresolved`: 0
 
@@ -74,45 +74,48 @@ This report is fail-closed. A resolved GitHub thread is not labeled correctly re
 
 ### PR67:PRRT_kwDOTH_vCM6OuqYN
 
-- Disposition: `resolved_incorrectly`
+- Disposition: `resolved_correctly`
 - Risk: `high`
 - Confidence: `manual_high`
 - Location: `examples/far/reasoning-systems/inconsistent-calculus.far.yaml:11`
 - GitHub resolved/outdated: `False` / `False`
 - Review URL: https://github.com/notfoundout/Project-FAR/pull/67#discussion_r3532162034
 - Claim: **P1 Badge Use the accepted inconsistent-calculus classification** When 'tools/evaluate_reasoning_systems.py' evaluates this fixture, 'falsifies FAR' is mapped into 'candidate counterexample', so this line turns the inconsistent-calculus...
-- Rationale: Inspection of the current repository evidence against the complete reviewer claim in finding PR67:PRRT_kwDOTH_vCM6OuqYN found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.
+- Rationale: The fixture now uses the accepted conservative-extension classification, so the evaluator no longer promotes representable inconsistent calculi to candidate counterexamples.
 - Evidence:
-  - Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains 'examples/far/reasoning-systems/inconsistent-calculus.far.yaml' (SHA-256 6408b5a975f69e52f028c3ace16fb42aba2a70e695a763501741673e24f86593).
-  - Current repository evidence at 'examples/far/reasoning-systems/inconsistent-calculus.far.yaml:11': 'verdict: falsifies FAR'.
+  - Repaired 'examples/far/reasoning-systems/inconsistent-calculus.far.yaml:11' now records 'verdict: extends FAR' (SHA-256 0e4e050e56339a6822e888231d9a7e8f6d8d23cc6a59d20736e4b9e3b4345958).
+  - Regression test 'tests/test_reasoning_system_classification.py' asserts that 'examples/far/reasoning-systems/inconsistent-calculus.far.yaml' evaluates as 'extends FAR' with a complete primitive mapping.
+  - Regenerated 'docs/reports/reasoning-system-evaluation-summary.md' records zero candidate counterexamples and the repaired fixture classification.
 
 ### PR67:PRRT_kwDOTH_vCM6OuqYV
 
-- Disposition: `resolved_incorrectly`
+- Disposition: `resolved_correctly`
 - Risk: `high`
 - Confidence: `manual_high`
 - Location: `examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml:11`
 - GitHub resolved/outdated: `False` / `False`
 - Review URL: https://github.com/notfoundout/Project-FAR/pull/67#discussion_r3532162043
 - Claim: **P1 Badge Do not classify opaque intuition as a FAR falsification** With this verdict, the evaluator records the opaque-oracle fixture as a 'candidate counterexample', but the repository's existing scope test for private intuition with ...
-- Rationale: Inspection of the current repository evidence against the complete reviewer claim in finding PR67:PRRT_kwDOTH_vCM6OuqYV found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.
+- Rationale: The fixture and evaluator now preserve the accepted out-of-scope boundary instead of converting inaccessible reasoning into falsification evidence.
 - Evidence:
-  - Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains 'examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml' (SHA-256 ccbb4980348bcedecc9d05a1bee815dc07073e3b0cb46b9946e4c8f178ac5bb8).
-  - Current repository evidence at 'examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml:11': 'verdict: falsifies FAR'.
+  - Repaired 'examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml:11' now records 'verdict: outside FAR scope' (SHA-256 403f9a845d04dfb8f7521f532eddbdda81056963abaa1bf1eb5708d4693c11f7).
+  - Regression test 'tests/test_reasoning_system_classification.py' asserts that 'examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml' evaluates as 'outside FAR scope' with a complete primitive mapping.
+  - Regenerated 'docs/reports/reasoning-system-evaluation-summary.md' records zero candidate counterexamples and the repaired fixture classification.
 
 ### PR67:PRRT_kwDOTH_vCM6OuqYa
 
-- Disposition: `resolved_incorrectly`
+- Disposition: `resolved_correctly`
 - Risk: `high`
 - Confidence: `manual_high`
 - Location: `examples/far/reasoning-systems/paradox.far.yaml:11`
 - GitHub resolved/outdated: `False` / `False`
 - Review URL: https://github.com/notfoundout/Project-FAR/pull/67#discussion_r3532162047
 - Claim: **P1 Badge Keep paradox as representable boundary evidence** This verdict causes the paradox fixture to be counted as a 'candidate counterexample', but 'theory/tests/falsification-tests-advanced.md' Test A3 explicitly says FAR can repres...
-- Rationale: Inspection of the current repository evidence against the complete reviewer claim in finding PR67:PRRT_kwDOTH_vCM6OuqYa found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.
+- Rationale: The fixture now uses the accepted conservative-extension classification, so representable paradox boundary evidence is no longer promoted to a candidate counterexample.
 - Evidence:
-  - Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains 'examples/far/reasoning-systems/paradox.far.yaml' (SHA-256 d0ab59720114860d3b9424d3540d38a6e331d03ce70c4e1e0a805a7cf1c55b8d).
-  - Current repository evidence at 'examples/far/reasoning-systems/paradox.far.yaml:11': 'verdict: falsifies FAR'.
+  - Repaired 'examples/far/reasoning-systems/paradox.far.yaml:11' now records 'verdict: extends FAR' (SHA-256 02ed9c26ad8cc50e3eb9cc677a89967ce67edddecc1e808415bdb1333437cf13).
+  - Regression test 'tests/test_reasoning_system_classification.py' asserts that 'examples/far/reasoning-systems/paradox.far.yaml' evaluates as 'extends FAR' with a complete primitive mapping.
+  - Regenerated 'docs/reports/reasoning-system-evaluation-summary.md' records zero candidate counterexamples and the repaired fixture classification.
 
 ### PR70:PRRT_kwDOTH_vCM6OvPip
 

@@ -2,7 +2,8 @@
   "classification_policy": "fail_closed_v1",
   "counts": {
     "obsolete_after_later_changes": 45,
-    "resolved_incorrectly": 405
+    "resolved_correctly": 3,
+    "resolved_incorrectly": 402
   },
   "findings": [
     {
@@ -1127,10 +1128,11 @@
     {
       "comment_id": "PRRC_kwDOTH_vCM7SiIPy",
       "confidence": "manual_high",
-      "disposition": "resolved_incorrectly",
+      "disposition": "resolved_correctly",
       "evidence": [
-        "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `examples/far/reasoning-systems/inconsistent-calculus.far.yaml` (SHA-256 6408b5a975f69e52f028c3ace16fb42aba2a70e695a763501741673e24f86593).",
-        "Current repository evidence at `examples/far/reasoning-systems/inconsistent-calculus.far.yaml:11`: 'verdict: falsifies FAR'."
+        "Repaired `examples/far/reasoning-systems/inconsistent-calculus.far.yaml:11` now records `verdict: extends FAR` (SHA-256 0e4e050e56339a6822e888231d9a7e8f6d8d23cc6a59d20736e4b9e3b4345958).",
+        "Regression test `tests/test_reasoning_system_classification.py` asserts that `examples/far/reasoning-systems/inconsistent-calculus.far.yaml` evaluates as `extends FAR` with a complete primitive mapping.",
+        "Regenerated `docs/reports/reasoning-system-evaluation-summary.md` records zero candidate counterexamples and the repaired fixture classification."
       ],
       "finding_id": "PR67:PRRT_kwDOTH_vCM6OuqYN",
       "github_is_outdated": false,
@@ -1138,7 +1140,7 @@
       "line": 11,
       "path": "examples/far/reasoning-systems/inconsistent-calculus.far.yaml",
       "pr_number": 67,
-      "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR67:PRRT_kwDOTH_vCM6OuqYN found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
+      "rationale": "The fixture now uses the accepted conservative-extension classification, so the evaluator no longer promotes representable inconsistent calculi to candidate counterexamples.",
       "reviewer_claim": "**<sub><sub>![P1 Badge](https://img.shields.io/badge/P1-orange?style=flat)</sub></sub>  Use the accepted inconsistent-calculus classification**\n\nWhen `tools/evaluate_reasoning_systems.py` evaluates this fixture, `falsifies FAR` is mapped into `candidate counterexample`, so this line turns the inconsistent-calculus example into evidence against FAR. That contradicts the existing accepted falsification tests: `theory/tests/falsification-tests.md` Test 3 and `theory/tests/falsification-tests-advanced.md` Test A4 both state that inconsistent/contradictory calculi are representable by encoding the claims, contradiction relation, interpretation, and calculus policy. This corrupts the new summary counts for the committed fixtures; the fixture should reflect the accepted failed-falsification/representable result unless the canonical tests are revised first.\n\nUseful? React with \ud83d\udc4d\u00a0/ \ud83d\udc4e.",
       "risk": "high",
       "thread_id": "PRRT_kwDOTH_vCM6OuqYN",
@@ -1147,10 +1149,11 @@
     {
       "comment_id": "PRRC_kwDOTH_vCM7SiIP7",
       "confidence": "manual_high",
-      "disposition": "resolved_incorrectly",
+      "disposition": "resolved_correctly",
       "evidence": [
-        "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml` (SHA-256 ccbb4980348bcedecc9d05a1bee815dc07073e3b0cb46b9946e4c8f178ac5bb8).",
-        "Current repository evidence at `examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml:11`: 'verdict: falsifies FAR'."
+        "Repaired `examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml:11` now records `verdict: outside FAR scope` (SHA-256 403f9a845d04dfb8f7521f532eddbdda81056963abaa1bf1eb5708d4693c11f7).",
+        "Regression test `tests/test_reasoning_system_classification.py` asserts that `examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml` evaluates as `outside FAR scope` with a complete primitive mapping.",
+        "Regenerated `docs/reports/reasoning-system-evaluation-summary.md` records zero candidate counterexamples and the repaired fixture classification."
       ],
       "finding_id": "PR67:PRRT_kwDOTH_vCM6OuqYV",
       "github_is_outdated": false,
@@ -1158,7 +1161,7 @@
       "line": 11,
       "path": "examples/far/reasoning-systems/opaque-oracle-reasoning.far.yaml",
       "pr_number": 67,
-      "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR67:PRRT_kwDOTH_vCM6OuqYV found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
+      "rationale": "The fixture and evaluator now preserve the accepted out-of-scope boundary instead of converting inaccessible reasoning into falsification evidence.",
       "reviewer_claim": "**<sub><sub>![P1 Badge](https://img.shields.io/badge/P1-orange?style=flat)</sub></sub>  Do not classify opaque intuition as a FAR falsification**\n\nWith this verdict, the evaluator records the opaque-oracle fixture as a `candidate counterexample`, but the repository's existing scope test for private intuition with no articulation says it lacks explicit representations/calculus and is not in FAR scope unless reconstructed (`theory/tests/falsification-tests.md` Test 2). In the opaque/no-derivation scenario represented by this file, treating it as an evidence-bearing counterexample conflates an out-of-scope boundary condition with a falsification and inflates the candidate-counterexample count.\n\nUseful? React with \ud83d\udc4d\u00a0/ \ud83d\udc4e.",
       "risk": "high",
       "thread_id": "PRRT_kwDOTH_vCM6OuqYV",
@@ -1167,10 +1170,11 @@
     {
       "comment_id": "PRRC_kwDOTH_vCM7SiIP_",
       "confidence": "manual_high",
-      "disposition": "resolved_incorrectly",
+      "disposition": "resolved_correctly",
       "evidence": [
-        "Current-main commit bb0a6fcbb213bcfa1616106344f50302b819c760 retains `examples/far/reasoning-systems/paradox.far.yaml` (SHA-256 d0ab59720114860d3b9424d3540d38a6e331d03ce70c4e1e0a805a7cf1c55b8d).",
-        "Current repository evidence at `examples/far/reasoning-systems/paradox.far.yaml:11`: 'verdict: falsifies FAR'."
+        "Repaired `examples/far/reasoning-systems/paradox.far.yaml:11` now records `verdict: extends FAR` (SHA-256 02ed9c26ad8cc50e3eb9cc677a89967ce67edddecc1e808415bdb1333437cf13).",
+        "Regression test `tests/test_reasoning_system_classification.py` asserts that `examples/far/reasoning-systems/paradox.far.yaml` evaluates as `extends FAR` with a complete primitive mapping.",
+        "Regenerated `docs/reports/reasoning-system-evaluation-summary.md` records zero candidate counterexamples and the repaired fixture classification."
       ],
       "finding_id": "PR67:PRRT_kwDOTH_vCM6OuqYa",
       "github_is_outdated": false,
@@ -1178,7 +1182,7 @@
       "line": 11,
       "path": "examples/far/reasoning-systems/paradox.far.yaml",
       "pr_number": 67,
-      "rationale": "Inspection of the current repository evidence against the complete reviewer claim in finding PR67:PRRT_kwDOTH_vCM6OuqYa found that the reported condition remains. The merged review finding is therefore a confirmed defect. This adjudication records triage only and does not repair it.",
+      "rationale": "The fixture now uses the accepted conservative-extension classification, so representable paradox boundary evidence is no longer promoted to a candidate counterexample.",
       "reviewer_claim": "**<sub><sub>![P1 Badge](https://img.shields.io/badge/P1-orange?style=flat)</sub></sub>  Keep paradox as representable boundary evidence**\n\nThis verdict causes the paradox fixture to be counted as a `candidate counterexample`, but `theory/tests/falsification-tests-advanced.md` Test A3 explicitly says FAR can represent the liar-style sentence, interpretation attempt, contradiction-generating rule, and resulting failure state, with paradox only a boundary for resolution. For paradox inputs like this one, the generated evaluation will therefore report a falsification candidate where the accepted result is failed falsification for representation.\n\nUseful? React with \ud83d\udc4d\u00a0/ \ud83d\udc4e.",
       "risk": "high",
       "thread_id": "PRRT_kwDOTH_vCM6OuqYa",

@@ -16,6 +16,7 @@ PRIMITIVES = {
 EVIDENCE_CLASSIFICATIONS = {
     "fits FAR",
     "extends FAR",
+    "outside FAR scope",
     "candidate counterexample",
     "conservative extension",
 }
