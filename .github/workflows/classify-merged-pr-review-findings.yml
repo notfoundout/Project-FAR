@@ -44,7 +44,8 @@ jobs:
             --threads docs/audits/merged-pr-review-audit/raw-review-threads.json \
             --overrides docs/audits/merged-pr-review-classification/manual-decisions.json \
             --json-output docs/audits/merged-pr-review-classification/findings.json \
-            --markdown-output docs/audits/merged-pr-review-classification/FINDINGS.md
+            --markdown-output docs/audits/merged-pr-review-classification/FINDINGS.md \
+            --queue-output docs/audits/merged-pr-review-classification/REMEDIATION_QUEUE.md
 
       - name: Validate generated outputs
         run: |
@@ -56,7 +57,7 @@ jobs:
           payload = json.loads((root / "findings.json").read_text(encoding="utf-8"))
           source = json.loads(Path(payload["source"]).read_text(encoding="utf-8"))
           findings = payload.get("findings", [])
-          if payload.get("schema_version") != 1:
+          if payload.get("schema_version") != 2:
               raise SystemExit("unexpected findings schema")
           if len(findings) != len(source.get("threads", [])):
               raise SystemExit("not every frozen review thread was classified")
@@ -68,8 +69,12 @@ jobs:
               missing = sorted(required - set(item))
               if missing:
                   raise SystemExit(f"finding {item.get('finding_id')} missing {missing}")
+              if item.get("risk") not in {"critical", "high", "medium", "low"}:
+                  raise SystemExit(f"finding {item.get('finding_id')} has invalid risk")
           if not (root / "FINDINGS.md").is_file():
               raise SystemExit("missing human-readable findings report")
+          if not (root / "REMEDIATION_QUEUE.md").is_file():
+              raise SystemExit("missing remediation queue")
           print(f"validated {len(findings)} classified review threads")
           PY
 
@@ -77,13 +82,16 @@ jobs:
         run: |
           cp docs/audits/merged-pr-review-classification/findings.json /tmp/findings.json
           cp docs/audits/merged-pr-review-classification/FINDINGS.md /tmp/FINDINGS.md
+          cp docs/audits/merged-pr-review-classification/REMEDIATION_QUEUE.md /tmp/REMEDIATION_QUEUE.md
           python tools/classify_merged_pr_review_findings.py \
             --threads docs/audits/merged-pr-review-audit/raw-review-threads.json \
             --overrides docs/audits/merged-pr-review-classification/manual-decisions.json \
             --json-output docs/audits/merged-pr-review-classification/findings.json \
-            --markdown-output docs/audits/merged-pr-review-classification/FINDINGS.md
+            --markdown-output docs/audits/merged-pr-review-classification/FINDINGS.md \
+            --queue-output docs/audits/merged-pr-review-classification/REMEDIATION_QUEUE.md
           cmp /tmp/findings.json docs/audits/merged-pr-review-classification/findings.json
           cmp /tmp/FINDINGS.md docs/audits/merged-pr-review-classification/FINDINGS.md
+          cmp /tmp/REMEDIATION_QUEUE.md docs/audits/merged-pr-review-classification/REMEDIATION_QUEUE.md
 
       - name: Commit generated findings to source branch
         if: github.event_name == 'push'
@@ -92,7 +100,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/audits/merged-pr-review-classification/findings.json \
-                  docs/audits/merged-pr-review-classification/FINDINGS.md
+                  docs/audits/merged-pr-review-classification/FINDINGS.md \
+                  docs/audits/merged-pr-review-classification/REMEDIATION_QUEUE.md
           if git diff --cached --quiet; then
             echo "Generated findings already current."
             exit 0

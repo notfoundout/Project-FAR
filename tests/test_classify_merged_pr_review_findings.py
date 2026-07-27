@@ -62,6 +62,7 @@ class ClassifierTests(unittest.TestCase):
                 "finding_id": "PR12:THREAD_1",
                 "disposition": "resolved_correctly",
                 "confidence": "manual_high",
+                "risk": "high",
                 "evidence": ["Verified current file and regression test."],
                 "rationale": "The reported defect no longer reproduces.",
             }
@@ -69,6 +70,36 @@ class ClassifierTests(unittest.TestCase):
         findings = classifier.classify([self.thread(resolved=True)], override)
         self.assertEqual(findings[0].disposition, "resolved_correctly")
         self.assertEqual(findings[0].confidence, "manual_high")
+        self.assertEqual(findings[0].risk, "high")
+
+    def test_schema_v2_override_requires_risk(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "overrides.json"
+            path.write_text(json.dumps({
+                "schema_version": 2,
+                "decisions": [{
+                    "finding_id": "PR12:THREAD_1",
+                    "disposition": "resolved_incorrectly",
+                    "evidence": ["Current repository evidence."],
+                    "rationale": "The condition remains.",
+                }],
+            }), encoding="utf-8")
+            with self.assertRaises(SystemExit):
+                classifier.load_overrides(path)
+
+    def test_remediation_queue_contains_only_confirmed_defects(self):
+        confirmed = classifier.classify([self.thread()], {
+            "PR12:THREAD_1": {
+                "finding_id": "PR12:THREAD_1",
+                "disposition": "resolved_incorrectly",
+                "risk": "high",
+                "evidence": ["Current repository evidence."],
+                "rationale": "The condition remains.",
+            }
+        })
+        queue = classifier.render_remediation_queue(confirmed)
+        self.assertIn("High risk (1)", queue)
+        self.assertIn("PR12:THREAD_1", queue)
 
     def test_duplicate_threads_fail_closed(self):
         with self.assertRaises(SystemExit):
