@@ -69,5 +69,5 @@ transitions:
     source: state0
     rule: opacity-test
     target: state1
-    status: accepted
+    status: admissible
     order: 1
