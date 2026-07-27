@@ -18,6 +18,7 @@ ROOT_DOCUMENTS = (
     "docs/project-status.md",
 )
 INLINE_PATH = re.compile(r"`([^`\n]+\.md(?:#[^`\s]+)?)`")
+ORPHAN_OK_MARKER = re.compile(r"(?m)^[ \t]*<!-- orphan-ok -->[ \t]*$")
 
 
 def referenced_documents(path: Path, text: str, root: Path = ROOT) -> set[Path]:
@@ -69,6 +70,7 @@ def find_orphans(root: Path = ROOT) -> list[Path]:
         if (root / scan_root).exists()
         for path in (root / scan_root).rglob("*.md")
         if "archive" not in path.relative_to(root).parts
+        and not ORPHAN_OK_MARKER.search(path.read_text(encoding="utf-8", errors="replace"))
     }
     seen: set[Path] = set()
     queue = deque(path.resolve() for path in roots if path.exists())

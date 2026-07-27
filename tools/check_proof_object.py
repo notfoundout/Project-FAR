@@ -101,12 +101,12 @@ def metadata_statement_text(item: Dict[str, Any]) -> str:
 
 
 def source_items(input_ids: List[str], lineage: Dict[str, Set[str]], index: Dict[str, Dict[str, Any]], pattern: str) -> List[Tuple[str, Dict[str, Any]]]:
-    items: List[Tuple[str, Dict[str, Any]]] = []
+    source_ids: Set[str] = set()
     for input_id in input_ids:
         for source_id in sorted(lineage.get(input_id, set())):
             if re.fullmatch(pattern, source_id) and source_id in index:
-                items.append((source_id, index[source_id]))
-    return items
+                source_ids.add(source_id)
+    return [(source_id, index[source_id]) for source_id in sorted(source_ids)]
 
 
 def warn_on_weak_metadata_alignment(step_id: str, rule: str, step_statement: str, sources: List[Tuple[str, Dict[str, Any]]], input_statements: Iterable[str], warnings: List[str]) -> None:
@@ -118,7 +118,7 @@ def warn_on_weak_metadata_alignment(step_id: str, rule: str, step_statement: str
     for source_id, item in sources:
         metadata_statement = metadata_statement_text(item)
         linked_text = [step_statement, *input_statements]
-        if metadata_statement and not any(conclusion_aligns_with_statement(text, metadata_statement) for text in linked_text):
+        if metadata_statement and not any(summary_aligns_with_statement(text, metadata_statement) for text in linked_text):
             warnings.append(f"step {step_id} {rule} has weak semantic overlap with {source_id} metadata statement")
 
 
@@ -189,22 +189,34 @@ def significant_words(text: str) -> Set[str]:
     return {word[:-1] if len(word) > 3 and word.endswith("s") else word for word in words}
 
 
-def conclusion_aligns_with_statement(conclusion: str, statement: str) -> bool:
-    if not conclusion or not statement:
+def _alignment_words(candidate: str, authority: str) -> Tuple[str, str, Set[str], Set[str]]:
+    normalized_candidate = re.sub(r"\s+", " ", candidate.lower()).strip()
+    normalized_authority = re.sub(r"\s+", " ", authority.lower()).strip()
+    return normalized_candidate, normalized_authority, significant_words(candidate), significant_words(authority)
+
+
+def summary_aligns_with_statement(summary: str, statement: str) -> bool:
+    """Allow a concise linked summary to align with longer authority text."""
+    if not summary or not statement:
         return False
-    normalized_conclusion = re.sub(r"\s+", " ", conclusion.lower()).strip()
-    normalized_statement = re.sub(r"\s+", " ", statement.lower()).strip()
-    if normalized_conclusion in normalized_statement or normalized_statement in normalized_conclusion:
+    normalized_summary, normalized_statement, summary_words, statement_words = _alignment_words(summary, statement)
+    if normalized_summary in normalized_statement or normalized_statement in normalized_summary:
         return True
-    conclusion_words = significant_words(conclusion)
-    statement_words = significant_words(statement)
-    if not conclusion_words or not statement_words:
+    if not summary_words or not statement_words:
         return False
-    overlap = conclusion_words & statement_words
-    # A premise may be a concise, explicitly linked summary of a longer
-    # canonical statement. Measure against the shorter vocabulary so added
-    # canonical context does not create a false weak-overlap warning.
-    return len(overlap) / min(len(conclusion_words), len(statement_words)) >= 0.35
+    return len(summary_words & statement_words) / min(len(summary_words), len(statement_words)) >= 0.35
+
+
+def conclusion_aligns_with_theorem(conclusion: str, theorem: str) -> bool:
+    """Require the registered theorem to support the proof conclusion itself."""
+    if not conclusion or not theorem:
+        return False
+    normalized_conclusion, normalized_theorem, conclusion_words, theorem_words = _alignment_words(conclusion, theorem)
+    if normalized_conclusion == normalized_theorem or normalized_conclusion in normalized_theorem:
+        return True
+    if not conclusion_words or not theorem_words:
+        return False
+    return len(conclusion_words & theorem_words) / len(conclusion_words) >= 0.70
 
 
 def declared_dependency_ids(theorem_id: str, index: Dict[str, Dict[str, Any]]) -> Set[str]:
@@ -461,7 +473,7 @@ def check_proof_object(path: Path) -> List[str]:
         statement = theorem_statement(theorem_id, index)
         if not statement:
             errors.append(f"theorem {theorem_id} proof file has no parsable Statement section")
-        elif not conclusion_aligns_with_statement(conclusion, statement):
+        elif not conclusion_aligns_with_theorem(conclusion, statement):
             errors.append(f"conclusion does not align with theorem {theorem_id} Statement section")
 
     return errors + [f"WARNING: {warning}" for warning in warnings]
