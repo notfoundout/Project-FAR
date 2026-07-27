@@ -87,6 +87,16 @@ class InvestigationExecutionGateTests(unittest.TestCase):
         payload["required_steps"] = []
         self.assertTrue(any("non-empty required_steps" in error for error in self.validate(payload)))
 
+    def test_required_step_id_must_be_non_empty(self):
+        payload = self.passing_payload()
+        payload["required_steps"][0]["id"] = "  "
+        self.assertTrue(any("missing or empty id" in error for error in self.validate(payload)))
+
+    def test_duplicate_required_step_ids_are_rejected(self):
+        payload = self.passing_payload()
+        payload["required_steps"][1]["id"] = payload["required_steps"][0]["id"]
+        self.assertTrue(any("duplicate required step id" in error for error in self.validate(payload)))
+
     def test_pass_rejected_when_upstream_manifest_is_missing(self):
         payload = self.passing_payload()
         payload["upstream_dependencies"] = [{"id": "VI-999", "status": "passed"}]
