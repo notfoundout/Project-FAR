@@ -1,0 +1,67 @@
+schema_version: 1
+investigation: VI-002
+title: Primitive Minimality
+status: Research
+result: incomplete
+scope: seven-candidate FARA primitive basis
+audited_at: 2026-07-27
+canonical_investigation: research/validation/investigations/VI-002-primitive-minimality.md
+upstream_dependencies:
+  - id: VI-001
+    status: passed
+    evidence:
+      - research/validation/investigations/VI-001-cross-domain-representation.md
+required_steps:
+  - id: remove_each_primitive
+    requirement: Remove each candidate primitive from the candidate basis.
+    status: complete
+    evidence:
+      - path: research/validation/investigations/VI-002-primitive-minimality.md
+        locator: Reduction Investigations 1-7
+  - id: define_from_remaining
+    requirement: Attempt to define each primitive entirely using the remaining candidates.
+    status: complete
+    evidence:
+      - path: research/validation/investigations/VI-002-primitive-minimality.md
+        locator: Attempt sections in Reduction Investigations 1-7
+  - id: reconstruct_architecture
+    requirement: Reconstruct every affected architectural definition for every removal case.
+    status: not_executed
+    evidence: []
+    missing_evidence: Seven per-removal reconstruction artifacts and their execution records.
+    unblock_condition: Commit executable reconstructed definitions for all seven removal cases and record their validation outcomes.
+  - id: reconstruct_fara_documents
+    requirement: Reconstruct every dependent FARA document for every removal case.
+    status: not_executed
+    evidence: []
+    missing_evidence: A dependency-complete consumer inventory and reconstructed document set for each removal case.
+    unblock_condition: Enumerate all consumers from the canonical dependency graph, reconstruct each under every removal, and preserve the outputs as evidence.
+  - id: rerun_vi001
+    requirement: Verify that VI-001 remains executable for every reconstructed removal case.
+    status: not_executed
+    evidence: []
+    missing_evidence: Seven VI-001 execution logs tied to the reconstructed removal cases.
+    unblock_condition: Execute the complete VI-001 procedure against each reconstruction and commit reproducible logs.
+  - id: record_expressive_loss
+    requirement: Record any loss of expressive power for every attempted reduction.
+    status: complete
+    evidence:
+      - path: research/validation/investigations/VI-002-primitive-minimality.md
+        locator: Evaluation and Observations sections in Reduction Investigations 1-7
+  - id: record_hidden_assumptions
+    requirement: Record hidden assumptions introduced by every attempted reduction.
+    status: partial
+    evidence:
+      - path: research/validation/investigations/VI-002-primitive-minimality.md
+        locator: Evaluation sections record circularity and implicit reintroduction
+    missing_evidence: A complete attempt-by-attempt hidden-assumption ledger.
+    unblock_condition: Audit every attempted reduction and explicitly record either its hidden assumptions or an evidenced none-found result.
+conclusion:
+  strongest_defensible_status: Research
+  strongest_defensible_result: incomplete
+  supported_observation: No successful reduction is recorded in the completed conceptual attempts.
+  unsupported_claims:
+    - VI-002 passed.
+    - The seven-candidate basis is minimal.
+    - The seven candidates are established as independent by VI-002.
+  dependency_note: T-001 is a distinct five-primitive, deletion-only conditional theorem and does not depend on VI-002.

@@ -1,0 +1,81 @@
+schema_version: 1
+investigation: VI-001
+title: Cross-Domain Representation
+status: Accepted
+result: pass
+scope: four registered reasoning domains
+canonical_investigation: research/validation/investigations/VI-001-cross-domain-representation.md
+upstream_dependencies: []
+required_steps:
+- id: identify_investigation
+  requirement: Execute VI-001 methodology step 1 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: identify_representations
+  requirement: Execute VI-001 methodology step 2 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: specify_representational_structure
+  requirement: Execute VI-001 methodology step 3 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: specify_interpretation
+  requirement: Execute VI-001 methodology step 4 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: specify_reasoning_calculus
+  requirement: Execute VI-001 methodology step 5 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: construct_reasoning_states
+  requirement: Execute VI-001 methodology step 6 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: construct_transition_signatures
+  requirement: Execute VI-001 methodology step 7 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: identify_candidates
+  requirement: Execute VI-001 methodology step 8 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: construct_admissibility_structure
+  requirement: Execute VI-001 methodology step 9 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: apply_resolution_rule
+  requirement: Execute VI-001 methodology step 10 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: produce_resolution
+  requirement: Execute VI-001 methodology step 11 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4
+- id: record_architectural_deficiency
+  requirement: Execute VI-001 methodology step 12 for all four registered domains.
+  status: complete
+  evidence:
+  - path: research/validation/investigations/VI-001-cross-domain-representation.md
+    locator: Test Cases 1-4

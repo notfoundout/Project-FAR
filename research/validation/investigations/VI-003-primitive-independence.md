@@ -54,6 +54,10 @@ Failure to reduce does not establish independence.
 
 Independent evidence must therefore be produced.
 
+VI-002 is currently **incomplete and non-passing**. Its conceptual attempts may be
+consulted as observations, but step 5 below cannot be treated as executed until VI-002's
+reconstruction, VI-001 re-execution, and hidden-assumption evidence is complete.
+
 ---
 
 
