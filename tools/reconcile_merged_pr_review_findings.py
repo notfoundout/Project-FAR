@@ -41,11 +41,6 @@ def subsystem(path: str | None) -> str:
     return "repository-metadata"
 
 
-def blocking(path: str | None, claim: str) -> bool:
-    text = f"{path or ''} {claim}".lower()
-    return any(token in text for token in ("reconstruct", "reproduc", "execution", "experiment", "manifest", "checksum", "frozen", "swe-agent", "cre-00", "preregistration", "trace"))
-
-
 def reconcile(root: Path, baseline: dict[str, Any], decisions: dict[str, Any]) -> dict[str, Any]:
     source = [x for x in baseline.get("findings", []) if x.get("disposition") == BASELINE_DISPOSITION]
     overrides = {x["finding_id"]: x for x in decisions.get("decisions", [])}
@@ -60,17 +55,24 @@ def reconcile(root: Path, baseline: dict[str, Any], decisions: dict[str, Any]) -
         disposition = override.get("disposition") if override else "cannot_verify"
         if disposition not in DISPOSITIONS:
             raise ValueError(f"invalid disposition for {item['finding_id']}")
-        if disposition in DEFINITIVE and (not override or not override.get("evidence")):
-            raise ValueError(f"finding {item['finding_id']} requires explicit disposition-specific evidence for {disposition}")
+        if disposition in DEFINITIVE:
+            if not override or not override.get("evidence"):
+                raise ValueError(f"finding {item['finding_id']} requires explicit disposition-specific evidence for {disposition}")
+            if not override.get("failure_mechanism"):
+                raise ValueError(f"finding {item['finding_id']} requires explicit disposition-specific rationale for {disposition}")
         path = (override or {}).get("current_path", item.get("path"))
         explicit_root = (override or {}).get("root_cause_id")
+        blocking_status = (override or {}).get("blocks_experiment_reconstruction", "unknown")
+        if blocking_status not in {True, False, "unknown"}:
+            raise ValueError(f"finding {item['finding_id']} has invalid experiment-blocking status")
         records.append({
             "finding_id": item["finding_id"], "pr_number": item["pr_number"], "thread_id": item["thread_id"],
             "comment_id": item.get("comment_id"), "disposition": disposition, "risk": item["risk"],
             "subsystem": subsystem(path), "current_path": path,
             "root_cause_id": explicit_root or f"unverified:{item['finding_id']}",
             "root_cause_verified": bool(explicit_root),
-            "blocks_experiment_reconstruction": bool((override or {}).get("blocks_experiment_reconstruction", blocking(path, item["reviewer_claim"]))),
+            "blocks_experiment_reconstruction": blocking_status,
+            "failure_mechanism": (override or {}).get("failure_mechanism", "No current-main failure mechanism has been verified."),
             "smallest_complete_remediation_boundary": (override or {}).get("smallest_complete_remediation_boundary", f"Verify `{item['finding_id']}` against current main before assigning a remediation batch."),
             "evidence": list((override or {}).get("evidence", ["No disposition-specific current-main evidence is recorded."])),
         })
@@ -83,7 +85,7 @@ def reconcile(root: Path, baseline: dict[str, Any], decisions: dict[str, Any]) -
         "by_experiment_blocking": dict(sorted(Counter(str(x["blocks_experiment_reconstruction"]).lower() for x in records if x["disposition"] in RESIDUAL).items())),
         "residual": sum(x["disposition"] in RESIDUAL for x in records),
     }
-    return {"schema_version": 2, "policy": "current_main_residual_v2_fail_closed", "source": decisions["source"], "baseline_commit": decisions["baseline_commit"], "audited_main_commit": decisions["audited_main_commit"], "counts": counts, "findings": records}
+    return {"schema_version": 3, "policy": "current_main_residual_v3_fail_closed", "source": decisions["source"], "baseline_commit": decisions["baseline_commit"], "audited_main_commit": decisions["audited_main_commit"], "counts": counts, "findings": records}
 
 
 def validate(data: dict[str, Any], baseline: dict[str, Any]) -> list[str]:
@@ -99,19 +101,19 @@ def validate(data: dict[str, Any], baseline: dict[str, Any]) -> list[str]:
 
 
 def compact_ledger(data: dict[str, Any]) -> dict[str, Any]:
-    explicit = [{"finding_id": x["finding_id"], "disposition": x["disposition"], "evidence": x["evidence"], "root_cause_id": x["root_cause_id"]} for x in data["findings"] if x["disposition"] != "cannot_verify"]
-    return {"schema_version": 2, "policy": data["policy"], "source": data["source"], "baseline_commit": data["baseline_commit"], "audited_main_commit": data["audited_main_commit"], "default_disposition": "cannot_verify", "default_evidence": "No disposition-specific current-main evidence is recorded.", "source_finding_count": data["counts"]["total"], "counts": data["counts"], "explicit_findings": explicit, "composition_rule": "Apply explicit_findings by finding_id; every remaining resolved_incorrectly source finding is cannot_verify and retains source traceability until audited."}
+    explicit = [{"finding_id": x["finding_id"], "disposition": x["disposition"], "evidence": x["evidence"], "failure_mechanism": x["failure_mechanism"], "root_cause_id": x["root_cause_id"], "blocks_experiment_reconstruction": x["blocks_experiment_reconstruction"]} for x in data["findings"] if x["disposition"] != "cannot_verify"]
+    return {"schema_version": 3, "policy": data["policy"], "source": data["source"], "baseline_commit": data["baseline_commit"], "audited_main_commit": data["audited_main_commit"], "default_disposition": "cannot_verify", "default_evidence": "No disposition-specific current-main evidence is recorded.", "default_experiment_blocking_status": "unknown", "source_finding_count": data["counts"]["total"], "counts": data["counts"], "explicit_findings": explicit, "composition_rule": "Apply explicit_findings by finding_id; every remaining resolved_incorrectly source finding is cannot_verify, has unknown experiment-blocking status, and retains source traceability until audited."}
 
 
 def render_report(data: dict[str, Any]) -> str:
     c = data["counts"]
     p1 = sum(x["risk"] in {"critical", "high"} and x["disposition"] in RESIDUAL for x in data["findings"])
-    return "\n".join(["# Merged-PR finding reconciliation", "", f"Audited main: `{data['audited_main_commit']}`", "", "## Result", "", f"- Source findings: {c['total']}", f"- Residual findings: {c['residual']}", *[f"- `{k}`: {v}" for k, v in c["by_disposition"].items()], "", "Unaudited findings fail closed to `cannot_verify`; they are not claimed reproducible.", "", "## Residual counts", "", f"- By risk: `{json.dumps(c['by_risk'], sort_keys=True)}`", f"- By subsystem: `{json.dumps(c['by_subsystem'], sort_keys=True)}`", f"- By experiment-blocking status: `{json.dumps(c['by_experiment_blocking'], sort_keys=True)}`", "", f"**{p1} unresolved P1 findings require verification or remediation.**"])
+    return "\n".join(["# Merged-PR finding reconciliation", "", f"Audited main: `{data['audited_main_commit']}`", "", "## Result", "", f"- Source findings: {c['total']}", f"- Residual findings: {c['residual']}", *[f"- `{k}`: {v}" for k, v in c["by_disposition"].items()], "", "Unaudited findings fail closed to `cannot_verify`; they are not claimed reproducible.", "Unaudited experiment-blocking status remains `unknown`; no keyword heuristic is treated as authoritative.", "", "## Residual counts", "", f"- By risk: `{json.dumps(c['by_risk'], sort_keys=True)}`", f"- By subsystem: `{json.dumps(c['by_subsystem'], sort_keys=True)}`", f"- By experiment-blocking status: `{json.dumps(c['by_experiment_blocking'], sort_keys=True)}`", "", f"**{p1} unresolved P1 findings require verification or remediation.**"])
 
 
 def render_queue(data: dict[str, Any]) -> str:
     c = data["counts"]
-    return "\n".join(["# Authoritative residual verification and remediation queue", "", f"Residual count: {c['residual']}", "", f"- `cannot_verify`: {c['by_disposition'].get('cannot_verify', 0)}", f"- `still_reproducible`: {c['by_disposition'].get('still_reproducible', 0)}", "", "All unaudited source findings remain active through the ledger composition rule. They must be verified before remediation batching.", "", f"- Risk counts: `{json.dumps(c['by_risk'], sort_keys=True)}`", f"- Experiment-blocking counts: `{json.dumps(c['by_experiment_blocking'], sort_keys=True)}`"])
+    return "\n".join(["# Authoritative residual verification and remediation queue", "", f"Residual count: {c['residual']}", "", f"- `cannot_verify`: {c['by_disposition'].get('cannot_verify', 0)}", f"- `still_reproducible`: {c['by_disposition'].get('still_reproducible', 0)}", "", "All unaudited source findings remain active through the ledger composition rule. They must be verified before remediation batching or experiment-blocking classification.", "", f"- Risk counts: `{json.dumps(c['by_risk'], sort_keys=True)}`", f"- Experiment-blocking counts: `{json.dumps(c['by_experiment_blocking'], sort_keys=True)}`"])
 
 
 def render_batches(data: dict[str, Any]) -> str:
@@ -120,8 +122,8 @@ def render_batches(data: dict[str, Any]) -> str:
         return "\n".join(["# Residual remediation batches", "", "Only findings with an explicitly demonstrated shared root-cause mechanism may be batched.", "", "No residual finding currently has a verified root-cause batch.", "", "The 400 unaudited findings remain `cannot_verify` and retain distinct source traceability and remediation boundaries until audited."])
     lines = ["# Residual remediation batches", ""]
     for x in verified:
-        lines += [f"## `{x['root_cause_id']}`", "", f"- Finding: `{x['finding_id']}`", f"- Trace: PR `{x['pr_number']}`, thread `{x['thread_id']}`, comment `{x['comment_id']}`", f"- Boundary: {plain(x['smallest_complete_remediation_boundary'])}", ""]
-    return "\n".join(lines)
+        lines += [f"## `{x['root_cause_id']}`", "", f"- Finding: `{x['finding_id']}`", f"- Trace: PR `{x['pr_number']}`, thread `{x['thread_id']}`, comment `{x['comment_id']}`", f"- Risk: `{x['risk']}`", f"- Experiment blocking: `{str(x['blocks_experiment_reconstruction']).lower()}`", f"- Boundary: {plain(x['smallest_complete_remediation_boundary'])}", ""]
+    return "\n".join(lines).rstrip()
 
 
 def main() -> int:
@@ -131,7 +133,7 @@ def main() -> int:
     a = p.parse_args(); baseline = load(a.baseline); data = reconcile(Path.cwd(), baseline, load(a.decisions))
     errors = validate(data, baseline)
     if errors: raise SystemExit("\n".join(errors))
-    outputs = {"disposition-ledger.json": json.dumps(compact_ledger(data), indent=2, sort_keys=True) + "\n", "RECONCILIATION_REPORT.md": render_report(data) + "\n", "RESIDUAL_REMEDIATION_QUEUE.md": render_queue(data) + "\n", "REMEDIATION_BATCHES.md": render_batches(data) + "\n"}
+    outputs = {"disposition-ledger.json": json.dumps(compact_ledger(data), indent=2, sort_keys=True) + "\n", "RECONCILIATION_REPORT.md": render_report(data).rstrip() + "\n", "RESIDUAL_REMEDIATION_QUEUE.md": render_queue(data).rstrip() + "\n", "REMEDIATION_BATCHES.md": render_batches(data).rstrip() + "\n"}
     if a.check:
         stale = [n for n, t in outputs.items() if not (a.output_dir / n).is_file() or (a.output_dir / n).read_text(encoding="utf-8") != t]
         if stale: raise SystemExit(f"stale reconciliation outputs: {', '.join(stale)}")
