@@ -21,7 +21,7 @@ concurrency:
 jobs:
   export:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - name: Check out audited main
         uses: actions/checkout@v4
@@ -32,14 +32,44 @@ jobs:
         id: export
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          MAX_EXPORT_ATTEMPTS: "4"
         run: |
           set +e
-          python tools/export_merged_pr_review_inventory.py \
-            --repository "${GITHUB_REPOSITORY}" \
-            --audited-sha "${GITHUB_SHA}" \
-            --output docs/audits/merged-pr-review-audit
-          export_rc=$?
+          export_rc=2
+          attempt=1
+
+          while [[ "$attempt" -le "$MAX_EXPORT_ATTEMPTS" ]]; do
+            echo "Starting authenticated export attempt ${attempt}/${MAX_EXPORT_ATTEMPTS}."
+            rm -rf docs/audits/merged-pr-review-audit
+
+            python tools/export_merged_pr_review_inventory.py \
+              --repository "${GITHUB_REPOSITORY}" \
+              --audited-sha "${GITHUB_SHA}" \
+              --output docs/audits/merged-pr-review-audit
+            export_rc=$?
+
+            if [[ "$export_rc" -eq 0 ]]; then
+              echo "Authenticated export completed successfully on attempt ${attempt}."
+              break
+            fi
+
+            if [[ "$export_rc" -ne 2 ]]; then
+              echo "Exporter returned non-retryable exit code ${export_rc}."
+              break
+            fi
+
+            if [[ "$attempt" -lt "$MAX_EXPORT_ATTEMPTS" ]]; then
+              delay=$((15 * 2 ** (attempt - 1)))
+              echo "Export remained incomplete; retrying the full deterministic export in ${delay} seconds."
+              sleep "$delay"
+            fi
+
+            attempt=$((attempt + 1))
+          done
+
           echo "export_rc=${export_rc}" >> "$GITHUB_OUTPUT"
+          echo "attempts=${attempt}" >> "$GITHUB_OUTPUT"
+
           if [[ "$export_rc" -ne 0 && "$export_rc" -ne 2 ]]; then
             exit "$export_rc"
           fi
@@ -93,6 +123,6 @@ jobs:
       - name: Enforce fail-closed completeness
         if: steps.export.outputs.export_rc != '0'
         run: |
-          echo "Authenticated export completed but the manifest is INCOMPLETE."
+          echo "Authenticated export remained INCOMPLETE after ${{ steps.export.outputs.attempts }} attempt(s)."
           echo "The artifact and generated branch were preserved for diagnosis."
           exit 1
