@@ -1,0 +1,58 @@
+name: Reconcile PR 412 autofix
+
+on:
+  push:
+    branches:
+      - codex/audit-and-update-pr-review-findings
+    paths:
+      - tools/reconcile_merged_pr_review_findings.py
+      - tests/test_reconcile_merged_pr_review_findings.py
+      - docs/audits/merged-pr-review-reconciliation/reconciliation-decisions.json
+      - docs/audits/merged-pr-review-reconciliation/README.md
+      - .github/workflows/reconcile-pr412-autofix.yml
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate-and-verify:
+    if: ${{ !contains(github.event.head_commit.message, '[reconcile-generated]') }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/audit-and-update-pr-review-findings
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Regenerate reconciliation artifacts
+        run: |
+          python tools/reconcile_merged_pr_review_findings.py \
+            --baseline docs/audits/merged-pr-review-classification/findings.json \
+            --decisions docs/audits/merged-pr-review-reconciliation/reconciliation-decisions.json \
+            --output-dir docs/audits/merged-pr-review-reconciliation
+      - name: Run focused tests
+        run: python -m unittest tests/test_reconcile_merged_pr_review_findings.py
+      - name: Verify deterministic outputs
+        run: |
+          python tools/reconcile_merged_pr_review_findings.py \
+            --baseline docs/audits/merged-pr-review-classification/findings.json \
+            --decisions docs/audits/merged-pr-review-reconciliation/reconciliation-decisions.json \
+            --output-dir docs/audits/merged-pr-review-reconciliation \
+            --check
+          git diff --check
+      - name: Commit generated artifacts
+        run: |
+          if git diff --quiet; then
+            echo 'No generated changes.'
+            exit 0
+          fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add docs/audits/merged-pr-review-reconciliation/disposition-ledger.json \
+                  docs/audits/merged-pr-review-reconciliation/RECONCILIATION_REPORT.md \
+                  docs/audits/merged-pr-review-reconciliation/RESIDUAL_REMEDIATION_QUEUE.md \
+                  docs/audits/merged-pr-review-reconciliation/REMEDIATION_BATCHES.md
+          git commit -m 'Regenerate fail-closed reconciliation artifacts [reconcile-generated]'
+          git push origin HEAD:codex/audit-and-update-pr-review-findings
