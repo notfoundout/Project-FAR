@@ -78,14 +78,15 @@ def reconcile(root: Path, baseline: dict[str, Any], decisions: dict[str, Any]) -
         path = (override or {}).get("current_path", item.get("path"))
         explicit_root = (override or {}).get("root_cause_id")
         blocking_status = (override or {}).get("blocks_experiment_reconstruction", "unknown")
-        if blocking_status not in {True, False, "unknown"}:
+        if not (type(blocking_status) is bool or blocking_status == "unknown"):
             raise ValueError(f"finding {item['finding_id']} has invalid experiment-blocking status")
+        root_cause_verified = bool(explicit_root) and disposition != "cannot_verify"
         records.append({
             "finding_id": item["finding_id"], "pr_number": item["pr_number"], "thread_id": item["thread_id"],
             "comment_id": item.get("comment_id"), "disposition": disposition, "risk": item["risk"],
             "subsystem": subsystem(path), "current_path": path,
             "root_cause_id": explicit_root or f"unverified:{item['finding_id']}",
-            "root_cause_verified": bool(explicit_root),
+            "root_cause_verified": root_cause_verified,
             "blocks_experiment_reconstruction": blocking_status,
             "failure_mechanism": (override or {}).get("failure_mechanism", "No current-main failure mechanism has been verified."),
             "smallest_complete_remediation_boundary": (override or {}).get("smallest_complete_remediation_boundary", f"Verify `{item['finding_id']}` against current main before assigning a remediation batch."),
@@ -112,6 +113,8 @@ def validate(data: dict[str, Any], baseline: dict[str, Any]) -> list[str]:
     for x in data["findings"]:
         if x["disposition"] == "still_reproducible" and not x["root_cause_verified"]:
             errors.append(f"{x['finding_id']}: reproducible disposition lacks verified mechanism")
+        if x["disposition"] == "cannot_verify" and x["root_cause_verified"]:
+            errors.append(f"{x['finding_id']}: cannot_verify disposition cannot have a verified root cause")
     return errors
 
 
