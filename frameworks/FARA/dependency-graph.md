@@ -91,6 +91,11 @@ and organized in:
 
 Candidate primitive status is provisional and remains subject to grounding investigations.
 
+The completed W1 execution in `research/primitive-independence-w1-result.md` does not establish that these nodes are mutually or jointly independent. It identifies dependency hazards
+`Object <- Representation <- Object`, `Representation <-> Interpretation`, and
+`Investigation <-> Reasoning Calculus`. These are audit warnings rather than derived
+edges or equivalence proofs; all seven adjudications remain unresolved.
+
 ---
 
 ## Derived Concept Dependencies

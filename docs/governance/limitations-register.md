@@ -21,3 +21,4 @@ New limitations require an evidence citation and may be closed only by a recorde
 | LIM-013 | Nonmonotonic, paraconsistent, probabilistic, causal, and higher-order systems have no general lossless-representation result. | Cross-domain | Open. |
 | LIM-014 | FAR/FARO procedures are independently selected methodology; uniqueness and necessity are unproved. | Derivation | Enforced boundary. |
 | LIM-015 | CRP v1.0 has adjudicated natural-language rules whose remaining compatibility clarifications require a new protocol version. | Protocol reproducibility | Proposed for v1.1. |
+| LIM-016 | FARA's canonical primitive definitions do not supply a formal signature, axioms/inference rules, model class, scope/objective, or equivalence relation for joint independence tests. | FARA proof assurance | Open; W1 fails closed with all seven primitive outcomes unresolved. |
