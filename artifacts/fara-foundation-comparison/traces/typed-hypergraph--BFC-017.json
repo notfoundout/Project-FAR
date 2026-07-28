@@ -1,0 +1,148 @@
+{
+  "benchmark": "BFC-017",
+  "candidate_execution": {
+    "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+    "status": "Unknown"
+  },
+  "comparison": {
+    "commitment_equivalent": false,
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Unknown",
+      "historical": "Unknown",
+      "information": "Unknown",
+      "operational": "Unknown",
+      "semantic": "Unknown",
+      "structural": "Unknown"
+    },
+    "result_equivalent": true
+  },
+  "correspondence_map": {
+    "bfc-017-event": "typed-hypergraph:bfc-017-event",
+    "bfc-017-source": "typed-hypergraph:bfc-017-source",
+    "bfc-017-state": "typed-hypergraph:bfc-017-state"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+        "status": "Unknown"
+      },
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph",
+      "reference_result": {
+        "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+        "status": "Unknown"
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": false,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Unknown",
+          "historical": "Unknown",
+          "information": "Unknown",
+          "operational": "Unknown",
+          "semantic": "Unknown",
+          "structural": "Unknown"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
+    }
+  ],
+  "external_assumptions": [
+    "oracle dependence"
+  ],
+  "external_dependencies": [
+    "oracle dependence"
+  ],
+  "failure_or_unknown_reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+  "formation_valid": true,
+  "foundation": "typed-hypergraph",
+  "generated_target_elements": [
+    "typed-hypergraph:bfc-017-event",
+    "typed-hypergraph:bfc-017-source",
+    "typed-hypergraph:bfc-017-state"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Unknown",
+    "historical": "Unknown",
+    "information": "Unknown",
+    "operational": "Unknown",
+    "semantic": "Unknown",
+    "structural": "Unknown"
+  },
+  "reconstruction_steps": [],
+  "recovered_commitments": {
+    "dependency": null,
+    "historical": null,
+    "information": null,
+    "operational": null,
+    "semantic": null,
+    "structural": null
+  },
+  "recovered_elements": [],
+  "recovered_result": {
+    "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+    "status": "Unknown"
+  },
+  "reference_execution": {
+    "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+    "status": "Unknown"
+  },
+  "source_elements": [
+    "bfc-017-source",
+    "bfc-017-state",
+    "bfc-017-event"
+  ],
+  "source_model": {
+    "commitments": {
+      "dependency": null,
+      "historical": null,
+      "information": null,
+      "operational": null,
+      "semantic": null,
+      "structural": null
+    },
+    "external": [
+      "oracle dependence"
+    ],
+    "id": "BFC-017",
+    "initial": null,
+    "instructions": [],
+    "name": "oracle dependence",
+    "unknown_reason": "no executable semantics for live/nonfinite/environment-inclusive commitment"
+  },
+  "status": "Unknown",
+  "structural_accounting": {
+    "derived": 0,
+    "execution": 0,
+    "external": 1,
+    "history": 0,
+    "identity": 0,
+    "interpretation": 0,
+    "native": 0,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 0,
+    "repair": 0,
+    "unresolved": 6
+  },
+  "target_model": null,
+  "typing_valid": true,
+  "unsupported_structures": []
+}

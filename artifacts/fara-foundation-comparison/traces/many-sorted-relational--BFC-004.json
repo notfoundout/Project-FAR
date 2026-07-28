@@ -1,0 +1,452 @@
+{
+  "benchmark": "BFC-004",
+  "candidate_execution": {
+    "state": {
+      "facts": [
+        "not_p",
+        "p"
+      ],
+      "query": {
+        "entailed": false,
+        "explosion": false,
+        "proposition": "q"
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "a1",
+      "a2",
+      "q1"
+    ]
+  },
+  "comparison": {
+    "commitment_equivalent": true,
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Pass",
+      "semantic": "Pass",
+      "structural": "Pass"
+    },
+    "result_equivalent": true
+  },
+  "correspondence_map": {
+    "a1": "many-sorted-relational:a1",
+    "a2": "many-sorted-relational:a2",
+    "bfc-004-event": "many-sorted-relational:bfc-004-event",
+    "bfc-004-source": "many-sorted-relational:bfc-004-source",
+    "bfc-004-state": "many-sorted-relational:bfc-004-state",
+    "q1": "many-sorted-relational:q1"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.many_sorted"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "state": {
+          "facts": [
+            "not_p",
+            "p"
+          ],
+          "query": {
+            "entailed": false,
+            "explosion": false,
+            "proposition": "q"
+          }
+        },
+        "status": "Pass",
+        "steps": [
+          "a1",
+          "a2",
+          "q1"
+        ]
+      },
+      "evaluator": "theory.foundation.fara_foundation_comparison.many_sorted",
+      "reference_result": {
+        "state": {
+          "facts": [
+            "not_p",
+            "p"
+          ],
+          "query": {
+            "entailed": false,
+            "explosion": false,
+            "proposition": "q"
+          }
+        },
+        "status": "Pass",
+        "steps": [
+          "a1",
+          "a2",
+          "q1"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": true,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Pass",
+          "semantic": "Pass",
+          "structural": "Pass"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": null,
+  "formation_valid": true,
+  "foundation": "many-sorted-relational",
+  "generated_target_elements": [
+    "many-sorted-relational:a1",
+    "many-sorted-relational:a2",
+    "many-sorted-relational:bfc-004-event",
+    "many-sorted-relational:bfc-004-source",
+    "many-sorted-relational:bfc-004-state",
+    "many-sorted-relational:q1"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "a1",
+      "target": "many-sorted-relational:a1"
+    },
+    {
+      "source": "a2",
+      "target": "many-sorted-relational:a2"
+    },
+    {
+      "source": "bfc-004-event",
+      "target": "many-sorted-relational:bfc-004-event"
+    },
+    {
+      "source": "bfc-004-source",
+      "target": "many-sorted-relational:bfc-004-source"
+    },
+    {
+      "source": "bfc-004-state",
+      "target": "many-sorted-relational:bfc-004-state"
+    },
+    {
+      "source": "q1",
+      "target": "many-sorted-relational:q1"
+    }
+  ],
+  "recovered_commitments": {
+    "dependency": [],
+    "historical": [
+      {
+        "after": null,
+        "id": "assert-p"
+      },
+      {
+        "after": "assert-p",
+        "id": "assert-not-p"
+      }
+    ],
+    "information": {
+      "queried": "q"
+    },
+    "operational": {
+      "initial": {
+        "facts": []
+      },
+      "instructions": [
+        {
+          "arguments": {
+            "proposition": "p"
+          },
+          "id": "a1",
+          "opcode": "assert"
+        },
+        {
+          "arguments": {
+            "proposition": "not_p"
+          },
+          "id": "a2",
+          "opcode": "assert"
+        },
+        {
+          "arguments": {
+            "explosion": false,
+            "proposition": "q"
+          },
+          "id": "q1",
+          "opcode": "query"
+        }
+      ]
+    },
+    "semantic": {
+      "consequence": "paraconsistent-no-explosion"
+    },
+    "structural": {
+      "identity_bearing_arguments": [],
+      "instruction_ids": [
+        "a1",
+        "a2",
+        "q1"
+      ],
+      "opcodes": [
+        "assert",
+        "assert",
+        "query"
+      ]
+    }
+  },
+  "recovered_elements": [
+    "a1",
+    "a2",
+    "bfc-004-event",
+    "bfc-004-source",
+    "bfc-004-state",
+    "q1"
+  ],
+  "recovered_result": {
+    "state": {
+      "facts": [
+        "not_p",
+        "p"
+      ],
+      "query": {
+        "entailed": false,
+        "explosion": false,
+        "proposition": "q"
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "a1",
+      "a2",
+      "q1"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "facts": [
+        "not_p",
+        "p"
+      ],
+      "query": {
+        "entailed": false,
+        "explosion": false,
+        "proposition": "q"
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "a1",
+      "a2",
+      "q1"
+    ]
+  },
+  "source_elements": [
+    "bfc-004-source",
+    "bfc-004-state",
+    "bfc-004-event",
+    "a1",
+    "a2",
+    "q1"
+  ],
+  "source_model": {
+    "commitments": {
+      "dependency": [],
+      "historical": [
+        {
+          "after": null,
+          "id": "assert-p"
+        },
+        {
+          "after": "assert-p",
+          "id": "assert-not-p"
+        }
+      ],
+      "information": {
+        "queried": "q"
+      },
+      "operational": {
+        "initial": {
+          "facts": []
+        },
+        "instructions": [
+          {
+            "arguments": {
+              "proposition": "p"
+            },
+            "id": "a1",
+            "opcode": "assert"
+          },
+          {
+            "arguments": {
+              "proposition": "not_p"
+            },
+            "id": "a2",
+            "opcode": "assert"
+          },
+          {
+            "arguments": {
+              "explosion": false,
+              "proposition": "q"
+            },
+            "id": "q1",
+            "opcode": "query"
+          }
+        ]
+      },
+      "semantic": {
+        "consequence": "paraconsistent-no-explosion"
+      },
+      "structural": {
+        "identity_bearing_arguments": [],
+        "instruction_ids": [
+          "a1",
+          "a2",
+          "q1"
+        ],
+        "opcodes": [
+          "assert",
+          "assert",
+          "query"
+        ]
+      }
+    },
+    "dependencies": [],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "assert-p"
+      },
+      {
+        "after": "assert-p",
+        "id": "assert-not-p"
+      }
+    ],
+    "id": "BFC-004",
+    "information": {
+      "queried": "q"
+    },
+    "initial": {
+      "facts": []
+    },
+    "instructions": [
+      {
+        "arguments": {
+          "proposition": "p"
+        },
+        "id": "a1",
+        "opcode": "assert"
+      },
+      {
+        "arguments": {
+          "proposition": "not_p"
+        },
+        "id": "a2",
+        "opcode": "assert"
+      },
+      {
+        "arguments": {
+          "explosion": false,
+          "proposition": "q"
+        },
+        "id": "q1",
+        "opcode": "query"
+      }
+    ],
+    "name": "paraconsistent consequence",
+    "semantic": {
+      "consequence": "paraconsistent-no-explosion"
+    },
+    "unknown_reason": null
+  },
+  "status": "Pass",
+  "structural_accounting": {
+    "derived": 0,
+    "execution": 3,
+    "external": 0,
+    "history": 2,
+    "identity": 3,
+    "interpretation": 0,
+    "native": 3,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 6,
+    "repair": 0,
+    "unresolved": 0
+  },
+  "target_model": {
+    "candidate": "many-sorted-relational",
+    "dependency_relations": [],
+    "history_relations": [
+      {
+        "after": null,
+        "id": "assert-p"
+      },
+      {
+        "after": "assert-p",
+        "id": "assert-not-p"
+      }
+    ],
+    "information_relations": {
+      "queried": "q"
+    },
+    "initial": {
+      "facts": []
+    },
+    "rules": [
+      {
+        "arguments": {
+          "proposition": "p"
+        },
+        "id": "a1",
+        "opcode": "assert"
+      },
+      {
+        "arguments": {
+          "proposition": "not_p"
+        },
+        "id": "a2",
+        "opcode": "assert"
+      },
+      {
+        "arguments": {
+          "explosion": false,
+          "proposition": "q"
+        },
+        "id": "q1",
+        "opcode": "query"
+      }
+    ],
+    "semantic_relations": {
+      "consequence": "paraconsistent-no-explosion"
+    }
+  },
+  "typing_valid": true,
+  "unsupported_structures": []
+}

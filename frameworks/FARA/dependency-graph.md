@@ -327,3 +327,7 @@ This unnumbered campaign addresses `UQ-T7`; repository authority does not design
 ## Core-formalization research dependency (`FARA-CORE-FORMAL-001`)
 
 This descriptively named, unnumbered campaign executes two remaining `FARA-VOC-001` obligations: formal derivation/composition rules and W1 circular-definition resolution. It preserves the canonical prose and W0–W5 results. Its acyclic many-sorted signature is an auxiliary finite test target; three non-equivalent coherent foundations remain, so it is not a canonical replacement, W7, uniqueness result, or global independence result.
+
+## Foundation-comparison research dependency (`FARA-FOUNDATION-COMP-001`)
+
+This descriptively named, unnumbered campaign executes the selection obligation retained by `FARA-CORE-PROOF-001`, `OP-10`, and `UQ-T11`. It freezes, executes, and compares the three retained coherent foundations without changing their PR #421 definitions. Its 19-case finite corpus, translations, reconstructions, witnesses, ablations, accounting, and Pareto relation are auxiliary research evidence. The terminal result is bounded Pareto incomparability, not W7, canonical selection, global superiority, necessity, minimality, completeness, or universality.

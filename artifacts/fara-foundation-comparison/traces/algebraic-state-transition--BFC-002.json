@@ -1,0 +1,435 @@
+{
+  "benchmark": "BFC-002",
+  "candidate_execution": {
+    "state": {
+      "posterior": {
+        "H": "3/4",
+        "notH": "1/4"
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "bayes-1"
+    ]
+  },
+  "comparison": {
+    "commitment_equivalent": true,
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Pass",
+      "semantic": "Pass",
+      "structural": "Pass"
+    },
+    "result_equivalent": true
+  },
+  "correspondence_map": {
+    "bayes-1": "algebraic-state-transition:bayes-1",
+    "bfc-002-event": "algebraic-state-transition:bfc-002-event",
+    "bfc-002-source": "algebraic-state-transition:bfc-002-source",
+    "bfc-002-state": "algebraic-state-transition:bfc-002-state"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "state": {
+          "posterior": {
+            "H": "3/4",
+            "notH": "1/4"
+          }
+        },
+        "status": "Pass",
+        "steps": [
+          "bayes-1"
+        ]
+      },
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state",
+      "reference_result": {
+        "state": {
+          "posterior": {
+            "H": "3/4",
+            "notH": "1/4"
+          }
+        },
+        "status": "Pass",
+        "steps": [
+          "bayes-1"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": true,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Pass",
+          "semantic": "Pass",
+          "structural": "Pass"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": null,
+  "formation_valid": true,
+  "foundation": "algebraic-state-transition",
+  "generated_target_elements": [
+    "algebraic-state-transition:bayes-1",
+    "algebraic-state-transition:bfc-002-event",
+    "algebraic-state-transition:bfc-002-source",
+    "algebraic-state-transition:bfc-002-state"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bayes-1",
+      "target": "algebraic-state-transition:bayes-1"
+    },
+    {
+      "source": "bfc-002-event",
+      "target": "algebraic-state-transition:bfc-002-event"
+    },
+    {
+      "source": "bfc-002-source",
+      "target": "algebraic-state-transition:bfc-002-source"
+    },
+    {
+      "source": "bfc-002-state",
+      "target": "algebraic-state-transition:bfc-002-state"
+    }
+  ],
+  "recovered_commitments": {
+    "dependency": [
+      [
+        "prior",
+        "posterior"
+      ],
+      [
+        "likelihood",
+        "posterior"
+      ]
+    ],
+    "historical": [
+      {
+        "after": null,
+        "id": "observation-1"
+      }
+    ],
+    "information": {
+      "hypotheses": [
+        "H",
+        "notH"
+      ]
+    },
+    "operational": {
+      "initial": {},
+      "instructions": [
+        {
+          "arguments": {
+            "likelihood": {
+              "H": [
+                3,
+                1
+              ],
+              "notH": [
+                1,
+                1
+              ]
+            },
+            "prior": {
+              "H": [
+                1,
+                1
+              ],
+              "notH": [
+                1,
+                1
+              ]
+            }
+          },
+          "id": "bayes-1",
+          "opcode": "bayes"
+        }
+      ]
+    },
+    "semantic": {
+      "normalization": "exact rational"
+    },
+    "structural": {
+      "identity_bearing_arguments": [],
+      "instruction_ids": [
+        "bayes-1"
+      ],
+      "opcodes": [
+        "bayes"
+      ]
+    }
+  },
+  "recovered_elements": [
+    "bayes-1",
+    "bfc-002-event",
+    "bfc-002-source",
+    "bfc-002-state"
+  ],
+  "recovered_result": {
+    "state": {
+      "posterior": {
+        "H": "3/4",
+        "notH": "1/4"
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "bayes-1"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "posterior": {
+        "H": "3/4",
+        "notH": "1/4"
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "bayes-1"
+    ]
+  },
+  "source_elements": [
+    "bfc-002-source",
+    "bfc-002-state",
+    "bfc-002-event",
+    "bayes-1"
+  ],
+  "source_model": {
+    "commitments": {
+      "dependency": [
+        [
+          "prior",
+          "posterior"
+        ],
+        [
+          "likelihood",
+          "posterior"
+        ]
+      ],
+      "historical": [
+        {
+          "after": null,
+          "id": "observation-1"
+        }
+      ],
+      "information": {
+        "hypotheses": [
+          "H",
+          "notH"
+        ]
+      },
+      "operational": {
+        "initial": {},
+        "instructions": [
+          {
+            "arguments": {
+              "likelihood": {
+                "H": [
+                  3,
+                  1
+                ],
+                "notH": [
+                  1,
+                  1
+                ]
+              },
+              "prior": {
+                "H": [
+                  1,
+                  1
+                ],
+                "notH": [
+                  1,
+                  1
+                ]
+              }
+            },
+            "id": "bayes-1",
+            "opcode": "bayes"
+          }
+        ]
+      },
+      "semantic": {
+        "normalization": "exact rational"
+      },
+      "structural": {
+        "identity_bearing_arguments": [],
+        "instruction_ids": [
+          "bayes-1"
+        ],
+        "opcodes": [
+          "bayes"
+        ]
+      }
+    },
+    "dependencies": [
+      [
+        "prior",
+        "posterior"
+      ],
+      [
+        "likelihood",
+        "posterior"
+      ]
+    ],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "observation-1"
+      }
+    ],
+    "id": "BFC-002",
+    "information": {
+      "hypotheses": [
+        "H",
+        "notH"
+      ]
+    },
+    "initial": {},
+    "instructions": [
+      {
+        "arguments": {
+          "likelihood": {
+            "H": [
+              3,
+              1
+            ],
+            "notH": [
+              1,
+              1
+            ]
+          },
+          "prior": {
+            "H": [
+              1,
+              1
+            ],
+            "notH": [
+              1,
+              1
+            ]
+          }
+        },
+        "id": "bayes-1",
+        "opcode": "bayes"
+      }
+    ],
+    "name": "probabilistic updating",
+    "semantic": {
+      "normalization": "exact rational"
+    },
+    "unknown_reason": null
+  },
+  "status": "Pass",
+  "structural_accounting": {
+    "derived": 1,
+    "execution": 1,
+    "external": 0,
+    "history": 1,
+    "identity": 1,
+    "interpretation": 0,
+    "native": 2,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 8,
+    "repair": 0,
+    "unresolved": 0
+  },
+  "target_model": {
+    "candidate": "algebraic-state-transition",
+    "dependency_map": [
+      [
+        "prior",
+        "posterior"
+      ],
+      [
+        "likelihood",
+        "posterior"
+      ]
+    ],
+    "history": [
+      {
+        "after": null,
+        "id": "observation-1"
+      }
+    ],
+    "information_map": {
+      "hypotheses": [
+        "H",
+        "notH"
+      ]
+    },
+    "initial": {},
+    "operations": {
+      "bayes-1": {
+        "arguments": {
+          "likelihood": {
+            "H": [
+              3,
+              1
+            ],
+            "notH": [
+              1,
+              1
+            ]
+          },
+          "prior": {
+            "H": [
+              1,
+              1
+            ],
+            "notH": [
+              1,
+              1
+            ]
+          }
+        },
+        "kind": "bayes"
+      }
+    },
+    "program": [
+      "bayes-1"
+    ],
+    "semantic_map": {
+      "normalization": "exact rational"
+    }
+  },
+  "typing_valid": true,
+  "unsupported_structures": []
+}

@@ -1,0 +1,570 @@
+{
+  "benchmark": "BFC-013",
+  "candidate_execution": {
+    "state": {
+      "before": [
+        [
+          "a",
+          "c"
+        ],
+        [
+          "b",
+          "c"
+        ]
+      ],
+      "events": [
+        "a",
+        "b",
+        "c"
+      ],
+      "maximal": [
+        "c"
+      ],
+      "minimal": [
+        "a",
+        "b"
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "p1",
+      "p2"
+    ]
+  },
+  "comparison": {
+    "commitment_equivalent": true,
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Pass",
+      "semantic": "Pass",
+      "structural": "Pass"
+    },
+    "result_equivalent": true
+  },
+  "correspondence_map": {
+    "bfc-013-event": "algebraic-state-transition:bfc-013-event",
+    "bfc-013-source": "algebraic-state-transition:bfc-013-source",
+    "bfc-013-state": "algebraic-state-transition:bfc-013-state",
+    "p1": "algebraic-state-transition:p1",
+    "p2": "algebraic-state-transition:p2"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "state": {
+          "before": [
+            [
+              "a",
+              "c"
+            ],
+            [
+              "b",
+              "c"
+            ]
+          ],
+          "events": [
+            "a",
+            "b",
+            "c"
+          ],
+          "maximal": [
+            "c"
+          ],
+          "minimal": [
+            "a",
+            "b"
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "p1",
+          "p2"
+        ]
+      },
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state",
+      "reference_result": {
+        "state": {
+          "before": [
+            [
+              "a",
+              "c"
+            ],
+            [
+              "b",
+              "c"
+            ]
+          ],
+          "events": [
+            "a",
+            "b",
+            "c"
+          ],
+          "maximal": [
+            "c"
+          ],
+          "minimal": [
+            "a",
+            "b"
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "p1",
+          "p2"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": true,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Pass",
+          "semantic": "Pass",
+          "structural": "Pass"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": null,
+  "formation_valid": true,
+  "foundation": "algebraic-state-transition",
+  "generated_target_elements": [
+    "algebraic-state-transition:bfc-013-event",
+    "algebraic-state-transition:bfc-013-source",
+    "algebraic-state-transition:bfc-013-state",
+    "algebraic-state-transition:p1",
+    "algebraic-state-transition:p2"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-013-event",
+      "target": "algebraic-state-transition:bfc-013-event"
+    },
+    {
+      "source": "bfc-013-source",
+      "target": "algebraic-state-transition:bfc-013-source"
+    },
+    {
+      "source": "bfc-013-state",
+      "target": "algebraic-state-transition:bfc-013-state"
+    },
+    {
+      "source": "p1",
+      "target": "algebraic-state-transition:p1"
+    },
+    {
+      "source": "p2",
+      "target": "algebraic-state-transition:p2"
+    }
+  ],
+  "recovered_commitments": {
+    "dependency": [
+      [
+        "a",
+        "c"
+      ],
+      [
+        "b",
+        "c"
+      ]
+    ],
+    "historical": [
+      {
+        "after": null,
+        "id": "a"
+      },
+      {
+        "after": null,
+        "id": "b"
+      },
+      {
+        "after": [
+          "a",
+          "b"
+        ],
+        "id": "c"
+      }
+    ],
+    "information": {
+      "concurrent": [
+        "a",
+        "b"
+      ]
+    },
+    "operational": {
+      "initial": {
+        "events": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "instructions": [
+        {
+          "arguments": {
+            "earlier": "a",
+            "later": "c"
+          },
+          "id": "p1",
+          "opcode": "before"
+        },
+        {
+          "arguments": {
+            "earlier": "b",
+            "later": "c"
+          },
+          "id": "p2",
+          "opcode": "before"
+        }
+      ]
+    },
+    "semantic": {
+      "order": "partial-not-total"
+    },
+    "structural": {
+      "identity_bearing_arguments": [],
+      "instruction_ids": [
+        "p1",
+        "p2"
+      ],
+      "opcodes": [
+        "before",
+        "before"
+      ]
+    }
+  },
+  "recovered_elements": [
+    "bfc-013-event",
+    "bfc-013-source",
+    "bfc-013-state",
+    "p1",
+    "p2"
+  ],
+  "recovered_result": {
+    "state": {
+      "before": [
+        [
+          "a",
+          "c"
+        ],
+        [
+          "b",
+          "c"
+        ]
+      ],
+      "events": [
+        "a",
+        "b",
+        "c"
+      ],
+      "maximal": [
+        "c"
+      ],
+      "minimal": [
+        "a",
+        "b"
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "p1",
+      "p2"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "before": [
+        [
+          "a",
+          "c"
+        ],
+        [
+          "b",
+          "c"
+        ]
+      ],
+      "events": [
+        "a",
+        "b",
+        "c"
+      ],
+      "maximal": [
+        "c"
+      ],
+      "minimal": [
+        "a",
+        "b"
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "p1",
+      "p2"
+    ]
+  },
+  "source_elements": [
+    "bfc-013-source",
+    "bfc-013-state",
+    "bfc-013-event",
+    "p1",
+    "p2"
+  ],
+  "source_model": {
+    "commitments": {
+      "dependency": [
+        [
+          "a",
+          "c"
+        ],
+        [
+          "b",
+          "c"
+        ]
+      ],
+      "historical": [
+        {
+          "after": null,
+          "id": "a"
+        },
+        {
+          "after": null,
+          "id": "b"
+        },
+        {
+          "after": [
+            "a",
+            "b"
+          ],
+          "id": "c"
+        }
+      ],
+      "information": {
+        "concurrent": [
+          "a",
+          "b"
+        ]
+      },
+      "operational": {
+        "initial": {
+          "events": [
+            "a",
+            "b",
+            "c"
+          ]
+        },
+        "instructions": [
+          {
+            "arguments": {
+              "earlier": "a",
+              "later": "c"
+            },
+            "id": "p1",
+            "opcode": "before"
+          },
+          {
+            "arguments": {
+              "earlier": "b",
+              "later": "c"
+            },
+            "id": "p2",
+            "opcode": "before"
+          }
+        ]
+      },
+      "semantic": {
+        "order": "partial-not-total"
+      },
+      "structural": {
+        "identity_bearing_arguments": [],
+        "instruction_ids": [
+          "p1",
+          "p2"
+        ],
+        "opcodes": [
+          "before",
+          "before"
+        ]
+      }
+    },
+    "dependencies": [
+      [
+        "a",
+        "c"
+      ],
+      [
+        "b",
+        "c"
+      ]
+    ],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "a"
+      },
+      {
+        "after": null,
+        "id": "b"
+      },
+      {
+        "after": [
+          "a",
+          "b"
+        ],
+        "id": "c"
+      }
+    ],
+    "id": "BFC-013",
+    "information": {
+      "concurrent": [
+        "a",
+        "b"
+      ]
+    },
+    "initial": {
+      "events": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    "instructions": [
+      {
+        "arguments": {
+          "earlier": "a",
+          "later": "c"
+        },
+        "id": "p1",
+        "opcode": "before"
+      },
+      {
+        "arguments": {
+          "earlier": "b",
+          "later": "c"
+        },
+        "id": "p2",
+        "opcode": "before"
+      }
+    ],
+    "name": "distributed partial order",
+    "semantic": {
+      "order": "partial-not-total"
+    },
+    "unknown_reason": null
+  },
+  "status": "Pass",
+  "structural_accounting": {
+    "derived": 2,
+    "execution": 2,
+    "external": 0,
+    "history": 3,
+    "identity": 2,
+    "interpretation": 0,
+    "native": 4,
+    "opaque": 0,
+    "ordering": 2,
+    "reconstruction": 9,
+    "repair": 0,
+    "unresolved": 0
+  },
+  "target_model": {
+    "candidate": "algebraic-state-transition",
+    "dependency_map": [
+      [
+        "a",
+        "c"
+      ],
+      [
+        "b",
+        "c"
+      ]
+    ],
+    "history": [
+      {
+        "after": null,
+        "id": "a"
+      },
+      {
+        "after": null,
+        "id": "b"
+      },
+      {
+        "after": [
+          "a",
+          "b"
+        ],
+        "id": "c"
+      }
+    ],
+    "information_map": {
+      "concurrent": [
+        "a",
+        "b"
+      ]
+    },
+    "initial": {
+      "events": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    "operations": {
+      "p1": {
+        "arguments": {
+          "earlier": "a",
+          "later": "c"
+        },
+        "kind": "before"
+      },
+      "p2": {
+        "arguments": {
+          "earlier": "b",
+          "later": "c"
+        },
+        "kind": "before"
+      }
+    },
+    "program": [
+      "p1",
+      "p2"
+    ],
+    "semantic_map": {
+      "order": "partial-not-total"
+    }
+  },
+  "typing_valid": true,
+  "unsupported_structures": []
+}

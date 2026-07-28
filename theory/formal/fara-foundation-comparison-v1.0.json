@@ -1,0 +1,1042 @@
+{
+  "benchmarks": [
+    {
+      "bias": {
+        "graphs": false,
+        "relations": false,
+        "transitions": true
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-001-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-001-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-001-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-001",
+      "name": "deterministic transitions",
+      "neutral_variant": "BFC-001-N",
+      "required_capability": "algebraic-state-transition",
+      "resembles": "algebraic-state-transition",
+      "source_formalism": "state transition",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": false,
+        "transitions": true
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-002-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-002-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-002-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-002",
+      "name": "probabilistic updating",
+      "neutral_variant": "BFC-002-N",
+      "required_capability": "algebraic-state-transition",
+      "resembles": "algebraic-state-transition",
+      "source_formalism": "probabilistic program",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": true,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": true,
+      "elements": [
+        {
+          "id": "bfc-003-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-003-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-003-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-003",
+      "name": "nonmonotonic retraction",
+      "neutral_variant": "BFC-003-N",
+      "required_capability": "many-sorted-relational",
+      "resembles": "many-sorted-relational",
+      "source_formalism": "rule system",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": true,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": true,
+      "elements": [
+        {
+          "id": "bfc-004-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-004-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-004-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-004",
+      "name": "paraconsistent consequence",
+      "neutral_variant": "BFC-004-N",
+      "required_capability": "many-sorted-relational",
+      "resembles": "many-sorted-relational",
+      "source_formalism": "consequence relation",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": true,
+        "relations": false,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-005-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-005-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-005-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-005",
+      "name": "causal intervention",
+      "neutral_variant": "BFC-005-N",
+      "required_capability": "typed-hypergraph",
+      "resembles": "typed-hypergraph",
+      "source_formalism": "structural causal model",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": false,
+        "transitions": true
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-006-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-006-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-006-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-006",
+      "name": "changing rules",
+      "neutral_variant": "BFC-006-N",
+      "required_capability": "algebraic-state-transition",
+      "resembles": "algebraic-state-transition",
+      "source_formalism": "dynamic rule system",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": true,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-007-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-007-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-007-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-007",
+      "name": "changing interpretations",
+      "neutral_variant": "BFC-007-N",
+      "required_capability": "many-sorted-relational",
+      "resembles": "many-sorted-relational",
+      "source_formalism": "dynamic semantics",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": true,
+        "relations": false,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-008-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-008-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-008-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-008",
+      "name": "evolving or incompatible ontologies",
+      "neutral_variant": "BFC-008-N",
+      "required_capability": "typed-hypergraph",
+      "resembles": "typed-hypergraph",
+      "source_formalism": "ontology alignment",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": true,
+        "relations": false,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-009-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-009-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-009-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-009",
+      "name": "identity-preserving merge",
+      "neutral_variant": "BFC-009-N",
+      "required_capability": "typed-hypergraph",
+      "resembles": "typed-hypergraph",
+      "source_formalism": "typed graph merge",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": false,
+        "transitions": true
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-010-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-010-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-010-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-010",
+      "name": "identity-collapsing merge",
+      "neutral_variant": "BFC-010-N",
+      "required_capability": "algebraic-state-transition",
+      "resembles": "algebraic-state-transition",
+      "source_formalism": "quotient merge",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": true,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": true,
+      "elements": [
+        {
+          "id": "bfc-011-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-011-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-011-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-011",
+      "name": "deletion and constraint relaxation",
+      "neutral_variant": "BFC-011-N",
+      "required_capability": "many-sorted-relational",
+      "resembles": "many-sorted-relational",
+      "source_formalism": "belief revision",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": true,
+        "relations": false,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-012-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-012-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-012-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-012",
+      "name": "provenance-sensitive history",
+      "neutral_variant": "BFC-012-N",
+      "required_capability": "typed-hypergraph",
+      "resembles": "typed-hypergraph",
+      "source_formalism": "event graph",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": true,
+        "relations": false,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-013-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-013-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-013-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-013",
+      "name": "distributed partial order",
+      "neutral_variant": "BFC-013-N",
+      "required_capability": "typed-hypergraph",
+      "resembles": "typed-hypergraph",
+      "source_formalism": "event structure",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": true,
+        "relations": false,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-014-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-014-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-014-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-014",
+      "name": "proof identity",
+      "neutral_variant": "BFC-014-N",
+      "required_capability": "typed-hypergraph",
+      "resembles": "typed-hypergraph",
+      "source_formalism": "proof net",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": true,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-015-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-015-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-015-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-015",
+      "name": "variable binding and scope",
+      "neutral_variant": "BFC-015-N",
+      "required_capability": "many-sorted-relational",
+      "resembles": "many-sorted-relational",
+      "source_formalism": "term calculus",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": true,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": false,
+      "elements": [
+        {
+          "id": "bfc-016-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-016-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-016-event",
+          "kind": "event"
+        }
+      ],
+      "external": [],
+      "id": "BFC-016",
+      "name": "institutional authority",
+      "neutral_variant": "BFC-016-N",
+      "required_capability": "many-sorted-relational",
+      "resembles": "many-sorted-relational",
+      "source_formalism": "normative system",
+      "unknown_reason": null
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": false,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": true,
+      "elements": [
+        {
+          "id": "bfc-017-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-017-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-017-event",
+          "kind": "event"
+        }
+      ],
+      "external": [
+        "oracle dependence"
+      ],
+      "id": "BFC-017",
+      "name": "oracle dependence",
+      "neutral_variant": "BFC-017-N",
+      "required_capability": "external-semantics",
+      "resembles": "none",
+      "source_formalism": "oracle machine",
+      "unknown_reason": "no executable semantics for live/nonfinite/environment-inclusive commitment"
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": false,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": true,
+      "elements": [
+        {
+          "id": "bfc-018-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-018-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-018-event",
+          "kind": "event"
+        }
+      ],
+      "external": [
+        "continuous or hybrid dynamics"
+      ],
+      "id": "BFC-018",
+      "name": "continuous or hybrid dynamics",
+      "neutral_variant": "BFC-018-N",
+      "required_capability": "external-semantics",
+      "resembles": "none",
+      "source_formalism": "hybrid automaton",
+      "unknown_reason": "no executable semantics for live/nonfinite/environment-inclusive commitment"
+    },
+    {
+      "bias": {
+        "graphs": false,
+        "relations": false,
+        "transitions": false
+      },
+      "commitments": [
+        "structure",
+        "meaning",
+        "execution",
+        "dependency",
+        "information",
+        "history"
+      ],
+      "earlier_auxiliary": true,
+      "elements": [
+        {
+          "id": "bfc-019-source",
+          "kind": "source"
+        },
+        {
+          "id": "bfc-019-state",
+          "kind": "state"
+        },
+        {
+          "id": "bfc-019-event",
+          "kind": "event"
+        }
+      ],
+      "external": [
+        "embodied or tacit coupling"
+      ],
+      "id": "BFC-019",
+      "name": "embodied or tacit coupling",
+      "neutral_variant": "BFC-019-N",
+      "required_capability": "external-semantics",
+      "resembles": "none",
+      "source_formalism": "environment-coupled system",
+      "unknown_reason": "no executable semantics for live/nonfinite/environment-inclusive commitment"
+    }
+  ],
+  "campaign": {
+    "authority": [
+      "OP-10",
+      "UQ-T11",
+      "FARA-CORE-PROOF-001 remaining obligation: choose among non-equivalent coherent foundations by substantive evidence"
+    ],
+    "base_commit": "4e9582aec8ab69cb947dfb67cffeaafa5bfac9ac",
+    "discrepancy": "Repository authority supplies no W7 or other workstream designation; this campaign remains descriptively named. The prompt combines OP-10 and UQ-T11 into an explicitly authorized bounded execution.",
+    "id": "FARA-FOUNDATION-COMP-001",
+    "pr421_artifact_hashes": {
+      "generated_report": "09d5319f3670a996edd5effec3d8e41a4da61a59",
+      "human_report": "63d0f95d570a6df7addf49d7fd2d466de158d4a1",
+      "proof": "03ab953de244de4eb0798ffef6879cc6c9f681c1",
+      "spec": "7e74c429098aaf00b7e2018c27858deb351e8899",
+      "tests": "e474b4c307dc51ae1fdda64e0e1abf5f81b254a1",
+      "validator": "a97abd90c926e955513c27c77fab18a91e4a5060"
+    },
+    "status": "Research",
+    "version": "1.0"
+  },
+  "comparison_dimensions": [
+    "exact",
+    "partial",
+    "fail",
+    "unknown",
+    "preservation",
+    "conservative",
+    "identity_failures",
+    "semantic_failures",
+    "operational_failures",
+    "historical_failures",
+    "hidden_machinery",
+    "external_dependencies",
+    "native_cost",
+    "derived_cost",
+    "reconstruction_cost",
+    "repair_cost",
+    "unresolved_obligations"
+  ],
+  "external_dependency_policy": "declare and charge every oracle, scheduler, environment, decoder, path semantics, denotation algebra, or execution engine; unavailable semantics remains Unknown",
+  "foundations": [
+    {
+      "admissible_models": "finite typed disjoint carriers and declared relations",
+      "composition": "derived relational join",
+      "derivability": "bounded forward rule application",
+      "derived_symbols": [
+        "Property",
+        "SemanticContent",
+        "Execution",
+        "Result"
+      ],
+      "equivalence": "typed relational isomorphism plus six-dimensional commitments",
+      "external_machinery": [
+        "relational join for composition"
+      ],
+      "formation": "finite declared-arity typed tuples",
+      "id": "FOUND-FARA-001",
+      "identity": "relations are extensional sets of tuples; carrier members retain stable identity",
+      "known_failure_boundaries": [
+        "parallel tuple identity",
+        "continuous dynamics",
+        "live environment"
+      ],
+      "module": "theory.foundation.fara_foundation_comparison.many_sorted",
+      "morphisms": "sort bijections preserving all relations",
+      "name": "many-sorted-relational",
+      "native_symbols": [
+        "denotes",
+        "interprets",
+        "applies",
+        "targets"
+      ],
+      "reconstruction": "inverse correspondence map",
+      "recursion": "finite least fixed point",
+      "semantics": "finite relational structures with bounded forward application",
+      "sorts": [
+        "Entity",
+        "Token",
+        "Meaning",
+        "Rule",
+        "State",
+        "Event",
+        "Objective",
+        "Condition",
+        "Relation"
+      ],
+      "structural_charges": {
+        "derived": 4,
+        "execution": 1,
+        "external": 1,
+        "history": 2,
+        "identity": 1,
+        "interpretation": 1,
+        "native": 13,
+        "opaque": 0,
+        "ordering": 1,
+        "reconstruction": 1,
+        "repair": 2
+      },
+      "translation": "explicit typed tuple construction",
+      "typing": "tuple members inhabit declared disjoint sorts",
+      "version": "many-sorted-relational/1.0"
+    },
+    {
+      "admissible_models": "finite typed incidence-total hypergraphs",
+      "composition": "derived typed path semantics",
+      "derivability": "bounded edge firing",
+      "derived_symbols": [
+        "path",
+        "rule firing",
+        "semantic composition"
+      ],
+      "equivalence": "typed graph isomorphism plus six-dimensional commitments",
+      "external_machinery": [
+        "declared path interpretation"
+      ],
+      "formation": "typed nodes and identity-bearing hyperedges with ordered ports",
+      "id": "FOUND-FARA-002",
+      "identity": "nodes and parallel hyperedges have stable identities",
+      "known_failure_boundaries": [
+        "path semantics external",
+        "continuous dynamics",
+        "live environment"
+      ],
+      "module": "theory.foundation.fara_foundation_comparison.typed_hypergraph",
+      "morphisms": "typed node/edge bijections preserving incidence and port order",
+      "name": "typed-hypergraph",
+      "native_symbols": [
+        "node_type",
+        "edge_type",
+        "has_port",
+        "incident"
+      ],
+      "reconstruction": "inverse correspondence map",
+      "recursion": "finite reachability fixed point",
+      "semantics": "finite incidence structures with bounded edge firing",
+      "sorts": [
+        "Node",
+        "Port",
+        "Hyperedge",
+        "NodeType",
+        "EdgeType"
+      ],
+      "structural_charges": {
+        "derived": 3,
+        "execution": 2,
+        "external": 1,
+        "history": 1,
+        "identity": 2,
+        "interpretation": 2,
+        "native": 9,
+        "opaque": 0,
+        "ordering": 2,
+        "reconstruction": 1,
+        "repair": 1
+      },
+      "translation": "explicit node, port, and edge construction",
+      "typing": "each port has one incident node and edge arity matches edge type",
+      "version": "typed-hypergraph/1.0"
+    },
+    {
+      "admissible_models": "finite partial operations with associative declared composition",
+      "composition": "primitive partial operation composition",
+      "derivability": "finite program execution",
+      "derived_symbols": [
+        "predicate view",
+        "operation graph"
+      ],
+      "equivalence": "algebra isomorphism plus six-dimensional commitments",
+      "external_machinery": [
+        "denotation interpretation"
+      ],
+      "formation": "typed finite carriers and partial operation tables",
+      "id": "FOUND-FARA-003",
+      "identity": "carrier equality and operation extensionality; quotienting explicit",
+      "known_failure_boundaries": [
+        "source/representation separation",
+        "static relation encoding",
+        "historical quotient loss"
+      ],
+      "module": "theory.foundation.fara_foundation_comparison.algebraic_state",
+      "morphisms": "homomorphisms preserving denotation and defined operations",
+      "name": "algebraic-state-transition",
+      "native_symbols": [
+        "compose",
+        "denote",
+        "step"
+      ],
+      "reconstruction": "inverse correspondence map",
+      "recursion": "finite iteration/fixed point when declared",
+      "semantics": "finite partial algebras and state-transition execution",
+      "sorts": [
+        "Carrier",
+        "State",
+        "Operation",
+        "MeaningAlgebra"
+      ],
+      "structural_charges": {
+        "derived": 2,
+        "execution": 1,
+        "external": 1,
+        "history": 3,
+        "identity": 1,
+        "interpretation": 2,
+        "native": 7,
+        "opaque": 0,
+        "ordering": 1,
+        "reconstruction": 2,
+        "repair": 3
+      },
+      "translation": "explicit carrier, operation, and state construction",
+      "typing": "operation domains/codomains declared; composition closed where defined",
+      "version": "algebraic-state-transition/1.0"
+    }
+  ],
+  "frozen_core_vocabulary": [
+    "Object",
+    "Property",
+    "Relation",
+    "Representation",
+    "Interpretation",
+    "ReasoningCalculus",
+    "Investigation",
+    "SemanticContent",
+    "Execution",
+    "Result"
+  ],
+  "interfaces": {
+    "commitment_equivalence": "all six preservation dimensions Pass and no omitted/introduced commitment",
+    "historical_equivalence": "same event identity, order, provenance, and authority",
+    "identity": "same stable elements and all declared structure",
+    "isomorphism": "typed bijection preserving native symbols, identity, and ordering",
+    "observational_equivalence": "same frozen query answers",
+    "operational_equivalence": "same enabled steps, order, partiality, and results",
+    "reconstruction": "reconstruct(source, trace) -> canonical commitments",
+    "semantic_equivalence": "same interpretation under allowed isomorphism",
+    "source_format": "finite source elements plus six explicit commitment classes",
+    "target_formats": {
+      "algebraic-state-transition": "algebraic-state-transition/1.0",
+      "many-sorted-relational": "many-sorted-relational/1.0",
+      "typed-hypergraph": "typed-hypergraph/1.0"
+    },
+    "translation": "translate(source, foundation) -> explicit trace"
+  },
+  "nonclaims": [
+    "canonical uniqueness",
+    "global superiority",
+    "universal representation",
+    "global minimality",
+    "primitive necessity",
+    "completeness",
+    "universality"
+  ],
+  "outcomes": {
+    "Fail": "executable evidence contradicts a required commitment or validation requirement",
+    "Partial": "executable with an explicit non-required or recoverable distortion, never full commitment equivalence",
+    "Pass": "executable, exact, conservative commitment recovery on every required dimension",
+    "Unknown": "no executable semantics or neutral evidence decides the requirement"
+  },
+  "pareto_rule": "A dominates B iff A is no worse on every frozen direction-aware dimension and strictly better on at least one; no weights or averaging",
+  "preservation_dimensions": [
+    "structural",
+    "semantic",
+    "operational",
+    "dependency",
+    "information",
+    "historical"
+  ],
+  "rejection_rules": [
+    "whole-source constants",
+    "arbitrary payload fields",
+    "embedded interpreters",
+    "embedded schedulers",
+    "arbitrary higher-order predicates",
+    "unrestricted relation arity",
+    "unrestricted graph labels",
+    "unrestricted algebraic operations",
+    "opaque semantic blobs",
+    "hidden decoders",
+    "benchmark-specific cases",
+    "manually supplied expected answers"
+  ],
+  "remaining_obligations": [
+    "independent replication",
+    "nonfinite continuous semantics",
+    "environment-inclusive embodied semantics",
+    "live-oracle semantics",
+    "neutral external benchmark corpus",
+    "complete old prose source-model class"
+  ],
+  "structural_accounting_dimensions": [
+    "native",
+    "derived",
+    "identity",
+    "interpretation",
+    "execution",
+    "history",
+    "ordering",
+    "external",
+    "opaque",
+    "repair",
+    "reconstruction",
+    "unresolved"
+  ],
+  "terminal_vocabulary": [
+    "one foundation Pareto-dominates the others under the frozen campaign",
+    "multiple foundations remain Pareto-incomparable",
+    "all tested foundations fail at least one required commitment",
+    "unresolved because executable semantics or neutral comparison criteria remain insufficient"
+  ]
+}

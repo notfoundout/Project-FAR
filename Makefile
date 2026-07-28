@@ -83,6 +83,7 @@ release-check:
 	python tools/check_release_consistency.py
 
 research-check:
+	python tools/check_fara_foundation_comparison.py
 	python tools/check_research_gates.py
 	python tools/check_investigation_execution.py
 	python tools/generate_investigation_index.py --check
@@ -190,6 +191,7 @@ cre002-execute:
 	python tools/cre002_execute.py --write --check
 
 semantic-check:
+	python tools/check_fara_foundation_comparison.py
 	python tools/check_semantic_consistency.py
 	python tools/check_fara_operator_w2.py
 	python tools/check_fara_common_architecture_w3.py
@@ -205,3 +207,8 @@ fara-vocabulary-check:
 fara-core-formalization-check:
 	python tools/check_fara_core_formalization.py
 	python -m unittest tests.test_fara_core_formalization -v
+
+.PHONY: fara-foundation-comparison-check
+fara-foundation-comparison-check:
+	python tools/check_fara_foundation_comparison.py
+	python -m unittest tests.test_fara_foundation_comparison -v

@@ -1,0 +1,381 @@
+{
+  "benchmark": "BFC-016",
+  "candidate_execution": {
+    "state": {
+      "authorities": {
+        "blog": "invalid",
+        "court": "valid"
+      },
+      "authorization": {
+        "admissible": true,
+        "claim": "C",
+        "source": "court"
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "a1"
+    ]
+  },
+  "comparison": {
+    "commitment_equivalent": true,
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Pass",
+      "semantic": "Pass",
+      "structural": "Pass"
+    },
+    "result_equivalent": true
+  },
+  "correspondence_map": {
+    "a1": "typed-hypergraph:a1",
+    "bfc-016-event": "typed-hypergraph:bfc-016-event",
+    "bfc-016-source": "typed-hypergraph:bfc-016-source",
+    "bfc-016-state": "typed-hypergraph:bfc-016-state"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "state": {
+          "authorities": {
+            "blog": "invalid",
+            "court": "valid"
+          },
+          "authorization": {
+            "admissible": true,
+            "claim": "C",
+            "source": "court"
+          }
+        },
+        "status": "Pass",
+        "steps": [
+          "a1"
+        ]
+      },
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph",
+      "reference_result": {
+        "state": {
+          "authorities": {
+            "blog": "invalid",
+            "court": "valid"
+          },
+          "authorization": {
+            "admissible": true,
+            "claim": "C",
+            "source": "court"
+          }
+        },
+        "status": "Pass",
+        "steps": [
+          "a1"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": true,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Pass",
+          "semantic": "Pass",
+          "structural": "Pass"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": null,
+  "formation_valid": true,
+  "foundation": "typed-hypergraph",
+  "generated_target_elements": [
+    "typed-hypergraph:a1",
+    "typed-hypergraph:bfc-016-event",
+    "typed-hypergraph:bfc-016-source",
+    "typed-hypergraph:bfc-016-state"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "a1",
+      "target": "typed-hypergraph:a1"
+    },
+    {
+      "source": "bfc-016-event",
+      "target": "typed-hypergraph:bfc-016-event"
+    },
+    {
+      "source": "bfc-016-source",
+      "target": "typed-hypergraph:bfc-016-source"
+    },
+    {
+      "source": "bfc-016-state",
+      "target": "typed-hypergraph:bfc-016-state"
+    }
+  ],
+  "recovered_commitments": {
+    "dependency": [
+      [
+        "court",
+        "C"
+      ]
+    ],
+    "historical": [
+      {
+        "after": null,
+        "id": "court-authorizes-C"
+      }
+    ],
+    "information": {
+      "claim": "C"
+    },
+    "operational": {
+      "initial": {
+        "authorities": {
+          "blog": "invalid",
+          "court": "valid"
+        }
+      },
+      "instructions": [
+        {
+          "arguments": {
+            "claim": "C",
+            "source": "court"
+          },
+          "id": "a1",
+          "opcode": "authorize"
+        }
+      ]
+    },
+    "semantic": {
+      "authority_is_institutional": true
+    },
+    "structural": {
+      "identity_bearing_arguments": [],
+      "instruction_ids": [
+        "a1"
+      ],
+      "opcodes": [
+        "authorize"
+      ]
+    }
+  },
+  "recovered_elements": [
+    "a1",
+    "bfc-016-event",
+    "bfc-016-source",
+    "bfc-016-state"
+  ],
+  "recovered_result": {
+    "state": {
+      "authorities": {
+        "blog": "invalid",
+        "court": "valid"
+      },
+      "authorization": {
+        "admissible": true,
+        "claim": "C",
+        "source": "court"
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "a1"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "authorities": {
+        "blog": "invalid",
+        "court": "valid"
+      },
+      "authorization": {
+        "admissible": true,
+        "claim": "C",
+        "source": "court"
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "a1"
+    ]
+  },
+  "source_elements": [
+    "bfc-016-source",
+    "bfc-016-state",
+    "bfc-016-event",
+    "a1"
+  ],
+  "source_model": {
+    "commitments": {
+      "dependency": [
+        [
+          "court",
+          "C"
+        ]
+      ],
+      "historical": [
+        {
+          "after": null,
+          "id": "court-authorizes-C"
+        }
+      ],
+      "information": {
+        "claim": "C"
+      },
+      "operational": {
+        "initial": {
+          "authorities": {
+            "blog": "invalid",
+            "court": "valid"
+          }
+        },
+        "instructions": [
+          {
+            "arguments": {
+              "claim": "C",
+              "source": "court"
+            },
+            "id": "a1",
+            "opcode": "authorize"
+          }
+        ]
+      },
+      "semantic": {
+        "authority_is_institutional": true
+      },
+      "structural": {
+        "identity_bearing_arguments": [],
+        "instruction_ids": [
+          "a1"
+        ],
+        "opcodes": [
+          "authorize"
+        ]
+      }
+    },
+    "dependencies": [
+      [
+        "court",
+        "C"
+      ]
+    ],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "court-authorizes-C"
+      }
+    ],
+    "id": "BFC-016",
+    "information": {
+      "claim": "C"
+    },
+    "initial": {
+      "authorities": {
+        "blog": "invalid",
+        "court": "valid"
+      }
+    },
+    "instructions": [
+      {
+        "arguments": {
+          "claim": "C",
+          "source": "court"
+        },
+        "id": "a1",
+        "opcode": "authorize"
+      }
+    ],
+    "name": "institutional authority",
+    "semantic": {
+      "authority_is_institutional": true
+    },
+    "unknown_reason": null
+  },
+  "status": "Pass",
+  "structural_accounting": {
+    "derived": 0,
+    "execution": 1,
+    "external": 0,
+    "history": 1,
+    "identity": 1,
+    "interpretation": 0,
+    "native": 3,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 7,
+    "repair": 0,
+    "unresolved": 0
+  },
+  "target_model": {
+    "candidate": "typed-hypergraph",
+    "dependency_edges": [
+      [
+        "court",
+        "C"
+      ]
+    ],
+    "edges": [
+      {
+        "arguments": {
+          "claim": "C",
+          "source": "court"
+        },
+        "id": "a1",
+        "type": "authorize"
+      }
+    ],
+    "history_edges": [
+      {
+        "after": null,
+        "id": "court-authorizes-C"
+      }
+    ],
+    "information_nodes": {
+      "claim": "C"
+    },
+    "initial": {
+      "authorities": {
+        "blog": "invalid",
+        "court": "valid"
+      }
+    },
+    "nodes": {
+      "a1": "instruction"
+    },
+    "semantic_nodes": {
+      "authority_is_institutional": true
+    }
+  },
+  "typing_valid": true,
+  "unsupported_structures": []
+}

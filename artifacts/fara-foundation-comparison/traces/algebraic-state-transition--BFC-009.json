@@ -1,0 +1,568 @@
+{
+  "benchmark": "BFC-009",
+  "candidate_execution": {
+    "state": {
+      "records": [
+        {
+          "id": "x",
+          "value": "x"
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "m1"
+    ]
+  },
+  "comparison": {
+    "commitment_equivalent": false,
+    "differences": {
+      "operational": {
+        "expected": {
+          "initial": {
+            "records": []
+          },
+          "instructions": [
+            {
+              "arguments": {
+                "records": [
+                  {
+                    "id": "e1",
+                    "value": "x"
+                  },
+                  {
+                    "id": "e2",
+                    "value": "x"
+                  }
+                ]
+              },
+              "id": "m1",
+              "opcode": "merge_preserve"
+            }
+          ]
+        },
+        "observed": {
+          "initial": {
+            "records": []
+          },
+          "instructions": [
+            {
+              "arguments": {
+                "records": [
+                  "x"
+                ]
+              },
+              "id": "m1",
+              "opcode": "merge_preserve"
+            }
+          ]
+        }
+      },
+      "structural": {
+        "expected": {
+          "identity_bearing_arguments": [
+            {
+              "records": [
+                {
+                  "id": "e1",
+                  "value": "x"
+                },
+                {
+                  "id": "e2",
+                  "value": "x"
+                }
+              ]
+            }
+          ],
+          "instruction_ids": [
+            "m1"
+          ],
+          "opcodes": [
+            "merge_preserve"
+          ]
+        },
+        "observed": {
+          "identity_bearing_arguments": [
+            {
+              "records": [
+                "x"
+              ]
+            }
+          ],
+          "instruction_ids": [
+            "m1"
+          ],
+          "opcodes": [
+            "merge_preserve"
+          ]
+        }
+      }
+    },
+    "missing": [
+      "operational",
+      "structural"
+    ],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Fail",
+      "semantic": "Pass",
+      "structural": "Fail"
+    },
+    "result_equivalent": false
+  },
+  "correspondence_map": {
+    "bfc-009-event": "algebraic-state-transition:bfc-009-event",
+    "bfc-009-source": "algebraic-state-transition:bfc-009-source",
+    "bfc-009-state": "algebraic-state-transition:bfc-009-state",
+    "m1": "algebraic-state-transition:m1"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "state": {
+          "records": [
+            {
+              "id": "x",
+              "value": "x"
+            }
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "m1"
+        ]
+      },
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state",
+      "reference_result": {
+        "state": {
+          "records": [
+            {
+              "id": "e1",
+              "value": "x"
+            },
+            {
+              "id": "e2",
+              "value": "x"
+            }
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "m1"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": false,
+        "differences": {
+          "operational": {
+            "expected": {
+              "initial": {
+                "records": []
+              },
+              "instructions": [
+                {
+                  "arguments": {
+                    "records": [
+                      {
+                        "id": "e1",
+                        "value": "x"
+                      },
+                      {
+                        "id": "e2",
+                        "value": "x"
+                      }
+                    ]
+                  },
+                  "id": "m1",
+                  "opcode": "merge_preserve"
+                }
+              ]
+            },
+            "observed": {
+              "initial": {
+                "records": []
+              },
+              "instructions": [
+                {
+                  "arguments": {
+                    "records": [
+                      "x"
+                    ]
+                  },
+                  "id": "m1",
+                  "opcode": "merge_preserve"
+                }
+              ]
+            }
+          },
+          "structural": {
+            "expected": {
+              "identity_bearing_arguments": [
+                {
+                  "records": [
+                    {
+                      "id": "e1",
+                      "value": "x"
+                    },
+                    {
+                      "id": "e2",
+                      "value": "x"
+                    }
+                  ]
+                }
+              ],
+              "instruction_ids": [
+                "m1"
+              ],
+              "opcodes": [
+                "merge_preserve"
+              ]
+            },
+            "observed": {
+              "identity_bearing_arguments": [
+                {
+                  "records": [
+                    "x"
+                  ]
+                }
+              ],
+              "instruction_ids": [
+                "m1"
+              ],
+              "opcodes": [
+                "merge_preserve"
+              ]
+            }
+          }
+        },
+        "missing": [
+          "operational",
+          "structural"
+        ],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Fail",
+          "semantic": "Pass",
+          "structural": "Fail"
+        },
+        "result_equivalent": false
+      },
+      "evaluator": "reconstruction.compare"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": "execution-result; operational; structural",
+  "formation_valid": true,
+  "foundation": "algebraic-state-transition",
+  "generated_target_elements": [
+    "algebraic-state-transition:bfc-009-event",
+    "algebraic-state-transition:bfc-009-source",
+    "algebraic-state-transition:bfc-009-state",
+    "algebraic-state-transition:m1"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [
+    "operational",
+    "structural"
+  ],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Fail",
+    "semantic": "Pass",
+    "structural": "Fail"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-009-event",
+      "target": "algebraic-state-transition:bfc-009-event"
+    },
+    {
+      "source": "bfc-009-source",
+      "target": "algebraic-state-transition:bfc-009-source"
+    },
+    {
+      "source": "bfc-009-state",
+      "target": "algebraic-state-transition:bfc-009-state"
+    },
+    {
+      "source": "m1",
+      "target": "algebraic-state-transition:m1"
+    }
+  ],
+  "recovered_commitments": {
+    "dependency": [],
+    "historical": [
+      {
+        "after": null,
+        "id": "merge-e1"
+      },
+      {
+        "after": null,
+        "id": "merge-e2"
+      }
+    ],
+    "information": {
+      "shared_value": "x"
+    },
+    "operational": {
+      "initial": {
+        "records": []
+      },
+      "instructions": [
+        {
+          "arguments": {
+            "records": [
+              "x"
+            ]
+          },
+          "id": "m1",
+          "opcode": "merge_preserve"
+        }
+      ]
+    },
+    "semantic": {
+      "merge_policy": "preserve distinct identities"
+    },
+    "structural": {
+      "identity_bearing_arguments": [
+        {
+          "records": [
+            "x"
+          ]
+        }
+      ],
+      "instruction_ids": [
+        "m1"
+      ],
+      "opcodes": [
+        "merge_preserve"
+      ]
+    }
+  },
+  "recovered_elements": [
+    "bfc-009-event",
+    "bfc-009-source",
+    "bfc-009-state",
+    "m1"
+  ],
+  "recovered_result": {
+    "state": {
+      "records": [
+        {
+          "id": "x",
+          "value": "x"
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "m1"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "records": [
+        {
+          "id": "e1",
+          "value": "x"
+        },
+        {
+          "id": "e2",
+          "value": "x"
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "m1"
+    ]
+  },
+  "source_elements": [
+    "bfc-009-source",
+    "bfc-009-state",
+    "bfc-009-event",
+    "m1"
+  ],
+  "source_model": {
+    "commitments": {
+      "dependency": [],
+      "historical": [
+        {
+          "after": null,
+          "id": "merge-e1"
+        },
+        {
+          "after": null,
+          "id": "merge-e2"
+        }
+      ],
+      "information": {
+        "shared_value": "x"
+      },
+      "operational": {
+        "initial": {
+          "records": []
+        },
+        "instructions": [
+          {
+            "arguments": {
+              "records": [
+                {
+                  "id": "e1",
+                  "value": "x"
+                },
+                {
+                  "id": "e2",
+                  "value": "x"
+                }
+              ]
+            },
+            "id": "m1",
+            "opcode": "merge_preserve"
+          }
+        ]
+      },
+      "semantic": {
+        "merge_policy": "preserve distinct identities"
+      },
+      "structural": {
+        "identity_bearing_arguments": [
+          {
+            "records": [
+              {
+                "id": "e1",
+                "value": "x"
+              },
+              {
+                "id": "e2",
+                "value": "x"
+              }
+            ]
+          }
+        ],
+        "instruction_ids": [
+          "m1"
+        ],
+        "opcodes": [
+          "merge_preserve"
+        ]
+      }
+    },
+    "dependencies": [],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "merge-e1"
+      },
+      {
+        "after": null,
+        "id": "merge-e2"
+      }
+    ],
+    "id": "BFC-009",
+    "information": {
+      "shared_value": "x"
+    },
+    "initial": {
+      "records": []
+    },
+    "instructions": [
+      {
+        "arguments": {
+          "records": [
+            {
+              "id": "e1",
+              "value": "x"
+            },
+            {
+              "id": "e2",
+              "value": "x"
+            }
+          ]
+        },
+        "id": "m1",
+        "opcode": "merge_preserve"
+      }
+    ],
+    "name": "identity-preserving merge",
+    "semantic": {
+      "merge_policy": "preserve distinct identities"
+    },
+    "unknown_reason": null
+  },
+  "status": "Fail",
+  "structural_accounting": {
+    "derived": 1,
+    "execution": 1,
+    "external": 0,
+    "history": 2,
+    "identity": 1,
+    "interpretation": 0,
+    "native": 2,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 8,
+    "repair": 1,
+    "unresolved": 2
+  },
+  "target_model": {
+    "candidate": "algebraic-state-transition",
+    "dependency_map": [],
+    "history": [
+      {
+        "after": null,
+        "id": "merge-e1"
+      },
+      {
+        "after": null,
+        "id": "merge-e2"
+      }
+    ],
+    "information_map": {
+      "shared_value": "x"
+    },
+    "initial": {
+      "records": []
+    },
+    "operations": {
+      "m1": {
+        "arguments": {
+          "records": [
+            "x"
+          ]
+        },
+        "kind": "merge_preserve"
+      }
+    },
+    "program": [
+      "m1"
+    ],
+    "semantic_map": {
+      "merge_policy": "preserve distinct identities"
+    }
+  },
+  "typing_valid": true,
+  "unsupported_structures": [
+    "operational",
+    "structural"
+  ]
+}

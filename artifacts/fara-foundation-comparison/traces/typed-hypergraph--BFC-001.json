@@ -1,0 +1,423 @@
+{
+  "benchmark": "BFC-001",
+  "candidate_execution": {
+    "state": {
+      "states": [
+        "s0",
+        "s1",
+        "s2"
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "r1",
+      "r2"
+    ]
+  },
+  "comparison": {
+    "commitment_equivalent": true,
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Pass",
+      "semantic": "Pass",
+      "structural": "Pass"
+    },
+    "result_equivalent": true
+  },
+  "correspondence_map": {
+    "bfc-001-event": "typed-hypergraph:bfc-001-event",
+    "bfc-001-source": "typed-hypergraph:bfc-001-source",
+    "bfc-001-state": "typed-hypergraph:bfc-001-state",
+    "r1": "typed-hypergraph:r1",
+    "r2": "typed-hypergraph:r2"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "state": {
+          "states": [
+            "s0",
+            "s1",
+            "s2"
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "r1",
+          "r2"
+        ]
+      },
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph",
+      "reference_result": {
+        "state": {
+          "states": [
+            "s0",
+            "s1",
+            "s2"
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "r1",
+          "r2"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": true,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Pass",
+          "semantic": "Pass",
+          "structural": "Pass"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": null,
+  "formation_valid": true,
+  "foundation": "typed-hypergraph",
+  "generated_target_elements": [
+    "typed-hypergraph:bfc-001-event",
+    "typed-hypergraph:bfc-001-source",
+    "typed-hypergraph:bfc-001-state",
+    "typed-hypergraph:r1",
+    "typed-hypergraph:r2"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-001-event",
+      "target": "typed-hypergraph:bfc-001-event"
+    },
+    {
+      "source": "bfc-001-source",
+      "target": "typed-hypergraph:bfc-001-source"
+    },
+    {
+      "source": "bfc-001-state",
+      "target": "typed-hypergraph:bfc-001-state"
+    },
+    {
+      "source": "r1",
+      "target": "typed-hypergraph:r1"
+    },
+    {
+      "source": "r2",
+      "target": "typed-hypergraph:r2"
+    }
+  ],
+  "recovered_commitments": {
+    "dependency": [
+      [
+        "r1",
+        "r2"
+      ]
+    ],
+    "historical": [
+      {
+        "after": null,
+        "id": "h1"
+      },
+      {
+        "after": "h1",
+        "id": "h2"
+      }
+    ],
+    "information": {
+      "initial_state": "s0"
+    },
+    "operational": {
+      "initial": {
+        "states": [
+          "s0"
+        ]
+      },
+      "instructions": [
+        {
+          "arguments": {
+            "source": "s1",
+            "target": "s2"
+          },
+          "id": "r2",
+          "opcode": "transition"
+        },
+        {
+          "arguments": {
+            "source": "s0",
+            "target": "s1"
+          },
+          "id": "r1",
+          "opcode": "transition"
+        }
+      ]
+    },
+    "semantic": {
+      "transition_meaning": "reachable-state closure"
+    },
+    "structural": {
+      "identity_bearing_arguments": [],
+      "instruction_ids": [
+        "r2",
+        "r1"
+      ],
+      "opcodes": [
+        "transition",
+        "transition"
+      ]
+    }
+  },
+  "recovered_elements": [
+    "bfc-001-event",
+    "bfc-001-source",
+    "bfc-001-state",
+    "r1",
+    "r2"
+  ],
+  "recovered_result": {
+    "state": {
+      "states": [
+        "s0",
+        "s1",
+        "s2"
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "r1",
+      "r2"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "states": [
+        "s0",
+        "s1",
+        "s2"
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "r1",
+      "r2"
+    ]
+  },
+  "source_elements": [
+    "bfc-001-source",
+    "bfc-001-state",
+    "bfc-001-event",
+    "r2",
+    "r1"
+  ],
+  "source_model": {
+    "commitments": {
+      "dependency": [
+        [
+          "r1",
+          "r2"
+        ]
+      ],
+      "historical": [
+        {
+          "after": null,
+          "id": "h1"
+        },
+        {
+          "after": "h1",
+          "id": "h2"
+        }
+      ],
+      "information": {
+        "initial_state": "s0"
+      },
+      "operational": {
+        "initial": {
+          "states": [
+            "s0"
+          ]
+        },
+        "instructions": [
+          {
+            "arguments": {
+              "source": "s1",
+              "target": "s2"
+            },
+            "id": "r2",
+            "opcode": "transition"
+          },
+          {
+            "arguments": {
+              "source": "s0",
+              "target": "s1"
+            },
+            "id": "r1",
+            "opcode": "transition"
+          }
+        ]
+      },
+      "semantic": {
+        "transition_meaning": "reachable-state closure"
+      },
+      "structural": {
+        "identity_bearing_arguments": [],
+        "instruction_ids": [
+          "r2",
+          "r1"
+        ],
+        "opcodes": [
+          "transition",
+          "transition"
+        ]
+      }
+    },
+    "dependencies": [
+      [
+        "r1",
+        "r2"
+      ]
+    ],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "h1"
+      },
+      {
+        "after": "h1",
+        "id": "h2"
+      }
+    ],
+    "id": "BFC-001",
+    "information": {
+      "initial_state": "s0"
+    },
+    "initial": {
+      "states": [
+        "s0"
+      ]
+    },
+    "instructions": [
+      {
+        "arguments": {
+          "source": "s1",
+          "target": "s2"
+        },
+        "id": "r2",
+        "opcode": "transition"
+      },
+      {
+        "arguments": {
+          "source": "s0",
+          "target": "s1"
+        },
+        "id": "r1",
+        "opcode": "transition"
+      }
+    ],
+    "name": "deterministic transitions",
+    "semantic": {
+      "transition_meaning": "reachable-state closure"
+    },
+    "unknown_reason": null
+  },
+  "status": "Pass",
+  "structural_accounting": {
+    "derived": 2,
+    "execution": 2,
+    "external": 1,
+    "history": 2,
+    "identity": 2,
+    "interpretation": 0,
+    "native": 6,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 8,
+    "repair": 0,
+    "unresolved": 0
+  },
+  "target_model": {
+    "candidate": "typed-hypergraph",
+    "dependency_edges": [
+      [
+        "r1",
+        "r2"
+      ]
+    ],
+    "edges": [
+      {
+        "arguments": {
+          "source": "s1",
+          "target": "s2"
+        },
+        "id": "r2",
+        "type": "transition"
+      },
+      {
+        "arguments": {
+          "source": "s0",
+          "target": "s1"
+        },
+        "id": "r1",
+        "type": "transition"
+      }
+    ],
+    "history_edges": [
+      {
+        "after": null,
+        "id": "h1"
+      },
+      {
+        "after": "h1",
+        "id": "h2"
+      }
+    ],
+    "information_nodes": {
+      "initial_state": "s0"
+    },
+    "initial": {
+      "states": [
+        "s0"
+      ]
+    },
+    "nodes": {
+      "r1": "instruction",
+      "r2": "instruction"
+    },
+    "semantic_nodes": {
+      "transition_meaning": "reachable-state closure"
+    }
+  },
+  "typing_valid": true,
+  "unsupported_structures": []
+}

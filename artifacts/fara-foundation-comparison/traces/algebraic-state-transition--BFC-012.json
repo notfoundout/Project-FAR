@@ -1,0 +1,606 @@
+{
+  "benchmark": "BFC-012",
+  "candidate_execution": {
+    "state": {
+      "observations": [
+        {
+          "source": "quotiented",
+          "value": 1
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "o1"
+    ]
+  },
+  "comparison": {
+    "commitment_equivalent": false,
+    "differences": {
+      "historical": {
+        "expected": [
+          {
+            "after": null,
+            "id": "sensorA:1"
+          },
+          {
+            "after": null,
+            "id": "sensorB:1"
+          }
+        ],
+        "observed": []
+      },
+      "operational": {
+        "expected": {
+          "initial": {
+            "observations": []
+          },
+          "instructions": [
+            {
+              "arguments": {
+                "source": "sensorA",
+                "value": 1
+              },
+              "id": "o1",
+              "opcode": "observe"
+            },
+            {
+              "arguments": {
+                "source": "sensorB",
+                "value": 1
+              },
+              "id": "o2",
+              "opcode": "observe"
+            }
+          ]
+        },
+        "observed": {
+          "initial": {
+            "observations": []
+          },
+          "instructions": [
+            {
+              "arguments": {
+                "value": 1
+              },
+              "id": "o1",
+              "opcode": "observe"
+            }
+          ]
+        }
+      },
+      "structural": {
+        "expected": {
+          "identity_bearing_arguments": [
+            {
+              "source": "sensorA",
+              "value": 1
+            },
+            {
+              "source": "sensorB",
+              "value": 1
+            }
+          ],
+          "instruction_ids": [
+            "o1",
+            "o2"
+          ],
+          "opcodes": [
+            "observe",
+            "observe"
+          ]
+        },
+        "observed": {
+          "identity_bearing_arguments": [
+            {
+              "value": 1
+            }
+          ],
+          "instruction_ids": [
+            "o1"
+          ],
+          "opcodes": [
+            "observe"
+          ]
+        }
+      }
+    },
+    "missing": [
+      "historical",
+      "operational",
+      "structural"
+    ],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Fail",
+      "information": "Pass",
+      "operational": "Fail",
+      "semantic": "Pass",
+      "structural": "Fail"
+    },
+    "result_equivalent": false
+  },
+  "correspondence_map": {
+    "bfc-012-event": "algebraic-state-transition:bfc-012-event",
+    "bfc-012-source": "algebraic-state-transition:bfc-012-source",
+    "bfc-012-state": "algebraic-state-transition:bfc-012-state",
+    "o1": "algebraic-state-transition:o1",
+    "o2": "algebraic-state-transition:o2"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "state": {
+          "observations": [
+            {
+              "source": "quotiented",
+              "value": 1
+            }
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "o1"
+        ]
+      },
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state",
+      "reference_result": {
+        "state": {
+          "observations": [
+            {
+              "source": "sensorA",
+              "value": 1
+            },
+            {
+              "source": "sensorB",
+              "value": 1
+            }
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "o1",
+          "o2"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": false,
+        "differences": {
+          "historical": {
+            "expected": [
+              {
+                "after": null,
+                "id": "sensorA:1"
+              },
+              {
+                "after": null,
+                "id": "sensorB:1"
+              }
+            ],
+            "observed": []
+          },
+          "operational": {
+            "expected": {
+              "initial": {
+                "observations": []
+              },
+              "instructions": [
+                {
+                  "arguments": {
+                    "source": "sensorA",
+                    "value": 1
+                  },
+                  "id": "o1",
+                  "opcode": "observe"
+                },
+                {
+                  "arguments": {
+                    "source": "sensorB",
+                    "value": 1
+                  },
+                  "id": "o2",
+                  "opcode": "observe"
+                }
+              ]
+            },
+            "observed": {
+              "initial": {
+                "observations": []
+              },
+              "instructions": [
+                {
+                  "arguments": {
+                    "value": 1
+                  },
+                  "id": "o1",
+                  "opcode": "observe"
+                }
+              ]
+            }
+          },
+          "structural": {
+            "expected": {
+              "identity_bearing_arguments": [
+                {
+                  "source": "sensorA",
+                  "value": 1
+                },
+                {
+                  "source": "sensorB",
+                  "value": 1
+                }
+              ],
+              "instruction_ids": [
+                "o1",
+                "o2"
+              ],
+              "opcodes": [
+                "observe",
+                "observe"
+              ]
+            },
+            "observed": {
+              "identity_bearing_arguments": [
+                {
+                  "value": 1
+                }
+              ],
+              "instruction_ids": [
+                "o1"
+              ],
+              "opcodes": [
+                "observe"
+              ]
+            }
+          }
+        },
+        "missing": [
+          "historical",
+          "operational",
+          "structural"
+        ],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Fail",
+          "information": "Pass",
+          "operational": "Fail",
+          "semantic": "Pass",
+          "structural": "Fail"
+        },
+        "result_equivalent": false
+      },
+      "evaluator": "reconstruction.compare"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": "execution-result; historical; operational; structural",
+  "formation_valid": true,
+  "foundation": "algebraic-state-transition",
+  "generated_target_elements": [
+    "algebraic-state-transition:bfc-012-event",
+    "algebraic-state-transition:bfc-012-source",
+    "algebraic-state-transition:bfc-012-state",
+    "algebraic-state-transition:o1",
+    "algebraic-state-transition:o2"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [
+    "historical",
+    "operational",
+    "structural"
+  ],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Fail",
+    "information": "Pass",
+    "operational": "Fail",
+    "semantic": "Pass",
+    "structural": "Fail"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-012-event",
+      "target": "algebraic-state-transition:bfc-012-event"
+    },
+    {
+      "source": "bfc-012-source",
+      "target": "algebraic-state-transition:bfc-012-source"
+    },
+    {
+      "source": "bfc-012-state",
+      "target": "algebraic-state-transition:bfc-012-state"
+    },
+    {
+      "source": "o1",
+      "target": "algebraic-state-transition:o1"
+    },
+    {
+      "source": "o2",
+      "target": "algebraic-state-transition:o2"
+    }
+  ],
+  "recovered_commitments": {
+    "dependency": [
+      [
+        "sensorA",
+        "value=1"
+      ],
+      [
+        "sensorB",
+        "value=1"
+      ]
+    ],
+    "historical": [],
+    "information": {
+      "value": 1
+    },
+    "operational": {
+      "initial": {
+        "observations": []
+      },
+      "instructions": [
+        {
+          "arguments": {
+            "value": 1
+          },
+          "id": "o1",
+          "opcode": "observe"
+        }
+      ]
+    },
+    "semantic": {
+      "same_value_distinct_provenance": true
+    },
+    "structural": {
+      "identity_bearing_arguments": [
+        {
+          "value": 1
+        }
+      ],
+      "instruction_ids": [
+        "o1"
+      ],
+      "opcodes": [
+        "observe"
+      ]
+    }
+  },
+  "recovered_elements": [
+    "bfc-012-event",
+    "bfc-012-source",
+    "bfc-012-state",
+    "o1",
+    "o2"
+  ],
+  "recovered_result": {
+    "state": {
+      "observations": [
+        {
+          "source": "quotiented",
+          "value": 1
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "o1"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "observations": [
+        {
+          "source": "sensorA",
+          "value": 1
+        },
+        {
+          "source": "sensorB",
+          "value": 1
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "o1",
+      "o2"
+    ]
+  },
+  "source_elements": [
+    "bfc-012-source",
+    "bfc-012-state",
+    "bfc-012-event",
+    "o1",
+    "o2"
+  ],
+  "source_model": {
+    "commitments": {
+      "dependency": [
+        [
+          "sensorA",
+          "value=1"
+        ],
+        [
+          "sensorB",
+          "value=1"
+        ]
+      ],
+      "historical": [
+        {
+          "after": null,
+          "id": "sensorA:1"
+        },
+        {
+          "after": null,
+          "id": "sensorB:1"
+        }
+      ],
+      "information": {
+        "value": 1
+      },
+      "operational": {
+        "initial": {
+          "observations": []
+        },
+        "instructions": [
+          {
+            "arguments": {
+              "source": "sensorA",
+              "value": 1
+            },
+            "id": "o1",
+            "opcode": "observe"
+          },
+          {
+            "arguments": {
+              "source": "sensorB",
+              "value": 1
+            },
+            "id": "o2",
+            "opcode": "observe"
+          }
+        ]
+      },
+      "semantic": {
+        "same_value_distinct_provenance": true
+      },
+      "structural": {
+        "identity_bearing_arguments": [
+          {
+            "source": "sensorA",
+            "value": 1
+          },
+          {
+            "source": "sensorB",
+            "value": 1
+          }
+        ],
+        "instruction_ids": [
+          "o1",
+          "o2"
+        ],
+        "opcodes": [
+          "observe",
+          "observe"
+        ]
+      }
+    },
+    "dependencies": [
+      [
+        "sensorA",
+        "value=1"
+      ],
+      [
+        "sensorB",
+        "value=1"
+      ]
+    ],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "sensorA:1"
+      },
+      {
+        "after": null,
+        "id": "sensorB:1"
+      }
+    ],
+    "id": "BFC-012",
+    "information": {
+      "value": 1
+    },
+    "initial": {
+      "observations": []
+    },
+    "instructions": [
+      {
+        "arguments": {
+          "source": "sensorA",
+          "value": 1
+        },
+        "id": "o1",
+        "opcode": "observe"
+      },
+      {
+        "arguments": {
+          "source": "sensorB",
+          "value": 1
+        },
+        "id": "o2",
+        "opcode": "observe"
+      }
+    ],
+    "name": "provenance-sensitive history",
+    "semantic": {
+      "same_value_distinct_provenance": true
+    },
+    "unknown_reason": null
+  },
+  "status": "Fail",
+  "structural_accounting": {
+    "derived": 1,
+    "execution": 1,
+    "external": 0,
+    "history": 0,
+    "identity": 1,
+    "interpretation": 0,
+    "native": 2,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 8,
+    "repair": 1,
+    "unresolved": 3
+  },
+  "target_model": {
+    "candidate": "algebraic-state-transition",
+    "dependency_map": [
+      [
+        "sensorA",
+        "value=1"
+      ],
+      [
+        "sensorB",
+        "value=1"
+      ]
+    ],
+    "history": [],
+    "information_map": {
+      "value": 1
+    },
+    "initial": {
+      "observations": []
+    },
+    "operations": {
+      "o1": {
+        "arguments": {
+          "value": 1
+        },
+        "kind": "observe"
+      }
+    },
+    "program": [
+      "o1"
+    ],
+    "semantic_map": {
+      "same_value_distinct_provenance": true
+    }
+  },
+  "typing_valid": true,
+  "unsupported_structures": [
+    "historical",
+    "operational",
+    "structural"
+  ]
+}

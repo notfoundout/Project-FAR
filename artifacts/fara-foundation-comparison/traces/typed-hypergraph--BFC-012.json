@@ -1,0 +1,474 @@
+{
+  "benchmark": "BFC-012",
+  "candidate_execution": {
+    "state": {
+      "observations": [
+        {
+          "source": "sensorA",
+          "value": 1
+        },
+        {
+          "source": "sensorB",
+          "value": 1
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "o1",
+      "o2"
+    ]
+  },
+  "comparison": {
+    "commitment_equivalent": true,
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Pass",
+      "semantic": "Pass",
+      "structural": "Pass"
+    },
+    "result_equivalent": true
+  },
+  "correspondence_map": {
+    "bfc-012-event": "typed-hypergraph:bfc-012-event",
+    "bfc-012-source": "typed-hypergraph:bfc-012-source",
+    "bfc-012-state": "typed-hypergraph:bfc-012-state",
+    "o1": "typed-hypergraph:o1",
+    "o2": "typed-hypergraph:o2"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "state": {
+          "observations": [
+            {
+              "source": "sensorA",
+              "value": 1
+            },
+            {
+              "source": "sensorB",
+              "value": 1
+            }
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "o1",
+          "o2"
+        ]
+      },
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph",
+      "reference_result": {
+        "state": {
+          "observations": [
+            {
+              "source": "sensorA",
+              "value": 1
+            },
+            {
+              "source": "sensorB",
+              "value": 1
+            }
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "o1",
+          "o2"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": true,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Pass",
+          "semantic": "Pass",
+          "structural": "Pass"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": null,
+  "formation_valid": true,
+  "foundation": "typed-hypergraph",
+  "generated_target_elements": [
+    "typed-hypergraph:bfc-012-event",
+    "typed-hypergraph:bfc-012-source",
+    "typed-hypergraph:bfc-012-state",
+    "typed-hypergraph:o1",
+    "typed-hypergraph:o2"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-012-event",
+      "target": "typed-hypergraph:bfc-012-event"
+    },
+    {
+      "source": "bfc-012-source",
+      "target": "typed-hypergraph:bfc-012-source"
+    },
+    {
+      "source": "bfc-012-state",
+      "target": "typed-hypergraph:bfc-012-state"
+    },
+    {
+      "source": "o1",
+      "target": "typed-hypergraph:o1"
+    },
+    {
+      "source": "o2",
+      "target": "typed-hypergraph:o2"
+    }
+  ],
+  "recovered_commitments": {
+    "dependency": [
+      [
+        "sensorA",
+        "value=1"
+      ],
+      [
+        "sensorB",
+        "value=1"
+      ]
+    ],
+    "historical": [
+      {
+        "after": null,
+        "id": "sensorA:1"
+      },
+      {
+        "after": null,
+        "id": "sensorB:1"
+      }
+    ],
+    "information": {
+      "value": 1
+    },
+    "operational": {
+      "initial": {
+        "observations": []
+      },
+      "instructions": [
+        {
+          "arguments": {
+            "source": "sensorA",
+            "value": 1
+          },
+          "id": "o1",
+          "opcode": "observe"
+        },
+        {
+          "arguments": {
+            "source": "sensorB",
+            "value": 1
+          },
+          "id": "o2",
+          "opcode": "observe"
+        }
+      ]
+    },
+    "semantic": {
+      "same_value_distinct_provenance": true
+    },
+    "structural": {
+      "identity_bearing_arguments": [
+        {
+          "source": "sensorA",
+          "value": 1
+        },
+        {
+          "source": "sensorB",
+          "value": 1
+        }
+      ],
+      "instruction_ids": [
+        "o1",
+        "o2"
+      ],
+      "opcodes": [
+        "observe",
+        "observe"
+      ]
+    }
+  },
+  "recovered_elements": [
+    "bfc-012-event",
+    "bfc-012-source",
+    "bfc-012-state",
+    "o1",
+    "o2"
+  ],
+  "recovered_result": {
+    "state": {
+      "observations": [
+        {
+          "source": "sensorA",
+          "value": 1
+        },
+        {
+          "source": "sensorB",
+          "value": 1
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "o1",
+      "o2"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "observations": [
+        {
+          "source": "sensorA",
+          "value": 1
+        },
+        {
+          "source": "sensorB",
+          "value": 1
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "o1",
+      "o2"
+    ]
+  },
+  "source_elements": [
+    "bfc-012-source",
+    "bfc-012-state",
+    "bfc-012-event",
+    "o1",
+    "o2"
+  ],
+  "source_model": {
+    "commitments": {
+      "dependency": [
+        [
+          "sensorA",
+          "value=1"
+        ],
+        [
+          "sensorB",
+          "value=1"
+        ]
+      ],
+      "historical": [
+        {
+          "after": null,
+          "id": "sensorA:1"
+        },
+        {
+          "after": null,
+          "id": "sensorB:1"
+        }
+      ],
+      "information": {
+        "value": 1
+      },
+      "operational": {
+        "initial": {
+          "observations": []
+        },
+        "instructions": [
+          {
+            "arguments": {
+              "source": "sensorA",
+              "value": 1
+            },
+            "id": "o1",
+            "opcode": "observe"
+          },
+          {
+            "arguments": {
+              "source": "sensorB",
+              "value": 1
+            },
+            "id": "o2",
+            "opcode": "observe"
+          }
+        ]
+      },
+      "semantic": {
+        "same_value_distinct_provenance": true
+      },
+      "structural": {
+        "identity_bearing_arguments": [
+          {
+            "source": "sensorA",
+            "value": 1
+          },
+          {
+            "source": "sensorB",
+            "value": 1
+          }
+        ],
+        "instruction_ids": [
+          "o1",
+          "o2"
+        ],
+        "opcodes": [
+          "observe",
+          "observe"
+        ]
+      }
+    },
+    "dependencies": [
+      [
+        "sensorA",
+        "value=1"
+      ],
+      [
+        "sensorB",
+        "value=1"
+      ]
+    ],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "sensorA:1"
+      },
+      {
+        "after": null,
+        "id": "sensorB:1"
+      }
+    ],
+    "id": "BFC-012",
+    "information": {
+      "value": 1
+    },
+    "initial": {
+      "observations": []
+    },
+    "instructions": [
+      {
+        "arguments": {
+          "source": "sensorA",
+          "value": 1
+        },
+        "id": "o1",
+        "opcode": "observe"
+      },
+      {
+        "arguments": {
+          "source": "sensorB",
+          "value": 1
+        },
+        "id": "o2",
+        "opcode": "observe"
+      }
+    ],
+    "name": "provenance-sensitive history",
+    "semantic": {
+      "same_value_distinct_provenance": true
+    },
+    "unknown_reason": null
+  },
+  "status": "Pass",
+  "structural_accounting": {
+    "derived": 0,
+    "execution": 2,
+    "external": 0,
+    "history": 2,
+    "identity": 2,
+    "interpretation": 0,
+    "native": 6,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 8,
+    "repair": 0,
+    "unresolved": 0
+  },
+  "target_model": {
+    "candidate": "typed-hypergraph",
+    "dependency_edges": [
+      [
+        "sensorA",
+        "value=1"
+      ],
+      [
+        "sensorB",
+        "value=1"
+      ]
+    ],
+    "edges": [
+      {
+        "arguments": {
+          "source": "sensorA",
+          "value": 1
+        },
+        "id": "o1",
+        "type": "observe"
+      },
+      {
+        "arguments": {
+          "source": "sensorB",
+          "value": 1
+        },
+        "id": "o2",
+        "type": "observe"
+      }
+    ],
+    "history_edges": [
+      {
+        "after": null,
+        "id": "sensorA:1"
+      },
+      {
+        "after": null,
+        "id": "sensorB:1"
+      }
+    ],
+    "information_nodes": {
+      "value": 1
+    },
+    "initial": {
+      "observations": []
+    },
+    "nodes": {
+      "o1": "instruction",
+      "o2": "instruction"
+    },
+    "semantic_nodes": {
+      "same_value_distinct_provenance": true
+    }
+  },
+  "typing_valid": true,
+  "unsupported_structures": []
+}
