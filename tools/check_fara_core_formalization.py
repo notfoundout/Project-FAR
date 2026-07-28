@@ -9,14 +9,14 @@ SPEC=ROOT/'theory/formal/fara-core-formalization-v1.0.json'
 PROOF=ROOT/'theory/evaluation/fara-core-formalization-proof-v1.0.json'
 REPORT=ROOT/'theory/evaluation/generated-fara-core-formalization-report.md'
 DIMS=['structural','semantic','operational','dependency','information','historical']
+W1_ORDER=['Object','Property','Relation','Representation','Interpretation','Investigation','ReasoningCalculus']
 NONCLAIMS=['canonical uniqueness','primitive necessity','global independence','global minimality','completeness','universality']
 OBLIGATIONS=['choose among non-equivalent coherent foundations by substantive evidence','extend bounded derivability beyond cardinality two','supply nonfinite continuous semantics','supply environment-inclusive embodied semantics','independently replicate model and countermodel executions','prove conservativity against a formalization of the complete old prose theory']
 
-def stable(x): return json.loads(json.dumps(x))
 def digest(x): return hashlib.sha256(json.dumps(x,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
 def build_spec():
-    """Return the frozen specification; its formal content is independently checked by validate."""
+    """Return the frozen specification; validate independently checks its formal content."""
     return json.loads(SPEC.read_text())
 
 def reduct(model,target): return {k:copy.deepcopy(v) for k,v in model.items() if k!=target}
@@ -60,8 +60,7 @@ def validate_foundation(foundation):
 
 def build_proof(spec):
     proof=json.loads(PROOF.read_text())
-    targets=['Object','Relation','Representation','Interpretation','ReasoningCalculus']
-    proof['countermodels']=[paired_countermodel(target,i) for i,target in enumerate(targets,1)]
+    proof['countermodels']=[paired_countermodel(target,i) for i,target in enumerate(['Object','Relation','Representation','Interpretation','ReasoningCalculus'],1)]
     proof['foundation_checks']=[validate_foundation(f) for f in spec['foundations']]
     families=['finite_deterministic','nonmonotonic_revision','paraconsistent','probabilistic','causal_intervention','changing_rules','changing_interpretations','incompatible_ontologies','provenance_history','distributed_partial_order','proof_identity_binding','institutional_authority','oracle_dependence','continuous_embodied']
     models=[]
@@ -88,7 +87,7 @@ def closure(graph):
 def render(spec,proof):
     pre='\n'.join(f"- `{k}` → {', '.join(v) or '∅'}" for k,v in spec['pre_dependency_graph'].items())
     post='\n'.join(f"- `{k}` → {', '.join(v) or '∅'}" for k,v in spec['post_dependency_graph'].items())
-    w1='\n'.join(f"| {k} | {v} |" for k,v in proof['w1_re_evaluation'].items())
+    w1='\n'.join(f"| {k} | {proof['w1_re_evaluation'][k]} |" for k in W1_ORDER)
     foundations='\n'.join(f"- **{f['name']}**: typed={c['typed']}, coherent={c['coherent']}; witness: {f['non_equivalence_witness']['property']}." for f,c in zip(spec['foundations'],proof['foundation_checks']))
     executed=sum(m['execution']=='Pass' for m in proof['models']); unknown=sum(m['execution']=='Unknown' for m in proof['models'])
     return f"""# FARA core formalization — generated report
@@ -125,7 +124,8 @@ All five non-derivability records include machine-checkable paired models whose 
 """+'\n'.join('- '+x for x in NONCLAIMS)+"\n\n## Remaining obligations\n"+'\n'.join('- '+x for x in OBLIGATIONS)+"\n"
 
 def validate(spec,proof,report=None):
-    errors=[]; expected=build_proof(spec)
+    errors=[]; canonical=build_spec(); expected=build_proof(spec)
+    if spec!=canonical: errors.append('specification differs from frozen canonical object')
     try: closure(spec.get('post_dependency_graph',{}))
     except (ValueError,KeyError) as exc: errors.append('dependency graph invalid: '+str(exc))
     definitions=spec.get('definitions',[]); symbols={d.get('symbol') for d in definitions}; sorts=set(spec.get('language',{}).get('sorts',[]))
