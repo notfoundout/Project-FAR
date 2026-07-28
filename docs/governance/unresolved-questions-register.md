@@ -22,7 +22,7 @@ The registers identify questions, not authorization to execute them. New investi
 
 - **UQ-T5:** Are Construct, Differentiate, and Restrict jointly sufficient and individually irreducible outside registered scopes? **Unresolved globally; W2 establishes only coordinate-separation-induced bounded minimality in `finite_coordinate_trace_v1`.**
 - **UQ-T6:** Is Resolve reducible in every relevant architecture, or does some case require it (or another operator) primitively? **Unresolved; W2 does not derive Resolve because its bounded model lacks declared-rule representation and rule execution.**
-- **UQ-T7:** Can changing rules, continuous dynamics, embodied coupling, incompatible ontologies, and nonclassical consequence be represented without material expressive loss? **Unresolved.**
+- **UQ-T7:** Can changing rules, continuous dynamics, embodied coupling, incompatible ontologies, and nonclassical consequence be represented without material expressive loss? **Unresolved globally; W4 establishes a bounded sufficient condition for finite explicit archives and registered collision/hidden-machinery failures, not a universal theorem.**
 - **UQ-T8:** Is admissibility logically prior to valid transition, or are both jointly specified by a calculus? **Unresolved.**
 - **UQ-T9:** Can one non-vacuous architecture preserve all six W3 dimensions for continuous/hybrid, embodied, changing-ontology, distributed, and oracle-dependent systems without copying the missing machinery into typed payloads? **Unresolved; `FARA-ARCH-W3-001` refutes only the internal-state-only lossless universal form.**
 - **UQ-E5:** Would independent CRP implementations agree on all canonicalization, clause-segmentation, and tie cases? **Unresolved; v1.1 fixtures proposed.**

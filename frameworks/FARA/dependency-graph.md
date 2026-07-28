@@ -296,6 +296,12 @@ W3 preserves W0, the unresolved W1 independence result, and W2's coordinate-sepa
 
 ---
 
+## W4 representation-boundary dependency (FARA-REP-W4-001)
+
+The W4 execution depends only on canonical definitions, the registered six-dimensional preservation basis, W1's unresolved primitive-independence boundary, and W2's coordinate-separation-induced bounded boundary. It does not consume W3. `finite_tagged_archive_v1` is explicitly auxiliary and is not a new FARA prerequisite. Hidden interpreters, external stores, live oracles, physical environments, and infinite-precision services are outside its admissible machinery closure.
+
+---
+
 ## Maintenance Policy
 
 This dependency graph should be updated whenever:
