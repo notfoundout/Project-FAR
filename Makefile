@@ -185,3 +185,4 @@ cre002-execute:
 semantic-check:
 	python tools/check_semantic_consistency.py
 	python tools/check_fara_operator_w2.py
+	python tools/check_fara_common_architecture_w3.py

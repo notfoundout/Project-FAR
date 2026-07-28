@@ -23,6 +23,7 @@
     {"id":"CLM-ARCH","status":"conjecture","scope":"outside frozen target class"},
     {"id":"CLM-OPS","status":"unresolved","scope":"global sufficiency and irreducibility"},
     {"id":"CLM-OPS-W2-BOUNDED","status":"bounded","scope":"coordinate-separation-induced minimality in finite_coordinate_trace_v1 only"},
+    {"id":"CLM-ARCH-W3-BOUNDED","status":"bounded","scope":"by-construction CTC reconstruction for B_W3_closed_explicit only; internal-state-only lossless universality and uniqueness refuted"},
     {"id":"CLM-LOSSLESS","status":"unresolved","scope":"cross-system translation"},
     {"id":"CLM-MIN","status":"unresolved","scope":"global FARA minimality"},
     {"id":"CLM-UNIV","status":"bounded","scope":"frozen UPP premises only"},
@@ -37,6 +38,6 @@
     "docs/governance/limitations-register.md", "docs/governance/unresolved-questions-register.md",
     "docs/governance/open-problems-register.md", "docs/governance/counterexample-register.md",
     "docs/governance/derivation-status-matrix.md", "docs/governance/theorem-proof-status-register.md",
-    "docs/research/fara-operator-w2-minimality-v1.0.md"
+    "docs/research/fara-operator-w2-minimality-v1.0.md", "docs/research/fara-w3-common-architecture-v1.0.md"
   ]
 }

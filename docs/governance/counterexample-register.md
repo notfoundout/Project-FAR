@@ -18,5 +18,7 @@ These are threats, not claims that a counterexample has already refuted the boun
 | open-ended design/aesthetic judgment | admissibility and resolution | criteria can emerge, conflict, or remain non-decidable | fixed objective/termination assumed; open |
 | practical deliberation | comparison/dominance | incommensurable values and changing preferences block Pareto conclusions | stable dimensions assumed; protocol-relative only |
 | incompatible ontologies | lossless translation | no shared commitment-equivalent target may exist | common ontology/canonicalization assumed; failure must be reported |
+| W3 oracle-paired executions (`CE-W3-001`) | lossless universal reconstruction from explicit internal state alone | identical internal state and trace receive different external oracle truth values, so one internal reconstruction cannot preserve both | valid counterexample to the internal-state-only form; adding oracle identity/transcript is charged auxiliary machinery, not a repair of the refuted claim |
+| W3 concurrent independent events (`CE-W3-002`) | unique total-trace common architecture | either linearization invents historical order; partial-order/event-structure encoding is a materially different reconstruction | refutes uniqueness and leaves total-trace historical preservation unresolved |
 
 No row currently justifies a new primitive. Each instead blocks global claims until a registered construction, reduction, or counterexample adjudication exists.

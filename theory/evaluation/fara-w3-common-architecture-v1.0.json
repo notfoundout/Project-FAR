@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0",
+  "id": "FARA-ARCH-W3-001",
+  "status": "complete_fail_closed_bounded_and_counterexample_adjudication",
+  "authority_recovery": {
+    "canonical_objective": "Determine whether structured reasoning can be represented by a common architecture; FARA describes a representation and analysis architecture and does not prescribe how reasoning must be performed.",
+    "prompt_discrepancy": "The prompt's phrase common architecture across structured reasoning systems is broader than the canonical objective unless read as representability rather than native constitution. Repository authority controls: W3 tests representational existence and preservation, not a necessary architecture of every reasoning process.",
+    "terminology": ["representation", "interpretation", "reasoning state representation", "transition signature", "reasoning trace", "admissibility", "resolution"],
+    "frozen_upstream": {
+      "W0": "preserved without reinterpretation",
+      "W1": "all seven candidate-primitive independence outcomes remain unresolved",
+      "W2": "coordinate-separation-induced bounded minimality in finite_coordinate_trace_v1 only"
+    },
+    "dependencies": [
+      "frameworks/FARA/architecture.md",
+      "docs/glossary/canonical-terminology.md",
+      "theory/evaluation/fara-w1-primitive-independence.json",
+      "theory/evaluation/fara-operator-w2-proof-v1.0.json",
+      "docs/governance/research-execution-charter.md"
+    ]
+  },
+  "proposition": {
+    "name": "P_W3_CTC",
+    "exact": "For every member S of frozen class C_W3, there exists a configuration-transition-context trace reconstruction M(S) such that the declared structural, semantic, operational, dependency, information, and historical observations of S are preserved under E_W3, using only machinery declared in the family record.",
+    "candidate_architecture": "CTC=(configurations, typed transitions, declared context, observation map, history order)",
+    "system_class": "C_W3 is exactly the ten named family specimens in family_results; it is a challenge set, not all reasoning systems and not a statistically representative population.",
+    "equivalence": "E_W3 is equality of each family's independently declared observable values in all six preservation dimensions; missing, ambiguous, or assumed equality is not preservation.",
+    "preservation_dimensions": ["structural", "semantic", "operational", "dependency", "information", "historical"],
+    "admissible_auxiliary_machinery": "Typed payloads, measures, logics, equations, clocks, sensors, rule/ontology versions, message/event structures, interpreters, and oracles are admissible only when named and charged; auxiliary machinery is not evidence that CTC is native, necessary, unique, or explanatory.",
+    "separated_claims": {
+      "existential_common_structure": "established only for B_W3_closed_explicit below",
+      "representational_reconstruction": "mixed across the ten specimens",
+      "necessity": "not_established",
+      "uniqueness": "refuted_by_multiple_trace_and_event_structure_reconstructions",
+      "universality": "refuted_for_internal_state_only_lossless_form; otherwise unresolved outside frozen domains"
+    }
+  },
+  "bounded_established_class": {
+    "id": "B_W3_closed_explicit",
+    "membership": "Finite or finitely presented, closed, explicitly specified systems whose complete declared observables and transition determinants are available as typed payloads and whose histories are totally ordered or have a declared linearization.",
+    "result": "existential CTC reconstruction preserves the six declared dimensions by construction when every dimension is itself part of the supplied typed payload",
+    "boundary": "This is representational reconstructability with charged payload machinery, not a discovery that CTC is native, necessary, unique, minimal, explanatory, or universal."
+  },
+  "family_results": [
+    {
+      "id": "W3-FAM-01", "family": "deterministic_state_transition", "specimen": "finite labeled transition system with total next-state function", "mapping": "configuration is native state; transition is one function application; context stores alphabet and function; history is the state word", "native_structure": ["states", "transition function"], "representation_artifacts": ["typed context wrapper", "observation map"], "added_machinery": ["alphabet", "total next-state function", "observation map"],
+      "preservation": {"structural":"preserved", "semantic":"preserved_under_declared_labeling", "operational":"preserved", "dependency":"preserved", "information":"preserved", "historical":"preserved"}, "countermodel_search": "Searched bisimilar systems with different state identities; this defeats uniqueness but not observable reconstruction.", "loss_failure_ambiguity": "State identity beyond the declared labeling is not invariant; semantic preservation assumes the labeling.", "adjudication": "established_for_specimen"
+    },
+    {
+      "id": "W3-FAM-02", "family": "probabilistic", "specimen": "finite Markov kernel with exact rational probabilities", "mapping": "configuration is state; typed transition payload is the probability kernel rather than one sampled edge", "native_structure": ["measurable states", "probability kernel"], "representation_artifacts": ["CTC edge wrapper"], "added_machinery": ["sigma algebra", "probability measure", "randomness source for execution"],
+      "preservation": {"structural":"preserved", "semantic":"preserved_under_measure_semantics", "operational":"preserved_in_distribution_not_sample_identity", "dependency":"preserved", "information":"preserved_for_exact_kernel", "historical":"preserved_in_path_distribution"}, "countermodel_search": "Searched non-rational and noncomputable measures; they escape finite explicit payloads and require a measure oracle.", "loss_failure_ambiguity": "Sample identity and noncomputable measures are not recovered from the kernel alone.", "adjudication": "established_for_specimen_only"
+    },
+    {
+      "id": "W3-FAM-03", "family": "nonmonotonic", "specimen": "finite default theory with explicit priority relation", "mapping": "configuration is current extension plus active defaults; transitions add or retract conclusions; context contains defaults and priorities", "native_structure": ["defaults", "defeat", "extensions"], "representation_artifacts": ["linearized revision trace"], "added_machinery": ["nonmonotonic consequence engine", "priority semantics", "retraction records"],
+      "preservation": {"structural":"preserved", "semantic":"preserved_under_selected_default_semantics", "operational":"preserved", "dependency":"preserved", "information":"preserved", "historical":"preserved_if_revision_log_supplied"}, "countermodel_search": "Searched theories with multiple extensions; selecting one trace silently loses alternative extensions unless the full extension set is payload.", "loss_failure_ambiguity": "No semantics-independent mapping; multiple extensions require branching machinery.", "adjudication": "established_for_specimen_only"
+    },
+    {
+      "id": "W3-FAM-04", "family": "paraconsistent", "specimen": "finite four-valued consequence system", "mapping": "configuration carries positive and negative support independently; transitions apply the paraconsistent calculus", "native_structure": ["independent positive and negative support", "non-explosive consequence"], "representation_artifacts": ["support-pair encoding"], "added_machinery": ["four-valued semantics", "paraconsistent consequence engine"],
+      "preservation": {"structural":"preserved", "semantic":"preserved", "operational":"preserved", "dependency":"preserved", "information":"preserved", "historical":"preserved_if_provenance_supplied"}, "countermodel_search": "Searched classical Boolean flattening; it is a rejected mapping because contradiction status and non-explosion are lost.", "loss_failure_ambiguity": "Success depends on retaining the native nonclassical calculus as auxiliary machinery.", "adjudication": "established_for_specimen_only"
+    },
+    {
+      "id": "W3-FAM-05", "family": "causal", "specimen": "finite acyclic structural causal model with interventions", "mapping": "configuration is endogenous assignment; context carries equations/exogenous assignment; typed transitions distinguish intervention from observation", "native_structure": ["structural equations", "interventions", "counterfactual dependence"], "representation_artifacts": ["assignment snapshots"], "added_machinery": ["structural equations", "exogenous variables", "intervention semantics", "counterfactual evaluator"],
+      "preservation": {"structural":"preserved", "semantic":"preserved", "operational":"preserved", "dependency":"preserved", "information":"preserved", "historical":"preserved_for_actual_trace"}, "countermodel_search": "Searched observationally equivalent causally distinct models; ordinary transition traces conflate them unless equations and intervention semantics are added.", "loss_failure_ambiguity": "Counterfactual histories are not actual histories and require the SCM payload.", "adjudication": "established_for_specimen_only"
+    },
+    {
+      "id": "W3-FAM-06", "family": "continuous_or_hybrid", "specimen": "hybrid system with real-valued flow and discrete guards", "mapping": "configuration is real-valued state and mode; a transition may carry an entire solution segment plus guard/reset", "native_structure": ["continuous flow", "discrete mode", "guards", "resets"], "representation_artifacts": ["trajectory-as-transition payload"], "added_machinery": ["real analysis", "ODE solver or exact solution oracle", "clock", "guard semantics"],
+      "preservation": {"structural":"preserved_formally", "semantic":"unresolved", "operational":"unresolved", "dependency":"preserved_formally", "information":"unresolved_for_noncomputable_reals", "historical":"preserved_only_by_entire_trajectory_payload"}, "countermodel_search": "Searched Zeno and noncomputable-flow cases; finite event traces lose limit behavior and exact execution may require an oracle.", "loss_failure_ambiguity": "Exact semantic, operational, and information preservation is unproved; trajectory payload risks making the architecture vacuous.", "adjudication": "unresolved"
+    },
+    {
+      "id": "W3-FAM-07", "family": "embodied_or_sensor_coupled", "specimen": "closed-loop agent whose environment supplies a continuous sensor stream", "mapping": "configuration pairs controller state with an environment snapshot; transitions carry actuator and sensor events", "native_structure": ["closed-loop coupling", "sensor stream", "actuation"], "representation_artifacts": ["environment snapshots", "system boundary"], "added_machinery": ["environment model", "sensor transducer", "clock", "boundary convention"],
+      "preservation": {"structural":"ambiguous", "semantic":"unresolved", "operational":"unresolved", "dependency":"ambiguous", "information":"unresolved", "historical":"preserved_only_if_full_stream_is_oracle_payload"}, "countermodel_search": "Searched identical controller states in different unobserved environments; future behavior differs, so internal state is insufficient.", "loss_failure_ambiguity": "Expanding configuration to the world smuggles the missing environment into the representation and does not prove an internal common architecture.", "adjudication": "unresolved"
+    },
+    {
+      "id": "W3-FAM-08", "family": "changing_rules_or_ontologies", "specimen": "system that replaces inference rules and splits an ontology term during execution", "mapping": "configuration versions rules, signature, ontology, and migration relation; meta-transitions modify them", "native_structure": ["rule change", "ontology change"], "representation_artifacts": ["version identifiers", "cross-version migration map"], "added_machinery": ["meta-language", "versioned interpreter", "ontology alignment relation"],
+      "preservation": {"structural":"preserved_if_meta_language_is_fixed", "semantic":"unresolved", "operational":"preserved_if_interpreter_is_supplied", "dependency":"preserved", "information":"ambiguous", "historical":"preserved"}, "countermodel_search": "Searched meaning change without a cross-version alignment; no fact determines whether old and new commitments are equivalent.", "loss_failure_ambiguity": "A fixed meta-language may merely relocate changing rules; semantic identity across ontology change is underdetermined.", "adjudication": "unresolved"
+    },
+    {
+      "id": "W3-FAM-09", "family": "distributed_or_multi_agent", "specimen": "asynchronous message-passing agents with concurrent independent events", "mapping": "configuration is a global cut; transitions are events; context includes local states, channels, and happens-before partial order", "native_structure": ["local state", "messages", "partial-order concurrency"], "representation_artifacts": ["global cuts", "chosen linearization"], "added_machinery": ["channel model", "event structure", "vector clocks", "fairness assumptions"],
+      "preservation": {"structural":"preserved_with_event_structure", "semantic":"preserved_under_local_interpreters", "operational":"ambiguous_under_linearization", "dependency":"preserved_by_happens_before", "information":"preserved_if_channels_observable", "historical":"not_preserved_by_single_total_trace"}, "countermodel_search": "Searched two concurrent events with no causal order; either total trace invents historical order, while quotienting interleavings requires an event-structure equivalence.", "loss_failure_ambiguity": "Plain CTC total history fails historical preservation; enriched partial-order machinery changes the candidate.", "adjudication": "unresolved"
+    },
+    {
+      "id": "W3-FAM-10", "family": "semantic_interpretation_or_oracle_access", "specimen": "two executions with identical explicit internal configuration and trace but an external oracle returns different truth values for the same query", "mapping": "strongest mapping adds oracle identity, query/answer transcript, and interpreter to context; no internal-state-only mapping distinguishes executions", "native_structure": ["external semantic/oracle dependence"], "representation_artifacts": ["oracle transcript", "oracle identity token"], "added_machinery": ["oracle", "interpreter", "query/answer transcript"],
+      "preservation": {"structural":"preserved_only_after_oracle_extension", "semantic":"not_preserved_from_explicit_internal_state", "operational":"not_preserved_from_explicit_internal_state", "dependency":"not_preserved_from_explicit_internal_state", "information":"not_preserved_from_explicit_internal_state", "historical":"not_preserved_unless_oracle_answers_are_added"}, "countermodel_search": "The paired executions are a direct countermodel: identical internal reconstruction inputs require identical outputs, but the oracle-dependent declared observations differ.", "loss_failure_ambiguity": "Adding the oracle makes reconstruction possible but concedes that the proposed explicit internal architecture was insufficient.", "adjudication": "counterexample_to_internal_state_only_lossless_universality"
+    }
+  ],
+  "adjudication": {
+    "strongest_established": "Existential CTC reconstruction for B_W3_closed_explicit, where every preserved dimension and determinant is already supplied in charged typed payloads.",
+    "refuted": ["unique CTC architecture", "lossless universal reconstruction from explicit internal state alone"],
+    "unresolved": ["one non-vacuous architecture for all ten specimens", "semantic and operational preservation for continuous, embodied, changing-ontology, distributed, and oracle-dependent cases", "necessity", "minimality", "open-world universality"],
+    "fail_closed_reason": "Five favorable bounded encodings do not discharge unresolved dimensions, and auxiliary payload success cannot be promoted to native structure, necessity, or universality."
+  },
+  "remaining_obligations": [
+    "Freeze a non-candidate-defined population if a claim beyond the ten challenge specimens is sought.",
+    "Give an independently justified non-vacuity bound on typed payload and oracle machinery.",
+    "Define semantic identity across ontology change.",
+    "Choose partial-order rather than total-trace historical equivalence for distributed systems or accept historical loss.",
+    "Prove or refute exact preservation for continuous noncomputable and Zeno dynamics.",
+    "Test embodied systems without treating the whole environment as hidden state.",
+    "Obtain independent counterexample replication before any promotion."
+  ],
+  "self_review": {
+    "circularity": "No architecture claim is used to admit the ten specimens.",
+    "smuggled_architecture": "CTC can copy arbitrary payload; the bounded result is expressly classified as by-construction reconstruction.",
+    "equivalence_rigging": "E_W3 requires all six independently named dimensions and treats ambiguity as failure, not success.",
+    "hidden_state_or_oracle": "Environment, solvers, interpreters, transcripts, and oracles are charged in each record.",
+    "reconstructability_vs_necessity": "Separated; necessity is not established.",
+    "bounded_vs_universal": "Separated; the challenge set is not a population and open-world universality remains unresolved."
+  }
+}
