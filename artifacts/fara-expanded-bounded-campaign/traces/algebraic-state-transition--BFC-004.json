@@ -1,0 +1,26 @@
+{
+  "digest": "b1334ce76e7ae80d88c74a19fbf789fe20f65b5910cb4b4ad2169179a90bbd29",
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "status": "Pass",
+  "structural_accounting": {
+    "derived": 3,
+    "execution": 3,
+    "external": 0,
+    "history": 2,
+    "identity": 3,
+    "interpretation": 0,
+    "native": 6,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 10,
+    "repair": 0,
+    "unresolved": 0
+  }
+}

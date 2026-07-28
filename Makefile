@@ -212,3 +212,6 @@ fara-core-formalization-check:
 fara-foundation-comparison-check:
 	python tools/check_fara_foundation_comparison.py
 	python -m unittest tests.test_fara_foundation_comparison -v
+
+fara-expanded-check:
+	python tools/check_fara_expanded_campaign.py

@@ -1,0 +1,26 @@
+{
+  "digest": "393ebe89450cdc7443d4347c1adae98e16dff00cd729cd52eaeba1eeeffe4ced",
+  "preservation": {
+    "dependency": "Unknown",
+    "historical": "Unknown",
+    "information": "Unknown",
+    "operational": "Unknown",
+    "semantic": "Unknown",
+    "structural": "Unknown"
+  },
+  "status": "Unknown",
+  "structural_accounting": {
+    "derived": 0,
+    "execution": 0,
+    "external": 1,
+    "history": 0,
+    "identity": 0,
+    "interpretation": 0,
+    "native": 0,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 0,
+    "repair": 0,
+    "unresolved": 6
+  }
+}

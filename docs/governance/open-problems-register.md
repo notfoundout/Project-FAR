@@ -23,3 +23,5 @@ Status: **Accepted problem index; not execution authorization**
 - Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
 - Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
+
+- **FARA-EXPANDED-BOUND-001:** enumerate larger carriers or justified signature cross-products; supply executable oracle, continuous, hybrid, and embodied semantics before adjudicating those cases.

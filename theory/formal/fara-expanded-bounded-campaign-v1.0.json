@@ -1,0 +1,25 @@
+{
+  "id": "FARA-EXPANDED-BOUND-001",
+  "status": "Research",
+  "base_commit": "b05e48f204e273938ef406168b83cafc0958f9a0",
+  "objective": "Re-execute core formalization and foundation comparison beyond carrier cardinality two without promoting bounded observations.",
+  "bounds": {
+    "maximum_carrier_size": 4,
+    "minimum_carrier_size": 0,
+    "exhaustive_relation_arities": [1, 2],
+    "axis_policy": "Each unary and binary relation interpretation is exhaustively enumerated independently at every carrier size 0..4; cross-products of all signature relations are not enumerated.",
+    "foundation_benchmark_bound": "The frozen 19-benchmark executable suite is rerun unchanged so comparison changes cannot be attributed to benchmark replacement.",
+    "resource_limit": "Deterministic single-process enumeration; no solver, oracle, network, probabilistic sampling, or unrecorded pruning."
+  },
+  "derivability_targets": ["Object", "Property", "Relation", "Representation", "Interpretation", "Investigation", "ReasoningCalculus"],
+  "nonclaims": [
+    "no universality claim",
+    "no uniqueness claim",
+    "no global superiority claim",
+    "no global minimality claim",
+    "no necessity claim",
+    "no completeness claim",
+    "no inference beyond the explicit finite bounds",
+    "no independent-replication claim"
+  ]
+}

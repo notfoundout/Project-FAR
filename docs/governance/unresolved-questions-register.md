@@ -39,3 +39,5 @@ The registers identify questions, not authorization to execute them. New investi
 - Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
 - Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
+
+- **FARA-EXPANDED-BOUND-001:** whether any bounded conclusions persist above carrier size 4 or outside independently enumerated unary/binary axes is Unknown.

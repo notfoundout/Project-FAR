@@ -29,3 +29,5 @@ Any active canonical use of “theorem”, “lemma”, “proposition”, “pr
 - Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
 - Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
+
+- **FARA-EXPANDED-BOUND-001:** Research executable evidence only; no theorem is registered. Proof, trace, cost, historical-hash, and mutation validation are machine checked.

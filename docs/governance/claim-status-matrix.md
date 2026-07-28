@@ -54,3 +54,5 @@ Examples, methodology, research, validation, papers and archive are never prereq
 - Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
 - Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
+
+- **FARA-EXPANDED-BOUND-001:** Research — paired-reduct non-derivability observations persist through carrier size 4 on declared independent axes; the rerun foundation comparison remains Pareto-incomparable within its frozen 19-benchmark suite. No global claim is licensed.

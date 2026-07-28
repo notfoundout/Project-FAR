@@ -39,3 +39,5 @@ Many-sorted relational dominates algebraic/state-transition under the frozen dim
 - Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
 - Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
+
+- **FARA-EXPANDED-BOUND-001 (Research):** exhaustive enumeration is limited to independent unary and binary relation axes over carriers of size 0..4 (31 and 66,067 interpretations respectively); full signature cross-products, carriers above four, oracle, continuous, hybrid, and embodied semantics remain Unknown.
