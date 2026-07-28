@@ -10,25 +10,25 @@ Authorized repository obligations: formalize canonical derivation and compositio
 finite typed first-order relational signature; model class: finite structures with each carrier cardinality 0..2, disjoint source/token/meaning carriers, typed total equality, partial interpretation, finite rules and transitions.
 
 ## Pre-formalization dependency graph
+- `Interpretation` → Representation
+- `Investigation` → ReasoningCalculus
 - `Object` → Representation
 - `Property` → Object
+- `ReasoningCalculus` → Investigation
 - `Relation` → Object
 - `Representation` → Object, Interpretation
-- `Interpretation` → Representation
-- `Investigation` → ReasoningCalculus
-- `ReasoningCalculus` → Investigation
 
 ## Post-formalization dependency DAG
+- `Execution` → ReasoningCalculus
+- `Interpretation` → Representation
+- `Investigation` → ReasoningCalculus
 - `Object` → ∅
 - `Property` → Object
+- `ReasoningCalculus` → ∅
 - `Relation` → Object
 - `Representation` → Object
-- `Interpretation` → Representation
-- `ReasoningCalculus` → ∅
-- `Investigation` → ReasoningCalculus
-- `SemanticContent` → Interpretation, Representation
-- `Execution` → ReasoningCalculus
 - `Result` → Execution
+- `SemanticContent` → Interpretation, Representation
 
 ## Foundation comparison
 - **many-sorted relational**: typed=True, coherent=True; witness: edge identity is extensional.
