@@ -81,6 +81,17 @@ class ReconciliationTests(unittest.TestCase):
         errors = reconcile.validate(self.generate(), self.baseline)
         self.assertTrue(any("verified mechanism" in error for error in errors))
 
+    def test_cannot_verify_root_cause_id_is_not_verified_or_batched(self):
+        self.decisions["decisions"] = [{
+            "finding_id": "PR1:T1", "disposition": "cannot_verify",
+            "root_cause_id": "unsupported:cause",
+        }]
+        data = self.generate()
+        record = data["findings"][0]
+        self.assertFalse(record["root_cause_verified"])
+        self.assertEqual([], reconcile.validate(data, self.baseline))
+        self.assertNotIn("unsupported:cause", reconcile.render_batches(data))
+
     def test_fixed_finding_is_removed_from_residual_count(self):
         self.decisions["decisions"] = [{
             "finding_id": "PR1:T1", "disposition": "fixed_on_current_main",
@@ -94,12 +105,23 @@ class ReconciliationTests(unittest.TestCase):
         self.assertEqual([], reconcile.validate(data, self.baseline))
 
     def test_invalid_experiment_blocking_status_fails_closed(self):
-        self.decisions["decisions"] = [{
-            "finding_id": "PR1:T1", "disposition": "cannot_verify",
-            "blocks_experiment_reconstruction": "probably",
-        }]
-        with self.assertRaisesRegex(ValueError, "invalid experiment-blocking status"):
-            self.generate()
+        for invalid in ("probably", 0, 1, None):
+            with self.subTest(invalid=invalid):
+                self.decisions["decisions"] = [{
+                    "finding_id": "PR1:T1", "disposition": "cannot_verify",
+                    "blocks_experiment_reconstruction": invalid,
+                }]
+                with self.assertRaisesRegex(ValueError, "invalid experiment-blocking status"):
+                    self.generate()
+
+    def test_boolean_experiment_blocking_status_is_accepted(self):
+        for valid in (True, False, "unknown"):
+            with self.subTest(valid=valid):
+                self.decisions["decisions"] = [{
+                    "finding_id": "PR1:T1", "disposition": "cannot_verify",
+                    "blocks_experiment_reconstruction": valid,
+                }]
+                self.assertEqual(valid, self.generate()["findings"][0]["blocks_experiment_reconstruction"])
 
     def test_unresolved_p1_is_prominent(self):
         self.assertIn(
