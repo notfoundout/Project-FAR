@@ -1,0 +1,120 @@
+{
+  "benchmark": "BFC-012",
+  "comparison": {
+    "commitment_equivalent": false,
+    "missing": [
+      "history"
+    ]
+  },
+  "correspondence_map": {
+    "bfc-012-event": "many-sorted-relational:bfc-012-event",
+    "bfc-012-source": "many-sorted-relational:bfc-012-source",
+    "bfc-012-state": "many-sorted-relational:bfc-012-state"
+  },
+  "derived_vs_native": {
+    "derived": [
+      "history"
+    ],
+    "native": "encoded"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.many_sorted"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "states": [
+          "s0",
+          "s1"
+        ],
+        "status": "Pass",
+        "steps": [
+          {
+            "rule": "r",
+            "source": "s0",
+            "target": "s1"
+          }
+        ]
+      },
+      "comparison_result": "Partial",
+      "evaluator": "theory.foundation.fara_foundation_comparison.many_sorted"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": "historical commitment encoded without native identity",
+  "formation_valid": true,
+  "foundation": "many-sorted-relational",
+  "generated_target_elements": [
+    "many-sorted-relational:bfc-012-source",
+    "many-sorted-relational:bfc-012-state",
+    "many-sorted-relational:bfc-012-event"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [
+    "history"
+  ],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-012-source",
+      "target": "many-sorted-relational:bfc-012-source"
+    },
+    {
+      "source": "bfc-012-state",
+      "target": "many-sorted-relational:bfc-012-state"
+    },
+    {
+      "source": "bfc-012-event",
+      "target": "many-sorted-relational:bfc-012-event"
+    }
+  ],
+  "recovered_commitments": [
+    "structure",
+    "meaning",
+    "execution",
+    "dependency",
+    "information"
+  ],
+  "recovered_elements": [
+    "bfc-012-source",
+    "bfc-012-state",
+    "bfc-012-event"
+  ],
+  "source_elements": [
+    "bfc-012-source",
+    "bfc-012-state",
+    "bfc-012-event"
+  ],
+  "status": "Partial",
+  "target_model": {
+    "relations": {
+      "applies": [
+        [
+          "r",
+          "s0",
+          "s1"
+        ]
+      ]
+    },
+    "states": [
+      "s0"
+    ]
+  },
+  "typing_valid": true,
+  "unsupported_structures": [
+    "history"
+  ]
+}

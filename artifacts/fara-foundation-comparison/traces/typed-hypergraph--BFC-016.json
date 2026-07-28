@@ -1,0 +1,130 @@
+{
+  "benchmark": "BFC-016",
+  "comparison": {
+    "commitment_equivalent": false,
+    "missing": [
+      "history"
+    ]
+  },
+  "correspondence_map": {
+    "bfc-016-event": "typed-hypergraph:bfc-016-event",
+    "bfc-016-source": "typed-hypergraph:bfc-016-source",
+    "bfc-016-state": "typed-hypergraph:bfc-016-state"
+  },
+  "derived_vs_native": {
+    "derived": [
+      "history"
+    ],
+    "native": "encoded"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "states": [
+          "s0",
+          "s1"
+        ],
+        "status": "Pass",
+        "steps": [
+          {
+            "edge": "BFC-016-edge",
+            "path": [
+              "r",
+              "s0",
+              "s1"
+            ]
+          }
+        ]
+      },
+      "comparison_result": "Partial",
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": "historical commitment encoded without native identity",
+  "formation_valid": true,
+  "foundation": "typed-hypergraph",
+  "generated_target_elements": [
+    "typed-hypergraph:bfc-016-source",
+    "typed-hypergraph:bfc-016-state",
+    "typed-hypergraph:bfc-016-event"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [
+    "history"
+  ],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-016-source",
+      "target": "typed-hypergraph:bfc-016-source"
+    },
+    {
+      "source": "bfc-016-state",
+      "target": "typed-hypergraph:bfc-016-state"
+    },
+    {
+      "source": "bfc-016-event",
+      "target": "typed-hypergraph:bfc-016-event"
+    }
+  ],
+  "recovered_commitments": [
+    "structure",
+    "meaning",
+    "execution",
+    "dependency",
+    "information"
+  ],
+  "recovered_elements": [
+    "bfc-016-source",
+    "bfc-016-state",
+    "bfc-016-event"
+  ],
+  "source_elements": [
+    "bfc-016-source",
+    "bfc-016-state",
+    "bfc-016-event"
+  ],
+  "status": "Partial",
+  "target_model": {
+    "active_states": [
+      "s0"
+    ],
+    "edges": [
+      {
+        "ends": [
+          "r",
+          "s0",
+          "s1"
+        ],
+        "id": "BFC-016-edge",
+        "type": "applies"
+      }
+    ],
+    "nodes": {
+      "r": "rule",
+      "s0": "state",
+      "s1": "state"
+    }
+  },
+  "typing_valid": true,
+  "unsupported_structures": [
+    "history"
+  ]
+}

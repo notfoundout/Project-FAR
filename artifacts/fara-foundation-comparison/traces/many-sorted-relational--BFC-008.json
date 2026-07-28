@@ -1,0 +1,120 @@
+{
+  "benchmark": "BFC-008",
+  "comparison": {
+    "commitment_equivalent": false,
+    "missing": [
+      "history"
+    ]
+  },
+  "correspondence_map": {
+    "bfc-008-event": "many-sorted-relational:bfc-008-event",
+    "bfc-008-source": "many-sorted-relational:bfc-008-source",
+    "bfc-008-state": "many-sorted-relational:bfc-008-state"
+  },
+  "derived_vs_native": {
+    "derived": [
+      "history"
+    ],
+    "native": "encoded"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.many_sorted"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "states": [
+          "s0",
+          "s1"
+        ],
+        "status": "Pass",
+        "steps": [
+          {
+            "rule": "r",
+            "source": "s0",
+            "target": "s1"
+          }
+        ]
+      },
+      "comparison_result": "Partial",
+      "evaluator": "theory.foundation.fara_foundation_comparison.many_sorted"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": "historical commitment encoded without native identity",
+  "formation_valid": true,
+  "foundation": "many-sorted-relational",
+  "generated_target_elements": [
+    "many-sorted-relational:bfc-008-source",
+    "many-sorted-relational:bfc-008-state",
+    "many-sorted-relational:bfc-008-event"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [
+    "history"
+  ],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-008-source",
+      "target": "many-sorted-relational:bfc-008-source"
+    },
+    {
+      "source": "bfc-008-state",
+      "target": "many-sorted-relational:bfc-008-state"
+    },
+    {
+      "source": "bfc-008-event",
+      "target": "many-sorted-relational:bfc-008-event"
+    }
+  ],
+  "recovered_commitments": [
+    "structure",
+    "meaning",
+    "execution",
+    "dependency",
+    "information"
+  ],
+  "recovered_elements": [
+    "bfc-008-source",
+    "bfc-008-state",
+    "bfc-008-event"
+  ],
+  "source_elements": [
+    "bfc-008-source",
+    "bfc-008-state",
+    "bfc-008-event"
+  ],
+  "status": "Partial",
+  "target_model": {
+    "relations": {
+      "applies": [
+        [
+          "r",
+          "s0",
+          "s1"
+        ]
+      ]
+    },
+    "states": [
+      "s0"
+    ]
+  },
+  "typing_valid": true,
+  "unsupported_structures": [
+    "history"
+  ]
+}

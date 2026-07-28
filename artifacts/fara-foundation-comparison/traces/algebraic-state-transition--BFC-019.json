@@ -1,0 +1,138 @@
+{
+  "benchmark": "BFC-019",
+  "comparison": {
+    "commitment_equivalent": false,
+    "missing": [
+      "dependency",
+      "execution",
+      "history",
+      "information",
+      "meaning",
+      "structure"
+    ]
+  },
+  "correspondence_map": {
+    "bfc-019-event": "algebraic-state-transition:bfc-019-event",
+    "bfc-019-source": "algebraic-state-transition:bfc-019-source",
+    "bfc-019-state": "algebraic-state-transition:bfc-019-state"
+  },
+  "derived_vs_native": {
+    "derived": [
+      "structure",
+      "meaning",
+      "execution",
+      "dependency",
+      "information",
+      "history"
+    ],
+    "native": "encoded"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "state": "s1",
+        "status": "Pass",
+        "steps": [
+          {
+            "operation": "advance",
+            "source": "s0",
+            "target": "s1"
+          }
+        ]
+      },
+      "comparison_result": "Unknown",
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state"
+    }
+  ],
+  "external_assumptions": [
+    "embodied or tacit coupling"
+  ],
+  "external_dependencies": [
+    "embodied or tacit coupling"
+  ],
+  "failure_or_unknown_reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+  "formation_valid": true,
+  "foundation": "algebraic-state-transition",
+  "generated_target_elements": [
+    "algebraic-state-transition:bfc-019-source",
+    "algebraic-state-transition:bfc-019-state",
+    "algebraic-state-transition:bfc-019-event"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [
+    "structure",
+    "meaning",
+    "execution",
+    "dependency",
+    "information",
+    "history"
+  ],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Unknown",
+    "historical": "Pass",
+    "information": "Unknown",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-019-source",
+      "target": "algebraic-state-transition:bfc-019-source"
+    },
+    {
+      "source": "bfc-019-state",
+      "target": "algebraic-state-transition:bfc-019-state"
+    },
+    {
+      "source": "bfc-019-event",
+      "target": "algebraic-state-transition:bfc-019-event"
+    }
+  ],
+  "recovered_commitments": [],
+  "recovered_elements": [
+    "bfc-019-source",
+    "bfc-019-state",
+    "bfc-019-event"
+  ],
+  "source_elements": [
+    "bfc-019-source",
+    "bfc-019-state",
+    "bfc-019-event"
+  ],
+  "status": "Unknown",
+  "target_model": {
+    "composition": {},
+    "initial_state": "s0",
+    "operations": {
+      "advance": {
+        "domain": [
+          "s0"
+        ],
+        "mapping": {
+          "s0": "s1"
+        }
+      }
+    },
+    "program": [
+      "advance"
+    ]
+  },
+  "typing_valid": true,
+  "unsupported_structures": [
+    "structure",
+    "meaning",
+    "execution",
+    "dependency",
+    "information",
+    "history"
+  ]
+}

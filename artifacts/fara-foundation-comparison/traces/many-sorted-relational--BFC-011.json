@@ -1,0 +1,113 @@
+{
+  "benchmark": "BFC-011",
+  "comparison": {
+    "commitment_equivalent": true,
+    "missing": []
+  },
+  "correspondence_map": {
+    "bfc-011-event": "many-sorted-relational:bfc-011-event",
+    "bfc-011-source": "many-sorted-relational:bfc-011-source",
+    "bfc-011-state": "many-sorted-relational:bfc-011-state"
+  },
+  "derived_vs_native": {
+    "derived": [],
+    "native": "deletion and constraint relaxation"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.many_sorted"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "states": [
+          "s0",
+          "s1"
+        ],
+        "status": "Pass",
+        "steps": [
+          {
+            "rule": "r",
+            "source": "s0",
+            "target": "s1"
+          }
+        ]
+      },
+      "comparison_result": "Pass",
+      "evaluator": "theory.foundation.fara_foundation_comparison.many_sorted"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": null,
+  "formation_valid": true,
+  "foundation": "many-sorted-relational",
+  "generated_target_elements": [
+    "many-sorted-relational:bfc-011-source",
+    "many-sorted-relational:bfc-011-state",
+    "many-sorted-relational:bfc-011-event"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-011-source",
+      "target": "many-sorted-relational:bfc-011-source"
+    },
+    {
+      "source": "bfc-011-state",
+      "target": "many-sorted-relational:bfc-011-state"
+    },
+    {
+      "source": "bfc-011-event",
+      "target": "many-sorted-relational:bfc-011-event"
+    }
+  ],
+  "recovered_commitments": [
+    "structure",
+    "meaning",
+    "execution",
+    "dependency",
+    "information",
+    "history"
+  ],
+  "recovered_elements": [
+    "bfc-011-source",
+    "bfc-011-state",
+    "bfc-011-event"
+  ],
+  "source_elements": [
+    "bfc-011-source",
+    "bfc-011-state",
+    "bfc-011-event"
+  ],
+  "status": "Pass",
+  "target_model": {
+    "relations": {
+      "applies": [
+        [
+          "r",
+          "s0",
+          "s1"
+        ]
+      ]
+    },
+    "states": [
+      "s0"
+    ]
+  },
+  "typing_valid": true,
+  "unsupported_structures": []
+}

@@ -1,0 +1,113 @@
+{
+  "benchmark": "BFC-006",
+  "comparison": {
+    "commitment_equivalent": true,
+    "missing": []
+  },
+  "correspondence_map": {
+    "bfc-006-event": "algebraic-state-transition:bfc-006-event",
+    "bfc-006-source": "algebraic-state-transition:bfc-006-source",
+    "bfc-006-state": "algebraic-state-transition:bfc-006-state"
+  },
+  "derived_vs_native": {
+    "derived": [],
+    "native": "changing rules"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "state": "s1",
+        "status": "Pass",
+        "steps": [
+          {
+            "operation": "advance",
+            "source": "s0",
+            "target": "s1"
+          }
+        ]
+      },
+      "comparison_result": "Pass",
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": null,
+  "formation_valid": true,
+  "foundation": "algebraic-state-transition",
+  "generated_target_elements": [
+    "algebraic-state-transition:bfc-006-source",
+    "algebraic-state-transition:bfc-006-state",
+    "algebraic-state-transition:bfc-006-event"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-006-source",
+      "target": "algebraic-state-transition:bfc-006-source"
+    },
+    {
+      "source": "bfc-006-state",
+      "target": "algebraic-state-transition:bfc-006-state"
+    },
+    {
+      "source": "bfc-006-event",
+      "target": "algebraic-state-transition:bfc-006-event"
+    }
+  ],
+  "recovered_commitments": [
+    "structure",
+    "meaning",
+    "execution",
+    "dependency",
+    "information",
+    "history"
+  ],
+  "recovered_elements": [
+    "bfc-006-source",
+    "bfc-006-state",
+    "bfc-006-event"
+  ],
+  "source_elements": [
+    "bfc-006-source",
+    "bfc-006-state",
+    "bfc-006-event"
+  ],
+  "status": "Pass",
+  "target_model": {
+    "composition": {},
+    "initial_state": "s0",
+    "operations": {
+      "advance": {
+        "domain": [
+          "s0"
+        ],
+        "mapping": {
+          "s0": "s1"
+        }
+      }
+    },
+    "program": [
+      "advance"
+    ]
+  },
+  "typing_valid": true,
+  "unsupported_structures": []
+}

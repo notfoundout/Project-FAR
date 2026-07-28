@@ -1,0 +1,123 @@
+{
+  "benchmark": "BFC-005",
+  "comparison": {
+    "commitment_equivalent": true,
+    "missing": []
+  },
+  "correspondence_map": {
+    "bfc-005-event": "typed-hypergraph:bfc-005-event",
+    "bfc-005-source": "typed-hypergraph:bfc-005-source",
+    "bfc-005-state": "typed-hypergraph:bfc-005-state"
+  },
+  "derived_vs_native": {
+    "derived": [],
+    "native": "causal intervention"
+  },
+  "execution_steps": [
+    {
+      "action": "validate",
+      "errors": [],
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+    },
+    {
+      "action": "execute-bounded",
+      "candidate_result": {
+        "states": [
+          "s0",
+          "s1"
+        ],
+        "status": "Pass",
+        "steps": [
+          {
+            "edge": "BFC-005-edge",
+            "path": [
+              "r",
+              "s0",
+              "s1"
+            ]
+          }
+        ]
+      },
+      "comparison_result": "Pass",
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+    }
+  ],
+  "external_assumptions": [],
+  "external_dependencies": [],
+  "failure_or_unknown_reason": null,
+  "formation_valid": true,
+  "foundation": "typed-hypergraph",
+  "generated_target_elements": [
+    "typed-hypergraph:bfc-005-source",
+    "typed-hypergraph:bfc-005-state",
+    "typed-hypergraph:bfc-005-event"
+  ],
+  "hidden_machinery": [],
+  "introduced_commitments": [],
+  "omitted_commitments": [],
+  "opaque_content": [],
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Pass",
+    "semantic": "Pass",
+    "structural": "Pass"
+  },
+  "reconstruction_steps": [
+    {
+      "source": "bfc-005-source",
+      "target": "typed-hypergraph:bfc-005-source"
+    },
+    {
+      "source": "bfc-005-state",
+      "target": "typed-hypergraph:bfc-005-state"
+    },
+    {
+      "source": "bfc-005-event",
+      "target": "typed-hypergraph:bfc-005-event"
+    }
+  ],
+  "recovered_commitments": [
+    "structure",
+    "meaning",
+    "execution",
+    "dependency",
+    "information",
+    "history"
+  ],
+  "recovered_elements": [
+    "bfc-005-source",
+    "bfc-005-state",
+    "bfc-005-event"
+  ],
+  "source_elements": [
+    "bfc-005-source",
+    "bfc-005-state",
+    "bfc-005-event"
+  ],
+  "status": "Pass",
+  "target_model": {
+    "active_states": [
+      "s0"
+    ],
+    "edges": [
+      {
+        "ends": [
+          "r",
+          "s0",
+          "s1"
+        ],
+        "id": "BFC-005-edge",
+        "type": "applies"
+      }
+    ],
+    "nodes": {
+      "r": "rule",
+      "s0": "state",
+      "s1": "state"
+    }
+  },
+  "typing_valid": true,
+  "unsupported_structures": []
+}
