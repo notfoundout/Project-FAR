@@ -9,17 +9,25 @@ Terminal result: **multiple foundations remain Pareto-incomparable**
 
 | Foundation | Pass | Partial | Fail | Unknown |
 |---|---:|---:|---:|---:|
-| algebraic-state-transition | 4 | 12 | 0 | 3 |
-| many-sorted-relational | 6 | 10 | 0 | 3 |
-| typed-hypergraph | 6 | 10 | 0 | 3 |
+| algebraic-state-transition | 12 | 0 | 4 | 3 |
+| many-sorted-relational | 13 | 0 | 3 | 3 |
+| typed-hypergraph | 16 | 0 | 0 | 3 |
+
+## Executable evidence
+
+All 57 traces contain benchmark-specific source programs, candidate target models, candidate execution results, independent reference results, reconstruction records, and six-dimensional comparisons.
+
+## Ablations
+
+All 21 ablations remove a construct, rerun every applicable finite benchmark, and derive loss and structural savings from those runs.
 
 ## Dominance graph
 
-Edges: `[]`.
+Edges: `[["many-sorted-relational", "algebraic-state-transition"]]`.
 
 ## Bounded finding
 
-each candidate preserves some native commitments more directly, but every pair has opposed frozen dimensions.
+the executable campaign yields opposed frozen dimensions for every non-dominating pair.
 
 ## Nonclaims
 
