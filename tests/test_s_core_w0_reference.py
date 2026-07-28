@@ -85,14 +85,44 @@ class SCoreW0ReferenceTests(unittest.TestCase):
     def test_canonical_form_retains_a_valid_witness(self) -> None:
         for fixture in self.data["fixtures"]:
             contract = FiniteSourceContract.from_dict(fixture["contract"])
+            material = contract.closure()
             code, witness_items = contract.canonical_form()
             witness = dict(witness_items)
-            self.assertEqual(set(witness), set(contract.nodes))
-            self.assertEqual(len(set(witness.values())), len(contract.nodes))
+            self.assertEqual(set(witness), set(material))
+            self.assertEqual(len(set(witness.values())), len(material))
             groups: dict[str, list[str]] = {}
             for node, sort_name in contract.sorts:
-                groups.setdefault(sort_name, []).append(node)
-            self.assertEqual(code, contract._code_under(witness, sorted(groups), groups))
+                if node in material:
+                    groups.setdefault(sort_name, []).append(node)
+            self.assertEqual(code, contract._code_under(witness, sorted(groups), groups, material))
+
+    def test_canonical_form_excludes_unreachable_declared_structure(self) -> None:
+        base_data = json.loads(json.dumps(self.by_id["W0-FX-002"]["contract"]))
+        extended_data = json.loads(json.dumps(base_data))
+        extended_data["nodes"].extend(["u0", "u1"])
+        extended_data["sorts"].update({"u0": "state", "u1": "ground"})
+        extended_data["references"].update({"u0": ["u1"], "u1": []})
+        extended_data["relations"].extend(
+            [
+                ["unreachable_only", ["u0", "u1"]],
+                ["mixed_unreachable", [extended_data["material_seed"][0], "u0"]],
+            ]
+        )
+        extended_data["axis_tags"]["P1"].append("u0")
+        extended_data["axis_tags"]["P4"].append("u1")
+
+        base = FiniteSourceContract.from_dict(base_data)
+        extended = FiniteSourceContract.from_dict(extended_data)
+        self.assertEqual(base.closure(), extended.closure())
+        self.assertEqual(base.canonical_code(), extended.canonical_code())
+
+        code, witness_items = extended.canonical_form()
+        witness = dict(witness_items)
+        self.assertEqual(set(witness), set(extended.closure()))
+        self.assertNotIn("u0", witness)
+        self.assertNotIn("u1", witness)
+        self.assertNotIn("unreachable_only", code)
+        self.assertNotIn("mixed_unreachable", code)
 
     def test_omitted_and_explicit_empty_references_have_one_canonical_code(self) -> None:
         fixture = self.by_id["W0-FX-002"]["contract"]

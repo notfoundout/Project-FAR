@@ -89,6 +89,7 @@
       "exhaustive bounded axis-reduct leastness",
       "canonical-code invariance under sort-preserving renaming",
       "canonicalization witness validity",
+      "material-closure restriction of canonical code and witness",
       "empty-successor presentation invariance",
       "duplicate set-member rejection",
       "ill-typed sort-declaration rejection",
