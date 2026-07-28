@@ -1,49 +1,70 @@
-# FARA W5 cross-representation invariance result v1.0
+# FARA W5 cross-representation invariance v1.1
 
-Status: **Research result — explicit representation-sensitive counterexample; bounded positive cases; global question unresolved**  
+Status: **Unresolved; bounded invariance established for two executable admissible pairs**
+
 Execution object: `FARA-INV-W5-001`  
 Proof object: `FARA-W5-PROOF-001`  
-Theorem record: `THM-INV-001` (counterexample; executable corroboration)  
-Claim record: `CLM-INV-W5-001`
+Claim: `CLM-INV-W5-001`  
+Theorem-status record: `THM-INV-001`  
+Limitation: `LIM-020`
 
-## Authority recovery and discrepancy
+## Corrected adjudication
 
-Repository authority does not name cross-representation invariance as a canonical FARA “W5.” The recovered objective is the necessary subquestion of UQ-T4: whether FAR/FARA/FARO boundaries remain adequate under representation escape and semantic change, informed by UQ-T7 and OP-05. The prompt supplies the W5 label and a broader fixture inventory. This execution therefore tests whether frozen FAR/FARA conclusions survive materially different admissible representations without changing those authority records.
+The frozen invariance contract requires both representations to recover commitment-equivalent sources and preserve structural, semantic, operational, dependency, information, and historical commitments. The original W5 draft incorrectly treated lossy or unrecoverable pairs as counterexamples to invariance.
 
-W0 is unchanged and not consumed. W1 remains unresolved for all seven primitives. W2 remains coordinate-separation-induced and bounded. W3 is unchanged and not consumed. W4 remains a bounded finite-archive result and supplies only a declared representation-contract boundary. No W0–W4 identifier, claim, limitation, counterexample, dependency, validator, or nonclaim is reassigned.
+That inference is invalid. A pair that fails recovery or any preservation dimension is inadmissible for testing whether the same source yields different conclusions under two faithful representations.
 
-## Frozen invariance contract
+The corrected terminal result is:
 
-The source class is the declared tuple `S=(X,R,Sem,Step,Obs,Hist,Ext)`, with identity, consequence, dependency, information, history, and the full observation interface material. A representation is admissible only when independently specified, fully disclosed, equipped with a source-independent recovery map, and free of equivalence defined by the tested conclusion.
+> Two executable, exactly recoverable, all-six-preserving pairs establish bounded invariance. No admissible same-source pair with different conclusions was produced. Representation independence remains unresolved.
 
-Notation invariance concerns glyph or identifier renaming; serialization invariance concerns byte/container changes with exact parsing; implementation invariance concerns independent realizations of one frozen transition contract. Representational invariance additionally requires materially different structures to recover commitment-equivalent sources and preserve all six dimensions. Observational invariance is equality at the complete frozen interface; behavioral invariance covers every admitted trace or distribution there; semantic invariance covers independently fixed interpretations, commitments, and consequences; proof-result invariance requires the same FAR/FARA adjudication, including Failure and Unknown.
+## Executable evidence
 
-The preservation vector is structural, semantic, operational, dependency, information, and historical. Permitted machinery is finite parsing, declared dictionaries, exact reduced-rational arithmetic, and finite lookup. A live oracle, external semantic policy, undeclared ontology alignment, decoder-held answer, physical environment, or infinite-precision service is forbidden hidden machinery. Syntactic similarity, successful simulation, reconstruction, or shared output proves none of semantic or proof-result invariance.
+The validator now constructs a concrete six-component source for every fixture, encodes it through each declared family, runs the family-specific recovery path, compares recovered commitments against the source, computes the preservation vector, determines admissibility, and computes the frozen conclusion only when exact recovery succeeds.
 
-## Independent families and fixtures
+The two admissible pairs are:
 
-The campaign directly specifies six family-native forms: labeled state-transition systems; typed relational structures; directed graphs/hypergraphs; logical theories; event/trace structures; and table-driven executable models. Algebraic/categorical presentations were not registered because repository authority provides no precise frozen presentation and necessity did not justify inventing one.
+- `W5-FIX-001`: labeled state-transition system ↔ table-driven model.
+- `W5-FIX-002`: typed relational structure ↔ table-driven model.
 
-Twelve paired fixtures cover deterministic transition, rational probability, nonmonotonic revision, paraconsistent consequence, causal intervention, rule/semantic change, identity merge/deletion, provenance-sensitive history, distributed partial order, oracle dependence, continuous state, and embodiment. Every record contains source commitments, two encodings, two recovery maps, charged machinery, assumptions, the six-dimensional judgment, both conclusions, agreement, and losses. The [deterministically generated matrix](../../theory/evaluation/generated-fara-w5-invariance-summary.md) is authoritative for compact review.
+Both recover the complete source, pass all six dimensions, and produce the same deterministic adjudication.
 
-## Observations and counterexamples
+The nonmonotonic, paraconsistent, causal, semantic-change, identity, provenance, and distributed pairs are retained as representation-boundary witnesses. They are not invariance counterexamples because at least one representation loses a material source commitment.
 
-Deterministic LSTS/table and rational-probability relational/table pairs have exact recovery, all-six preservation, and bounded conclusion agreement. They establish only bounded invariance for those frozen pairs.
+Oracle, continuous, and embodied fixtures remain unresolved because no finite source-independent recovery execution is available under the frozen machinery policy.
 
-Five adversarial witnesses are retained. A trace preserving defeat order and an extensional logical closure produce different nonmonotonic admissibility conclusions (`CE-W5-001`). Observationally collapsed causal models differ under intervention (`CE-W5-002`). Linearized LSTS requires a scheduler absent from a partial-order trace, changing minimality (`CE-W5-003`). Paraconsistent agreement appears only if a decoder imports the source consequence policy (`CE-W5-004`). Defining equivalence by the conclusion under test makes invariance circular (`CE-W5-005`). Unsuccessful and Unknown mappings are not discarded: oracle, continuous, and embodied pairs remain Unknown where finite faithful recovery or equivalence is unavailable.
+## Failed counterexample attempts
 
-## Adjudication and claim ladder
+- `CE-W5-001`: rejected because the compared pair loses information.
+- `CE-W5-002`: a useful collapse witness, but not a same-source invariance counterexample.
+- `CE-W5-003`: rejected because total-order linearization loses partial-order history.
+- `CE-W5-004`: rejected because agreement requires forbidden decoder-held semantics.
+- `CE-W5-005`: rejected because conclusion-defined equivalence is circular.
 
-Multiple encodings exist, but that alone establishes neither recovery nor equivalence. Recovery and commitment equivalence hold only for the two positive pairs. Conclusion agreement is bounded to those pairs. Invariance under all registered representations and representation independence are refuted within the campaign. Universal invariance is not established.
+## Claim boundaries
 
-The fail-closed terminal result is exactly **explicit representation-sensitive counterexample**. This neither asserts that every conclusion is representation-sensitive nor resolves the global existence of an invariant architecture.
+Established:
 
-## Nonclaims, obligations, and self-review
+- multiple materially different encodings for the registered fixtures;
+- exact recovery and bounded invariance for two finite pairs;
+- executable detection of lossy, unavailable, and hidden-machinery cases.
 
-No implication is asserted from notation, serialization, simulation, shared output, or reconstruction to semantic invariance. Bounded results do not imply all-family, representation-independent, or universal results. W3 and W4 do not prove W5.
+Unresolved:
 
-Remaining obligations are independent replication of every family; formal equivalence for nonclassical consequence; nonfinite continuous recovery; environment-inclusive embodied equivalence; and adjudication of transcript versus live-oracle boundaries. Self-review found and retained risks from encoding assumptions, semantic leakage, circularity, project-authored fixture selection, superficial renaming, reconstruction/invariance confusion, finite promotion, and undeclared dependency. The exact findings reside in the proof object.
+- representation independence across all registered families;
+- any admissible same-source different-conclusion counterexample;
+- oracle-dependent, continuous, embodied, and open-world invariance;
+- universal invariance.
+
+Explicit nonclaims include that lossy pairs refute invariance, reconstruction implies invariance, simulation implies semantic equivalence, or finite coverage proves representation independence.
 
 ## Reproduction
 
-`python tools/check_fara_w5_invariance.py` validates the exact canonical claim map and obligations, authority boundary, six families, twelve fixtures, preservation vocabulary, recovery consistency, disclosed loss, counterexamples, nonpromotion language, identifier ownership, and report freshness. `tests/test_fara_w5_invariance.py` mutates every required validator boundary. This is deterministic executable corroboration, not proof-assistant verification.
+Run:
+
+```bash
+python tools/check_fara_w5_invariance.py
+python -m unittest tests.test_fara_w5_invariance -v
+```
+
+The validator fails closed on declaration/execution drift, recovery contradictions, lossy-pair promotion, conclusion contradictions, family or dimension omission, circular equivalence, hidden decoder machinery, changed obligations, duplicate identifier ownership, and stale generated reports.
