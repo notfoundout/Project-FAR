@@ -14,7 +14,25 @@ FAMILIES = [
 ]
 DIMENSIONS = {"structural", "semantic", "operational", "dependency", "information", "historical"}
 REQUIRED_FIELDS = {"mapping", "native_structure", "representation_artifacts", "added_machinery", "preservation", "countermodel_search", "loss_failure_ambiguity", "adjudication"}
-FORBIDDEN_PROMOTIONS = ("all reasoning systems", "universal architecture established", "necessity established", "unique architecture established")
+ALLOWED_PRESERVATION_PREFIXES = ("preserved", "unresolved", "ambiguous", "not_preserved")
+EXPECTED_SYSTEM_CLASS = "C_W3 is exactly the ten named family specimens in family_results; it is a challenge set, not all reasoning systems and not a statistically representative population."
+EXPECTED_SEPARATED_CLAIMS = {
+    "existential_common_structure": "established only for B_W3_closed_explicit below",
+    "representational_reconstruction": "mixed across the ten specimens",
+    "necessity": "not_established",
+    "uniqueness": "refuted_by_multiple_trace_and_event_structure_reconstructions",
+    "universality": "refuted_for_internal_state_only_lossless_form; otherwise unresolved outside frozen domains",
+}
+EXPECTED_OBLIGATIONS = [
+    "Freeze a non-candidate-defined population if a claim beyond the ten challenge specimens is sought.",
+    "Give an independently justified non-vacuity bound on typed payload and oracle machinery.",
+    "Define semantic identity across ontology change.",
+    "Choose partial-order rather than total-trace historical equivalence for distributed systems or accept historical loss.",
+    "Prove or refute exact preservation for continuous noncomputable and Zeno dynamics.",
+    "Test embodied systems without treating the whole environment as hidden state.",
+    "Obtain independent counterexample replication before any promotion.",
+]
+
 
 def render(data: dict) -> str:
     rows = []
@@ -60,6 +78,7 @@ No successful encoding establishes necessity, uniqueness, minimality, native con
         unresolved="; ".join(adj["unresolved"]),
     )
 
+
 def validate(data: dict) -> list[str]:
     errors = []
     if data.get("id") != "FARA-ARCH-W3-001": errors.append("proof object identity changed")
@@ -70,24 +89,30 @@ def validate(data: dict) -> list[str]:
         errors.append("frozen W0-W2 boundary omitted or promoted")
     prop = data.get("proposition", {})
     separated = prop.get("separated_claims", {})
-    if prop.get("system_class", "").lower().startswith("all reasoning systems"):
-        errors.append("forbidden scope expansion to all reasoning systems")
+    system_class = prop.get("system_class", "")
+    if system_class != EXPECTED_SYSTEM_CLASS:
+        errors.append("system class description changed or scope expanded")
+    if any(term in system_class.lower() for term in ("contains all reasoning systems", "includes all reasoning systems", "all systems are members", "unbounded class")):
+        errors.append("forbidden scope expansion language")
     strongest = data.get("adjudication", {}).get("strongest_established", "").lower()
     if any(x in strongest for x in ("universal architecture established", "necessity established", "unique architecture established")):
         errors.append("bounded result was promoted")
-    if "exactly the ten" not in prop.get("system_class", ""): errors.append("system class is not frozen to ten specimens")
     if set(prop.get("preservation_dimensions", [])) != DIMENSIONS: errors.append("six-dimensional preservation contract changed")
-    if set(separated) != {"existential_common_structure", "representational_reconstruction", "necessity", "uniqueness", "universality"}:
-        errors.append("claim ladder is incomplete")
-    if separated.get("necessity") != "not_established" or not separated.get("universality", "").startswith("refuted"):
-        errors.append("necessity or universality was promoted")
+    if separated != EXPECTED_SEPARATED_CLAIMS:
+        errors.append("claim ladder changed, contradicted, or promoted")
     records = data.get("family_results", [])
     if [x.get("family") for x in records] != FAMILIES: errors.append("required family coverage/order changed")
     if len({x.get("id") for x in records}) != 10: errors.append("family IDs missing or duplicated")
     for item in records:
         missing = REQUIRED_FIELDS - set(item)
         if missing: errors.append(f"{item.get('id')} omitted {sorted(missing)}")
-        if set(item.get("preservation", {})) != DIMENSIONS: errors.append(f"{item.get('id')} omitted a preservation dimension")
+        preservation = item.get("preservation", {})
+        if set(preservation) != DIMENSIONS:
+            errors.append(f"{item.get('id')} omitted a preservation dimension")
+        invalid = [value for value in preservation.values() if not isinstance(value, str) or not value.startswith(ALLOWED_PRESERVATION_PREFIXES)]
+        if invalid: errors.append(f"{item.get('id')} uses invalid preservation outcomes")
+        if item.get("adjudication") == "unresolved" and preservation and all(value.startswith("preserved") for value in preservation.values()):
+            errors.append(f"{item.get('id')} unresolved adjudication was silently promoted")
         if not item.get("added_machinery"): errors.append(f"{item.get('id')} hides auxiliary machinery")
         if not item.get("countermodel_search"): errors.append(f"{item.get('id')} lacks adversarial search")
         if not item.get("loss_failure_ambiguity"): errors.append(f"{item.get('id')} omits failure/loss")
@@ -98,10 +123,12 @@ def validate(data: dict) -> list[str]:
     adj = data.get("adjudication", {})
     if "B_W3_closed_explicit" not in adj.get("strongest_established", ""): errors.append("strongest claim escaped bounded class")
     if len(adj.get("refuted", [])) < 2 or len(adj.get("unresolved", [])) < 3: errors.append("terminal failures are incomplete")
-    if len(data.get("remaining_obligations", [])) < 7: errors.append("remaining obligations were weakened")
+    if data.get("remaining_obligations") != EXPECTED_OBLIGATIONS:
+        errors.append("remaining obligations changed, duplicated, or weakened")
     if set(data.get("self_review", {})) != {"circularity", "smuggled_architecture", "equivalence_rigging", "hidden_state_or_oracle", "reconstructability_vs_necessity", "bounded_vs_universal"}:
         errors.append("mandatory self-review is incomplete")
     return errors
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -115,5 +142,6 @@ def main() -> int:
     if errors: raise SystemExit("\n".join(f"ERROR: {x}" for x in errors))
     print("FARA-ARCH-W3-001 valid: 10 families; 6 dimensions; bounded result; counterexample retained")
     return 0
+
 
 if __name__ == "__main__": raise SystemExit(main())
