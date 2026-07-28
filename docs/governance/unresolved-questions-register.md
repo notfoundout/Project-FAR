@@ -8,6 +8,7 @@ Status: **Accepted governance register**
 - **UQ-T2:** Are retained primitives globally necessary, independent and minimal under admissible alternative vocabularies? **Unresolved.**
 - **UQ-T3:** Can the terminal relative theorem be reconstructed as one kernel-checked end-to-end proof? **Unresolved.**
 - **UQ-T4:** Do FAR/FARA/FARO boundaries remain adequate under representation escape and semantic change? **Conjectural beyond registered cases.**
+- **UQ-T10:** Are FAR/FARA proof results invariant across admissible representations beyond the frozen W5 families and fixtures? **Unresolved; W5 establishes bounded invariance for two executable admissible pairs, but no admissible same-source different-conclusion counterexample and no general independence result. Oracle-dependent, continuous, and embodied pairs remain Unknown.**
 
 ## Empirical
 
