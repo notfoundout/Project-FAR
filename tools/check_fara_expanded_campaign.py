@@ -31,8 +31,10 @@ def relation_errors(carrier,arity,relation):
 def evaluate_relation(carrier,arity,relation):
  u=universe(carrier,arity);first=u[0] if u else None
  alt=tuple(t for t in relation if t!=first) if first in relation else tuple(sorted((*relation,first))) if first is not None else relation
- ok=first is not None and {'carrier':carrier}=={'carrier':carrier} and relation!=alt
- return {'tuple_count':len(relation),'complement_count':len(u)-len(relation),'contains_first_tuple':first in relation if first else False,'contains_last_tuple':u[-1] in relation if u else False,'diagonal_count':sum(a==b for a,b in relation) if arity==2 else None,'paired_reduct_verified':ok,'outcome':'paired-reduct-witness' if ok else 'no-distinct-relation-at-empty-carrier'}
+ model_a={'carrier':carrier,'relation':relation};model_b={'carrier':carrier,'relation':alt}
+ reduct_a={'carrier':model_a['carrier']};reduct_b={'carrier':model_b['carrier']}
+ ok=first is not None and reduct_a==reduct_b and model_a['relation']!=model_b['relation']
+ return {'tuple_count':len(relation),'complement_count':len(u)-len(relation),'contains_first_tuple':first in relation if first else False,'contains_last_tuple':u[-1] in relation if u else False,'diagonal_count':sum(a==b for a,b in relation) if arity==2 else None,'reduct_digest':digest(reduct_a),'alternate_relation_digest':digest(alt),'paired_reduct_verified':ok,'outcome':'paired-reduct-witness' if ok else 'no-distinct-relation-at-empty-carrier'}
 def enumerate_axis(maximum,arity):
  rows=[];totals={'constructed':0,'admissible':0,'evaluated':0,'rejected':0,'paired_reduct_pass':0};ah=hashlib.sha256();rh=hashlib.sha256()
  for n in range(maximum+1):
@@ -45,7 +47,7 @@ def enumerate_axis(maximum,arity):
   if c!=count or a+r!=c or v!=a:raise ValueError('incomplete relation execution')
   row={'carrier_size':n,'interpretations':count,'constructed':c,'admissible':a,'evaluated':v,'rejected':r,'paired_reduct_pass':p,'outcomes':out,'execution_digest':eh.hexdigest(),'result_digest':sh.hexdigest()};rows.append(row)
   for k,val in (('constructed',c),('admissible',a),('evaluated',v),('rejected',r),('paired_reduct_pass',p)):totals[k]+=val
- return {'arity':arity,'algorithm':'materialize-validate-evaluate-v2','per_size':rows,'interpretations_examined':totals['evaluated'],**totals,'execution_digest':ah.hexdigest(),'result_digest':rh.hexdigest()}
+ return {'arity':arity,'algorithm':'materialize-validate-evaluate-v3','per_size':rows,'interpretations_examined':totals['evaluated'],**totals,'execution_digest':ah.hexdigest(),'result_digest':rh.hexdigest()}
 def base_model(n):return {'Object':[f'o{i}' for i in range(n)],'Property':[],'Relation':[],'Representation':{},'Interpretation':{},'Investigation':{'objective':'q','conditions':[],'calculus':'r0'},'ReasoningCalculus':['r0']}
 def model_errors(m,maximum):
  e=[];required={'Object','Property','Relation','Representation','Interpretation','Investigation','ReasoningCalculus'}
