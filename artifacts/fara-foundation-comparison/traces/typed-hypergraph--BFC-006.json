@@ -1,21 +1,42 @@
 {
   "benchmark": "BFC-006",
-  "comparison": {
-    "commitment_equivalent": false,
-    "missing": [
-      "history"
+  "candidate_execution": {
+    "state": {
+      "increment": 2,
+      "results": [
+        2,
+        4
+      ],
+      "value": 4
+    },
+    "status": "Pass",
+    "steps": [
+      "apply-v1",
+      "replace-v2",
+      "apply-v2"
     ]
   },
+  "comparison": {
+    "commitment_equivalent": true,
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Pass",
+      "semantic": "Pass",
+      "structural": "Pass"
+    },
+    "result_equivalent": true
+  },
   "correspondence_map": {
+    "apply-v1": "typed-hypergraph:apply-v1",
+    "apply-v2": "typed-hypergraph:apply-v2",
     "bfc-006-event": "typed-hypergraph:bfc-006-event",
     "bfc-006-source": "typed-hypergraph:bfc-006-source",
-    "bfc-006-state": "typed-hypergraph:bfc-006-state"
-  },
-  "derived_vs_native": {
-    "derived": [
-      "history"
-    ],
-    "native": "encoded"
+    "bfc-006-state": "typed-hypergraph:bfc-006-state",
+    "replace-v2": "typed-hypergraph:replace-v2"
   },
   "execution_steps": [
     {
@@ -26,41 +47,74 @@
     {
       "action": "execute-bounded",
       "candidate_result": {
-        "states": [
-          "s0",
-          "s1"
-        ],
+        "state": {
+          "increment": 2,
+          "results": [
+            2,
+            4
+          ],
+          "value": 4
+        },
         "status": "Pass",
         "steps": [
-          {
-            "edge": "BFC-006-edge",
-            "path": [
-              "r",
-              "s0",
-              "s1"
-            ]
-          }
+          "apply-v1",
+          "replace-v2",
+          "apply-v2"
         ]
       },
-      "comparison_result": "Partial",
-      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph",
+      "reference_result": {
+        "state": {
+          "increment": 2,
+          "results": [
+            2,
+            4
+          ],
+          "value": 4
+        },
+        "status": "Pass",
+        "steps": [
+          "apply-v1",
+          "replace-v2",
+          "apply-v2"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": true,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Pass",
+          "semantic": "Pass",
+          "structural": "Pass"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
     }
   ],
   "external_assumptions": [],
   "external_dependencies": [],
-  "failure_or_unknown_reason": "historical commitment encoded without native identity",
+  "failure_or_unknown_reason": null,
   "formation_valid": true,
   "foundation": "typed-hypergraph",
   "generated_target_elements": [
+    "typed-hypergraph:apply-v1",
+    "typed-hypergraph:apply-v2",
+    "typed-hypergraph:bfc-006-event",
     "typed-hypergraph:bfc-006-source",
     "typed-hypergraph:bfc-006-state",
-    "typed-hypergraph:bfc-006-event"
+    "typed-hypergraph:replace-v2"
   ],
   "hidden_machinery": [],
   "introduced_commitments": [],
-  "omitted_commitments": [
-    "history"
-  ],
+  "omitted_commitments": [],
   "opaque_content": [],
   "preservation": {
     "dependency": "Pass",
@@ -72,6 +126,18 @@
   },
   "reconstruction_steps": [
     {
+      "source": "apply-v1",
+      "target": "typed-hypergraph:apply-v1"
+    },
+    {
+      "source": "apply-v2",
+      "target": "typed-hypergraph:apply-v2"
+    },
+    {
+      "source": "bfc-006-event",
+      "target": "typed-hypergraph:bfc-006-event"
+    },
+    {
       "source": "bfc-006-source",
       "target": "typed-hypergraph:bfc-006-source"
     },
@@ -80,51 +146,329 @@
       "target": "typed-hypergraph:bfc-006-state"
     },
     {
-      "source": "bfc-006-event",
-      "target": "typed-hypergraph:bfc-006-event"
+      "source": "replace-v2",
+      "target": "typed-hypergraph:replace-v2"
     }
   ],
-  "recovered_commitments": [
-    "structure",
-    "meaning",
-    "execution",
-    "dependency",
-    "information"
-  ],
+  "recovered_commitments": {
+    "dependency": [
+      [
+        "replace-v2",
+        "apply-v2"
+      ]
+    ],
+    "historical": [
+      {
+        "after": null,
+        "id": "use-v1"
+      },
+      {
+        "after": "use-v1",
+        "id": "install-v2"
+      },
+      {
+        "after": "install-v2",
+        "id": "use-v2"
+      }
+    ],
+    "information": {
+      "initial_increment": 1
+    },
+    "operational": {
+      "initial": {
+        "increment": 1,
+        "value": 1
+      },
+      "instructions": [
+        {
+          "arguments": {},
+          "id": "apply-v1",
+          "opcode": "increment"
+        },
+        {
+          "arguments": {
+            "value": 2
+          },
+          "id": "replace-v2",
+          "opcode": "replace_increment"
+        },
+        {
+          "arguments": {},
+          "id": "apply-v2",
+          "opcode": "increment"
+        }
+      ]
+    },
+    "semantic": {
+      "rule_versions": [
+        "v1",
+        "v2"
+      ]
+    },
+    "structural": {
+      "identity_bearing_arguments": [],
+      "instruction_ids": [
+        "apply-v1",
+        "replace-v2",
+        "apply-v2"
+      ],
+      "opcodes": [
+        "increment",
+        "replace_increment",
+        "increment"
+      ]
+    }
+  },
   "recovered_elements": [
+    "apply-v1",
+    "apply-v2",
+    "bfc-006-event",
     "bfc-006-source",
     "bfc-006-state",
-    "bfc-006-event"
+    "replace-v2"
   ],
+  "recovered_result": {
+    "state": {
+      "increment": 2,
+      "results": [
+        2,
+        4
+      ],
+      "value": 4
+    },
+    "status": "Pass",
+    "steps": [
+      "apply-v1",
+      "replace-v2",
+      "apply-v2"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "increment": 2,
+      "results": [
+        2,
+        4
+      ],
+      "value": 4
+    },
+    "status": "Pass",
+    "steps": [
+      "apply-v1",
+      "replace-v2",
+      "apply-v2"
+    ]
+  },
   "source_elements": [
     "bfc-006-source",
     "bfc-006-state",
-    "bfc-006-event"
+    "bfc-006-event",
+    "apply-v1",
+    "replace-v2",
+    "apply-v2"
   ],
-  "status": "Partial",
+  "source_model": {
+    "commitments": {
+      "dependency": [
+        [
+          "replace-v2",
+          "apply-v2"
+        ]
+      ],
+      "historical": [
+        {
+          "after": null,
+          "id": "use-v1"
+        },
+        {
+          "after": "use-v1",
+          "id": "install-v2"
+        },
+        {
+          "after": "install-v2",
+          "id": "use-v2"
+        }
+      ],
+      "information": {
+        "initial_increment": 1
+      },
+      "operational": {
+        "initial": {
+          "increment": 1,
+          "value": 1
+        },
+        "instructions": [
+          {
+            "arguments": {},
+            "id": "apply-v1",
+            "opcode": "increment"
+          },
+          {
+            "arguments": {
+              "value": 2
+            },
+            "id": "replace-v2",
+            "opcode": "replace_increment"
+          },
+          {
+            "arguments": {},
+            "id": "apply-v2",
+            "opcode": "increment"
+          }
+        ]
+      },
+      "semantic": {
+        "rule_versions": [
+          "v1",
+          "v2"
+        ]
+      },
+      "structural": {
+        "identity_bearing_arguments": [],
+        "instruction_ids": [
+          "apply-v1",
+          "replace-v2",
+          "apply-v2"
+        ],
+        "opcodes": [
+          "increment",
+          "replace_increment",
+          "increment"
+        ]
+      }
+    },
+    "dependencies": [
+      [
+        "replace-v2",
+        "apply-v2"
+      ]
+    ],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "use-v1"
+      },
+      {
+        "after": "use-v1",
+        "id": "install-v2"
+      },
+      {
+        "after": "install-v2",
+        "id": "use-v2"
+      }
+    ],
+    "id": "BFC-006",
+    "information": {
+      "initial_increment": 1
+    },
+    "initial": {
+      "increment": 1,
+      "value": 1
+    },
+    "instructions": [
+      {
+        "arguments": {},
+        "id": "apply-v1",
+        "opcode": "increment"
+      },
+      {
+        "arguments": {
+          "value": 2
+        },
+        "id": "replace-v2",
+        "opcode": "replace_increment"
+      },
+      {
+        "arguments": {},
+        "id": "apply-v2",
+        "opcode": "increment"
+      }
+    ],
+    "name": "changing rules",
+    "semantic": {
+      "rule_versions": [
+        "v1",
+        "v2"
+      ]
+    },
+    "unknown_reason": null
+  },
+  "status": "Pass",
+  "structural_accounting": {
+    "derived": 0,
+    "execution": 3,
+    "external": 0,
+    "history": 3,
+    "identity": 3,
+    "interpretation": 0,
+    "native": 9,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 9,
+    "repair": 0,
+    "unresolved": 0
+  },
   "target_model": {
-    "active_states": [
-      "s0"
+    "candidate": "typed-hypergraph",
+    "dependency_edges": [
+      [
+        "replace-v2",
+        "apply-v2"
+      ]
     ],
     "edges": [
       {
-        "ends": [
-          "r",
-          "s0",
-          "s1"
-        ],
-        "id": "BFC-006-edge",
-        "type": "applies"
+        "arguments": {},
+        "id": "apply-v1",
+        "type": "increment"
+      },
+      {
+        "arguments": {
+          "value": 2
+        },
+        "id": "replace-v2",
+        "type": "replace_increment"
+      },
+      {
+        "arguments": {},
+        "id": "apply-v2",
+        "type": "increment"
       }
     ],
+    "history_edges": [
+      {
+        "after": null,
+        "id": "use-v1"
+      },
+      {
+        "after": "use-v1",
+        "id": "install-v2"
+      },
+      {
+        "after": "install-v2",
+        "id": "use-v2"
+      }
+    ],
+    "information_nodes": {
+      "initial_increment": 1
+    },
+    "initial": {
+      "increment": 1,
+      "value": 1
+    },
     "nodes": {
-      "r": "rule",
-      "s0": "state",
-      "s1": "state"
+      "apply-v1": "instruction",
+      "apply-v2": "instruction",
+      "replace-v2": "instruction"
+    },
+    "semantic_nodes": {
+      "rule_versions": [
+        "v1",
+        "v2"
+      ]
     }
   },
   "typing_valid": true,
-  "unsupported_structures": [
-    "history"
-  ]
+  "unsupported_structures": []
 }

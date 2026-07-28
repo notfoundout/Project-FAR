@@ -1,17 +1,41 @@
 {
   "benchmark": "BFC-005",
+  "candidate_execution": {
+    "state": {
+      "equations": {
+        "y": "x"
+      },
+      "variables": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "eq1",
+      "do1"
+    ]
+  },
   "comparison": {
     "commitment_equivalent": true,
-    "missing": []
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Pass",
+      "semantic": "Pass",
+      "structural": "Pass"
+    },
+    "result_equivalent": true
   },
   "correspondence_map": {
     "bfc-005-event": "typed-hypergraph:bfc-005-event",
     "bfc-005-source": "typed-hypergraph:bfc-005-source",
-    "bfc-005-state": "typed-hypergraph:bfc-005-state"
-  },
-  "derived_vs_native": {
-    "derived": [],
-    "native": "causal intervention"
+    "bfc-005-state": "typed-hypergraph:bfc-005-state",
+    "do1": "typed-hypergraph:do1",
+    "eq1": "typed-hypergraph:eq1"
   },
   "execution_steps": [
     {
@@ -22,24 +46,56 @@
     {
       "action": "execute-bounded",
       "candidate_result": {
-        "states": [
-          "s0",
-          "s1"
-        ],
+        "state": {
+          "equations": {
+            "y": "x"
+          },
+          "variables": {
+            "x": 0,
+            "y": 0
+          }
+        },
         "status": "Pass",
         "steps": [
-          {
-            "edge": "BFC-005-edge",
-            "path": [
-              "r",
-              "s0",
-              "s1"
-            ]
-          }
+          "eq1",
+          "do1"
         ]
       },
-      "comparison_result": "Pass",
-      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph",
+      "reference_result": {
+        "state": {
+          "equations": {
+            "y": "x"
+          },
+          "variables": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "status": "Pass",
+        "steps": [
+          "eq1",
+          "do1"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": true,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Pass",
+          "semantic": "Pass",
+          "structural": "Pass"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
     }
   ],
   "external_assumptions": [],
@@ -48,9 +104,11 @@
   "formation_valid": true,
   "foundation": "typed-hypergraph",
   "generated_target_elements": [
+    "typed-hypergraph:bfc-005-event",
     "typed-hypergraph:bfc-005-source",
     "typed-hypergraph:bfc-005-state",
-    "typed-hypergraph:bfc-005-event"
+    "typed-hypergraph:do1",
+    "typed-hypergraph:eq1"
   ],
   "hidden_machinery": [],
   "introduced_commitments": [],
@@ -66,6 +124,10 @@
   },
   "reconstruction_steps": [
     {
+      "source": "bfc-005-event",
+      "target": "typed-hypergraph:bfc-005-event"
+    },
+    {
       "source": "bfc-005-source",
       "target": "typed-hypergraph:bfc-005-source"
     },
@@ -74,48 +136,300 @@
       "target": "typed-hypergraph:bfc-005-state"
     },
     {
-      "source": "bfc-005-event",
-      "target": "typed-hypergraph:bfc-005-event"
+      "source": "do1",
+      "target": "typed-hypergraph:do1"
+    },
+    {
+      "source": "eq1",
+      "target": "typed-hypergraph:eq1"
     }
   ],
-  "recovered_commitments": [
-    "structure",
-    "meaning",
-    "execution",
-    "dependency",
-    "information",
-    "history"
-  ],
+  "recovered_commitments": {
+    "dependency": [
+      [
+        "x",
+        "y"
+      ]
+    ],
+    "historical": [
+      {
+        "after": null,
+        "id": "equation-y-x"
+      },
+      {
+        "after": "equation-y-x",
+        "id": "do-x-0"
+      }
+    ],
+    "information": {
+      "interventional_x": 0,
+      "observational_x": 1
+    },
+    "operational": {
+      "initial": {
+        "variables": {
+          "x": 1
+        }
+      },
+      "instructions": [
+        {
+          "arguments": {
+            "source": "x",
+            "target": "y"
+          },
+          "id": "eq1",
+          "opcode": "equation"
+        },
+        {
+          "arguments": {
+            "value": 0,
+            "variable": "x"
+          },
+          "id": "do1",
+          "opcode": "intervene"
+        }
+      ]
+    },
+    "semantic": {
+      "intervention": "surgical replacement"
+    },
+    "structural": {
+      "identity_bearing_arguments": [],
+      "instruction_ids": [
+        "eq1",
+        "do1"
+      ],
+      "opcodes": [
+        "equation",
+        "intervene"
+      ]
+    }
+  },
   "recovered_elements": [
+    "bfc-005-event",
     "bfc-005-source",
     "bfc-005-state",
-    "bfc-005-event"
+    "do1",
+    "eq1"
   ],
+  "recovered_result": {
+    "state": {
+      "equations": {
+        "y": "x"
+      },
+      "variables": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "eq1",
+      "do1"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "equations": {
+        "y": "x"
+      },
+      "variables": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "status": "Pass",
+    "steps": [
+      "eq1",
+      "do1"
+    ]
+  },
   "source_elements": [
     "bfc-005-source",
     "bfc-005-state",
-    "bfc-005-event"
+    "bfc-005-event",
+    "eq1",
+    "do1"
   ],
+  "source_model": {
+    "commitments": {
+      "dependency": [
+        [
+          "x",
+          "y"
+        ]
+      ],
+      "historical": [
+        {
+          "after": null,
+          "id": "equation-y-x"
+        },
+        {
+          "after": "equation-y-x",
+          "id": "do-x-0"
+        }
+      ],
+      "information": {
+        "interventional_x": 0,
+        "observational_x": 1
+      },
+      "operational": {
+        "initial": {
+          "variables": {
+            "x": 1
+          }
+        },
+        "instructions": [
+          {
+            "arguments": {
+              "source": "x",
+              "target": "y"
+            },
+            "id": "eq1",
+            "opcode": "equation"
+          },
+          {
+            "arguments": {
+              "value": 0,
+              "variable": "x"
+            },
+            "id": "do1",
+            "opcode": "intervene"
+          }
+        ]
+      },
+      "semantic": {
+        "intervention": "surgical replacement"
+      },
+      "structural": {
+        "identity_bearing_arguments": [],
+        "instruction_ids": [
+          "eq1",
+          "do1"
+        ],
+        "opcodes": [
+          "equation",
+          "intervene"
+        ]
+      }
+    },
+    "dependencies": [
+      [
+        "x",
+        "y"
+      ]
+    ],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "equation-y-x"
+      },
+      {
+        "after": "equation-y-x",
+        "id": "do-x-0"
+      }
+    ],
+    "id": "BFC-005",
+    "information": {
+      "interventional_x": 0,
+      "observational_x": 1
+    },
+    "initial": {
+      "variables": {
+        "x": 1
+      }
+    },
+    "instructions": [
+      {
+        "arguments": {
+          "source": "x",
+          "target": "y"
+        },
+        "id": "eq1",
+        "opcode": "equation"
+      },
+      {
+        "arguments": {
+          "value": 0,
+          "variable": "x"
+        },
+        "id": "do1",
+        "opcode": "intervene"
+      }
+    ],
+    "name": "causal intervention",
+    "semantic": {
+      "intervention": "surgical replacement"
+    },
+    "unknown_reason": null
+  },
   "status": "Pass",
+  "structural_accounting": {
+    "derived": 1,
+    "execution": 2,
+    "external": 0,
+    "history": 2,
+    "identity": 2,
+    "interpretation": 0,
+    "native": 6,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 8,
+    "repair": 0,
+    "unresolved": 0
+  },
   "target_model": {
-    "active_states": [
-      "s0"
+    "candidate": "typed-hypergraph",
+    "dependency_edges": [
+      [
+        "x",
+        "y"
+      ]
     ],
     "edges": [
       {
-        "ends": [
-          "r",
-          "s0",
-          "s1"
-        ],
-        "id": "BFC-005-edge",
-        "type": "applies"
+        "arguments": {
+          "source": "x",
+          "target": "y"
+        },
+        "id": "eq1",
+        "type": "equation"
+      },
+      {
+        "arguments": {
+          "value": 0,
+          "variable": "x"
+        },
+        "id": "do1",
+        "type": "intervene"
       }
     ],
+    "history_edges": [
+      {
+        "after": null,
+        "id": "equation-y-x"
+      },
+      {
+        "after": "equation-y-x",
+        "id": "do-x-0"
+      }
+    ],
+    "information_nodes": {
+      "interventional_x": 0,
+      "observational_x": 1
+    },
+    "initial": {
+      "variables": {
+        "x": 1
+      }
+    },
     "nodes": {
-      "r": "rule",
-      "s0": "state",
-      "s1": "state"
+      "do1": "instruction",
+      "eq1": "instruction"
+    },
+    "semantic_nodes": {
+      "intervention": "surgical replacement"
     }
   },
   "typing_valid": true,

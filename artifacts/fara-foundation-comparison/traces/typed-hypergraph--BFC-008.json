@@ -1,17 +1,47 @@
 {
   "benchmark": "BFC-008",
+  "candidate_execution": {
+    "state": {
+      "classifications": [
+        [
+          "left",
+          "a",
+          "person"
+        ],
+        [
+          "right",
+          "a",
+          "account"
+        ]
+      ],
+      "conflict": true
+    },
+    "status": "Pass",
+    "steps": [
+      "c1",
+      "c2"
+    ]
+  },
   "comparison": {
     "commitment_equivalent": true,
-    "missing": []
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Pass",
+      "semantic": "Pass",
+      "structural": "Pass"
+    },
+    "result_equivalent": true
   },
   "correspondence_map": {
     "bfc-008-event": "typed-hypergraph:bfc-008-event",
     "bfc-008-source": "typed-hypergraph:bfc-008-source",
-    "bfc-008-state": "typed-hypergraph:bfc-008-state"
-  },
-  "derived_vs_native": {
-    "derived": [],
-    "native": "evolving or incompatible ontologies"
+    "bfc-008-state": "typed-hypergraph:bfc-008-state",
+    "c1": "typed-hypergraph:c1",
+    "c2": "typed-hypergraph:c2"
   },
   "execution_steps": [
     {
@@ -22,24 +52,68 @@
     {
       "action": "execute-bounded",
       "candidate_result": {
-        "states": [
-          "s0",
-          "s1"
-        ],
+        "state": {
+          "classifications": [
+            [
+              "left",
+              "a",
+              "person"
+            ],
+            [
+              "right",
+              "a",
+              "account"
+            ]
+          ],
+          "conflict": true
+        },
         "status": "Pass",
         "steps": [
-          {
-            "edge": "BFC-008-edge",
-            "path": [
-              "r",
-              "s0",
-              "s1"
-            ]
-          }
+          "c1",
+          "c2"
         ]
       },
-      "comparison_result": "Pass",
-      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph",
+      "reference_result": {
+        "state": {
+          "classifications": [
+            [
+              "left",
+              "a",
+              "person"
+            ],
+            [
+              "right",
+              "a",
+              "account"
+            ]
+          ],
+          "conflict": true
+        },
+        "status": "Pass",
+        "steps": [
+          "c1",
+          "c2"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": true,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Pass",
+          "semantic": "Pass",
+          "structural": "Pass"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
     }
   ],
   "external_assumptions": [],
@@ -48,9 +122,11 @@
   "formation_valid": true,
   "foundation": "typed-hypergraph",
   "generated_target_elements": [
+    "typed-hypergraph:bfc-008-event",
     "typed-hypergraph:bfc-008-source",
     "typed-hypergraph:bfc-008-state",
-    "typed-hypergraph:bfc-008-event"
+    "typed-hypergraph:c1",
+    "typed-hypergraph:c2"
   ],
   "hidden_machinery": [],
   "introduced_commitments": [],
@@ -66,6 +142,10 @@
   },
   "reconstruction_steps": [
     {
+      "source": "bfc-008-event",
+      "target": "typed-hypergraph:bfc-008-event"
+    },
+    {
       "source": "bfc-008-source",
       "target": "typed-hypergraph:bfc-008-source"
     },
@@ -74,48 +154,320 @@
       "target": "typed-hypergraph:bfc-008-state"
     },
     {
-      "source": "bfc-008-event",
-      "target": "typed-hypergraph:bfc-008-event"
+      "source": "c1",
+      "target": "typed-hypergraph:c1"
+    },
+    {
+      "source": "c2",
+      "target": "typed-hypergraph:c2"
     }
   ],
-  "recovered_commitments": [
-    "structure",
-    "meaning",
-    "execution",
-    "dependency",
-    "information",
-    "history"
-  ],
+  "recovered_commitments": {
+    "dependency": [
+      [
+        "left:a",
+        "right:a"
+      ]
+    ],
+    "historical": [
+      {
+        "after": null,
+        "id": "left-load"
+      },
+      {
+        "after": null,
+        "id": "right-load"
+      }
+    ],
+    "information": {
+      "ontologies": [
+        "left",
+        "right"
+      ]
+    },
+    "operational": {
+      "initial": {
+        "classifications": []
+      },
+      "instructions": [
+        {
+          "arguments": {
+            "category": "person",
+            "entity": "a",
+            "ontology": "left"
+          },
+          "id": "c1",
+          "opcode": "classify"
+        },
+        {
+          "arguments": {
+            "category": "account",
+            "entity": "a",
+            "ontology": "right"
+          },
+          "id": "c2",
+          "opcode": "classify"
+        }
+      ]
+    },
+    "semantic": {
+      "alignment": "categories incompatible"
+    },
+    "structural": {
+      "identity_bearing_arguments": [],
+      "instruction_ids": [
+        "c1",
+        "c2"
+      ],
+      "opcodes": [
+        "classify",
+        "classify"
+      ]
+    }
+  },
   "recovered_elements": [
+    "bfc-008-event",
     "bfc-008-source",
     "bfc-008-state",
-    "bfc-008-event"
+    "c1",
+    "c2"
   ],
+  "recovered_result": {
+    "state": {
+      "classifications": [
+        [
+          "left",
+          "a",
+          "person"
+        ],
+        [
+          "right",
+          "a",
+          "account"
+        ]
+      ],
+      "conflict": true
+    },
+    "status": "Pass",
+    "steps": [
+      "c1",
+      "c2"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "classifications": [
+        [
+          "left",
+          "a",
+          "person"
+        ],
+        [
+          "right",
+          "a",
+          "account"
+        ]
+      ],
+      "conflict": true
+    },
+    "status": "Pass",
+    "steps": [
+      "c1",
+      "c2"
+    ]
+  },
   "source_elements": [
     "bfc-008-source",
     "bfc-008-state",
-    "bfc-008-event"
+    "bfc-008-event",
+    "c1",
+    "c2"
   ],
+  "source_model": {
+    "commitments": {
+      "dependency": [
+        [
+          "left:a",
+          "right:a"
+        ]
+      ],
+      "historical": [
+        {
+          "after": null,
+          "id": "left-load"
+        },
+        {
+          "after": null,
+          "id": "right-load"
+        }
+      ],
+      "information": {
+        "ontologies": [
+          "left",
+          "right"
+        ]
+      },
+      "operational": {
+        "initial": {
+          "classifications": []
+        },
+        "instructions": [
+          {
+            "arguments": {
+              "category": "person",
+              "entity": "a",
+              "ontology": "left"
+            },
+            "id": "c1",
+            "opcode": "classify"
+          },
+          {
+            "arguments": {
+              "category": "account",
+              "entity": "a",
+              "ontology": "right"
+            },
+            "id": "c2",
+            "opcode": "classify"
+          }
+        ]
+      },
+      "semantic": {
+        "alignment": "categories incompatible"
+      },
+      "structural": {
+        "identity_bearing_arguments": [],
+        "instruction_ids": [
+          "c1",
+          "c2"
+        ],
+        "opcodes": [
+          "classify",
+          "classify"
+        ]
+      }
+    },
+    "dependencies": [
+      [
+        "left:a",
+        "right:a"
+      ]
+    ],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "left-load"
+      },
+      {
+        "after": null,
+        "id": "right-load"
+      }
+    ],
+    "id": "BFC-008",
+    "information": {
+      "ontologies": [
+        "left",
+        "right"
+      ]
+    },
+    "initial": {
+      "classifications": []
+    },
+    "instructions": [
+      {
+        "arguments": {
+          "category": "person",
+          "entity": "a",
+          "ontology": "left"
+        },
+        "id": "c1",
+        "opcode": "classify"
+      },
+      {
+        "arguments": {
+          "category": "account",
+          "entity": "a",
+          "ontology": "right"
+        },
+        "id": "c2",
+        "opcode": "classify"
+      }
+    ],
+    "name": "evolving or incompatible ontologies",
+    "semantic": {
+      "alignment": "categories incompatible"
+    },
+    "unknown_reason": null
+  },
   "status": "Pass",
+  "structural_accounting": {
+    "derived": 0,
+    "execution": 2,
+    "external": 0,
+    "history": 2,
+    "identity": 2,
+    "interpretation": 0,
+    "native": 6,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 8,
+    "repair": 0,
+    "unresolved": 0
+  },
   "target_model": {
-    "active_states": [
-      "s0"
+    "candidate": "typed-hypergraph",
+    "dependency_edges": [
+      [
+        "left:a",
+        "right:a"
+      ]
     ],
     "edges": [
       {
-        "ends": [
-          "r",
-          "s0",
-          "s1"
-        ],
-        "id": "BFC-008-edge",
-        "type": "applies"
+        "arguments": {
+          "category": "person",
+          "entity": "a",
+          "ontology": "left"
+        },
+        "id": "c1",
+        "type": "classify"
+      },
+      {
+        "arguments": {
+          "category": "account",
+          "entity": "a",
+          "ontology": "right"
+        },
+        "id": "c2",
+        "type": "classify"
       }
     ],
+    "history_edges": [
+      {
+        "after": null,
+        "id": "left-load"
+      },
+      {
+        "after": null,
+        "id": "right-load"
+      }
+    ],
+    "information_nodes": {
+      "ontologies": [
+        "left",
+        "right"
+      ]
+    },
+    "initial": {
+      "classifications": []
+    },
     "nodes": {
-      "r": "rule",
-      "s0": "state",
-      "s1": "state"
+      "c1": "instruction",
+      "c2": "instruction"
+    },
+    "semantic_nodes": {
+      "alignment": "categories incompatible"
     }
   },
   "typing_valid": true,

@@ -1,17 +1,44 @@
 {
   "benchmark": "BFC-014",
+  "candidate_execution": {
+    "state": {
+      "proofs": [
+        {
+          "formula": "T",
+          "id": "proof-1"
+        },
+        {
+          "formula": "T",
+          "id": "proof-2"
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "p1",
+      "p2"
+    ]
+  },
   "comparison": {
     "commitment_equivalent": true,
-    "missing": []
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Pass",
+      "historical": "Pass",
+      "information": "Pass",
+      "operational": "Pass",
+      "semantic": "Pass",
+      "structural": "Pass"
+    },
+    "result_equivalent": true
   },
   "correspondence_map": {
     "bfc-014-event": "typed-hypergraph:bfc-014-event",
     "bfc-014-source": "typed-hypergraph:bfc-014-source",
-    "bfc-014-state": "typed-hypergraph:bfc-014-state"
-  },
-  "derived_vs_native": {
-    "derived": [],
-    "native": "proof identity"
+    "bfc-014-state": "typed-hypergraph:bfc-014-state",
+    "p1": "typed-hypergraph:p1",
+    "p2": "typed-hypergraph:p2"
   },
   "execution_steps": [
     {
@@ -22,24 +49,62 @@
     {
       "action": "execute-bounded",
       "candidate_result": {
-        "states": [
-          "s0",
-          "s1"
-        ],
+        "state": {
+          "proofs": [
+            {
+              "formula": "T",
+              "id": "proof-1"
+            },
+            {
+              "formula": "T",
+              "id": "proof-2"
+            }
+          ]
+        },
         "status": "Pass",
         "steps": [
-          {
-            "edge": "BFC-014-edge",
-            "path": [
-              "r",
-              "s0",
-              "s1"
-            ]
-          }
+          "p1",
+          "p2"
         ]
       },
-      "comparison_result": "Pass",
-      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph"
+      "evaluator": "theory.foundation.fara_foundation_comparison.typed_hypergraph",
+      "reference_result": {
+        "state": {
+          "proofs": [
+            {
+              "formula": "T",
+              "id": "proof-1"
+            },
+            {
+              "formula": "T",
+              "id": "proof-2"
+            }
+          ]
+        },
+        "status": "Pass",
+        "steps": [
+          "p1",
+          "p2"
+        ]
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": true,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Pass",
+          "historical": "Pass",
+          "information": "Pass",
+          "operational": "Pass",
+          "semantic": "Pass",
+          "structural": "Pass"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
     }
   ],
   "external_assumptions": [],
@@ -48,9 +113,11 @@
   "formation_valid": true,
   "foundation": "typed-hypergraph",
   "generated_target_elements": [
+    "typed-hypergraph:bfc-014-event",
     "typed-hypergraph:bfc-014-source",
     "typed-hypergraph:bfc-014-state",
-    "typed-hypergraph:bfc-014-event"
+    "typed-hypergraph:p1",
+    "typed-hypergraph:p2"
   ],
   "hidden_machinery": [],
   "introduced_commitments": [],
@@ -66,6 +133,10 @@
   },
   "reconstruction_steps": [
     {
+      "source": "bfc-014-event",
+      "target": "typed-hypergraph:bfc-014-event"
+    },
+    {
       "source": "bfc-014-source",
       "target": "typed-hypergraph:bfc-014-source"
     },
@@ -74,48 +145,292 @@
       "target": "typed-hypergraph:bfc-014-state"
     },
     {
-      "source": "bfc-014-event",
-      "target": "typed-hypergraph:bfc-014-event"
+      "source": "p1",
+      "target": "typed-hypergraph:p1"
+    },
+    {
+      "source": "p2",
+      "target": "typed-hypergraph:p2"
     }
   ],
-  "recovered_commitments": [
-    "structure",
-    "meaning",
-    "execution",
-    "dependency",
-    "information",
-    "history"
-  ],
+  "recovered_commitments": {
+    "dependency": [],
+    "historical": [
+      {
+        "after": null,
+        "id": "proof-1"
+      },
+      {
+        "after": null,
+        "id": "proof-2"
+      }
+    ],
+    "information": {
+      "formula": "T"
+    },
+    "operational": {
+      "initial": {
+        "proofs": []
+      },
+      "instructions": [
+        {
+          "arguments": {
+            "formula": "T",
+            "proof_id": "proof-1"
+          },
+          "id": "p1",
+          "opcode": "prove"
+        },
+        {
+          "arguments": {
+            "formula": "T",
+            "proof_id": "proof-2"
+          },
+          "id": "p2",
+          "opcode": "prove"
+        }
+      ]
+    },
+    "semantic": {
+      "same_formula_distinct_proofs": true
+    },
+    "structural": {
+      "identity_bearing_arguments": [
+        {
+          "formula": "T",
+          "proof_id": "proof-1"
+        },
+        {
+          "formula": "T",
+          "proof_id": "proof-2"
+        }
+      ],
+      "instruction_ids": [
+        "p1",
+        "p2"
+      ],
+      "opcodes": [
+        "prove",
+        "prove"
+      ]
+    }
+  },
   "recovered_elements": [
+    "bfc-014-event",
     "bfc-014-source",
     "bfc-014-state",
-    "bfc-014-event"
+    "p1",
+    "p2"
   ],
+  "recovered_result": {
+    "state": {
+      "proofs": [
+        {
+          "formula": "T",
+          "id": "proof-1"
+        },
+        {
+          "formula": "T",
+          "id": "proof-2"
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "p1",
+      "p2"
+    ]
+  },
+  "reference_execution": {
+    "state": {
+      "proofs": [
+        {
+          "formula": "T",
+          "id": "proof-1"
+        },
+        {
+          "formula": "T",
+          "id": "proof-2"
+        }
+      ]
+    },
+    "status": "Pass",
+    "steps": [
+      "p1",
+      "p2"
+    ]
+  },
   "source_elements": [
     "bfc-014-source",
     "bfc-014-state",
-    "bfc-014-event"
+    "bfc-014-event",
+    "p1",
+    "p2"
   ],
-  "status": "Pass",
-  "target_model": {
-    "active_states": [
-      "s0"
-    ],
-    "edges": [
-      {
-        "ends": [
-          "r",
-          "s0",
-          "s1"
+  "source_model": {
+    "commitments": {
+      "dependency": [],
+      "historical": [
+        {
+          "after": null,
+          "id": "proof-1"
+        },
+        {
+          "after": null,
+          "id": "proof-2"
+        }
+      ],
+      "information": {
+        "formula": "T"
+      },
+      "operational": {
+        "initial": {
+          "proofs": []
+        },
+        "instructions": [
+          {
+            "arguments": {
+              "formula": "T",
+              "proof_id": "proof-1"
+            },
+            "id": "p1",
+            "opcode": "prove"
+          },
+          {
+            "arguments": {
+              "formula": "T",
+              "proof_id": "proof-2"
+            },
+            "id": "p2",
+            "opcode": "prove"
+          }
+        ]
+      },
+      "semantic": {
+        "same_formula_distinct_proofs": true
+      },
+      "structural": {
+        "identity_bearing_arguments": [
+          {
+            "formula": "T",
+            "proof_id": "proof-1"
+          },
+          {
+            "formula": "T",
+            "proof_id": "proof-2"
+          }
         ],
-        "id": "BFC-014-edge",
-        "type": "applies"
+        "instruction_ids": [
+          "p1",
+          "p2"
+        ],
+        "opcodes": [
+          "prove",
+          "prove"
+        ]
+      }
+    },
+    "dependencies": [],
+    "external": [],
+    "history": [
+      {
+        "after": null,
+        "id": "proof-1"
+      },
+      {
+        "after": null,
+        "id": "proof-2"
       }
     ],
+    "id": "BFC-014",
+    "information": {
+      "formula": "T"
+    },
+    "initial": {
+      "proofs": []
+    },
+    "instructions": [
+      {
+        "arguments": {
+          "formula": "T",
+          "proof_id": "proof-1"
+        },
+        "id": "p1",
+        "opcode": "prove"
+      },
+      {
+        "arguments": {
+          "formula": "T",
+          "proof_id": "proof-2"
+        },
+        "id": "p2",
+        "opcode": "prove"
+      }
+    ],
+    "name": "proof identity",
+    "semantic": {
+      "same_formula_distinct_proofs": true
+    },
+    "unknown_reason": null
+  },
+  "status": "Pass",
+  "structural_accounting": {
+    "derived": 0,
+    "execution": 2,
+    "external": 0,
+    "history": 2,
+    "identity": 2,
+    "interpretation": 0,
+    "native": 6,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 8,
+    "repair": 0,
+    "unresolved": 0
+  },
+  "target_model": {
+    "candidate": "typed-hypergraph",
+    "dependency_edges": [],
+    "edges": [
+      {
+        "arguments": {
+          "formula": "T",
+          "proof_id": "proof-1"
+        },
+        "id": "p1",
+        "type": "prove"
+      },
+      {
+        "arguments": {
+          "formula": "T",
+          "proof_id": "proof-2"
+        },
+        "id": "p2",
+        "type": "prove"
+      }
+    ],
+    "history_edges": [
+      {
+        "after": null,
+        "id": "proof-1"
+      },
+      {
+        "after": null,
+        "id": "proof-2"
+      }
+    ],
+    "information_nodes": {
+      "formula": "T"
+    },
+    "initial": {
+      "proofs": []
+    },
     "nodes": {
-      "r": "rule",
-      "s0": "state",
-      "s1": "state"
+      "p1": "instruction",
+      "p2": "instruction"
+    },
+    "semantic_nodes": {
+      "same_formula_distinct_proofs": true
     }
   },
   "typing_valid": true,

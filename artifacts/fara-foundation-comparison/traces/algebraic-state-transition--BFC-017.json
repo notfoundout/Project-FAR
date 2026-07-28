@@ -1,31 +1,27 @@
 {
   "benchmark": "BFC-017",
+  "candidate_execution": {
+    "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+    "status": "Unknown"
+  },
   "comparison": {
     "commitment_equivalent": false,
-    "missing": [
-      "dependency",
-      "execution",
-      "history",
-      "information",
-      "meaning",
-      "structure"
-    ]
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Unknown",
+      "historical": "Unknown",
+      "information": "Unknown",
+      "operational": "Unknown",
+      "semantic": "Unknown",
+      "structural": "Unknown"
+    },
+    "result_equivalent": true
   },
   "correspondence_map": {
     "bfc-017-event": "algebraic-state-transition:bfc-017-event",
     "bfc-017-source": "algebraic-state-transition:bfc-017-source",
     "bfc-017-state": "algebraic-state-transition:bfc-017-state"
-  },
-  "derived_vs_native": {
-    "derived": [
-      "structure",
-      "meaning",
-      "execution",
-      "dependency",
-      "information",
-      "history"
-    ],
-    "native": "encoded"
   },
   "execution_steps": [
     {
@@ -36,18 +32,32 @@
     {
       "action": "execute-bounded",
       "candidate_result": {
-        "state": "s1",
-        "status": "Pass",
-        "steps": [
-          {
-            "operation": "advance",
-            "source": "s0",
-            "target": "s1"
-          }
-        ]
+        "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+        "status": "Unknown"
       },
-      "comparison_result": "Unknown",
-      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state"
+      "evaluator": "theory.foundation.fara_foundation_comparison.algebraic_state",
+      "reference_result": {
+        "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+        "status": "Unknown"
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": false,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Unknown",
+          "historical": "Unknown",
+          "information": "Unknown",
+          "operational": "Unknown",
+          "semantic": "Unknown",
+          "structural": "Unknown"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
     }
   ],
   "external_assumptions": [
@@ -60,79 +70,79 @@
   "formation_valid": true,
   "foundation": "algebraic-state-transition",
   "generated_target_elements": [
+    "algebraic-state-transition:bfc-017-event",
     "algebraic-state-transition:bfc-017-source",
-    "algebraic-state-transition:bfc-017-state",
-    "algebraic-state-transition:bfc-017-event"
+    "algebraic-state-transition:bfc-017-state"
   ],
   "hidden_machinery": [],
   "introduced_commitments": [],
-  "omitted_commitments": [
-    "structure",
-    "meaning",
-    "execution",
-    "dependency",
-    "information",
-    "history"
-  ],
+  "omitted_commitments": [],
   "opaque_content": [],
   "preservation": {
     "dependency": "Unknown",
-    "historical": "Pass",
+    "historical": "Unknown",
     "information": "Unknown",
-    "operational": "Pass",
-    "semantic": "Pass",
-    "structural": "Pass"
+    "operational": "Unknown",
+    "semantic": "Unknown",
+    "structural": "Unknown"
   },
-  "reconstruction_steps": [
-    {
-      "source": "bfc-017-source",
-      "target": "algebraic-state-transition:bfc-017-source"
-    },
-    {
-      "source": "bfc-017-state",
-      "target": "algebraic-state-transition:bfc-017-state"
-    },
-    {
-      "source": "bfc-017-event",
-      "target": "algebraic-state-transition:bfc-017-event"
-    }
-  ],
-  "recovered_commitments": [],
-  "recovered_elements": [
-    "bfc-017-source",
-    "bfc-017-state",
-    "bfc-017-event"
-  ],
+  "reconstruction_steps": [],
+  "recovered_commitments": {
+    "dependency": null,
+    "historical": null,
+    "information": null,
+    "operational": null,
+    "semantic": null,
+    "structural": null
+  },
+  "recovered_elements": [],
+  "recovered_result": {
+    "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+    "status": "Unknown"
+  },
+  "reference_execution": {
+    "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+    "status": "Unknown"
+  },
   "source_elements": [
     "bfc-017-source",
     "bfc-017-state",
     "bfc-017-event"
   ],
-  "status": "Unknown",
-  "target_model": {
-    "composition": {},
-    "initial_state": "s0",
-    "operations": {
-      "advance": {
-        "domain": [
-          "s0"
-        ],
-        "mapping": {
-          "s0": "s1"
-        }
-      }
+  "source_model": {
+    "commitments": {
+      "dependency": null,
+      "historical": null,
+      "information": null,
+      "operational": null,
+      "semantic": null,
+      "structural": null
     },
-    "program": [
-      "advance"
-    ]
+    "external": [
+      "oracle dependence"
+    ],
+    "id": "BFC-017",
+    "initial": null,
+    "instructions": [],
+    "name": "oracle dependence",
+    "unknown_reason": "no executable semantics for live/nonfinite/environment-inclusive commitment"
   },
+  "status": "Unknown",
+  "structural_accounting": {
+    "derived": 0,
+    "execution": 0,
+    "external": 1,
+    "history": 0,
+    "identity": 0,
+    "interpretation": 0,
+    "native": 0,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 0,
+    "repair": 0,
+    "unresolved": 6
+  },
+  "target_model": null,
   "typing_valid": true,
-  "unsupported_structures": [
-    "structure",
-    "meaning",
-    "execution",
-    "dependency",
-    "information",
-    "history"
-  ]
+  "unsupported_structures": []
 }

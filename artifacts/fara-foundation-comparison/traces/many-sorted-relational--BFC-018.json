@@ -1,31 +1,27 @@
 {
   "benchmark": "BFC-018",
+  "candidate_execution": {
+    "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+    "status": "Unknown"
+  },
   "comparison": {
     "commitment_equivalent": false,
-    "missing": [
-      "dependency",
-      "execution",
-      "history",
-      "information",
-      "meaning",
-      "structure"
-    ]
+    "differences": {},
+    "missing": [],
+    "preservation": {
+      "dependency": "Unknown",
+      "historical": "Unknown",
+      "information": "Unknown",
+      "operational": "Unknown",
+      "semantic": "Unknown",
+      "structural": "Unknown"
+    },
+    "result_equivalent": true
   },
   "correspondence_map": {
     "bfc-018-event": "many-sorted-relational:bfc-018-event",
     "bfc-018-source": "many-sorted-relational:bfc-018-source",
     "bfc-018-state": "many-sorted-relational:bfc-018-state"
-  },
-  "derived_vs_native": {
-    "derived": [
-      "structure",
-      "meaning",
-      "execution",
-      "dependency",
-      "information",
-      "history"
-    ],
-    "native": "encoded"
   },
   "execution_steps": [
     {
@@ -36,21 +32,32 @@
     {
       "action": "execute-bounded",
       "candidate_result": {
-        "states": [
-          "s0",
-          "s1"
-        ],
-        "status": "Pass",
-        "steps": [
-          {
-            "rule": "r",
-            "source": "s0",
-            "target": "s1"
-          }
-        ]
+        "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+        "status": "Unknown"
       },
-      "comparison_result": "Unknown",
-      "evaluator": "theory.foundation.fara_foundation_comparison.many_sorted"
+      "evaluator": "theory.foundation.fara_foundation_comparison.many_sorted",
+      "reference_result": {
+        "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+        "status": "Unknown"
+      }
+    },
+    {
+      "action": "compare-commitments",
+      "comparison": {
+        "commitment_equivalent": false,
+        "differences": {},
+        "missing": [],
+        "preservation": {
+          "dependency": "Unknown",
+          "historical": "Unknown",
+          "information": "Unknown",
+          "operational": "Unknown",
+          "semantic": "Unknown",
+          "structural": "Unknown"
+        },
+        "result_equivalent": true
+      },
+      "evaluator": "reconstruction.compare"
     }
   ],
   "external_assumptions": [
@@ -63,76 +70,79 @@
   "formation_valid": true,
   "foundation": "many-sorted-relational",
   "generated_target_elements": [
+    "many-sorted-relational:bfc-018-event",
     "many-sorted-relational:bfc-018-source",
-    "many-sorted-relational:bfc-018-state",
-    "many-sorted-relational:bfc-018-event"
+    "many-sorted-relational:bfc-018-state"
   ],
   "hidden_machinery": [],
   "introduced_commitments": [],
-  "omitted_commitments": [
-    "structure",
-    "meaning",
-    "execution",
-    "dependency",
-    "information",
-    "history"
-  ],
+  "omitted_commitments": [],
   "opaque_content": [],
   "preservation": {
     "dependency": "Unknown",
-    "historical": "Pass",
+    "historical": "Unknown",
     "information": "Unknown",
-    "operational": "Pass",
-    "semantic": "Pass",
-    "structural": "Pass"
+    "operational": "Unknown",
+    "semantic": "Unknown",
+    "structural": "Unknown"
   },
-  "reconstruction_steps": [
-    {
-      "source": "bfc-018-source",
-      "target": "many-sorted-relational:bfc-018-source"
-    },
-    {
-      "source": "bfc-018-state",
-      "target": "many-sorted-relational:bfc-018-state"
-    },
-    {
-      "source": "bfc-018-event",
-      "target": "many-sorted-relational:bfc-018-event"
-    }
-  ],
-  "recovered_commitments": [],
-  "recovered_elements": [
-    "bfc-018-source",
-    "bfc-018-state",
-    "bfc-018-event"
-  ],
+  "reconstruction_steps": [],
+  "recovered_commitments": {
+    "dependency": null,
+    "historical": null,
+    "information": null,
+    "operational": null,
+    "semantic": null,
+    "structural": null
+  },
+  "recovered_elements": [],
+  "recovered_result": {
+    "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+    "status": "Unknown"
+  },
+  "reference_execution": {
+    "reason": "no executable semantics for live/nonfinite/environment-inclusive commitment",
+    "status": "Unknown"
+  },
   "source_elements": [
     "bfc-018-source",
     "bfc-018-state",
     "bfc-018-event"
   ],
-  "status": "Unknown",
-  "target_model": {
-    "relations": {
-      "applies": [
-        [
-          "r",
-          "s0",
-          "s1"
-        ]
-      ]
+  "source_model": {
+    "commitments": {
+      "dependency": null,
+      "historical": null,
+      "information": null,
+      "operational": null,
+      "semantic": null,
+      "structural": null
     },
-    "states": [
-      "s0"
-    ]
+    "external": [
+      "continuous or hybrid dynamics"
+    ],
+    "id": "BFC-018",
+    "initial": null,
+    "instructions": [],
+    "name": "continuous or hybrid dynamics",
+    "unknown_reason": "no executable semantics for live/nonfinite/environment-inclusive commitment"
   },
+  "status": "Unknown",
+  "structural_accounting": {
+    "derived": 0,
+    "execution": 0,
+    "external": 1,
+    "history": 0,
+    "identity": 0,
+    "interpretation": 0,
+    "native": 0,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 0,
+    "repair": 0,
+    "unresolved": 6
+  },
+  "target_model": null,
   "typing_valid": true,
-  "unsupported_structures": [
-    "structure",
-    "meaning",
-    "execution",
-    "dependency",
-    "information",
-    "history"
-  ]
+  "unsupported_structures": []
 }
