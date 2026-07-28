@@ -323,3 +323,7 @@ Dependency updates should be justified by grounding investigations, artifact aud
 ## Vocabulary-pressure evaluation dependency (`FARA-VOC-001`)
 
 This unnumbered campaign addresses `UQ-T7`; repository authority does not designate it as FARA W6. It freezes the seven provisional candidate primitives without changing them, preserves W0–W5, and uses W4/W5 cases only as registered phenomena. Its extension classifications are bounded to the auxiliary finite interpretation and establish no global primitive necessity.
+
+## Core-formalization research dependency (`FARA-CORE-FORMAL-001`)
+
+This descriptively named, unnumbered campaign executes two remaining `FARA-VOC-001` obligations: formal derivation/composition rules and W1 circular-definition resolution. It preserves the canonical prose and W0–W5 results. Its acyclic many-sorted signature is an auxiliary finite test target; three non-equivalent coherent foundations remain, so it is not a canonical replacement, W7, uniqueness result, or global independence result.

@@ -12,6 +12,7 @@ health:
 	python tools/check_fara_primitive_independence.py
 	python tools/check_fara_w4_representation.py
 	python tools/check_fara_w5_invariance.py
+	python tools/check_fara_core_formalization.py
 	python tools/check_s_core_w1.py
 	python tools/check_s_core_w2.py
 	python tools/check_s_core_w3.py
@@ -199,3 +200,8 @@ semantic-check:
 fara-vocabulary-check:
 	python tools/check_fara_vocabulary_sufficiency.py
 	python -m unittest tests.test_fara_vocabulary_sufficiency -v
+
+.PHONY: fara-core-formalization-check
+fara-core-formalization-check:
+	python tools/check_fara_core_formalization.py
+	python -m unittest tests.test_fara_core_formalization -v

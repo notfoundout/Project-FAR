@@ -44,3 +44,4 @@ Examples, methodology, research, validation, papers and archive are never prereq
 | Comparative mappings establish representational sufficiency | Validated only for exact cases meeting CRP rules | No universality follows. |
 | Commercial/software claims imply theoretical validation | Rejected | Software behavior and commercial framing are downstream and bounded. |
 | FARA-VOC-001 | extension pressure with boundedly irreducible candidate additions | Nineteen executable registered-family mappings reject catch-all serialization as expression; bounded failures support extension pressure only under the frozen auxiliary interpretation. |
+| FARA-CORE-FORMAL-001 | multiple non-equivalent coherent formalizations remain | One bounded many-sorted target is coherent and testable, but substantive identity/disjointness choices and two alternative coherent foundations prohibit canonical uniqueness, global independence, minimality, completeness, or universality claims. |
