@@ -330,4 +330,12 @@ This descriptively named, unnumbered campaign executes two remaining `FARA-VOC-0
 
 ## Foundation-comparison research dependency (`FARA-FOUNDATION-COMP-001`)
 
-This descriptively named, unnumbered campaign executes the selection obligation retained by `FARA-CORE-PROOF-001`, `OP-10`, and `UQ-T11`. It freezes, executes, and compares the three retained coherent foundations without changing their PR #421 definitions. Its 19-case finite corpus, translations, reconstructions, witnesses, ablations, accounting, and Pareto relation are auxiliary research evidence. The terminal result is bounded Pareto incomparability, not W7, canonical selection, global superiority, necessity, minimality, completeness, or universality.
+This descriptively named, unnumbered campaign executes the selection obligation retained by `FARA-CORE-PROOF-001`, `OP-10`, and `UQ-T11`. It freezes, executes, and compares the three retained coherent foundations without changing their PR #421 definitions. Its 19-case finite corpus, translations, reconstructions, witnesses, ablations, accounting, and Pareto relation are auxiliary research evidence. Many-sorted relational dominates algebraic/state-transition under the frozen dimensions, while typed hypergraph remains Pareto-incomparable with many-sorted relational. The terminal result remains multiple foundations remain Pareto-incomparable, not W7, canonical selection, global superiority, necessity, minimality, completeness, or universality.
+
+<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->
+- Mapping totals (Pass/Partial/Fail/Unknown): `{"algebraic-state-transition":{"Fail":4,"Partial":0,"Pass":12,"Unknown":3},"many-sorted-relational":{"Fail":3,"Partial":0,"Pass":13,"Unknown":3},"typed-hypergraph":{"Fail":0,"Partial":0,"Pass":16,"Unknown":3}}`
+- Dominance edges: `[["many-sorted-relational","algebraic-state-transition"]]`
+- Terminal result: **multiple foundations remain Pareto-incomparable**
+- Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
+- Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
+<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->

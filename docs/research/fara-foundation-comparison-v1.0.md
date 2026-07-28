@@ -26,9 +26,19 @@ Ablations remove seven major constructs from every candidate. They establish onl
 
 The exact terminal result is: **multiple foundations remain Pareto-incomparable**.
 
-The dominance graph has three nodes and no edges. Every pair has opposed frozen dimensions: native exactness and lower repair cost in one area trade against identity, historical, semantic, operational, or structural cost elsewhere. No candidate is no worse on every dimension. This is not a forced tie and does not select a preferred foundation.
+The dominance graph has three nodes and the single edge `many-sorted-relational` → `algebraic-state-transition`: the many-sorted relational candidate is no worse on all seventeen frozen dimensions and is strictly better on twelve. Typed hypergraph remains Pareto-incomparable with many-sorted relational because its greater exactness, preservation, and lower derived/repair costs trade against greater native and reconstruction costs and one additional external dependency. The edge is bounded comparative evidence, not a global preference or selection.
 
 The strongest supported finding is bounded: all three frozen foundations are coherent enough to execute part of the finite corpus, none has a justified componentwise advantage over both others, and absent external/nonfinite semantics prevents stronger adjudication.
+
+## Executable-evidence snapshot
+
+<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->
+- Mapping totals (Pass/Partial/Fail/Unknown): `{"algebraic-state-transition":{"Fail":4,"Partial":0,"Pass":12,"Unknown":3},"many-sorted-relational":{"Fail":3,"Partial":0,"Pass":13,"Unknown":3},"typed-hypergraph":{"Fail":0,"Partial":0,"Pass":16,"Unknown":3}}`
+- Dominance edges: `[["many-sorted-relational","algebraic-state-transition"]]`
+- Terminal result: **multiple foundations remain Pareto-incomparable**
+- Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
+- Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
+<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
 
 ## Refuted and unresolved claims
 

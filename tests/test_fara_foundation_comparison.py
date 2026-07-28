@@ -135,5 +135,25 @@ class FoundationComparisonTests(unittest.TestCase):
         human = ROOT / "docs/research/fara-foundation-comparison-v1.0.md"
         if human.exists(): self.assertNotEqual(human.read_text(), checker.REPORT.read_text())
 
+    def test_authoritative_human_and_governance_records_match_proof(self):
+        for record in checker.AUTHORITATIVE_RECORDS:
+            with self.subTest(record=record.relative_to(ROOT)):
+                self.assertTrue(checker.validate_authoritative_text(record.read_text(), self.proof))
+
+    def test_equivalent_authoritative_record_mutations_fail_closed(self):
+        snapshot = checker.authoritative_snapshot(self.proof)
+        mutations = [
+            lambda text: text.replace('"Pass":13', '"Pass":12', 1),
+            lambda text: text.replace('[["many-sorted-relational","algebraic-state-transition"]]', '[]', 1),
+            lambda text: text.replace('multiple foundations remain Pareto-incomparable', 'one foundation is selected', 1),
+            lambda text: text.replace('"global superiority",', '', 1),
+            lambda text: text.replace('"independent replication",', '', 1),
+        ]
+        for mutation in mutations:
+            with self.subTest(mutation=mutation):
+                changed = mutation(snapshot)
+                self.assertNotEqual(snapshot, changed)
+                self.assertFalse(checker.validate_authoritative_text(changed, self.proof))
+
 
 if __name__ == "__main__": unittest.main()

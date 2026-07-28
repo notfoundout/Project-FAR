@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse,copy,hashlib,importlib,json,pathlib,subprocess,sys
 ROOT=pathlib.Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 SPEC=ROOT/'theory/formal/fara-foundation-comparison-v1.0.json';PROOF=ROOT/'theory/evaluation/fara-foundation-comparison-proof-v1.0.json';REPORT=ROOT/'theory/evaluation/generated-fara-foundation-comparison-report.md';TRACE_DIR=ROOT/'artifacts/fara-foundation-comparison/traces'
+AUTHORITATIVE_RECORDS=(ROOT/'docs/research/fara-foundation-comparison-v1.0.md',ROOT/'docs/governance/claim-status-matrix.md',ROOT/'docs/governance/limitations-register.md',ROOT/'docs/governance/open-problems-register.md',ROOT/'docs/governance/theorem-proof-status-register.md',ROOT/'docs/governance/unresolved-questions-register.md',ROOT/'frameworks/FARA/dependency-graph.md')
 DIMS=('structural','semantic','operational','dependency','information','historical');CONSTRUCTS=('identity','composition','interpretation','execution','history','ordering','source-representation-separation');RANK={'Unknown':0,'Fail':1,'Partial':2,'Pass':3}
 def canonical(x):return json.dumps(x,sort_keys=True,separators=(',',':'))
 def sha(x):return hashlib.sha256(canonical(x).encode()).hexdigest()
@@ -82,6 +83,12 @@ def render(spec,p):
  for name in sorted(p['structural_accounting']):
   c=p['structural_accounting'][name]['mapping_counts'];lines.append(f"| {name} | {c['Pass']} | {c['Partial']} | {c['Fail']} | {c['Unknown']} |")
  lines+=['','## Executable evidence','',f"All {len(p['traces'])} traces contain benchmark-specific source programs, candidate target models, candidate execution results, independent reference results, reconstruction records, and six-dimensional comparisons.",'','## Ablations','',f"All {len(p['ablations'])} ablations remove a construct, rerun every applicable finite benchmark, and derive loss and structural savings from those runs.",'','## Dominance graph','',f"Edges: `{json.dumps(p['dominance_graph']['edges'])}`.",'','## Bounded finding','',p['strongest_finding']+'.','','## Nonclaims','']+[f'- {x}' for x in p['nonclaims']]+['','## Remaining obligations','']+[f'- {x}' for x in p['remaining_obligations']];return '\n'.join(lines)+'\n'
+def authoritative_snapshot(p):
+ counts={name:data['mapping_counts'] for name,data in sorted(p['structural_accounting'].items())}
+ return '\n'.join(('<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->',f"- Mapping totals (Pass/Partial/Fail/Unknown): `{canonical(counts)}`",f"- Dominance edges: `{canonical(p['dominance_graph']['edges'])}`",f"- Terminal result: **{p['terminal_result']}**",f"- Nonclaims: `{canonical(p['nonclaims'])}`",f"- Remaining obligations: `{canonical(p['remaining_obligations'])}`",'<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->'))
+def validate_authoritative_text(text,p):
+ snapshot=authoritative_snapshot(p)
+ return text.count(snapshot)==1 and text.count('<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->')==1 and text.count('<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->')==1
 def validate(spec,stored,report=None):
  e=[]
  try:fresh=build(copy.deepcopy(spec))
@@ -121,6 +128,8 @@ def validate(spec,stored,report=None):
    if k not in old or subprocess.check_output(['git','hash-object',str(p)],text=True).strip()!=old[k]:e.append('prior PR #421 results overwritten')
  human=ROOT/'docs/research/fara-foundation-comparison-v1.0.md'
  if human.exists() and report is not None and human.read_text()==report:e.append('generated/human report duplication')
+ for record in AUTHORITATIVE_RECORDS:
+  if not record.exists() or not validate_authoritative_text(record.read_text(),fresh):e.append(f'stale authoritative record: {record.relative_to(ROOT)}')
  return sorted(set(e))
 def write_all(spec):
  p=build(copy.deepcopy(spec));PROOF.write_text(json.dumps(p,indent=2,sort_keys=True)+'\n');REPORT.write_text(render(spec,p));TRACE_DIR.mkdir(parents=True,exist_ok=True)
