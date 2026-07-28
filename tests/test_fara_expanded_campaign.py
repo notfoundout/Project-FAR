@@ -16,16 +16,24 @@ class ExpandedCampaignTests(unittest.TestCase):
     def setUpClass(cls):
         cls.spec = json.loads(checker.SPEC.read_text())
         cls.proof = json.loads(checker.PROOF.read_text())
+        cls.fresh = checker.build(copy.deepcopy(cls.spec))
 
     def validate_without_upstream(self, proof=None, report=None):
-        return checker.validate(
-            self.spec,
-            self.proof if proof is None else proof,
-            checker.REPORT.read_text() if report is None else report,
-            check_upstream=False,
-        )
+        # Production validation always rebuilds independently. Mutation tests reuse the
+        # already independently rebuilt class fixture to avoid repeating the full
+        # 66,098-interpretation campaign for every one-field mutation.
+        with mock.patch.object(
+            checker, "build", return_value=copy.deepcopy(self.fresh)
+        ):
+            return checker.validate(
+                self.spec,
+                self.proof if proof is None else proof,
+                checker.REPORT.read_text() if report is None else report,
+                check_upstream=False,
+            )
 
     def test_fresh_executable_evidence(self):
+        self.assertEqual(self.fresh, self.proof)
         self.assertEqual(
             [],
             checker.validate(
