@@ -1,0 +1,448 @@
+{
+  "conservativity": [
+    {
+      "construct": "typed carriers and disjointness",
+      "reason": "adds source/representation separation not formally entailed by old prose models",
+      "result": "nonconservative"
+    },
+    {
+      "construct": "Property abbreviation",
+      "reason": "explicit unary-relation expansion",
+      "result": "conservative"
+    },
+    {
+      "construct": "Investigation tuple",
+      "reason": "old prose identity and condition semantics absent",
+      "result": "unresolved"
+    },
+    {
+      "construct": "remaining definitions",
+      "reason": "complete old prose model class absent",
+      "result": "unresolved"
+    }
+  ],
+  "counterexample_search": [
+    {
+      "attempt": "inequivalent systems identified",
+      "result": "successful witness retained"
+    },
+    {
+      "attempt": "incompatible interpretations",
+      "result": "successful witness retained"
+    },
+    {
+      "attempt": "primitive identity depends on derived concept",
+      "result": "unresolved"
+    },
+    {
+      "attempt": "hidden-metalanguage derivation",
+      "result": "successful witness retained"
+    },
+    {
+      "attempt": "nonconservative definition",
+      "result": "successful witness retained"
+    },
+    {
+      "attempt": "cycle lacking base semantics",
+      "result": "successful witness retained"
+    },
+    {
+      "attempt": "catch-all simulates all",
+      "result": "successful witness retained"
+    },
+    {
+      "attempt": "investigation without calculus",
+      "result": "successful witness retained"
+    },
+    {
+      "attempt": "calculus identity depends on investigation",
+      "result": "successful witness retained"
+    },
+    {
+      "attempt": "inseparable representation/represented object",
+      "result": "successful witness retained"
+    }
+  ],
+  "countermodels": [
+    {
+      "bounded": true,
+      "id": "CE-FORMAL-001",
+      "target": "Object",
+      "witness": "paired reducts agree without target and differ on target"
+    },
+    {
+      "bounded": true,
+      "id": "CE-FORMAL-002",
+      "target": "Relation",
+      "witness": "paired reducts agree without target and differ on target"
+    },
+    {
+      "bounded": true,
+      "id": "CE-FORMAL-003",
+      "target": "Representation",
+      "witness": "paired reducts agree without target and differ on target"
+    },
+    {
+      "bounded": true,
+      "id": "CE-FORMAL-004",
+      "target": "Interpretation",
+      "witness": "paired reducts agree without target and differ on target"
+    },
+    {
+      "bounded": true,
+      "id": "CE-FORMAL-005",
+      "target": "ReasoningCalculus",
+      "witness": "paired reducts agree without target and differ on target"
+    }
+  ],
+  "derivations": [
+    {
+      "mechanical": true,
+      "target": "Property",
+      "trace": [
+        "Relation declared",
+        "restrict arity to 1",
+        "typed unary relation obtained"
+      ]
+    },
+    {
+      "mechanical": true,
+      "target": "Investigation",
+      "trace": [
+        "Objective and Condition carriers declared",
+        "ReasoningCalculus reference declared",
+        "form typed tuple"
+      ]
+    }
+  ],
+  "id": "FARA-CORE-PROOF-001",
+  "models": [
+    {
+      "distortion": "none",
+      "execution": "Pass",
+      "family": "finite_deterministic",
+      "formation": "Pass",
+      "id": "FORM-MODEL-001",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "none",
+      "execution": "Pass",
+      "family": "nonmonotonic_revision",
+      "formation": "Pass",
+      "id": "FORM-MODEL-002",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "none",
+      "execution": "Pass",
+      "family": "paraconsistent",
+      "formation": "Pass",
+      "id": "FORM-MODEL-003",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "none",
+      "execution": "Pass",
+      "family": "probabilistic",
+      "formation": "Pass",
+      "id": "FORM-MODEL-004",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "none",
+      "execution": "Pass",
+      "family": "causal_intervention",
+      "formation": "Pass",
+      "id": "FORM-MODEL-005",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "none",
+      "execution": "Pass",
+      "family": "changing_rules",
+      "formation": "Pass",
+      "id": "FORM-MODEL-006",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "none",
+      "execution": "Pass",
+      "family": "changing_interpretations",
+      "formation": "Pass",
+      "id": "FORM-MODEL-007",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "semantic alignment external",
+      "execution": "Pass",
+      "family": "incompatible_ontologies",
+      "formation": "Pass",
+      "id": "FORM-MODEL-008",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "none",
+      "execution": "Pass",
+      "family": "provenance_history",
+      "formation": "Pass",
+      "id": "FORM-MODEL-009",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "totalization forbidden",
+      "execution": "Pass",
+      "family": "distributed_partial_order",
+      "formation": "Pass",
+      "id": "FORM-MODEL-010",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "none",
+      "execution": "Pass",
+      "family": "proof_identity_binding",
+      "formation": "Pass",
+      "id": "FORM-MODEL-011",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "none",
+      "execution": "Pass",
+      "family": "institutional_authority",
+      "formation": "Pass",
+      "id": "FORM-MODEL-012",
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "Pass",
+      "typing": "Pass",
+      "unsupported": []
+    },
+    {
+      "distortion": "outside finite model class",
+      "execution": "Unknown",
+      "family": "oracle_dependence",
+      "formation": "Pass",
+      "id": "FORM-MODEL-013",
+      "preservation": {
+        "dependency": "Unknown",
+        "historical": "Unknown",
+        "information": "Unknown",
+        "operational": "Unknown",
+        "semantic": "Unknown",
+        "structural": "Unknown"
+      },
+      "recovery": "Unknown",
+      "typing": "Pass",
+      "unsupported": [
+        "oracle/environment"
+      ]
+    },
+    {
+      "distortion": "outside finite model class",
+      "execution": "Unknown",
+      "family": "continuous_embodied",
+      "formation": "Pass",
+      "id": "FORM-MODEL-014",
+      "preservation": {
+        "dependency": "Unknown",
+        "historical": "Unknown",
+        "information": "Unknown",
+        "operational": "Unknown",
+        "semantic": "Unknown",
+        "structural": "Unknown"
+      },
+      "recovery": "Unknown",
+      "typing": "Pass",
+      "unsupported": [
+        "oracle/environment"
+      ]
+    }
+  ],
+  "nonclaims": [
+    "canonical uniqueness",
+    "primitive necessity",
+    "global independence",
+    "global minimality",
+    "completeness",
+    "universality"
+  ],
+  "prior_preservation": {
+    "FARA-VOC-001": "all classifications, nonclaims and obligations retained",
+    "W0": "unchanged",
+    "W1": "unchanged; original unresolved results retained",
+    "W2": "unchanged bounded result",
+    "W3": "unchanged reconstruction result",
+    "W4": "unchanged representation boundary",
+    "W5": "unchanged unresolved invariance result"
+  },
+  "refuted_claims": [
+    "the formal target is conservative in every respect",
+    "the foundations are notational variants",
+    "all adversarial families are internal to the finite model class"
+  ],
+  "rejected_definitions": [
+    "Object as universal payload",
+    "Interpretation as opaque semantic blob",
+    "Representation containing decoder",
+    "Investigation/Calculus ungrounded mutual recursion"
+  ],
+  "remaining_cycles": [],
+  "remaining_obligations": [
+    "choose among non-equivalent coherent foundations by substantive evidence",
+    "extend bounded derivability beyond cardinality two",
+    "supply nonfinite continuous semantics",
+    "supply environment-inclusive embodied semantics",
+    "independently replicate model and countermodel executions",
+    "prove conservativity against a formalization of the complete old prose theory"
+  ],
+  "schema_version": "1.0",
+  "self_review": [
+    "formal elegance is not truth",
+    "disjointness is a substantive theory choice",
+    "finite-set metalanguage is charged",
+    "no higher-order escape hatch admitted",
+    "identity was not chosen as output equality",
+    "finite model selection bias remains",
+    "bounded countermodels are not global",
+    "no mutual recursion is relabeled to hide a cycle",
+    "representability is not ontology",
+    "conservativity is semantic where models exist and otherwise Unknown",
+    "benchmarks may overfit prior campaigns",
+    "W2-W5 and vocabulary classifications are preserved but not premises"
+  ],
+  "specification": "FARA-CORE-FORMAL-001",
+  "strongest_established_result": "the selected many-sorted specification is boundedly coherent under the frozen finite model class; three materially non-equivalent coherent foundations remain",
+  "terminal_result": "multiple non-equivalent coherent formalizations remain",
+  "unresolved_claims": [
+    "which foundation matches intended FARA",
+    "unbounded independence",
+    "complete prose conservativity",
+    "continuous, embodied and oracle semantics"
+  ],
+  "w1_preservation": "all original W1 adjudications remain unresolved in their original artifact; these new bounded classifications do not overwrite them",
+  "w1_re_evaluation": {
+    "Interpretation": "not derivable under the frozen bounded model class",
+    "Investigation": "derivable under the frozen theory",
+    "Object": "not derivable under the frozen bounded model class",
+    "Property": "derivable under the frozen theory",
+    "ReasoningCalculus": "not derivable under the frozen bounded model class",
+    "Relation": "not derivable under the frozen bounded model class",
+    "Representation": "not derivable under the frozen bounded model class"
+  }
+}

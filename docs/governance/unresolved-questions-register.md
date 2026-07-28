@@ -29,3 +29,4 @@ The registers identify questions, not authorization to execute them. New investi
 - **UQ-E5:** Would independent CRP implementations agree on all canonicalization, clause-segmentation, and tie cases? **Unresolved; v1.1 fixtures proposed.**
 - **UQ-E6:** Do independently administered alternative-vocabulary and domain cases reproduce bounded sufficiency observations? **Unresolved.**
 - **UQ-T10:** Are the `FARA-VOC-001` extension candidates necessary outside its frozen auxiliary model? **Unresolved; finite mappings and ablations cannot establish global necessity or minimality.**
+- **UQ-T11:** Which coherent formal foundation, identity criteria, and equivalence relation match intended canonical FARA without substantive theory change? **Unresolved; `FARA-CORE-PROOF-001` retains three non-equivalent foundations and finds a nonconservative disjointness choice.**

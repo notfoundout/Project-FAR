@@ -13,3 +13,4 @@ Status: **Accepted problem index; not execution authorization**
 | OP-07 | Independently replicate bounded comparative representations. | empirical | Existing executions are project-authored or bounded. |
 | OP-08 | Determine whether FAR/FARO procedure families are necessary or merely useful. | methodological | No uniqueness/necessity derivation. |
 | OP-09 | Determine whether boundedly irreducible FARA extension candidates remain irreducible beyond the frozen auxiliary interpretation. | theoretical/empirical | `FARA-VOC-PROOF-001` establishes extension pressure, not global primitive necessity. |
+| OP-10 | Determine which, if any, coherent FARA formal foundation is justified by evidence beyond the frozen finite model class. | theoretical/empirical | `FARA-CORE-PROOF-001` retains relational, hypergraph, and algebraic foundations and does not select a uniquely correct one. |
