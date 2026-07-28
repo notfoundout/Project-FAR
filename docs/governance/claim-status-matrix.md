@@ -34,6 +34,7 @@ Examples, methodology, research, validation, papers and archive are never prereq
 | A fourth or fifth irreducible operator exists | Unresolved | No accepted candidate/evidence. |
 | Admissibility is prior to valid transition (or conversely) | Unresolved | Both are context/calculus-relative in current definitions. |
 | FAR translates reasoning systems without expressive loss | Unresolved and not a current general claim | Every mapping must report preservation/loss. |
+| CLM-REP-W4-001 | Supported only for `finite_tagged_archive_v1` under its frozen full preservation and machinery-closure contract | Positive witnesses coexist with semantic, causal, continuous, embodied, oracle, identity, and provenance failures; simulation or narrowed behavior is not recovery. |
 | FARA is universal/minimal | Bounded theorem only under exact frozen premises; global claim unresolved | Never omit the target class and faithfulness/closure/equivalence assumptions. |
 | FAR protocols derive from FARA | Rejected | Procedures are independently chosen but compatible methodology. |
 | FARO follows necessarily from FAR/FARA | Rejected | FARO is a downstream independent operational layer. |
