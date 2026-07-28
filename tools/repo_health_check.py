@@ -21,6 +21,10 @@ def main()->int:
     add('vocabulary semantics baseline 1.1',[sys.executable,'tools/check_vocabulary_semantics_baseline_1_1.py'])
     add('cre002 extension preregistration',[sys.executable,'tools/check_cre002_ext001_preregistration.py'])
     add('cre002 extension checksum lock',[sys.executable,'tools/check_cre002_ext001_checksums.py'])
+    add('merged-PR residual reconciliation',[sys.executable,'tools/reconcile_merged_pr_review_findings.py',
+        '--baseline','docs/audits/merged-pr-review-classification/findings.json',
+        '--decisions','docs/audits/merged-pr-review-reconciliation/reconciliation-decisions.json',
+        '--output-dir','docs/audits/merged-pr-review-reconciliation','--check'])
     tools=['verify_theory.py','check_dependencies.py','check_dependency_registry.py','check_registry.py','check_notation.py','check_circularity.py','generate_theorem_index.py','check_repository_hygiene.py','check_certification_compliance.py','check_math_rendering.py','check_markdown_hygiene.py','check_release_consistency.py','check_internal_links.py','check_status_consistency.py']
     if full: tools += ['check_claims_audit.py','check_project_status.py','check_proof_assurance.py','check_external_validation_terms.py','check_mechanization_claims.py','check_ci_workflows.py']
     for tool in tools:

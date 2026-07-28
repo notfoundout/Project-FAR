@@ -10,6 +10,9 @@ on:
       - tests/test_classify_merged_pr_review_findings.py
       - docs/audits/merged-pr-review-audit/raw-review-threads.json
       - docs/audits/merged-pr-review-classification/manual-decisions.json
+      - docs/audits/merged-pr-review-reconciliation/**
+      - tools/reconcile_merged_pr_review_findings.py
+      - tests/test_reconcile_merged_pr_review_findings.py
       - .github/workflows/classify-merged-pr-review-findings.yml
   pull_request:
     paths:
@@ -17,6 +20,9 @@ on:
       - tests/test_classify_merged_pr_review_findings.py
       - docs/audits/merged-pr-review-audit/raw-review-threads.json
       - docs/audits/merged-pr-review-classification/**
+      - docs/audits/merged-pr-review-reconciliation/**
+      - tools/reconcile_merged_pr_review_findings.py
+      - tests/test_reconcile_merged_pr_review_findings.py
       - .github/workflows/classify-merged-pr-review-findings.yml
 
 permissions:
@@ -92,6 +98,15 @@ jobs:
           cmp /tmp/findings.json docs/audits/merged-pr-review-classification/findings.json
           cmp /tmp/FINDINGS.md docs/audits/merged-pr-review-classification/FINDINGS.md
           cmp /tmp/REMEDIATION_QUEUE.md docs/audits/merged-pr-review-classification/REMEDIATION_QUEUE.md
+
+      - name: Validate authoritative residual reconciliation
+        run: |
+          python -m unittest tests/test_reconcile_merged_pr_review_findings.py
+          python tools/reconcile_merged_pr_review_findings.py \
+            --baseline docs/audits/merged-pr-review-classification/findings.json \
+            --decisions docs/audits/merged-pr-review-reconciliation/reconciliation-decisions.json \
+            --output-dir docs/audits/merged-pr-review-reconciliation \
+            --check
 
       - name: Commit generated findings to source branch
         if: github.event_name == 'push'

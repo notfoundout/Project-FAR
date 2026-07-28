@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "source": "docs/audits/merged-pr-review-classification/findings.json",
+  "baseline_commit": "cb55c50324a9912deb8c73b62d0fbb242f026933",
+  "baseline_git_blob_sha": "69b72e0247b1c1604e03789a472559f8be9eeffb",
+  "audited_main_commit": "5ca27d5c40281771cf74aa29704c2a06868a16ae",
+  "decisions": [
+    {
+      "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bR",
+      "disposition": "fixed_on_current_main",
+      "current_path": "research/validation/investigations/VI-002-primitive-minimality.md",
+      "current_lines": [1303, 1340],
+      "evidence": [
+        "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 replaces the unsupported pass claim with an explicit INCOMPLETE — NON-PASSING execution audit.",
+        "research/validation/executions/VI-002.execution.yaml records only 3 of 7 required steps complete and tools/check_investigation_execution.py validates the fail-closed manifest.",
+        "tests/test_investigation_execution_gates.py exercises incomplete evidence, dependency, step identity, and status propagation failures."
+      ],
+      "failure_mechanism": "The former PASS classification could be consumed despite missing reconstruction and VI-001 re-execution evidence; the current manifest and validator now prohibit that state.",
+      "smallest_complete_remediation_boundary": "Complete: the investigation, execution manifest, status surfaces, validator, and focused fail-closed tests now agree that VI-002 is non-passing.",
+      "root_cause_id": "vi-002:unsupported-pass"
+    },
+    {
+      "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bU",
+      "disposition": "fixed_on_current_main",
+      "current_path": "research/validation/investigations/VI-002-primitive-minimality.md",
+      "current_lines": [1226, 1236],
+      "evidence": [
+        "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 labels the earlier partial table superseded and retains one audited seven-primitive summary.",
+        "research/validation/investigations/VI-002-primitive-minimality.md:1230 records Property as Independent (Provisional), consistent with the audited final summary.",
+        "research/validation/executions/VI-002.execution.yaml is the machine-readable status authority validated by tools/check_investigation_execution.py."
+      ],
+      "failure_mechanism": "The stale interim Property row contradicted the final investigation summary; the interim table is no longer a live result surface and the current audited table is synchronized.",
+      "smallest_complete_remediation_boundary": "Complete: retain the supersession marker, synchronized final summary, and execution-manifest validator.",
+      "root_cause_id": "vi-002:divergent-result-surfaces"
+    }
+  ]
+}

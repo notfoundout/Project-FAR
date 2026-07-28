@@ -17,6 +17,12 @@ jobs:
       run: python3 tools/check_cre002_lock.py
     - name: Verify CRE-002-EXT-001 checksum lock
       run: python3 tools/check_cre002_ext001_checksums.py
+    - name: Verify merged-PR residual reconciliation
+      run: >-
+        python3 tools/reconcile_merged_pr_review_findings.py
+        --baseline docs/audits/merged-pr-review-classification/findings.json
+        --decisions docs/audits/merged-pr-review-reconciliation/reconciliation-decisions.json
+        --output-dir docs/audits/merged-pr-review-reconciliation --check
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11'

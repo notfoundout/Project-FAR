@@ -1,0 +1,69 @@
+{
+  "audited_main_commit": "5ca27d5c40281771cf74aa29704c2a06868a16ae",
+  "baseline_commit": "cb55c50324a9912deb8c73b62d0fbb242f026933",
+  "baseline_git_blob_sha": "69b72e0247b1c1604e03789a472559f8be9eeffb",
+  "composition_rule": "Apply explicit_findings by finding_id; every remaining resolved_incorrectly source finding is cannot_verify, has unknown experiment-blocking status, and retains source traceability until audited.",
+  "counts": {
+    "by_disposition": {
+      "cannot_verify": 400,
+      "fixed_on_current_main": 2
+    },
+    "by_experiment_blocking": {
+      "unknown": 400
+    },
+    "by_risk": {
+      "high": 124,
+      "medium": 276
+    },
+    "by_subsystem": {
+      "canonical-theory": 111,
+      "ci-and-automation": 13,
+      "commercial-validation": 20,
+      "comparative-experiments": 26,
+      "documentation-and-governance": 69,
+      "external-validation": 35,
+      "frameworks": 13,
+      "mechanization": 7,
+      "repository-metadata": 6,
+      "research-records": 4,
+      "test-infrastructure": 7,
+      "validation-engine": 4,
+      "validators-and-tooling": 85
+    },
+    "residual": 400,
+    "total": 402
+  },
+  "default_disposition": "cannot_verify",
+  "default_evidence": "No disposition-specific current-main evidence is recorded.",
+  "default_experiment_blocking_status": "unknown",
+  "explicit_findings": [
+    {
+      "blocks_experiment_reconstruction": "unknown",
+      "disposition": "fixed_on_current_main",
+      "evidence": [
+        "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 replaces the unsupported pass claim with an explicit INCOMPLETE \u2014 NON-PASSING execution audit.",
+        "research/validation/executions/VI-002.execution.yaml records only 3 of 7 required steps complete and tools/check_investigation_execution.py validates the fail-closed manifest.",
+        "tests/test_investigation_execution_gates.py exercises incomplete evidence, dependency, step identity, and status propagation failures."
+      ],
+      "failure_mechanism": "The former PASS classification could be consumed despite missing reconstruction and VI-001 re-execution evidence; the current manifest and validator now prohibit that state.",
+      "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bR",
+      "root_cause_id": "vi-002:unsupported-pass"
+    },
+    {
+      "blocks_experiment_reconstruction": "unknown",
+      "disposition": "fixed_on_current_main",
+      "evidence": [
+        "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 labels the earlier partial table superseded and retains one audited seven-primitive summary.",
+        "research/validation/investigations/VI-002-primitive-minimality.md:1230 records Property as Independent (Provisional), consistent with the audited final summary.",
+        "research/validation/executions/VI-002.execution.yaml is the machine-readable status authority validated by tools/check_investigation_execution.py."
+      ],
+      "failure_mechanism": "The stale interim Property row contradicted the final investigation summary; the interim table is no longer a live result surface and the current audited table is synchronized.",
+      "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bU",
+      "root_cause_id": "vi-002:divergent-result-surfaces"
+    }
+  ],
+  "policy": "current_main_residual_v4_pinned_fail_closed",
+  "schema_version": 4,
+  "source": "docs/audits/merged-pr-review-classification/findings.json",
+  "source_finding_count": 402
+}
