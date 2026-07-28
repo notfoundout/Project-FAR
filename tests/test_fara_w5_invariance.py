@@ -53,6 +53,7 @@ class FaraW5InvarianceTests(unittest.TestCase):
     def test_rejects_unavailable_fixture_promoted(self):
         bad=copy.deepcopy(self.data)
         bad["cases"][9]["representation_execution"]["lsts"]["available"]=True
+        bad["cases"][9]["representation_execution"]["tables"]["available"]=True
         with self.assertRaises(AssertionError): W5.validate(bad,canonical=False)
 
     def test_rejects_missing_family(self):
