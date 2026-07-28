@@ -1,0 +1,34 @@
+name: Regenerate FARA Foundation Comparison
+
+on:
+  push:
+    branches:
+      - codex/execute-next-research-workstream-after-pr-#421
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Regenerate canonical artifacts
+        run: python tools/check_fara_foundation_comparison.py --write
+      - name: Commit generated artifacts
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add theory/evaluation/fara-foundation-comparison-proof-v1.0.json theory/evaluation/generated-fara-foundation-comparison-report.md artifacts/fara-foundation-comparison/traces
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Regenerate foundation comparison artifacts"
+          git push origin HEAD:${GITHUB_REF_NAME}
