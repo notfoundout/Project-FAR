@@ -43,3 +43,4 @@ Examples, methodology, research, validation, papers and archive are never prereq
 | Fail reports are theoretically necessary | Unresolved; governance-required | Current requirement is methodological/governance. |
 | Comparative mappings establish representational sufficiency | Validated only for exact cases meeting CRP rules | No universality follows. |
 | Commercial/software claims imply theoretical validation | Rejected | Software behavior and commercial framing are downstream and bounded. |
+| FARA-VOC-001 | extension pressure with boundedly irreducible candidate additions | Nineteen executable registered-family mappings reject catch-all serialization as expression; bounded failures support extension pressure only under the frozen auxiliary interpretation. |

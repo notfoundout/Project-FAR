@@ -12,3 +12,4 @@ Status: **Accepted problem index; not execution authorization**
 | OP-06 | Reconstruct the terminal theorem in one kernel-checked object. | proof assurance | Current composition is audited but heterogeneous. |
 | OP-07 | Independently replicate bounded comparative representations. | empirical | Existing executions are project-authored or bounded. |
 | OP-08 | Determine whether FAR/FARO procedure families are necessary or merely useful. | methodological | No uniqueness/necessity derivation. |
+| OP-09 | Determine whether boundedly irreducible FARA extension candidates remain irreducible beyond the frozen auxiliary interpretation. | theoretical/empirical | `FARA-VOC-PROOF-001` establishes extension pressure, not global primitive necessity. |

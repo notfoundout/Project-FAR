@@ -28,3 +28,4 @@ The registers identify questions, not authorization to execute them. New investi
 - **UQ-T9:** Can one non-vacuous architecture preserve all six W3 dimensions for continuous/hybrid, embodied, changing-ontology, distributed, and oracle-dependent systems without copying the missing machinery into typed payloads? **Unresolved; `FARA-ARCH-W3-001` refutes only the internal-state-only lossless universal form.**
 - **UQ-E5:** Would independent CRP implementations agree on all canonicalization, clause-segmentation, and tie cases? **Unresolved; v1.1 fixtures proposed.**
 - **UQ-E6:** Do independently administered alternative-vocabulary and domain cases reproduce bounded sufficiency observations? **Unresolved.**
+- **UQ-T10:** Are the `FARA-VOC-001` extension candidates necessary outside its frozen auxiliary model? **Unresolved; finite mappings and ablations cannot establish global necessity or minimality.**
