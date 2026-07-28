@@ -25,8 +25,9 @@ Examples, methodology, research, validation, papers and archive are never prereq
 | Claim | Status | Required interpretation |
 |---|---|---|
 | All structured investigation shares one architecture | Conjecture outside the frozen UPP class | Counterexample register blocks unbounded wording. |
-| Construct/Differentiate/Restrict are sufficient or minimal | Unresolved globally | Bounded reconstruction does not establish irreducibility. |
-| Resolve is primitive | Rejected on current record | It is treated as rule application/procedure; a new necessity result could reopen it. |
+| Construct/Differentiate/Restrict are sufficient or minimal | Unresolved globally | W2 establishes only coordinate-separation-induced bounded minimality in `finite_coordinate_trace_v1`; the result follows from the auxiliary premise that each operator exclusively controls one observable coordinate. |
+| Construct/Differentiate/Restrict in `finite_coordinate_trace_v1` | Coordinate-separation-induced bounded minimality | Valid only under finite monotone traces, exclusive coordinate effects, and componentwise equality; not evidence of canonical or global operator necessity. |
+| Resolve is primitive | Rejected on current record | It is treated as rule application/procedure; W2 does not derive it because the bounded model lacks rule representation and rule execution. |
 | A fourth or fifth irreducible operator exists | Unresolved | No accepted candidate/evidence. |
 | Admissibility is prior to valid transition (or conversely) | Unresolved | Both are context/calculus-relative in current definitions. |
 | FAR translates reasoning systems without expressive loss | Unresolved and not a current general claim | Every mapping must report preservation/loss. |
