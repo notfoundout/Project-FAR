@@ -82,7 +82,7 @@ class SCoreW0ReferenceTests(unittest.TestCase):
                         if seed <= candidate and closed:
                             self.assertTrue(reduct <= candidate, f"{fixture['id']} {axis} {candidate}")
 
-    def test_canonical_form_retains_a_valid_material_witness(self) -> None:
+    def test_canonical_form_retains_a_valid_witness(self) -> None:
         for fixture in self.data["fixtures"]:
             contract = FiniteSourceContract.from_dict(fixture["contract"])
             material = contract.closure()
