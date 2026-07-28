@@ -14,4 +14,12 @@ Status: **Accepted problem index; not execution authorization**
 | OP-08 | Determine whether FAR/FARO procedure families are necessary or merely useful. | methodological | No uniqueness/necessity derivation. |
 | OP-09 | Determine whether boundedly irreducible FARA extension candidates remain irreducible beyond the frozen auxiliary interpretation. | theoretical/empirical | `FARA-VOC-PROOF-001` establishes extension pressure, not global primitive necessity. |
 | OP-10 | Determine which, if any, coherent FARA formal foundation is justified by evidence beyond the frozen finite model class. | theoretical/empirical | `FARA-CORE-PROOF-001` retains relational, hypergraph, and algebraic foundations and does not select a uniquely correct one. |
-| OP-11 | Determine whether independent implementations, a neutral external corpus, or executable nonfinite/environment semantics break the frozen foundation incomparability. | theoretical/empirical | `FARA-FOUNDATION-COMP-001` has no Pareto edge among the three retained candidates and leaves oracle, continuous/hybrid, and embodied cases `Unknown`. |
+| OP-11 | Determine whether independent implementations, a neutral external corpus, or executable nonfinite/environment semantics change the frozen foundation Pareto result. | theoretical/empirical | `FARA-FOUNDATION-COMP-001` has the bounded edge many-sorted relational → algebraic/state-transition, while typed hypergraph and many-sorted relational remain incomparable; oracle, continuous/hybrid, and embodied cases remain `Unknown`. |
+
+<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->
+- Mapping totals (Pass/Partial/Fail/Unknown): `{"algebraic-state-transition":{"Fail":4,"Partial":0,"Pass":12,"Unknown":3},"many-sorted-relational":{"Fail":3,"Partial":0,"Pass":13,"Unknown":3},"typed-hypergraph":{"Fail":0,"Partial":0,"Pass":16,"Unknown":3}}`
+- Dominance edges: `[["many-sorted-relational","algebraic-state-transition"]]`
+- Terminal result: **multiple foundations remain Pareto-incomparable**
+- Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
+- Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
+<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->

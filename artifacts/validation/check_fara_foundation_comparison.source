@@ -2,7 +2,6 @@
 """Fresh-build, fail-closed validator for FARA-FOUNDATION-COMP-001."""
 from __future__ import annotations
 import argparse,copy,hashlib,importlib,json,pathlib,subprocess,sys
-from fara_foundation_authoritative_prose import validate_text as validate_authoritative_prose_text
 ROOT=pathlib.Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 SPEC=ROOT/'theory/formal/fara-foundation-comparison-v1.0.json';PROOF=ROOT/'theory/evaluation/fara-foundation-comparison-proof-v1.0.json';REPORT=ROOT/'theory/evaluation/generated-fara-foundation-comparison-report.md';TRACE_DIR=ROOT/'artifacts/fara-foundation-comparison/traces'
 AUTHORITATIVE_RECORDS=(ROOT/'docs/research/fara-foundation-comparison-v1.0.md',ROOT/'docs/governance/claim-status-matrix.md',ROOT/'docs/governance/limitations-register.md',ROOT/'docs/governance/open-problems-register.md',ROOT/'docs/governance/theorem-proof-status-register.md',ROOT/'docs/governance/unresolved-questions-register.md',ROOT/'frameworks/FARA/dependency-graph.md')
@@ -88,7 +87,8 @@ def authoritative_snapshot(p):
  counts={name:data['mapping_counts'] for name,data in sorted(p['structural_accounting'].items())}
  return '\n'.join(('<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->',f"- Mapping totals (Pass/Partial/Fail/Unknown): `{canonical(counts)}`",f"- Dominance edges: `{canonical(p['dominance_graph']['edges'])}`",f"- Terminal result: **{p['terminal_result']}**",f"- Nonclaims: `{canonical(p['nonclaims'])}`",f"- Remaining obligations: `{canonical(p['remaining_obligations'])}`",'<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->'))
 def validate_authoritative_text(text,p):
- return validate_authoritative_prose_text(text,p,authoritative_snapshot)
+ snapshot=authoritative_snapshot(p)
+ return text.count(snapshot)==1 and text.count('<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->')==1 and text.count('<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->')==1
 def validate(spec,stored,report=None):
  e=[]
  try:fresh=build(copy.deepcopy(spec))

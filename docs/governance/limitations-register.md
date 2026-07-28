@@ -29,3 +29,13 @@ New limitations require an evidence citation and may be closed only by a recorde
 | LIM-021 | The vocabulary-pressure campaign uses a smallest auxiliary finite executable interpretation because canonical FARA does not provide complete derivation, composition, or operational semantics for all registered phenomena. | Vocabulary sufficiency | Open; extension classifications are bounded, continuous/oracle/embodied cases remain Unknown, and global sufficiency, minimality, and necessity remain unresolved. Evidence: `FARA-VOC-PROOF-001`. |
 | LIM-022 | The core formalization fixes finite carriers of size at most two and makes substantive disjointness and identity choices absent from canonical prose. | FARA formal semantics | Open; three non-equivalent coherent foundations remain, full conservativity and unbounded derivability are unresolved, and oracle/continuous/embodied semantics remain external. Evidence: `FARA-CORE-PROOF-001`. |
 | LIM-023 | The foundation comparison uses project-authored finite implementations and has no executable live-oracle, nonfinite continuous, or environment-inclusive embodied semantics. | Comparative foundation evidence | Open; the three affected benchmark families remain `Unknown`, independent replication and a neutral external corpus remain obligations, and no global selection follows. Evidence: `FARA-FOUNDATION-COMP-001`. |
+
+Many-sorted relational dominates algebraic/state-transition under the frozen dimensions, while typed hypergraph and many-sorted relational remain incomparable. This bounded relation does not select a canonical foundation.
+
+<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->
+- Mapping totals (Pass/Partial/Fail/Unknown): `{"algebraic-state-transition":{"Fail":4,"Partial":0,"Pass":12,"Unknown":3},"many-sorted-relational":{"Fail":3,"Partial":0,"Pass":13,"Unknown":3},"typed-hypergraph":{"Fail":0,"Partial":0,"Pass":16,"Unknown":3}}`
+- Dominance edges: `[["many-sorted-relational","algebraic-state-transition"]]`
+- Terminal result: **multiple foundations remain Pareto-incomparable**
+- Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
+- Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
+<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->

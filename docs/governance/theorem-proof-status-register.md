@@ -20,4 +20,12 @@ Status: **Accepted classification index; proof objects remain authoritative**
 Any active canonical use of “theorem”, “lemma”, “proposition”, “proof”, or “derivation” must identify a statement/record and its status or link here/its proof record. Illustrations and semantic similarities are not derivations.
 | THM-VOC-001 / FARA-VOC-PROOF-001 | bounded executable insufficiency/extension-pressure evidence | The seven candidate primitives do not expose several family-specific operational roles under the frozen interpretation; no universal insufficiency, minimality, necessity, or globally primitive extension follows. |
 | FARA-CORE-PROOF-001 | bounded executable specification/consistency evidence; not a theorem | The selected finite many-sorted target has an acyclic dependency graph and bounded countermodels, while three non-equivalent coherent foundations remain. Original W1 adjudications remain unresolved. |
-| FARA-FOUNDATION-COMP-PROOF-001 | bounded executable comparison evidence; not a theorem | Fifty-seven translations and reconstructions, three paired non-equivalence witnesses, 21 ablations, and direction-aware Pareto recomputation retain all three candidates as incomparable. No global or canonical selection follows. |
+| FARA-FOUNDATION-COMP-PROOF-001 | bounded executable comparison evidence; not a theorem | Fifty-seven translations and reconstructions, three paired non-equivalence witnesses, 21 ablations, and direction-aware Pareto recomputation establish many-sorted relational → algebraic/state-transition while typed hypergraph remains incomparable with many-sorted relational. No global or canonical selection follows. |
+
+<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->
+- Mapping totals (Pass/Partial/Fail/Unknown): `{"algebraic-state-transition":{"Fail":4,"Partial":0,"Pass":12,"Unknown":3},"many-sorted-relational":{"Fail":3,"Partial":0,"Pass":13,"Unknown":3},"typed-hypergraph":{"Fail":0,"Partial":0,"Pass":16,"Unknown":3}}`
+- Dominance edges: `[["many-sorted-relational","algebraic-state-transition"]]`
+- Terminal result: **multiple foundations remain Pareto-incomparable**
+- Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
+- Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
+<!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
