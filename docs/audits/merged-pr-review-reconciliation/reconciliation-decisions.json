@@ -11,7 +11,7 @@
       "current_path": "research/validation/investigations/VI-002-primitive-minimality.md",
       "current_lines": [1303, 1340],
       "evidence": [
-        "Commit 1f3b086a88c541bfdb56ea2a26762129101e9008 replaces the unsupported pass claim with an explicit INCOMPLETE — NON-PASSING execution audit.",
+        "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 replaces the unsupported pass claim with an explicit INCOMPLETE — NON-PASSING execution audit.",
         "research/validation/executions/VI-002.execution.yaml records only 3 of 7 required steps complete and tools/check_investigation_execution.py validates the fail-closed manifest.",
         "tests/test_investigation_execution_gates.py exercises incomplete evidence, dependency, step identity, and status propagation failures."
       ],
@@ -25,7 +25,7 @@
       "current_path": "research/validation/investigations/VI-002-primitive-minimality.md",
       "current_lines": [1226, 1236],
       "evidence": [
-        "Commit 1f3b086a88c541bfdb56ea2a26762129101e9008 labels the earlier partial table superseded and retains one audited seven-primitive summary.",
+        "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 labels the earlier partial table superseded and retains one audited seven-primitive summary.",
         "research/validation/investigations/VI-002-primitive-minimality.md:1230 records Property as Independent (Provisional), consistent with the audited final summary.",
         "research/validation/executions/VI-002.execution.yaml is the machine-readable status authority validated by tools/check_investigation_execution.py."
       ],
