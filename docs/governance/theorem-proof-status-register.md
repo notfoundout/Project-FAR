@@ -21,6 +21,7 @@ Any active canonical use of “theorem”, “lemma”, “proposition”, “pr
 | THM-VOC-001 / FARA-VOC-PROOF-001 | bounded executable insufficiency/extension-pressure evidence | The seven candidate primitives do not expose several family-specific operational roles under the frozen interpretation; no universal insufficiency, minimality, necessity, or globally primitive extension follows. |
 | FARA-CORE-PROOF-001 | bounded executable specification/consistency evidence; not a theorem | The selected finite many-sorted target has an acyclic dependency graph and bounded countermodels, while three non-equivalent coherent foundations remain. Original W1 adjudications remain unresolved. |
 | FARA-FOUNDATION-COMP-PROOF-001 | bounded executable comparison evidence; not a theorem | Fifty-seven translations and reconstructions, three paired non-equivalence witnesses, 21 ablations, and direction-aware Pareto recomputation establish many-sorted relational → algebraic/state-transition while typed hypergraph remains incomparable with many-sorted relational. No global or canonical selection follows. |
+| FARA-EXPANDED-BOUND-001 | bounded executable Research evidence; not a theorem | Every unary and binary relation interpretation on independent axes over carriers 0..4 was materially constructed and evaluated (66,098 executions). Thirty independently revalidated paired-reduct witnesses support only recorded target-specific bounds: 1..4 for Object, Property, Relation, Representation, and Interpretation; 0..4 for Investigation and Reasoning Calculus. No full-signature, unbounded, global, or independent-replication result follows. |
 
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->
 - Mapping totals (Pass/Partial/Fail/Unknown): `{"algebraic-state-transition":{"Fail":4,"Partial":0,"Pass":12,"Unknown":3},"many-sorted-relational":{"Fail":3,"Partial":0,"Pass":13,"Unknown":3},"typed-hypergraph":{"Fail":0,"Partial":0,"Pass":16,"Unknown":3}}`
@@ -30,4 +31,4 @@ Any active canonical use of “theorem”, “lemma”, “proposition”, “pr
 - Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
 
-- **FARA-EXPANDED-BOUND-001:** Research executable evidence only; no theorem is registered. Proof, trace, cost, historical-hash, and mutation validation are machine checked.
+The expanded campaign proof, trace summaries, cost accounting, immutable base identities, target-specific coverage, and mutation checks are machine validated. They do not create a theorem.
