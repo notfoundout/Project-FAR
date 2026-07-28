@@ -12,5 +12,6 @@ Status: **Accepted classification index; proof objects remain authoritative**
 | Terminal UPP theorem | bounded theorem with mixed assurance | Relative to frozen class/contract/closure/equivalence premises; composition is not one kernel-checked object. |
 | CRE/EV/SWE-agent results | empirical observations | Never theorems and never proofs of universality. |
 | Construct/Differentiate/Restrict sufficiency or irreducibility | unresolved conjecture outside registered scope | Bounded reconstruction/ablation does not prove global minimality. |
+| FARA-OPS-W2-001 | coordinate-separation-induced bounded result; executable corroboration | Joint sufficiency and individual irreducibility hold only because `finite_coordinate_trace_v1` assigns each operator exclusive control of one observable coordinate under componentwise equality. This does not establish canonical or global operator necessity. |
 
 Any active canonical use of “theorem”, “lemma”, “proposition”, “proof”, or “derivation” must identify a statement/record and its status or link here/its proof record. Illustrations and semantic similarities are not derivations.

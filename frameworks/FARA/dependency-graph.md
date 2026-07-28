@@ -284,6 +284,12 @@ The following constraints must be preserved:
 
 ---
 
+## Bounded operator-evaluation dependency (FARA-OPS-W2-001)
+
+The W2 evaluation depends on the canonical glossary definitions of Construct, Differentiate, and Restrict plus the explicitly noncanonical `finite_coordinate_trace_v1` model. Its bounded result is induced by the premise that each operator exclusively controls one observable coordinate under componentwise equality. The model and result are not prerequisites of FARA and do not establish canonical or global operator necessity. Resolve and Select remain outside-scope unresolved because the model contains neither declared-rule representation nor rule execution.
+
+---
+
 ## Maintenance Policy
 
 This dependency graph should be updated whenever:

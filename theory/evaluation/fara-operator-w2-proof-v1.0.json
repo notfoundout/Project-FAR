@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "id": "FARA-OPS-W2-001",
+  "status": "coordinate_separation_induced_bounded_minimality_global_unresolved",
+  "authority": {
+    "path": "docs/glossary/canonical-terminology.md",
+    "operators": {
+      "Construct": "Introduce an explicit representation or structure.",
+      "Differentiate": "Record an explicit distinction relevant to the declared scope.",
+      "Restrict": "Limit admissible objects, relations, states, or transitions by an explicit constraint."
+    },
+    "scope_text": "the declared scope",
+    "authority_limitation": "The authority supplies prose definitions but no transition semantics, equivalence relation, or candidate universe."
+  },
+  "bounded_model": {
+    "name": "finite_coordinate_trace_v1",
+    "assumptions": [
+      "R, D, and A are finite sets of explicit representations, recorded distinctions, and admissible items.",
+      "Construct adds exactly one member to R; Differentiate adds exactly one member to D; Restrict removes exactly one member from A.",
+      "Operators do not change either of the other two coordinates.",
+      "Observational equivalence is componentwise equality of (R,D,A).",
+      "Only finite monotone traces using those three coordinate effects are in scope."
+    ],
+    "excluded": [
+      "implicit or infinite representations",
+      "deletion of representations or distinctions",
+      "relaxation of constraints",
+      "semantic interpretation not reducible to recorded distinctions",
+      "physical execution and oracle access",
+      "declared-rule application and outcome selection",
+      "open-world operator vocabularies"
+    ],
+    "claim": "Under the operator-separating coordinate premises of finite_coordinate_trace_v1, Construct, Differentiate, and Restrict are jointly sufficient and individually irreducible under componentwise observational equivalence. The minimality result is induced by those premises and does not establish canonical or global operator necessity."
+  },
+  "operators": [
+    {"name":"Construct","coordinate":"R","effect":"add","elimination":"fails on W_C because R changes","derivation":"impossible from Differentiate/Restrict by R-invariance","composition":"arbitrary finite R additions compose from Construct","equivalence":"not equivalent to either other operator under componentwise equality","hidden_duplication":"none in the bounded signature","status":"required_under_coordinate_separation_global_unresolved","witness":"W_C"},
+    {"name":"Differentiate","coordinate":"D","effect":"add","elimination":"fails on W_D because D changes","derivation":"impossible from Construct/Restrict by D-invariance","composition":"arbitrary finite D additions compose from Differentiate","equivalence":"not equivalent to either other operator under componentwise equality","hidden_duplication":"none in the bounded signature","status":"required_under_coordinate_separation_global_unresolved","witness":"W_D"},
+    {"name":"Restrict","coordinate":"A","effect":"remove","elimination":"fails on W_R because A changes","derivation":"impossible from Construct/Differentiate by A-invariance","composition":"arbitrary finite A removals compose from Restrict","equivalence":"not equivalent to either other operator under componentwise equality","hidden_duplication":"none in the bounded signature","status":"required_under_coordinate_separation_global_unresolved","witness":"W_R"}
+  ],
+  "witnesses": [
+    {"id":"W_C","start":{"R":[],"D":[],"A":["x"]},"target":{"R":["r"],"D":[],"A":["x"]},"requires":"Construct"},
+    {"id":"W_D","start":{"R":[],"D":[],"A":["x"]},"target":{"R":[],"D":["d"],"A":["x"]},"requires":"Differentiate"},
+    {"id":"W_R","start":{"R":[],"D":[],"A":["x"]},"target":{"R":[],"D":[],"A":[]},"requires":"Restrict"}
+  ],
+  "elimination_subsets_tested": [[],["Construct"],["Differentiate"],["Restrict"],["Construct","Differentiate"],["Construct","Restrict"],["Differentiate","Restrict"]],
+  "fourth_candidates": [
+    {"name":"Resolve","classification":"outside_scope_unresolved","reason":"canonical Resolve applies a declared rule, but finite_coordinate_trace_v1 contains neither a rule representation nor a rule-execution transition; Restrict plus Construct can only record an already supplied result"},
+    {"name":"Select","classification":"outside_scope_unresolved","reason":"selection among multiple admissible candidates requires a selection rule or execution effect absent from the bounded model"},
+    {"name":"Transform","classification":"composition_in_scope","reason":"finite replacement is representation of a new item plus restriction of the old item"},
+    {"name":"Compare","classification":"representation_convenience","reason":"its observable product is a recorded distinction"},
+    {"name":"Interpret","classification":"outside_scope_unresolved","reason":"canonical operator prose does not authorize reducing semantic interpretation to a recorded distinction"},
+    {"name":"Observe","classification":"outside_scope_unresolved","reason":"external information acquisition is absent from the bounded trace model"},
+    {"name":"Delete_or_relax","classification":"outside_scope_counterexample","reason":"the monotone operator effects cannot delete R/D records or add an item back to A"},
+    {"name":"Merge","classification":"outside_scope_unresolved","reason":"identity-changing quotient effects are not specified by the three canonical prose definitions"}
+  ],
+  "strongest_claim": "coordinate-separation-induced bounded minimality for finite_coordinate_trace_v1 only",
+  "global_claim": "unresolved",
+  "remaining_obligations": [
+    "Freeze canonical transition semantics independently of this evaluation.",
+    "Freeze an admissible open-world candidate universe and equivalence/cost preorder.",
+    "Model declared-rule representation and rule execution before adjudicating Resolve or Select.",
+    "Determine whether interpretation, observation, deletion, relaxation, or quotient/merge effects belong to the intended operator scope.",
+    "Supply lower bounds that do not assume coordinate locality if a stronger claim is sought."
+  ],
+  "dependencies": ["docs/glossary/canonical-terminology.md","docs/governance/deduction-first-research-standard.md","docs/governance/research-execution-charter.md"],
+  "nonclaims": ["global sufficiency","global irreducibility","unique basis","metaphysical necessity","FARA primitive minimality","Resolve derivability","Select derivability","canonical operator necessity","minimality independent of coordinate separation"]
+}
