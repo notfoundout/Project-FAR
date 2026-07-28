@@ -11,6 +11,7 @@ health:
 	python tools/check_s_core_w0.py
 	python tools/check_fara_primitive_independence.py
 	python tools/check_fara_w4_representation.py
+	python tools/check_fara_w5_invariance.py
 	python tools/check_s_core_w1.py
 	python tools/check_s_core_w2.py
 	python tools/check_s_core_w3.py
@@ -45,6 +46,7 @@ health-fast:
 	python tools/check_s_core_w0.py
 	python tools/check_fara_primitive_independence.py
 	python tools/check_fara_w4_representation.py
+	python tools/check_fara_w5_invariance.py
 	python tools/check_s_core_w1.py
 	python tools/check_s_core_w2.py
 	python tools/check_s_core_w3.py
@@ -91,6 +93,7 @@ research-check:
 	python tools/check_s_core_w0.py
 	python tools/check_fara_primitive_independence.py
 	python tools/check_fara_w4_representation.py
+	python tools/check_fara_w5_invariance.py
 	python tools/check_s_core_w1.py
 	python tools/check_s_core_w2.py
 	python tools/check_s_core_w3.py
@@ -190,3 +193,4 @@ semantic-check:
 	python tools/check_fara_operator_w2.py
 	python tools/check_fara_common_architecture_w3.py
 	python tools/check_fara_w4_representation.py
+	python tools/check_fara_w5_invariance.py

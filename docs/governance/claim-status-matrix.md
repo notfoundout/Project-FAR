@@ -36,6 +36,7 @@ Examples, methodology, research, validation, papers and archive are never prereq
 | FAR translates reasoning systems without expressive loss | Unresolved and not a current general claim | Every mapping must report preservation/loss. |
 | CLM-REP-W4-001 | Supported only for `finite_tagged_archive_v1` under its frozen full preservation and machinery-closure contract | Positive witnesses coexist with semantic, causal, continuous, embodied, oracle, identity, and provenance failures; simulation or narrowed behavior is not recovery. |
 | FARA is universal/minimal | Bounded theorem only under exact frozen premises; global claim unresolved | Never omit the target class and faithfulness/closure/equivalence assumptions. |
+| FAR/FARA conclusions are representation-independent | Refuted within the frozen W5 campaign; globally unresolved | `FARA-INV-W5-001` records bounded positive pairs, representation-sensitive counterexamples, and unresolved oracle, continuous, and embodied pairs. |
 | FAR protocols derive from FARA | Rejected | Procedures are independently chosen but compatible methodology. |
 | FARO follows necessarily from FAR/FARA | Rejected | FARO is a downstream independent operational layer. |
 | Successful bounded mappings establish generality | Rejected inference | They establish only registered-case observations. |

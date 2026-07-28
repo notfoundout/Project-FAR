@@ -304,6 +304,12 @@ The W4 execution depends only on canonical definitions, the registered six-dimen
 
 ## Maintenance Policy
 
+## W5 cross-representation invariance dependency (`FARA-INV-W5-001`)
+
+W5 preserves W0–W4 and consumes only W1's unresolved boundary, W2's bounded coordinate boundary, and W4's representation-contract boundary. W3 is explicitly not consumed. Its six representation families, equivalence criterion, fixtures, and translation machinery are auxiliary research objects, not new FARA prerequisites. The registered counterexamples refute representation independence only in the frozen campaign.
+
+---
+
 This dependency graph should be updated whenever:
 
 - a candidate primitive is added or removed;

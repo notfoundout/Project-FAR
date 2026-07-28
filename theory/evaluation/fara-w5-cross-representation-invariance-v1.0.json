@@ -1,0 +1,690 @@
+{
+  "assurance": {
+    "kind": "deterministic executable corroboration",
+    "proof_assistant_verification": "not performed"
+  },
+  "authority_recovery": {
+    "canonical_objective": "UQ-T4 asks whether FAR/FARA/FARO boundaries remain adequate under representation escape and semantic change; W5 executes the narrower necessary test of whether registered FAR/FARA conclusions are invariant across materially different admissible representations.",
+    "dependencies": [
+      "FARA-W1-PRIMITIVE-INDEPENDENCE-001",
+      "FARA-OPS-W2-001",
+      "FARA-REP-W4-001"
+    ],
+    "prompt_discrepancy": "No repository artifact names cross-representation invariance as canonical FARA W5. The prompt supplies the W5 label and broader fixture list; repository authority supplies UQ-T4, UQ-T7 and OP-05. This execution is additive and does not rewrite those questions.",
+    "w0_w4_preservation": {
+      "W0": "unchanged; no claim consumed",
+      "W1": "unchanged; all seven primitive outcomes unresolved",
+      "W2": "unchanged; bounded coordinate result only",
+      "W3": "unchanged and not consumed",
+      "W4": "unchanged; finite archive boundary used only as declared dependency"
+    }
+  },
+  "cases": [
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "positive",
+      "conclusion_agreement": true,
+      "decoder_or_recovery": {
+        "lsts": "recover only explicitly typed source commitments; no inference of absent content",
+        "tables": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "lsts": "independent labeled state-transition systems specification using states, typed labels, transition relation, observation map",
+        "tables": "independent table-driven executable models specification using finite typed tables for state, rule, step, observation and history"
+      },
+      "far_fara_conclusions": {
+        "lsts": "bounded agreement",
+        "tables": "bounded agreement"
+      },
+      "fixture": "deterministic",
+      "hidden_assumptions": [],
+      "id": "W5-FIX-001",
+      "losses_ambiguities_failures": [],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "exact",
+      "representations": [
+        "lsts",
+        "tables"
+      ],
+      "source_commitments": "frozen deterministic transitions: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "deterministic transitions"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "positive",
+      "conclusion_agreement": true,
+      "decoder_or_recovery": {
+        "tables": "recover only explicitly typed source commitments; no inference of absent content",
+        "trs": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "tables": "independent table-driven executable models specification using finite typed tables for state, rule, step, observation and history",
+        "trs": "independent typed relational structures specification using many-sorted carriers, typed relations, interpretation and provenance relations"
+      },
+      "far_fara_conclusions": {
+        "tables": "bounded agreement",
+        "trs": "bounded agreement"
+      },
+      "fixture": "probability",
+      "hidden_assumptions": [],
+      "id": "W5-FIX-002",
+      "losses_ambiguities_failures": [],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "exact",
+      "representations": [
+        "trs",
+        "tables"
+      ],
+      "source_commitments": "frozen probabilistic information: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "probabilistic information"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "negative",
+      "conclusion_agreement": false,
+      "decoder_or_recovery": {
+        "logic": "recover only explicitly typed source commitments; no inference of absent content",
+        "traces": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "logic": "independent logical theories specification using typed signature, formulas, consequence relation, revision/intervention rules",
+        "traces": "independent event or trace structures specification using events, labels, causality/conflict order and observations"
+      },
+      "far_fara_conclusions": {
+        "logic": "representation-sensitive counterexample",
+        "traces": "different admissibility/minimality conclusion"
+      },
+      "fixture": "nonmonotonic",
+      "hidden_assumptions": [
+        "linearization or semantic policy is representation-relative"
+      ],
+      "id": "W5-FIX-003",
+      "losses_ambiguities_failures": [
+        "nonmonotonic revision cannot be recovered or compared across the pair under the frozen machinery"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Fail",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "partial",
+      "representations": [
+        "logic",
+        "traces"
+      ],
+      "source_commitments": "frozen nonmonotonic revision: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "nonmonotonic revision"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "negative",
+      "conclusion_agreement": false,
+      "decoder_or_recovery": {
+        "graphs": "recover only explicitly typed source commitments; no inference of absent content",
+        "logic": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "graphs": "independent directed graphs or hypergraphs specification using typed vertices and directed (hyper)edges with explicit edge roles",
+        "logic": "independent logical theories specification using typed signature, formulas, consequence relation, revision/intervention rules"
+      },
+      "far_fara_conclusions": {
+        "graphs": "different admissibility/minimality conclusion",
+        "logic": "representation-sensitive counterexample"
+      },
+      "fixture": "paraconsistent",
+      "hidden_assumptions": [
+        "linearization or semantic policy is representation-relative"
+      ],
+      "id": "W5-FIX-004",
+      "losses_ambiguities_failures": [
+        "paraconsistent consequence cannot be recovered or compared across the pair under the frozen machinery"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "impossible",
+      "representations": [
+        "logic",
+        "graphs"
+      ],
+      "source_commitments": "frozen paraconsistent consequence: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "paraconsistent consequence"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "negative",
+      "conclusion_agreement": false,
+      "decoder_or_recovery": {
+        "graphs": "recover only explicitly typed source commitments; no inference of absent content",
+        "logic": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "graphs": "independent directed graphs or hypergraphs specification using typed vertices and directed (hyper)edges with explicit edge roles",
+        "logic": "independent logical theories specification using typed signature, formulas, consequence relation, revision/intervention rules"
+      },
+      "far_fara_conclusions": {
+        "graphs": "representation-sensitive counterexample",
+        "logic": "different admissibility/minimality conclusion"
+      },
+      "fixture": "causal",
+      "hidden_assumptions": [
+        "linearization or semantic policy is representation-relative"
+      ],
+      "id": "W5-FIX-005",
+      "losses_ambiguities_failures": [
+        "causal intervention cannot be recovered or compared across the pair under the frozen machinery"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "partial",
+      "representations": [
+        "graphs",
+        "logic"
+      ],
+      "source_commitments": "frozen causal intervention: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "causal intervention"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "negative",
+      "conclusion_agreement": false,
+      "decoder_or_recovery": {
+        "traces": "recover only explicitly typed source commitments; no inference of absent content",
+        "trs": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "traces": "independent event or trace structures specification using events, labels, causality/conflict order and observations",
+        "trs": "independent typed relational structures specification using many-sorted carriers, typed relations, interpretation and provenance relations"
+      },
+      "far_fara_conclusions": {
+        "traces": "different admissibility/minimality conclusion",
+        "trs": "representation-sensitive counterexample"
+      },
+      "fixture": "semantic_change",
+      "hidden_assumptions": [
+        "linearization or semantic policy is representation-relative"
+      ],
+      "id": "W5-FIX-006",
+      "losses_ambiguities_failures": [
+        "changing rules or semantics cannot be recovered or compared across the pair under the frozen machinery"
+      ],
+      "preservation": {
+        "dependency": "Fail",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "impossible",
+      "representations": [
+        "trs",
+        "traces"
+      ],
+      "source_commitments": "frozen changing rules or semantics: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "changing rules or semantics"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "negative",
+      "conclusion_agreement": false,
+      "decoder_or_recovery": {
+        "graphs": "recover only explicitly typed source commitments; no inference of absent content",
+        "trs": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "graphs": "independent directed graphs or hypergraphs specification using typed vertices and directed (hyper)edges with explicit edge roles",
+        "trs": "independent typed relational structures specification using many-sorted carriers, typed relations, interpretation and provenance relations"
+      },
+      "far_fara_conclusions": {
+        "graphs": "representation-sensitive counterexample",
+        "trs": "different admissibility/minimality conclusion"
+      },
+      "fixture": "identity",
+      "hidden_assumptions": [
+        "linearization or semantic policy is representation-relative"
+      ],
+      "id": "W5-FIX-007",
+      "losses_ambiguities_failures": [
+        "identity merge and deletion cannot be recovered or compared across the pair under the frozen machinery"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Fail",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "partial",
+      "representations": [
+        "graphs",
+        "trs"
+      ],
+      "source_commitments": "frozen identity merge and deletion: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "identity merge and deletion"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "negative",
+      "conclusion_agreement": false,
+      "decoder_or_recovery": {
+        "tables": "recover only explicitly typed source commitments; no inference of absent content",
+        "traces": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "tables": "independent table-driven executable models specification using finite typed tables for state, rule, step, observation and history",
+        "traces": "independent event or trace structures specification using events, labels, causality/conflict order and observations"
+      },
+      "far_fara_conclusions": {
+        "tables": "representation-sensitive counterexample",
+        "traces": "different admissibility/minimality conclusion"
+      },
+      "fixture": "provenance",
+      "hidden_assumptions": [
+        "linearization or semantic policy is representation-relative"
+      ],
+      "id": "W5-FIX-008",
+      "losses_ambiguities_failures": [
+        "provenance-sensitive history cannot be recovered or compared across the pair under the frozen machinery"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "impossible",
+      "representations": [
+        "tables",
+        "traces"
+      ],
+      "source_commitments": "frozen provenance-sensitive history: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "provenance-sensitive history"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "negative",
+      "conclusion_agreement": false,
+      "decoder_or_recovery": {
+        "lsts": "recover only explicitly typed source commitments; no inference of absent content",
+        "traces": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "lsts": "independent labeled state-transition systems specification using states, typed labels, transition relation, observation map",
+        "traces": "independent event or trace structures specification using events, labels, causality/conflict order and observations"
+      },
+      "far_fara_conclusions": {
+        "lsts": "representation-sensitive counterexample",
+        "traces": "different admissibility/minimality conclusion"
+      },
+      "fixture": "distributed",
+      "hidden_assumptions": [
+        "linearization or semantic policy is representation-relative"
+      ],
+      "id": "W5-FIX-009",
+      "losses_ambiguities_failures": [
+        "distributed partial order cannot be recovered or compared across the pair under the frozen machinery"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "partial",
+      "representations": [
+        "lsts",
+        "traces"
+      ],
+      "source_commitments": "frozen distributed partial order: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "distributed partial order"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "unresolved",
+      "conclusion_agreement": null,
+      "decoder_or_recovery": {
+        "lsts": "recover only explicitly typed source commitments; no inference of absent content",
+        "tables": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "lsts": "independent labeled state-transition systems specification using states, typed labels, transition relation, observation map",
+        "tables": "independent table-driven executable models specification using finite typed tables for state, rule, step, observation and history"
+      },
+      "far_fara_conclusions": {
+        "lsts": "Unknown",
+        "tables": "Unknown"
+      },
+      "fixture": "oracle",
+      "hidden_assumptions": [
+        "faithful finite execution or external coupling is unavailable"
+      ],
+      "id": "W5-FIX-010",
+      "losses_ambiguities_failures": [
+        "external oracle dependence cannot be recovered or compared across the pair under the frozen machinery"
+      ],
+      "preservation": {
+        "dependency": "Partial",
+        "historical": "Unknown",
+        "information": "Unknown",
+        "operational": "Partial",
+        "semantic": "Unknown",
+        "structural": "Partial"
+      },
+      "recovery": "unknown",
+      "representations": [
+        "lsts",
+        "tables"
+      ],
+      "source_commitments": "frozen external oracle dependence: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "external oracle dependence"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "unresolved",
+      "conclusion_agreement": null,
+      "decoder_or_recovery": {
+        "tables": "recover only explicitly typed source commitments; no inference of absent content",
+        "trs": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "tables": "independent table-driven executable models specification using finite typed tables for state, rule, step, observation and history",
+        "trs": "independent typed relational structures specification using many-sorted carriers, typed relations, interpretation and provenance relations"
+      },
+      "far_fara_conclusions": {
+        "tables": "Unknown",
+        "trs": "Unknown"
+      },
+      "fixture": "continuous",
+      "hidden_assumptions": [
+        "faithful finite execution or external coupling is unavailable"
+      ],
+      "id": "W5-FIX-011",
+      "losses_ambiguities_failures": [
+        "continuous case cannot be recovered or compared across the pair under the frozen machinery"
+      ],
+      "preservation": {
+        "dependency": "Partial",
+        "historical": "Unknown",
+        "information": "Unknown",
+        "operational": "Partial",
+        "semantic": "Unknown",
+        "structural": "Partial"
+      },
+      "recovery": "unknown",
+      "representations": [
+        "trs",
+        "tables"
+      ],
+      "source_commitments": "frozen continuous case: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "continuous case"
+    },
+    {
+      "auxiliary_machinery": [
+        "finite parser",
+        "declared type/label dictionary"
+      ],
+      "classification": "unresolved",
+      "conclusion_agreement": null,
+      "decoder_or_recovery": {
+        "graphs": "recover only explicitly typed source commitments; no inference of absent content",
+        "traces": "recover only explicitly typed source commitments; no inference of absent content"
+      },
+      "encodings": {
+        "graphs": "independent directed graphs or hypergraphs specification using typed vertices and directed (hyper)edges with explicit edge roles",
+        "traces": "independent event or trace structures specification using events, labels, causality/conflict order and observations"
+      },
+      "far_fara_conclusions": {
+        "graphs": "Unknown",
+        "traces": "Unknown"
+      },
+      "fixture": "embodied",
+      "hidden_assumptions": [
+        "faithful finite execution or external coupling is unavailable"
+      ],
+      "id": "W5-FIX-012",
+      "losses_ambiguities_failures": [
+        "embodied case cannot be recovered or compared across the pair under the frozen machinery"
+      ],
+      "preservation": {
+        "dependency": "Partial",
+        "historical": "Unknown",
+        "information": "Unknown",
+        "operational": "Partial",
+        "semantic": "Unknown",
+        "structural": "Partial"
+      },
+      "recovery": "unknown",
+      "representations": [
+        "graphs",
+        "traces"
+      ],
+      "source_commitments": "frozen embodied case: identities, rules/semantics, full observations, dependencies, information and ordered/partial history are material",
+      "topic": "embodied case"
+    }
+  ],
+  "claim_id": "CLM-INV-W5-001",
+  "claim_levels": {
+    "all_registered_representations": "refuted by CE-W5-001 through CE-W5-004",
+    "bounded_invariance": "established for W5-FIX-001 and W5-FIX-002",
+    "commitment_equivalence": "established only in positive pairs",
+    "conclusion_agreement": "established only in positive pairs",
+    "multiple_encodings": "established for registered fixtures",
+    "recoverability": "established only in positive pairs",
+    "representation_independence": "refuted within the registered campaign",
+    "universal_invariance": "not established"
+  },
+  "contract": {
+    "admissible_representations": "independently specified registered families with total disclosure, typed structure, a source-independent recovery map and no conclusion-defined equivalence",
+    "equivalence_criteria": "commitment equality plus all-six preservation and full-interface behavior; fixed before conclusions and never defined by conclusion agreement",
+    "failure_unknown": "Fail records a demonstrated contradiction/loss/collision; Unknown records insufficient equivalence, recovery, or coverage and is never Pass.",
+    "forbidden_hidden_machinery": [
+      "live oracle",
+      "external semantic policy",
+      "undeclared ontology alignment",
+      "decoder-held rule or conclusion",
+      "physical environment",
+      "infinite-precision service"
+    ],
+    "invariance_kinds": {
+      "behavioral": "equality of every admitted trace/distribution at that interface",
+      "implementation": "independent implementations realize the same frozen transition/observation contract",
+      "notation": "renaming/glyph changes only",
+      "observational": "equality only at the full frozen observation interface",
+      "proof_result": "the same frozen FAR/FARA claim adjudication, including failure and Unknown",
+      "representational": "materially different structural forms recover equivalent source commitments and preserve the six dimensions",
+      "semantic": "commitment and consequence equality under independently fixed interpretations",
+      "serialization": "byte/container ordering changes with exact parse recovery"
+    },
+    "outputs": [
+      "bounded invariance under a frozen representation class",
+      "explicit representation-sensitive counterexample",
+      "unresolved because equivalence, recovery, or coverage is insufficient"
+    ],
+    "permitted_auxiliary_machinery": [
+      "finite parsers",
+      "declared type and label dictionaries",
+      "exact reduced-rational arithmetic",
+      "finite table lookup"
+    ],
+    "preservation_dimensions": [
+      "structural",
+      "semantic",
+      "operational",
+      "dependency",
+      "information",
+      "historical"
+    ],
+    "recovery_requirements": "recover every declared material commitment up to stable identifier renaming; otherwise partial, failure, or Unknown",
+    "source_system_class": "frozen declared systems S=(X,R,Sem,Step,Obs,Hist,Ext) with material identity, consequence, dependency, information, history and observation commitments",
+    "translation_maps": "encode source into each family directly; cross-family translation may compose only through exact recovered commitments"
+  },
+  "counterexamples": [
+    {
+      "id": "CE-W5-001",
+      "kind": "equivalent-source/different-conclusion",
+      "witness": "nonmonotonic trace retains defeat order while extensional logical closure omits it; revision admissibility differs"
+    },
+    {
+      "id": "CE-W5-002",
+      "kind": "inequivalent-source/collapse",
+      "witness": "causal models with identical observational graph distributions differ under intervention"
+    },
+    {
+      "id": "CE-W5-003",
+      "kind": "representation-dependent-minimality",
+      "witness": "partial-order trace needs no scheduler; LSTS linearization requires one and makes it appear necessary"
+    },
+    {
+      "id": "CE-W5-004",
+      "kind": "decoder-smuggling",
+      "witness": "paraconsistent consequence agrees only when the decoder imports the source consequence policy"
+    },
+    {
+      "id": "CE-W5-005",
+      "kind": "circularity",
+      "witness": "defining equivalence as equal FAR/FARA conclusions makes invariance tautological and is rejected"
+    }
+  ],
+  "id": "FARA-INV-W5-001",
+  "nonclaims": [
+    "notation invariance implies representational invariance",
+    "simulation implies semantic invariance",
+    "reconstruction implies invariance",
+    "bounded invariance implies universal invariance",
+    "W3 or W4 proves W5",
+    "finite coverage proves representation independence"
+  ],
+  "proof_object_id": "FARA-W5-PROOF-001",
+  "refuted_claims": [
+    "shared output establishes semantic invariance",
+    "successful simulation establishes recoverability",
+    "all registered representations preserve FAR/FARA conclusions",
+    "representation-independent minimality in the registered campaign"
+  ],
+  "remaining_obligations": [
+    "independent specification and replication of each family",
+    "formal semantic equivalence for nonclassical consequence",
+    "nonfinite recovery theory for continuous systems",
+    "environment-inclusive embodied equivalence",
+    "oracle transcript/live-service boundary adjudication"
+  ],
+  "representation_families": {
+    "graphs": {
+      "independent_specification": "typed vertices and directed (hyper)edges with explicit edge roles",
+      "name": "directed graphs or hypergraphs",
+      "not_superficial_reason": "graphs has family-native carriers and composition/recovery rules rather than archive-field renaming"
+    },
+    "logic": {
+      "independent_specification": "typed signature, formulas, consequence relation, revision/intervention rules",
+      "name": "logical theories",
+      "not_superficial_reason": "logic has family-native carriers and composition/recovery rules rather than archive-field renaming"
+    },
+    "lsts": {
+      "independent_specification": "states, typed labels, transition relation, observation map",
+      "name": "labeled state-transition systems",
+      "not_superficial_reason": "lsts has family-native carriers and composition/recovery rules rather than archive-field renaming"
+    },
+    "tables": {
+      "independent_specification": "finite typed tables for state, rule, step, observation and history",
+      "name": "table-driven executable models",
+      "not_superficial_reason": "tables has family-native carriers and composition/recovery rules rather than archive-field renaming"
+    },
+    "traces": {
+      "independent_specification": "events, labels, causality/conflict order and observations",
+      "name": "event or trace structures",
+      "not_superficial_reason": "traces has family-native carriers and composition/recovery rules rather than archive-field renaming"
+    },
+    "trs": {
+      "independent_specification": "many-sorted carriers, typed relations, interpretation and provenance relations",
+      "name": "typed relational structures",
+      "not_superficial_reason": "trs has family-native carriers and composition/recovery rules rather than archive-field renaming"
+    }
+  },
+  "self_review": [
+    "hidden encoding assumptions disclosed per case",
+    "semantic leakage rejected by CE-W5-004",
+    "circular equivalence rejected by CE-W5-005",
+    "fixture coverage is adversarial but not population-complete",
+    "family-native structures checked against superficial renaming",
+    "reconstruction is not counted as invariance",
+    "no finite-to-universal promotion",
+    "W3 is not consumed and W4 is only a declared boundary dependency"
+  ],
+  "status": "explicit representation-sensitive counterexample",
+  "strongest_result": "Two frozen finite pairs exhibit bounded invariance, but registered nonmonotonic, causal, partial-order and semantic-policy witnesses produce representation-sensitive conclusions; therefore representation independence is refuted for the registered campaign.",
+  "terminal_result": "explicit representation-sensitive counterexample",
+  "theorem_id": "THM-INV-001",
+  "unresolved_claims": [
+    "oracle-dependent invariance",
+    "faithful finite continuous invariance",
+    "embodied/tacit invariance",
+    "invariance beyond the frozen families and fixtures"
+  ]
+}
