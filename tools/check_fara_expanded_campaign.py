@@ -102,7 +102,7 @@ def validate_countermodel(rec,maximum,metadata=True):
  return sorted(set(e))
 def countermodel(target,bound,maximum):
  if bound<0 or bound>maximum or (target in {'Object','Property','Relation','Representation','Interpretation'} and bound==0):return None
- if target=='Object':a,b=base_model(0),base_model(1)
+ if target=='Object':a,b=base_model(bound-1),base_model(bound)
  else:
   a=base_model(bound);b=copy.deepcopy(a)
   if target=='Property':b[target]=[['o0']]
