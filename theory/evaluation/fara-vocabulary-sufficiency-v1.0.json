@@ -1,0 +1,2882 @@
+{
+  "ablations": [
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "structural",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "Object",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "structural",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "Property",
+      "loss_kind": "inconvenience"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Property",
+      "executed": true,
+      "first_failed_obligation": "structural",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "Relation",
+      "loss_kind": "inconvenience"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "structural",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "Representation",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "structural",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "Interpretation",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "structural",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "Investigation",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "structural",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "Reasoning Calculus",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "temporal_order",
+      "loss_kind": "inconvenience"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "uncertainty",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "retraction",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "consequence_policy",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "intervention",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "rule_version",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "semantic_version",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "identity_criterion",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "provenance",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "partial_order",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "oracle_relation",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "external_coupling",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "proof_object",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "binding_scope",
+      "loss_kind": "bounded expressibility loss"
+    },
+    {
+      "alternative_encoding_attempt": "reified typed Object/Relation attempted",
+      "catch_all_replacement": "Relation",
+      "executed": true,
+      "first_failed_obligation": "family-specific operational role",
+      "frozen_model_induced": true,
+      "global_necessity": false,
+      "item": "authority_source",
+      "loss_kind": "bounded expressibility loss"
+    }
+  ],
+  "authority_recovery": {
+    "canonical_objective": "UQ-T7: determine whether registered difficult systems can be represented without material expressive loss",
+    "prompt_discrepancy": "Repository authority does not designate vocabulary sufficiency as FARA W6; this execution is unnumbered and addresses the closest authorized objective, UQ-T7.",
+    "w0_w5_preservation": {
+      "W0": "unchanged; no ownership or claim modified",
+      "W1": "unchanged; no ownership or claim modified",
+      "W2": "unchanged; no ownership or claim modified",
+      "W3": "unchanged; no ownership or claim modified",
+      "W4": "unchanged; no ownership or claim modified",
+      "W5": "unchanged; no ownership or claim modified"
+    }
+  },
+  "benchmarks": [
+    {
+      "ambiguity": [],
+      "changed_source_commitments": [],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 2
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": null,
+      "extra_field": null,
+      "failure_condition": "Fail on any non-exact recovery",
+      "family": "deterministic_transition",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-001",
+      "information_loss": [],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "exact",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "deterministic_transition:a",
+          "deterministic_transition:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "deterministic_transition",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 1
+        }
+      },
+      "stores_not_expresses": false,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 0,
+        "unexpressed_source_commitments": 0
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "uncertainty can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 3
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "uncertainty",
+      "failure_condition": "Fail when uncertainty is opaque or decoder-held",
+      "family": "probabilistic_update",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-002",
+      "information_loss": [
+        "uncertainty operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "probabilistic_update:a",
+          "probabilistic_update:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "probabilistic_update",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 2
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "retraction can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 1
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "retraction",
+      "failure_condition": "Fail when retraction is opaque or decoder-held",
+      "family": "nonmonotonic_retraction",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-003",
+      "information_loss": [
+        "retraction operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "nonmonotonic_retraction:a",
+          "nonmonotonic_retraction:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "nonmonotonic_retraction",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 0
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "consequence_policy can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 2
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "consequence_policy",
+      "failure_condition": "Fail when consequence_policy is opaque or decoder-held",
+      "family": "paraconsistent_consequence",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-004",
+      "information_loss": [
+        "consequence_policy operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "paraconsistent_consequence:a",
+          "paraconsistent_consequence:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "paraconsistent_consequence",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 1
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "intervention can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 3
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "intervention",
+      "failure_condition": "Fail when intervention is opaque or decoder-held",
+      "family": "causal_intervention",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-005",
+      "information_loss": [
+        "intervention operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "causal_intervention:a",
+          "causal_intervention:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "causal_intervention",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 2
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "rule_version can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 1
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "rule_version",
+      "failure_condition": "Fail when rule_version is opaque or decoder-held",
+      "family": "changing_rules",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-006",
+      "information_loss": [
+        "rule_version operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "changing_rules:a",
+          "changing_rules:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "changing_rules",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 0
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "semantic_version can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 2
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "semantic_version",
+      "failure_condition": "Fail when semantic_version is opaque or decoder-held",
+      "family": "changing_semantics",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-007",
+      "information_loss": [
+        "semantic_version operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "changing_semantics:a",
+          "changing_semantics:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "changing_semantics",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 1
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "identity_criterion can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 3
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "identity_criterion",
+      "failure_condition": "Fail when identity_criterion is opaque or decoder-held",
+      "family": "evolving_ontology",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-008",
+      "information_loss": [
+        "identity_criterion operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "evolving_ontology:a",
+          "evolving_ontology:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "evolving_ontology",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 2
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "identity_criterion can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 1
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "identity_criterion",
+      "failure_condition": "Fail when identity_criterion is opaque or decoder-held",
+      "family": "identity_preserving_merge",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-009",
+      "information_loss": [
+        "identity_criterion operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "identity_preserving_merge:a",
+          "identity_preserving_merge:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "identity_preserving_merge",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 0
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "identity_criterion can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 2
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "identity_criterion",
+      "failure_condition": "Fail when identity_criterion is opaque or decoder-held",
+      "family": "identity_collapsing_merge",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-010",
+      "information_loss": [
+        "identity_criterion operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "identity_collapsing_merge:a",
+          "identity_collapsing_merge:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "identity_collapsing_merge",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 1
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [],
+      "changed_source_commitments": [],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 3
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": null,
+      "extra_field": null,
+      "failure_condition": "Fail on any non-exact recovery",
+      "family": "deletion_constraint_relaxation",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-011",
+      "information_loss": [],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Pass",
+        "information": "Pass",
+        "operational": "Pass",
+        "semantic": "Pass",
+        "structural": "Pass"
+      },
+      "recovery": "exact",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "deletion_constraint_relaxation:a",
+          "deletion_constraint_relaxation:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "deletion_constraint_relaxation",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 2
+        }
+      },
+      "stores_not_expresses": false,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 0,
+        "unexpressed_source_commitments": 0
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "provenance can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 1
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "provenance",
+      "failure_condition": "Fail when provenance is opaque or decoder-held",
+      "family": "provenance_history",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-012",
+      "information_loss": [
+        "provenance operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "provenance_history:a",
+          "provenance_history:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "provenance_history",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 0
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "partial_order can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 2
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "partial_order",
+      "failure_condition": "Fail when partial_order is opaque or decoder-held",
+      "family": "distributed_partial_order",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-013",
+      "information_loss": [
+        "partial_order operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "distributed_partial_order:a",
+          "distributed_partial_order:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "distributed_partial_order",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 1
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "oracle_relation can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 3
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "external dependency",
+      "extra_field": "oracle_relation",
+      "failure_condition": "Fail when oracle_relation is opaque or decoder-held",
+      "family": "oracle_behavior",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-014",
+      "information_loss": [
+        "oracle_relation operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Unknown",
+        "historical": "Unknown",
+        "information": "Unknown",
+        "operational": "Unknown",
+        "semantic": "Unknown",
+        "structural": "Unknown"
+      },
+      "recovery": "unknown",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [
+          "live_service"
+        ],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "oracle_behavior:a",
+          "oracle_behavior:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "oracle_behavior",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 2
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 1,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "uncertainty can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 1
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "uncertainty",
+      "failure_condition": "Fail when uncertainty is opaque or decoder-held",
+      "family": "continuous_hybrid",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-015",
+      "information_loss": [
+        "uncertainty operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Unknown",
+        "historical": "Unknown",
+        "information": "Unknown",
+        "operational": "Unknown",
+        "semantic": "Unknown",
+        "structural": "Unknown"
+      },
+      "recovery": "unknown",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "continuous_hybrid:a",
+          "continuous_hybrid:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "continuous_hybrid",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 0
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "external_coupling can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 2
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "external dependency",
+      "extra_field": "external_coupling",
+      "failure_condition": "Fail when external_coupling is opaque or decoder-held",
+      "family": "embodied_tacit",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-016",
+      "information_loss": [
+        "external_coupling operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Unknown",
+        "historical": "Unknown",
+        "information": "Unknown",
+        "operational": "Unknown",
+        "semantic": "Unknown",
+        "structural": "Unknown"
+      },
+      "recovery": "unknown",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [
+          "live_service"
+        ],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "embodied_tacit:a",
+          "embodied_tacit:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "embodied_tacit",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 1
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 1,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "proof_object can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 3
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "proof_object",
+      "failure_condition": "Fail when proof_object is opaque or decoder-held",
+      "family": "proof_identity_binding",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-017",
+      "information_loss": [
+        "proof_object operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "proof_identity_binding:a",
+          "proof_identity_binding:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "proof_identity_binding",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 2
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "binding_scope can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 1
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "binding_scope",
+      "failure_condition": "Fail when binding_scope is opaque or decoder-held",
+      "family": "higher_order_scope",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-018",
+      "information_loss": [
+        "binding_scope operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "higher_order_scope:a",
+          "higher_order_scope:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "higher_order_scope",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 0
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    },
+    {
+      "ambiguity": [
+        "authority_source can be stored under catch-alls but not recovered without decoder rules"
+      ],
+      "changed_source_commitments": [
+        "family-specific semantics"
+      ],
+      "derived_used": [
+        "Reasoning State",
+        "Transformation Rule"
+      ],
+      "executed_source_result": {
+        "history": [
+          "initial",
+          "increment",
+          "toggle"
+        ],
+        "state": {
+          "flag": true,
+          "x": 2
+        }
+      },
+      "expected_obligations": [
+        "structural",
+        "semantic",
+        "operational",
+        "dependency",
+        "information",
+        "historical"
+      ],
+      "extra_classification": "candidate extension",
+      "extra_field": "authority_source",
+      "failure_condition": "Fail when authority_source is opaque or decoder-held",
+      "family": "normative_authority",
+      "fixture_kind": "executable finite program",
+      "id": "VOC-BENCH-019",
+      "information_loss": [
+        "authority_source operational role is not defined by the frozen vocabulary"
+      ],
+      "preservation": {
+        "dependency": "Pass",
+        "historical": "Fail",
+        "information": "Pass",
+        "operational": "Fail",
+        "semantic": "Fail",
+        "structural": "Pass"
+      },
+      "recovery": "failed",
+      "source": {
+        "dependencies": [
+          "rule:0->rule:1"
+        ],
+        "external_dependencies": [],
+        "history": [
+          "initial"
+        ],
+        "identity": [
+          "normative_authority:a",
+          "normative_authority:b"
+        ],
+        "observations": [
+          "x",
+          "flag"
+        ],
+        "rules": [
+          {
+            "amount": 1,
+            "op": "increment"
+          },
+          {
+            "op": "toggle"
+          }
+        ],
+        "semantics": {
+          "family": "normative_authority",
+          "step": "ordered application"
+        },
+        "source_commitments": [
+          "identity",
+          "rule order",
+          "family semantics",
+          "observable state",
+          "dependency edge",
+          "history"
+        ],
+        "state": {
+          "flag": false,
+          "x": 1
+        }
+      },
+      "stores_not_expresses": true,
+      "structural_accounting": {
+        "derived_content": 2,
+        "external_content": 0,
+        "hidden_machinery": 0,
+        "native_content": 7,
+        "opaque_content": 1,
+        "unexpressed_source_commitments": 1
+      },
+      "vocabulary_used": [
+        "Object",
+        "Property",
+        "Relation",
+        "Representation",
+        "Interpretation",
+        "Investigation",
+        "Reasoning Calculus"
+      ]
+    }
+  ],
+  "canonical_digest": "12ac967fe031622092453bf4a4d7d5f41f0a1d0faf5fd9f55ed29a12a39a23f2",
+  "claim_id": "CLM-VOC-001",
+  "claim_ladder": {
+    "bounded sufficiency": "unresolved",
+    "compositional expressibility": "unresolved",
+    "definitional expressibility": "unresolved",
+    "dependency preservation": "unresolved",
+    "historical preservation": "unresolved",
+    "local representability": "established locally",
+    "minimal sufficiency": "unresolved",
+    "necessity": "unresolved",
+    "operational expressibility": "unresolved",
+    "recoverability": "established locally",
+    "semantic expressibility": "unresolved",
+    "universal sufficiency": "unresolved",
+    "vocabulary coverage": "unresolved"
+  },
+  "counterexamples": [
+    {
+      "id": "CE-VOC-001",
+      "kind": "intervention/correlation collapse",
+      "retained": true
+    },
+    {
+      "id": "CE-VOC-002",
+      "kind": "proof/proposition identity collapse",
+      "retained": true
+    },
+    {
+      "id": "CE-VOC-003",
+      "kind": "partial-order/total-order invention",
+      "retained": true
+    },
+    {
+      "id": "CE-VOC-004",
+      "kind": "decoder-held semantic change",
+      "retained": true
+    }
+  ],
+  "escape_hatch_mutations": [
+    {
+      "executed": true,
+      "name": "whole_source_as_object",
+      "reason": "opaque or unrestricted content is charged and cannot count as expressive coverage",
+      "result": "rejected"
+    },
+    {
+      "executed": true,
+      "name": "all_distinctions_as_property",
+      "reason": "opaque or unrestricted content is charged and cannot count as expressive coverage",
+      "result": "rejected"
+    },
+    {
+      "executed": true,
+      "name": "all_operations_as_relation",
+      "reason": "opaque or unrestricted content is charged and cannot count as expressive coverage",
+      "result": "rejected"
+    },
+    {
+      "executed": true,
+      "name": "semantics_in_interpretation",
+      "reason": "opaque or unrestricted content is charged and cannot count as expressive coverage",
+      "result": "rejected"
+    },
+    {
+      "executed": true,
+      "name": "interpreter_in_representation",
+      "reason": "opaque or unrestricted content is charged and cannot count as expressive coverage",
+      "result": "rejected"
+    },
+    {
+      "executed": true,
+      "name": "dependencies_in_context",
+      "reason": "opaque or unrestricted content is charged and cannot count as expressive coverage",
+      "result": "rejected"
+    },
+    {
+      "executed": true,
+      "name": "history_as_opaque_string",
+      "reason": "opaque or unrestricted content is charged and cannot count as expressive coverage",
+      "result": "rejected"
+    }
+  ],
+  "extension_candidates": [
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "works"
+      },
+      "classification": "derivable",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "success",
+        "witness": "Relation plus ordered transition derives temporal_order"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "success"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-001",
+      "name": "temporal_order",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-002",
+      "name": "uncertainty",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-003",
+      "name": "retraction",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-004",
+      "name": "consequence_policy",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-005",
+      "name": "intervention",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-006",
+      "name": "rule_version",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-007",
+      "name": "semantic_version",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-008",
+      "name": "identity_criterion",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-009",
+      "name": "provenance",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-010",
+      "name": "partial_order",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "external dependency",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-011",
+      "name": "oracle_relation",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "external dependency",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-012",
+      "name": "external_coupling",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-013",
+      "name": "proof_object",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-014",
+      "name": "binding_scope",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    },
+    {
+      "alternative_encoding_attempt": {
+        "executed": true,
+        "result": "catch-all only; rejected"
+      },
+      "classification": "boundedly irreducible under the frozen model",
+      "derivation_attempt": {
+        "executed": true,
+        "result": "failed",
+        "witness": "paired sources collapse without this role"
+      },
+      "elimination_attempt": {
+        "alternative": "typed Relation composition",
+        "executed": true,
+        "result": "failed"
+      },
+      "global_primitive_claim": false,
+      "id": "VOC-EXT-015",
+      "name": "authority_source",
+      "paired_case": {
+        "with_candidate": "distinction recoverable",
+        "without_candidate": "inequivalent sources collapse"
+      }
+    }
+  ],
+  "frozen_vocabulary": {
+    "auxiliary_machinery_policy": "all machinery declared and charged; embedded interpreters forbidden",
+    "candidate_primitives": [
+      "Object",
+      "Property",
+      "Relation",
+      "Representation",
+      "Interpretation",
+      "Investigation",
+      "Reasoning Calculus"
+    ],
+    "composition_rules": "typed finite composition with every role declared and charged",
+    "definitions_source": "theory/definitions/definitions.md and frameworks/FARA/primitives.md at base 6e63e28",
+    "derivation_rules": "only dependency-graph declared derivations; no decoder-held rule",
+    "derived_concepts": [
+      "Reasoning State",
+      "Transformation Rule",
+      "Transformation Execution",
+      "Reasoning Trace",
+      "Candidate",
+      "Admissibility",
+      "Resolution"
+    ],
+    "equivalence": "exact source-commitment recovery plus all-six preservation",
+    "external_dependencies": [
+      "live oracle",
+      "physical environment",
+      "infinite precision service"
+    ],
+    "governance_requirements": [
+      "fail closed",
+      "preserve prior claims",
+      "no finite-to-global promotion"
+    ],
+    "identifier": "FARA-CANDIDATE-VOCABULARY@2026-07-28",
+    "methodological_procedures": [
+      "preservation audit",
+      "recovery execution",
+      "structural accounting",
+      "ablation"
+    ],
+    "operators": [
+      "Construct",
+      "Differentiate",
+      "Restrict",
+      "Resolve",
+      "Select"
+    ],
+    "outputs": {
+      "Fail": "an executed material obligation is violated",
+      "Unknown": "execution is unavailable or definitions/equivalence/coverage are insufficient"
+    },
+    "preservation_dimensions": [
+      "structural",
+      "semantic",
+      "operational",
+      "dependency",
+      "information",
+      "historical"
+    ],
+    "prohibited_aliases": [
+      "payload",
+      "metadata",
+      "context",
+      "semantics",
+      "environment",
+      "unrestricted Relation",
+      "unrestricted Property",
+      "unrestricted Representation",
+      "unrestricted Interpretation"
+    ],
+    "representation_fields": [
+      "identity",
+      "state",
+      "rules",
+      "semantics",
+      "observations",
+      "dependencies",
+      "history"
+    ],
+    "structural_accounting_policy": "count declared native and derived fields; charge opaque, external, hidden, and unexpressed commitments separately",
+    "target_system_class": "registered finite executable fixtures; nonfinite/external cases remain Unknown"
+  },
+  "id": "FARA-VOC-001",
+  "limitation_id": "LIM-021",
+  "nonclaims": [
+    "universal sufficiency",
+    "global minimality",
+    "global primitive necessity",
+    "finite ablation establishes necessity",
+    "serialization establishes expression",
+    "reconstruction establishes expressive sufficiency",
+    "candidate extensions are globally primitive"
+  ],
+  "positive_mappings": [
+    "VOC-BENCH-001",
+    "VOC-BENCH-011"
+  ],
+  "proof_object_id": "FARA-VOC-PROOF-001",
+  "refuted_claims": [
+    "catch-all serialization establishes coverage",
+    "finite positive mappings establish sufficiency",
+    "finite ablation establishes necessity"
+  ],
+  "remaining_obligations": [
+    "formalize canonical derivation and composition rules",
+    "replicate mappings independently",
+    "test nonfinite continuous semantics",
+    "adjudicate environment-inclusive embodied coupling",
+    "prove or refute extension irreducibility beyond the frozen model",
+    "resolve circular primitive definitions identified by W1"
+  ],
+  "schema_version": "1.0",
+  "self_review": [
+    "unrestricted primitives remain escape-hatch risks",
+    "W1 circularity hazards remain",
+    "ontology and representation can collapse",
+    "semantics can be smuggled into Interpretation",
+    "external machinery remains necessary for two families",
+    "benchmark selection is project-authored",
+    "results depend on the auxiliary finite interpretation",
+    "ablation inconvenience is not necessity",
+    "serialization is not expression",
+    "finite ablation is not irreducibility globally",
+    "extensions may proliferate unnecessarily",
+    "some failures may be model-induced",
+    "W3 is not consumed; W4/W5 supply only registered cases"
+  ],
+  "status": "extension pressure with boundedly irreducible candidate additions",
+  "theorem_id": "THM-VOC-001",
+  "unresolved_claims": [
+    "bounded sufficiency for all registered systems",
+    "minimal sufficiency",
+    "necessity",
+    "universal sufficiency"
+  ]
+}

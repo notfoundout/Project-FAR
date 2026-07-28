@@ -319,3 +319,7 @@ This dependency graph should be updated whenever:
 - an architectural document is added, removed, or re-scoped.
 
 Dependency updates should be justified by grounding investigations, artifact audits, or explicit architectural revisions.
+
+## Vocabulary-pressure evaluation dependency (`FARA-VOC-001`)
+
+This unnumbered campaign addresses `UQ-T7`; repository authority does not designate it as FARA W6. It freezes the seven provisional candidate primitives without changing them, preserves W0–W5, and uses W4/W5 cases only as registered phenomena. Its extension classifications are bounded to the auxiliary finite interpretation and establish no global primitive necessity.

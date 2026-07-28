@@ -194,3 +194,8 @@ semantic-check:
 	python tools/check_fara_common_architecture_w3.py
 	python tools/check_fara_w4_representation.py
 	python tools/check_fara_w5_invariance.py
+
+.PHONY: fara-vocabulary-check
+fara-vocabulary-check:
+	python tools/check_fara_vocabulary_sufficiency.py
+	python -m unittest tests.test_fara_vocabulary_sufficiency -v
