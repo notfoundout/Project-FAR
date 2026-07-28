@@ -2,7 +2,6 @@
 """Executable, fail-closed FARA vocabulary-pressure campaign."""
 from __future__ import annotations
 import argparse, hashlib, json, pathlib
-from fractions import Fraction
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 OBJECT=ROOT/'theory/evaluation/fara-vocabulary-sufficiency-v1.0.json'
 REPORT=ROOT/'theory/evaluation/generated-fara-vocabulary-sufficiency-report.md'
@@ -19,7 +18,7 @@ def digest(x):return hashlib.sha256(json.dumps(x,sort_keys=True,separators=(',',
 def fixture(f):
  d={'family':f,'identity':['a','b'],'history':['initial']}
  d.update({
-'deterministic_transition':{'x':1,'amount':2},'probabilistic_update':{'prior':[1,2],'likelihood':[3,4]},'nonmonotonic_retraction':{'facts':['bird'],'defeaters':['injured']},'paraconsistent_consequence':{'facts':['p','not_p'],'query':'q'},'causal_intervention':{'x':1,'do_x':0},'changing_rules':{'x':1,'versions':[1,3],'active':1},'changing_semantics':{'meanings':['river','finance'],'active':1},'evolving_ontology':{'same_versions':[False,True],'active':1},'identity_preserving_merge':{'policy':'preserve'},'identity_collapsing_merge':{'policy':'collapse'},'deletion_constraint_relaxation':{'values':[1,2,3],'delete':1,'max':3},'provenance_history':{'sources':['A','B'],'trusted':['A']},'distributed_partial_order':{'events':['a','b','c'],'before':[('a','c'),('b','c')]},'oracle_behavior':{'external':'live_service'},'continuous_hybrid':{'flow':'dx/dt=1','duration':'sqrt(2)'},'embodied_tacit':{'external':'physical_environment'},'proof_identity_binding':{'proofs':['lambda x.x','lambda y.y']},'higher_order_scope':{'formula':'forall P. exists x. P(x)'},'normative_authority':{'rules':[('permit','court'),('forbid','clerk')],'order':['court','clerk']}}[f]);return d
+'deterministic_transition':{'x':1,'amount':2},'probabilistic_update':{'prior':[1,2],'likelihood':[3,4]},'nonmonotonic_retraction':{'facts':['bird'],'defeaters':['injured']},'paraconsistent_consequence':{'facts':['p','not_p'],'query':'q'},'causal_intervention':{'x':1,'do_x':0},'changing_rules':{'x':1,'versions':[1,3],'active':1},'changing_semantics':{'meanings':['river','finance'],'active':1},'evolving_ontology':{'same_versions':[False,True],'active':1},'identity_preserving_merge':{'policy':'preserve'},'identity_collapsing_merge':{'policy':'collapse'},'deletion_constraint_relaxation':{'values':[1,2,3],'delete':1,'max':3},'provenance_history':{'sources':['A','B'],'trusted':['A']},'distributed_partial_order':{'events':['a','b','c'],'before':[['a','c'],['b','c']]},'oracle_behavior':{'external':'live_service'},'continuous_hybrid':{'flow':'dx/dt=1','duration':'sqrt(2)'},'embodied_tacit':{'external':'physical_environment'},'proof_identity_binding':{'proofs':['lambda x.x','lambda y.y']},'higher_order_scope':{'formula':'forall P. exists x. P(x)'},'normative_authority':{'rules':[['permit','court'],['forbid','clerk']],'order':['court','clerk']}}[f]);return d
 def run(s,role=True):
  f=s['family']
  if f=='deterministic_transition':return {'available':True,'result':s['x']+s['amount']}
