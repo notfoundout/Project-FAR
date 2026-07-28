@@ -218,7 +218,9 @@ No FARA target component, constructor, recovery procedure, or faithfulness assum
 
 ## 8. Executable reference evidence
 
-`tools/s_core_w0_reference.py` implements finite dependency closure, axis-reduct extraction, applicability, source renaming, and canonical-code comparison. `tests/test_s_core_w0_reference.py` checks closure completeness, cycle termination, applicability, reduct transport, canonical invariance, and rejection of undeclared dependencies against the registered fixtures.
+`tools/s_core_w0_reference.py` implements finite dependency closure, axis-reduct extraction, applicability, source renaming, canonical-code comparison, and retention of a deterministic witnessing bijection. Missing and explicitly empty successor lists receive the same total finite-reference-relation interpretation; duplicate set members are rejected rather than silently normalized.
+
+`tests/test_s_core_w0_reference.py` checks closure completeness, cycle termination, applicability, reduct transport, canonical invariance, witness validity, presentation invariance for empty successor lists, and fail-closed rejection of undeclared, duplicate, or ill-typed declarations against the registered fixtures. For every fixture and axis it also exhausts every subset of the material carrier and verifies that each closed carrier containing the axis seed contains the extracted reduct. This is a bounded machine-checkable test of the leastness argument, not sampling of selected candidate reducts.
 
 These executions corroborate the definitions and protect the repository against implementation drift. They do not elevate this result to proof-assistant verification or independent review.
 
