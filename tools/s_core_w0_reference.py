@@ -99,7 +99,7 @@ class FiniteSourceContract:
 
     def reference_map(self) -> dict[str, tuple[str, ...]]:
         # Absence and an explicitly empty successor list denote the same finite
-        # relation.  Totalizing here keeps closure and canonicalization
+        # relation. Totalizing here keeps closure and canonicalization
         # independent of a JSON presentation choice.
         declared = dict(self.references)
         return {node: declared.get(node, ()) for node in self.nodes}
@@ -208,10 +208,11 @@ class FiniteSourceContract:
         return self.canonical_form()[0]
 
     def canonical_form(self) -> tuple[str, tuple[tuple[str, str], ...]]:
-        """Return the least code and a deterministic witnessing bijection."""
+        """Return the least material-restricted code and its witnessing bijection."""
+        material = self.closure()
         sort_map = self.sort_map()
         groups: dict[str, list[str]] = {}
-        for node in self.nodes:
+        for node in sorted(material):
             groups.setdefault(sort_map[node], []).append(node)
         ordered_sorts = sorted(groups)
         per_sort_orders = [list(permutations(sorted(groups[sort_name]))) for sort_name in ordered_sorts]
@@ -221,21 +222,46 @@ class FiniteSourceContract:
             for sort_name, ordering in zip(ordered_sorts, chosen_orders):
                 for index, node in enumerate(ordering):
                     mapping[node] = f"{sort_name}:{index}"
-            candidates.append((self._code_under(mapping, ordered_sorts, groups), tuple(sorted(mapping.items()))))
+            candidates.append(
+                (
+                    self._code_under(mapping, ordered_sorts, groups, material),
+                    tuple(sorted(mapping.items())),
+                )
+            )
         if not candidates:
             raise ValueError("canonicalization requires a finite carrier")
         return min(candidates)
 
-    def _code_under(self, mapping: Mapping[str, str], ordered_sorts: list[str], groups: Mapping[str, list[str]]) -> str:
+    def _code_under(
+        self,
+        mapping: Mapping[str, str],
+        ordered_sorts: list[str],
+        groups: Mapping[str, list[str]],
+        carrier: Iterable[str] | None = None,
+    ) -> str:
+        material = frozenset(mapping) if carrier is None else frozenset(carrier)
+        if set(mapping) != set(material):
+            raise ValueError("canonical mapping must exactly cover the encoded material carrier")
+        reference_map = self.reference_map()
         payload = {
             "sort_sizes": [[sort_name, len(groups[sort_name])] for sort_name in ordered_sorts],
-            "relations": sorted([fact.name, [mapping[arg] for arg in fact.args]] for fact in self.relations),
-            "references": sorted(
-                [mapping[node], sorted(mapping[target] for target in targets)]
-                for node, targets in self.reference_map().items()
+            "relations": sorted(
+                [fact.name, [mapping[arg] for arg in fact.args]]
+                for fact in self.relations
+                if all(arg in material for arg in fact.args)
             ),
-            "material_seed": sorted(mapping[node] for node in self.material_seed),
-            "axis_tags": [[axis, sorted(mapping[node] for node in tagged)] for axis, tagged in self.axis_tags],
+            "references": sorted(
+                [
+                    mapping[node],
+                    sorted(mapping[target] for target in reference_map[node] if target in material),
+                ]
+                for node in material
+            ),
+            "material_seed": sorted(mapping[node] for node in self.material_seed if node in material),
+            "axis_tags": [
+                [axis, sorted(mapping[node] for node in tagged if node in material)]
+                for axis, tagged in self.axis_tags
+            ],
         }
         return json.dumps(payload, sort_keys=True, separators=(",", ":"))
 
