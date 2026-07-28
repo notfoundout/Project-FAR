@@ -138,12 +138,17 @@ class ExpandedCampaignTests(unittest.TestCase):
             self.assertLessEqual(
                 max(record["actual_carrier_sizes"]), record["support_bound"]
             )
+            if record["target"] == "Object":
+                self.assertEqual(
+                    [record["support_bound"] - 1, record["support_bound"]],
+                    record["actual_carrier_sizes"],
+                )
 
     def test_invalid_witnesses_fail_even_when_verified_is_forged(self):
         valid = checker.countermodel("Object", 4, 4)
         self.assertIsNotNone(valid)
         overflow = copy.deepcopy(valid)
-        overflow["model_b"]["Object"].extend(["o2", "o3", "o4"])
+        overflow["model_b"]["Object"].append("o4")
         overflow["verified"] = True
         self.assertTrue(checker.validate_countermodel(overflow, 4))
 
