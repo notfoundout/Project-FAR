@@ -1,0 +1,42 @@
+{
+  "id": "FARA-W1-PRIMITIVE-INDEPENDENCE-001",
+  "status": "Research / complete execution / unresolved outcomes",
+  "question": "Is each canonical FARA candidate primitive derivable from the remaining six candidate primitives?",
+  "authority": {
+    "primitive_set": "frameworks/FARA/primitives.md#Current Candidate Primitives",
+    "definitions": "theory/definitions/definitions.md",
+    "independence": "theory/definitions/definitions.md#Independence",
+    "reduction": "theory/definitions/definitions.md#Reduction"
+  },
+  "primitive_set": ["Object", "Property", "Relation", "Representation", "Interpretation", "Investigation", "Reasoning Calculus"],
+  "criterion": {
+    "requested_joint_test": "For each P in the canonical set, either exhibit a model of an explicitly stated formal theory of the other six in which P's defining predicate is not definable, or give a lossless definition of P using only the other six, relative to a stated scope and objective.",
+    "canonical_boundary": "The canonical Independence definition is only binary; Reduction additionally requires a specified scope and objective.",
+    "adjudication_rule": "Independent requires a countermodel; derivable requires a lossless definition; equivalent requires both reductions under a stated equivalence relation; otherwise unresolved. Syntactic omission, failed search, examples, and downstream FAR/FARO behavior are not proofs."
+  },
+  "shared_blockers": [
+    "No formal signature, axioms, inference rules, model class, scope, objective, or equivalence relation is canonical for this seven-concept test.",
+    "The canonical binary Independence definition does not define independence from a set of six concepts.",
+    "The prose definitions use non-canonical notions including distinguishability, characteristic, association, mapping, semantic meaning, objective, conditions, and rules; treating those notions as primitives would add hidden assumptions.",
+    "Consequently no model can be certified as a model of the remaining primitives and no claim of complete, lossless definability can be checked."
+  ],
+  "results": [
+    {"primitive":"Object","classification":"unresolved","attempt":"Remove Object and read its definition as a candidate predicate: anything explicitly distinguishable.","exact_blocker":"No domain or formal predicate for explicit distinguishability is specified, so a reduct/countermodel and lossless reconstruction cannot be formed.","dependency_observation":"Property and Relation explicitly invoke object; Representation is itself defined as an object. Using any of them to recover Object would require proving that their object occurrences are eliminable rather than presupposing Object.","assumptions_used":[]},
+    {"primitive":"Property","classification":"unresolved","attempt":"Remove Property and test whether 'a characteristic that an object may possess' is definable using the other six.","exact_blocker":"Characteristic, possession, and modality ('may') have no formal signatures or semantics.","dependency_observation":"Object supplies a bearer but not a definition of characteristic or possession; substituting Relation would assume, without a registered equivalence, that every property is a relation.","assumptions_used":[]},
+    {"primitive":"Relation","classification":"unresolved","attempt":"Remove Relation and test whether an explicitly specified association of arity at least two is definable using the other six.","exact_blocker":"Association, explicit specification, arity, and satisfaction are not formalized.","dependency_observation":"Encoding a relation as a Property of tuples requires tuple formation, n-ary satisfaction, and a property/relation equivalence not supplied by canonical authority.","assumptions_used":[]},
+    {"primitive":"Representation","classification":"unresolved","attempt":"Remove Representation and test whether an object used to denote, describe, encode, or refer is definable using the other six.","exact_blocker":"Denotation/reference and the role 'constructed or used' have no formal semantics or loss criterion.","dependency_observation":"Interpretation is defined as assigning meaning to representations, so recovering Representation from Interpretation is circular unless Interpretation is independently reformulated without Representation.","assumptions_used":[]},
+    {"primitive":"Interpretation","classification":"unresolved","attempt":"Remove Interpretation and test whether a meaning-assigning mapping on representations is definable using the other six.","exact_blocker":"Mapping, semantic meaning, assignment, and equality of meaning are not formalized.","dependency_observation":"Representation mentions different interpretations; using that clause to reconstruct Interpretation merely reuses the removed term and is circular.","assumptions_used":[]},
+    {"primitive":"Investigation","classification":"unresolved","attempt":"Remove Investigation and test whether a reasoning objective together with pursuit conditions is definable using the other six.","exact_blocker":"Reasoning objective, conditions, and the together-with constructor lack a formal signature and identity criterion.","dependency_observation":"Reasoning Calculus is explicitly defined within an investigation; reconstructing Investigation from Reasoning Calculus therefore presupposes the removed primitive.","assumptions_used":[]},
+    {"primitive":"Reasoning Calculus","classification":"unresolved","attempt":"Remove Reasoning Calculus and test whether rules governing admissible reasoning within an investigation are definable using the other six.","exact_blocker":"Rule, admissibility, transformation, inference, criterion, and procedure are not formalized at the primitive layer.","dependency_observation":"Investigation's context clause names reasoning calculi but supplies no rules; downstream FAR workflow or FARO operations cannot fill the gap without reversing the canonical dependency direction.","assumptions_used":[]}
+  ],
+  "adversarial_findings": {
+    "circular_reasoning": ["Object <- Representation <- Object", "Representation <-> Interpretation", "Investigation <-> Reasoning Calculus"],
+    "hidden_equivalent_candidates": ["Property as unary Relation", "Relation as Property of tuples", "Interpretation as a Relation or mapping", "Representation as an interpreted Object"],
+    "renamed_duplicates": [],
+    "renamed_duplicate_result": "No exact duplicate definition was found after case-folding and whitespace/punctuation normalization; semantic equivalence remains untestable without a registered equivalence relation.",
+    "downstream_dependency": "No FAR or FARO artifact is used as an assumption or proof. Their methodology/operations are downstream and inadmissible for this test."
+  },
+  "conclusion": "W1 execution is complete, but all seven outcomes fail closed as unresolved. No primitive is established independent, derivable, or equivalent.",
+  "consequences": ["The seven items remain candidate primitives only.", "FARA primitive independence and minimality remain unproved.", "No theorem, necessity, irreducibility, or global theory claim may consume this execution as a positive result."],
+  "generated_artifact": "frameworks/FARA/research/primitive-independence-w1-result.md"
+}

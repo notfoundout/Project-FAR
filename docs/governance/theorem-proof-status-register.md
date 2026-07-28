@@ -7,6 +7,7 @@ Status: **Accepted classification index; proof objects remain authoritative**
 | Definitions and framework “principles” | specification/assumption, not proof | Naming or stability does not establish necessity. |
 | Legacy root-theory limits “theorem” | historical proof attempt | Filename is retained for provenance; no global theorem status follows. |
 | FARA representation/minimality claims | conjecture or bounded evaluation | Global proof absent; counterexample search remains open. |
+| FARA W1 primitive independence | completed fail-closed execution; no theorem | All seven candidate primitives are unresolved because no canonical formal theory, model class, scope/objective, or equivalence relation supports a derivation or countermodel. |
 | T-/L-/P-series records | status declared in their validation reports | Assurance and premises must travel with each statement. |
 | Terminal UPP theorem | bounded theorem with mixed assurance | Relative to frozen class/contract/closure/equivalence premises; composition is not one kernel-checked object. |
 | CRE/EV/SWE-agent results | empirical observations | Never theorems and never proofs of universality. |

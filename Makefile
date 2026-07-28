@@ -9,6 +9,7 @@ health:
 	python tools/check_p8_theorem_role.py
 	python tools/check_s_core_lemma_ledger.py
 	python tools/check_s_core_w0.py
+	python tools/check_fara_primitive_independence.py
 	python tools/check_s_core_w1.py
 	python tools/check_s_core_w2.py
 	python tools/check_s_core_w3.py
@@ -41,6 +42,7 @@ health-fast:
 	python tools/check_p8_theorem_role.py
 	python tools/check_s_core_lemma_ledger.py
 	python tools/check_s_core_w0.py
+	python tools/check_fara_primitive_independence.py
 	python tools/check_s_core_w1.py
 	python tools/check_s_core_w2.py
 	python tools/check_s_core_w3.py
@@ -85,6 +87,7 @@ research-check:
 	python tools/check_p8_theorem_role.py
 	python tools/check_s_core_lemma_ledger.py
 	python tools/check_s_core_w0.py
+	python tools/check_fara_primitive_independence.py
 	python tools/check_s_core_w1.py
 	python tools/check_s_core_w2.py
 	python tools/check_s_core_w3.py

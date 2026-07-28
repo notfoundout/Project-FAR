@@ -4,7 +4,7 @@ Status: **Accepted classification index; source records remain authoritative**
 
 | Claim or concept | Classification | Boundary |
 |---|---|---|
-| FARA primitive vocabulary | Primitive candidates / accepted only within recorded framework scope | Global necessity and independence unresolved. |
+| FARA primitive vocabulary | Seven primitive candidates / accepted only within recorded framework scope | W1 tested Object, Property, Relation, Representation, Interpretation, Investigation, and Reasoning Calculus; every result is unresolved. No global necessity, independence, derivability, or equivalence is established. |
 | Terms derived from FARA primitives | Derived | Valid only where cited definitions and premises apply. |
 | FAR investigation workflow | Independent methodological choice | A procedure, not a theorem or prerequisite of theory. |
 | FARO comparison/audit operations | Derived framework operations | Depend on foundations → shared theory → FARA → FAR. |
