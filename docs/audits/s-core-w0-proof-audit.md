@@ -52,9 +52,15 @@ The reference implementation and fixtures check:
 - reduct transport under renaming;
 - closure of reduct dependencies;
 - rejection of undeclared references;
-- rejection of sort-changing renamings.
+- rejection of sort-changing renamings;
+- exhaustive leastness over every material-carrier subset in each registered fixture;
+- validity of the retained canonicalization witness;
+- invariance between omitted and explicitly empty successor lists;
+- fail-closed rejection of duplicate reference endpoints, relation facts, and axis tags, and of non-string sort declarations.
 
 These checks are bounded executable corroboration. They do not constitute proof-assistant verification.
+
+The self-review introduced no mathematical dependency. It closed two executable-representation gaps: the reference relation is now totalized before canonical coding, and the normalization routine returns the deterministic witness promised by the proof construction.
 
 ## Ledger effects
 

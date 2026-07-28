@@ -44,6 +44,8 @@ class FiniteSourceContract:
             raise ValueError("nodes must be unique")
         if not isinstance(sorts_raw, dict):
             raise ValueError("sorts must be an object")
+        if not all(isinstance(node, str) and isinstance(sort_name, str) for node, sort_name in sorts_raw.items()):
+            raise ValueError("sorts must map strings to strings")
         if not isinstance(relations_raw, list):
             raise ValueError("relations must be a list")
         if not isinstance(references_raw, dict):
@@ -83,7 +85,7 @@ class FiniteSourceContract:
 
         contract = cls(
             nodes=tuple(nodes_raw),
-            sorts=tuple(sorted((str(k), str(v)) for k, v in sorts_raw.items())),
+            sorts=tuple(sorted(sorts_raw.items())),
             relations=tuple(relations),
             references=tuple(sorted(references)),
             material_seed=tuple(seed_raw),
@@ -96,7 +98,11 @@ class FiniteSourceContract:
         return dict(self.sorts)
 
     def reference_map(self) -> dict[str, tuple[str, ...]]:
-        return dict(self.references)
+        # Absence and an explicitly empty successor list denote the same finite
+        # relation.  Totalizing here keeps closure and canonicalization
+        # independent of a JSON presentation choice.
+        declared = dict(self.references)
+        return {node: declared.get(node, ()) for node in self.nodes}
 
     def tag_map(self) -> dict[str, tuple[str, ...]]:
         return dict(self.axis_tags)
@@ -104,6 +110,8 @@ class FiniteSourceContract:
     def validate(self) -> None:
         node_set = set(self.nodes)
         sort_map = self.sort_map()
+        if len(self.sorts) != len(sort_map):
+            raise ValueError("sort declarations must be unique")
         if set(sort_map) != node_set:
             missing = sorted(node_set - set(sort_map))
             extra = sorted(set(sort_map) - node_set)
@@ -114,6 +122,13 @@ class FiniteSourceContract:
             for target in targets:
                 if target not in node_set:
                     raise ValueError(f"undeclared reference endpoint: {target}")
+            if len(targets) != len(set(targets)):
+                raise ValueError(f"duplicate reference endpoint for: {node}")
+        if len(self.references) != len({node for node, _ in self.references}):
+            raise ValueError("reference sources must be unique")
+        relation_keys = [(fact.name, fact.args) for fact in self.relations]
+        if len(relation_keys) != len(set(relation_keys)):
+            raise ValueError("relation facts must be unique")
         for fact in self.relations:
             for arg in fact.args:
                 if arg not in node_set:
@@ -123,12 +138,17 @@ class FiniteSourceContract:
                 raise ValueError(f"undeclared material seed: {node}")
         if len(self.material_seed) != len(set(self.material_seed)):
             raise ValueError("material_seed must not contain duplicates")
+        declared_axes = [axis for axis, _ in self.axis_tags]
+        if len(declared_axes) != len(set(declared_axes)) or set(declared_axes) != set(AXES):
+            raise ValueError("axis tags must declare each canonical axis exactly once")
         for axis, tagged in self.axis_tags:
             if axis not in AXES:
                 raise ValueError(f"unknown axis: {axis}")
             for node in tagged:
                 if node not in node_set:
                     raise ValueError(f"undeclared axis-tag node: {node}")
+            if len(tagged) != len(set(tagged)):
+                raise ValueError(f"axis_tags.{axis} must not contain duplicates")
 
     def closure(self, seeds: Iterable[str] | None = None) -> frozenset[str]:
         reference_map = self.reference_map()
@@ -174,34 +194,46 @@ class FiniteSourceContract:
             nodes=tuple(mapping[node] for node in self.nodes),
             sorts=tuple(sorted(target_sort_by_name.items())),
             relations=tuple(RelationFact(fact.name, tuple(mapping[arg] for arg in fact.args)) for fact in self.relations),
-            references=tuple(sorted((mapping[node], tuple(mapping[target] for target in targets)) for node, targets in self.references)),
+            references=tuple(
+                sorted(
+                    (mapping[node], tuple(mapping[target] for target in targets))
+                    for node, targets in self.reference_map().items()
+                )
+            ),
             material_seed=tuple(mapping[node] for node in self.material_seed),
             axis_tags=tuple((axis, tuple(mapping[node] for node in tagged)) for axis, tagged in self.axis_tags),
         )
 
     def canonical_code(self) -> str:
+        return self.canonical_form()[0]
+
+    def canonical_form(self) -> tuple[str, tuple[tuple[str, str], ...]]:
+        """Return the least code and a deterministic witnessing bijection."""
         sort_map = self.sort_map()
         groups: dict[str, list[str]] = {}
         for node in self.nodes:
             groups.setdefault(sort_map[node], []).append(node)
         ordered_sorts = sorted(groups)
         per_sort_orders = [list(permutations(sorted(groups[sort_name]))) for sort_name in ordered_sorts]
-        codes: list[str] = []
+        candidates: list[tuple[str, tuple[tuple[str, str], ...]]] = []
         for chosen_orders in product(*per_sort_orders):
             mapping: dict[str, str] = {}
             for sort_name, ordering in zip(ordered_sorts, chosen_orders):
                 for index, node in enumerate(ordering):
                     mapping[node] = f"{sort_name}:{index}"
-            codes.append(self._code_under(mapping, ordered_sorts, groups))
-        if not codes:
+            candidates.append((self._code_under(mapping, ordered_sorts, groups), tuple(sorted(mapping.items()))))
+        if not candidates:
             raise ValueError("canonicalization requires a finite carrier")
-        return min(codes)
+        return min(candidates)
 
     def _code_under(self, mapping: Mapping[str, str], ordered_sorts: list[str], groups: Mapping[str, list[str]]) -> str:
         payload = {
             "sort_sizes": [[sort_name, len(groups[sort_name])] for sort_name in ordered_sorts],
             "relations": sorted([fact.name, [mapping[arg] for arg in fact.args]] for fact in self.relations),
-            "references": sorted([mapping[node], sorted(mapping[target] for target in targets)] for node, targets in self.references),
+            "references": sorted(
+                [mapping[node], sorted(mapping[target] for target in targets)]
+                for node, targets in self.reference_map().items()
+            ),
             "material_seed": sorted(mapping[node] for node in self.material_seed),
             "axis_tags": [[axis, sorted(mapping[node] for node in tagged)] for axis, tagged in self.axis_tags],
         }

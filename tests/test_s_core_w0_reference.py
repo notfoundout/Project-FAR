@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from itertools import combinations
 from pathlib import Path
 import unittest
 
@@ -64,6 +65,44 @@ class SCoreW0ReferenceTests(unittest.TestCase):
                 for node in reduct:
                     self.assertTrue(set(references.get(node, ())) <= set(reduct))
 
+    def test_axis_reducts_are_the_unique_least_closed_carriers(self) -> None:
+        """Exhaust all subsets of the bounded fixtures, not only examples."""
+        for fixture in self.data["fixtures"]:
+            contract = FiniteSourceContract.from_dict(fixture["contract"])
+            material = contract.closure()
+            references = contract.reference_map()
+            for axis in AXES:
+                seed = material.intersection(contract.tag_map()[axis])
+                reduct = contract.reduct_nodes(axis)
+                material_list = sorted(material)
+                for size in range(len(material_list) + 1):
+                    for values in combinations(material_list, size):
+                        candidate = frozenset(values)
+                        closed = all(set(references[node]) <= candidate for node in candidate)
+                        if seed <= candidate and closed:
+                            self.assertTrue(reduct <= candidate, f"{fixture['id']} {axis} {candidate}")
+
+    def test_canonical_form_retains_a_valid_witness(self) -> None:
+        for fixture in self.data["fixtures"]:
+            contract = FiniteSourceContract.from_dict(fixture["contract"])
+            code, witness_items = contract.canonical_form()
+            witness = dict(witness_items)
+            self.assertEqual(set(witness), set(contract.nodes))
+            self.assertEqual(len(set(witness.values())), len(contract.nodes))
+            groups: dict[str, list[str]] = {}
+            for node, sort_name in contract.sorts:
+                groups.setdefault(sort_name, []).append(node)
+            self.assertEqual(code, contract._code_under(witness, sorted(groups), groups))
+
+    def test_omitted_and_explicit_empty_references_have_one_canonical_code(self) -> None:
+        fixture = self.by_id["W0-FX-002"]["contract"]
+        omitted = json.loads(json.dumps(fixture))
+        omitted["references"].pop("e1")
+        left = FiniteSourceContract.from_dict(fixture)
+        right = FiniteSourceContract.from_dict(omitted)
+        self.assertEqual(left.closure(), right.closure())
+        self.assertEqual(left.canonical_code(), right.canonical_code())
+
     def test_undeclared_reference_is_rejected(self) -> None:
         fixture = next(item for item in self.data["negative_fixtures"] if item["id"] == "W0-NF-001")
         with self.assertRaisesRegex(ValueError, fixture["expected_error"]):
@@ -74,6 +113,24 @@ class SCoreW0ReferenceTests(unittest.TestCase):
         base = FiniteSourceContract.from_dict(self.by_id[fixture["base_fixture"]]["contract"])
         with self.assertRaisesRegex(ValueError, fixture["expected_error"]):
             base.renamed(fixture["renaming"])
+
+    def test_duplicate_set_members_are_rejected_fail_closed(self) -> None:
+        for field, mutation, error in (
+            ("references", lambda data: data["references"]["c1"].append("s1"), "duplicate reference endpoint"),
+            ("relations", lambda data: data["relations"].append(data["relations"][0]), "relation facts must be unique"),
+            ("axis_tags", lambda data: data["axis_tags"]["P2"].append("c1"), "must not contain duplicates"),
+        ):
+            with self.subTest(field=field):
+                malformed = json.loads(json.dumps(self.by_id["W0-FX-002"]["contract"]))
+                mutation(malformed)
+                with self.assertRaisesRegex(ValueError, error):
+                    FiniteSourceContract.from_dict(malformed)
+
+    def test_non_string_sort_declarations_are_rejected_fail_closed(self) -> None:
+        malformed = json.loads(json.dumps(self.by_id["W0-FX-002"]["contract"]))
+        malformed["sorts"]["e1"] = 1
+        with self.assertRaisesRegex(ValueError, "sorts must map strings to strings"):
+            FiniteSourceContract.from_dict(malformed)
 
 
 if __name__ == "__main__":
