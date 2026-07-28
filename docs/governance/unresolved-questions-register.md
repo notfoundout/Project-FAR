@@ -24,5 +24,6 @@ The registers identify questions, not authorization to execute them. New investi
 - **UQ-T6:** Is Resolve reducible in every relevant architecture, or does some case require it (or another operator) primitively? **Unresolved; W2 does not derive Resolve because its bounded model lacks declared-rule representation and rule execution.**
 - **UQ-T7:** Can changing rules, continuous dynamics, embodied coupling, incompatible ontologies, and nonclassical consequence be represented without material expressive loss? **Unresolved.**
 - **UQ-T8:** Is admissibility logically prior to valid transition, or are both jointly specified by a calculus? **Unresolved.**
+- **UQ-T9:** Can one non-vacuous architecture preserve all six W3 dimensions for continuous/hybrid, embodied, changing-ontology, distributed, and oracle-dependent systems without copying the missing machinery into typed payloads? **Unresolved; `FARA-ARCH-W3-001` refutes only the internal-state-only lossless universal form.**
 - **UQ-E5:** Would independent CRP implementations agree on all canonicalization, clause-segmentation, and tie cases? **Unresolved; v1.1 fixtures proposed.**
 - **UQ-E6:** Do independently administered alternative-vocabulary and domain cases reproduce bounded sufficiency observations? **Unresolved.**

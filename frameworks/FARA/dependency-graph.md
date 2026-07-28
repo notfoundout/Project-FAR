@@ -290,6 +290,12 @@ The W2 evaluation depends on the canonical glossary definitions of Construct, Di
 
 ---
 
+## Common-architecture evaluation dependency (FARA-ARCH-W3-001)
+
+W3 preserves W0, the unresolved W1 independence result, and W2's coordinate-separation boundary as frozen upstream results. Its by-construction CTC result depends on `B_W3_closed_explicit`, the six-dimensional `E_W3` preservation criterion, and complete declared observables/determinants supplied in charged typed payloads. The oracle countermodel refutes only lossless universal reconstruction from explicit internal state alone. W3 is not a prerequisite of canonical FARA and establishes no native common structure, necessity, uniqueness, minimality, or open-world universality.
+
+---
+
 ## Maintenance Policy
 
 This dependency graph should be updated whenever:

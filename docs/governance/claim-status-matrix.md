@@ -25,6 +25,9 @@ Examples, methodology, research, validation, papers and archive are never prereq
 | Claim | Status | Required interpretation |
 |---|---|---|
 | All structured investigation shares one architecture | Conjecture outside the frozen UPP class | Counterexample register blocks unbounded wording. |
+| `CLM-ARCH-W3-BOUNDED`: CTC reconstruction for `B_W3_closed_explicit` | Established only by construction at the frozen bounded class | Complete declared observables and determinants are charged typed payloads; this is reconstructability, not native common structure or necessity. |
+| Lossless universal reconstruction from explicit internal state alone | Refuted at W3 scope | The oracle-paired countermodel has identical explicit internal state/history and different declared semantic, operational, dependency, information, and historical observations. |
+| A unique common architecture | Refuted at W3 scope | Trace, quotient, and partial-order/event-structure reconstructions are non-unique; successful encodings do not imply uniqueness. |
 | Construct/Differentiate/Restrict are sufficient or minimal | Unresolved globally | W2 establishes only coordinate-separation-induced bounded minimality in `finite_coordinate_trace_v1`; the result follows from the auxiliary premise that each operator exclusively controls one observable coordinate. |
 | Construct/Differentiate/Restrict in `finite_coordinate_trace_v1` | Coordinate-separation-induced bounded minimality | Valid only under finite monotone traces, exclusive coordinate effects, and componentwise equality; not evidence of canonical or global operator necessity. |
 | Resolve is primitive | Rejected on current record | It is treated as rule application/procedure; W2 does not derive it because the bounded model lacks rule representation and rule execution. |
