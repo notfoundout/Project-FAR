@@ -55,11 +55,13 @@ def model_errors(m,maximum):
  if len(o)>maximum:e.append('Object carrier exceeds bound')
  if not isinstance(m['Property'],list):e.append('Property must be list')
  else:
+  if len(m['Property'])!=len({tuple(t) for t in m['Property'] if isinstance(t,list)}):e.append('duplicate Property tuple')
   for t in m['Property']:
    if not isinstance(t,list) or len(t)!=1:e.append('Property tuple must be unary')
    elif t[0] not in o:e.append('Property outside Object')
  if not isinstance(m['Relation'],list):e.append('Relation must be list')
  else:
+  if len(m['Relation'])!=len({tuple(t) for t in m['Relation'] if isinstance(t,list)}):e.append('duplicate Relation tuple')
   for t in m['Relation']:
    if not isinstance(t,list) or len(t)!=2:e.append('Relation tuple must be binary')
    elif any(x not in o for x in t):e.append('Relation outside Object')
@@ -132,9 +134,15 @@ def historical_errors(spec,root=ROOT):
 def upstream_state(spec,root=ROOT):
  e=[];core=load('expanded_core',root/'tools/check_fara_core_formalization.py');cs=json.loads(core.SPEC.read_text());cp=json.loads(core.PROOF.read_text());ce=core.validate(cs,cp,core.REPORT.read_text());e += [f'core rerun: {x}' for x in ce];fresh_core=core.build_proof(copy.deepcopy(cs));c={'terminal_result':fresh_core['terminal_result'],'model_families':len(fresh_core['models'])}
  foundation=load('expanded_foundation',root/'tools/check_fara_foundation_comparison.py');fs=json.loads(foundation.SPEC.read_text());fp=json.loads(foundation.PROOF.read_text());fe=foundation.validate(fs,fp,foundation.REPORT.read_text());e += [f'foundation rerun: {x}' for x in fe];f=foundation.build(copy.deepcopy(fs));totals={n:d['mapping_counts'] for n,d in sorted(f['structural_accounting'].items())};summary={'terminal_result':f['terminal_result'],'foundation_executions':len(f['traces']),'ablations':len(f['ablations']),'ablation_executions':sum(len(x['executions']) for x in f['ablations']),'round_trip_records':len(f['round_trip_ledger']),'dominance_edges':f['dominance_graph']['edges'],'mapping_totals':totals};manifest={k:{'digest':digest(v),'status':v['status'],'preservation':v['preservation'],'structural_accounting':v['structural_accounting']} for k,v in f['traces'].items()};return c,summary,manifest,e
+
+def summarize_countermodels(records,coverage):
+ summaries=[summarize_countermodel(r) for r in records];by_target=[]
+ for target,bounds in coverage.items():
+  rows=[r for r in summaries if r['target']==target];by_target.append({'target':target,'supported_bounds':bounds['supported_bounds'],'unsupported_bounds':bounds['unsupported_bounds'],'witness_count':len(rows),'model_count':2*len(rows),'evidence_digest':digest(rows)})
+ return {'witness_count':len(records),'model_count':2*len(records),'evidence_digest':digest(summaries),'by_target':by_target}
 def build(spec):
  axes=[enumerate_axis(spec['bounds']['maximum_carrier_size'],a) for a in spec['bounds']['exhaustive_relation_arities']];records,coverage=build_countermodels(spec);unknown={u:'Unknown' for u in UNKNOWN};up=spec['upstream_expectations']['foundation']
- return {'campaign_id':spec['id'],'spec_digest':digest(spec),'base_commit':spec['base_commit'],'bounds':spec['bounds'],'enumeration_axes':axes,'countermodels':[summarize_countermodel(r) for r in records],'countermodel_coverage':coverage,'cost_accounting':{'relation_interpretations_constructed_and_evaluated':sum(a['evaluated'] for a in axes),'paired_reduct_witnesses':len(records),'paired_reduct_models':2*len(records),'foundation_executions':up['foundation_executions'],'ablations':up['ablations'],'ablation_executions':up['ablation_executions'],'round_trip_records':up['round_trip_records']},'upstream_reruns':spec['upstream_expectations'],'historical_artifacts':copy.deepcopy(spec['historical_artifacts']),'conclusions':{'relation_axes':'every unary and binary relation interpretation on carriers 0..4 was materialized, type-checked, and evaluated independently; full-signature cross-products were not searched','derivability':'paired-reduct witnesses establish bounded non-derivability only at target-specific support bounds recorded in countermodel_coverage','foundation':up['terminal_result'],'external_cases':unknown},'unknown_cases':unknown,'nonclaims':spec['nonclaims']}
+ return {'campaign_id':spec['id'],'spec_digest':digest(spec),'base_commit':spec['base_commit'],'bounds':spec['bounds'],'enumeration_axes':axes,'countermodel_evidence':summarize_countermodels(records,coverage),'countermodel_coverage':coverage,'cost_accounting':{'relation_interpretations_constructed_and_evaluated':sum(a['evaluated'] for a in axes),'paired_reduct_witnesses':len(records),'paired_reduct_models':2*len(records),'foundation_executions':up['foundation_executions'],'ablations':up['ablations'],'ablation_executions':up['ablation_executions'],'round_trip_records':up['round_trip_records']},'upstream_reruns':spec['upstream_expectations'],'historical_artifacts':copy.deepcopy(spec['historical_artifacts']),'conclusions':{'relation_axes':'every unary and binary relation interpretation on carriers 0..4 was materialized, type-checked, and evaluated independently; full-signature cross-products were not searched','derivability':'paired-reduct witnesses establish bounded non-derivability only at target-specific support bounds recorded in countermodel_coverage','foundation':up['terminal_result'],'external_cases':unknown},'unknown_cases':unknown,'nonclaims':spec['nonclaims']}
 def render(spec,p):
  lines=['# Expanded bounded FARA executable campaign','','Status: Research','',f"Base: `{p['base_commit']}`. Maximum carrier size: **{p['bounds']['maximum_carrier_size']}**.",'','## Executed relation axes','']
  for axis in p['enumeration_axes']:
@@ -157,9 +165,9 @@ def validate(spec,stored,report=None,trace_dir=TRACE_DIR,root=ROOT,check_upstrea
   if not a.get('constructed')==a.get('admissible')==a.get('evaluated')==a.get('interpretations_examined'):e.append('relation masks counted without complete execution')
   if a.get('rejected')!=0:e.append('unexpected rejected generated relation')
   if not a.get('execution_digest') or not a.get('result_digest'):e.append('missing execution digest')
- records,coverage=build_countermodels(spec);summaries=[summarize_countermodel(r) for r in records]
+ records,coverage=build_countermodels(spec);summary=summarize_countermodels(records,coverage)
  if any(validate_countermodel(r,spec['bounds']['maximum_carrier_size']) for r in records):e.append('invalid generated countermodel')
- if stored.get('countermodels')!=summaries:e.append('countermodel evidence not reproducible')
+ if stored.get('countermodel_evidence')!=summary:e.append('countermodel evidence not reproducible')
  if stored.get('countermodel_coverage')!=coverage:e.append('false countermodel size coverage')
  if stored.get('historical_artifacts')!=spec.get('historical_artifacts'):e.append('historical identities not copied from specification')
  if check_upstream:
