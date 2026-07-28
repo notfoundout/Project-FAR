@@ -6,6 +6,7 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "tools"))
 import check_fara_foundation_comparison as checker
+import fara_foundation_authoritative_prose as prose
 
 
 class AuthoritativeProseValidationTests(unittest.TestCase):
@@ -15,8 +16,8 @@ class AuthoritativeProseValidationTests(unittest.TestCase):
 
     @staticmethod
     def mutate_outside_snapshot(text, mutation):
-        start = checker._SNAPSHOT_START
-        end = checker._SNAPSHOT_END
+        start = prose.SNAPSHOT_START
+        end = prose.SNAPSHOT_END
         prefix, remainder = text.split(start, 1)
         snapshot, suffix = remainder.split(end, 1)
         return mutation(prefix) + start + snapshot + end + mutation(suffix)
@@ -66,5 +67,4 @@ class AuthoritativeProseValidationTests(unittest.TestCase):
                 self.assertFalse(checker.validate_authoritative_text(changed, self.proof))
 
 
-if __name__ == "__main__":
-    unittest.main()
+if __name__ == "__main__": unittest.main()
