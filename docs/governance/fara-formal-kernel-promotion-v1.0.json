@@ -7,7 +7,7 @@
   "canonical_kernel": "identity-bearing-many-sorted-relational",
   "canonical_document": {
     "path": "frameworks/FARA/formal-kernel.md",
-    "git_blob_sha": "bccac5f36ebfa89c7557ba84ff76dce39e17ad43"
+    "git_blob_sha": "362567c6d61b3257b76f76532c957b6e1172d01f"
   },
   "lifecycle": {
     "question": "complete",
@@ -44,11 +44,11 @@
     },
     "acceptance_record": {
       "path": "docs/governance/fara-formal-kernel-acceptance-v1.0.md",
-      "git_blob_sha": "4958a71434f9c5572aba6edc1e51572736e24b3a"
+      "git_blob_sha": "72eb998efab920a8c79a44b7cad49483375a3ee0"
     },
     "promotion_record": {
       "path": "docs/governance/fara-formal-kernel-promotion-v1.0.md",
-      "git_blob_sha": "490f1749ed462c29c7ec1c8af7eaa88af9b672e5"
+      "git_blob_sha": "1b13741c84fb77d76f23c88a357760935874e338"
     }
   },
   "mandatory_gates": [
