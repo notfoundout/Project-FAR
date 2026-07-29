@@ -1,0 +1,124 @@
+{
+  "acceptance_id": "FARA-FORMAL-KERNEL-001",
+  "promotion_id": "FARA-FORMAL-KERNEL-PROMOTION-001",
+  "change_id": "FARA-CCR-001",
+  "status": "Accepted",
+  "scope": "Project FAR v1.0 finite explicit auditable representational architecture",
+  "canonical_kernel": "identity-bearing-many-sorted-relational",
+  "canonical_document": {
+    "path": "frameworks/FARA/formal-kernel.md",
+    "git_blob_sha": "5e4f5b1b860f1447f8a4880ff1480b4fb6e5a1eb"
+  },
+  "lifecycle": {
+    "question": "complete",
+    "execution": "complete",
+    "observation": "complete",
+    "discovery": "complete",
+    "replication": "complete",
+    "acceptance": "complete",
+    "promotion": "complete",
+    "repository_change": "authorized; effective when this pull request merges"
+  },
+  "evidence_locks": {
+    "source_campaign_merge": "775c24b26a30339a3fc0117e1faf4febece0a33c",
+    "source_spec": {
+      "path": "theory/formal/fara-canonical-kernel-v1.0.json",
+      "git_blob_sha": "49e10b34ac9920fed85a5c8be5e5200f59aedfbe"
+    },
+    "source_proof": {
+      "path": "theory/evaluation/fara-canonical-kernel-proof-v1.0.json",
+      "git_blob_sha": "36b046f0efc32fa9464cd0943aef30af398c63bf"
+    },
+    "replication_merge": "5932e6b2111c6d7da8b1c9a443474b395f02880e",
+    "replication_result": {
+      "path": "research/replications/fara-canonical-kernel-v1.0/result.json",
+      "git_blob_sha": "fde056ce8309f0ef2f383730b02438f5c2b91c93"
+    },
+    "replication_adjudication": {
+      "path": "research/replications/fara-canonical-kernel-v1.0/adjudication.json",
+      "git_blob_sha": "d4737e680ece1510c23eb8571470e0f175d7f663"
+    },
+    "acceptance_record": {
+      "path": "docs/governance/fara-formal-kernel-acceptance-v1.0.md",
+      "git_blob_sha": "4958a71434f9c5572aba6edc1e51572736e24b3a"
+    },
+    "promotion_record": {
+      "path": "docs/governance/fara-formal-kernel-promotion-v1.0.md",
+      "git_blob_sha": "490f1749ed462c29c7ec1c8af7eaa88af9b672e5"
+    }
+  },
+  "mandatory_gates": [
+    "representation_object_separation",
+    "rule_execution_result_separation",
+    "interpretation_separation",
+    "calculus_independence",
+    "architecture_operation_separation",
+    "identity_bearing_occurrences",
+    "explicit_provenance_and_order",
+    "encoding_neutrality"
+  ],
+  "sorts": [
+    "Object",
+    "Representation",
+    "Meaning",
+    "Interpretation",
+    "ReasoningCalculus",
+    "Rule",
+    "State",
+    "Event",
+    "Investigation",
+    "Objective",
+    "Condition",
+    "RelationType",
+    "RelationOccurrence",
+    "Role",
+    "Provenance"
+  ],
+  "relations": {
+    "denotes": ["Representation", "Object"],
+    "assigns": ["Interpretation", "Representation", "Meaning"],
+    "contains_rule": ["ReasoningCalculus", "Rule"],
+    "applies": ["Event", "Rule"],
+    "input_state": ["Event", "State"],
+    "output_state": ["Event", "State"],
+    "occurs_in": ["Event", "Investigation"],
+    "uses_calculus": ["Investigation", "ReasoningCalculus"],
+    "objective_of": ["Investigation", "Objective"],
+    "condition_of": ["Investigation", "Condition"],
+    "instance_of": ["RelationOccurrence", "RelationType"],
+    "participant": ["RelationOccurrence", "Role", "Object"],
+    "precedes": ["Event", "Event"],
+    "provenance_of": ["Event", "Provenance"],
+    "represents_event": ["Representation", "Event"]
+  },
+  "candidate_roles": {
+    "identity-bearing-many-sorted-relational": "canonical-formal-kernel-within-scope",
+    "typed-hypergraph": "admissible-derived-representation",
+    "algebraic-state-transition": "admissible-derived-backend-with-explicit-preservation-machinery",
+    "many-sorted-extensional-relational": "noncanonical-identity-losing-projection"
+  },
+  "primitive_registry_unchanged": [
+    "Object",
+    "Property",
+    "Relation",
+    "Representation",
+    "Interpretation",
+    "Investigation",
+    "Reasoning Calculus"
+  ],
+  "external_investigator_independence": "not established",
+  "nonclaims": [
+    "global uniqueness",
+    "universal representation of every reasoning system",
+    "global primitive necessity",
+    "global minimality",
+    "completeness",
+    "full-signature adequacy",
+    "unbounded adequacy",
+    "nonfinite continuous semantics",
+    "live-oracle semantics",
+    "environment-inclusive embodied semantics",
+    "external-investigator independence",
+    "superiority under every possible comparison criterion"
+  ]
+}
