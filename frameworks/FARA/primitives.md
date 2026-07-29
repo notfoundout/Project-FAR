@@ -2,89 +2,67 @@
 
 ## Purpose
 
-This document records the concepts currently treated as candidate primitives within the Foundational Architecture of Reasoning Analysis (FARA).
+This document identifies the concepts currently treated as candidate primitives within the Foundational Architecture of Reasoning Analysis (FARA).
 
-A candidate primitive is a concept that has not yet been successfully reduced to simpler concepts within the current framework. Candidate status remains provisional and does not establish global irreducibility, necessity, independence, or minimality.
+A candidate primitive is a concept that has not yet been successfully reduced to simpler concepts within the current framework.
 
-Canonical definitions remain in:
+Candidate primitive status is provisional.
+
+Every candidate primitive remains subject to future reduction, replacement, refinement, or elimination through grounding investigations.
+
+The canonical definitions of all concepts listed here are maintained in:
 
 `theory/definitions/definitions.md`
 
-The scoped formal status used here is established by:
+---
 
-`docs/research/fara-canonical-kernel-v1.0.md`
+# Primitive Policy
+
+A concept should appear in this document only if:
+
+- no complete reduction has been established;
+- no simpler definition preserves the required expressive power;
+- repeated reduction attempts have not yet succeeded.
+
+Candidate primitive status is not evidence of irreducibility.
+
+It reflects only the current state of investigation.
 
 ---
 
-## Primitive Policy
+# Current Candidate Primitives
 
-A concept belongs in this registry only when:
-
-- no complete scoped reduction has been established;
-- no simpler definition preserves the required expressive commitments within the active scope;
-- any claimed reduction or independence result identifies its model class, equivalence relation, and objective.
-
-Formal support sorts used by an implementation are not automatically conceptual primitives.
-
----
-
-## Current Candidate Primitives
-
-The current Project FAR v1.0 candidate primitive concepts are:
+The current candidate primitive concepts are:
 
 - Object
+- Property
 - Relation
 - Representation
 - Interpretation
+- Investigation
 - Reasoning Calculus
 
-These form the current unreduced conceptual basis used by the canonical identity-bearing many-sorted relational kernel.
+These concepts presently serve as the smallest unreduced conceptual foundation of FARA.
 
-No claim is made that all five are globally necessary, mutually independent, permanently fundamental, or minimal outside the declared Project FAR v1.0 scope.
-
----
-
-## Scoped Reductions Established by the Canonical Kernel
-
-The following concepts are no longer listed as candidate primitives for Project FAR v1.0:
-
-- **Property** — derived as a unary relation occurrence.
-- **Investigation** — derived as an explicitly identified context whose content is the tuple of objective, conditions, and reasoning-calculus reference.
-
-The kernel also derives:
-
-- Semantic Content from Interpretation applied to Representation;
-- Transformation Execution from an identity-bearing Event applying a Rule;
-- Transformation Result from the Event's output State;
-- Transition Signature from a Representation of an Event;
-- Reasoning Trace from an ordered collection of Events.
-
-These are scoped formal reductions. They do not prove that the same reductions are globally mandatory in every possible ontology or reasoning architecture.
+All remaining architectural concepts are currently treated as derived concepts.
 
 ---
 
-## Formal Support Categories
+# Derived Architectural Concepts
 
-The canonical kernel uses additional typed carriers such as Meaning, Rule, State, Event, Objective, Condition, Relation Type, Relation Occurrence, Role, and Provenance.
+The following concepts are presently defined in terms of the candidate primitives and other derived concepts.
 
-Their presence in the formal signature records identity, typing, auditability, and reconstruction obligations. It does not by itself classify each support category as a conceptual primitive.
+## Structural Concepts
 
----
-
-## Derived Architectural Concepts
-
-Derived concepts include, but are not limited to:
-
-### Structural
-
-- Property
 - Structure
 - Component
 - System
 - Class
 - Domain
 
-### Representational
+---
+
+## Representational Concepts
 
 - Representational Structure
 - Representation Mapping
@@ -93,22 +71,23 @@ Derived concepts include, but are not limited to:
 - Representation Completeness
 - Representation Consistency
 - Representation Invariance
-- Semantic Content
 
-### Reasoning and transition
+---
 
-- Investigation
+## Reasoning Concepts
+
 - Reasoning Process
 - Reasoning State
 - Reasoning State Representation
 - Reasoning State Record
 - Transformation Rule
 - Transformation Execution
-- Transformation Result
 - Transition Signature
 - Reasoning Trace
 
-### Decision
+---
+
+## Decision Concepts
 
 - Candidate
 - Criterion
@@ -121,18 +100,72 @@ Derived concepts include, but are not limited to:
 
 ---
 
-## Research Objectives
+## Evidence Concepts
 
-Remaining primitive research includes:
-
-- reducing the five retained candidate concepts where possible;
-- establishing scoped independence only under explicit formal contracts;
-- testing whether identity-bearing relation occurrences suffice in untested domains;
-- determining whether additional concepts are required for nonfinite, embodied, distributed, or oracle-dependent systems;
-- distinguishing conceptual primitives from implementation support sorts.
+- Claim
+- Evidence
+- Observation
+- Assumption
+- Hypothesis
+- Explanation
+- Prediction
+- Counterexample
 
 ---
 
-## Version Status
+## Formal Concepts
 
-This registry is canonical for Project FAR v1.0 repository usage. It remains revisable through explicit grounding investigations, proofs, counterexamples, or validated representational failures.
+- Model
+- Framework
+- Theory
+- Architecture
+- Equivalence
+- Reduction
+- Independence
+- Universal Architecture
+- Expressive Power
+
+---
+
+This list is informational.
+
+Canonical definitions remain in:
+
+`theory/definitions/definitions.md`
+
+---
+
+# Primitive Stability
+
+No candidate primitive should be regarded as permanently fundamental.
+
+Grounding investigations should continually attempt to:
+
+- derive candidate primitives from simpler concepts;
+- demonstrate independence where reduction fails;
+- identify hidden assumptions;
+- eliminate unnecessary primitives;
+- establish a smaller foundational basis.
+
+Successful reductions should remove concepts from the candidate primitive list.
+
+---
+
+# Research Objectives
+
+Current research focuses on:
+
+- reducing the primitive set;
+- establishing independence where reduction fails;
+- proving minimality of the remaining primitive basis;
+- identifying hidden conceptual dependencies;
+- determining whether additional candidate primitives are required;
+- producing formal reduction proofs.
+
+---
+
+# Version Status
+
+This document records the current candidate primitive basis for FARA.
+
+It is expected to evolve as Project FAR's grounding investigations progress.
