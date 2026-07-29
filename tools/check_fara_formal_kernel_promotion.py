@@ -97,11 +97,14 @@ EXPECTED_ROLES = {
     "many-sorted-extensional-relational": "noncanonical-identity-losing-projection",
 }
 REQUIRED_AUTHORITY_MARKERS = {
+    "README.md": "FARA-FORMAL-KERNEL-001",
     "frameworks/FARA/README.md": "FARA-FORMAL-KERNEL-001",
     "frameworks/FARA/architecture.md": "FARA-FORMAL-KERNEL-001",
+    "frameworks/FARA/design-principles.md": "sort-preserving relational isomorphism",
     "frameworks/FARA/document-map.md": "formal-kernel.md",
     "frameworks/FARA/dependency-graph.md": "FARA-FORMAL-KERNEL-001",
     "docs/CANONICAL_MAP.md": "formal-kernel.md",
+    "docs/governance/framework-boundaries.md": "FARA-FORMAL-KERNEL-001",
     "docs/governance/claim-status-matrix.md": "FARA-FORMAL-KERNEL-001",
     "docs/governance/limitations-register.md": "LIM-025",
     "docs/governance/unresolved-questions-register.md": "UQ-T11",
@@ -387,7 +390,10 @@ def validate_equivalence_witness(
         noninjective_errors = validate_model_isomorphism(
             model, renamed, noninjective
         )
-        if not any("not injective: RelationOccurrence" in item for item in noninjective_errors):
+        if not any(
+            "not injective: RelationOccurrence" in item
+            for item in noninjective_errors
+        ):
             errors.append("occurrence-identity collapse was not rejected")
 
     without_provenance = copy.deepcopy(renamed)
@@ -400,6 +406,59 @@ def validate_equivalence_witness(
     if "relation not preserved and reflected: provenance_of" not in provenance_errors:
         errors.append("provenance-loss equivalence was not rejected")
     return errors
+
+
+def extract_formal_carriers(text: str) -> tuple[list[str], list[str]]:
+    match = re.search(
+        r"## Formal carriers\s+"
+        r"The kernel contains the following disjoint carriers:\s+"
+        r"(.*?)\s+These are formal carrier names\.",
+        text,
+        flags=re.DOTALL,
+    )
+    if not match:
+        return [], ["canonical formal-carrier registry not found"]
+    found = re.findall(r"^- `([^`]+)`$", match.group(1), flags=re.MULTILINE)
+    errors: list[str] = []
+    for sort_name in EXPECTED_SORTS:
+        if sort_name not in found:
+            errors.append(f"canonical kernel sort missing: {sort_name}")
+    extras = [sort_name for sort_name in found if sort_name not in EXPECTED_SORTS]
+    if extras or found != EXPECTED_SORTS:
+        errors.append("canonical formal-carrier registry mismatch")
+    return found, errors
+
+
+def extract_relation_signature(
+    text: str,
+) -> tuple[dict[str, list[str]], list[str]]:
+    match = re.search(
+        r"## Relation signature\s+"
+        r"The canonical relation signature is:\s+"
+        r"\| Relation \| Signature \|\s+"
+        r"\|---\|---\|\s+"
+        r"(.*?)\s+## Admission constraints",
+        text,
+        flags=re.DOTALL,
+    )
+    if not match:
+        return {}, ["canonical relation-signature table not found"]
+    found: dict[str, list[str]] = {}
+    errors: list[str] = []
+    for name, signature_text in re.findall(
+        r"^\| `([^`]+)` \| `([^`]+)` \|$",
+        match.group(1),
+        flags=re.MULTILINE,
+    ):
+        if name in found:
+            errors.append(f"duplicate canonical relation declaration: {name}")
+        found[name] = signature_text.split(" × ")
+    for relation_name in EXPECTED_RELATIONS:
+        if relation_name not in found:
+            errors.append(f"canonical kernel relation missing: {relation_name}")
+    if found != EXPECTED_RELATIONS:
+        errors.append("canonical relation-signature table mismatch")
+    return found, errors
 
 
 def validate_canonical_text(
@@ -419,12 +478,10 @@ def validate_canonical_text(
     for marker in required:
         if marker not in text:
             errors.append(f"canonical kernel marker missing: {marker}")
-    for sort_name in EXPECTED_SORTS:
-        if f"`{sort_name}`" not in text:
-            errors.append(f"canonical kernel sort missing: {sort_name}")
-    for relation_name in EXPECTED_RELATIONS:
-        if f"`{relation_name}`" not in text:
-            errors.append(f"canonical kernel relation missing: {relation_name}")
+    _, carrier_errors = extract_formal_carriers(text)
+    errors.extend(carrier_errors)
+    _, relation_errors = extract_relation_signature(text)
+    errors.extend(relation_errors)
     lowered = text.lower()
     for assertion in FORBIDDEN_ASSERTIONS:
         if assertion in lowered:
