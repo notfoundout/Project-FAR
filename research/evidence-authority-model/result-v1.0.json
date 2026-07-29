@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "status": "Research",
+  "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
+  "question": "complete",
+  "execution": "complete",
+  "observation": "complete",
+  "discovery": "bounded_candidate_supported",
+  "decision_basis": "A1-A8 satisfied and all preregistered negative controls detected by the candidate validation contract",
+  "supported_propositions": [
+    "a non-self-activating proposition-specific Research candidate authority contract can be constructed for the current repository",
+    "the governing charter and proof-assurance taxonomy must be registered as activation blockers",
+    "proof ownership must be enumerated independently from repository proof metadata and separated from artifact status and authority-bearing designation",
+    "manifest-level Acceptance provenance is required",
+    "unresolved equal-priority contradictions must yield Unknown"
+  ],
+  "lifecycle": {
+    "question": "complete",
+    "execution": "complete",
+    "observation": "complete",
+    "discovery": "complete bounded candidate construction",
+    "internal_repeat": "complete",
+    "external_replication": "pending",
+    "acceptance": "prohibited",
+    "promotion": "prohibited",
+    "repository_change": "Research evidence candidate artifacts and validation wiring only"
+  },
+  "activation_status": "prohibited",
+  "bootstrap_status": "Unknown",
+  "limitations": [
+    "the candidate has not received external independent replication",
+    "the charter is Provisional",
+    "the proof-assurance taxonomy status is Unknown",
+    "no bootstrap authority has been selected",
+    "the manifest is not Accepted or populated",
+    "CI success is conformance evidence only"
+  ],
+  "nonclaims": [
+    "Accepted authority model",
+    "Promoted authority registry",
+    "canonical dependency reconciliation",
+    "logical derivation of FAR or FARO from FARA",
+    "theorem truth",
+    "necessity",
+    "minimality",
+    "uniqueness",
+    "universality",
+    "experiment authorization"
+  ]
+}
