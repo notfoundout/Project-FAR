@@ -1,18 +1,31 @@
-# Canonical FARA Formal Kernel v1.0
+# Identity-Bearing FARA Relational Kernel Research Campaign
 
-Status: **Accepted for Project FAR v1.0**
+Status: **Research**
 
 Campaign: `FARA-CANONICAL-KERNEL-001`
 
-## Decision
+## Objective
 
-FARA's canonical formal foundation for Project FAR v1.0 is an **identity-bearing many-sorted relational kernel**.
+Test whether an identity-bearing many-sorted relational kernel satisfies the existing Project FAR v1.0 architectural constraints more directly than the three frozen historical foundation candidates.
 
-Typed-hypergraph and algebraic/state-transition structures remain admissible derived views when their translations, external machinery, and reconstruction sidecars are explicit and commitment-preserving. This is a scoped architectural decision, not a claim that one formalism is the globally unique foundation of reasoning.
+This artifact records Execution, Observation, and a provisional Discovery. It does not record independent Replication, Acceptance, Promotion, or canonical repository change.
 
-## Decision rule
+## Lifecycle record
 
-A canonical FARA foundation must satisfy every frozen architectural gate:
+| Stage | Status | Evidence |
+|---|---|---|
+| Question | recorded | `UQ-T11` and the unresolved selection obligation in the historical core formalization |
+| Execution | complete | executable kernel, translations, counterexamples, checker, proof object, and mutation tests in this campaign |
+| Observation | complete | proof-derived gate matrix and reconstruction outcomes |
+| Discovery | provisional Research finding | one candidate passes every frozen gate in the registered fixtures |
+| Replication | pending | requires an independent implementation and neutral fixtures |
+| Acceptance | pending | prohibited until replication is recorded and reviewed |
+| Promotion | pending | no canonical FARA artifact is changed by this campaign |
+| Repository change | Research artifacts only | implementation and evidence are isolated under Research status |
+
+## Frozen architectural gates
+
+The campaign operationalizes eight existing FARA requirements:
 
 1. representation/object separation;
 2. rule/execution/result separation;
@@ -23,54 +36,41 @@ A canonical FARA foundation must satisfy every frozen architectural gate:
 7. explicit provenance and order;
 8. encoding neutrality.
 
-These gates are drawn from FARA's existing architectural and design constraints. They are treated as admissibility conditions for the canonical kernel rather than weighted comparison dimensions.
+The specification does not assign gate truth values. `kernel.py` derives every result from executable predicates, model validation, round trips, mutation rejection, schema inspection under the frozen contract, and observed reconstruction loss.
 
-## Kernel
+## Event and occurrence contract
 
-The executable kernel provides disjoint identity-bearing carriers for Object, Representation, Meaning, Interpretation, ReasoningCalculus, Rule, State, Event, Investigation, Objective, Condition, RelationType, RelationOccurrence, Role, and Provenance.
+Every admitted Event must possess exactly one Rule, input State, output State, and Investigation reference, plus at least one explicit provenance record. Event order must be acyclic. Every RelationOccurrence must possess exactly one RelationType and at least one participant.
 
-Its primitive relation registry records denotation, interpretation assignment, calculus/rule membership, event rule application, input and output states, investigation context, objective and conditions, identity-bearing relation occurrences, participant roles, event order, provenance, and transition-signature representation.
+These constraints prevent dictionary overwrite from silently changing algebraic round trips and prevent models without provenance from passing the proposed kernel's own admission contract.
 
-Property is a derived unary relation occurrence. Investigation content is derived from objective, conditions, and calculus references. SemanticContent is derived by interpretation application. A TransitionSignature is a representation of an Event. A ReasoningTrace is a derived ordered collection of Events.
+## Observations
 
-## Executable evidence
+- The identity-bearing many-sorted relational candidate passes all eight gates in the registered executable fixtures.
+- Pure extensional relational projection preserves the direct FARA schema but collapses two parallel relation occurrences into one extensional fact.
+- The typed-hypergraph view performs an exact round trip but requires Node/Port/Hyperedge scaffolding and therefore fails the frozen encoding-neutrality gate.
+- The bare algebraic/state-transition view preserves event/operation/state fields but omits representation/object separation, interpretation, provenance, relation-occurrence identity, and architecture/operation separation. An explicit sidecar enables exact reconstruction as a derived backend.
 
-The proof object builds and validates a model containing two distinct relation occurrences with identical type and participants. Pure extensional projection collapses the pair, while the canonical kernel and the typed-hypergraph derived view preserve both identities.
+## Provisional discovery
 
-The typed-hypergraph translation performs an exact round trip. The algebraic/state-transition translation performs an exact round trip only with an explicit sidecar carrying nonoperational FARA commitments. Without that sidecar, source/representation separation, interpretation, investigation context, provenance, and relation-occurrence identity are not reconstructible.
+Within the registered finite explicit fixtures and frozen gates, the identity-bearing many-sorted relational kernel is the sole provisional canonical candidate.
 
-## Relationship to earlier foundation comparison
+This is not Accepted theory. The next lifecycle step is independent replication. Until that succeeds and a later Acceptance/Promotion record is merged, the current canonical FARA documents, primitive registry, ontology, and `UQ-T11` status remain unchanged.
 
-`FARA-FOUNDATION-COMP-001` remains valid historical Research evidence about its three frozen candidate implementations and seventeen Pareto dimensions. Its terminal result—multiple foundations remain Pareto-incomparable—has not been rewritten.
+## Historical compatibility
 
-The canonical decision is later and narrower. It applies FARA's mandatory architecture gates and an identity-bearing repair that was not one of the three frozen candidates. Therefore the earlier Pareto result and the current canonical selection are not contradictory.
+`FARA-FOUNDATION-COMP-001` remains valid Research evidence about its three frozen implementations. Its terminal result—multiple foundations remain Pareto-incomparable—is not rewritten. This campaign evaluates a repaired fourth candidate under mandatory gates rather than reranking the historical three through altered Pareto weights.
 
-## Primitive-status effect
-
-The kernel establishes scoped formal reductions for:
-
-- Property as a unary relation occurrence;
-- Investigation content as objective, conditions, and calculus reference;
-- SemanticContent as interpretation application;
-- Execution as an Event applying a Rule;
-- Result as the Event's output State.
-
-This removes Property and Investigation from the current candidate-primitive registry for Project FAR v1.0. It does not establish global primitive minimality or necessity for the remaining concepts.
+The expanded bounded campaign is also pinned by immutable Git blob identities and remains unchanged.
 
 ## Nonclaims
 
-This decision does not establish:
+This campaign does not establish:
 
-- a globally unique foundation of reasoning;
-- universal representation of every reasoning system;
-- global primitive necessity;
-- global minimality;
+- an Accepted canonical repository foundation;
+- global uniqueness;
+- universal representation;
+- primitive necessity or minimality;
 - completeness;
-- nonfinite continuous semantics;
-- live-oracle semantics;
-- embodied environment semantics;
+- nonfinite continuous, live-oracle, or embodied semantics;
 - independent replication.
-
-## Validation
-
-The checker rebuilds the proof object, validates every typed relation, rejects cross-sort identity collapse, rejects forged or incomplete Events, rejects cyclic event order, verifies exact typed-hypergraph reconstruction, verifies the charged algebraic sidecar boundary, detects extensional occurrence-identity loss, and rejects stale or mutated specifications, proofs, and reports.
