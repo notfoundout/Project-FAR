@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0",
+  "investigation_id": "FAR-THEORY-DEPENDENCY-AUDIT-001",
+  "status": "Research",
+  "base_commit": "5e8f27b617632a76e76760779dcbb24dedbb6786",
+  "objective": "Determine whether accepted Project FAR artifacts require split authority relations and artifact-contract dependency classifications before experiment preregistration.",
+  "source_locks": {
+    "theory/definitions/definitions.md": "4b9cd40f4a956162cee3fed6bae887d78835724b",
+    "frameworks/FARA/primitives.md": "2c523bbd29255c921c97aeee80db824dc86c2b68",
+    "frameworks/FARA/formal-kernel.md": "362567c6d61b3257b76f76532c957b6e1172d01f",
+    "docs/glossary/canonical-terminology.md": "ffc742a529062f57328163673ca4bb375c1d915e",
+    "docs/governance/semantic-consistency.json": "b6396ab8cf7f7e89e8c6a554afa611e6f3bdf2f7",
+    "docs/governance/framework-boundaries.md": "829a15d1ca05c81c7b0491eb1846f6039085b13f",
+    "docs/governance/derivation-status-matrix.md": "f3097042f42954f0a77bdec4d040d23338524cf1",
+    "frameworks/FAR/dependency-graph.md": "d6ea902b82e5be16e3ea6cf77247f25e12ccebec",
+    "frameworks/FARO/dependency-graph.md": "21f2249248072db7c062249f179577e1ba3cc520"
+  },
+  "candidate_primitives": [
+    "Object",
+    "Property",
+    "Relation",
+    "Representation",
+    "Interpretation",
+    "Investigation",
+    "Reasoning Calculus"
+  ],
+  "authority_candidates": {
+    "undifferentiated_owner": {
+      "description": "One owner field represents definition, classification, formalization, methodology, operations, protocol, and governance authority.",
+      "falsifier": "Any accepted term or artifact requiring two distinct authority roles or any missing required authority role."
+    },
+    "split_authority": {
+      "description": "Canonical definition, candidate classification, formalization, methodology, operations, protocol, and governance are separate authority relations.",
+      "falsifier": "Accepted sources assign the same role to conflicting locations or fail to support one of the proposed distinctions."
+    }
+  },
+  "dependency_candidates": {
+    "logical_derivation": {
+      "description": "FAR methodology and FARO operations are logical consequences of FARA or its formal kernel.",
+      "falsifier": "Accepted boundary/derivation authority rejects the theorem claim and no accepted proof establishes it."
+    },
+    "artifact_workflow_contract": {
+      "description": "FAR and FARO consume and preserve upstream representation or investigation artifacts without being logically entailed by them.",
+      "falsifier": "Accepted sources explicitly establish necessary derivation or do not record any upstream artifact/workflow dependency."
+    },
+    "unclassified_dependency": {
+      "description": "The accepted repository does not determine the dependency kind.",
+      "falsifier": "Accepted sources explicitly determine the dependency as derivational or contractual."
+    }
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "name": "canonical_definition_authority",
+      "criterion": "The shared-theory definitions artifact declares repository-wide canonical definition authority and contains headings for all seven candidate primitives."
+    },
+    {
+      "id": "C2",
+      "name": "fara_candidate_classification",
+      "criterion": "The FARA primitive registry lists exactly the seven candidate primitives and points canonical definitions to shared theory."
+    },
+    {
+      "id": "C3",
+      "name": "undifferentiated_registry_adequacy",
+      "criterion": "The current semantic owner registry explicitly represents all seven candidate primitives and can preserve both definition and FARA classification authority."
+    },
+    {
+      "id": "C4",
+      "name": "formal_kernel_role_boundary",
+      "criterion": "The accepted formal kernel is a scoped FARA formalization and explicitly does not reclassify the seven candidate primitives or establish global primitive properties."
+    },
+    {
+      "id": "C5",
+      "name": "far_dependency_kind",
+      "criterion": "Accepted FAR and boundary records determine whether FARA supplies an artifact contract or logically derives FAR procedure."
+    },
+    {
+      "id": "C6",
+      "name": "faro_dependency_kind",
+      "criterion": "Accepted FARO and boundary records determine whether FARA/FAR supply artifact/workflow contracts or logically derive FARO operations."
+    },
+    {
+      "id": "C7",
+      "name": "protocol_derivation_boundary",
+      "criterion": "Accepted derivation authority classifies canonicalization, CIR, evaluator rules, Pareto comparison, preregistration, and fail reporting as methodology/governance rather than theory consequences."
+    }
+  ],
+  "decision_rule": {
+    "undifferentiated_owner": "Pass only if C1-C3 show one owner relation completely preserves every accepted authority commitment.",
+    "split_authority": "Pass only if C1-C4 support distinct definition, classification, and formalization roles without contradiction.",
+    "logical_derivation": "Pass only if C5-C7 identify accepted derivations or proofs for downstream procedures.",
+    "artifact_workflow_contract": "Pass only if C5-C7 explicitly support consumption/preservation dependencies while rejecting necessary procedural derivation.",
+    "unclassified_dependency": "Pass only if C5-C7 do not determine either derivation or contract status."
+  },
+  "lifecycle": {
+    "question": "complete",
+    "execution": "registered",
+    "observation": "pending",
+    "discovery": "pending",
+    "replication": "pending",
+    "acceptance": "prohibited",
+    "promotion": "prohibited",
+    "repository_change": "research artifacts only"
+  },
+  "nonclaims": [
+    "accepted authority model",
+    "accepted dependency classification",
+    "canonical repository change",
+    "experiment preregistration authorization",
+    "experiment execution authorization",
+    "global universality",
+    "primitive necessity",
+    "primitive minimality",
+    "primitive independence"
+  ]
+}
