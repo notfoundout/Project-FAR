@@ -170,8 +170,8 @@ The accepted kernel is supported by:
 - source implementation Git blob `81b2a6441b21699a3f98f8e209a12267da2fba50`;
 - replication `FARA-CANONICAL-KERNEL-REPLICATION-001`, merge commit `5932e6b2111c6d7da8b1c9a443474b395f02880e`;
 - replication adjudication Git blob `d4737e680ece1510c23eb8571470e0f175d7f663`;
-- Acceptance record Git blob `4958a71434f9c5572aba6edc1e51572736e24b3a`;
-- Promotion record Git blob `490f1749ed462c29c7ec1c8af7eaa88af9b672e5`.
+- Acceptance record Git blob `72eb998efab920a8c79a44b7cad49483375a3ee0`;
+- Promotion record Git blob `1b13741c84fb77d76f23c88a357760935874e338`.
 
 The underlying Research artifacts remain immutable Research evidence. Promotion does not relabel or rewrite them.
 
