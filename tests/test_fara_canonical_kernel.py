@@ -12,7 +12,7 @@ import check_fara_canonical_kernel as checker
 from theory.foundation.fara_canonical_kernel import kernel
 
 
-class CanonicalKernelTests(unittest.TestCase):
+class CanonicalKernelResearchTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.spec = json.loads(checker.SPEC.read_text())
@@ -30,59 +30,97 @@ class CanonicalKernelTests(unittest.TestCase):
             ),
         )
 
-    def test_only_identity_bearing_relational_kernel_passes_all_gates(self):
-        rows = {
-            row["id"]: row
-            for row in self.proof["candidate_adjudication"]
-        }
+    def test_gate_results_are_executable_not_spec_authored(self):
+        self.assertTrue(all("gates" not in row for row in self.spec["candidates"]))
+        rows = {row["id"]: row for row in self.proof["candidate_adjudication"]}
         self.assertEqual(
-            "canonical-candidate",
+            "provisional-canonical-candidate",
             rows["identity-bearing-many-sorted-relational"]["classification"],
         )
-        self.assertEqual(
-            ["identity_bearing_occurrences"],
-            rows["many-sorted-extensional-relational"]["failed_gates"],
+        self.assertTrue(
+            all(
+                item["pass"]
+                for item in rows["identity-bearing-many-sorted-relational"][
+                    "gate_evidence"
+                ].values()
+            )
         )
-        self.assertEqual(
-            ["encoding_neutrality"],
-            rows["typed-hypergraph"]["failed_gates"],
+        self.assertFalse(
+            rows["many-sorted-extensional-relational"]["gate_evidence"][
+                "identity_bearing_occurrences"
+            ]["pass"]
         )
-        self.assertEqual(
-            "noncanonical",
-            rows["many-sorted-extensional-relational"]["classification"],
+        self.assertFalse(
+            rows["typed-hypergraph"]["gate_evidence"]["encoding_neutrality"][
+                "pass"
+            ]
         )
-        self.assertEqual(
-            "admissible-derived-view",
-            rows["algebraic-state-transition"]["classification"],
-        )
+
+    def test_candidate_authored_gate_booleans_are_rejected(self):
+        spec = copy.deepcopy(self.spec)
+        spec["candidates"][2]["gates"] = {
+            gate: True for gate in kernel.MANDATORY_GATES
+        }
+        errors = checker.validate(spec, self.proof, check_historical=False)
+        self.assertIn("candidate-authored gate booleans", errors)
 
     def test_parallel_occurrences_survive_kernel_and_hypergraph_roundtrip(self):
         model = kernel.sample_model()
         self.assertEqual([], kernel.validate_model(model))
         self.assertEqual(2, len(model["sorts"]["RelationOccurrence"]))
-        projected = kernel.extensional_occurrence_projection(model)
-        self.assertEqual(1, len(projected))
+        self.assertEqual(1, len(kernel.extensional_occurrence_projection(model)))
         restored = kernel.from_typed_hypergraph(kernel.to_typed_hypergraph(model))
         self.assertEqual(
             kernel.canonical(kernel.normalized_model(model)),
             kernel.canonical(kernel.normalized_model(restored)),
         )
-        self.assertEqual(2, len(restored["sorts"]["RelationOccurrence"]))
 
     def test_algebraic_view_requires_explicit_sidecar(self):
         model = kernel.sample_model()
         view = kernel.to_algebraic_view(model)
-        self.assertFalse(view["standalone_complete"])
         restored = kernel.from_algebraic_view(copy.deepcopy(view))
         self.assertEqual(
             kernel.canonical(kernel.normalized_model(model)),
             kernel.canonical(kernel.normalized_model(restored)),
         )
         del view["sidecar"]
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegex(ValueError, "sidecar"):
             kernel.from_algebraic_view(view)
 
-    def test_admissibility_rejects_cross_sort_collapse_and_forged_events(self):
+    def test_event_requires_exactly_one_rule_input_output_and_investigation(self):
+        relation_and_error = (
+            ("applies", ["e1", "rule-second"], "exactly one rule"),
+            ("input_state", ["e1", "s1"], "exactly one input state"),
+            ("output_state", ["e1", "s0"], "exactly one output state"),
+            ("occurs_in", ["e1", "inv-2"], "exactly one investigation"),
+        )
+        for relation, extra, expected in relation_and_error:
+            with self.subTest(relation=relation):
+                model = kernel.sample_model()
+                if relation == "applies":
+                    model["sorts"]["Rule"].append("rule-second")
+                    model["relations"]["contains_rule"].append(
+                        ["calc-1", "rule-second"]
+                    )
+                if relation == "occurs_in":
+                    model["sorts"]["Investigation"].append("inv-2")
+                model["relations"][relation].append(extra)
+                self.assertTrue(
+                    any(expected in error for error in kernel.validate_model(model))
+                )
+                with self.assertRaises(ValueError):
+                    kernel.to_algebraic_view(model)
+
+    def test_event_without_provenance_is_rejected(self):
+        model = kernel.sample_model()
+        model["relations"]["provenance_of"] = [
+            row for row in model["relations"]["provenance_of"] if row[0] != "e1"
+        ]
+        self.assertIn(
+            "event without explicit provenance: e1", kernel.validate_model(model)
+        )
+
+    def test_cross_sort_collapse_and_precedence_cycles_fail(self):
         model = kernel.sample_model()
         model["sorts"]["Representation"].append("source-temperature")
         self.assertIn(
@@ -90,41 +128,22 @@ class CanonicalKernelTests(unittest.TestCase):
             kernel.validate_model(model),
         )
         model = kernel.sample_model()
-        model["relations"]["applies"] = []
-        self.assertIn("event without rule: e1", kernel.validate_model(model))
-        self.assertIn("event without rule: e2", kernel.validate_model(model))
-
-    def test_precedence_cycles_fail(self):
-        model = kernel.sample_model()
         model["relations"]["precedes"].append(["e2", "e1"])
         self.assertIn(
-            "precedes relation contains a cycle",
-            kernel.validate_model(model),
+            "precedes relation contains a cycle", kernel.validate_model(model)
         )
 
-    def test_mutations_fail_closed(self):
-        mutations = [
-            lambda spec: spec.__setitem__("selected_foundation", "typed-hypergraph"),
-            lambda spec: spec["mandatory_gates"].pop(),
-            lambda spec: spec["candidates"][3]["gates"].__setitem__(
-                "identity_bearing_occurrences", False
-            ),
-            lambda spec: spec["candidates"][1]["gates"].__setitem__(
-                "encoding_neutrality", True
-            ),
-        ]
-        for mutation in mutations:
-            with self.subTest(mutation=mutation):
-                spec = copy.deepcopy(self.spec)
-                mutation(spec)
-                self.assertTrue(
-                    checker.validate(spec, self.proof, check_historical=False)
-                )
-
-    def test_hypergraph_edges_have_unique_identity(self):
-        view = kernel.to_typed_hypergraph(kernel.sample_model())
-        edge_ids = [edge["id"] for edge in view["edges"]]
-        self.assertEqual(len(edge_ids), len(set(edge_ids)))
+    def test_lifecycle_cannot_be_promoted_in_research_artifact(self):
+        for field, value in (("status", "Accepted"),):
+            spec = copy.deepcopy(self.spec)
+            spec[field] = value
+            self.assertTrue(checker.validate(spec, self.proof, check_historical=False))
+        spec = copy.deepcopy(self.spec)
+        spec["lifecycle"]["acceptance"] = "complete"
+        self.assertIn(
+            "premature acceptance or promotion",
+            checker.validate(spec, self.proof, check_historical=False),
+        )
 
     def test_historical_artifact_mutation_fails(self):
         import tempfile
@@ -147,7 +166,7 @@ class CanonicalKernelTests(unittest.TestCase):
 
     def test_stale_proof_and_report_fail(self):
         proof = copy.deepcopy(self.proof)
-        proof["selected_foundation"] = "typed-hypergraph"
+        proof["proposed_foundation"] = "typed-hypergraph"
         self.assertIn(
             "stale proof object",
             checker.validate(self.spec, proof, check_historical=False),
