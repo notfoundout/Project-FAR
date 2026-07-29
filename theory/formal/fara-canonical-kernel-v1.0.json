@@ -1,0 +1,81 @@
+{
+  "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+  "campaign_id": "FARA-CANONICAL-KERNEL-001",
+  "candidates": [
+    {
+      "id": "many-sorted-extensional-relational",
+      "reason": "The existing candidate directly matches FARA sorts but executable extensional projection collapses distinct parallel relation occurrences."
+    },
+    {
+      "id": "typed-hypergraph",
+      "reason": "Typed nodes and identity-bearing hyperedges preserve the registered commitments exactly, but require universal node/port/hyperedge encoding machinery."
+    },
+    {
+      "id": "algebraic-state-transition",
+      "reason": "The bare transition view omits multiple nonoperational FARA commitments; an explicit sidecar permits exact reconstruction as a derived backend."
+    },
+    {
+      "id": "identity-bearing-many-sorted-relational",
+      "reason": "Typed disjoint carriers and identity-bearing Event and RelationOccurrence carriers preserve the frozen FARA architectural commitments without mandatory operational or graph scaffolding."
+    }
+  ],
+  "finding": "Under the frozen Project FAR v1.0 architectural gates and executable fixtures, the identity-bearing many-sorted relational kernel is the sole provisional canonical candidate. This is a Research finding pending independent replication, Acceptance, Promotion, and any resulting canonical repository change.",
+  "historical_artifacts": {
+    "theory/evaluation/fara-expanded-bounded-campaign-proof-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "548f237e688db3260b6f9fd26224e18380b98282"
+    },
+    "theory/evaluation/fara-foundation-comparison-proof-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "1e8d16e9e1dee4f17361666af49425752c6c2d3c"
+    },
+    "theory/formal/fara-expanded-bounded-campaign-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "f6cc63feffd64bcd8a18945ae4cca3d1e52b7849"
+    },
+    "theory/formal/fara-foundation-comparison-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "2fcdb87726ef483a1d39f0254971d5df7b73e738"
+    }
+  },
+  "historical_result_policy": {
+    "adjudication": "The historical Pareto terminal remains true of the frozen candidates. This later Research campaign evaluates a repaired fourth candidate under mandatory architectural gates and does not rewrite the earlier result.",
+    "fara-expanded-bounded-campaign-v1.0": "Preserved as bounded Research evidence. No finite result is promoted to universality, necessity, uniqueness, minimality, or completeness.",
+    "fara-foundation-comparison-v1.0": "Preserved as bounded Research evidence comparing the three frozen candidates under seventeen Pareto dimensions."
+  },
+  "lifecycle": {
+    "question": "recorded",
+    "execution": "complete",
+    "observation": "complete",
+    "discovery": "provisional research finding",
+    "replication": "pending independent implementation",
+    "acceptance": "pending",
+    "promotion": "pending",
+    "repository_change": "research artifacts only; no canonical authority changed"
+  },
+  "mandatory_gates": [
+    "representation_object_separation",
+    "rule_execution_result_separation",
+    "interpretation_separation",
+    "calculus_independence",
+    "architecture_operation_separation",
+    "identity_bearing_occurrences",
+    "explicit_provenance_and_order",
+    "encoding_neutrality"
+  ],
+  "nonclaims": [
+    "accepted canonical repository foundation",
+    "globally unique foundation of reasoning",
+    "universal representation of every reasoning system",
+    "global primitive necessity",
+    "global minimality",
+    "completeness",
+    "coverage of nonfinite continuous semantics",
+    "coverage of live-oracle semantics",
+    "coverage of embodied environment semantics",
+    "independent replication"
+  ],
+  "proposed_foundation": "identity-bearing-many-sorted-relational",
+  "scope": "Project FAR v1.0 finite explicit auditable representational architecture",
+  "status": "Research"
+}
