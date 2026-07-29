@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "status": "Research",
+  "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
+  "observations": [
+    "The prior audit provides no Accepted authority model and explicitly requires a new preregistered campaign.",
+    "The research-execution charter defines the imported lifecycle and artifact-status taxonomy but is itself Provisional.",
+    "The proof-assurance taxonomy defines assurance labels used by the theorem/proof-status register but has no explicit charter status.",
+    "The repository registers proof evidence through theorem metadata, lemma metadata, the dependency registry, verifier-required T-series proof objects, JSON and YAML path fields, self-identifying proof records, and Lean paths.",
+    "A proof owner pattern does not establish proof status or authority-bearing designation.",
+    "The proof-artifact status manifest requires its own independent Acceptance decision in addition to per-entry decisions.",
+    "Recency cannot resolve equal-priority contradiction; unresolved contradiction must fail closed to Unknown.",
+    "A non-self-activating Research candidate can encode these constraints while bootstrap authority remains Unknown."
+  ],
+  "failures": [],
+  "unresolved": [
+    "external bootstrap authority",
+    "Accepted status or successor for the research-execution charter",
+    "Accepted status or successor for the proof-assurance taxonomy",
+    "completed proof-artifact status manifest",
+    "external independent replication",
+    "Acceptance and Promotion"
+  ],
+  "nonclaims": [
+    "the observations establish canonical authority",
+    "the observations establish theorem truth",
+    "the observations authorize an experiment"
+  ]
+}
