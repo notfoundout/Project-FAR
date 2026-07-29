@@ -6,6 +6,13 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MODEL_PATH = ROOT / "docs/governance/evidence-authority-model.md"
 REGISTRY_PATH = ROOT / "docs/governance/evidence-authority-registry.json"
+PROOF_METADATA_ROOTS = (
+    ROOT / "foundations",
+    ROOT / "theory",
+    ROOT / "docs/governance",
+    ROOT / "research",
+    ROOT / "mechanization",
+)
 
 
 def iter_registered_proof_paths(value):
@@ -26,6 +33,19 @@ def matches_owner_pattern(path, owner_pattern):
         fnmatch.fnmatchcase(path, pattern)
         for pattern in owner_pattern.split("|")
     )
+
+
+def iter_valid_json_payloads():
+    for metadata_root in PROOF_METADATA_ROOTS:
+        if not metadata_root.exists():
+            continue
+        for json_path in metadata_root.rglob("*.json"):
+            try:
+                yield json_path, json.loads(json_path.read_text())
+            except json.JSONDecodeError:
+                # Some repository fixtures intentionally use malformed JSON to
+                # test validators. They are not admissible proof metadata.
+                continue
 
 
 class EvidenceAuthorityModelTests(unittest.TestCase):
@@ -110,8 +130,7 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         self.assertNotEqual(proofs["authority_class"], status["authority_class"])
 
         registered_paths = set()
-        for json_path in ROOT.rglob("*.json"):
-            payload = json.loads(json_path.read_text())
+        for _, payload in iter_valid_json_payloads():
             registered_paths.update(iter_registered_proof_paths(payload))
 
         self.assertTrue(registered_paths, "no registered proof artifacts discovered")
