@@ -8,16 +8,16 @@ Replication: `FARA-CANONICAL-KERNEL-REPLICATION-001`
 
 **replicated**
 
-The clean-room Node.js implementation reproduced the source campaign's candidate classifications and failed-gate sets across three neutral fixture scenarios. Agreement is computed only after the isolated execution.
+The clean-room Node.js implementation reproduced the source campaign's candidate classifications and failed-gate sets across three neutral fixture scenarios. Agreement was computed only after isolated execution.
 
 ## Independence achieved
 
 - different implementation language from the source Python kernel;
-- no source-kernel import;
-- no source-proof access during execution;
-- execution in a temporary directory containing only the protocol, neutral fixtures, and JavaScript implementation;
-- neutral fixtures frozen in branch history before the protocol, implementation, and result;
-- fresh isolated output must exactly match the committed raw result.
+- no source-kernel import or source-proof access during execution;
+- isolated temporary-directory execution;
+- fresh output exactly equals the committed raw result;
+- Git ancestry proves fixture commit `10e28b1827834430d4b4e08e447ab4b219361c46` precedes implementation commit `d6bd162811cda81cb697687e690bf25e73a7ad54`;
+- the frozen fixture bytes remain unchanged and the implementation was absent at the freeze commit.
 
 ## Candidate agreement
 
@@ -28,9 +28,13 @@ The clean-room Node.js implementation reproduced the source campaign's candidate
 | `algebraic-state-transition` | `admissible-derived-view` | `architecture_operation_separation, calculus_independence, encoding_neutrality, explicit_provenance_and_order, identity_bearing_occurrences, interpretation_separation, representation_object_separation` |
 | `identity-bearing-many-sorted-relational` | `provisional-canonical-candidate` | `none` |
 
+## Merge requirement
+
+Merge commit required; squash or rebase would destroy the reachable staged-history evidence.
+
 ## Remaining boundary
 
-External investigator independence is **not established**. This PR completes only the repository's frozen implementation-independent replication criterion. Acceptance and Promotion require a separate adjudication PR. No canonical FARA authority changes here.
+External investigator independence is **not established**. Acceptance and Promotion require a separate adjudication PR. No canonical FARA authority changes here.
 
 ## Validation errors
 
