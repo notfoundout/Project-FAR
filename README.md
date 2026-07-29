@@ -30,6 +30,16 @@ The deductive UPP queue is closed. The active phase is independent criticism, co
 
 The generated dashboard below is a historical status surface for the older bounded REP/ADJ/W3.5 program. It does not override the later UPP terminal adjudication or define the repository's current phase.
 
+## Scoped FARA formal kernel
+
+`FARA-FORMAL-KERNEL-001` is Accepted for **Project FAR v1.0 finite, explicit, auditable representational architecture**. The canonical formal foundation at that scope is an [identity-bearing many-sorted relational kernel](frameworks/FARA/formal-kernel.md) with typed occurrence-sensitive identity and sort-preserving relational isomorphism as model equivalence.
+
+The decision follows an executable source campaign and a separate clean-room Node.js replication over neutral scenarios. It does not establish global uniqueness, universality, primitive necessity/minimality, completeness, nonfinite/oracle/embodied coverage, or external-investigator independence. The seven candidate primitives remain unchanged.
+
+- [Acceptance record](docs/governance/fara-formal-kernel-acceptance-v1.0.md)
+- [Promotion record](docs/governance/fara-formal-kernel-promotion-v1.0.md)
+- [Limitation LIM-025](docs/governance/limitations-register.md)
+
 ## Latest bounded external evaluation
 
 The frozen SWE-agent v2 comparison observed **0/2 resolved runs for v1.0.0 and 0/2 for v1.0.1** on one task. The recorded observation is `no_observed_resolution_difference`, and the bounded decision remains `REVIEW_REQUIRED`. This does **not** demonstrate equivalence, superiority, safety, readiness, or general performance. See the [post-experiment audit](docs/audits/post-swe-agent-v2-stabilization-audit.md) and [reproducibility guide](docs/reproducibility/swe-agent-v2.md).

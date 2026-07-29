@@ -18,7 +18,9 @@ Formal shared definitions are maintained in [`../../theory/definitions/definitio
 
 FARA is treated as the stable representational architecture layer of Project FAR.
 
-Future FARA changes should be driven by concrete downstream requirements, worked examples, or validated representational deficiencies.
+`FARA-FORMAL-KERNEL-001` is Accepted within Project FAR v1.0 finite explicit auditable representational architecture. The canonical formal foundation for that scope is the [identity-bearing many-sorted relational kernel](formal-kernel.md). This scoped selection does not establish global uniqueness, universality, primitive necessity/minimality, completeness, nonfinite/oracle/embodied coverage, or external-investigator independence.
+
+Future FARA changes should be driven by concrete downstream requirements, worked examples, validated representational deficiencies, or the accepted discovery lifecycle.
 
 ---
 
@@ -42,6 +44,7 @@ It defines the architectural objects that FAR applies methodologically, FARO ope
 ## Canonical Documents
 
 - [`architecture.md`](architecture.md) — Defines the FARA architecture.
+- [`formal-kernel.md`](formal-kernel.md) — Defines the accepted identity-bearing many-sorted relational formal kernel within the registered v1.0 scope.
 - [`dependency-graph.md`](dependency-graph.md) — Records FARA document-maintenance dependencies.
 - [`design-principles.md`](design-principles.md) — Records governing design constraints for FARA.
 - [`document-map.md`](document-map.md) — Maps FARA documents and their roles.
@@ -61,6 +64,11 @@ FARA is covered by the repository-wide stabilization and navigation audits:
 - [`../../docs/audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md`](../../docs/audits/PROJECT-FAR-POST-V1-REPOSITORY-AUDIT.md)
 - [`../../docs/audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md`](../../docs/audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md)
 
+The formal-kernel authority is recorded by:
+
+- [`../../docs/governance/fara-formal-kernel-acceptance-v1.0.md`](../../docs/governance/fara-formal-kernel-acceptance-v1.0.md)
+- [`../../docs/governance/fara-formal-kernel-promotion-v1.0.md`](../../docs/governance/fara-formal-kernel-promotion-v1.0.md)
+
 ---
 
 ## Milestones
@@ -73,7 +81,7 @@ FARA is treated as the stable representational layer in the post-v1.0 framework 
 
 Do not expand FARA speculatively.
 
-Modify FARA only when a downstream requirement, concrete worked example, or validated representational defect requires it.
+Modify FARA only when a downstream requirement, concrete worked example, validated representational defect, or accepted and promoted discovery requires it.
 
 ---
 
@@ -83,11 +91,13 @@ FARA owns representational architecture.
 
 It does not define investigation methodology, operational procedures, mathematical evaluation, or meta-framework governance.
 
+The canonical formal kernel is a representation architecture. It does not make typed-hypergraph paths or algebraic operation composition primitive FARA commitments.
+
 ---
 
 ## Next Steps
 
-Use worked examples to test whether the current representational architecture is sufficient.
+Use worked examples and external criticism to test the accepted kernel outside its current finite explicit auditable scope without widening its claims prematurely.
 
 ---
 
@@ -102,4 +112,4 @@ Use worked examples to test whether the current representational architecture is
 
 ## Epistemic boundary
 
-“Stable” is a maintenance status, not proof that FARA is universal, globally minimal, necessary, or lossless. Candidate primitives remain candidates; FAR methods and FARO operations are downstream and are not FARA axioms. See the [framework-boundary specification](../../docs/governance/framework-boundaries.md).
+“Stable” is a maintenance status, not proof that FARA is universal, globally minimal, necessary, or lossless. Candidate primitives remain candidates; FAR methods and FARO operations are downstream and are not FARA axioms. `FARA-FORMAL-KERNEL-001` is Accepted only at its registered scope. See the [framework-boundary specification](../../docs/governance/framework-boundaries.md) and [limitations register](../../docs/governance/limitations-register.md).

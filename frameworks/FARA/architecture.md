@@ -39,6 +39,7 @@ It specifies how reasoning may be represented and analyzed.
 The core FARA documents are:
 
 - `architecture.md` — architectural overview and document relationships;
+- `formal-kernel.md` — accepted formal carrier architecture within the registered v1.0 scope;
 - `primitives.md` — current candidate primitive registry;
 - `ontology.md` — conceptual organization of candidate primitives and derived concepts;
 - `semantics.md` — relationship between representation, interpretation, and meaning;
@@ -94,7 +95,19 @@ The ontology must remain synchronized with the primitive registry.
 
 ---
 
-### 4. Representational Layer
+### 4. Formal-Kernel Layer
+
+The formal-kernel layer specifies the admitted identity-bearing many-sorted relational carrier architecture for Project FAR v1.0 finite explicit auditable representations.
+
+Primary artifact:
+
+`formal-kernel.md`
+
+`FARA-FORMAL-KERNEL-001` is Accepted only at that scope. The kernel does not reclassify the seven candidate primitives and does not establish global uniqueness, universality, minimality, necessity, or completeness.
+
+---
+
+### 5. Representational Layer
 
 The representational layer distinguishes representations, represented objects, representational structures, interpretation, and semantic content.
 
@@ -102,10 +115,11 @@ Primary artifacts:
 
 - `theory/definitions/definitions.md`
 - `semantics.md`
+- `formal-kernel.md`
 
 ---
 
-### 5. Reasoning-State Layer
+### 6. Reasoning-State Layer
 
 The reasoning-state layer describes the state of an investigation at stages of a reasoning process.
 
@@ -117,19 +131,20 @@ This layer separates reasoning states from reasoning state representations and r
 
 ---
 
-### 6. Transition Layer
+### 7. Transition Layer
 
 The transition layer records transformation executions between reasoning state representations.
 
-Primary artifact:
+Primary artifacts:
 
-`transition-signatures.md`
+- `transition-signatures.md`
+- `formal-kernel.md`
 
-This layer separates transformation rules, executions, results, and transition signatures.
+This layer separates transformation rules, executions, results, and transition signatures. The formal kernel represents executions as identity-bearing Events and requires explicit provenance and acyclic order.
 
 ---
 
-### 7. Admissibility and Resolution Layer
+### 8. Admissibility and Resolution Layer
 
 The admissibility layer records classifications of candidates under a reasoning calculus.
 
@@ -149,6 +164,7 @@ The core conceptual flow is:
 Definitions
   -> Candidate Primitives
   -> Ontology
+  -> Formal Kernel
   -> Representational Structure
   -> Reasoning State Representation
   -> Transition Signature
@@ -181,6 +197,18 @@ These distinctions are mandatory architectural constraints, not stylistic prefer
 
 ---
 
+## Accepted Formal Kernel
+
+`FARA-FORMAL-KERNEL-001` promotes an identity-bearing many-sorted relational structure as the canonical formal kernel within Project FAR v1.0 finite explicit auditable representational architecture.
+
+The kernel is accepted because it preserves the mandatory category separations, remains calculus-independent, separates architecture from operation, preserves parallel occurrence identity, and requires explicit provenance and event order. A separate clean-room implementation reproduced the source classifications and failed-gate sets.
+
+Typed-hypergraph and algebraic/state-transition forms remain optional derived views. Pure extensional relational projection is insufficient as the canonical kernel where parallel occurrence identity matters.
+
+The accepted kernel does not alter the candidate primitive registry and does not settle broader nonfinite, oracle-dependent, embodied, full-signature, unbounded, or externally administered cases.
+
+---
+
 ## Relationship to FARO
 
 FARA specifies what the reasoning architecture contains.
@@ -194,6 +222,8 @@ FARA: what exists architecturally
 FARO: what happens operationally
 ```
 
+The formal kernel preserves this boundary by not making operation composition primitive.
+
 This boundary should remain explicit during future development.
 
 ---
@@ -204,6 +234,8 @@ FARA is stabilized as a v1.0 architectural baseline.
 
 Stabilization means that the current documents are internally synchronized and suitable for downstream work.
 
-It does not mean that minimality, universality, or irreducibility have been proven.
+The scoped formal-kernel selection is Accepted under `FARA-FORMAL-KERNEL-001`.
 
-Those remain active research questions.
+It does not mean that global minimality, universality, primitive irreducibility, completeness, or unique foundation status have been proven.
+
+Those remain active research questions outside the accepted scope.

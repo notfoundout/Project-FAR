@@ -1,0 +1,148 @@
+{
+  "acceptance_id": "FARA-FORMAL-KERNEL-001",
+  "promotion_id": "FARA-FORMAL-KERNEL-PROMOTION-001",
+  "change_id": "FARA-CCR-001",
+  "status": "Accepted",
+  "scope": "Project FAR v1.0 finite explicit auditable representational architecture",
+  "canonical_kernel": "identity-bearing-many-sorted-relational",
+  "canonical_document": {
+    "path": "frameworks/FARA/formal-kernel.md",
+    "git_blob_sha": "362567c6d61b3257b76f76532c957b6e1172d01f"
+  },
+  "lifecycle": {
+    "question": "complete",
+    "execution": "complete",
+    "observation": "complete",
+    "discovery": "complete",
+    "replication": "complete",
+    "acceptance": "complete",
+    "promotion": "complete",
+    "repository_change": "authorized; effective when this pull request merges"
+  },
+  "evidence_locks": {
+    "source_campaign_merge": "775c24b26a30339a3fc0117e1faf4febece0a33c",
+    "source_spec": {
+      "path": "theory/formal/fara-canonical-kernel-v1.0.json",
+      "git_blob_sha": "49e10b34ac9920fed85a5c8be5e5200f59aedfbe"
+    },
+    "source_proof": {
+      "path": "theory/evaluation/fara-canonical-kernel-proof-v1.0.json",
+      "git_blob_sha": "36b046f0efc32fa9464cd0943aef30af398c63bf"
+    },
+    "source_implementation": {
+      "path": "theory/foundation/fara_canonical_kernel/kernel.py",
+      "git_blob_sha": "81b2a6441b21699a3f98f8e209a12267da2fba50"
+    },
+    "replication_merge": "5932e6b2111c6d7da8b1c9a443474b395f02880e",
+    "replication_result": {
+      "path": "research/replications/fara-canonical-kernel-v1.0/result.json",
+      "git_blob_sha": "fde056ce8309f0ef2f383730b02438f5c2b91c93"
+    },
+    "replication_adjudication": {
+      "path": "research/replications/fara-canonical-kernel-v1.0/adjudication.json",
+      "git_blob_sha": "d4737e680ece1510c23eb8571470e0f175d7f663"
+    },
+    "acceptance_record": {
+      "path": "docs/governance/fara-formal-kernel-acceptance-v1.0.md",
+      "git_blob_sha": "72eb998efab920a8c79a44b7cad49483375a3ee0"
+    },
+    "promotion_record": {
+      "path": "docs/governance/fara-formal-kernel-promotion-v1.0.md",
+      "git_blob_sha": "1b13741c84fb77d76f23c88a357760935874e338"
+    }
+  },
+  "mandatory_gates": [
+    "representation_object_separation",
+    "rule_execution_result_separation",
+    "interpretation_separation",
+    "calculus_independence",
+    "architecture_operation_separation",
+    "identity_bearing_occurrences",
+    "explicit_provenance_and_order",
+    "encoding_neutrality"
+  ],
+  "sorts": [
+    "Object",
+    "Representation",
+    "Meaning",
+    "Interpretation",
+    "ReasoningCalculus",
+    "Rule",
+    "State",
+    "Event",
+    "Investigation",
+    "Objective",
+    "Condition",
+    "RelationType",
+    "RelationOccurrence",
+    "Role",
+    "Provenance"
+  ],
+  "relations": {
+    "denotes": ["Representation", "Object"],
+    "assigns": ["Interpretation", "Representation", "Meaning"],
+    "contains_rule": ["ReasoningCalculus", "Rule"],
+    "applies": ["Event", "Rule"],
+    "input_state": ["Event", "State"],
+    "output_state": ["Event", "State"],
+    "occurs_in": ["Event", "Investigation"],
+    "uses_calculus": ["Investigation", "ReasoningCalculus"],
+    "objective_of": ["Investigation", "Objective"],
+    "condition_of": ["Investigation", "Condition"],
+    "instance_of": ["RelationOccurrence", "RelationType"],
+    "participant": ["RelationOccurrence", "Role", "Object"],
+    "precedes": ["Event", "Event"],
+    "provenance_of": ["Event", "Provenance"],
+    "represents_event": ["Representation", "Event"]
+  },
+  "identity_criteria": {
+    "typed_identity": true,
+    "cross_sort_identity_collision_allowed": false,
+    "event_occurrences_identity_bearing": true,
+    "relation_occurrences_identity_bearing": true,
+    "literal_identifier_spelling_semantic": false,
+    "renaming_may_merge_split_create_or_delete_identities": false
+  },
+  "model_equivalence": {
+    "name": "kernel-equivalence",
+    "relation": "sort-preserving relational isomorphism",
+    "requires_bijection_per_sort": true,
+    "preserves_and_reflects_every_relation": true,
+    "preserves_occurrence_multiplicity": true,
+    "preserves_event_cardinality": true,
+    "preserves_provenance": true,
+    "preserves_precedence": true,
+    "exact_normalized_equality": "identity-map special case",
+    "behavioral_or_commitment_equivalence_substitutable": false
+  },
+  "candidate_roles": {
+    "identity-bearing-many-sorted-relational": "canonical-formal-kernel-within-scope",
+    "typed-hypergraph": "admissible-derived-representation",
+    "algebraic-state-transition": "admissible-derived-backend-with-explicit-preservation-machinery",
+    "many-sorted-extensional-relational": "noncanonical-identity-losing-projection"
+  },
+  "primitive_registry_unchanged": [
+    "Object",
+    "Property",
+    "Relation",
+    "Representation",
+    "Interpretation",
+    "Investigation",
+    "Reasoning Calculus"
+  ],
+  "external_investigator_independence": "not established",
+  "nonclaims": [
+    "global uniqueness",
+    "universal representation of every reasoning system",
+    "global primitive necessity",
+    "global minimality",
+    "completeness",
+    "full-signature adequacy",
+    "unbounded adequacy",
+    "nonfinite continuous semantics",
+    "live-oracle semantics",
+    "environment-inclusive embodied semantics",
+    "external-investigator independence",
+    "superiority under every possible comparison criterion"
+  ]
+}
