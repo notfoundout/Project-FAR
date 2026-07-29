@@ -7,7 +7,7 @@
   "canonical_kernel": "identity-bearing-many-sorted-relational",
   "canonical_document": {
     "path": "frameworks/FARA/formal-kernel.md",
-    "git_blob_sha": "5e4f5b1b860f1447f8a4880ff1480b4fb6e5a1eb"
+    "git_blob_sha": "bccac5f36ebfa89c7557ba84ff76dce39e17ad43"
   },
   "lifecycle": {
     "question": "complete",
@@ -28,6 +28,10 @@
     "source_proof": {
       "path": "theory/evaluation/fara-canonical-kernel-proof-v1.0.json",
       "git_blob_sha": "36b046f0efc32fa9464cd0943aef30af398c63bf"
+    },
+    "source_implementation": {
+      "path": "theory/foundation/fara_canonical_kernel/kernel.py",
+      "git_blob_sha": "81b2a6441b21699a3f98f8e209a12267da2fba50"
     },
     "replication_merge": "5932e6b2111c6d7da8b1c9a443474b395f02880e",
     "replication_result": {
@@ -90,6 +94,26 @@
     "precedes": ["Event", "Event"],
     "provenance_of": ["Event", "Provenance"],
     "represents_event": ["Representation", "Event"]
+  },
+  "identity_criteria": {
+    "typed_identity": true,
+    "cross_sort_identity_collision_allowed": false,
+    "event_occurrences_identity_bearing": true,
+    "relation_occurrences_identity_bearing": true,
+    "literal_identifier_spelling_semantic": false,
+    "renaming_may_merge_split_create_or_delete_identities": false
+  },
+  "model_equivalence": {
+    "name": "kernel-equivalence",
+    "relation": "sort-preserving relational isomorphism",
+    "requires_bijection_per_sort": true,
+    "preserves_and_reflects_every_relation": true,
+    "preserves_occurrence_multiplicity": true,
+    "preserves_event_cardinality": true,
+    "preserves_provenance": true,
+    "preserves_precedence": true,
+    "exact_normalized_equality": "identity-map special case",
+    "behavioral_or_commitment_equivalence_substitutable": false
   },
   "candidate_roles": {
     "identity-bearing-many-sorted-relational": "canonical-formal-kernel-within-scope",
