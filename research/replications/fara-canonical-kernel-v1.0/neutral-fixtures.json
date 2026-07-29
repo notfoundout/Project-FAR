@@ -1,0 +1,28 @@
+{
+  "corpus_id": "FARA-KERNEL-NEUTRAL-FIXTURES-001",
+  "status": "Research",
+  "construction_policy": "Domain-neutral scenario parameters are materialized by the clean-room implementation. No source-campaign sample model, generated proof, expected gate result, or proposed winner is included.",
+  "scenarios": [
+    {
+      "id": "document-revision",
+      "objects": ["draft", "policy"],
+      "event_labels": ["author", "review", "publish"],
+      "parallel_occurrences": 3,
+      "provenance_per_event": 2
+    },
+    {
+      "id": "inventory-reconciliation",
+      "objects": ["ledger", "shipment", "count"],
+      "event_labels": ["record", "compare", "resolve", "close"],
+      "parallel_occurrences": 2,
+      "provenance_per_event": 1
+    },
+    {
+      "id": "classification-review",
+      "objects": ["claim", "criterion"],
+      "event_labels": ["submit", "classify"],
+      "parallel_occurrences": 4,
+      "provenance_per_event": 3
+    }
+  ]
+}
