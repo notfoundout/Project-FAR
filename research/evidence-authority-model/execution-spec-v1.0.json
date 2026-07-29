@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0",
+  "status": "Research",
+  "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
+  "question": "research/evidence-authority-model/question-v1.0.md",
+  "preregistration_commit": "791906aa7f483c7906650bd0a55c8ba1505e2e62",
+  "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
+  "objective": "Determine whether a non-self-activating Research candidate evidence-authority contract can satisfy the frozen construction and falsification conditions without claiming Acceptance, Promotion, canonical dependency reconciliation, or experiment authority.",
+  "frozen_sources": {
+    "research/theory-dependency-audit/report-v1.0.md": "5cdd34a1dc518ece9112960887da4a3b499ccfc0",
+    "research/theory-dependency-audit/result-v1.0.json": "dbc7a99bc863c651fb061628a93327b64212822d",
+    "docs/governance/research-execution-charter.md": "9a6c2d7621a569a8db1d3f66dc1a98263cdfb283",
+    "docs/governance/theorem-proof-status-register.md": "e0f3c8f740d9ed62d925d836b5298c7228c89d09",
+    "docs/proof-assurance-taxonomy.md": "1c4f35bc64b50497ad5be728f9b69767436a0efd",
+    "theory/dependencies/dependency-registry.yaml": "4d98b90c0e36f70f32c85946eefc85cfcc982da4",
+    "theory/metadata/theorems.yaml": "c789fb18dd0f25ba4f2488acd3fd5f763e47a4c8",
+    "theory/metadata/lemmas.yaml": "93fa667f473f47aef9fa36dfac5d656f085d41db",
+    "tools/verify_theory.py": "a7b578e05f03113d3bd5827a5dd03b7affb101a0"
+  },
+  "candidate_contract_components": [
+    "evidence authority model",
+    "authority registry",
+    "proof artifact status manifest",
+    "independent validation contract"
+  ],
+  "required_checks": [
+    {
+      "id": "A1",
+      "name": "research_inactivity",
+      "pass_condition": "model registry and manifest are Research inactive and self-activation is prohibited"
+    },
+    {
+      "id": "A2",
+      "name": "external_bootstrap",
+      "pass_condition": "initial Acceptance and Promotion require a preregistered hash-locked authority predating the candidate; absent selection remains Unknown"
+    },
+    {
+      "id": "A3",
+      "name": "governing_dependency_coverage",
+      "pass_condition": "the authority map registers the research-execution charter proof-assurance taxonomy model registry manifest and governance-decision owner with explicit status transitions"
+    },
+    {
+      "id": "A4",
+      "name": "proof_path_completeness",
+      "pass_condition": "independent enumeration covers theorem Markdown proofs lemma proof sources T-001 through T-015 YAML proof objects registered JSON records and registered Lean files"
+    },
+    {
+      "id": "A5",
+      "name": "proof_status_separation",
+      "pass_condition": "ownership pattern alone grants no authority; every registered proof artifact requires one charter status and authority-bearing designation; only authority-bearing Accepted artifacts may carry active proof authority"
+    },
+    {
+      "id": "A6",
+      "name": "manifest_provenance",
+      "pass_condition": "the manifest has a separate top-level acceptance-decision record requirement in addition to per-entry status decisions"
+    },
+    {
+      "id": "A7",
+      "name": "equal_priority_conflict_safety",
+      "pass_condition": "unresolved contradictions at equal or higher priority for the same proposition scope premises and version resolve to Unknown pending governance"
+    },
+    {
+      "id": "A8",
+      "name": "claim_boundary",
+      "pass_condition": "the Research candidate neither authorizes nor prohibits experiments and does not claim Accepted authority dependency derivation theorem truth necessity minimality or universality"
+    }
+  ],
+  "falsification_conditions": [
+    "any candidate artifact can Accept Promote or activate itself",
+    "a governing dependency used by the contract is excluded from the authority map",
+    "a registered proof path is absent from the proof owner coverage test",
+    "a proof artifact can gain active authority without an Accepted charter status and authority-bearing designation",
+    "the status manifest can become Accepted without a manifest-level independent decision record",
+    "two contradictory equal-priority artifacts can both remain authoritative for the same proposition scope premises and version",
+    "the candidate authorizes canonical dependency reconciliation or experiment execution while bootstrap authority remains Unknown"
+  ],
+  "execution_method": {
+    "source_identity": "verify every frozen source blob against frozen_base_commit",
+    "construction": "derive the smallest candidate contract satisfying A1-A8; reject additions not required by a frozen check",
+    "proof_discovery": "parse repository proof metadata and verifier-declared proof-object requirements independently of the candidate owner pattern",
+    "negative_controls": "remove each required governing owner and each proof metadata pathway in turn and require the validation contract to fail",
+    "conflict_control": "inject an equal-priority contradictory proposition and require Unknown rather than dual authority",
+    "repeat": "perform a second clean evaluation from the frozen specification without importing the first result fields"
+  },
+  "decision_rule": {
+    "bounded_candidate_supported": "all A1-A8 pass and every falsification control is detected",
+    "candidate_refuted": "at least one A-check fails or at least one falsification control is undetected",
+    "unknown": "source identity or independent proof-path completeness cannot be verified"
+  },
+  "lifecycle_constraints": {
+    "acceptance": "prohibited by this campaign",
+    "promotion": "prohibited by this campaign",
+    "repository_change": "limited to Research evidence candidate artifacts and validation wiring",
+    "external_replication": "required before any later Acceptance"
+  },
+  "nonclaims": [
+    "accepted authority model",
+    "promoted authority registry",
+    "canonical dependency reconciliation",
+    "logical derivation of FAR or FARO from FARA",
+    "proof of theorem truth",
+    "necessity",
+    "minimality",
+    "uniqueness",
+    "universality",
+    "experiment authorization"
+  ]
+}
