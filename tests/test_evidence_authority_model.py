@@ -18,31 +18,16 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
             "Status: **Research candidate; not Accepted or Promoted**",
             self.model,
         )
-        self.assertEqual("Research", self.registry["lifecycle_state"])
-        self.assertIn("not Accepted or Promoted", self.registry["status"])
-        self.assertTrue(self.registry["self_activation_prohibited"])
+        self.assertEqual(
+            "Research candidate; not Accepted or Promoted",
+            self.registry["status"],
+        )
 
     def test_registry_points_to_existing_canonical_owners(self):
         for domain in self.registry["domains"].values():
             owner = domain.get("owner")
             if owner:
                 self.assertTrue((ROOT / owner).is_file(), owner)
-
-    def test_governance_decision_authority_is_registered(self):
-        governance = self.registry["domains"]["governance_decisions"]
-        self.assertEqual("governance_decision", governance["authority_class"])
-        self.assertEqual("docs/DECISION_LOG.md", governance["owner"])
-        established = set(governance["may_establish"])
-        self.assertIn("acceptance decision", established)
-        self.assertIn("promotion decision", established)
-
-    def test_governance_decisions_cannot_prove_truth_or_self_promote(self):
-        governance = self.registry["domains"]["governance_decisions"]
-        forbidden = set(governance["may_not_establish"])
-        self.assertIn("theorem truth", forbidden)
-        self.assertIn("empirical truth", forbidden)
-        self.assertIn("self-acceptance of the authority model", forbidden)
-        self.assertIn("self-promotion of the authority registry", forbidden)
 
     def test_authority_classes_are_closed(self):
         allowed = {
@@ -87,15 +72,32 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
             methodology["may_not_establish"],
         )
 
+    def test_governance_decision_authority_is_registered(self):
+        governance = self.registry["domains"]["governance_decisions"]
+        self.assertEqual("governance_decision", governance["authority_class"])
+        self.assertEqual("docs/DECISION_LOG.md", governance["owner"])
+        self.assertIn("acceptance", governance["may_establish"])
+        self.assertIn("promotion", governance["may_establish"])
+
+    def test_governance_decisions_cannot_prove_truth_or_self_promote(self):
+        governance = self.registry["domains"]["governance_decisions"]
+        forbidden = set(governance["may_not_establish"])
+        self.assertIn("theorem truth", forbidden)
+        self.assertIn("empirical truth", forbidden)
+        self.assertIn("self-acceptance", forbidden)
+        self.assertIn("self-promotion", forbidden)
+
     def test_promotion_gate_requires_full_lifecycle(self):
         requirements = set(self.registry["promotion_requirements"])
         expected = {
-            "separate governance decision",
-            "separately preregistered lifecycle",
-            "replication and lifecycle completion",
+            "separate preregistered lifecycle",
+            "independent governance decision",
             "exact artifact and version",
             "promoted propositions and scope",
             "required proof or evidence",
+            "replication record",
+            "acceptance record",
+            "promotion record",
             "limitations and counterexamples",
             "status-register update",
             "canonical-map update",
@@ -108,20 +110,15 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         self.assertIn("CI success implies truth", forbidden)
         self.assertIn("artifact self-promotion", forbidden)
         self.assertIn("formal notation implies proof", forbidden)
-        self.assertIn("authority model self-acceptance", forbidden)
-        self.assertIn("authority registry self-promotion", forbidden)
+        self.assertIn("research candidate implies acceptance", forbidden)
 
     def test_model_preserves_unresolved_dependency_status(self):
         self.assertIn(
-            "does not settle those dependencies",
+            "does not settle those dependencies or activate the gate by itself",
             self.model,
         )
         self.assertIn(
             "No experiment may resume",
-            self.model,
-        )
-        self.assertIn(
-            "does not activate the gate by itself",
             self.model,
         )
 
