@@ -34,19 +34,24 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
             if proposed_owner:
                 self.assertTrue((ROOT / proposed_owner).is_file(), proposed_owner)
 
-    def test_all_authority_classes_have_permitted_statuses(self):
-        allowed = set(self.registry["permitted_statuses_by_class"])
+    def test_status_taxonomy_matches_charter(self):
+        expected = {"Accepted", "Research", "Provisional", "Archive", "Unknown"}
+        self.assertEqual(expected, set(self.registry["artifact_status_taxonomy"]))
+        permitted = self.registry["permitted_statuses_by_class"]
+        for authority_class, statuses in permitted.items():
+            self.assertTrue(statuses, authority_class)
+            self.assertTrue(set(statuses) <= expected, authority_class)
+            self.assertNotIn("Promoted", statuses)
+            self.assertNotIn("Superseded", statuses)
+        self.assertEqual(["Archive"], permitted["historical_record"])
+
+    def test_all_authority_classes_have_domains_and_permitted_statuses(self):
+        permitted = set(self.registry["permitted_statuses_by_class"])
         declared = {
             domain["authority_class"]
             for domain in self.registry["domains"].values()
         }
-        self.assertEqual(declared, allowed - {"historical_record"})
-        for authority_class, statuses in self.registry[
-            "permitted_statuses_by_class"
-        ].items():
-            self.assertTrue(statuses, authority_class)
-            self.assertNotIn("Unknown", statuses)
-            self.assertNotIn("Provisional", statuses)
+        self.assertEqual(declared, permitted)
 
     def test_every_domain_has_scope_and_nonclaim_boundaries(self):
         for name, domain in self.registry["domains"].items():
@@ -75,15 +80,15 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         self.assertIn("self-acceptance", governance["may_not_establish"])
         self.assertIn("self-promotion", governance["may_not_establish"])
 
-    def test_proof_records_have_a_distinct_owner_domain(self):
+    def test_proof_records_cover_registered_json_objects(self):
         proofs = self.registry["domains"]["proof_records"]
         status = self.registry["domains"]["theorem_and_proof_status"]
         self.assertEqual("proof_record", proofs["authority_class"])
-        self.assertIn("proof", proofs["owner_pattern"])
+        self.assertIn("theory/evaluation/*.json", proofs["owner_pattern"])
         self.assertEqual("status_register", status["authority_class"])
         self.assertNotEqual(proofs["authority_class"], status["authority_class"])
 
-    def test_definition_scopes_are_split_explicitly(self):
+    def test_definition_scopes_and_status_transition_are_explicit(self):
         terminology = self.registry["domains"]["canonical_terminology"]
         definitions = self.registry["domains"]["detailed_definitions"]
         self.assertEqual(
@@ -92,10 +97,19 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         self.assertEqual(
             "theory/definitions/definitions.md", definitions["owner"]
         )
+        self.assertEqual("Unknown", definitions["current_status"])
+        self.assertEqual("Accepted", definitions["required_status_for_activation"])
+        self.assertIn("owner status transitions completed", self.registry["promotion_requirements"])
         self.assertIn(
             "detailed formal definitions", terminology["may_not_establish"]
         )
         self.assertIn("canonical naming overrides", definitions["may_not_establish"])
+
+    def test_historical_records_have_archive_owner_and_no_active_authority(self):
+        historical = self.registry["domains"]["historical_records"]
+        self.assertEqual("archive/**", historical["owner_pattern"])
+        self.assertEqual("historical_record", historical["authority_class"])
+        self.assertIn("active canonical authority", historical["may_not_establish"])
 
     def test_research_and_methodology_claim_boundaries(self):
         research = self.registry["domains"]["research_observations"]
@@ -116,6 +130,7 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
             "replication record",
             "acceptance record",
             "promotion record",
+            "owner status transitions completed",
             "semantic and dependency validation",
         }
         self.assertTrue(required <= requirements)
@@ -129,6 +144,7 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
             "research candidate implies acceptance",
             "research candidate authorizes experiment execution",
             "research candidate prohibits experiment execution",
+            "lifecycle promotion implies artifact status Promoted",
         }
         self.assertTrue(required <= forbidden)
 
