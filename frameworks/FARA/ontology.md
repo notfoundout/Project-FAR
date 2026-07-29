@@ -2,135 +2,185 @@
 
 ## Purpose
 
-This document specifies the current conceptual organization of FARA and distinguishes candidate primitive concepts from derived concepts.
+This document specifies the conceptual ontology of the Foundational Architecture of Reasoning Analysis (FARA).
 
-Canonical terminology remains in:
+The ontology identifies the principal categories of concepts used throughout the framework and distinguishes candidate primitive concepts from derived concepts.
+
+The canonical definitions of all concepts are maintained in:
 
 `theory/definitions/definitions.md`
 
-The canonical formal foundation is specified and validated by:
-
-`theory/formal/fara-canonical-kernel-v1.0.json`
-
-`docs/research/fara-canonical-kernel-v1.0.md`
+This document specifies conceptual organization rather than introducing new definitions.
 
 ---
 
-## Ontological Organization
+# Ontological Organization
 
-FARA distinguishes:
+The ontology of FARA is organized into two categories:
 
 - candidate primitive concepts;
-- derived concepts;
-- formal support categories used to make identity, typing, provenance, and execution explicit.
+- derived concepts.
 
-These categories must not be conflated. A carrier or relation appearing in the formal kernel is not automatically a conceptual primitive.
+Candidate primitives constitute the current unreduced conceptual basis of the framework.
+
+Derived concepts are explicitly defined in terms of candidate primitives and previously established derived concepts.
+
+This organization is provisional and remains subject to grounding investigations.
 
 ---
 
-## Candidate Primitive Concepts
+# Candidate Primitive Concepts
 
-The current Project FAR v1.0 candidate primitive concepts are:
+The current candidate primitive concepts are:
 
 - Object
+- Property
 - Relation
 - Representation
 - Interpretation
+- Investigation
 - Reasoning Calculus
 
-Candidate status is provisional. The canonical-kernel decision establishes repository authority and a scoped formal basis, not global irreducibility or universal minimality.
+These concepts currently form the smallest unreduced conceptual basis of FARA.
+
+Candidate primitive status does not imply permanent irreducibility.
 
 ---
 
-## Derived Concepts
+# Derived Concepts
 
-### Property
+Derived concepts include every concept defined from candidate primitives, including:
 
-Property is derived as a unary relation occurrence: a Relation Type instantiated by an identity-bearing Relation Occurrence with one participant role.
+## Structural Concepts
 
-### Investigation
-
-Investigation content is derived from an objective, applicable conditions, and a Reasoning Calculus reference. An investigation record may carry its own identity for traceability without making Investigation a primitive conceptual category.
-
-### Semantic Content
-
-Semantic Content is derived from the application of an Interpretation to a Representation.
-
-### Execution and Result
-
-A Transformation Execution is represented by an identity-bearing Event applying a Rule within an Investigation. A Transformation Result is the Event's output State.
-
-### Transition and trace
-
-A Transition Signature is a Representation of an Event. A Reasoning Trace is an ordered collection of Events represented by explicit precedence relations.
-
-Additional derived concepts include the structural, representational, decision, evidence, and formal concepts listed in `primitives.md` and defined in the canonical definitions.
+- Structure
+- Component
+- System
+- Class
+- Domain
 
 ---
 
-## Formal Support Categories
+## Representational Concepts
 
-The canonical kernel provides typed identity-bearing support for:
-
-- Meaning;
-- Rule;
-- State;
-- Event;
-- Investigation record;
-- Objective;
-- Condition;
-- Relation Type;
-- Relation Occurrence;
-- Role;
-- Provenance.
-
-These support categories make mandatory FARA separations executable:
-
-- object / representation;
-- structure / interpretation;
-- rule / execution / result;
-- investigation context / reasoning process;
-- relation type / relation occurrence;
-- event identity / event order / event provenance.
+- Representational Structure
+- Representation Mapping
+- Representation Transformation
+- Representation Fidelity
+- Representation Completeness
+- Representation Consistency
+- Representation Invariance
 
 ---
 
-## Canonical Formal Foundation
+## Reasoning Concepts
 
-The canonical Project FAR v1.0 foundation is an identity-bearing many-sorted relational kernel.
-
-Typed-hypergraph and algebraic/state-transition structures are admissible derived views when translations, sidecars, and reconstruction obligations are explicit. They are not coequal canonical foundations.
-
-The earlier frozen comparison among extensional relational, typed-hypergraph, and algebraic/state-transition candidates remains historical Research evidence. Its Pareto result is not overwritten.
-
----
-
-## Reduction Principle
-
-Whenever a concept can be completely defined in terms of simpler concepts without loss of required expressive commitments relative to the active scope and objective, it must be treated as derived.
-
-A valid reduction must identify:
-
-- the source and target vocabularies;
-- the model class;
-- the equivalence or preservation relation;
-- the reconstruction procedure;
-- any external machinery or sidecar;
-- the exact scope of the conclusion.
+- Reasoning Process
+- Reasoning State
+- Reasoning State Representation
+- Reasoning State Record
+- Transformation Rule
+- Transformation Execution
+- Transition Signature
+- Reasoning Trace
 
 ---
 
-## Research Status
+## Decision Concepts
 
-Unresolved questions include:
-
-- whether the five retained candidate concepts can be reduced further;
-- whether the kernel survives independent implementation and external benchmark corpora;
-- whether nonfinite continuous, embodied, distributed, or live-oracle systems require material extensions;
-- whether the formal support categories can be reduced without losing identity, provenance, or auditability.
+- Candidate
+- Criterion
+- Admissibility
+- Admissibility Classification
+- Admissibility Structure (Ω)
+- Resolution Rule
+- Resolution Execution
+- Resolution
 
 ---
 
-## Version Status
+## Evidence Concepts
 
-This ontology is canonical for Project FAR v1.0 repository usage and remains subject to evidence-driven revision.
+- Claim
+- Evidence
+- Observation
+- Assumption
+- Hypothesis
+- Explanation
+- Prediction
+- Counterexample
+
+---
+
+## Formal Concepts
+
+- Model
+- Framework
+- Theory
+- Architecture
+- Equivalence
+- Reduction
+- Independence
+- Universal Architecture
+- Expressive Power
+
+---
+
+Additional derived concepts may be introduced provided they are explicitly defined within the canonical terminology.
+
+---
+
+# Reduction Principle
+
+Project FAR adopts reduction as a guiding methodological principle.
+
+Whenever a concept can be completely defined in terms of simpler concepts without loss of expressive power relative to the intended scope, it should be treated as a derived concept rather than a candidate primitive.
+
+Grounding investigations should continually seek additional reductions.
+
+---
+
+# Ontological Stability
+
+The ontology should evolve only when supported by explicit justification, including:
+
+- grounding investigations;
+- reduction proofs;
+- independence proofs;
+- artifact audits;
+- identification of hidden assumptions;
+- improvements in explanatory or expressive power.
+
+Architectural stability is achieved through demonstrated reduction rather than by declaration.
+
+---
+
+# Relationship to the Primitive Registry
+
+This document specifies the conceptual organization of FARA.
+
+The current registry of candidate primitives is maintained in:
+
+`primitives.md`
+
+Changes to the primitive registry should be reflected in this ontology.
+
+---
+
+# Research Status
+
+Current research investigates:
+
+- whether additional candidate primitives are required;
+- whether existing candidate primitives can be reduced;
+- whether the primitive basis is minimal;
+- whether the ontology is sufficient for universal reasoning representation within the intended scope of Project FAR;
+- formal relationships among the major conceptual categories.
+
+---
+
+# Version Status
+
+This ontology represents the current conceptual organization of FARA.
+
+It remains provisional pending future grounding investigations and formal reduction proofs.
