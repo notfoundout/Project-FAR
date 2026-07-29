@@ -34,6 +34,8 @@ Status: **Accepted governance register**
 
 New limitations require an evidence citation and may be closed only by a recorded execution, not by wording changes.
 
+Many-sorted relational dominates algebraic/state-transition under the frozen dimensions, while typed hypergraph and many-sorted relational remain incomparable. This historical bounded result does not select the canonical foundation.
+
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->
 - Mapping totals (Pass/Partial/Fail/Unknown): `{"algebraic-state-transition":{"Fail":4,"Partial":0,"Pass":12,"Unknown":3},"many-sorted-relational":{"Fail":3,"Partial":0,"Pass":13,"Unknown":3},"typed-hypergraph":{"Fail":0,"Partial":0,"Pass":16,"Unknown":3}}`
 - Dominance edges: `[["many-sorted-relational","algebraic-state-transition"]]`
