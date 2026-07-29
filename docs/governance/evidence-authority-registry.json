@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.7",
+  "schema_version": "1.8",
   "status": "Research",
   "candidacy": "inactive_candidate",
   "promotion_completed": false,
@@ -26,14 +26,36 @@
   },
   "activation_requirements": [
     "independent bootstrap authority selected and hash locked",
+    "authority model and authority registry separately transitioned to Accepted by independent governance",
     "every fixed canonical owner has an explicit artifact status",
     "every fixed canonical owner requiring active authority has status Accepted",
     "proof owner pattern covers every proof object named by registered proof metadata",
-    "every registered proof artifact has exactly one explicit charter status in a promotion status manifest",
-    "every registered proof artifact has status Accepted before proof authority activates"
+    "proof artifact status manifest separately transitioned to Accepted by independent governance",
+    "every registered proof artifact appears exactly once in the proof artifact status manifest",
+    "every registered proof artifact has exactly one explicit charter status",
+    "every proof artifact designated authority-bearing has status Accepted",
+    "every proof artifact not designated authority-bearing is excluded from active proof authority"
   ],
   "default_rule": "unregistered artifacts have no authority beyond their explicit local status and content",
   "domains": {
+    "authority_model_specification": {
+      "owner": "docs/governance/evidence-authority-model.md",
+      "current_status": "Research",
+      "required_status_for_activation": "Accepted",
+      "authority_class": "canonical_specification",
+      "proposition_scope": "evidence authority classes priority rules activation conditions and claim boundaries",
+      "may_establish": ["authority classes", "priority rules", "activation conditions", "claim boundaries after valid activation"],
+      "may_not_establish": ["self-acceptance", "self-promotion", "theorem truth", "empirical truth"]
+    },
+    "authority_registry_specification": {
+      "owner": "docs/governance/evidence-authority-registry.json",
+      "current_status": "Research",
+      "required_status_for_activation": "Accepted",
+      "authority_class": "canonical_specification",
+      "proposition_scope": "registered authority owners scopes permitted statuses and activation requirements",
+      "may_establish": ["registered owner mapping", "registered scope mapping", "permitted status mapping after valid activation"],
+      "may_not_establish": ["self-acceptance", "self-promotion", "artifact truth", "proof truth"]
+    },
     "governance_decisions": {
       "proposed_owner": "docs/DECISION_LOG.md",
       "owner_state": "candidate_inactive_until_external_bootstrap",
@@ -63,21 +85,34 @@
       "may_establish": ["theorem classification", "proof assurance classification", "registered scope"],
       "may_not_establish": ["truth without linked proof record", "scope expansion"]
     },
+    "proof_artifact_status_manifest": {
+      "owner": "docs/governance/proof-artifact-status-manifest.json",
+      "current_status": "Research",
+      "required_status_for_activation": "Accepted",
+      "authority_class": "status_register",
+      "proposition_scope": "charter artifact status and authority-bearing designation for every registered proof artifact",
+      "may_establish": ["proof artifact charter status", "authority-bearing designation", "active proof-corpus membership after valid activation"],
+      "may_not_establish": ["proof truth", "theorem truth", "self-acceptance", "status without linked governance decision"]
+    },
     "proof_records": {
       "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/**/proofs/**|theory/evaluation/*.json|theory/proof-objects/*.proof.yaml|docs/governance/proofs/**|docs/research/*proof*.md|mechanization/lean/*.lean",
       "authority_class": "proof_record",
       "proposition_scope": "exact registered formal statements under explicit premises",
       "requires": ["statement identifier", "exact statement", "premises", "scope", "model class", "proof object", "status-register entry"],
       "status_policy": {
+        "manifest_owner": "docs/governance/proof-artifact-status-manifest.json",
         "manifest_required_for_activation": true,
-        "manifest_created_by": "separate promotion lifecycle",
+        "manifest_created_and_accepted_by": "separate independently authorized promotion lifecycle",
         "missing_or_undeclared_status": "Unknown",
-        "required_status_for_activation": "Accepted",
+        "required_status_for_authority_bearing_artifact": "Accepted",
         "exactly_one_status_per_registered_artifact": true,
+        "authority_bearing_designation_required": true,
+        "non_authority_bearing_artifacts_may_retain_nonaccepted_charter_statuses": true,
+        "non_authority_bearing_artifacts_excluded_from_active_proof_authority": true,
         "validate_status_against_artifact_status_taxonomy": true
       },
-      "may_establish": ["exact proved statement under registered premises"],
-      "may_not_establish": ["unregistered theorem truth", "scope expansion", "empirical truth"]
+      "may_establish": ["exact proved statement under registered premises when designated authority-bearing and Accepted"],
+      "may_not_establish": ["unregistered theorem truth", "scope expansion", "empirical truth", "authority from ownership pattern alone"]
     },
     "claim_status": {
       "owner": "docs/governance/claim-status-matrix.md",
@@ -142,8 +177,10 @@
     "replication record",
     "acceptance record",
     "promotion record",
+    "authority model status transition completed",
+    "authority registry status transition completed",
     "owner status transitions completed",
-    "proof artifact status manifest completed",
+    "proof artifact status manifest completed and Accepted",
     "limitations and counterexamples",
     "status-register update",
     "canonical-map update",
@@ -164,6 +201,8 @@
     "research candidate authorizes experiment execution",
     "research candidate prohibits experiment execution",
     "lifecycle promotion implies artifact status Promoted",
-    "proof owner pattern implies Accepted proof status"
+    "proof owner pattern implies Accepted proof status",
+    "registered proof implies authority-bearing proof",
+    "nonaccepted proof artifact blocks activation when explicitly excluded from active proof authority"
   ]
 }
