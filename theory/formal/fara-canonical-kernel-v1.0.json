@@ -1,0 +1,116 @@
+{
+  "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+  "campaign_id": "FARA-CANONICAL-KERNEL-001",
+  "candidates": [
+    {
+      "derived_view_admissible": false,
+      "gates": {
+        "architecture_operation_separation": true,
+        "calculus_independence": true,
+        "encoding_neutrality": true,
+        "explicit_provenance_and_order": true,
+        "identity_bearing_occurrences": false,
+        "interpretation_separation": true,
+        "representation_object_separation": true,
+        "rule_execution_result_separation": true
+      },
+      "id": "many-sorted-extensional-relational",
+      "reason": "The existing candidate directly matches FARA sorts but extensional tuple identity collapses distinct parallel relation occurrences. Reifying occurrences repairs the defect and yields the selected kernel."
+    },
+    {
+      "derived_view_admissible": true,
+      "gates": {
+        "architecture_operation_separation": true,
+        "calculus_independence": true,
+        "encoding_neutrality": false,
+        "explicit_provenance_and_order": true,
+        "identity_bearing_occurrences": true,
+        "interpretation_separation": true,
+        "representation_object_separation": true,
+        "rule_execution_result_separation": true
+      },
+      "id": "typed-hypergraph",
+      "reason": "Typed nodes and identity-bearing hyperedges preserve the required commitments, but universal node/port/hyperedge machinery fixes an encoding style not required by FARA. It is retained as an exact derived view."
+    },
+    {
+      "derived_view_admissible": true,
+      "derived_view_condition": "An explicit sidecar preserves nonoperational FARA commitments and is included in reconstruction.",
+      "gates": {
+        "architecture_operation_separation": false,
+        "calculus_independence": false,
+        "encoding_neutrality": true,
+        "explicit_provenance_and_order": false,
+        "identity_bearing_occurrences": false,
+        "interpretation_separation": false,
+        "representation_object_separation": false,
+        "rule_execution_result_separation": false
+      },
+      "id": "algebraic-state-transition",
+      "reason": "Bare transition algebra makes operation and execution structure foundational and does not natively preserve source/representation, interpretation, provenance, or occurrence identity. A charged sidecar makes it an admissible operational backend."
+    },
+    {
+      "derived_view_admissible": true,
+      "gates": {
+        "architecture_operation_separation": true,
+        "calculus_independence": true,
+        "encoding_neutrality": true,
+        "explicit_provenance_and_order": true,
+        "identity_bearing_occurrences": true,
+        "interpretation_separation": true,
+        "representation_object_separation": true,
+        "rule_execution_result_separation": true
+      },
+      "id": "identity-bearing-many-sorted-relational",
+      "reason": "Typed disjoint carriers directly realize FARA categories; identity-bearing Event and RelationOccurrence carriers preserve repeated occurrences; operational semantics remain in the declared calculus or FARO layer."
+    }
+  ],
+  "conclusion": "For Project FAR v1.0, FARA's canonical formal foundation is the identity-bearing many-sorted relational kernel. Typed-hypergraph and algebraic/state-transition forms are admissible derived views when their translations and required sidecars are explicit and commitment-preserving.",
+  "historical_artifacts": {
+    "theory/evaluation/fara-expanded-bounded-campaign-proof-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "548f237e688db3260b6f9fd26224e18380b98282"
+    },
+    "theory/evaluation/fara-foundation-comparison-proof-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "1e8d16e9e1dee4f17361666af49425752c6c2d3c"
+    },
+    "theory/formal/fara-expanded-bounded-campaign-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "f6cc63feffd64bcd8a18945ae4cca3d1e52b7849"
+    },
+    "theory/formal/fara-foundation-comparison-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "2fcdb87726ef483a1d39f0254971d5df7b73e738"
+    }
+  },
+  "historical_result_policy": {
+    "adjudication": "The historical Pareto terminal remains true of the frozen candidates. Canonical selection is a later scoped architectural decision using FARA's mandatory gates, including the repaired occurrence-identity requirement.",
+    "fara-expanded-bounded-campaign-v1.0": "Preserved as bounded Research evidence. No finite result is promoted to universality, necessity, uniqueness, minimality, or completeness.",
+    "fara-foundation-comparison-v1.0": "Preserved as bounded Research evidence comparing the three frozen candidates under seventeen Pareto dimensions."
+  },
+  "mandatory_gates": [
+    "representation_object_separation",
+    "rule_execution_result_separation",
+    "interpretation_separation",
+    "calculus_independence",
+    "architecture_operation_separation",
+    "identity_bearing_occurrences",
+    "explicit_provenance_and_order",
+    "encoding_neutrality"
+  ],
+  "nonclaims": [
+    "globally unique foundation of reasoning",
+    "universal representation of every reasoning system",
+    "global primitive necessity",
+    "global minimality",
+    "completeness",
+    "coverage of nonfinite continuous semantics",
+    "coverage of live-oracle semantics",
+    "coverage of embodied environment semantics",
+    "independent replication"
+  ],
+  "scope": "Project FAR v1.0 finite explicit auditable representational architecture",
+  "selected_foundation": "identity-bearing-many-sorted-relational",
+  "selection_rule": "A canonical foundation must satisfy every frozen architectural gate. A candidate that preserves commitments only through an explicit translation or charged sidecar remains an admissible derived view, not the canonical kernel.",
+  "status": "Accepted"
+}
