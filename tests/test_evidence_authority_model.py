@@ -13,18 +13,36 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         cls.model = MODEL_PATH.read_text()
         cls.registry = json.loads(REGISTRY_PATH.read_text())
 
-    def test_model_and_registry_are_accepted_governance_artifacts(self):
-        self.assertIn("Status: **Accepted governance specification**", self.model)
-        self.assertEqual(
-            "Accepted governance registry",
-            self.registry["status"],
+    def test_model_and_registry_remain_research_candidates(self):
+        self.assertIn(
+            "Status: **Research candidate; not Accepted or Promoted**",
+            self.model,
         )
+        self.assertEqual("Research", self.registry["lifecycle_state"])
+        self.assertIn("not Accepted or Promoted", self.registry["status"])
+        self.assertTrue(self.registry["self_activation_prohibited"])
 
     def test_registry_points_to_existing_canonical_owners(self):
         for domain in self.registry["domains"].values():
             owner = domain.get("owner")
             if owner:
                 self.assertTrue((ROOT / owner).is_file(), owner)
+
+    def test_governance_decision_authority_is_registered(self):
+        governance = self.registry["domains"]["governance_decisions"]
+        self.assertEqual("governance_decision", governance["authority_class"])
+        self.assertEqual("docs/DECISION_LOG.md", governance["owner"])
+        established = set(governance["may_establish"])
+        self.assertIn("acceptance decision", established)
+        self.assertIn("promotion decision", established)
+
+    def test_governance_decisions_cannot_prove_truth_or_self_promote(self):
+        governance = self.registry["domains"]["governance_decisions"]
+        forbidden = set(governance["may_not_establish"])
+        self.assertIn("theorem truth", forbidden)
+        self.assertIn("empirical truth", forbidden)
+        self.assertIn("self-acceptance of the authority model", forbidden)
+        self.assertIn("self-promotion of the authority registry", forbidden)
 
     def test_authority_classes_are_closed(self):
         allowed = {
@@ -69,10 +87,12 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
             methodology["may_not_establish"],
         )
 
-    def test_promotion_gate_is_complete(self):
+    def test_promotion_gate_requires_full_lifecycle(self):
         requirements = set(self.registry["promotion_requirements"])
         expected = {
             "separate governance decision",
+            "separately preregistered lifecycle",
+            "replication and lifecycle completion",
             "exact artifact and version",
             "promoted propositions and scope",
             "required proof or evidence",
@@ -88,6 +108,8 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         self.assertIn("CI success implies truth", forbidden)
         self.assertIn("artifact self-promotion", forbidden)
         self.assertIn("formal notation implies proof", forbidden)
+        self.assertIn("authority model self-acceptance", forbidden)
+        self.assertIn("authority registry self-promotion", forbidden)
 
     def test_model_preserves_unresolved_dependency_status(self):
         self.assertIn(
@@ -96,6 +118,10 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         )
         self.assertIn(
             "No experiment may resume",
+            self.model,
+        )
+        self.assertIn(
+            "does not activate the gate by itself",
             self.model,
         )
 
