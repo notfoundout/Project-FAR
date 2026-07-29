@@ -1,6 +1,8 @@
 {
-  "schema_version": "1.4",
-  "status": "Research candidate; not Accepted or Promoted",
+  "schema_version": "1.5",
+  "status": "Research",
+  "candidacy": "inactive_candidate",
+  "promotion_completed": false,
   "authority_model": "docs/governance/evidence-authority-model.md",
   "lifecycle_state": "Research",
   "active": false,
@@ -26,7 +28,7 @@
     "independent bootstrap authority selected and hash locked",
     "every fixed canonical owner has an explicit artifact status",
     "every fixed canonical owner requiring active authority has status Accepted",
-    "proof owner pattern covers every proof object named by the theorem and proof status register"
+    "proof owner pattern covers every proof object named by registered proof metadata"
   ],
   "default_rule": "unregistered artifacts have no authority beyond their explicit local status and content",
   "domains": {
@@ -60,7 +62,7 @@
       "may_not_establish": ["truth without linked proof record", "scope expansion"]
     },
     "proof_records": {
-      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/**/proofs/**|theory/evaluation/*.json|docs/governance/proofs/**",
+      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/**/proofs/**|theory/evaluation/*.json|docs/governance/proofs/**|docs/research/*proof*.md",
       "authority_class": "proof_record",
       "proposition_scope": "exact registered formal statements under explicit premises",
       "requires": ["statement identifier", "exact statement", "premises", "scope", "model class", "proof object", "status-register entry"],
