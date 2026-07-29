@@ -1,0 +1,215 @@
+{
+  "base_commit": "5e8f27b617632a76e76760779dcbb24dedbb6786",
+  "candidate_adjudication": {
+    "authority_models": {
+      "split_authority": "Pass",
+      "undifferentiated_owner": "Fail"
+    },
+    "dependency_models": {
+      "artifact_workflow_contract": "Pass",
+      "logical_derivation": "Fail",
+      "unclassified_dependency": "Fail"
+    }
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "measurements": {
+        "authority_markers_present": true,
+        "definition_headings": {
+          "Interpretation": true,
+          "Investigation": true,
+          "Object": true,
+          "Property": true,
+          "Reasoning Calculus": true,
+          "Relation": true,
+          "Representation": true
+        }
+      },
+      "name": "canonical_definition_authority",
+      "status": "Pass"
+    },
+    {
+      "id": "C2",
+      "measurements": {
+        "definitions_pointer_present": true,
+        "irreducibility_nonclaim_present": true,
+        "parsed_candidate_primitives": [
+          "Object",
+          "Property",
+          "Relation",
+          "Representation",
+          "Interpretation",
+          "Investigation",
+          "Reasoning Calculus"
+        ]
+      },
+      "name": "fara_candidate_classification",
+      "status": "Pass"
+    },
+    {
+      "id": "C3",
+      "measurements": {
+        "all_seven_registered": false,
+        "expected_candidate_primitive_terms": [
+          "interpretation",
+          "investigation",
+          "object",
+          "property",
+          "reasoning calculus",
+          "relation",
+          "representation"
+        ],
+        "registered_candidate_primitive_terms": [
+          "object",
+          "property",
+          "relation",
+          "representation"
+        ],
+        "separate_definition_and_classification_fields_present": false
+      },
+      "name": "undifferentiated_registry_adequacy",
+      "status": "Fail"
+    },
+    {
+      "id": "C4",
+      "measurements": {
+        "accepted_scope_marker": true,
+        "global_primitive_nonclaim": true,
+        "primitive_reclassification_nonclaim": true
+      },
+      "name": "formal_kernel_role_boundary",
+      "status": "Pass"
+    },
+    {
+      "id": "C5",
+      "measurements": {
+        "accepted_derivation_proof_recorded": false,
+        "artifact_use_markers": true,
+        "non_derivation_markers": true
+      },
+      "name": "far_dependency_kind",
+      "status": "Pass"
+    },
+    {
+      "id": "C6",
+      "measurements": {
+        "accepted_derivation_proof_recorded": false,
+        "artifact_and_workflow_markers": true,
+        "non_derivation_markers": true
+      },
+      "name": "faro_dependency_kind",
+      "status": "Pass"
+    },
+    {
+      "id": "C7",
+      "measurements": {
+        "independent_method_and_governance_classifications_present": true
+      },
+      "name": "protocol_derivation_boundary",
+      "status": "Pass"
+    }
+  ],
+  "discovery": {
+    "finding": "split_authority_and_artifact_contract_model_supported_at_frozen_repository_scope",
+    "proposed_authority_relations": {
+      "acceptance_promotion_and_freeze": "governance",
+      "candidate_primitive_classification": "FARA",
+      "canonical_definition": "shared-theory",
+      "experiment_protocol_and_decision_rules": "CRP/methodology",
+      "formal_representation_kernel": "FARA",
+      "investigation_methodology": "FAR",
+      "operational_interface": "FARO"
+    },
+    "proposed_dependency_kinds": {
+      "FARA_to_FAR": "representation-artifact-contract",
+      "FARA_to_FARO": "representation-artifact-contract",
+      "FAR_to_FARO": "investigation-artifact-and-workflow-contract"
+    },
+    "supported": true
+  },
+  "failures": [
+    "The undifferentiated owner model does not preserve both shared-theory definition authority and FARA candidate classification.",
+    "The current semantic owner registry does not register all seven FARA candidate primitives.",
+    "No accepted derivation proof supports treating FAR methodology or FARO operations as logical consequences of FARA."
+  ],
+  "investigation_id": "FAR-THEORY-DEPENDENCY-AUDIT-001",
+  "lifecycle": {
+    "acceptance": "prohibited",
+    "discovery": "Research finding",
+    "execution": "complete",
+    "observation": "complete",
+    "promotion": "prohibited",
+    "question": "complete",
+    "replication": "pending separate implementation",
+    "repository_change": "prohibited except Research evidence"
+  },
+  "nonclaims": [
+    "accepted authority model",
+    "accepted dependency classification",
+    "canonical repository change",
+    "experiment preregistration authorization",
+    "experiment execution authorization",
+    "global universality",
+    "primitive necessity",
+    "primitive minimality",
+    "primitive independence"
+  ],
+  "observations": [
+    "Shared theory explicitly owns repository-wide canonical definitions for all seven FARA candidate-primitive terms.",
+    "FARA separately lists and classifies the same seven terms as candidate primitives while pointing definitions to shared theory.",
+    "The accepted semantic owner registry covers only a subset of the seven candidate primitives and exposes no distinct definition-owner and classification-owner relations.",
+    "The accepted FARA formal kernel is a scoped formalization and explicitly does not reclassify the candidate primitives or establish their global primitive properties.",
+    "Accepted FAR, FARO, framework-boundary, and derivation records support upstream artifact/workflow consumption while rejecting necessary downstream procedural derivation.",
+    "Accepted protocol classifications keep canonicalization, CIR, evaluator controls, Pareto comparison, preregistration, and fail reporting outside canonical theory."
+  ],
+  "schema_version": "1.0",
+  "source_lock_results": {
+    "docs/glossary/canonical-terminology.md": {
+      "actual_git_blob_sha": "ffc742a529062f57328163673ca4bb375c1d915e",
+      "expected_git_blob_sha": "ffc742a529062f57328163673ca4bb375c1d915e",
+      "verified": true
+    },
+    "docs/governance/derivation-status-matrix.md": {
+      "actual_git_blob_sha": "f3097042f42954f0a77bdec4d040d23338524cf1",
+      "expected_git_blob_sha": "f3097042f42954f0a77bdec4d040d23338524cf1",
+      "verified": true
+    },
+    "docs/governance/framework-boundaries.md": {
+      "actual_git_blob_sha": "829a15d1ca05c81c7b0491eb1846f6039085b13f",
+      "expected_git_blob_sha": "829a15d1ca05c81c7b0491eb1846f6039085b13f",
+      "verified": true
+    },
+    "docs/governance/semantic-consistency.json": {
+      "actual_git_blob_sha": "b6396ab8cf7f7e89e8c6a554afa611e6f3bdf2f7",
+      "expected_git_blob_sha": "b6396ab8cf7f7e89e8c6a554afa611e6f3bdf2f7",
+      "verified": true
+    },
+    "frameworks/FAR/dependency-graph.md": {
+      "actual_git_blob_sha": "d6ea902b82e5be16e3ea6cf77247f25e12ccebec",
+      "expected_git_blob_sha": "d6ea902b82e5be16e3ea6cf77247f25e12ccebec",
+      "verified": true
+    },
+    "frameworks/FARA/formal-kernel.md": {
+      "actual_git_blob_sha": "362567c6d61b3257b76f76532c957b6e1172d01f",
+      "expected_git_blob_sha": "362567c6d61b3257b76f76532c957b6e1172d01f",
+      "verified": true
+    },
+    "frameworks/FARA/primitives.md": {
+      "actual_git_blob_sha": "2c523bbd29255c921c97aeee80db824dc86c2b68",
+      "expected_git_blob_sha": "2c523bbd29255c921c97aeee80db824dc86c2b68",
+      "verified": true
+    },
+    "frameworks/FARO/dependency-graph.md": {
+      "actual_git_blob_sha": "21f2249248072db7c062249f179577e1ba3cc520",
+      "expected_git_blob_sha": "21f2249248072db7c062249f179577e1ba3cc520",
+      "verified": true
+    },
+    "theory/definitions/definitions.md": {
+      "actual_git_blob_sha": "4b9cd40f4a956162cee3fed6bae887d78835724b",
+      "expected_git_blob_sha": "4b9cd40f4a956162cee3fed6bae887d78835724b",
+      "verified": true
+    }
+  },
+  "status": "Research"
+}
