@@ -28,7 +28,7 @@ Formal support sorts used by an implementation are not automatically conceptual 
 
 ---
 
-## Current Candidate Primitive Concepts
+## Current Candidate Primitives
 
 The current Project FAR v1.0 candidate primitive concepts are:
 
