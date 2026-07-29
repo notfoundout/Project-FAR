@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.1",
-  "status": "Research candidate registry; not Accepted or Promoted",
+  "schema_version": "1.2",
+  "status": "Research candidate; not Accepted or Promoted",
   "authority_model": "docs/governance/evidence-authority-model.md",
   "lifecycle_state": "Research",
   "self_activation_prohibited": true,
@@ -10,6 +10,8 @@
       "owner": "docs/DECISION_LOG.md",
       "authority_class": "governance_decision",
       "may_establish": [
+        "acceptance",
+        "promotion",
         "acceptance decision",
         "promotion decision",
         "deprecation decision",
@@ -28,6 +30,8 @@
       "may_not_establish": [
         "theorem truth",
         "empirical truth",
+        "self-acceptance",
+        "self-promotion",
         "self-acceptance of the authority model",
         "self-promotion of the authority registry"
       ]
@@ -83,12 +87,14 @@
     }
   },
   "promotion_requirements": [
-    "separate governance decision",
-    "separately preregistered lifecycle",
-    "replication and lifecycle completion",
+    "separate preregistered lifecycle",
+    "independent governance decision",
     "exact artifact and version",
     "promoted propositions and scope",
     "required proof or evidence",
+    "replication record",
+    "acceptance record",
+    "promotion record",
     "limitations and counterexamples",
     "status-register update",
     "canonical-map update",
@@ -103,6 +109,7 @@
     "research result directly rewrites canonical theory",
     "artifact self-promotion",
     "authority model self-acceptance",
-    "authority registry self-promotion"
+    "authority registry self-promotion",
+    "research candidate implies acceptance"
   ]
 }
