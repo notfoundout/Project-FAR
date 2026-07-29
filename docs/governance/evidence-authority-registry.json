@@ -1,9 +1,37 @@
 {
-  "schema_version": "1.0",
-  "status": "Accepted governance registry",
+  "schema_version": "1.1",
+  "status": "Research candidate registry; not Accepted or Promoted",
   "authority_model": "docs/governance/evidence-authority-model.md",
+  "lifecycle_state": "Research",
+  "self_activation_prohibited": true,
   "default_rule": "unregistered artifacts have no authority beyond their explicit local status and content",
   "domains": {
+    "governance_decisions": {
+      "owner": "docs/DECISION_LOG.md",
+      "authority_class": "governance_decision",
+      "may_establish": [
+        "acceptance decision",
+        "promotion decision",
+        "deprecation decision",
+        "scope decision",
+        "ownership decision",
+        "change-control decision"
+      ],
+      "requires": [
+        "decision identifier and date",
+        "deciding authority or repository action",
+        "affected artifact and version",
+        "exact status or ownership change",
+        "supporting evidence or proof records",
+        "limitations and nonclaims"
+      ],
+      "may_not_establish": [
+        "theorem truth",
+        "empirical truth",
+        "self-acceptance of the authority model",
+        "self-promotion of the authority registry"
+      ]
+    },
     "repository_navigation": {
       "owner": "docs/CANONICAL_MAP.md",
       "authority_class": "index",
@@ -56,6 +84,8 @@
   },
   "promotion_requirements": [
     "separate governance decision",
+    "separately preregistered lifecycle",
+    "replication and lifecycle completion",
     "exact artifact and version",
     "promoted propositions and scope",
     "required proof or evidence",
@@ -71,6 +101,8 @@
     "repetition implies corroboration",
     "index entry implies acceptance",
     "research result directly rewrites canonical theory",
-    "artifact self-promotion"
+    "artifact self-promotion",
+    "authority model self-acceptance",
+    "authority registry self-promotion"
   ]
 }
