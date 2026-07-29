@@ -33,6 +33,8 @@ health:
 	python tools/check_pb001_execution.py
 	python tools/check_pbts001_replication_package.py
 	python tools/check_pbts001_replication_run001_controls.py
+	python research/theory-dependency-audit/execute.py
+	python -m unittest tests.test_theory_dependency_audit -v
 
 health-fast:
 	python tools/repo_health_check.py --fast
@@ -68,6 +70,8 @@ health-fast:
 	python tools/check_pb001_execution.py
 	python tools/check_pbts001_replication_package.py
 	python tools/check_pbts001_replication_run001_controls.py
+	python research/theory-dependency-audit/execute.py
+	python -m unittest tests.test_theory_dependency_audit -v
 
 docs-check:
 	python tools/validate_docs.py
@@ -116,6 +120,8 @@ research-check:
 	python tools/check_pb001_execution.py
 	python tools/check_pbts001_replication_package.py
 	python tools/check_pbts001_replication_run001_controls.py
+	python research/theory-dependency-audit/execute.py
+	python -m unittest tests.test_theory_dependency_audit -v
 
 status:
 	python tools/project_status_report.py
