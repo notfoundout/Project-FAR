@@ -1,0 +1,319 @@
+{
+  "base_commit": "5e8f27b617632a76e76760779dcbb24dedbb6786",
+  "candidate_adjudication": {
+    "authority_models": {
+      "split_authority": "Unknown",
+      "undifferentiated_owner": "Unknown"
+    },
+    "dependency_models": {
+      "artifact_workflow_contract": "Unknown",
+      "logical_derivation": "Unknown",
+      "unclassified_dependency": "Unknown"
+    }
+  },
+  "checks": [
+    {
+      "acceptance_verified": false,
+      "content_result": "Pass",
+      "id": "C1",
+      "measurements": {
+        "content_markers_present": true,
+        "definition_headings": {
+          "Interpretation": true,
+          "Investigation": true,
+          "Object": true,
+          "Property": true,
+          "Reasoning Calculus": true,
+          "Relation": true,
+          "Representation": true
+        }
+      },
+      "name": "canonical_definition_authority",
+      "required_sources": [
+        "theory/definitions/definitions.md"
+      ],
+      "status": "Unknown"
+    },
+    {
+      "acceptance_verified": false,
+      "content_result": "Pass",
+      "id": "C2",
+      "measurements": {
+        "content_markers_present": true,
+        "parsed_candidate_primitives": [
+          "Object",
+          "Property",
+          "Relation",
+          "Representation",
+          "Interpretation",
+          "Investigation",
+          "Reasoning Calculus"
+        ]
+      },
+      "name": "fara_candidate_classification",
+      "required_sources": [
+        "frameworks/FARA/primitives.md"
+      ],
+      "status": "Unknown"
+    },
+    {
+      "acceptance_verified": false,
+      "content_result": "Fail",
+      "id": "C3",
+      "measurements": {
+        "represented_owner_values_agree": true,
+        "semantic_registry_covers_all_seven": false,
+        "terminology_inventory_covers_all_seven": false
+      },
+      "name": "undifferentiated_registry_adequacy",
+      "required_sources": [
+        "theory/definitions/definitions.md",
+        "frameworks/FARA/primitives.md",
+        "docs/glossary/canonical-terminology.md",
+        "docs/governance/semantic-consistency.json"
+      ],
+      "status": "Unknown"
+    },
+    {
+      "acceptance_verified": true,
+      "content_result": "Pass",
+      "id": "C4",
+      "measurements": {
+        "content_markers_present": true
+      },
+      "name": "formal_kernel_role_boundary",
+      "required_sources": [
+        "frameworks/FARA/formal-kernel.md"
+      ],
+      "status": "Pass"
+    },
+    {
+      "acceptance_verified": false,
+      "content_result": "Pass",
+      "id": "C5",
+      "measurements": {
+        "artifact_contract_markers_present": true,
+        "negative_derivation_record_present": true,
+        "positive_derivation_proof_verified": false,
+        "proof_inventory_in_scope": false
+      },
+      "name": "far_dependency_kind",
+      "required_sources": [
+        "frameworks/FAR/dependency-graph.md",
+        "docs/governance/framework-boundaries.md",
+        "docs/governance/derivation-status-matrix.md"
+      ],
+      "status": "Unknown"
+    },
+    {
+      "acceptance_verified": false,
+      "content_result": "Pass",
+      "id": "C6",
+      "measurements": {
+        "artifact_workflow_markers_present": true,
+        "negative_derivation_record_present": true,
+        "positive_derivation_proof_verified": false,
+        "proof_inventory_in_scope": false
+      },
+      "name": "faro_dependency_kind",
+      "required_sources": [
+        "frameworks/FARO/dependency-graph.md",
+        "docs/governance/framework-boundaries.md",
+        "docs/governance/derivation-status-matrix.md"
+      ],
+      "status": "Unknown"
+    },
+    {
+      "acceptance_verified": true,
+      "content_result": "Pass",
+      "id": "C7",
+      "measurements": {
+        "derivation_matrix_classifications": {
+          "canonicalization_and_cir": true,
+          "evaluator_controls": true,
+          "evaluator_mapping": true,
+          "fail_reporting": true,
+          "pareto": true,
+          "preregistration": true
+        },
+        "terminology_authority_classifications": {
+          "canonicalization": true,
+          "cir": true,
+          "evaluator_mapping": true,
+          "fail_report": true,
+          "pareto": true
+        }
+      },
+      "name": "protocol_derivation_boundary",
+      "required_sources": [
+        "docs/governance/derivation-status-matrix.md",
+        "docs/glossary/canonical-terminology.md"
+      ],
+      "status": "Pass"
+    }
+  ],
+  "discovery": {
+    "authority_evidence_complete": false,
+    "dependency_evidence_complete": false,
+    "failure_mode": "source_admissibility_and_proof_scope_incomplete",
+    "finding": "no_reconciliation_discovery_supported",
+    "supported": false
+  },
+  "failures": [
+    "The frozen design did not include an Accepted-status authority capable of validating every selected source.",
+    "The FARA primitive registry explicitly declares its candidate status provisional.",
+    "The semantic registry and FAR/FARO dependency graphs do not declare Accepted status within the selected evidence.",
+    "The authoritative theorem/proof-status register was omitted, so logical derivation and proof absence remain Unknown.",
+    "Post-hoc addition of omitted evidence is prohibited; a separately preregistered campaign is required."
+  ],
+  "investigation_id": "FAR-THEORY-DEPENDENCY-AUDIT-001",
+  "lifecycle": {
+    "acceptance": "prohibited",
+    "discovery": "complete",
+    "execution": "complete",
+    "observation": "complete",
+    "outcome": "failure report",
+    "promotion": "prohibited",
+    "question": "complete",
+    "replication": "blocked pending separately preregistered source-complete campaign",
+    "repository_change": "prohibited except Research evidence and validation wiring"
+  },
+  "nonclaims": [
+    "accepted authority model",
+    "accepted dependency classification",
+    "canonical repository change",
+    "experiment preregistration authorization",
+    "experiment execution authorization",
+    "global universality",
+    "primitive necessity",
+    "primitive minimality",
+    "primitive independence"
+  ],
+  "observations": [
+    "All nine selected files match their preregistered Git blob identities at the frozen base commit.",
+    "Four selected files explicitly declare Accepted status, one selected file explicitly declares provisional status, and four selected files do not verify Accepted status within the frozen source set.",
+    "The selected source text contains the registered definition, classification, formal-kernel, framework-boundary, dependency, evaluator, and protocol markers measured by C1-C7.",
+    "The authoritative theorem/proof-status register was not selected, so proof presence or absence cannot be adjudicated.",
+    "Source identity does not establish source Acceptance."
+  ],
+  "proof_scope": {
+    "authoritative_proof_inventory_path": "docs/governance/theorem-proof-status-register.md",
+    "positive_derivation_proof_verified": false,
+    "proof_absence_verified": false,
+    "selected_in_frozen_source_set": false,
+    "status": "Unknown"
+  },
+  "schema_version": "1.0",
+  "source_admissibility": {
+    "all_selected_sources_accepted": false,
+    "artifacts": {
+      "docs/glossary/canonical-terminology.md": {
+        "acceptance_state": "Accepted",
+        "acceptance_verified": true,
+        "evidence": "explicit Accepted marker",
+        "identity_verified": true
+      },
+      "docs/governance/derivation-status-matrix.md": {
+        "acceptance_state": "Accepted",
+        "acceptance_verified": true,
+        "evidence": "explicit Accepted marker",
+        "identity_verified": true
+      },
+      "docs/governance/framework-boundaries.md": {
+        "acceptance_state": "Accepted",
+        "acceptance_verified": true,
+        "evidence": "explicit Accepted marker",
+        "identity_verified": true
+      },
+      "docs/governance/semantic-consistency.json": {
+        "acceptance_state": "Unknown",
+        "acceptance_verified": false,
+        "evidence": "top-level Accepted status is absent",
+        "identity_verified": true
+      },
+      "frameworks/FAR/dependency-graph.md": {
+        "acceptance_state": "Unknown",
+        "acceptance_verified": false,
+        "evidence": "Accepted status not declared",
+        "identity_verified": true
+      },
+      "frameworks/FARA/formal-kernel.md": {
+        "acceptance_state": "Accepted",
+        "acceptance_verified": true,
+        "evidence": "explicit Accepted marker",
+        "identity_verified": true
+      },
+      "frameworks/FARA/primitives.md": {
+        "acceptance_state": "Provisional",
+        "acceptance_verified": false,
+        "evidence": "artifact explicitly declares candidate primitive status provisional",
+        "identity_verified": true
+      },
+      "frameworks/FARO/dependency-graph.md": {
+        "acceptance_state": "Unknown",
+        "acceptance_verified": false,
+        "evidence": "Accepted status not declared",
+        "identity_verified": true
+      },
+      "theory/definitions/definitions.md": {
+        "acceptance_state": "Unknown",
+        "acceptance_verified": false,
+        "evidence": "canonical authority is declared, but Accepted lifecycle status is not",
+        "identity_verified": true
+      }
+    },
+    "counts": {
+      "Accepted": 4,
+      "Provisional": 1,
+      "Unknown": 4
+    }
+  },
+  "source_lock_results": {
+    "docs/glossary/canonical-terminology.md": {
+      "actual_git_blob_sha": "ffc742a529062f57328163673ca4bb375c1d915e",
+      "expected_git_blob_sha": "ffc742a529062f57328163673ca4bb375c1d915e",
+      "verified": true
+    },
+    "docs/governance/derivation-status-matrix.md": {
+      "actual_git_blob_sha": "f3097042f42954f0a77bdec4d040d23338524cf1",
+      "expected_git_blob_sha": "f3097042f42954f0a77bdec4d040d23338524cf1",
+      "verified": true
+    },
+    "docs/governance/framework-boundaries.md": {
+      "actual_git_blob_sha": "829a15d1ca05c81c7b0491eb1846f6039085b13f",
+      "expected_git_blob_sha": "829a15d1ca05c81c7b0491eb1846f6039085b13f",
+      "verified": true
+    },
+    "docs/governance/semantic-consistency.json": {
+      "actual_git_blob_sha": "b6396ab8cf7f7e89e8c6a554afa611e6f3bdf2f7",
+      "expected_git_blob_sha": "b6396ab8cf7f7e89e8c6a554afa611e6f3bdf2f7",
+      "verified": true
+    },
+    "frameworks/FAR/dependency-graph.md": {
+      "actual_git_blob_sha": "d6ea902b82e5be16e3ea6cf77247f25e12ccebec",
+      "expected_git_blob_sha": "d6ea902b82e5be16e3ea6cf77247f25e12ccebec",
+      "verified": true
+    },
+    "frameworks/FARA/formal-kernel.md": {
+      "actual_git_blob_sha": "362567c6d61b3257b76f76532c957b6e1172d01f",
+      "expected_git_blob_sha": "362567c6d61b3257b76f76532c957b6e1172d01f",
+      "verified": true
+    },
+    "frameworks/FARA/primitives.md": {
+      "actual_git_blob_sha": "2c523bbd29255c921c97aeee80db824dc86c2b68",
+      "expected_git_blob_sha": "2c523bbd29255c921c97aeee80db824dc86c2b68",
+      "verified": true
+    },
+    "frameworks/FARO/dependency-graph.md": {
+      "actual_git_blob_sha": "21f2249248072db7c062249f179577e1ba3cc520",
+      "expected_git_blob_sha": "21f2249248072db7c062249f179577e1ba3cc520",
+      "verified": true
+    },
+    "theory/definitions/definitions.md": {
+      "actual_git_blob_sha": "4b9cd40f4a956162cee3fed6bae887d78835724b",
+      "expected_git_blob_sha": "4b9cd40f4a956162cee3fed6bae887d78835724b",
+      "verified": true
+    }
+  },
+  "status": "Research"
+}
