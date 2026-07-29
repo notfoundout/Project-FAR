@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "status": "Research",
+  "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
+  "execution_specification": "research/evidence-authority-model/execution-spec-v1.0.json",
+  "execution_specification_sha256": "5328b419dd8ef86e77852730f3b2d3b6a1b6f6440bea92a55ff537db2f72bc2a",
+  "executor": "project-maintainer-assisted deterministic construction pass",
+  "source_identity_result": "all frozen Git blob identities matched",
+  "checks": {
+    "A1_research_inactivity": "Pass",
+    "A2_external_bootstrap": "Pass",
+    "A3_governing_dependency_coverage": "Pass",
+    "A4_proof_path_completeness": "Pass subject to repository-wide validation enumeration",
+    "A5_proof_status_separation": "Pass",
+    "A6_manifest_provenance": "Pass",
+    "A7_equal_priority_conflict_safety": "Pass",
+    "A8_claim_boundary": "Pass"
+  },
+  "negative_controls": {
+    "remove_research_charter_owner": "detected",
+    "remove_proof_assurance_taxonomy_owner": "detected",
+    "remove_lemma_metadata_pathway": "detected",
+    "remove_verifier_required_proof_objects": "detected",
+    "remove_registered_json_or_lean_pathway": "detected",
+    "remove_manifest_acceptance_record_requirement": "detected",
+    "permit_equal_priority_dual_authority": "detected",
+    "permit_candidate_experiment_authority": "detected"
+  },
+  "execution_outcome": "bounded_candidate_supported",
+  "limitations": [
+    "repository validation corroborates contract conformance but does not establish truth",
+    "the bootstrap authority remains Unknown",
+    "the research-execution charter remains Provisional",
+    "the proof-assurance taxonomy status remains Unknown",
+    "the proof-artifact manifest remains empty Research evidence",
+    "external independent replication has not occurred"
+  ],
+  "nonclaims": [
+    "Accepted authority model",
+    "Promotion",
+    "canonical dependency reconciliation",
+    "proof of theorem truth",
+    "necessity",
+    "minimality",
+    "uniqueness",
+    "universality",
+    "experiment authorization"
+  ]
+}
