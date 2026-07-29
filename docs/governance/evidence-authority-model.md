@@ -58,13 +58,17 @@ This Research candidate does not grant `docs/DECISION_LOG.md` authority. The reg
 
 Initial Acceptance or Promotion of this model requires a separate preregistered campaign that selects and hash-locks an Accepted-status or promotion-provenance authority whose authority predates this model. Until that external bootstrap authority is identified and validated, the bootstrap status is `Unknown`, the registry remains inactive, and no decision in `docs/DECISION_LOG.md` can derive authority from this candidate.
 
+The activated authority map must explicitly register this model and its registry as separate `canonical_specification` owners. Both currently remain `Research`; each must receive an independently authorized transition to `Accepted`. The registry entry cannot perform either transition itself.
+
 After valid activation, a governance decision would be authoritative only for the exact decision it records and only when it identifies the decision, date, deciding authority, affected artifact and version, exact status or ownership change, supporting evidence, limitations, and superseded decision where applicable.
 
 ## Proof authority
 
 The registry separately assigns theorem/proof classification to `docs/governance/theorem-proof-status-register.md` and exact proof objects to a proof-record owner pattern that includes every proof artifact path registered by repository proof metadata, including Markdown, JSON, YAML, and Lean proof objects.
 
-Owner-pattern coverage establishes only proposed ownership. It does not establish artifact status. Before activation, the promotion lifecycle must create a proof-artifact status manifest that lists every registered proof artifact exactly once, assigns one charter-recognized artifact status, and transitions every artifact intended to carry proof authority to `Accepted`. A missing or undeclared status is treated as `Unknown` and blocks proof authority.
+Owner-pattern coverage establishes only proposed ownership. It does not establish artifact status or active proof authority. Before activation, the promotion lifecycle must complete and independently Accept `docs/governance/proof-artifact-status-manifest.json`. That manifest must list every registered proof artifact exactly once, assign one charter-recognized artifact status, and designate whether the artifact is authority-bearing.
+
+Only proof artifacts designated authority-bearing must have status `Accepted`. Registered proof artifacts intentionally retained as `Research`, `Provisional`, `Archive`, or `Unknown` may remain non-Accepted, but must be explicitly excluded from active proof authority. A missing status, duplicate entry, or missing authority-bearing designation blocks activation.
 
 Use of `theorem`, `lemma`, `proposition`, `proof`, `derivation`, `necessary`, `sufficient`, `minimal`, `irreducible`, or `universal` requires a unique statement identifier, exact statement, premises, scope, model class, preservation criterion where relevant, linked proof object or bounded-evidence classification, and a status-register entry.
 
@@ -99,6 +103,8 @@ A research record is admissible only when its question, design, source identitie
 - This model and registry cannot Accept, Promote, or activate themselves.
 - The initial bootstrap authority must predate and be independent of this model.
 - Proof-owner coverage cannot substitute for an explicit permitted artifact status.
+- Registration as a proof artifact cannot substitute for an authority-bearing designation.
+- The proof-artifact status manifest cannot Accept itself or assign status without linked independent governance decisions.
 
 ## Promotion gate
 
@@ -109,12 +115,15 @@ This Research candidate may become active only through a separately preregistere
 3. defines promoted propositions and scope;
 4. identifies required proof or evidence;
 5. records replication, Acceptance, and Promotion separately;
-6. transitions every proposed canonical owner lacking an explicit status to `Accepted` through separate governance;
-7. creates and validates a complete proof-artifact status manifest with exactly one charter status per registered proof artifact and `Accepted` status for every artifact intended to carry proof authority;
-8. records unresolved counterexamples and limitations;
-9. updates the applicable status register and canonical map;
-10. passes semantic, dependency, and repository validation;
-11. does not claim more than the supporting record establishes.
+6. independently transitions this authority model and its registry to `Accepted`;
+7. transitions every other proposed canonical owner lacking an explicit permitted status through separate governance;
+8. independently transitions the proof-artifact status manifest to `Accepted`;
+9. completes the manifest with exactly one charter status and one authority-bearing designation per registered proof artifact;
+10. requires `Accepted` only for authority-bearing proof artifacts and excludes all others from active proof authority;
+11. records unresolved counterexamples and limitations;
+12. updates the applicable status register and canonical map;
+13. passes semantic, dependency, and repository validation;
+14. does not claim more than the supporting record establishes.
 
 Until every requirement is satisfied, activation remains prohibited and authority conclusions remain `Unknown`.
 
