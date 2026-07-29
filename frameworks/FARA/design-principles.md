@@ -18,7 +18,7 @@ FARA documents must use the canonical terminology established in:
 
 `theory/definitions/definitions.md`
 
-Framework documents may specify architectural roles, constraints, or examples, but they should not redefine canonical terms independently.
+Framework documents may specify architectural roles, constraints, local formal carrier names, or examples, but they should not redefine canonical terms independently.
 
 ---
 
@@ -168,8 +168,24 @@ Architectural stability is earned through investigation rather than assumed by d
 
 ---
 
+## Principle 13 — Typed Identity and Kernel Equivalence
+
+Within the scope of `FARA-FORMAL-KERNEL-001`, identity is typed and occurrence-sensitive.
+
+- one identity token belongs to exactly one formal carrier sort;
+- distinct transformation-execution Events remain distinct even when their extensional rule/state fields coincide;
+- distinct RelationOccurrences remain distinct even when their type and participants coincide;
+- literal identifier spelling is not semantic;
+- equivalent renaming may not merge, split, create, or delete identities.
+
+Canonical kernel-equivalence is **sort-preserving relational isomorphism**: one bijection per carrier sort that preserves and reflects every declared relation. Behavioral similarity, commitment equivalence, and lossy projection do not substitute for kernel-equivalence unless a separate scoped relation is explicitly declared.
+
+This principle is bounded to the Accepted formal-kernel scope. It is not a claim that the same identity or equivalence criteria govern every possible reasoning architecture.
+
+---
+
 ## Maintenance Policy
 
 This document should be updated whenever a new architectural principle is adopted or an existing principle is revised.
 
-Any change to these principles should be justified by an audit, grounding investigation, or formal methodological decision.
+Any change to these principles should be justified by an audit, grounding investigation, accepted promotion record, or formal methodological decision.
