@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "status": "Accepted governance registry",
+  "authority_model": "docs/governance/evidence-authority-model.md",
+  "default_rule": "unregistered artifacts have no authority beyond their explicit local status and content",
+  "domains": {
+    "repository_navigation": {
+      "owner": "docs/CANONICAL_MAP.md",
+      "authority_class": "index",
+      "may_establish": ["canonical artifact location"],
+      "may_not_establish": ["claim truth", "proof", "acceptance", "empirical result"]
+    },
+    "framework_boundaries": {
+      "owner": "docs/governance/framework-boundaries.md",
+      "authority_class": "canonical_specification",
+      "may_establish": ["framework ownership", "allowed dependency direction", "framework nonclaims"],
+      "may_not_establish": ["logical derivation", "necessity", "minimality", "universality"]
+    },
+    "theorem_and_proof_status": {
+      "owner": "docs/governance/theorem-proof-status-register.md",
+      "authority_class": "status_register",
+      "may_establish": ["theorem classification", "proof assurance classification", "registered scope"],
+      "may_not_establish": ["truth without linked proof record", "scope expansion"]
+    },
+    "claim_status": {
+      "owner": "docs/governance/claim-status-matrix.md",
+      "authority_class": "status_register",
+      "may_establish": ["epistemic classification", "known limitation linkage"],
+      "may_not_establish": ["claim truth", "proof"]
+    },
+    "derivation_status": {
+      "owner": "docs/governance/derivation-status-matrix.md",
+      "authority_class": "status_register",
+      "may_establish": ["derived versus methodological versus governance classification"],
+      "may_not_establish": ["derivation without proof record", "theorem truth"]
+    },
+    "canonical_terminology": {
+      "owner": "docs/glossary/canonical-terminology.md",
+      "authority_class": "canonical_specification",
+      "may_establish": ["canonical names", "declared meanings", "framework ownership of terms"],
+      "may_not_establish": ["necessity", "minimality", "empirical adequacy"]
+    },
+    "research_observations": {
+      "owner_pattern": "research/**/result*.json|research/**/report*.md|research/**/evidence/**",
+      "authority_class": "research_record",
+      "requires": ["question", "execution specification", "source identity", "result", "nonclaims"],
+      "may_establish": ["bounded observation", "registered counterexample", "failure report"],
+      "may_not_establish": ["canonical theory", "acceptance", "promotion", "global generalization"]
+    },
+    "methodology": {
+      "owner_pattern": "frameworks/FAR/**|methodology/**",
+      "authority_class": "methodological_specification",
+      "may_establish": ["adopted investigation procedure", "evaluation rule"],
+      "may_not_establish": ["logical derivation from FARA", "truth of investigated claim"]
+    }
+  },
+  "promotion_requirements": [
+    "separate governance decision",
+    "exact artifact and version",
+    "promoted propositions and scope",
+    "required proof or evidence",
+    "limitations and counterexamples",
+    "status-register update",
+    "canonical-map update",
+    "semantic and dependency validation"
+  ],
+  "forbidden_inferences": [
+    "location implies authority",
+    "CI success implies truth",
+    "formal notation implies proof",
+    "repetition implies corroboration",
+    "index entry implies acceptance",
+    "research result directly rewrites canonical theory",
+    "artifact self-promotion"
+  ]
+}
