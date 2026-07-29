@@ -18,11 +18,14 @@ The core FARA document dependency order is:
 theory/definitions/definitions.md
   -> frameworks/FARA/primitives.md
   -> frameworks/FARA/ontology.md
+  -> frameworks/FARA/formal-kernel.md
   -> frameworks/FARA/semantics.md
   -> frameworks/FARA/reasoning-states.md
   -> frameworks/FARA/transition-signatures.md
   -> frameworks/FARA/admissibility-structure.md
 ```
+
+The formal kernel consumes canonical definitions plus the candidate-primitive and ontology classifications. It provides a scoped formal carrier architecture; it does not redefine the canonical terminology or reclassify the seven candidate primitives.
 
 Navigation and maintenance documents depend on the whole FARA set:
 
@@ -47,6 +50,8 @@ Representation
 Interpretation
 Investigation
 Reasoning Calculus
+  -> Ontological classification
+  -> Accepted formal carrier architecture
   -> Representational Structure
   -> Reasoning Process
   -> Reasoning State
@@ -95,6 +100,37 @@ The completed W1 execution in `research/primitive-independence-w1-result.md` doe
 `Object <- Representation <- Object`, `Representation <-> Interpretation`, and
 `Investigation <-> Reasoning Calculus`. These are audit warnings rather than derived
 edges or equivalence proofs; all seven adjudications remain unresolved.
+
+`FARA-FORMAL-KERNEL-001` does not change this basis. It selects a formal carrier architecture within a bounded scope and does not establish primitive independence, necessity, minimality, or irreducibility.
+
+---
+
+## Accepted Formal-Kernel Dependency (`FARA-FORMAL-KERNEL-001`)
+
+The accepted formal kernel depends on:
+
+- canonical definitions in `theory/definitions/definitions.md`;
+- the unchanged seven-candidate primitive registry in `primitives.md`;
+- the conceptual classifications in `ontology.md`;
+- the mandatory category separations and design constraints in FARA;
+- the accepted source execution `FARA-CANONICAL-KERNEL-001`;
+- the clean-room implementation replication `FARA-CANONICAL-KERNEL-REPLICATION-001`;
+- the Acceptance record `docs/governance/fara-formal-kernel-acceptance-v1.0.md`;
+- the Promotion record `docs/governance/fara-formal-kernel-promotion-v1.0.md`.
+
+The dependency consequence is:
+
+```text
+canonical definitions
+  + candidate primitive/ontology classifications
+  + mandatory FARA architectural gates
+  + accepted and replicated evidence
+    -> identity-bearing many-sorted relational formal kernel
+      -> optional typed-hypergraph derived view
+      -> optional algebraic/state-transition backend view
+```
+
+The kernel is canonical only for Project FAR v1.0 finite explicit auditable representational architecture. It is not a prerequisite for claims outside that scope and does not establish global uniqueness, universality, primitive necessity/minimality, completeness, nonfinite/oracle/embodied coverage, or external-investigator independence.
 
 ---
 
@@ -281,6 +317,8 @@ The following constraints must be preserved:
 - No document should collapse a record with the object recorded.
 - No document should collapse admissibility with Ω.
 - No document should collapse resolution rules, resolution executions, and resolutions.
+- No derived graph or operation view should be treated as the canonical FARA foundation without a new accepted and promoted lifecycle record.
+- No use of the accepted formal kernel should omit its registered scope and nonclaims.
 
 ---
 
@@ -302,23 +340,11 @@ The W4 execution depends only on canonical definitions, the registered six-dimen
 
 ---
 
-## Maintenance Policy
-
 ## W5 cross-representation invariance dependency (`FARA-INV-W5-001`)
 
 W5 preserves W0–W4 and consumes only W1's unresolved boundary, W2's bounded coordinate boundary, and W4's representation-contract boundary. W3 is explicitly not consumed. Its six representation families, equivalence criterion, fixtures, and translation machinery are auxiliary research objects, not new FARA prerequisites. The registered counterexamples refute representation independence only in the frozen campaign.
 
 ---
-
-This dependency graph should be updated whenever:
-
-- a candidate primitive is added or removed;
-- a derived concept is added;
-- a canonical definition changes;
-- a concept dependency changes;
-- an architectural document is added, removed, or re-scoped.
-
-Dependency updates should be justified by grounding investigations, artifact audits, or explicit architectural revisions.
 
 ## Vocabulary-pressure evaluation dependency (`FARA-VOC-001`)
 
@@ -343,3 +369,18 @@ This descriptively named, unnumbered campaign executes the selection obligation 
 ## Expanded bounded executable campaign (Research)
 
 `FARA-EXPANDED-BOUND-001` depends on the historical core-formalization and foundation-comparison specifications and executable implementations. Its additive proof object records hashes for the six historical specification/proof/report artifacts, explicit carrier bounds 0..4, exhaustive unary/binary axis costs, and regenerated trace manifests. External oracle, continuous, hybrid, and embodied semantics remain unavailable and therefore Unknown.
+
+---
+
+## Maintenance Policy
+
+This dependency graph should be updated whenever:
+
+- a candidate primitive is added or removed;
+- a derived concept is added;
+- a canonical definition changes;
+- a concept dependency changes;
+- an architectural document is added, removed, or re-scoped;
+- the accepted formal kernel, its scope, or its derived-view policy changes.
+
+Dependency updates should be justified by grounding investigations, artifact audits, accepted promotion records, or explicit architectural revisions.
