@@ -1,5 +1,21 @@
 # Decision Log
 
+## 2026-07-29 — Accept and promote the scoped FARA formal kernel
+
+**Question:** Which coherent formal carrier architecture should govern canonical FARA within Project FAR v1.0 finite explicit auditable representational scope?
+
+**Execution:** `FARA-CANONICAL-KERNEL-001` implemented and falsification-tested four candidates under eight mandatory architectural gates. `FARA-CANONICAL-KERNEL-REPLICATION-001` then used a separate Node.js implementation, three neutral scenarios, isolated execution, outcome-blind sequencing, Git-proven fixture ancestry, and fail-closed adjudication.
+
+**Observation:** Identity-bearing many-sorted relational was the sole registered candidate passing all eight gates in both implementations. Pure extensional relations collapsed parallel occurrence identity. Typed hypergraph preserved the model but introduced universal graph scaffolding. Bare algebraic/state-transition omitted required nonoperational commitments and reconstructed exactly only with explicit sidecar machinery.
+
+**Acceptance:** Accept `FARA-FORMAL-KERNEL-001` only for Project FAR v1.0 finite explicit auditable representational architecture. The accepted claim selects a formal carrier architecture; it does not reclassify the seven candidate primitives or establish their independence, necessity, minimality, or irreducibility.
+
+**Promotion:** Promote `frameworks/FARA/formal-kernel.md` as the canonical formal-kernel source within the stated scope. Typed-hypergraph and algebraic/state-transition forms remain optional derived views. The immutable source and replication campaigns remain Research evidence.
+
+**Repository change:** Synchronize FARA architecture/navigation, the canonical map, claim status, limitations, unresolved/open-problem registers, project status, and fail-closed promotion validation. Preserve the dependency direction foundations → shared theory → FARA → FAR → FARO.
+
+**Claim boundary:** No global uniqueness, universality, primitive necessity/minimality, completeness, full-signature or unbounded adequacy, nonfinite continuous semantics, live-oracle semantics, embodied/environment-inclusive semantics, external-investigator independence, or superiority under every comparison criterion is established.
+
 ## 2026-07-26 — Stabilize the completed SWE-agent v2 evidence boundary
 
 **Question:** How should the repository represent and protect the completed comparison after outcome reveal?
