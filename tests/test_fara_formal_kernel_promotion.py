@@ -204,6 +204,20 @@ class FaraFormalKernelPromotionTests(unittest.TestCase):
             ),
         )
 
+    def test_canonical_relation_deletion_fails(self):
+        text = self.canonical_text.replace(
+            "| `participant` | `RelationOccurrence × Role × Object` |\n",
+            "",
+        )
+        self.assertIn(
+            "canonical kernel relation missing: participant",
+            checker.validate(
+                self.manifest,
+                check_files=False,
+                canonical_text=text,
+            ),
+        )
+
     def test_canonical_equivalence_deletion_fails(self):
         text = self.canonical_text.replace(
             "sort-preserving relational isomorphism",
