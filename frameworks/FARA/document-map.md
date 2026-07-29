@@ -18,7 +18,7 @@ All formal terminology used throughout FARA is canonically defined in:
 
 No FARA document should redefine canonical terminology independently.
 
-Framework documents may specify architectural roles, relationships, examples, or implementation implications, but canonical definitions remain centralized.
+Framework documents may specify architectural roles, relationships, examples, formal carrier names, or implementation implications, but canonical definitions remain centralized.
 
 ---
 
@@ -27,6 +27,7 @@ Framework documents may specify architectural roles, relationships, examples, or
 | Document | Role |
 |---|---|
 | `architecture.md` | Architectural overview and layer organization |
+| `formal-kernel.md` | Accepted identity-bearing many-sorted relational formal kernel within the registered v1.0 scope |
 | `primitives.md` | Current candidate primitive registry |
 | `ontology.md` | Conceptual organization of candidate primitives and derived concepts |
 | `semantics.md` | Representation, interpretation, and meaning relationships |
@@ -43,24 +44,24 @@ Framework documents may specify architectural roles, relationships, examples, or
 
 | Concept | Canonical Definition | Architectural Discussion |
 |---|---|---|
-| Object | `theory/definitions/definitions.md` | `ontology.md`, `primitives.md` |
-| Property | `theory/definitions/definitions.md` | `ontology.md`, `primitives.md` |
-| Relation | `theory/definitions/definitions.md` | `ontology.md`, `primitives.md` |
-| Representation | `theory/definitions/definitions.md` | `semantics.md`, `ontology.md`, `primitives.md` |
-| Represented Object | `theory/definitions/definitions.md` | `semantics.md` |
-| Representational Structure | `theory/definitions/definitions.md` | `semantics.md`, `ontology.md` |
-| Interpretation | `theory/definitions/definitions.md` | `semantics.md`, `ontology.md`, `primitives.md` |
-| Semantic Content | `theory/definitions/definitions.md` | `semantics.md` |
-| Investigation | `theory/definitions/definitions.md` | `ontology.md`, `primitives.md`, `reasoning-states.md` |
-| Reasoning Calculus | `theory/definitions/definitions.md` | `ontology.md`, `primitives.md` |
-| Reasoning State | `theory/definitions/definitions.md` | `reasoning-states.md`, `ontology.md` |
-| Reasoning State Representation | `theory/definitions/definitions.md` | `reasoning-states.md` |
+| Object | `theory/definitions/definitions.md` | `ontology.md`, `primitives.md`, `formal-kernel.md` |
+| Property | `theory/definitions/definitions.md` | `ontology.md`, `primitives.md`, `formal-kernel.md` |
+| Relation | `theory/definitions/definitions.md` | `ontology.md`, `primitives.md`, `formal-kernel.md` |
+| Representation | `theory/definitions/definitions.md` | `semantics.md`, `ontology.md`, `primitives.md`, `formal-kernel.md` |
+| Represented Object | `theory/definitions/definitions.md` | `semantics.md`, `formal-kernel.md` |
+| Representational Structure | `theory/definitions/definitions.md` | `semantics.md`, `ontology.md`, `formal-kernel.md` |
+| Interpretation | `theory/definitions/definitions.md` | `semantics.md`, `ontology.md`, `primitives.md`, `formal-kernel.md` |
+| Semantic Content | `theory/definitions/definitions.md` | `semantics.md`, `formal-kernel.md` |
+| Investigation | `theory/definitions/definitions.md` | `ontology.md`, `primitives.md`, `reasoning-states.md`, `formal-kernel.md` |
+| Reasoning Calculus | `theory/definitions/definitions.md` | `ontology.md`, `primitives.md`, `formal-kernel.md` |
+| Reasoning State | `theory/definitions/definitions.md` | `reasoning-states.md`, `ontology.md`, `formal-kernel.md` |
+| Reasoning State Representation | `theory/definitions/definitions.md` | `reasoning-states.md`, `formal-kernel.md` |
 | Reasoning State Record | `theory/definitions/definitions.md` | `reasoning-states.md` |
-| Transformation Rule | `theory/definitions/definitions.md` | `transition-signatures.md`, `ontology.md` |
-| Transformation Execution | `theory/definitions/definitions.md` | `transition-signatures.md`, `ontology.md` |
-| Transformation Result | `theory/definitions/definitions.md` | `transition-signatures.md` |
-| Transition Signature | `theory/definitions/definitions.md` | `transition-signatures.md`, `ontology.md` |
-| Reasoning Trace | `theory/definitions/definitions.md` | `reasoning-states.md`, `transition-signatures.md`, `ontology.md` |
+| Transformation Rule | `theory/definitions/definitions.md` | `transition-signatures.md`, `ontology.md`, `formal-kernel.md` |
+| Transformation Execution | `theory/definitions/definitions.md` | `transition-signatures.md`, `ontology.md`, `formal-kernel.md` |
+| Transformation Result | `theory/definitions/definitions.md` | `transition-signatures.md`, `formal-kernel.md` |
+| Transition Signature | `theory/definitions/definitions.md` | `transition-signatures.md`, `ontology.md`, `formal-kernel.md` |
+| Reasoning Trace | `theory/definitions/definitions.md` | `reasoning-states.md`, `transition-signatures.md`, `ontology.md`, `formal-kernel.md` |
 | Candidate | `theory/definitions/definitions.md` | `admissibility-structure.md`, `ontology.md` |
 | Admissibility | `theory/definitions/definitions.md` | `admissibility-structure.md`, `ontology.md` |
 | Admissibility Classification | `theory/definitions/definitions.md` | `admissibility-structure.md`, `ontology.md` |
@@ -68,6 +69,7 @@ Framework documents may specify architectural roles, relationships, examples, or
 | Resolution Rule | `theory/definitions/definitions.md` | `admissibility-structure.md`, `ontology.md` |
 | Resolution Execution | `theory/definitions/definitions.md` | `admissibility-structure.md`, `ontology.md` |
 | Resolution | `theory/definitions/definitions.md` | `admissibility-structure.md`, `ontology.md` |
+| Formal carrier architecture | local formal symbols mapped to canonical terminology | `formal-kernel.md` |
 
 ---
 
@@ -76,22 +78,24 @@ Framework documents may specify architectural roles, relationships, examples, or
 For a new reader, the recommended order is:
 
 1. `architecture.md`
-2. `document-map.md`
-3. `design-principles.md`
-4. `primitives.md`
-5. `ontology.md`
-6. `semantics.md`
-7. `reasoning-states.md`
-8. `transition-signatures.md`
-9. `admissibility-structure.md`
-10. `theory/definitions/definitions.md` for canonical terminology as needed
+2. `formal-kernel.md`
+3. `document-map.md`
+4. `design-principles.md`
+5. `primitives.md`
+6. `ontology.md`
+7. `semantics.md`
+8. `reasoning-states.md`
+9. `transition-signatures.md`
+10. `admissibility-structure.md`
+11. `theory/definitions/definitions.md` for canonical terminology as needed
 
 For formal work, begin with:
 
 1. `theory/definitions/definitions.md`
 2. `primitives.md`
 3. `ontology.md`
-4. `dependency-graph.md`
+4. `formal-kernel.md`
+5. `dependency-graph.md`
 
 ---
 
@@ -101,12 +105,14 @@ A new concept should not be added directly to multiple documents.
 
 The correct order is:
 
-1. Define the concept canonically in `theory/definitions/definitions.md`, or explicitly mark it as non-canonical if it is only exploratory.
-2. Place it in `ontology.md` as either candidate primitive or derived.
+1. Define the concept canonically in `theory/definitions/definitions.md`, or explicitly mark it as a local formal symbol or non-canonical exploratory term.
+2. Place it in `ontology.md` as either candidate primitive or derived when it is a conceptual category.
 3. If it is a candidate primitive, list it in `primitives.md` with justification.
 4. Add architectural discussion in the relevant FARA document.
 5. Update this document map.
 6. Update `dependency-graph.md` if the concept changes dependencies.
+
+`formal-kernel.md` may introduce scoped formal carrier names only when it maps them explicitly to canonical FARA terminology and does not silently create new candidate primitives.
 
 ---
 
@@ -118,6 +124,7 @@ This document should be updated whenever:
 - a concept moves between primitive and derived status;
 - a canonical definition is added or revised;
 - an architectural document changes scope;
-- a new dependency relationship is introduced.
+- a new dependency relationship is introduced;
+- the accepted formal kernel changes.
 
 The document map is not a proof artifact. It is a repository maintenance artifact intended to prevent duplication, drift, and inconsistent terminology.
