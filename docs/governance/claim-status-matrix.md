@@ -54,3 +54,5 @@ Examples, methodology, research, validation, papers and archive are never prereq
 - Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
 - Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
+
+- **FARA-EXPANDED-BOUND-001:** Research — all 66,098 unary/binary relation interpretations on independent axes over carriers 0..4 were concretely constructed and evaluated. Thirty admissible paired-reduct witnesses support target-specific bounds: Object, Property, Relation, Representation, and Interpretation at 1..4; Investigation and Reasoning Calculus at 0..4. No full-signature, global, or size-0 claim beyond that coverage is licensed.

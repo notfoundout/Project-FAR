@@ -31,6 +31,7 @@ The registers identify questions, not authorization to execute them. New investi
 - **UQ-T10:** Are the `FARA-VOC-001` extension candidates necessary outside its frozen auxiliary model? **Unresolved; finite mappings and ablations cannot establish global necessity or minimality.**
 - **UQ-T11:** Which coherent formal foundation, identity criteria, and equivalence relation match intended canonical FARA without substantive theory change? **Unresolved; `FARA-CORE-PROOF-001` retains three non-equivalent foundations and finds a nonconservative disjointness choice.**
 - **UQ-T12:** Would independent candidate implementations, neutral reformulations, or executable oracle/nonfinite/environment semantics change the Pareto relation among the retained FARA foundations? **Unresolved; `FARA-FOUNDATION-COMP-001` finds many-sorted relational → algebraic/state-transition under the frozen dimensions, while typed hypergraph remains incomparable with many-sorted relational.**
+- **UQ-T13:** Do the `FARA-EXPANDED-BOUND-001` target-specific paired-reduct results survive full-signature cross-products, carriers above four, alternative admissibility definitions, or independent reimplementation? **Unresolved. The campaign executes 66,098 independent unary/binary interpretations and 30 admissible witnesses, but excludes size zero for five targets and does not search the complete signature space.**
 
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->
 - Mapping totals (Pass/Partial/Fail/Unknown): `{"algebraic-state-transition":{"Fail":4,"Partial":0,"Pass":12,"Unknown":3},"many-sorted-relational":{"Fail":3,"Partial":0,"Pass":13,"Unknown":3},"typed-hypergraph":{"Fail":0,"Partial":0,"Pass":16,"Unknown":3}}`
@@ -39,3 +40,5 @@ The registers identify questions, not authorization to execute them. New investi
 - Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
 - Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
+
+- **FARA-EXPANDED-BOUND-001:** persistence above carrier size 4, across full-signature cross-products, or outside the exact target-specific support bounds is Unknown.

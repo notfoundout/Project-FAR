@@ -1,0 +1,26 @@
+{
+  "digest": "f73b8448e1fcd7169ed96ec493a1884a7214b69733699dbc8ac4a3c4690c5665",
+  "preservation": {
+    "dependency": "Pass",
+    "historical": "Pass",
+    "information": "Pass",
+    "operational": "Fail",
+    "semantic": "Pass",
+    "structural": "Fail"
+  },
+  "status": "Fail",
+  "structural_accounting": {
+    "derived": 2,
+    "execution": 2,
+    "external": 0,
+    "history": 3,
+    "identity": 2,
+    "interpretation": 0,
+    "native": 3,
+    "opaque": 0,
+    "ordering": 0,
+    "reconstruction": 6,
+    "repair": 0,
+    "unresolved": 2
+  }
+}

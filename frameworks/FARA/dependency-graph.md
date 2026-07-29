@@ -339,3 +339,7 @@ This descriptively named, unnumbered campaign executes the selection obligation 
 - Nonclaims: `["canonical uniqueness","global superiority","universal representation","global minimality","primitive necessity","completeness","universality"]`
 - Remaining obligations: `["independent replication","nonfinite continuous semantics","environment-inclusive embodied semantics","live-oracle semantics","neutral external benchmark corpus","complete old prose source-model class"]`
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
+
+## Expanded bounded executable campaign (Research)
+
+`FARA-EXPANDED-BOUND-001` depends on the historical core-formalization and foundation-comparison specifications and executable implementations. Its additive proof object records hashes for the six historical specification/proof/report artifacts, explicit carrier bounds 0..4, exhaustive unary/binary axis costs, and regenerated trace manifests. External oracle, continuous, hybrid, and embodied semantics remain unavailable and therefore Unknown.

@@ -1,0 +1,102 @@
+{
+  "base_commit": "b05e48f204e273938ef406168b83cafc0958f9a0",
+  "bounds": {
+    "axis_policy": "Every unary and binary relation interpretation is materialized from its mask, checked for tuple arity and carrier membership, and evaluated independently at every carrier size 0..4; cross-products of all signature relations are not enumerated.",
+    "countermodel_policy": "A target is reported only at support bounds for which two distinct admissible models exist, both actual Object carriers fit within the support bound, their target-deleted reducts agree, and their target interpretations differ.",
+    "exhaustive_relation_arities": [
+      1,
+      2
+    ],
+    "foundation_benchmark_bound": "The frozen 19-benchmark executable suite is independently rerun unchanged so comparison changes cannot be attributed to benchmark replacement.",
+    "maximum_carrier_size": 4,
+    "minimum_carrier_size": 0,
+    "resource_limit": "Deterministic single-process exhaustive construction and evaluation; no solver, oracle, network, probabilistic sampling, or unrecorded pruning."
+  },
+  "derivability_targets": [
+    "Object",
+    "Property",
+    "Relation",
+    "Representation",
+    "Interpretation",
+    "Investigation",
+    "ReasoningCalculus"
+  ],
+  "historical_artifacts": {
+    "theory/evaluation/fara-core-formalization-proof-v1.0.json": {
+      "base_commit": "b05e48f204e273938ef406168b83cafc0958f9a0",
+      "git_blob_sha": "03ab953de244de4eb0798ffef6879cc6c9f681c1"
+    },
+    "theory/evaluation/fara-foundation-comparison-proof-v1.0.json": {
+      "base_commit": "b05e48f204e273938ef406168b83cafc0958f9a0",
+      "git_blob_sha": "1e8d16e9e1dee4f17361666af49425752c6c2d3c"
+    },
+    "theory/evaluation/generated-fara-core-formalization-report.md": {
+      "base_commit": "b05e48f204e273938ef406168b83cafc0958f9a0",
+      "git_blob_sha": "09d5319f3670a996edd5effec3d8e41a4da61a59"
+    },
+    "theory/evaluation/generated-fara-foundation-comparison-report.md": {
+      "base_commit": "b05e48f204e273938ef406168b83cafc0958f9a0",
+      "git_blob_sha": "8cef5442cd5b317f92e7b7a982ea20dd8a96d62a"
+    },
+    "theory/formal/fara-core-formalization-v1.0.json": {
+      "base_commit": "b05e48f204e273938ef406168b83cafc0958f9a0",
+      "git_blob_sha": "7e74c429098aaf00b7e2018c27858deb351e8899"
+    },
+    "theory/formal/fara-foundation-comparison-v1.0.json": {
+      "base_commit": "b05e48f204e273938ef406168b83cafc0958f9a0",
+      "git_blob_sha": "2fcdb87726ef483a1d39f0254971d5df7b73e738"
+    }
+  },
+  "id": "FARA-EXPANDED-BOUND-001",
+  "nonclaims": [
+    "no universality claim",
+    "no uniqueness claim",
+    "no global superiority claim",
+    "no global minimality claim",
+    "no necessity claim",
+    "no completeness claim",
+    "no inference beyond the explicit finite bounds and target-specific support coverage",
+    "no independent-replication claim"
+  ],
+  "objective": "Re-execute finite relation axes and admissible paired-reduct checks beyond carrier cardinality two without promoting bounded observations.",
+  "status": "Research",
+  "upstream_expectations": {
+    "core": {
+      "model_families": 14,
+      "terminal_result": "multiple non-equivalent coherent formalizations remain"
+    },
+    "foundation": {
+      "ablation_executions": 336,
+      "ablations": 21,
+      "dominance_edges": [
+        [
+          "many-sorted-relational",
+          "algebraic-state-transition"
+        ]
+      ],
+      "foundation_executions": 57,
+      "mapping_totals": {
+        "algebraic-state-transition": {
+          "Fail": 4,
+          "Partial": 0,
+          "Pass": 12,
+          "Unknown": 3
+        },
+        "many-sorted-relational": {
+          "Fail": 3,
+          "Partial": 0,
+          "Pass": 13,
+          "Unknown": 3
+        },
+        "typed-hypergraph": {
+          "Fail": 0,
+          "Partial": 0,
+          "Pass": 16,
+          "Unknown": 3
+        }
+      },
+      "round_trip_records": 12,
+      "terminal_result": "multiple foundations remain Pareto-incomparable"
+    }
+  }
+}
