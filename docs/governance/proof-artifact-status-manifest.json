@@ -1,11 +1,23 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "status": "Research",
   "candidacy": "inactive_candidate",
   "active": false,
   "authority_model": "docs/governance/evidence-authority-model.md",
   "registry": "docs/governance/evidence-authority-registry.json",
+  "research_provenance": "research/evidence-authority-model/execution-spec-v1.0.json",
   "purpose": "Candidate owner for explicit charter-status and authority-bearing designations of registered proof artifacts during a separately authorized promotion lifecycle.",
+  "acceptance_decision_required_for_activation": true,
+  "acceptance_decision_record": null,
+  "acceptance_decision_record_requirements": [
+    "independently authoritative governance owner",
+    "manifest path and exact version",
+    "decision date",
+    "transition from Research to Accepted",
+    "supporting evidence",
+    "scope and limitations",
+    "hash-locked manifest identity"
+  ],
   "entries": [],
   "completion_state": "not_started",
   "required_entry_fields": [
@@ -18,15 +30,17 @@
   ],
   "activation_conditions": [
     "manifest status is Accepted through independent governance",
+    "manifest-level acceptance_decision_record is present and valid",
     "every registered proof artifact appears exactly once",
     "every artifact_status belongs to the charter taxonomy",
     "every authority-bearing proof artifact has status Accepted",
     "non-authority-bearing artifacts are excluded from active proof authority",
-    "all status decisions link to an independently authoritative governance record"
+    "all per-artifact status decisions link to independently authoritative governance records"
   ],
   "nonclaims": [
     "this Research candidate assigns no current artifact status",
     "this Research candidate grants no proof authority",
-    "an empty entries list does not satisfy the promotion gate"
+    "an empty entries list does not satisfy the promotion gate",
+    "a future per-entry decision cannot substitute for the manifest's own Acceptance decision"
   ]
 }
