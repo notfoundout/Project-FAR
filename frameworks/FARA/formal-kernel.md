@@ -93,6 +93,41 @@ A model is admitted only when all of the following hold:
 
 These constraints preserve FARA's required category separations and make reasoning traces auditable without treating operation composition as primitive architecture.
 
+## Identity criteria
+
+Identity is typed and occurrence-sensitive.
+
+1. Within one model, each carrier member is an explicit identity token.
+2. Carrier membership is part of identity: the same token cannot inhabit two sorts.
+3. Distinct `Event` tokens remain distinct executions even when they apply the same rule to the same input and output states.
+4. Distinct `RelationOccurrence` tokens remain distinct occurrences even when they share one relation type and identical participants.
+5. Literal token spelling is not semantic by itself. A consistent sort-preserving renaming may witness model equivalence.
+6. A renaming may not merge, split, create, or delete identities.
+
+These criteria preserve the distinction between identity and extensional content without treating arbitrary identifier strings as semantic facts.
+
+## Model equivalence
+
+Two admitted kernel models are **kernel-equivalent** exactly when there exists a family of bijections, one for each carrier sort, such that:
+
+1. every carrier identity in the first model maps to exactly one identity in the same sort in the second model, and every identity in the second model has exactly one preimage;
+2. for every declared relation and every tuple in the first model, the componentwise image of that tuple occurs in the same relation in the second model;
+3. for every tuple in the second model, its componentwise inverse image occurs in the same relation in the first model.
+
+This is a sort-preserving relational isomorphism. Because all relations must be preserved and reflected, it preserves and reflects:
+
+- representation/object denotation;
+- interpretation assignments;
+- rules, states, investigations, objectives, and conditions;
+- event identity and event cardinality;
+- relation-occurrence identity and multiplicity;
+- participant roles;
+- provenance attachments;
+- precedence order;
+- transition-signature representations.
+
+Exact normalized equality is the executable special case where every bijection is the identity map. Commitment-equivalent or behaviorally equivalent projections are not automatically kernel-equivalent; they require separately declared equivalence relations and may not be substituted for this canonical relation.
+
 ## Architectural gates
 
 The kernel is canonical within scope because it satisfies the eight accepted gates:
@@ -132,6 +167,7 @@ The accepted kernel is supported by:
 - source campaign `FARA-CANONICAL-KERNEL-001`, merge commit `775c24b26a30339a3fc0117e1faf4febece0a33c`;
 - source specification Git blob `49e10b34ac9920fed85a5c8be5e5200f59aedfbe`;
 - source proof Git blob `36b046f0efc32fa9464cd0943aef30af398c63bf`;
+- source implementation Git blob `81b2a6441b21699a3f98f8e209a12267da2fba50`;
 - replication `FARA-CANONICAL-KERNEL-REPLICATION-001`, merge commit `5932e6b2111c6d7da8b1c9a443474b395f02880e`;
 - replication adjudication Git blob `d4737e680ece1510c23eb8571470e0f175d7f663`;
 - Acceptance record Git blob `4958a71434f9c5572aba6edc1e51572736e24b3a`;
