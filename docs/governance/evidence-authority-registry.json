@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.6",
+  "schema_version": "1.7",
   "status": "Research",
   "candidacy": "inactive_candidate",
   "promotion_completed": false,
@@ -28,7 +28,9 @@
     "independent bootstrap authority selected and hash locked",
     "every fixed canonical owner has an explicit artifact status",
     "every fixed canonical owner requiring active authority has status Accepted",
-    "proof owner pattern covers every proof object named by registered proof metadata"
+    "proof owner pattern covers every proof object named by registered proof metadata",
+    "every registered proof artifact has exactly one explicit charter status in a promotion status manifest",
+    "every registered proof artifact has status Accepted before proof authority activates"
   ],
   "default_rule": "unregistered artifacts have no authority beyond their explicit local status and content",
   "domains": {
@@ -62,10 +64,18 @@
       "may_not_establish": ["truth without linked proof record", "scope expansion"]
     },
     "proof_records": {
-      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/**/proofs/**|theory/evaluation/*.json|docs/governance/proofs/**|docs/research/*proof*.md|mechanization/lean/*.lean",
+      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/**/proofs/**|theory/evaluation/*.json|theory/proof-objects/*.proof.yaml|docs/governance/proofs/**|docs/research/*proof*.md|mechanization/lean/*.lean",
       "authority_class": "proof_record",
       "proposition_scope": "exact registered formal statements under explicit premises",
       "requires": ["statement identifier", "exact statement", "premises", "scope", "model class", "proof object", "status-register entry"],
+      "status_policy": {
+        "manifest_required_for_activation": true,
+        "manifest_created_by": "separate promotion lifecycle",
+        "missing_or_undeclared_status": "Unknown",
+        "required_status_for_activation": "Accepted",
+        "exactly_one_status_per_registered_artifact": true,
+        "validate_status_against_artifact_status_taxonomy": true
+      },
       "may_establish": ["exact proved statement under registered premises"],
       "may_not_establish": ["unregistered theorem truth", "scope expansion", "empirical truth"]
     },
@@ -133,6 +143,7 @@
     "acceptance record",
     "promotion record",
     "owner status transitions completed",
+    "proof artifact status manifest completed",
     "limitations and counterexamples",
     "status-register update",
     "canonical-map update",
@@ -152,6 +163,7 @@
     "research candidate implies acceptance",
     "research candidate authorizes experiment execution",
     "research candidate prohibits experiment execution",
-    "lifecycle promotion implies artifact status Promoted"
+    "lifecycle promotion implies artifact status Promoted",
+    "proof owner pattern implies Accepted proof status"
   ]
 }
