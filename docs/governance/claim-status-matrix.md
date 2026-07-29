@@ -4,9 +4,8 @@ Status: **Accepted classification index; source records remain authoritative**
 
 | Claim or concept | Classification | Boundary |
 |---|---|---|
-| FARA primitive vocabulary | Five current candidate primitives for Project FAR v1.0 | Object, Relation, Representation, Interpretation, and Reasoning Calculus remain candidate primitives. Property and Investigation have scoped reductions in `FARA-CANONICAL-KERNEL-001`. No global necessity, mutual independence, or minimality is established. |
-| FARA canonical formal foundation | Accepted scoped architectural decision | The identity-bearing many-sorted relational kernel is canonical for Project FAR v1.0. Typed-hypergraph and algebraic/state-transition structures are derived views, not coequal canonical foundations. No global uniqueness follows. |
-| Terms derived from FARA primitives | Derived | Valid only where cited definitions, model class, preservation contract, and premises apply. |
+| FARA primitive vocabulary | Seven primitive candidates / accepted only within recorded framework scope | W1 tested Object, Property, Relation, Representation, Interpretation, Investigation, and Reasoning Calculus; every result is unresolved. No global necessity, independence, derivability, or equivalence is established. |
+| Terms derived from FARA primitives | Derived | Valid only where cited definitions and premises apply. |
 | FAR investigation workflow | Independent methodological choice | A procedure, not a theorem or prerequisite of theory. |
 | FARO comparison/audit operations | Derived framework operations | Depend on foundations → shared theory → FARA → FAR. |
 | Common minimal reasoning architecture | Empirical hypothesis / conjecture | Not universally established. |
@@ -33,7 +32,7 @@ Examples, methodology, research, validation, papers and archive are never prereq
 | Construct/Differentiate/Restrict in `finite_coordinate_trace_v1` | Coordinate-separation-induced bounded minimality | Valid only under finite monotone traces, exclusive coordinate effects, and componentwise equality; not evidence of canonical or global operator necessity. |
 | Resolve is primitive | Rejected on current record | It is treated as rule application/procedure; W2 does not derive it because the bounded model lacks rule representation and rule execution. |
 | A fourth or fifth irreducible operator exists | Unresolved | No accepted candidate/evidence. |
-| Admissibility is prior to valid transition (or conversely) | Unresolved | Both depend on a declared calculus/context in current definitions. |
+| Admissibility is prior to valid transition (or conversely) | Unresolved | Both are context/calculus-relative in current definitions. |
 | FAR translates reasoning systems without expressive loss | Unresolved and not a current general claim | Every mapping must report preservation/loss. |
 | CLM-REP-W4-001 | Supported only for `finite_tagged_archive_v1` under its frozen full preservation and machinery-closure contract | Positive witnesses coexist with semantic, causal, continuous, embodied, oracle, identity, and provenance failures; simulation or narrowed behavior is not recovery. |
 | FARA is universal/minimal | Bounded theorem only under exact frozen premises; global claim unresolved | Never omit the target class and faithfulness/closure/equivalence assumptions. |
@@ -45,9 +44,8 @@ Examples, methodology, research, validation, papers and archive are never prereq
 | Comparative mappings establish representational sufficiency | Validated only for exact cases meeting CRP rules | No universality follows. |
 | Commercial/software claims imply theoretical validation | Rejected | Software behavior and commercial framing are downstream and bounded. |
 | FARA-VOC-001 | extension pressure with boundedly irreducible candidate additions | Nineteen executable registered-family mappings reject catch-all serialization as expression; bounded failures support extension pressure only under the frozen auxiliary interpretation. |
-| FARA-CORE-FORMAL-001 | bounded historical formalization evidence | One finite many-sorted target is coherent and testable. Its three retained non-equivalent foundations motivated later canonical adjudication but did not itself select a canonical foundation. |
-| FARA-FOUNDATION-COMP-001 | multiple foundations remain Pareto-incomparable under the frozen 19-case campaign | Many-sorted relational dominates algebraic/state-transition under all seventeen frozen dimensions; typed hypergraph remains Pareto-incomparable with many-sorted relational. No canonical selection follows from that campaign alone. |
-| FARA-CANONICAL-KERNEL-001 | Accepted Project FAR v1.0 architectural specification with executable evidence | The identity-bearing many-sorted relational kernel uniquely satisfies the frozen canonical gates. Typed-hypergraph round-trips exactly as a derived view; algebraic/state-transition requires an explicit sidecar for complete reconstruction. No global uniqueness, universality, minimality, necessity, or completeness follows. |
+| FARA-CORE-FORMAL-001 | multiple non-equivalent coherent formalizations remain | One bounded many-sorted target is coherent and testable, but substantive identity/disjointness choices and two alternative coherent foundations prohibit canonical uniqueness, global independence, minimality, completeness, or universality claims. |
+| FARA-FOUNDATION-COMP-001 | multiple foundations remain Pareto-incomparable under the frozen 19-case campaign | Many-sorted relational dominates algebraic/state-transition under all seventeen frozen dimensions; typed hypergraph remains Pareto-incomparable with many-sorted relational. No canonical or global selection follows. |
 
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->
 - Mapping totals (Pass/Partial/Fail/Unknown): `{"algebraic-state-transition":{"Fail":4,"Partial":0,"Pass":12,"Unknown":3},"many-sorted-relational":{"Fail":3,"Partial":0,"Pass":13,"Unknown":3},"typed-hypergraph":{"Fail":0,"Partial":0,"Pass":16,"Unknown":3}}`
