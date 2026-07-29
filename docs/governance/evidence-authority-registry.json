@@ -1,10 +1,11 @@
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "status": "Research candidate; not Accepted or Promoted",
   "authority_model": "docs/governance/evidence-authority-model.md",
   "lifecycle_state": "Research",
   "active": false,
   "self_activation_prohibited": true,
+  "artifact_status_taxonomy": ["Accepted", "Research", "Provisional", "Archive", "Unknown"],
   "bootstrap": {
     "status": "Unknown",
     "required_authority": "an Accepted-status or promotion-provenance authority whose authority predates this model",
@@ -12,15 +13,21 @@
     "selection_must_be_preregistered_and_hash_locked": true
   },
   "permitted_statuses_by_class": {
-    "governance_decision": ["Accepted", "Promoted"],
-    "canonical_specification": ["Accepted", "Promoted"],
-    "proof_record": ["Accepted", "Promoted"],
-    "status_register": ["Accepted", "Promoted"],
-    "research_record": ["Research", "Accepted", "Promoted"],
-    "methodological_specification": ["Accepted", "Promoted"],
-    "index": ["Accepted", "Promoted"],
-    "historical_record": ["Superseded", "Accepted", "Promoted"]
+    "governance_decision": ["Accepted"],
+    "canonical_specification": ["Accepted"],
+    "proof_record": ["Accepted"],
+    "status_register": ["Accepted"],
+    "research_record": ["Research", "Accepted"],
+    "methodological_specification": ["Accepted"],
+    "index": ["Accepted"],
+    "historical_record": ["Archive"]
   },
+  "activation_requirements": [
+    "independent bootstrap authority selected and hash locked",
+    "every fixed canonical owner has an explicit artifact status",
+    "every fixed canonical owner requiring active authority has status Accepted",
+    "proof owner pattern covers every proof object named by the theorem and proof status register"
+  ],
   "default_rule": "unregistered artifacts have no authority beyond their explicit local status and content",
   "domains": {
     "governance_decisions": {
@@ -53,7 +60,7 @@
       "may_not_establish": ["truth without linked proof record", "scope expansion"]
     },
     "proof_records": {
-      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/**/proofs/**|docs/governance/proofs/**",
+      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/**/proofs/**|theory/evaluation/*.json|docs/governance/proofs/**",
       "authority_class": "proof_record",
       "proposition_scope": "exact registered formal statements under explicit premises",
       "requires": ["statement identifier", "exact statement", "premises", "scope", "model class", "proof object", "status-register entry"],
@@ -83,6 +90,8 @@
     },
     "detailed_definitions": {
       "owner": "theory/definitions/definitions.md",
+      "current_status": "Unknown",
+      "required_status_for_activation": "Accepted",
       "authority_class": "canonical_specification",
       "proposition_scope": "detailed formal definitions",
       "may_establish": ["detailed formal definitions within stated scope"],
@@ -102,6 +111,13 @@
       "proposition_scope": "adopted investigation and evaluation procedures",
       "may_establish": ["adopted investigation procedure", "evaluation rule"],
       "may_not_establish": ["logical derivation from FARA", "truth of investigated claim"]
+    },
+    "historical_records": {
+      "owner_pattern": "archive/**",
+      "authority_class": "historical_record",
+      "proposition_scope": "artifact provenance and superseded reasoning",
+      "may_establish": ["provenance", "superseded reasoning"],
+      "may_not_establish": ["active canonical authority", "claim truth", "acceptance", "promotion"]
     }
   },
   "promotion_requirements": [
@@ -114,6 +130,7 @@
     "replication record",
     "acceptance record",
     "promotion record",
+    "owner status transitions completed",
     "limitations and counterexamples",
     "status-register update",
     "canonical-map update",
@@ -132,6 +149,7 @@
     "authority registry self-promotion",
     "research candidate implies acceptance",
     "research candidate authorizes experiment execution",
-    "research candidate prohibits experiment execution"
+    "research candidate prohibits experiment execution",
+    "lifecycle promotion implies artifact status Promoted"
   ]
 }
