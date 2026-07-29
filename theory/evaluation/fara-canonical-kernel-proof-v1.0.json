@@ -1,0 +1,121 @@
+{
+  "algebraic_translation": {
+    "digest": "30f4fd1e91b5259cd051e76f161832da6fc4f5f82da90670655565d372c1ac4f",
+    "operation_count": 2,
+    "roundtrip_exact_with_sidecar": true,
+    "sidecar_required": true,
+    "standalone_complete": false
+  },
+  "campaign_id": "FARA-CANONICAL-KERNEL-001",
+  "candidate_adjudication": [
+    {
+      "classification": "noncanonical",
+      "failed_gates": [
+        "identity_bearing_occurrences"
+      ],
+      "id": "many-sorted-extensional-relational",
+      "reason": "The existing candidate directly matches FARA sorts but extensional tuple identity collapses distinct parallel relation occurrences. Reifying occurrences repairs the defect and yields the selected kernel."
+    },
+    {
+      "classification": "admissible-derived-view",
+      "failed_gates": [
+        "encoding_neutrality"
+      ],
+      "id": "typed-hypergraph",
+      "reason": "Typed nodes and identity-bearing hyperedges preserve the required commitments, but universal node/port/hyperedge machinery fixes an encoding style not required by FARA. It is retained as an exact derived view."
+    },
+    {
+      "classification": "admissible-derived-view",
+      "failed_gates": [
+        "representation_object_separation",
+        "rule_execution_result_separation",
+        "interpretation_separation",
+        "calculus_independence",
+        "architecture_operation_separation",
+        "identity_bearing_occurrences",
+        "explicit_provenance_and_order"
+      ],
+      "id": "algebraic-state-transition",
+      "reason": "Bare transition algebra makes operation and execution structure foundational and does not natively preserve source/representation, interpretation, provenance, or occurrence identity. A charged sidecar makes it an admissible operational backend."
+    },
+    {
+      "classification": "canonical-candidate",
+      "failed_gates": [],
+      "id": "identity-bearing-many-sorted-relational",
+      "reason": "Typed disjoint carriers directly realize FARA categories; identity-bearing Event and RelationOccurrence carriers preserve repeated occurrences; operational semantics remain in the declared calculus or FARO layer."
+    }
+  ],
+  "conclusion": "For Project FAR v1.0, FARA's canonical formal foundation is the identity-bearing many-sorted relational kernel. Typed-hypergraph and algebraic/state-transition forms are admissible derived views when their translations and required sidecars are explicit and commitment-preserving.",
+  "counterexamples": {
+    "bare_algebraic_reconstruction": {
+      "full_reconstruction_without_sidecar": false,
+      "lost_commitments": [
+        "source/representation sort separation",
+        "interpretation",
+        "investigation context",
+        "provenance",
+        "relation occurrence identity"
+      ]
+    },
+    "extensional_relation_identity_loss": {
+      "loss_detected": true,
+      "occurrence_count": 2,
+      "projected_fact_count": 1
+    }
+  },
+  "derived_status": {
+    "Investigation": "derived objective/condition/calculus context tuple; records may carry identity",
+    "Property": "derived unary relation occurrence",
+    "ReasoningTrace": "derived ordered Event collection",
+    "SemanticContent": "derived interpretation application",
+    "TransitionSignature": "derived representation of Event"
+  },
+  "derived_views_digest": "485e6553b6fde66df19a691a04c479b4f1d76866336a824833d1fbcdea90125e",
+  "historical_artifacts": {
+    "theory/evaluation/fara-expanded-bounded-campaign-proof-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "548f237e688db3260b6f9fd26224e18380b98282"
+    },
+    "theory/evaluation/fara-foundation-comparison-proof-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "1e8d16e9e1dee4f17361666af49425752c6c2d3c"
+    },
+    "theory/formal/fara-expanded-bounded-campaign-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "f6cc63feffd64bcd8a18945ae4cca3d1e52b7849"
+    },
+    "theory/formal/fara-foundation-comparison-v1.0.json": {
+      "base_commit": "882d137be56669ab3a259662c6497ff5195b123f",
+      "git_blob_sha": "2fcdb87726ef483a1d39f0254971d5df7b73e738"
+    }
+  },
+  "historical_result_policy": {
+    "adjudication": "The historical Pareto terminal remains true of the frozen candidates. Canonical selection is a later scoped architectural decision using FARA's mandatory gates, including the repaired occurrence-identity requirement.",
+    "fara-expanded-bounded-campaign-v1.0": "Preserved as bounded Research evidence. No finite result is promoted to universality, necessity, uniqueness, minimality, or completeness.",
+    "fara-foundation-comparison-v1.0": "Preserved as bounded Research evidence comparing the three frozen candidates under seventeen Pareto dimensions."
+  },
+  "hypergraph_translation": {
+    "digest": "b7f34358d364022091916d4e83f61990552e706009e6e50f33629d3c739dea61",
+    "edge_count": 25,
+    "node_count": 23,
+    "roundtrip_exact": true
+  },
+  "kernel_version": "fara-identity-bearing-many-sorted-relational/1.0",
+  "nonclaims": [
+    "globally unique foundation of reasoning",
+    "universal representation of every reasoning system",
+    "global primitive necessity",
+    "global minimality",
+    "completeness",
+    "coverage of nonfinite continuous semantics",
+    "coverage of live-oracle semantics",
+    "coverage of embodied environment semantics",
+    "independent replication"
+  ],
+  "sample_model_digest": "38f6e4ab121a3fe1c7a91d5850fbdf8b35a52dd08668dbdca3fc26171408cf6b",
+  "sample_model_valid": true,
+  "scope": "Project FAR v1.0 finite explicit auditable representational architecture",
+  "selected_foundation": "identity-bearing-many-sorted-relational",
+  "spec_digest": "f07c1696d8735c2e14e21b1f0e78b5a594d024ab8ad2fd674a124b9038d3f59a",
+  "status": "Accepted"
+}
