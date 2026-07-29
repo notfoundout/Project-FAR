@@ -1,39 +1,26 @@
 {
   "candidates": [
-    {
-      "id": "many-sorted-extensional-relational",
-      "kind": "native-extensional"
-    },
-    {
-      "id": "typed-hypergraph",
-      "kind": "derived-view"
-    },
-    {
-      "id": "algebraic-state-transition",
-      "kind": "derived-view"
-    },
-    {
-      "id": "identity-bearing-many-sorted-relational",
-      "kind": "native-identity-bearing"
-    }
+    {"id":"many-sorted-extensional-relational","kind":"native-extensional"},
+    {"id":"typed-hypergraph","kind":"derived-view"},
+    {"id":"algebraic-state-transition","kind":"derived-view"},
+    {"id":"identity-bearing-many-sorted-relational","kind":"native-identity-bearing"}
   ],
   "decision_rule": {
-    "not_replicated": "Any candidate disagreement, invalid neutral scenario, stale output, source-kernel dependency, or independence-contract violation.",
+    "not_replicated": "Any candidate disagreement, invalid neutral scenario, stale output, source-kernel dependency, history-proof failure, or independence-contract violation.",
     "partial": "Execution completes but one or more comparison dimensions are unavailable without changing the frozen protocol.",
-    "replicated": "Every candidate has the same failed-gate set and classification as the source proof, all neutral scenarios validate, committed output equals a fresh isolated execution, and all independence checks pass."
+    "replicated": "Every candidate has the same failed-gate set and classification as the source proof, all neutral scenarios validate, committed output equals a fresh isolated execution, all independence checks pass, and Git ancestry proves the fixture corpus predates the implementation."
   },
   "fixture_corpus": {
-    "frozen_before_implementation": true,
+    "path": "research/replications/fara-canonical-kernel-v1.0/neutral-fixtures.json",
     "git_blob_sha": "d967dc66d451dc7d3d2e269276e19fbfee7390cc",
-    "path": "research/replications/fara-canonical-kernel-v1.0/neutral-fixtures.json"
+    "freeze_commit": "10e28b1827834430d4b4e08e447ab4b219361c46",
+    "implementation_commit": "d6bd162811cda81cb697687e690bf25e73a7ad54",
+    "replication_branch": "research/fara-kernel-independent-replication",
+    "merge_requirement": "Merge commit required; squash or rebase would destroy the reachable staged-history evidence."
   },
   "independence_contract": {
     "agreement_is_computed_after_execution": true,
-    "allowed_runtime_modules": [
-      "fs",
-      "crypto",
-      "path"
-    ],
+    "allowed_runtime_modules": ["fs","crypto","path"],
     "implementation_language": "JavaScript (Node.js)",
     "must_execute_in_isolated_directory": true,
     "must_not_import_source_kernel": true,
@@ -57,16 +44,7 @@
     "encoding_neutrality"
   ],
   "nonclaims": [
-    "external investigator independence",
-    "accepted canonical repository foundation",
-    "global uniqueness",
-    "universal representation",
-    "primitive necessity",
-    "global minimality",
-    "completeness",
-    "nonfinite continuous semantics",
-    "live-oracle semantics",
-    "embodied environment semantics"
+    "external investigator independence","accepted canonical repository foundation","global uniqueness","universal representation","primitive necessity","global minimality","completeness","nonfinite continuous semantics","live-oracle semantics","embodied environment semantics"
   ],
   "question": "Does a clean-room implementation using neutral fixtures independently reproduce the source campaign's candidate gate classifications?",
   "replication_id": "FARA-CANONICAL-KERNEL-REPLICATION-001",
