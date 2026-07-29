@@ -62,7 +62,9 @@ After valid activation, a governance decision would be authoritative only for th
 
 ## Proof authority
 
-The registry separately assigns theorem/proof classification to `docs/governance/theorem-proof-status-register.md` and exact proof objects to a proof-record owner pattern that includes every proof artifact path registered by repository proof metadata, including linked Markdown records under `docs/research/` and JSON proof records under `theory/evaluation/`.
+The registry separately assigns theorem/proof classification to `docs/governance/theorem-proof-status-register.md` and exact proof objects to a proof-record owner pattern that includes every proof artifact path registered by repository proof metadata, including Markdown, JSON, YAML, and Lean proof objects.
+
+Owner-pattern coverage establishes only proposed ownership. It does not establish artifact status. Before activation, the promotion lifecycle must create a proof-artifact status manifest that lists every registered proof artifact exactly once, assigns one charter-recognized artifact status, and transitions every artifact intended to carry proof authority to `Accepted`. A missing or undeclared status is treated as `Unknown` and blocks proof authority.
 
 Use of `theorem`, `lemma`, `proposition`, `proof`, `derivation`, `necessary`, `sufficient`, `minimal`, `irreducible`, or `universal` requires a unique statement identifier, exact statement, premises, scope, model class, preservation criterion where relevant, linked proof object or bounded-evidence classification, and a status-register entry.
 
@@ -96,6 +98,7 @@ A research record is admissible only when its question, design, source identitie
 - Repetition across files does not increase authority.
 - This model and registry cannot Accept, Promote, or activate themselves.
 - The initial bootstrap authority must predate and be independent of this model.
+- Proof-owner coverage cannot substitute for an explicit permitted artifact status.
 
 ## Promotion gate
 
@@ -107,10 +110,11 @@ This Research candidate may become active only through a separately preregistere
 4. identifies required proof or evidence;
 5. records replication, Acceptance, and Promotion separately;
 6. transitions every proposed canonical owner lacking an explicit status to `Accepted` through separate governance;
-7. records unresolved counterexamples and limitations;
-8. updates the applicable status register and canonical map;
-9. passes semantic, dependency, and repository validation;
-10. does not claim more than the supporting record establishes.
+7. creates and validates a complete proof-artifact status manifest with exactly one charter status per registered proof artifact and `Accepted` status for every artifact intended to carry proof authority;
+8. records unresolved counterexamples and limitations;
+9. updates the applicable status register and canonical map;
+10. passes semantic, dependency, and repository validation;
+11. does not claim more than the supporting record establishes.
 
 Until every requirement is satisfied, activation remains prohibited and authority conclusions remain `Unknown`.
 
