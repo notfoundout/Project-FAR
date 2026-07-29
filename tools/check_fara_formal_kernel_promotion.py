@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import importlib.util
 import json
 import re
 import sys
@@ -58,6 +59,26 @@ EXPECTED_RELATIONS = {
     "provenance_of": ["Event", "Provenance"],
     "represents_event": ["Representation", "Event"],
 }
+EXPECTED_IDENTITY_CRITERIA = {
+    "typed_identity": True,
+    "cross_sort_identity_collision_allowed": False,
+    "event_occurrences_identity_bearing": True,
+    "relation_occurrences_identity_bearing": True,
+    "literal_identifier_spelling_semantic": False,
+    "renaming_may_merge_split_create_or_delete_identities": False,
+}
+EXPECTED_MODEL_EQUIVALENCE = {
+    "name": "kernel-equivalence",
+    "relation": "sort-preserving relational isomorphism",
+    "requires_bijection_per_sort": True,
+    "preserves_and_reflects_every_relation": True,
+    "preserves_occurrence_multiplicity": True,
+    "preserves_event_cardinality": True,
+    "preserves_provenance": True,
+    "preserves_precedence": True,
+    "exact_normalized_equality": "identity-map special case",
+    "behavioral_or_commitment_equivalence_substitutable": False,
+}
 EXPECTED_PRIMITIVES = [
     "Object",
     "Property",
@@ -70,7 +91,9 @@ EXPECTED_PRIMITIVES = [
 EXPECTED_ROLES = {
     "identity-bearing-many-sorted-relational": "canonical-formal-kernel-within-scope",
     "typed-hypergraph": "admissible-derived-representation",
-    "algebraic-state-transition": "admissible-derived-backend-with-explicit-preservation-machinery",
+    "algebraic-state-transition": (
+        "admissible-derived-backend-with-explicit-preservation-machinery"
+    ),
     "many-sorted-extensional-relational": "noncanonical-identity-losing-projection",
 }
 REQUIRED_AUTHORITY_MARKERS = {
@@ -121,10 +144,20 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
             errors.append(f"manifest {key} mismatch")
 
     lifecycle = manifest.get("lifecycle", {})
-    for stage in ("question", "execution", "observation", "discovery", "replication", "acceptance", "promotion"):
+    stages = (
+        "question",
+        "execution",
+        "observation",
+        "discovery",
+        "replication",
+        "acceptance",
+        "promotion",
+    )
+    for stage in stages:
         if lifecycle.get(stage) != "complete":
             errors.append(f"lifecycle stage not complete: {stage}")
-    if lifecycle.get("repository_change") != "authorized; effective when this pull request merges":
+    expected_change = "authorized; effective when this pull request merges"
+    if lifecycle.get("repository_change") != expected_change:
         errors.append("repository-change lifecycle boundary mismatch")
 
     if manifest.get("mandatory_gates") != EXPECTED_GATES:
@@ -133,6 +166,10 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
         errors.append("canonical sort registry mismatch")
     if manifest.get("relations") != EXPECTED_RELATIONS:
         errors.append("canonical relation signature mismatch")
+    if manifest.get("identity_criteria") != EXPECTED_IDENTITY_CRITERIA:
+        errors.append("identity criteria mismatch")
+    if manifest.get("model_equivalence") != EXPECTED_MODEL_EQUIVALENCE:
+        errors.append("model equivalence relation mismatch")
     if manifest.get("candidate_roles") != EXPECTED_ROLES:
         errors.append("candidate role adjudication mismatch")
     if manifest.get("primitive_registry_unchanged") != EXPECTED_PRIMITIVES:
@@ -161,14 +198,18 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
 def validate_blob_locks(manifest: dict[str, Any], root: Path = ROOT) -> list[str]:
     errors: list[str] = []
     records = [manifest.get("canonical_document", {})]
-    records.extend(manifest.get("evidence_locks", {}).get(key, {}) for key in (
+    lock_names = (
         "source_spec",
         "source_proof",
+        "source_implementation",
         "replication_result",
         "replication_adjudication",
         "acceptance_record",
         "promotion_record",
-    ))
+    )
+    records.extend(
+        manifest.get("evidence_locks", {}).get(key, {}) for key in lock_names
+    )
     for record in records:
         path_value = record.get("path")
         expected = record.get("git_blob_sha")
@@ -185,7 +226,9 @@ def validate_blob_locks(manifest: dict[str, Any], root: Path = ROOT) -> list[str
     return errors
 
 
-def validate_evidence_content(manifest: dict[str, Any], root: Path = ROOT) -> list[str]:
+def validate_evidence_content(
+    manifest: dict[str, Any], root: Path = ROOT
+) -> list[str]:
     errors: list[str] = []
     locks = manifest["evidence_locks"]
     source_spec = load_json(root / locks["source_spec"]["path"])
@@ -202,7 +245,9 @@ def validate_evidence_content(manifest: dict[str, Any], root: Path = ROOT) -> li
     if source_proof.get("proposed_foundation") != EXPECTED_KERNEL:
         errors.append("source proof foundation mismatch")
 
-    source_rows = {row["id"]: row for row in source_proof.get("candidate_adjudication", [])}
+    source_rows = {
+        row["id"]: row for row in source_proof.get("candidate_adjudication", [])
+    }
     selected = source_rows.get(EXPECTED_KERNEL, {})
     if selected.get("classification") != "provisional-canonical-candidate":
         errors.append("source candidate classification mismatch")
@@ -215,7 +260,8 @@ def validate_evidence_content(manifest: dict[str, Any], root: Path = ROOT) -> li
         errors.append("replication decision is not replicated")
     if adjudication.get("errors") != []:
         errors.append("replication adjudication contains errors")
-    if not adjudication.get("agreement", {}).get("matches_source_classifications_and_failed_gates"):
+    agreement = adjudication.get("agreement", {})
+    if not agreement.get("matches_source_classifications_and_failed_gates"):
         errors.append("replication/source agreement missing")
     independence = adjudication.get("independence", {})
     if independence.get("external_investigator_independence") != "not established":
@@ -229,7 +275,136 @@ def validate_evidence_content(manifest: dict[str, Any], root: Path = ROOT) -> li
     return errors
 
 
-def validate_canonical_text(manifest: dict[str, Any], text: str) -> list[str]:
+def validate_model_isomorphism(
+    left: dict[str, Any],
+    right: dict[str, Any],
+    mapping: dict[str, dict[str, str]],
+) -> list[str]:
+    errors: list[str] = []
+    left_sorts = left.get("sorts", {})
+    right_sorts = right.get("sorts", {})
+    left_relations = left.get("relations", {})
+    right_relations = right.get("relations", {})
+
+    for sort_name in EXPECTED_SORTS:
+        left_members = set(left_sorts.get(sort_name, []))
+        right_members = set(right_sorts.get(sort_name, []))
+        sort_mapping = mapping.get(sort_name, {})
+        if set(sort_mapping) != left_members:
+            errors.append(f"isomorphism domain mismatch: {sort_name}")
+            continue
+        images = list(sort_mapping.values())
+        if len(images) != len(set(images)):
+            errors.append(f"isomorphism is not injective: {sort_name}")
+        if set(images) != right_members:
+            errors.append(f"isomorphism codomain mismatch: {sort_name}")
+
+    for relation_name, signature in EXPECTED_RELATIONS.items():
+        mapped_rows: set[tuple[str, ...]] = set()
+        for row in left_relations.get(relation_name, []):
+            if len(row) != len(signature):
+                errors.append(f"left relation arity mismatch: {relation_name}")
+                continue
+            try:
+                mapped = tuple(
+                    mapping[sort_name][value]
+                    for value, sort_name in zip(row, signature)
+                )
+            except KeyError:
+                errors.append(f"unmapped relation member: {relation_name}")
+                continue
+            mapped_rows.add(mapped)
+        right_rows = {
+            tuple(row) for row in right_relations.get(relation_name, [])
+        }
+        if mapped_rows != right_rows:
+            errors.append(f"relation not preserved and reflected: {relation_name}")
+    return sorted(set(errors))
+
+
+def rename_model(
+    model: dict[str, Any], mapping: dict[str, dict[str, str]]
+) -> dict[str, Any]:
+    renamed = copy.deepcopy(model)
+    renamed["sorts"] = {
+        sort_name: [mapping[sort_name][member] for member in members]
+        for sort_name, members in model["sorts"].items()
+    }
+    renamed["relations"] = {}
+    for relation_name, signature in EXPECTED_RELATIONS.items():
+        renamed["relations"][relation_name] = [
+            [
+                mapping[sort_name][value]
+                for value, sort_name in zip(row, signature)
+            ]
+            for row in model["relations"][relation_name]
+        ]
+    return renamed
+
+
+def load_source_kernel(
+    manifest: dict[str, Any], root: Path = ROOT
+) -> Any:
+    path = root / manifest["evidence_locks"]["source_implementation"]["path"]
+    spec = importlib.util.spec_from_file_location("fara_source_kernel", path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError("unable to load source kernel")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def validate_equivalence_witness(
+    manifest: dict[str, Any], root: Path = ROOT
+) -> list[str]:
+    errors: list[str] = []
+    try:
+        kernel = load_source_kernel(manifest, root)
+        model = kernel.sample_model()
+    except Exception as exc:  # pragma: no cover - converted to fail-closed output
+        return [f"equivalence witness setup failed: {exc}"]
+
+    mapping = {
+        sort_name: {
+            member: f"{sort_name.lower()}::{index}"
+            for index, member in enumerate(model["sorts"][sort_name])
+        }
+        for sort_name in EXPECTED_SORTS
+    }
+    renamed = rename_model(model, mapping)
+    if kernel.validate_model(renamed):
+        errors.append("renamed equivalence witness is not an admitted model")
+    if validate_model_isomorphism(model, renamed, mapping):
+        errors.append("sort-preserving renaming failed kernel equivalence")
+
+    occurrence_members = model["sorts"]["RelationOccurrence"]
+    if len(occurrence_members) >= 2:
+        noninjective = copy.deepcopy(mapping)
+        first, second = occurrence_members[:2]
+        noninjective["RelationOccurrence"][second] = noninjective[
+            "RelationOccurrence"
+        ][first]
+        noninjective_errors = validate_model_isomorphism(
+            model, renamed, noninjective
+        )
+        if not any("not injective: RelationOccurrence" in item for item in noninjective_errors):
+            errors.append("occurrence-identity collapse was not rejected")
+
+    without_provenance = copy.deepcopy(renamed)
+    without_provenance["relations"]["provenance_of"] = without_provenance[
+        "relations"
+    ]["provenance_of"][:-1]
+    provenance_errors = validate_model_isomorphism(
+        model, without_provenance, mapping
+    )
+    if "relation not preserved and reflected: provenance_of" not in provenance_errors:
+        errors.append("provenance-loss equivalence was not rejected")
+    return errors
+
+
+def validate_canonical_text(
+    manifest: dict[str, Any], text: str
+) -> list[str]:
     errors: list[str] = []
     required = [
         "Status: **Accepted**",
@@ -237,6 +412,8 @@ def validate_canonical_text(manifest: dict[str, Any], text: str) -> list[str]:
         "identity-bearing many-sorted relational structure",
         "finite, explicit, auditable representational architectures in Project FAR v1.0",
         "The formal carrier names do not reclassify FARA's seven candidate primitives.",
+        "Literal token spelling is not semantic by itself.",
+        "sort-preserving relational isomorphism",
         "external-investigator independence",
     ]
     for marker in required:
@@ -255,10 +432,14 @@ def validate_canonical_text(manifest: dict[str, Any], text: str) -> list[str]:
     return errors
 
 
-def validate_primitive_text(manifest: dict[str, Any], text: str) -> list[str]:
+def validate_primitive_text(
+    manifest: dict[str, Any], text: str
+) -> list[str]:
     errors: list[str] = []
     match = re.search(
-        r"# Current Candidate Primitives\s+The current candidate primitive concepts are:\s+(.*?)\s+These concepts presently serve",
+        r"# Current Candidate Primitives\s+"
+        r"The current candidate primitive concepts are:\s+"
+        r"(.*?)\s+These concepts presently serve",
         text,
         flags=re.DOTALL,
     )
@@ -290,13 +471,21 @@ def validate(
     canonical_text: str | None = None,
     primitive_text: str | None = None,
 ) -> list[str]:
-    manifest = copy.deepcopy(manifest if manifest is not None else load_json(root / MANIFEST.relative_to(ROOT)))
+    manifest_path = root / MANIFEST.relative_to(ROOT)
+    manifest = copy.deepcopy(
+        manifest if manifest is not None else load_json(manifest_path)
+    )
     errors = validate_manifest(manifest)
     if check_files:
         errors.extend(validate_blob_locks(manifest, root))
         errors.extend(validate_evidence_content(manifest, root))
-        canonical_path = root / manifest.get("canonical_document", {}).get("path", "")
-        canonical_text = canonical_path.read_text() if canonical_path.is_file() else ""
+        errors.extend(validate_equivalence_witness(manifest, root))
+        canonical_path = root / manifest.get("canonical_document", {}).get(
+            "path", ""
+        )
+        canonical_text = (
+            canonical_path.read_text() if canonical_path.is_file() else ""
+        )
         primitive_text = (root / "frameworks/FARA/primitives.md").read_text()
         errors.extend(validate_authority_markers(root))
     if canonical_text is not None:
