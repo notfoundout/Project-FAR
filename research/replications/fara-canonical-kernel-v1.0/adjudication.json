@@ -1,0 +1,52 @@
+{
+  "agreement": {
+    "matches_source_classifications_and_failed_gates": true,
+    "replication": [
+      {"classification": "noncanonical", "failed_gates": ["identity_bearing_occurrences"], "id": "many-sorted-extensional-relational"},
+      {"classification": "admissible-derived-view", "failed_gates": ["encoding_neutrality"], "id": "typed-hypergraph"},
+      {"classification": "admissible-derived-view", "failed_gates": ["architecture_operation_separation", "calculus_independence", "encoding_neutrality", "explicit_provenance_and_order", "identity_bearing_occurrences", "interpretation_separation", "representation_object_separation"], "id": "algebraic-state-transition"},
+      {"classification": "provisional-canonical-candidate", "failed_gates": [], "id": "identity-bearing-many-sorted-relational"}
+    ],
+    "source": [
+      {"classification": "noncanonical", "failed_gates": ["identity_bearing_occurrences"], "id": "many-sorted-extensional-relational"},
+      {"classification": "admissible-derived-view", "failed_gates": ["encoding_neutrality"], "id": "typed-hypergraph"},
+      {"classification": "admissible-derived-view", "failed_gates": ["architecture_operation_separation", "calculus_independence", "encoding_neutrality", "explicit_provenance_and_order", "identity_bearing_occurrences", "interpretation_separation", "representation_object_separation"], "id": "algebraic-state-transition"},
+      {"classification": "provisional-canonical-candidate", "failed_gates": [], "id": "identity-bearing-many-sorted-relational"}
+    ]
+  },
+  "artifact_locks": {
+    "fixtures_git_blob_sha": "d967dc66d451dc7d3d2e269276e19fbfee7390cc",
+    "fresh_result_sha256": "acbfdeb862d4f8860fab8a3497eef3522144b2624532de01d251fa7b40c17505",
+    "implementation_git_blob_sha": "89293caf6838882129efeaeb343662351348ef90",
+    "protocol_git_blob_sha": "a4560b006eaa5d9be4ca25cf6a294a1efe7f42a5",
+    "raw_result_git_blob_sha": "fde056ce8309f0ef2f383730b02438f5c2b91c93"
+  },
+  "decision": "replicated",
+  "errors": [],
+  "independence": {
+    "external_investigator_independence": "not established",
+    "implementation_language_independent": true,
+    "isolated_directory_execution": true,
+    "neutral_fixture_history": {
+      "errors": [],
+      "fixture_unchanged_since_freeze": true,
+      "freeze_ancestor_of_implementation": true,
+      "freeze_commit": "10e28b1827834430d4b4e08e447ab4b219361c46",
+      "implementation_absent_at_freeze": true,
+      "implementation_commit": "d6bd162811cda81cb697687e690bf25e73a7ad54",
+      "verified": true
+    },
+    "source_kernel_import_absent": true,
+    "source_proof_unavailable_during_execution": true
+  },
+  "lifecycle_consequence": {
+    "acceptance": "pending separate PR",
+    "canonical_authority_changed": false,
+    "promotion": "pending separate PR",
+    "replication": "complete under the frozen implementation-independent clean-room criterion"
+  },
+  "merge_requirement": "Merge commit required; squash or rebase would destroy the reachable staged-history evidence.",
+  "nonclaims": ["external investigator independence", "accepted canonical repository foundation", "global uniqueness", "universal representation", "primitive necessity", "global minimality", "completeness", "nonfinite continuous semantics", "live-oracle semantics", "embodied environment semantics"],
+  "replication_id": "FARA-CANONICAL-KERNEL-REPLICATION-001",
+  "status": "Research"
+}

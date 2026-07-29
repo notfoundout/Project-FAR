@@ -1,0 +1,131 @@
+{
+  "replication_id": "FARA-CANONICAL-KERNEL-REPLICATION-001",
+  "source_campaign_id": "FARA-CANONICAL-KERNEL-001",
+  "status": "Research",
+  "scope": "Project FAR v1.0 finite explicit auditable representational architecture",
+  "implementation": {
+    "language": "JavaScript (Node.js)",
+    "clean_room": true,
+    "isolated_execution_required": true,
+    "source_kernel_imported": false,
+    "source_proof_read_during_execution": false,
+    "runtime_modules": ["fs", "crypto", "path"]
+  },
+  "fixture_corpus": {
+    "corpus_id": "FARA-KERNEL-NEUTRAL-FIXTURES-001",
+    "scenario_count": 3,
+    "materialized_model_digests": [
+      {"id": "document-revision", "digest": "e7d116c5db8bbb8c565cd3e5da8d0a53dfc07287a0607c3e28e9b8c998e14644"},
+      {"id": "inventory-reconciliation", "digest": "0015df6a5c4a36a81e6a64d9c27935a981159836bbb69e16d935d543c17b6565"},
+      {"id": "classification-review", "digest": "5e9af5db88f4f367a4eefef18903a56b1e21a6499e76dc4f99dcd1139f632fd7"}
+    ],
+    "all_models_valid": true
+  },
+  "candidate_adjudication": [
+    {
+      "id": "many-sorted-extensional-relational",
+      "classification": "noncanonical",
+      "failed_gates": ["identity_bearing_occurrences"],
+      "gate_results": {
+        "representation_object_separation": {"pass": true, "measurements": {"valid": true, "collision_rejected": true}},
+        "rule_execution_result_separation": {"pass": true, "measurements": {"valid": true, "duplicate_rule_rejected": true}},
+        "interpretation_separation": {"pass": true, "measurements": {"scenario_count": 3}},
+        "calculus_independence": {"pass": true, "measurements": {"operation_sort_absent": true}},
+        "architecture_operation_separation": {"pass": true, "measurements": {"rule_event_disjoint": true}},
+        "identity_bearing_occurrences": {"pass": false, "measurements": {"scenarios": [{"occurrences": 3, "projected": 1}, {"occurrences": 2, "projected": 1}, {"occurrences": 4, "projected": 1}]}},
+        "explicit_provenance_and_order": {"pass": true, "measurements": {"missing_provenance_rejected": true, "cycle_rejected": true}},
+        "encoding_neutrality": {"pass": true, "measurements": {"forbidden_scaffolding_absent": true}}
+      }
+    },
+    {
+      "id": "typed-hypergraph",
+      "classification": "admissible-derived-view",
+      "failed_gates": ["encoding_neutrality"],
+      "gate_results": {
+        "representation_object_separation": {"pass": true, "measurements": {"roundtrip_exact": true}},
+        "rule_execution_result_separation": {"pass": true, "measurements": {"roundtrip_exact": true}},
+        "interpretation_separation": {"pass": true, "measurements": {"roundtrip_exact": true}},
+        "calculus_independence": {"pass": true, "measurements": {"roundtrip_exact": true}},
+        "architecture_operation_separation": {"pass": true, "measurements": {"roundtrip_exact": true}},
+        "identity_bearing_occurrences": {"pass": true, "measurements": {"roundtrip_exact": true}},
+        "explicit_provenance_and_order": {"pass": true, "measurements": {"roundtrip_exact": true}},
+        "encoding_neutrality": {"pass": false, "measurements": {"native_schema": ["Node", "Port", "Hyperedge"]}}
+      }
+    },
+    {
+      "id": "algebraic-state-transition",
+      "classification": "admissible-derived-view",
+      "failed_gates": ["representation_object_separation", "interpretation_separation", "calculus_independence", "architecture_operation_separation", "identity_bearing_occurrences", "explicit_provenance_and_order", "encoding_neutrality"],
+      "gate_results": {
+        "representation_object_separation": {"pass": false, "measurements": {"scenarios": [
+          {"id": "document-revision", "object_carrier_present": false, "representation_carrier_present": false},
+          {"id": "inventory-reconciliation", "object_carrier_present": false, "representation_carrier_present": false},
+          {"id": "classification-review", "object_carrier_present": false, "representation_carrier_present": false}
+        ]}},
+        "rule_execution_result_separation": {"pass": true, "measurements": {"scenarios": [
+          {"id": "document-revision", "operation_rows": 3, "explicit_event_operation_domain_codomain": true},
+          {"id": "inventory-reconciliation", "operation_rows": 4, "explicit_event_operation_domain_codomain": true},
+          {"id": "classification-review", "operation_rows": 2, "explicit_event_operation_domain_codomain": true}
+        ]}},
+        "interpretation_separation": {"pass": false, "measurements": {"scenarios": [
+          {"id": "document-revision", "interpretation_present": false},
+          {"id": "inventory-reconciliation", "interpretation_present": false},
+          {"id": "classification-review", "interpretation_present": false}
+        ]}},
+        "calculus_independence": {"pass": false, "measurements": {"scenarios": [
+          {"id": "document-revision", "calculus_present": false, "native_operation_present": true},
+          {"id": "inventory-reconciliation", "calculus_present": false, "native_operation_present": true},
+          {"id": "classification-review", "calculus_present": false, "native_operation_present": true}
+        ]}},
+        "architecture_operation_separation": {"pass": false, "measurements": {"scenarios": [
+          {"id": "document-revision", "native_operation_present": true},
+          {"id": "inventory-reconciliation", "native_operation_present": true},
+          {"id": "classification-review", "native_operation_present": true}
+        ]}},
+        "identity_bearing_occurrences": {"pass": false, "measurements": {"scenarios": [
+          {"id": "document-revision", "occurrence_identity_present": false},
+          {"id": "inventory-reconciliation", "occurrence_identity_present": false},
+          {"id": "classification-review", "occurrence_identity_present": false}
+        ]}},
+        "explicit_provenance_and_order": {"pass": false, "measurements": {"scenarios": [
+          {"id": "document-revision", "order_present": true, "provenance_present": false},
+          {"id": "inventory-reconciliation", "order_present": true, "provenance_present": false},
+          {"id": "classification-review", "order_present": true, "provenance_present": false}
+        ]}},
+        "encoding_neutrality": {"pass": false, "measurements": {"scenarios": [
+          {"id": "document-revision", "native_scaffolding": ["Operation", "Transition"]},
+          {"id": "inventory-reconciliation", "native_scaffolding": ["Operation", "Transition"]},
+          {"id": "classification-review", "native_scaffolding": ["Operation", "Transition"]}
+        ]}}
+      }
+    },
+    {
+      "id": "identity-bearing-many-sorted-relational",
+      "classification": "provisional-canonical-candidate",
+      "failed_gates": [],
+      "gate_results": {
+        "representation_object_separation": {"pass": true, "measurements": {"valid": true, "collision_rejected": true}},
+        "rule_execution_result_separation": {"pass": true, "measurements": {"valid": true, "duplicate_rule_rejected": true}},
+        "interpretation_separation": {"pass": true, "measurements": {"scenario_count": 3}},
+        "calculus_independence": {"pass": true, "measurements": {"operation_sort_absent": true}},
+        "architecture_operation_separation": {"pass": true, "measurements": {"rule_event_disjoint": true}},
+        "identity_bearing_occurrences": {"pass": true, "measurements": {"scenarios": [{"occurrences": 3, "projected": 1}, {"occurrences": 2, "projected": 1}, {"occurrences": 4, "projected": 1}]}},
+        "explicit_provenance_and_order": {"pass": true, "measurements": {"missing_provenance_rejected": true, "cycle_rejected": true}},
+        "encoding_neutrality": {"pass": true, "measurements": {"forbidden_scaffolding_absent": true}}
+      }
+    }
+  ],
+  "translations": {
+    "typed_hypergraph_roundtrip_exact": true,
+    "algebraic_roundtrip_exact_with_sidecar": true,
+    "bare_algebraic_reconstruction_rejected": true
+  },
+  "provisional_result": ["identity-bearing-many-sorted-relational"],
+  "lifecycle": {
+    "replication": "implementation-independent clean-room execution complete",
+    "investigator_independence": "not established",
+    "acceptance": "pending separate adjudication",
+    "promotion": "pending separate adjudication"
+  },
+  "nonclaims": ["external investigator independence", "accepted canonical repository foundation", "global uniqueness", "universal representation", "primitive necessity", "global minimality", "completeness", "nonfinite continuous semantics", "live-oracle semantics", "embodied environment semantics"]
+}

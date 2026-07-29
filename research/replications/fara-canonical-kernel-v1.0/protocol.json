@@ -1,0 +1,61 @@
+{
+  "candidates": [
+    {"id":"many-sorted-extensional-relational","kind":"native-extensional"},
+    {"id":"typed-hypergraph","kind":"derived-view"},
+    {"id":"algebraic-state-transition","kind":"derived-view"},
+    {"id":"identity-bearing-many-sorted-relational","kind":"native-identity-bearing"}
+  ],
+  "decision_rule": {
+    "not_replicated": "Any candidate disagreement, invalid neutral scenario, stale output, source-kernel dependency, history-proof failure, or independence-contract violation.",
+    "partial": "Execution completes but one or more comparison dimensions are unavailable without changing the frozen protocol.",
+    "replicated": "Every candidate has the same failed-gate set and classification as the source proof, all neutral scenarios validate, committed output equals a fresh isolated execution, all independence checks pass, and Git ancestry proves the fixture corpus predates the implementation."
+  },
+  "fixture_corpus": {
+    "path": "research/replications/fara-canonical-kernel-v1.0/neutral-fixtures.json",
+    "git_blob_sha": "d967dc66d451dc7d3d2e269276e19fbfee7390cc",
+    "freeze_commit": "10e28b1827834430d4b4e08e447ab4b219361c46",
+    "implementation_commit": "d6bd162811cda81cb697687e690bf25e73a7ad54",
+    "replication_branch": "research/fara-kernel-independent-replication",
+    "merge_requirement": "Merge commit required; squash or rebase would destroy the reachable staged-history evidence."
+  },
+  "independence_contract": {
+    "agreement_is_computed_after_execution": true,
+    "allowed_runtime_modules": ["fs","crypto","path"],
+    "implementation_language": "JavaScript (Node.js)",
+    "must_execute_in_isolated_directory": true,
+    "must_not_import_source_kernel": true,
+    "must_not_read_source_proof_during_execution": true,
+    "neutral_fixture_requirement": "Fixtures contain scenario parameters only and no expected gate outcomes or proposed foundation."
+  },
+  "lifecycle_boundary": {
+    "acceptance": "Not authorized by this replication PR.",
+    "investigator_independence": "Not established; external investigator replication remains a nonclaim.",
+    "promotion": "Not authorized by this replication PR.",
+    "replication": "This protocol can establish implementation-independent clean-room replication inside the repository."
+  },
+  "mandatory_gates": [
+    "representation_object_separation",
+    "rule_execution_result_separation",
+    "interpretation_separation",
+    "calculus_independence",
+    "architecture_operation_separation",
+    "identity_bearing_occurrences",
+    "explicit_provenance_and_order",
+    "encoding_neutrality"
+  ],
+  "nonclaims": [
+    "external investigator independence","accepted canonical repository foundation","global uniqueness","universal representation","primitive necessity","global minimality","completeness","nonfinite continuous semantics","live-oracle semantics","embodied environment semantics"
+  ],
+  "question": "Does a clean-room implementation using neutral fixtures independently reproduce the source campaign's candidate gate classifications?",
+  "replication_id": "FARA-CANONICAL-KERNEL-REPLICATION-001",
+  "scope": "Project FAR v1.0 finite explicit auditable representational architecture",
+  "source_campaign": {
+    "campaign_id": "FARA-CANONICAL-KERNEL-001",
+    "merge_commit": "775c24b26a30339a3fc0117e1faf4febece0a33c",
+    "proof_git_blob_sha": "36b046f0efc32fa9464cd0943aef30af398c63bf",
+    "proof_path": "theory/evaluation/fara-canonical-kernel-proof-v1.0.json",
+    "spec_git_blob_sha": "49e10b34ac9920fed85a5c8be5e5200f59aedfbe",
+    "spec_path": "theory/formal/fara-canonical-kernel-v1.0.json"
+  },
+  "status": "Research"
+}
