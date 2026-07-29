@@ -1,0 +1,110 @@
+{
+  "agreement": {
+    "matches_source_classifications_and_failed_gates": true,
+    "replication": [
+      {
+        "classification": "noncanonical",
+        "failed_gates": [
+          "identity_bearing_occurrences"
+        ],
+        "id": "many-sorted-extensional-relational"
+      },
+      {
+        "classification": "admissible-derived-view",
+        "failed_gates": [
+          "encoding_neutrality"
+        ],
+        "id": "typed-hypergraph"
+      },
+      {
+        "classification": "admissible-derived-view",
+        "failed_gates": [
+          "architecture_operation_separation",
+          "calculus_independence",
+          "encoding_neutrality",
+          "explicit_provenance_and_order",
+          "identity_bearing_occurrences",
+          "interpretation_separation",
+          "representation_object_separation"
+        ],
+        "id": "algebraic-state-transition"
+      },
+      {
+        "classification": "provisional-canonical-candidate",
+        "failed_gates": [],
+        "id": "identity-bearing-many-sorted-relational"
+      }
+    ],
+    "source": [
+      {
+        "classification": "noncanonical",
+        "failed_gates": [
+          "identity_bearing_occurrences"
+        ],
+        "id": "many-sorted-extensional-relational"
+      },
+      {
+        "classification": "admissible-derived-view",
+        "failed_gates": [
+          "encoding_neutrality"
+        ],
+        "id": "typed-hypergraph"
+      },
+      {
+        "classification": "admissible-derived-view",
+        "failed_gates": [
+          "architecture_operation_separation",
+          "calculus_independence",
+          "encoding_neutrality",
+          "explicit_provenance_and_order",
+          "identity_bearing_occurrences",
+          "interpretation_separation",
+          "representation_object_separation"
+        ],
+        "id": "algebraic-state-transition"
+      },
+      {
+        "classification": "provisional-canonical-candidate",
+        "failed_gates": [],
+        "id": "identity-bearing-many-sorted-relational"
+      }
+    ]
+  },
+  "artifact_locks": {
+    "fixtures_git_blob_sha": "d967dc66d451dc7d3d2e269276e19fbfee7390cc",
+    "fresh_result_sha256": "4ed99eb0ecb33920091b74c1553b97c848e02f9922ebaa04441866b066ff13d7",
+    "implementation_git_blob_sha": "5bb9e0eecd2c9b1949a89d15ab95f71a0d147a0d",
+    "protocol_git_blob_sha": "87ba29338beefbc05087fc6d0292bde0e833da44",
+    "raw_result_git_blob_sha": "ac433b6c5d2bad5fbe972adf01729d25b0b64def"
+  },
+  "decision": "replicated",
+  "errors": [],
+  "independence": {
+    "external_investigator_independence": "not established",
+    "implementation_language_independent": true,
+    "isolated_directory_execution": true,
+    "neutral_fixtures_frozen_before_implementation": true,
+    "source_kernel_import_absent": true,
+    "source_proof_unavailable_during_execution": true
+  },
+  "lifecycle_consequence": {
+    "acceptance": "pending separate PR",
+    "canonical_authority_changed": false,
+    "promotion": "pending separate PR",
+    "replication": "complete under the frozen implementation-independent clean-room criterion"
+  },
+  "nonclaims": [
+    "external investigator independence",
+    "accepted canonical repository foundation",
+    "global uniqueness",
+    "universal representation",
+    "primitive necessity",
+    "global minimality",
+    "completeness",
+    "nonfinite continuous semantics",
+    "live-oracle semantics",
+    "embodied environment semantics"
+  ],
+  "replication_id": "FARA-CANONICAL-KERNEL-REPLICATION-001",
+  "status": "Research"
+}
