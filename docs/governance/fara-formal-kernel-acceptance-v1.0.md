@@ -10,6 +10,8 @@ Scope: **Project FAR v1.0 finite, explicit, auditable representational architect
 
 Within the stated scope and the eight registered architectural gates, the identity-bearing many-sorted relational kernel is accepted as the formal foundation that most directly preserves FARA's mandatory architectural distinctions without making graph scaffolding or operational composition primitive.
 
+The Accepted kernel uses typed, occurrence-sensitive identity. Literal identifier spelling is not semantic. Its canonical model-equivalence relation is sort-preserving relational isomorphism: one bijection per carrier sort that preserves and reflects every declared relation. This preserves event and relation-occurrence cardinality, participant roles, provenance, and precedence while permitting consistent identity renaming.
+
 The accepted claim is scoped. It is not a claim that this kernel is the unique or universally correct foundation of reasoning.
 
 ## Lifecycle record
@@ -21,7 +23,7 @@ The accepted claim is scoped. It is not a claim that this kernel is the unique o
 | Observation | complete | executable gate matrix, reconstruction results, identity-loss counterexample, and mutation evidence |
 | Discovery | complete | identity-bearing many-sorted relational was the sole registered candidate passing all eight gates |
 | Replication | complete | `FARA-CANONICAL-KERNEL-REPLICATION-001`, merged as `5932e6b2111c6d7da8b1c9a443474b395f02880e` |
-| Acceptance | complete | this record |
+| Acceptance | complete | this record, including explicit identity and equivalence criteria |
 | Promotion | pending | requires a separate promotion record |
 | Repository change | pending | prohibited until Promotion |
 
@@ -41,6 +43,18 @@ Acceptance is justified because all of the following are established within the 
 8. A clean-room Node.js implementation using three neutral scenarios reproduced every candidate classification and failed-gate set.
 9. Git ancestry proves that the neutral fixtures preceded the replication implementation.
 10. Source and replication campaigns passed fail-closed regression, mutation, repository-health, unified-validation, Lean-assurance, model-checking, and exact-commit/tree gates.
+11. Typed identity follows from the mandatory category separations and occurrence-identity gate: identity tokens cannot cross sorts, and parallel Event or RelationOccurrence identities cannot be merged by extensional equality.
+12. Sort-preserving relational isomorphism is the accepted equivalence relation because it permits arbitrary consistent renaming while preserving and reflecting the complete admitted structure. Exact normalized equality is its identity-map special case.
+
+## Identity and equivalence adjudication
+
+| Question | Accepted answer within scope |
+|---|---|
+| What constitutes identity? | Explicit carrier membership plus distinct identity token; Event and RelationOccurrence identities remain occurrence-sensitive. |
+| Does token spelling carry semantic content? | No. Consistent sort-preserving renaming is permitted. |
+| May equivalent models merge or split identities? | No. Equivalence requires a bijection per sort. |
+| What is the model-equivalence relation? | Sort-preserving relational isomorphism preserving and reflecting every declared relation. |
+| Are behavioral or commitment-equivalent projections automatically kernel-equivalent? | No. They require separately declared relations and cannot replace canonical kernel-equivalence. |
 
 ## Candidate adjudication
 
@@ -78,6 +92,6 @@ This Acceptance does not establish:
 
 ## Acceptance decision
 
-`FARA-FORMAL-KERNEL-001` is **Accepted at the stated scope**.
+`FARA-FORMAL-KERNEL-001`—including its scoped carrier architecture, typed occurrence-sensitive identity criteria, and sort-preserving relational-isomorphism equivalence relation—is **Accepted at the stated scope**.
 
 Promotion and canonical repository change require a separate, traceable record.
