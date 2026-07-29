@@ -1,0 +1,337 @@
+{
+  "replication_id": "FARA-CANONICAL-KERNEL-REPLICATION-001",
+  "source_campaign_id": "FARA-CANONICAL-KERNEL-001",
+  "status": "Research",
+  "scope": "Project FAR v1.0 finite explicit auditable representational architecture",
+  "implementation": {
+    "language": "JavaScript (Node.js)",
+    "clean_room": true,
+    "isolated_execution_required": true,
+    "source_kernel_imported": false,
+    "source_proof_read_during_execution": false,
+    "runtime_modules": [
+      "fs",
+      "crypto",
+      "path"
+    ]
+  },
+  "fixture_corpus": {
+    "corpus_id": "FARA-KERNEL-NEUTRAL-FIXTURES-001",
+    "scenario_count": 3,
+    "materialized_model_digests": [
+      {
+        "id": "document-revision",
+        "digest": "be06a1b2f3f28acd3ccd1d9010a633a937e82e5585386edde32cd015def98151"
+      },
+      {
+        "id": "inventory-reconciliation",
+        "digest": "2bd44a82956c7986089b9f5319e6cb2ff14a93dad5c8ac6024ca5e23a7b05842"
+      },
+      {
+        "id": "classification-review",
+        "digest": "eb851d8bb1c75ecb22f3f513f930fd2e92cdcdeb3c5143ed24d5fe7f2f9be994"
+      }
+    ],
+    "all_models_valid": true
+  },
+  "candidate_adjudication": [
+    {
+      "id": "many-sorted-extensional-relational",
+      "classification": "noncanonical",
+      "failed_gates": [
+        "identity_bearing_occurrences"
+      ],
+      "gate_results": {
+        "representation_object_separation": {
+          "pass": true,
+          "measurements": {
+            "valid": true,
+            "collision_rejected": true
+          }
+        },
+        "rule_execution_result_separation": {
+          "pass": true,
+          "measurements": {
+            "valid": true,
+            "duplicate_rule_rejected": true
+          }
+        },
+        "interpretation_separation": {
+          "pass": true,
+          "measurements": {
+            "scenario_count": 3
+          }
+        },
+        "calculus_independence": {
+          "pass": true,
+          "measurements": {
+            "operation_sort_absent": true
+          }
+        },
+        "architecture_operation_separation": {
+          "pass": true,
+          "measurements": {
+            "rule_event_disjoint": true
+          }
+        },
+        "identity_bearing_occurrences": {
+          "pass": false,
+          "measurements": {
+            "scenarios": [
+              {
+                "occurrences": 3,
+                "projected": 1
+              },
+              {
+                "occurrences": 2,
+                "projected": 1
+              },
+              {
+                "occurrences": 4,
+                "projected": 1
+              }
+            ]
+          }
+        },
+        "explicit_provenance_and_order": {
+          "pass": true,
+          "measurements": {
+            "missing_provenance_rejected": true,
+            "cycle_rejected": true
+          }
+        },
+        "encoding_neutrality": {
+          "pass": true,
+          "measurements": {
+            "forbidden_scaffolding_absent": true
+          }
+        }
+      }
+    },
+    {
+      "id": "typed-hypergraph",
+      "classification": "admissible-derived-view",
+      "failed_gates": [
+        "encoding_neutrality"
+      ],
+      "gate_results": {
+        "representation_object_separation": {
+          "pass": true,
+          "measurements": {
+            "roundtrip_exact": true
+          }
+        },
+        "rule_execution_result_separation": {
+          "pass": true,
+          "measurements": {
+            "roundtrip_exact": true
+          }
+        },
+        "interpretation_separation": {
+          "pass": true,
+          "measurements": {
+            "roundtrip_exact": true
+          }
+        },
+        "calculus_independence": {
+          "pass": true,
+          "measurements": {
+            "roundtrip_exact": true
+          }
+        },
+        "architecture_operation_separation": {
+          "pass": true,
+          "measurements": {
+            "roundtrip_exact": true
+          }
+        },
+        "identity_bearing_occurrences": {
+          "pass": true,
+          "measurements": {
+            "roundtrip_exact": true
+          }
+        },
+        "explicit_provenance_and_order": {
+          "pass": true,
+          "measurements": {
+            "roundtrip_exact": true
+          }
+        },
+        "encoding_neutrality": {
+          "pass": false,
+          "measurements": {
+            "native_schema": [
+              "Node",
+              "Port",
+              "Hyperedge"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "algebraic-state-transition",
+      "classification": "admissible-derived-view",
+      "failed_gates": [
+        "representation_object_separation",
+        "interpretation_separation",
+        "calculus_independence",
+        "architecture_operation_separation",
+        "identity_bearing_occurrences",
+        "explicit_provenance_and_order",
+        "encoding_neutrality"
+      ],
+      "gate_results": {
+        "representation_object_separation": {
+          "pass": false,
+          "measurements": {
+            "carriers_present": false
+          }
+        },
+        "rule_execution_result_separation": {
+          "pass": true,
+          "measurements": {
+            "operation_rows": 9
+          }
+        },
+        "interpretation_separation": {
+          "pass": false,
+          "measurements": {
+            "interpretation_carrier_present": false
+          }
+        },
+        "calculus_independence": {
+          "pass": false,
+          "measurements": {
+            "formation_by_operation_rows": true
+          }
+        },
+        "architecture_operation_separation": {
+          "pass": false,
+          "measurements": {
+            "operation_native": true
+          }
+        },
+        "identity_bearing_occurrences": {
+          "pass": false,
+          "measurements": {
+            "occurrence_identity_present": false
+          }
+        },
+        "explicit_provenance_and_order": {
+          "pass": false,
+          "measurements": {
+            "order_present": true,
+            "provenance_present": false
+          }
+        },
+        "encoding_neutrality": {
+          "pass": false,
+          "measurements": {
+            "native_schema": [
+              "Operation",
+              "Transition"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "identity-bearing-many-sorted-relational",
+      "classification": "provisional-canonical-candidate",
+      "failed_gates": [],
+      "gate_results": {
+        "representation_object_separation": {
+          "pass": true,
+          "measurements": {
+            "valid": true,
+            "collision_rejected": true
+          }
+        },
+        "rule_execution_result_separation": {
+          "pass": true,
+          "measurements": {
+            "valid": true,
+            "duplicate_rule_rejected": true
+          }
+        },
+        "interpretation_separation": {
+          "pass": true,
+          "measurements": {
+            "scenario_count": 3
+          }
+        },
+        "calculus_independence": {
+          "pass": true,
+          "measurements": {
+            "operation_sort_absent": true
+          }
+        },
+        "architecture_operation_separation": {
+          "pass": true,
+          "measurements": {
+            "rule_event_disjoint": true
+          }
+        },
+        "identity_bearing_occurrences": {
+          "pass": true,
+          "measurements": {
+            "scenarios": [
+              {
+                "occurrences": 3,
+                "projected": 1
+              },
+              {
+                "occurrences": 2,
+                "projected": 1
+              },
+              {
+                "occurrences": 4,
+                "projected": 1
+              }
+            ]
+          }
+        },
+        "explicit_provenance_and_order": {
+          "pass": true,
+          "measurements": {
+            "missing_provenance_rejected": true,
+            "cycle_rejected": true
+          }
+        },
+        "encoding_neutrality": {
+          "pass": true,
+          "measurements": {
+            "forbidden_scaffolding_absent": true
+          }
+        }
+      }
+    }
+  ],
+  "translations": {
+    "typed_hypergraph_roundtrip_exact": true,
+    "algebraic_roundtrip_exact_with_sidecar": true,
+    "bare_algebraic_reconstruction_rejected": true
+  },
+  "provisional_result": [
+    "identity-bearing-many-sorted-relational"
+  ],
+  "lifecycle": {
+    "replication": "implementation-independent clean-room execution complete",
+    "investigator_independence": "not established",
+    "acceptance": "pending separate adjudication",
+    "promotion": "pending separate adjudication"
+  },
+  "nonclaims": [
+    "external investigator independence",
+    "accepted canonical repository foundation",
+    "global uniqueness",
+    "universal representation",
+    "primitive necessity",
+    "global minimality",
+    "completeness",
+    "nonfinite continuous semantics",
+    "live-oracle semantics",
+    "embodied environment semantics"
+  ]
+}
