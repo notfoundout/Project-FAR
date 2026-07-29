@@ -201,7 +201,7 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         self.assertIn("theory/proof-objects/T-001.proof.yaml", paths)
         self.assertIn("theory/proof-objects/T-005.proof.yaml", paths)
         self.assertIn("theory/proofs/T-001-primitive-minimality.md", paths)
-        self.assertIn("theory/proofs/T-015-constraint-propagation.md", paths)
+        self.assertIn("theory/proofs/T-015-explicit-reasoning-meta-theorem.md", paths)
         for proof_path in sorted(paths):
             self.assertTrue((ROOT / proof_path).is_file(), proof_path)
             self.assertTrue(
