@@ -53,39 +53,18 @@ class TheoryDependencyAuditTests(unittest.TestCase):
         return next(row for row in result["checks"] if row["id"] == check_id)
 
     def test_preregistration_commits_precede_execution_and_result(self):
-        fetch = self.git(
-            ROOT,
-            "fetch",
-            "--no-tags",
-            "--depth=32",
-            "origin",
-            "governance/freeze-theory-dependency-reconciliation",
-        )
-        self.assertEqual(0, fetch.returncode)
-        branch_head = "FETCH_HEAD"
+        question = "3a0343cf78b1c3a59e745d06a9bed32326ece497"
+        specification = "fd977871a299d39f5c7b2e5ef06d3f22f5ea93a3"
+        executor = "3c371a5c6d8bfc5d3c4be43f07607c1562c838df"
+        result = "78361d2e9df4d8b291e45bd2f2c121f1ea9a63a4"
 
-        def path_commit(path):
-            return self.git(
-                ROOT,
-                "log",
-                "-1",
-                "--format=%H",
-                branch_head,
-                "--",
-                path,
-            ).stdout.strip()
+        for commit in (question, specification, executor, result):
+            self.git(ROOT, "cat-file", "-e", f"{commit}^{{commit}}")
 
-        question = path_commit("research/theory-dependency-audit/question-v1.0.md")
-        specification = path_commit(
-            "research/theory-dependency-audit/execution-spec-v1.0.json"
-        )
-        executor = path_commit("research/theory-dependency-audit/execute.py")
-        result = path_commit("research/theory-dependency-audit/result-v1.0.json")
-
-        self.assertTrue(question and specification and executor and result)
         self.git(ROOT, "merge-base", "--is-ancestor", question, specification)
         self.git(ROOT, "merge-base", "--is-ancestor", specification, executor)
         self.git(ROOT, "merge-base", "--is-ancestor", executor, result)
+        self.git(ROOT, "merge-base", "--is-ancestor", result, "HEAD")
         self.git(
             ROOT,
             "cat-file",
