@@ -18,6 +18,8 @@ Status: **Accepted problem index; not execution authorization**
 | OP-12 | Determine whether the expanded target-specific non-derivability witnesses survive full-signature cross-products, carriers above four, alternative identity criteria, or independent implementation. | theoretical/empirical | No full-signature search or independent implementation exists. |
 | OP-13 | Determine whether the five retained candidate primitives can be reduced further within the canonical kernel without losing required commitments. | theoretical | Property and Investigation now have scoped reductions; Object, Relation, Representation, Interpretation, and Reasoning Calculus remain candidates, not established primitives. |
 
+Many-sorted relational dominates algebraic/state-transition under the frozen dimensions, while typed hypergraph and many-sorted relational remain incomparable. This historical bounded result does not select the canonical foundation.
+
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: start -->
 - Mapping totals (Pass/Partial/Fail/Unknown): `{"algebraic-state-transition":{"Fail":4,"Partial":0,"Pass":12,"Unknown":3},"many-sorted-relational":{"Fail":3,"Partial":0,"Pass":13,"Unknown":3},"typed-hypergraph":{"Fail":0,"Partial":0,"Pass":16,"Unknown":3}}`
 - Dominance edges: `[["many-sorted-relational","algebraic-state-transition"]]`
