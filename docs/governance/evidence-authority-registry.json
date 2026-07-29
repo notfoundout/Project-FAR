@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.5",
+  "schema_version": "1.6",
   "status": "Research",
   "candidacy": "inactive_candidate",
   "promotion_completed": false,
@@ -62,7 +62,7 @@
       "may_not_establish": ["truth without linked proof record", "scope expansion"]
     },
     "proof_records": {
-      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/**/proofs/**|theory/evaluation/*.json|docs/governance/proofs/**|docs/research/*proof*.md",
+      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/**/proofs/**|theory/evaluation/*.json|docs/governance/proofs/**|docs/research/*proof*.md|mechanization/lean/*.lean",
       "authority_class": "proof_record",
       "proposition_scope": "exact registered formal statements under explicit premises",
       "requires": ["statement identifier", "exact statement", "premises", "scope", "model class", "proof object", "status-register entry"],
