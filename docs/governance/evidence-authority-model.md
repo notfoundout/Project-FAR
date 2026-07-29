@@ -16,12 +16,12 @@ Under this candidate model, an artifact would have authority only when all of th
 
 1. its authority class is declared;
 2. its proposition scope is explicit;
-3. its status appears in the permitted-status set for that authority class;
+3. its artifact status is permitted for that authority class;
 4. the activated registry identifies the artifact or owner pattern for that proposition scope;
 5. any required proof object, decision record, or frozen evidence record is present and linked;
 6. no higher-priority authoritative artifact contradicts it.
 
-The companion registry defines the permitted-status sets. `Unknown`, `Provisional`, and `Superseded` do not silently acquire active authority unless explicitly permitted for the relevant class and scope.
+Artifact status uses only the charter taxonomy: `Accepted`, `Research`, `Provisional`, `Archive`, or `Unknown`. Replication, Acceptance, and Promotion are lifecycle stages; Promotion is not an artifact status. `Unknown` and `Provisional` never silently acquire active authority.
 
 ## Authority classes
 
@@ -60,10 +60,7 @@ After valid activation, a governance decision would be authoritative only for th
 
 ## Proof authority
 
-The registry separately assigns:
-
-- theorem and proof classification to `docs/governance/theorem-proof-status-register.md`; and
-- exact proof objects to the `proof_record` owner pattern.
+The registry separately assigns theorem/proof classification to `docs/governance/theorem-proof-status-register.md` and exact proof objects to a proof-record owner pattern that includes the repository's registered Markdown and JSON proof artifacts.
 
 Use of `theorem`, `lemma`, `proposition`, `proof`, `derivation`, `necessary`, `sufficient`, `minimal`, `irreducible`, or `universal` requires a unique statement identifier, exact statement, premises, scope, model class, preservation criterion where relevant, linked proof object or bounded-evidence classification, and a status-register entry.
 
@@ -76,7 +73,11 @@ Canonical terminology and detailed definitions have separate proposition scopes:
 - `docs/glossary/canonical-terminology.md` proposes ownership of canonical names and short declared meanings;
 - `theory/definitions/definitions.md` proposes ownership of detailed formal definitions.
 
-Neither scope may silently overwrite the other.
+The detailed-definition artifact currently has status `Unknown` because it has no explicit status declaration. Activation therefore requires a separately governed transition of that artifact to `Accepted`; ownership registration alone does not make it authoritative.
+
+## Historical authority
+
+Artifacts under `archive/**` may serve as `historical_record` sources only while their artifact status is `Archive`. They may establish provenance and superseded reasoning, but never active canonical authority.
 
 ## Research authority
 
@@ -103,10 +104,11 @@ This Research candidate may become active only through a separately preregistere
 3. defines promoted propositions and scope;
 4. identifies required proof or evidence;
 5. records replication, Acceptance, and Promotion separately;
-6. records unresolved counterexamples and limitations;
-7. updates the applicable status register and canonical map;
-8. passes semantic, dependency, and repository validation;
-9. does not claim more than the supporting record establishes.
+6. transitions every proposed canonical owner lacking an explicit status to `Accepted` through separate governance;
+7. records unresolved counterexamples and limitations;
+8. updates the applicable status register and canonical map;
+9. passes semantic, dependency, and repository validation;
+10. does not claim more than the supporting record establishes.
 
 Until every requirement is satisfied, activation remains prohibited and authority conclusions remain `Unknown`.
 
