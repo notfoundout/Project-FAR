@@ -4,11 +4,21 @@ Status: **Research**
 Candidacy: **Inactive candidate**
 Promotion completed: **No**
 
+## Research provenance
+
+This version is the candidate output of `FAR-EVIDENCE-AUTHORITY-MODEL-001`.
+
+- Question: `research/evidence-authority-model/question-v1.0.md`
+- Frozen execution specification: `research/evidence-authority-model/execution-spec-v1.0.json`
+- Preregistration commit: `2fe84b72a58e370f814b05a53aa0cf104b17afb1`
+
+Any draft predating that preregistration is withdrawn as an unvalidated design sketch. Only the post-preregistration candidate, execution record, observation, discovery, and replication record may support this Research artifact. None may Accept or Promote it.
+
 ## Purpose
 
 This document proposes which Project FAR artifacts may establish canonical propositions, classifications, proof status, methodological requirements, or bounded research observations. It addresses the authority ambiguity identified by `FAR-THEORY-DEPENDENCY-AUDIT-001` without promoting any unresolved theory or governance claim.
 
-This artifact remains Research until a separately preregistered lifecycle completes replication, Acceptance, and Promotion. Until then, it is an inactive candidate and cannot authorize its own adoption, any downstream promotion, or any experiment decision.
+This artifact remains Research until a separately preregistered lifecycle completes external replication, Acceptance, and Promotion. Until then, it is an inactive candidate and cannot authorize its own adoption, any downstream promotion, or any experiment decision.
 
 ## Core rule
 
@@ -21,7 +31,8 @@ Under this candidate model, an artifact would have authority only when all of th
 3. its artifact status is permitted for that authority class;
 4. the activated registry identifies the artifact or owner pattern for that proposition scope;
 5. any required proof object, decision record, or frozen evidence record is present and linked;
-6. no higher-priority authoritative artifact contradicts it.
+6. no unresolved authoritative artifact of equal or higher priority contradicts it for the same proposition, scope, premises, and version;
+7. the registry identifies a unique scoped owner or an authorized version/supersession relation for that proposition.
 
 Artifact status uses only the charter taxonomy: `Accepted`, `Research`, `Provisional`, `Archive`, or `Unknown`. Replication, Acceptance, and Promotion are lifecycle stages; Promotion is not an artifact status. `Unknown` and `Provisional` never silently acquire active authority.
 
@@ -50,7 +61,18 @@ Authority is proposition-specific, not file-wide. When two activated artifacts c
 6. Methodological specifications control adopted procedure, not theory.
 7. Indexes and historical records never resolve substantive conflicts.
 
-A later artifact does not automatically outrank an earlier one. Revision requires an authorized change record naming the superseded artifact and affected proposition.
+A later artifact does not automatically outrank an earlier one. Revision requires an authorized change record naming the superseded artifact, version, affected proposition, and scope.
+
+If two equal-priority artifacts contradict one another for the same proposition, scope, premises, and version, neither proposition is authoritative. The result is `Unknown` until an independently authorized governance decision selects a unique scoped owner/version or records a valid supersession relation. Dual authority for a proposition and its negation is prohibited.
+
+## Governing dependencies
+
+The activated map must register every artifact whose rules the model imports.
+
+- `docs/governance/research-execution-charter.md` supplies the current Research lifecycle and five-value artifact-status taxonomy. It is currently `Provisional`, so it cannot govern an activated model until independently transitioned to `Accepted` or replaced by an independently Accepted successor.
+- `docs/proof-assurance-taxonomy.md` supplies meanings for proof-assurance classifications. Its charter status is currently `Unknown`, so those meanings cannot carry active canonical authority until independently transitioned to `Accepted`.
+
+The candidate does not upgrade either dependency. Their unresolved transitions block activation.
 
 ## Bootstrap and governance decisions
 
@@ -64,11 +86,21 @@ After valid activation, a governance decision would be authoritative only for th
 
 ## Proof authority
 
-The registry separately assigns theorem/proof classification to `docs/governance/theorem-proof-status-register.md` and exact proof objects to a proof-record owner pattern that includes every proof artifact path registered by repository proof metadata, including Markdown, JSON, YAML, and Lean proof objects.
+The registry separately assigns theorem/proof classification to `docs/governance/theorem-proof-status-register.md`, assurance-level meanings to `docs/proof-assurance-taxonomy.md`, and exact proof objects to a proof-record owner pattern that includes every proof artifact path registered by repository JSON, YAML, Markdown, verifier-declared, and Lean metadata pathways.
 
-Owner-pattern coverage establishes only proposed ownership. It does not establish artifact status or active proof authority. Before activation, the promotion lifecycle must complete and independently Accept `docs/governance/proof-artifact-status-manifest.json`. That manifest must list every registered proof artifact exactly once, assign one charter-recognized artifact status, and designate whether the artifact is authority-bearing.
+The proof discovery contract independently enumerates:
 
-Only proof artifacts designated authority-bearing must have status `Accepted`. Registered proof artifacts intentionally retained as `Research`, `Provisional`, `Archive`, or `Unknown` may remain non-Accepted, but must be explicitly excluded from active proof authority. A missing status, duplicate entry, or missing authority-bearing designation blocks activation.
+- theorem `proof` fields;
+- lemma `source` fields;
+- dependency-registry `proof_object` sources;
+- every T-001 through T-015 proof object required by `tools/verify_theory.py`;
+- JSON and YAML path fields named `proof_object`, `proof_artifact`, `source_proof`, `lean_file`, or `proof_registry`, plus keys ending in `_proof_artifact` or `_proof_registry`;
+- self-identifying JSON proof records carrying a `proof_id`;
+- every referenced Markdown, JSON, YAML, and Lean artifact that exists in the repository.
+
+Owner-pattern coverage establishes only proposed ownership. It does not establish artifact status or active proof authority. Before activation, the promotion lifecycle must complete and independently Accept `docs/governance/proof-artifact-status-manifest.json`. That manifest must link its own independent Acceptance decision, list every registered proof artifact exactly once, assign one charter-recognized artifact status, and designate whether the artifact is authority-bearing.
+
+Only proof artifacts designated authority-bearing must have status `Accepted`. Registered proof artifacts intentionally retained as `Research`, `Provisional`, `Archive`, or `Unknown` may remain non-Accepted, but must be explicitly excluded from active proof authority. A missing status, duplicate entry, missing authority-bearing designation, missing manifest-level Acceptance record, or unregistered proof path blocks activation.
 
 Use of `theorem`, `lemma`, `proposition`, `proof`, `derivation`, `necessary`, `sufficient`, `minimal`, `irreducible`, or `universal` requires a unique statement identifier, exact statement, premises, scope, model class, preservation criterion where relevant, linked proof object or bounded-evidence classification, and a status-register entry.
 
@@ -105,6 +137,8 @@ A research record is admissible only when its question, design, source identitie
 - Proof-owner coverage cannot substitute for an explicit permitted artifact status.
 - Registration as a proof artifact cannot substitute for an authority-bearing designation.
 - The proof-artifact status manifest cannot Accept itself or assign status without linked independent governance decisions.
+- A status register cannot define the assurance classes it merely applies unless the taxonomy is separately registered.
+- An unresolved equal-priority contradiction cannot be resolved by recency, file location, or simultaneous authority.
 
 ## Promotion gate
 
@@ -114,16 +148,18 @@ This Research candidate may become active only through a separately preregistere
 2. names the exact model and registry versions;
 3. defines promoted propositions and scope;
 4. identifies required proof or evidence;
-5. records replication, Acceptance, and Promotion separately;
+5. records external replication, Acceptance, and Promotion separately;
 6. independently transitions this authority model and its registry to `Accepted`;
-7. transitions every other proposed canonical owner lacking an explicit permitted status through separate governance;
-8. independently transitions the proof-artifact status manifest to `Accepted`;
-9. completes the manifest with exactly one charter status and one authority-bearing designation per registered proof artifact;
-10. requires `Accepted` only for authority-bearing proof artifacts and excludes all others from active proof authority;
-11. records unresolved counterexamples and limitations;
-12. updates the applicable status register and canonical map;
-13. passes semantic, dependency, and repository validation;
-14. does not claim more than the supporting record establishes.
+7. independently transitions the governing research-execution charter and proof-assurance taxonomy to `Accepted` or identifies independently Accepted successors;
+8. transitions every other proposed canonical owner lacking an explicit permitted status through separate governance;
+9. independently transitions the proof-artifact status manifest to `Accepted` and links the manifest-level Acceptance decision;
+10. completes the manifest with exactly one charter status and one authority-bearing designation per registered proof artifact;
+11. requires `Accepted` only for authority-bearing proof artifacts and excludes all others from active proof authority;
+12. verifies a unique scoped owner/version or valid supersession relation for every proposition and sends unresolved equal-priority conflicts to `Unknown`;
+13. records unresolved counterexamples and limitations;
+14. updates the applicable status register and canonical map;
+15. passes semantic, dependency, and repository validation;
+16. does not claim more than the supporting record establishes.
 
 Until every requirement is satisfied, activation remains prohibited and authority conclusions remain `Unknown`.
 
