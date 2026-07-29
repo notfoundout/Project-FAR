@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "status": "Research",
+  "candidacy": "inactive_candidate",
+  "active": false,
+  "authority_model": "docs/governance/evidence-authority-model.md",
+  "registry": "docs/governance/evidence-authority-registry.json",
+  "purpose": "Candidate owner for explicit charter-status and authority-bearing designations of registered proof artifacts during a separately authorized promotion lifecycle.",
+  "entries": [],
+  "completion_state": "not_started",
+  "required_entry_fields": [
+    "artifact",
+    "artifact_status",
+    "authority_bearing",
+    "status_decision_record",
+    "scope",
+    "limitations"
+  ],
+  "activation_conditions": [
+    "manifest status is Accepted through independent governance",
+    "every registered proof artifact appears exactly once",
+    "every artifact_status belongs to the charter taxonomy",
+    "every authority-bearing proof artifact has status Accepted",
+    "non-authority-bearing artifacts are excluded from active proof authority",
+    "all status decisions link to an independently authoritative governance record"
+  ],
+  "nonclaims": [
+    "this Research candidate assigns no current artifact status",
+    "this Research candidate grants no proof authority",
+    "an empty entries list does not satisfy the promotion gate"
+  ]
+}
