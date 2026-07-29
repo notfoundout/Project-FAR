@@ -3,6 +3,7 @@
 The root [README Command Center](../README.md) is the canonical repository entry point and links to this canonical map.
 
 - [`docs/maintenance/repository-health-checks.md`](maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
+
 ## Purpose
 
 This document identifies the canonical location of major Project FAR concepts and framework documents.
@@ -33,6 +34,8 @@ Each concept should have one canonical source. Other documents should link to th
 | Theorem/Proof Status | [`governance/theorem-proof-status-register.md`](governance/theorem-proof-status-register.md) | Classifies theorem-like claim families and assurance. |
 | Roadmap | [`ROADMAP.md`](ROADMAP.md) | Records gated future work. |
 | Claim Status | [`governance/claim-status-matrix.md`](governance/claim-status-matrix.md) | Classifies important claims by epistemic status. |
+| FARA formal-kernel Acceptance | [`governance/fara-formal-kernel-acceptance-v1.0.md`](governance/fara-formal-kernel-acceptance-v1.0.md) | Records the scoped Acceptance decision for `FARA-FORMAL-KERNEL-001`. |
+| FARA formal-kernel Promotion | [`governance/fara-formal-kernel-promotion-v1.0.md`](governance/fara-formal-kernel-promotion-v1.0.md) | Records the change-control and Promotion authority for the scoped canonical kernel. |
 | Repository Certification Standard | [`governance/repository-certification-standard.md`](governance/repository-certification-standard.md) | Defines repository certification governance, protected boundaries, criteria, and completion rules. |
 | Mission | [`../foundations/motivation/mission.md`](../foundations/motivation/mission.md) | Defines the project mission. |
 | Philosophy | [`../foundations/motivation/philosophy.md`](../foundations/motivation/philosophy.md) | Defines guiding philosophical principles. |
@@ -46,6 +49,7 @@ Each concept should have one canonical source. Other documents should link to th
 |---|---|---|
 | FARA README | [`../frameworks/FARA/README.md`](../frameworks/FARA/README.md) | Entry point for the representational architecture layer. |
 | FARA Architecture | [`../frameworks/FARA/architecture.md`](../frameworks/FARA/architecture.md) | Defines FARA architecture. |
+| FARA Formal Kernel | [`../frameworks/FARA/formal-kernel.md`](../frameworks/FARA/formal-kernel.md) | Defines the Accepted identity-bearing many-sorted relational kernel within Project FAR v1.0 finite explicit auditable scope. |
 | FARA Dependency Graph | [`../frameworks/FARA/dependency-graph.md`](../frameworks/FARA/dependency-graph.md) | Records FARA document-maintenance dependencies. |
 | FARA Design Principles | [`../frameworks/FARA/design-principles.md`](../frameworks/FARA/design-principles.md) | Records FARA design constraints. |
 | FARA Document Map | [`../frameworks/FARA/document-map.md`](../frameworks/FARA/document-map.md) | Maps FARA documents and roles. |
@@ -164,6 +168,7 @@ Each concept should have one canonical source. Other documents should link to th
 - Repository Compliance Enforcement Report: `docs/audits/repository-compliance-enforcement-report.md` is the canonical compliance enforcement compliance enforcement, automation coverage, regression prevention, and final finding disposition report.
 - Independent Repository Certification Audit: `docs/audits/independent-repository-certification-audit.md` is the canonical certification matrix, governance consistency, integrity, regression, and automation verification audit.
 - Repository Certification Status: `docs/certification/repository-certification-status.md` is the canonical repository certification decision, evidence matrix, repository integrity summary, and maintenance readiness assessment.
+
 ## Release Navigation
 
 - Current Project FAR release: [`releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md).
