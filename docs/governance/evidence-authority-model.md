@@ -1,6 +1,8 @@
 # Evidence Authority Model
 
-Status: **Research candidate; not Accepted or Promoted**
+Status: **Research**
+Candidacy: **Inactive candidate**
+Promotion completed: **No**
 
 ## Purpose
 
@@ -60,7 +62,7 @@ After valid activation, a governance decision would be authoritative only for th
 
 ## Proof authority
 
-The registry separately assigns theorem/proof classification to `docs/governance/theorem-proof-status-register.md` and exact proof objects to a proof-record owner pattern that includes the repository's registered Markdown and JSON proof artifacts.
+The registry separately assigns theorem/proof classification to `docs/governance/theorem-proof-status-register.md` and exact proof objects to a proof-record owner pattern that includes every proof artifact path registered by repository proof metadata, including linked Markdown records under `docs/research/` and JSON proof records under `theory/evaluation/`.
 
 Use of `theorem`, `lemma`, `proposition`, `proof`, `derivation`, `necessary`, `sufficient`, `minimal`, `irreducible`, or `universal` requires a unique statement identifier, exact statement, premises, scope, model class, preservation criterion where relevant, linked proof object or bounded-evidence classification, and a status-register entry.
 
