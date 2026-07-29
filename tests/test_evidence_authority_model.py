@@ -6,18 +6,19 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MODEL_PATH = ROOT / "docs/governance/evidence-authority-model.md"
 REGISTRY_PATH = ROOT / "docs/governance/evidence-authority-registry.json"
-EVALUATION_ROOT = ROOT / "theory/evaluation"
 
 
-def iter_keyed_strings(value, key_suffix):
+def iter_registered_proof_paths(value):
     if isinstance(value, dict):
         for key, child in value.items():
-            if isinstance(child, str) and key.endswith(key_suffix):
+            if isinstance(child, str) and (
+                key == "proof_object" or key.endswith("_proof_artifact")
+            ):
                 yield child
-            yield from iter_keyed_strings(child, key_suffix)
+            yield from iter_registered_proof_paths(child)
     elif isinstance(value, list):
         for child in value:
-            yield from iter_keyed_strings(child, key_suffix)
+            yield from iter_registered_proof_paths(child)
 
 
 def matches_owner_pattern(path, owner_pattern):
@@ -109,11 +110,15 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         self.assertNotEqual(proofs["authority_class"], status["authority_class"])
 
         registered_paths = set()
-        for json_path in EVALUATION_ROOT.glob("*.json"):
+        for json_path in ROOT.rglob("*.json"):
             payload = json.loads(json_path.read_text())
-            registered_paths.update(iter_keyed_strings(payload, "_proof_artifact"))
+            registered_paths.update(iter_registered_proof_paths(payload))
 
         self.assertTrue(registered_paths, "no registered proof artifacts discovered")
+        self.assertIn(
+            "mechanization/lean/FARCanonicalCountermodel.lean",
+            registered_paths,
+        )
         for proof_path in sorted(registered_paths):
             self.assertTrue((ROOT / proof_path).is_file(), proof_path)
             self.assertTrue(
