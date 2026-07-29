@@ -1,11 +1,13 @@
 import fnmatch
 import json
 import pathlib
+import re
 import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MODEL_PATH = ROOT / "docs/governance/evidence-authority-model.md"
 REGISTRY_PATH = ROOT / "docs/governance/evidence-authority-registry.json"
+DEPENDENCY_REGISTRY_PATH = ROOT / "theory/dependencies/dependency-registry.yaml"
 PROOF_METADATA_ROOTS = (
     ROOT / "foundations",
     ROOT / "theory",
@@ -28,6 +30,23 @@ def iter_registered_proof_paths(value):
             yield from iter_registered_proof_paths(child)
 
 
+def iter_yaml_registered_proof_paths(text):
+    current_source = None
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        source_match = re.fullmatch(r"source:\s*(\S+)", line)
+        if source_match:
+            current_source = source_match.group(1)
+            continue
+        type_match = re.fullmatch(r"source_type:\s*(\S+)", line)
+        if type_match and type_match.group(1) == "proof_object":
+            if current_source is None:
+                raise AssertionError("proof_object source_type without source")
+            yield current_source
+        if line.startswith("- id:"):
+            current_source = None
+
+
 def matches_owner_pattern(path, owner_pattern):
     return any(
         fnmatch.fnmatchcase(path, pattern)
@@ -46,6 +65,16 @@ def iter_valid_json_payloads():
                 # Some repository fixtures intentionally use malformed JSON to
                 # test validators. They are not admissible proof metadata.
                 continue
+
+
+def registered_proof_paths():
+    paths = set()
+    for _, payload in iter_valid_json_payloads():
+        paths.update(iter_registered_proof_paths(payload))
+    paths.update(
+        iter_yaml_registered_proof_paths(DEPENDENCY_REGISTRY_PATH.read_text())
+    )
+    return paths
 
 
 class EvidenceAuthorityModelTests(unittest.TestCase):
@@ -129,21 +158,50 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         self.assertEqual("status_register", status["authority_class"])
         self.assertNotEqual(proofs["authority_class"], status["authority_class"])
 
-        registered_paths = set()
-        for _, payload in iter_valid_json_payloads():
-            registered_paths.update(iter_registered_proof_paths(payload))
-
-        self.assertTrue(registered_paths, "no registered proof artifacts discovered")
+        paths = registered_proof_paths()
+        self.assertTrue(paths, "no registered proof artifacts discovered")
         self.assertIn(
             "mechanization/lean/FARCanonicalCountermodel.lean",
-            registered_paths,
+            paths,
         )
-        for proof_path in sorted(registered_paths):
+        self.assertIn("theory/proof-objects/T-001.proof.yaml", paths)
+        self.assertIn("theory/proof-objects/T-005.proof.yaml", paths)
+        for proof_path in sorted(paths):
             self.assertTrue((ROOT / proof_path).is_file(), proof_path)
             self.assertTrue(
                 matches_owner_pattern(proof_path, proofs["owner_pattern"]),
                 proof_path,
             )
+
+    def test_proof_status_policy_blocks_activation_without_explicit_acceptance(self):
+        proofs = self.registry["domains"]["proof_records"]
+        policy = proofs["status_policy"]
+        taxonomy = set(self.registry["artifact_status_taxonomy"])
+        requirements = set(self.registry["activation_requirements"])
+
+        self.assertTrue(policy["manifest_required_for_activation"])
+        self.assertTrue(policy["exactly_one_status_per_registered_artifact"])
+        self.assertTrue(policy["validate_status_against_artifact_status_taxonomy"])
+        self.assertEqual("Unknown", policy["missing_or_undeclared_status"])
+        self.assertEqual("Accepted", policy["required_status_for_activation"])
+        self.assertIn(policy["missing_or_undeclared_status"], taxonomy)
+        self.assertIn(policy["required_status_for_activation"], taxonomy)
+        self.assertIn(
+            "every registered proof artifact has exactly one explicit charter status in a promotion status manifest",
+            requirements,
+        )
+        self.assertIn(
+            "every registered proof artifact has status Accepted before proof authority activates",
+            requirements,
+        )
+        self.assertIn(
+            "proof owner pattern implies Accepted proof status",
+            self.registry["forbidden_inferences"],
+        )
+        self.assertIn(
+            "A missing or undeclared status is treated as `Unknown` and blocks proof authority",
+            self.model,
+        )
 
     def test_definition_scopes_and_status_transition_are_explicit(self):
         terminology = self.registry["domains"]["canonical_terminology"]
@@ -191,6 +249,7 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
             "acceptance record",
             "promotion record",
             "owner status transitions completed",
+            "proof artifact status manifest completed",
             "semantic and dependency validation",
         }
         self.assertTrue(required <= requirements)
@@ -205,6 +264,7 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
             "research candidate authorizes experiment execution",
             "research candidate prohibits experiment execution",
             "lifecycle promotion implies artifact status Promoted",
+            "proof owner pattern implies Accepted proof status",
         }
         self.assertTrue(required <= forbidden)
 
