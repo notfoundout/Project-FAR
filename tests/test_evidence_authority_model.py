@@ -1,3 +1,4 @@
+import fnmatch
 import json
 import pathlib
 import unittest
@@ -5,6 +6,25 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MODEL_PATH = ROOT / "docs/governance/evidence-authority-model.md"
 REGISTRY_PATH = ROOT / "docs/governance/evidence-authority-registry.json"
+EVALUATION_ROOT = ROOT / "theory/evaluation"
+
+
+def iter_keyed_strings(value, key_suffix):
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if isinstance(child, str) and key.endswith(key_suffix):
+                yield child
+            yield from iter_keyed_strings(child, key_suffix)
+    elif isinstance(value, list):
+        for child in value:
+            yield from iter_keyed_strings(child, key_suffix)
+
+
+def matches_owner_pattern(path, owner_pattern):
+    return any(
+        fnmatch.fnmatchcase(path, pattern)
+        for pattern in owner_pattern.split("|")
+    )
 
 
 class EvidenceAuthorityModelTests(unittest.TestCase):
@@ -14,14 +34,14 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         cls.registry = json.loads(REGISTRY_PATH.read_text())
 
     def test_model_and_registry_remain_inactive_research_candidates(self):
-        self.assertIn(
-            "Status: **Research candidate; not Accepted or Promoted**",
-            self.model,
-        )
-        self.assertEqual(
-            "Research candidate; not Accepted or Promoted",
-            self.registry["status"],
-        )
+        taxonomy = set(self.registry["artifact_status_taxonomy"])
+        self.assertIn("Status: **Research**", self.model)
+        self.assertIn("Candidacy: **Inactive candidate**", self.model)
+        self.assertIn("Promotion completed: **No**", self.model)
+        self.assertEqual("Research", self.registry["status"])
+        self.assertIn(self.registry["status"], taxonomy)
+        self.assertEqual("inactive_candidate", self.registry["candidacy"])
+        self.assertFalse(self.registry["promotion_completed"])
         self.assertFalse(self.registry["active"])
         self.assertEqual("Research", self.registry["lifecycle_state"])
 
@@ -37,6 +57,7 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
     def test_status_taxonomy_matches_charter(self):
         expected = {"Accepted", "Research", "Provisional", "Archive", "Unknown"}
         self.assertEqual(expected, set(self.registry["artifact_status_taxonomy"]))
+        self.assertIn(self.registry["status"], expected)
         permitted = self.registry["permitted_statuses_by_class"]
         for authority_class, statuses in permitted.items():
             self.assertTrue(statuses, authority_class)
@@ -80,13 +101,25 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         self.assertIn("self-acceptance", governance["may_not_establish"])
         self.assertIn("self-promotion", governance["may_not_establish"])
 
-    def test_proof_records_cover_registered_json_objects(self):
+    def test_proof_records_cover_every_registered_proof_artifact(self):
         proofs = self.registry["domains"]["proof_records"]
         status = self.registry["domains"]["theorem_and_proof_status"]
         self.assertEqual("proof_record", proofs["authority_class"])
-        self.assertIn("theory/evaluation/*.json", proofs["owner_pattern"])
         self.assertEqual("status_register", status["authority_class"])
         self.assertNotEqual(proofs["authority_class"], status["authority_class"])
+
+        registered_paths = set()
+        for json_path in EVALUATION_ROOT.glob("*.json"):
+            payload = json.loads(json_path.read_text())
+            registered_paths.update(iter_keyed_strings(payload, "_proof_artifact"))
+
+        self.assertTrue(registered_paths, "no registered proof artifacts discovered")
+        for proof_path in sorted(registered_paths):
+            self.assertTrue((ROOT / proof_path).is_file(), proof_path)
+            self.assertTrue(
+                matches_owner_pattern(proof_path, proofs["owner_pattern"]),
+                proof_path,
+            )
 
     def test_definition_scopes_and_status_transition_are_explicit(self):
         terminology = self.registry["domains"]["canonical_terminology"]
@@ -99,7 +132,10 @@ class EvidenceAuthorityModelTests(unittest.TestCase):
         )
         self.assertEqual("Unknown", definitions["current_status"])
         self.assertEqual("Accepted", definitions["required_status_for_activation"])
-        self.assertIn("owner status transitions completed", self.registry["promotion_requirements"])
+        self.assertIn(
+            "owner status transitions completed",
+            self.registry["promotion_requirements"],
+        )
         self.assertIn(
             "detailed formal definitions", terminology["may_not_establish"]
         )
