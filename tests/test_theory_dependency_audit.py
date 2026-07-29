@@ -2,7 +2,6 @@ import copy
 import importlib.util
 import json
 import pathlib
-import shutil
 import subprocess
 import tempfile
 import unittest
@@ -54,8 +53,27 @@ class TheoryDependencyAuditTests(unittest.TestCase):
         return next(row for row in result["checks"] if row["id"] == check_id)
 
     def test_preregistration_commits_precede_execution_and_result(self):
+        fetch = self.git(
+            ROOT,
+            "fetch",
+            "--no-tags",
+            "--depth=32",
+            "origin",
+            "governance/freeze-theory-dependency-reconciliation",
+        )
+        self.assertEqual(0, fetch.returncode)
+        branch_head = "FETCH_HEAD"
+
         def path_commit(path):
-            return self.git(ROOT, "log", "-1", "--format=%H", "--", path).stdout.strip()
+            return self.git(
+                ROOT,
+                "log",
+                "-1",
+                "--format=%H",
+                branch_head,
+                "--",
+                path,
+            ).stdout.strip()
 
         question = path_commit("research/theory-dependency-audit/question-v1.0.md")
         specification = path_commit(
