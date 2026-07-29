@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.8",
+  "schema_version": "1.9",
   "status": "Research",
   "candidacy": "inactive_candidate",
   "promotion_completed": false,
@@ -95,7 +95,7 @@
       "may_not_establish": ["proof truth", "theorem truth", "self-acceptance", "status without linked governance decision"]
     },
     "proof_records": {
-      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/**/proofs/**|theory/evaluation/*.json|theory/proof-objects/*.proof.yaml|docs/governance/proofs/**|docs/research/*proof*.md|mechanization/lean/*.lean",
+      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/proofs/**|theory/**/proofs/**|theory/evaluation/*.json|theory/proof-objects/*.proof.yaml|docs/governance/proofs/**|docs/research/*proof*.md|mechanization/lean/*.lean",
       "authority_class": "proof_record",
       "proposition_scope": "exact registered formal statements under explicit premises",
       "requires": ["statement identifier", "exact statement", "premises", "scope", "model class", "proof object", "status-register entry"],
