@@ -112,4 +112,4 @@ Use worked examples and external criticism to test the accepted kernel outside i
 
 ## Epistemic boundary
 
-“Stable” is a maintenance status, not proof that FARA is universal, globally minimal, necessary, or lossless. Candidate primitives remain candidates; FAR methods and FARO operations are downstream and are not FARA axioms. `FARA-FORMAL-KERNEL-001` is Accepted only at its registered scope. See the [framework-boundary specification](../../docs/governance/framework-boundaries.md) and [formal-kernel limitation](../../docs/governance/limitations-register.md#lim-025).
+“Stable” is a maintenance status, not proof that FARA is universal, globally minimal, necessary, or lossless. Candidate primitives remain candidates; FAR methods and FARO operations are downstream and are not FARA axioms. `FARA-FORMAL-KERNEL-001` is Accepted only at its registered scope. See the [framework-boundary specification](../../docs/governance/framework-boundaries.md) and [limitations register](../../docs/governance/limitations-register.md).
