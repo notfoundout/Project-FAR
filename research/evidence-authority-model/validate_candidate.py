@@ -10,6 +10,7 @@ private validator default.
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import pathlib
 from typing import Any, Iterable
@@ -19,10 +20,8 @@ import yaml
 HERE = pathlib.Path(__file__).resolve().parent
 V1_PATH = HERE / "validator_entrypoint_v1.py"
 DISCOVERY_SCHEMA_PATH = HERE / "candidate/proof-discovery-schema-v1.0.json"
-_spec = __import__("importlib.util").util.spec_from_file_location(
-    "evidence_authority_validator_v1", V1_PATH
-)
-v1 = __import__("importlib.util").util.module_from_spec(_spec)
+_spec = importlib.util.spec_from_file_location("evidence_authority_validator_v1", V1_PATH)
+v1 = importlib.util.module_from_spec(_spec)
 assert _spec.loader is not None
 _spec.loader.exec_module(v1)
 core = v1.core
@@ -85,6 +84,7 @@ def _validate_discovery_schema() -> list[str]:
     map_required = {
         "source_file_extension": ".json",
         "registered_key_extension": ".json",
+        "registered_key_filename_must_contain": "proof",
         "negative_control": "disable_hash_locked_artifact_map_key_schema",
     }
     for field, expected in map_required.items():
@@ -160,6 +160,9 @@ def discover_proof_paths(
     registered_extension = str(
         _artifact_map_key_rule().get("registered_key_extension", "")
     )
+    registered_token = str(
+        _artifact_map_key_rule().get("registered_key_filename_must_contain", "")
+    ).lower()
 
     for source in frozen.structured_metadata_paths():
         if not source.endswith(".json"):
@@ -175,10 +178,13 @@ def discover_proof_paths(
 
         if artifact_map_enabled and _source_matches_artifact_map_rule(source):
             for registered_path in _artifact_map_keys(payload, mapping_fields):
+                registered_name = pathlib.PurePosixPath(registered_path).name.lower()
                 if (
                     core.syntactic_repo_path(registered_path)
                     and pathlib.PurePosixPath(registered_path).suffix
                     == registered_extension
+                    and registered_token
+                    and registered_token in registered_name
                 ):
                     inventory[registered_path].add("artifact_map_keys")
                     artifact_map_found = True
