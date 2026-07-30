@@ -1,11 +1,11 @@
 {
-  "schema_version": "1.0-research-candidate",
+  "schema_version": "1.1-research-candidate",
   "status": "Research",
   "candidacy": "inactive_candidate_extension",
   "active": false,
   "extends": "research/evidence-authority-model/candidate/registry-v1.0.json#domains/proof_records/discovery_contract",
-  "purpose": "Declare schema-aware self-registering proof-record discovery rules that augment the base candidate registry without activating governance.",
-  "pathway": "self_registering_records",
+  "purpose": "Declare schema-aware proof-record discovery rules that augment the base candidate registry without activating governance.",
+  "pathway": "schema_aware_proof_discovery",
   "rules": [
     {
       "rule_id": "proof_id_record",
@@ -27,12 +27,29 @@
         "theory/evaluation/fara-operator-w2-proof-v1.0.json"
       ],
       "negative_control": "disable_canonical_id_proof_record_schema"
+    },
+    {
+      "rule_id": "hash_locked_artifact_map_keys",
+      "mapping_fields": [
+        "historical_artifacts"
+      ],
+      "roots": [
+        "theory/evaluation/"
+      ],
+      "source_file_extension": ".json",
+      "registered_key_extension": ".json",
+      "required_sentinels": [
+        "theory/evaluation/fara-expanded-bounded-campaign-proof-v1.0.json",
+        "theory/evaluation/fara-foundation-comparison-proof-v1.0.json"
+      ],
+      "negative_control": "disable_hash_locked_artifact_map_key_schema"
     }
   ],
   "activation_effect": "none",
   "nonclaims": [
     "this extension grants no proof authority",
     "the id field alone is not sufficient outside the declared roots and filename constraint",
+    "mapping keys are registered only under declared artifact-map fields and source roots",
     "discovery does not establish proof correctness",
     "this Research extension does not modify canonical governance"
   ]
