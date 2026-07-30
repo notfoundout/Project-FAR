@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.6",
+  "schema_version": "1.7",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "execution_specification": "research/evidence-authority-model/execution-spec-v1.0.json",
@@ -9,8 +9,8 @@
     "candidate_model": "3ff99dd626e26cc74b47f4e1f978737926a3b663",
     "candidate_registry": "798ddae550304981df78cd539b1fab34768b3745",
     "candidate_manifest": "68ac0a4bfa0b4e033be185ccc71b117e22b8552d",
-    "candidate_proof_discovery_schema": "532e01621cbf597fabf2db59599c19b2d2b5cf4f",
-    "validator_entrypoint": "c4b2c227e0d162d012910f83b040f5e96460f412",
+    "candidate_proof_discovery_schema": "b460ae67754579f0319beb679dcac5b8fcce7a0a",
+    "validator_entrypoint": "12754bd5a1ead5cd5313a8591ea430571686eec7",
     "validator_entrypoint_v1": "677d3f9a807ee0e488dc14b6f9f5babbf200ec45",
     "validator_core": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
   },
@@ -29,19 +29,24 @@
     "A1_research_inactivity": "Pass",
     "A2_external_bootstrap": "Pass",
     "A3_governing_dependency_coverage": "Pass",
-    "A4_proof_path_completeness": "Pass: 56 registered proof paths across all base pathways plus canonical-id and hash-locked artifact-map schemas",
-    "A5_proof_status_separation": "Pass: 56 entries and 57 structurally validated decision records; all weakening controls detected",
+    "A4_proof_path_completeness": "Pass: 59 registered proof paths across all base pathways plus proof-object-id canonical-id and hash-locked artifact-map schemas",
+    "A5_proof_status_separation": "Pass: 59 entries and 60 structurally validated decision records; all weakening controls detected",
     "A6_manifest_provenance": "Pass: identity version authority independence linkage date evidence scope limitations and digest locks validated",
     "A7_equal_priority_conflict_safety": "Pass: equal-priority contradiction resolved Unknown; candidate-declared priority order selected priority 1 governance over priority 5 Research",
     "A8_claim_boundary": "Pass"
   },
   "proof_discovery": {
-    "registered_path_count": 56,
+    "registered_path_count": 59,
     "all_targets_exist_in_frozen_tree": true,
     "all_targets_covered_by_candidate_owner_pattern": true,
     "proposition_discovery_status_blind": true,
     "base_pathway_count": 9,
     "schema": "research/evidence-authority-model/candidate/proof-discovery-schema-v1.0.json",
+    "proof_object_id_records": [
+      "theory/evaluation/fara-vocabulary-sufficiency-v1.0.json",
+      "theory/evaluation/fara-w4-representation-boundary-v1.0.json",
+      "theory/evaluation/fara-w5-cross-representation-invariance-v1.0.json"
+    ],
     "canonical_id_proof_records": [
       "theory/evaluation/fara-core-formalization-proof-v1.0.json",
       "theory/evaluation/fara-operator-w2-proof-v1.0.json"
@@ -57,22 +62,23 @@
     "selected_numeric_priority": 1,
     "numeric_priority_order": "lower_is_higher",
     "priority_order_derived_from_candidate_model": true,
-    "synthetic_activation_entry_count": 56,
-    "synthetic_decision_record_count": 57,
+    "synthetic_activation_entry_count": 59,
+    "synthetic_decision_record_count": 60,
     "synthetic_bundle_effect": "none; non-operative Research probe"
   },
   "negative_control_execution": {
-    "count": 42,
+    "count": 43,
     "all_detected": true,
     "provenance_omission_controls": 8,
+    "proof_object_id_schema_disable_control": "detected",
     "canonical_id_schema_disable_control": "detected",
     "artifact_map_key_schema_disable_control": "detected",
     "candidate_priority_declaration_reversal_control": "detected",
-    "primary_validated_commit": "e65b0fd24b163758879ef3039f540e739e05c393",
-    "repeat_validated_commit": "3b997b8b219282e2bb744810eb2a8c4307c96ac2",
-    "primary_workflow_run_id": 30516299643,
-    "repeat_workflow_run_id": 30516384838,
-    "evidence_digest": "0087fb82194a2389729b3c5df4ce07306701135cc8d4c387b8a53176b4d875bf",
+    "primary_validated_commit": "ddd4ced4a467f5a202e804bd333a1709509c05c3",
+    "repeat_validated_commit": "d4968f0334da2db56df8e6dcba313dd3a84c9e55",
+    "primary_workflow_run_id": 30517745133,
+    "repeat_workflow_run_id": 30517874492,
+    "evidence_digest": "7c2deb179b15a2a08e6562d2af852f574384e679b4dc60b10fca737abb95b770",
     "result": "Pass in two separate workflow executions"
   },
   "execution_outcome": "bounded_candidate_supported",
