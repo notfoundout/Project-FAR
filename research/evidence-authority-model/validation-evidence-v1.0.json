@@ -1,29 +1,29 @@
 {
-  "schema_version": "1.6",
+  "schema_version": "1.7",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "execution_role": "primary",
-  "validated_commit": "ddd4ced4a467f5a202e804bd333a1709509c05c3",
+  "validated_commit": "f916fe2b2e8e6cb02ad753e9114fa9adbb5fd186",
   "candidate_and_validator_blobs": {
     "candidate_model": "3ff99dd626e26cc74b47f4e1f978737926a3b663",
     "candidate_registry": "798ddae550304981df78cd539b1fab34768b3745",
     "candidate_manifest": "68ac0a4bfa0b4e033be185ccc71b117e22b8552d",
     "candidate_proof_discovery_schema": "b460ae67754579f0319beb679dcac5b8fcce7a0a",
-    "validator_entrypoint": "12754bd5a1ead5cd5313a8591ea430571686eec7",
+    "validator_entrypoint": "d4197968646c555f133ff416df32627d4dec8118",
     "validator_entrypoint_v1": "677d3f9a807ee0e488dc14b6f9f5babbf200ec45",
     "validator_core": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
   },
   "validation_source": {
     "workflow": "Repository Health",
-    "workflow_run_id": 30517745133,
-    "workflow_run_number": 1839,
-    "job_id": 90791242158,
+    "workflow_run_id": 30519399225,
+    "workflow_run_number": 1851,
+    "job_id": 90796266056,
     "result": "success",
-    "log_marker": "BEGIN_EVIDENCE_AUTHORITY_PRIMARY_V6"
+    "log_marker": "BEGIN_EVIDENCE_AUTHORITY_PRIMARY_V7"
   },
   "overall": "pass",
   "errors": [],
-  "evidence_digest": "7c2deb179b15a2a08e6562d2af852f574384e679b4dc60b10fca737abb95b770",
+  "evidence_digest": "bec322a704c4f3932a716b3798f1cd9bd81136635e486ddc862eac38bdab53a0",
   "canonical_repository_implementation_deferred": true,
   "frozen_source_execution": {
     "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
@@ -53,6 +53,13 @@
     ],
     "schema": "research/evidence-authority-model/candidate/proof-discovery-schema-v1.0.json"
   },
+  "frozen_contract_validation": {
+    "model_header_requirements_enforced": true,
+    "external_bootstrap_contract_enforced": true,
+    "fixed_governing_domain_oracle_enforced": true,
+    "fixed_activation_requirements_enforced": true,
+    "fixed_promotion_requirements_enforced": true
+  },
   "conflict_probes": {
     "equal_priority_result": "Unknown",
     "unequal_priority_result": "Affirmed",
@@ -68,12 +75,13 @@
     "complete_decision_provenance_valid": true
   },
   "negative_controls": {
-    "count": 43,
+    "count": 57,
     "all_detected": true,
     "provenance_omission_controls": 8,
-    "proof_object_id_schema_disable_control": "detected",
-    "canonical_id_schema_disable_control": "detected",
-    "artifact_map_key_schema_disable_control": "detected",
+    "proof_discovery_extension_controls": 3,
+    "model_header_controls": 4,
+    "external_bootstrap_controls": 4,
+    "fixed_governing_domain_bypass_controls": 6,
     "candidate_priority_declaration_reversal_control": "detected"
   },
   "lifecycle": {
