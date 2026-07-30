@@ -1,24 +1,26 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.2",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "execution_role": "internal deterministic repeat",
-  "validated_commit": "ba528f5e4891b14c33791716097b6a5a3e2b035e",
+  "validated_commit": "58aa3a15d69d2dd71668adf0d7b9501a52c52e57",
   "validator": {
-    "path": "research/evidence-authority-model/validate_candidate.py",
-    "git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
+    "entrypoint": "research/evidence-authority-model/validate_candidate.py",
+    "entrypoint_git_blob_sha": "1ec1acfed37091dc6820c3bb70950301e9897e67",
+    "core": "research/evidence-authority-model/validator_core_v1.py",
+    "core_git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
   },
   "validation_source": {
     "workflow": "Repository Health",
-    "workflow_run_id": 30503397417,
-    "workflow_run_number": 1765,
-    "job_id": 90747810604,
+    "workflow_run_id": 30507130512,
+    "workflow_run_number": 1778,
+    "job_id": 90759219738,
     "result": "success",
-    "log_marker": "BEGIN_EVIDENCE_AUTHORITY_REPEAT"
+    "log_marker": "BEGIN_EVIDENCE_AUTHORITY_REPEAT_V2"
   },
   "overall": "pass",
   "errors": [],
-  "evidence_digest": "8ba33d1d14d3e97d3adf4d0a16cd3b1f340c41370be698708e1d5c11ea9894a6",
+  "evidence_digest": "8399794130250807c8b64d316a762bf39459e1b6def3e61a8d012c0e1e9915cf",
   "canonical_repository_implementation_deferred": true,
   "frozen_source_execution": {
     "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
@@ -33,27 +35,43 @@
     "all_registered_targets_match_candidate_owner_coverage": true,
     "proposition_discovery_status_blind": true
   },
-  "conflict_probe": {
-    "claims_injected": 2,
-    "same_proposition_scope_premises_version": true,
-    "equal_priority": true,
-    "opposite_polarities": true,
-    "result": "Unknown",
-    "reason": "equal_priority_contradiction"
+  "conflict_probes": {
+    "equal_priority": {
+      "result": "Unknown",
+      "reason": "equal_priority_contradiction"
+    },
+    "unequal_priority": {
+      "numeric_priority_order": "lower_is_higher",
+      "selected_numeric_priority": 1,
+      "result": "Affirmed",
+      "selected_artifact": "synthetic://accepted-governance.json"
+    }
   },
   "activation_manifest_probe": {
+    "synthetic_nonoperative_probe": true,
     "entry_count": 52,
-    "valid": true
+    "decision_record_count": 53,
+    "valid": true,
+    "structural_provenance_valid": true
   },
   "negative_controls": {
-    "count": 24,
-    "all_detected": true
+    "count": 32,
+    "all_detected": true,
+    "priority_reversal_detected": true,
+    "manifest_decision_missing_detected": true,
+    "manifest_version_mismatch_detected": true,
+    "non_authoritative_governance_detected": true,
+    "manifest_hash_tamper_detected": true,
+    "artifact_status_record_missing_detected": true,
+    "artifact_linkage_mismatch_detected": true,
+    "artifact_status_hash_tamper_detected": true
   },
   "independence": {
     "separate_workflow_run": true,
     "separate_job": true,
     "separate_commit": true,
-    "identical_validator_blob": true,
+    "identical_entrypoint_blob": true,
+    "identical_core_blob": true,
     "identical_frozen_tree": true,
     "first_result_not_loaded_by_validator": true,
     "external_independence": false
