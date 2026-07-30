@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0-research-candidate",
+  "status": "Research",
+  "candidacy": "inactive_candidate_extension",
+  "active": false,
+  "extends": "research/evidence-authority-model/candidate/registry-v1.0.json#domains/proof_records/discovery_contract",
+  "purpose": "Declare schema-aware self-registering proof-record discovery rules that augment the base candidate registry without activating governance.",
+  "pathway": "self_registering_records",
+  "rules": [
+    {
+      "rule_id": "proof_id_record",
+      "identifier_field": "proof_id",
+      "source": "base candidate registry"
+    },
+    {
+      "rule_id": "canonical_id_proof_record",
+      "identifier_field": "id",
+      "roots": [
+        "theory/evaluation/",
+        "theory/terminal/",
+        "foundations/"
+      ],
+      "file_extension": ".json",
+      "filename_must_contain": "proof",
+      "required_sentinels": [
+        "theory/evaluation/fara-core-formalization-proof-v1.0.json",
+        "theory/evaluation/fara-operator-w2-proof-v1.0.json"
+      ],
+      "negative_control": "disable_canonical_id_proof_record_schema"
+    }
+  ],
+  "activation_effect": "none",
+  "nonclaims": [
+    "this extension grants no proof authority",
+    "the id field alone is not sufficient outside the declared roots and filename constraint",
+    "discovery does not establish proof correctness",
+    "this Research extension does not modify canonical governance"
+  ]
+}
