@@ -13,8 +13,8 @@ assert SPEC.loader is not None
 SPEC.loader.exec_module(MODULE)
 
 
-class EvidenceAuthorityPrimaryV5Test(unittest.TestCase):
-    def test_evidence_authority_primary_v5(self) -> None:
+class EvidenceAuthorityRepeatV5Test(unittest.TestCase):
+    def test_evidence_authority_repeat_v5(self) -> None:
         result = MODULE.run_full_validation()
         positive = result["positive_validation"]
         summary = {
@@ -36,9 +36,9 @@ class EvidenceAuthorityPrimaryV5Test(unittest.TestCase):
             "artifact_map_key_records": MODULE._artifact_map_key_rule()["required_sentinels"],
             "control_ids": [item["control_id"] for item in result["negative_controls"]],
         }
-        print("BEGIN_EVIDENCE_AUTHORITY_PRIMARY_V5")
+        print("BEGIN_EVIDENCE_AUTHORITY_REPEAT_V5")
         print(json.dumps(summary, sort_keys=True))
-        print("END_EVIDENCE_AUTHORITY_PRIMARY_V5")
+        print("END_EVIDENCE_AUTHORITY_REPEAT_V5")
 
         self.assertEqual(result["overall"], "pass", result["errors"])
         self.assertEqual(positive["proof_path_count"], 56)
