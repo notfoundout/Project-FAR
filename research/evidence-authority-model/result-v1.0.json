@@ -1,27 +1,27 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "question": "complete",
   "execution": "complete",
   "observation": "complete",
   "discovery": "bounded_candidate_supported",
-  "decision_basis": "A1-A8 passed in two separately identified workflow executions using an identical validator blob and frozen tree; 52 proof paths were discovered from 372 frozen inputs; all 24 mutation controls were executed and detected; both evidence digests matched",
+  "decision_basis": "A1-A8 passed in two separately identified workflow executions using identical validator entrypoint and core blobs and the same frozen tree; 52 proof paths were discovered from 372 frozen inputs; all 32 mutation controls were detected; both evidence digests matched",
   "primary_validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
   "repeat_validation_evidence": "research/evidence-authority-model/repeat-validation-evidence-v1.0.json",
   "replication_comparison": "research/evidence-authority-model/replication-comparison-v1.0.json",
   "supported_propositions": [
     "a non-self-activating proposition-specific Research candidate authority contract can be represented as research evidence for the frozen repository state",
     "all proof-discovery inputs can be bound to the preregistered frozen commit and tree rather than the mutable working tree",
-    "proposition-source discovery must be status-blind so Proposed and Established records are both covered",
-    "the governing charter and proof-assurance taxonomy must remain explicit activation blockers",
-    "proof ownership must be discovered independently across theorem lemma proposition dependency verifier structured object-valued self-registering and terminal-entrypoint metadata",
+    "proposition-source discovery must be status-blind",
+    "proof ownership must be discovered independently across all nine registered pathways",
     "syntactically registered proof paths must be retained before existence validation",
-    "proof ownership must remain separate from artifact status and authority-bearing designation",
-    "authority-bearing proof artifacts must be Accepted and explicitly designated",
-    "manifest-level independent Acceptance provenance is required",
-    "concrete unresolved equal-priority contradictory claims must adjudicate to Unknown",
-    "canonical governance implementation must remain absent until external replication Acceptance Promotion and authorized Repository Change"
+    "proof ownership remains separate from artifact status and authority-bearing designation",
+    "authority-bearing proof artifacts require Accepted status and explicit designation",
+    "manifest and per-entry decision provenance require resolvable authoritative independent records with identity linkage and digest locks",
+    "equal-priority contradictory claims resolve Unknown",
+    "lower numeric rank denotes higher authority, so priority 1 governance overrides priority 5 Research",
+    "canonical governance implementation remains absent until external replication Acceptance Promotion and authorized Repository Change"
   ],
   "evidence_summary": {
     "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
@@ -29,9 +29,13 @@
     "discovery_input_count": 372,
     "discovery_input_digest": "1f1bdb8185c4104d2ae843a288149dbb361a4fb8def784cf0130f138813d1dff",
     "registered_proof_path_count": 52,
-    "negative_control_count": 24,
-    "primary_evidence_digest": "8ba33d1d14d3e97d3adf4d0a16cd3b1f340c41370be698708e1d5c11ea9894a6",
-    "repeat_evidence_digest": "8ba33d1d14d3e97d3adf4d0a16cd3b1f340c41370be698708e1d5c11ea9894a6",
+    "synthetic_manifest_entry_count": 52,
+    "synthetic_decision_record_count": 53,
+    "negative_control_count": 32,
+    "primary_workflow_run_id": 30506960124,
+    "repeat_workflow_run_id": 30507130512,
+    "primary_evidence_digest": "8399794130250807c8b64d316a762bf39459e1b6def3e61a8d012c0e1e9915cf",
+    "repeat_evidence_digest": "8399794130250807c8b64d316a762bf39459e1b6def3e61a8d012c0e1e9915cf",
     "digest_match": true
   },
   "lifecycle": {
@@ -44,7 +48,7 @@
     "acceptance": "prohibited",
     "promotion": "prohibited",
     "canonical_repository_change": "deferred and prohibited by this campaign",
-    "retained_repository_material": "research evidence and reproducible research validator only"
+    "retained_repository_material": "Research evidence and reproducible Research validator only"
   },
   "activation_status": "prohibited",
   "bootstrap_status": "Unknown",
@@ -52,7 +56,7 @@
     "evidence_authority_model_under_docs_governance": "absent",
     "evidence_authority_registry_under_docs_governance": "absent",
     "proof_artifact_status_manifest_under_docs_governance": "absent",
-    "permanent_canonical_test_wiring": "absent",
+    "permanent_canonical_test_wiring": "absent after final cleanup",
     "future_creation_condition": "authorized Repository Change after external replication Acceptance and Promotion"
   },
   "limitations": [
@@ -63,7 +67,7 @@
     "the candidate manifest is not Accepted or populated",
     "the primary and repeat executions share one validator implementation and frozen metadata source",
     "CI success is conformance evidence only",
-    "the discovery supports only a research candidate representation not an active authority model"
+    "the discovery supports only a Research candidate representation not an active authority model"
   ],
   "nonclaims": [
     "Accepted authority model",
