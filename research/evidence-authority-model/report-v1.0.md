@@ -1,4 +1,4 @@
-# Evidence Authority Model Investigation Report v1.4
+# Evidence Authority Model Investigation Report v1.5
 
 Status: **Research**
 
@@ -27,10 +27,10 @@ Both final executions validated identical blobs:
 - candidate model: `3ff99dd626e26cc74b47f4e1f978737926a3b663`;
 - candidate registry: `798ddae550304981df78cd539b1fab34768b3745`;
 - candidate manifest: `68ac0a4bfa0b4e033be185ccc71b117e22b8552d`;
-- validator entrypoint: `677d3f9a807ee0e488dc14b6f9f5babbf200ec45`;
+- candidate proof-discovery schema: `f220701b36fdb21a1a5035849c776183348d55cf`;
+- validator entrypoint: `88cc42d24afc006c0dbcb3ce64d9120e9e5119bb`;
+- reviewed v1 validator layer: `677d3f9a807ee0e488dc14b6f9f5babbf200ec45`;
 - validator core: `1d078266a10d8b73e8d841ffa72abbbe434efc25`.
-
-This resolves the distinction between validating an earlier design and validating the final retained Research candidate.
 
 ## Frozen execution boundary
 
@@ -40,7 +40,14 @@ The mutable PR tree was not used as the proof-discovery source. Candidate artifa
 
 ## Proof discovery
 
-Both runs discovered 52 registered proof artifacts through all nine pathways: theorem metadata, lemma metadata, status-blind proposition metadata including Proposed P-009, dependency-registry proof objects, verifier-required T-001 through T-015 objects, general structured metadata, object-valued paths, self-registering records, and terminal Lean entrypoints. Registered paths were collected before existence testing.
+Both runs discovered 54 registered proof artifacts. The base contract covers theorem metadata, lemma metadata, status-blind proposition metadata including Proposed P-009, dependency-registry proof objects, verifier-required T-001 through T-015 objects, general structured metadata, object-valued paths, self-registering records, and terminal Lean entrypoints. Registered paths were collected before existence testing.
+
+A separate inactive Research candidate extension declares constrained discovery for proof records that self-register through a canonical top-level `id` field. The rule applies only under declared roots, to JSON files whose names contain `proof`. It recovered two records omitted by the earlier inventory:
+
+- `theory/evaluation/fara-core-formalization-proof-v1.0.json`;
+- `theory/evaluation/fara-operator-w2-proof-v1.0.json`.
+
+Disabling that schema pathway is detected by a dedicated mutation control.
 
 ## Conflict and priority adjudication
 
@@ -50,7 +57,7 @@ A separate unequal-priority probe used priority 1 Accepted governance and priori
 
 ## Structural decision provenance
 
-The non-operative synthetic activation probe contained 52 artifact entries and 53 resolvable decision records: one manifest-Acceptance decision and one status/designation decision per artifact.
+The non-operative synthetic activation probe contained 54 artifact entries and 55 resolvable decision records: one manifest-Acceptance decision and one status/designation decision per artifact.
 
 Validation required manifest identity and version linkage, `Accepted` decision status, `governance_decision` authority class, `Accepted` governance authority status, independence from the candidate, exact artifact/status/designation linkage, ISO decision date, non-empty supporting evidence, non-empty scope, non-empty limitations, canonical manifest-digest linkage, and tamper-evident record digests.
 
@@ -58,7 +65,7 @@ Missing records, mismatched linkage, non-authoritative governance, broken digest
 
 ## Negative controls
 
-The validator executed 40 mutations, all detected in both runs. They covered six required governing domains, nine discovery pathways, owner coverage, equal-priority fail-closed behavior, numeric-priority direction, manifest gating, proof-status separation, decision existence/linkage/authority/hash checks, eight date/evidence/scope/limitations omission controls, missing registered targets, and experiment-authority injection.
+The validator executed 41 mutations, all detected in both final runs. They covered six required governing domains, the base discovery pathways, owner coverage, equal-priority fail-closed behavior, numeric-priority direction, manifest gating, proof-status separation, decision existence/linkage/authority/hash checks, eight date/evidence/scope/limitations omission controls, missing registered targets, experiment-authority injection, and disabling the canonical-`id` proof-record schema.
 
 ## Discovery
 
@@ -70,17 +77,17 @@ At least one proposition-specific, non-self-activating Research candidate satisf
 
 Primary execution:
 
-- commit `57dbc0781979cb0c7440eef7ff434accabeb7ac3`;
-- workflow run `30512207430`;
-- job `90774490206`.
+- commit `5f715d740a9a1d08c096351889ea8c84b0ba0478`;
+- workflow run `30514345750`;
+- job `90780772893`.
 
 Repeat execution:
 
-- commit `2e233feae813d760b173d7a0a5a82e9c2241515d`;
-- workflow run `30512296774`;
-- job `90774752506`.
+- commit `97116189e6debb33067ceaa8f16e3e4e52054d8d`;
+- workflow run `30514438925`;
+- job `90781052642`.
 
-Both used identical final candidate and validator blobs, frozen commit, frozen tree, 372-input digest, 52-path inventory, 53-record synthetic probe, and 40-control campaign. Both produced evidence digest `6a352e3d7f959c7759af3e856ec9d703b62aa1f0b5b5463fe899fc8293a7ee05`.
+Both used identical final candidate and validator blobs, frozen commit, frozen tree, 372-input digest, 54-path inventory, 55-record synthetic probe, and 41-control campaign. Both produced evidence digest `565befa500cec5da8af44671ff7ba3696e2c828525c5eea82460f1491fe416d9`.
 
 The repeat is separately captured but is not externally independent. External replication remains mandatory before any later Acceptance.
 
