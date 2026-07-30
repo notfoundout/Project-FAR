@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "status": "Research",
+  "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
+  "execution_role": "internal deterministic repeat",
+  "validated_commit": "ba528f5e4891b14c33791716097b6a5a3e2b035e",
+  "validator": {
+    "path": "research/evidence-authority-model/validate_candidate.py",
+    "git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
+  },
+  "validation_source": {
+    "workflow": "Repository Health",
+    "workflow_run_id": 30503397417,
+    "workflow_run_number": 1765,
+    "job_id": 90747810604,
+    "result": "success",
+    "log_marker": "BEGIN_EVIDENCE_AUTHORITY_REPEAT"
+  },
+  "overall": "pass",
+  "errors": [],
+  "evidence_digest": "8ba33d1d14d3e97d3adf4d0a16cd3b1f340c41370be698708e1d5c11ea9894a6",
+  "canonical_repository_implementation_deferred": true,
+  "frozen_source_execution": {
+    "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
+    "frozen_tree_sha": "2d7b5c1647f4bc5578e65cbe709299d0c7baea51",
+    "discovery_input_count": 372,
+    "discovery_input_digest": "1f1bdb8185c4104d2ae843a288149dbb361a4fb8def784cf0130f138813d1dff",
+    "mutable_working_tree_used_for_discovery": false
+  },
+  "proof_inventory": {
+    "registered_path_count": 52,
+    "all_registered_targets_exist_in_frozen_tree": true,
+    "all_registered_targets_match_candidate_owner_coverage": true,
+    "proposition_discovery_status_blind": true
+  },
+  "conflict_probe": {
+    "claims_injected": 2,
+    "same_proposition_scope_premises_version": true,
+    "equal_priority": true,
+    "opposite_polarities": true,
+    "result": "Unknown",
+    "reason": "equal_priority_contradiction"
+  },
+  "activation_manifest_probe": {
+    "entry_count": 52,
+    "valid": true
+  },
+  "negative_controls": {
+    "count": 24,
+    "all_detected": true
+  },
+  "independence": {
+    "separate_workflow_run": true,
+    "separate_job": true,
+    "separate_commit": true,
+    "identical_validator_blob": true,
+    "identical_frozen_tree": true,
+    "first_result_not_loaded_by_validator": true,
+    "external_independence": false
+  },
+  "lifecycle": {
+    "internal_repeat": "complete",
+    "external_replication": "pending",
+    "acceptance": "prohibited",
+    "promotion": "prohibited",
+    "canonical_repository_change": "deferred"
+  },
+  "nonclaims": [
+    "the repeat is externally independent",
+    "the repeat establishes truth",
+    "the repeat Accepts or Promotes the candidate",
+    "the repeat authorizes canonical Repository Change"
+  ]
+}
