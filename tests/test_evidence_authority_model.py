@@ -18,6 +18,11 @@ class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
         result = validator.run_full_validation(enforce_research_only_placement=True)
         validation = result["positive_validation"]
         synthetic = validator.v1.synthetic_activation_manifest(validation["proof_inventory"])
+        frozen = validator.core.FrozenTree(validation["frozen_base_commit"])
+        prior_inventory, _, _ = validator._original_discover_proof_paths(frozen, set())
+        canonical_id_records = sorted(
+            set(validation["proof_inventory"]) - set(prior_inventory)
+        )
         summary = {
             "overall": result["overall"],
             "errors": result["errors"],
@@ -30,6 +35,7 @@ class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
             "frozen_tree_sha": validation["frozen_tree_sha"],
             "discovery_input_count": validation["discovery_input_count"],
             "discovery_input_digest": validation["discovery_input_digest"],
+            "canonical_id_records": canonical_id_records,
             "canonical_id_sentinel_pathways": validation["proof_inventory"].get(SENTINEL),
             "unequal_priority_probe": validation["unequal_priority_probe"],
             "conflict_probe": validation["conflict_probe"],
@@ -43,16 +49,17 @@ class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
         self.assertEqual([], result["errors"])
         self.assertTrue(result["all_negative_controls_detected"])
         self.assertEqual(41, result["negative_control_count"])
-        self.assertEqual(53, validation["proof_path_count"])
+        self.assertEqual(54, validation["proof_path_count"])
         self.assertEqual(372, validation["discovery_input_count"])
-        self.assertIn(SENTINEL, validation["proof_inventory"])
+        self.assertEqual(2, len(canonical_id_records), canonical_id_records)
+        self.assertIn(SENTINEL, canonical_id_records)
         self.assertIn("self_registering_records", validation["proof_inventory"][SENTINEL])
         self.assertEqual("Affirmed", validation["unequal_priority_probe"]["result"])
         self.assertEqual(1, validation["unequal_priority_probe"]["selected_numeric_priority"])
         self.assertEqual("Unknown", validation["conflict_probe"]["result"])
         self.assertTrue(validation["activation_manifest_probe"]["valid"])
-        self.assertEqual(53, validation["activation_manifest_probe"]["entry_count"])
-        self.assertEqual(54, len(synthetic["decision_records"]))
+        self.assertEqual(54, validation["activation_manifest_probe"]["entry_count"])
+        self.assertEqual(55, len(synthetic["decision_records"]))
         self.assertIn(
             "disable_canonical_id_proof_record_schema",
             summary["control_ids"],
