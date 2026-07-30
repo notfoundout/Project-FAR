@@ -1,18 +1,22 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "question": "complete",
   "execution": "complete",
   "observation": "complete",
   "discovery": "bounded_candidate_supported",
-  "decision_basis": "A1-A8 satisfied and all preregistered negative controls detected by the candidate validation contract",
+  "decision_basis": "A1-A8 passed; 51 proof paths were discovered across nine independent pathways; all 21 preregistered mutation controls were executed and detected",
+  "validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
   "supported_propositions": [
-    "a non-self-activating proposition-specific Research candidate authority contract can be constructed for the current repository",
-    "the governing charter and proof-assurance taxonomy must be registered as activation blockers",
-    "proof ownership must be enumerated independently from repository proof metadata and separated from artifact status and authority-bearing designation",
-    "manifest-level Acceptance provenance is required",
-    "unresolved equal-priority contradictions must yield Unknown"
+    "a non-self-activating proposition-specific Research candidate authority contract can be represented as research evidence for the current repository",
+    "the governing charter and proof-assurance taxonomy must remain explicit activation blockers",
+    "proof ownership must be discovered independently across theorem lemma proposition dependency verifier structured object-valued self-registering and terminal-entrypoint metadata",
+    "syntactically registered proof paths must be retained before existence validation",
+    "proof ownership must remain separate from artifact status and authority-bearing designation",
+    "manifest-level independent Acceptance provenance is required",
+    "unresolved equal-priority contradictions must yield Unknown",
+    "canonical governance implementation must remain absent until external replication Acceptance Promotion and authorized Repository Change"
   ],
   "lifecycle": {
     "question": "complete",
@@ -23,21 +27,31 @@
     "external_replication": "pending",
     "acceptance": "prohibited",
     "promotion": "prohibited",
-    "repository_change": "Research evidence candidate artifacts and validation wiring only"
+    "canonical_repository_change": "deferred and prohibited by this campaign",
+    "retained_repository_material": "research evidence and reproducible research validator only"
   },
   "activation_status": "prohibited",
   "bootstrap_status": "Unknown",
+  "canonical_implementation": {
+    "evidence_authority_model_under_docs_governance": "absent",
+    "evidence_authority_registry_under_docs_governance": "absent",
+    "proof_artifact_status_manifest_under_docs_governance": "absent",
+    "permanent_canonical_test_wiring": "absent",
+    "future_creation_condition": "authorized Repository Change after external replication Acceptance and Promotion"
+  },
   "limitations": [
     "the candidate has not received external independent replication",
-    "the charter is Provisional",
-    "the proof-assurance taxonomy status is Unknown",
+    "the research-execution charter remains Provisional",
+    "the proof-assurance taxonomy status remains Unknown",
     "no bootstrap authority has been selected",
-    "the manifest is not Accepted or populated",
-    "CI success is conformance evidence only"
+    "the candidate manifest is not Accepted or populated",
+    "CI success is conformance evidence only",
+    "the discovery supports only a research candidate representation not an active authority model"
   ],
   "nonclaims": [
     "Accepted authority model",
     "Promoted authority registry",
+    "authorized canonical Repository Change",
     "canonical dependency reconciliation",
     "logical derivation of FAR or FARO from FARA",
     "theorem truth",
@@ -45,6 +59,6 @@
     "minimality",
     "uniqueness",
     "universality",
-    "experiment authorization"
+    "experiment authorization or prohibition"
   ]
 }
