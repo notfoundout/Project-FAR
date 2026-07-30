@@ -13,8 +13,8 @@ assert spec.loader is not None
 spec.loader.exec_module(validator)
 
 
-class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
-    def test_canonical_id_proof_schema_campaign(self):
+class EvidenceAuthorityRepeatExecutionTests(unittest.TestCase):
+    def test_canonical_id_proof_schema_campaign_repeat(self):
         result = validator.run_full_validation(enforce_research_only_placement=True)
         validation = result["positive_validation"]
         synthetic = validator.v1.synthetic_activation_manifest(validation["proof_inventory"])
@@ -42,9 +42,9 @@ class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
             "activation_manifest_probe": validation["activation_manifest_probe"],
             "synthetic_decision_record_count": len(synthetic["decision_records"]),
         }
-        print("BEGIN_EVIDENCE_AUTHORITY_PRIMARY_V3")
+        print("BEGIN_EVIDENCE_AUTHORITY_REPEAT_V3")
         print(json.dumps(summary, sort_keys=True))
-        print("END_EVIDENCE_AUTHORITY_PRIMARY_V3")
+        print("END_EVIDENCE_AUTHORITY_REPEAT_V3")
         self.assertEqual("pass", result["overall"], result["errors"])
         self.assertEqual([], result["errors"])
         self.assertTrue(result["all_negative_controls_detected"])
