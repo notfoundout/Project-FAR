@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.4",
+  "schema_version": "1.5",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "primary_validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
@@ -8,20 +8,20 @@
   "observations": [
     "The prior audit supplies no Accepted authority model and requires a separate preregistered campaign.",
     "The research-execution charter remains Provisional and the proof-assurance taxonomy remains Unknown.",
-    "All discovery executed from frozen commit 787d8776f0aab7c78cea9d536762c323b62d8c37 and tree 2d7b5c1647f4bc5578e65cbe709299d0c7baea51, not the mutable PR tree.",
+    "All discovery executed from frozen commit 787d8776f0aab7c78cea9d536762c323b62d8c37 and tree 2d7b5c1647f4bc5578e65cbe709299d0c7baea51 rather than the mutable PR tree.",
     "The frozen discovery read 372 blob-identified inputs with digest 1f1bdb8185c4104d2ae843a288149dbb361a4fb8def784cf0130f138813d1dff.",
-    "The frozen repository registers 52 proof artifacts across nine discovery pathways, including Proposed proposition source theory/theorems/propositions.md.",
+    "The frozen repository registers 54 proof artifacts across the base discovery pathways and the declared canonical-id proof-record schema.",
+    "Two proof records self-register through a constrained canonical id field: theory/evaluation/fara-core-formalization-proof-v1.0.json and theory/evaluation/fara-operator-w2-proof-v1.0.json.",
+    "The canonical-id rule is limited to declared roots, JSON files, and proof-bearing filenames; disabling it is detected by a dedicated negative control.",
     "Proof paths must be collected before existence testing; object-valued paths and terminal Lean entrypoints require explicit traversal.",
     "A proof owner pattern alone does not establish status or authority-bearing designation.",
-    "The synthetic activation probe contained 52 artifact entries and 53 resolvable decision records and remained explicitly non-operative.",
+    "The synthetic activation probe contained 54 artifact entries and 55 resolvable decision records and remained explicitly non-operative.",
     "Manifest and entry decisions passed only when identity, version, governance authority, independence, artifact/status/designation linkage, decision date, supporting evidence, scope, limitations, manifest digest, and record digest all matched.",
-    "Missing records, mismatched versions or artifact linkage, non-authoritative governance, broken digest locks, and omission of any required provenance field were rejected.",
-    "Two equal-priority contradictory claims with identical identity fields adjudicated to Unknown.",
+    "Two equal-priority contradictory claims with identical proposition identity fields adjudicated to Unknown.",
     "For unequal priorities, lower numeric rank is higher authority: priority 1 governance overrode priority 5 Research and produced Affirmed.",
-    "All 40 injected faults, including eight provenance-field omissions, were executed and detected in both the primary and internal repeat runs.",
-    "Primary run 30512207430 at commit 57dbc0781979cb0c7440eef7ff434accabeb7ac3 and repeat run 30512296774 at commit 2e233feae813d760b173d7a0a5a82e9c2241515d validated identical final candidate and validator blobs and produced digest 6a352e3d7f959c7759af3e856ec9d703b62aa1f0b5b5463fe899fc8293a7ee05.",
-    "Canonical governance artifacts and permanent canonical test wiring remain outside the retained Research-only result.",
-    "A non-self-activating Research candidate can encode the bounded contract while bootstrap authority remains Unknown."
+    "All 41 injected faults were executed and detected in both the primary and internal repeat runs.",
+    "Primary run 30514345750 at commit 5f715d740a9a1d08c096351889ea8c84b0ba0478 and repeat run 30514438925 at commit 97116189e6debb33067ceaa8f16e3e4e52054d8d validated identical final candidate and validator blobs and produced digest 565befa500cec5da8af44671ff7ba3696e2c828525c5eea82460f1491fe416d9.",
+    "Canonical governance artifacts and permanent canonical test wiring remain outside the retained Research-only result."
   ],
   "failures": [],
   "unresolved": [
