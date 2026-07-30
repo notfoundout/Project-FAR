@@ -1,29 +1,29 @@
 {
-  "schema_version": "1.4",
+  "schema_version": "1.5",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "execution_role": "internal deterministic repeat",
-  "validated_commit": "97116189e6debb33067ceaa8f16e3e4e52054d8d",
+  "validated_commit": "3b997b8b219282e2bb744810eb2a8c4307c96ac2",
   "candidate_and_validator_blobs": {
     "candidate_model": "3ff99dd626e26cc74b47f4e1f978737926a3b663",
     "candidate_registry": "798ddae550304981df78cd539b1fab34768b3745",
     "candidate_manifest": "68ac0a4bfa0b4e033be185ccc71b117e22b8552d",
-    "candidate_proof_discovery_schema": "f220701b36fdb21a1a5035849c776183348d55cf",
-    "validator_entrypoint": "88cc42d24afc006c0dbcb3ce64d9120e9e5119bb",
+    "candidate_proof_discovery_schema": "532e01621cbf597fabf2db59599c19b2d2b5cf4f",
+    "validator_entrypoint": "c4b2c227e0d162d012910f83b040f5e96460f412",
     "validator_entrypoint_v1": "677d3f9a807ee0e488dc14b6f9f5babbf200ec45",
     "validator_core": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
   },
   "validation_source": {
     "workflow": "Repository Health",
-    "workflow_run_id": 30514438925,
-    "workflow_run_number": 1811,
-    "job_id": 90781052642,
+    "workflow_run_id": 30516384838,
+    "workflow_run_number": 1827,
+    "job_id": 90787096016,
     "result": "success",
-    "log_marker": "BEGIN_EVIDENCE_AUTHORITY_REPEAT_V4"
+    "log_marker": "BEGIN_EVIDENCE_AUTHORITY_REPEAT_V5"
   },
   "overall": "pass",
   "errors": [],
-  "evidence_digest": "565befa500cec5da8af44671ff7ba3696e2c828525c5eea82460f1491fe416d9",
+  "evidence_digest": "0087fb82194a2389729b3c5df4ce07306701135cc8d4c387b8a53176b4d875bf",
   "canonical_repository_implementation_deferred": true,
   "frozen_source_execution": {
     "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
@@ -33,10 +33,14 @@
     "mutable_working_tree_used_for_discovery": false
   },
   "proof_inventory": {
-    "registered_path_count": 54,
+    "registered_path_count": 56,
     "canonical_id_proof_records": [
       "theory/evaluation/fara-core-formalization-proof-v1.0.json",
       "theory/evaluation/fara-operator-w2-proof-v1.0.json"
+    ],
+    "hash_locked_artifact_map_proof_records": [
+      "theory/evaluation/fara-expanded-bounded-campaign-proof-v1.0.json",
+      "theory/evaluation/fara-foundation-comparison-proof-v1.0.json"
     ],
     "all_registered_targets_exist_in_frozen_tree": true,
     "all_registered_targets_match_candidate_owner_coverage": true
@@ -44,18 +48,22 @@
   "conflict_probes": {
     "equal_priority_result": "Unknown",
     "unequal_priority_result": "Affirmed",
-    "selected_numeric_priority": 1
+    "selected_numeric_priority": 1,
+    "numeric_priority_order": "lower_is_higher",
+    "priority_order_derived_from_candidate_model": true
   },
   "activation_manifest_probe": {
     "synthetic_nonoperative_probe": true,
-    "entry_count": 54,
-    "decision_record_count": 55,
+    "entry_count": 56,
+    "decision_record_count": 57,
     "valid": true
   },
   "negative_controls": {
-    "count": 41,
+    "count": 42,
     "all_detected": true,
     "canonical_id_schema_disable_control": "detected",
+    "artifact_map_key_schema_disable_control": "detected",
+    "candidate_priority_declaration_reversal_control": "detected",
     "provenance_omission_controls": 8
   },
   "independence": {
