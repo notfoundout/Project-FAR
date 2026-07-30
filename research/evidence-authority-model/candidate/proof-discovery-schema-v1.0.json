@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2-research-candidate",
+  "schema_version": "1.3-research-candidate",
   "status": "Research",
   "candidacy": "inactive_candidate_extension",
   "active": false,
@@ -11,6 +11,20 @@
       "rule_id": "proof_id_record",
       "identifier_field": "proof_id",
       "source": "base candidate registry"
+    },
+    {
+      "rule_id": "proof_object_id_record",
+      "identifier_field": "proof_object_id",
+      "roots": [
+        "theory/evaluation/"
+      ],
+      "file_extension": ".json",
+      "required_sentinels": [
+        "theory/evaluation/fara-vocabulary-sufficiency-v1.0.json",
+        "theory/evaluation/fara-w4-representation-boundary-v1.0.json",
+        "theory/evaluation/fara-w5-cross-representation-invariance-v1.0.json"
+      ],
+      "negative_control": "disable_proof_object_id_record_schema"
     },
     {
       "rule_id": "canonical_id_proof_record",
@@ -49,6 +63,7 @@
   "activation_effect": "none",
   "nonclaims": [
     "this extension grants no proof authority",
+    "proof_object_id records are registered only under declared roots and file extensions",
     "the id field alone is not sufficient outside the declared roots and filename constraint",
     "mapping keys are registered only under declared artifact-map fields source roots and proof-bearing filenames",
     "discovery does not establish proof correctness",
