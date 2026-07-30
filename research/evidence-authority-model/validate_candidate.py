@@ -50,7 +50,10 @@ def discover_proof_paths(
     inventory, executed, discovery_inputs = _original_discover_proof_paths(
         frozen, disabled
     )
-    if CANONICAL_ID_PROOF_PATHWAY in disabled:
+    if (
+        CANONICAL_ID_PROOF_PATHWAY in disabled
+        or "self_registering_records" in disabled
+    ):
         return inventory, executed, discovery_inputs
 
     found = False
