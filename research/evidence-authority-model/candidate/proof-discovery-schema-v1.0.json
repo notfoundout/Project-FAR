@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1-research-candidate",
+  "schema_version": "1.2-research-candidate",
   "status": "Research",
   "candidacy": "inactive_candidate_extension",
   "active": false,
@@ -38,6 +38,7 @@
       ],
       "source_file_extension": ".json",
       "registered_key_extension": ".json",
+      "registered_key_filename_must_contain": "proof",
       "required_sentinels": [
         "theory/evaluation/fara-expanded-bounded-campaign-proof-v1.0.json",
         "theory/evaluation/fara-foundation-comparison-proof-v1.0.json"
@@ -49,7 +50,7 @@
   "nonclaims": [
     "this extension grants no proof authority",
     "the id field alone is not sufficient outside the declared roots and filename constraint",
-    "mapping keys are registered only under declared artifact-map fields and source roots",
+    "mapping keys are registered only under declared artifact-map fields source roots and proof-bearing filenames",
     "discovery does not establish proof correctness",
     "this Research extension does not modify canonical governance"
   ]
