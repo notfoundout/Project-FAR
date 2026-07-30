@@ -1,26 +1,42 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "execution_role": "primary",
-  "validated_commit": "3cb1999f51645f1aa84de97b1f7b418e38b88e26",
-  "validator": {
-    "entrypoint": "research/evidence-authority-model/validate_candidate.py",
-    "entrypoint_git_blob_sha": "1ec1acfed37091dc6820c3bb70950301e9897e67",
-    "core": "research/evidence-authority-model/validator_core_v1.py",
-    "core_git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
+  "validated_commit": "57dbc0781979cb0c7440eef7ff434accabeb7ac3",
+  "candidate_and_validator_blobs": {
+    "candidate_model": {
+      "path": "research/evidence-authority-model/candidate/model-v1.0.md",
+      "git_blob_sha": "3ff99dd626e26cc74b47f4e1f978737926a3b663"
+    },
+    "candidate_registry": {
+      "path": "research/evidence-authority-model/candidate/registry-v1.0.json",
+      "git_blob_sha": "798ddae550304981df78cd539b1fab34768b3745"
+    },
+    "candidate_manifest": {
+      "path": "research/evidence-authority-model/candidate/proof-artifact-status-manifest-v1.0.json",
+      "git_blob_sha": "68ac0a4bfa0b4e033be185ccc71b117e22b8552d"
+    },
+    "validator_entrypoint": {
+      "path": "research/evidence-authority-model/validate_candidate.py",
+      "git_blob_sha": "677d3f9a807ee0e488dc14b6f9f5babbf200ec45"
+    },
+    "validator_core": {
+      "path": "research/evidence-authority-model/validator_core_v1.py",
+      "git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
+    }
   },
   "validation_source": {
     "workflow": "Repository Health",
-    "workflow_run_id": 30506960124,
-    "workflow_run_number": 1777,
-    "job_id": 90758711922,
+    "workflow_run_id": 30512207430,
+    "workflow_run_number": 1792,
+    "job_id": 90774490206,
     "result": "success",
     "log_marker": "BEGIN_EVIDENCE_AUTHORITY_PRIMARY_V2"
   },
   "overall": "pass",
   "errors": [],
-  "evidence_digest": "8399794130250807c8b64d316a762bf39459e1b6def3e61a8d012c0e1e9915cf",
+  "evidence_digest": "6a352e3d7f959c7759af3e856ec9d703b62aa1f0b5b5463fe899fc8293a7ee05",
   "canonical_repository_implementation_deferred": true,
   "frozen_source_execution": {
     "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
@@ -77,11 +93,15 @@
       "independence from candidate",
       "artifact status and authority-bearing linkage",
       "canonical manifest digest linkage",
-      "tamper-evident record digests"
+      "tamper-evident record digests",
+      "ISO decision dates",
+      "non-empty supporting evidence",
+      "non-empty scope",
+      "non-empty limitations"
     ]
   },
   "negative_controls": {
-    "count": 32,
+    "count": 40,
     "all_detected": true,
     "control_ids": [
       "remove_governing_domain:authority_model_specification",
@@ -115,7 +135,15 @@
       "break_manifest_acceptance_decision_hash_lock",
       "remove_artifact_status_decision_record",
       "mismatch_artifact_status_decision_linkage",
-      "break_artifact_status_decision_hash_lock"
+      "break_artifact_status_decision_hash_lock",
+      "omit_manifest_decision_decision_date",
+      "omit_manifest_decision_supporting_evidence",
+      "omit_manifest_decision_scope",
+      "omit_manifest_decision_limitations",
+      "omit_artifact_status_decision_decision_date",
+      "omit_artifact_status_decision_supporting_evidence",
+      "omit_artifact_status_decision_scope",
+      "omit_artifact_status_decision_limitations"
     ]
   },
   "lifecycle": {
