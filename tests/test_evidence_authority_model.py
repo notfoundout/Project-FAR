@@ -28,7 +28,11 @@ class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
         self.assertEqual("Affirmed", validation["unequal_priority_probe"]["result"])
         self.assertEqual(1, validation["unequal_priority_probe"]["selected_numeric_priority"])
         self.assertTrue(validation["activation_manifest_probe"]["valid"])
-        self.assertEqual(53, validation["activation_manifest_probe"]["decision_record_count"])
+        activation = validator.synthetic_activation_manifest(
+            {path: set(pathways) for path, pathways in validation["proof_inventory"].items()}
+        )
+        self.assertEqual(53, len(activation["decision_records"]))
+        self.assertRegex(activation["manifest_digest"], r"^[0-9a-f]{64}$")
         self.assertRegex(result["evidence_digest"], r"^[0-9a-f]{64}$")
 
 
