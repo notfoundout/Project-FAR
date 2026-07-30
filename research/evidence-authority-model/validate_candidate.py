@@ -5,14 +5,17 @@ The reviewed v1 entrypoint remains in ``validator_entrypoint_v1.py``. This
 entrypoint applies the explicit Research candidate discovery extensions for
 ``proof_object_id`` records, canonical ``id`` proof records, and hash-locked
 artifact-map keys. It also derives numeric priority direction from the
-candidate model rather than a private validator default.
+candidate model and enforces frozen A1-A3 contract requirements independently
+of candidate-controlled declarations.
 """
 from __future__ import annotations
 
 import argparse
+import copy
 import importlib.util
 import json
 import pathlib
+import re
 from typing import Any, Iterable
 
 import yaml
@@ -31,6 +34,65 @@ CANONICAL_ID_PROOF_PATHWAY = "canonical_id_proof_records"
 ARTIFACT_MAP_KEY_PATHWAY = "artifact_map_key_paths"
 LOWER_PRIORITY_DECLARATION = "lower numeric rank means higher authority"
 HIGHER_PRIORITY_DECLARATION = "higher numeric rank means higher authority"
+EXPECTED_BOOTSTRAP_REQUIRED_AUTHORITY = (
+    "an Accepted-status or promotion-provenance authority predating and "
+    "independent of this candidate"
+)
+FROZEN_A3_REQUIRED_DOMAINS = frozenset(
+    {
+        "authority_model_specification",
+        "authority_registry_specification",
+        "research_execution_charter",
+        "proof_assurance_taxonomy",
+        "governance_decisions",
+        "proof_artifact_status_manifest",
+    }
+)
+FROZEN_ACTIVATION_REQUIREMENTS = frozenset(
+    {
+        "external independent replication completed",
+        "independent bootstrap authority selected and hash locked",
+        "authority model and registry Accepted and Promoted by independent governance",
+        "research execution charter Accepted or replaced by an independently Accepted successor",
+        "proof assurance taxonomy Accepted or replaced by an independently Accepted successor",
+        "every fixed owner has one explicit permitted artifact status",
+        "proof discovery executes from the preregistered frozen commit",
+        "proof discovery covers every registered JSON YAML Markdown proposition theorem lemma verifier and Lean pathway without status filtering",
+        "every syntactically registered proof target exists",
+        "proof artifact status manifest independently Accepted with its own decision record",
+        "every registered proof artifact appears exactly once in the manifest",
+        "every registered proof artifact has one charter status and one authority-bearing designation",
+        "every authority-bearing proof artifact has status Accepted",
+        "every non-authority-bearing proof artifact is excluded from active proof authority",
+        "every authoritative proposition has a unique scoped owner or authorized version and supersession relation",
+        "every unresolved equal-priority contradiction yields Unknown",
+        "canonical governance files and test wiring are created only by authorized Repository Change after Promotion",
+    }
+)
+FROZEN_PROMOTION_REQUIREMENTS = frozenset(
+    {
+        "separate preregistered lifecycle",
+        "external independent replication",
+        "pre-existing independent bootstrap authority",
+        "acceptance record",
+        "promotion record",
+        "governing dependency transitions or Accepted successors",
+        "completed independently Accepted proof manifest",
+        "manifest acceptance decision linked",
+        "equal-priority conflict inventory resolved or classified Unknown",
+        "semantic and dependency validation",
+        "authorized Repository Change creates canonical files after Promotion",
+    }
+)
+MODEL_HEADER_REQUIREMENTS = {
+    "Status": ("Research", "model_status_not_research"),
+    "Candidacy": ("Inactive candidate", "model_candidacy_not_inactive"),
+    "Promotion completed": ("No", "model_promotion_not_incomplete"),
+    "Canonical governance implementation": (
+        "Deferred",
+        "model_canonical_implementation_not_deferred",
+    ),
+}
 _original_discover_proof_paths = core.discover_proof_paths
 _original_validate_candidate = v1.validate_candidate
 _original_execute_negative_controls = v1.execute_negative_controls
@@ -257,10 +319,70 @@ def _declared_priority_order(model_text: str) -> tuple[str, list[str]]:
     return "lower_is_higher", ["priority_order_declaration_missing"]
 
 
+def _model_header_value(model_text: str, label: str) -> str | None:
+    match = re.search(
+        rf"^{re.escape(label)}:\s+\*\*(?P<value>[^*]+)\*\*\s*$",
+        model_text,
+        re.MULTILINE,
+    )
+    return match.group("value").strip() if match else None
+
+
+def _validate_model_header(model_text: str) -> list[str]:
+    errors: list[str] = []
+    for label, (expected, error) in MODEL_HEADER_REQUIREMENTS.items():
+        if _model_header_value(model_text, label) != expected:
+            errors.append(error)
+    return errors
+
+
+def _validate_frozen_a2_a3_contract(registry: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+
+    declared_domains = registry.get("required_governing_domains")
+    declared_set = set(declared_domains) if isinstance(declared_domains, list) else set()
+    actual_domains = registry.get("domains")
+    actual_set = set(actual_domains) if isinstance(actual_domains, dict) else set()
+    for domain in sorted(FROZEN_A3_REQUIRED_DOMAINS):
+        if domain not in declared_set:
+            errors.append(f"missing_frozen_required_domain_declaration:{domain}")
+        if domain not in actual_set:
+            errors.append(f"missing_frozen_governing_domain:{domain}")
+
+    bootstrap = registry.get("bootstrap")
+    if not isinstance(bootstrap, dict):
+        bootstrap = {}
+    if bootstrap.get("required_authority") != EXPECTED_BOOTSTRAP_REQUIRED_AUTHORITY:
+        errors.append("bootstrap_required_authority_mismatch")
+    if bootstrap.get("selection_must_be_preregistered_and_hash_locked") is not True:
+        errors.append("bootstrap_selection_not_preregistered_hash_locked")
+
+    activation_requirements = registry.get("activation_requirements")
+    activation_set = (
+        set(activation_requirements) if isinstance(activation_requirements, list) else set()
+    )
+    for requirement in sorted(FROZEN_ACTIVATION_REQUIREMENTS):
+        if requirement not in activation_set:
+            errors.append(f"missing_frozen_activation_requirement:{requirement}")
+
+    promotion_requirements = registry.get("promotion_requirements")
+    promotion_set = (
+        set(promotion_requirements) if isinstance(promotion_requirements, list) else set()
+    )
+    for requirement in sorted(FROZEN_PROMOTION_REQUIREMENTS):
+        if requirement not in promotion_set:
+            errors.append(f"missing_frozen_promotion_requirement:{requirement}")
+    return errors
+
+
 def validate_candidate(*args: Any, **kwargs: Any) -> dict[str, Any]:
     model_text = kwargs.get("model_text")
     if model_text is None:
         model_text = core.MODEL_PATH.read_text(encoding="utf-8")
+    registry = kwargs.get("registry")
+    if registry is None:
+        registry = core.load_json(core.REGISTRY_PATH)
+
     declared_order, declaration_errors = _declared_priority_order(model_text)
     result = _original_validate_candidate(
         *args,
@@ -268,6 +390,8 @@ def validate_candidate(*args: Any, **kwargs: Any) -> dict[str, Any]:
         **kwargs,
     )
     result["errors"].extend(declaration_errors)
+    result["errors"].extend(_validate_model_header(model_text))
+    result["errors"].extend(_validate_frozen_a2_a3_contract(registry))
     result["errors"].extend(_validate_discovery_schema())
 
     for sentinel in _proof_object_id_rule().get("required_sentinels", []):
@@ -367,6 +491,124 @@ def execute_negative_controls(frozen: Any) -> list[dict[str, Any]]:
         result,
         "priority_probe_wrong_winner:Denied",
     )
+
+    model_mutations = (
+        (
+            "promote_model_status_to_accepted",
+            model_text.replace("Status: **Research**", "Status: **Accepted**", 1),
+            "model_status_not_research",
+        ),
+        (
+            "activate_model_candidacy",
+            model_text.replace(
+                "Candidacy: **Inactive candidate**",
+                "Candidacy: **Active candidate**",
+                1,
+            ),
+            "model_candidacy_not_inactive",
+        ),
+        (
+            "mark_model_promotion_complete",
+            model_text.replace("Promotion completed: **No**", "Promotion completed: **Yes**", 1),
+            "model_promotion_not_incomplete",
+        ),
+        (
+            "activate_model_canonical_implementation",
+            model_text.replace(
+                "Canonical governance implementation: **Deferred**",
+                "Canonical governance implementation: **Active**",
+                1,
+            ),
+            "model_canonical_implementation_not_deferred",
+        ),
+    )
+    for control_id, mutated_model, expected in model_mutations:
+        result = validate_candidate(
+            frozen,
+            model_text=mutated_model,
+            enforce_research_only_placement=False,
+        )
+        _record_control(controls, control_id, result, expected)
+
+    base_registry = core.load_json(core.REGISTRY_PATH)
+
+    mutated = copy.deepcopy(base_registry)
+    mutated["bootstrap"]["required_authority"] = (
+        "this evidence-authority candidate after self-activation"
+    )
+    result = validate_candidate(
+        frozen,
+        registry=mutated,
+        enforce_research_only_placement=False,
+    )
+    _record_control(
+        controls,
+        "replace_bootstrap_required_authority_with_candidate",
+        result,
+        "bootstrap_required_authority_mismatch",
+    )
+
+    mutated = copy.deepcopy(base_registry)
+    mutated["bootstrap"]["selection_must_be_preregistered_and_hash_locked"] = False
+    result = validate_candidate(
+        frozen,
+        registry=mutated,
+        enforce_research_only_placement=False,
+    )
+    _record_control(
+        controls,
+        "disable_bootstrap_preregistration_hash_lock",
+        result,
+        "bootstrap_selection_not_preregistered_hash_locked",
+    )
+
+    mutated = copy.deepcopy(base_registry)
+    mutated["activation_requirements"] = []
+    result = validate_candidate(
+        frozen,
+        registry=mutated,
+        enforce_research_only_placement=False,
+    )
+    _record_control(
+        controls,
+        "clear_activation_requirements",
+        result,
+        "missing_frozen_activation_requirement:",
+    )
+
+    mutated = copy.deepcopy(base_registry)
+    mutated["promotion_requirements"] = []
+    result = validate_candidate(
+        frozen,
+        registry=mutated,
+        enforce_research_only_placement=False,
+    )
+    _record_control(
+        controls,
+        "clear_promotion_requirements",
+        result,
+        "missing_frozen_promotion_requirement:",
+    )
+
+    for domain in sorted(FROZEN_A3_REQUIRED_DOMAINS):
+        mutated = copy.deepcopy(base_registry)
+        mutated["required_governing_domains"] = [
+            item
+            for item in mutated["required_governing_domains"]
+            if item != domain
+        ]
+        mutated["domains"].pop(domain, None)
+        result = validate_candidate(
+            frozen,
+            registry=mutated,
+            enforce_research_only_placement=False,
+        )
+        _record_control(
+            controls,
+            f"remove_frozen_governing_domain_declaration_and_owner:{domain}",
+            result,
+            f"missing_frozen_required_domain_declaration:{domain}",
+        )
     return controls
 
 
@@ -379,7 +621,7 @@ def run_full_validation(*, enforce_research_only_placement: bool = True) -> dict
     result = core.run_full_validation(
         enforce_research_only_placement=enforce_research_only_placement
     )
-    result["schema_version"] = "1.7"
+    result["schema_version"] = "1.8"
     result["evidence_digest"] = core.canonical_digest(
         {key: value for key, value in result.items() if key != "evidence_digest"}
     )
