@@ -1,4 +1,4 @@
-# Evidence Authority Model Investigation Report v1.7
+# Evidence Authority Model Investigation Report v1.8
 
 Status: **Research**
 
@@ -28,7 +28,7 @@ Both final executions validated identical blobs:
 - candidate registry: `798ddae550304981df78cd539b1fab34768b3745`;
 - candidate manifest: `68ac0a4bfa0b4e033be185ccc71b117e22b8552d`;
 - candidate proof-discovery schema: `b460ae67754579f0319beb679dcac5b8fcce7a0a`;
-- validator entrypoint: `12754bd5a1ead5cd5313a8591ea430571686eec7`;
+- validator entrypoint: `d4197968646c555f133ff416df32627d4dec8118`;
 - reviewed v1 validator layer: `677d3f9a807ee0e488dc14b6f9f5babbf200ec45`;
 - validator core: `1d078266a10d8b73e8d841ffa72abbbe434efc25`.
 
@@ -37,6 +37,16 @@ Both final executions validated identical blobs:
 Every proof-discovery input was read from frozen commit `787d8776f0aab7c78cea9d536762c323b62d8c37`, tree `2d7b5c1647f4bc5578e65cbe709299d0c7baea51`. The validator identified 372 blob-locked inputs and produced discovery-input digest `1f1bdb8185c4104d2ae843a288149dbb361a4fb8def784cf0130f138813d1dff`.
 
 The mutable PR tree was not used as the proof-discovery source. Candidate artifacts were validated from the Research branch while investigated repository evidence remained frozen.
+
+## Frozen A1-A3 contract enforcement
+
+The final validator does not allow the candidate to define its own success conditions.
+
+For A1, it parses and enforces four exact model-header declarations: `Status: Research`, `Candidacy: Inactive candidate`, `Promotion completed: No`, and `Canonical governance implementation: Deferred`. Mutating each declaration independently caused validation failure.
+
+For A2, it independently requires a bootstrap authority that predates and is independent of the candidate, requires preregistration and hash locking, and compares the registry against the complete frozen activation and promotion requirement sets. Self-referential authority, disabling the hash-lock gate, clearing activation requirements, and clearing promotion requirements were all detected.
+
+For A3, the six governing domains are a fixed validator oracle derived from the preregistered design, not from `required_governing_domains`. Removing each domain from both the candidate declaration and the owner map was independently detected.
 
 ## Proof discovery
 
@@ -66,7 +76,7 @@ Disabling each schema pathway is detected by its own mutation control.
 
 Two equal-priority opposite claims with identical proposition identity fields adjudicated to `Unknown`.
 
-A separate unequal-priority probe used priority 1 Accepted governance and priority 5 Research. The validator derives numeric direction from the candidate model's declaration that lower numeric rank means higher authority; priority 1 was therefore selected and the result was `Affirmed`. Reversing the candidate declaration was detected by a dedicated mutation control. The control no longer tests a private validator-only argument.
+A separate unequal-priority probe used priority 1 Accepted governance and priority 5 Research. The validator derives numeric direction from the candidate model's declaration that lower numeric rank means higher authority; priority 1 was therefore selected and the result was `Affirmed`. Reversing the candidate declaration was detected by a dedicated mutation control. The control does not use a private validator-only priority argument.
 
 ## Structural decision provenance
 
@@ -78,7 +88,12 @@ Missing records, mismatched linkage, non-authoritative governance, broken digest
 
 ## Negative controls
 
-The validator executed 43 mutations, all detected in both final runs. They covered six required governing domains, the base discovery pathways, owner coverage, equal-priority fail-closed behavior, candidate-declared numeric-priority direction, manifest gating, proof-status separation, decision existence/linkage/authority/hash checks, eight date/evidence/scope/limitations omission controls, missing registered targets, experiment-authority injection, disabling the `proof_object_id` schema, disabling the canonical-`id` schema, and disabling the hash-locked artifact-map-key schema.
+The validator executed 57 mutations, all detected in both final runs. The campaign includes the prior governance, discovery, ownership, conflict, priority, manifest, status-separation, provenance, missing-target, and experiment-boundary controls, plus:
+
+- three schema-aware proof-discovery disable controls;
+- four model-header mutations;
+- four external-bootstrap and lifecycle-declaration mutations; and
+- six candidate-controlled A3 bypass mutations, one for each frozen governing domain.
 
 ## Discovery
 
@@ -90,17 +105,17 @@ At least one proposition-specific, non-self-activating Research candidate satisf
 
 Primary execution:
 
-- commit `ddd4ced4a467f5a202e804bd333a1709509c05c3`;
-- workflow run `30517745133`;
-- job `90791242158`.
+- commit `f916fe2b2e8e6cb02ad753e9114fa9adbb5fd186`;
+- workflow run `30519399225`;
+- job `90796266056`.
 
 Repeat execution:
 
-- commit `d4968f0334da2db56df8e6dcba313dd3a84c9e55`;
-- workflow run `30517874492`;
-- job `90791636534`.
+- commit `bbaee75cf16dd76658ab97beac11e42ec22e266d`;
+- workflow run `30519531630`;
+- job `90796656093`.
 
-Both used identical final candidate and validator blobs, frozen commit, frozen tree, 372-input digest, 59-path inventory, 60-record synthetic probe, and 43-control campaign. Both produced evidence digest `7c2deb179b15a2a08e6562d2af852f574384e679b4dc60b10fca737abb95b770`.
+Both used identical final candidate and validator blobs, frozen commit, frozen tree, 372-input digest, 59-path inventory, 60-record synthetic probe, and 57-control campaign. Both produced evidence digest `bec322a704c4f3932a716b3798f1cd9bd81136635e486ddc862eac38bdab53a0`.
 
 The repeat is separately captured but is not externally independent. External replication remains mandatory before any later Acceptance.
 
