@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2-research-candidate",
+  "schema_version": "1.3-research-candidate",
   "status": "Research",
   "candidacy": "inactive_candidate",
   "active": false,
@@ -10,15 +10,22 @@
   "purpose": "Research-only candidate schema for future explicit charter statuses and authority-bearing designations of registered proof artifacts.",
   "acceptance_decision_required_for_activation": true,
   "acceptance_decision_record": null,
-  "acceptance_decision_record_requirements": [
-    "independently authoritative governance owner",
-    "manifest path and exact version",
-    "decision date",
-    "transition from Research to Accepted",
-    "supporting evidence",
-    "scope and limitations",
-    "hash-locked manifest identity"
-  ],
+  "decision_record_store": null,
+  "acceptance_decision_record_requirements": {
+    "record_must_resolve_from_explicit_store": true,
+    "decision_type": "manifest_acceptance",
+    "decision_status": "Accepted",
+    "authority_class": "governance_decision",
+    "governance_authority_status": "Accepted",
+    "independent_of_candidate": true,
+    "exact_manifest_id_required": true,
+    "exact_manifest_version_required": true,
+    "canonical_manifest_digest_required": true,
+    "tamper_evident_record_digest_required": true,
+    "decision_date_required": true,
+    "supporting_evidence_required": true,
+    "scope_and_limitations_required": true
+  },
   "entries": [],
   "completion_state": "not_started",
   "required_entry_fields": [
@@ -29,24 +36,47 @@
     "scope",
     "limitations"
   ],
+  "per_entry_decision_record_requirements": {
+    "record_must_resolve_from_explicit_store": true,
+    "decision_type": "artifact_status_and_authority_designation",
+    "decision_status": "Accepted",
+    "authority_class": "governance_decision",
+    "governance_authority_status": "Accepted",
+    "independent_of_candidate": true,
+    "exact_manifest_id_and_version_required": true,
+    "canonical_manifest_digest_required": true,
+    "exact_artifact_linkage_required": true,
+    "exact_artifact_status_linkage_required": true,
+    "exact_authority_bearing_linkage_required": true,
+    "tamper_evident_record_digest_required": true
+  },
   "activation_conditions": [
     "external independent replication is complete",
     "candidate model and registry are Accepted and Promoted",
     "canonical manifest is created by authorized Repository Change after Promotion",
     "canonical manifest status is Accepted through independent governance",
-    "manifest-level acceptance_decision_record is present and valid",
+    "manifest-level acceptance_decision_record resolves and passes structural and digest validation",
     "every registered proof artifact appears exactly once",
     "every registered target exists",
     "every artifact_status belongs to the charter taxonomy",
     "every authority-bearing proof artifact has status Accepted",
     "non-authority-bearing artifacts are excluded from active proof authority",
-    "all per-artifact status decisions link to independently authoritative governance records"
+    "all per-artifact status decisions resolve and match manifest artifact status and designation",
+    "missing mismatched self-issued non-authoritative or hash-invalid decision records block activation"
   ],
+  "synthetic_probe_boundary": {
+    "allowed_for_research_validation": true,
+    "must_be_explicitly_nonoperative": true,
+    "acceptance_effect": "none",
+    "promotion_effect": "none",
+    "repository_change_effect": "none"
+  },
   "nonclaims": [
     "this Research candidate assigns no current artifact status",
     "this Research candidate grants no proof authority",
     "an empty entries list does not satisfy the promotion gate",
     "a future per-entry decision cannot substitute for the manifest's own Acceptance decision",
+    "a decision-record string without a resolvable valid record supplies no provenance",
     "this candidate file is not the future canonical manifest"
   ]
 }
