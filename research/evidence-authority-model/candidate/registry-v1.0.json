@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.1-research-candidate",
+  "schema_version": "2.2-research-candidate",
   "status": "Research",
   "candidacy": "inactive_candidate",
   "active": false,
@@ -12,9 +12,16 @@
     "question": "research/evidence-authority-model/question-v1.0.md",
     "execution_specification": "research/evidence-authority-model/execution-spec-v1.0.json",
     "preregistration_commit": "2fe84b72a58e370f814b05a53aa0cf104b17afb1",
+    "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
     "pre_preregistration_drafts_withdrawn": true
   },
-  "artifact_status_taxonomy": ["Accepted", "Research", "Provisional", "Archive", "Unknown"],
+  "artifact_status_taxonomy": [
+    "Accepted",
+    "Research",
+    "Provisional",
+    "Archive",
+    "Unknown"
+  ],
   "bootstrap": {
     "status": "Unknown",
     "selected_owner": null,
@@ -31,14 +38,31 @@
     "resolution_requires_independent_governance_decision": true
   },
   "permitted_statuses_by_class": {
-    "governance_decision": ["Accepted"],
-    "canonical_specification": ["Accepted"],
-    "proof_record": ["Accepted"],
-    "status_register": ["Accepted"],
-    "research_record": ["Research", "Accepted"],
-    "methodological_specification": ["Accepted"],
-    "index": ["Accepted"],
-    "historical_record": ["Archive"]
+    "governance_decision": [
+      "Accepted"
+    ],
+    "canonical_specification": [
+      "Accepted"
+    ],
+    "proof_record": [
+      "Accepted"
+    ],
+    "status_register": [
+      "Accepted"
+    ],
+    "research_record": [
+      "Research",
+      "Accepted"
+    ],
+    "methodological_specification": [
+      "Accepted"
+    ],
+    "index": [
+      "Accepted"
+    ],
+    "historical_record": [
+      "Archive"
+    ]
   },
   "required_governing_domains": [
     "authority_model_specification",
@@ -55,7 +79,8 @@
     "research execution charter Accepted or replaced by an independently Accepted successor",
     "proof assurance taxonomy Accepted or replaced by an independently Accepted successor",
     "every fixed owner has one explicit permitted artifact status",
-    "proof discovery covers every registered JSON YAML Markdown proposition theorem lemma verifier and Lean pathway",
+    "proof discovery executes from the preregistered frozen commit",
+    "proof discovery covers every registered JSON YAML Markdown proposition theorem lemma verifier and Lean pathway without status filtering",
     "every syntactically registered proof target exists",
     "proof artifact status manifest independently Accepted with its own decision record",
     "every registered proof artifact appears exactly once in the manifest",
@@ -68,103 +93,201 @@
   ],
   "domains": {
     "authority_model_specification": {
+      "authority_class": "canonical_specification",
+      "proposition_scope": "authority classes priority rules activation conditions and claim boundaries",
+      "may_establish": [
+        "candidate authority classes",
+        "candidate priority rules",
+        "candidate activation conditions"
+      ],
+      "may_not_establish": [
+        "active governance",
+        "self-acceptance",
+        "self-promotion",
+        "theorem truth",
+        "empirical truth"
+      ],
       "candidate_artifact": "research/evidence-authority-model/candidate/model-v1.0.md",
       "proposed_future_owner": "docs/governance/evidence-authority-model.md",
       "owner_state": "not_created_until_promotion",
       "current_status": "Research",
-      "required_status_for_activation": "Accepted",
-      "authority_class": "canonical_specification",
-      "proposition_scope": "authority classes priority rules activation conditions and claim boundaries",
-      "may_establish": ["candidate authority classes", "candidate priority rules", "candidate activation conditions"],
-      "may_not_establish": ["active governance", "self-acceptance", "self-promotion", "theorem truth", "empirical truth"]
+      "required_status_for_activation": "Accepted"
     },
     "authority_registry_specification": {
+      "authority_class": "canonical_specification",
+      "proposition_scope": "candidate owner mappings statuses conflicts proof discovery and activation requirements",
+      "may_establish": [
+        "candidate mapping",
+        "candidate scope",
+        "candidate conflict policy"
+      ],
+      "may_not_establish": [
+        "active governance",
+        "self-acceptance",
+        "self-promotion",
+        "artifact truth"
+      ],
       "candidate_artifact": "research/evidence-authority-model/candidate/registry-v1.0.json",
       "proposed_future_owner": "docs/governance/evidence-authority-registry.json",
       "owner_state": "not_created_until_promotion",
       "current_status": "Research",
-      "required_status_for_activation": "Accepted",
-      "authority_class": "canonical_specification",
-      "proposition_scope": "candidate owner mappings statuses conflicts proof discovery and activation requirements",
-      "may_establish": ["candidate mapping", "candidate scope", "candidate conflict policy"],
-      "may_not_establish": ["active governance", "self-acceptance", "self-promotion", "artifact truth"]
+      "required_status_for_activation": "Accepted"
     },
     "research_execution_charter": {
-      "owner": "docs/governance/research-execution-charter.md",
-      "current_status": "Provisional",
-      "required_status_for_activation": "Accepted",
       "authority_class": "methodological_specification",
       "proposition_scope": "research lifecycle status taxonomy provenance and repository-change constraints",
-      "may_establish": ["current provisional research procedure"],
-      "may_not_establish": ["its own acceptance", "canonical theory", "theorem truth"]
+      "may_establish": [
+        "current provisional research procedure"
+      ],
+      "may_not_establish": [
+        "its own acceptance",
+        "canonical theory",
+        "theorem truth"
+      ],
+      "owner": "docs/governance/research-execution-charter.md",
+      "current_status": "Provisional",
+      "required_status_for_activation": "Accepted"
     },
     "proof_assurance_taxonomy": {
-      "owner": "docs/proof-assurance-taxonomy.md",
-      "current_status": "Unknown",
-      "required_status_for_activation": "Accepted",
       "authority_class": "canonical_specification",
       "proposition_scope": "meanings and boundaries of proof-assurance classifications",
-      "may_establish": ["candidate interpretation of assurance labels"],
-      "may_not_establish": ["theorem truth", "artifact status", "self-acceptance"]
+      "may_establish": [
+        "candidate interpretation of assurance labels"
+      ],
+      "may_not_establish": [
+        "theorem truth",
+        "artifact status",
+        "self-acceptance"
+      ],
+      "owner": "docs/proof-assurance-taxonomy.md",
+      "current_status": "Unknown",
+      "required_status_for_activation": "Accepted"
     },
     "governance_decisions": {
-      "proposed_future_owner": "docs/DECISION_LOG.md",
-      "owner_state": "candidate_inactive_until_external_bootstrap",
       "authority_class": "governance_decision",
       "proposition_scope": "acceptance promotion deprecation ownership version supersession and change control",
-      "may_establish": ["future scoped governance decisions after activation"],
-      "may_not_establish": ["current authority", "theorem truth", "empirical truth", "self-promotion"]
+      "may_establish": [
+        "future scoped governance decisions after activation"
+      ],
+      "may_not_establish": [
+        "current authority",
+        "theorem truth",
+        "empirical truth",
+        "self-promotion"
+      ],
+      "proposed_future_owner": "docs/DECISION_LOG.md",
+      "owner_state": "candidate_inactive_until_external_bootstrap"
     },
     "repository_navigation": {
-      "owner": "docs/CANONICAL_MAP.md",
       "authority_class": "index",
       "proposition_scope": "artifact routing only",
-      "may_establish": ["artifact location"],
-      "may_not_establish": ["claim truth", "proof", "acceptance"]
+      "may_establish": [
+        "artifact location"
+      ],
+      "may_not_establish": [
+        "claim truth",
+        "proof",
+        "acceptance"
+      ],
+      "owner": "docs/CANONICAL_MAP.md"
     },
     "framework_boundaries": {
-      "owner": "docs/governance/framework-boundaries.md",
       "authority_class": "canonical_specification",
       "proposition_scope": "framework ownership boundaries and allowed dependency directions",
-      "may_establish": ["framework boundary declarations within existing status"],
-      "may_not_establish": ["logical derivation", "necessity", "minimality", "universality"]
+      "may_establish": [
+        "framework boundary declarations within existing status"
+      ],
+      "may_not_establish": [
+        "logical derivation",
+        "necessity",
+        "minimality",
+        "universality"
+      ],
+      "owner": "docs/governance/framework-boundaries.md"
     },
     "theorem_and_proof_status": {
-      "owner": "docs/governance/theorem-proof-status-register.md",
       "authority_class": "status_register",
       "proposition_scope": "theorem and proof-assurance classification",
-      "requires": ["separately registered proof-assurance taxonomy"],
-      "may_establish": ["classification within existing scope"],
-      "may_not_establish": ["truth without linked proof", "assurance meaning without taxonomy"]
+      "may_establish": [
+        "classification within existing scope"
+      ],
+      "may_not_establish": [
+        "truth without linked proof",
+        "assurance meaning without taxonomy"
+      ],
+      "owner": "docs/governance/theorem-proof-status-register.md",
+      "requires": [
+        "separately registered proof-assurance taxonomy"
+      ]
     },
     "proof_artifact_status_manifest": {
+      "authority_class": "status_register",
+      "proposition_scope": "charter status and authority-bearing designation for every registered proof artifact",
+      "may_establish": [
+        "candidate manifest schema"
+      ],
+      "may_not_establish": [
+        "current proof status",
+        "proof truth",
+        "self-acceptance"
+      ],
       "candidate_artifact": "research/evidence-authority-model/candidate/proof-artifact-status-manifest-v1.0.json",
       "proposed_future_owner": "docs/governance/proof-artifact-status-manifest.json",
       "owner_state": "not_created_until_promotion",
       "current_status": "Research",
       "required_status_for_activation": "Accepted",
-      "authority_class": "status_register",
-      "proposition_scope": "charter status and authority-bearing designation for every registered proof artifact",
-      "requires": ["manifest-level independent acceptance decision", "per-entry independent status decision"],
-      "may_establish": ["candidate manifest schema"],
-      "may_not_establish": ["current proof status", "proof truth", "self-acceptance"]
+      "requires": [
+        "manifest-level independent acceptance decision",
+        "per-entry independent status decision"
+      ]
     },
     "proof_records": {
-      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/proofs/**|theory/**/proofs/**|theory/lemmas/core-lemmas.md|theory/evaluation/*.json|theory/terminal/*.json|theory/**/proof*.json|theory/proof-objects/*.proof.yaml|docs/governance/proofs/**|docs/research/*proof*.md|mechanization/lean/*.lean",
       "authority_class": "proof_record",
       "proposition_scope": "exact registered statements under explicit premises",
+      "may_establish": [
+        "future exact proof statement when independently Accepted and designated authority-bearing"
+      ],
+      "may_not_establish": [
+        "current authority",
+        "unregistered theorem truth",
+        "scope expansion",
+        "authority from pattern alone"
+      ],
+      "owner_pattern": "foundations/**/proof*.md|theory/**/proof*.md|theory/proofs/**|theory/**/proofs/**|theory/lemmas/core-lemmas.md|theory/theorems/propositions.md|theory/evaluation/*.json|theory/terminal/*.json|theory/**/proof*.json|theory/proof-objects/*.proof.yaml|docs/governance/proofs/**|docs/research/*proof*.md|mechanization/lean/*.lean",
       "discovery_contract": {
+        "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
         "theorem_metadata": "theory/metadata/theorems.yaml",
         "lemma_metadata": "theory/metadata/lemmas.yaml",
         "proposition_metadata": "theory/metadata/propositions.yaml",
+        "proposition_discovery_status_blind": true,
         "dependency_registry": "theory/dependencies/dependency-registry.yaml",
         "required_proof_object_source": "tools/verify_theory.py",
-        "metadata_roots": ["foundations", "theory", "docs/governance", "research", "mechanization"],
-        "path_keys": ["proof", "proof_object", "proof_artifact", "source_proof", "lean_file", "proof_registry", "entrypoint"],
-        "path_key_suffixes": ["_proof_artifact", "_proof_registry"],
+        "metadata_roots": [
+          "foundations",
+          "theory",
+          "docs/governance",
+          "research",
+          "mechanization"
+        ],
+        "path_keys": [
+          "proof",
+          "proof_object",
+          "proof_artifact",
+          "source_proof",
+          "lean_file",
+          "proof_registry",
+          "entrypoint"
+        ],
+        "path_key_suffixes": [
+          "_proof_artifact",
+          "_proof_registry"
+        ],
         "object_path_member": "path",
-        "self_registering_record_keys": ["proof_id"],
-        "collect_before_existence_check": true
+        "self_registering_record_keys": [
+          "proof_id"
+        ],
+        "collect_before_existence_check": true,
+        "all_discovery_inputs_read_from_frozen_commit": true
       },
       "status_policy": {
         "candidate_manifest": "research/evidence-authority-model/candidate/proof-artifact-status-manifest-v1.0.json",
@@ -176,60 +299,102 @@
         "authority_bearing_designation_required": true,
         "non_authority_bearing_artifacts_may_retain_nonaccepted_statuses": true,
         "non_authority_bearing_artifacts_excluded_from_active_proof_authority": true
-      },
-      "may_establish": ["future exact proof statement when independently Accepted and designated authority-bearing"],
-      "may_not_establish": ["current authority", "unregistered theorem truth", "scope expansion", "authority from pattern alone"]
+      }
     },
     "claim_status": {
-      "owner": "docs/governance/claim-status-matrix.md",
       "authority_class": "status_register",
       "proposition_scope": "epistemic claim classifications",
-      "may_establish": ["classification"],
-      "may_not_establish": ["claim truth", "proof"]
+      "may_establish": [
+        "classification"
+      ],
+      "may_not_establish": [
+        "claim truth",
+        "proof"
+      ],
+      "owner": "docs/governance/claim-status-matrix.md"
     },
     "derivation_status": {
-      "owner": "docs/governance/derivation-status-matrix.md",
       "authority_class": "status_register",
       "proposition_scope": "dependency classifications",
-      "may_establish": ["classification"],
-      "may_not_establish": ["derivation without proof", "theorem truth"]
+      "may_establish": [
+        "classification"
+      ],
+      "may_not_establish": [
+        "derivation without proof",
+        "theorem truth"
+      ],
+      "owner": "docs/governance/derivation-status-matrix.md"
     },
     "canonical_terminology": {
-      "owner": "docs/glossary/canonical-terminology.md",
       "authority_class": "canonical_specification",
       "proposition_scope": "canonical names and short meanings",
-      "may_establish": ["names and short meanings within existing scope"],
-      "may_not_establish": ["detailed definitions", "necessity", "minimality"]
+      "may_establish": [
+        "names and short meanings within existing scope"
+      ],
+      "may_not_establish": [
+        "detailed definitions",
+        "necessity",
+        "minimality"
+      ],
+      "owner": "docs/glossary/canonical-terminology.md"
     },
     "detailed_definitions": {
-      "owner": "theory/definitions/definitions.md",
-      "current_status": "Unknown",
-      "required_status_for_activation": "Accepted",
       "authority_class": "canonical_specification",
       "proposition_scope": "detailed formal definitions",
-      "may_establish": ["definitions after valid status transition"],
-      "may_not_establish": ["current authority", "canonical naming override", "minimality"]
+      "may_establish": [
+        "definitions after valid status transition"
+      ],
+      "may_not_establish": [
+        "current authority",
+        "canonical naming override",
+        "minimality"
+      ],
+      "owner": "theory/definitions/definitions.md",
+      "current_status": "Unknown",
+      "required_status_for_activation": "Accepted"
     },
     "research_observations": {
-      "owner_pattern": "research/**/result*.json|research/**/report*.md|research/**/evidence/**|research/evidence-authority-model/**",
       "authority_class": "research_record",
       "proposition_scope": "bounded observations from registered designs",
-      "may_establish": ["bounded observation", "failure", "counterexample", "candidate construction"],
-      "may_not_establish": ["canonical theory", "acceptance", "promotion", "global generalization"]
+      "may_establish": [
+        "bounded observation",
+        "failure",
+        "counterexample",
+        "candidate construction"
+      ],
+      "may_not_establish": [
+        "canonical theory",
+        "acceptance",
+        "promotion",
+        "global generalization"
+      ],
+      "owner_pattern": "research/**/result*.json|research/**/report*.md|research/**/evidence/**|research/evidence-authority-model/**"
     },
     "methodology": {
-      "owner_pattern": "frameworks/FAR/**|methodology/**",
       "authority_class": "methodological_specification",
       "proposition_scope": "adopted procedures excluding the separately registered charter",
-      "may_establish": ["procedure within existing scope"],
-      "may_not_establish": ["logical derivation from FARA", "truth", "charter status"]
+      "may_establish": [
+        "procedure within existing scope"
+      ],
+      "may_not_establish": [
+        "logical derivation from FARA",
+        "truth",
+        "charter status"
+      ],
+      "owner_pattern": "frameworks/FAR/**|methodology/**"
     },
     "historical_records": {
-      "owner_pattern": "archive/**",
       "authority_class": "historical_record",
       "proposition_scope": "provenance and superseded reasoning",
-      "may_establish": ["provenance"],
-      "may_not_establish": ["active authority", "claim truth", "promotion"]
+      "may_establish": [
+        "provenance"
+      ],
+      "may_not_establish": [
+        "active authority",
+        "claim truth",
+        "promotion"
+      ],
+      "owner_pattern": "archive/**"
     }
   },
   "promotion_requirements": [
