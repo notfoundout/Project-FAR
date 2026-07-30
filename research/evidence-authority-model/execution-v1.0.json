@@ -1,27 +1,40 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "execution_specification": "research/evidence-authority-model/execution-spec-v1.0.json",
   "execution_specification_sha256": "5328b419dd8ef86e77852730f3b2d3b6a1b6f6440bea92a55ff537db2f72bc2a",
   "executor": "project-maintainer-assisted deterministic construction and mutation pass",
-  "validator": "research/evidence-authority-model/validate_candidate.py",
-  "validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
-  "source_identity_result": "all frozen Git blob identities matched",
+  "validator": {
+    "path": "research/evidence-authority-model/validate_candidate.py",
+    "git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
+  },
+  "primary_validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
+  "repeat_validation_evidence": "research/evidence-authority-model/repeat-validation-evidence-v1.0.json",
+  "replication_comparison": "research/evidence-authority-model/replication-comparison-v1.0.json",
+  "source_identity_result": "all discovery inputs were read from the preregistered frozen commit; all explicitly frozen source blobs matched",
+  "frozen_execution": {
+    "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
+    "frozen_tree_sha": "2d7b5c1647f4bc5578e65cbe709299d0c7baea51",
+    "discovery_input_count": 372,
+    "discovery_input_digest": "1f1bdb8185c4104d2ae843a288149dbb361a4fb8def784cf0130f138813d1dff",
+    "mutable_working_tree_used_for_discovery": false
+  },
   "checks": {
     "A1_research_inactivity": "Pass",
     "A2_external_bootstrap": "Pass",
     "A3_governing_dependency_coverage": "Pass",
-    "A4_proof_path_completeness": "Pass: 51 registered proof paths discovered across all nine required pathways",
-    "A5_proof_status_separation": "Pass",
+    "A4_proof_path_completeness": "Pass: 52 registered proof paths discovered across all nine required pathways, including Proposed proposition sources",
+    "A5_proof_status_separation": "Pass: a 52-entry synthetic activation manifest validated; unaccepted authority, missing designation, and weakened-status-policy controls failed",
     "A6_manifest_provenance": "Pass",
-    "A7_equal_priority_conflict_safety": "Pass",
+    "A7_equal_priority_conflict_safety": "Pass: two concrete equal-priority opposite claims with identical identity fields adjudicated Unknown",
     "A8_claim_boundary": "Pass"
   },
   "proof_discovery": {
-    "registered_path_count": 51,
-    "all_targets_exist": true,
+    "registered_path_count": 52,
+    "all_targets_exist_in_frozen_tree": true,
     "all_targets_covered_by_candidate_owner_pattern": true,
+    "proposition_discovery_status_blind": true,
     "pathways": [
       "dependency_registry",
       "lemma_metadata",
@@ -35,17 +48,18 @@
     ]
   },
   "negative_control_execution": {
-    "count": 21,
+    "count": 24,
     "all_detected": true,
-    "evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
-    "method": "each required governing domain and discovery pathway was independently removed or disabled; conflict, manifest, missing-target, owner-coverage, and experiment-authority faults were separately injected",
-    "result": "Pass"
+    "primary_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
+    "repeat_evidence": "research/evidence-authority-model/repeat-validation-evidence-v1.0.json",
+    "method": "required governing domains and discovery pathways were independently removed or disabled; owner coverage, real conflict adjudication, manifest provenance, unaccepted authority, missing designation, weakened status policy, missing target, and experiment-authority faults were injected",
+    "result": "Pass in two separate workflow executions"
   },
   "execution_outcome": "bounded_candidate_supported",
   "repository_effect": {
     "canonical_governance_implementation": "withdrawn and absent",
-    "canonical_test_wiring": "temporary execution wrapper removed after evidence capture",
-    "retained_material": "research question specification candidate evidence validator execution observation result replication report and validation evidence only",
+    "canonical_test_wiring": "temporary execution wrapper removed after primary and repeat evidence capture",
+    "retained_material": "research question specification candidate evidence validator execution observation result replication report primary repeat and comparison evidence only",
     "repository_change_authority": "not claimed",
     "future_canonical_repository_change": "deferred until external replication Acceptance and Promotion"
   },
@@ -55,7 +69,7 @@
     "the research-execution charter remains Provisional",
     "the proof-assurance taxonomy status remains Unknown",
     "the candidate proof-artifact manifest remains empty Research evidence",
-    "external independent replication has not occurred",
+    "the two captured executions are internally independent runs but not externally independent replication",
     "canonical implementation and permanent test wiring are intentionally absent"
   ],
   "nonclaims": [
