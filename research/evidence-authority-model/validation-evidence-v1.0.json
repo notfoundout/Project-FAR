@@ -1,23 +1,37 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
-  "validated_commit": "154b010d5efd9e7dc69636df7c79fcb59258a83e",
+  "execution_role": "primary",
+  "validated_commit": "687d3cd50ff5b8eb7e485cd5b6a8db3def87db64",
+  "validator": {
+    "path": "research/evidence-authority-model/validate_candidate.py",
+    "git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
+  },
   "validation_source": {
     "workflow": "Repository Health",
-    "workflow_run_id": 30501869497,
-    "workflow_run_number": 1754,
-    "job_id": 90743072046,
-    "result": "success"
+    "workflow_run_id": 30503257408,
+    "workflow_run_number": 1764,
+    "job_id": 90747380558,
+    "result": "success",
+    "log_marker": "BEGIN_EVIDENCE_AUTHORITY_PRIMARY"
   },
-  "validator": "research/evidence-authority-model/validate_candidate.py",
   "overall": "pass",
   "errors": [],
+  "evidence_digest": "8ba33d1d14d3e97d3adf4d0a16cd3b1f340c41370be698708e1d5c11ea9894a6",
   "canonical_repository_implementation_deferred": true,
+  "frozen_source_execution": {
+    "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
+    "frozen_tree_sha": "2d7b5c1647f4bc5578e65cbe709299d0c7baea51",
+    "discovery_input_count": 372,
+    "discovery_input_digest": "1f1bdb8185c4104d2ae843a288149dbb361a4fb8def784cf0130f138813d1dff",
+    "mutable_working_tree_used_for_discovery": false
+  },
   "proof_inventory": {
-    "registered_path_count": 51,
-    "all_registered_targets_exist": true,
+    "registered_path_count": 52,
+    "all_registered_targets_exist_in_frozen_tree": true,
     "all_registered_targets_match_candidate_owner_coverage": true,
+    "proposition_discovery_status_blind": true,
     "executed_pathways": [
       "dependency_registry",
       "lemma_metadata",
@@ -30,29 +44,30 @@
       "verifier_required_objects"
     ],
     "sentinels": {
-      "theory/evaluation/fara-canonical-kernel-proof-v1.0.json": [
-        "object_valued_paths",
-        "structured_metadata"
-      ],
-      "theory/proofs/P-001-first-propositions.md": [
-        "proposition_metadata"
-      ],
-      "mechanization/lean/UPPSemanticKernel.lean": [
-        "terminal_entrypoints"
-      ],
-      "mechanization/lean/G2OpenWorldLowerBound.lean": [
-        "terminal_entrypoints"
-      ],
-      "mechanization/lean/G3EpistemicMaximality.lean": [
-        "terminal_entrypoints"
-      ],
-      "theory/proof-objects/T-015.proof.yaml": [
-        "verifier_required_objects"
-      ]
+      "theory/theorems/propositions.md": ["proposition_metadata"],
+      "theory/evaluation/fara-canonical-kernel-proof-v1.0.json": ["object_valued_paths", "structured_metadata"],
+      "mechanization/lean/UPPSemanticKernel.lean": ["terminal_entrypoints"],
+      "mechanization/lean/G2OpenWorldLowerBound.lean": ["terminal_entrypoints"],
+      "mechanization/lean/G3EpistemicMaximality.lean": ["terminal_entrypoints"],
+      "theory/proof-objects/T-015.proof.yaml": ["verifier_required_objects"]
     }
   },
+  "conflict_probe": {
+    "claims_injected": 2,
+    "same_proposition_scope_premises_version": true,
+    "equal_priority": true,
+    "opposite_polarities": true,
+    "result": "Unknown",
+    "reason": "equal_priority_contradiction"
+  },
+  "activation_manifest_probe": {
+    "entry_count": 52,
+    "valid": true,
+    "one_authority_bearing_accepted_entry": true,
+    "non_authority_bearing_research_entries_excluded": true
+  },
   "negative_controls": {
-    "count": 21,
+    "count": 24,
     "all_detected": true,
     "control_ids": [
       "remove_governing_domain:authority_model_specification",
@@ -71,9 +86,12 @@
       "disable_discovery_pathway:theorem_metadata",
       "disable_discovery_pathway:verifier_required_objects",
       "remove_proof_owner_coverage",
-      "permit_equal_priority_resolution",
-      "permit_dual_authority",
+      "inject_equal_priority_contradiction_with_nonfailclosed_policy",
+      "inject_equal_priority_contradiction_with_dual_authority",
       "remove_manifest_acceptance_gate",
+      "grant_authority_to_unaccepted_proof",
+      "omit_authority_bearing_designation",
+      "weaken_authority_bearing_status_policy",
       "inject_missing_registered_target",
       "inject_experiment_authority"
     ]
