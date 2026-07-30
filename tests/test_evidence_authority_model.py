@@ -12,15 +12,15 @@ assert spec.loader is not None
 spec.loader.exec_module(validator)
 
 
-class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
-    def test_corrected_frozen_candidate_and_mutation_campaign(self):
+class EvidenceAuthorityRepeatExecutionTests(unittest.TestCase):
+    def test_corrected_frozen_candidate_and_mutation_campaign_repeat(self):
         result = validator.run_full_validation(enforce_research_only_placement=True)
-        print("BEGIN_EVIDENCE_AUTHORITY_PRIMARY_V2")
+        print("BEGIN_EVIDENCE_AUTHORITY_REPEAT_V2")
         print(json.dumps(result, indent=2, sort_keys=True))
-        print("END_EVIDENCE_AUTHORITY_PRIMARY_V2")
+        print("END_EVIDENCE_AUTHORITY_REPEAT_V2")
         self.assertEqual("pass", result["overall"], result["errors"])
         self.assertTrue(result["all_negative_controls_detected"])
-        self.assertGreaterEqual(result["negative_control_count"], 32)
+        self.assertEqual(32, result["negative_control_count"])
         validation = result["positive_validation"]
         self.assertEqual("787d8776f0aab7c78cea9d536762c323b62d8c37", validation["frozen_base_commit"])
         self.assertEqual(52, validation["proof_path_count"])
@@ -33,7 +33,10 @@ class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
         )
         self.assertEqual(53, len(activation["decision_records"]))
         self.assertRegex(activation["manifest_digest"], r"^[0-9a-f]{64}$")
-        self.assertRegex(result["evidence_digest"], r"^[0-9a-f]{64}$")
+        self.assertEqual(
+            "8399794130250807c8b64d316a762bf39459e1b6def3e61a8d012c0e1e9915cf",
+            result["evidence_digest"],
+        )
 
 
 if __name__ == "__main__":
