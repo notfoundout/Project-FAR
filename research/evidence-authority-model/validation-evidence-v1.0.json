@@ -1,24 +1,26 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "execution_role": "primary",
-  "validated_commit": "687d3cd50ff5b8eb7e485cd5b6a8db3def87db64",
+  "validated_commit": "3cb1999f51645f1aa84de97b1f7b418e38b88e26",
   "validator": {
-    "path": "research/evidence-authority-model/validate_candidate.py",
-    "git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
+    "entrypoint": "research/evidence-authority-model/validate_candidate.py",
+    "entrypoint_git_blob_sha": "1ec1acfed37091dc6820c3bb70950301e9897e67",
+    "core": "research/evidence-authority-model/validator_core_v1.py",
+    "core_git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
   },
   "validation_source": {
     "workflow": "Repository Health",
-    "workflow_run_id": 30503257408,
-    "workflow_run_number": 1764,
-    "job_id": 90747380558,
+    "workflow_run_id": 30506960124,
+    "workflow_run_number": 1777,
+    "job_id": 90758711922,
     "result": "success",
-    "log_marker": "BEGIN_EVIDENCE_AUTHORITY_PRIMARY"
+    "log_marker": "BEGIN_EVIDENCE_AUTHORITY_PRIMARY_V2"
   },
   "overall": "pass",
   "errors": [],
-  "evidence_digest": "8ba33d1d14d3e97d3adf4d0a16cd3b1f340c41370be698708e1d5c11ea9894a6",
+  "evidence_digest": "8399794130250807c8b64d316a762bf39459e1b6def3e61a8d012c0e1e9915cf",
   "canonical_repository_implementation_deferred": true,
   "frozen_source_execution": {
     "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
@@ -42,32 +44,44 @@
       "terminal_entrypoints",
       "theorem_metadata",
       "verifier_required_objects"
-    ],
-    "sentinels": {
-      "theory/theorems/propositions.md": ["proposition_metadata"],
-      "theory/evaluation/fara-canonical-kernel-proof-v1.0.json": ["object_valued_paths", "structured_metadata"],
-      "mechanization/lean/UPPSemanticKernel.lean": ["terminal_entrypoints"],
-      "mechanization/lean/G2OpenWorldLowerBound.lean": ["terminal_entrypoints"],
-      "mechanization/lean/G3EpistemicMaximality.lean": ["terminal_entrypoints"],
-      "theory/proof-objects/T-015.proof.yaml": ["verifier_required_objects"]
+    ]
+  },
+  "conflict_probes": {
+    "equal_priority": {
+      "claims_injected": 2,
+      "same_proposition_scope_premises_version": true,
+      "opposite_polarities": true,
+      "result": "Unknown",
+      "reason": "equal_priority_contradiction"
+    },
+    "unequal_priority": {
+      "claims_injected": 2,
+      "governance_numeric_priority": 1,
+      "research_numeric_priority": 5,
+      "numeric_priority_order": "lower_is_higher",
+      "selected_numeric_priority": 1,
+      "result": "Affirmed",
+      "selected_artifact": "synthetic://accepted-governance.json"
     }
   },
-  "conflict_probe": {
-    "claims_injected": 2,
-    "same_proposition_scope_premises_version": true,
-    "equal_priority": true,
-    "opposite_polarities": true,
-    "result": "Unknown",
-    "reason": "equal_priority_contradiction"
-  },
   "activation_manifest_probe": {
+    "synthetic_nonoperative_probe": true,
     "entry_count": 52,
+    "decision_record_count": 53,
+    "manifest_acceptance_decision_records": 1,
+    "artifact_status_decision_records": 52,
     "valid": true,
-    "one_authority_bearing_accepted_entry": true,
-    "non_authority_bearing_research_entries_excluded": true
+    "structural_checks": [
+      "manifest identity and version linkage",
+      "Accepted governance decision status and authority class",
+      "independence from candidate",
+      "artifact status and authority-bearing linkage",
+      "canonical manifest digest linkage",
+      "tamper-evident record digests"
+    ]
   },
   "negative_controls": {
-    "count": 24,
+    "count": 32,
     "all_detected": true,
     "control_ids": [
       "remove_governing_domain:authority_model_specification",
@@ -93,7 +107,15 @@
       "omit_authority_bearing_designation",
       "weaken_authority_bearing_status_policy",
       "inject_missing_registered_target",
-      "inject_experiment_authority"
+      "inject_experiment_authority",
+      "reverse_numeric_priority_order",
+      "remove_manifest_acceptance_decision_record",
+      "mismatch_manifest_acceptance_decision_version",
+      "reject_non_authoritative_manifest_governance",
+      "break_manifest_acceptance_decision_hash_lock",
+      "remove_artifact_status_decision_record",
+      "mismatch_artifact_status_decision_linkage",
+      "break_artifact_status_decision_hash_lock"
     ]
   },
   "lifecycle": {
