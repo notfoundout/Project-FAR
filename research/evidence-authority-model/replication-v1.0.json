@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.6",
+  "schema_version": "1.7",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "replication_type": "internal deterministic clean repeat",
@@ -9,29 +9,29 @@
   "repeat_validation_evidence": "research/evidence-authority-model/repeat-validation-evidence-v1.0.json",
   "comparison_evidence": "research/evidence-authority-model/replication-comparison-v1.0.json",
   "primary_execution": {
-    "validated_commit": "e65b0fd24b163758879ef3039f540e739e05c393",
-    "workflow_run_id": 30516299643,
-    "job_id": 90786824181,
+    "validated_commit": "ddd4ced4a467f5a202e804bd333a1709509c05c3",
+    "workflow_run_id": 30517745133,
+    "job_id": 90791242158,
     "overall": "pass"
   },
   "repeat_execution": {
-    "validated_commit": "3b997b8b219282e2bb744810eb2a8c4307c96ac2",
-    "workflow_run_id": 30516384838,
-    "job_id": 90787096016,
+    "validated_commit": "d4968f0334da2db56df8e6dcba313dd3a84c9e55",
+    "workflow_run_id": 30517874492,
+    "job_id": 90791636534,
     "overall": "pass"
   },
   "repeated_checks": {
-    "proof_path_completeness": "Pass: 56 paths including two canonical-id and two hash-locked artifact-map proof records",
+    "proof_path_completeness": "Pass: 59 paths including three proof-object-id, two canonical-id, and two hash-locked artifact-map proof records",
     "proof_discovery_schema": "Pass: explicit inactive Research extension validated",
-    "proof_status_separation": "Pass: 56 entries and 57 decision records",
+    "proof_status_separation": "Pass: 59 entries and 60 decision records",
     "manifest_provenance": "Pass",
     "conflict_and_priority": "Pass: priority direction derived from the candidate model",
-    "negative_control_campaign": "Pass: 42 of 42 faults detected",
+    "negative_control_campaign": "Pass: 43 of 43 faults detected",
     "frozen_discovery_inputs": "Pass: 372 inputs"
   },
   "replicated_outcome": "bounded_candidate_supported",
   "matches_primary_execution": true,
-  "matching_evidence_digest": "0087fb82194a2389729b3c5df4ce07306701135cc8d4c387b8a53176b4d875bf",
+  "matching_evidence_digest": "7c2deb179b15a2a08e6562d2af852f574384e679b4dc60b10fca737abb95b770",
   "acceptance_effect": "none",
   "promotion_effect": "none",
   "repository_change_effect": "none; canonical implementation remains deferred",
