@@ -1,26 +1,27 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "execution_role": "internal deterministic repeat",
-  "validated_commit": "58aa3a15d69d2dd71668adf0d7b9501a52c52e57",
-  "validator": {
-    "entrypoint": "research/evidence-authority-model/validate_candidate.py",
-    "entrypoint_git_blob_sha": "1ec1acfed37091dc6820c3bb70950301e9897e67",
-    "core": "research/evidence-authority-model/validator_core_v1.py",
-    "core_git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
+  "validated_commit": "2e233feae813d760b173d7a0a5a82e9c2241515d",
+  "candidate_and_validator_blobs": {
+    "candidate_model": "3ff99dd626e26cc74b47f4e1f978737926a3b663",
+    "candidate_registry": "798ddae550304981df78cd539b1fab34768b3745",
+    "candidate_manifest": "68ac0a4bfa0b4e033be185ccc71b117e22b8552d",
+    "validator_entrypoint": "677d3f9a807ee0e488dc14b6f9f5babbf200ec45",
+    "validator_core": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
   },
   "validation_source": {
     "workflow": "Repository Health",
-    "workflow_run_id": 30507130512,
-    "workflow_run_number": 1778,
-    "job_id": 90759219738,
+    "workflow_run_id": 30512296774,
+    "workflow_run_number": 1793,
+    "job_id": 90774752506,
     "result": "success",
     "log_marker": "BEGIN_EVIDENCE_AUTHORITY_REPEAT_V2"
   },
   "overall": "pass",
   "errors": [],
-  "evidence_digest": "8399794130250807c8b64d316a762bf39459e1b6def3e61a8d012c0e1e9915cf",
+  "evidence_digest": "6a352e3d7f959c7759af3e856ec9d703b62aa1f0b5b5463fe899fc8293a7ee05",
   "canonical_repository_implementation_deferred": true,
   "frozen_source_execution": {
     "frozen_base_commit": "787d8776f0aab7c78cea9d536762c323b62d8c37",
@@ -52,10 +53,14 @@
     "entry_count": 52,
     "decision_record_count": 53,
     "valid": true,
-    "structural_provenance_valid": true
+    "structural_provenance_valid": true,
+    "decision_date_valid": true,
+    "supporting_evidence_valid": true,
+    "scope_valid": true,
+    "limitations_valid": true
   },
   "negative_controls": {
-    "count": 32,
+    "count": 40,
     "all_detected": true,
     "priority_reversal_detected": true,
     "manifest_decision_missing_detected": true,
@@ -64,12 +69,17 @@
     "manifest_hash_tamper_detected": true,
     "artifact_status_record_missing_detected": true,
     "artifact_linkage_mismatch_detected": true,
-    "artifact_status_hash_tamper_detected": true
+    "artifact_status_hash_tamper_detected": true,
+    "manifest_provenance_field_omissions_detected": 4,
+    "artifact_status_provenance_field_omissions_detected": 4
   },
   "independence": {
     "separate_workflow_run": true,
     "separate_job": true,
     "separate_commit": true,
+    "identical_candidate_model_blob": true,
+    "identical_candidate_registry_blob": true,
+    "identical_candidate_manifest_blob": true,
     "identical_entrypoint_blob": true,
     "identical_core_blob": true,
     "identical_frozen_tree": true,
