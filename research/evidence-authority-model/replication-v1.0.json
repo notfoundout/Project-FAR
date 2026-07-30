@@ -1,34 +1,59 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "replication_type": "internal deterministic clean repeat",
   "external_independence": false,
   "external_replication": "pending",
   "input": "research/evidence-authority-model/execution-spec-v1.0.json",
-  "validator": "research/evidence-authority-model/validate_candidate.py",
-  "validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
+  "validator": {
+    "path": "research/evidence-authority-model/validate_candidate.py",
+    "git_blob_sha": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
+  },
+  "primary_validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
+  "repeat_validation_evidence": "research/evidence-authority-model/repeat-validation-evidence-v1.0.json",
+  "comparison_evidence": "research/evidence-authority-model/replication-comparison-v1.0.json",
   "first_result_withheld_from_repeat_inputs": true,
+  "primary_execution": {
+    "validated_commit": "687d3cd50ff5b8eb7e485cd5b6a8db3def87db64",
+    "workflow_run_id": 30503257408,
+    "job_id": 90747380558,
+    "overall": "pass",
+    "evidence_digest": "8ba33d1d14d3e97d3adf4d0a16cd3b1f340c41370be698708e1d5c11ea9894a6"
+  },
+  "repeat_execution": {
+    "validated_commit": "ba528f5e4891b14c33791716097b6a5a3e2b035e",
+    "workflow_run_id": 30503397417,
+    "job_id": 90747810604,
+    "overall": "pass",
+    "evidence_digest": "8ba33d1d14d3e97d3adf4d0a16cd3b1f340c41370be698708e1d5c11ea9894a6"
+  },
   "repeated_checks": {
     "A1_research_inactivity": "Pass",
     "A2_external_bootstrap": "Pass",
     "A3_governing_dependency_coverage": "Pass",
-    "A4_proof_path_completeness": "Pass: 51 paths across nine required pathways",
-    "A5_proof_status_separation": "Pass",
+    "A4_proof_path_completeness": "Pass: 52 paths across nine required pathways from the identical frozen tree",
+    "A5_proof_status_separation": "Pass: activation manifest validated and three status-policy faults detected",
     "A6_manifest_provenance": "Pass",
-    "A7_equal_priority_conflict_safety": "Pass",
+    "A7_equal_priority_conflict_safety": "Pass: concrete equal-priority contradictory claims adjudicated Unknown",
     "A8_claim_boundary": "Pass",
-    "negative_control_campaign": "Pass: 21 of 21 injected faults detected"
+    "negative_control_campaign": "Pass: 24 of 24 injected faults detected",
+    "frozen_discovery_inputs": "Pass: 372 blob-identified inputs with identical digest"
   },
   "replicated_outcome": "bounded_candidate_supported",
   "matches_primary_execution": true,
+  "matching_evidence_digest": true,
+  "matching_validator_blob": true,
+  "matching_frozen_tree": true,
+  "matching_discovery_input_digest": true,
   "acceptance_effect": "none",
   "promotion_effect": "none",
   "repository_change_effect": "none; canonical implementation remains deferred",
   "canonical_implementation_absent": true,
   "limitations": [
     "the repeat is not an external investigator replication",
-    "shared repository validator and metadata remain possible common-mode dependencies",
+    "shared repository validator and frozen metadata remain possible common-mode dependencies",
+    "the repeat commit differs only to create a separately identifiable workflow execution",
     "external replication is mandatory before Acceptance",
     "Acceptance and Promotion are mandatory before canonical Repository Change",
     "the repeat supports research evidence only"
