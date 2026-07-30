@@ -12,8 +12,8 @@ assert spec.loader is not None
 spec.loader.exec_module(validator)
 
 
-class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
-    def test_revised_candidate_and_provenance_mutations(self):
+class EvidenceAuthorityRepeatExecutionTests(unittest.TestCase):
+    def test_revised_candidate_and_provenance_mutations_repeat(self):
         result = validator.run_full_validation(enforce_research_only_placement=True)
         validation = result["positive_validation"]
         summary = {
@@ -32,9 +32,9 @@ class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
             "conflict_probe": validation["conflict_probe"],
             "activation_manifest_probe": validation["activation_manifest_probe"],
         }
-        print("BEGIN_EVIDENCE_AUTHORITY_PRIMARY_V2")
+        print("BEGIN_EVIDENCE_AUTHORITY_REPEAT_V2")
         print(json.dumps(summary, sort_keys=True))
-        print("END_EVIDENCE_AUTHORITY_PRIMARY_V2")
+        print("END_EVIDENCE_AUTHORITY_REPEAT_V2")
         self.assertEqual("pass", result["overall"], result["errors"])
         self.assertEqual([], result["errors"])
         self.assertTrue(result["all_negative_controls_detected"])
