@@ -2,8 +2,9 @@
 """Schema-aware extension for FAR-EVIDENCE-AUTHORITY-MODEL-001.
 
 The reviewed v1 entrypoint remains in ``validator_entrypoint_v1.py``. This
-entrypoint adds independent discovery for self-registering proof records whose
-canonical identifier field is ``id`` rather than ``proof_id``.
+entrypoint applies the explicit Research candidate discovery extension for
+self-registering proof records whose canonical identifier is ``id`` rather
+than ``proof_id``.
 """
 from __future__ import annotations
 
@@ -17,6 +18,7 @@ import yaml
 
 HERE = pathlib.Path(__file__).resolve().parent
 V1_PATH = HERE / "validator_entrypoint_v1.py"
+DISCOVERY_SCHEMA_PATH = HERE / "candidate/proof-discovery-schema-v1.0.json"
 _spec = importlib.util.spec_from_file_location("evidence_authority_validator_v1", V1_PATH)
 v1 = importlib.util.module_from_spec(_spec)
 assert _spec.loader is not None
@@ -24,21 +26,65 @@ _spec.loader.exec_module(v1)
 core = v1.core
 
 CANONICAL_ID_PROOF_PATHWAY = "canonical_id_proof_records"
-CANONICAL_ID_PROOF_SENTINEL = "theory/evaluation/fara-operator-w2-proof-v1.0.json"
 _original_discover_proof_paths = core.discover_proof_paths
 _original_validate_candidate = v1.validate_candidate
 _original_execute_negative_controls = v1.execute_negative_controls
 
 
+def _load_discovery_schema() -> dict[str, Any]:
+    return json.loads(DISCOVERY_SCHEMA_PATH.read_text(encoding="utf-8"))
+
+
+def _canonical_id_rule() -> dict[str, Any]:
+    schema = _load_discovery_schema()
+    for rule in schema.get("rules", []):
+        if rule.get("rule_id") == "canonical_id_proof_record":
+            return rule
+    return {}
+
+
+def _validate_discovery_schema() -> list[str]:
+    schema = _load_discovery_schema()
+    errors: list[str] = []
+    if schema.get("status") != "Research" or schema.get("active") is not False:
+        errors.append("proof_discovery_schema_not_inactive_research")
+    if schema.get("pathway") != "self_registering_records":
+        errors.append("proof_discovery_schema_pathway_mismatch")
+    rule = _canonical_id_rule()
+    required = {
+        "identifier_field": "id",
+        "file_extension": ".json",
+        "filename_must_contain": "proof",
+        "negative_control": "disable_canonical_id_proof_record_schema",
+    }
+    for field, expected in required.items():
+        if rule.get(field) != expected:
+            errors.append(f"proof_discovery_schema_field_mismatch:{field}")
+    roots = rule.get("roots")
+    if not isinstance(roots, list) or not roots:
+        errors.append("proof_discovery_schema_roots_missing")
+    sentinels = rule.get("required_sentinels")
+    if not isinstance(sentinels, list) or not sentinels:
+        errors.append("proof_discovery_schema_sentinels_missing")
+    return errors
+
+
 def _is_canonical_id_proof_record(source: str, payload: Any) -> bool:
-    """Recognize repository proof records that self-register through ``id``."""
-    if not isinstance(payload, dict) or not isinstance(payload.get("id"), str):
+    """Recognize records according to the declared candidate schema extension."""
+    rule = _canonical_id_rule()
+    identifier_field = rule.get("identifier_field")
+    if not isinstance(payload, dict) or not isinstance(payload.get(identifier_field), str):
         return False
+    roots = tuple(item for item in rule.get("roots", []) if isinstance(item, str))
+    extension = rule.get("file_extension")
+    token = str(rule.get("filename_must_contain", "")).lower()
     path = pathlib.PurePosixPath(source)
     return (
-        source.startswith(("theory/evaluation/", "theory/terminal/", "foundations/"))
-        and path.suffix == ".json"
-        and "proof" in path.name.lower()
+        bool(roots)
+        and source.startswith(roots)
+        and path.suffix == extension
+        and bool(token)
+        and token in path.name.lower()
     )
 
 
@@ -74,10 +120,10 @@ def discover_proof_paths(
 
 def validate_candidate(*args: Any, **kwargs: Any) -> dict[str, Any]:
     result = _original_validate_candidate(*args, **kwargs)
-    if CANONICAL_ID_PROOF_SENTINEL not in result.get("proof_inventory", {}):
-        result["errors"].append(
-            f"missing_canonical_id_proof_record:{CANONICAL_ID_PROOF_SENTINEL}"
-        )
+    result["errors"].extend(_validate_discovery_schema())
+    for sentinel in _canonical_id_rule().get("required_sentinels", []):
+        if sentinel not in result.get("proof_inventory", {}):
+            result["errors"].append(f"missing_canonical_id_proof_record:{sentinel}")
     result["valid"] = not result["errors"]
     return result
 
@@ -89,7 +135,7 @@ def execute_negative_controls(frozen: Any) -> list[dict[str, Any]]:
         disabled_pathways={CANONICAL_ID_PROOF_PATHWAY},
         enforce_research_only_placement=False,
     )
-    expected = f"missing_canonical_id_proof_record:{CANONICAL_ID_PROOF_SENTINEL}"
+    expected = "missing_canonical_id_proof_record:"
     observed = [error for error in result["errors"] if error.startswith(expected)]
     controls.append(
         {
@@ -111,7 +157,7 @@ def run_full_validation(*, enforce_research_only_placement: bool = True) -> dict
     result = core.run_full_validation(
         enforce_research_only_placement=enforce_research_only_placement
     )
-    result["schema_version"] = "1.4"
+    result["schema_version"] = "1.5"
     result["evidence_digest"] = core.canonical_digest(
         {key: value for key, value in result.items() if key != "evidence_digest"}
     )
