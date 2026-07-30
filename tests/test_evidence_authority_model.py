@@ -12,12 +12,12 @@ assert spec.loader is not None
 spec.loader.exec_module(validator)
 
 
-class EvidenceAuthorityPrimaryExecutionTests(unittest.TestCase):
-    def test_frozen_candidate_and_mutation_campaign(self):
+class EvidenceAuthorityRepeatExecutionTests(unittest.TestCase):
+    def test_frozen_candidate_and_mutation_campaign_repeat(self):
         result = validator.run_full_validation(enforce_research_only_placement=True)
-        print("BEGIN_EVIDENCE_AUTHORITY_PRIMARY")
+        print("BEGIN_EVIDENCE_AUTHORITY_REPEAT")
         print(json.dumps(result, indent=2, sort_keys=True))
-        print("END_EVIDENCE_AUTHORITY_PRIMARY")
+        print("END_EVIDENCE_AUTHORITY_REPEAT")
         self.assertEqual("pass", result["overall"], result["errors"])
         self.assertTrue(result["all_negative_controls_detected"])
         self.assertGreaterEqual(result["negative_control_count"], 24)
