@@ -3,9 +3,9 @@
 
 The reviewed v1 entrypoint remains in ``validator_entrypoint_v1.py``. This
 entrypoint applies the explicit Research candidate discovery extensions for
-canonical ``id`` proof records and hash-locked artifact-map keys. It also
-derives numeric priority direction from the candidate model rather than a
-private validator default.
+``proof_object_id`` records, canonical ``id`` proof records, and hash-locked
+artifact-map keys. It also derives numeric priority direction from the
+candidate model rather than a private validator default.
 """
 from __future__ import annotations
 
@@ -26,6 +26,7 @@ assert _spec.loader is not None
 _spec.loader.exec_module(v1)
 core = v1.core
 
+PROOF_OBJECT_ID_PATHWAY = "proof_object_id_records"
 CANONICAL_ID_PROOF_PATHWAY = "canonical_id_proof_records"
 ARTIFACT_MAP_KEY_PATHWAY = "artifact_map_key_paths"
 LOWER_PRIORITY_DECLARATION = "lower numeric rank means higher authority"
@@ -47,6 +48,10 @@ def _rule(rule_id: str) -> dict[str, Any]:
     return {}
 
 
+def _proof_object_id_rule() -> dict[str, Any]:
+    return _rule("proof_object_id_record")
+
+
 def _canonical_id_rule() -> dict[str, Any]:
     return _rule("canonical_id_proof_record")
 
@@ -62,6 +67,20 @@ def _validate_discovery_schema() -> list[str]:
         errors.append("proof_discovery_schema_not_inactive_research")
     if schema.get("pathway") != "schema_aware_proof_discovery":
         errors.append("proof_discovery_schema_pathway_mismatch")
+
+    proof_object_rule = _proof_object_id_rule()
+    proof_object_required = {
+        "identifier_field": "proof_object_id",
+        "file_extension": ".json",
+        "negative_control": "disable_proof_object_id_record_schema",
+    }
+    for field, expected in proof_object_required.items():
+        if proof_object_rule.get(field) != expected:
+            errors.append(f"proof_object_id_schema_field_mismatch:{field}")
+    for field in ("roots", "required_sentinels"):
+        value = proof_object_rule.get(field)
+        if not isinstance(value, list) or not value:
+            errors.append(f"proof_object_id_schema_{field}_missing")
 
     canonical_rule = _canonical_id_rule()
     canonical_required = {
@@ -97,22 +116,42 @@ def _validate_discovery_schema() -> list[str]:
     return errors
 
 
-def _is_canonical_id_proof_record(source: str, payload: Any) -> bool:
-    """Recognize records according to the declared candidate schema extension."""
-    rule = _canonical_id_rule()
+def _is_identifier_proof_record(
+    source: str,
+    payload: Any,
+    rule: dict[str, Any],
+    *,
+    require_filename_token: bool,
+) -> bool:
     identifier_field = rule.get("identifier_field")
     if not isinstance(payload, dict) or not isinstance(payload.get(identifier_field), str):
         return False
     roots = tuple(item for item in rule.get("roots", []) if isinstance(item, str))
     extension = rule.get("file_extension")
-    token = str(rule.get("filename_must_contain", "")).lower()
     path = pathlib.PurePosixPath(source)
-    return (
-        bool(roots)
-        and source.startswith(roots)
-        and path.suffix == extension
-        and bool(token)
-        and token in path.name.lower()
+    if not (bool(roots) and source.startswith(roots) and path.suffix == extension):
+        return False
+    if not require_filename_token:
+        return True
+    token = str(rule.get("filename_must_contain", "")).lower()
+    return bool(token) and token in path.name.lower()
+
+
+def _is_proof_object_id_record(source: str, payload: Any) -> bool:
+    return _is_identifier_proof_record(
+        source,
+        payload,
+        _proof_object_id_rule(),
+        require_filename_token=False,
+    )
+
+
+def _is_canonical_id_proof_record(source: str, payload: Any) -> bool:
+    return _is_identifier_proof_record(
+        source,
+        payload,
+        _canonical_id_rule(),
+        require_filename_token=True,
     )
 
 
@@ -145,11 +184,16 @@ def discover_proof_paths(
         frozen, disabled
     )
 
+    proof_object_id_enabled = (
+        PROOF_OBJECT_ID_PATHWAY not in disabled
+        and "self_registering_records" not in disabled
+    )
     canonical_enabled = (
         CANONICAL_ID_PROOF_PATHWAY not in disabled
         and "self_registering_records" not in disabled
     )
     artifact_map_enabled = ARTIFACT_MAP_KEY_PATHWAY not in disabled
+    proof_object_id_found = False
     canonical_found = False
     artifact_map_found = False
     mapping_fields = {
@@ -172,6 +216,10 @@ def discover_proof_paths(
         except (json.JSONDecodeError, yaml.YAMLError, UnicodeDecodeError):
             continue
 
+        if proof_object_id_enabled and _is_proof_object_id_record(source, payload):
+            inventory[source].add("self_registering_records")
+            proof_object_id_found = True
+
         if canonical_enabled and _is_canonical_id_proof_record(source, payload):
             inventory[source].add("self_registering_records")
             canonical_found = True
@@ -189,7 +237,7 @@ def discover_proof_paths(
                     inventory[registered_path].add("artifact_map_keys")
                     artifact_map_found = True
 
-    if canonical_found:
+    if proof_object_id_found or canonical_found:
         executed.add("self_registering_records")
     if artifact_map_found:
         executed.add("artifact_map_keys")
@@ -222,6 +270,9 @@ def validate_candidate(*args: Any, **kwargs: Any) -> dict[str, Any]:
     result["errors"].extend(declaration_errors)
     result["errors"].extend(_validate_discovery_schema())
 
+    for sentinel in _proof_object_id_rule().get("required_sentinels", []):
+        if sentinel not in result.get("proof_inventory", {}):
+            result["errors"].append(f"missing_proof_object_id_record:{sentinel}")
     for sentinel in _canonical_id_rule().get("required_sentinels", []):
         if sentinel not in result.get("proof_inventory", {}):
             result["errors"].append(f"missing_canonical_id_proof_record:{sentinel}")
@@ -260,6 +311,18 @@ def execute_negative_controls(frozen: Any) -> list[dict[str, Any]]:
         for item in _original_execute_negative_controls(frozen)
         if item.get("control_id") != "reverse_numeric_priority_order"
     ]
+
+    result = validate_candidate(
+        frozen,
+        disabled_pathways={PROOF_OBJECT_ID_PATHWAY},
+        enforce_research_only_placement=False,
+    )
+    _record_control(
+        controls,
+        "disable_proof_object_id_record_schema",
+        result,
+        "missing_proof_object_id_record:",
+    )
 
     result = validate_candidate(
         frozen,
@@ -316,7 +379,7 @@ def run_full_validation(*, enforce_research_only_placement: bool = True) -> dict
     result = core.run_full_validation(
         enforce_research_only_placement=enforce_research_only_placement
     )
-    result["schema_version"] = "1.6"
+    result["schema_version"] = "1.7"
     result["evidence_digest"] = core.canonical_digest(
         {key: value for key, value in result.items() if key != "evidence_digest"}
     )
