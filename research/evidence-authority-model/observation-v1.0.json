@@ -1,20 +1,28 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
-  "validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
+  "primary_validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
+  "repeat_validation_evidence": "research/evidence-authority-model/repeat-validation-evidence-v1.0.json",
+  "replication_comparison": "research/evidence-authority-model/replication-comparison-v1.0.json",
   "observations": [
     "The prior audit provides no Accepted authority model and explicitly requires a new preregistered campaign.",
     "The research-execution charter defines the imported lifecycle and artifact-status taxonomy but is itself Provisional.",
     "The proof-assurance taxonomy defines assurance labels used by the theorem/proof-status register but has no explicit charter status.",
-    "The repository currently registers 51 proof artifacts across theorem lemma proposition dependency verifier structured object-valued self-registering and terminal-entrypoint pathways.",
+    "All discovery was executed from preregistered frozen commit 787d8776f0aab7c78cea9d536762c323b62d8c37 and tree 2d7b5c1647f4bc5578e65cbe709299d0c7baea51 rather than the mutable working tree.",
+    "The frozen discovery read 372 blob-identified inputs with digest 1f1bdb8185c4104d2ae843a288149dbb361a4fb8def784cf0130f138813d1dff.",
+    "The frozen repository registers 52 proof artifacts across theorem lemma proposition dependency verifier structured object-valued self-registering and terminal-entrypoint pathways.",
+    "Proposition discovery must be status-blind: Proposed P-009 adds theory/theorems/propositions.md to the proof inventory.",
     "Object-valued source_proof records contain nested path members and must be recursively traversed.",
     "Terminal theorem records register Lean files through entrypoint and must be included in proof discovery.",
     "Registered proof paths must be collected before existence testing so missing or misspelled targets remain detectable.",
     "A proof owner pattern does not establish proof status or authority-bearing designation.",
+    "A 52-entry synthetic activation manifest passed only when every entry had one status and one designation, the authority-bearing entry was Accepted, and all decisions were linked.",
+    "Research-status authority-bearing, missing designation, and weakened-status-policy mutations were rejected.",
     "The proof-artifact status manifest requires its own independent Acceptance decision in addition to per-entry decisions.",
-    "Recency cannot resolve equal-priority contradiction; unresolved contradiction must fail closed to Unknown.",
-    "Twenty-one injected faults were executed and detected by the research validator.",
+    "Two concrete equal-priority opposite claims with identical proposition scope premises and version adjudicated to Unknown.",
+    "Twenty-four injected faults were executed and detected by the research validator.",
+    "A separate primary workflow run and repeat workflow run used the identical validator blob and frozen tree and produced identical evidence digest 8ba33d1d14d3e97d3adf4d0a16cd3b1f340c41370be698708e1d5c11ea9894a6.",
     "Canonical governance artifacts and permanent canonical test wiring would violate the lifecycle before external replication Acceptance and Promotion, so they are absent.",
     "A non-self-activating Research candidate can encode these constraints while bootstrap authority remains Unknown."
   ],
@@ -32,6 +40,7 @@
   "nonclaims": [
     "the observations establish canonical authority",
     "the observations establish theorem truth",
+    "the internal repeat is externally independent replication",
     "the observations authorize canonical Repository Change",
     "the observations authorize or prohibit an experiment"
   ]
