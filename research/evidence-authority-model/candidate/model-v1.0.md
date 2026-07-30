@@ -1,4 +1,4 @@
-# Evidence Authority Model — Research Candidate v1.0
+# Evidence Authority Model — Research Candidate v1.1
 
 Status: **Research**
 Candidacy: **Inactive candidate**
@@ -29,7 +29,7 @@ Under this candidate, an artifact would have authority only when all conditions 
 2. its proposition scope is explicit;
 3. its artifact status is permitted for that authority class;
 4. an activated, independently promoted registry identifies the scoped owner or owner pattern;
-5. required proof, decision, and frozen evidence records are present and linked;
+5. required proof, decision, and frozen evidence records are present, resolvable, structurally valid, and linked;
 6. no unresolved artifact of equal or higher priority contradicts it for the same proposition, scope, premises, and version; and
 7. a unique scoped owner, authorized version, or valid supersession relation is registered.
 
@@ -52,7 +52,7 @@ Artifact status uses only `Accepted`, `Research`, `Provisional`, `Archive`, or `
 
 ## Priority and conflict rules
 
-Authority is proposition-specific, not file-wide. Proposed priority is:
+Authority is proposition-specific, not file-wide. **Lower numeric rank means higher authority.** Proposed priority is:
 
 1. scoped governance decision for status and ownership;
 2. proof record for its exact statement under its premises;
@@ -62,7 +62,7 @@ Authority is proposition-specific, not file-wide. Proposed priority is:
 6. methodological specification for adopted procedure only;
 7. index and historical records never resolve substantive conflicts.
 
-Recency is not a tiebreaker. If equal-priority artifacts contradict one another for the same proposition, scope, premises, and version, neither proposition is authoritative. The result is `Unknown` until independent governance selects a unique scoped owner/version or records a valid supersession relation. Dual authority for a proposition and its negation is prohibited.
+Therefore priority `1` overrides priority `5` for the same proposition identity when the higher-authority claim is otherwise valid. Recency is not a tiebreaker. If equal-priority artifacts contradict one another for the same proposition, scope, premises, and version, neither proposition is authoritative. The result is `Unknown` until independent governance selects a unique scoped owner/version or records a valid supersession relation. Dual authority for a proposition and its negation is prohibited.
 
 ## Governing dependencies
 
@@ -77,7 +77,21 @@ Neither source is upgraded by this campaign. Activation requires each to become 
 
 The bootstrap authority remains `Unknown`. Initial Acceptance or Promotion requires a separate preregistered campaign that identifies and hash-locks an authority predating and independent of this candidate.
 
-`docs/DECISION_LOG.md` is only a proposed future governance-decision owner. It gains no authority from this research candidate. A valid decision record would need an independently authoritative decision maker, date, exact artifact/version, exact status or ownership change, supporting evidence, scope, limitations, and superseded decision where applicable.
+`docs/DECISION_LOG.md` is only a proposed future governance-decision owner. It gains no authority from this research candidate.
+
+A decision record used for activation must be resolved from an explicit record store and must contain:
+
+- a stable record identifier;
+- an exact decision type and `Accepted` decision status;
+- authority class `governance_decision` and `Accepted` governance-authority status;
+- an explicit statement that the decision is independent of this candidate;
+- exact artifact or manifest identity and version;
+- exact status, ownership, or authority-bearing change;
+- canonical digest linkage to the decided manifest or artifact bundle;
+- a tamper-evident digest over the decision record itself;
+- scope, limitations, evidence, date, and superseded decision where applicable.
+
+A missing, unresolvable, self-issued, non-authoritative, mismatched, or hash-invalid decision record supplies no authority.
 
 ## Proof authority
 
@@ -96,15 +110,19 @@ The proof inventory must be discovered independently of the proposed owner patte
 
 Owner-pattern coverage grants no status or proof authority. A future promoted manifest must:
 
-- have its own independently authoritative Acceptance decision;
+- have its own independently authoritative, resolvable, hash-valid Acceptance decision;
+- identify its exact manifest ID, version, and canonical digest;
 - list every registered proof artifact exactly once;
 - assign one charter status;
 - designate authority-bearing true or false;
-- link each status decision to independent governance;
+- link each status and designation to an independent governance decision record;
+- require every entry decision to match the exact manifest, artifact, status, and designation;
 - require `Accepted` only for authority-bearing artifacts; and
 - exclude all non-authority-bearing artifacts from active proof authority.
 
-A missing target, duplicate entry, missing status, missing designation, missing decision record, unregistered path, or incomplete discovery pathway blocks activation.
+A missing target, duplicate entry, missing status, missing designation, missing or invalid decision record, unregistered path, or incomplete discovery pathway blocks activation.
+
+Synthetic activation probes used by this Research campaign are explicitly non-operative. They test the contract but cannot Accept, Promote, populate, or activate the candidate manifest.
 
 ## Definition, historical, research, and method boundaries
 
@@ -122,6 +140,8 @@ Canonical names and detailed definitions have separate scopes. Archives can esta
 - Registration cannot substitute for an authority-bearing designation.
 - A status register cannot define an assurance taxonomy it merely applies.
 - Equal-priority contradiction cannot be resolved by recency, location, or simultaneous authority.
+- Numeric priority cannot be reversed: lower rank is always higher authority.
+- A decision-record string or file path is not provenance unless the record resolves and passes structural and digest validation.
 
 ## Promotion and repository-change gate
 
