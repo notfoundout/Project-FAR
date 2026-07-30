@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.2-research-candidate",
+  "status": "Research",
+  "candidacy": "inactive_candidate",
+  "active": false,
+  "canonical_repository_implementation_deferred": true,
+  "candidate_model": "research/evidence-authority-model/candidate/model-v1.0.md",
+  "candidate_registry": "research/evidence-authority-model/candidate/registry-v1.0.json",
+  "proposed_future_owner": "docs/governance/proof-artifact-status-manifest.json",
+  "purpose": "Research-only candidate schema for future explicit charter statuses and authority-bearing designations of registered proof artifacts.",
+  "acceptance_decision_required_for_activation": true,
+  "acceptance_decision_record": null,
+  "acceptance_decision_record_requirements": [
+    "independently authoritative governance owner",
+    "manifest path and exact version",
+    "decision date",
+    "transition from Research to Accepted",
+    "supporting evidence",
+    "scope and limitations",
+    "hash-locked manifest identity"
+  ],
+  "entries": [],
+  "completion_state": "not_started",
+  "required_entry_fields": [
+    "artifact",
+    "artifact_status",
+    "authority_bearing",
+    "status_decision_record",
+    "scope",
+    "limitations"
+  ],
+  "activation_conditions": [
+    "external independent replication is complete",
+    "candidate model and registry are Accepted and Promoted",
+    "canonical manifest is created by authorized Repository Change after Promotion",
+    "canonical manifest status is Accepted through independent governance",
+    "manifest-level acceptance_decision_record is present and valid",
+    "every registered proof artifact appears exactly once",
+    "every registered target exists",
+    "every artifact_status belongs to the charter taxonomy",
+    "every authority-bearing proof artifact has status Accepted",
+    "non-authority-bearing artifacts are excluded from active proof authority",
+    "all per-artifact status decisions link to independently authoritative governance records"
+  ],
+  "nonclaims": [
+    "this Research candidate assigns no current artifact status",
+    "this Research candidate grants no proof authority",
+    "an empty entries list does not satisfy the promotion gate",
+    "a future per-entry decision cannot substitute for the manifest's own Acceptance decision",
+    "this candidate file is not the future canonical manifest"
+  ]
+}
