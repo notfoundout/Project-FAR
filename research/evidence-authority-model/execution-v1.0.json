@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.7",
+  "schema_version": "1.8",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "execution_specification": "research/evidence-authority-model/execution-spec-v1.0.json",
@@ -10,7 +10,7 @@
     "candidate_registry": "798ddae550304981df78cd539b1fab34768b3745",
     "candidate_manifest": "68ac0a4bfa0b4e033be185ccc71b117e22b8552d",
     "candidate_proof_discovery_schema": "b460ae67754579f0319beb679dcac5b8fcce7a0a",
-    "validator_entrypoint": "12754bd5a1ead5cd5313a8591ea430571686eec7",
+    "validator_entrypoint": "d4197968646c555f133ff416df32627d4dec8118",
     "validator_entrypoint_v1": "677d3f9a807ee0e488dc14b6f9f5babbf200ec45",
     "validator_core": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
   },
@@ -26,9 +26,9 @@
     "mutable_working_tree_used_for_discovery": false
   },
   "checks": {
-    "A1_research_inactivity": "Pass",
-    "A2_external_bootstrap": "Pass",
-    "A3_governing_dependency_coverage": "Pass",
+    "A1_research_inactivity": "Pass: model status candidacy promotion completion and canonical implementation declarations enforced independently",
+    "A2_external_bootstrap": "Pass: predating independent authority preregistration hash lock and full activation and promotion prerequisites enforced",
+    "A3_governing_dependency_coverage": "Pass: six frozen domains enforced independently of candidate-controlled declarations",
     "A4_proof_path_completeness": "Pass: 59 registered proof paths across all base pathways plus proof-object-id canonical-id and hash-locked artifact-map schemas",
     "A5_proof_status_separation": "Pass: 59 entries and 60 structurally validated decision records; all weakening controls detected",
     "A6_manifest_provenance": "Pass: identity version authority independence linkage date evidence scope limitations and digest locks validated",
@@ -42,19 +42,22 @@
     "proposition_discovery_status_blind": true,
     "base_pathway_count": 9,
     "schema": "research/evidence-authority-model/candidate/proof-discovery-schema-v1.0.json",
-    "proof_object_id_records": [
-      "theory/evaluation/fara-vocabulary-sufficiency-v1.0.json",
-      "theory/evaluation/fara-w4-representation-boundary-v1.0.json",
-      "theory/evaluation/fara-w5-cross-representation-invariance-v1.0.json"
+    "proof_object_id_record_count": 3,
+    "canonical_id_proof_record_count": 2,
+    "hash_locked_artifact_map_proof_record_count": 2
+  },
+  "frozen_contract_validation": {
+    "model_header_requirements": [
+      "Status Research",
+      "Candidacy Inactive candidate",
+      "Promotion completed No",
+      "Canonical governance implementation Deferred"
     ],
-    "canonical_id_proof_records": [
-      "theory/evaluation/fara-core-formalization-proof-v1.0.json",
-      "theory/evaluation/fara-operator-w2-proof-v1.0.json"
-    ],
-    "hash_locked_artifact_map_proof_records": [
-      "theory/evaluation/fara-expanded-bounded-campaign-proof-v1.0.json",
-      "theory/evaluation/fara-foundation-comparison-proof-v1.0.json"
-    ]
+    "bootstrap_required_authority": "predating and independent of this candidate",
+    "bootstrap_selection_preregistered_and_hash_locked": true,
+    "activation_requirement_count": 17,
+    "promotion_requirement_count": 11,
+    "fixed_governing_domain_count": 6
   },
   "authority_probes": {
     "equal_priority_result": "Unknown",
@@ -67,18 +70,19 @@
     "synthetic_bundle_effect": "none; non-operative Research probe"
   },
   "negative_control_execution": {
-    "count": 43,
+    "count": 57,
     "all_detected": true,
     "provenance_omission_controls": 8,
-    "proof_object_id_schema_disable_control": "detected",
-    "canonical_id_schema_disable_control": "detected",
-    "artifact_map_key_schema_disable_control": "detected",
+    "proof_discovery_extension_controls": 3,
+    "model_header_controls": 4,
+    "external_bootstrap_controls": 4,
+    "fixed_governing_domain_bypass_controls": 6,
     "candidate_priority_declaration_reversal_control": "detected",
-    "primary_validated_commit": "ddd4ced4a467f5a202e804bd333a1709509c05c3",
-    "repeat_validated_commit": "d4968f0334da2db56df8e6dcba313dd3a84c9e55",
-    "primary_workflow_run_id": 30517745133,
-    "repeat_workflow_run_id": 30517874492,
-    "evidence_digest": "7c2deb179b15a2a08e6562d2af852f574384e679b4dc60b10fca737abb95b770",
+    "primary_validated_commit": "f916fe2b2e8e6cb02ad753e9114fa9adbb5fd186",
+    "repeat_validated_commit": "bbaee75cf16dd76658ab97beac11e42ec22e266d",
+    "primary_workflow_run_id": 30519399225,
+    "repeat_workflow_run_id": 30519531630,
+    "evidence_digest": "bec322a704c4f3932a716b3798f1cd9bd81136635e486ddc862eac38bdab53a0",
     "result": "Pass in two separate workflow executions"
   },
   "execution_outcome": "bounded_candidate_supported",
