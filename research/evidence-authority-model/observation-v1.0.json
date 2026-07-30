@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "primary_validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
@@ -14,12 +14,12 @@
     "Proof paths must be collected before existence testing; object-valued paths and terminal Lean entrypoints require explicit traversal.",
     "A proof owner pattern alone does not establish status or authority-bearing designation.",
     "The synthetic activation probe contained 52 artifact entries and 53 resolvable decision records and remained explicitly non-operative.",
-    "Manifest and entry decisions passed only when identity, version, governance authority, independence, artifact/status/designation linkage, manifest digest, and record digest all matched.",
-    "Missing records, mismatched versions or artifact linkage, non-authoritative governance, and broken digest locks were rejected.",
+    "Manifest and entry decisions passed only when identity, version, governance authority, independence, artifact/status/designation linkage, decision date, supporting evidence, scope, limitations, manifest digest, and record digest all matched.",
+    "Missing records, mismatched versions or artifact linkage, non-authoritative governance, broken digest locks, and omission of any required provenance field were rejected.",
     "Two equal-priority contradictory claims with identical identity fields adjudicated to Unknown.",
     "For unequal priorities, lower numeric rank is higher authority: priority 1 governance overrode priority 5 Research and produced Affirmed.",
-    "All 32 injected faults were executed and detected in both the primary and internal repeat runs.",
-    "Primary run 30506960124 and repeat run 30507130512 used identical validator entrypoint/core blobs and frozen tree and produced digest 8399794130250807c8b64d316a762bf39459e1b6def3e61a8d012c0e1e9915cf.",
+    "All 40 injected faults, including eight provenance-field omissions, were executed and detected in both the primary and internal repeat runs.",
+    "Primary run 30512207430 at commit 57dbc0781979cb0c7440eef7ff434accabeb7ac3 and repeat run 30512296774 at commit 2e233feae813d760b173d7a0a5a82e9c2241515d validated identical final candidate and validator blobs and produced digest 6a352e3d7f959c7759af3e856ec9d703b62aa1f0b5b5463fe899fc8293a7ee05.",
     "Canonical governance artifacts and permanent canonical test wiring remain outside the retained Research-only result.",
     "A non-self-activating Research candidate can encode the bounded contract while bootstrap authority remains Unknown."
   ],
