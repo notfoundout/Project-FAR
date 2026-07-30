@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "status": "Research",
+  "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
+  "validated_commit": "154b010d5efd9e7dc69636df7c79fcb59258a83e",
+  "validation_source": {
+    "workflow": "Repository Health",
+    "workflow_run_id": 30501869497,
+    "workflow_run_number": 1754,
+    "job_id": 90743072046,
+    "result": "success"
+  },
+  "validator": "research/evidence-authority-model/validate_candidate.py",
+  "overall": "pass",
+  "errors": [],
+  "canonical_repository_implementation_deferred": true,
+  "proof_inventory": {
+    "registered_path_count": 51,
+    "all_registered_targets_exist": true,
+    "all_registered_targets_match_candidate_owner_coverage": true,
+    "executed_pathways": [
+      "dependency_registry",
+      "lemma_metadata",
+      "object_valued_paths",
+      "proposition_metadata",
+      "self_registering_records",
+      "structured_metadata",
+      "terminal_entrypoints",
+      "theorem_metadata",
+      "verifier_required_objects"
+    ],
+    "sentinels": {
+      "theory/evaluation/fara-canonical-kernel-proof-v1.0.json": [
+        "object_valued_paths",
+        "structured_metadata"
+      ],
+      "theory/proofs/P-001-first-propositions.md": [
+        "proposition_metadata"
+      ],
+      "mechanization/lean/UPPSemanticKernel.lean": [
+        "terminal_entrypoints"
+      ],
+      "mechanization/lean/G2OpenWorldLowerBound.lean": [
+        "terminal_entrypoints"
+      ],
+      "mechanization/lean/G3EpistemicMaximality.lean": [
+        "terminal_entrypoints"
+      ],
+      "theory/proof-objects/T-015.proof.yaml": [
+        "verifier_required_objects"
+      ]
+    }
+  },
+  "negative_controls": {
+    "count": 21,
+    "all_detected": true,
+    "control_ids": [
+      "remove_governing_domain:authority_model_specification",
+      "remove_governing_domain:authority_registry_specification",
+      "remove_governing_domain:research_execution_charter",
+      "remove_governing_domain:proof_assurance_taxonomy",
+      "remove_governing_domain:governance_decisions",
+      "remove_governing_domain:proof_artifact_status_manifest",
+      "disable_discovery_pathway:dependency_registry",
+      "disable_discovery_pathway:lemma_metadata",
+      "disable_discovery_pathway:object_valued_paths",
+      "disable_discovery_pathway:proposition_metadata",
+      "disable_discovery_pathway:self_registering_records",
+      "disable_discovery_pathway:structured_metadata",
+      "disable_discovery_pathway:terminal_entrypoints",
+      "disable_discovery_pathway:theorem_metadata",
+      "disable_discovery_pathway:verifier_required_objects",
+      "remove_proof_owner_coverage",
+      "permit_equal_priority_resolution",
+      "permit_dual_authority",
+      "remove_manifest_acceptance_gate",
+      "inject_missing_registered_target",
+      "inject_experiment_authority"
+    ]
+  },
+  "lifecycle": {
+    "research_validation": "complete",
+    "external_replication": "pending",
+    "acceptance": "prohibited",
+    "promotion": "prohibited",
+    "canonical_repository_change": "deferred"
+  },
+  "nonclaims": [
+    "validation establishes truth",
+    "validation Accepts or Promotes the candidate",
+    "validation authorizes canonical Repository Change",
+    "validation authorizes or prohibits experiments",
+    "validation establishes necessity minimality uniqueness or universality"
+  ]
+}
