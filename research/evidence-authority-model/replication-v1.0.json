@@ -1,68 +1,43 @@
 {
-  "schema_version": "1.4",
+  "schema_version": "1.5",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "replication_type": "internal deterministic clean repeat",
   "external_independence": false,
   "external_replication": "pending",
-  "input": "research/evidence-authority-model/execution-spec-v1.0.json",
-  "candidate_and_validator_blobs": {
-    "candidate_model": "3ff99dd626e26cc74b47f4e1f978737926a3b663",
-    "candidate_registry": "798ddae550304981df78cd539b1fab34768b3745",
-    "candidate_manifest": "68ac0a4bfa0b4e033be185ccc71b117e22b8552d",
-    "validator_entrypoint": "677d3f9a807ee0e488dc14b6f9f5babbf200ec45",
-    "validator_core": "1d078266a10d8b73e8d841ffa72abbbe434efc25"
-  },
   "primary_validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
   "repeat_validation_evidence": "research/evidence-authority-model/repeat-validation-evidence-v1.0.json",
   "comparison_evidence": "research/evidence-authority-model/replication-comparison-v1.0.json",
-  "first_result_withheld_from_repeat_inputs": true,
   "primary_execution": {
-    "validated_commit": "57dbc0781979cb0c7440eef7ff434accabeb7ac3",
-    "workflow_run_id": 30512207430,
-    "job_id": 90774490206,
-    "overall": "pass",
-    "evidence_digest": "6a352e3d7f959c7759af3e856ec9d703b62aa1f0b5b5463fe899fc8293a7ee05"
+    "validated_commit": "5f715d740a9a1d08c096351889ea8c84b0ba0478",
+    "workflow_run_id": 30514345750,
+    "job_id": 90780772893,
+    "overall": "pass"
   },
   "repeat_execution": {
-    "validated_commit": "2e233feae813d760b173d7a0a5a82e9c2241515d",
-    "workflow_run_id": 30512296774,
-    "job_id": 90774752506,
-    "overall": "pass",
-    "evidence_digest": "6a352e3d7f959c7759af3e856ec9d703b62aa1f0b5b5463fe899fc8293a7ee05"
+    "validated_commit": "97116189e6debb33067ceaa8f16e3e4e52054d8d",
+    "workflow_run_id": 30514438925,
+    "job_id": 90781052642,
+    "overall": "pass"
   },
   "repeated_checks": {
-    "A1_research_inactivity": "Pass",
-    "A2_external_bootstrap": "Pass",
-    "A3_governing_dependency_coverage": "Pass",
-    "A4_proof_path_completeness": "Pass: 52 paths across nine pathways from the identical frozen tree",
-    "A5_proof_status_separation": "Pass: 52 entries and 53 structurally linked decision records; weakening faults detected",
-    "A6_manifest_provenance": "Pass: decision identity authority independence linkage dates evidence scope limitations and digest locks validated",
-    "A7_conflict_safety_and_priority": "Pass: equal priority resolved Unknown and priority 1 governance overrode priority 5 Research",
-    "A8_claim_boundary": "Pass",
-    "negative_control_campaign": "Pass: 40 of 40 injected faults detected, including eight provenance-field omissions",
-    "frozen_discovery_inputs": "Pass: 372 blob-identified inputs with identical digest"
+    "proof_path_completeness": "Pass: 54 paths including two canonical-id proof records",
+    "proof_discovery_schema": "Pass: explicit inactive Research extension validated",
+    "proof_status_separation": "Pass: 54 entries and 55 decision records",
+    "manifest_provenance": "Pass",
+    "conflict_and_priority": "Pass",
+    "negative_control_campaign": "Pass: 41 of 41 faults detected",
+    "frozen_discovery_inputs": "Pass: 372 inputs"
   },
   "replicated_outcome": "bounded_candidate_supported",
   "matches_primary_execution": true,
-  "matching_evidence_digest": true,
-  "matching_candidate_model_blob": true,
-  "matching_candidate_registry_blob": true,
-  "matching_candidate_manifest_blob": true,
-  "matching_validator_entrypoint_blob": true,
-  "matching_validator_core_blob": true,
-  "matching_frozen_tree": true,
-  "matching_discovery_input_digest": true,
+  "matching_evidence_digest": "565befa500cec5da8af44671ff7ba3696e2c828525c5eea82460f1491fe416d9",
   "acceptance_effect": "none",
   "promotion_effect": "none",
   "repository_change_effect": "none; canonical implementation remains deferred",
-  "canonical_implementation_absent": true,
   "limitations": [
-    "the repeat is not an external investigator replication",
-    "shared repository validator and frozen metadata remain possible common-mode dependencies",
-    "the repeat commit differs only to create a separately identifiable workflow execution",
-    "external replication is mandatory before Acceptance",
-    "Acceptance and Promotion are mandatory before canonical Repository Change",
-    "the repeat supports Research evidence only"
+    "the repeat is not externally independent",
+    "both runs share the same validator implementation and frozen metadata",
+    "external replication remains mandatory before Acceptance"
   ]
 }
