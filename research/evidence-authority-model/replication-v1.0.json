@@ -1,29 +1,36 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "status": "Research",
   "investigation_id": "FAR-EVIDENCE-AUTHORITY-MODEL-001",
   "replication_type": "internal deterministic clean repeat",
   "external_independence": false,
   "external_replication": "pending",
   "input": "research/evidence-authority-model/execution-spec-v1.0.json",
+  "validator": "research/evidence-authority-model/validate_candidate.py",
+  "validation_evidence": "research/evidence-authority-model/validation-evidence-v1.0.json",
   "first_result_withheld_from_repeat_inputs": true,
   "repeated_checks": {
     "A1_research_inactivity": "Pass",
     "A2_external_bootstrap": "Pass",
     "A3_governing_dependency_coverage": "Pass",
-    "A4_proof_path_completeness": "Pass subject to repository-wide validation enumeration",
+    "A4_proof_path_completeness": "Pass: 51 paths across nine required pathways",
     "A5_proof_status_separation": "Pass",
     "A6_manifest_provenance": "Pass",
     "A7_equal_priority_conflict_safety": "Pass",
-    "A8_claim_boundary": "Pass"
+    "A8_claim_boundary": "Pass",
+    "negative_control_campaign": "Pass: 21 of 21 injected faults detected"
   },
   "replicated_outcome": "bounded_candidate_supported",
   "matches_primary_execution": true,
   "acceptance_effect": "none",
   "promotion_effect": "none",
+  "repository_change_effect": "none; canonical implementation remains deferred",
+  "canonical_implementation_absent": true,
   "limitations": [
     "the repeat is not an external investigator replication",
-    "shared repository and validation implementation remain possible common-mode dependencies",
-    "external replication is mandatory before Acceptance"
+    "shared repository validator and metadata remain possible common-mode dependencies",
+    "external replication is mandatory before Acceptance",
+    "Acceptance and Promotion are mandatory before canonical Repository Change",
+    "the repeat supports research evidence only"
   ]
 }
