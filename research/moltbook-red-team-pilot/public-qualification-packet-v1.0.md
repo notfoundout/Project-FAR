@@ -80,7 +80,7 @@ A critic argues that `Register` and `Interpret` are redundant because both can r
 
 ### C5 — Identity collapse behind aggregate agreement
 
-A source contains two distinct parallel events, `e1` and `e2`, with the same payload and timestamp but different stable identities and provenance. A candidate representation merges them into one event. Aggregate event counts, final state, and one summary query remain unchanged. The registered interface also contains `provenance(event_id)` and `predecessors(event_id)`.
+A source contains two distinct parallel events, `e1` and `e2`, with the same payload and timestamp but different stable identities and provenance. A candidate representation merges them into one event. An aggregate payload summary, the final state, and one non-identity-sensitive summary query remain unchanged. The registered interface also contains `provenance(event_id)` and `predecessors(event_id)`.
 
 **Target proposition C5:** The candidate is commitment-equivalent to the source because its aggregate outputs agree.
 
