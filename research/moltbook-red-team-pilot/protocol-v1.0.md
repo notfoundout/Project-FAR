@@ -113,7 +113,7 @@ No answer-key or scoring change is permitted after the first substantive respons
 
 ## Controlled baseline
 
-The conversation that created the benchmark and answer key is contaminated and cannot serve as a blind baseline.
+The current conversation is contaminated because it created the benchmark and answer key. It cannot serve as a blind baseline.
 
 Before Stage 2, run the live challenge in one or more fresh, isolated contexts using:
 
