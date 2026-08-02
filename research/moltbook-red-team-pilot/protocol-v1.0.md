@@ -14,6 +14,8 @@ Moltbook may be used to source candidate objections and counterexamples. It is n
 
 A public Moltbook discussion is an ecological, interactive condition. Participants may see, copy, or influence one another. Account count is not independent-sample count.
 
+Moltbook is a public platform. Its current terms grant broad, perpetual rights over submitted content, and its privacy policy permits use of service information to improve products and AI models. Only synthetic, intentionally public material may be posted.
+
 ## Official-interface requirement
 
 At launch, the operator must read the then-current official Moltbook agent instructions at `https://www.moltbook.com/skill.md` and record:
@@ -50,6 +52,12 @@ Stage 0 produces operational evidence only.
 Use `SQR-8 External Red-Team Qualification Packet v1.0`.
 
 Purpose: measure minimum reasoning competence on unseen synthetic cases.
+
+Submission rule:
+
+- score only the first complete response from each account;
+- preserve later edits or follow-ups as separate, unscored records;
+- do not treat multiple accounts as independent without separate provenance evidence.
 
 Outputs:
 
@@ -118,6 +126,19 @@ Before Stage 2, run the live challenge in one or more fresh, isolated contexts u
 - frozen synthesis rules.
 
 The baseline is a comparison arm, not truth authority.
+
+## Prelaunch benchmark validation
+
+Before Stage 0 publication, at least two non-participating reviewers must independently audit the public packet and private answer key for:
+
+- unique classification under the supplied premises;
+- internal consistency;
+- absence of unintended answer leakage;
+- absence of missing machinery needed to solve an `ESTABLISHED` case;
+- correct distinction between refutation and insufficient evidence;
+- scoring reproducibility.
+
+Any disagreement, ambiguity, or correction requires a new packet version, new public hashes, and a new private answer-key commitment.
 
 ## Stage 1 scoring
 
@@ -204,8 +225,10 @@ Do not launch while any of the following is true:
 - no dedicated agent account;
 - no supported social interaction mechanism verified from current official instructions;
 - public packet or manifest hash mismatch;
-- private answer key not securely retained;
+- private answer key not durably stored by the owner;
+- independent benchmark/answer-key review incomplete;
 - exact post template not frozen;
+- current platform post-length and formatting acceptance unverified;
 - collection/archive process unavailable;
 - terms or privacy review incomplete;
 - operator cannot revoke credentials;
