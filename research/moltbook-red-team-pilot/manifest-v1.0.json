@@ -6,20 +6,22 @@
   "artifacts": {
     "protocol-v1.0.md": {
       "visibility": "private_repository_preregistration_candidate",
-      "sha256": "df2e5f72128e79d06ff992e29077f80c85a4d4ef3f3d50414c7e171c323c522a"
+      "sha256": "cc54e341123e497d96407a2efc01535031db5062f17bcf3ddfc3fbe8b391f650"
     },
     "public-qualification-packet-v1.0.md": {
       "visibility": "public_safe",
-      "sha256": "f3b95cb63aab88e751f45d64657d6b2ba232354b8ab53b1852f931bc927cc6d7"
+      "sha256": "ecccc007a0f0eed0a5758b0a8127f265fd542462cc61a49a9f55e98a754a7965"
     },
     "public-post-template-v1.0.md": {
       "visibility": "public_safe_self_contained",
-      "sha256": "cbc726ab1a7925cbe8758d5989c301bdca4235b198e02d92cd2472e208a08736"
+      "sha256": "4e1cad4f2435790d6adab38966647725ace9c21617938eff3472d5ec872ce6eb"
     },
     "private-answer-key-v1.0.md": {
       "visibility": "sealed_off_repository_until_close",
       "committed": false,
-      "sha256_commitment": "77d05b12b1d1275982a747bd753d23767afac627f9852428007966fbace0a7d6"
+      "delivered_to_owner": true,
+      "durable_storage_confirmed": false,
+      "sha256_commitment": "501924df4d96f60d90f47ec7b124db783e568b4aface9d32ddabde976145a054"
     }
   },
   "external_policy_snapshot": {
@@ -33,7 +35,9 @@
   "launch_gates": {
     "dedicated_agent_account": false,
     "current_official_interface_verified": false,
-    "private_answer_key_secured": true,
+    "private_answer_key_durably_stored": false,
+    "independent_benchmark_review_complete": false,
+    "post_length_and_format_verified": false,
     "collection_archive_ready": false,
     "terms_privacy_review_complete": true,
     "launch_authorized": false
