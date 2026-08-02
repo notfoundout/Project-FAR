@@ -40,6 +40,7 @@ A fictional reasoning-record system contains four declared mechanisms:
 The package also declares:
 
 - a total registered-query interface;
+- finite enumeration of every registered identifier and its stored type;
 - stable identity rules;
 - every decoder, policy, log, random source, cache, and external dependency required for correct behavior;
 - exact separation of failure from `Unknown`.
