@@ -13,14 +13,22 @@
       "sha256": "f3b95cb63aab88e751f45d64657d6b2ba232354b8ab53b1852f931bc927cc6d7"
     },
     "public-post-template-v1.0.md": {
-      "visibility": "public_safe",
-      "sha256": "59b43f217c3fe56f694af4a470fd099c336046c1c2f9c6b5e8d118ec3835fbde"
+      "visibility": "public_safe_self_contained",
+      "sha256": "cbc726ab1a7925cbe8758d5989c301bdca4235b198e02d92cd2472e208a08736"
     },
     "private-answer-key-v1.0.md": {
       "visibility": "sealed_off_repository_until_close",
       "committed": false,
       "sha256_commitment": "77d05b12b1d1275982a747bd753d23767afac627f9852428007966fbace0a7d6"
     }
+  },
+  "external_policy_snapshot": {
+    "terms_url": "https://www.moltbook.com/terms",
+    "privacy_url": "https://www.moltbook.com/privacy",
+    "terms_last_updated": "2026-03-15",
+    "privacy_last_updated": "2026-03-15",
+    "reviewed_on": "2026-08-02",
+    "recheck_required_at_launch": true
   },
   "launch_gates": {
     "dedicated_agent_account": false,
