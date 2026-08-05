@@ -1,10 +1,97 @@
 {
-  "schema_version": "1.0",
-  "artifact_status": "Archive",
+  "schema_version": "1.1",
+  "status": "Research",
   "audit_id": "TCD-CHAT-AUDIT-001",
   "program_id": "TCD-CLEANROOM-001",
   "audit_date": "2026-08-05",
-  "superseded_by": "audit-manifest-v1.1.json",
-  "correction_reason": "The original v1.0 manifest recorded verifier and test Git blob identities that became stale after PR #433. It is retained as an archived historical record and is not an integrity authority.",
-  "execution_authorized": false
+  "repository_base_commit": "aaf070a0253c5510308a9ad11ffe80f14c4cba45",
+  "decision": "research_program_registered_execution_not_authorized",
+  "stable_claims": [
+    "On Set with all functions, natural positive-finitary element-valued operations are coordinate projections.",
+    "Representation neutrality alone does not select which additional nontrivial structure should be adopted.",
+    "Behavioral, localization, closure, and evaluation constructions are canonical only relative to declared contracts."
+  ],
+  "retracted_or_unproved_claims": [
+    "composable contextual discrimination is the objectively strongest root",
+    "functorial evaluation is the objectively strongest root",
+    "universal semantic localization solves the unrestricted target-category problem",
+    "canonical behavioral reflection solves the unrestricted target-category problem",
+    "no universal architecture can exist under every defensible formalization",
+    "architecture selection logically follows as the universal architecture"
+  ],
+  "verified_design": {
+    "rows": 36,
+    "development": 24,
+    "validation_sealed": 12,
+    "required_pairwise_level_pairs": 434,
+    "covered_pairwise_level_pairs": 434
+  },
+  "execution_gate": {
+    "authorized": false,
+    "blockers": [
+      "source roster incomplete",
+      "source snapshots absent",
+      "synthetic artifacts not generated",
+      "packet leakage review incomplete",
+      "restricted workbook rejected"
+    ]
+  },
+  "excluded_restricted_artifacts": [
+    "PROJECT_FAR_SEALED_CASE_REGISTRY_v1.0.md",
+    "PROJECT_FAR_SEALED_CASE_REGISTRY_v1.0.csv",
+    "PROJECT_FAR_CASE_PACKET_PREPARATION_AND_LEAKAGE_AUDIT_WORKBOOK_v1.0.xlsx",
+    "PROJECT_FAR_CASE_SAMPLING_FRAME_BUNDLE_v1.0.zip",
+    "PROJECT_FAR_PACKET_WORKBOOK_DASHBOARD_PREVIEW.png"
+  ],
+  "integrity_note": "Git blob SHA-1 values are the authoritative identities of the exact repository bytes. Local pre-push SHA-256 values were removed because newline normalization changed byte identities for some text artifacts.",
+  "committed_artifacts": [
+    {
+      "path": "docs/CHANGELOG.md",
+      "git_blob_sha1": "5109a259e5d81659856012ecafad290d1b13a30d"
+    },
+    {
+      "path": "research/target-category-discovery/README.md",
+      "git_blob_sha1": "6a62fb00c4157ba9c7ed75a39d9565a5049abf5e"
+    },
+    {
+      "path": "research/target-category-discovery/chat-audit-2026-08-05.md",
+      "git_blob_sha1": "85ca5089824962ddee5e43b7ef0abb46d602c981"
+    },
+    {
+      "path": "research/target-category-discovery/clean-room-derivation-protocol-v1.2.md",
+      "git_blob_sha1": "91353be767b08d22e2ef6a42e292850a3a4045f2"
+    },
+    {
+      "path": "research/target-category-discovery/covering-array-v1.0.csv",
+      "git_blob_sha1": "54a74a22a655e8d1a1e40296483533b54025f908"
+    },
+    {
+      "path": "research/target-category-discovery/pairwise-coverage-report-v1.0.csv",
+      "git_blob_sha1": "dc84cef503046b463c7396860f9a8af98b783364"
+    },
+    {
+      "path": "research/target-category-discovery/protocol-amendment-001.md",
+      "git_blob_sha1": "d4c501747a7dbe35030073af4c2631859dc607f9"
+    },
+    {
+      "path": "research/target-category-discovery/restricted-artifacts-policy.md",
+      "git_blob_sha1": "c8cdeac2a8b5d8cac1eac255aab5dfadd6388937"
+    },
+    {
+      "path": "research/target-category-discovery/sampling-design-v1.1.md",
+      "git_blob_sha1": "30cb3ff43a3bb7fc0f15b44833800b4fe00c494e"
+    },
+    {
+      "path": "research/target-category-discovery/scope-and-universality-charter-v1.1.md",
+      "git_blob_sha1": "a4f7074c10c92863fc5a37edfd65aa3178b71dba"
+    },
+    {
+      "path": "research/target-category-discovery/verify_sampling_design.py",
+      "git_blob_sha1": "e7f90fbc4893e8a102baf4517c3e1cd5248d0939"
+    },
+    {
+      "path": "tests/test_target_category_discovery.py",
+      "git_blob_sha1": "9fb056ebc19d4bc75c16b61250d4ea57f759bc7d"
+    }
+  ]
 }
