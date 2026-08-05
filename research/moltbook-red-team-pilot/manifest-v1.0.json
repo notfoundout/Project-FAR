@@ -35,6 +35,7 @@
     "terms_last_updated": "2026-03-15",
     "privacy_last_updated": "2026-03-15",
     "reviewed_on": "2026-08-02",
+    "immutable_copy_or_hash_recorded": false,
     "recheck_required_at_launch": true
   },
   "launch_gates": {
@@ -44,7 +45,7 @@
     "independent_benchmark_review_complete": false,
     "post_length_and_format_verified": false,
     "collection_archive_ready": false,
-    "historical_terms_privacy_snapshot_recorded": true,
+    "historical_terms_privacy_snapshot_recorded": false,
     "launch_time_terms_privacy_review_complete": false,
     "launch_authorized": false
   },
