@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — Target-category discovery chat audit
+
+- Audited the 2026-08-05 target-category discovery session and preserved a complete retraction and claim-boundary ledger.
+- Registered `TCD-CLEANROOM-001` as Research without changing accepted theory, the scoped FARA formal kernel, or the terminal UPP theorem.
+- Corrected the clean-room protocol by separating neutral audit-question derivation from later structural, ablation, recoding, and alternative-basis analysis.
+- Verified the public 36-row sampling design at 434/434 declared pairwise level pairs and added deterministic mutation-tested validation.
+- Withheld the incomplete source roster, sealed validation identities, and defective packet workbook from the repository; execution remains blocked pending source, synthetic-case, packet, and leakage freeze.
+
 ## Unreleased — post–SWE-agent v2 stabilization
 
 - Reconciled current status with the frozen 0/2 versus 0/2 result and `REVIEW_REQUIRED` disposition.
