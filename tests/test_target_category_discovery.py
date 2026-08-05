@@ -53,6 +53,28 @@ class TargetCategorySamplingDesignTests(unittest.TestCase):
             with self.assertRaises(module.VerificationError):
                 module.verify(path)
 
+    def test_validation_source_class_split_is_rejected(self) -> None:
+        with CSV_PATH.open(newline="", encoding="utf-8") as handle:
+            reader = csv.DictReader(handle)
+            rows = list(reader)
+            fieldnames = list(reader.fieldnames or [])
+
+        rows_by_id = {row["Blind Case ID"]: row for row in rows}
+        rows_by_id["CR-024"]["Domain source"] = "De-identified operational case"
+        rows_by_id["CR-020"]["Domain source"] = "Naturally occurring public case"
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "mutated.csv"
+            with path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(rows)
+            with self.assertRaisesRegex(
+                module.VerificationError,
+                "validation source split mismatch",
+            ):
+                module.verify(path)
+
 
 if __name__ == "__main__":
     unittest.main()
