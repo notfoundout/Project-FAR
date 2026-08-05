@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "program_id": "TCD-CLEANROOM-001",
+  "artifact_status": "Research",
+  "execution_authorized": false,
+  "normalization": "UTF-8; Unicode NFC; LF; trim trailing horizontal whitespace; exactly one terminal LF",
+  "prompts": [
+    {
+      "id": "TCD-A1-PROMPT-001",
+      "stage": "A1",
+      "text": "Review the supplied blind packet using only its contents and explicitly permitted sources. Do not fit it to a theory, architecture, component list, or preferred conclusion. Restate the supported output, reviewer role, objective, rules, access limits, and uncertainty constraints. Identify concrete ways the artifact could make a justified review conclusion incorrect, unsupported, unauthorized, unreproducible, or impossible. Derive only the audit questions needed to detect those failures or satisfy the objective. For each question state exact wording, answer space, permitted evidence, access/oracle limits, Unknown meaning, and failure predicate. Separate source fact, logical consequence, reviewer judgment, methodological choice, and unresolved uncertainty. Do not propose primitives, modules, minimum information sets, architecture, recodings, ablations, costs, or alternative representations. Return: review_task_restatement, failure_mode_ledger, audit_question_ledger, unresolved_facts, disagreements_or_ambiguities, contamination_declaration."
+    },
+    {
+      "id": "TCD-A2-PROMPT-001",
+      "stage": "A2",
+      "text": "Compare the frozen adjudicated A1 ledger with the sealed curator failure ledger. Do not rewrite, merge, promote, or delete any A1 item. For each curator entry classify it as covered_by_A1, equivalent_to_A1, new_objective_linked_failure, invalid_or_unlinked, or unresolved, citing exact A1 pointers. For each new objective-linked failure derive the minimum audit question and label it curator_prompted. Return: comparison_ledger, curator_prompted_questions, invalid_or_unlinked_entries, unresolved_entries, contamination_declaration."
+    },
+    {
+      "id": "TCD-B1-PROMPT-001",
+      "stage": "B1",
+      "text": "Analyze the frozen Stage A ledger without adding, removing, merging, or rewriting questions. For each accepted or provisional question propose sufficient information sets and an explicit reconstruction procedure; attempt paired-witness ablation; inspect hidden reintroduction through metadata, code, assumptions, external machinery, ambiguity policy, or exceptions; test registered exact recodings; generate structurally distinct coverage, Pareto, and robustness bases; measure every candidate only under the frozen cost instrument; preserve incomparable, disputed, and Unknown outcomes. Return: sufficiency_ledger, necessity_and_cost_witnesses, recoding_report, hidden_reintroduction_report, alternative_bases, relation_graph_updates, unresolved_issues, contamination_declaration."
+    }
+  ]
+}
