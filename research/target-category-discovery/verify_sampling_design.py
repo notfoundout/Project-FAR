@@ -206,6 +206,22 @@ def verify(path: Path = DEFAULT_CSV) -> dict[str, object]:
     source_allocation = Counter(
         (row["Domain source"], row["Allocation"]) for row in rows
     )
+    expected_validation_sources = Counter(
+        {
+            "Naturally occurring public case": 6,
+            "De-identified operational case": 6,
+        }
+    )
+    validation_sources = Counter(
+        row["Domain source"]
+        for row in rows
+        if row["Allocation"] == "Validation—sealed"
+    )
+    if validation_sources != expected_validation_sources:
+        raise VerificationError(
+            "validation source split mismatch: expected "
+            f"{expected_validation_sources}, got {validation_sources}"
+        )
     if source_allocation[("Neutral synthetic case", "Validation—sealed")] != 0:
         raise VerificationError("synthetic validation rows were not preregistered")
     if source_allocation[("Neutral synthetic case", "Development")] != 12:
