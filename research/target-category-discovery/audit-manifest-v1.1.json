@@ -4,36 +4,55 @@
   "audit_id": "TCD-HARDENING-AUDIT-001",
   "program_id": "TCD-CLEANROOM-001",
   "audit_date": "2026-08-05",
-  "repository_base_commit": "d1fc8053e1459a7829f6f24b8d187f7887375cf0",
   "protocol_version": "1.3",
-  "decision": "public_control_defects_corrected_execution_not_authorized",
+  "decision": "public_controls_hardened_execution_not_authorized",
+  "historical_manifest": {
+    "path": "research/target-category-discovery/audit-manifest-v1.0.json",
+    "disposition": "immutable historical payload preserved unchanged"
+  },
+  "current_authorities": [
+    "research/target-category-discovery/clean-room-derivation-protocol-v1.3.md",
+    "research/target-category-discovery/protocol-amendment-002.md",
+    "research/target-category-discovery/execution-prompts-v1.0.json",
+    "research/target-category-discovery/validation-and-challenge-protocol-v1.0.md",
+    "research/target-category-discovery/stage-a-adjudication-codebook-v1.0.md",
+    "research/target-category-discovery/stage-b-cost-instrument-v1.0.md",
+    "research/target-category-discovery/source-selection-and-replacement-protocol-v1.0.md",
+    "research/target-category-discovery/restricted-package-format-v1.0.md",
+    "research/target-category-discovery/role-access-conflict-matrix-v1.0.md",
+    "research/target-category-discovery/sacrificial-operational-pilot-v1.0.md"
+  ],
   "freeze_manifest": {
     "path": "research/target-category-discovery/freeze-manifest-v1.0.json",
-    "governed_file_count": 21
+    "governed_file_count": 18,
+    "identity_type": "Git blob SHA-1 for the non-self-referential control core"
   },
   "verified_controls": [
-    "exact sampling-array and report byte identity",
-    "semantic sampling invariants",
-    "complete implemented-branch mutation coverage",
-    "Stage A curator-failure nondisclosure",
-    "fixed Stage A adjudication codebook",
-    "operational Stage B cost instrument",
-    "preregistered source search and deterministic matching",
-    "deterministic restricted-package commitment",
-    "profile-known holdout claim boundary",
-    "role/access/conflict gate",
-    "sacrificial operations pilot protocol"
+    "exact covering-array and pairwise-report byte identities",
+    "validation source-class split",
+    "exact A1 A2 and B1 prompt registry",
+    "symlink rejection before governed-file hashing",
+    "Stage A undisclosed-failure primary arm and disclosed-failure completeness arm",
+    "fixed Stage A adjudication",
+    "operational Stage B costs and Pareto-only default comparison",
+    "reproducible source selection and replacement",
+    "deterministic restricted-package commitments",
+    "profile-known source-identity-hidden validation boundary",
+    "frozen validation and six-class challenge scoring rules",
+    "role access and conflict gates",
+    "sacrificial operations-only pilot"
   ],
   "execution_gate": {
     "authorized": false,
     "blockers": [
-      "role assignments and signed conflict declarations absent",
-      "restricted custodian store absent",
+      "actual role assignments and signed conflict declarations absent",
+      "access-controlled restricted store and audit log absent",
       "sacrificial operational pilot not executed",
-      "source universes and queries not instantiated",
-      "36 source and synthetic cases not frozen",
-      "blind packets and leakage approvals absent"
+      "source universes queries and candidate logs not instantiated",
+      "36 source and synthetic case byte packages not frozen",
+      "blind packets and leakage approvals absent",
+      "validation and challenge packet contents and keys not frozen"
     ]
   },
-  "claim_boundary": "This manifest certifies the exact public control package only. It is not evidence for a requirement basis, RCCD adequacy, independence, held-out success, universality, necessity, minimality, or canonicality."
+  "claim_boundary": "No neutral requirement basis, RCCD adequacy, independence, held-out success, universality, necessity, minimality, superiority, or canonicality is established."
 }
