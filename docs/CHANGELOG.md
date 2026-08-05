@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased — Target-category discovery protocol hardening v1.3
+
+- Locked the exact covering-array and pairwise-report bytes by SHA-256 rather than accepting any semantically equivalent replacement.
+- Added an exact public-control freeze manifest, verifier, and audit-manifest anchor.
+- Removed curator-known failure scenarios from the primary Stage A packet and separated them into a post-freeze completeness arm.
+- Added a fixed Stage A adjudication codebook and an operational Stage B cost instrument.
+- Added reproducible source-universe, query, candidate-log, deterministic-matching, and replacement controls.
+- Added deterministic restricted-package commitments with canonical JSON, Merkle roots, normalized paths, and symlink/hard-link rejection.
+- Added operational role, access, conflict, substitution, revocation, and reveal gates.
+- Registered a sacrificial operations-only pilot that is permanently excluded from study evidence.
+- Expanded negative testing to every implemented sampling-verifier branch plus manifest and restricted-package mutation controls.
+- Re-audited the hardened package: public-control defects are corrected; execution remains blocked pending real roles, storage, pilot execution, sources, synthetic outputs, and packets.
+
 ## Unreleased — Target-category discovery chat audit
 
 - Audited the 2026-08-05 target-category discovery session and preserved a complete retraction and claim-boundary ledger.

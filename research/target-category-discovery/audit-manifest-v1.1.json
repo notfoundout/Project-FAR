@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.1",
+  "artifact_status": "Research",
+  "audit_id": "TCD-HARDENING-AUDIT-001",
+  "program_id": "TCD-CLEANROOM-001",
+  "audit_date": "2026-08-05",
+  "repository_base_commit": "d1fc8053e1459a7829f6f24b8d187f7887375cf0",
+  "protocol_version": "1.3",
+  "decision": "public_control_defects_corrected_execution_not_authorized",
+  "freeze_manifest": {
+    "path": "research/target-category-discovery/freeze-manifest-v1.0.json",
+    "governed_file_count": 21
+  },
+  "verified_controls": [
+    "exact sampling-array and report byte identity",
+    "semantic sampling invariants",
+    "complete implemented-branch mutation coverage",
+    "Stage A curator-failure nondisclosure",
+    "fixed Stage A adjudication codebook",
+    "operational Stage B cost instrument",
+    "preregistered source search and deterministic matching",
+    "deterministic restricted-package commitment",
+    "profile-known holdout claim boundary",
+    "role/access/conflict gate",
+    "sacrificial operations pilot protocol"
+  ],
+  "execution_gate": {
+    "authorized": false,
+    "blockers": [
+      "role assignments and signed conflict declarations absent",
+      "restricted custodian store absent",
+      "sacrificial operational pilot not executed",
+      "source universes and queries not instantiated",
+      "36 source and synthetic cases not frozen",
+      "blind packets and leakage approvals absent"
+    ]
+  },
+  "claim_boundary": "This manifest certifies the exact public control package only. It is not evidence for a requirement basis, RCCD adequacy, independence, held-out success, universality, necessity, minimality, or canonicality."
+}
