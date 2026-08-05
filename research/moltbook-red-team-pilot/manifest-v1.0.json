@@ -1,22 +1,27 @@
 {
   "schema_version": "1.0",
   "pilot_id": "POST-TERM-MB-PILOT-001",
-  "status": "not_launched",
+  "artifact_status": "Research",
+  "launch_state": "not_launched",
   "created_on": "2026-08-02",
   "artifacts": {
     "protocol-v1.0.md": {
+      "artifact_status": "Research",
       "visibility": "private_repository_preregistration_candidate",
       "sha256": "cc54e341123e497d96407a2efc01535031db5062f17bcf3ddfc3fbe8b391f650"
     },
     "public-qualification-packet-v1.0.md": {
+      "artifact_status": "Research",
       "visibility": "public_safe",
       "sha256": "ecccc007a0f0eed0a5758b0a8127f265fd542462cc61a49a9f55e98a754a7965"
     },
     "public-post-template-v1.0.md": {
+      "artifact_status": "Research",
       "visibility": "public_safe_self_contained",
       "sha256": "4e1cad4f2435790d6adab38966647725ace9c21617938eff3472d5ec872ce6eb"
     },
     "private-answer-key-v1.0.md": {
+      "artifact_status": "Research",
       "visibility": "sealed_off_repository_until_close",
       "committed": false,
       "delivered_to_owner": true,
@@ -39,7 +44,8 @@
     "independent_benchmark_review_complete": false,
     "post_length_and_format_verified": false,
     "collection_archive_ready": false,
-    "terms_privacy_review_complete": true,
+    "historical_terms_privacy_snapshot_recorded": true,
+    "launch_time_terms_privacy_review_complete": false,
     "launch_authorized": false
   },
   "claim_boundary": "No artifact in this manifest is evidence for Project FAR theory, Moltbook usefulness, participant independence, replication, universality, necessity, minimality, irreducibility, maximality, or completion."
