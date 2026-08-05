@@ -4,90 +4,25 @@
   "artifact_status": "Research",
   "protocol_version": "1.3",
   "execution_authorized": false,
+  "scope_note": "Non-self-referential exact control core. The verifier, its tests, prompt registry, audit report, and manifest are reviewed and versioned but are not members of their own cryptographic target set.",
   "files": [
-    {
-      "path": "research/target-category-discovery/README.md",
-      "sha256": "3562ef98f4373eccf1f6b70941d7bec4e898da0f76073efe5f4c52a123f48b4c"
-    },
-    {
-      "path": "research/target-category-discovery/audit-manifest-v1.0.json",
-      "sha256": "caff82e8973f76ee7f2381f04a50000b1eebff2399c4cff5dcc0f2eff254d319"
-    },
-    {
-      "path": "research/target-category-discovery/audit-manifest-v1.1.json",
-      "sha256": "2beae7c3e9aa94254de76465f0eb15d6aef3cc8ffa53307e1f79058207b0c5c7"
-    },
-    {
-      "path": "research/target-category-discovery/clean-room-derivation-protocol-v1.3.md",
-      "sha256": "9aabdbee03972c01dfeda101205b1d90a570a15e6e9c256a22a78b50dbadfce9"
-    },
-    {
-      "path": "research/target-category-discovery/covering-array-v1.0.csv",
-      "sha256": "fa5d2cff7fdd05418deb1006ff431a284fef2dadf74f15abaea1da5d67d38822"
-    },
-    {
-      "path": "research/target-category-discovery/follow-up-audit-2026-08-05.md",
-      "sha256": "9e1ee734b17c89df7637ec576609962175a0dc1952eecdf1b4930ff9d3cc7c7a"
-    },
-    {
-      "path": "research/target-category-discovery/pairwise-coverage-report-v1.0.csv",
-      "sha256": "eab73927c36dc82c1e142f183fe0d579304d139af4aef80d37c43f831441bc1c"
-    },
-    {
-      "path": "research/target-category-discovery/restricted-artifacts-policy-v1.1.md",
-      "sha256": "66cf1d2e02cc73547f5b021440771a0de5fd8f22e7ac080615a06f6d7f99160e"
-    },
-    {
-      "path": "research/target-category-discovery/restricted-package-format-v1.0.md",
-      "sha256": "82a78454563dbc5a5697868f40891cdab475086b15bd3577c088245c12ad0303"
-    },
-    {
-      "path": "research/target-category-discovery/restricted_package_commitment.py",
-      "sha256": "f2aa23a769f737bbb9a65d23f4b3c3d71aa82c15c6e861e4d63885dbcdeac4e6"
-    },
-    {
-      "path": "research/target-category-discovery/role-access-conflict-matrix-v1.0.md",
-      "sha256": "25d1ab123a984af68a748b4f852a3fad19f6256d11b2d38328fa7a8b82ccf835"
-    },
-    {
-      "path": "research/target-category-discovery/sacrificial-operational-pilot-v1.0.md",
-      "sha256": "c4f4bde7dd8f8332eaae1b154d9bb0abbe4f9bc1b0f5dee7a2ebf572d67e4a3b"
-    },
-    {
-      "path": "research/target-category-discovery/sampling-design-v1.2.md",
-      "sha256": "84db0d63fdf0b77425896731a7ee0f33eedd4da4a1db9b13f83bea350e7432e7"
-    },
-    {
-      "path": "research/target-category-discovery/source-selection-and-replacement-protocol-v1.0.md",
-      "sha256": "4fc7654c2d1b69694d2176ea3abe3740564a945b2792261cf2826a8ea768c381"
-    },
-    {
-      "path": "research/target-category-discovery/stage-a-adjudication-codebook-v1.0.md",
-      "sha256": "b90e20180b004f18ff75dc3cf79757c63e42a101c52c07d51c3af961b9195eab"
-    },
-    {
-      "path": "research/target-category-discovery/stage-b-cost-instrument-v1.0.md",
-      "sha256": "07d8a81baa6c718b3a8d024c997b829704822f5943be3998d799f6334480aa19"
-    },
-    {
-      "path": "research/target-category-discovery/verify_program_freeze.py",
-      "sha256": "88de2bf92c5ddf1186c5de8d43465d13a6deb033fa6e11fb341bc0f577dbc273"
-    },
-    {
-      "path": "research/target-category-discovery/verify_sampling_design.py",
-      "sha256": "a84ebd6a28dfe74e45028f3d379b0a5cfa908a5a9b7946a1ce8134ec534d1f78"
-    },
-    {
-      "path": "tests/test_restricted_package_commitment.py",
-      "sha256": "f85e3c919fcafcd1bfcea59aa9b60c89f12d33d4b1ba2048a849d07ee1948f4a"
-    },
-    {
-      "path": "tests/test_target_category_discovery.py",
-      "sha256": "56c093a3d81560eaafb474d2784daee6803750f0f5ed7b57fa7cb5476c907261"
-    },
-    {
-      "path": "tests/test_tcd_program_freeze.py",
-      "sha256": "f58a626730a19cea0492004a8a21651f7382870be28026ee5a6ffbedb78cded0"
-    }
+    {"path": "research/target-category-discovery/audit-manifest-v1.0.json", "git_blob_sha1": "3945534849cbbf1696335369361a22b0efa7b74b"},
+    {"path": "research/target-category-discovery/audit-manifest-v1.1.json", "git_blob_sha1": "066e4788727543c718ddfaf55d8edb45f9008221"},
+    {"path": "research/target-category-discovery/clean-room-derivation-protocol-v1.3.md", "git_blob_sha1": "7e8848ec226edfbcffc9792bf3460fb8fdc78a3b"},
+    {"path": "research/target-category-discovery/covering-array-v1.0.csv", "git_blob_sha1": "54a74a22a655e8d1a1e40296483533b54025f908"},
+    {"path": "research/target-category-discovery/pairwise-coverage-report-v1.0.csv", "git_blob_sha1": "dc84cef503046b463c7396860f9a8af98b783364"},
+    {"path": "research/target-category-discovery/restricted-artifacts-policy-v1.1.md", "git_blob_sha1": "f48afb5c0dc574dfcb59b835401792dd13ec3b16"},
+    {"path": "research/target-category-discovery/restricted-package-format-v1.0.md", "git_blob_sha1": "f748afa8bc856bd1d868ddf78a6f1ed1916c0a07"},
+    {"path": "research/target-category-discovery/restricted_package_commitment.py", "git_blob_sha1": "9726618782101ec8f134035c50a49e8df4a32fb8"},
+    {"path": "research/target-category-discovery/role-access-conflict-matrix-v1.0.md", "git_blob_sha1": "63c048a59fc79dcae7dc95960c515f2794ed02b4"},
+    {"path": "research/target-category-discovery/sacrificial-operational-pilot-v1.0.md", "git_blob_sha1": "33eac3c6d55ad26bd82a1d8967ec79320472b70c"},
+    {"path": "research/target-category-discovery/sampling-design-v1.2.md", "git_blob_sha1": "12218075a55a56c42e5d7434cab670cb09854199"},
+    {"path": "research/target-category-discovery/source-selection-and-replacement-protocol-v1.0.md", "git_blob_sha1": "9caaee466c0b8c60226fcbf9b94ae877b2b44ba5"},
+    {"path": "research/target-category-discovery/stage-a-adjudication-codebook-v1.0.md", "git_blob_sha1": "ce72f9f37ebfdd42d00f6206bc219aa04dc09513"},
+    {"path": "research/target-category-discovery/stage-b-cost-instrument-v1.0.md", "git_blob_sha1": "e764b24ba5bee5520f20184178dc20e38409ee8c"},
+    {"path": "research/target-category-discovery/validation-and-challenge-protocol-v1.0.md", "git_blob_sha1": "9f3969a1cce5943161180354352b2f010db0a7ec"},
+    {"path": "research/target-category-discovery/verify_sampling_design.py", "git_blob_sha1": "687153ccc3ff58878e806377a14cb665b1f107aa"},
+    {"path": "tests/test_restricted_package_commitment.py", "git_blob_sha1": "efb51a39edc9dc0b53ba3a7d90cb7d64d06b4824"},
+    {"path": "tests/test_target_category_discovery.py", "git_blob_sha1": "33fde465870fd4cc026d4f430918db67c72886c0"}
   ]
 }
