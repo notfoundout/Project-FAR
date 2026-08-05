@@ -1,0 +1,37 @@
+Row,Blind Case ID,Allocation,Output type,Governing relation,Temporal structure,Information condition,Primary review objective,Artifact medium,Domain source
+1,CR-001,Validation—sealed,Recommendation,Optimization or multi-criteria choice,Static snapshot,Explicit uncertainty,Support or correctness,Narrative,Naturally occurring public case
+2,CR-002,Development,Classification,Evidential or probabilistic assessment,Static snapshot,Explicit uncertainty,Support or correctness,Table or form,Neutral synthetic case
+3,CR-003,Development,Authorization or decision,Explicit rule or deduction,Path-sensitive history,Materially complete information,Support or correctness,Graph or diagram,Naturally occurring public case
+4,CR-004,Validation—sealed,Plan,Explicit rule or deduction,Ordered sequence,Missing information,Support or correctness,"Executable rule, query, or program",Naturally occurring public case
+5,CR-005,Development,Factual or analytic conclusion,Sequential or interactive procedure,Ordered sequence,Materially complete information,Support or correctness,Event log or timeline,Neutral synthetic case
+6,CR-006,Validation—sealed,Authorization or decision,Causal or counterfactual assessment,Path-sensitive history,Conflicting information,Support or correctness,Hybrid,De-identified operational case
+7,CR-007,Development,Plan,Causal or counterfactual assessment,Path-sensitive history,Missing information,Reproducibility,Narrative,De-identified operational case
+8,CR-008,Validation—sealed,Authorization or decision,Sequential or interactive procedure,Ordered sequence,Explicit uncertainty,Reproducibility,Table or form,De-identified operational case
+9,CR-009,Validation—sealed,Factual or analytic conclusion,Optimization or multi-criteria choice,Ordered sequence,Conflicting information,Reproducibility,Graph or diagram,De-identified operational case
+10,CR-010,Development,Classification,Explicit rule or deduction,Static snapshot,Explicit uncertainty,Reproducibility,"Executable rule, query, or program",Neutral synthetic case
+11,CR-011,Development,Recommendation,Evidential or probabilistic assessment,Ordered sequence,Conflicting information,Reproducibility,Event log or timeline,Neutral synthetic case
+12,CR-012,Development,Recommendation,Optimization or multi-criteria choice,Static snapshot,Materially complete information,Reproducibility,Hybrid,Naturally occurring public case
+13,CR-013,Validation—sealed,Authorization or decision,Evidential or probabilistic assessment,Static snapshot,Materially complete information,Authorization or compliance,Narrative,De-identified operational case
+14,CR-014,Development,Classification,Optimization or multi-criteria choice,Ordered sequence,Materially complete information,Authorization or compliance,Table or form,De-identified operational case
+15,CR-015,Development,Plan,Causal or counterfactual assessment,Ordered sequence,Explicit uncertainty,Authorization or compliance,Graph or diagram,Neutral synthetic case
+16,CR-016,Validation—sealed,Recommendation,Sequential or interactive procedure,Path-sensitive history,Conflicting information,Authorization or compliance,"Executable rule, query, or program",Naturally occurring public case
+17,CR-017,Development,Factual or analytic conclusion,Explicit rule or deduction,Path-sensitive history,Missing information,Authorization or compliance,Event log or timeline,Neutral synthetic case
+18,CR-018,Development,Classification,Sequential or interactive procedure,Static snapshot,Missing information,Authorization or compliance,Hybrid,Neutral synthetic case
+19,CR-019,Development,Authorization or decision,Sequential or interactive procedure,Ordered sequence,Materially complete information,Sensitivity or robustness,Narrative,Neutral synthetic case
+20,CR-020,Development,Factual or analytic conclusion,Causal or counterfactual assessment,Ordered sequence,Explicit uncertainty,Sensitivity or robustness,Table or form,De-identified operational case
+21,CR-021,Validation—sealed,Classification,Explicit rule or deduction,Path-sensitive history,Missing information,Sensitivity or robustness,Graph or diagram,Naturally occurring public case
+22,CR-022,Development,Recommendation,Causal or counterfactual assessment,Static snapshot,Conflicting information,Sensitivity or robustness,"Executable rule, query, or program",Naturally occurring public case
+23,CR-023,Validation—sealed,Plan,Optimization or multi-criteria choice,Path-sensitive history,Materially complete information,Sensitivity or robustness,Event log or timeline,De-identified operational case
+24,CR-024,Validation—sealed,Factual or analytic conclusion,Evidential or probabilistic assessment,Ordered sequence,Explicit uncertainty,Sensitivity or robustness,Hybrid,Naturally occurring public case
+25,CR-025,Development,Classification,Causal or counterfactual assessment,Static snapshot,Conflicting information,Provenance or accountability,Narrative,Naturally occurring public case
+26,CR-026,Development,Recommendation,Explicit rule or deduction,Path-sensitive history,Conflicting information,Provenance or accountability,Table or form,Neutral synthetic case
+27,CR-027,Validation—sealed,Plan,Sequential or interactive procedure,Static snapshot,Conflicting information,Provenance or accountability,Graph or diagram,De-identified operational case
+28,CR-028,Development,Factual or analytic conclusion,Evidential or probabilistic assessment,Path-sensitive history,Materially complete information,Provenance or accountability,"Executable rule, query, or program",De-identified operational case
+29,CR-029,Development,Authorization or decision,Optimization or multi-criteria choice,Ordered sequence,Explicit uncertainty,Provenance or accountability,Event log or timeline,Naturally occurring public case
+30,CR-030,Development,Factual or analytic conclusion,Explicit rule or deduction,Path-sensitive history,Missing information,Provenance or accountability,Hybrid,Neutral synthetic case
+31,CR-031,Development,Factual or analytic conclusion,Explicit rule or deduction,Static snapshot,Conflicting information,Comparison with an alternative,Narrative,De-identified operational case
+32,CR-032,Development,Plan,Evidential or probabilistic assessment,Static snapshot,Missing information,Comparison with an alternative,Table or form,Naturally occurring public case
+33,CR-033,Development,Recommendation,Evidential or probabilistic assessment,Path-sensitive history,Missing information,Comparison with an alternative,Graph or diagram,De-identified operational case
+34,CR-034,Development,Authorization or decision,Optimization or multi-criteria choice,Ordered sequence,Missing information,Comparison with an alternative,"Executable rule, query, or program",Neutral synthetic case
+35,CR-035,Validation—sealed,Classification,Causal or counterfactual assessment,Static snapshot,Materially complete information,Comparison with an alternative,Event log or timeline,Naturally occurring public case
+36,CR-036,Development,Plan,Sequential or interactive procedure,Path-sensitive history,Explicit uncertainty,Comparison with an alternative,Hybrid,Neutral synthetic case
