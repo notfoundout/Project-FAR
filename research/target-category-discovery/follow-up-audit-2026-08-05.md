@@ -3,141 +3,48 @@
 Status: **Research**  
 Audit ID: `TCD-HARDENING-AUDIT-001`  
 Program ID: `TCD-CLEANROOM-001`  
-Audit date: 2026-08-05  
-Execution status: **not authorized**
+Audit date: 2026-08-05
 
-## 1. Audit question
+## Decision
 
-Did protocol hardening v1.3 close the integrity, neutrality, adjudication, cost, source-selection, restricted-storage, validation-boundary, mutation-coverage, and role-separation defects identified after PRs #432 and #433?
+The public protocol-control defects identified after PRs #432 and #433 are corrected and negative-tested. The experiment remains operationally uninstantiated and execution remains unauthorized.
 
-## 2. Decision
+## Corrected controls
 
-**The identified protocol and repository-control defects are corrected at the public-control layer. The experiment remains operationally blocked.**
+1. **Exact freeze:** the covering array and report remain byte-identical; the public-control manifest locks every governed file by Git blob identity and CI verifies the working bytes against those identities.
+2. **Prompt freeze:** `execution-prompts-v1.0.json` contains exact A1, A2, and B1 texts, IDs, and a normalization rule. The freeze verifier computes their normalized SHA-256 values, and every future run must record its prompt ID and computed digest.
+3. **Stage A neutrality:** curator-known failures are excluded from A1 and disclosed only in a separately labeled A2 completeness arm after A1 freeze.
+4. **Adjudication:** the fixed codebook defines splitting, equivalence, merging, recurrence, witness acceptance, disagreement, contamination, and status assignment.
+5. **Costing:** the Stage B instrument defines units, canonicalization, measurement, `NA`/`Unknown`, replication, and coordinate-wise Pareto comparison. Unregistered scalar weights are prohibited.
+6. **Source selection:** universes, queries, retrieval windows, ordering, stopping, complete pre-decision candidate logs, independent coding, deterministic matching, unfilled rows, and replacement chains must be frozen.
+7. **Restricted commitments:** canonical paths, exact file hashes, canonical JSON, deterministic Merkle roots, symlink/hard-link rejection, reproduction, access logs, reveal, revocation, and restore are specified.
+8. **Validation boundary:** validation is explicitly profile-known and source-identity-hidden; six public and six operational cases do not test synthetic holdout transfer or undisclosed profiles.
+9. **Validation and challenge rules:** exact construction, freeze, execution, scoring, stopping, failure, and claim-impact rules are fixed before development exposure.
+10. **Role separation:** required identities, conflicts, access classes, prohibited combinations, substitutions, revocation, and audit evidence are specified. Unassigned roles keep the gate closed.
+11. **Sacrificial pilot:** three operations-only fixtures are permanently excluded from all study evidence and must test capture, commitments, sanitation, access denial, logging, revocation, restore, and mutation detection.
+12. **Historical integrity:** the original `audit-manifest-v1.0.json` payload is preserved unchanged. The current audit authority is v1.1; history is not rewritten.
 
-This distinction is mandatory:
+## Verification
 
-- `control_corrected` means the governing rule, verifier, and negative test now exist;
-- `operationally_instantiated` means real personnel, credentials, stores, sources, packets, and logs satisfy those rules.
+The hardened package includes semantic sampling checks, exact repository-byte checks, prompt-registry checks, symlink rejection, deterministic restricted-package tests, and negative mutations for every implemented verification branch.
 
-The first is true. The second is false.
+## Residual blockers
 
-## 3. Corrected findings
+These are uninstantiated prerequisites, not unresolved public-protocol defects:
 
-### 3.1 Exact design and artifact freeze
+- named independent role assignments and signed conflict declarations;
+- an access-controlled restricted store, credentials, backup, restore, revocation, and append-only audit log;
+- successful execution and independent audit of the sacrificial pilot;
+- frozen source universes, queries, candidate logs, codings, and deterministic matches;
+- exact bytes for 24 real-source cases and 12 synthetic cases;
+- accepted blind packets and leakage reviews;
+- frozen validation and challenge packet contents and keys;
+- any A1, A2, adjudication, B1, validation, or challenge result.
 
-The sampling verifier now enforces exact SHA-256 identities for the canonical covering array and pairwise report before semantic checks. `verify_program_freeze.py` verifies the exact bytes of every governed public control and test against `freeze-manifest-v1.0.json`.
+## Claim boundary
 
-A byte-only mutation that preserves CSV semantics is rejected. Manifest omission, reordering, duplication, invalid hashes, and governed-file mutation are separately tested.
+This audit establishes only that the public control package is internally specified, exact-byte governed, and negatively tested. It establishes no neutral requirement basis, RCCD adequacy, investigator independence, held-out success, universality, necessity, minimality, comparative superiority, or canonicality.
 
-Disposition: **corrected**.
+## Final disposition
 
-### 3.2 Stage A curator priming
-
-The primary A1 packet no longer contains curator-known failure scenarios. Those failures remain in a sealed curator ledger and may be disclosed only in a separate A2 completeness arm after A1 outputs are frozen. A2-only questions are labeled `curator_prompted` and excluded from primary convergence.
-
-Disposition: **corrected**.
-
-### 3.3 Adjudication discretion
-
-`stage-a-adjudication-codebook-v1.0.md` fixes atomic splitting, equivalence, merge limits, objective linkage, recurrence, witness acceptance, singleton treatment, curator-prompted status, contamination, disagreement, two-adjudicator procedure, third-adjudicator limits, and required decision records.
-
-Disposition: **corrected at protocol layer**. Operational adjudicators are not assigned.
-
-### 3.4 Cost ambiguity
-
-`stage-b-cost-instrument-v1.0.md` defines count, byte, time, memory, reviewer-burden, exception, hidden-state, interpreter, and ambiguity-policy coordinates; canonicalization; measurement replication; Unknown/NA handling; and coordinate-wise Pareto dominance. Unregistered scalar scores and post hoc weights are prohibited.
-
-Disposition: **corrected at protocol layer**. No candidate has been measured.
-
-### 3.5 Project-controlled source selection
-
-`source-selection-and-replacement-protocol-v1.0.md` requires frozen source universes, exact queries/filters, retrieval windows, ordering, maximum inspection, stopping, complete pre-decision candidate logging, independent coding, deterministic matching, unfilled-row handling, and immutable replacement chains.
-
-Disposition: **corrected at protocol layer**. Actual universes and queries are not instantiated.
-
-### 3.6 Restricted-package reproducibility
-
-`restricted-package-format-v1.0.md` and `restricted_package_commitment.py` define normalized relative paths, sorted entries, exact file hashes, canonical JSON, deterministic Merkle roots, symlink and hard-link rejection, path-collision detection, independent reproduction, and append-only access logging. ZIP identity is explicitly non-authoritative.
-
-Disposition: **corrected and unit-tested**. No real restricted store exists.
-
-### 3.7 Validation interpretation
-
-`sampling-design-v1.2.md` explicitly classifies validation as profile-known and source-identity-hidden, with six public and six operational cases and no synthetic holdout. Claims of synthetic-class generalization, undisclosed-profile generalization, population representativeness, and universality are prohibited.
-
-Disposition: **corrected**.
-
-### 3.8 Mutation-test completeness
-
-The sampling suite now tests exact byte identity, report identity, headers, row count, integer rows, blind IDs, target leakage, row order, ID uniqueness and mapping, allocation, level sets, missing pair coverage, validation source split, synthetic validation, report headers, report row count, duplicate report pairs, numeric mismatch, and incomplete coverage.
-
-Freeze-manifest and restricted-package suites add omission, ordering, duplication, malformed hash, governed-file mutation, order independence, byte mutation, path mutation, symlink, hard-link, unsafe-path, and empty-package controls.
-
-Disposition: **corrected for all implemented verification branches**.
-
-### 3.9 Role separation
-
-`role-access-conflict-matrix-v1.0.md` defines required roles, prohibited combinations, deny-by-default access classes, assignment evidence, signed conflict declarations, substitutes, revocation, and independent access-log audit.
-
-Disposition: **corrected at protocol layer**. The matrix is intentionally `unassigned — execution blocked`.
-
-### 3.10 Pre-study operational pilot
-
-`sacrificial-operational-pilot-v1.0.md` defines three permanently excluded fixtures and tests capture, commitment reproduction, blind-packet sanitation, access denial, release, logging, revocation, restore, and negative mutations.
-
-Disposition: **pilot specified but not executed** because the store, credentials, and role assignments do not exist.
-
-## 4. Internal consistency audit
-
-The hardened controls satisfy the following dependency order:
-
-1. public controls and exact freeze;
-2. operational role/store instantiation;
-3. sacrificial pilot;
-4. source-universe and query freeze;
-5. candidate enumeration and deterministic matching;
-6. source/synthetic byte freeze;
-7. A1 packet sanitation and leakage audit;
-8. A1 derivation;
-9. A2 completeness arm;
-10. fixed adjudication;
-11. Stage B and frozen costing;
-12. validation;
-13. challenge;
-14. architecture comparison.
-
-No later stage is authorized to repair an earlier exposed stage in place.
-
-## 5. Residual blockers
-
-The following are not defects in v1.3; they are uninstantiated prerequisites:
-
-- no independent role assignments or signed conflict declarations;
-- no access-controlled restricted store;
-- no pilot credentials, backup, or append-only audit log;
-- no executed sacrificial pilot;
-- no frozen source universes, queries, retrieval windows, or candidate logs;
-- no selected or captured 36-case sources;
-- no generated synthetic artifacts;
-- no sanitized packets or leakage approvals;
-- no derivation, adjudication, cost measurement, validation, or challenge result.
-
-## 6. Claim boundary
-
-This hardening establishes only that the public control package is internally specified, exact-byte frozen, and negative-tested.
-
-It does not establish:
-
-- a neutral requirement basis exists;
-- the source-selection pools will be adequate;
-- real role separation will be obtainable;
-- the pilot will pass;
-- RCCD is sufficient, necessary, minimal, or superior;
-- the bounded class is independently optimal;
-- held-out adequacy;
-- external independence;
-- universality or canonicality.
-
-## 7. Final disposition
-
-> **Protocol hardening v1.3 closes the identified public-control defects. Exact freeze and negative tests pass. Operational execution remains blocked until role/store instantiation and a successful sacrificial pilot.**
+> **Public protocol controls corrected and frozen; historical audit preserved; execution prompts and validation/challenge rules machine-verifiable; operational prerequisites absent; experiment not started and not authorized.**
