@@ -91,14 +91,19 @@ def verify_manifest() -> None:
             raise DesignError("manifest entry must be object")
         relative = entry.get("path")
         expected = entry.get("sha256")
+        expected_bytes = entry.get("bytes")
         if not isinstance(relative, str) or not isinstance(expected, str):
             raise DesignError("manifest path and sha256 required")
+        if not isinstance(expected_bytes, int) or isinstance(expected_bytes, bool) or expected_bytes < 0:
+            raise DesignError(f"manifest bytes must be a nonnegative integer: {relative}")
         if relative in seen:
             raise DesignError(f"duplicate manifest path: {relative}")
         seen.add(relative)
         path = _safe_manifest_path(relative)
         if not path.is_file():
             raise DesignError(f"missing manifested file: {relative}")
+        if path.stat().st_size != expected_bytes:
+            raise DesignError(f"byte-count mismatch: {relative}")
         if _sha256(path) != expected:
             raise DesignError(f"digest mismatch: {relative}")
     required = {
@@ -186,6 +191,44 @@ def verify_preregistration() -> None:
         raise DesignError("population generalization must be prohibited")
     if data.get("minimum_practically_important_difference") != 0.10:
         raise DesignError("minimum practically important difference must remain 0.10")
+
+    invalid_policy = analysis.get("invalid_run_and_cell_policy", {})
+    if invalid_policy.get("replacement_attempts_per_infrastructure_invalid_slot") != 1:
+        raise DesignError("exactly one same-slot infrastructure replacement must be permitted")
+    for key in (
+        "replacement_must_use_same_frozen_task_arm_repetition_and_conditions",
+        "replacement_must_finish_before_any_outcome_reveal",
+        "cell_valid_only_if_every_frozen_repetition_is_valid",
+        "retained_invalid_repetition_makes_entire_task_arm_cell_missing",
+    ):
+        if invalid_policy.get(key) is not True:
+            raise DesignError(f"invalid-run policy must be fail closed: {key}")
+    if invalid_policy.get("primary_missingness_rule") != (
+        "if any FAR or placebo task-arm cell is missing, final confirmatory classification is inconclusive_due_to_missingness"
+    ):
+        raise DesignError("primary missingness must force inconclusive_due_to_missingness")
+    if invalid_policy.get("sensitivity_results_are_confirmatory") is not False:
+        raise DesignError("missingness sensitivity must remain descriptive")
+
+    precedence = analysis.get("decision_precedence")
+    expected_precedence = [
+        "inconclusive_due_to_missingness",
+        "bounded_harm",
+        "bounded_positive",
+        "no_practical_advantage",
+        "inconclusive",
+    ]
+    if precedence != expected_precedence:
+        raise DesignError("decision precedence mismatch")
+    categories = analysis.get("decision_categories", {})
+    if set(categories) != set(expected_precedence):
+        raise DesignError("decision category set mismatch")
+    if "0 <= 95% paired-task bootstrap upper bound < 0.10" not in categories.get("no_practical_advantage", ""):
+        raise DesignError("no_practical_advantage must exclude bounded harm")
+    if "no primary cells are missing" not in categories.get("bounded_harm", ""):
+        raise DesignError("bounded_harm must require complete primary cells")
+    if "no primary cells are missing" not in categories.get("bounded_positive", ""):
+        raise DesignError("bounded_positive must require complete primary cells")
 
     pilot = data.get("pilot", {})
     if pilot.get("status") != "not_authorized" or pilot.get("model_calls_currently_prohibited") is not True:
