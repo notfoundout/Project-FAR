@@ -18,8 +18,10 @@ _git_blob_sha1 = integrity._git_blob_sha1
 CONTRACT_DIGESTS = {
     "arm_matching": "386f364130f3cff43092e1eef9c3e45fbf9291e4d3cf10f90878670925f14459",
     "execution_controls": "98c69c448baae529a4314b570e92d503df65bf0f581f1241c046c309426aa503",
+    "blinding": "0a49cf62f75063a91f88a2d732ba1a12b57fa0a7f2c1961d55232cb005340182",
     "runtime": "ebea8e1896276afdcdbc3f058f1f52994be991d77c031d821b7b28e5b29d13d6",
     "source": "b6914e456e26124212e124e10d2eda7abefd520a8953f6d5445ec2a2f3238a14",
+    "required_outputs": "af9cf47a1dc29cbfb5d91a17ecc685534378f79340355f746497d4e417e2d252",
     "placebo_matching": "7502f557f9dac08df1afe5d13993785276f5b26b0d33dce49db9fc577f5f0d3d",
     "invalid_policy": "911e4ae6c40c019e204e67bbc5d4ceadb393a10eedb193fcd3df0ada625a550c",
     "decision_categories": "38d6859deb3966d2e887733c959ed8e5ca55db898864a4f7385ba2797f4561d8",
@@ -160,6 +162,12 @@ def verify_preregistration() -> None:
             key,
         )
 
+    integrity._require_digest(
+        data.get("blinding"),
+        CONTRACT_DIGESTS["blinding"],
+        "preregistration blinding contract",
+    )
+
     pilot = data.get("pilot")
     if not isinstance(pilot, dict):
         raise DesignError("pilot object required")
@@ -189,6 +197,11 @@ def verify_capsule_contract() -> None:
         data.get("source"),
         CONTRACT_DIGESTS["source"],
         "capsule source provenance",
+    )
+    integrity._require_digest(
+        data.get("required_outputs"),
+        CONTRACT_DIGESTS["required_outputs"],
+        "capsule identity outputs",
     )
     forbidden = " ".join(
         integrity._strings(

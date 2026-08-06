@@ -51,8 +51,8 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/verify_design.py",
-      "git_blob_sha1": "ea5c2b45ce413248ea321863603c3e0d16fa25bd",
-      "bytes": 12096
+      "git_blob_sha1": "acef0235e326b68c757a4f88a0d48b9f684c56de",
+      "bytes": 12580
     }
   ]
 }
