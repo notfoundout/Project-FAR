@@ -38,7 +38,7 @@ The follow-up theoretical question is now closed under one explicit independentl
 
 The proof uses the free category on the operation's finite input graph. The operation's value on the identity presentation selects a path; naturality forces every other value to be that path's image.
 
-This establishes a nontrivial common invariant without inserting RCCD into the premises. It does not establish that categories are the absolute broadest model of every conceivable reasoning system, that all reasoning is sequential, or that RCCD follows from composition.
+This establishes a nontrivial common invariant without inserting RCCD into the premises. It does not establish that categories are the absolute broadest model of every conceivable reasoning system, that all reasoning is sequential, that categories are broader than bare sets under a common order, that typed composition is weakest or minimal, or that RCCD follows from composition.
 
 See [`compositional-invariant-terminal-result-v1.0.md`](compositional-invariant-terminal-result-v1.0.md).
 
@@ -47,8 +47,8 @@ See [`compositional-invariant-terminal-result-v1.0.md`](compositional-invariant-
 - [`chat-audit-2026-08-05.md`](chat-audit-2026-08-05.md) — claim retraction ledger, artifact defects, corrected status, and nonclaims.
 - [`scope-and-universality-charter-v1.1.md`](scope-and-universality-charter-v1.1.md) — historical Research charter before the compositional subquestion was closed.
 - [`scope-and-universality-charter-v1.2.md`](scope-and-universality-charter-v1.2.md) — current Research charter separating the resolved compositional theorem from the unexecuted empirical program.
-- [`compositional-invariant-spec-v1.0.json`](compositional-invariant-spec-v1.0.json) — frozen typed-composition axioms, recoding contract, theorem claims, fixture, terminal disposition, and nonclaims.
-- [`compositional-invariant-terminal-result-v1.0.md`](compositional-invariant-terminal-result-v1.0.md) — free-category proof, minimality boundary, RCCD consequence, and terminal claim.
+- [`compositional-invariant-spec-v1.0.json`](compositional-invariant-spec-v1.0.json) — frozen small-category contract, recoding contract, theorem claims, fixture, terminal disposition, and nonclaims.
+- [`compositional-invariant-terminal-result-v1.0.md`](compositional-invariant-terminal-result-v1.0.md) — free-category proof, scope boundary, RCCD consequence, and terminal claim.
 - [`compositional-invariant-result-v1.0.json`](compositional-invariant-result-v1.0.json) — deterministic bounded corroboration and exact claim-boundary result.
 - [`verify_compositional_invariant.py`](verify_compositional_invariant.py) — strict standard-library verifier and result regenerator.
 - [`clean-room-derivation-protocol-v1.2.md`](clean-room-derivation-protocol-v1.2.md) — corrected two-stage protocol separating neutral question derivation from later structural analysis.
@@ -67,8 +67,10 @@ The theoretical and empirical tracks now have separate statuses.
 ### Theoretical track
 
 - bare-set element-valued invariants: projections only;
-- typed-compositional arrow-valued invariants: exactly path terms;
-- common nontrivial invariant: identity and sequential composition;
+- small-category arrow-valued invariants: exactly path terms;
+- common nontrivial invariant inside the selected categorical scope: identity and sequential composition;
+- comparison order between categorical and other structures: not defined;
+- weakest or minimal invariant-supporting structure: not established;
 - RCCD derivation from this invariant core: not established;
 - absolute broadest reasoning architecture: not established.
 
@@ -103,4 +105,4 @@ A favorable result is not required for procedural success.
 
 This directory establishes no empirical necessity, minimality, universality, comparative superiority, external independence, or population generalization. Pairwise coverage refers only to the seven declared coding dimensions.
 
-The compositional theorem establishes only the complete functor-invariant finitary arrow-valued operations for small categories. It does not establish a complete architecture of reasoning or change accepted Project FAR theory.
+The compositional theorem establishes only the complete functor-invariant finitary arrow-valued operations for small categories. It does not establish a complete architecture of reasoning, a minimal structural basis, a common broadness order, or any change to accepted Project FAR theory.
