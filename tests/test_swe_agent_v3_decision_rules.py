@@ -44,7 +44,11 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
         self.assertIn("no primary cells are missing", categories["no_practical_advantage"])
 
     def test_bootstrap_interval_and_rng_are_fully_frozen(self) -> None:
-        spec = self.load_analysis()["bootstrap_interval_spec"]
+        analysis = self.load_analysis()
+        self.assertEqual(analysis["bootstrap_seed_status"], "unfrozen_and_committed_before_outcome_reveal")
+        self.assertEqual(analysis["bootstrap_resamples"], 100000)
+        self.assertEqual(analysis["uncertainty_method"], "paired_task_bootstrap")
+        spec = analysis["bootstrap_interval_spec"]
         self.assertEqual(
             spec,
             {
