@@ -39,6 +39,20 @@ CONTRACT_DIGESTS = {
 EVIDENCE_BUNDLE_SECTION_SHA256 = (
     "4fa33bbd5a4db1683520a035c2a4ca504fdb00d9a0e8ce999ee1436f8da2075e"
 )
+ANALYSIS_KEYS = {
+    "task_level_aggregation",
+    "primary_estimand",
+    "uncertainty_method",
+    "bootstrap_resamples",
+    "bootstrap_seed_status",
+    "decision_categories",
+    "multiple_comparison_policy",
+    "equivalence_or_noninferiority_claim_permitted",
+    "population_generalization_permitted",
+    "invalid_run_and_cell_policy",
+    "decision_precedence",
+    "bootstrap_interval_spec",
+}
 GATES = {
     "theory_version_frozen",
     "far_capsule_built_and_hash_frozen",
@@ -159,14 +173,20 @@ def verify_preregistration() -> None:
     analysis = data.get("analysis")
     if not isinstance(analysis, dict):
         raise DesignError("analysis object required")
+    if set(analysis) != ANALYSIS_KEYS:
+        raise DesignError("analysis key set must be exact")
     exact = {
         "primary_estimand": "mean_task_level_resolution_probability_far_minus_placebo",
         "task_level_aggregation": "mean over repetitions within each task and arm",
         "uncertainty_method": "paired_task_bootstrap",
         "bootstrap_seed_status": "unfrozen_and_committed_before_outcome_reveal",
+        "multiple_comparison_policy": (
+            "primary contrast alone is confirmatory; all secondary contrasts and "
+            "component ablations are exploratory unless separately frozen before exposure"
+        ),
     }
     if any(analysis.get(key) != value for key, value in exact.items()):
-        raise DesignError("analysis identity mismatch")
+        raise DesignError("analysis identity or multiplicity policy mismatch")
     if integrity._integer(
         analysis.get("bootstrap_resamples"), "bootstrap_resamples"
     ) != 100000:
@@ -300,10 +320,12 @@ def verify_text_boundaries() -> None:
     ).decode("utf-8")
     start_marker = "## Evidence bundle per run\n"
     end_marker = "\n## Pre-submission behavior contract\n"
+    if evidence_text.count(start_marker) != 1 or evidence_text.count(end_marker) != 1:
+        raise DesignError("evidence-bundle section markers must be unique")
     start = evidence_text.find(start_marker)
     end = evidence_text.find(end_marker, start + len(start_marker))
-    if start < 0 or end < 0:
-        raise DesignError("evidence-bundle section boundary missing")
+    if start < 0 or end < 0 or end <= start:
+        raise DesignError("evidence-bundle section boundary missing or invalid")
     evidence_bundle = evidence_text[start:end]
     evidence_digest = hashlib.sha256(evidence_bundle.encode("utf-8")).hexdigest()
     if evidence_digest != EVIDENCE_BUNDLE_SECTION_SHA256:
