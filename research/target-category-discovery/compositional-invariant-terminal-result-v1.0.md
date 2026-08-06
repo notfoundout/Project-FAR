@@ -16,39 +16,39 @@ Find the broadest independently justified class of structured reasoning systems 
 2. what counts as an admissible recoding;
 3. what order compares one proposed class with another.
 
-Without those choices, an absolute broadest class cannot be selected or disproved. A class may be broadened by adding unrelated components, changing signatures, weakening morphisms, or moving to a higher-level representation. Those moves are not ordered by one neutral criterion.
+Without those choices, an absolute broadest class cannot be selected or disproved. A class may be changed by adding unrelated components, changing signatures, weakening morphisms, or moving to a higher-level representation. Those moves are not ordered by one neutral criterion.
 
-The correct repair is to state the weakest independently motivated structure that supplies a nontrivial operation and then prove the complete invariant operations inside that scope.
+The correct repair is to state one independently motivated structure that supplies a nontrivial operation and then prove the complete invariant operations inside that declared scope. This does not establish that the selected structure is weakest, first, minimal, or broader than alternatives under any common order.
 
 ## 3. Independently stated scope
 
-A **typed compositional system** has:
+A **typed compositional system** consists of the following set-sized data and laws:
 
-- interfaces or states;
-- steps with a source and target;
-- an identity step at each interface;
-- sequential composition whenever types match;
-- associative composition with identities as units.
+- a set of interfaces and a set of steps;
+- total source and target functions from steps to interfaces;
+- a total designated identity assignment sending each interface `X` to one step `id_X : X -> X`;
+- a single-valued composition operation defined exactly on composable ordered pairs `(f,g)` with `target(f)=source(g)`, returning `g∘f` with source `source(f)` and target `target(g)`;
+- two-sided identity laws and associativity for every well-typed step and composable triple.
 
-A recoding must preserve exactly that structure.
+A recoding preserves interfaces, steps, source, target, identities, and composition.
 
-These are the axioms of a small category, and the recodings are functors. RCCD, FARA primitives, audit questions, observations, objectives, failure predicates, and preferred decompositions are absent from the definition.
+These are exactly the data and laws of a small category, and the recodings are functors. RCCD, FARA primitives, audit questions, observations, objectives, failure predicates, and preferred decompositions are absent from the definition.
 
-This scope is broad in one precise sense: it contains exactly every small system satisfying the four typed-composition axioms. It is not claimed to include every conceivable nonsequential, embodied, continuous, oracle-dependent, or higher-dimensional reasoning process without additional representation choices.
+This scope contains exactly every small category under the declared contract. It is not claimed to include every conceivable nonsequential, embodied, continuous, oracle-dependent, or higher-dimensional reasoning process without additional representation choices. It is also not claimed to be weaker, broader, or minimal relative to structures with different signatures or recoding policies.
 
 ## 4. Theorem 1: exact structural characterization
 
-A system satisfying the four typed-composition axioms is a small category by definition:
+A system satisfying TC1–TC4 is a small category because the contract explicitly supplies:
 
-- interfaces are objects;
-- steps are morphisms;
-- source and target give morphism typing;
-- identity steps are identity morphisms;
-- sequential composition is categorical composition.
+- set-sized object and morphism collections;
+- total source and target functions;
+- one designated identity morphism for each object;
+- one composition value for every and only every composable ordered pair, with the required source and target;
+- the unit and associativity laws.
 
-A map preserving source, target, identities, and composition is exactly a functor.
+A map preserving all of that data is exactly a functor.
 
-Therefore the selected class is not tailored to RCCD. It is the complete class determined by the independently stated typed-composition contract.
+Therefore the selected class is not tailored to RCCD. It is the complete class determined by the independently stated small-category contract.
 
 ## 5. Theorem 2: path-term classification
 
@@ -116,13 +116,15 @@ The two invariant operations of this input shape returning an `A -> C` arrow are
 
 The committed verifier constructs the free category, checks identity and associativity, confirms the new composite, and corroborates preservation through a word-category interpretation followed by a length-preserving recoding.
 
-## 7. Minimality boundary
+## 7. Scope boundary, not a minimality theorem
 
-If sequential composition is removed, the remaining directed graph has no internal arrow corresponding to `b∘a`. A free-category construction can add the path, but that is a completion chosen by the analyst; it is not already an operation of the graph.
+If internal sequential composition is removed from this specific contract, the remaining directed graph has no internal arrow corresponding to `b∘a`. A free-category construction can add the path, but that is an added completion rather than an operation already present in the graph.
+
+This observation establishes only that the witness `b∘a` depends on composition in the selected representation. It does not order or eliminate semigroupoids, semicategories, semigroups, multicategories, operads, higher categories, partial algebras, or other weaker, richer, or incomparable structures.
 
 If the scope is strengthened with products, coproducts, monoidal combination, order, probability, topology, closure, observation, or semantics, additional invariant operations may appear. Each additional operation depends on that added structure and its preserving maps.
 
-Therefore typed composition is the first nontrivial invariant layer under the selected criterion, not the final architecture of reasoning.
+Therefore typed composition is a demonstrated nontrivial invariant layer under the selected criterion. No weakest, first, minimal, or globally optimal structure has been proved.
 
 ## 8. RCCD consequence
 
@@ -146,9 +148,9 @@ Any derivation of those features requires additional premises or evidence. Treat
 The previous result remains valid:
 
 - on bare sets with every function admitted, natural positive-finitary element-valued operations are only projections;
-- on typed compositional systems with functors admitted, nontrivial arrow-valued path operations exist.
+- on small categories with functors admitted, nontrivial arrow-valued path operations exist.
 
-There is no contradiction. The second result adds independently declared typing and composition. The added operations arise exactly from that additional structure.
+There is no contradiction because the signatures, output types, and admissible recodings differ. The second result uses typing and composition; the first does not. Neither result establishes that one scope is broader than the other under a common comparison order.
 
 ## 10. Terminal disposition
 
@@ -162,7 +164,7 @@ The stronger absolute statement remains invalid:
 
 That statement is not proved and is listed as a nonclaim.
 
-No objectively strongest full reasoning architecture was discovered. The terminal common invariant is compositional structure, not RCCD.
+No objectively strongest full reasoning architecture was discovered. The terminal common invariant inside the selected categorical scope is compositional structure, not RCCD.
 
 ## 11. What remains open
 
@@ -174,7 +176,9 @@ The clean-room empirical program is not complete. It still must determine whethe
 - several bases remain Pareto-incomparable;
 - held-out cases defeat every proposed basis.
 
-This result closes the architecture-neutral compositional subquestion. It does not execute or replace the empirical comparison program.
+The formal comparison problem also remains open: no common order has been defined and proved across categorical, semigroupoidal, higher-dimensional, probabilistic, embodied, or other candidate structures.
+
+This result closes the architecture-neutral compositional subquestion only within the declared small-category scope. It does not execute or replace the empirical comparison program.
 
 ## 12. Proof and assurance status
 
