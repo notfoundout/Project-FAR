@@ -18,9 +18,12 @@ _git_blob_sha1 = integrity._git_blob_sha1
 CONTRACT_DIGESTS = {
     "arms": "69842f18cf5309d92bb5fba51a394d77b1ef221264a6881f56fd7d56ef62e095",
     "arm_matching": "386f364130f3cff43092e1eef9c3e45fbf9291e4d3cf10f90878670925f14459",
+    "task_population": "a06b42a8b462051535547dc5435864fdb78aa4ab77b73469a01e752c5eac2bad",
+    "assignment": "bcb47dde562693980e012d8a2840e28015d6c2d24347138707bc25bf2fa4aceb",
     "execution_controls": "98c69c448baae529a4314b570e92d503df65bf0f581f1241c046c309426aa503",
     "outcomes": "425fbc3a58632b77b5ccfeec264a4d4756f6809d2b3e58cf300c045a26c57f2b",
     "blinding": "0a49cf62f75063a91f88a2d732ba1a12b57fa0a7f2c1961d55232cb005340182",
+    "allowed_content": "4d6c91f92ef7c78b9a73a479a45403757b954499b1b212f2bbcdaffba8426824",
     "runtime": "ebea8e1896276afdcdbc3f058f1f52994be991d77c031d821b7b28e5b29d13d6",
     "source": "b6914e456e26124212e124e10d2eda7abefd520a8953f6d5445ec2a2f3238a14",
     "required_outputs": "af9cf47a1dc29cbfb5d91a17ecc685534378f79340355f746497d4e417e2d252",
@@ -86,6 +89,11 @@ def verify_preregistration() -> None:
     )
 
     population = data.get("task_population")
+    integrity._require_digest(
+        population,
+        CONTRACT_DIGESTS["task_population"],
+        "complete confirmatory task-population contract",
+    )
     if not isinstance(population, dict) or population.get("status") != "unfrozen":
         raise DesignError("task population must remain unfrozen")
     if integrity._integer(
@@ -111,6 +119,11 @@ def verify_preregistration() -> None:
         raise DesignError("Project FAR task repository prohibition missing")
 
     assignment = data.get("assignment")
+    integrity._require_digest(
+        assignment,
+        CONTRACT_DIGESTS["assignment"],
+        "complete counterbalancing and assignment contract",
+    )
     if not isinstance(assignment, dict):
         raise DesignError("assignment object required")
     if assignment.get("paired_design") is not True:
@@ -217,6 +230,11 @@ def verify_capsule_contract() -> None:
         "capsule identity outputs",
     )
     integrity._require_digest(
+        data.get("allowed_content_classes"),
+        CONTRACT_DIGESTS["allowed_content"],
+        "complete capsule allowed-content boundary",
+    )
+    integrity._require_digest(
         data.get("forbidden_content_classes"),
         CONTRACT_DIGESTS["forbidden_content"],
         "complete capsule forbidden-content boundary",
@@ -277,6 +295,7 @@ def verify_text_boundaries() -> None:
         HERE / "evidence-and-analysis-plan-v1.0.md"
     ).decode("utf-8").lower()
     required_evidence = (
+        "model provider, endpoint, model version, parameters, and provider request identifier",
         "stdout",
         "stderr",
         "trajectory",
