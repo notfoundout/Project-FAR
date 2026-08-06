@@ -65,7 +65,10 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
         )
         self.assertEqual(rng["digest"], "SHA-256")
         self.assertEqual(rng["integer"], "first 8 digest bytes interpreted as unsigned big-endian")
-        self.assertIn("reject x >=", rng["unbiased_index_rule"])
+        self.assertEqual(
+            rng["unbiased_index_rule"],
+            "reject x >= 2^64 - (2^64 mod N); otherwise index = x mod N; increment rejection_counter from zero until accepted",
+        )
         self.assertEqual(spec["quantile_convention"]["id"], "hyndman_fan_type_7")
         self.assertIn("h=(m-1)*p", spec["quantile_convention"]["formula"])
 
