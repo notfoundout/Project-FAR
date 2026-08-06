@@ -45,32 +45,37 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
 
     def test_bootstrap_interval_and_rng_are_fully_frozen(self) -> None:
         spec = self.load_analysis()["bootstrap_interval_spec"]
-        self.assertEqual(spec["method"], "percentile_equal_tailed")
-        self.assertEqual(spec["lower_tail_probability"], 0.025)
-        self.assertEqual(spec["upper_tail_probability"], 0.975)
-        self.assertEqual(spec["resample_count"], 100000)
-        self.assertEqual(spec["task_order"], "ascending frozen blind task identifier")
-        rng = spec["rng_procedure"]
-        self.assertEqual(rng["id"], "sha256_rejection_stream_v1")
         self.assertEqual(
-            rng["seed_format"],
-            "exactly 64 lowercase hexadecimal characters strictly base16-decoded into 32 bytes; the ASCII hex characters are not hashed",
+            spec,
+            {
+                "method": "percentile_equal_tailed",
+                "confidence_level": 0.95,
+                "lower_tail_probability": 0.025,
+                "upper_tail_probability": 0.975,
+                "resample_count": 100000,
+                "resample_unit": "task",
+                "resample_size": "number_of_complete_primary_tasks",
+                "draws_with_replacement": True,
+                "task_order": "ascending frozen blind task identifier",
+                "rng_procedure": {
+                    "id": "sha256_rejection_stream_v1",
+                    "seed_format": "exactly 64 lowercase hexadecimal characters strictly base16-decoded into 32 bytes; the ASCII hex characters are not hashed",
+                    "counter_encoding": "decoded_seed_32_bytes || uint64_be(resample_index) || uint64_be(draw_index) || uint32_be(rejection_counter)",
+                    "digest": "SHA-256",
+                    "integer": "first 8 digest bytes interpreted as unsigned big-endian",
+                    "unbiased_index_rule": "reject x >= 2^64 - (2^64 mod N); otherwise index = x mod N; increment rejection_counter from zero until accepted",
+                    "resample_index_origin": 0,
+                    "draw_index_origin": 0,
+                    "rejection_counter_origin": 0,
+                },
+                "quantile_convention": {
+                    "id": "hyndman_fan_type_7",
+                    "sorted_values": "ascending bootstrap estimates including duplicates",
+                    "formula": "h=(m-1)*p; q=(1-f)*x[floor(h)] + f*x[ceil(h)], where f=h-floor(h), zero-based indices, and m=100000",
+                },
+                "classification_uses_bounds": "lower p=0.025 and upper p=0.975 from this exact procedure",
+            },
         )
-        self.assertEqual(rng["resample_index_origin"], 0)
-        self.assertEqual(rng["draw_index_origin"], 0)
-        self.assertEqual(rng["rejection_counter_origin"], 0)
-        self.assertEqual(
-            rng["counter_encoding"],
-            "decoded_seed_32_bytes || uint64_be(resample_index) || uint64_be(draw_index) || uint32_be(rejection_counter)",
-        )
-        self.assertEqual(rng["digest"], "SHA-256")
-        self.assertEqual(rng["integer"], "first 8 digest bytes interpreted as unsigned big-endian")
-        self.assertEqual(
-            rng["unbiased_index_rule"],
-            "reject x >= 2^64 - (2^64 mod N); otherwise index = x mod N; increment rejection_counter from zero until accepted",
-        )
-        self.assertEqual(spec["quantile_convention"]["id"], "hyndman_fan_type_7")
-        self.assertIn("h=(m-1)*p", spec["quantile_convention"]["formula"])
 
 
 if __name__ == "__main__":
