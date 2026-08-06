@@ -38,13 +38,17 @@ These controls affect all arms equally and are part of the frozen agent configur
 
 ## Primary analysis
 
-For task `i` and arm `a`, resolution probability is the mean of valid binary resolution outcomes over the frozen repetitions. The task-level paired contrast is:
+A task-arm cell is valid only when every frozen repetition in that cell has a valid binary resolution outcome. An infrastructure-invalid slot may receive at most one replacement attempt, using the same frozen task, arm, repetition, model, environment, budgets, and prompts, and only before any outcome reveal. If the replacement is absent or invalid, the retained invalid repetition makes the entire task-arm cell missing; surviving repetitions are never averaged by themselves.
+
+For task `i` and arm `a`, `p_i(a)` is the mean over all preregistered repetitions only when the cell is valid. The task-level paired contrast is:
 
 `D_i = p_i(far) - p_i(placebo)`
 
 The primary estimate is the arithmetic mean of `D_i` over the exact frozen confirmatory task set.
 
-Uncertainty uses a paired task bootstrap with 100,000 resamples. The bootstrap seed must be committed before outcome reveal. Invalid runs are not silently dropped; the preregistered invalid-run rule must either rerun the same frozen slot for an infrastructure failure or retain the task-arm cell as missing and trigger the declared missingness sensitivity analysis.
+If any FAR or placebo cell remains missing, the final confirmatory classification is `inconclusive_due_to_missingness`. The report must still show: the complete-case paired estimate; a worst-case full-task-set bound assigning missing FAR cells `0` and missing placebo cells `1`; and a best-case bound assigning missing FAR cells `1` and missing placebo cells `0`. Those sensitivity values are descriptive and cannot support a positive, harm, or no-practical-advantage classification.
+
+When no primary cells are missing, uncertainty uses a paired task bootstrap with 100,000 resamples. The bootstrap seed must be committed before outcome reveal. Decision precedence is: `inconclusive_due_to_missingness`, `bounded_harm`, `bounded_positive`, `no_practical_advantage`, then `inconclusive`. `no_practical_advantage` requires a nonnegative upper bound below `0.10`, so it cannot overlap `bounded_harm`.
 
 ## Critical-harm gates
 
