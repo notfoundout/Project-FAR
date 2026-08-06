@@ -53,8 +53,23 @@
   },
   "placebo_matching": {
     "required": true,
-    "utf8_bytes_relative_tolerance": 0.01,
-    "frozen_tokenizer_tokens_relative_tolerance": 0.01,
+    "relative_tolerance": {
+      "applies_to": [
+        "utf8_bytes",
+        "frozen_tokenizer_tokens"
+      ],
+      "maximum_absolute_relative_difference": {
+        "numerator": 1,
+        "denominator": 100
+      },
+      "reference_count": "far_treatment_count",
+      "far_count_requirement": "positive integer",
+      "placebo_count_requirement": "nonnegative integer",
+      "boundary": "inclusive",
+      "rounding": "none",
+      "floating_point_permitted": false,
+      "integer_acceptance_rule": "abs(placebo_count - far_treatment_count) * 100 <= far_treatment_count"
+    },
     "file_count_exact": true,
     "relative_path_shape_exact": true,
     "directory_depth_exact": true,
