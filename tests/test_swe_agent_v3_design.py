@@ -104,6 +104,25 @@ class SweAgentV3DesignTests(unittest.TestCase):
                 (self.here / name).write_bytes(original)
                 self.refresh_manifest()
 
+    def test_execution_control_and_source_shapes_are_exact(self) -> None:
+        cases = (
+            ("preregistration-v1.0.json", lambda d: d.__setitem__("execution_controls", {})),
+            ("preregistration-v1.0.json", lambda d: d["execution_controls"].pop("same_tools_across_arms")),
+            ("preregistration-v1.0.json", lambda d: d["execution_controls"].__setitem__("same_hidden_state_across_arms", True)),
+            ("preregistration-v1.0.json", lambda d: d["execution_controls"].__setitem__("same_tools_across_arms", False)),
+            ("treatment-capsule-contract-v1.0.json", lambda d: d["source"].pop("repository")),
+            ("treatment-capsule-contract-v1.0.json", lambda d: d["source"].__setitem__("repository", "example/unrelated")),
+            ("treatment-capsule-contract-v1.0.json", lambda d: d["source"].__setitem__("branch", "main")),
+            ("treatment-capsule-contract-v1.0.json", lambda d: d["source"].__setitem__("commit_sha", "0" * 40)),
+        )
+        for name, mutation in cases:
+            with self.subTest(name=name):
+                original = (self.here / name).read_bytes()
+                self.mutate_json(name, mutation)
+                self.rejected()
+                (self.here / name).write_bytes(original)
+                self.refresh_manifest()
+
     def test_tolerance_contract_is_exact(self) -> None:
         cases = (
             ("preregistration-v1.0.json", lambda d: d["arms"][1]["matching_requirements"]["relative_tolerance"].__setitem__("reference_count", "placebo_count")),
