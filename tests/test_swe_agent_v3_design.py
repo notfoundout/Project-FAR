@@ -91,6 +91,16 @@ class SweAgentV3DesignTests(unittest.TestCase):
         with self.assertRaises(verify_module.DesignError):
             self.run_verify()
 
+    def test_preregistration_tolerances_cannot_drift_below_contract(self) -> None:
+        self.mutate_json(
+            "preregistration-v1.0.json",
+            lambda d: d["arms"][1]["matching_requirements"].__setitem__(
+                "frozen_tokenizer_tokens_relative_tolerance", 0.005
+            ),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
     def test_project_far_task_prohibition_is_required(self) -> None:
         self.mutate_json(
             "preregistration-v1.0.json",
@@ -192,10 +202,47 @@ class SweAgentV3DesignTests(unittest.TestCase):
                         with self.assertRaises(verify_module.DesignError):
                             verify_module.verify()
 
+    def test_numeric_boolean_equivalents_are_rejected(self) -> None:
+        for field, value in (("read_only", 1), ("network_access", 0)):
+            with self.subTest(field=field):
+                with tempfile.TemporaryDirectory() as tmp:
+                    clone_root = Path(tmp)
+                    clone = clone_root / "research/external-validation/swe-agent-v3"
+                    clone.parent.mkdir(parents=True)
+                    shutil.copytree(self.here, clone)
+                    data_path = clone / "treatment-capsule-contract-v1.0.json"
+                    data = json.loads(data_path.read_text())
+                    data["runtime_constraints"][field] = value
+                    data_path.write_text(json.dumps(data, indent=2) + "\n")
+                    manifest_path = clone / "design-manifest-v1.0.json"
+                    manifest = json.loads(manifest_path.read_text())
+                    for entry in manifest["artifacts"]:
+                        path = clone_root / entry["path"]
+                        entry.clear()
+                        entry.update(
+                            path=str(path.relative_to(clone_root)).replace("\\", "/"),
+                            git_blob_sha1=git_blob_sha1(path),
+                            bytes=path.stat().st_size,
+                        )
+                    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
+                    with mock.patch.object(verify_module, "ROOT", clone_root), \
+                         mock.patch.object(verify_module, "HERE", clone), \
+                         mock.patch.object(verify_module, "MANIFEST", manifest_path):
+                        with self.assertRaises(verify_module.DesignError):
+                            verify_module.verify()
+
     def test_capsule_placebo_matching_contract_is_exact(self) -> None:
         self.mutate_json(
             "treatment-capsule-contract-v1.0.json",
             lambda d: d["placebo_matching"].__setitem__("read_order_exact", False),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_capsule_placebo_required_must_be_boolean(self) -> None:
+        self.mutate_json(
+            "treatment-capsule-contract-v1.0.json",
+            lambda d: d["placebo_matching"].__setitem__("required", 1),
         )
         with self.assertRaises(verify_module.DesignError):
             self.run_verify()
