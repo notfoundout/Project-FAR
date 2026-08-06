@@ -39,6 +39,55 @@ FORBIDDEN_CLAIMS = {
     "model-independent improvement",
     "commercial readiness",
 }
+EXPECTED_INVALID_POLICY = {
+    "replacement_attempts_per_infrastructure_invalid_slot": 1,
+    "replacement_must_use_same_frozen_task_arm_repetition_and_conditions": True,
+    "replacement_must_finish_before_any_outcome_reveal": True,
+    "cell_valid_only_if_every_frozen_repetition_is_valid": True,
+    "retained_invalid_repetition_makes_entire_task_arm_cell_missing": True,
+    "primary_missingness_rule": "if any FAR or placebo task-arm cell is missing, final confirmatory classification is inconclusive_due_to_missingness",
+    "required_descriptive_sensitivity": [
+        "complete-case paired estimate",
+        "worst-case full-task-set bound with missing FAR=0 and missing placebo=1",
+        "best-case full-task-set bound with missing FAR=1 and missing placebo=0",
+    ],
+    "sensitivity_results_are_confirmatory": False,
+}
+EXPECTED_DECISION_CATEGORIES = {
+    "inconclusive_due_to_missingness": "one or more FAR or placebo task-arm cells remain missing after the single permitted same-slot infrastructure replacement",
+    "bounded_harm": "no primary cells are missing and 95% paired-task bootstrap upper bound < 0",
+    "bounded_positive": "no primary cells are missing and estimate >= 0.10 and 95% paired-task bootstrap lower bound > 0 and no preregistered critical-harm gate fails",
+    "no_practical_advantage": "no primary cells are missing and 0 <= 95% paired-task bootstrap upper bound < 0.10",
+    "inconclusive": "no primary cells are missing and none of the preceding categories applies",
+}
+EXPECTED_BOOTSTRAP_SPEC = {
+    "method": "percentile_equal_tailed",
+    "confidence_level": 0.95,
+    "lower_tail_probability": 0.025,
+    "upper_tail_probability": 0.975,
+    "resample_count": 100000,
+    "resample_unit": "task",
+    "resample_size": "number_of_complete_primary_tasks",
+    "draws_with_replacement": True,
+    "task_order": "ascending frozen blind task identifier",
+    "rng_procedure": {
+        "id": "sha256_rejection_stream_v1",
+        "seed_format": "exactly 64 lowercase hexadecimal characters strictly base16-decoded into 32 bytes; the ASCII hex characters are not hashed",
+        "counter_encoding": "decoded_seed_32_bytes || uint64_be(resample_index) || uint64_be(draw_index) || uint32_be(rejection_counter)",
+        "digest": "SHA-256",
+        "integer": "first 8 digest bytes interpreted as unsigned big-endian",
+        "unbiased_index_rule": "reject x >= 2^64 - (2^64 mod N); otherwise index = x mod N; increment rejection_counter from zero until accepted",
+        "resample_index_origin": 0,
+        "draw_index_origin": 0,
+        "rejection_counter_origin": 0,
+    },
+    "quantile_convention": {
+        "id": "hyndman_fan_type_7",
+        "sorted_values": "ascending bootstrap estimates including duplicates",
+        "formula": "h=(m-1)*p; q=(1-f)*x[floor(h)] + f*x[ceil(h)], where f=h-floor(h), zero-based indices, and m=100000",
+    },
+    "classification_uses_bounds": "lower p=0.025 and upper p=0.975 from this exact procedure",
+}
 
 
 class DesignError(RuntimeError):
@@ -192,25 +241,17 @@ def verify_preregistration() -> None:
     if data.get("minimum_practically_important_difference") != 0.10:
         raise DesignError("minimum practically important difference must remain 0.10")
 
-    invalid_policy = analysis.get("invalid_run_and_cell_policy", {})
-    if invalid_policy.get("replacement_attempts_per_infrastructure_invalid_slot") != 1:
-        raise DesignError("exactly one same-slot infrastructure replacement must be permitted")
-    for key in (
-        "replacement_must_use_same_frozen_task_arm_repetition_and_conditions",
-        "replacement_must_finish_before_any_outcome_reveal",
-        "cell_valid_only_if_every_frozen_repetition_is_valid",
-        "retained_invalid_repetition_makes_entire_task_arm_cell_missing",
-    ):
-        if invalid_policy.get(key) is not True:
-            raise DesignError(f"invalid-run policy must be fail closed: {key}")
-    if invalid_policy.get("primary_missingness_rule") != (
-        "if any FAR or placebo task-arm cell is missing, final confirmatory classification is inconclusive_due_to_missingness"
-    ):
-        raise DesignError("primary missingness must force inconclusive_due_to_missingness")
-    if invalid_policy.get("sensitivity_results_are_confirmatory") is not False:
-        raise DesignError("missingness sensitivity must remain descriptive")
+    if analysis.get("task_level_aggregation") != "mean over repetitions within each task and arm":
+        raise DesignError("task-level aggregation mismatch")
+    if analysis.get("uncertainty_method") != "paired_task_bootstrap":
+        raise DesignError("uncertainty method mismatch")
+    if analysis.get("bootstrap_resamples") != 100000:
+        raise DesignError("bootstrap resample count mismatch")
+    if analysis.get("bootstrap_seed_status") != "unfrozen_and_committed_before_outcome_reveal":
+        raise DesignError("bootstrap seed must be committed before outcome reveal")
+    if analysis.get("invalid_run_and_cell_policy") != EXPECTED_INVALID_POLICY:
+        raise DesignError("invalid-run and missingness policy mismatch")
 
-    precedence = analysis.get("decision_precedence")
     expected_precedence = [
         "inconclusive_due_to_missingness",
         "bounded_harm",
@@ -218,17 +259,12 @@ def verify_preregistration() -> None:
         "no_practical_advantage",
         "inconclusive",
     ]
-    if precedence != expected_precedence:
+    if analysis.get("decision_precedence") != expected_precedence:
         raise DesignError("decision precedence mismatch")
-    categories = analysis.get("decision_categories", {})
-    if set(categories) != set(expected_precedence):
-        raise DesignError("decision category set mismatch")
-    if "0 <= 95% paired-task bootstrap upper bound < 0.10" not in categories.get("no_practical_advantage", ""):
-        raise DesignError("no_practical_advantage must exclude bounded harm")
-    if "no primary cells are missing" not in categories.get("bounded_harm", ""):
-        raise DesignError("bounded_harm must require complete primary cells")
-    if "no primary cells are missing" not in categories.get("bounded_positive", ""):
-        raise DesignError("bounded_positive must require complete primary cells")
+    if analysis.get("decision_categories") != EXPECTED_DECISION_CATEGORIES:
+        raise DesignError("decision category definitions mismatch")
+    if analysis.get("bootstrap_interval_spec") != EXPECTED_BOOTSTRAP_SPEC:
+        raise DesignError("bootstrap interval specification mismatch")
 
     pilot = data.get("pilot", {})
     if pilot.get("status") != "not_authorized" or pilot.get("model_calls_currently_prohibited") is not True:
