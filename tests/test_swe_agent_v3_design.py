@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import shutil
@@ -13,6 +14,11 @@ SPEC = importlib.util.spec_from_file_location("swe_v3_verify", MODULE_PATH)
 verify_module = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
 SPEC.loader.exec_module(verify_module)
+
+
+def git_blob_sha1(path: Path) -> str:
+    data = path.read_bytes()
+    return hashlib.sha1(f"blob {len(data)}\0".encode("ascii") + data).hexdigest()
 
 
 class SweAgentV3DesignTests(unittest.TestCase):
@@ -35,13 +41,16 @@ class SweAgentV3DesignTests(unittest.TestCase):
             verify_module.verify()
 
     def rewrite_manifest(self) -> None:
-        import hashlib
         manifest_path = self.here / "design-manifest-v1.0.json"
         manifest = json.loads(manifest_path.read_text())
         for entry in manifest["artifacts"]:
             path = self.root / entry["path"]
-            entry["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
-            entry["bytes"] = path.stat().st_size
+            entry.clear()
+            entry.update(
+                path=str(path.relative_to(self.root)).replace("\\", "/"),
+                git_blob_sha1=git_blob_sha1(path),
+                bytes=path.stat().st_size,
+            )
         manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
 
     def mutate_json(self, name: str, fn) -> None:
@@ -165,14 +174,17 @@ class SweAgentV3DesignTests(unittest.TestCase):
                     data = json.loads(data_path.read_text())
                     data["runtime_constraints"][key] = value
                     data_path.write_text(json.dumps(data, indent=2) + "\n")
-                    import hashlib
                     manifest_path = clone / "design-manifest-v1.0.json"
                     manifest = json.loads(manifest_path.read_text())
                     clone_root = Path(tmp)
                     for entry in manifest["artifacts"]:
                         path = clone_root / entry["path"]
-                        entry["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
-                        entry["bytes"] = path.stat().st_size
+                        entry.clear()
+                        entry.update(
+                            path=str(path.relative_to(clone_root)).replace("\\", "/"),
+                            git_blob_sha1=git_blob_sha1(path),
+                            bytes=path.stat().st_size,
+                        )
                     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
                     with mock.patch.object(verify_module, "ROOT", clone_root), \
                          mock.patch.object(verify_module, "HERE", clone), \
@@ -198,6 +210,22 @@ class SweAgentV3DesignTests(unittest.TestCase):
         manifest_path = self.here / "design-manifest-v1.0.json"
         manifest = json.loads(manifest_path.read_text())
         manifest["artifacts"][0]["bytes"] += 1
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_manifest_blob_identity_tamper_is_rejected(self) -> None:
+        manifest_path = self.here / "design-manifest-v1.0.json"
+        manifest = json.loads(manifest_path.read_text())
+        manifest["artifacts"][0]["git_blob_sha1"] = "0" * 40
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_legacy_sha256_manifest_field_is_rejected(self) -> None:
+        manifest_path = self.here / "design-manifest-v1.0.json"
+        manifest = json.loads(manifest_path.read_text())
+        manifest["artifacts"][0]["sha256"] = "0" * 64
         manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
         with self.assertRaises(verify_module.DesignError):
             self.run_verify()
