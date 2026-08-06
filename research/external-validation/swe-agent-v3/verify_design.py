@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 import sys
 from pathlib import Path
 
@@ -39,6 +40,9 @@ CONTRACT_DIGESTS = {
 EVIDENCE_BUNDLE_SECTION_SHA256 = (
     "4fa33bbd5a4db1683520a035c2a4ca504fdb00d9a0e8ce999ee1436f8da2075e"
 )
+PRE_SUBMISSION_SECTION_SHA256 = (
+    "d4ad9fd4d3f5d3852bf42d18cb30759ec7d53f03f67966b812e7aaf096b42ae8"
+)
 ANALYSIS_KEYS = {
     "task_level_aggregation",
     "primary_estimand",
@@ -73,6 +77,21 @@ GATES = {
 }
 
 
+def _normalized_atx_headings(text: str) -> list[tuple[int, str]]:
+    headings: list[tuple[int, str]] = []
+    for line in text.splitlines():
+        indentation = len(line) - len(line.lstrip(" "))
+        if indentation > 3:
+            continue
+        candidate = line[indentation:]
+        match = re.match(r"^(#{1,6})(?:[ \t]+|$)(.*)$", candidate)
+        if match is None:
+            continue
+        title = re.sub(r"[ \t]+#+[ \t]*$", "", match.group(2)).strip()
+        headings.append((len(match.group(1)), title))
+    return headings
+
+
 def verify_preregistration() -> None:
     data = integrity._load_json(HERE / "preregistration-v1.0.json")
     identity = (
@@ -86,6 +105,13 @@ def verify_preregistration() -> None:
         raise DesignError("execution must remain prohibited")
     if data.get("historical_v2_pooling_permitted") is not False:
         raise DesignError("historical v2 pooling must remain prohibited")
+    if data.get("primary_contrast") != "far_minus_placebo":
+        raise DesignError("primary contrast must remain FAR minus placebo")
+    if data.get("secondary_contrasts") != [
+        "far_minus_baseline",
+        "placebo_minus_baseline",
+    ]:
+        raise DesignError("secondary contrast list and order must remain exact")
 
     arms = data.get("arms")
     if not isinstance(arms, list):
@@ -318,18 +344,46 @@ def verify_text_boundaries() -> None:
     evidence_text = integrity._read_regular(
         HERE / "evidence-and-analysis-plan-v1.0.md"
     ).decode("utf-8")
-    start_marker = "## Evidence bundle per run\n"
-    end_marker = "\n## Pre-submission behavior contract\n"
-    if evidence_text.count(start_marker) != 1 or evidence_text.count(end_marker) != 1:
-        raise DesignError("evidence-bundle section markers must be unique")
-    start = evidence_text.find(start_marker)
-    end = evidence_text.find(end_marker, start + len(start_marker))
-    if start < 0 or end < 0 or end <= start:
-        raise DesignError("evidence-bundle section boundary missing or invalid")
-    evidence_bundle = evidence_text[start:end]
+    headings = _normalized_atx_headings(evidence_text)
+    required_headings = (
+        "Evidence bundle per run",
+        "Pre-submission behavior contract",
+        "Failure semantics",
+    )
+    if any(headings.count((2, title)) != 1 for title in required_headings):
+        raise DesignError("governed evidence-plan headings must be unique")
+
+    evidence_start_marker = "## Evidence bundle per run\n"
+    pre_submission_start_marker = "## Pre-submission behavior contract\n"
+    pre_submission_end_marker = "\n## Failure semantics\n"
+    evidence_start = evidence_text.find(evidence_start_marker)
+    pre_submission_start = evidence_text.find(pre_submission_start_marker)
+    pre_submission_end = evidence_text.find(
+        pre_submission_end_marker,
+        pre_submission_start + len(pre_submission_start_marker),
+    )
+    if (
+        evidence_start < 0
+        or pre_submission_start < 0
+        or pre_submission_end < 0
+        or not evidence_start < pre_submission_start < pre_submission_end
+    ):
+        raise DesignError("governed evidence-plan section boundaries are invalid")
+
+    evidence_end = pre_submission_start - 1
+    evidence_bundle = evidence_text[evidence_start:evidence_end]
     evidence_digest = hashlib.sha256(evidence_bundle.encode("utf-8")).hexdigest()
     if evidence_digest != EVIDENCE_BUNDLE_SECTION_SHA256:
         raise DesignError("complete evidence-bundle contract mismatch")
+
+    pre_submission_contract = evidence_text[
+        pre_submission_start:pre_submission_end
+    ]
+    pre_submission_digest = hashlib.sha256(
+        pre_submission_contract.encode("utf-8")
+    ).hexdigest()
+    if pre_submission_digest != PRE_SUBMISSION_SECTION_SHA256:
+        raise DesignError("pre-submission behavior contract mismatch")
 
     evidence = evidence_text.lower()
     required_evidence = (
