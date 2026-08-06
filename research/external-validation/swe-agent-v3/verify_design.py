@@ -17,7 +17,9 @@ _git_blob_sha1 = integrity._git_blob_sha1
 
 CONTRACT_DIGESTS = {
     "arm_matching": "386f364130f3cff43092e1eef9c3e45fbf9291e4d3cf10f90878670925f14459",
+    "execution_controls": "98c69c448baae529a4314b570e92d503df65bf0f581f1241c046c309426aa503",
     "runtime": "ebea8e1896276afdcdbc3f058f1f52994be991d77c031d821b7b28e5b29d13d6",
+    "source": "b6914e456e26124212e124e10d2eda7abefd520a8953f6d5445ec2a2f3238a14",
     "placebo_matching": "7502f557f9dac08df1afe5d13993785276f5b26b0d33dce49db9fc577f5f0d3d",
     "invalid_policy": "911e4ae6c40c019e204e67bbc5d4ceadb393a10eedb193fcd3df0ada625a550c",
     "decision_categories": "38d6859deb3966d2e887733c959ed8e5ca55db898864a4f7385ba2797f4561d8",
@@ -116,11 +118,11 @@ def verify_preregistration() -> None:
     ):
         raise DesignError("fresh workspace and context required")
 
-    controls = data.get("execution_controls")
-    if not isinstance(controls, dict) or any(
-        value is not True for value in controls.values()
-    ):
-        raise DesignError("all frozen execution controls must be true")
+    integrity._require_digest(
+        data.get("execution_controls"),
+        CONTRACT_DIGESTS["execution_controls"],
+        "execution controls",
+    )
 
     analysis = data.get("analysis")
     if not isinstance(analysis, dict):
@@ -183,12 +185,11 @@ def verify_capsule_contract() -> None:
         raise DesignError("capsule must remain uninstantiated")
     if data.get("execution_authorized") is not False:
         raise DesignError("capsule execution must remain unauthorized")
-    source = data.get("source")
-    source_keys = ("commit_sha", "tree_sha", "theory_version", "exporter_blob_sha")
-    if not isinstance(source, dict) or any(
-        source.get(key) is not None for key in source_keys
-    ):
-        raise DesignError("capsule source must remain unfrozen")
+    integrity._require_digest(
+        data.get("source"),
+        CONTRACT_DIGESTS["source"],
+        "capsule source provenance",
+    )
     forbidden = " ".join(
         integrity._strings(
             data.get("forbidden_content_classes"),
