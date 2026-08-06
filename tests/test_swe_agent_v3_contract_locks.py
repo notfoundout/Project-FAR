@@ -25,6 +25,9 @@ class SweAgentV3ContractLockTests(unittest.TestCase):
         for name in (
             "preregistration-v1.0.json",
             "treatment-capsule-contract-v1.0.json",
+            "evidence-and-analysis-plan-v1.0.md",
+            "README.md",
+            "question-v1.0.md",
         ):
             shutil.copy2(MODULE_PATH.parent / name, self.here / name)
 
@@ -141,6 +144,81 @@ class SweAgentV3ContractLockTests(unittest.TestCase):
             with self.subTest(index=index):
                 self.reset_fixture()
                 self.assert_capsule_rejected(mutation)
+
+    def test_task_population_contract_is_exact(self) -> None:
+        mutations = (
+            lambda d: d.pop("task_population"),
+            lambda d: d["task_population"].pop("prohibited_tasks"),
+            lambda d: d["task_population"]["prohibited_tasks"].remove(
+                "any historical SWE-agent v2 task"
+            ),
+            lambda d: d["task_population"]["prohibited_tasks"].remove(
+                "any task used in the sacrificial harness pilot"
+            ),
+            lambda d: d["task_population"]["prohibited_tasks"].remove(
+                "any task exposed during capsule construction"
+            ),
+            lambda d: d["task_population"]["prohibited_tasks"].remove(
+                "any task with gold patch or hidden-test exposure to an operator or treatment author"
+            ),
+        )
+        for index, mutation in enumerate(mutations):
+            with self.subTest(index=index):
+                self.reset_fixture()
+                self.assert_preregistration_rejected(mutation)
+
+    def test_assignment_contract_is_exact(self) -> None:
+        mutations = (
+            lambda d: d.pop("assignment"),
+            lambda d: d["assignment"].__setitem__("order", "fixed"),
+            lambda d: d["assignment"].__setitem__(
+                "randomization_seed_status", "selected_after_outcome_reveal"
+            ),
+            lambda d: d["assignment"].__setitem__("paired_design", False),
+            lambda d: d["assignment"].__setitem__(
+                "operator_override_permitted", True
+            ),
+        )
+        for index, mutation in enumerate(mutations):
+            with self.subTest(index=index):
+                self.reset_fixture()
+                self.assert_preregistration_rejected(mutation)
+
+    def test_capsule_allowed_content_boundary_is_exact(self) -> None:
+        mutations = (
+            lambda d: d.pop("allowed_content_classes"),
+            lambda d: d["allowed_content_classes"].append(
+                "general software-engineering advice unrelated to FAR"
+            ),
+            lambda d: d["allowed_content_classes"].remove(
+                "static instructions derived from the frozen FAR version"
+            ),
+            lambda d: d["allowed_content_classes"].remove(
+                "worked examples that are domain-neutral and frozen before task selection"
+            ),
+            lambda d: d.__setitem__("allowed_content_classes", []),
+        )
+        for index, mutation in enumerate(mutations):
+            with self.subTest(index=index):
+                self.reset_fixture()
+                self.assert_capsule_rejected(mutation)
+
+    def test_model_identity_evidence_is_required(self) -> None:
+        path = self.here / "evidence-and-analysis-plan-v1.0.md"
+        text = path.read_text(encoding="utf-8")
+        required = (
+            "- model provider, endpoint, model version, parameters, "
+            "and provider request identifier;\n"
+        )
+        self.assertIn(required, text)
+        path.write_text(
+            text.replace(required, "", 1),
+            encoding="utf-8",
+            newline="\n",
+        )
+        with mock.patch.object(verify_module, "HERE", self.here):
+            with self.assertRaises(verify_module.DesignError):
+                verify_module.verify_text_boundaries()
 
 
 if __name__ == "__main__":
