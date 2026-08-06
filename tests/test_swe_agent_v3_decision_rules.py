@@ -43,7 +43,7 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
         self.assertIn("no primary cells are missing", categories["bounded_harm"])
         self.assertIn("no primary cells are missing", categories["no_practical_advantage"])
 
-    def test_bootstrap_interval_and_rng_are_fully_frozen(self) -> None:
+    def test_bootstrap_interval_rng_and_order_are_fully_frozen(self) -> None:
         analysis = self.load_analysis()
         self.assertEqual(analysis["bootstrap_seed_status"], "unfrozen_and_committed_before_outcome_reveal")
         self.assertEqual(analysis["bootstrap_resamples"], 100000)
@@ -60,7 +60,16 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
                 "resample_unit": "task",
                 "resample_size": "number_of_complete_primary_tasks",
                 "draws_with_replacement": True,
-                "task_order": "ascending frozen blind task identifier",
+                "task_order": {
+                    "contract": "task-manifest-contract-v1.0.json",
+                    "source": "exact frozen ordered task manifest committed before outcome reveal",
+                    "blind_identifier_pattern": "^TASK-[0-9]{6}$",
+                    "blind_identifier_encoding": "ASCII subset of UTF-8; Unicode and normalization-sensitive identifiers are prohibited",
+                    "sequence_rule": "manifest JSON array order is authoritative; runtime sorting and locale collation are prohibited",
+                    "uniqueness_rule": "blind identifiers must be unique",
+                    "complete_case_rule": "remove tasks with missing primary cells while preserving manifest-relative order",
+                    "bootstrap_vector_rule": "D_i vector indices are exactly the remaining manifest array positions in order",
+                },
                 "rng_procedure": {
                     "id": "sha256_rejection_stream_v1",
                     "seed_format": "exactly 64 lowercase hexadecimal characters strictly base16-decoded into 32 bytes; the ASCII hex characters are not hashed",

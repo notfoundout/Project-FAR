@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import json
 import shutil
@@ -16,275 +15,191 @@ assert SPEC.loader is not None
 SPEC.loader.exec_module(verify_module)
 
 
-def git_blob_sha1(path: Path) -> str:
-    data = path.read_bytes()
-    return hashlib.sha1(f"blob {len(data)}\0".encode("ascii") + data).hexdigest()
-
-
 class SweAgentV3DesignTests(unittest.TestCase):
     def setUp(self) -> None:
         self.tmp = tempfile.TemporaryDirectory()
-        self.root = Path(self.tmp.name)
-        source = MODULE_PATH.parent
-        target = self.root / "research/external-validation/swe-agent-v3"
-        target.parent.mkdir(parents=True)
-        shutil.copytree(source, target)
-        self.here = target
+        self._reset_fixture()
 
     def tearDown(self) -> None:
         self.tmp.cleanup()
 
+    def _reset_fixture(self) -> None:
+        self.root = Path(self.tmp.name)
+        if self.root.exists():
+            for child in self.root.iterdir():
+                if child.is_dir():
+                    shutil.rmtree(child)
+                else:
+                    child.unlink()
+        self.here = self.root / "research/external-validation/swe-agent-v3"
+        self.here.parent.mkdir(parents=True)
+        shutil.copytree(MODULE_PATH.parent, self.here)
+        self.sync_committed()
+
+    def sync_committed(self) -> None:
+        self.committed = {
+            str(path.relative_to(self.root)).replace("\\", "/"): path.read_bytes()
+            for path in self.here.iterdir()
+            if path.is_file() and not path.is_symlink()
+        }
+
+    def committed_blob(self, relative: str) -> bytes:
+        try:
+            return self.committed[relative]
+        except KeyError as exc:
+            raise verify_module.DesignError(f"test committed blob missing: {relative}") from exc
+
     def run_verify(self) -> None:
-        with mock.patch.object(verify_module, "ROOT", self.root), \
-             mock.patch.object(verify_module, "HERE", self.here), \
-             mock.patch.object(verify_module, "MANIFEST", self.here / "design-manifest-v1.0.json"):
+        manifest = self.here / "design-manifest-v1.0.json"
+        with (
+            mock.patch.object(verify_module, "ROOT", self.root),
+            mock.patch.object(verify_module, "HERE", self.here),
+            mock.patch.object(verify_module, "MANIFEST", manifest),
+            mock.patch.object(
+                verify_module,
+                "_committed_blob_bytes",
+                side_effect=self.committed_blob,
+            ),
+        ):
             verify_module.verify()
 
-    def rewrite_manifest(self) -> None:
-        manifest_path = self.here / "design-manifest-v1.0.json"
-        manifest = json.loads(manifest_path.read_text())
+    def refresh_manifest(self, commit: bool = True) -> None:
+        path = self.here / "design-manifest-v1.0.json"
+        manifest = json.loads(path.read_text(encoding="utf-8"))
         for entry in manifest["artifacts"]:
-            path = self.root / entry["path"]
-            entry.clear()
-            entry.update(
-                path=str(path.relative_to(self.root)).replace("\\", "/"),
-                git_blob_sha1=git_blob_sha1(path),
-                bytes=path.stat().st_size,
-            )
-        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
+            artifact = self.root / entry["path"]
+            data = artifact.read_bytes()
+            entry["git_blob_sha1"] = verify_module._git_blob_sha1(data)
+            entry["bytes"] = len(data)
+        path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
+        if commit:
+            self.sync_committed()
 
-    def mutate_json(self, name: str, fn) -> None:
+    def mutate_json(self, name: str, mutation) -> None:
         path = self.here / name
-        data = json.loads(path.read_text())
-        fn(data)
-        path.write_text(json.dumps(data, indent=2) + "\n")
-        self.rewrite_manifest()
+        data = json.loads(path.read_text(encoding="utf-8"))
+        mutation(data)
+        path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8", newline="\n")
+        self.refresh_manifest()
+
+    def rejected(self) -> None:
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
 
     def test_canonical_design_passes(self) -> None:
         self.run_verify()
 
-    def test_execution_authorization_is_rejected(self) -> None:
-        self.mutate_json("execution-gate-v1.0.json", lambda d: d.__setitem__("execution_authorized", True))
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_any_true_gate_is_rejected(self) -> None:
-        self.mutate_json(
-            "execution-gate-v1.0.json",
-            lambda d: d["gates"].__setitem__("theory_version_frozen", True),
+    def test_execution_and_arm_weakening_are_rejected(self) -> None:
+        cases = (
+            ("execution-gate-v1.0.json", lambda d: d.__setitem__("execution_authorized", True)),
+            ("execution-gate-v1.0.json", lambda d: d["gates"].__setitem__("theory_version_frozen", True)),
+            ("preregistration-v1.0.json", lambda d: d["arms"].pop(1)),
+            ("preregistration-v1.0.json", lambda d: d.__setitem__("historical_v2_pooling_permitted", True)),
         )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
+        for name, mutation in cases:
+            with self.subTest(name=name):
+                original = (self.here / name).read_bytes()
+                self.mutate_json(name, mutation)
+                self.rejected()
+                (self.here / name).write_bytes(original)
+                self.refresh_manifest()
 
-    def test_missing_placebo_arm_is_rejected(self) -> None:
-        self.mutate_json("preregistration-v1.0.json", lambda d: d["arms"].pop(1))
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_weak_placebo_matching_is_rejected(self) -> None:
-        self.mutate_json(
-            "preregistration-v1.0.json",
-            lambda d: d["arms"][1]["matching_requirements"].__setitem__(
-                "utf8_bytes_relative_tolerance", 0.25
-            ),
+    def test_tolerance_contract_is_exact(self) -> None:
+        cases = (
+            ("preregistration-v1.0.json", lambda d: d["arms"][1]["matching_requirements"]["relative_tolerance"].__setitem__("reference_count", "placebo_count")),
+            ("preregistration-v1.0.json", lambda d: d["arms"][1]["matching_requirements"]["relative_tolerance"].__setitem__("rounding", "nearest percent")),
+            ("treatment-capsule-contract-v1.0.json", lambda d: d["placebo_matching"]["relative_tolerance"].__setitem__("integer_acceptance_rule", "abs(placebo_count-far_treatment_count)*100 < far_treatment_count")),
         )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
+        for name, mutation in cases:
+            with self.subTest(name=name):
+                original = (self.here / name).read_bytes()
+                self.mutate_json(name, mutation)
+                self.rejected()
+                (self.here / name).write_bytes(original)
+                self.refresh_manifest()
 
-    def test_preregistration_tolerances_cannot_drift_below_contract(self) -> None:
-        self.mutate_json(
-            "preregistration-v1.0.json",
-            lambda d: d["arms"][1]["matching_requirements"].__setitem__(
-                "frozen_tokenizer_tokens_relative_tolerance", 0.005
-            ),
+    def test_task_order_contract_is_exact(self) -> None:
+        cases = (
+            ("preregistration-v1.0.json", lambda d: d["analysis"]["bootstrap_interval_spec"]["task_order"].__setitem__("sequence_rule", "numeric runtime sort")),
+            ("task-manifest-contract-v1.0.json", lambda d: d["record_schema"]["blind_task_id"].__setitem__("unicode_permitted", True)),
+            ("task-manifest-contract-v1.0.json", lambda d: d["order_contract"].__setitem__("authoritative_sequence", "locale-sorted blind_task_id")),
         )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
+        for name, mutation in cases:
+            with self.subTest(name=name):
+                original = (self.here / name).read_bytes()
+                self.mutate_json(name, mutation)
+                self.rejected()
+                (self.here / name).write_bytes(original)
+                self.refresh_manifest()
 
-    def test_project_far_task_prohibition_is_required(self) -> None:
-        self.mutate_json(
-            "preregistration-v1.0.json",
-            lambda d: d["task_population"].__setitem__("prohibited_task_repositories", []),
+    def test_strict_json_rejects_nonfinite_duplicate_and_bom(self) -> None:
+        cases = (
+            ("preregistration-v1.0.json", lambda text: text.replace('"minimum_task_count": 24', '"minimum_task_count": NaN')),
+            ("preregistration-v1.0.json", lambda text: text.replace('"maximum_fraction_from_one_repository": 0.2', '"maximum_fraction_from_one_repository": Infinity')),
+            ("execution-gate-v1.0.json", lambda text: text.replace('"execution_authorized": false,', '"execution_authorized": false,\n  "execution_authorized": false,', 1)),
         )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
+        for name, mutation in cases:
+            with self.subTest(name=name):
+                path = self.here / name
+                original = path.read_bytes()
+                path.write_text(mutation(original.decode()), encoding="utf-8", newline="\n")
+                self.refresh_manifest()
+                self.rejected()
+                path.write_bytes(original)
+                self.refresh_manifest()
+        path = self.here / "preregistration-v1.0.json"
+        original = path.read_bytes()
+        path.write_bytes(b"\xef\xbb\xbf" + original)
+        self.refresh_manifest()
+        self.rejected()
 
-    def test_too_few_tasks_is_rejected(self) -> None:
-        self.mutate_json(
-            "preregistration-v1.0.json",
-            lambda d: d["task_population"].__setitem__("minimum_task_count", 4),
-        )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
+    def test_committed_bytes_and_manifest_are_fail_closed(self) -> None:
+        readme = self.here / "README.md"
+        readme.write_bytes(readme.read_bytes().replace(b"\n", b"\r\n"))
+        self.rejected()
+        self.setUp_after_drift()
+        manifest = self.here / "design-manifest-v1.0.json"
+        manifest.write_text(manifest.read_text() + "\n", encoding="utf-8", newline="\n")
+        self.rejected()
 
-    def test_v2_pooling_is_rejected(self) -> None:
-        self.mutate_json(
-            "preregistration-v1.0.json",
-            lambda d: d.__setitem__("historical_v2_pooling_permitted", True),
-        )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
+    def setUp_after_drift(self) -> None:
+        self._reset_fixture()
 
-    def test_invalid_repetition_cannot_be_averaged_away(self) -> None:
-        self.mutate_json(
-            "preregistration-v1.0.json",
-            lambda d: d["analysis"]["invalid_run_and_cell_policy"].__setitem__(
-                "retained_invalid_repetition_makes_entire_task_arm_cell_missing", False
-            ),
-        )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_decision_categories_cannot_overlap_harm(self) -> None:
-        self.mutate_json(
-            "preregistration-v1.0.json",
-            lambda d: d["analysis"]["decision_categories"].__setitem__(
-                "no_practical_advantage", "95% paired-task bootstrap upper bound < 0.10"
-            ),
-        )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_bootstrap_seed_must_be_committed_before_reveal(self) -> None:
-        self.mutate_json(
-            "preregistration-v1.0.json",
-            lambda d: d["analysis"].__setitem__(
-                "bootstrap_seed_status", "selected_after_outcome_reveal"
-            ),
-        )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_capsule_source_cannot_be_pretended_frozen(self) -> None:
-        self.mutate_json(
-            "treatment-capsule-contract-v1.0.json",
-            lambda d: d["source"].__setitem__("commit_sha", "a" * 40),
-        )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_capsule_runtime_constraints_are_exact(self) -> None:
-        mutations = {
-            "read_only": False,
-            "network_access": True,
-            "writes_outside_run_evidence_directory": True,
-            "extra_tool_permissions": True,
-            "extra_context_window": True,
-            "extra_model_calls": True,
-            "mutable_remote_dependencies": True,
-        }
-        for key, value in mutations.items():
-            with self.subTest(key=key):
-                with tempfile.TemporaryDirectory() as tmp:
-                    source = self.here
-                    clone = Path(tmp) / "research/external-validation/swe-agent-v3"
-                    clone.parent.mkdir(parents=True)
-                    shutil.copytree(source, clone)
-                    data_path = clone / "treatment-capsule-contract-v1.0.json"
-                    data = json.loads(data_path.read_text())
-                    data["runtime_constraints"][key] = value
-                    data_path.write_text(json.dumps(data, indent=2) + "\n")
-                    manifest_path = clone / "design-manifest-v1.0.json"
-                    manifest = json.loads(manifest_path.read_text())
-                    clone_root = Path(tmp)
-                    for entry in manifest["artifacts"]:
-                        path = clone_root / entry["path"]
-                        entry.clear()
-                        entry.update(
-                            path=str(path.relative_to(clone_root)).replace("\\", "/"),
-                            git_blob_sha1=git_blob_sha1(path),
-                            bytes=path.stat().st_size,
-                        )
-                    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
-                    with mock.patch.object(verify_module, "ROOT", clone_root), \
-                         mock.patch.object(verify_module, "HERE", clone), \
-                         mock.patch.object(verify_module, "MANIFEST", manifest_path):
-                        with self.assertRaises(verify_module.DesignError):
-                            verify_module.verify()
-
-    def test_numeric_boolean_equivalents_are_rejected(self) -> None:
-        for field, value in (("read_only", 1), ("network_access", 0)):
-            with self.subTest(field=field):
-                with tempfile.TemporaryDirectory() as tmp:
-                    clone_root = Path(tmp)
-                    clone = clone_root / "research/external-validation/swe-agent-v3"
-                    clone.parent.mkdir(parents=True)
-                    shutil.copytree(self.here, clone)
-                    data_path = clone / "treatment-capsule-contract-v1.0.json"
-                    data = json.loads(data_path.read_text())
-                    data["runtime_constraints"][field] = value
-                    data_path.write_text(json.dumps(data, indent=2) + "\n")
-                    manifest_path = clone / "design-manifest-v1.0.json"
-                    manifest = json.loads(manifest_path.read_text())
-                    for entry in manifest["artifacts"]:
-                        path = clone_root / entry["path"]
-                        entry.clear()
-                        entry.update(
-                            path=str(path.relative_to(clone_root)).replace("\\", "/"),
-                            git_blob_sha1=git_blob_sha1(path),
-                            bytes=path.stat().st_size,
-                        )
-                    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
-                    with mock.patch.object(verify_module, "ROOT", clone_root), \
-                         mock.patch.object(verify_module, "HERE", clone), \
-                         mock.patch.object(verify_module, "MANIFEST", manifest_path):
-                        with self.assertRaises(verify_module.DesignError):
-                            verify_module.verify()
-
-    def test_capsule_placebo_matching_contract_is_exact(self) -> None:
-        self.mutate_json(
-            "treatment-capsule-contract-v1.0.json",
-            lambda d: d["placebo_matching"].__setitem__("read_order_exact", False),
-        )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_capsule_placebo_required_must_be_boolean(self) -> None:
-        self.mutate_json(
-            "treatment-capsule-contract-v1.0.json",
-            lambda d: d["placebo_matching"].__setitem__("required", 1),
-        )
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_manifest_tamper_is_rejected(self) -> None:
-        path = self.here / "question-v1.0.md"
-        path.write_text(path.read_text() + "\npost hoc mutation\n")
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_manifest_byte_count_tamper_is_rejected(self) -> None:
-        manifest_path = self.here / "design-manifest-v1.0.json"
-        manifest = json.loads(manifest_path.read_text())
-        manifest["artifacts"][0]["bytes"] += 1
-        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_manifest_blob_identity_tamper_is_rejected(self) -> None:
-        manifest_path = self.here / "design-manifest-v1.0.json"
-        manifest = json.loads(manifest_path.read_text())
-        manifest["artifacts"][0]["git_blob_sha1"] = "0" * 40
-        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_legacy_sha256_manifest_field_is_rejected(self) -> None:
-        manifest_path = self.here / "design-manifest-v1.0.json"
-        manifest = json.loads(manifest_path.read_text())
-        manifest["artifacts"][0]["sha256"] = "0" * 64
-        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
-
-    def test_symlinked_governed_artifact_is_rejected(self) -> None:
+    def test_byte_policy_symlinks_and_manifest_metadata_are_rejected(self) -> None:
+        policy = self.here / ".gitattributes"
+        policy.write_text("* text=auto\n", encoding="utf-8", newline="\n")
+        self.refresh_manifest()
+        self.rejected()
+        self.setUp_after_drift()
+        manifest = self.here / "design-manifest-v1.0.json"
+        data = json.loads(manifest.read_text())
+        data["artifacts"][0]["bytes"] += 1
+        manifest.write_text(json.dumps(data, indent=2) + "\n")
+        self.sync_committed()
+        self.rejected()
+        self.setUp_after_drift()
         target = self.here / "question-v1.0.md"
         copy = self.here / "question-copy.md"
         copy.write_bytes(target.read_bytes())
         target.unlink()
         target.symlink_to(copy.name)
-        with self.assertRaises(verify_module.DesignError):
-            self.run_verify()
+        self.rejected()
+
+    def test_runtime_types_missingness_decisions_and_seed_are_exact(self) -> None:
+        cases = (
+            ("treatment-capsule-contract-v1.0.json", lambda d: d["runtime_constraints"].__setitem__("read_only", 1)),
+            ("treatment-capsule-contract-v1.0.json", lambda d: d["runtime_constraints"].__setitem__("extra_context_window", True)),
+            ("preregistration-v1.0.json", lambda d: d["analysis"]["invalid_run_and_cell_policy"].__setitem__("retained_invalid_repetition_makes_entire_task_arm_cell_missing", False)),
+            ("preregistration-v1.0.json", lambda d: d["analysis"]["decision_categories"].__setitem__("no_practical_advantage", "upper bound < 0.10")),
+            ("preregistration-v1.0.json", lambda d: d["analysis"].__setitem__("bootstrap_seed_status", "selected_after_outcome_reveal")),
+        )
+        for name, mutation in cases:
+            with self.subTest(name=name):
+                original = (self.here / name).read_bytes()
+                self.mutate_json(name, mutation)
+                self.rejected()
+                (self.here / name).write_bytes(original)
+                self.refresh_manifest()
 
 
 if __name__ == "__main__":
