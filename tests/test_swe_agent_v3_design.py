@@ -126,6 +126,16 @@ class SweAgentV3DesignTests(unittest.TestCase):
         with self.assertRaises(verify_module.DesignError):
             self.run_verify()
 
+    def test_bootstrap_seed_must_be_committed_before_reveal(self) -> None:
+        self.mutate_json(
+            "preregistration-v1.0.json",
+            lambda d: d["analysis"].__setitem__(
+                "bootstrap_seed_status", "selected_after_outcome_reveal"
+            ),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
     def test_capsule_source_cannot_be_pretended_frozen(self) -> None:
         self.mutate_json(
             "treatment-capsule-contract-v1.0.json",
