@@ -30,10 +30,12 @@
     "RCCD is false",
     "RCCD is necessary, minimal, unique, or Pareto-optimal",
     "all reasoning is sequential",
+    "small categories are broader than bare sets under a common comparison order",
     "small categories are the absolute broadest possible class of every conceivable reasoning system",
     "the clean-room target-category study has been executed",
     "the result changes accepted Project FAR theory",
-    "typed composition is a complete architecture of reasoning"
+    "typed composition is a complete architecture of reasoning",
+    "typed composition is the weakest, first, or minimal structure supporting nontrivial invariants"
   ],
   "rccd_status": "not_derived",
   "status": "Research",
