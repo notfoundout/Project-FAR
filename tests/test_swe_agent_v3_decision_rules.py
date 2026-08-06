@@ -43,6 +43,17 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
         self.assertIn("no primary cells are missing", categories["bounded_harm"])
         self.assertIn("no primary cells are missing", categories["no_practical_advantage"])
 
+    def test_bootstrap_interval_and_rng_are_fully_frozen(self) -> None:
+        spec = self.load_analysis()["bootstrap_interval_spec"]
+        self.assertEqual(spec["method"], "percentile_equal_tailed")
+        self.assertEqual(spec["lower_tail_probability"], 0.025)
+        self.assertEqual(spec["upper_tail_probability"], 0.975)
+        self.assertEqual(spec["resample_count"], 100000)
+        self.assertEqual(spec["task_order"], "ascending frozen blind task identifier")
+        self.assertEqual(spec["rng_procedure"]["id"], "sha256_rejection_stream_v1")
+        self.assertIn("reject x >=", spec["rng_procedure"]["unbiased_index_rule"])
+        self.assertEqual(spec["quantile_convention"]["id"], "hyndman_fan_type_7")
+
 
 if __name__ == "__main__":
     unittest.main()
