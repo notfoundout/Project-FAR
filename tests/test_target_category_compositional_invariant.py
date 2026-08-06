@@ -12,6 +12,8 @@ MODULE_PATH = ROOT / "research/target-category-discovery/verify_compositional_in
 SPEC_PATH = ROOT / "research/target-category-discovery/compositional-invariant-spec-v1.0.json"
 RESULT_PATH = ROOT / "research/target-category-discovery/compositional-invariant-result-v1.0.json"
 REPORT_PATH = ROOT / "research/target-category-discovery/compositional-invariant-terminal-result-v1.0.md"
+README_PATH = ROOT / "research/target-category-discovery/README.md"
+CHARTER_PATH = ROOT / "research/target-category-discovery/scope-and-universality-charter-v1.2.md"
 
 spec = importlib.util.spec_from_file_location("verify_compositional_invariant", MODULE_PATH)
 assert spec and spec.loader
@@ -57,6 +59,14 @@ class CompositionalInvariantTests(unittest.TestCase):
         with self.assertRaisesRegex(module.VerificationError, "broadness policy drifted"):
             module.build_result(data)
 
+    def test_incomplete_scope_criterion_is_rejected(self) -> None:
+        data = module.load_json(SPEC_PATH)
+        data["broadness_policy"]["scope_criterion"] = (
+            "A system is included when composition merely exists."
+        )
+        with self.assertRaisesRegex(module.VerificationError, "broadness policy drifted"):
+            module.build_result(data)
+
     def test_noncanonical_base_commit_is_rejected(self) -> None:
         data = module.load_json(SPEC_PATH)
         data["base_commit"] = "a" * 40
@@ -82,10 +92,30 @@ class CompositionalInvariantTests(unittest.TestCase):
         with self.assertRaisesRegex(module.VerificationError, "semantics drifted"):
             module.build_result(data)
 
+    def test_category_characterization_drift_is_rejected(self) -> None:
+        data = module.load_json(SPEC_PATH)
+        data["theorem_claims"][0]["statement"] = (
+            "Existence-only axioms characterize small categories."
+        )
+        with self.assertRaisesRegex(module.VerificationError, "semantics drifted"):
+            module.build_result(data)
+
     def test_missing_associativity_axiom_is_rejected(self) -> None:
         data = module.load_json(SPEC_PATH)
         data["axioms"] = [axiom for axiom in data["axioms"] if axiom["id"] != "TC4"]
-        with self.assertRaisesRegex(module.VerificationError, "exact four-axiom contract"):
+        with self.assertRaisesRegex(module.VerificationError, "exact four-part category contract"):
+            module.build_result(data)
+
+    def test_nondesignated_identity_axiom_is_rejected(self) -> None:
+        data = module.load_json(SPEC_PATH)
+        data["axioms"][1]["statement"] = "Every interface has at least one identity-like step."
+        with self.assertRaisesRegex(module.VerificationError, "exact four-part category contract"):
+            module.build_result(data)
+
+    def test_multivalued_composition_axiom_is_rejected(self) -> None:
+        data = module.load_json(SPEC_PATH)
+        data["axioms"][2]["statement"] = "Every composable pair has one or more composites."
+        with self.assertRaisesRegex(module.VerificationError, "exact four-part category contract"):
             module.build_result(data)
 
     def test_rccd_derivation_claim_is_rejected(self) -> None:
@@ -108,6 +138,25 @@ class CompositionalInvariantTests(unittest.TestCase):
             path.write_text(json.dumps(result), encoding="utf-8")
             with self.assertRaisesRegex(module.VerificationError, "fresh rebuild"):
                 module.verify(SPEC_PATH, path, REPORT_PATH)
+
+    def test_public_claim_surfaces_do_not_restore_comparison_overclaims(self) -> None:
+        text = (
+            README_PATH.read_text(encoding="utf-8")
+            + "\n"
+            + CHARTER_PATH.read_text(encoding="utf-8")
+            + "\n"
+            + REPORT_PATH.read_text(encoding="utf-8")
+        )
+        forbidden = [
+            "A broader independently stated structured class than bare sets",
+            "typed composition is the first nontrivial invariant layer",
+            "The correct repair is to state the weakest independently motivated structure",
+            "## 7. Minimality boundary",
+        ]
+        for phrase in forbidden:
+            self.assertNotIn(phrase, text)
+        self.assertIn("No weakest, first, minimal, or globally optimal structure has been proved.", text)
+        self.assertIn("comparison order between categorical and other structures: not defined", text)
 
     def test_report_without_absolute_nonclaim_is_rejected(self) -> None:
         text = REPORT_PATH.read_text(encoding="utf-8").replace(
@@ -132,6 +181,20 @@ class CompositionalInvariantTests(unittest.TestCase):
 
     def test_report_empirical_completion_contradiction_is_rejected(self) -> None:
         raw = REPORT_PATH.read_bytes() + b"\nThe clean-room empirical program is complete.\n"
+        with self.assertRaisesRegex(module.VerificationError, "report content drifted"):
+            module.verify(SPEC_PATH, RESULT_PATH, self._mutated_report(raw))
+
+    def test_report_minimality_overclaim_is_rejected(self) -> None:
+        raw = REPORT_PATH.read_bytes() + (
+            b"\nTyped composition is the weakest and first nontrivial invariant structure.\n"
+        )
+        with self.assertRaisesRegex(module.VerificationError, "report content drifted"):
+            module.verify(SPEC_PATH, RESULT_PATH, self._mutated_report(raw))
+
+    def test_report_bare_set_broadness_overclaim_is_rejected(self) -> None:
+        raw = REPORT_PATH.read_bytes() + (
+            b"\nSmall categories are broader than bare sets under a common order.\n"
+        )
         with self.assertRaisesRegex(module.VerificationError, "report content drifted"):
             module.verify(SPEC_PATH, RESULT_PATH, self._mutated_report(raw))
 
