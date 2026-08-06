@@ -60,6 +60,26 @@ EXPECTED_DECISION_CATEGORIES = {
     "no_practical_advantage": "no primary cells are missing and 0 <= 95% paired-task bootstrap upper bound < 0.10",
     "inconclusive": "no primary cells are missing and none of the preceding categories applies",
 }
+EXPECTED_CAPSULE_RUNTIME = {
+    "read_only": True,
+    "network_access": False,
+    "writes_outside_run_evidence_directory": False,
+    "extra_tool_permissions": False,
+    "extra_context_window": False,
+    "extra_model_calls": False,
+    "mutable_remote_dependencies": False,
+}
+EXPECTED_PLACEBO_MATCHING = {
+    "required": True,
+    "utf8_bytes_relative_tolerance": 0.01,
+    "frozen_tokenizer_tokens_relative_tolerance": 0.01,
+    "file_count_exact": True,
+    "relative_path_shape_exact": True,
+    "directory_depth_exact": True,
+    "read_order_exact": True,
+    "interaction_turns_exact": True,
+    "tool_permissions_exact": True,
+}
 EXPECTED_BOOTSTRAP_SPEC = {
     "method": "percentile_equal_tailed",
     "confidence_level": 0.95,
@@ -285,11 +305,10 @@ def verify_capsule_contract() -> None:
     for token in ("task identifiers", "gold patches", "hidden tests", "benchmark outcomes"):
         if token not in forbidden:
             raise DesignError(f"missing forbidden capsule content: {token}")
-    runtime = data.get("runtime_constraints", {})
-    if runtime.get("network_access") is not False:
-        raise DesignError("capsule network access must be false")
-    if runtime.get("extra_model_calls") is not False or runtime.get("extra_tool_permissions") is not False:
-        raise DesignError("capsule cannot add model calls or tool permissions")
+    if data.get("runtime_constraints") != EXPECTED_CAPSULE_RUNTIME:
+        raise DesignError("capsule runtime constraints mismatch")
+    if data.get("placebo_matching") != EXPECTED_PLACEBO_MATCHING:
+        raise DesignError("capsule placebo-matching contract mismatch")
 
 
 def verify_execution_gate() -> None:
