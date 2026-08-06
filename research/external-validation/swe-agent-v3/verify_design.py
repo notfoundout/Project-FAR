@@ -2,6 +2,7 @@
 """Fail-closed verifier for the design-only FAR SWE-agent v3 package."""
 from __future__ import annotations
 
+import hashlib
 import sys
 from pathlib import Path
 
@@ -35,6 +36,9 @@ CONTRACT_DIGESTS = {
     "bootstrap": "cb128bfd172c463dc1d4d109ccbc58e1146da0ff5236d690bb30f53079b1e695",
     "task_contract": "9e1a81d50a8513f110da1a749c42709d28356e07d512fea1dc106aba814b4bf2",
 }
+EVIDENCE_BUNDLE_SECTION_SHA256 = (
+    "4fa33bbd5a4db1683520a035c2a4ca504fdb00d9a0e8ce999ee1436f8da2075e"
+)
 GATES = {
     "theory_version_frozen",
     "far_capsule_built_and_hash_frozen",
@@ -291,9 +295,21 @@ def verify_execution_gate() -> None:
 
 
 def verify_text_boundaries() -> None:
-    evidence = integrity._read_regular(
+    evidence_text = integrity._read_regular(
         HERE / "evidence-and-analysis-plan-v1.0.md"
-    ).decode("utf-8").lower()
+    ).decode("utf-8")
+    start_marker = "## Evidence bundle per run\n"
+    end_marker = "\n## Pre-submission behavior contract\n"
+    start = evidence_text.find(start_marker)
+    end = evidence_text.find(end_marker, start + len(start_marker))
+    if start < 0 or end < 0:
+        raise DesignError("evidence-bundle section boundary missing")
+    evidence_bundle = evidence_text[start:end]
+    evidence_digest = hashlib.sha256(evidence_bundle.encode("utf-8")).hexdigest()
+    if evidence_digest != EVIDENCE_BUNDLE_SECTION_SHA256:
+        raise DesignError("complete evidence-bundle contract mismatch")
+
+    evidence = evidence_text.lower()
     required_evidence = (
         "model provider, endpoint, model version, parameters, and provider request identifier",
         "stdout",
