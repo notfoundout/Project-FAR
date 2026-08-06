@@ -26,5 +26,5 @@ All model calls and benchmark execution remain blocked until every gate in `exec
 
 ```bash
 python research/external-validation/swe-agent-v3/verify_design.py
-python -m unittest tests.test_swe_agent_v3_design -v
+python -m unittest tests.test_swe_agent_v3_design tests.test_swe_agent_v3_decision_rules -v
 ```
