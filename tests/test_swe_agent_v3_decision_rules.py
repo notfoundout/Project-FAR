@@ -50,9 +50,24 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
         self.assertEqual(spec["upper_tail_probability"], 0.975)
         self.assertEqual(spec["resample_count"], 100000)
         self.assertEqual(spec["task_order"], "ascending frozen blind task identifier")
-        self.assertEqual(spec["rng_procedure"]["id"], "sha256_rejection_stream_v1")
-        self.assertIn("reject x >=", spec["rng_procedure"]["unbiased_index_rule"])
+        rng = spec["rng_procedure"]
+        self.assertEqual(rng["id"], "sha256_rejection_stream_v1")
+        self.assertEqual(
+            rng["seed_format"],
+            "exactly 64 lowercase hexadecimal characters strictly base16-decoded into 32 bytes; the ASCII hex characters are not hashed",
+        )
+        self.assertEqual(rng["resample_index_origin"], 0)
+        self.assertEqual(rng["draw_index_origin"], 0)
+        self.assertEqual(rng["rejection_counter_origin"], 0)
+        self.assertEqual(
+            rng["counter_encoding"],
+            "decoded_seed_32_bytes || uint64_be(resample_index) || uint64_be(draw_index) || uint32_be(rejection_counter)",
+        )
+        self.assertEqual(rng["digest"], "SHA-256")
+        self.assertEqual(rng["integer"], "first 8 digest bytes interpreted as unsigned big-endian")
+        self.assertIn("reject x >=", rng["unbiased_index_rule"])
         self.assertEqual(spec["quantile_convention"]["id"], "hyndman_fan_type_7")
+        self.assertIn("h=(m-1)*p", spec["quantile_convention"]["formula"])
 
 
 if __name__ == "__main__":
