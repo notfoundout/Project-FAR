@@ -70,8 +70,7 @@ EXPECTED_CAPSULE_RUNTIME = {
     "extra_model_calls": False,
     "mutable_remote_dependencies": False,
 }
-EXPECTED_PLACEBO_MATCHING = {
-    "required": True,
+EXPECTED_ARM_MATCHING = {
     "utf8_bytes_relative_tolerance": 0.01,
     "frozen_tokenizer_tokens_relative_tolerance": 0.01,
     "file_count_exact": True,
@@ -81,6 +80,7 @@ EXPECTED_PLACEBO_MATCHING = {
     "interaction_turns_exact": True,
     "tool_permissions_exact": True,
 }
+EXPECTED_PLACEBO_MATCHING = {"required": True, **EXPECTED_ARM_MATCHING}
 EXPECTED_BOOTSTRAP_SPEC = {
     "method": "percentile_equal_tailed",
     "confidence_level": 0.95,
@@ -125,6 +125,21 @@ def _load_json(path: Path) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise DesignError(f"JSON object required: {path}")
     return data
+
+
+def _json_exact(actual: Any, expected: Any) -> bool:
+    """Compare decoded JSON values with exact recursive types and values."""
+    if type(actual) is not type(expected):
+        return False
+    if isinstance(expected, dict):
+        return set(actual) == set(expected) and all(
+            _json_exact(actual[key], expected[key]) for key in expected
+        )
+    if isinstance(expected, list):
+        return len(actual) == len(expected) and all(
+            _json_exact(a, e) for a, e in zip(actual, expected)
+        )
+    return actual == expected
 
 
 def _safe_manifest_path(relative: str) -> Path:
@@ -211,20 +226,8 @@ def verify_preregistration() -> None:
         raise DesignError("exact ordered arms baseline, placebo, far required")
     if not all(arm.get("required") is True for arm in arms):
         raise DesignError("all three arms must be required")
-
-    matching = arms[1].get("matching_requirements")
-    if not isinstance(matching, dict):
-        raise DesignError("placebo matching requirements missing")
-    for key in (
-        "file_count_exact", "relative_path_shape_exact", "directory_depth_exact",
-        "read_order_exact", "interaction_turns_exact", "tool_permissions_exact",
-    ):
-        if matching.get(key) is not True:
-            raise DesignError(f"placebo exact match required: {key}")
-    for key in ("utf8_bytes_relative_tolerance", "frozen_tokenizer_tokens_relative_tolerance"):
-        value = matching.get(key)
-        if not isinstance(value, (int, float)) or value < 0 or value > 0.01:
-            raise DesignError(f"placebo tolerance too weak: {key}")
+    if not _json_exact(arms[1].get("matching_requirements"), EXPECTED_ARM_MATCHING):
+        raise DesignError("preregistration placebo-matching contract mismatch")
 
     population = data.get("task_population")
     if not isinstance(population, dict) or population.get("status") != "unfrozen":
@@ -275,7 +278,7 @@ def verify_preregistration() -> None:
         raise DesignError("bootstrap resample count mismatch")
     if analysis.get("bootstrap_seed_status") != "unfrozen_and_committed_before_outcome_reveal":
         raise DesignError("bootstrap seed must be committed before outcome reveal")
-    if analysis.get("invalid_run_and_cell_policy") != EXPECTED_INVALID_POLICY:
+    if not _json_exact(analysis.get("invalid_run_and_cell_policy"), EXPECTED_INVALID_POLICY):
         raise DesignError("invalid-run and missingness policy mismatch")
 
     expected_precedence = [
@@ -285,11 +288,11 @@ def verify_preregistration() -> None:
         "no_practical_advantage",
         "inconclusive",
     ]
-    if analysis.get("decision_precedence") != expected_precedence:
+    if not _json_exact(analysis.get("decision_precedence"), expected_precedence):
         raise DesignError("decision precedence mismatch")
-    if analysis.get("decision_categories") != EXPECTED_DECISION_CATEGORIES:
+    if not _json_exact(analysis.get("decision_categories"), EXPECTED_DECISION_CATEGORIES):
         raise DesignError("decision category definitions mismatch")
-    if analysis.get("bootstrap_interval_spec") != EXPECTED_BOOTSTRAP_SPEC:
+    if not _json_exact(analysis.get("bootstrap_interval_spec"), EXPECTED_BOOTSTRAP_SPEC):
         raise DesignError("bootstrap interval specification mismatch")
 
     pilot = data.get("pilot", {})
@@ -311,9 +314,9 @@ def verify_capsule_contract() -> None:
     for token in ("task identifiers", "gold patches", "hidden tests", "benchmark outcomes"):
         if token not in forbidden:
             raise DesignError(f"missing forbidden capsule content: {token}")
-    if data.get("runtime_constraints") != EXPECTED_CAPSULE_RUNTIME:
+    if not _json_exact(data.get("runtime_constraints"), EXPECTED_CAPSULE_RUNTIME):
         raise DesignError("capsule runtime constraints mismatch")
-    if data.get("placebo_matching") != EXPECTED_PLACEBO_MATCHING:
+    if not _json_exact(data.get("placebo_matching"), EXPECTED_PLACEBO_MATCHING):
         raise DesignError("capsule placebo-matching contract mismatch")
 
 
