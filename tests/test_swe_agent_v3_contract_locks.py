@@ -53,6 +53,10 @@ class SweAgentV3ContractLockTests(unittest.TestCase):
             with self.assertRaises(verify_module.DesignError):
                 verify_module.verify_capsule_contract()
 
+    def reset_fixture(self) -> None:
+        self.tearDown()
+        self.setUp()
+
     def test_blinding_contract_is_exact(self) -> None:
         mutations = (
             lambda d: d.pop("blinding"),
@@ -67,8 +71,7 @@ class SweAgentV3ContractLockTests(unittest.TestCase):
         )
         for index, mutation in enumerate(mutations):
             with self.subTest(index=index):
-                self.tearDown()
-                self.setUp()
+                self.reset_fixture()
                 self.assert_preregistration_rejected(mutation)
 
     def test_capsule_required_outputs_are_exact(self) -> None:
@@ -85,8 +88,58 @@ class SweAgentV3ContractLockTests(unittest.TestCase):
         )
         for index, mutation in enumerate(mutations):
             with self.subTest(index=index):
-                self.tearDown()
-                self.setUp()
+                self.reset_fixture()
+                self.assert_capsule_rejected(mutation)
+
+    def test_arm_treatment_semantics_are_exact(self) -> None:
+        mutations = (
+            lambda d: d["arms"][2].__setitem__("extra_capsule", None),
+            lambda d: d["arms"][2].pop("capsule_contract"),
+            lambda d: d["arms"][0].__setitem__("extra_capsule", "far"),
+            lambda d: d["arms"][1].__setitem__("extra_capsule", None),
+            lambda d: d["arms"][2].__setitem__("budget", "larger_than_other_arms"),
+        )
+        for index, mutation in enumerate(mutations):
+            with self.subTest(index=index):
+                self.reset_fixture()
+                self.assert_preregistration_rejected(mutation)
+
+    def test_outcome_contract_is_exact(self) -> None:
+        mutations = (
+            lambda d: d.pop("outcomes"),
+            lambda d: d["outcomes"]["primary"].__setitem__(
+                "invalid_is_not_resolved", False
+            ),
+            lambda d: d["outcomes"]["primary"].__setitem__(
+                "source", "operator_judgment"
+            ),
+            lambda d: d["outcomes"]["primary"]["values"].remove("invalid"),
+            lambda d: d["outcomes"]["secondary"].remove("budget_exhausted"),
+        )
+        for index, mutation in enumerate(mutations):
+            with self.subTest(index=index):
+                self.reset_fixture()
+                self.assert_preregistration_rejected(mutation)
+
+    def test_capsule_forbidden_content_boundary_is_exact(self) -> None:
+        mutations = (
+            lambda d: d.pop("forbidden_content_classes"),
+            lambda d: d["forbidden_content_classes"].remove(
+                "confirmatory repository names"
+            ),
+            lambda d: d["forbidden_content_classes"].remove(
+                "issue text from confirmatory tasks"
+            ),
+            lambda d: d["forbidden_content_classes"].remove(
+                "provider-specific hidden memory"
+            ),
+            lambda d: d["forbidden_content_classes"].append(
+                "operator-selected contextual hints"
+            ),
+        )
+        for index, mutation in enumerate(mutations):
+            with self.subTest(index=index):
+                self.reset_fixture()
                 self.assert_capsule_rejected(mutation)
 
 
