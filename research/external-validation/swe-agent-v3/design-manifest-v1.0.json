@@ -5,6 +5,11 @@
   "scope": "design-only authority; excludes tasks, model, capsule bytes, placebo bytes, randomization, execution, and outcomes",
   "artifacts": [
     {
+      "path": "research/external-validation/swe-agent-v3/.gitattributes",
+      "git_blob_sha1": "80dc6c8d82aec41fb85ff6cec8744f31efbad723",
+      "bytes": 90
+    },
+    {
       "path": "research/external-validation/swe-agent-v3/README.md",
       "git_blob_sha1": "3d5627e3a75020304bc4626acc86272078c858ea",
       "bytes": 2014
@@ -16,13 +21,18 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/preregistration-v1.0.json",
-      "git_blob_sha1": "c0a689e621546c3494b5d0493973f80288e83abe",
-      "bytes": 9254
+      "git_blob_sha1": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
+      "bytes": 10514
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/task-manifest-contract-v1.0.json",
+      "git_blob_sha1": "2b60061dd4575b1fbc8d0d56469a4ff92f57405e",
+      "bytes": 1864
     },
     {
       "path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
-      "git_blob_sha1": "571b81f164390aca1e6b7a3d926626cc06630627",
-      "bytes": 2933
+      "git_blob_sha1": "e011c8f9972a5682e03526f739437f62e973e76d",
+      "bytes": 3424
     },
     {
       "path": "research/external-validation/swe-agent-v3/execution-gate-v1.0.json",
@@ -31,13 +41,18 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md",
-      "git_blob_sha1": "7b5883bb857001d3aa7c7276bd51ae80bf2d6815",
-      "bytes": 5384
+      "git_blob_sha1": "15b352d54a524d9caf827018b608028c004f8f13",
+      "bytes": 6506
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/verify_integrity.py",
+      "git_blob_sha1": "7ec65171cb20b92bd01f5e69a391c1a0ddbeb75d",
+      "bytes": 6798
     },
     {
       "path": "research/external-validation/swe-agent-v3/verify_design.py",
-      "git_blob_sha1": "a7712df058218e083bc1ff7df828be17c00303b4",
-      "bytes": 18468
+      "git_blob_sha1": "f9583d6eab91d321dfa81212c3dba24b557b2139",
+      "bytes": 12146
     }
   ]
 }
