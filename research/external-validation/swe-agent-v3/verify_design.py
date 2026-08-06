@@ -2,18 +2,30 @@
 """Fail-closed verifier for the design-only FAR SWE-agent v3 package."""
 from __future__ import annotations
 
-import hashlib
-import json
-import re
-from pathlib import Path, PurePosixPath
-from typing import Any
+import sys
+from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[2]
-MANIFEST = HERE / "design-manifest-v1.0.json"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import verify_integrity as integrity
 
-REQUIRED_ARMS = ["baseline", "placebo", "far"]
-REQUIRED_GATE_NAMES = {
+DesignError = integrity.DesignError
+ROOT = integrity.ROOT
+HERE = integrity.HERE
+MANIFEST = integrity.MANIFEST
+_committed_blob_bytes = integrity._committed_blob_bytes
+_git_blob_sha1 = integrity._git_blob_sha1
+
+CONTRACT_DIGESTS = {
+    "arm_matching": "386f364130f3cff43092e1eef9c3e45fbf9291e4d3cf10f90878670925f14459",
+    "runtime": "ebea8e1896276afdcdbc3f058f1f52994be991d77c031d821b7b28e5b29d13d6",
+    "placebo_matching": "7502f557f9dac08df1afe5d13993785276f5b26b0d33dce49db9fc577f5f0d3d",
+    "invalid_policy": "911e4ae6c40c019e204e67bbc5d4ceadb393a10eedb193fcd3df0ada625a550c",
+    "decision_categories": "38d6859deb3966d2e887733c959ed8e5ca55db898864a4f7385ba2797f4561d8",
+    "decision_precedence": "0d82a12d4a5a7d482c6c8a3800877de00b2aee45735ed6962174b9a90b7afc72",
+    "bootstrap": "cb128bfd172c463dc1d4d109ccbc58e1146da0ff5236d690bb30f53079b1e695",
+    "task_contract": "9e1a81d50a8513f110da1a749c42709d28356e07d512fea1dc106aba814b4bf2",
+}
+GATES = {
     "theory_version_frozen",
     "far_capsule_built_and_hash_frozen",
     "placebo_built_and_matching_verified",
@@ -31,343 +43,258 @@ REQUIRED_GATE_NAMES = {
     "branch_or_tag_protection_and_exact_head_checks_enabled",
     "manual_launch_authorization_recorded",
 }
-REQUIRED_EVIDENCE_TERMS = {
-    "stdout", "stderr", "trajectory", "commands", "tool calls", "model messages",
-    "patch", "prediction", "grader logs", "content-root digest",
-}
-FORBIDDEN_CLAIMS = {
-    "universal software-engineering improvement",
-    "model-independent improvement",
-    "commercial readiness",
-}
-EXPECTED_INVALID_POLICY = {
-    "replacement_attempts_per_infrastructure_invalid_slot": 1,
-    "replacement_must_use_same_frozen_task_arm_repetition_and_conditions": True,
-    "replacement_must_finish_before_any_outcome_reveal": True,
-    "cell_valid_only_if_every_frozen_repetition_is_valid": True,
-    "retained_invalid_repetition_makes_entire_task_arm_cell_missing": True,
-    "primary_missingness_rule": "if any FAR or placebo task-arm cell is missing, final confirmatory classification is inconclusive_due_to_missingness",
-    "required_descriptive_sensitivity": [
-        "complete-case paired estimate",
-        "worst-case full-task-set bound with missing FAR=0 and missing placebo=1",
-        "best-case full-task-set bound with missing FAR=1 and missing placebo=0",
-    ],
-    "sensitivity_results_are_confirmatory": False,
-}
-EXPECTED_DECISION_CATEGORIES = {
-    "inconclusive_due_to_missingness": "one or more FAR or placebo task-arm cells remain missing after the single permitted same-slot infrastructure replacement",
-    "bounded_harm": "no primary cells are missing and 95% paired-task bootstrap upper bound < 0",
-    "bounded_positive": "no primary cells are missing and estimate >= 0.10 and 95% paired-task bootstrap lower bound > 0 and no preregistered critical-harm gate fails",
-    "no_practical_advantage": "no primary cells are missing and 0 <= 95% paired-task bootstrap upper bound < 0.10",
-    "inconclusive": "no primary cells are missing and none of the preceding categories applies",
-}
-EXPECTED_CAPSULE_RUNTIME = {
-    "read_only": True,
-    "network_access": False,
-    "writes_outside_run_evidence_directory": False,
-    "extra_tool_permissions": False,
-    "extra_context_window": False,
-    "extra_model_calls": False,
-    "mutable_remote_dependencies": False,
-}
-EXPECTED_ARM_MATCHING = {
-    "utf8_bytes_relative_tolerance": 0.01,
-    "frozen_tokenizer_tokens_relative_tolerance": 0.01,
-    "file_count_exact": True,
-    "relative_path_shape_exact": True,
-    "directory_depth_exact": True,
-    "read_order_exact": True,
-    "interaction_turns_exact": True,
-    "tool_permissions_exact": True,
-}
-EXPECTED_PLACEBO_MATCHING = {"required": True, **EXPECTED_ARM_MATCHING}
-EXPECTED_BOOTSTRAP_SPEC = {
-    "method": "percentile_equal_tailed",
-    "confidence_level": 0.95,
-    "lower_tail_probability": 0.025,
-    "upper_tail_probability": 0.975,
-    "resample_count": 100000,
-    "resample_unit": "task",
-    "resample_size": "number_of_complete_primary_tasks",
-    "draws_with_replacement": True,
-    "task_order": "ascending frozen blind task identifier",
-    "rng_procedure": {
-        "id": "sha256_rejection_stream_v1",
-        "seed_format": "exactly 64 lowercase hexadecimal characters strictly base16-decoded into 32 bytes; the ASCII hex characters are not hashed",
-        "counter_encoding": "decoded_seed_32_bytes || uint64_be(resample_index) || uint64_be(draw_index) || uint32_be(rejection_counter)",
-        "digest": "SHA-256",
-        "integer": "first 8 digest bytes interpreted as unsigned big-endian",
-        "unbiased_index_rule": "reject x >= 2^64 - (2^64 mod N); otherwise index = x mod N; increment rejection_counter from zero until accepted",
-        "resample_index_origin": 0,
-        "draw_index_origin": 0,
-        "rejection_counter_origin": 0,
-    },
-    "quantile_convention": {
-        "id": "hyndman_fan_type_7",
-        "sorted_values": "ascending bootstrap estimates including duplicates",
-        "formula": "h=(m-1)*p; q=(1-f)*x[floor(h)] + f*x[ceil(h)], where f=h-floor(h), zero-based indices, and m=100000",
-    },
-    "classification_uses_bounds": "lower p=0.025 and upper p=0.975 from this exact procedure",
-}
-
-
-class DesignError(RuntimeError):
-    pass
-
-
-def _load_json(path: Path) -> dict[str, Any]:
-    if path.is_symlink():
-        raise DesignError(f"symlink prohibited: {path}")
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise DesignError(f"invalid JSON {path}: {exc}") from exc
-    if not isinstance(data, dict):
-        raise DesignError(f"JSON object required: {path}")
-    return data
-
-
-def _json_exact(actual: Any, expected: Any) -> bool:
-    """Compare decoded JSON values with exact recursive types and values."""
-    if type(actual) is not type(expected):
-        return False
-    if isinstance(expected, dict):
-        return set(actual) == set(expected) and all(
-            _json_exact(actual[key], expected[key]) for key in expected
-        )
-    if isinstance(expected, list):
-        return len(actual) == len(expected) and all(
-            _json_exact(a, e) for a, e in zip(actual, expected)
-        )
-    return actual == expected
-
-
-def _safe_manifest_path(relative: str) -> Path:
-    posix = PurePosixPath(relative)
-    if posix.is_absolute() or ".." in posix.parts or "." in posix.parts or "\\" in relative:
-        raise DesignError(f"unsafe manifest path: {relative}")
-    current = ROOT
-    for part in posix.parts:
-        current = current / part
-        if current.is_symlink():
-            raise DesignError(f"symlink prohibited in manifest path: {relative}")
-    resolved = current.resolve()
-    try:
-        resolved.relative_to(ROOT.resolve())
-    except ValueError as exc:
-        raise DesignError(f"manifest path escapes repository: {relative}") from exc
-    return current
-
-
-def _git_blob_sha1(path: Path) -> str:
-    data = path.read_bytes()
-    header = f"blob {len(data)}\0".encode("ascii")
-    return hashlib.sha1(header + data).hexdigest()
-
-
-def verify_manifest() -> None:
-    manifest = _load_json(MANIFEST)
-    if manifest.get("schema_version") != "1.0":
-        raise DesignError("manifest schema_version must be 1.0")
-    entries = manifest.get("artifacts")
-    if not isinstance(entries, list) or not entries:
-        raise DesignError("manifest artifacts must be non-empty list")
-    seen: set[str] = set()
-    for entry in entries:
-        if not isinstance(entry, dict):
-            raise DesignError("manifest entry must be object")
-        relative = entry.get("path")
-        expected_blob = entry.get("git_blob_sha1")
-        expected_bytes = entry.get("bytes")
-        if not isinstance(relative, str):
-            raise DesignError("manifest path required")
-        if not isinstance(expected_blob, str) or re.fullmatch(r"[0-9a-f]{40}", expected_blob) is None:
-            raise DesignError(f"manifest git_blob_sha1 must be 40 lowercase hexadecimal characters: {relative}")
-        if not isinstance(expected_bytes, int) or isinstance(expected_bytes, bool) or expected_bytes < 0:
-            raise DesignError(f"manifest bytes must be a nonnegative integer: {relative}")
-        if set(entry) != {"path", "git_blob_sha1", "bytes"}:
-            raise DesignError(f"unexpected manifest fields: {relative}")
-        if relative in seen:
-            raise DesignError(f"duplicate manifest path: {relative}")
-        seen.add(relative)
-        path = _safe_manifest_path(relative)
-        if not path.is_file():
-            raise DesignError(f"missing manifested file: {relative}")
-        if path.stat().st_size != expected_bytes:
-            raise DesignError(f"byte-count mismatch: {relative}")
-        if _git_blob_sha1(path) != expected_blob:
-            raise DesignError(f"Git blob identity mismatch: {relative}")
-    required = {
-        "research/external-validation/swe-agent-v3/README.md",
-        "research/external-validation/swe-agent-v3/question-v1.0.md",
-        "research/external-validation/swe-agent-v3/preregistration-v1.0.json",
-        "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
-        "research/external-validation/swe-agent-v3/execution-gate-v1.0.json",
-        "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md",
-        "research/external-validation/swe-agent-v3/verify_design.py",
-    }
-    if seen != required:
-        raise DesignError(f"manifest artifact set mismatch: {sorted(seen ^ required)}")
 
 
 def verify_preregistration() -> None:
-    data = _load_json(HERE / "preregistration-v1.0.json")
-    if data.get("program_id") != "FAR-SWE-V3-001":
-        raise DesignError("wrong program_id")
-    if data.get("artifact_status") != "Research" or data.get("stage") != "design_only":
-        raise DesignError("package must remain Research/design_only")
+    data = integrity._load_json(HERE / "preregistration-v1.0.json")
+    identity = (
+        data.get("program_id"),
+        data.get("artifact_status"),
+        data.get("stage"),
+    )
+    if identity != ("FAR-SWE-V3-001", "Research", "design_only"):
+        raise DesignError("wrong preregistration identity or status")
     if data.get("execution_authorized") is not False:
-        raise DesignError("execution must remain unauthorized")
+        raise DesignError("execution must remain prohibited")
     if data.get("historical_v2_pooling_permitted") is not False:
-        raise DesignError("historical v2 pooling must be prohibited")
+        raise DesignError("historical v2 pooling must remain prohibited")
 
     arms = data.get("arms")
-    if not isinstance(arms, list) or [arm.get("id") for arm in arms] != REQUIRED_ARMS:
+    if not isinstance(arms, list):
+        raise DesignError("arms must be a list")
+    ids = [arm.get("id") for arm in arms if isinstance(arm, dict)]
+    if ids != ["baseline", "placebo", "far"]:
         raise DesignError("exact ordered arms baseline, placebo, far required")
-    if not all(arm.get("required") is True for arm in arms):
-        raise DesignError("all three arms must be required")
-    if not _json_exact(arms[1].get("matching_requirements"), EXPECTED_ARM_MATCHING):
-        raise DesignError("preregistration placebo-matching contract mismatch")
+    if any(arm.get("required") is not True for arm in arms):
+        raise DesignError("all arms must be required")
+    integrity._require_digest(
+        arms[1].get("matching_requirements"),
+        CONTRACT_DIGESTS["arm_matching"],
+        "preregistration placebo matching",
+    )
 
     population = data.get("task_population")
     if not isinstance(population, dict) or population.get("status") != "unfrozen":
         raise DesignError("task population must remain unfrozen")
-    if population.get("minimum_task_count", 0) < 24:
+    if integrity._integer(
+        population.get("minimum_task_count"), "minimum_task_count"
+    ) < 24:
         raise DesignError("minimum_task_count must be at least 24")
-    if population.get("minimum_repository_count", 0) < 5:
+    if integrity._integer(
+        population.get("minimum_repository_count"), "minimum_repository_count"
+    ) < 5:
         raise DesignError("minimum_repository_count must be at least 5")
-    if population.get("maximum_fraction_from_one_repository", 1) > 0.20:
+    if integrity._number(
+        population.get("maximum_fraction_from_one_repository"),
+        "maximum_fraction_from_one_repository",
+    ) > 0.2:
         raise DesignError("single-repository fraction exceeds 0.20")
-    prohibited = " ".join(population.get("prohibited_task_repositories", [])).lower()
-    if "project-far" not in prohibited and "project far" not in prohibited:
-        raise DesignError("Project FAR must be prohibited as a task repository")
+    prohibited = " ".join(
+        integrity._strings(
+            population.get("prohibited_task_repositories"),
+            "prohibited repositories",
+        )
+    ).lower()
+    if "project-far" not in prohibited:
+        raise DesignError("Project FAR task repository prohibition missing")
 
-    assignment = data.get("assignment", {})
-    if assignment.get("paired_design") is not True or assignment.get("every_task_in_every_arm") is not True:
-        raise DesignError("paired all-arm task design required")
-    if assignment.get("minimum_repetitions_per_task_arm", 0) < 2:
-        raise DesignError("at least two repetitions per task-arm required")
-    if assignment.get("carryover_control") != "fresh_workspace_and_fresh_model_context_for_every_run":
-        raise DesignError("fresh workspace and model context required")
-
-    controls = data.get("execution_controls", {})
-    for key in (
-        "same_model_endpoint_across_arms", "model_fallback_prohibited",
-        "same_system_and_agent_prompts_except_capsule_mount",
-        "same_repository_commit_across_arms", "same_environment_image_across_arms",
-        "same_tools_across_arms", "same_call_token_time_and_cost_budgets_across_arms",
-        "fresh_context_per_run", "parallel_cross_arm_information_sharing_prohibited",
+    assignment = data.get("assignment")
+    if not isinstance(assignment, dict):
+        raise DesignError("assignment object required")
+    if assignment.get("paired_design") is not True:
+        raise DesignError("paired design required")
+    if assignment.get("every_task_in_every_arm") is not True:
+        raise DesignError("every task must appear in every arm")
+    if integrity._integer(
+        assignment.get("minimum_repetitions_per_task_arm"),
+        "minimum repetitions",
+    ) < 2:
+        raise DesignError("at least two repetitions required")
+    if (
+        assignment.get("carryover_control")
+        != "fresh_workspace_and_fresh_model_context_for_every_run"
     ):
-        if controls.get(key) is not True:
-            raise DesignError(f"execution control must be true: {key}")
+        raise DesignError("fresh workspace and context required")
 
-    analysis = data.get("analysis", {})
-    if analysis.get("primary_estimand") != "mean_task_level_resolution_probability_far_minus_placebo":
-        raise DesignError("wrong primary estimand")
-    if analysis.get("equivalence_or_noninferiority_claim_permitted") is not False:
-        raise DesignError("equivalence/noninferiority claims must be prohibited")
-    if analysis.get("population_generalization_permitted") is not False:
-        raise DesignError("population generalization must be prohibited")
-    if data.get("minimum_practically_important_difference") != 0.10:
-        raise DesignError("minimum practically important difference must remain 0.10")
-    if analysis.get("task_level_aggregation") != "mean over repetitions within each task and arm":
-        raise DesignError("task-level aggregation mismatch")
-    if analysis.get("uncertainty_method") != "paired_task_bootstrap":
-        raise DesignError("uncertainty method mismatch")
-    if analysis.get("bootstrap_resamples") != 100000:
+    controls = data.get("execution_controls")
+    if not isinstance(controls, dict) or any(
+        value is not True for value in controls.values()
+    ):
+        raise DesignError("all frozen execution controls must be true")
+
+    analysis = data.get("analysis")
+    if not isinstance(analysis, dict):
+        raise DesignError("analysis object required")
+    exact = {
+        "primary_estimand": "mean_task_level_resolution_probability_far_minus_placebo",
+        "task_level_aggregation": "mean over repetitions within each task and arm",
+        "uncertainty_method": "paired_task_bootstrap",
+        "bootstrap_seed_status": "unfrozen_and_committed_before_outcome_reveal",
+    }
+    if any(analysis.get(key) != value for key, value in exact.items()):
+        raise DesignError("analysis identity mismatch")
+    if integrity._integer(
+        analysis.get("bootstrap_resamples"), "bootstrap_resamples"
+    ) != 100000:
         raise DesignError("bootstrap resample count mismatch")
-    if analysis.get("bootstrap_seed_status") != "unfrozen_and_committed_before_outcome_reveal":
-        raise DesignError("bootstrap seed must be committed before outcome reveal")
-    if not _json_exact(analysis.get("invalid_run_and_cell_policy"), EXPECTED_INVALID_POLICY):
-        raise DesignError("invalid-run and missingness policy mismatch")
+    if integrity._number(
+        data.get("minimum_practically_important_difference"),
+        "minimum practical difference",
+    ) != 0.1:
+        raise DesignError("minimum practical difference must be 0.10")
+    if analysis.get("equivalence_or_noninferiority_claim_permitted") is not False:
+        raise DesignError("equivalence claims prohibited")
+    if analysis.get("population_generalization_permitted") is not False:
+        raise DesignError("population generalization prohibited")
+    for key, digest_name in (
+        ("invalid_run_and_cell_policy", "invalid_policy"),
+        ("decision_categories", "decision_categories"),
+        ("decision_precedence", "decision_precedence"),
+        ("bootstrap_interval_spec", "bootstrap"),
+    ):
+        integrity._require_digest(
+            analysis.get(key),
+            CONTRACT_DIGESTS[digest_name],
+            key,
+        )
 
-    expected_precedence = [
-        "inconclusive_due_to_missingness",
-        "bounded_harm",
-        "bounded_positive",
-        "no_practical_advantage",
-        "inconclusive",
-    ]
-    if not _json_exact(analysis.get("decision_precedence"), expected_precedence):
-        raise DesignError("decision precedence mismatch")
-    if not _json_exact(analysis.get("decision_categories"), EXPECTED_DECISION_CATEGORIES):
-        raise DesignError("decision category definitions mismatch")
-    if not _json_exact(analysis.get("bootstrap_interval_spec"), EXPECTED_BOOTSTRAP_SPEC):
-        raise DesignError("bootstrap interval specification mismatch")
-
-    pilot = data.get("pilot", {})
-    if pilot.get("status") != "not_authorized" or pilot.get("model_calls_currently_prohibited") is not True:
-        raise DesignError("pilot must remain unauthorized with model calls prohibited")
+    pilot = data.get("pilot")
+    if not isinstance(pilot, dict):
+        raise DesignError("pilot object required")
+    if pilot.get("status") != "not_authorized":
+        raise DesignError("pilot must remain unauthorized")
+    if pilot.get("model_calls_currently_prohibited") is not True:
+        raise DesignError("pilot model calls must remain prohibited")
     if pilot.get("pilot_tasks_excluded_from_confirmatory_evidence") is not True:
-        raise DesignError("pilot tasks must be excluded")
+        raise DesignError("pilot tasks must remain excluded")
+
+
+def verify_task_manifest_contract() -> None:
+    integrity._require_digest(
+        integrity._load_json(HERE / "task-manifest-contract-v1.0.json"),
+        CONTRACT_DIGESTS["task_contract"],
+        "task-manifest ordering and identifier contract",
+    )
 
 
 def verify_capsule_contract() -> None:
-    data = _load_json(HERE / "treatment-capsule-contract-v1.0.json")
-    if data.get("capsule_status") != "uninstantiated" or data.get("execution_authorized") is not False:
-        raise DesignError("capsule must remain uninstantiated and unauthorized")
-    source = data.get("source", {})
-    for key in ("commit_sha", "tree_sha", "theory_version", "exporter_blob_sha"):
-        if source.get(key) is not None:
-            raise DesignError(f"source {key} must be null before theory freeze")
-    forbidden = " ".join(data.get("forbidden_content_classes", [])).lower()
-    for token in ("task identifiers", "gold patches", "hidden tests", "benchmark outcomes"):
-        if token not in forbidden:
-            raise DesignError(f"missing forbidden capsule content: {token}")
-    if not _json_exact(data.get("runtime_constraints"), EXPECTED_CAPSULE_RUNTIME):
-        raise DesignError("capsule runtime constraints mismatch")
-    if not _json_exact(data.get("placebo_matching"), EXPECTED_PLACEBO_MATCHING):
-        raise DesignError("capsule placebo-matching contract mismatch")
+    data = integrity._load_json(HERE / "treatment-capsule-contract-v1.0.json")
+    if data.get("capsule_status") != "uninstantiated":
+        raise DesignError("capsule must remain uninstantiated")
+    if data.get("execution_authorized") is not False:
+        raise DesignError("capsule execution must remain unauthorized")
+    source = data.get("source")
+    source_keys = ("commit_sha", "tree_sha", "theory_version", "exporter_blob_sha")
+    if not isinstance(source, dict) or any(
+        source.get(key) is not None for key in source_keys
+    ):
+        raise DesignError("capsule source must remain unfrozen")
+    forbidden = " ".join(
+        integrity._strings(
+            data.get("forbidden_content_classes"),
+            "forbidden capsule content",
+        )
+    ).lower()
+    required = ("task identifiers", "gold patches", "hidden tests", "benchmark outcomes")
+    if any(term not in forbidden for term in required):
+        raise DesignError("forbidden capsule content boundary incomplete")
+    integrity._require_digest(
+        data.get("runtime_constraints"),
+        CONTRACT_DIGESTS["runtime"],
+        "capsule runtime",
+    )
+    integrity._require_digest(
+        data.get("placebo_matching"),
+        CONTRACT_DIGESTS["placebo_matching"],
+        "capsule placebo matching",
+    )
 
 
 def verify_execution_gate() -> None:
-    data = _load_json(HERE / "execution-gate-v1.0.json")
-    if data.get("execution_authorized") is not False:
-        raise DesignError("execution gate must be false")
-    if data.get("model_calls_authorized") is not False or data.get("benchmark_execution_authorized") is not False:
-        raise DesignError("model and benchmark execution must be false")
-    gates = data.get("gates")
-    if not isinstance(gates, dict) or set(gates) != REQUIRED_GATE_NAMES:
-        raise DesignError("execution gate set mismatch")
-    if any(value is not False for value in gates.values()):
-        raise DesignError("all execution gates must remain false in design-only package")
-    forbidden = " ".join(data.get("forbidden_current_actions", [])).lower()
-    for term in ("model call", "pilot execution", "confirmatory execution", "outcome reveal"):
-        if term not in forbidden:
-            raise DesignError(f"missing forbidden current action: {term}")
-
-
-def verify_evidence_plan() -> None:
-    text = (HERE / "evidence-and-analysis-plan-v1.0.md").read_text(encoding="utf-8").lower()
-    for term in REQUIRED_EVIDENCE_TERMS:
-        if term not in text:
-            raise DesignError(f"missing evidence term: {term}")
-    for term in ("outer process success cannot override", "budget_exhausted", "invalid", "historical swe-agent v2"):
-        if term not in text:
-            raise DesignError(f"missing evidence boundary: {term}")
-
-
-def verify_claim_boundary() -> None:
-    text = "\n".join(
-        path.read_text(encoding="utf-8").lower()
-        for path in (HERE / "README.md", HERE / "question-v1.0.md")
+    data = integrity._load_json(HERE / "execution-gate-v1.0.json")
+    authorization_keys = (
+        "execution_authorized",
+        "model_calls_authorized",
+        "benchmark_execution_authorized",
     )
-    if "execution authorized: **no**" not in text:
-        raise DesignError("README must visibly deny execution authorization")
-    if "would not establish" not in text:
-        raise DesignError("claim boundary missing")
-    for claim in FORBIDDEN_CLAIMS:
-        if claim not in text:
-            raise DesignError(f"explicit nonclaim missing: {claim}")
+    if any(data.get(key) is not False for key in authorization_keys):
+        raise DesignError("execution must remain unauthorized")
+    gates = data.get("gates")
+    if not isinstance(gates, dict):
+        raise DesignError("gate object required")
+    if set(gates) != GATES or any(value is not False for value in gates.values()):
+        raise DesignError("execution gate set must be exact and all false")
+    forbidden = " ".join(
+        integrity._strings(
+            data.get("forbidden_current_actions"),
+            "forbidden actions",
+        )
+    ).lower()
+    required = (
+        "model call",
+        "pilot execution",
+        "confirmatory execution",
+        "outcome reveal",
+    )
+    if any(term not in forbidden for term in required):
+        raise DesignError("forbidden current actions incomplete")
+
+
+def verify_text_boundaries() -> None:
+    evidence = integrity._read_regular(
+        HERE / "evidence-and-analysis-plan-v1.0.md"
+    ).decode("utf-8").lower()
+    required_evidence = (
+        "stdout",
+        "stderr",
+        "trajectory",
+        "commands",
+        "tool calls",
+        "model messages",
+        "patch",
+        "prediction",
+        "grader logs",
+        "content-root digest",
+        "outer process success cannot override",
+        "budget_exhausted",
+        "invalid",
+        "historical swe-agent v2",
+        "abs(placebo_count - far_treatment_count) * 100 <= far_treatment_count",
+        "runtime sorting",
+        "array order is authoritative",
+    )
+    if any(term not in evidence for term in required_evidence):
+        raise DesignError("evidence or analysis boundary missing")
+
+    claims = "\n".join(
+        integrity._read_regular(HERE / path).decode("utf-8").lower()
+        for path in ("README.md", "question-v1.0.md")
+    )
+    if "execution authorized: **no**" not in claims:
+        raise DesignError("visible execution boundary missing")
+    if "would not establish" not in claims:
+        raise DesignError("visible claim boundary missing")
+    nonclaims = (
+        "universal software-engineering improvement",
+        "model-independent improvement",
+        "commercial readiness",
+    )
+    if any(term not in claims for term in nonclaims):
+        raise DesignError("explicit nonclaim missing")
 
 
 def verify() -> None:
-    verify_manifest()
+    integrity.ROOT = ROOT
+    integrity.HERE = HERE
+    integrity.MANIFEST = MANIFEST
+    integrity._committed_blob_bytes = _committed_blob_bytes
+    integrity.verify_manifest()
+    integrity.verify_byte_policy()
     verify_preregistration()
+    verify_task_manifest_contract()
     verify_capsule_contract()
     verify_execution_gate()
-    verify_evidence_plan()
-    verify_claim_boundary()
+    verify_text_boundaries()
 
 
 if __name__ == "__main__":
@@ -375,4 +302,7 @@ if __name__ == "__main__":
         verify()
     except DesignError as exc:
         raise SystemExit(f"FAIL: {exc}")
-    print("PASS: FAR-SWE-V3-001 design is internally consistent and execution remains blocked.")
+    print(
+        "PASS: FAR-SWE-V3-001 design is internally consistent "
+        "and execution remains blocked."
+    )
