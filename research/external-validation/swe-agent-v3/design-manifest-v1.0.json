@@ -6,38 +6,38 @@
   "artifacts": [
     {
       "path": "research/external-validation/swe-agent-v3/README.md",
-      "sha256": "d40764fc36ecf68922a800bfc83802d4c84bdccebb88fe84f0bf37e6347e865b",
+      "git_blob_sha1": "3d5627e3a75020304bc4626acc86272078c858ea",
       "bytes": 2014
     },
     {
       "path": "research/external-validation/swe-agent-v3/question-v1.0.md",
-      "sha256": "02c97de70f37fdc0be5d977aaba83ce6a48ecf566ac5cc5aea6411995fb496a0",
+      "git_blob_sha1": "b61da8b21953b835d341331e360405d6783d4cf4",
       "bytes": 1795
     },
     {
       "path": "research/external-validation/swe-agent-v3/preregistration-v1.0.json",
-      "sha256": "09ff33322f00f7c2979c94759c3e4afc9eba8ecaff85217bdb43d532f5c75362",
+      "git_blob_sha1": "c0a689e621546c3494b5d0493973f80288e83abe",
       "bytes": 9254
     },
     {
       "path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
-      "sha256": "1cc9ae9631e4fe5418fdba980c9e5a0073031edea64fad8dd072d7961024e78f",
+      "git_blob_sha1": "571b81f164390aca1e6b7a3d926626cc06630627",
       "bytes": 2933
     },
     {
       "path": "research/external-validation/swe-agent-v3/execution-gate-v1.0.json",
-      "sha256": "955432c861b37795ca5c2d5d600b428cfb2c2efaeb44bde5361cae8f0fa6b1ec",
+      "git_blob_sha1": "055cdd17581074e2325d570db8df9266e88556e2",
       "bytes": 1865
     },
     {
       "path": "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md",
-      "sha256": "f2f89a890d46777a8df11c6e23fcd124c37783ad14606a25f9e2632d13c22eba",
+      "git_blob_sha1": "7b5883bb857001d3aa7c7276bd51ae80bf2d6815",
       "bytes": 5384
     },
     {
       "path": "research/external-validation/swe-agent-v3/verify_design.py",
-      "sha256": "f28fc13569ec97e258349f65acc33b3858765fd89590322f7a1aad722c47dce9",
-      "bytes": 17909
+      "git_blob_sha1": "a2be0e58764b69ee9267f60bdb30d884063cf0b8",
+      "bytes": 18342
     }
   ]
 }
