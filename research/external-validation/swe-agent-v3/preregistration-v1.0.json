@@ -177,11 +177,14 @@
       "task_order": "ascending frozen blind task identifier",
       "rng_procedure": {
         "id": "sha256_rejection_stream_v1",
-        "seed_format": "exactly 64 lowercase hexadecimal characters committed before outcome reveal",
-        "counter_encoding": "seed_bytes || uint64_be(resample_index) || uint64_be(draw_index) || uint32_be(rejection_counter)",
+        "seed_format": "exactly 64 lowercase hexadecimal characters strictly base16-decoded into 32 bytes; the ASCII hex characters are not hashed",
+        "counter_encoding": "decoded_seed_32_bytes || uint64_be(resample_index) || uint64_be(draw_index) || uint32_be(rejection_counter)",
         "digest": "SHA-256",
         "integer": "first 8 digest bytes interpreted as unsigned big-endian",
-        "unbiased_index_rule": "reject x >= 2^64 - (2^64 mod N); otherwise index = x mod N; increment rejection_counter from zero until accepted"
+        "unbiased_index_rule": "reject x >= 2^64 - (2^64 mod N); otherwise index = x mod N; increment rejection_counter from zero until accepted",
+        "resample_index_origin": 0,
+        "draw_index_origin": 0,
+        "rejection_counter_origin": 0
       },
       "quantile_convention": {
         "id": "hyndman_fan_type_7",
