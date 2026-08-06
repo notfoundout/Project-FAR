@@ -106,6 +106,26 @@ class SweAgentV3DesignTests(unittest.TestCase):
         with self.assertRaises(verify_module.DesignError):
             self.run_verify()
 
+    def test_invalid_repetition_cannot_be_averaged_away(self) -> None:
+        self.mutate_json(
+            "preregistration-v1.0.json",
+            lambda d: d["analysis"]["invalid_run_and_cell_policy"].__setitem__(
+                "retained_invalid_repetition_makes_entire_task_arm_cell_missing", False
+            ),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_decision_categories_cannot_overlap_harm(self) -> None:
+        self.mutate_json(
+            "preregistration-v1.0.json",
+            lambda d: d["analysis"]["decision_categories"].__setitem__(
+                "no_practical_advantage", "95% paired-task bootstrap upper bound < 0.10"
+            ),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
     def test_capsule_source_cannot_be_pretended_frozen(self) -> None:
         self.mutate_json(
             "treatment-capsule-contract-v1.0.json",
@@ -125,6 +145,14 @@ class SweAgentV3DesignTests(unittest.TestCase):
     def test_manifest_tamper_is_rejected(self) -> None:
         path = self.here / "question-v1.0.md"
         path.write_text(path.read_text() + "\npost hoc mutation\n")
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_manifest_byte_count_tamper_is_rejected(self) -> None:
+        manifest_path = self.here / "design-manifest-v1.0.json"
+        manifest = json.loads(manifest_path.read_text())
+        manifest["artifacts"][0]["bytes"] += 1
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
         with self.assertRaises(verify_module.DesignError):
             self.run_verify()
 
