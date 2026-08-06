@@ -144,10 +144,46 @@ class SweAgentV3DesignTests(unittest.TestCase):
         with self.assertRaises(verify_module.DesignError):
             self.run_verify()
 
-    def test_capsule_cannot_gain_network_access(self) -> None:
+    def test_capsule_runtime_constraints_are_exact(self) -> None:
+        mutations = {
+            "read_only": False,
+            "network_access": True,
+            "writes_outside_run_evidence_directory": True,
+            "extra_tool_permissions": True,
+            "extra_context_window": True,
+            "extra_model_calls": True,
+            "mutable_remote_dependencies": True,
+        }
+        for key, value in mutations.items():
+            with self.subTest(key=key):
+                with tempfile.TemporaryDirectory() as tmp:
+                    source = self.here
+                    clone = Path(tmp) / "research/external-validation/swe-agent-v3"
+                    clone.parent.mkdir(parents=True)
+                    shutil.copytree(source, clone)
+                    data_path = clone / "treatment-capsule-contract-v1.0.json"
+                    data = json.loads(data_path.read_text())
+                    data["runtime_constraints"][key] = value
+                    data_path.write_text(json.dumps(data, indent=2) + "\n")
+                    import hashlib
+                    manifest_path = clone / "design-manifest-v1.0.json"
+                    manifest = json.loads(manifest_path.read_text())
+                    clone_root = Path(tmp)
+                    for entry in manifest["artifacts"]:
+                        path = clone_root / entry["path"]
+                        entry["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+                        entry["bytes"] = path.stat().st_size
+                    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
+                    with mock.patch.object(verify_module, "ROOT", clone_root), \
+                         mock.patch.object(verify_module, "HERE", clone), \
+                         mock.patch.object(verify_module, "MANIFEST", manifest_path):
+                        with self.assertRaises(verify_module.DesignError):
+                            verify_module.verify()
+
+    def test_capsule_placebo_matching_contract_is_exact(self) -> None:
         self.mutate_json(
             "treatment-capsule-contract-v1.0.json",
-            lambda d: d["runtime_constraints"].__setitem__("network_access", True),
+            lambda d: d["placebo_matching"].__setitem__("read_order_exact", False),
         )
         with self.assertRaises(verify_module.DesignError):
             self.run_verify()
