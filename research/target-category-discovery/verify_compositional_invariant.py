@@ -13,8 +13,8 @@ DEFAULT_RESULT = HERE / "compositional-invariant-result-v1.0.json"
 DEFAULT_REPORT = HERE / "compositional-invariant-terminal-result-v1.0.md"
 
 EXPECTED_BASE = "d1fc8053e1459a7829f6f24b8d187f7887375cf0"
-EXPECTED_SPEC_SHA256 = "733b8162fa2228d2be2018bd9eab79e8c096beeb21f09ac1cde50a7b9faccbf6"
-EXPECTED_REPORT_SHA256 = "734be42e44dcad48a057fb14126ebe59f5c270b40b6a68d331c4b3181a4f4ce4"
+EXPECTED_SPEC_SHA256 = "61adb63977045fb50aab66153af2de845f7b4f5b979cb33b8cafa281fdf0b7ee"
+EXPECTED_REPORT_SHA256 = "272a6e63244e63761a10f8ff3d9a49832c55f553c6328919a1b4790ef52680c9"
 EXPECTED_QUESTION = (
     "What is the broadest independently stated structured class in which "
     "nontrivial operations are invariant under admissible recoding, without "
@@ -29,7 +29,7 @@ EXPECTED_SCHEMA = {
 EXPECTED_CLAIMS = [
     {
         "id": "TCD-CI-T1",
-        "statement": "TC1-TC4 characterize small categories and functors as the corresponding recodings.",
+        "statement": "TC1-TC4 specify exactly the data and laws of a small category; structure-preserving recodings are functors.",
         "status": "proved_in_report",
     },
     {
@@ -52,14 +52,26 @@ EXPECTED_POLICY = {
     "absolute_maximum_claimed": False,
     "reason": "Broadest is undefined until a comparison order and admissible recodings are fixed.",
     "selected_scope": "all small typed compositional systems",
-    "scope_criterion": "A system is included exactly when its typed steps have identities and associative sequential composition.",
+    "scope_criterion": "A system is included exactly when it supplies the set-sized category data and laws in TC1-TC4.",
     "recodings": "all functors",
 }
 EXPECTED_AXIOMS = [
-    {"id": "TC1", "statement": "Every step has a source interface and a target interface."},
-    {"id": "TC2", "statement": "Every interface has an identity step."},
-    {"id": "TC3", "statement": "Whenever the target of one step equals the source of another, their sequential composite exists."},
-    {"id": "TC4", "statement": "Identity steps are two-sided units and sequential composition is associative."},
+    {
+        "id": "TC1",
+        "statement": "Interfaces and steps form sets, with total source and target functions from steps to interfaces.",
+    },
+    {
+        "id": "TC2",
+        "statement": "A total designated identity assignment maps each interface X to a step id_X:X->X.",
+    },
+    {
+        "id": "TC3",
+        "statement": "A single-valued composition operation is defined exactly on composable ordered pairs (f,g) with target(f)=source(g), and returns g∘f with source(g∘f)=source(f) and target(g∘f)=target(g).",
+    },
+    {
+        "id": "TC4",
+        "statement": "For every well-typed step and composable triple, identities are two-sided units and composition is associative.",
+    },
 ]
 EXPECTED_FIXTURE = {
     "objects": ["A", "B", "C"],
@@ -88,6 +100,8 @@ EXPECTED_NONCLAIMS = {
     "RCCD is necessary, minimal, unique, or Pareto-optimal",
     "the clean-room target-category study has been executed",
     "the result changes accepted Project FAR theory",
+    "typed composition is the weakest, first, or minimal structure supporting nontrivial invariants",
+    "small categories are broader than bare sets under a common comparison order",
 }
 
 
@@ -139,14 +153,25 @@ def canonical_json(value: Any) -> bytes:
 
 def _validate_spec(spec: dict[str, Any]) -> None:
     expected_keys = {
-        "id", "version", "status", "base_commit", "question",
-        "broadness_policy", "axioms", "input_operation_schema",
-        "theorem_claims", "fixture", "terminal_disposition", "nonclaims",
+        "id",
+        "version",
+        "status",
+        "base_commit",
+        "question",
+        "broadness_policy",
+        "axioms",
+        "input_operation_schema",
+        "theorem_claims",
+        "fixture",
+        "terminal_disposition",
+        "nonclaims",
     }
     if set(spec) != expected_keys:
         raise VerificationError("spec top-level keys drifted")
     if (spec["id"], spec["version"], spec["status"]) != (
-        "TCD-COMPOSITIONAL-INVARIANT-001", "1.0", "Research"
+        "TCD-COMPOSITIONAL-INVARIANT-001",
+        "1.0",
+        "Research",
     ):
         raise VerificationError("spec identity/version/status drifted")
     base = spec["base_commit"]
@@ -159,7 +184,7 @@ def _validate_spec(spec: dict[str, Any]) -> None:
     if spec["broadness_policy"] != EXPECTED_POLICY:
         raise VerificationError("broadness policy drifted")
     if spec["axioms"] != EXPECTED_AXIOMS:
-        raise VerificationError("exact four-axiom contract required")
+        raise VerificationError("exact four-part category contract required")
     if spec["input_operation_schema"] != EXPECTED_SCHEMA:
         raise VerificationError("input operation schema drifted")
     if spec["theorem_claims"] != EXPECTED_CLAIMS:
@@ -176,7 +201,10 @@ def _validate_spec(spec: dict[str, Any]) -> None:
 
 
 def _free_category() -> tuple[list[tuple[str, tuple[str, ...]]], dict[str, tuple[str, str]]]:
-    generators = {g["name"]: (g["source"], g["target"]) for g in EXPECTED_FIXTURE["generators"]}
+    generators = {
+        g["name"]: (g["source"], g["target"])
+        for g in EXPECTED_FIXTURE["generators"]
+    }
     outgoing: dict[str, list[str]] = {obj: [] for obj in EXPECTED_FIXTURE["objects"]}
     for name, (source, _) in generators.items():
         outgoing[source].append(name)
@@ -191,10 +219,12 @@ def _free_category() -> tuple[list[tuple[str, tuple[str, ...]]], dict[str, tuple
         return current
 
     paths: list[tuple[str, tuple[str, ...]]] = []
+
     def extend(path: tuple[str, tuple[str, ...]]) -> None:
         paths.append(path)
         for edge in outgoing[target(path)]:
             extend((path[0], path[1] + (edge,)))
+
     for obj in EXPECTED_FIXTURE["objects"]:
         extend((obj, ()))
     return sorted(set(paths), key=lambda p: (p[0], len(p[1]), p[1])), generators
@@ -217,16 +247,23 @@ def build_result(spec: dict[str, Any]) -> dict[str, Any]:
             current = destination
         return current
 
-    def compose(first: tuple[str, tuple[str, ...]], second: tuple[str, tuple[str, ...]]) -> tuple[str, tuple[str, ...]]:
+    def compose(
+        first: tuple[str, tuple[str, ...]],
+        second: tuple[str, tuple[str, ...]],
+    ) -> tuple[str, tuple[str, ...]]:
         if target(first) != second[0]:
             raise VerificationError("non-composable arrows")
         return first[0], first[1] + second[1]
 
     identity_checks = 0
     for arrow in arrows:
-        if compose((arrow[0], ()), arrow) != arrow or compose(arrow, (target(arrow), ())) != arrow:
+        if (
+            compose((arrow[0], ()), arrow) != arrow
+            or compose(arrow, (target(arrow), ())) != arrow
+        ):
             raise VerificationError("identity law failed")
         identity_checks += 2
+
     associativity_checks = 0
     for first in arrows:
         for second in arrows:
@@ -235,22 +272,31 @@ def build_result(spec: dict[str, Any]) -> dict[str, Any]:
             for third in arrows:
                 if target(second) != third[0]:
                     continue
-                if compose(compose(first, second), third) != compose(first, compose(second, third)):
+                if compose(compose(first, second), third) != compose(
+                    first, compose(second, third)
+                ):
                     raise VerificationError("associativity failed")
                 associativity_checks += 1
 
-    distinguished = [_render(p) for p in arrows if p[0] == "A" and target(p) == "C"]
+    distinguished = [
+        _render(path)
+        for path in arrows
+        if path[0] == "A" and target(path) == "C"
+    ]
     if distinguished != ["c", "b∘a"]:
         raise VerificationError("distinguished path set drifted")
+
     composite = compose(("A", ("a",)), ("B", ("b",)))
     if _render(composite) != "b∘a":
         raise VerificationError("nontrivial composite witness changed")
-    nonidentity = {_render(p) for p in arrows if p[1]}
+
+    nonidentity = {_render(path) for path in arrows if path[1]}
     new_paths = sorted(nonidentity - set(generators))
     if new_paths != ["b∘a"]:
         raise VerificationError("free-completion witness set drifted")
+
     words = {"a": "x", "b": "yz", "c": "q"}
-    word = "".join(words[e] for e in composite[1])
+    word = "".join(words[edge] for edge in composite[1])
     if word != "xyz" or len(word) != len(words["a"]) + len(words["b"]):
         raise VerificationError("functorial recoding witness failed")
 
@@ -297,10 +343,16 @@ def _validate_report(path: Path) -> None:
     except UnicodeDecodeError as exc:
         raise VerificationError(f"invalid UTF-8 in {path}") from exc
     if hashlib.sha256(raw).hexdigest() != EXPECTED_REPORT_SHA256:
-        raise VerificationError("terminal report content drifted from the frozen proof and claim boundary")
+        raise VerificationError(
+            "terminal report content drifted from the frozen proof and claim boundary"
+        )
 
 
-def verify(spec_path: Path = DEFAULT_SPEC, result_path: Path = DEFAULT_RESULT, report_path: Path = DEFAULT_REPORT) -> dict[str, Any]:
+def verify(
+    spec_path: Path = DEFAULT_SPEC,
+    result_path: Path = DEFAULT_RESULT,
+    report_path: Path = DEFAULT_REPORT,
+) -> dict[str, Any]:
     actual = build_result(load_json(spec_path))
     if actual != load_json(result_path):
         raise VerificationError("committed result does not match a fresh rebuild")
@@ -315,13 +367,22 @@ def main() -> int:
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args()
+
     actual = build_result(load_json(args.spec))
     if args.write:
-        args.result.write_text(json.dumps(actual, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+        args.result.write_text(
+            json.dumps(actual, indent=2, ensure_ascii=False, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
     elif actual != load_json(args.result):
         raise VerificationError("committed result does not match a fresh rebuild")
+
     _validate_report(args.report)
-    print(f"PASS: typed-compositional invariant result; {actual['evidence']['free_category_arrow_count']} arrows; paths={actual['evidence']['distinguished_paths']}")
+    print(
+        "PASS: typed-compositional invariant result; "
+        f"{actual['evidence']['free_category_arrow_count']} arrows; "
+        f"paths={actual['evidence']['distinguished_paths']}"
+    )
     return 0
 
 
