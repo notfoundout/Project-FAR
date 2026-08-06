@@ -41,7 +41,7 @@ EVIDENCE_BUNDLE_SECTION_SHA256 = (
     "4fa33bbd5a4db1683520a035c2a4ca504fdb00d9a0e8ce999ee1436f8da2075e"
 )
 PRE_SUBMISSION_SECTION_SHA256 = (
-    "d4ad9fd4d3f5d3852bf42d18cb30759ec7d53f03f67966b812e7aaf096b42ae8"
+    "b712f1c7a649f0d472d3c6eb5f6bfe87b7e0544e79d11f12fef698f2a171aa42"
 )
 ANALYSIS_KEYS = {
     "task_level_aggregation",
@@ -79,11 +79,25 @@ GATES = {
 
 def _normalized_atx_headings(text: str) -> list[tuple[int, str]]:
     headings: list[tuple[int, str]] = []
+    fence_character: str | None = None
+    fence_length = 0
     for line in text.splitlines():
         indentation = len(line) - len(line.lstrip(" "))
         if indentation > 3:
             continue
         candidate = line[indentation:]
+        fence = re.match(r"^(`{3,}|~{3,})(.*)$", candidate)
+        if fence is not None:
+            marker = fence.group(1)
+            if fence_character is None:
+                fence_character = marker[0]
+                fence_length = len(marker)
+            elif marker[0] == fence_character and len(marker) >= fence_length:
+                fence_character = None
+                fence_length = 0
+            continue
+        if fence_character is not None:
+            continue
         match = re.match(r"^(#{1,6})(?:[ \t]+|$)(.*)$", candidate)
         if match is None:
             continue
@@ -295,7 +309,12 @@ def verify_capsule_contract() -> None:
             "forbidden capsule content",
         )
     ).lower()
-    required = ("task identifiers", "gold patches", "hidden tests", "benchmark outcomes")
+    required = (
+        "task identifiers",
+        "gold patches",
+        "hidden tests",
+        "benchmark outcomes",
+    )
     if any(term not in forbidden for term in required):
         raise DesignError("forbidden capsule content boundary incomplete")
     integrity._require_digest(
@@ -348,14 +367,14 @@ def verify_text_boundaries() -> None:
     required_headings = (
         "Evidence bundle per run",
         "Pre-submission behavior contract",
-        "Failure semantics",
+        "Placebo exposure matching",
     )
     if any(headings.count((2, title)) != 1 for title in required_headings):
         raise DesignError("governed evidence-plan headings must be unique")
 
     evidence_start_marker = "## Evidence bundle per run\n"
     pre_submission_start_marker = "## Pre-submission behavior contract\n"
-    pre_submission_end_marker = "\n## Failure semantics\n"
+    pre_submission_end_marker = "\n## Placebo exposure matching\n"
     evidence_start = evidence_text.find(evidence_start_marker)
     pre_submission_start = evidence_text.find(pre_submission_start_marker)
     pre_submission_end = evidence_text.find(
