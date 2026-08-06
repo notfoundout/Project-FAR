@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -32,7 +33,7 @@ REQUIRED_GATE_NAMES = {
 }
 REQUIRED_EVIDENCE_TERMS = {
     "stdout", "stderr", "trajectory", "commands", "tool calls", "model messages",
-    "patch", "prediction", "grader logs", "content-root digest"
+    "patch", "prediction", "grader logs", "content-root digest",
 }
 FORBIDDEN_CLAIMS = {
     "universal software-engineering improvement",
@@ -143,8 +144,10 @@ def _safe_manifest_path(relative: str) -> Path:
     return current
 
 
-def _sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def _git_blob_sha1(path: Path) -> str:
+    data = path.read_bytes()
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
 
 
 def verify_manifest() -> None:
@@ -159,12 +162,16 @@ def verify_manifest() -> None:
         if not isinstance(entry, dict):
             raise DesignError("manifest entry must be object")
         relative = entry.get("path")
-        expected = entry.get("sha256")
+        expected_blob = entry.get("git_blob_sha1")
         expected_bytes = entry.get("bytes")
-        if not isinstance(relative, str) or not isinstance(expected, str):
-            raise DesignError("manifest path and sha256 required")
+        if not isinstance(relative, str):
+            raise DesignError("manifest path required")
+        if not isinstance(expected_blob, str) or re.fullmatch(r"[0-9a-f]{40}", expected_blob) is None:
+            raise DesignError(f"manifest git_blob_sha1 must be 40 lowercase hexadecimal characters: {relative}")
         if not isinstance(expected_bytes, int) or isinstance(expected_bytes, bool) or expected_bytes < 0:
             raise DesignError(f"manifest bytes must be a nonnegative integer: {relative}")
+        if set(entry) != {"path", "git_blob_sha1", "bytes"}:
+            raise DesignError(f"unexpected manifest fields: {relative}")
         if relative in seen:
             raise DesignError(f"duplicate manifest path: {relative}")
         seen.add(relative)
@@ -173,8 +180,8 @@ def verify_manifest() -> None:
             raise DesignError(f"missing manifested file: {relative}")
         if path.stat().st_size != expected_bytes:
             raise DesignError(f"byte-count mismatch: {relative}")
-        if _sha256(path) != expected:
-            raise DesignError(f"digest mismatch: {relative}")
+        if _git_blob_sha1(path) != expected_blob:
+            raise DesignError(f"Git blob identity mismatch: {relative}")
     required = {
         "research/external-validation/swe-agent-v3/README.md",
         "research/external-validation/swe-agent-v3/question-v1.0.md",
@@ -210,7 +217,7 @@ def verify_preregistration() -> None:
         raise DesignError("placebo matching requirements missing")
     for key in (
         "file_count_exact", "relative_path_shape_exact", "directory_depth_exact",
-        "read_order_exact", "interaction_turns_exact", "tool_permissions_exact"
+        "read_order_exact", "interaction_turns_exact", "tool_permissions_exact",
     ):
         if matching.get(key) is not True:
             raise DesignError(f"placebo exact match required: {key}")
@@ -246,7 +253,7 @@ def verify_preregistration() -> None:
         "same_system_and_agent_prompts_except_capsule_mount",
         "same_repository_commit_across_arms", "same_environment_image_across_arms",
         "same_tools_across_arms", "same_call_token_time_and_cost_budgets_across_arms",
-        "fresh_context_per_run", "parallel_cross_arm_information_sharing_prohibited"
+        "fresh_context_per_run", "parallel_cross_arm_information_sharing_prohibited",
     ):
         if controls.get(key) is not True:
             raise DesignError(f"execution control must be true: {key}")
@@ -260,7 +267,6 @@ def verify_preregistration() -> None:
         raise DesignError("population generalization must be prohibited")
     if data.get("minimum_practically_important_difference") != 0.10:
         raise DesignError("minimum practically important difference must remain 0.10")
-
     if analysis.get("task_level_aggregation") != "mean over repetitions within each task and arm":
         raise DesignError("task-level aggregation mismatch")
     if analysis.get("uncertainty_method") != "paired_task_bootstrap":
