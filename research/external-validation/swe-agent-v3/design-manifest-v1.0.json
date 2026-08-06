@@ -36,8 +36,8 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/verify_design.py",
-      "sha256": "3a7985939d53e36b284d9709cee7c10903d3cc2ab61156ec882a83baedc626bd",
-      "bytes": 15169
+      "sha256": "85dc5339a847815aa8f1acfa327e515b6ce3b870f3da272048b654b0b16d4860",
+      "bytes": 17350
     }
   ]
 }
