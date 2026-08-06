@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-SWE-V3-001",
+  "artifact_status": "Research",
+  "capsule_status": "uninstantiated",
+  "execution_authorized": false,
+  "source": {
+    "repository": "notfoundout/Project-FAR",
+    "commit_sha": null,
+    "tree_sha": null,
+    "theory_version": null,
+    "exporter_blob_sha": null
+  },
+  "required_outputs": {
+    "capsule_manifest": "canonical JSON with normalized relative paths, byte sizes, SHA-256, Git blob SHA-1 where applicable, and media type",
+    "capsule_root_sha256": null,
+    "tokenizer_identity": null,
+    "token_count": null,
+    "utf8_byte_count": null,
+    "file_count": null,
+    "maximum_directory_depth": null
+  },
+  "allowed_content_classes": [
+    "static instructions derived from the frozen FAR version",
+    "static schemas",
+    "static checklists",
+    "deterministic local validation tools",
+    "worked examples that are domain-neutral and frozen before task selection"
+  ],
+  "forbidden_content_classes": [
+    "confirmatory task identifiers",
+    "confirmatory repository names",
+    "issue text from confirmatory tasks",
+    "gold patches",
+    "hidden tests",
+    "grader outputs",
+    "benchmark outcomes",
+    "task-specific hints",
+    "post-selection examples",
+    "internet retrieval instructions",
+    "additional model calls",
+    "provider-specific hidden memory",
+    "Project FAR repository navigation unrelated to the exported capsule"
+  ],
+  "runtime_constraints": {
+    "read_only": true,
+    "network_access": false,
+    "writes_outside_run_evidence_directory": false,
+    "extra_tool_permissions": false,
+    "extra_context_window": false,
+    "extra_model_calls": false,
+    "mutable_remote_dependencies": false
+  },
+  "placebo_matching": {
+    "required": true,
+    "utf8_bytes_relative_tolerance": 0.01,
+    "frozen_tokenizer_tokens_relative_tolerance": 0.01,
+    "file_count_exact": true,
+    "relative_path_shape_exact": true,
+    "directory_depth_exact": true,
+    "read_order_exact": true,
+    "interaction_turns_exact": true,
+    "tool_permissions_exact": true
+  },
+  "freeze_sequence": [
+    "freeze theory version and source commit",
+    "export candidate FAR capsule deterministically",
+    "audit for forbidden task or outcome content",
+    "freeze tokenizer identity and compute exposure metrics",
+    "construct inert placebo without confirmatory task access",
+    "verify matching tolerances",
+    "commit capsule and placebo manifests before confirmatory task identities are released",
+    "seal exact capsule and placebo bytes"
+  ],
+  "invalidation_rules": [
+    "any source commit or capsule byte change creates a new experiment version",
+    "any confirmatory task identity exposure to a capsule author invalidates the affected task",
+    "any unmatched tool, budget, context, read-order, or interaction advantage invalidates the causal contrast",
+    "any mutable remote dependency invalidates the capsule"
+  ]
+}

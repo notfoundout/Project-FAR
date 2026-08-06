@@ -1,0 +1,142 @@
+from __future__ import annotations
+
+import importlib.util
+import json
+import shutil
+import tempfile
+import unittest
+from pathlib import Path
+from unittest import mock
+
+MODULE_PATH = Path(__file__).resolve().parents[1] / "research/external-validation/swe-agent-v3/verify_design.py"
+SPEC = importlib.util.spec_from_file_location("swe_v3_verify", MODULE_PATH)
+verify_module = importlib.util.module_from_spec(SPEC)
+assert SPEC.loader is not None
+SPEC.loader.exec_module(verify_module)
+
+
+class SweAgentV3DesignTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self.tmp.name)
+        source = MODULE_PATH.parent
+        target = self.root / "research/external-validation/swe-agent-v3"
+        target.parent.mkdir(parents=True)
+        shutil.copytree(source, target)
+        self.here = target
+
+    def tearDown(self) -> None:
+        self.tmp.cleanup()
+
+    def run_verify(self) -> None:
+        with mock.patch.object(verify_module, "ROOT", self.root), \
+             mock.patch.object(verify_module, "HERE", self.here), \
+             mock.patch.object(verify_module, "MANIFEST", self.here / "design-manifest-v1.0.json"):
+            verify_module.verify()
+
+    def rewrite_manifest(self) -> None:
+        import hashlib
+        manifest_path = self.here / "design-manifest-v1.0.json"
+        manifest = json.loads(manifest_path.read_text())
+        for entry in manifest["artifacts"]:
+            path = self.root / entry["path"]
+            entry["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+            entry["bytes"] = path.stat().st_size
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
+
+    def mutate_json(self, name: str, fn) -> None:
+        path = self.here / name
+        data = json.loads(path.read_text())
+        fn(data)
+        path.write_text(json.dumps(data, indent=2) + "\n")
+        self.rewrite_manifest()
+
+    def test_canonical_design_passes(self) -> None:
+        self.run_verify()
+
+    def test_execution_authorization_is_rejected(self) -> None:
+        self.mutate_json("execution-gate-v1.0.json", lambda d: d.__setitem__("execution_authorized", True))
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_any_true_gate_is_rejected(self) -> None:
+        self.mutate_json(
+            "execution-gate-v1.0.json",
+            lambda d: d["gates"].__setitem__("theory_version_frozen", True),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_missing_placebo_arm_is_rejected(self) -> None:
+        self.mutate_json("preregistration-v1.0.json", lambda d: d["arms"].pop(1))
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_weak_placebo_matching_is_rejected(self) -> None:
+        self.mutate_json(
+            "preregistration-v1.0.json",
+            lambda d: d["arms"][1]["matching_requirements"].__setitem__(
+                "utf8_bytes_relative_tolerance", 0.25
+            ),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_project_far_task_prohibition_is_required(self) -> None:
+        self.mutate_json(
+            "preregistration-v1.0.json",
+            lambda d: d["task_population"].__setitem__("prohibited_task_repositories", []),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_too_few_tasks_is_rejected(self) -> None:
+        self.mutate_json(
+            "preregistration-v1.0.json",
+            lambda d: d["task_population"].__setitem__("minimum_task_count", 4),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_v2_pooling_is_rejected(self) -> None:
+        self.mutate_json(
+            "preregistration-v1.0.json",
+            lambda d: d.__setitem__("historical_v2_pooling_permitted", True),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_capsule_source_cannot_be_pretended_frozen(self) -> None:
+        self.mutate_json(
+            "treatment-capsule-contract-v1.0.json",
+            lambda d: d["source"].__setitem__("commit_sha", "a" * 40),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_capsule_cannot_gain_network_access(self) -> None:
+        self.mutate_json(
+            "treatment-capsule-contract-v1.0.json",
+            lambda d: d["runtime_constraints"].__setitem__("network_access", True),
+        )
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_manifest_tamper_is_rejected(self) -> None:
+        path = self.here / "question-v1.0.md"
+        path.write_text(path.read_text() + "\npost hoc mutation\n")
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+    def test_symlinked_governed_artifact_is_rejected(self) -> None:
+        target = self.here / "question-v1.0.md"
+        copy = self.here / "question-copy.md"
+        copy.write_bytes(target.read_bytes())
+        target.unlink()
+        target.symlink_to(copy.name)
+        with self.assertRaises(verify_module.DesignError):
+            self.run_verify()
+
+
+if __name__ == "__main__":
+    unittest.main()

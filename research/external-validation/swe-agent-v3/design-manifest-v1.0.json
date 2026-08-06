@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-SWE-V3-001",
+  "artifact_status": "Research",
+  "scope": "design-only authority; excludes tasks, model, capsule bytes, placebo bytes, randomization, execution, and outcomes",
+  "artifacts": [
+    {
+      "path": "research/external-validation/swe-agent-v3/README.md",
+      "sha256": "4c3d4003ccf0e23dd7d973c7964353ce9683549be73b8de3a0cac8f3344318a0",
+      "bytes": 1975
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/question-v1.0.md",
+      "sha256": "02c97de70f37fdc0be5d977aaba83ce6a48ecf566ac5cc5aea6411995fb496a0",
+      "bytes": 1795
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/preregistration-v1.0.json",
+      "sha256": "be41fe50b77fa606fd823c8197764122a54f20d7964eacb1ef59b9336c13da8b",
+      "bytes": 6379
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
+      "sha256": "1cc9ae9631e4fe5418fdba980c9e5a0073031edea64fad8dd072d7961024e78f",
+      "bytes": 2933
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/execution-gate-v1.0.json",
+      "sha256": "955432c861b37795ca5c2d5d600b428cfb2c2efaeb44bde5361cae8f0fa6b1ec",
+      "bytes": 1865
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md",
+      "sha256": "99037776bd4b12d34a2d1e1594c5d48254d33ca47a2ccf0f52a8a36bda2cb91f",
+      "bytes": 3508
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/verify_design.py",
+      "sha256": "e229e0ed479ff1bc7e5723a7604f9b30a3fb206626f64cd45b073b36033355e2",
+      "bytes": 12661
+    }
+  ]
+}
