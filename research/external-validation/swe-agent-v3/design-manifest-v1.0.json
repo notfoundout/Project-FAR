@@ -16,8 +16,8 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/preregistration-v1.0.json",
-      "sha256": "77d80ec6e520b26beb4a9f381bbe9bfdb3138e17bcf3df8e393309bcb8e275b1",
-      "bytes": 9089
+      "sha256": "09ff33322f00f7c2979c94759c3e4afc9eba8ecaff85217bdb43d532f5c75362",
+      "bytes": 9254
     },
     {
       "path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
@@ -31,8 +31,8 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md",
-      "sha256": "93871223c7c86f2196ba51a0c380b6afeada3132cb3d19f98d3c03145f7328b7",
-      "bytes": 5213
+      "sha256": "f2f89a890d46777a8df11c6e23fcd124c37783ad14606a25f9e2632d13c22eba",
+      "bytes": 5384
     },
     {
       "path": "research/external-validation/swe-agent-v3/verify_design.py",
