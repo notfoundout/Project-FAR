@@ -8,25 +8,25 @@
     "absolute_maximum_claimed": false,
     "reason": "Broadest is undefined until a comparison order and admissible recodings are fixed.",
     "selected_scope": "all small typed compositional systems",
-    "scope_criterion": "A system is included exactly when its typed steps have identities and associative sequential composition.",
+    "scope_criterion": "A system is included exactly when it supplies the set-sized category data and laws in TC1-TC4.",
     "recodings": "all functors"
   },
   "axioms": [
     {
       "id": "TC1",
-      "statement": "Every step has a source interface and a target interface."
+      "statement": "Interfaces and steps form sets, with total source and target functions from steps to interfaces."
     },
     {
       "id": "TC2",
-      "statement": "Every interface has an identity step."
+      "statement": "A total designated identity assignment maps each interface X to a step id_X:X->X."
     },
     {
       "id": "TC3",
-      "statement": "Whenever the target of one step equals the source of another, their sequential composite exists."
+      "statement": "A single-valued composition operation is defined exactly on composable ordered pairs (f,g) with target(f)=source(g), and returns g∘f with source(g∘f)=source(f) and target(g∘f)=target(g)."
     },
     {
       "id": "TC4",
-      "statement": "Identity steps are two-sided units and sequential composition is associative."
+      "statement": "For every well-typed step and composable triple, identities are two-sided units and composition is associative."
     }
   ],
   "input_operation_schema": {
@@ -38,7 +38,7 @@
   "theorem_claims": [
     {
       "id": "TCD-CI-T1",
-      "statement": "TC1-TC4 characterize small categories and functors as the corresponding recodings.",
+      "statement": "TC1-TC4 specify exactly the data and laws of a small category; structure-preserving recodings are functors.",
       "status": "proved_in_report"
     },
     {
@@ -83,6 +83,8 @@
     "RCCD is false",
     "RCCD is necessary, minimal, unique, or Pareto-optimal",
     "the clean-room target-category study has been executed",
-    "the result changes accepted Project FAR theory"
+    "the result changes accepted Project FAR theory",
+    "typed composition is the weakest, first, or minimal structure supporting nontrivial invariants",
+    "small categories are broader than bare sets under a common comparison order"
   ]
 }
