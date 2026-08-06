@@ -80,25 +80,42 @@ class SweAgentV3PrimaryAndBehaviorContractTests(unittest.TestCase):
         mutations = (
             lambda text: text + "\n## Evidence bundle per run ##\nConflict.\n",
             lambda text: text + "\n## Pre-submission behavior contract ##\nConflict.\n",
-            lambda text: text + "\n## Failure semantics ##\nConflict.\n",
+            lambda text: text + "\n## Placebo exposure matching ##\nConflict.\n",
         )
         for index, mutation in enumerate(mutations):
             with self.subTest(index=index):
                 self.reset_fixture()
                 self.assert_text_rejected(mutation)
 
+    def test_fenced_pseudo_headings_do_not_count(self) -> None:
+        self.mutate_evidence(
+            lambda text: text
+            + "\n```text\n## Evidence bundle per run ##\n"
+            + "## Pre-submission behavior contract ##\n"
+            + "## Placebo exposure matching ##\n```\n"
+        )
+        with mock.patch.object(verify_module, "HERE", self.here):
+            verify_module.verify_text_boundaries()
+
     def test_pre_submission_behavior_contract_is_exact(self) -> None:
         mutations = (
-            lambda text: text.replace("1. reproduce the failure;\n", "", 1),
             lambda text: text.replace(
-                "4. run the narrowest discriminating test;\n",
-                "4. skip directly to the broadest test;\n",
+                "1. a reproduction attempt or explicit `reproduction_unavailable`;\n",
+                "",
                 1,
             ),
             lambda text: text.replace(
-                "6. report remaining uncertainty and retained evidence.\n",
-                "6. report remaining uncertainty and retained evidence;\n"
-                "7. use operator-selected post-hoc guidance.\n",
+                "4. execution of the identified target test before submission, or "
+                "explicit `target_test_unavailable`;\n",
+                "4. execution of any available test before submission;\n",
+                1,
+            ),
+            lambda text: text.replace(
+                "6. a patch that modifies an intended repository path, unless the run "
+                "terminates with an explicit no-patch failure.\n",
+                "6. a patch that modifies an intended repository path, unless the run "
+                "terminates with an explicit no-patch failure;\n"
+                "7. operator-selected post-hoc guidance.\n",
                 1,
             ),
         )
