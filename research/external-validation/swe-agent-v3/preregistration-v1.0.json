@@ -164,7 +164,32 @@
       "bounded_positive",
       "no_practical_advantage",
       "inconclusive"
-    ]
+    ],
+    "bootstrap_interval_spec": {
+      "method": "percentile_equal_tailed",
+      "confidence_level": 0.95,
+      "lower_tail_probability": 0.025,
+      "upper_tail_probability": 0.975,
+      "resample_count": 100000,
+      "resample_unit": "task",
+      "resample_size": "number_of_complete_primary_tasks",
+      "draws_with_replacement": true,
+      "task_order": "ascending frozen blind task identifier",
+      "rng_procedure": {
+        "id": "sha256_rejection_stream_v1",
+        "seed_format": "exactly 64 lowercase hexadecimal characters committed before outcome reveal",
+        "counter_encoding": "seed_bytes || uint64_be(resample_index) || uint64_be(draw_index) || uint32_be(rejection_counter)",
+        "digest": "SHA-256",
+        "integer": "first 8 digest bytes interpreted as unsigned big-endian",
+        "unbiased_index_rule": "reject x >= 2^64 - (2^64 mod N); otherwise index = x mod N; increment rejection_counter from zero until accepted"
+      },
+      "quantile_convention": {
+        "id": "hyndman_fan_type_7",
+        "sorted_values": "ascending bootstrap estimates including duplicates",
+        "formula": "h=(m-1)*p; q=(1-f)*x[floor(h)] + f*x[ceil(h)], where f=h-floor(h), zero-based indices, and m=100000"
+      },
+      "classification_uses_bounds": "lower p=0.025 and upper p=0.975 from this exact procedure"
+    }
   },
   "blinding": {
     "arm_labels_blinded_to_graders": true,
