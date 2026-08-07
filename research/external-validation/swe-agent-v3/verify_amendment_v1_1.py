@@ -19,6 +19,20 @@ PREREG_BLOB = "7147f6814f76eb0f73fd0741b17b2501e38e6f57"
 PLAN_BLOB = "15b352d54a524d9caf827018b608028c004f8f13"
 REPL_DIGEST = "18babea600927a00669682937b0da60e5b4689f69e9c98e7e39ebe2a53f1ce2e"
 ARITH_DIGEST = "df99660ed73f71757013a2cae39f2cb53b4ce3f9ec97bc7e6cf7557dfc70f653"
+EXPECTED_AUTHORITY = {
+    "base_design_head": "83c951aca9be6a09a4517044ae531a3ed1bcc9a9",
+    "base_preregistration_git_blob_sha1": PREREG_BLOB,
+    "base_evidence_plan_git_blob_sha1": PLAN_BLOB,
+    "superseded_paths": [
+        "/analysis/invalid_run_and_cell_policy/replacement rule",
+        "/analysis/bootstrap_interval_spec/arithmetic representation",
+    ],
+    "precedence": "For the two superseded subjects, this amendment controls over v1.0; every other v1.0 field remains unchanged.",
+    "outcome_exposure_status": "none",
+    "model_calls_authorized": False,
+    "benchmark_execution_authorized": False,
+    "execution_authorized": False,
+}
 
 
 class AmendmentError(ValueError):
@@ -85,7 +99,7 @@ def validate(
         raise AmendmentError("README bytes drifted")
 
     amendment = load(amend)
-    authority = amendment.get("authority", {})
+    authority = amendment.get("authority")
     identity = (
         amendment.get("schema_version"),
         amendment.get("program_id"),
@@ -99,27 +113,10 @@ def validate(
         "prospective_pre_execution_correction",
     ):
         raise AmendmentError("identity drifted")
-    if authority.get("outcome_exposure_status") != "none" or any(
-        authority.get(key) is not False
-        for key in (
-            "model_calls_authorized",
-            "benchmark_execution_authorized",
-            "execution_authorized",
-        )
-    ):
-        raise AmendmentError("execution boundary drifted")
-    if set(authority.get("superseded_paths", [])) != {
-        "/analysis/invalid_run_and_cell_policy/replacement rule",
-        "/analysis/bootstrap_interval_spec/arithmetic representation",
-    }:
-        raise AmendmentError("scope drifted")
+    if authority != EXPECTED_AUTHORITY:
+        raise AmendmentError("authority or precedence drifted")
     if blob(prereg.read_bytes()) != PREREG_BLOB or blob(plan.read_bytes()) != PLAN_BLOB:
         raise AmendmentError("base design identity drifted")
-    if (
-        authority.get("base_preregistration_git_blob_sha1") != PREREG_BLOB
-        or authority.get("base_evidence_plan_git_blob_sha1") != PLAN_BLOB
-    ):
-        raise AmendmentError("authority base identity drifted")
     if load(prereg).get("execution_authorized") is not False:
         raise AmendmentError("base execution authorized")
     gate_data = load(gate)
