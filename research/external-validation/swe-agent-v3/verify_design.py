@@ -20,7 +20,7 @@ ARTIFACT_BLOBS = {
     "README.md": "4685f7a42beaab65eb6a96bb9a3ec72f2313744e",
     "question-v1.0.md": "b61da8b21953b835d341331e360405d6783d4cf4",
     "preregistration-v1.0.json": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
-    "task-manifest-contract-v1.0.json": "2b60061dd4575b1fbc8d0d56469a4ff92f57405e",
+    "task-manifest-contract-v1.0.json": "1cb4f312ae907b9a93afbe5c85ebcca93bbbd3e9",
     "treatment-capsule-contract-v1.0.json": "e011c8f9972a5682e03526f739437f62e973e76d",
     "execution-gate-v1.0.json": "055cdd17581074e2325d570db8df9266e88556e2",
     "evidence-and-analysis-plan-v1.0.md": "15b352d54a524d9caf827018b608028c004f8f13",
@@ -114,9 +114,52 @@ def verify_task_manifest_contract() -> None:
     data = integrity._load_json(HERE / "task-manifest-contract-v1.0.json")
     if data.get("manifest_status") != "uninstantiated" or data.get("execution_authorized") is not False:
         raise DesignError("task manifest boundary drifted")
+    freeze_timing = data.get("freeze_timing")
+    if not isinstance(freeze_timing, str) or "before any sacrificial pilot or confirmatory execution" not in freeze_timing or "freezing after any agent run is prohibited" not in freeze_timing:
+        raise DesignError("task manifest prospective freeze timing drifted")
+    record = _require_keys(
+        data.get("record_schema"),
+        {"required_keys_exactly", "blind_task_id", "repository_blind_id", "task_bundle_root_sha256"},
+        "task manifest record schema",
+    )
+    root_field = _require_keys(record.get("task_bundle_root_sha256"), {"pattern", "construction"}, "task bundle root field")
+    if root_field.get("pattern") != "^[0-9a-f]{64}$" or "task_bundle_root_contract" not in root_field.get("construction", ""):
+        raise DesignError("task bundle root field drifted")
+    root = _require_keys(
+        data.get("task_bundle_root_contract"),
+        {
+            "algorithm_id", "hash", "descriptor_media_type", "descriptor_canonicalization",
+            "descriptor_required_keys_exactly", "descriptor_values", "required_root_members",
+            "archive_or_filesystem_metadata_in_root", "path_order_or_archive_format_in_root",
+            "recomputation_rule",
+        },
+        "task bundle root contract",
+    )
+    if root.get("algorithm_id") != "far-swe-v3-task-bundle-root-v1" or root.get("hash") != "SHA-256":
+        raise DesignError("task bundle root algorithm drifted")
+    if root.get("descriptor_canonicalization") != "RFC 8785 JSON Canonicalization Scheme (JCS); UTF-8 bytes; no BOM; no insignificant whitespace":
+        raise DesignError("task bundle descriptor canonicalization drifted")
+    required_descriptor_keys = [
+        "algorithm_id", "repository_url", "repository_commit_sha",
+        "task_payload_sha256", "task_payload_bytes",
+    ]
+    if root.get("descriptor_required_keys_exactly") != required_descriptor_keys:
+        raise DesignError("task bundle descriptor shape drifted")
+    values = _require_keys(root.get("descriptor_values"), set(required_descriptor_keys), "task bundle descriptor values")
+    if values.get("algorithm_id") != "far-swe-v3-task-bundle-root-v1":
+        raise DesignError("task bundle descriptor algorithm identity drifted")
+    if root.get("required_root_members") != [
+        "repository URL", "exact repository commit", "exact task/issue payload digest", "exact task/issue payload byte count"
+    ]:
+        raise DesignError("task bundle required root members drifted")
+    if root.get("archive_or_filesystem_metadata_in_root") is not False or root.get("path_order_or_archive_format_in_root") is not False:
+        raise DesignError("task bundle root must be independent of archive/path metadata")
     order = data.get("order_contract")
     if not isinstance(order, dict) or order.get("authoritative_sequence") != "top-level JSON array order" or order.get("runtime_sorting_permitted") is not False:
         raise DesignError("task-order contract drifted")
+    validations = data.get("preexecution_validation")
+    if not isinstance(validations, list) or "every task bundle root is independently recomputed from the canonical task-bundle descriptor" not in validations or "the exact task manifest artifact bytes and Git blob identity are committed before any sacrificial pilot or confirmatory execution" not in validations:
+        raise DesignError("task manifest preexecution validation drifted")
 
 
 def verify_capsule_contract() -> None:
