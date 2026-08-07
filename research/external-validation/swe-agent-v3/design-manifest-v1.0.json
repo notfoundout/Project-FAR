@@ -43,6 +43,11 @@
       "path": "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md",
       "git_blob_sha1": "15b352d54a524d9caf827018b608028c004f8f13",
       "bytes": 6506
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/failure-arithmetic-amendment-v1.1.json",
+      "git_blob_sha1": "60dc4a5b3004532ba8a71a27c2191550f0f96c6f",
+      "bytes": 5492
     }
   ]
 }
