@@ -19,11 +19,11 @@ _git_blob_sha1 = integrity._git_blob_sha1
 ARTIFACT_BLOBS = {
     "README.md": "e8ecc4a9c337e57a108b96de16772dcf10081ff2",
     "question-v1.0.md": "b61da8b21953b835d341331e360405d6783d4cf4",
-    "preregistration-v1.0.json": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
-    "task-manifest-contract-v1.0.json": "598336af0940e5732acab793cdf9bef96fbfdf08",
+    "preregistration-v1.0.json": "c6c9b5399ef2699ddcd2652dbb2acdd8e820bee1",
+    "task-manifest-contract-v1.0.json": "02f12f061a0dcfa61212b27c40ce9a12bdb2c9a0",
     "treatment-capsule-contract-v1.0.json": "e011c8f9972a5682e03526f739437f62e973e76d",
     "execution-gate-v1.0.json": "99eabd1fee9a59770a3a61a07c151abcba23683f",
-    "evidence-and-analysis-plan-v1.0.md": "15b352d54a524d9caf827018b608028c004f8f13",
+    "evidence-and-analysis-plan-v1.0.md": "04baff3069bc81f5a23fc2b92c5c04fec855b2c4",
 }
 PILOT_DIGEST = "847385a29ce4b02d7ece9817dfc4c7772a0583c6b4e0f663248bf3bb02bda478"
 FREEZE_SEQUENCE_DIGEST = "198b19ca3ef97f55480077559b47197668ab842474f252f0d7b1faa876186449"
@@ -131,8 +131,8 @@ def verify_preregistration() -> None:
     analysis = data.get("analysis")
     if not isinstance(analysis, dict) or analysis.get("primary_estimand") != "mean_task_level_resolution_probability_far_minus_placebo":
         raise DesignError("primary estimand drifted")
-    if analysis.get("bootstrap_resamples") != 100000 or analysis.get("bootstrap_seed_status") != "unfrozen_and_committed_before_outcome_reveal":
-        raise DesignError("bootstrap contract drifted")
+    if analysis.get("bootstrap_resamples") != 100000 or analysis.get("bootstrap_seed_status") != "unfrozen_and_independently_committed_before_execution":
+        raise DesignError("bootstrap seed must be independently committed before execution")
     if analysis.get("equivalence_or_noninferiority_claim_permitted") is not False or analysis.get("population_generalization_permitted") is not False:
         raise DesignError("prohibited inference was enabled")
     blinding = data.get("blinding")
@@ -144,7 +144,7 @@ def verify_preregistration() -> None:
 def verify_task_manifest_contract() -> None:
     _require_exact_artifact("task-manifest-contract-v1.0.json")
     data = integrity._load_json(HERE / "task-manifest-contract-v1.0.json")
-    if data.get("schema_version") != "1.1":
+    if data.get("schema_version") != "1.2":
         raise DesignError("task manifest contract version drifted")
     if data.get("manifest_status") != "uninstantiated" or data.get("execution_authorized") is not False:
         raise DesignError("task manifest boundary drifted")
@@ -164,8 +164,8 @@ def verify_task_manifest_contract() -> None:
     if repository_blind.get("pattern") != "^REPO-[0-9]{4}$" or repository_blind.get("unicode_permitted") is not False:
         raise DesignError("repository blind-id syntax drifted")
     mapping = repository_blind.get("canonical_mapping", "")
-    if "equal canonical repository URLs must use the same blind ID" not in mapping or "distinct canonical repository URLs must use distinct blind IDs" not in mapping:
-        raise DesignError("repository blind IDs are not bound one-to-one to canonical repositories")
+    if "equal authoritative repository identities must use the same blind ID" not in mapping or "distinct authoritative repository identities must use distinct blind IDs" not in mapping:
+        raise DesignError("repository blind IDs are not bound one-to-one to authoritative repository identities")
     root_field = _require_keys(
         record.get("task_bundle_root_sha256"), {"pattern", "construction"}, "task bundle root field"
     )
@@ -181,23 +181,28 @@ def verify_task_manifest_contract() -> None:
         },
         "task bundle root contract",
     )
-    if root.get("algorithm_id") != "far-swe-v3-task-bundle-root-v1" or root.get("hash") != "SHA-256":
+    if root.get("algorithm_id") != "far-swe-v3-task-bundle-root-v2" or root.get("hash") != "SHA-256":
         raise DesignError("task bundle root algorithm drifted")
     if root.get("descriptor_canonicalization") != "RFC 8785 JSON Canonicalization Scheme (JCS); UTF-8 bytes; no BOM; no insignificant whitespace":
         raise DesignError("task bundle descriptor canonicalization drifted")
     required_descriptor_keys = [
-        "algorithm_id", "canonical_repository_url", "repository_commit_sha",
+        "algorithm_id", "repository_provider", "repository_provider_id",
+        "canonical_repository_url", "repository_commit_sha",
         "task_payload_sha256", "task_payload_bytes",
     ]
     if root.get("descriptor_required_keys_exactly") != required_descriptor_keys:
         raise DesignError("task bundle descriptor shape drifted")
     values = _require_keys(root.get("descriptor_values"), set(required_descriptor_keys), "task bundle descriptor values")
-    if values.get("algorithm_id") != "far-swe-v3-task-bundle-root-v1":
+    if values.get("algorithm_id") != "far-swe-v3-task-bundle-root-v2":
         raise DesignError("task bundle descriptor algorithm identity drifted")
+    if "github requires the decimal GitHub REST repository id" not in values.get("repository_provider_id", ""):
+        raise DesignError("provider-stable repository identity rule drifted")
     canonical_rule = values.get("canonical_repository_url", "")
-    if "query and fragment are prohibited" not in canonical_rule:
-        raise DesignError("canonical repository URL rule drifted")
+    for required in ("default port 443 omitted", "query, fragment, userinfo", "URL spelling is never the repository-count identity"):
+        if required not in canonical_rule:
+            raise DesignError("canonical repository URL audit rule drifted")
     if root.get("required_root_members") != [
+        "authoritative repository provider", "provider-stable repository identity",
         "canonical repository URL", "exact repository commit",
         "exact task/issue payload digest", "exact task/issue payload byte count",
     ]:
@@ -207,24 +212,31 @@ def verify_task_manifest_contract() -> None:
     identity = _require_keys(
         data.get("repository_identity_contract"),
         {
-            "canonicalization", "equal_canonical_urls_same_blind_id",
-            "distinct_canonical_urls_distinct_blind_ids", "minimum_repository_count_basis",
-            "per_repository_cap_basis", "validation_timing",
+            "authoritative_identity", "github_identity_rule", "canonical_url_rule",
+            "equal_authoritative_identities_same_blind_id",
+            "distinct_authoritative_identities_distinct_blind_ids",
+            "minimum_repository_count_basis", "per_repository_cap_basis",
+            "validation_timing",
         },
         "repository identity contract",
     )
-    if identity.get("equal_canonical_urls_same_blind_id") is not True or identity.get("distinct_canonical_urls_distinct_blind_ids") is not True:
-        raise DesignError("repository blind-ID mapping must be bijective over canonical URLs")
-    if "canonical_repository_url" not in identity.get("minimum_repository_count_basis", "") or "canonical_repository_url" not in identity.get("per_repository_cap_basis", ""):
-        raise DesignError("repository count and cap must use canonical repository identity")
+    if identity.get("equal_authoritative_identities_same_blind_id") is not True or identity.get("distinct_authoritative_identities_distinct_blind_ids") is not True:
+        raise DesignError("repository blind-ID mapping must be bijective over authoritative identities")
+    github_rule = identity.get("github_identity_rule", "")
+    for required in ("decimal REST repository id", "path case", "default HTTPS port spelling", "renames"):
+        if required not in github_rule:
+            raise DesignError("GitHub repository alias resistance drifted")
+    if "(repository_provider, repository_provider_id)" not in identity.get("minimum_repository_count_basis", "") or "(repository_provider, repository_provider_id)" not in identity.get("per_repository_cap_basis", ""):
+        raise DesignError("repository count and cap must use provider-stable identity")
     order = data.get("order_contract")
     if not isinstance(order, dict) or order.get("authoritative_sequence") != "top-level JSON array order" or order.get("runtime_sorting_permitted") is not False:
         raise DesignError("task-order contract drifted")
     validations = data.get("preexecution_validation")
     required_validations = {
         "every task bundle root is independently recomputed from the canonical task-bundle descriptor",
-        "equal canonical repository URLs use the same repository blind ID and distinct canonical repository URLs use distinct blind IDs",
-        "minimum repository count and per-repository cap are computed from canonical repository URLs rather than blind-ID label count",
+        "every canonical repository URL is resolved to one authoritative provider-stable repository identity before counting or blind-ID assignment",
+        "equal authoritative repository identities use the same repository blind ID and distinct authoritative repository identities use distinct blind IDs",
+        "minimum repository count and per-repository cap are computed from authoritative provider-stable repository identities rather than URL spellings or blind-ID label count",
         "the exact task manifest artifact bytes and Git blob identity are committed before any sacrificial pilot or confirmatory execution",
     }
     if not isinstance(validations, list) or not required_validations.issubset(set(validations)):
@@ -295,6 +307,10 @@ def verify_text_boundaries() -> None:
     question = _require_exact_artifact("question-v1.0.md").decode("utf-8")
     if "`D_i = p_i(far) - p_i(placebo)`" not in evidence or "`D_i = p_i(far) - p_i(baseline)`" in evidence:
         raise DesignError("primary analysis narrative must remain FAR minus placebo")
+    if "independently committed before any pilot or confirmatory execution" not in evidence:
+        raise DesignError("bootstrap seed prospective commitment narrative drifted")
+    if "authoritative repository provider identity, canonical repository URL, and exact commit" not in evidence:
+        raise DesignError("repository identity evidence requirement drifted")
     if "Execution authorized: **No**" not in readme or "would not establish" not in question:
         raise DesignError("visible execution or claim boundary missing")
     if "A sacrificial pilot may only be separately authorized after every pre-pilot gate" not in readme:
