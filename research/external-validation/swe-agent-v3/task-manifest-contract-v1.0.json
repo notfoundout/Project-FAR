@@ -4,7 +4,7 @@
   "artifact_status": "Research",
   "manifest_status": "uninstantiated",
   "execution_authorized": false,
-  "freeze_timing": "exact manifest bytes and Git blob identity must be committed before outcome reveal and before bootstrap seed use",
+  "freeze_timing": "exact task manifest bytes and Git blob identity must be committed and independently reviewed before any sacrificial pilot or confirmatory execution; freezing after any agent run is prohibited even if outcomes or grades remain concealed",
   "document_shape": {
     "media_type": "application/json",
     "top_level_type": "array",
@@ -28,8 +28,38 @@
       "unicode_permitted": false
     },
     "task_bundle_root_sha256": {
-      "pattern": "^[0-9a-f]{64}$"
+      "pattern": "^[0-9a-f]{64}$",
+      "construction": "SHA-256 over the exact UTF-8 bytes of the canonical task-bundle descriptor defined by task_bundle_root_contract"
     }
+  },
+  "task_bundle_root_contract": {
+    "algorithm_id": "far-swe-v3-task-bundle-root-v1",
+    "hash": "SHA-256",
+    "descriptor_media_type": "application/json",
+    "descriptor_canonicalization": "RFC 8785 JSON Canonicalization Scheme (JCS); UTF-8 bytes; no BOM; no insignificant whitespace",
+    "descriptor_required_keys_exactly": [
+      "algorithm_id",
+      "repository_url",
+      "repository_commit_sha",
+      "task_payload_sha256",
+      "task_payload_bytes"
+    ],
+    "descriptor_values": {
+      "algorithm_id": "far-swe-v3-task-bundle-root-v1",
+      "repository_url": "exact HTTPS repository URL used to obtain the frozen task repository",
+      "repository_commit_sha": "lowercase 40-character Git commit SHA identifying the exact repository snapshot",
+      "task_payload_sha256": "lowercase SHA-256 of the exact task/issue payload bytes supplied to the agent, before prompt wrapping",
+      "task_payload_bytes": "nonnegative integer byte count of that exact task/issue payload"
+    },
+    "required_root_members": [
+      "repository URL",
+      "exact repository commit",
+      "exact task/issue payload digest",
+      "exact task/issue payload byte count"
+    ],
+    "archive_or_filesystem_metadata_in_root": false,
+    "path_order_or_archive_format_in_root": false,
+    "recomputation_rule": "independent auditors reconstruct the five-key descriptor from the sealed repository source and exact task payload, JCS-canonicalize it, and SHA-256 the resulting bytes"
   },
   "order_contract": {
     "authoritative_sequence": "top-level JSON array order",
@@ -44,6 +74,7 @@
     "blind task identifiers are unique",
     "all identifiers match their ASCII fixed-width patterns",
     "all task bundle roots are lowercase 64-character SHA-256 hex",
-    "manifest artifact identity is frozen before outcome reveal"
+    "every task bundle root is independently recomputed from the canonical task-bundle descriptor",
+    "the exact task manifest artifact bytes and Git blob identity are committed before any sacrificial pilot or confirmatory execution"
   ]
 }
