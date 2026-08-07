@@ -7,10 +7,11 @@
 - Corrected the clean-room protocol by separating neutral audit-question derivation from later structural, ablation, recoding, and alternative-basis analysis.
 - Verified the public 36-row sampling design at 434/434 declared pairwise level pairs and added deterministic mutation-tested validation.
 - Withheld the incomplete source roster, sealed validation identities, and defective packet workbook; execution remains blocked pending source, synthetic-case, packet, and leakage freeze.
-- Established an internal scoped path-classification theorem for small categories and functors without claiming an absolute broadest, weakest, first, minimal, or globally optimal structure.
-- Corrected the nontriviality claim: sequential composition supplies the `b∘a:A->C` witness; identities are trivial structural path terms and are unavailable for that distinct-endpoint output shape.
-- Preserved `RG-07` as unsatisfied and explicitly blocked theorem release; accepted Project FAR theory remains unchanged.
-- Added exact per-surface claim-boundary locks and regressions for the README, Charter, report, spec, result, and governance disposition.
+- Preserved the small-category path-classification argument as exploratory Research because no prospective deductive program was registered before derivation; no theorem is established and the research question remains open.
+- Corrected the nontriviality observation: sequential composition supplies the `b∘a:A->C` fixture witness; identities are trivial structural path terms and are unavailable for that distinct-endpoint output shape.
+- Required any future theorem attempt to begin under a new prospectively registered deductive program with independently frozen definitions, terminal outcomes, a finite stopping rule, and a claim-impact policy.
+- Preserved accepted Project FAR theory and all release gates unchanged.
+- Added exact per-surface claim-boundary locks and regressions that reject promotion of the exploratory derivation to theorem status.
 
 ## Unreleased — post–SWE-agent v2 stabilization
 
