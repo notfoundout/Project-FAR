@@ -18,7 +18,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 MANIFEST = HERE / "design-manifest-v1.0.json"
 MANIFEST_RELATIVE = "research/external-validation/swe-agent-v3/design-manifest-v1.0.json"
-EXPECTED_MANIFEST_GIT_BLOB_SHA1 = "01b3c0aaafff7acee253ab07879d1cf98b5d6d92"
+EXPECTED_MANIFEST_GIT_BLOB_SHA1 = "2539316948ee859e648a2d765233a09e8193c91e"
 
 
 class DesignError(RuntimeError):
