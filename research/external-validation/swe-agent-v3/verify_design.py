@@ -17,19 +17,19 @@ _committed_blob_bytes = integrity._committed_blob_bytes
 _git_blob_sha1 = integrity._git_blob_sha1
 
 ARTIFACT_BLOBS = {
-    "README.md": "4685f7a42beaab65eb6a96bb9a3ec72f2313744e",
+    "README.md": "e8ecc4a9c337e57a108b96de16772dcf10081ff2",
     "question-v1.0.md": "b61da8b21953b835d341331e360405d6783d4cf4",
     "preregistration-v1.0.json": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
     "task-manifest-contract-v1.0.json": "598336af0940e5732acab793cdf9bef96fbfdf08",
     "treatment-capsule-contract-v1.0.json": "e011c8f9972a5682e03526f739437f62e973e76d",
-    "execution-gate-v1.0.json": "adbfb03eb45e8f8e1ee506e58f18038ef80429ec",
+    "execution-gate-v1.0.json": "99eabd1fee9a59770a3a61a07c151abcba23683f",
     "evidence-and-analysis-plan-v1.0.md": "15b352d54a524d9caf827018b608028c004f8f13",
 }
 PILOT_DIGEST = "847385a29ce4b02d7ece9817dfc4c7772a0583c6b4e0f663248bf3bb02bda478"
 FREEZE_SEQUENCE_DIGEST = "198b19ca3ef97f55480077559b47197668ab842474f252f0d7b1faa876186449"
 INVALIDATION_RULES_DIGEST = "63b9a2c5989ce78e065133dd0920b67115e1cae9c5cd3d4cc5efa30c96536670"
 
-PRE_PILOT_GATES = {
+PILOT_GATES = {
     "theory_version_frozen",
     "far_capsule_built_and_hash_frozen",
     "placebo_built_and_matching_verified",
@@ -46,10 +46,35 @@ PRE_PILOT_GATES = {
     "branch_or_tag_protection_and_exact_head_checks_enabled",
     "manual_pilot_launch_authorization_recorded",
 }
-CONFIRMATORY_ONLY_GATES = {
+GATES = {
+    "theory_version_frozen",
+    "far_capsule_built_and_hash_frozen",
+    "placebo_built_and_matching_verified",
+    "confirmatory_task_population_frozen",
+    "task_identity_information_barriers_verified",
+    "model_endpoint_and_version_frozen",
+    "prompts_and_agent_configuration_frozen",
+    "environment_images_and_dependencies_frozen",
+    "budgets_and_stopping_rules_frozen",
+    "counterbalancing_and_randomization_seed_frozen",
+    "grader_and_scoring_contract_frozen",
+    "evidence_store_and_restoration_test_passed",
     "sacrificial_pilot_completed_and_excluded",
-    "manual_confirmatory_launch_authorization_recorded",
+    "independent_preexecution_review_clean",
+    "branch_or_tag_protection_and_exact_head_checks_enabled",
+    "manual_launch_authorization_recorded",
 }
+EXPECTED_PILOT_GATE_RULE = (
+    "sacrificial pilot execution is authorized only when every pilot gate is true, "
+    "the exact design manifest verifies, and a separate prospective pilot launch "
+    "record names the frozen commit; sacrificial_pilot_completed_and_excluded is "
+    "not a pilot prerequisite"
+)
+EXPECTED_GATE_RULE = (
+    "confirmatory execution is authorized only when every gate is true, the exact "
+    "design manifest verifies, and a separate prospective confirmatory launch record "
+    "names the frozen commit"
+)
 
 
 def _require_exact_artifact(name: str) -> bytes:
@@ -126,7 +151,6 @@ def verify_task_manifest_contract() -> None:
     freeze_timing = data.get("freeze_timing")
     if not isinstance(freeze_timing, str) or "before any sacrificial pilot or confirmatory execution" not in freeze_timing or "freezing after any agent run is prohibited" not in freeze_timing:
         raise DesignError("task manifest prospective freeze timing drifted")
-
     record = _require_keys(
         data.get("record_schema"),
         {"required_keys_exactly", "blind_task_id", "repository_blind_id", "task_bundle_root_sha256"},
@@ -142,60 +166,69 @@ def verify_task_manifest_contract() -> None:
     mapping = repository_blind.get("canonical_mapping", "")
     if "equal canonical repository URLs must use the same blind ID" not in mapping or "distinct canonical repository URLs must use distinct blind IDs" not in mapping:
         raise DesignError("repository blind IDs are not bound one-to-one to canonical repositories")
-
-    root = data.get("task_bundle_root_contract")
-    if not isinstance(root, dict):
-        raise DesignError("task bundle root contract missing")
-    expected_descriptor_keys = [
-        "algorithm_id",
-        "canonical_repository_url",
-        "repository_commit_sha",
-        "task_payload_sha256",
-        "task_payload_bytes",
+    root_field = _require_keys(
+        record.get("task_bundle_root_sha256"), {"pattern", "construction"}, "task bundle root field"
+    )
+    if root_field.get("pattern") != "^[0-9a-f]{64}$" or "task_bundle_root_contract" not in root_field.get("construction", ""):
+        raise DesignError("task bundle root field drifted")
+    root = _require_keys(
+        data.get("task_bundle_root_contract"),
+        {
+            "algorithm_id", "hash", "descriptor_media_type", "descriptor_canonicalization",
+            "descriptor_required_keys_exactly", "descriptor_values", "required_root_members",
+            "archive_or_filesystem_metadata_in_root", "path_order_or_archive_format_in_root",
+            "recomputation_rule",
+        },
+        "task bundle root contract",
+    )
+    if root.get("algorithm_id") != "far-swe-v3-task-bundle-root-v1" or root.get("hash") != "SHA-256":
+        raise DesignError("task bundle root algorithm drifted")
+    if root.get("descriptor_canonicalization") != "RFC 8785 JSON Canonicalization Scheme (JCS); UTF-8 bytes; no BOM; no insignificant whitespace":
+        raise DesignError("task bundle descriptor canonicalization drifted")
+    required_descriptor_keys = [
+        "algorithm_id", "canonical_repository_url", "repository_commit_sha",
+        "task_payload_sha256", "task_payload_bytes",
     ]
-    if root.get("descriptor_required_keys_exactly") != expected_descriptor_keys:
+    if root.get("descriptor_required_keys_exactly") != required_descriptor_keys:
         raise DesignError("task bundle descriptor shape drifted")
-    values = root.get("descriptor_values")
-    if not isinstance(values, dict) or set(values) != set(expected_descriptor_keys):
-        raise DesignError("task bundle descriptor values drifted")
-    canonical_rule = values.get("canonical_repository_url")
-    if not isinstance(canonical_rule, str) or "query and fragment are prohibited" not in canonical_rule:
+    values = _require_keys(root.get("descriptor_values"), set(required_descriptor_keys), "task bundle descriptor values")
+    if values.get("algorithm_id") != "far-swe-v3-task-bundle-root-v1":
+        raise DesignError("task bundle descriptor algorithm identity drifted")
+    canonical_rule = values.get("canonical_repository_url", "")
+    if "query and fragment are prohibited" not in canonical_rule:
         raise DesignError("canonical repository URL rule drifted")
     if root.get("required_root_members") != [
-        "canonical repository URL",
-        "exact repository commit",
-        "exact task/issue payload digest",
-        "exact task/issue payload byte count",
+        "canonical repository URL", "exact repository commit",
+        "exact task/issue payload digest", "exact task/issue payload byte count",
     ]:
         raise DesignError("task bundle required root members drifted")
-
+    if root.get("archive_or_filesystem_metadata_in_root") is not False or root.get("path_order_or_archive_format_in_root") is not False:
+        raise DesignError("task bundle root must be independent of archive/path metadata")
     identity = _require_keys(
         data.get("repository_identity_contract"),
         {
-            "canonicalization",
-            "equal_canonical_urls_same_blind_id",
-            "distinct_canonical_urls_distinct_blind_ids",
-            "minimum_repository_count_basis",
-            "per_repository_cap_basis",
-            "validation_timing",
+            "canonicalization", "equal_canonical_urls_same_blind_id",
+            "distinct_canonical_urls_distinct_blind_ids", "minimum_repository_count_basis",
+            "per_repository_cap_basis", "validation_timing",
         },
         "repository identity contract",
     )
     if identity.get("equal_canonical_urls_same_blind_id") is not True or identity.get("distinct_canonical_urls_distinct_blind_ids") is not True:
         raise DesignError("repository blind-ID mapping must be bijective over canonical URLs")
-    if "canonical_repository_url" not in identity.get("minimum_repository_count_basis", ""):
-        raise DesignError("minimum repository count must use canonical repository identity")
-    if "canonical_repository_url" not in identity.get("per_repository_cap_basis", ""):
-        raise DesignError("per-repository cap must use canonical repository identity")
-
+    if "canonical_repository_url" not in identity.get("minimum_repository_count_basis", "") or "canonical_repository_url" not in identity.get("per_repository_cap_basis", ""):
+        raise DesignError("repository count and cap must use canonical repository identity")
+    order = data.get("order_contract")
+    if not isinstance(order, dict) or order.get("authoritative_sequence") != "top-level JSON array order" or order.get("runtime_sorting_permitted") is not False:
+        raise DesignError("task-order contract drifted")
     validations = data.get("preexecution_validation")
     required_validations = {
+        "every task bundle root is independently recomputed from the canonical task-bundle descriptor",
         "equal canonical repository URLs use the same repository blind ID and distinct canonical repository URLs use distinct blind IDs",
         "minimum repository count and per-repository cap are computed from canonical repository URLs rather than blind-ID label count",
         "the exact task manifest artifact bytes and Git blob identity are committed before any sacrificial pilot or confirmatory execution",
     }
     if not isinstance(validations, list) or not required_validations.issubset(set(validations)):
-        raise DesignError("task manifest repository-identity validation drifted")
+        raise DesignError("task manifest preexecution validation drifted")
 
 
 def verify_capsule_contract() -> None:
@@ -217,67 +250,41 @@ def verify_execution_gate() -> None:
     _require_keys(
         data,
         {
-            "schema_version",
-            "program_id",
-            "artifact_status",
-            "execution_authorized",
-            "model_calls_authorized",
-            "benchmark_execution_authorized",
-            "pilot_execution_authorized",
-            "confirmatory_execution_authorized",
-            "authorization_policy",
-            "pre_pilot_gates",
-            "confirmatory_only_gates",
-            "current_blockers",
-            "forbidden_current_actions",
+            "schema_version", "program_id", "artifact_status", "execution_authorized",
+            "model_calls_authorized", "benchmark_execution_authorized",
+            "pilot_execution_authorized", "confirmatory_execution_authorized",
+            "pilot_gate_rule", "gate_rule", "pilot_gates", "gates",
+            "current_blockers", "forbidden_current_actions",
         },
         "execution gate",
     )
-    if data.get("schema_version") != "1.1":
+    if data.get("schema_version") != "1.2":
         raise DesignError("execution-gate version drifted")
-    blocked_flags = (
-        "execution_authorized",
-        "model_calls_authorized",
-        "benchmark_execution_authorized",
-        "pilot_execution_authorized",
-        "confirmatory_execution_authorized",
-    )
-    if any(data.get(k) is not False for k in blocked_flags):
-        raise DesignError("all execution and model-call authorizations must remain false")
-
-    policy = _require_keys(
-        data.get("authorization_policy"),
-        {"pilot_rule", "confirmatory_rule", "current_state"},
-        "authorization policy",
-    )
-    pilot_rule = policy.get("pilot_rule", "")
-    confirmatory_rule = policy.get("confirmatory_rule", "")
-    if "completed-pilot gate is explicitly not a prerequisite for pilot execution" not in pilot_rule:
-        raise DesignError("pilot authorization is circular")
-    if "sacrificial_pilot_completed_and_excluded" not in confirmatory_rule:
-        raise DesignError("confirmatory launch must require completed excluded pilot")
-    if policy.get("current_state") != "neither pilot nor confirmatory execution is authorized":
-        raise DesignError("current authorization state drifted")
-
-    pre = data.get("pre_pilot_gates")
-    if not isinstance(pre, dict) or set(pre) != PRE_PILOT_GATES or any(v is not False for v in pre.values()):
-        raise DesignError("all pre-pilot gates must remain present and false")
-    confirmatory = data.get("confirmatory_only_gates")
-    if not isinstance(confirmatory, dict) or set(confirmatory) != CONFIRMATORY_ONLY_GATES or any(v is not False for v in confirmatory.values()):
-        raise DesignError("confirmatory-only gates must remain present and false")
-    if "sacrificial_pilot_completed_and_excluded" in pre:
-        raise DesignError("completed-pilot gate cannot be a pre-pilot prerequisite")
-
+    if any(data.get(k) is not False for k in (
+        "execution_authorized", "model_calls_authorized", "benchmark_execution_authorized",
+        "pilot_execution_authorized", "confirmatory_execution_authorized",
+    )):
+        raise DesignError("execution and model calls must remain blocked")
+    if data.get("pilot_gate_rule") != EXPECTED_PILOT_GATE_RULE:
+        raise DesignError("pilot launch rule drifted")
+    if data.get("gate_rule") != EXPECTED_GATE_RULE:
+        raise DesignError("confirmatory all-gates launch rule drifted")
+    pilot_gates = data.get("pilot_gates")
+    if not isinstance(pilot_gates, dict) or set(pilot_gates) != PILOT_GATES or any(v is not False for v in pilot_gates.values()):
+        raise DesignError("all pre-pilot gates must remain false")
+    gates = data.get("gates")
+    if not isinstance(gates, dict) or set(gates) != GATES or any(v is not False for v in gates.values()):
+        raise DesignError("all confirmatory gates must remain false")
+    if "sacrificial_pilot_completed_and_excluded" in pilot_gates:
+        raise DesignError("completed pilot cannot be a pilot prerequisite")
+    if "sacrificial_pilot_completed_and_excluded" not in gates:
+        raise DesignError("confirmatory execution must require completed excluded pilot")
     if len(data.get("current_blockers", [])) != 6:
         raise DesignError("complete current-blocker list required")
     if set(data.get("forbidden_current_actions", [])) != {
-        "model access probe",
-        "agent model call",
-        "benchmark task selection with capsule-author access",
-        "pilot execution",
-        "confirmatory execution",
-        "outcome reveal",
-        "claim of FAR improvement",
+        "model access probe", "agent model call",
+        "benchmark task selection with capsule-author access", "pilot execution",
+        "confirmatory execution", "outcome reveal", "claim of FAR improvement",
     }:
         raise DesignError("forbidden-current-action contract drifted")
 
@@ -290,6 +297,10 @@ def verify_text_boundaries() -> None:
         raise DesignError("primary analysis narrative must remain FAR minus placebo")
     if "Execution authorized: **No**" not in readme or "would not establish" not in question:
         raise DesignError("visible execution or claim boundary missing")
+    if "A sacrificial pilot may only be separately authorized after every pre-pilot gate" not in readme:
+        raise DesignError("README pilot authorization boundary drifted")
+    if "confirmatory execution additionally requires the completed-and-excluded pilot gate" not in readme:
+        raise DesignError("README confirmatory authorization boundary drifted")
     for phrase in ("universal software-engineering improvement", "model-independent improvement", "commercial readiness"):
         if phrase not in question:
             raise DesignError(f"public nonclaim missing: {phrase}")
