@@ -5,25 +5,21 @@ Program ID: `TCD-CLEANROOM-001`
 
 ## 1. Authority
 
-This Charter governs only this Research subprogram. The controlling repository authorities remain the Research Execution Charter, Central Research Program, Anti-Self-Validation Standard, and `theory/evaluation/research-gates.json`. A conflict invalidates this Charter.
+This Charter governs only the Research subprogram in this directory. The controlling repository authorities remain the Research Execution Charter, Central Research Program, Anti-Self-Validation Standard, and `theory/evaluation/research-gates.json`.
+
+The scoped compositional proof is retained internally, but `RG-07 nonclaim-audit` remains unsatisfied. The result is therefore not released and does not alter accepted theory.
 
 ## 2. Formal scope
 
-The internal theorem ranges over all small categories and all functors. Its operation schema uses a fixed finite directed graph with distinguished source and target vertices and returns one arrow between their images.
+The declared formal class is all small categories with all functors admitted as recodings. For a fixed finite input graph, the complete finitary arrow-valued invariant operations are evaluations of unique paths in the free category.
 
-Every invariant operation in that scope is evaluation of one unique path in the free category. Identity paths are structural terms when source equals target. Sequential composition supplies the committed nonidentity witness `b∘a:A->C`.
+Identity paths are structural terms only when the distinguished source equals the distinguished target. Sequential composition supplies the committed nonidentity witness `b∘a:A->C`. Identity is not a nontrivial witness for that operation shape.
 
-This formal result does not choose a universal domain of reasoning or a common comparison order over categories, bare sets, semicategories, semigroupoids, higher categories, probabilistic systems, embodied systems, continuous systems, or oracle-dependent systems.
+## 3. Empirical scope
 
-## 3. Governance status
+The separate clean-room program studies explicitly auditable reasoning artifacts under frozen review contracts. The source roster, source bytes, synthetic artifacts, blind packets, information barriers, and role separation are incomplete. No execution is authorized.
 
-The proof is stored as an internal Research result. `RG-07 nonclaim-audit` remains `not_satisfied`; therefore theorem release is blocked. This Charter does not update the gate, supply global audit evidence, or authorize release.
-
-## 4. Empirical target
-
-The separate clean-room program studies explicitly auditable reasoning artifacts under frozen case-level review contracts. Its source roster, exact source bytes, synthetic artifacts, blind packets, role separation, and leakage controls are not fully instantiated. Execution remains prohibited.
-
-## 5. Public claim boundary
+## 4. Public claim boundary
 
 - No weakest invariant-supporting structure has been proved.
 - No first invariant-supporting structure has been proved.
@@ -36,6 +32,10 @@ The separate clean-room program studies explicitly auditable reasoning artifacts
 - Accepted Project FAR theory is unchanged.
 - This result is not released while RG-07 remains unsatisfied.
 
+## 5. Remaining questions
+
+The program leaves open whether a common order can compare categorical, semigroupoidal, higher-dimensional, probabilistic, embodied, continuous, oracle-dependent, or environment-inclusive structures; whether any stable requirement basis exists across the selected artifacts; whether RCCD is sufficient or locally necessary; and whether several incomparable bases remain under full-cost accounting.
+
 ## 6. Change rule
 
-Any substantive change after evidence exposure creates a new version and preserves prior outcomes. A future RG-07 satisfaction requires explicit evidence and does not retroactively release this version.
+A future theorem release requires separately evidenced satisfaction of RG-07, a new version, exact-head hosted validation, and fresh review. Any substantive change after exposure preserves prior results and creates a new version.
