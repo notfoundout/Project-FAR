@@ -26,8 +26,8 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/task-manifest-contract-v1.0.json",
-      "git_blob_sha1": "2b60061dd4575b1fbc8d0d56469a4ff92f57405e",
-      "bytes": 1864
+      "git_blob_sha1": "1cb4f312ae907b9a93afbe5c85ebcca93bbbd3e9",
+      "bytes": 3781
     },
     {
       "path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
