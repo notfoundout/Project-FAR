@@ -81,6 +81,27 @@ class CompositionalInvariantTests(unittest.TestCase):
             with self.assertRaises(module.VerificationError):
                 module.validate_public_surface("README", path)
 
+    def test_empirical_chat_audit_bytes_are_validated(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            audit = Path(tmp) / "chat-audit-2026-08-05.md"
+            audit.write_bytes(module.DEFAULT_CHAT_AUDIT.read_bytes() + b"\n")
+            with self.assertRaisesRegex(module.VerificationError, "registered chat audit identity drifted"):
+                module.validate_empirical_authority(
+                    module.DEFAULT_EMPIRICAL_CHARTER,
+                    module.DEFAULT_EMPIRICAL_MANIFEST,
+                    audit,
+                )
+
+    def test_missing_empirical_chat_audit_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            missing = Path(tmp) / "chat-audit-2026-08-05.md"
+            with self.assertRaisesRegex(module.VerificationError, "required artifact missing or unreadable"):
+                module.validate_empirical_authority(
+                    module.DEFAULT_EMPIRICAL_CHARTER,
+                    module.DEFAULT_EMPIRICAL_MANIFEST,
+                    missing,
+                )
+
     def test_rg07_must_remain_unsatisfied_for_this_version(self) -> None:
         gates = module.load_json(GATES_PATH)
         rg07 = next(g for g in gates["gates"] if g["id"] == "RG-07")
