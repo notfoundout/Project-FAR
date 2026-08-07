@@ -87,7 +87,7 @@
     },
     {
       "path": "research/target-category-discovery/verify_sampling_design.py",
-      "git_blob_sha1": "e7f90fbc4893e8a102baf4517c3e1cd5248d0939"
+      "git_blob_sha1": "e783f38770b2cbc5de04bb3745f7059435bea04d"
     },
     {
       "path": "tests/test_target_category_discovery.py",
