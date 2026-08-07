@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import shutil
 import sys
 import tempfile
 import unittest
@@ -24,12 +23,12 @@ module = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = module
 spec.loader.exec_module(module)
 
-
 class CompositionalInvariantTests(unittest.TestCase):
     def test_frozen_result_passes(self) -> None:
         result = module.verify(SPEC_PATH, RESULT_PATH, REPORT_PATH, README_PATH, CHARTER_PATH, GATES_PATH)
-        self.assertEqual(result["classification"], "scoped_theorem_established_internal_release_blocked")
-        self.assertEqual(result["release_status"], "blocked_by_rg_07_nonclaim_audit")
+        self.assertEqual(result["classification"], "exploratory_unregistered_derivation")
+        self.assertEqual(result["release_status"], "not_eligible_unregistered_deductive_program")
+        self.assertEqual(result["theorem_status"], "not_established_exploratory_argument_with_bounded_executable_corroboration")
         self.assertFalse(result["accepted_theory_change"])
 
     def test_nontrivial_witness_is_composition_not_identity(self) -> None:
@@ -46,12 +45,22 @@ class CompositionalInvariantTests(unittest.TestCase):
         with self.assertRaisesRegex(module.VerificationError, "specification"):
             module.build_result(data)
 
+    def test_unregistered_derivation_cannot_be_promoted_to_theorem(self) -> None:
+        for field, value in (
+            ("classification", "scoped_theorem_established_internal_release_blocked"),
+            ("release_status", "blocked_by_rg_07_nonclaim_audit"),
+        ):
+            data = module.load_json(SPEC_PATH)
+            data["disposition"][field] = value
+            with self.subTest(field=field), self.assertRaises(module.VerificationError):
+                module.build_result(data)
+        data = module.load_json(SPEC_PATH)
+        data["theorem_claims"][1]["status"] = "proved_in_internal_research_report"
+        with self.assertRaises(module.VerificationError):
+            module.build_result(data)
+
     def test_each_public_surface_is_locked_independently(self) -> None:
-        surfaces = {
-            "README": README_PATH,
-            "Charter": CHARTER_PATH,
-            "Report": REPORT_PATH,
-        }
+        surfaces = {"README": README_PATH, "Charter": CHARTER_PATH, "Report": REPORT_PATH}
         for name, source in surfaces.items():
             with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
                 mutated = Path(tmp) / source.name
@@ -64,6 +73,13 @@ class CompositionalInvariantTests(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             for line in module.PUBLIC_NONCLAIMS:
                 self.assertEqual(text.count(line), 1, f"{path} missing or duplicates {line}")
+
+    def test_public_surface_theorem_overclaim_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "README.md"
+            path.write_text(README_PATH.read_text(encoding="utf-8") + "\nTheorem established.\n", encoding="utf-8")
+            with self.assertRaises(module.VerificationError):
+                module.validate_public_surface("README", path)
 
     def test_rg07_must_remain_unsatisfied_for_this_version(self) -> None:
         gates = module.load_json(GATES_PATH)
@@ -105,7 +121,6 @@ class CompositionalInvariantTests(unittest.TestCase):
             nonfinite.write_text('{"x":NaN}', encoding="utf-8")
             with self.assertRaisesRegex(module.VerificationError, "non-finite"):
                 module.load_json(nonfinite)
-
 
 if __name__ == "__main__":
     unittest.main()
