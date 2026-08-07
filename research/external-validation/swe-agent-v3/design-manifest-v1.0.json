@@ -48,6 +48,11 @@
       "path": "research/external-validation/swe-agent-v3/failure-arithmetic-amendment-v1.1.json",
       "git_blob_sha1": "60dc4a5b3004532ba8a71a27c2191550f0f96c6f",
       "bytes": 5492
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/AMENDMENT-v1.1.md",
+      "git_blob_sha1": "9b7ac22d91c44d054651fe1b0bc4467d7d87b262",
+      "bytes": 2268
     }
   ]
 }
