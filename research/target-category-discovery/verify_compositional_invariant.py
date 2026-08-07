@@ -16,6 +16,7 @@ DEFAULT_README = HERE / "README.md"
 DEFAULT_CHARTER = HERE / "scope-and-universality-charter-v1.2.md"
 DEFAULT_EMPIRICAL_CHARTER = HERE / "scope-and-universality-charter-v1.1.md"
 DEFAULT_EMPIRICAL_MANIFEST = HERE / "audit-manifest-v1.0.json"
+DEFAULT_CHAT_AUDIT = HERE / "chat-audit-2026-08-05.md"
 DEFAULT_GATES = ROOT / "theory/evaluation/research-gates.json"
 
 EXPECTED_BASE = "d1fc8053e1459a7829f6f24b8d187f7887375cf0"
@@ -118,7 +119,10 @@ def _no_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
 
 
 def _read_utf8(path: Path) -> tuple[bytes, str]:
-    raw = path.read_bytes()
+    try:
+        raw = path.read_bytes()
+    except OSError as exc:
+        raise VerificationError(f"required artifact missing or unreadable: {path}") from exc
     if raw.startswith(b"\xef\xbb\xbf"):
         raise VerificationError(f"UTF-8 BOM rejected: {path}")
     try:
@@ -316,14 +320,21 @@ def validate_public_surface(name: str, path: Path) -> None:
             raise VerificationError("Charter must preserve the empirical/compositional authority boundary")
 
 
-def validate_empirical_authority(charter_path: Path, manifest_path: Path) -> None:
-    charter_raw, _ = _read_utf8(charter_path)
-    if _git_blob_sha1(charter_raw) != EXPECTED_EMPIRICAL_BLOBS[charter_path.name]:
-        raise VerificationError("controlling empirical charter identity drifted")
+def validate_empirical_authority(
+    charter_path: Path,
+    manifest_path: Path,
+    audit_path: Path = DEFAULT_CHAT_AUDIT,
+) -> None:
+    for path, label in (
+        (charter_path, "controlling empirical charter"),
+        (manifest_path, "registered empirical manifest"),
+        (audit_path, "registered chat audit"),
+    ):
+        raw, _ = _read_utf8(path)
+        expected = EXPECTED_EMPIRICAL_BLOBS.get(path.name)
+        if expected is None or _git_blob_sha1(raw) != expected:
+            raise VerificationError(f"{label} identity drifted")
 
-    manifest_raw, _ = _read_utf8(manifest_path)
-    if _git_blob_sha1(manifest_raw) != EXPECTED_EMPIRICAL_BLOBS[manifest_path.name]:
-        raise VerificationError("registered empirical manifest identity drifted")
     manifest = load_json(manifest_path)
     if manifest.get("program_id") != "TCD-CLEANROOM-001" or manifest.get("decision") != "research_program_registered_execution_not_authorized":
         raise VerificationError("registered empirical program disposition drifted")
@@ -375,6 +386,7 @@ def verify(
     gates_path: Path = DEFAULT_GATES,
     empirical_charter_path: Path = DEFAULT_EMPIRICAL_CHARTER,
     empirical_manifest_path: Path = DEFAULT_EMPIRICAL_MANIFEST,
+    audit_path: Path = DEFAULT_CHAT_AUDIT,
 ) -> dict[str, Any]:
     actual = build_result(load_json(spec_path))
     if actual != load_json(result_path):
@@ -382,7 +394,7 @@ def verify(
     validate_public_surface("README", readme_path)
     validate_public_surface("Charter", charter_path)
     validate_public_surface("Report", report_path)
-    validate_empirical_authority(empirical_charter_path, empirical_manifest_path)
+    validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)
     validate_gate(gates_path)
     if actual["classification"] != "exploratory_unregistered_derivation":
         raise VerificationError("classification must remain exploratory")
@@ -400,6 +412,7 @@ def main() -> int:
     parser.add_argument("--charter", type=Path, default=DEFAULT_CHARTER)
     parser.add_argument("--empirical-charter", type=Path, default=DEFAULT_EMPIRICAL_CHARTER)
     parser.add_argument("--empirical-manifest", type=Path, default=DEFAULT_EMPIRICAL_MANIFEST)
+    parser.add_argument("--chat-audit", type=Path, default=DEFAULT_CHAT_AUDIT)
     parser.add_argument("--gates", type=Path, default=DEFAULT_GATES)
     args = parser.parse_args()
     try:
@@ -412,6 +425,7 @@ def main() -> int:
             args.gates,
             args.empirical_charter,
             args.empirical_manifest,
+            args.chat_audit,
         )
     except VerificationError as exc:
         print(f"FAIL: {exc}")
