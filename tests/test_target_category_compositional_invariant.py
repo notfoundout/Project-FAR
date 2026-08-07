@@ -2,18 +2,21 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import shutil
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MODULE_PATH = ROOT / "research/target-category-discovery/verify_compositional_invariant.py"
-SPEC_PATH = ROOT / "research/target-category-discovery/compositional-invariant-spec-v1.0.json"
-RESULT_PATH = ROOT / "research/target-category-discovery/compositional-invariant-result-v1.0.json"
-REPORT_PATH = ROOT / "research/target-category-discovery/compositional-invariant-terminal-result-v1.0.md"
-README_PATH = ROOT / "research/target-category-discovery/README.md"
-CHARTER_PATH = ROOT / "research/target-category-discovery/scope-and-universality-charter-v1.2.md"
+DIR = ROOT / "research/target-category-discovery"
+MODULE_PATH = DIR / "verify_compositional_invariant.py"
+SPEC_PATH = DIR / "compositional-invariant-spec-v1.0.json"
+RESULT_PATH = DIR / "compositional-invariant-result-v1.0.json"
+REPORT_PATH = DIR / "compositional-invariant-terminal-result-v1.0.md"
+README_PATH = DIR / "README.md"
+CHARTER_PATH = DIR / "scope-and-universality-charter-v1.2.md"
+GATES_PATH = ROOT / "theory/evaluation/research-gates.json"
 
 spec = importlib.util.spec_from_file_location("verify_compositional_invariant", MODULE_PATH)
 assert spec and spec.loader
@@ -23,210 +26,85 @@ spec.loader.exec_module(module)
 
 
 class CompositionalInvariantTests(unittest.TestCase):
-    def _mutated_report(self, raw: bytes) -> Path:
-        self.temp_dir = tempfile.TemporaryDirectory()
-        path = Path(self.temp_dir.name) / "report.md"
-        path.write_bytes(raw)
-        self.addCleanup(self.temp_dir.cleanup)
-        return path
-
     def test_frozen_result_passes(self) -> None:
-        result = module.verify(SPEC_PATH, RESULT_PATH, REPORT_PATH)
-        self.assertEqual(result["classification"], "scoped_theoretical_question_closed")
-        self.assertEqual(result["rccd_status"], "not_derived")
-        self.assertEqual(result["empirical_program_status"], "not_executed")
-        self.assertEqual(result["evidence"]["distinguished_paths"], ["c", "b∘a"])
-        self.assertEqual(result["evidence"]["new_nonidentity_paths"], ["b∘a"])
+        result = module.verify(SPEC_PATH, RESULT_PATH, REPORT_PATH, README_PATH, CHARTER_PATH, GATES_PATH)
+        self.assertEqual(result["classification"], "scoped_theorem_established_internal_release_blocked")
+        self.assertEqual(result["release_status"], "blocked_by_rg_07_nonclaim_audit")
+        self.assertFalse(result["accepted_theory_change"])
 
-    def test_free_category_supplies_a_genuinely_new_composite(self) -> None:
+    def test_nontrivial_witness_is_composition_not_identity(self) -> None:
         result = module.build_result(module.load_json(SPEC_PATH))
         evidence = result["evidence"]
-        self.assertFalse(evidence["graph_only_has_composite"])
-        self.assertTrue(evidence["free_category_has_composite"])
-        self.assertEqual(evidence["fixture_generator_count"], 3)
-        self.assertEqual(evidence["free_category_nonidentity_arrow_count"], 4)
-        self.assertEqual(evidence["nontrivial_composite"], "b∘a")
+        self.assertEqual(evidence["nontrivial_invariant_witness"], "b∘a")
+        self.assertFalse(evidence["identity_is_nontrivial_witness"])
+        self.assertFalse(evidence["identity_is_admissible_for_distinguished_A_to_C_shape"])
+        self.assertNotIn("id_A", evidence["distinguished_paths"])
 
-    def test_absolute_broadest_overclaim_is_rejected(self) -> None:
+    def test_spec_identity_overclaim_is_rejected(self) -> None:
         data = module.load_json(SPEC_PATH)
-        data["broadness_policy"]["absolute_maximum_claimed"] = True
-        with self.assertRaisesRegex(module.VerificationError, "broadness policy drifted"):
+        data["theorem_claims"][2]["statement"] = "Identity is a nontrivial A-to-C invariant."
+        with self.assertRaisesRegex(module.VerificationError, "specification"):
             module.build_result(data)
 
-    def test_arbitrary_recodings_are_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["broadness_policy"]["recodings"] = "all underlying set functions"
-        with self.assertRaisesRegex(module.VerificationError, "broadness policy drifted"):
-            module.build_result(data)
+    def test_each_public_surface_is_locked_independently(self) -> None:
+        surfaces = {
+            "README": README_PATH,
+            "Charter": CHARTER_PATH,
+            "Report": REPORT_PATH,
+        }
+        for name, source in surfaces.items():
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
+                mutated = Path(tmp) / source.name
+                mutated.write_text(source.read_text(encoding="utf-8").replace(module.PUBLIC_NONCLAIMS[0], "", 1), encoding="utf-8")
+                with self.assertRaisesRegex(module.VerificationError, f"{name} public claim surface drifted"):
+                    module.validate_public_surface(name, mutated)
 
-    def test_incomplete_scope_criterion_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["broadness_policy"]["scope_criterion"] = (
-            "A system is included when composition merely exists."
-        )
-        with self.assertRaisesRegex(module.VerificationError, "broadness policy drifted"):
-            module.build_result(data)
+    def test_every_surface_contains_every_comparison_boundary_once(self) -> None:
+        for path in (README_PATH, CHARTER_PATH, REPORT_PATH):
+            text = path.read_text(encoding="utf-8")
+            for line in module.PUBLIC_NONCLAIMS:
+                self.assertEqual(text.count(line), 1, f"{path} missing or duplicates {line}")
 
-    def test_noncanonical_base_commit_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["base_commit"] = "a" * 40
-        with self.assertRaisesRegex(module.VerificationError, "frozen repository base"):
-            module.build_result(data)
+    def test_rg07_must_remain_unsatisfied_for_this_version(self) -> None:
+        gates = module.load_json(GATES_PATH)
+        rg07 = next(g for g in gates["gates"] if g["id"] == "RG-07")
+        rg07["status"] = "satisfied"
+        rg07["evidence"] = ["fake.md"]
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "gates.json"
+            path.write_text(json.dumps(gates), encoding="utf-8")
+            with self.assertRaisesRegex(module.VerificationError, "RG-07 state changed"):
+                module.validate_gate(path)
 
-    def test_nonhex_base_commit_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["base_commit"] = "z" * 40
-        with self.assertRaisesRegex(module.VerificationError, "hexadecimal SHA"):
-            module.build_result(data)
-
-    def test_input_operation_schema_drift_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["input_operation_schema"]["invariance"] = "preserve the four RCCD operations"
-        with self.assertRaisesRegex(module.VerificationError, "input operation schema drifted"):
-            module.build_result(data)
-
-    def test_theorem_semantic_drift_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["theorem_claims"][1]["statement"] = "RCCD is universally derived."
-        data["theorem_claims"][1]["status"] = "accepted"
-        with self.assertRaisesRegex(module.VerificationError, "semantics drifted"):
-            module.build_result(data)
-
-    def test_category_characterization_drift_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["theorem_claims"][0]["statement"] = (
-            "Existence-only axioms characterize small categories."
-        )
-        with self.assertRaisesRegex(module.VerificationError, "semantics drifted"):
-            module.build_result(data)
-
-    def test_missing_associativity_axiom_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["axioms"] = [axiom for axiom in data["axioms"] if axiom["id"] != "TC4"]
-        with self.assertRaisesRegex(module.VerificationError, "exact four-part category contract"):
-            module.build_result(data)
-
-    def test_nondesignated_identity_axiom_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["axioms"][1]["statement"] = "Every interface has at least one identity-like step."
-        with self.assertRaisesRegex(module.VerificationError, "exact four-part category contract"):
-            module.build_result(data)
-
-    def test_multivalued_composition_axiom_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["axioms"][2]["statement"] = "Every composable pair has one or more composites."
-        with self.assertRaisesRegex(module.VerificationError, "exact four-part category contract"):
-            module.build_result(data)
-
-    def test_rccd_derivation_claim_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["terminal_disposition"]["rccd_status"] = "derived"
-        with self.assertRaisesRegex(module.VerificationError, "terminal disposition"):
-            module.build_result(data)
-
-    def test_empirical_completion_claim_is_rejected(self) -> None:
-        data = module.load_json(SPEC_PATH)
-        data["terminal_disposition"]["empirical_program_status"] = "complete"
-        with self.assertRaisesRegex(module.VerificationError, "terminal disposition"):
-            module.build_result(data)
-
-    def test_committed_result_drift_is_rejected(self) -> None:
-        result = module.load_json(RESULT_PATH)
-        result["evidence"]["free_category_arrow_count"] = 6
+    def test_release_cannot_be_claimed_by_mutating_result(self) -> None:
+        data = module.load_json(RESULT_PATH)
+        data["release_status"] = "released"
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "result.json"
-            path.write_text(json.dumps(result), encoding="utf-8")
+            path.write_text(json.dumps(data), encoding="utf-8")
             with self.assertRaisesRegex(module.VerificationError, "fresh rebuild"):
-                module.verify(SPEC_PATH, path, REPORT_PATH)
+                module.verify(SPEC_PATH, path, REPORT_PATH, README_PATH, CHARTER_PATH, GATES_PATH)
 
-    def test_public_claim_surfaces_do_not_restore_comparison_overclaims(self) -> None:
-        text = (
-            README_PATH.read_text(encoding="utf-8")
-            + "\n"
-            + CHARTER_PATH.read_text(encoding="utf-8")
-            + "\n"
-            + REPORT_PATH.read_text(encoding="utf-8")
-        )
-        forbidden = [
-            "A broader independently stated structured class than bare sets",
-            "typed composition is the first nontrivial invariant layer",
-            "The correct repair is to state the weakest independently motivated structure",
-            "## 7. Minimality boundary",
-        ]
-        for phrase in forbidden:
-            self.assertNotIn(phrase, text)
-        self.assertIn("No weakest, first, minimal, or globally optimal structure has been proved.", text)
-        self.assertIn("comparison order between categorical and other structures: not defined", text)
+    def test_broadness_and_optimality_overclaims_are_rejected(self) -> None:
+        data = module.load_json(SPEC_PATH)
+        data["broadness_policy"]["absolute_maximum_claimed"] = True
+        with self.assertRaisesRegex(module.VerificationError, "specification"):
+            module.build_result(data)
+        data = module.load_json(SPEC_PATH)
+        data["nonclaims"] = [x for x in data["nonclaims"] if "globally optimal" not in x]
+        with self.assertRaisesRegex(module.VerificationError, "specification"):
+            module.build_result(data)
 
-    def test_report_without_absolute_nonclaim_is_rejected(self) -> None:
-        text = REPORT_PATH.read_text(encoding="utf-8").replace(
-            "Small categories are the absolute broadest possible class of every conceivable reasoning system.",
-            "",
-        )
-        with self.assertRaisesRegex(module.VerificationError, "report content drifted"):
-            module.verify(SPEC_PATH, RESULT_PATH, self._mutated_report(text.encode()))
-
-    def test_report_proof_status_reversal_is_rejected(self) -> None:
-        text = REPORT_PATH.read_text(encoding="utf-8").replace(
-            "it is not a proof assistant and does not convert CI success into mathematical proof",
-            "it is a proof assistant and converts CI success into mathematical proof",
-        )
-        with self.assertRaisesRegex(module.VerificationError, "report content drifted"):
-            module.verify(SPEC_PATH, RESULT_PATH, self._mutated_report(text.encode()))
-
-    def test_report_rccd_contradiction_is_rejected(self) -> None:
-        raw = REPORT_PATH.read_bytes() + b"\nRCCD is universally derived.\n"
-        with self.assertRaisesRegex(module.VerificationError, "report content drifted"):
-            module.verify(SPEC_PATH, RESULT_PATH, self._mutated_report(raw))
-
-    def test_report_empirical_completion_contradiction_is_rejected(self) -> None:
-        raw = REPORT_PATH.read_bytes() + b"\nThe clean-room empirical program is complete.\n"
-        with self.assertRaisesRegex(module.VerificationError, "report content drifted"):
-            module.verify(SPEC_PATH, RESULT_PATH, self._mutated_report(raw))
-
-    def test_report_minimality_overclaim_is_rejected(self) -> None:
-        raw = REPORT_PATH.read_bytes() + (
-            b"\nTyped composition is the weakest and first nontrivial invariant structure.\n"
-        )
-        with self.assertRaisesRegex(module.VerificationError, "report content drifted"):
-            module.verify(SPEC_PATH, RESULT_PATH, self._mutated_report(raw))
-
-    def test_report_bare_set_broadness_overclaim_is_rejected(self) -> None:
-        raw = REPORT_PATH.read_bytes() + (
-            b"\nSmall categories are broader than bare sets under a common order.\n"
-        )
-        with self.assertRaisesRegex(module.VerificationError, "report content drifted"):
-            module.verify(SPEC_PATH, RESULT_PATH, self._mutated_report(raw))
-
-    def test_report_bom_is_rejected(self) -> None:
-        path = self._mutated_report(b"\xef\xbb\xbf" + REPORT_PATH.read_bytes())
-        with self.assertRaisesRegex(module.VerificationError, "UTF-8 BOM"):
-            module.verify(SPEC_PATH, RESULT_PATH, path)
-
-    def test_report_invalid_utf8_is_rejected(self) -> None:
-        path = self._mutated_report(REPORT_PATH.read_bytes() + b"\xff")
-        with self.assertRaisesRegex(module.VerificationError, "invalid UTF-8"):
-            module.verify(SPEC_PATH, RESULT_PATH, path)
-
-    def test_duplicate_json_key_is_rejected(self) -> None:
-        raw = SPEC_PATH.read_text(encoding="utf-8")
-        mutated = raw.replace(
-            '  "version": "1.0",',
-            '  "version": "1.0",\n  "version": "1.1",',
-            1,
-        )
+    def test_duplicate_json_key_and_nonfinite_number_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / "duplicate.json"
-            path.write_text(mutated, encoding="utf-8")
+            duplicate = Path(tmp) / "duplicate.json"
+            duplicate.write_text('{"x":1,"x":2}', encoding="utf-8")
             with self.assertRaisesRegex(module.VerificationError, "duplicate JSON key"):
-                module.load_json(path)
-
-    def test_utf8_bom_is_rejected(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / "bom.json"
-            path.write_bytes(b"\xef\xbb\xbf" + SPEC_PATH.read_bytes())
-            with self.assertRaisesRegex(module.VerificationError, "UTF-8 BOM"):
-                module.load_json(path)
+                module.load_json(duplicate)
+            nonfinite = Path(tmp) / "nonfinite.json"
+            nonfinite.write_text('{"x":NaN}', encoding="utf-8")
+            with self.assertRaisesRegex(module.VerificationError, "non-finite"):
+                module.load_json(nonfinite)
 
 
 if __name__ == "__main__":

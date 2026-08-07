@@ -1,241 +1,41 @@
 # Scope and Universality Charter v1.2
 
 Status: **Research**  
-Program ID: `TCD-CLEANROOM-001`  
-Version: 1.2  
-Supersedes within this directory: `scope-and-universality-charter-v1.1.md`
+Program ID: `TCD-CLEANROOM-001`
 
-## 1. Authority and subordination
+## 1. Authority
 
-This Charter governs only the Research subprogram in this directory. It is not canonical repository governance and does not alter accepted theory.
+This Charter governs only this Research subprogram. The controlling repository authorities remain the Research Execution Charter, Central Research Program, Anti-Self-Validation Standard, and `theory/evaluation/research-gates.json`. A conflict invalidates this Charter.
 
-The controlling authorities remain:
+## 2. Formal scope
 
-- [`../../docs/governance/research-execution-charter.md`](../../docs/governance/research-execution-charter.md)
-- [`../../docs/governance/central-research-program.md`](../../docs/governance/central-research-program.md)
-- [`../../docs/governance/anti-self-validation-standard.md`](../../docs/governance/anti-self-validation-standard.md)
-- [`../../theory/evaluation/research-gates.json`](../../theory/evaluation/research-gates.json)
+The internal theorem ranges over all small categories and all functors. Its operation schema uses a fixed finite directed graph with distinguished source and target vertices and returns one arrow between their images.
 
-Where this Charter conflicts with those artifacts, this Charter fails and must be revised.
+Every invariant operation in that scope is evaluation of one unique path in the free category. Identity paths are structural terms when source equals target. Sequential composition supplies the committed nonidentity witness `b∘a:A->C`.
 
-## 2. Purpose
+This formal result does not choose a universal domain of reasoning or a common comparison order over categories, bare sets, semicategories, semigroupoids, higher categories, probabilistic systems, embodied systems, continuous systems, or oracle-dependent systems.
 
-The program investigates whether a neutral requirement basis can be derived for a bounded class of explicitly auditable reasoning artifacts and whether RCCD or another architecture is sufficient, necessary, economical, or Pareto-optimal within that class.
+## 3. Governance status
 
-It does not test unrestricted metaphysical universality.
+The proof is stored as an internal Research result. `RG-07 nonclaim-audit` remains `not_satisfied`; therefore theorem release is blocked. This Charter does not update the gate, supply global audit evidence, or authorize release.
 
-## 3. Stable formal boundaries
+## 4. Empirical target
 
-This subprogram may rely on the following narrow results.
+The separate clean-room program studies explicitly auditable reasoning artifacts under frozen case-level review contracts. Its source roster, exact source bytes, synthetic artifacts, blind packets, role separation, and leakage controls are not fully instantiated. Execution remains prohibited.
 
-### 3.1 Domain declaration
+## 5. Public claim boundary
 
-A universal statement must declare the domain over which its quantifier ranges. Changing that domain changes the proposition.
+- No weakest invariant-supporting structure has been proved.
+- No first invariant-supporting structure has been proved.
+- No minimal invariant-supporting structure has been proved.
+- No globally optimal invariant-supporting structure has been proved.
+- Small categories are not claimed to be broader than bare sets under a common comparison order.
+- No complete architecture of reasoning is established.
+- RCCD is not derived.
+- The empirical clean-room program has not been executed.
+- Accepted Project FAR theory is unchanged.
+- This result is not released while RG-07 remains unsatisfied.
 
-### 3.2 Semantic descent
+## 6. Change rule
 
-For a declared semantics map `B : Rep -> Sem`, a representation-level property is semantic only if it is constant on the fibers of `B`, equivalently if it factors through `B`.
-
-This condition validates claims relative to `B`; it does not select `B`.
-
-### 3.3 Bare-carrier projection barrier
-
-On `Set` with all functions, every natural positive-finitary element-valued operation is a coordinate projection, and there is no natural nullary global element.
-
-This excludes bare carriers with unrestricted recodings as a source of nontrivial element-valued operations. It does not exclude nontrivial structure in other independently justified signatures and recoding classes.
-
-### 3.4 Typed-compositional path theorem
-
-For the class of all small categories, with all functors admitted as recodings, every finitary arrow-valued invariant operation on a finite input graph is evaluation of one fixed path in the free category on that graph. Conversely, every fixed path defines such an invariant operation.
-
-The small-category contract requires set-sized object and arrow collections, total source and target functions, a total designated identity assignment, a single-valued composition operation defined exactly on composable ordered pairs with the correct source and target, and the unit and associativity laws.
-
-The invariant operations in that declared scope are therefore path terms generated by identity and typed sequential composition.
-
-This result is registered as Research in [`compositional-invariant-terminal-result-v1.0.md`](compositional-invariant-terminal-result-v1.0.md). It does not establish that categories are the absolute broadest possible model of reasoning, that categories are broader than bare sets under a common order, that typed composition is weakest or minimal, that all reasoning is sequential, or that RCCD follows from composition.
-
-## 4. Resolved and open theoretical questions
-
-### Resolved within the declared compositional scope
-
-- Small categories under functorial recoding support common nontrivial arrow-valued invariants.
-- The complete finitary arrow-valued invariants in that scope are path terms generated by identities and sequential composition.
-- RCCD-specific operators are not forced by that invariant core.
-
-### Still open
-
-- whether any common comparison order can be independently justified across bare sets, semigroupoids, semicategories, small categories, higher categories, probabilistic systems, embodied systems, or other candidate structures;
-- whether typed composition is a weakest, first, minimal, or independently optimal invariant-supporting structure under any such order;
-- whether typed compositional systems are an independently optimal target across nonsequential, higher, embodied, continuous, oracle-dependent, or environment-inclusive systems;
-- whether the explicitly auditable-artifact class is itself independently optimal;
-- whether one stable requirement basis exists across the selected cases;
-- whether RCCD is sufficient, necessary, minimal, unique, or Pareto-optimal within the bounded class;
-- whether several incomparable bases remain after full-cost accounting;
-- whether held-out cases defeat the frozen requirements.
-
-No document may describe the still-open questions as solved.
-
-## 5. Chosen target for this subprogram
-
-A candidate case is an **explicitly auditable reasoning artifact** when all conditions below hold:
-
-1. a finite or finitely inspectable artifact is presented as support for an identifiable output;
-2. an independent reviewer is expected to evaluate at least one declared property of that support;
-3. the review task can be expressed through finite registered questions and answer rules;
-4. at least some correct answers are determined by disclosed material or a declared environment;
-5. at least one possible artifact can fail the review;
-6. at least two faithful representational forms are possible in principle;
-7. the source can be inspected and used lawfully and ethically.
-
-This is a research choice. It is not derived as the universal domain of reasoning.
-
-## 6. Excluded scope
-
-The primary program excludes:
-
-- inaccessible private mental states;
-- unrecorded intuition;
-- embodied skill with no inspectable artifact;
-- systems evaluated only by task success;
-- claims about neural or biological implementation;
-- unrestricted live-oracle dependence;
-- any case previously used to define the target architecture;
-- any source that cannot be frozen and disclosed under the access policy.
-
-A later scope extension requires a new version and cannot retroactively rescue a failed result.
-
-## 7. Neutral review contract
-
-Each case must instantiate a contract
-
-`K = (E, Y, O, A, Q, R, F, C)`
-
-where:
-
-- `E` — disclosed artifact and declared environment;
-- `Y` — supported output;
-- `O` — reviewer objective;
-- `A` — reviewer access policy;
-- `Q` — registered audit questions;
-- `R_q` — answer space for each question;
-- `F` — failure predicates;
-- `C` — cost vector for later comparison.
-
-Questions must be justified by a source-native objective or failure mode. A target architecture's native field names are not independent justification.
-
-## 8. Representation and equivalence
-
-For fixed `K`, a representation is admissible only when it:
-
-- is inspectable under `A`;
-- preserves the supported output and every registered answer;
-- discloses machinery required to produce those answers;
-- obeys declared timing, privacy, security, and locality constraints;
-- does not rely on undeclared hidden state or unavailable private oracles.
-
-Two representations are equivalent for the program only relative to the frozen contract:
-
-`r ~_K r'` when all registered answers, operational effects, and cost-relevant behavior agree.
-
-Visible field count, module count, file layout, naming, and serialization are not semantic unless independently registered as observables.
-
-## 9. Recoding policy
-
-The following transformations are presumptively admissible when they preserve the frozen contract and all counted costs:
-
-- identifier renaming;
-- record reordering;
-- lossless serialization changes;
-- table/graph conversions;
-- bundling and lossless splitting;
-- stored/derived substitution;
-- equivalent executable compilation;
-- normalized versus denormalized storage.
-
-A transformation may be excluded only by a preregistered independent constraint. Resemblance to or divergence from RCCD is not a valid exclusion reason.
-
-The typed-compositional theorem does not replace this case-level recoding policy. Functorial recoding is the formal contract for the theorem; case equivalence remains relative to each frozen review contract `K`.
-
-## 10. Claim ladder
-
-Every result must be assigned the strongest supported level and no higher.
-
-0. **Compatibility:** one case can be represented.
-1. **Bounded coverage:** all registered development questions are answerable.
-2. **Held-out adequacy:** the frozen result covers the sealed validation cases under the fixed rules.
-3. **Nontrivial constraint:** negative controls are rejected.
-4. **Local necessity:** a requirement survives ablation and hidden-reintroduction review in declared cases.
-5. **Comparative economy:** a basis is not Pareto-dominated by registered competitors under full-cost accounting.
-6. **Bounded universality:** every case in an independently justified bounded class has the property.
-7. **Canonicality:** the basis is unique up to declared equivalence.
-
-Levels 6 and 7 require separate arguments beyond successful finite sampling. The typed-compositional path theorem is a separate formal result and does not promote an empirical basis on this ladder.
-
-## 11. Required outcomes and failure permission
-
-Valid outcomes include:
-
-- one provisional basis;
-- multiple incomparable bases;
-- no stable basis;
-- target leakage invalidating the study;
-- held-out failure;
-- RCCD dominated by a competitor;
-- RCCD useful but nonminimal;
-- evidence insufficient.
-
-The protocol is successful when it produces the strongest justified result, including an unfavorable or Unknown result.
-
-## 12. Theory and software gate
-
-This Charter authorizes only preparation required by the registered clean-room program:
-
-- source capture and hashing;
-- packet sanitation;
-- coverage verification;
-- leakage review;
-- preregistered clerical randomization;
-- deterministic validation of frozen records;
-- deterministic verification of the registered typed-compositional Research artifact.
-
-It does not authorize general software development, a new reasoning engine, new benchmarks, or favorable-case expansion.
-
-## 13. Freeze and change rule
-
-The following must be versioned and hashed before execution:
-
-- target definition;
-- eligibility rules;
-- sampling dimensions;
-- source roster;
-- source snapshots;
-- packet contents;
-- prompts;
-- role declarations;
-- answer formats;
-- scoring and stopping rules.
-
-A substantive post-exposure change creates a new program version and preserves the earlier failure or unresolved result.
-
-No clean-room derivation has begun under v1.1 or v1.2. This charter revision therefore changes no exposed study outcome.
-
-## 14. Claim-impact policy
-
-This subprogram can affect RCCD claims only after comparison. A clean-room result may:
-
-- support a bounded RCCD mapping;
-- narrow RCCD's legitimate scope;
-- show one or more obligations are optional or reconstructible;
-- identify missing obligations;
-- reveal equal or cheaper alternatives;
-- leave the existing theorem unchanged because the evidence addresses a different contract.
-
-The typed-compositional result has one immediate negative implication: RCCD is not derivable from functorial invariance and sequential composition alone. It does not establish that RCCD is false or useless.
-
-No exploratory output automatically changes accepted theory.
-
-## 15. Adoption status
-
-Version 1.2 is registered as Research. It records the scoped typed-compositional theorem and preserves the unexecuted status of the empirical clean-room program.
-
-The empirical program may proceed only after the source and packet defects listed in the audit are closed.
+Any substantive change after evidence exposure creates a new version and preserves prior outcomes. A future RG-07 satisfaction requires explicit evidence and does not retroactively release this version.

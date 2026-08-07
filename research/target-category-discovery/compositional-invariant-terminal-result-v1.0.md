@@ -1,187 +1,83 @@
-# Compositional Invariant Terminal Result v1.0
+# Compositional Invariant Research Result v1.1
 
-Status: **Research**  
+Status: **Research — internal result, release blocked**  
 Result ID: `TCD-COMPOSITIONAL-INVARIANT-001`  
-Repository base: `d1fc8053e1459a7829f6f24b8d187f7887375cf0`
+Repository base: `d1fc8053e1459a7829f6f24b8d187f7887375cf0`  
+Release gate: `RG-07 nonclaim-audit = not_satisfied`
 
-## 1. Question
+The legacy filename contains `terminal-result`; that path is retained only to avoid breaking existing references. This document is not a released terminal theorem.
 
-Find the broadest independently justified class of structured reasoning systems that produces nontrivial invariant operations without defining the class so narrowly that RCCD is inserted into the premises.
+## 1. Repaired question
 
-## 2. Defect in the original wording
+Within the independently stated class of all small categories, with all functors admitted as recodings, classify the finitary arrow-valued operations on a fixed finite input graph that are invariant under every functor. Do not assume RCCD components.
 
-“Broadest” is not a mathematical property until three things are fixed:
+The original word “broadest” is not itself a mathematical criterion. It requires a comparison order over candidate classes and recoding policies. No such common order has been established. This result therefore proves a complete classification only inside the declared small-category scope.
 
-1. what counts as a system;
-2. what counts as an admissible recoding;
-3. what order compares one proposed class with another.
+## 2. Exact structural contract
 
-Without those choices, an absolute broadest class cannot be selected or disproved. A class may be changed by adding unrelated components, changing signatures, weakening morphisms, or moving to a higher-level representation. Those moves are not ordered by one neutral criterion.
+A system in scope has:
 
-The correct repair is to state one independently motivated structure that supplies a nontrivial operation and then prove the complete invariant operations inside that declared scope. This does not establish that the selected structure is weakest, first, minimal, or broader than alternatives under any common order.
-
-## 3. Independently stated scope
-
-A **typed compositional system** consists of the following set-sized data and laws:
-
-- a set of interfaces and a set of steps;
-- total source and target functions from steps to interfaces;
-- a total designated identity assignment sending each interface `X` to one step `id_X : X -> X`;
-- a single-valued composition operation defined exactly on composable ordered pairs `(f,g)` with `target(f)=source(g)`, returning `g∘f` with source `source(f)` and target `target(g)`;
-- two-sided identity laws and associativity for every well-typed step and composable triple.
-
-A recoding preserves interfaces, steps, source, target, identities, and composition.
-
-These are exactly the data and laws of a small category, and the recodings are functors. RCCD, FARA primitives, audit questions, observations, objectives, failure predicates, and preferred decompositions are absent from the definition.
-
-This scope contains exactly every small category under the declared contract. It is not claimed to include every conceivable nonsequential, embodied, continuous, oracle-dependent, or higher-dimensional reasoning process without additional representation choices. It is also not claimed to be weaker, broader, or minimal relative to structures with different signatures or recoding policies.
-
-## 4. Theorem 1: exact structural characterization
-
-A system satisfying TC1–TC4 is a small category because the contract explicitly supplies:
-
-- set-sized object and morphism collections;
+- a set of objects and a set of arrows;
 - total source and target functions;
-- one designated identity morphism for each object;
+- one designated identity arrow for every object;
 - one composition value for every and only every composable ordered pair, with the required source and target;
-- the unit and associativity laws.
+- two-sided unit laws and associativity.
 
-A map preserving all of that data is exactly a functor.
+These are exactly the data and laws of a small category. A map preserving them is exactly a functor. RCCD, FARA primitives, audit objectives, observations, failure rules, and preferred decompositions are absent from the premises.
 
-Therefore the selected class is not tailored to RCCD. It is the complete class determined by the independently stated small-category contract.
+## 3. Path-classification theorem
 
-## 5. Theorem 2: path-term classification
+Let `G` be a finite directed graph with distinguished vertices `s` and `t`, and let `F(G)` be the free category on `G`. A presentation of `G` in a small category `C` is a graph map `x:G->U(C)`, equivalently its unique functorial extension `x_bar:F(G)->C`.
 
-Let `G` be a finite directed graph with distinguished vertices `s` and `t`. Let `F(G)` be the free category on `G`.
-
-For every small category `C`, a presentation of `G` in `C` is a graph map
-
-`x : G -> U(C)`,
-
-or equivalently its unique functorial extension
-
-`x_bar : F(G) -> C`.
-
-Suppose an operation `alpha` assigns an arrow
-
-`alpha_C(x) : x(s) -> x(t)`
-
-to every presentation and is invariant under every functor `H : C -> D`:
+Suppose `alpha` assigns an arrow `alpha_C(x):x(s)->x(t)` to every presentation and is invariant under every functor `H:C->D`:
 
 `H(alpha_C(x)) = alpha_D(H composed with x)`.
 
-Evaluate the operation in the free category on the identity presentation:
+Evaluate `alpha` on the identity presentation in `F(G)` and define
 
 `p = alpha_F(G)(eta_G)`.
 
-The value `p` is an arrow from `s` to `t` in `F(G)`, hence a path in `G`. For any presentation `x_bar : F(G) -> C`, apply naturality to the functor `x_bar`:
+The arrow `p:s->t` is a path in `G`. Naturality with respect to `x_bar` gives
 
-`alpha_C(x) = x_bar(alpha_F(G)(eta_G)) = x_bar(p)`.
+`alpha_C(x) = x_bar(p)`.
 
-Thus every functor-invariant finitary arrow-valued operation is evaluation of one fixed path. Conversely, every fixed path defines such an invariant operation because functors preserve identities and composition.
+Therefore every invariant operation is evaluation of one fixed path. Conversely, every fixed path defines an invariant operation because functors preserve identities and composition. Uniqueness follows by evaluating competing terms on the identity presentation in `F(G)`.
 
-The path is unique: evaluate two alleged path terms on the identity presentation in `F(G)`.
+The complete operations in this scope are path terms generated by identity and typed sequential composition.
 
-### Exact conclusion
+## 4. Nontrivial witness and identity correction
 
-The complete finitary arrow-valued invariant operations across all small categories and all functors are **path terms** generated by:
+Use the graph `A --a--> B --b--> C` with a second generator `c:A->C`. The free category adds the nonidentity arrow `b∘a:A->C`. This is a genuinely new composite and is preserved by every functor.
 
-- identity;
-- typed sequential composition.
+For the distinguished operation shape `A->C`, the two paths are `c` and `b∘a`. No identity arrow has type `A->C`. Identity paths are admissible only when the distinguished source and target coincide, and identities are trivial structural terms rather than nontrivial witnesses.
 
-No RCCD-specific operation follows from this theorem.
+Thus the nontrivial common invariant demonstrated by this fixture is sequential composition, not identity.
 
-## 6. Nontrivial witness
+## 5. RCCD consequence
 
-Use the graph
+The theorem does not derive Construct, Differentiate, Restrict, Resolve, a four-part decomposition, an observation contract, an audit objective, a failure policy, or an Unknown policy. Relabeling category structure with RCCD terms would be post hoc interpretation, not derivation.
 
-`A --a--> B --b--> C`
+## 6. Artifact-specific claim audit
 
-with a second generator
+Each public surface in this PR independently preserves every boundary below. The verifier exact-locks the README, Charter, and this report separately and checks the same lines in each file.
 
-`A --c--> C`.
+- No weakest invariant-supporting structure has been proved.
+- No first invariant-supporting structure has been proved.
+- No minimal invariant-supporting structure has been proved.
+- No globally optimal invariant-supporting structure has been proved.
+- Small categories are not claimed to be broader than bare sets under a common comparison order.
+- No complete architecture of reasoning is established.
+- RCCD is not derived.
+- The empirical clean-room program has not been executed.
+- Accepted Project FAR theory is unchanged.
+- This result is not released while RG-07 remains unsatisfied.
 
-The graph itself contains three nonidentity edges. Its free category contains a fourth nonidentity arrow:
+## 7. Governance disposition
 
-`b∘a : A -> C`.
+The mathematical argument is retained as an internal Research result. The controlling repository gate `RG-07` remains unsatisfied and has no evidence. Consequently this PR does not perform `theorem_release`, does not describe the result as terminal, and does not change accepted theory.
 
-This composite is not an identity and is not one of the original generators. It is preserved by every functor:
+A future release requires a separately evidenced nonclaim audit, a new version, exact-head hosted validation, and fresh review. Satisfying RG-07 later does not automatically release this version.
 
-`F(b∘a) = F(b)∘F(a)`.
+## 8. Assurance status
 
-The two invariant operations of this input shape returning an `A -> C` arrow are exactly the two paths:
-
-- `c`;
-- `b∘a`.
-
-The committed verifier constructs the free category, checks identity and associativity, confirms the new composite, and corroborates preservation through a word-category interpretation followed by a length-preserving recoding.
-
-## 7. Scope boundary, not a minimality theorem
-
-If internal sequential composition is removed from this specific contract, the remaining directed graph has no internal arrow corresponding to `b∘a`. A free-category construction can add the path, but that is an added completion rather than an operation already present in the graph.
-
-This observation establishes only that the witness `b∘a` depends on composition in the selected representation. It does not order or eliminate semigroupoids, semicategories, semigroups, multicategories, operads, higher categories, partial algebras, or other weaker, richer, or incomparable structures.
-
-If the scope is strengthened with products, coproducts, monoidal combination, order, probability, topology, closure, observation, or semantics, additional invariant operations may appear. Each additional operation depends on that added structure and its preserving maps.
-
-Therefore typed composition is a demonstrated nontrivial invariant layer under the selected criterion. No weakest, first, minimal, or globally optimal structure has been proved.
-
-## 8. RCCD consequence
-
-RCCD components can be represented as named generators, typed substructures, equations, or derived paths inside a richer category. The categorical theorem does not select those generators or force their interpretation.
-
-In particular, the theorem does not derive:
-
-- Construct;
-- Differentiate;
-- Restrict;
-- Resolve;
-- a four-part decomposition;
-- a target observation contract;
-- an audit objective;
-- a failure or Unknown policy.
-
-Any derivation of those features requires additional premises or evidence. Treating path composition as “Resolve,” or treating source/target typing as “Differentiate,” would be a post hoc relabeling rather than a theorem.
-
-## 9. Relationship to the bare-set barrier
-
-The previous result remains valid:
-
-- on bare sets with every function admitted, natural positive-finitary element-valued operations are only projections;
-- on small categories with functors admitted, nontrivial arrow-valued path operations exist.
-
-There is no contradiction because the signatures, output types, and admissible recodings differ. The second result uses typing and composition; the first does not. Neither result establishes that one scope is broader than the other under a common comparison order.
-
-## 10. Terminal disposition
-
-The original theoretical question is closed only after repair:
-
-> Across all small typed compositional systems and all functorial recodings, the complete finitary arrow-valued invariant operations are path terms generated by identities and sequential composition.
-
-The stronger absolute statement remains invalid:
-
-> Small categories are the absolute broadest possible class of every conceivable reasoning system.
-
-That statement is not proved and is listed as a nonclaim.
-
-No objectively strongest full reasoning architecture was discovered. The terminal common invariant inside the selected categorical scope is compositional structure, not RCCD.
-
-## 11. What remains open
-
-The clean-room empirical program is not complete. It still must determine whether, for the separately chosen class of explicitly auditable reasoning artifacts:
-
-- RCCD is sufficient;
-- any RCCD component is locally necessary;
-- a cheaper or structurally different basis exists;
-- several bases remain Pareto-incomparable;
-- held-out cases defeat every proposed basis.
-
-The formal comparison problem also remains open: no common order has been defined and proved across categorical, semigroupoidal, higher-dimensional, probabilistic, embodied, or other candidate structures.
-
-This result closes the architecture-neutral compositional subquestion only within the declared small-category scope. It does not execute or replace the empirical comparison program.
-
-## 12. Proof and assurance status
-
-The path-term classification is established by the free-category argument above. The Python verifier is bounded executable corroboration and repository-drift detection; it is not a proof assistant and does not convert CI success into mathematical proof.
-
-No accepted Project FAR theory, terminal UPP theorem, FARA formal kernel, FAR method, or FARO operation is changed by this Research result.
+The free-category argument above is the proof. The Python verifier provides bounded executable corroboration, drift detection, and claim-boundary enforcement. It is not a proof assistant and does not convert CI success into machine-checked proof.
