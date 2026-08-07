@@ -148,7 +148,7 @@
     "primary_estimand": "mean_task_level_resolution_probability_far_minus_placebo",
     "uncertainty_method": "paired_task_bootstrap",
     "bootstrap_resamples": 100000,
-    "bootstrap_seed_status": "unfrozen_and_committed_before_outcome_reveal",
+    "bootstrap_seed_status": "unfrozen_and_independently_committed_before_execution",
     "decision_categories": {
       "inconclusive_due_to_missingness": "one or more FAR or placebo task-arm cells remain missing after the single permitted same-slot infrastructure replacement",
       "bounded_harm": "no primary cells are missing and 95% paired-task bootstrap upper bound < 0",
