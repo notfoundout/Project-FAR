@@ -20,7 +20,7 @@ The historical v2 result remains immutable and separate: one task, two repetitio
 
 This package freezes only the causal question, arm structure, estimands, outcome contract, evidence requirements, capsule constraints, and fail-closed execution gate. It does not select tasks, choose a model, build the FAR capsule, build the placebo, set the final run budget, generate randomization, or authorize a pilot or confirmatory run.
 
-All model calls and benchmark execution remain blocked until every gate in `execution-gate-v1.0.json` is satisfied and separately authorized after the theory version is frozen.
+All model calls and benchmark execution are currently blocked. A sacrificial pilot may only be separately authorized after every pre-pilot gate in `execution-gate-v1.0.json` is true; confirmatory execution additionally requires the completed-and-excluded pilot gate and every remaining confirmatory gate. No such authorization currently exists.
 
 ## Integrity model
 
