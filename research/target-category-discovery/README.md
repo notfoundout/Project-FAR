@@ -39,8 +39,22 @@ The sampling design is verified, but source instantiation, packet freezing, info
 
 ## Registered artifacts
 
+### Exploratory compositional track
+
 - `compositional-invariant-spec-v1.0.json` — exact exploratory contract and governance disposition.
 - `compositional-invariant-result-v1.0.json` — deterministic bounded corroboration of the preserved exploratory argument.
 - `compositional-invariant-terminal-result-v1.0.md` — exploratory Research note retained at its legacy path.
-- `scope-and-universality-charter-v1.2.md` — scope, governance, and empirical boundaries.
+- `scope-and-universality-charter-v1.2.md` — compositional-only scope and governance boundary.
 - `verify_compositional_invariant.py` — strict verifier for the spec, result, public surfaces, and exploratory disposition.
+
+### Registered empirical clean-room track
+
+- `audit-manifest-v1.0.json` — registered empirical program manifest.
+- `scope-and-universality-charter-v1.1.md` — controlling empirical clean-room charter.
+- `clean-room-derivation-protocol-v1.2.md` — empirical derivation and review protocol.
+- `sampling-design-v1.1.md` — frozen sampling design.
+- `covering-array-v1.0.csv` — empirical covering array.
+- `pairwise-coverage-report-v1.0.csv` — pairwise coverage verification output.
+- `restricted-artifacts-policy.md` — restricted-artifact and information-barrier policy.
+- `protocol-amendment-001.md` — registered empirical protocol amendment.
+- `verify_sampling_design.py` — sampling-design verifier.
