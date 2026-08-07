@@ -28,7 +28,7 @@ EXPECTED_PUBLIC_SHA256 = {
 }
 EXPECTED_EMPIRICAL_BLOBS = {
     "scope-and-universality-charter-v1.1.md": "a4f7074c10c92863fc5a37edfd65aa3178b71dba",
-    "audit-manifest-v1.0.json": "3eb77b05af61d2bac548d7081fa83eb9e84b17e3",
+    "audit-manifest-v1.0.json": "bda494ad389f31cb88306adcdf3401ca816ef350",
     "chat-audit-2026-08-05.md": "85ca5089824962ddee5e43b7ef0abb46d602c981",
 }
 PUBLIC_NONCLAIMS = [
