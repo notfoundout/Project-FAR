@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
   "manifest_status": "uninstantiated",
@@ -25,7 +25,8 @@
     "repository_blind_id": {
       "pattern": "^REPO-[0-9]{4}$",
       "encoding": "ASCII subset of UTF-8",
-      "unicode_permitted": false
+      "unicode_permitted": false,
+      "canonical_mapping": "repository_blind_id is a one-to-one label for canonical_repository_url: equal canonical repository URLs must use the same blind ID, and distinct canonical repository URLs must use distinct blind IDs"
     },
     "task_bundle_root_sha256": {
       "pattern": "^[0-9a-f]{64}$",
@@ -39,27 +40,35 @@
     "descriptor_canonicalization": "RFC 8785 JSON Canonicalization Scheme (JCS); UTF-8 bytes; no BOM; no insignificant whitespace",
     "descriptor_required_keys_exactly": [
       "algorithm_id",
-      "repository_url",
+      "canonical_repository_url",
       "repository_commit_sha",
       "task_payload_sha256",
       "task_payload_bytes"
     ],
     "descriptor_values": {
       "algorithm_id": "far-swe-v3-task-bundle-root-v1",
-      "repository_url": "exact HTTPS repository URL used to obtain the frozen task repository",
+      "canonical_repository_url": "canonical HTTPS repository URL: lowercase scheme and host; remove a trailing slash; remove one terminal .git suffix; preserve path case and all other path bytes; query and fragment are prohibited",
       "repository_commit_sha": "lowercase 40-character Git commit SHA identifying the exact repository snapshot",
       "task_payload_sha256": "lowercase SHA-256 of the exact task/issue payload bytes supplied to the agent, before prompt wrapping",
       "task_payload_bytes": "nonnegative integer byte count of that exact task/issue payload"
     },
     "required_root_members": [
-      "repository URL",
+      "canonical repository URL",
       "exact repository commit",
       "exact task/issue payload digest",
       "exact task/issue payload byte count"
     ],
     "archive_or_filesystem_metadata_in_root": false,
     "path_order_or_archive_format_in_root": false,
-    "recomputation_rule": "independent auditors reconstruct the five-key descriptor from the sealed repository source and exact task payload, JCS-canonicalize it, and SHA-256 the resulting bytes"
+    "recomputation_rule": "independent auditors reconstruct the five-key descriptor from the sealed canonical repository source and exact task payload, JCS-canonicalize it, and SHA-256 the resulting bytes"
+  },
+  "repository_identity_contract": {
+    "canonicalization": "apply the canonical_repository_url rule before assigning or comparing repository identities",
+    "equal_canonical_urls_same_blind_id": true,
+    "distinct_canonical_urls_distinct_blind_ids": true,
+    "minimum_repository_count_basis": "count distinct canonical_repository_url values, never repository_blind_id labels alone",
+    "per_repository_cap_basis": "apply the preregistered per-repository task cap by canonical_repository_url before execution",
+    "validation_timing": "validate the complete one-to-one canonical URL to blind-ID mapping before any sacrificial pilot or confirmatory execution"
   },
   "order_contract": {
     "authoritative_sequence": "top-level JSON array order",
@@ -75,6 +84,8 @@
     "all identifiers match their ASCII fixed-width patterns",
     "all task bundle roots are lowercase 64-character SHA-256 hex",
     "every task bundle root is independently recomputed from the canonical task-bundle descriptor",
+    "equal canonical repository URLs use the same repository blind ID and distinct canonical repository URLs use distinct blind IDs",
+    "minimum repository count and per-repository cap are computed from canonical repository URLs rather than blind-ID label count",
     "the exact task manifest artifact bytes and Git blob identity are committed before any sacrificial pilot or confirmatory execution"
   ]
 }
