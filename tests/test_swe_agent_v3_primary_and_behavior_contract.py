@@ -76,26 +76,28 @@ class SweAgentV3PrimaryAndBehaviorContractTests(unittest.TestCase):
             with self.assertRaises(verify_module.DesignError):
                 verify_module.verify_text_boundaries()
 
-    def test_semantically_duplicate_atx_headings_are_rejected(self) -> None:
-        mutations = (
-            lambda text: text + "\n## Evidence bundle per run ##\nConflict.\n",
-            lambda text: text + "\n## Pre-submission behavior contract ##\nConflict.\n",
-            lambda text: text + "\n## Placebo exposure matching ##\nConflict.\n",
-        )
-        for index, mutation in enumerate(mutations):
-            with self.subTest(index=index):
-                self.reset_fixture()
-                self.assert_text_rejected(mutation)
-
-    def test_fenced_pseudo_headings_do_not_count(self) -> None:
-        self.mutate_evidence(
+    def test_any_markdown_drift_is_rejected_even_inside_valid_fences(self) -> None:
+        self.assert_text_rejected(
             lambda text: text
             + "\n```text\n## Evidence bundle per run ##\n"
             + "## Pre-submission behavior contract ##\n"
             + "## Placebo exposure matching ##\n```\n"
         )
-        with mock.patch.object(verify_module, "HERE", self.here):
-            verify_module.verify_text_boundaries()
+
+    def test_malformed_backtick_info_string_cannot_hide_duplicate_heading(self) -> None:
+        self.assert_text_rejected(
+            lambda text: text
+            + "\n```invalid`info\n## Evidence bundle per run ##\n"
+        )
+
+    def test_primary_analysis_narrative_cannot_switch_to_baseline(self) -> None:
+        self.assert_text_rejected(
+            lambda text: text.replace(
+                "`D_i = p_i(far) - p_i(placebo)`",
+                "`D_i = p_i(far) - p_i(baseline)`",
+                1,
+            )
+        )
 
     def test_pre_submission_behavior_contract_is_exact(self) -> None:
         mutations = (

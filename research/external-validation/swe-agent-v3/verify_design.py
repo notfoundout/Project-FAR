@@ -2,10 +2,9 @@
 """Fail-closed verifier for the design-only FAR SWE-agent v3 package."""
 from __future__ import annotations
 
-import hashlib
-import re
 import sys
 from pathlib import Path
+from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import verify_integrity as integrity
@@ -17,438 +16,154 @@ MANIFEST = integrity.MANIFEST
 _committed_blob_bytes = integrity._committed_blob_bytes
 _git_blob_sha1 = integrity._git_blob_sha1
 
-CONTRACT_DIGESTS = {
-    "arms": "69842f18cf5309d92bb5fba51a394d77b1ef221264a6881f56fd7d56ef62e095",
-    "arm_matching": "386f364130f3cff43092e1eef9c3e45fbf9291e4d3cf10f90878670925f14459",
-    "task_population": "a06b42a8b462051535547dc5435864fdb78aa4ab77b73469a01e752c5eac2bad",
-    "assignment": "bcb47dde562693980e012d8a2840e28015d6c2d24347138707bc25bf2fa4aceb",
-    "execution_controls": "98c69c448baae529a4314b570e92d503df65bf0f581f1241c046c309426aa503",
-    "outcomes": "425fbc3a58632b77b5ccfeec264a4d4756f6809d2b3e58cf300c045a26c57f2b",
-    "blinding": "0a49cf62f75063a91f88a2d732ba1a12b57fa0a7f2c1961d55232cb005340182",
-    "allowed_content": "4d6c91f92ef7c78b9a73a479a45403757b954499b1b212f2bbcdaffba8426824",
-    "runtime": "ebea8e1896276afdcdbc3f058f1f52994be991d77c031d821b7b28e5b29d13d6",
-    "source": "b6914e456e26124212e124e10d2eda7abefd520a8953f6d5445ec2a2f3238a14",
-    "required_outputs": "af9cf47a1dc29cbfb5d91a17ecc685534378f79340355f746497d4e417e2d252",
-    "forbidden_content": "add8736a01f34595b59bc4eaf069ca84f38a1c77de7433839dec4f4cd7a35a5b",
-    "placebo_matching": "7502f557f9dac08df1afe5d13993785276f5b26b0d33dce49db9fc577f5f0d3d",
-    "invalid_policy": "911e4ae6c40c019e204e67bbc5d4ceadb393a10eedb193fcd3df0ada625a550c",
-    "decision_categories": "38d6859deb3966d2e887733c959ed8e5ca55db898864a4f7385ba2797f4561d8",
-    "decision_precedence": "0d82a12d4a5a7d482c6c8a3800877de00b2aee45735ed6962174b9a90b7afc72",
-    "bootstrap": "cb128bfd172c463dc1d4d109ccbc58e1146da0ff5236d690bb30f53079b1e695",
-    "task_contract": "9e1a81d50a8513f110da1a749c42709d28356e07d512fea1dc106aba814b4bf2",
+ARTIFACT_BLOBS = {
+    "README.md": "4685f7a42beaab65eb6a96bb9a3ec72f2313744e",
+    "question-v1.0.md": "b61da8b21953b835d341331e360405d6783d4cf4",
+    "preregistration-v1.0.json": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
+    "task-manifest-contract-v1.0.json": "2b60061dd4575b1fbc8d0d56469a4ff92f57405e",
+    "treatment-capsule-contract-v1.0.json": "e011c8f9972a5682e03526f739437f62e973e76d",
+    "execution-gate-v1.0.json": "055cdd17581074e2325d570db8df9266e88556e2",
+    "evidence-and-analysis-plan-v1.0.md": "15b352d54a524d9caf827018b608028c004f8f13",
 }
-EVIDENCE_BUNDLE_SECTION_SHA256 = (
-    "4fa33bbd5a4db1683520a035c2a4ca504fdb00d9a0e8ce999ee1436f8da2075e"
+PILOT_DIGEST = "847385a29ce4b02d7ece9817dfc4c7772a0583c6b4e0f663248bf3bb02bda478"
+FREEZE_SEQUENCE_DIGEST = "198b19ca3ef97f55480077559b47197668ab842474f252f0d7b1faa876186449"
+INVALIDATION_RULES_DIGEST = "63b9a2c5989ce78e065133dd0920b67115e1cae9c5cd3d4cc5efa30c96536670"
+EXPECTED_GATE_RULE = (
+    "execution is authorized only when every gate is true, the exact design "
+    "manifest verifies, and a separate launch record names the frozen commit"
 )
-PRE_SUBMISSION_SECTION_SHA256 = (
-    "b712f1c7a649f0d472d3c6eb5f6bfe87b7e0544e79d11f12fef698f2a171aa42"
-)
-ANALYSIS_KEYS = {
-    "task_level_aggregation",
-    "primary_estimand",
-    "uncertainty_method",
-    "bootstrap_resamples",
-    "bootstrap_seed_status",
-    "decision_categories",
-    "multiple_comparison_policy",
-    "equivalence_or_noninferiority_claim_permitted",
-    "population_generalization_permitted",
-    "invalid_run_and_cell_policy",
-    "decision_precedence",
-    "bootstrap_interval_spec",
-}
 GATES = {
-    "theory_version_frozen",
-    "far_capsule_built_and_hash_frozen",
-    "placebo_built_and_matching_verified",
-    "confirmatory_task_population_frozen",
-    "task_identity_information_barriers_verified",
-    "model_endpoint_and_version_frozen",
-    "prompts_and_agent_configuration_frozen",
-    "environment_images_and_dependencies_frozen",
-    "budgets_and_stopping_rules_frozen",
-    "counterbalancing_and_randomization_seed_frozen",
-    "grader_and_scoring_contract_frozen",
-    "evidence_store_and_restoration_test_passed",
-    "sacrificial_pilot_completed_and_excluded",
-    "independent_preexecution_review_clean",
+    "theory_version_frozen", "far_capsule_built_and_hash_frozen",
+    "placebo_built_and_matching_verified", "confirmatory_task_population_frozen",
+    "task_identity_information_barriers_verified", "model_endpoint_and_version_frozen",
+    "prompts_and_agent_configuration_frozen", "environment_images_and_dependencies_frozen",
+    "budgets_and_stopping_rules_frozen", "counterbalancing_and_randomization_seed_frozen",
+    "grader_and_scoring_contract_frozen", "evidence_store_and_restoration_test_passed",
+    "sacrificial_pilot_completed_and_excluded", "independent_preexecution_review_clean",
     "branch_or_tag_protection_and_exact_head_checks_enabled",
     "manual_launch_authorization_recorded",
 }
 
 
-def _normalized_atx_headings(text: str) -> list[tuple[int, str]]:
-    headings: list[tuple[int, str]] = []
-    fence_character: str | None = None
-    fence_length = 0
-    for line in text.splitlines():
-        indentation = len(line) - len(line.lstrip(" "))
-        if indentation > 3:
-            continue
-        candidate = line[indentation:]
-        fence = re.match(r"^(`{3,}|~{3,})(.*)$", candidate)
-        if fence is not None:
-            marker = fence.group(1)
-            if fence_character is None:
-                fence_character = marker[0]
-                fence_length = len(marker)
-            elif marker[0] == fence_character and len(marker) >= fence_length:
-                fence_character = None
-                fence_length = 0
-            continue
-        if fence_character is not None:
-            continue
-        match = re.match(r"^(#{1,6})(?:[ \t]+|$)(.*)$", candidate)
-        if match is None:
-            continue
-        title = re.sub(r"[ \t]+#+[ \t]*$", "", match.group(2)).strip()
-        headings.append((len(match.group(1)), title))
-    return headings
+def _require_exact_artifact(name: str) -> bytes:
+    raw = integrity._read_regular(HERE / name)
+    if integrity._git_blob_sha1(raw) != ARTIFACT_BLOBS[name]:
+        raise DesignError(f"complete governed artifact drifted: {name}")
+    return raw
+
+
+def _require_keys(value: Any, keys: set[str], label: str) -> dict[str, Any]:
+    if not isinstance(value, dict) or set(value) != keys:
+        raise DesignError(f"exact key set required: {label}")
+    return value
 
 
 def verify_preregistration() -> None:
+    _require_exact_artifact("preregistration-v1.0.json")
     data = integrity._load_json(HERE / "preregistration-v1.0.json")
-    identity = (
-        data.get("program_id"),
-        data.get("artifact_status"),
-        data.get("stage"),
-    )
-    if identity != ("FAR-SWE-V3-001", "Research", "design_only"):
-        raise DesignError("wrong preregistration identity or status")
-    if data.get("execution_authorized") is not False:
-        raise DesignError("execution must remain prohibited")
-    if data.get("historical_v2_pooling_permitted") is not False:
-        raise DesignError("historical v2 pooling must remain prohibited")
+    if (data.get("program_id"), data.get("stage"), data.get("execution_authorized")) != (
+        "FAR-SWE-V3-001", "design_only", False
+    ):
+        raise DesignError("preregistration identity or execution boundary drifted")
     if data.get("primary_contrast") != "far_minus_placebo":
         raise DesignError("primary contrast must remain FAR minus placebo")
-    if data.get("secondary_contrasts") != [
-        "far_minus_baseline",
-        "placebo_minus_baseline",
-    ]:
-        raise DesignError("secondary contrast list and order must remain exact")
-
+    if data.get("secondary_contrasts") != ["far_minus_baseline", "placebo_minus_baseline"]:
+        raise DesignError("secondary contrasts drifted")
+    if data.get("historical_v2_pooling_permitted") is not False:
+        raise DesignError("historical v2 pooling must remain prohibited")
     arms = data.get("arms")
-    if not isinstance(arms, list):
-        raise DesignError("arms must be a list")
-    integrity._require_digest(
-        arms,
-        CONTRACT_DIGESTS["arms"],
-        "preregistered arm treatment semantics",
-    )
-    ids = [arm.get("id") for arm in arms if isinstance(arm, dict)]
-    if ids != ["baseline", "placebo", "far"]:
-        raise DesignError("exact ordered arms baseline, placebo, far required")
-    if any(arm.get("required") is not True for arm in arms):
-        raise DesignError("all arms must be required")
-    integrity._require_digest(
-        arms[1].get("matching_requirements"),
-        CONTRACT_DIGESTS["arm_matching"],
-        "preregistration placebo matching",
-    )
-
+    if not isinstance(arms, list) or [x.get("id") for x in arms] != ["baseline", "placebo", "far"]:
+        raise DesignError("exact three-arm order required")
+    if any(x.get("required") is not True for x in arms):
+        raise DesignError("all three arms must remain mandatory")
+    if arms[0].get("extra_capsule") is not None or arms[1].get("extra_capsule") != "placebo":
+        raise DesignError("baseline/placebo treatment mapping drifted")
+    if arms[2].get("extra_capsule") != "far" or arms[2].get("capsule_contract") != "treatment-capsule-contract-v1.0.json":
+        raise DesignError("FAR treatment mapping drifted")
+    assignment = data.get("assignment")
+    if not isinstance(assignment, dict) or assignment.get("paired_design") is not True:
+        raise DesignError("paired assignment required")
+    if assignment.get("order") != "counterbalanced_within_task":
+        raise DesignError("counterbalancing contract drifted")
     population = data.get("task_population")
-    integrity._require_digest(
-        population,
-        CONTRACT_DIGESTS["task_population"],
-        "complete confirmatory task-population contract",
-    )
     if not isinstance(population, dict) or population.get("status") != "unfrozen":
         raise DesignError("task population must remain unfrozen")
-    if integrity._integer(
-        population.get("minimum_task_count"), "minimum_task_count"
-    ) < 24:
-        raise DesignError("minimum_task_count must be at least 24")
-    if integrity._integer(
-        population.get("minimum_repository_count"), "minimum_repository_count"
-    ) < 5:
-        raise DesignError("minimum_repository_count must be at least 5")
-    if integrity._number(
-        population.get("maximum_fraction_from_one_repository"),
-        "maximum_fraction_from_one_repository",
-    ) > 0.2:
-        raise DesignError("single-repository fraction exceeds 0.20")
-    prohibited = " ".join(
-        integrity._strings(
-            population.get("prohibited_task_repositories"),
-            "prohibited repositories",
-        )
-    ).lower()
-    if "project-far" not in prohibited:
-        raise DesignError("Project FAR task repository prohibition missing")
-
-    assignment = data.get("assignment")
-    integrity._require_digest(
-        assignment,
-        CONTRACT_DIGESTS["assignment"],
-        "complete counterbalancing and assignment contract",
-    )
-    if not isinstance(assignment, dict):
-        raise DesignError("assignment object required")
-    if assignment.get("paired_design") is not True:
-        raise DesignError("paired design required")
-    if assignment.get("every_task_in_every_arm") is not True:
-        raise DesignError("every task must appear in every arm")
-    if integrity._integer(
-        assignment.get("minimum_repetitions_per_task_arm"),
-        "minimum repetitions",
-    ) < 2:
-        raise DesignError("at least two repetitions required")
-    if (
-        assignment.get("carryover_control")
-        != "fresh_workspace_and_fresh_model_context_for_every_run"
-    ):
-        raise DesignError("fresh workspace and context required")
-
-    integrity._require_digest(
-        data.get("execution_controls"),
-        CONTRACT_DIGESTS["execution_controls"],
-        "execution controls",
-    )
-    integrity._require_digest(
-        data.get("outcomes"),
-        CONTRACT_DIGESTS["outcomes"],
-        "primary and secondary outcome contract",
-    )
-
+    if population.get("minimum_task_count", 0) < 24 or population.get("minimum_repository_count", 0) < 5:
+        raise DesignError("minimum task population weakened")
+    controls = data.get("execution_controls")
+    if not isinstance(controls, dict) or len(controls) != 9 or any(v is not True for v in controls.values()):
+        raise DesignError("all nine cross-arm controls required")
+    outcomes = data.get("outcomes", {}).get("primary")
+    if outcomes != {"id": "task_resolution", "source": "sealed_external_grader", "values": ["resolved", "unresolved", "invalid"], "invalid_is_not_resolved": True}:
+        raise DesignError("primary outcome contract drifted")
     analysis = data.get("analysis")
-    if not isinstance(analysis, dict):
-        raise DesignError("analysis object required")
-    if set(analysis) != ANALYSIS_KEYS:
-        raise DesignError("analysis key set must be exact")
-    exact = {
-        "primary_estimand": "mean_task_level_resolution_probability_far_minus_placebo",
-        "task_level_aggregation": "mean over repetitions within each task and arm",
-        "uncertainty_method": "paired_task_bootstrap",
-        "bootstrap_seed_status": "unfrozen_and_committed_before_outcome_reveal",
-        "multiple_comparison_policy": (
-            "primary contrast alone is confirmatory; all secondary contrasts and "
-            "component ablations are exploratory unless separately frozen before exposure"
-        ),
-    }
-    if any(analysis.get(key) != value for key, value in exact.items()):
-        raise DesignError("analysis identity or multiplicity policy mismatch")
-    if integrity._integer(
-        analysis.get("bootstrap_resamples"), "bootstrap_resamples"
-    ) != 100000:
-        raise DesignError("bootstrap resample count mismatch")
-    if integrity._number(
-        data.get("minimum_practically_important_difference"),
-        "minimum practical difference",
-    ) != 0.1:
-        raise DesignError("minimum practical difference must be 0.10")
-    if analysis.get("equivalence_or_noninferiority_claim_permitted") is not False:
-        raise DesignError("equivalence claims prohibited")
-    if analysis.get("population_generalization_permitted") is not False:
-        raise DesignError("population generalization prohibited")
-    for key, digest_name in (
-        ("invalid_run_and_cell_policy", "invalid_policy"),
-        ("decision_categories", "decision_categories"),
-        ("decision_precedence", "decision_precedence"),
-        ("bootstrap_interval_spec", "bootstrap"),
-    ):
-        integrity._require_digest(
-            analysis.get(key),
-            CONTRACT_DIGESTS[digest_name],
-            key,
-        )
-
-    integrity._require_digest(
-        data.get("blinding"),
-        CONTRACT_DIGESTS["blinding"],
-        "preregistration blinding contract",
-    )
-
-    pilot = data.get("pilot")
-    if not isinstance(pilot, dict):
-        raise DesignError("pilot object required")
-    if pilot.get("status") != "not_authorized":
-        raise DesignError("pilot must remain unauthorized")
-    if pilot.get("model_calls_currently_prohibited") is not True:
-        raise DesignError("pilot model calls must remain prohibited")
-    if pilot.get("pilot_tasks_excluded_from_confirmatory_evidence") is not True:
-        raise DesignError("pilot tasks must remain excluded")
+    if not isinstance(analysis, dict) or analysis.get("primary_estimand") != "mean_task_level_resolution_probability_far_minus_placebo":
+        raise DesignError("primary estimand drifted")
+    if analysis.get("bootstrap_resamples") != 100000 or analysis.get("bootstrap_seed_status") != "unfrozen_and_committed_before_outcome_reveal":
+        raise DesignError("bootstrap contract drifted")
+    if analysis.get("equivalence_or_noninferiority_claim_permitted") is not False or analysis.get("population_generalization_permitted") is not False:
+        raise DesignError("prohibited inference was enabled")
+    blinding = data.get("blinding")
+    if not isinstance(blinding, dict) or len(blinding) != 4 or any(v is not True for v in blinding.values()):
+        raise DesignError("complete blinding contract required")
+    integrity._require_digest(data.get("pilot"), PILOT_DIGEST, "sacrificial pilot")
 
 
 def verify_task_manifest_contract() -> None:
-    integrity._require_digest(
-        integrity._load_json(HERE / "task-manifest-contract-v1.0.json"),
-        CONTRACT_DIGESTS["task_contract"],
-        "task-manifest ordering and identifier contract",
-    )
+    _require_exact_artifact("task-manifest-contract-v1.0.json")
+    data = integrity._load_json(HERE / "task-manifest-contract-v1.0.json")
+    if data.get("manifest_status") != "uninstantiated" or data.get("execution_authorized") is not False:
+        raise DesignError("task manifest boundary drifted")
+    order = data.get("order_contract")
+    if not isinstance(order, dict) or order.get("authoritative_sequence") != "top-level JSON array order" or order.get("runtime_sorting_permitted") is not False:
+        raise DesignError("task-order contract drifted")
 
 
 def verify_capsule_contract() -> None:
+    _require_exact_artifact("treatment-capsule-contract-v1.0.json")
     data = integrity._load_json(HERE / "treatment-capsule-contract-v1.0.json")
-    if data.get("capsule_status") != "uninstantiated":
-        raise DesignError("capsule must remain uninstantiated")
-    if data.get("execution_authorized") is not False:
-        raise DesignError("capsule execution must remain unauthorized")
-    integrity._require_digest(
-        data.get("source"),
-        CONTRACT_DIGESTS["source"],
-        "capsule source provenance",
-    )
-    integrity._require_digest(
-        data.get("required_outputs"),
-        CONTRACT_DIGESTS["required_outputs"],
-        "capsule identity outputs",
-    )
-    integrity._require_digest(
-        data.get("allowed_content_classes"),
-        CONTRACT_DIGESTS["allowed_content"],
-        "complete capsule allowed-content boundary",
-    )
-    integrity._require_digest(
-        data.get("forbidden_content_classes"),
-        CONTRACT_DIGESTS["forbidden_content"],
-        "complete capsule forbidden-content boundary",
-    )
-    forbidden = " ".join(
-        integrity._strings(
-            data.get("forbidden_content_classes"),
-            "forbidden capsule content",
-        )
-    ).lower()
-    required = (
-        "task identifiers",
-        "gold patches",
-        "hidden tests",
-        "benchmark outcomes",
-    )
-    if any(term not in forbidden for term in required):
-        raise DesignError("forbidden capsule content boundary incomplete")
-    integrity._require_digest(
-        data.get("runtime_constraints"),
-        CONTRACT_DIGESTS["runtime"],
-        "capsule runtime",
-    )
-    integrity._require_digest(
-        data.get("placebo_matching"),
-        CONTRACT_DIGESTS["placebo_matching"],
-        "capsule placebo matching",
-    )
+    if data.get("capsule_status") != "uninstantiated" or data.get("execution_authorized") is not False:
+        raise DesignError("capsule boundary drifted")
+    if data.get("source") != {"repository": "notfoundout/Project-FAR", "commit_sha": None, "tree_sha": None, "theory_version": None, "exporter_blob_sha": None}:
+        raise DesignError("capsule source provenance drifted")
+    if data.get("runtime_constraints") != {"read_only": True, "network_access": False, "writes_outside_run_evidence_directory": False, "extra_tool_permissions": False, "extra_context_window": False, "extra_model_calls": False, "mutable_remote_dependencies": False}:
+        raise DesignError("capsule runtime constraints drifted")
+    integrity._require_digest(data.get("freeze_sequence"), FREEZE_SEQUENCE_DIGEST, "capsule freeze sequence")
+    integrity._require_digest(data.get("invalidation_rules"), INVALIDATION_RULES_DIGEST, "capsule invalidation rules")
 
 
 def verify_execution_gate() -> None:
+    _require_exact_artifact("execution-gate-v1.0.json")
     data = integrity._load_json(HERE / "execution-gate-v1.0.json")
-    authorization_keys = (
-        "execution_authorized",
-        "model_calls_authorized",
-        "benchmark_execution_authorized",
-    )
-    if any(data.get(key) is not False for key in authorization_keys):
-        raise DesignError("execution must remain unauthorized")
+    _require_keys(data, {"schema_version", "program_id", "artifact_status", "execution_authorized", "model_calls_authorized", "benchmark_execution_authorized", "gate_rule", "gates", "current_blockers", "forbidden_current_actions"}, "execution gate")
+    if any(data.get(k) is not False for k in ("execution_authorized", "model_calls_authorized", "benchmark_execution_authorized")):
+        raise DesignError("execution and model calls must remain blocked")
+    if data.get("gate_rule") != EXPECTED_GATE_RULE:
+        raise DesignError("all-gates launch rule drifted")
     gates = data.get("gates")
-    if not isinstance(gates, dict):
-        raise DesignError("gate object required")
-    if set(gates) != GATES or any(value is not False for value in gates.values()):
-        raise DesignError("execution gate set must be exact and all false")
-    forbidden = " ".join(
-        integrity._strings(
-            data.get("forbidden_current_actions"),
-            "forbidden actions",
-        )
-    ).lower()
-    required = (
-        "model call",
-        "pilot execution",
-        "confirmatory execution",
-        "outcome reveal",
-    )
-    if any(term not in forbidden for term in required):
-        raise DesignError("forbidden current actions incomplete")
+    if not isinstance(gates, dict) or set(gates) != GATES or any(v is not False for v in gates.values()):
+        raise DesignError("all sixteen gates must remain false")
+    if len(data.get("current_blockers", [])) != 6:
+        raise DesignError("complete current-blocker list required")
+    if set(data.get("forbidden_current_actions", [])) != {"model access probe", "agent model call", "benchmark task selection with capsule-author access", "pilot execution", "confirmatory execution", "outcome reveal", "claim of FAR improvement"}:
+        raise DesignError("forbidden-current-action contract drifted")
 
 
 def verify_text_boundaries() -> None:
-    evidence_text = integrity._read_regular(
-        HERE / "evidence-and-analysis-plan-v1.0.md"
-    ).decode("utf-8")
-    headings = _normalized_atx_headings(evidence_text)
-    required_headings = (
-        "Evidence bundle per run",
-        "Pre-submission behavior contract",
-        "Placebo exposure matching",
-    )
-    if any(headings.count((2, title)) != 1 for title in required_headings):
-        raise DesignError("governed evidence-plan headings must be unique")
-
-    evidence_start_marker = "## Evidence bundle per run\n"
-    pre_submission_start_marker = "## Pre-submission behavior contract\n"
-    pre_submission_end_marker = "\n## Placebo exposure matching\n"
-    evidence_start = evidence_text.find(evidence_start_marker)
-    pre_submission_start = evidence_text.find(pre_submission_start_marker)
-    pre_submission_end = evidence_text.find(
-        pre_submission_end_marker,
-        pre_submission_start + len(pre_submission_start_marker),
-    )
-    if (
-        evidence_start < 0
-        or pre_submission_start < 0
-        or pre_submission_end < 0
-        or not evidence_start < pre_submission_start < pre_submission_end
-    ):
-        raise DesignError("governed evidence-plan section boundaries are invalid")
-
-    evidence_end = pre_submission_start - 1
-    evidence_bundle = evidence_text[evidence_start:evidence_end]
-    evidence_digest = hashlib.sha256(evidence_bundle.encode("utf-8")).hexdigest()
-    if evidence_digest != EVIDENCE_BUNDLE_SECTION_SHA256:
-        raise DesignError("complete evidence-bundle contract mismatch")
-
-    pre_submission_contract = evidence_text[
-        pre_submission_start:pre_submission_end
-    ]
-    pre_submission_digest = hashlib.sha256(
-        pre_submission_contract.encode("utf-8")
-    ).hexdigest()
-    if pre_submission_digest != PRE_SUBMISSION_SECTION_SHA256:
-        raise DesignError("pre-submission behavior contract mismatch")
-
-    evidence = evidence_text.lower()
-    required_evidence = (
-        "model provider, endpoint, model version, parameters, and provider request identifier",
-        "stdout",
-        "stderr",
-        "trajectory",
-        "commands",
-        "tool calls",
-        "model messages",
-        "patch",
-        "prediction",
-        "grader logs",
-        "content-root digest",
-        "outer process success cannot override",
-        "budget_exhausted",
-        "invalid",
-        "historical swe-agent v2",
-        "abs(placebo_count - far_treatment_count) * 100 <= far_treatment_count",
-        "runtime sorting",
-        "array order is authoritative",
-    )
-    if any(term not in evidence for term in required_evidence):
-        raise DesignError("evidence or analysis boundary missing")
-
-    claims = "\n".join(
-        integrity._read_regular(HERE / path).decode("utf-8").lower()
-        for path in ("README.md", "question-v1.0.md")
-    )
-    if "execution authorized: **no**" not in claims:
-        raise DesignError("visible execution boundary missing")
-    if "would not establish" not in claims:
-        raise DesignError("visible claim boundary missing")
-    nonclaims = (
-        "universal software-engineering improvement",
-        "model-independent improvement",
-        "commercial readiness",
-    )
-    if any(term not in claims for term in nonclaims):
-        raise DesignError("explicit nonclaim missing")
+    evidence = _require_exact_artifact("evidence-and-analysis-plan-v1.0.md").decode("utf-8")
+    readme = _require_exact_artifact("README.md").decode("utf-8")
+    question = _require_exact_artifact("question-v1.0.md").decode("utf-8")
+    if "`D_i = p_i(far) - p_i(placebo)`" not in evidence or "`D_i = p_i(far) - p_i(baseline)`" in evidence:
+        raise DesignError("primary analysis narrative must remain FAR minus placebo")
+    if "Execution authorized: **No**" not in readme or "would not establish" not in question:
+        raise DesignError("visible execution or claim boundary missing")
+    for phrase in ("universal software-engineering improvement", "model-independent improvement", "commercial readiness"):
+        if phrase not in question:
+            raise DesignError(f"public nonclaim missing: {phrase}")
 
 
 def verify() -> None:
-    integrity.ROOT = ROOT
-    integrity.HERE = HERE
-    integrity.MANIFEST = MANIFEST
+    integrity.ROOT, integrity.HERE, integrity.MANIFEST = ROOT, HERE, MANIFEST
     integrity._committed_blob_bytes = _committed_blob_bytes
     integrity.verify_manifest()
     integrity.verify_byte_policy()
@@ -464,7 +179,4 @@ if __name__ == "__main__":
         verify()
     except DesignError as exc:
         raise SystemExit(f"FAIL: {exc}")
-    print(
-        "PASS: FAR-SWE-V3-001 design is internally consistent "
-        "and execution remains blocked."
-    )
+    print("PASS: FAR-SWE-V3-001 is exact-locked and execution remains blocked.")

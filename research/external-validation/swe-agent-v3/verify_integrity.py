@@ -1,4 +1,9 @@
-"""Strict JSON and committed-byte integrity checks for FAR-SWE-V3-001."""
+"""Strict artifact and committed-byte integrity for FAR-SWE-V3-001.
+
+The data/narrative design artifacts are exact-locked through one non-self-referential
+manifest. Verifier source is intentionally outside that manifest so the manifest
+identity can be pinned here without a recursive hash cycle.
+"""
 from __future__ import annotations
 
 import hashlib
@@ -13,6 +18,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 MANIFEST = HERE / "design-manifest-v1.0.json"
 MANIFEST_RELATIVE = "research/external-validation/swe-agent-v3/design-manifest-v1.0.json"
+EXPECTED_MANIFEST_GIT_BLOB_SHA1 = "0eef931c3dd6f5c0c8f1e438757beac4d502a452"
 
 
 class DesignError(RuntimeError):
@@ -75,7 +81,8 @@ def _canonical_digest(value: Any) -> str:
         sort_keys=True,
         separators=(",", ":"),
         ensure_ascii=False,
-    ).encode()
+        allow_nan=False,
+    ).encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
 
 
@@ -93,7 +100,7 @@ def _safe_path(relative: str) -> Path:
     if (
         p.is_absolute()
         or not p.parts
-        or any(x in {"", ".", ".."} for x in p.parts)
+        or any(part in {"", ".", ".."} for part in p.parts)
         or "\\" in relative
     ):
         raise DesignError(f"unsafe manifest path: {relative}")
@@ -122,7 +129,7 @@ def _number(value: Any, label: str) -> float:
 
 
 def _strings(value: Any, label: str) -> list[str]:
-    if not isinstance(value, list) or any(type(x) is not str for x in value):
+    if not isinstance(value, list) or any(type(item) is not str for item in value):
         raise DesignError(f"{label} must be string list")
     return value
 
@@ -136,18 +143,39 @@ REQUIRED_ARTIFACTS = {
     "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
     "research/external-validation/swe-agent-v3/execution-gate-v1.0.json",
     "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md",
-    "research/external-validation/swe-agent-v3/verify_integrity.py",
-    "research/external-validation/swe-agent-v3/verify_design.py",
 }
 
 
 def verify_manifest() -> None:
     worktree = _read_regular(MANIFEST)
-    if worktree != _committed_blob_bytes(MANIFEST_RELATIVE):
+    committed_manifest = _committed_blob_bytes(MANIFEST_RELATIVE)
+    if worktree != committed_manifest:
         raise DesignError("design manifest differs from committed HEAD blob")
+    if _git_blob_sha1(worktree) != EXPECTED_MANIFEST_GIT_BLOB_SHA1:
+        raise DesignError("design manifest identity drifted")
+
     manifest = _decode_json(worktree, MANIFEST_RELATIVE)
-    if not isinstance(manifest, dict) or manifest.get("schema_version") != "1.0":
-        raise DesignError("manifest schema_version must be 1.0")
+    expected_top = {
+        "schema_version",
+        "program_id",
+        "artifact_status",
+        "scope",
+        "artifacts",
+    }
+    if not isinstance(manifest, dict) or set(manifest) != expected_top:
+        raise DesignError("design manifest top-level shape drifted")
+    if (
+        manifest.get("schema_version"),
+        manifest.get("program_id"),
+        manifest.get("artifact_status"),
+    ) != ("1.1", "FAR-SWE-V3-001", "Research"):
+        raise DesignError("design manifest identity or status drifted")
+    if manifest.get("scope") != (
+        "design-only authority; exact-locks all governed data and narrative "
+        "artifacts while verifier code remains reviewable and non-self-referential"
+    ):
+        raise DesignError("design manifest scope drifted")
+
     entries = manifest.get("artifacts")
     if not isinstance(entries, list) or not entries:
         raise DesignError("manifest artifacts must be non-empty list")
@@ -170,11 +198,13 @@ def verify_manifest() -> None:
             raise DesignError(f"invalid Git blob id: {relative}")
         _integer(size, f"manifest bytes for {relative}")
         seen.add(relative)
+
         committed = _committed_blob_bytes(relative)
         if len(committed) != size or _git_blob_sha1(committed) != blob:
             raise DesignError(f"committed blob identity mismatch: {relative}")
         if _read_regular(_safe_path(relative)) != committed:
             raise DesignError(f"worktree differs from committed blob: {relative}")
+
     if seen != REQUIRED_ARTIFACTS:
         raise DesignError(
             f"manifest artifact set mismatch: {sorted(seen ^ REQUIRED_ARTIFACTS)}"

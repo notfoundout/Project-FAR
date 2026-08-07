@@ -22,9 +22,17 @@ This package freezes only the causal question, arm structure, estimands, outcome
 
 All model calls and benchmark execution remain blocked until every gate in `execution-gate-v1.0.json` is satisfied and separately authorized after the theory version is frozen.
 
+## Integrity model
+
+Every governed data and narrative artifact is exact-locked in `design-manifest-v1.0.json`. The verifier pins that manifest as one immutable root and separately checks the experiment's critical semantics. Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing; it remains ordinary reviewed code at the exact PR head.
+
 ## Verification
 
 ```bash
 python research/external-validation/swe-agent-v3/verify_design.py
-python -m unittest tests.test_swe_agent_v3_design tests.test_swe_agent_v3_decision_rules -v
+python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v
+python -m py_compile \
+  research/external-validation/swe-agent-v3/verify_integrity.py \
+  research/external-validation/swe-agent-v3/verify_design.py \
+  tests/test_swe_agent_v3*.py
 ```
