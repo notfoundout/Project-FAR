@@ -28,7 +28,7 @@ EXPECTED_PUBLIC_SHA256 = {
 }
 EXPECTED_EMPIRICAL_BLOBS = {
     "scope-and-universality-charter-v1.1.md": "a4f7074c10c92863fc5a37edfd65aa3178b71dba",
-    "audit-manifest-v1.0.json": "3945534849cbbf1696335369361a22b0efa7b74b",
+    "audit-manifest-v1.0.json": "694666a763652fb5e659089733a2e9ceef9af55a",
     "chat-audit-2026-08-05.md": "85ca5089824962ddee5e43b7ef0abb46d602c981",
 }
 PUBLIC_NONCLAIMS = [
@@ -346,13 +346,27 @@ def validate_empirical_authority(
         raise VerificationError("empirical execution blockers must remain explicit")
 
     committed = manifest.get("committed_artifacts")
-    if not isinstance(committed, list):
+    if not isinstance(committed, list) or not committed:
         raise VerificationError("registered empirical artifact ledger missing")
-    ledger = {
-        item.get("path"): item.get("git_blob_sha1")
-        for item in committed
-        if isinstance(item, dict)
-    }
+    seen_paths: set[str] = set()
+    ledger: dict[str, str] = {}
+    for item in committed:
+        if not isinstance(item, dict) or set(item) != {"path", "git_blob_sha1"}:
+            raise VerificationError("empirical artifact ledger entries require exact path/blob fields")
+        rel = item.get("path")
+        expected_blob = item.get("git_blob_sha1")
+        if not isinstance(rel, str) or not rel or rel.startswith("/") or ".." in Path(rel).parts:
+            raise VerificationError("unsafe empirical artifact ledger path")
+        if rel in seen_paths:
+            raise VerificationError("duplicate empirical artifact ledger path")
+        if not isinstance(expected_blob, str) or re.fullmatch(r"[0-9a-f]{40}", expected_blob) is None:
+            raise VerificationError("invalid empirical artifact blob identity")
+        seen_paths.add(rel)
+        ledger[rel] = expected_blob
+        raw, _ = _read_utf8(ROOT / rel)
+        if _git_blob_sha1(raw) != expected_blob:
+            raise VerificationError(f"registered empirical artifact identity drifted: {rel}")
+
     expected_charter_path = "research/target-category-discovery/scope-and-universality-charter-v1.1.md"
     expected_audit_path = "research/target-category-discovery/chat-audit-2026-08-05.md"
     if ledger.get(expected_charter_path) != EXPECTED_EMPIRICAL_BLOBS["scope-and-universality-charter-v1.1.md"]:
