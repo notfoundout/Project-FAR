@@ -5,7 +5,9 @@ Program ID: `TCD-CLEANROOM-001`
 
 ## 1. Authority
 
-This Charter governs only this Research subprogram. The controlling repository authorities remain the Research Execution Charter, Central Research Program, Anti-Self-Validation Standard, and `theory/evaluation/research-gates.json`. A conflict invalidates this Charter.
+This Charter governs only the exploratory compositional track preserved in this document. It does not supersede, amend, or control the registered empirical clean-room program. `scope-and-universality-charter-v1.1.md`, as registered by `audit-manifest-v1.0.json`, remains controlling for `TCD-CLEANROOM-001` empirical execution, including its target definition, eligibility rules, claim ladder, preparation limits, freeze controls, and adoption gate.
+
+The controlling repository authorities remain the Research Execution Charter, Central Research Program, Anti-Self-Validation Standard, and `theory/evaluation/research-gates.json`. A conflict invalidates this Charter.
 
 ## 2. Formal scope
 
@@ -23,7 +25,7 @@ Any future theorem attempt must use a new program identifier and independently f
 
 ## 4. Empirical target
 
-The separate clean-room program studies explicitly auditable reasoning artifacts under frozen case-level review contracts. Its source roster, exact source bytes, synthetic artifacts, blind packets, role separation, and leakage controls are not fully instantiated. Execution remains prohibited.
+The separate clean-room program studies explicitly auditable reasoning artifacts under frozen case-level review contracts. Its controlling charter remains `scope-and-universality-charter-v1.1.md`; this v1.2 document adds no empirical authority. Its source roster, exact source bytes, synthetic artifacts, blind packets, role separation, and leakage controls are not fully instantiated. Execution remains prohibited.
 
 ## 5. Public claim boundary
 
