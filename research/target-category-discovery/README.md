@@ -50,6 +50,7 @@ The sampling design is verified, but source instantiation, packet freezing, info
 ### Registered empirical clean-room track
 
 - `audit-manifest-v1.0.json` — registered empirical program manifest.
+- `chat-audit-2026-08-05.md` — complete claim-and-artifact audit and retraction ledger registered by the empirical manifest.
 - `scope-and-universality-charter-v1.1.md` — controlling empirical clean-room charter.
 - `clean-room-derivation-protocol-v1.2.md` — empirical derivation and review protocol.
 - `sampling-design-v1.1.md` — frozen sampling design.
