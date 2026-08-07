@@ -11,8 +11,8 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/README.md",
-      "git_blob_sha1": "4685f7a42beaab65eb6a96bb9a3ec72f2313744e",
-      "bytes": 2562
+      "git_blob_sha1": "e8ecc4a9c337e57a108b96de16772dcf10081ff2",
+      "bytes": 2730
     },
     {
       "path": "research/external-validation/swe-agent-v3/question-v1.0.md",
@@ -36,8 +36,8 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/execution-gate-v1.0.json",
-      "git_blob_sha1": "adbfb03eb45e8f8e1ee506e58f18038ef80429ec",
-      "bytes": 2478
+      "git_blob_sha1": "99eabd1fee9a59770a3a61a07c151abcba23683f",
+      "bytes": 3104
     },
     {
       "path": "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md",
