@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
   "execution_authorized": false,
@@ -7,12 +7,9 @@
   "benchmark_execution_authorized": false,
   "pilot_execution_authorized": false,
   "confirmatory_execution_authorized": false,
-  "authorization_policy": {
-    "pilot_rule": "a sacrificial pilot may be authorized only by a separate prospective pilot launch record after every pre-pilot gate is true; the completed-pilot gate is explicitly not a prerequisite for pilot execution",
-    "confirmatory_rule": "confirmatory execution may be authorized only by a separate prospective confirmatory launch record after every confirmatory gate, including sacrificial_pilot_completed_and_excluded, is true",
-    "current_state": "neither pilot nor confirmatory execution is authorized"
-  },
-  "pre_pilot_gates": {
+  "pilot_gate_rule": "sacrificial pilot execution is authorized only when every pilot gate is true, the exact design manifest verifies, and a separate prospective pilot launch record names the frozen commit; sacrificial_pilot_completed_and_excluded is not a pilot prerequisite",
+  "gate_rule": "confirmatory execution is authorized only when every gate is true, the exact design manifest verifies, and a separate prospective confirmatory launch record names the frozen commit",
+  "pilot_gates": {
     "theory_version_frozen": false,
     "far_capsule_built_and_hash_frozen": false,
     "placebo_built_and_matching_verified": false,
@@ -29,9 +26,23 @@
     "branch_or_tag_protection_and_exact_head_checks_enabled": false,
     "manual_pilot_launch_authorization_recorded": false
   },
-  "confirmatory_only_gates": {
+  "gates": {
+    "theory_version_frozen": false,
+    "far_capsule_built_and_hash_frozen": false,
+    "placebo_built_and_matching_verified": false,
+    "confirmatory_task_population_frozen": false,
+    "task_identity_information_barriers_verified": false,
+    "model_endpoint_and_version_frozen": false,
+    "prompts_and_agent_configuration_frozen": false,
+    "environment_images_and_dependencies_frozen": false,
+    "budgets_and_stopping_rules_frozen": false,
+    "counterbalancing_and_randomization_seed_frozen": false,
+    "grader_and_scoring_contract_frozen": false,
+    "evidence_store_and_restoration_test_passed": false,
     "sacrificial_pilot_completed_and_excluded": false,
-    "manual_confirmatory_launch_authorization_recorded": false
+    "independent_preexecution_review_clean": false,
+    "branch_or_tag_protection_and_exact_head_checks_enabled": false,
+    "manual_launch_authorization_recorded": false
   },
   "current_blockers": [
     "theory version is not frozen for this experiment",
