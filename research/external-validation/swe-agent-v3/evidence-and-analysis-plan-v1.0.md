@@ -9,7 +9,8 @@ Every attempted run must retain immutable, hash-addressed copies of:
 
 - task identity under sealed mapping, including the frozen task-manifest strata classification;
 - frozen task-manifest Git blob identity and frozen sealed identity-ledger Git blob identity;
-- authoritative repository provider identity, canonical repository URL, and exact commit as reconstructed from the sealed identity ledger by the independent identity auditor;
+- retained task-population repository-prohibition audit report root;
+- authoritative repository provider identity, canonical repository URL, exact commit, GitHub fork-source repository ID or null, and treatment-material audit result as reconstructed from the sealed identity ledger by the independent identity auditor;
 - environment image digest and dependency lock;
 - model provider, endpoint, model version, parameters, and provider request identifier;
 - all system, agent, task, capsule, and tool instructions;
@@ -44,9 +45,11 @@ The FAR treatment count is the sole denominator for both UTF-8-byte and frozen-t
 
 ## Task identity and population audit
 
-`task-manifest-contract-v1.0.json` controls both the blinded ordered task manifest and a separate sealed identity ledger. The manifest contains only blind task ID, repository blind ID, unique task-bundle root, and frozen strata. The sealed ledger contains exactly one same-position record for each manifest entry and binds those blind fields to the authoritative GitHub repository ID, canonical audit URL, exact repository commit, task-payload digest/byte count, and identical strata.
+`task-manifest-contract-v1.0.json` controls both the blinded ordered task manifest and a separate sealed identity ledger. The manifest contains only blind task ID, repository blind ID, unique task-bundle root, and frozen strata. The sealed ledger contains exactly one same-position record for each manifest entry and binds those blind fields to the authoritative GitHub repository ID, canonical audit URL, exact repository commit, task-payload digest/byte count, matching strata, GitHub fork-source repository ID or null, and a boolean treatment-material audit result.
 
-Before any pilot or confirmatory execution, an independent identity auditor must verify the exact one-to-one ledger/manifest binding, recompute every task-bundle root from the canonical seven-key descriptor, resolve every GitHub repository ID independently from `api.github.com`, enforce one blind repository ID per authoritative provider/ID pair, enforce the five-repository minimum and per-repository cap from provider-stable identities, and verify that the frozen manifest-wide strata union covers all five preregistered strata. The exact manifest bytes, sealed-ledger bytes, both Git blob identities, and validation report are committed before execution. The ledger remains sealed from the executing agent and capsule authors.
+Before any pilot or confirmatory execution, an independent identity auditor must verify the exact one-to-one ledger/manifest binding, recompute every task-bundle root from the canonical seven-key descriptor, resolve every GitHub repository ID and canonical `full_name` independently from `api.github.com`, enforce one blind repository ID and one canonical URL per authoritative provider/ID pair, and enforce one authoritative provider/ID pair per canonical URL. The auditor must reject repository ID `1283452680` (`notfoundout/Project-FAR`), reject any GitHub fork whose `source.id` is `1283452680`, and reject any candidate exact commit for which the independent audit finds Project FAR treatment material. Every retained `contains_project_far_treatment_material` value must therefore be boolean `false`; unavailable required prohibition evidence rejects the population.
+
+The same preexecution audit must enforce at least 24 tasks, at least five provider-stable repositories, no repository contributing more than 20% of frozen tasks, and frozen manifest-wide coverage of all five preregistered strata. The exact manifest bytes, sealed-ledger bytes, both Git blob identities, independent validation report, and repository-prohibition audit report are committed before execution. The ledger remains sealed from the executing agent and capsule authors. The repository-prohibition audit report root is a required prospective launch binding.
 
 ## Primary analysis
 
@@ -78,7 +81,7 @@ Changing a threshold, numerator predicate, denominator rule, comparison rule, ev
 
 ## Pre-execution launch binding
 
-`execution-gate-v1.0.json` requires a separate prospective pilot or confirmatory launch record committed before execution. That record must bind every execution-critical identity listed in `launch_record_required_bindings`, including the frozen design commit and manifest, task manifest, sealed identity ledger, bootstrap-seed commitment, critical-harm contract, treatment and placebo roots, model identity, prompts/configuration, environment/dependencies, budgets/stopping rules, assignment seed, grader contract, evidence-store configuration, protection reference, and manual authorization record. A true gate without the complete launch record cannot authorize execution.
+`execution-gate-v1.0.json` requires a separate prospective pilot or confirmatory launch record committed before execution. That record must bind every execution-critical identity listed in `launch_record_required_bindings`, including the frozen design commit and manifest, task manifest, sealed identity ledger, repository-prohibition audit report root, bootstrap-seed commitment, critical-harm contract, treatment and placebo roots, model identity, prompts/configuration, environment/dependencies, budgets/stopping rules, assignment seed, grader contract, evidence-store configuration, protection reference, and manual authorization record. A true gate without the complete launch record cannot authorize execution.
 
 ## Secondary analysis
 
