@@ -1,17 +1,15 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
   "amendment_status": "prospective_pre_execution_correction",
   "authority": {
-    "base_design_head": "83c951aca9be6a09a4517044ae531a3ed1bcc9a9",
-    "base_preregistration_git_blob_sha1": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
-    "base_evidence_plan_git_blob_sha1": "15b352d54a524d9caf827018b608028c004f8f13",
+    "historical_authority": "historical-authority-v1.0.json",
     "superseded_paths": [
       "/analysis/invalid_run_and_cell_policy/replacement rule",
       "/analysis/bootstrap_interval_spec/arithmetic representation"
     ],
-    "precedence": "For the two superseded subjects, this amendment controls over v1.0; every other v1.0 field remains unchanged.",
+    "precedence": "For the two superseded subjects, this amendment controls over the historical v1.0 design identified by historical-authority-v1.0.json; every other subject is governed by the current prospectively amended design artifacts.",
     "outcome_exposure_status": "none",
     "model_calls_authorized": false,
     "benchmark_execution_authorized": false,
