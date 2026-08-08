@@ -1,8 +1,9 @@
 """Strict artifact and committed-byte integrity for FAR-SWE-V3-001.
 
 The reviewed Git commit/tree is the immutable root. Governed current design
-artifacts are indexed exactly once by the non-self-referential design manifest;
-semantic verifier source remains ordinary reviewed code outside that manifest.
+artifacts and self-contained historical evidence are indexed exactly once by the
+non-self-referential design manifest; semantic verifier source remains ordinary
+reviewed code outside that manifest.
 """
 from __future__ import annotations
 
@@ -145,6 +146,10 @@ REQUIRED_ARTIFACTS = {
     "research/external-validation/swe-agent-v3/failure-arithmetic-amendment-v1.1.json",
     "research/external-validation/swe-agent-v3/AMENDMENT-v1.1.md",
     "research/external-validation/swe-agent-v3/bootstrap-seed-commitment-contract-v1.0.json",
+    "research/external-validation/swe-agent-v3/critical-harm-thresholds-v1.0.json",
+    "research/external-validation/swe-agent-v3/historical-authority-v1.0.json",
+    "research/external-validation/swe-agent-v3/historical-base-83c951/preregistration-v1.0.json",
+    "research/external-validation/swe-agent-v3/historical-base-83c951/evidence-and-analysis-plan-v1.0.md",
 }
 
 
@@ -168,11 +173,12 @@ def verify_manifest() -> dict[str, dict[str, Any]]:
         manifest.get("schema_version"),
         manifest.get("program_id"),
         manifest.get("artifact_status"),
-    ) != ("1.2", "FAR-SWE-V3-001", "Research"):
+    ) != ("1.3", "FAR-SWE-V3-001", "Research"):
         raise DesignError("design manifest identity or status drifted")
     if manifest.get("scope") != (
-        "design-only authority; exact-locks all governed data, narrative, prospective-amendment, "
-        "and seed-commitment artifacts while verifier code remains reviewable and non-self-referential"
+        "design-only authority; exact-locks all governed current design data, narrative, prospective-amendment, "
+        "seed-commitment, critical-harm, and self-contained historical-authority artifacts while verifier code "
+        "remains reviewable and non-self-referential"
     ):
         raise DesignError("design manifest scope drifted")
 
