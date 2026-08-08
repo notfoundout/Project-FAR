@@ -1,0 +1,62 @@
+name: PR438 root closure diagnostic
+
+on:
+  push:
+    branches:
+      - repair/pr435-final-contract-closure
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: repair/pr435-final-contract-closure
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install pyyaml
+      - name: Reproduce one-shot transformation
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          import yaml
+          wf = yaml.safe_load(Path('.github/workflows/pr438-root-closure.yml').read_text(encoding='utf-8'))
+          step = next(s for s in wf['jobs']['repair']['steps'] if s.get('name') == 'Reconcile schema 1.6 verifier and tests')
+          run = step['run']
+          prefix = "python - <<'PY'\n"
+          if not run.startswith(prefix) or not run.rstrip().endswith('\nPY'):
+              raise SystemExit('unable to extract authoritative transformation')
+          script = run[len(prefix):run.rfind('\nPY')]
+          subprocess.run(['python', '-c', script], check=True)
+          PY
+      - name: Capture targeted validation
+        id: target
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          : > /tmp/pr438-targeted.log
+          python research/external-validation/swe-agent-v3/verify_review_closure.py 2>&1 | tee -a /tmp/pr438-targeted.log
+          s1=${PIPESTATUS[0]}
+          python -m unittest tests.test_swe_agent_v3_single_source_integrity 2>&1 | tee -a /tmp/pr438-targeted.log
+          s2=${PIPESTATUS[0]}
+          printf '\nverifier_status=%s\nunittest_status=%s\n' "$s1" "$s2" | tee -a /tmp/pr438-targeted.log
+          if [ "$s1" -ne 0 ] || [ "$s2" -ne 0 ]; then exit 1; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr438-targeted-diagnostic
+          path: /tmp/pr438-targeted.log
+          if-no-files-found: error
+      - name: Enforce diagnostic result
+        if: steps.target.outcome != 'success'
+        run: exit 1
