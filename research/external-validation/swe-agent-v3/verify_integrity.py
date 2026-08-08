@@ -145,6 +145,10 @@ REQUIRED_ARTIFACTS = {
     "research/external-validation/swe-agent-v3/failure-arithmetic-amendment-v1.1.json",
     "research/external-validation/swe-agent-v3/AMENDMENT-v1.1.md",
     "research/external-validation/swe-agent-v3/bootstrap-seed-commitment-contract-v1.0.json",
+    "research/external-validation/swe-agent-v3/review-closure-amendment-v1.2.json",
+    "research/external-validation/swe-agent-v3/AMENDMENT-v1.2.md",
+    "research/external-validation/swe-agent-v3/historical-base-83c951/preregistration-v1.0.json",
+    "research/external-validation/swe-agent-v3/historical-base-83c951/evidence-and-analysis-plan-v1.0.md",
 }
 
 
@@ -168,11 +172,12 @@ def verify_manifest() -> dict[str, dict[str, Any]]:
         manifest.get("schema_version"),
         manifest.get("program_id"),
         manifest.get("artifact_status"),
-    ) != ("1.2", "FAR-SWE-V3-001", "Research"):
+    ) != ("1.3", "FAR-SWE-V3-001", "Research"):
         raise DesignError("design manifest identity or status drifted")
     if manifest.get("scope") != (
         "design-only authority; exact-locks all governed data, narrative, prospective-amendment, "
-        "and seed-commitment artifacts while verifier code remains reviewable and non-self-referential"
+        "seed-commitment, and immutable historical-authority snapshot artifacts while verifier code "
+        "remains reviewable and non-self-referential"
     ):
         raise DesignError("design manifest scope drifted")
 
