@@ -39,7 +39,7 @@ class SweAgentV3DesignTests(unittest.TestCase):
     def sync_committed(self) -> None:
         self.committed = {
             str(path.relative_to(self.root)).replace("\\", "/"): path.read_bytes()
-            for path in self.here.iterdir()
+            for path in self.here.rglob("*")
             if path.is_file() and not path.is_symlink()
         }
 
@@ -55,11 +55,11 @@ class SweAgentV3DesignTests(unittest.TestCase):
             mock.patch.object(verify_module, "ROOT", self.root),
             mock.patch.object(verify_module, "HERE", self.here),
             mock.patch.object(verify_module, "MANIFEST", manifest),
-            mock.patch.object(
-                verify_module,
-                "_committed_blob_bytes",
-                side_effect=self.committed_blob,
-            ),
+            mock.patch.object(verify_module, "_committed_blob_bytes", side_effect=self.committed_blob),
+            mock.patch.object(verify_module.integrity, "ROOT", self.root),
+            mock.patch.object(verify_module.integrity, "HERE", self.here),
+            mock.patch.object(verify_module.integrity, "MANIFEST", manifest),
+            mock.patch.object(verify_module.integrity, "_committed_blob_bytes", side_effect=self.committed_blob),
         ):
             verify_module.verify()
 
@@ -93,16 +93,14 @@ class SweAgentV3DesignTests(unittest.TestCase):
         cases = (
             ("execution-gate-v1.0.json", lambda d: d.__setitem__("execution_authorized", True)),
             ("execution-gate-v1.0.json", lambda d: d["gates"].__setitem__("theory_version_frozen", True)),
+            ("execution-gate-v1.0.json", lambda d: d["pilot_gates"].pop("critical_harm_thresholds_frozen_and_verified")),
             ("preregistration-v1.0.json", lambda d: d["arms"].pop(1)),
             ("preregistration-v1.0.json", lambda d: d.__setitem__("historical_v2_pooling_permitted", True)),
         )
         for name, mutation in cases:
             with self.subTest(name=name):
-                original = (self.here / name).read_bytes()
-                self.mutate_json(name, mutation)
-                self.rejected()
-                (self.here / name).write_bytes(original)
-                self.refresh_manifest()
+                original = (self.here / name).read_bytes(); self.mutate_json(name, mutation); self.rejected()
+                (self.here / name).write_bytes(original); self.refresh_manifest()
 
     def test_execution_control_and_source_shapes_are_exact(self) -> None:
         cases = (
@@ -117,11 +115,8 @@ class SweAgentV3DesignTests(unittest.TestCase):
         )
         for name, mutation in cases:
             with self.subTest(name=name):
-                original = (self.here / name).read_bytes()
-                self.mutate_json(name, mutation)
-                self.rejected()
-                (self.here / name).write_bytes(original)
-                self.refresh_manifest()
+                original = (self.here / name).read_bytes(); self.mutate_json(name, mutation); self.rejected()
+                (self.here / name).write_bytes(original); self.refresh_manifest()
 
     def test_tolerance_contract_is_exact(self) -> None:
         cases = (
@@ -131,25 +126,21 @@ class SweAgentV3DesignTests(unittest.TestCase):
         )
         for name, mutation in cases:
             with self.subTest(name=name):
-                original = (self.here / name).read_bytes()
-                self.mutate_json(name, mutation)
-                self.rejected()
-                (self.here / name).write_bytes(original)
-                self.refresh_manifest()
+                original = (self.here / name).read_bytes(); self.mutate_json(name, mutation); self.rejected()
+                (self.here / name).write_bytes(original); self.refresh_manifest()
 
-    def test_task_order_contract_is_exact(self) -> None:
+    def test_task_order_identity_and_strata_contract_is_exact(self) -> None:
         cases = (
             ("preregistration-v1.0.json", lambda d: d["analysis"]["bootstrap_interval_spec"]["task_order"].__setitem__("sequence_rule", "numeric runtime sort")),
             ("task-manifest-contract-v1.0.json", lambda d: d["record_schema"]["blind_task_id"].__setitem__("unicode_permitted", True)),
+            ("task-manifest-contract-v1.0.json", lambda d: d["record_schema"]["task_bundle_root_sha256"].__setitem__("unique", False)),
+            ("task-manifest-contract-v1.0.json", lambda d: d["record_schema"]["strata"].__setitem__("coverage_rule", "optional coverage")),
             ("task-manifest-contract-v1.0.json", lambda d: d["order_contract"].__setitem__("authoritative_sequence", "locale-sorted blind_task_id")),
         )
         for name, mutation in cases:
             with self.subTest(name=name):
-                original = (self.here / name).read_bytes()
-                self.mutate_json(name, mutation)
-                self.rejected()
-                (self.here / name).write_bytes(original)
-                self.refresh_manifest()
+                original = (self.here / name).read_bytes(); self.mutate_json(name, mutation); self.rejected()
+                (self.here / name).write_bytes(original); self.refresh_manifest()
 
     def test_strict_json_rejects_nonfinite_duplicate_and_bom(self) -> None:
         cases = (
@@ -159,66 +150,43 @@ class SweAgentV3DesignTests(unittest.TestCase):
         )
         for name, mutation in cases:
             with self.subTest(name=name):
-                path = self.here / name
-                original = path.read_bytes()
-                path.write_text(mutation(original.decode()), encoding="utf-8", newline="\n")
-                self.refresh_manifest()
-                self.rejected()
-                path.write_bytes(original)
-                self.refresh_manifest()
-        path = self.here / "preregistration-v1.0.json"
-        original = path.read_bytes()
-        path.write_bytes(b"\xef\xbb\xbf" + original)
-        self.refresh_manifest()
-        self.rejected()
+                path = self.here / name; original = path.read_bytes()
+                path.write_text(mutation(original.decode()), encoding="utf-8", newline="\n"); self.refresh_manifest(); self.rejected()
+                path.write_bytes(original); self.refresh_manifest()
+        path = self.here / "preregistration-v1.0.json"; original = path.read_bytes()
+        path.write_bytes(b"\xef\xbb\xbf" + original); self.refresh_manifest(); self.rejected()
 
     def test_committed_bytes_and_manifest_are_fail_closed(self) -> None:
         readme = self.here / "README.md"
-        readme.write_bytes(readme.read_bytes().replace(b"\n", b"\r\n"))
-        self.rejected()
-        self.setUp_after_drift()
+        readme.write_bytes(readme.read_bytes().replace(b"\n", b"\r\n")); self.rejected(); self.setUp_after_drift()
         manifest = self.here / "design-manifest-v1.0.json"
-        manifest.write_text(manifest.read_text() + "\n", encoding="utf-8", newline="\n")
-        self.rejected()
+        manifest.write_text(manifest.read_text() + "\n", encoding="utf-8", newline="\n"); self.rejected()
 
     def setUp_after_drift(self) -> None:
         self._reset_fixture()
 
     def test_byte_policy_symlinks_and_manifest_metadata_are_rejected(self) -> None:
         policy = self.here / ".gitattributes"
-        policy.write_text("* text=auto\n", encoding="utf-8", newline="\n")
-        self.refresh_manifest()
-        self.rejected()
-        self.setUp_after_drift()
-        manifest = self.here / "design-manifest-v1.0.json"
-        data = json.loads(manifest.read_text())
-        data["artifacts"][0]["bytes"] += 1
-        manifest.write_text(json.dumps(data, indent=2) + "\n")
-        self.sync_committed()
-        self.rejected()
-        self.setUp_after_drift()
-        target = self.here / "question-v1.0.md"
-        copy = self.here / "question-copy.md"
-        copy.write_bytes(target.read_bytes())
-        target.unlink()
-        target.symlink_to(copy.name)
-        self.rejected()
+        policy.write_text("* text=auto\n", encoding="utf-8", newline="\n"); self.refresh_manifest(); self.rejected(); self.setUp_after_drift()
+        manifest = self.here / "design-manifest-v1.0.json"; data = json.loads(manifest.read_text())
+        data["artifacts"][0]["bytes"] += 1; manifest.write_text(json.dumps(data, indent=2) + "\n"); self.sync_committed(); self.rejected(); self.setUp_after_drift()
+        target = self.here / "question-v1.0.md"; copy = self.here / "question-copy.md"; copy.write_bytes(target.read_bytes()); target.unlink(); target.symlink_to(copy.name); self.rejected()
 
-    def test_runtime_types_missingness_decisions_and_seed_are_exact(self) -> None:
+    def test_runtime_types_missingness_decisions_seed_and_harm_are_exact(self) -> None:
         cases = (
             ("treatment-capsule-contract-v1.0.json", lambda d: d["runtime_constraints"].__setitem__("read_only", 1)),
             ("treatment-capsule-contract-v1.0.json", lambda d: d["runtime_constraints"].__setitem__("extra_context_window", True)),
             ("preregistration-v1.0.json", lambda d: d["analysis"]["invalid_run_and_cell_policy"].__setitem__("retained_invalid_repetition_makes_entire_task_arm_cell_missing", False)),
             ("preregistration-v1.0.json", lambda d: d["analysis"]["decision_categories"].__setitem__("no_practical_advantage", "upper bound < 0.10")),
             ("preregistration-v1.0.json", lambda d: d["analysis"].__setitem__("bootstrap_seed_status", "selected_after_outcome_reveal")),
+            ("bootstrap-seed-commitment-contract-v1.0.json", lambda d: d["commitment"].__setitem__("mutable_launch_inputs_permitted", True)),
+            ("critical-harm-thresholds-v1.0.json", lambda d: d["rate_harms"]["invalid_run_rate"].__setitem__("critical_threshold", {"numerator": 1, "denominator": 5})),
+            ("critical-harm-thresholds-v1.0.json", lambda d: d["zero_tolerance_harms"]["hidden_task_leakage"].__setitem__("trigger_rule", "count > 1")),
         )
         for name, mutation in cases:
             with self.subTest(name=name):
-                original = (self.here / name).read_bytes()
-                self.mutate_json(name, mutation)
-                self.rejected()
-                (self.here / name).write_bytes(original)
-                self.refresh_manifest()
+                original = (self.here / name).read_bytes(); self.mutate_json(name, mutation); self.rejected()
+                (self.here / name).write_bytes(original); self.refresh_manifest()
 
 
 if __name__ == "__main__":
