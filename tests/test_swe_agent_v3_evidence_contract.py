@@ -47,8 +47,8 @@ class SweAgentV3EvidenceContractTests(unittest.TestCase):
     def test_complete_evidence_bundle_section_is_exact(self) -> None:
         mutations = (
             (
-                "- repository URL and exact commit;\n",
-                "",
+                "- authoritative repository provider identity, canonical repository URL, and exact commit;\n",
+                "- canonical repository URL and exact commit;\n",
             ),
             (
                 "- environment image digest and dependency lock;\n",
