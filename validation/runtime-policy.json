@@ -33,6 +33,7 @@
     "make",
     "lake",
     "lean",
+    "node",
     "grep",
     "sed",
     "awk",
