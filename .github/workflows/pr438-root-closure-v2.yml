@@ -1,0 +1,122 @@
+name: PR438 validated root closure v2
+
+on:
+  push:
+    branches:
+      - repair/pr435-final-contract-closure
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: repair/pr435-final-contract-closure
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install validation dependency
+        run: python -m pip install pyyaml
+      - name: Apply schema 1.6 identity repair from fail-closed helper
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, yaml
+          wf = yaml.safe_load(Path('.github/workflows/pr438-root-closure.yml').read_text(encoding='utf-8'))
+          step = next(s for s in wf['jobs']['repair']['steps'] if s.get('name') == 'Reconcile schema 1.6 verifier and tests')
+          run = step['run']
+          prefix = "python - <<'PY'\n"
+          if not run.startswith(prefix) or not run.rstrip().endswith('\nPY'):
+              raise SystemExit('authoritative schema-1.6 transformation is not extractable')
+          script = run[len(prefix):run.rfind('\nPY')]
+          subprocess.run(['python', '-c', script], check=True)
+          PY
+      - name: Reconcile standalone schema 1.3 failure/arithmetic authority
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          verifier = Path('research/external-validation/swe-agent-v3/verify_amendment_v1_1.py')
+          text = verifier.read_text(encoding='utf-8')
+
+          def one(old: str, new: str, label: str) -> None:
+              global text
+              n = text.count(old)
+              if n != 1:
+                  raise SystemExit(f'{label}: expected 1 anchor, found {n}')
+              text = text.replace(old, new, 1)
+
+          one(
+              ') != ("1.2", "FAR-SWE-V3-001", "Research", "prospective_pre_execution_correction"):',
+              ') != ("1.3", "FAR-SWE-V3-001", "Research", "current_prospective_failure_and_arithmetic_contract"):',
+              'amendment identity',
+          )
+
+          old_authority = '''    expected_authority = {\n        "historical_authority": "historical-authority-v1.0.json",\n        "superseded_paths": [\n            "/analysis/invalid_run_and_cell_policy/replacement rule",\n            "/analysis/bootstrap_interval_spec/arithmetic representation",\n        ],\n        "precedence": "For the two superseded subjects, this amendment controls over the historical v1.0 design identified by historical-authority-v1.0.json; every other subject is governed by the current prospectively amended design artifacts.",\n        "outcome_exposure_status": "none",\n        "model_calls_authorized": False,\n        "benchmark_execution_authorized": False,\n        "execution_authorized": False,\n    }\n    _require_type_exact(amendment.get("authority"), expected_authority, "amendment authority and precedence")\n    validate_historical_authority(HERE / expected_authority["historical_authority"])\n'''
+          new_authority = '''    expected_authority = {\n        "contract_role": "standalone_current_prospective_authority",\n        "historical_context": "historical-authority-v1.0.json",\n        "historical_provenance_required_for_current_validity": False,\n        "governed_subjects": [\n            "replacement eligibility and terminal-reason classification",\n            "exact arithmetic for primary and bootstrap calculations and classification comparisons",\n        ],\n        "precedence": "For its governed subjects, this contract controls the current FAR-SWE-V3-001 design prospectively. The historical archive is explanatory context only and is not an authority dependency.",\n        "outcome_exposure_status": "none",\n        "model_calls_authorized": False,\n        "benchmark_execution_authorized": False,\n        "execution_authorized": False,\n    }\n    _require_type_exact(amendment.get("authority"), expected_authority, "current standalone failure/arithmetic authority")\n'''
+          one(old_authority, new_authority, 'authority block')
+
+          old_nonclaims = '''    _require_type_exact(amendment.get("nonclaims"), [\n        "This amendment does not authorize model calls, pilot execution, benchmark execution, or outcome reveal.",\n        "This amendment does not change the FAR treatment, task population, estimand, or decision categories.",\n        "This amendment does not establish that FAR improves software engineering.",\n    ], "amendment nonclaims")\n'''
+          new_nonclaims = '''    _require_type_exact(amendment.get("nonclaims"), [\n        "This contract does not require the historical archive to prove its current validity.",\n        "This contract does not authorize model calls, pilot execution, benchmark execution, or outcome reveal.",\n        "This contract does not change the FAR treatment, task population, estimand, or decision categories.",\n        "This contract does not establish that FAR improves software engineering.",\n    ], "current contract nonclaims")\n'''
+          one(old_nonclaims, new_nonclaims, 'nonclaims block')
+
+          old_narrative = '''    for phrase in (\n        "Execution authorized: **No**",\n        "It supersedes only:",\n        "later prospective design artifacts may independently refine other subjects before execution",\n        "Current authority for unrelated subjects comes from the current integrity-rooted design artifacts",\n        "Any unlisted reason is invalid and nonreplaceable",\n        "Floating-point values and displayed decimals never determine a classification",\n    ):\n'''
+          new_narrative = '''    for phrase in (\n        "Execution authorized: **No**",\n        "current machine-readable authority is now standalone",\n        "`historical-authority-v1.0.json` is archival context only",\n        "current failure/arithmetic validity does not depend on that claim",\n        "Current authority for unrelated subjects comes from the current integrity-rooted design artifacts",\n        "Any unlisted reason is invalid and nonreplaceable",\n        "Floating-point values and displayed decimals never determine a classification",\n    ):\n'''
+          one(old_narrative, new_narrative, 'narrative lock')
+          verifier.write_text(text, encoding='utf-8', newline='\n')
+
+          tests = Path('tests/test_swe_agent_v3_amendment_v1_1.py')
+          body = tests.read_text(encoding='utf-8')
+          old = '''        self.assertEqual(amendment["authority"]["historical_authority"], "historical-authority-v1.0.json")\n'''
+          new = '''        self.assertEqual(amendment["authority"]["contract_role"], "standalone_current_prospective_authority")\n        self.assertEqual(amendment["authority"]["historical_context"], "historical-authority-v1.0.json")\n        self.assertFalse(amendment["authority"]["historical_provenance_required_for_current_validity"])\n'''
+          if body.count(old) != 1:
+              raise SystemExit('canonical amendment test anchor drifted')
+          body = body.replace(old, new, 1)
+          anchor = '            lambda d: d["authority"].__setitem__("precedence", "historical v1.0 controls everything"),\n'
+          if body.count(anchor) != 1:
+              raise SystemExit('amendment mutation anchor drifted')
+          body = body.replace(anchor, anchor + '            lambda d: d["authority"].__setitem__("historical_provenance_required_for_current_validity", True),\n', 1)
+          tests.write_text(body, encoding='utf-8', newline='\n')
+          PY
+      - name: Remove all temporary closure workflows
+        run: |
+          git rm -f \
+            .github/workflows/pr438-root-closure.yml \
+            .github/workflows/pr438-root-closure-diagnostic.yml \
+            .github/workflows/pr438-root-closure-v2.yml
+      - name: Create local candidate commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add research/external-validation/swe-agent-v3/verify_review_closure.py \
+                  research/external-validation/swe-agent-v3/verify_amendment_v1_1.py \
+                  tests/test_swe_agent_v3_single_source_integrity.py \
+                  tests/test_swe_agent_v3_amendment_v1_1.py
+          git commit -m "Reconcile SWE v3 authority validators"
+      - name: Run governing verifiers
+        run: |
+          python research/external-validation/swe-agent-v3/verify_amendment_v1_1.py
+          python research/external-validation/swe-agent-v3/verify_review_closure.py
+          python research/external-validation/swe-agent-v3/verify_design.py
+          python research/external-validation/swe-agent-v3/verify_integrity.py
+          python research/external-validation/swe-agent-v3/verify_public_narratives.py
+          python research/external-validation/swe-agent-v3/verify_public_narratives_v2.py
+      - name: Run complete SWE v3 unit-test surface
+        shell: bash
+        run: |
+          python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v
+      - name: Run repository hygiene and canonical fast suite
+        run: |
+          python tools/check_repository_hygiene.py
+          python tools/run_tests.py --fast
+      - name: Push only validated candidate
+        run: git push origin HEAD:repair/pr435-final-contract-closure
