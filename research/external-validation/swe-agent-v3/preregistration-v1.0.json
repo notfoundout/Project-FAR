@@ -191,7 +191,7 @@
       "draws_with_replacement": true,
       "task_order": {
         "contract": "task-manifest-contract-v1.0.json",
-        "source": "exact frozen ordered task manifest committed before outcome reveal",
+        "source": "exact frozen ordered task manifest committed and integrity-rooted before any sacrificial pilot or confirmatory execution",
         "blind_identifier_pattern": "^TASK-[0-9]{6}$",
         "blind_identifier_encoding": "ASCII subset of UTF-8; Unicode and normalization-sensitive identifiers are prohibited",
         "sequence_rule": "manifest JSON array order is authoritative; runtime sorting and locale collation are prohibited",
