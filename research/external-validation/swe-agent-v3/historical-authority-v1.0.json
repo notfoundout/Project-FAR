@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-SWE-V3-001",
+  "artifact_status": "Archive",
+  "authority_status": "immutable_historical_evidence",
+  "current_design_authority": false,
+  "execution_authorized": false,
+  "purpose": "Self-contained byte authority for the two artifacts superseded in part by failure-arithmetic-amendment-v1.1.json. These snapshots preserve historical evidence and are not current Research design surfaces.",
+  "base_design_head": "83c951aca9be6a09a4517044ae531a3ed1bcc9a9",
+  "snapshots": [
+    {
+      "path": "research/external-validation/swe-agent-v3/historical-base-83c951/preregistration-v1.0.json",
+      "historical_git_blob_sha1": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
+      "historical_source_path": "research/external-validation/swe-agent-v3/preregistration-v1.0.json"
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/historical-base-83c951/evidence-and-analysis-plan-v1.0.md",
+      "historical_git_blob_sha1": "15b352d54a524d9caf827018b608028c004f8f13",
+      "historical_source_path": "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md"
+    }
+  ],
+  "verification_rule": "Verification reads the governed snapshot bytes from the current commit, recomputes each Git blob SHA-1 from those bytes, and compares it to historical_git_blob_sha1. Historical Git objects, branch ancestry, network access, and fetch depth are not required.",
+  "immutability_rule": "Any snapshot-byte, snapshot-path, historical-blob-identity, or base-design-head change creates a new historical-authority version and cannot silently rewrite v1.0 authority.",
+  "nonclaims": [
+    "These snapshots do not restore historical files as current design authority.",
+    "This authority does not authorize model calls, pilot execution, benchmark execution, confirmatory execution, grading, or outcome reveal.",
+    "This authority does not establish that FAR improves software engineering."
+  ]
+}
