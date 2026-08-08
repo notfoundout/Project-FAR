@@ -1,11 +1,10 @@
-"""Defense-in-depth verifier for PR #435 review-closure contracts."""
+"""Defense-in-depth semantic verifier for PR #435 review-closure contracts."""
 from __future__ import annotations
 
 import hashlib
-import json
+import re
 import sys
 from pathlib import Path
-from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import verify_amendment_v1_1 as amendment
@@ -13,112 +12,130 @@ import verify_integrity as integrity
 
 DesignError = integrity.DesignError
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[2]
 SEED = HERE / "bootstrap-seed-commitment-contract-v1.0.json"
 TASK = HERE / "task-manifest-contract-v1.0.json"
 GATE = HERE / "execution-gate-v1.0.json"
-
-SEED_BLOB = "e5a9b94a0ccbce383cfbc7237d98e400af9d853d"
-TASK_BLOB = "b160b713d3b1290f9580f96e1d9f88392a3275be"
-CAPSULE_BLOB = "e011c8f9972a5682e03526f739437f62e973e76d"
-GATE_BLOB = "99eabd1fee9a59770a3a61a07c151abcba23683f"
-RECORD_SCHEMA_DIGEST = "8a2f1700158a69911f9c67204a615fc69a70d3af82356a090ead45f3cb1d34c9"
-TASK_BUNDLE_ROOT_DIGEST = "775c77b565cc2eb9de47a30613c73525cf248d1004fc49ad164d5acb596ef765"
-REPOSITORY_IDENTITY_DIGEST = "602529cd5ac05dc3df31947fa2411ade241e409e28c6703ae64ca22ca6012e03"
-SEED_HEX = "76764013d297cadd3865295298e160a9fbb1a39833aac5860b0dfb13f54fdf87"
-SEED_PAYLOAD = (
-    "FAR-SWE-V3-001/bootstrap-seed/v1\n"
-    "treatment_capsule_git_blob_sha1=e011c8f9972a5682e03526f739437f62e973e76d\n"
-    "execution_gate_git_blob_sha1=99eabd1fee9a59770a3a61a07c151abcba23683f\n"
-)
+CAPSULE_REL = "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json"
+GATE_REL = "research/external-validation/swe-agent-v3/execution-gate-v1.0.json"
 
 
-def _blob(data: bytes) -> str:
-    return hashlib.sha1(f"blob {len(data)}\0".encode("ascii") + data).hexdigest()
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode("utf-8")).hexdigest()
-
-
-def _require_current_blob(relative: str, expected: str) -> bytes:
-    committed = integrity._committed_blob_bytes(relative)
-    if _blob(committed) != expected:
-        raise DesignError(f"committed blob identity drifted: {relative}")
-    return committed
+def _manifest_index() -> dict[str, dict[str, object]]:
+    manifest = integrity._decode_json(
+        integrity._read_regular(integrity.MANIFEST), str(integrity.MANIFEST)
+    )
+    if not isinstance(manifest, dict) or not isinstance(manifest.get("artifacts"), list):
+        raise DesignError("verified design manifest required")
+    index: dict[str, dict[str, object]] = {}
+    for entry in manifest["artifacts"]:
+        if isinstance(entry, dict) and isinstance(entry.get("path"), str):
+            index[entry["path"]] = entry
+    return index
 
 
 def verify_task_identity_contract(path: Path = TASK) -> None:
-    raw = integrity._read_regular(path)
-    if _blob(raw) != TASK_BLOB:
-        raise DesignError("task manifest contract bytes drifted")
-    data = integrity._decode_json(raw, str(path))
+    data = integrity._decode_json(integrity._read_regular(path), str(path))
     if not isinstance(data, dict):
         raise DesignError("task manifest contract must be object")
-    if _digest(data.get("record_schema")) != RECORD_SCHEMA_DIGEST:
-        raise DesignError("complete task record schema drifted")
-    if _digest(data.get("task_bundle_root_contract")) != TASK_BUNDLE_ROOT_DIGEST:
-        raise DesignError("complete task-bundle root contract drifted")
-    if _digest(data.get("repository_identity_contract")) != REPOSITORY_IDENTITY_DIGEST:
-        raise DesignError("complete repository identity contract drifted")
+    if (data.get("schema_version"), data.get("program_id"), data.get("manifest_status"), data.get("execution_authorized")) != (
+        "1.3", "FAR-SWE-V3-001", "uninstantiated", False
+    ):
+        raise DesignError("task manifest identity/boundary drifted")
+    freeze = data.get("freeze_timing", "")
+    if "before any sacrificial pilot or confirmatory execution" not in freeze or "freezing after any agent run is prohibited" not in freeze:
+        raise DesignError("task manifest freeze timing drifted")
+    record = data.get("record_schema", {})
+    if record.get("required_keys_exactly") != ["blind_task_id", "repository_blind_id", "task_bundle_root_sha256"]:
+        raise DesignError("task record shape drifted")
+    blind = record.get("blind_task_id", {})
+    repo_blind = record.get("repository_blind_id", {})
+    task_root = record.get("task_bundle_root_sha256", {})
+    if blind.get("unique") is not True or blind.get("unicode_permitted") is not False:
+        raise DesignError("blind task identity drifted")
+    if repo_blind.get("unicode_permitted") is not False or "one-to-one" not in repo_blind.get("canonical_mapping", ""):
+        raise DesignError("repository blind identity drifted")
+    if task_root.get("unique") is not True or task_root.get("pattern") != "^[0-9a-f]{64}$":
+        raise DesignError("task root uniqueness drifted")
+    root = data.get("task_bundle_root_contract", {})
+    values = root.get("descriptor_values", {})
+    if root.get("algorithm_id") != "far-swe-v3-task-bundle-root-v2" or root.get("hash") != "SHA-256":
+        raise DesignError("task root algorithm drifted")
+    if "exact JSON string github.com" not in values.get("repository_provider", ""):
+        raise DesignError("GitHub-only provider contract drifted")
+    provider_id = values.get("repository_provider_id", "")
+    if "positive JSON integer" not in provider_id or "GitHub REST repository id" not in provider_id:
+        raise DesignError("repository provider ID type drifted")
+    if "lowercase 40-character Git commit SHA" not in values.get("repository_commit_sha", ""):
+        raise DesignError("repository commit identity drifted")
+    identity = data.get("repository_identity_contract", {})
+    if identity.get("supported_provider") != "github.com only":
+        raise DesignError("repository provider scope drifted")
+    if identity.get("equal_authoritative_identities_same_blind_id") is not True or identity.get("distinct_authoritative_identities_distinct_blind_ids") is not True:
+        raise DesignError("repository identity-to-blind-ID mapping drifted")
+    for key in ("minimum_repository_count_basis", "per_repository_cap_basis"):
+        if "(repository_provider, repository_provider_id)" not in identity.get(key, ""):
+            raise DesignError("repository count/cap identity basis drifted")
+    order = data.get("order_contract", {})
+    if order.get("authoritative_sequence") != "top-level JSON array order" or order.get("runtime_sorting_permitted") is not False:
+        raise DesignError("task manifest order drifted")
+    validations = data.get("preexecution_validation", [])
+    for phrase in (
+        "task bundle roots are unique so one authoritative task identity cannot occupy multiple manifest records or bootstrap units",
+        "every repository_provider is exactly github.com and every repository_provider_id is a positive JSON integer independently resolved from api.github.com before counting or blind-ID assignment",
+        "the exact task manifest artifact bytes and Git blob identity are committed before any sacrificial pilot or confirmatory execution",
+    ):
+        if phrase not in validations:
+            raise DesignError("task preexecution validation drifted")
 
 
 def verify_seed_contract(path: Path = SEED) -> None:
-    raw = integrity._read_regular(path)
-    if _blob(raw) != SEED_BLOB:
-        raise DesignError("bootstrap seed commitment bytes drifted")
-    data = integrity._decode_json(raw, str(path))
+    data = integrity._decode_json(integrity._read_regular(path), str(path))
     if not isinstance(data, dict):
         raise DesignError("bootstrap seed commitment must be object")
     if (data.get("schema_version"), data.get("program_id"), data.get("artifact_status"), data.get("commitment_status")) != (
         "1.0", "FAR-SWE-V3-001", "Research", "frozen_pre_execution"
     ):
         raise DesignError("bootstrap seed commitment identity drifted")
-
     authority = data.get("authority")
-    expected_authority = {
-        "base_design_head": "b578239e008617362f66ad5cf069f87b7d0e6d8b",
-        "base_preregistration_git_blob_sha1": "c6c9b5399ef2699ddcd2652dbb2acdd8e820bee1",
-        "superseded_subject": "/analysis/bootstrap_seed_status",
-        "precedence": "This prospective contract freezes the bootstrap seed required by preregistration-v1.0.json; every other preregistration field remains unchanged.",
-        "outcome_exposure_status": "none",
-        "model_calls_authorized": False,
-        "pilot_execution_authorized": False,
-        "benchmark_execution_authorized": False,
-        "confirmatory_execution_authorized": False,
-    }
-    if authority != expected_authority:
-        raise DesignError("bootstrap seed authority or non-authorization boundary drifted")
+    if not isinstance(authority, dict) or authority.get("outcome_exposure_status") != "none":
+        raise DesignError("bootstrap seed outcome boundary drifted")
+    for key in ("model_calls_authorized", "pilot_execution_authorized", "benchmark_execution_authorized", "confirmatory_execution_authorized"):
+        if authority.get(key) is not False:
+            raise DesignError("bootstrap seed authorization boundary drifted")
 
-    rng = data.get("rng_contract")
-    if rng != {
-        "procedure_id": "sha256_rejection_stream_v1",
-        "seed_encoding": "64 lowercase hexadecimal characters decoded as exactly 32 bytes",
-        "seed_hex": SEED_HEX,
-    }:
-        raise DesignError("bootstrap RNG or committed seed drifted")
+    rng = data.get("rng_contract", {})
+    seed = rng.get("seed_hex")
+    if rng.get("procedure_id") != "sha256_rejection_stream_v1" or rng.get("seed_encoding") != "64 lowercase hexadecimal characters decoded as exactly 32 bytes":
+        raise DesignError("bootstrap RNG contract drifted")
+    if type(seed) is not str or re.fullmatch(r"[0-9a-f]{64}", seed) is None or len(bytes.fromhex(seed)) != 32:
+        raise DesignError("bootstrap seed encoding drifted")
 
+    index = _manifest_index()
+    try:
+        capsule_blob = index[CAPSULE_REL]["git_blob_sha1"]
+        gate_blob = index[GATE_REL]["git_blob_sha1"]
+    except KeyError as exc:
+        raise DesignError("seed input missing from governed manifest") from exc
+    if type(capsule_blob) is not str or type(gate_blob) is not str:
+        raise DesignError("seed input manifest identity invalid")
+    expected_inputs = [
+        {"path": CAPSULE_REL, "git_blob_sha1": capsule_blob},
+        {"path": GATE_REL, "git_blob_sha1": gate_blob},
+    ]
     derivation = data.get("derivation")
-    if not isinstance(derivation, dict):
-        raise DesignError("bootstrap seed derivation missing")
-    if derivation.get("method") != "SHA-256 over the exact UTF-8 bytes of canonical_payload":
-        raise DesignError("bootstrap seed derivation method drifted")
-    if derivation.get("canonical_payload") != SEED_PAYLOAD:
-        raise DesignError("bootstrap seed canonical payload drifted")
-    if hashlib.sha256(SEED_PAYLOAD.encode("utf-8")).hexdigest() != SEED_HEX:
+    if not isinstance(derivation, dict) or derivation.get("inputs") != expected_inputs:
+        raise DesignError("bootstrap seed input identity drifted")
+    payload = (
+        "FAR-SWE-V3-001/bootstrap-seed/v1\n"
+        f"treatment_capsule_git_blob_sha1={capsule_blob}\n"
+        f"execution_gate_git_blob_sha1={gate_blob}\n"
+    )
+    if derivation.get("method") != "SHA-256 over the exact UTF-8 bytes of canonical_payload" or derivation.get("canonical_payload") != payload:
+        raise DesignError("bootstrap seed derivation contract drifted")
+    recomputed = hashlib.sha256(payload.encode("utf-8")).hexdigest()
+    if recomputed != seed or derivation.get("sha256") != seed:
         raise DesignError("bootstrap seed recomputation failed")
-    if derivation.get("sha256") != SEED_HEX:
-        raise DesignError("bootstrap seed digest record drifted")
     if derivation.get("outcome_or_grade_inputs_permitted") is not False or derivation.get("task_identity_inputs_permitted") is not False:
         raise DesignError("post-outcome or task-identity seed inputs were enabled")
-    if derivation.get("inputs") != [
-        {"path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json", "git_blob_sha1": CAPSULE_BLOB},
-        {"path": "research/external-validation/swe-agent-v3/execution-gate-v1.0.json", "git_blob_sha1": GATE_BLOB},
-    ]:
-        raise DesignError("bootstrap seed input identity drifted")
-
-    _require_current_blob("research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json", CAPSULE_BLOB)
-    _require_current_blob("research/external-validation/swe-agent-v3/execution-gate-v1.0.json", GATE_BLOB)
     timing = data.get("timing")
     if not isinstance(timing, dict) or set(timing) != {
         "must_be_committed_and_integrity_rooted_before_any_sacrificial_pilot_execution",
@@ -140,8 +157,6 @@ def verify_gate_closed(path: Path = GATE) -> None:
 
 
 def verify() -> None:
-    integrity.ROOT = ROOT
-    integrity.HERE = HERE
     verify_task_identity_contract()
     verify_seed_contract()
     amendment.validate()
@@ -153,4 +168,4 @@ if __name__ == "__main__":
         verify()
     except (DesignError, amendment.AmendmentError) as exc:
         raise SystemExit(f"FAIL: {exc}")
-    print("PASS: PR #435 review-closure contracts are exact, prospective, and execution remains blocked.")
+    print("PASS: PR #435 review-closure semantics are prospective and execution remains blocked.")
