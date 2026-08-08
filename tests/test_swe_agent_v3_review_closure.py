@@ -29,6 +29,7 @@ class ReviewClosureTests(unittest.TestCase):
             lambda d: d["repository_identity_contract"].__setitem__("minimum_repository_count_basis", "count URL strings"),
             lambda d: d["record_schema"]["task_bundle_root_sha256"].__setitem__("unique", False),
             lambda d: d["record_schema"]["strata"].__setitem__("allowed_values_in_canonical_order", ["bug_fix"]),
+            lambda d: d["sealed_identity_ledger_contract"].__setitem__("access_control", "public to agent"),
         )
         for mutation in cases:
             with self.subTest(mutation=mutation):
@@ -43,6 +44,7 @@ class ReviewClosureTests(unittest.TestCase):
         data = json.loads((DIR / "bootstrap-seed-commitment-contract-v1.0.json").read_text(encoding="utf-8"))
         cases = (
             lambda d: d["authority"].__setitem__("outcome_exposure_status", "partial"),
+            lambda d: d["authority"].__setitem__("execution_authorized", 0),
             lambda d: d["commitment"].__setitem__("artifact_inputs_permitted", True),
             lambda d: d["commitment"].__setitem__("mutable_launch_inputs_permitted", True),
             lambda d: d["timing"].__setitem__("must_precede_any_pilot_or_confirmatory_outcome_reveal", False),
@@ -63,17 +65,17 @@ class ReviewClosureTests(unittest.TestCase):
         self.assertFalse(data["commitment"]["mutable_launch_inputs_permitted"])
         self.assertRegex(data["rng_contract"]["seed_hex"], r"^[0-9a-f]{64}$")
         self.assertEqual(len(bytes.fromhex(data["rng_contract"]["seed_hex"])), 32)
-        # The exact seed value is frozen by reviewed commit + design manifest. It is
-        # intentionally not duplicated in semantic verifier constants.
         source = (DIR / "verify_review_closure.py").read_text(encoding="utf-8")
         self.assertNotIn(data["rng_contract"]["seed_hex"], source)
 
     def test_critical_harm_contract_is_exact_and_preexecution(self) -> None:
         data = json.loads((DIR / "critical-harm-thresholds-v1.0.json").read_text(encoding="utf-8"))
         cases = (
-            lambda d: d["zero_tolerance_harms"]["hidden_task_leakage"].__setitem__("trigger_rule", "count > 1"),
+            lambda d: d["zero_tolerance_harms"]["hidden_task_leakage"].__setitem__("trigger_rule", "slot_numerator > 1"),
+            lambda d: d["zero_tolerance_harms"]["evidence_loss"].__setitem__("slot_denominator", "valid slots only"),
             lambda d: d["rate_harms"]["invalid_run_rate"].__setitem__("critical_threshold", {"numerator": 1, "denominator": 5}),
             lambda d: d["rate_harms"]["regression_introduction_rate"].__setitem__("slot_denominator", "complete cases only"),
+            lambda d: d["rate_harms"]["regression_introduction_rate"].__setitem__("slot_numerator", "operator-attributed only"),
             lambda d: d.__setitem__("versioning_rule", "may change after outcomes"),
         )
         for mutation in cases:
@@ -84,6 +86,23 @@ class ReviewClosureTests(unittest.TestCase):
                     path.write_text(json.dumps(altered, indent=2) + "\n", encoding="utf-8")
                     with self.assertRaises(module.DesignError):
                         module.verify_critical_harm_contract(path)
+
+    def test_launch_gate_requires_complete_frozen_identity_binding(self) -> None:
+        data = json.loads((DIR / "execution-gate-v1.0.json").read_text(encoding="utf-8"))
+        cases = (
+            lambda d: d["launch_record_required_bindings"].remove("sealed_identity_ledger_git_blob_sha1"),
+            lambda d: d["launch_record_required_bindings"].remove("bootstrap_seed_commitment_git_blob_sha1"),
+            lambda d: d["pilot_gates"].pop("critical_harm_thresholds_frozen_and_verified"),
+            lambda d: d["gates"].__setitem__("manual_launch_authorization_recorded", True),
+            lambda d: d.__setitem__("confirmatory_execution_authorized", 0),
+        )
+        for mutation in cases:
+            altered = json.loads(json.dumps(data)); mutation(altered)
+            with tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / "gate.json"
+                path.write_text(json.dumps(altered, indent=2) + "\n", encoding="utf-8")
+                with self.assertRaises(module.DesignError):
+                    module.verify_gate_closed(path)
 
 
 if __name__ == "__main__":
