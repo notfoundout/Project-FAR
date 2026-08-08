@@ -1,8 +1,8 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
-  "scope": "design-only authority; exact-locks all governed data, narrative, prospective-amendment, and seed-commitment artifacts while verifier code remains reviewable and non-self-referential",
+  "scope": "design-only authority; exact-locks all governed data, narrative, prospective-amendment, seed-commitment, and immutable historical-authority snapshot artifacts while verifier code remains reviewable and non-self-referential",
   "artifacts": [
     {
       "path": "research/external-validation/swe-agent-v3/.gitattributes",
@@ -11,8 +11,8 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/README.md",
-      "git_blob_sha1": "e8ecc4a9c337e57a108b96de16772dcf10081ff2",
-      "bytes": 2730
+      "git_blob_sha1": "6b537c9320f4aed2f6e1e1653dee1c42179c5efa",
+      "bytes": 4258
     },
     {
       "path": "research/external-validation/swe-agent-v3/question-v1.0.md",
@@ -58,6 +58,26 @@
       "path": "research/external-validation/swe-agent-v3/bootstrap-seed-commitment-contract-v1.0.json",
       "git_blob_sha1": "e5a9b94a0ccbce383cfbc7237d98e400af9d853d",
       "bytes": 2577
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/review-closure-amendment-v1.2.json",
+      "git_blob_sha1": "1a75a23d91762084a363b96214ce39d10a9e2f8b",
+      "bytes": 7983
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/AMENDMENT-v1.2.md",
+      "git_blob_sha1": "7ab6a94d033dc8f1a3e9fb28393bf1928f2da718",
+      "bytes": 4034
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/historical-base-83c951/preregistration-v1.0.json",
+      "git_blob_sha1": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
+      "bytes": 10514
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/historical-base-83c951/evidence-and-analysis-plan-v1.0.md",
+      "git_blob_sha1": "15b352d54a524d9caf827018b608028c004f8f13",
+      "bytes": 6506
     }
   ]
 }
