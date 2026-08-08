@@ -1,8 +1,8 @@
 """Strict artifact and committed-byte integrity for FAR-SWE-V3-001.
 
-The governed design artifacts are exact-locked through one non-self-referential
-manifest. Verifier source is intentionally outside that manifest so the manifest
-identity can be pinned here without a recursive hash cycle.
+The reviewed Git commit/tree is the immutable root. Governed current design
+artifacts are indexed exactly once by the non-self-referential design manifest;
+semantic verifier source remains ordinary reviewed code outside that manifest.
 """
 from __future__ import annotations
 
@@ -18,7 +18,6 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 MANIFEST = HERE / "design-manifest-v1.0.json"
 MANIFEST_RELATIVE = "research/external-validation/swe-agent-v3/design-manifest-v1.0.json"
-EXPECTED_MANIFEST_GIT_BLOB_SHA1 = "e62bfbe6aeba67bdd7139d8d3e3811b01d40b93d"
 
 
 class DesignError(RuntimeError):
@@ -149,13 +148,11 @@ REQUIRED_ARTIFACTS = {
 }
 
 
-def verify_manifest() -> None:
+def verify_manifest() -> dict[str, dict[str, Any]]:
     worktree = _read_regular(MANIFEST)
     committed_manifest = _committed_blob_bytes(MANIFEST_RELATIVE)
     if worktree != committed_manifest:
         raise DesignError("design manifest differs from committed HEAD blob")
-    if _git_blob_sha1(worktree) != EXPECTED_MANIFEST_GIT_BLOB_SHA1:
-        raise DesignError("design manifest identity drifted")
 
     manifest = _decode_json(worktree, MANIFEST_RELATIVE)
     expected_top = {
@@ -183,6 +180,7 @@ def verify_manifest() -> None:
     if not isinstance(entries, list) or not entries:
         raise DesignError("manifest artifacts must be non-empty list")
     seen: set[str] = set()
+    index: dict[str, dict[str, Any]] = {}
     for entry in entries:
         if not isinstance(entry, dict) or set(entry) != {
             "path",
@@ -201,6 +199,7 @@ def verify_manifest() -> None:
             raise DesignError(f"invalid Git blob id: {relative}")
         _integer(size, f"manifest bytes for {relative}")
         seen.add(relative)
+        index[relative] = entry
 
         committed = _committed_blob_bytes(relative)
         if len(committed) != size or _git_blob_sha1(committed) != blob:
@@ -218,6 +217,7 @@ def verify_manifest() -> None:
     except ImportError as exc:
         raise DesignError("mandatory review-closure verifier is unavailable") from exc
     review_closure.verify()
+    return index
 
 
 def verify_byte_policy() -> None:
