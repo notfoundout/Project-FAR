@@ -39,10 +39,9 @@ class ReviewClosureTests(unittest.TestCase):
                     with self.assertRaises(module.DesignError):
                         module.verify_task_identity_contract(path)
 
-    def test_seed_commitment_is_direct_exact_and_preoutcome(self) -> None:
+    def test_seed_commitment_semantics_are_direct_and_preoutcome(self) -> None:
         data = json.loads((DIR / "bootstrap-seed-commitment-contract-v1.0.json").read_text(encoding="utf-8"))
         cases = (
-            lambda d: d["rng_contract"].__setitem__("seed_hex", "0" * 64),
             lambda d: d["authority"].__setitem__("outcome_exposure_status", "partial"),
             lambda d: d["commitment"].__setitem__("artifact_inputs_permitted", True),
             lambda d: d["commitment"].__setitem__("mutable_launch_inputs_permitted", True),
@@ -57,12 +56,17 @@ class ReviewClosureTests(unittest.TestCase):
                     with self.assertRaises(module.DesignError):
                         module.verify_seed_contract(path)
 
-    def test_seed_has_no_mutable_artifact_derivation(self) -> None:
+    def test_seed_value_is_well_formed_and_owned_by_byte_authority(self) -> None:
         data = json.loads((DIR / "bootstrap-seed-commitment-contract-v1.0.json").read_text(encoding="utf-8"))
         self.assertEqual(data["commitment"]["method"], "direct_precommitted_value")
         self.assertFalse(data["commitment"]["artifact_inputs_permitted"])
         self.assertFalse(data["commitment"]["mutable_launch_inputs_permitted"])
+        self.assertRegex(data["rng_contract"]["seed_hex"], r"^[0-9a-f]{64}$")
         self.assertEqual(len(bytes.fromhex(data["rng_contract"]["seed_hex"])), 32)
+        # The exact seed value is frozen by reviewed commit + design manifest. It is
+        # intentionally not duplicated in semantic verifier constants.
+        source = (DIR / "verify_review_closure.py").read_text(encoding="utf-8")
+        self.assertNotIn(data["rng_contract"]["seed_hex"], source)
 
     def test_critical_harm_contract_is_exact_and_preexecution(self) -> None:
         data = json.loads((DIR / "critical-harm-thresholds-v1.0.json").read_text(encoding="utf-8"))
