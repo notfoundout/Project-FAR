@@ -1,0 +1,88 @@
+name: PR438 validated root closure v5
+
+on:
+  push:
+    branches: [repair/pr435-final-contract-closure]
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: repair/pr435-final-contract-closure
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pyyaml
+      - name: Reapply v4 candidate transformation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, yaml
+          wf=yaml.safe_load(Path('.github/workflows/pr438-root-closure-v4.yml').read_text(encoding='utf-8'))
+          for step_name in ['Reapply semantic validator reconciliations','Rebuild non-self-referential design integrity manifest']:
+              step=next(s for s in wf['jobs']['repair']['steps'] if s.get('name')==step_name)
+              run=step['run']; prefix="python - <<'PY'\n"
+              if not run.startswith(prefix) or not run.rstrip().endswith('\nPY'):
+                  raise SystemExit(f'cannot extract {step_name}')
+              subprocess.run(['python','-c',run[len(prefix):run.rfind('\nPY')]],check=True)
+          PY
+      - name: Reconcile retained evidence semantic lock
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('research/external-validation/swe-agent-v3/verify_design.py')
+          s=p.read_text(encoding='utf-8')
+          old='''- frozen task-manifest Git blob identity and frozen sealed identity-ledger Git blob identity;\n- authoritative repository provider identity, canonical repository URL, and exact commit as reconstructed from the sealed identity ledger by the independent identity auditor;\n'''
+          new='''- frozen task-manifest Git blob identity and frozen sealed identity-ledger Git blob identity;\n- retained task-population repository-prohibition audit report root;\n- authoritative repository provider identity, canonical repository URL, exact commit, GitHub fork-source repository ID or null, and treatment-material audit result as reconstructed from the sealed identity ledger by the independent identity auditor;\n'''
+          if s.count(old)!=1:
+              raise SystemExit(f'evidence lock anchor count={s.count(old)}')
+          p.write_text(s.replace(old,new,1),encoding='utf-8',newline='\n')
+          PY
+      - name: Rebuild design manifest after governed transformations
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          root=Path('.')
+          mp=root/'research/external-validation/swe-agent-v3/design-manifest-v1.0.json'
+          d=json.loads(mp.read_text(encoding='utf-8'))
+          out=[]
+          for e in d['artifacts']:
+              raw=(root/e['path']).read_bytes()
+              out.append({'path':e['path'],'git_blob_sha1':hashlib.sha1(f'blob {len(raw)}\0'.encode()+raw).hexdigest(),'bytes':len(raw)})
+          d['artifacts']=out
+          mp.write_text(json.dumps(d,indent=2,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
+          PY
+      - name: Remove temporary closure workflows
+        run: |
+          git rm -f .github/workflows/pr438-root-closure.yml .github/workflows/pr438-root-closure-diagnostic.yml .github/workflows/pr438-root-closure-v2.yml .github/workflows/pr438-root-closure-v3.yml .github/workflows/pr438-root-closure-v4.yml .github/workflows/pr438-root-closure-v5.yml
+      - name: Commit local candidate
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add research/external-validation/swe-agent-v3/design-manifest-v1.0.json research/external-validation/swe-agent-v3/verify_review_closure.py research/external-validation/swe-agent-v3/verify_amendment_v1_1.py research/external-validation/swe-agent-v3/verify_design.py tests/test_swe_agent_v3_single_source_integrity.py tests/test_swe_agent_v3_amendment_v1_1.py
+          git commit -m "Close SWE v3 authority integrity drift"
+      - name: Governing verifiers
+        run: |
+          python research/external-validation/swe-agent-v3/verify_amendment_v1_1.py
+          python research/external-validation/swe-agent-v3/verify_review_closure.py
+          python research/external-validation/swe-agent-v3/verify_design.py
+          python research/external-validation/swe-agent-v3/verify_integrity.py
+          python research/external-validation/swe-agent-v3/verify_public_narratives.py
+          python research/external-validation/swe-agent-v3/verify_public_narratives_v2.py
+      - name: Complete SWE v3 tests
+        run: python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v
+      - name: Repository hygiene
+        run: python tools/check_repository_hygiene.py
+      - name: Canonical fast suite
+        run: python tools/run_tests.py --fast
+      - name: Push validated candidate only
+        run: git push origin HEAD:repair/pr435-final-contract-closure
