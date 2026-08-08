@@ -91,6 +91,26 @@ def _require_digest(value: Any, expected: str, label: str) -> None:
         raise DesignError(f"exact contract mismatch: {label}")
 
 
+def _type_exact_equal(actual: Any, expected: Any) -> bool:
+    """JSON-semantic equality that never treats booleans as integers."""
+    if type(actual) is not type(expected):
+        return False
+    if isinstance(expected, dict):
+        return set(actual) == set(expected) and all(
+            _type_exact_equal(actual[key], expected[key]) for key in expected
+        )
+    if isinstance(expected, list):
+        return len(actual) == len(expected) and all(
+            _type_exact_equal(a, b) for a, b in zip(actual, expected)
+        )
+    return actual == expected
+
+
+def _require_type_exact(actual: Any, expected: Any, label: str) -> None:
+    if not _type_exact_equal(actual, expected):
+        raise DesignError(f"type-exact contract mismatch: {label}")
+
+
 def _git_blob_sha1(data: bytes) -> str:
     return hashlib.sha1(f"blob {len(data)}\0".encode() + data).hexdigest()
 
@@ -160,19 +180,11 @@ def verify_manifest() -> dict[str, dict[str, Any]]:
         raise DesignError("design manifest differs from committed HEAD blob")
 
     manifest = _decode_json(worktree, MANIFEST_RELATIVE)
-    expected_top = {
-        "schema_version",
-        "program_id",
-        "artifact_status",
-        "scope",
-        "artifacts",
-    }
+    expected_top = {"schema_version", "program_id", "artifact_status", "scope", "artifacts"}
     if not isinstance(manifest, dict) or set(manifest) != expected_top:
         raise DesignError("design manifest top-level shape drifted")
     if (
-        manifest.get("schema_version"),
-        manifest.get("program_id"),
-        manifest.get("artifact_status"),
+        manifest.get("schema_version"), manifest.get("program_id"), manifest.get("artifact_status")
     ) != ("1.3", "FAR-SWE-V3-001", "Research"):
         raise DesignError("design manifest identity or status drifted")
     if manifest.get("scope") != (
@@ -188,14 +200,8 @@ def verify_manifest() -> dict[str, dict[str, Any]]:
     seen: set[str] = set()
     index: dict[str, dict[str, Any]] = {}
     for entry in entries:
-        if not isinstance(entry, dict) or set(entry) != {
-            "path",
-            "git_blob_sha1",
-            "bytes",
-        }:
-            raise DesignError(
-                "manifest entries require exactly path, git_blob_sha1, bytes"
-            )
+        if not isinstance(entry, dict) or set(entry) != {"path", "git_blob_sha1", "bytes"}:
+            raise DesignError("manifest entries require exactly path, git_blob_sha1, bytes")
         relative = entry["path"]
         blob = entry["git_blob_sha1"]
         size = entry["bytes"]
@@ -214,9 +220,7 @@ def verify_manifest() -> dict[str, dict[str, Any]]:
             raise DesignError(f"worktree differs from committed blob: {relative}")
 
     if seen != REQUIRED_ARTIFACTS:
-        raise DesignError(
-            f"manifest artifact set mismatch: {sorted(seen ^ REQUIRED_ARTIFACTS)}"
-        )
+        raise DesignError(f"manifest artifact set mismatch: {sorted(seen ^ REQUIRED_ARTIFACTS)}")
 
     try:
         import verify_review_closure as review_closure
