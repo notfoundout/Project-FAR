@@ -4,10 +4,9 @@ import json
 import unittest
 from pathlib import Path
 
-SPEC_PATH = (
-    Path(__file__).resolve().parents[1]
-    / "research/external-validation/swe-agent-v3/preregistration-v1.0.json"
-)
+ROOT = Path(__file__).resolve().parents[1]
+SPEC_PATH = ROOT / "research/external-validation/swe-agent-v3/preregistration-v1.0.json"
+SEED_PATH = ROOT / "research/external-validation/swe-agent-v3/bootstrap-seed-commitment-contract-v1.0.json"
 
 
 class SweAgentV3DecisionRuleTests(unittest.TestCase):
@@ -45,7 +44,18 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
 
     def test_bootstrap_interval_rng_and_order_are_fully_frozen(self) -> None:
         analysis = self.load_analysis()
-        self.assertEqual(analysis["bootstrap_seed_status"], "unfrozen_and_committed_before_outcome_reveal")
+        self.assertEqual(
+            analysis["bootstrap_seed_status"],
+            "unfrozen_and_independently_committed_before_execution",
+        )
+        commitment = json.loads(SEED_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(commitment["commitment_status"], "frozen_pre_execution")
+        self.assertEqual(commitment["rng_contract"]["procedure_id"], "sha256_rejection_stream_v1")
+        self.assertRegex(commitment["rng_contract"]["seed_hex"], r"^[0-9a-f]{64}$")
+        self.assertTrue(
+            commitment["timing"]["must_be_committed_and_integrity_rooted_before_any_confirmatory_execution"]
+        )
+        self.assertTrue(commitment["timing"]["must_precede_any_pilot_or_confirmatory_outcome_reveal"])
         self.assertEqual(analysis["bootstrap_resamples"], 100000)
         self.assertEqual(analysis["uncertainty_method"], "paired_task_bootstrap")
         spec = analysis["bootstrap_interval_spec"]
