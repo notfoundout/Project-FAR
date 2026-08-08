@@ -213,6 +213,12 @@ def verify_manifest() -> None:
             f"manifest artifact set mismatch: {sorted(seen ^ REQUIRED_ARTIFACTS)}"
         )
 
+    try:
+        import verify_review_closure as review_closure
+    except ImportError as exc:
+        raise DesignError("mandatory review-closure verifier is unavailable") from exc
+    review_closure.verify()
+
 
 def verify_byte_policy() -> None:
     expected = (
