@@ -1,6 +1,6 @@
 """Strict artifact and committed-byte integrity for FAR-SWE-V3-001.
 
-The data/narrative design artifacts are exact-locked through one non-self-referential
+The governed design artifacts are exact-locked through one non-self-referential
 manifest. Verifier source is intentionally outside that manifest so the manifest
 identity can be pinned here without a recursive hash cycle.
 """
@@ -18,7 +18,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 MANIFEST = HERE / "design-manifest-v1.0.json"
 MANIFEST_RELATIVE = "research/external-validation/swe-agent-v3/design-manifest-v1.0.json"
-EXPECTED_MANIFEST_GIT_BLOB_SHA1 = "2e16548d0b046bac497ca8e5a6e35fed346fda9a"
+EXPECTED_MANIFEST_GIT_BLOB_SHA1 = "e62bfbe6aeba67bdd7139d8d3e3811b01d40b93d"
 
 
 class DesignError(RuntimeError):
@@ -145,6 +145,7 @@ REQUIRED_ARTIFACTS = {
     "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md",
     "research/external-validation/swe-agent-v3/failure-arithmetic-amendment-v1.1.json",
     "research/external-validation/swe-agent-v3/AMENDMENT-v1.1.md",
+    "research/external-validation/swe-agent-v3/bootstrap-seed-commitment-contract-v1.0.json",
 }
 
 
@@ -170,11 +171,11 @@ def verify_manifest() -> None:
         manifest.get("schema_version"),
         manifest.get("program_id"),
         manifest.get("artifact_status"),
-    ) != ("1.1", "FAR-SWE-V3-001", "Research"):
+    ) != ("1.2", "FAR-SWE-V3-001", "Research"):
         raise DesignError("design manifest identity or status drifted")
     if manifest.get("scope") != (
-        "design-only authority; exact-locks all governed data and narrative "
-        "artifacts while verifier code remains reviewable and non-self-referential"
+        "design-only authority; exact-locks all governed data, narrative, prospective-amendment, "
+        "and seed-commitment artifacts while verifier code remains reviewable and non-self-referential"
     ):
         raise DesignError("design manifest scope drifted")
 
