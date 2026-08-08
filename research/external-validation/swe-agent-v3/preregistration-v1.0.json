@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
   "stage": "design_only",
@@ -94,6 +94,7 @@
       "API_or_contract_change",
       "multi_file_change"
     ],
+    "sealed_identity_ledger_contract": "task-manifest-contract-v1.0.json#/sealed_identity_ledger_contract",
     "prohibited_task_repositories": [
       "notfoundout/Project-FAR",
       "any fork or mirror containing Project FAR treatment material"
@@ -194,6 +195,7 @@
       "task_order": {
         "contract": "task-manifest-contract-v1.0.json",
         "source": "exact frozen ordered task manifest committed and integrity-rooted before any sacrificial pilot or confirmatory execution",
+        "sealed_identity_ledger": "the exact sealed identity ledger governed by task-manifest-contract-v1.0.json is committed with the task manifest before execution and binds each blind record to its authoritative GitHub repository/task descriptor",
         "blind_identifier_pattern": "^TASK-[0-9]{6}$",
         "blind_identifier_encoding": "ASCII subset of UTF-8; Unicode and normalization-sensitive identifiers are prohibited",
         "sequence_rule": "manifest JSON array order is authoritative; runtime sorting and locale collation are prohibited",
