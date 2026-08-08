@@ -4,14 +4,14 @@ Status: **Research — prospective pre-execution correction**
 Program ID: `FAR-SWE-V3-001`  
 Execution authorized: **No**
 
-This amendment closes two ambiguities found during exact-head review of the v1.0 design. No model call, pilot, benchmark run, task selection, outcome reveal, or analysis occurred before this correction.
+This amendment closed two ambiguities found during exact-head review of the historical v1.0 design. No model call, pilot, benchmark run, task selection, outcome reveal, or analysis occurred before this correction.
 
 It supersedes only:
 
 1. the definition of a replacement-eligible infrastructure-invalid run;
 2. the numeric representation and comparison rules for bootstrap estimates, quantiles, and classification thresholds.
 
-All other v1.0 design fields remain unchanged. Where the v1.0 wording conflicts with `failure-arithmetic-amendment-v1.1.json` on either subject, the amendment controls.
+For those two historical subjects, `failure-arithmetic-amendment-v1.1.json` controls over the v1.0 snapshots identified by `historical-authority-v1.0.json`. This amendment makes no claim that every other current design field is unchanged: later prospective design artifacts may independently refine other subjects before execution. Current authority for unrelated subjects comes from the current integrity-rooted design artifacts, not from this historical amendment.
 
 ## Replacement boundary
 
