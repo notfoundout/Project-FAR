@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.4",
+  "schema_version": "1.5",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
   "execution_authorized": false,
@@ -12,6 +12,7 @@
     "design_manifest_git_blob_sha1",
     "task_manifest_git_blob_sha1",
     "sealed_identity_ledger_git_blob_sha1",
+    "task_population_prohibition_audit_report_root",
     "bootstrap_seed_commitment_git_blob_sha1",
     "critical_harm_threshold_contract_git_blob_sha1",
     "far_capsule_root_sha256",
@@ -69,7 +70,7 @@
     "theory version is not frozen for this experiment",
     "FAR treatment capsule does not exist",
     "placebo does not exist",
-    "tasks, sealed identity ledger, model, prompts, environments, budgets, randomization, grader, and critical-harm threshold verification are not frozen or complete",
+    "tasks, sealed identity ledger, repository-prohibition audit, model, prompts, environments, budgets, randomization, grader, and critical-harm threshold verification are not frozen or complete",
     "evidence storage and sacrificial pilot are not complete",
     "independent review and separate fully bound pilot/confirmatory launch authorization are absent"
   ],
