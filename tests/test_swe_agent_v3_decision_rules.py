@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT / "research/external-validation/swe-agent-v3/preregistration-v1.0.json"
 SEED_PATH = ROOT / "research/external-validation/swe-agent-v3/bootstrap-seed-commitment-contract-v1.0.json"
 HARM_PATH = ROOT / "research/external-validation/swe-agent-v3/critical-harm-thresholds-v1.0.json"
+TASK_PATH = ROOT / "research/external-validation/swe-agent-v3/task-manifest-contract-v1.0.json"
 
 
 class SweAgentV3DecisionRuleTests(unittest.TestCase):
@@ -37,11 +38,15 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
         self.assertIn("critical-harm-thresholds-v1.0.json", categories["bounded_positive"])
         self.assertEqual(analysis["critical_harm_contract"], "critical-harm-thresholds-v1.0.json")
         harm = json.loads(HARM_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(harm["schema_version"], "1.1")
         self.assertEqual(harm["rate_harms"]["regression_introduction_rate"]["critical_threshold"], {"numerator": 1, "denominator": 10})
         self.assertEqual(harm["rate_harms"]["invalid_run_rate"]["critical_threshold"], {"numerator": 1, "denominator": 10})
-        self.assertTrue(all(rule["trigger_rule"] == "count > 0" for rule in harm["zero_tolerance_harms"].values()))
+        self.assertTrue(all(rule["trigger_rule"] == "slot_numerator > 0" for rule in harm["zero_tolerance_harms"].values()))
+        self.assertTrue(all(rule["critical_threshold"] == {"allowed_occurrences": 0} for rule in harm["zero_tolerance_harms"].values()))
+        self.assertIn("no causal-attribution override", harm["rate_harms"]["regression_introduction_rate"]["slot_numerator"])
+        self.assertIn("frozen_task_identity_ledger_git_blob_sha1", harm["evidence_retention"]["required_provenance"])
 
-    def test_bootstrap_interval_rng_order_strata_and_seed_are_fully_frozen(self) -> None:
+    def test_bootstrap_interval_rng_order_strata_ledger_and_seed_are_fully_frozen(self) -> None:
         analysis = self.load_analysis()
         self.assertEqual(
             analysis["bootstrap_seed_status"],
@@ -70,9 +75,14 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
         order = spec["task_order"]
         self.assertEqual(order["contract"], "task-manifest-contract-v1.0.json")
         self.assertIn("before any sacrificial pilot or confirmatory execution", order["source"])
+        self.assertIn("sealed identity ledger", order["sealed_identity_ledger"])
         self.assertEqual(order["sequence_rule"], "manifest JSON array order is authoritative; runtime sorting and locale collation are prohibited")
         self.assertEqual(order["uniqueness_rule"], "blind identifiers and task-bundle roots must each be unique")
         self.assertIn("manifest-wide union must cover all five before execution", order["strata_rule"])
+        task = json.loads(TASK_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(task["schema_version"], "1.5")
+        self.assertEqual(task["sealed_identity_ledger_contract"]["status"], "uninstantiated")
+        self.assertFalse(task["sealed_identity_ledger_contract"]["execution_authorized"])
         rng = spec["rng_procedure"]
         self.assertEqual(
             rng,
