@@ -18,21 +18,29 @@ The historical v2 result remains immutable and separate: one task, two repetitio
 
 ## Current boundary
 
-This package freezes only the causal question, arm structure, estimands, outcome contract, evidence requirements, capsule constraints, and fail-closed execution gate. It does not select tasks, choose a model, build the FAR capsule, build the placebo, set the final run budget, generate randomization, or authorize a pilot or confirmatory run.
+This package freezes the causal question, arm structure, estimands, outcome contract, evidence requirements, capsule constraints, exact bootstrap procedure and bootstrap seed, task-manifest schema including required strata, critical-harm threshold contract, and fail-closed execution gate. It does not select the confirmatory tasks, choose a model endpoint, build the FAR capsule, build the placebo, set the final run budget, freeze assignment/counterbalancing randomization, or authorize a pilot or confirmatory run.
 
-All model calls and benchmark execution are currently blocked. A sacrificial pilot may only be separately authorized after every pre-pilot gate in `execution-gate-v1.0.json` is true; confirmatory execution additionally requires the completed-and-excluded pilot gate and every remaining confirmatory gate. No such authorization currently exists.
+All model calls and benchmark execution are currently blocked. A sacrificial pilot may only be separately authorized after every pre-pilot gate in `execution-gate-v1.0.json` is true, including `critical_harm_thresholds_frozen_and_verified`; confirmatory execution additionally requires the completed-and-excluded pilot gate and every remaining confirmatory gate. No such authorization currently exists.
+
+The bootstrap seed is already prospectively frozen by `bootstrap-seed-commitment-contract-v1.0.json`. It is a direct committed value and does not depend on mutable capsule, task, or execution-gate identities. This is distinct from the still-unfrozen assignment/counterbalancing randomization seed.
+
+`historical-authority-v1.0.json` roots the two exact historical snapshots needed to interpret the v1.1 failure/arithmetic amendment. Those snapshots are immutable historical evidence, not current design authority, and verification does not require repository history beyond the reviewed checkout.
 
 ## Integrity model
 
-Every governed data and narrative artifact is exact-locked in `design-manifest-v1.0.json`. The verifier pins that manifest as one immutable root and separately checks the experiment's critical semantics. Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing; it remains ordinary reviewed code at the exact PR head.
+The reviewed Git commit/tree is the immutable current root. Every governed current design artifact plus the self-contained historical authority is indexed exactly once by `design-manifest-v1.0.json`. The manifest records committed Git blob identity and byte count; semantic verifiers enforce contract invariants without copying mutable current blob IDs into verifier constants. Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing and remains ordinary reviewed code at the exact PR head.
 
 ## Verification
 
 ```bash
 python research/external-validation/swe-agent-v3/verify_design.py
+python research/external-validation/swe-agent-v3/verify_amendment_v1_1.py
+python research/external-validation/swe-agent-v3/verify_review_closure.py
 python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v
 python -m py_compile \
   research/external-validation/swe-agent-v3/verify_integrity.py \
   research/external-validation/swe-agent-v3/verify_design.py \
+  research/external-validation/swe-agent-v3/verify_review_closure.py \
+  research/external-validation/swe-agent-v3/verify_amendment_v1_1.py \
   tests/test_swe_agent_v3*.py
 ```
