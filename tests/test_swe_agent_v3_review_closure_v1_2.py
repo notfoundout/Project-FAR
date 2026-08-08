@@ -51,35 +51,125 @@ class ReviewClosureV12Tests(unittest.TestCase):
             )
         )
 
-    def test_task_stratum_is_required_and_root_bound(self) -> None:
+    def test_task_identity_is_unique_independently_of_strata(self) -> None:
         self._mutated_amendment_fails(
-            lambda d: d["task_manifest_effective_contract"].__setitem__(
-                "required_record_keys_exactly",
-                ["blind_task_id", "repository_blind_id", "task_bundle_root_sha256"],
+            lambda d: d["task_manifest_effective_contract"]["task_identity_contract"].__setitem__(
+                "strata_excluded_from_identity", False
             )
         )
         self._mutated_amendment_fails(
-            lambda d: d["task_manifest_effective_contract"]["task_bundle_root_extension"].__setitem__(
-                "task_stratum_is_root_member", False
+            lambda d: d["task_manifest_effective_contract"]["task_identity_contract"].__setitem__(
+                "uniqueness_rule", "task_bundle_root_sha256 is unique"
+            )
+        )
+        self._mutated_amendment_fails(
+            lambda d: d["task_manifest_effective_contract"]["task_identity_contract"].__setitem__(
+                "descriptor_required_keys_exactly",
+                module.TASK_IDENTITY_KEYS + ["task_strata"],
             )
         )
 
-    def test_required_stratum_set_is_exact(self) -> None:
+    def test_effective_descriptor_keys_are_exact_locked(self) -> None:
         self._mutated_amendment_fails(
-            lambda d: d["task_manifest_effective_contract"]["task_stratum"].__setitem__(
+            lambda d: d["task_manifest_effective_contract"]["task_bundle_root_extension"].__setitem__(
+                "descriptor_required_keys_exactly",
+                ["algorithm_id", "task_identity_sha256", "task_strata", "arbitrary_key"],
+            )
+        )
+        self._mutated_amendment_fails(
+            lambda d: d["task_manifest_effective_contract"]["task_identity_contract"].__setitem__(
+                "descriptor_required_keys_exactly",
+                [
+                    "algorithm_id",
+                    "repository_provider",
+                    "repository_provider_id",
+                    "canonical_repository_url",
+                    "arbitrary_key",
+                    "task_payload_sha256",
+                    "task_payload_bytes",
+                ],
+            )
+        )
+
+    def test_task_strata_classifier_is_deterministic_and_multilabel(self) -> None:
+        self._mutated_amendment_fails(
+            lambda d: d["task_manifest_effective_contract"]["task_strata"].__setitem__(
                 "allowed_values_exactly", module.REQUIRED_STRATA[:-1]
             )
         )
+        self._mutated_amendment_fails(
+            lambda d: d["task_manifest_effective_contract"]["task_strata"].__setitem__(
+                "classification_inputs_required", module.CLASSIFICATION_INPUTS[:-1]
+            )
+        )
+        self._mutated_amendment_fails(
+            lambda d: d["task_manifest_effective_contract"]["task_strata"]["deterministic_mapping"].__setitem__(
+                "multi_file_change", "operator decides"
+            )
+        )
+        self._mutated_amendment_fails(
+            lambda d: d["task_manifest_effective_contract"]["task_strata"].__setitem__(
+                "multi_label_rule", "choose one primary label"
+            )
+        )
 
-    def test_harm_thresholds_are_frozen_and_exact(self) -> None:
+    def test_task_preexecution_validation_is_exact(self) -> None:
+        self._mutated_amendment_fails(
+            lambda d: d["task_manifest_effective_contract"].__setitem__(
+                "preexecution_validation_extension",
+                d["task_manifest_effective_contract"]["preexecution_validation_extension"][:-1],
+            )
+        )
+
+    def test_harm_thresholds_and_slot_construction_are_exact(self) -> None:
         self._mutated_amendment_fails(
             lambda d: d["critical_harm_threshold_contract"]["rate_harms"]["invalid_run_rate"].__setitem__(
                 "threshold", {"numerator": 1, "denominator": 5}
             )
         )
         self._mutated_amendment_fails(
+            lambda d: d["critical_harm_threshold_contract"]["rate_harms"]["invalid_run_rate"].__setitem__(
+                "denominator_rule", "complete valid runs only"
+            )
+        )
+        self._mutated_amendment_fails(
+            lambda d: d["critical_harm_threshold_contract"]["rate_harms"]["regression_introduction"].__setitem__(
+                "event_rule", "task indicator is 1 if any repetition regresses"
+            )
+        )
+        self._mutated_amendment_fails(
+            lambda d: d["critical_harm_threshold_contract"].__setitem__(
+                "pairing_rule", "pair tasks when convenient"
+            )
+        )
+        self._mutated_amendment_fails(
+            lambda d: d["critical_harm_threshold_contract"].__setitem__(
+                "replacement_rule", "replacement adds a new denominator run"
+            )
+        )
+
+    def test_harm_missingness_and_retention_fail_closed(self) -> None:
+        self._mutated_amendment_fails(
             lambda d: d["critical_harm_threshold_contract"].__setitem__(
                 "missing_harm_evidence_rule", "missing evidence may be ignored"
+            )
+        )
+        self._mutated_amendment_fails(
+            lambda d: d["critical_harm_threshold_contract"].__setitem__(
+                "retained_evidence",
+                d["critical_harm_threshold_contract"]["retained_evidence"][:-1],
+            )
+        )
+
+    def test_launch_prerequisite_contents_are_exact_locked(self) -> None:
+        self._mutated_amendment_fails(
+            lambda d: d["execution_gate_extension"].__setitem__(
+                "pilot_prerequisites", ["no prerequisite"] * 3
+            )
+        )
+        self._mutated_amendment_fails(
+            lambda d: d["execution_gate_extension"].__setitem__(
+                "confirmatory_prerequisites", ["no prerequisite"] * 3
             )
         )
 
