@@ -12,6 +12,7 @@ import verify_integrity as integrity
 
 DesignError = integrity.DesignError
 HERE = Path(__file__).resolve().parent
+MANIFEST = HERE / "design-manifest-v1.0.json"
 SEED = HERE / "bootstrap-seed-commitment-contract-v1.0.json"
 TASK = HERE / "task-manifest-contract-v1.0.json"
 GATE = HERE / "execution-gate-v1.0.json"
@@ -20,25 +21,21 @@ GATE_REL = "research/external-validation/swe-agent-v3/execution-gate-v1.0.json"
 
 
 def _manifest_index() -> dict[str, dict[str, object]]:
-    manifest = integrity._decode_json(
-        integrity._read_regular(integrity.MANIFEST), str(integrity.MANIFEST)
-    )
+    manifest = integrity._decode_json(integrity._read_regular(MANIFEST), str(MANIFEST))
     if not isinstance(manifest, dict) or not isinstance(manifest.get("artifacts"), list):
         raise DesignError("verified design manifest required")
-    index: dict[str, dict[str, object]] = {}
-    for entry in manifest["artifacts"]:
-        if isinstance(entry, dict) and isinstance(entry.get("path"), str):
-            index[entry["path"]] = entry
-    return index
+    return {
+        entry["path"]: entry
+        for entry in manifest["artifacts"]
+        if isinstance(entry, dict) and isinstance(entry.get("path"), str)
+    }
 
 
 def verify_task_identity_contract(path: Path = TASK) -> None:
     data = integrity._decode_json(integrity._read_regular(path), str(path))
     if not isinstance(data, dict):
         raise DesignError("task manifest contract must be object")
-    if (data.get("schema_version"), data.get("program_id"), data.get("manifest_status"), data.get("execution_authorized")) != (
-        "1.3", "FAR-SWE-V3-001", "uninstantiated", False
-    ):
+    if (data.get("schema_version"), data.get("program_id"), data.get("manifest_status"), data.get("execution_authorized")) != ("1.3", "FAR-SWE-V3-001", "uninstantiated", False):
         raise DesignError("task manifest identity/boundary drifted")
     freeze = data.get("freeze_timing", "")
     if "before any sacrificial pilot or confirmatory execution" not in freeze or "freezing after any agent run is prohibited" not in freeze:
@@ -91,9 +88,7 @@ def verify_seed_contract(path: Path = SEED) -> None:
     data = integrity._decode_json(integrity._read_regular(path), str(path))
     if not isinstance(data, dict):
         raise DesignError("bootstrap seed commitment must be object")
-    if (data.get("schema_version"), data.get("program_id"), data.get("artifact_status"), data.get("commitment_status")) != (
-        "1.0", "FAR-SWE-V3-001", "Research", "frozen_pre_execution"
-    ):
+    if (data.get("schema_version"), data.get("program_id"), data.get("artifact_status"), data.get("commitment_status")) != ("1.0", "FAR-SWE-V3-001", "Research", "frozen_pre_execution"):
         raise DesignError("bootstrap seed commitment identity drifted")
     authority = data.get("authority")
     if not isinstance(authority, dict) or authority.get("outcome_exposure_status") != "none":
@@ -101,14 +96,12 @@ def verify_seed_contract(path: Path = SEED) -> None:
     for key in ("model_calls_authorized", "pilot_execution_authorized", "benchmark_execution_authorized", "confirmatory_execution_authorized"):
         if authority.get(key) is not False:
             raise DesignError("bootstrap seed authorization boundary drifted")
-
     rng = data.get("rng_contract", {})
     seed = rng.get("seed_hex")
     if rng.get("procedure_id") != "sha256_rejection_stream_v1" or rng.get("seed_encoding") != "64 lowercase hexadecimal characters decoded as exactly 32 bytes":
         raise DesignError("bootstrap RNG contract drifted")
     if type(seed) is not str or re.fullmatch(r"[0-9a-f]{64}", seed) is None or len(bytes.fromhex(seed)) != 32:
         raise DesignError("bootstrap seed encoding drifted")
-
     index = _manifest_index()
     try:
         capsule_blob = index[CAPSULE_REL]["git_blob_sha1"]
@@ -131,8 +124,7 @@ def verify_seed_contract(path: Path = SEED) -> None:
     )
     if derivation.get("method") != "SHA-256 over the exact UTF-8 bytes of canonical_payload" or derivation.get("canonical_payload") != payload:
         raise DesignError("bootstrap seed derivation contract drifted")
-    recomputed = hashlib.sha256(payload.encode("utf-8")).hexdigest()
-    if recomputed != seed or derivation.get("sha256") != seed:
+    if hashlib.sha256(payload.encode("utf-8")).hexdigest() != seed or derivation.get("sha256") != seed:
         raise DesignError("bootstrap seed recomputation failed")
     if derivation.get("outcome_or_grade_inputs_permitted") is not False or derivation.get("task_identity_inputs_permitted") is not False:
         raise DesignError("post-outcome or task-identity seed inputs were enabled")
@@ -148,10 +140,7 @@ def verify_seed_contract(path: Path = SEED) -> None:
 
 def verify_gate_closed(path: Path = GATE) -> None:
     data = integrity._load_json(path)
-    for key in (
-        "execution_authorized", "model_calls_authorized", "benchmark_execution_authorized",
-        "pilot_execution_authorized", "confirmatory_execution_authorized",
-    ):
+    for key in ("execution_authorized", "model_calls_authorized", "benchmark_execution_authorized", "pilot_execution_authorized", "confirmatory_execution_authorized"):
         if data.get(key) is not False:
             raise DesignError(f"execution gate opened: {key}")
 
