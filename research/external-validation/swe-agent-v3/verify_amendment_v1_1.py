@@ -68,9 +68,7 @@ def load(path: Path) -> dict[str, Any]:
 
 def _git(*args: str) -> bytes:
     try:
-        return subprocess.run(
-            ["git", "-C", str(ROOT), *args], check=True, capture_output=True
-        ).stdout
+        return subprocess.run(["git", "-C", str(ROOT), *args], check=True, capture_output=True).stdout
     except (OSError, subprocess.CalledProcessError) as exc:
         raise AmendmentError(
             "required historical Git object is unavailable; fetch full history with "
@@ -92,111 +90,100 @@ def historical_blob_bytes(head: str, relative: str) -> bytes:
 
 def validate(amend: Path = AMEND, readme: Path = README, gate: Path = GATE) -> dict[str, Any]:
     amendment = load(amend)
-    authority = amendment.get("authority")
-    identity = (
-        amendment.get("schema_version"), amendment.get("program_id"),
-        amendment.get("artifact_status"), amendment.get("amendment_status"),
-    )
-    if identity != ("1.1", "FAR-SWE-V3-001", "Research", "prospective_pre_execution_correction"):
+    if (amendment.get("schema_version"), amendment.get("program_id"), amendment.get("artifact_status"), amendment.get("amendment_status")) != (
+        "1.1", "FAR-SWE-V3-001", "Research", "prospective_pre_execution_correction"
+    ):
         raise AmendmentError("identity drifted")
-    if authority != EXPECTED_AUTHORITY:
+    if amendment.get("authority") != EXPECTED_AUTHORITY:
         raise AmendmentError("authority or precedence drifted")
 
-    # Historical authority is immutable object identity, not branch ancestry. Reconstructed
-    # research branches need only contain the exact named historical objects.
     if historical_blob_id(BASE_HEAD, PREREG_REL) != PREREG_BLOB:
         raise AmendmentError("historical preregistration identity drifted")
     if historical_blob_id(BASE_HEAD, PLAN_REL) != PLAN_BLOB:
         raise AmendmentError("historical evidence-plan identity drifted")
-    historical_prereg = _decode(
-        historical_blob_bytes(BASE_HEAD, PREREG_REL), f"{BASE_HEAD}:{PREREG_REL}"
-    )
+    historical_prereg = _decode(historical_blob_bytes(BASE_HEAD, PREREG_REL), f"{BASE_HEAD}:{PREREG_REL}")
     if historical_prereg.get("execution_authorized") is not False:
         raise AmendmentError("historical base execution authorized")
 
     gate_data = load(gate)
-    if any(gate_data.get(key) is not False for key in (
-        "execution_authorized", "model_calls_authorized", "benchmark_execution_authorized"
-    )):
+    if any(gate_data.get(key) is not False for key in ("execution_authorized", "model_calls_authorized", "benchmark_execution_authorized")):
         raise AmendmentError("gate open")
 
-    replacement = amendment.get("replacement_contract", {})
-    arithmetic = amendment.get("exact_arithmetic_contract", {})
-
-    classes = replacement.get("terminal_reason_classes", {})
-    keys = {
-        "infrastructure_invalid_replacement_eligible",
-        "unresolved_nonreplaceable",
-        "invalid_nonreplaceable",
-    }
-    if set(classes) != keys:
+    replacement = amendment.get("replacement_contract")
+    if not isinstance(replacement, dict) or set(replacement) != {
+        "decision_order", "replacement_attempts_per_eligible_slot", "same_slot_and_conditions_required",
+        "replacement_before_any_outcome_reveal_required", "operator_discretion_permitted",
+        "eligibility_facts_required_all_true", "terminal_reason_classes", "unlisted_terminal_reason_rule",
+        "grader_failure_rule", "cell_rule",
+    }:
+        raise AmendmentError("replacement contract shape drifted")
+    if replacement.get("decision_order") != [
+        "protocol_or_evidence_violation_invalid_nonreplaceable",
+        "exact_pre_exposure_infrastructure_reason_with_all_eligibility_facts_true",
+        "post_exposure_nonresolution_unresolved_nonreplaceable",
+        "unlisted_reason_invalid_nonreplaceable",
+    ]:
+        raise AmendmentError("replacement decision order drifted")
+    if replacement.get("replacement_attempts_per_eligible_slot") != 1 or replacement.get("same_slot_and_conditions_required") is not True or replacement.get("replacement_before_any_outcome_reveal_required") is not True or replacement.get("operator_discretion_permitted") is not False:
+        raise AmendmentError("replacement eligibility boundary drifted")
+    eligibility = replacement.get("eligibility_facts_required_all_true")
+    if not isinstance(eligibility, list) or len(eligibility) != 5 or len(set(eligibility)) != 5:
+        raise AmendmentError("eligibility facts drifted")
+    classes = replacement.get("terminal_reason_classes")
+    expected_class_keys = {"infrastructure_invalid_replacement_eligible", "unresolved_nonreplaceable", "invalid_nonreplaceable"}
+    if not isinstance(classes, dict) or set(classes) != expected_class_keys:
         raise AmendmentError("taxonomy keys")
-    if any(not isinstance(v, list) or any(type(x) is not str for x in v) for v in classes.values()):
-        raise AmendmentError("taxonomy values")
     flat = [reason for reasons in classes.values() for reason in reasons]
     if len(flat) != len(set(flat)):
         raise AmendmentError("taxonomy overlap")
-    if any("timeout" in reason for reason in classes["infrastructure_invalid_replacement_eligible"]):
-        raise AmendmentError("timeout retry")
+    if len(classes["infrastructure_invalid_replacement_eligible"]) != 5 or any("timeout" in reason for reason in classes["infrastructure_invalid_replacement_eligible"]):
+        raise AmendmentError("replacement-eligible taxonomy drifted")
     if "provider_timeout_or_failure_after_request_acceptance" not in classes["unresolved_nonreplaceable"]:
-        raise AmendmentError("provider rule")
+        raise AmendmentError("provider post-acceptance rule drifted")
     if "unclassified_terminal_reason" not in classes["invalid_nonreplaceable"]:
-        raise AmendmentError("fallback")
-    if replacement.get("operator_discretion_permitted") is not False:
-        raise AmendmentError("replacement discretion")
-    if replacement.get("replacement_attempts_per_eligible_slot") != 1:
-        raise AmendmentError("replacement count")
-    if len(replacement.get("eligibility_facts_required_all_true", [])) != 5:
-        raise AmendmentError("eligibility facts")
+        raise AmendmentError("unlisted fallback drifted")
     if "never retroactively reclassify" not in replacement.get("unlisted_terminal_reason_rule", ""):
-        raise AmendmentError("unlisted reason preservation")
+        raise AmendmentError("unlisted reason preservation drifted")
     if "never rerun the agent" not in replacement.get("grader_failure_rule", ""):
-        raise AmendmentError("grader preservation")
-    if replacement.get("retained_invalid_repetition_makes_entire_task_arm_cell_missing") is not True:
-        raise AmendmentError("retained invalid missingness")
-    if replacement.get("primary_missingness_rule") != "if any FAR or placebo task-arm cell is missing, final confirmatory classification is inconclusive_due_to_missingness":
-        raise AmendmentError("primary missingness rule")
-    if replacement.get("sensitivity_results_are_confirmatory") is not False:
-        raise AmendmentError("sensitivity confirmatory drift")
+        raise AmendmentError("grader failure rule drifted")
+    if replacement.get("cell_rule") != "a retained invalid repetition makes the entire task-arm cell missing; unresolved repetitions remain valid binary zero outcomes and are never replaced":
+        raise AmendmentError("cell rule drifted")
 
-    number_system = arithmetic.get("number_system", "")
-    if "exact reduced rational" not in number_system or "arbitrary-precision" not in number_system:
+    arithmetic = amendment.get("exact_arithmetic_contract")
+    if not isinstance(arithmetic, dict) or set(arithmetic) != {
+        "number_system", "canonical_representation", "binary_outcome_encoding", "task_arm_probability",
+        "task_contrast", "primary_estimate", "bootstrap_estimate", "sorting_rule", "tail_probabilities",
+        "quantile_rule", "classification_thresholds", "classification_comparison_rule", "display_rule",
+    }:
+        raise AmendmentError("exact arithmetic contract shape drifted")
+    if "exact reduced rational" not in arithmetic.get("number_system", "") or "arbitrary-precision" not in arithmetic.get("number_system", ""):
         raise AmendmentError("number system")
+    if "denominator > 0" not in arithmetic.get("canonical_representation", "") or "gcd" not in arithmetic.get("canonical_representation", ""):
+        raise AmendmentError("rational canonicalization drifted")
     if arithmetic.get("binary_outcome_encoding") != {"resolved": 1, "unresolved": 0}:
         raise AmendmentError("binary encoding")
-    if arithmetic.get("tail_probabilities") != {
-        "lower": {"numerator": 1, "denominator": 40},
-        "upper": {"numerator": 39, "denominator": 40},
-    }:
-        raise AmendmentError("tails")
-    if arithmetic.get("classification_thresholds") != {
-        "zero": {"numerator": 0, "denominator": 1},
-        "minimum_practical_difference": {"numerator": 1, "denominator": 10},
-    }:
-        raise AmendmentError("thresholds")
+    for key in ("task_arm_probability", "task_contrast", "primary_estimate", "bootstrap_estimate", "quantile_rule"):
+        if "exact" not in arithmetic.get(key, "").lower():
+            raise AmendmentError(f"exact arithmetic rule drifted: {key}")
     if "no floating point" not in arithmetic.get("sorting_rule", ""):
         raise AmendmentError("floating point sorting")
+    if arithmetic.get("tail_probabilities") != {"lower": {"numerator": 1, "denominator": 40}, "upper": {"numerator": 39, "denominator": 40}}:
+        raise AmendmentError("tails")
+    if arithmetic.get("classification_thresholds") != {"zero": {"numerator": 0, "denominator": 1}, "minimum_practical_difference": {"numerator": 1, "denominator": 10}}:
+        raise AmendmentError("thresholds")
     if "never decision inputs" not in arithmetic.get("classification_comparison_rule", ""):
-        raise AmendmentError("floating point classification")
-    for required in (
-        "task_arm_cell_probability",
-        "arm_mean_failure_probability",
-        "paired_task_contrast",
-        "bootstrap_replicate",
-        "type7_quantile",
-    ):
-        if required not in arithmetic:
-            raise AmendmentError(f"arithmetic contract missing: {required}")
+        raise AmendmentError("classification comparison drifted")
+    if "classification is fixed" not in arithmetic.get("display_rule", ""):
+        raise AmendmentError("display rule drifted")
 
-    # Narrative remains governed by the design manifest. Here we enforce the semantic
-    # amendment boundary without introducing a second mutable current-byte hash.
     narrative = readme.read_text(encoding="utf-8")
     for phrase in (
-        "prospective",
-        "execution",
-        "v1.1",
+        "Execution authorized: **No**",
+        "It supersedes only:",
+        "Any unlisted reason is invalid and nonreplaceable",
+        "Floating-point values and displayed decimals never determine a classification",
     ):
-        if phrase.lower() not in narrative.lower():
+        if phrase not in narrative:
             raise AmendmentError("amendment narrative boundary drifted")
     return amendment
 
