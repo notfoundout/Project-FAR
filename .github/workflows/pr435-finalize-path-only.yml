@@ -1,0 +1,192 @@
+name: PR435 one-shot path-only migration
+
+on:
+  push:
+    branches:
+      - repair/pr435-final-contract-closure
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: repair/pr435-final-contract-closure
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Migrate path-only authority and semantic mutation tests
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+          pkg = root / 'research/external-validation/swe-agent-v3'
+
+          # 1. Public README: state the actual byte-authority model.
+          readme = pkg / 'README.md'
+          text = readme.read_text(encoding='utf-8')
+          old = (
+              'The reviewed Git commit/tree is the immutable current root. Every governed current design artifact plus archival context is indexed exactly once by `design-manifest-v1.0.json`. '
+              'The manifest records committed Git blob identity and byte count; semantic verifiers enforce complete type-exact contract invariants without copying mutable current blob IDs into verifier constants. '
+              'Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing and remains ordinary reviewed code at the exact PR head.'
+          )
+          new = (
+              'The reviewed Git commit/tree is the immutable current-byte root. `design-manifest-v1.0.json` is only the exact governed-path registry; it deliberately contains no current blob IDs, byte counts, or semantic digests. '
+              'For every governed path, verification reads the exact blob from `HEAD:path` and requires the checkout bytes to match it. '
+              'Semantic verifiers and complete public-narrative oracles enforce meaning independently, so a legitimate contract edit changes one Git tree rather than triggering a chain of redundant current-identity repins. '
+              'Verifier source is deliberately outside the governed-path registry to avoid recursive self-reference and remains ordinary reviewed code at the exact PR head.'
+          )
+          if old not in text:
+              raise SystemExit('README stale integrity paragraph not found exactly once')
+          readme.write_text(text.replace(old, new, 1), encoding='utf-8', newline='\n')
+
+          # 2. One canonical complete narrative oracle, generated from the four reviewed surfaces.
+          narrative_names = [
+              'question-v1.0.md',
+              'AMENDMENT-v1.1.md',
+              'README.md',
+              'evidence-and-analysis-plan-v1.0.md',
+          ]
+          expected = {name: (pkg / name).read_text(encoding='utf-8') for name in narrative_names}
+          oracle = pkg / 'verify_public_narratives.py'
+          lines = [
+              '"""Complete semantic oracles for all public FAR-SWE-V3-001 narrative surfaces.\n\n'
+              'Current byte identity is owned only by the reviewed Git tree. These whole-document\n'
+              'expectations are semantic contracts: any added, removed, or contradictory public prose\n'
+              'must be deliberately reviewed here as well.\n"""',
+              'from __future__ import annotations',
+              '',
+              'from pathlib import Path',
+              '',
+              'HERE = Path(__file__).resolve().parent',
+              '',
+              'class NarrativeError(ValueError):',
+              '    pass',
+              '',
+              'EXPECTED = {',
+          ]
+          for name in narrative_names:
+              lines.append(f'    {name!r}: {expected[name]!r},')
+          lines += [
+              '}',
+              '',
+              'def verify(here: Path = HERE) -> None:',
+              '    for name, expected in EXPECTED.items():',
+              '        path = here / name',
+              '        if path.is_symlink() or not path.is_file():',
+              '            raise NarrativeError(f"regular public narrative required: {name}")',
+              '        try:',
+              '            actual = path.read_text(encoding="utf-8")',
+              '        except UnicodeDecodeError as exc:',
+              '            raise NarrativeError(f"public narrative must be UTF-8: {name}") from exc',
+              '        if actual != expected:',
+              '            raise NarrativeError(f"complete public narrative contract drifted: {name}")',
+              '',
+              'if __name__ == "__main__":',
+              '    try:',
+              '        verify()',
+              '    except NarrativeError as exc:',
+              '        raise SystemExit(f"FAIL: {exc}")',
+              '    print("PASS: all FAR-SWE-V3-001 public narrative surfaces match their complete semantic oracles.")',
+              '',
+          ]
+          oracle.write_text('\n'.join(lines), encoding='utf-8', newline='\n')
+          for obsolete in ('verify_public_narratives_v2.py', 'verify_public_narratives_v3.py'):
+              path = pkg / obsolete
+              if path.exists():
+                  path.unlink()
+
+          integrity = pkg / 'verify_integrity.py'
+          text = integrity.read_text(encoding='utf-8')
+          text = text.replace('import verify_public_narratives_v2 as public_narratives', 'import verify_public_narratives as public_narratives')
+          text = text.replace('import verify_public_narratives_v3 as public_narratives', 'import verify_public_narratives as public_narratives')
+          integrity.write_text(text, encoding='utf-8', newline='\n')
+
+          # 3. Semantic fixture commits: mutation helpers no longer alter the path registry.
+          design_test = root / 'tests/test_swe_agent_v3_design.py'
+          text = design_test.read_text(encoding='utf-8')
+          pattern = re.compile(r'    def refresh_manifest\(self, commit: bool = True\) -> None:\n.*?(?=    def mutate_json\()', re.S)
+          replacement = (
+              '    def refresh_manifest(self, commit: bool = True) -> None:\n'
+              '        # A semantic mutation represents a newly committed Git tree. The schema-1.4\n'
+              '        # design manifest is only a governed-path registry and never needs repinning.\n'
+              '        if commit:\n'
+              '            self.sync_committed()\n\n'
+          )
+          text, count = pattern.subn(replacement, text, count=1)
+          if count != 1:
+              raise SystemExit('test_swe_agent_v3_design refresh_manifest helper not found')
+
+          # Replace the obsolete manifest-byte-metadata subtest with path-registry attacks.
+          pattern = re.compile(r'    def test_byte_policy_symlinks_and_manifest_metadata_are_rejected\(self\) -> None:\n.*?(?=    def test_missingness_decisions_seed_and_harm_semantics_are_exact\()', re.S)
+          replacement = '''    def test_byte_policy_symlinks_and_manifest_registry_are_rejected(self) -> None:\n        policy = self.here / ".gitattributes"\n        policy.write_text("* text=auto\\n", encoding="utf-8", newline="\\n")\n        self.refresh_manifest()\n        self.rejected()\n        self.setUp_after_drift()\n\n        manifest = self.here / "design-manifest-v1.0.json"\n        data = json.loads(manifest.read_text(encoding="utf-8"))\n        data["artifacts"][0]["git_blob_sha1"] = "0" * 40\n        manifest.write_text(json.dumps(data, indent=2) + "\\n", encoding="utf-8", newline="\\n")\n        self.sync_committed()\n        self.rejected()\n        self.setUp_after_drift()\n\n        manifest = self.here / "design-manifest-v1.0.json"\n        data = json.loads(manifest.read_text(encoding="utf-8"))\n        data["artifacts"].pop()\n        manifest.write_text(json.dumps(data, indent=2) + "\\n", encoding="utf-8", newline="\\n")\n        self.sync_committed()\n        self.rejected()\n        self.setUp_after_drift()\n\n        target = self.here / "question-v1.0.md"\n        copy = self.here / "question-copy.md"\n        copy.write_bytes(target.read_bytes())\n        target.unlink()\n        target.symlink_to(copy.name)\n        self.rejected()\n\n'''
+          text, count = pattern.subn(replacement, text, count=1)
+          if count != 1:
+              raise SystemExit('obsolete design manifest metadata test block not found')
+          design_test.write_text(text, encoding='utf-8', newline='\n')
+
+          locks_test = root / 'tests/test_swe_agent_v3_contract_locks.py'
+          text = locks_test.read_text(encoding='utf-8')
+          pattern = re.compile(r'    def refresh_manifest_and_commit_fixture\(self\) -> None:\n.*?(?=    def mutate_json\()', re.S)
+          replacement = (
+              '    def refresh_manifest_and_commit_fixture(self) -> None:\n'
+              '        # Commit the mutated governed artifact in the fixture. The path-only manifest\n'
+              '        # remains unchanged, so rejection must come from semantic verification.\n'
+              '        self.sync_committed()\n\n'
+          )
+          text, count = pattern.subn(replacement, text, count=1)
+          if count != 1:
+              raise SystemExit('contract-lock repin helper not found')
+          locks_test.write_text(text, encoding='utf-8', newline='\n')
+
+          # 4. The public-narrative totality test must point at the single current oracle.
+          single = root / 'tests/test_swe_agent_v3_single_source_integrity.py'
+          text = single.read_text(encoding='utf-8')
+          text = text.replace("DIR / 'verify_public_narratives_v2.py'", "DIR / 'verify_public_narratives.py'")
+          text = text.replace('DIR / "verify_public_narratives_v2.py"', 'DIR / "verify_public_narratives.py"')
+          text = text.replace("DIR / 'verify_public_narratives_v3.py'", "DIR / 'verify_public_narratives.py'")
+          text = text.replace('DIR / "verify_public_narratives_v3.py"', 'DIR / "verify_public_narratives.py"')
+          single.write_text(text, encoding='utf-8', newline='\n')
+
+          # 5. Fail the migration if current-manifest repinning survives in SWE-v3 tests/verifiers.
+          allowed_historical = {
+              'tests/test_swe_agent_v3_single_source_integrity.py',
+              'tests/test_swe_agent_v3_amendment_v1_1.py',
+              'research/external-validation/swe-agent-v3/verify_amendment_v1_1.py',
+          }
+          offenders = []
+          for path in list((root / 'tests').glob('test_swe_agent_v3*.py')) + list(pkg.glob('verify*.py')):
+              rel = path.as_posix()
+              body = path.read_text(encoding='utf-8')
+              if rel not in allowed_historical:
+                  if 'entry["git_blob_sha1"]' in body or "entry['git_blob_sha1']" in body or 'entry["bytes"]' in body or "entry['bytes']" in body:
+                      offenders.append(rel)
+          if offenders:
+              raise SystemExit('current-manifest repin assumptions remain: ' + ', '.join(sorted(offenders)))
+
+          # Syntax gate before creating the migration commit.
+          import py_compile
+          for path in [
+              pkg / 'verify_integrity.py', pkg / 'verify_design.py', pkg / 'verify_review_closure.py',
+              pkg / 'verify_amendment_v1_1.py', pkg / 'verify_public_narratives.py',
+              design_test, locks_test, single,
+          ]:
+              py_compile.compile(str(path), doraise=True)
+          PY
+      - name: Commit migration and remove one-shot workflow
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git rm .github/workflows/pr435-finalize-path-only.yml
+          git add research/external-validation/swe-agent-v3 tests
+          git commit -m "Complete SWE v3 path-only authority migration"
+          git push origin HEAD:repair/pr435-final-contract-closure
