@@ -11,8 +11,8 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/README.md",
-      "git_blob_sha1": "6b537c9320f4aed2f6e1e1653dee1c42179c5efa",
-      "bytes": 4258
+      "git_blob_sha1": "2f4fd9208e2abafe06c01afc131a79851f295459",
+      "bytes": 5360
     },
     {
       "path": "research/external-validation/swe-agent-v3/question-v1.0.md",
@@ -61,13 +61,13 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/review-closure-amendment-v1.2.json",
-      "git_blob_sha1": "1a75a23d91762084a363b96214ce39d10a9e2f8b",
-      "bytes": 7983
+      "git_blob_sha1": "59c862790fee90beb0b3fba93dfd9b4e51921322",
+      "bytes": 12835
     },
     {
       "path": "research/external-validation/swe-agent-v3/AMENDMENT-v1.2.md",
-      "git_blob_sha1": "7ab6a94d033dc8f1a3e9fb28393bf1928f2da718",
-      "bytes": 4034
+      "git_blob_sha1": "6089f31d1769349fc1e9f9588ad40dca9e775fef",
+      "bytes": 6868
     },
     {
       "path": "research/external-validation/swe-agent-v3/historical-base-83c951/preregistration-v1.0.json",
