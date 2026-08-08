@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
   "execution_authorized": false,
@@ -21,6 +21,7 @@
     "budgets_and_stopping_rules_frozen": false,
     "counterbalancing_and_randomization_seed_frozen": false,
     "grader_and_scoring_contract_frozen": false,
+    "critical_harm_thresholds_frozen_and_verified": false,
     "evidence_store_and_restoration_test_passed": false,
     "independent_preexecution_review_clean": false,
     "branch_or_tag_protection_and_exact_head_checks_enabled": false,
@@ -38,6 +39,7 @@
     "budgets_and_stopping_rules_frozen": false,
     "counterbalancing_and_randomization_seed_frozen": false,
     "grader_and_scoring_contract_frozen": false,
+    "critical_harm_thresholds_frozen_and_verified": false,
     "evidence_store_and_restoration_test_passed": false,
     "sacrificial_pilot_completed_and_excluded": false,
     "independent_preexecution_review_clean": false,
@@ -48,7 +50,7 @@
     "theory version is not frozen for this experiment",
     "FAR treatment capsule does not exist",
     "placebo does not exist",
-    "tasks, model, prompts, environments, budgets, randomization, and grader are not frozen",
+    "tasks, model, prompts, environments, budgets, randomization, grader, and critical-harm threshold verification are not frozen or complete",
     "evidence storage and sacrificial pilot are not complete",
     "independent review and separate pilot/confirmatory launch authorization are absent"
   ],
