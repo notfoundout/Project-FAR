@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
   "manifest_status": "uninstantiated",
@@ -30,7 +30,8 @@
     },
     "task_bundle_root_sha256": {
       "pattern": "^[0-9a-f]{64}$",
-      "construction": "SHA-256 over the exact UTF-8 bytes of the canonical task-bundle descriptor defined by task_bundle_root_contract"
+      "construction": "SHA-256 over the exact UTF-8 bytes of the canonical task-bundle descriptor defined by task_bundle_root_contract",
+      "unique": true
     }
   },
   "task_bundle_root_contract": {
@@ -49,9 +50,9 @@
     ],
     "descriptor_values": {
       "algorithm_id": "far-swe-v3-task-bundle-root-v2",
-      "repository_provider": "lowercase source-provider identifier; github.com repositories use github",
-      "repository_provider_id": "provider-stable repository identifier resolved from the authoritative source before freeze; github requires the decimal GitHub REST repository id, not owner/name text",
-      "canonical_repository_url": "display-and-audit locator resolved from the authoritative repository identity: HTTPS only; lowercase scheme and host; default port 443 omitted; query, fragment, userinfo, and trailing slash prohibited; one terminal .git suffix removed; for github.com use the canonical full_name returned for repository_provider_id and lowercase owner/repository path for comparison; URL spelling is never the repository-count identity",
+      "repository_provider": "exact JSON string github.com; no other provider or self-hosted instance is permitted in FAR-SWE-V3-001",
+      "repository_provider_id": "positive JSON integer equal to the decimal GitHub REST repository id returned by api.github.com for the repository; strings, owner/name text, zero, negatives, and alternate numeric encodings are prohibited",
+      "canonical_repository_url": "exact HTTPS URL https://github.com/{full_name} where full_name is returned by api.github.com for repository_provider_id at freeze time; query, fragment, userinfo, explicit port, terminal .git suffix, and trailing slash are prohibited; URL spelling is audit metadata and never the repository-count identity",
       "repository_commit_sha": "lowercase 40-character Git commit SHA identifying the exact repository snapshot",
       "task_payload_sha256": "lowercase SHA-256 of the exact task/issue payload bytes supplied to the agent, before prompt wrapping",
       "task_payload_bytes": "nonnegative integer byte count of that exact task/issue payload"
@@ -66,17 +67,18 @@
     ],
     "archive_or_filesystem_metadata_in_root": false,
     "path_order_or_archive_format_in_root": false,
-    "recomputation_rule": "independent auditors reconstruct the seven-key descriptor from the sealed authoritative repository source and exact task payload, JCS-canonicalize it, and SHA-256 the resulting bytes"
+    "recomputation_rule": "independent auditors reconstruct the seven-key descriptor from api.github.com repository metadata and the exact sealed task payload, JCS-canonicalize it, and SHA-256 the resulting bytes"
   },
   "repository_identity_contract": {
-    "authoritative_identity": "the ordered pair (repository_provider, repository_provider_id) resolved from authoritative source metadata before freeze; URL strings and repository_blind_id labels are never repository identities",
-    "github_identity_rule": "for github.com, repository_provider is github and repository_provider_id is the decimal REST repository id; host case, owner/repository path case, default HTTPS port spelling, .git suffixes, redirects, renames, and equivalent clone URL spellings cannot create distinct repository identities",
-    "canonical_url_rule": "canonical_repository_url is derived only after authoritative identity resolution and is retained for auditability; it may not override or split an equal provider-stable identity",
+    "supported_provider": "github.com only",
+    "authoritative_identity": "the ordered pair (repository_provider, repository_provider_id), where repository_provider is exactly the JSON string github.com and repository_provider_id is a positive JSON integer equal to the api.github.com REST repository id resolved before freeze; URL strings and repository_blind_id labels are never repository identities",
+    "github_identity_rule": "repository_provider must equal github.com exactly and repository_provider_id must be a positive JSON integer equal to the decimal GitHub REST repository id; strings, owner/repository text, host aliases, self-hosted GitHub instances, path-case variants, default-port variants, .git suffixes, redirects, and renames cannot create distinct repository identities",
+    "canonical_url_rule": "canonical_repository_url must equal https://github.com/{full_name} using the full_name returned by api.github.com for the authoritative repository id at freeze time and is retained only for auditability; it may not override or split an equal provider-stable identity",
     "equal_authoritative_identities_same_blind_id": true,
     "distinct_authoritative_identities_distinct_blind_ids": true,
     "minimum_repository_count_basis": "count distinct (repository_provider, repository_provider_id) pairs, never URL strings or repository_blind_id labels alone",
     "per_repository_cap_basis": "apply the preregistered per-repository task cap by the same (repository_provider, repository_provider_id) pair before execution",
-    "validation_timing": "resolve and validate every repository identity, the one-to-one identity-to-blind-ID mapping, minimum repository count, and per-repository cap before any sacrificial pilot or confirmatory execution"
+    "validation_timing": "resolve and validate every github.com repository identity from api.github.com, the one-to-one identity-to-blind-ID mapping, unique task-bundle-root mapping, minimum repository count, and per-repository cap before any sacrificial pilot or confirmatory execution"
   },
   "order_contract": {
     "authoritative_sequence": "top-level JSON array order",
@@ -89,10 +91,12 @@
   "preexecution_validation": [
     "record keys match the exact schema",
     "blind task identifiers are unique",
+    "task bundle roots are unique so one authoritative task identity cannot occupy multiple manifest records or bootstrap units",
     "all identifiers match their ASCII fixed-width patterns",
     "all task bundle roots are lowercase 64-character SHA-256 hex",
     "every task bundle root is independently recomputed from the canonical task-bundle descriptor",
-    "every canonical repository URL is resolved to one authoritative provider-stable repository identity before counting or blind-ID assignment",
+    "every repository_provider is exactly github.com and every repository_provider_id is a positive JSON integer independently resolved from api.github.com before counting or blind-ID assignment",
+    "every canonical repository URL is derived from the authoritative GitHub repository id and returned full_name before counting or blind-ID assignment",
     "equal authoritative repository identities use the same repository blind ID and distinct authoritative repository identities use distinct blind IDs",
     "minimum repository count and per-repository cap are computed from authoritative provider-stable repository identities rather than URL spellings or blind-ID label count",
     "the exact task manifest artifact bytes and Git blob identity are committed before any sacrificial pilot or confirmatory execution"
