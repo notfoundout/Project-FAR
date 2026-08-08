@@ -21,13 +21,13 @@
     },
     {
       "path": "research/external-validation/swe-agent-v3/preregistration-v1.0.json",
-      "git_blob_sha1": "c6c9b5399ef2699ddcd2652dbb2acdd8e820bee1",
-      "bytes": 10523
+      "git_blob_sha1": "b6664cf59ca7a2033c99f512e2b233601ad53d94",
+      "bytes": 10577
     },
     {
       "path": "research/external-validation/swe-agent-v3/task-manifest-contract-v1.0.json",
-      "git_blob_sha1": "02f12f061a0dcfa61212b27c40ce9a12bdb2c9a0",
-      "bytes": 6839
+      "git_blob_sha1": "b160b713d3b1290f9580f96e1d9f88392a3275be",
+      "bytes": 7553
     },
     {
       "path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
