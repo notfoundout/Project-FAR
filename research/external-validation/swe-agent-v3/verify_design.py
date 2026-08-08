@@ -214,6 +214,43 @@ EXPECTED_CAPSULE = {
         "any mutable remote dependency invalidates the capsule",
     ],
 }
+EXPECTED_EVIDENCE_BUNDLE_SECTION = """## Evidence bundle per run
+
+Every attempted run must retain immutable, hash-addressed copies of:
+
+- task identity under sealed mapping, including the frozen task-manifest strata classification;
+- frozen task-manifest Git blob identity and frozen sealed identity-ledger Git blob identity;
+- authoritative repository provider identity, canonical repository URL, and exact commit as reconstructed from the sealed identity ledger by the independent identity auditor;
+- environment image digest and dependency lock;
+- model provider, endpoint, model version, parameters, and provider request identifier;
+- all system, agent, task, capsule, and tool instructions;
+- capsule or placebo manifest and mount path;
+- randomization position and repetition;
+- stdout, stderr, ordered trajectory, commands, tool calls, model messages, timestamps, token usage, budget state, and cost;
+- workspace status before and after the run;
+- patch, prediction, changed-file inventory, internal exit status, outer exit status, and terminal reason;
+- target, neighboring, regression, and hidden-grader results;
+- grader version, grader logs, adjudication record, and final outcome;
+- the critical-harm evaluation inputs and exact results required by `critical-harm-thresholds-v1.0.json`;
+- bundle manifest and content-root digest.
+
+Outer process success cannot override an inner execution failure. `budget_exhausted` is distinct from `resolved`. Missing required evidence makes the run `invalid`, never `resolved`.
+
+"""
+EXPECTED_PRE_SUBMISSION_SECTION = """## Pre-submission behavior contract
+
+The agent must retain:
+
+1. a reproduction attempt or explicit `reproduction_unavailable`;
+2. a causal hypothesis;
+3. at least one observation that discriminates that hypothesis from an alternative;
+4. execution of the identified target test before submission, or explicit `target_test_unavailable`;
+5. execution of the frozen neighboring-test set after a target pass;
+6. a patch that modifies an intended repository path, unless the run terminates with an explicit no-patch failure.
+
+These controls affect all arms equally and are part of the frozen agent configuration, not part of the FAR capsule.
+
+"""
 
 
 def _manifest_entries() -> dict[str, dict[str, Any]]:
@@ -294,10 +331,35 @@ def verify_execution_gate() -> None:
     review_closure.verify_gate_closed(HERE / "execution-gate-v1.0.json")
 
 
+def _exact_section(text: str, start_heading: str, next_heading: str, expected: str, label: str) -> None:
+    start_marker = start_heading + "\n"
+    next_marker = next_heading + "\n"
+    if text.count(start_marker) != 1 or text.count(next_marker) != 1:
+        raise DesignError(f"{label} headings must occur exactly once")
+    start = text.index(start_marker)
+    end = text.index(next_marker, start + len(start_marker))
+    if text[start:end] != expected:
+        raise DesignError(f"{label} exact contract drifted")
+
+
 def verify_text_boundaries() -> None:
     evidence = _require_exact_artifact("evidence-and-analysis-plan-v1.0.md").decode("utf-8")
     readme = _require_exact_artifact("README.md").decode("utf-8")
     question = _require_exact_artifact("question-v1.0.md").decode("utf-8")
+    _exact_section(
+        evidence,
+        "## Evidence bundle per run",
+        "## Pre-submission behavior contract",
+        EXPECTED_EVIDENCE_BUNDLE_SECTION,
+        "retained evidence bundle",
+    )
+    _exact_section(
+        evidence,
+        "## Pre-submission behavior contract",
+        "## Placebo exposure matching",
+        EXPECTED_PRE_SUBMISSION_SECTION,
+        "pre-submission behavior",
+    )
     required_evidence = (
         "`D_i = p_i(far) - p_i(placebo)`",
         "frozen sealed identity-ledger Git blob identity",
@@ -319,9 +381,13 @@ def verify_text_boundaries() -> None:
         if phrase in evidence:
             raise DesignError(f"forbidden evidence/analysis wording survived: {phrase}")
     required_readme = (
-        "Execution authorized: **No**", "bootstrap seed is already prospectively frozen",
-        "historical-authority-v1.0.json", "critical_harm_thresholds_frozen_and_verified",
-        "Current authority for unrelated subjects comes from the current integrity-rooted design artifacts" if "Current authority for unrelated subjects comes from the current integrity-rooted design artifacts" in readme else "The reviewed Git commit/tree is the immutable current root.",
+        "Execution authorized: **No**",
+        "bootstrap seed is already prospectively frozen",
+        "historical-authority-v1.0.json",
+        "critical_harm_thresholds_frozen_and_verified",
+        "sealed identity ledger governed by `task-manifest-contract-v1.0.json`",
+        "`launch_record_required_bindings`",
+        "The reviewed Git commit/tree is the immutable current root.",
     )
     for phrase in required_readme:
         if phrase not in readme:
