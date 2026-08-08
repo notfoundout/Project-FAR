@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import sys
@@ -19,6 +20,51 @@ def load_module(name: str, path: Path):
     sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
+
+
+def git_blob_sha1(raw: bytes) -> str:
+    return hashlib.sha1(f"blob {len(raw)}\0".encode("ascii") + raw).hexdigest()
+
+
+def canonical_descriptor_bytes(record: dict) -> bytes:
+    descriptor = {
+        "algorithm_id": "far-swe-v3-task-bundle-root-v2",
+        "repository_provider": record["repository_provider"],
+        "repository_provider_id": record["repository_provider_id"],
+        "canonical_repository_url": record["canonical_repository_url"],
+        "repository_commit_sha": record["repository_commit_sha"],
+        "task_payload_sha256": record["task_payload_sha256"],
+        "task_payload_bytes": record["task_payload_bytes"],
+    }
+    return json.dumps(descriptor, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+
+
+def build_manifest_and_ledger() -> tuple[list[dict], list[dict]]:
+    manifest: list[dict] = []
+    ledger: list[dict] = []
+    for i in range(25):
+        repo_index = i % 5 + 1
+        identity = {
+            "blind_task_id": f"TASK-{i + 1:06d}",
+            "repository_blind_id": f"REPO-{repo_index:04d}",
+            "task_bundle_root_sha256": "",
+            "repository_provider": "github.com",
+            "repository_provider_id": 1000 + repo_index,
+            "canonical_repository_url": f"https://github.com/example/repo{repo_index}",
+            "repository_commit_sha": f"{repo_index:040x}",
+            "task_payload_sha256": f"{i + 1:064x}",
+            "task_payload_bytes": 100 + i,
+            "strata": [STRATA[i % len(STRATA)]],
+        }
+        identity["task_bundle_root_sha256"] = hashlib.sha256(canonical_descriptor_bytes(identity)).hexdigest()
+        ledger.append(identity)
+        manifest.append({
+            "blind_task_id": identity["blind_task_id"],
+            "repository_blind_id": identity["repository_blind_id"],
+            "task_bundle_root_sha256": identity["task_bundle_root_sha256"],
+            "strata": identity["strata"],
+        })
+    return manifest, ledger
 
 
 class SingleSourceIntegrityTests(unittest.TestCase):
@@ -52,15 +98,17 @@ class SingleSourceIntegrityTests(unittest.TestCase):
         for token in ("import subprocess", "git fetch --unshallow", "rev-parse", "cat-file", "merge-base", "--is-ancestor"):
             self.assertNotIn(token, verifier)
         authority = json.loads((DIR / "historical-authority-v1.0.json").read_text(encoding="utf-8"))
-        self.assertEqual(authority["base_design_head"], "83c951aca9be6a09a4517044ae531a3ed1bcc9a9")
+        self.assertRegex(authority["base_design_head"], r"^[0-9a-f]{40}$")
         self.assertEqual(authority["artifact_status"], "Archive")
         self.assertFalse(authority["current_design_authority"])
         self.assertFalse(authority["execution_authorized"])
         self.assertEqual(len(authority["snapshots"]), 2)
-        self.assertEqual(
-            {entry["historical_git_blob_sha1"] for entry in authority["snapshots"]},
-            {"7147f6814f76eb0f73fd0741b17b2501e38e6f57", "15b352d54a524d9caf827018b608028c004f8f13"},
-        )
+        for entry in authority["snapshots"]:
+            self.assertRegex(entry["historical_git_blob_sha1"], r"^[0-9a-f]{40}$")
+            snapshot = ROOT / entry["path"]
+            self.assertEqual(git_blob_sha1(snapshot.read_bytes()), entry["historical_git_blob_sha1"])
+            # Historical blob IDs are governed data, not duplicated verifier constants.
+            self.assertNotIn(entry["historical_git_blob_sha1"], verifier)
 
     def test_every_governed_final_contract_is_in_design_manifest(self) -> None:
         manifest = json.loads((DIR / "design-manifest-v1.0.json").read_text(encoding="utf-8"))
@@ -87,10 +135,11 @@ class SingleSourceIntegrityTests(unittest.TestCase):
         source = (DIR / "verify_review_closure.py").read_text(encoding="utf-8")
         self.assertNotIn("treatment_capsule_git_blob_sha1", source)
         self.assertNotIn("execution_gate_git_blob_sha1", source)
+        self.assertNotIn(data["rng_contract"]["seed_hex"], source)
 
-    def test_schema_1_4_identity_and_strata_contract_is_preserved(self) -> None:
+    def test_schema_1_5_identity_strata_and_sealed_ledger_contract_is_preserved(self) -> None:
         data = json.loads((DIR / "task-manifest-contract-v1.0.json").read_text(encoding="utf-8"))
-        self.assertEqual(data["schema_version"], "1.4")
+        self.assertEqual(data["schema_version"], "1.5")
         self.assertFalse(data["execution_authorized"])
         self.assertEqual(data["repository_identity_contract"]["supported_provider"], "github.com only")
         self.assertIn("positive JSON integer", data["task_bundle_root_contract"]["descriptor_values"]["repository_provider_id"])
@@ -98,6 +147,12 @@ class SingleSourceIntegrityTests(unittest.TestCase):
         self.assertTrue(data["record_schema"]["task_bundle_root_sha256"]["unique"])
         self.assertEqual(data["record_schema"]["strata"]["allowed_values_in_canonical_order"], STRATA)
         self.assertFalse(data["order_contract"]["runtime_sorting_permitted"])
+        ledger = data["sealed_identity_ledger_contract"]
+        self.assertEqual(ledger["status"], "uninstantiated")
+        self.assertFalse(ledger["execution_authorized"])
+        self.assertIn("exactly one ledger record for every task-manifest record", ledger["array_binding_rule"])
+        self.assertIn("committed before any sacrificial pilot or confirmatory execution", ledger["freeze_timing"])
+        self.assertIn("agent and capsule authors", ledger["access_control"])
 
     def test_instantiated_manifest_enforces_unique_roots_canonical_strata_and_coverage(self) -> None:
         module = load_module("single_source_review_closure_records", DIR / "verify_review_closure.py")
@@ -124,14 +179,55 @@ class SingleSourceIntegrityTests(unittest.TestCase):
                 with self.assertRaises(module.DesignError):
                     module.validate_instantiated_task_manifest(path)
 
+    def test_sealed_identity_ledger_enforces_roots_repository_population_and_cap(self) -> None:
+        module = load_module("single_source_review_closure_ledger", DIR / "verify_review_closure.py")
+        manifest, ledger = build_manifest_and_ledger()
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest_path = Path(tmp) / "manifest.json"
+            ledger_path = Path(tmp) / "ledger.json"
+
+            def write(current_manifest: list[dict], current_ledger: list[dict]) -> None:
+                manifest_path.write_text(json.dumps(current_manifest, indent=2) + "\n", encoding="utf-8")
+                ledger_path.write_text(json.dumps(current_ledger, indent=2) + "\n", encoding="utf-8")
+
+            write(manifest, ledger)
+            self.assertEqual(len(module.validate_instantiated_identity_ledger(manifest_path, ledger_path)), 25)
+
+            bad_root = json.loads(json.dumps(ledger)); bad_root[0]["task_payload_bytes"] += 1
+            write(manifest, bad_root)
+            with self.assertRaises(module.DesignError):
+                module.validate_instantiated_identity_ledger(manifest_path, ledger_path)
+
+            alias_split = json.loads(json.dumps(ledger)); alias_split[5]["repository_blind_id"] = "REPO-9999"
+            alias_manifest = json.loads(json.dumps(manifest)); alias_manifest[5]["repository_blind_id"] = "REPO-9999"
+            write(alias_manifest, alias_split)
+            with self.assertRaises(module.DesignError):
+                module.validate_instantiated_identity_ledger(manifest_path, ledger_path)
+
+            cap_evasion = json.loads(json.dumps(ledger))
+            cap_manifest = json.loads(json.dumps(manifest))
+            # Move one task from repo 2 to repo 1 and recompute its authoritative root.
+            moved = cap_evasion[6]
+            moved["repository_blind_id"] = "REPO-0001"
+            moved["repository_provider_id"] = 1001
+            moved["canonical_repository_url"] = "https://github.com/example/repo1"
+            moved["repository_commit_sha"] = f"{1:040x}"
+            moved["task_bundle_root_sha256"] = hashlib.sha256(canonical_descriptor_bytes(moved)).hexdigest()
+            cap_manifest[6]["repository_blind_id"] = moved["repository_blind_id"]
+            cap_manifest[6]["task_bundle_root_sha256"] = moved["task_bundle_root_sha256"]
+            write(cap_manifest, cap_evasion)
+            with self.assertRaises(module.DesignError):
+                module.validate_instantiated_identity_ledger(manifest_path, ledger_path)
+
     def test_semantic_weakening_fails_without_repinning_verifier(self) -> None:
         module = load_module("single_source_review_closure", DIR / "verify_review_closure.py")
         data = json.loads((DIR / "task-manifest-contract-v1.0.json").read_text(encoding="utf-8"))
         mutations = (
-            lambda d: d.__setitem__("schema_version", "1.3"),
+            lambda d: d.__setitem__("schema_version", "1.4"),
             lambda d: d["record_schema"]["task_bundle_root_sha256"].__setitem__("unique", False),
             lambda d: d["record_schema"]["strata"].__setitem__("allowed_values_in_canonical_order", STRATA[:-1]),
             lambda d: d["task_bundle_root_contract"]["descriptor_values"].__setitem__("repository_provider_id", "owner/name string"),
+            lambda d: d["sealed_identity_ledger_contract"].__setitem__("access_control", "agent may inspect identities"),
             lambda d: d["order_contract"].__setitem__("runtime_sorting_permitted", True),
         )
         for mutation in mutations:
@@ -148,7 +244,9 @@ class SingleSourceIntegrityTests(unittest.TestCase):
         mutations = (
             lambda d: d["rate_harms"]["invalid_run_rate"].__setitem__("critical_threshold", {"numerator": 1, "denominator": 5}),
             lambda d: d["rate_harms"]["regression_introduction_rate"].__setitem__("slot_denominator", "complete cases only"),
-            lambda d: d["zero_tolerance_harms"]["hidden_task_leakage"].__setitem__("trigger_rule", "count > 1"),
+            lambda d: d["rate_harms"]["regression_introduction_rate"].__setitem__("slot_numerator", "operator-attributed regressions only"),
+            lambda d: d["zero_tolerance_harms"]["hidden_task_leakage"].__setitem__("trigger_rule", "slot_numerator > 1"),
+            lambda d: d["zero_tolerance_harms"]["evidence_loss"].__setitem__("slot_denominator", "valid slots only"),
             lambda d: d.__setitem__("versioning_rule", "thresholds may change after exposure"),
         )
         for mutation in mutations:
