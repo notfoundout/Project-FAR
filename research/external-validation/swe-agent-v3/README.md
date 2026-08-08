@@ -18,21 +18,30 @@ The historical v2 result remains immutable and separate: one task, two repetitio
 
 ## Current boundary
 
-This package freezes only the causal question, arm structure, estimands, outcome contract, evidence requirements, capsule constraints, and fail-closed execution gate. It does not select tasks, choose a model, build the FAR capsule, build the placebo, set the final run budget, generate randomization, or authorize a pilot or confirmatory run.
+This package freezes only the causal question, arm structure, estimands, outcome contract, evidence requirements, capsule constraints, prospective corrections, and fail-closed execution gates. It does not authorize a model call, pilot, benchmark run, confirmatory run, grading, outcome reveal, release, or accepted-theory change.
 
-All model calls and benchmark execution are currently blocked. A sacrificial pilot may only be separately authorized after every pre-pilot gate in `execution-gate-v1.0.json` is true; confirmatory execution additionally requires the completed-and-excluded pilot gate and every remaining confirmatory gate. No such authorization currently exists.
+`failure-arithmetic-amendment-v1.1.json` controls its two registered subjects. `review-closure-amendment-v1.2.json` prospectively controls only the bootstrap-seed authority correction, stratum-auditable task-manifest extension, critical-harm thresholds and launch prerequisites, and shallow-checkout historical-authority consumption described in `AMENDMENT-v1.2.md`. The original historical authority bytes are preserved under `historical-base-83c951/` and are manifest-rooted immutable snapshots, not new evidence.
+
+The frozen bootstrap seed remains bound to its originally committed derivation-input identities; later launch-preparation changes cannot rewrite it. Future instantiated confirmatory task manifests must record one of the five preregistered strata per task and prove all required strata are represented before execution. Critical-harm thresholds are prospectively fixed and fail closed on missing required harm evidence.
+
+All model calls and benchmark execution are currently blocked. A sacrificial pilot may only be separately authorized after every pre-pilot gate and every v1.2 pilot prerequisite are true; confirmatory execution additionally requires the completed-and-excluded pilot gate, frozen required-strata coverage, harm-evidence retention, and every remaining confirmatory gate. No such authorization currently exists.
 
 ## Integrity model
 
-Every governed data and narrative artifact is exact-locked in `design-manifest-v1.0.json`. The verifier pins that manifest as one immutable root and separately checks the experiment's critical semantics. Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing; it remains ordinary reviewed code at the exact PR head.
+Every governed data, narrative, prospective-amendment, seed-commitment, and immutable historical-authority snapshot artifact is exact-locked in `design-manifest-v1.0.json`. The verifier checks each committed Git blob and the corresponding worktree bytes, then evaluates the critical semantic contracts. Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing; it remains ordinary reviewed code at the exact PR head.
+
+The historical snapshots make primary verification self-contained in a depth-1 checkout. The required verification path does not depend on fetching historical Git objects or proving an unrelated ancestry relation.
 
 ## Verification
 
 ```bash
 python research/external-validation/swe-agent-v3/verify_design.py
+python research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py
 python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v
 python -m py_compile \
   research/external-validation/swe-agent-v3/verify_integrity.py \
   research/external-validation/swe-agent-v3/verify_design.py \
+  research/external-validation/swe-agent-v3/verify_review_closure.py \
+  research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py \
   tests/test_swe_agent_v3*.py
 ```
