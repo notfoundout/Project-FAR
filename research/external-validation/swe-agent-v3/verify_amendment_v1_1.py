@@ -3,24 +3,27 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
 AMEND = HERE / "failure-arithmetic-amendment-v1.1.json"
 README = HERE / "AMENDMENT-v1.1.md"
-PREREG = HERE / "preregistration-v1.0.json"
-PLAN = HERE / "evidence-and-analysis-plan-v1.0.md"
 GATE = HERE / "execution-gate-v1.0.json"
 AMEND_SHA = "08065ca4b4878f77732e2a86c3beb99a18312bcf892c669ff1795eae172016c2"
 README_SHA = "5f95525e501d8e86700f66a2d6a48d0bb6386bfc36b68f8ee7085f1323d1e355"
+BASE_HEAD = "83c951aca9be6a09a4517044ae531a3ed1bcc9a9"
+PREREG_REL = "research/external-validation/swe-agent-v3/preregistration-v1.0.json"
+PLAN_REL = "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md"
 PREREG_BLOB = "7147f6814f76eb0f73fd0741b17b2501e38e6f57"
 PLAN_BLOB = "15b352d54a524d9caf827018b608028c004f8f13"
 REPL_DIGEST = "18babea600927a00669682937b0da60e5b4689f69e9c98e7e39ebe2a53f1ce2e"
 ARITH_DIGEST = "df99660ed73f71757013a2cae39f2cb53b4ce3f9ec97bc7e6cf7557dfc70f653"
 EXPECTED_AUTHORITY = {
-    "base_design_head": "83c951aca9be6a09a4517044ae531a3ed1bcc9a9",
+    "base_design_head": BASE_HEAD,
     "base_preregistration_git_blob_sha1": PREREG_BLOB,
     "base_evidence_plan_git_blob_sha1": PLAN_BLOB,
     "superseded_paths": [
@@ -52,47 +55,49 @@ def _pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
-def load(path: Path) -> dict[str, Any]:
-    raw = path.read_bytes()
+def _decode(raw: bytes, label: str) -> dict[str, Any]:
     if raw.startswith(b"\xef\xbb\xbf"):
-        raise AmendmentError("BOM")
+        raise AmendmentError(f"BOM: {label}")
     try:
-        value = json.loads(
-            raw.decode("utf-8"),
-            object_pairs_hook=_pairs,
-            parse_constant=_bad,
-        )
+        value = json.loads(raw.decode("utf-8"), object_pairs_hook=_pairs, parse_constant=_bad)
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise AmendmentError(f"invalid JSON: {path}") from exc
+        raise AmendmentError(f"invalid JSON: {label}") from exc
     if not isinstance(value, dict):
-        raise AmendmentError("object required")
+        raise AmendmentError(f"object required: {label}")
     return value
 
 
+def load(path: Path) -> dict[str, Any]:
+    return _decode(path.read_bytes(), str(path))
+
+
 def digest(value: Any) -> str:
-    return hashlib.sha256(
-        json.dumps(
-            value,
-            sort_keys=True,
-            separators=(",", ":"),
-            ensure_ascii=False,
-            allow_nan=False,
-        ).encode("utf-8")
-    ).hexdigest()
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode("utf-8")).hexdigest()
 
 
 def blob(raw: bytes) -> str:
-    header = b"blob " + str(len(raw)).encode("ascii") + b"\x00"
-    return hashlib.sha1(header + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\x00" + raw).hexdigest()
 
 
-def validate(
-    amend: Path = AMEND,
-    readme: Path = README,
-    prereg: Path = PREREG,
-    plan: Path = PLAN,
-    gate: Path = GATE,
-) -> dict[str, Any]:
+def _git(*args: str) -> bytes:
+    try:
+        return subprocess.run(["git", "-C", str(ROOT), *args], check=True, capture_output=True).stdout
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise AmendmentError(f"cannot resolve historical Git authority: {' '.join(args)}") from exc
+
+
+def historical_blob_id(head: str, relative: str) -> str:
+    value = _git("rev-parse", f"{head}:{relative}").decode("ascii").strip()
+    if len(value) != 40 or any(ch not in "0123456789abcdef" for ch in value):
+        raise AmendmentError(f"invalid historical blob id: {relative}")
+    return value
+
+
+def historical_blob_bytes(head: str, relative: str) -> bytes:
+    return _git("cat-file", "blob", f"{head}:{relative}")
+
+
+def validate(amend: Path = AMEND, readme: Path = README, gate: Path = GATE) -> dict[str, Any]:
     if hashlib.sha256(amend.read_bytes()).hexdigest() != AMEND_SHA:
         raise AmendmentError("amendment bytes drifted")
     if hashlib.sha256(readme.read_bytes()).hexdigest() != README_SHA:
@@ -101,33 +106,28 @@ def validate(
     amendment = load(amend)
     authority = amendment.get("authority")
     identity = (
-        amendment.get("schema_version"),
-        amendment.get("program_id"),
-        amendment.get("artifact_status"),
-        amendment.get("amendment_status"),
+        amendment.get("schema_version"), amendment.get("program_id"),
+        amendment.get("artifact_status"), amendment.get("amendment_status"),
     )
-    if identity != (
-        "1.1",
-        "FAR-SWE-V3-001",
-        "Research",
-        "prospective_pre_execution_correction",
-    ):
+    if identity != ("1.1", "FAR-SWE-V3-001", "Research", "prospective_pre_execution_correction"):
         raise AmendmentError("identity drifted")
     if authority != EXPECTED_AUTHORITY:
         raise AmendmentError("authority or precedence drifted")
-    if blob(prereg.read_bytes()) != PREREG_BLOB or blob(plan.read_bytes()) != PLAN_BLOB:
-        raise AmendmentError("base design identity drifted")
-    if load(prereg).get("execution_authorized") is not False:
-        raise AmendmentError("base execution authorized")
+
+    if historical_blob_id(BASE_HEAD, PREREG_REL) != PREREG_BLOB:
+        raise AmendmentError("historical preregistration identity drifted")
+    if historical_blob_id(BASE_HEAD, PLAN_REL) != PLAN_BLOB:
+        raise AmendmentError("historical evidence-plan identity drifted")
+    historical_prereg = _decode(historical_blob_bytes(BASE_HEAD, PREREG_REL), f"{BASE_HEAD}:{PREREG_REL}")
+    if historical_prereg.get("execution_authorized") is not False:
+        raise AmendmentError("historical base execution authorized")
+    try:
+        subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor", BASE_HEAD, "HEAD"], check=True, capture_output=True)
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise AmendmentError("historical amendment base is not an ancestor of HEAD") from exc
+
     gate_data = load(gate)
-    if any(
-        gate_data.get(key) is not False
-        for key in (
-            "execution_authorized",
-            "model_calls_authorized",
-            "benchmark_execution_authorized",
-        )
-    ):
+    if any(gate_data.get(key) is not False for key in ("execution_authorized", "model_calls_authorized", "benchmark_execution_authorized")):
         raise AmendmentError("gate open")
 
     replacement = amendment.get("replacement_contract", {})
@@ -136,11 +136,7 @@ def validate(
         raise AmendmentError("contract drifted")
 
     classes = replacement.get("terminal_reason_classes", {})
-    keys = {
-        "infrastructure_invalid_replacement_eligible",
-        "unresolved_nonreplaceable",
-        "invalid_nonreplaceable",
-    }
+    keys = {"infrastructure_invalid_replacement_eligible", "unresolved_nonreplaceable", "invalid_nonreplaceable"}
     if set(classes) != keys:
         raise AmendmentError("taxonomy keys")
     flat = [reason for reasons in classes.values() for reason in reasons]
@@ -152,53 +148,28 @@ def validate(
         raise AmendmentError("provider rule")
     if "unclassified_terminal_reason" not in classes["invalid_nonreplaceable"]:
         raise AmendmentError("fallback")
-    if (
-        replacement.get("operator_discretion_permitted") is not False
-        or replacement.get("replacement_attempts_per_eligible_slot") != 1
-    ):
+    if replacement.get("operator_discretion_permitted") is not False or replacement.get("replacement_attempts_per_eligible_slot") != 1:
         raise AmendmentError("replacement discretion")
     if len(replacement.get("eligibility_facts_required_all_true", [])) != 5:
         raise AmendmentError("eligibility facts")
-    if (
-        "never retroactively reclassify"
-        not in replacement.get("unlisted_terminal_reason_rule", "")
-        or "never rerun the agent" not in replacement.get("grader_failure_rule", "")
-    ):
+    if "never retroactively reclassify" not in replacement.get("unlisted_terminal_reason_rule", "") or "never rerun the agent" not in replacement.get("grader_failure_rule", ""):
         raise AmendmentError("preservation rules")
 
-    if (
-        "exact reduced rational" not in arithmetic.get("number_system", "")
-        or "arbitrary-precision" not in arithmetic.get("number_system", "")
-    ):
+    if "exact reduced rational" not in arithmetic.get("number_system", "") or "arbitrary-precision" not in arithmetic.get("number_system", ""):
         raise AmendmentError("number system")
     if arithmetic.get("binary_outcome_encoding") != {"resolved": 1, "unresolved": 0}:
         raise AmendmentError("binary encoding")
-    if arithmetic.get("tail_probabilities") != {
-        "lower": {"numerator": 1, "denominator": 40},
-        "upper": {"numerator": 39, "denominator": 40},
-    }:
+    if arithmetic.get("tail_probabilities") != {"lower": {"numerator": 1, "denominator": 40}, "upper": {"numerator": 39, "denominator": 40}}:
         raise AmendmentError("tails")
-    if arithmetic.get("classification_thresholds") != {
-        "zero": {"numerator": 0, "denominator": 1},
-        "minimum_practical_difference": {"numerator": 1, "denominator": 10},
-    }:
+    if arithmetic.get("classification_thresholds") != {"zero": {"numerator": 0, "denominator": 1}, "minimum_practical_difference": {"numerator": 1, "denominator": 10}}:
         raise AmendmentError("thresholds")
-    if (
-        "no floating point" not in arithmetic.get("sorting_rule", "")
-        or "never decision inputs"
-        not in arithmetic.get("classification_comparison_rule", "")
-    ):
+    if "no floating point" not in arithmetic.get("sorting_rule", "") or "never decision inputs" not in arithmetic.get("classification_comparison_rule", ""):
         raise AmendmentError("floating point")
     return amendment
 
 
 def probability(resolved: int, repetitions: int) -> Fraction:
-    if (
-        type(resolved) is not int
-        or type(repetitions) is not int
-        or repetitions <= 0
-        or not 0 <= resolved <= repetitions
-    ):
+    if type(resolved) is not int or type(repetitions) is not int or repetitions <= 0 or not 0 <= resolved <= repetitions:
         raise AmendmentError("counts")
     return Fraction(resolved, repetitions)
 
@@ -213,13 +184,7 @@ def type7(values: list[Fraction], p: Fraction) -> Fraction:
     return (1 - f) * values[k] + f * values[upper]
 
 
-def classify(
-    estimate: Fraction,
-    lower: Fraction,
-    upper: Fraction,
-    missing: bool = False,
-    critical_harm: bool = False,
-) -> str:
+def classify(estimate: Fraction, lower: Fraction, upper: Fraction, missing: bool = False, critical_harm: bool = False) -> str:
     if missing:
         return "inconclusive_due_to_missingness"
     if upper < 0:
@@ -241,7 +206,7 @@ def main() -> int:
     except AmendmentError as exc:
         print(f"FAIL: {exc}")
         return 1
-    print("PASS: amendment v1.1 exact-locked; execution blocked.")
+    print("PASS: amendment v1.1 exact-locked against immutable historical base; execution blocked.")
     return 0
 
 
