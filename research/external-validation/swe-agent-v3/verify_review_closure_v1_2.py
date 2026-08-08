@@ -11,6 +11,7 @@ import verify_integrity as integrity
 
 DesignError = integrity.DesignError
 HERE = Path(__file__).resolve().parent
+REPO_ROOT = HERE.parents[2]
 AMENDMENT = HERE / "review-closure-amendment-v1.2.json"
 NARRATIVE = HERE / "AMENDMENT-v1.2.md"
 SEED = HERE / "bootstrap-seed-commitment-contract-v1.0.json"
@@ -63,7 +64,7 @@ def _blob(path: Path) -> str:
 
 
 def _current_blob(path: Path) -> str:
-    relative = path.relative_to(integrity.ROOT).as_posix()
+    relative = path.relative_to(REPO_ROOT).as_posix()
     return integrity._git_blob_sha1(integrity._committed_blob_bytes(relative))
 
 
