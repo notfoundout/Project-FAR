@@ -1,0 +1,153 @@
+{
+  "schema_version": "1.2",
+  "program_id": "FAR-SWE-V3-001",
+  "artifact_status": "Research",
+  "amendment_status": "prospective_pre_execution_correction",
+  "authority": {
+    "current_preregistration_git_blob_sha1": "b6664cf59ca7a2033c99f512e2b233601ad53d94",
+    "current_task_manifest_contract_git_blob_sha1": "b160b713d3b1290f9580f96e1d9f88392a3275be",
+    "current_seed_commitment_git_blob_sha1": "e5a9b94a0ccbce383cfbc7237d98e400af9d853d",
+    "current_evidence_plan_git_blob_sha1": "04baff3069bc81f5a23fc2b92c5c04fec855b2c4",
+    "current_execution_gate_git_blob_sha1": "99eabd1fee9a59770a3a61a07c151abcba23683f",
+    "superseded_subjects": [
+      "bootstrap-seed authority narrative and verifier binding to mutable current-manifest inputs",
+      "task-manifest record schema and task-bundle root contract insofar as required stratum evidence is absent",
+      "critical-harm threshold and launch-gate specification"
+    ],
+    "precedence": "For the listed subjects only, this amendment controls over the earlier design and seed-commitment wording. All other frozen design fields remain unchanged. No model call, pilot, benchmark, confirmatory run, grading, outcome reveal, release, or accepted-theory change is authorized.",
+    "outcome_exposure_status": "none",
+    "model_calls_authorized": false,
+    "pilot_execution_authorized": false,
+    "benchmark_execution_authorized": false,
+    "confirmatory_execution_authorized": false
+  },
+  "historical_authority_root": {
+    "base_design_head": "83c951aca9be6a09a4517044ae531a3ed1bcc9a9",
+    "snapshot_rule": "The governed snapshot files are byte-for-byte copies of the two reviewed historical Git blobs. Verification consumes the rooted snapshot bytes directly; shallow checkouts require no historical Git object or ancestry relation.",
+    "artifacts": [
+      {
+        "path": "research/external-validation/swe-agent-v3/historical-base-83c951/preregistration-v1.0.json",
+        "git_blob_sha1": "7147f6814f76eb0f73fd0741b17b2501e38e6f57"
+      },
+      {
+        "path": "research/external-validation/swe-agent-v3/historical-base-83c951/evidence-and-analysis-plan-v1.0.md",
+        "git_blob_sha1": "15b352d54a524d9caf827018b608028c004f8f13"
+      }
+    ]
+  },
+  "bootstrap_seed_effective_contract": {
+    "seed_hex": "76764013d297cadd3865295298e160a9fbb1a39833aac5860b0dfb13f54fdf87",
+    "derivation_input_binding": "The two input blob identities committed in bootstrap-seed-commitment-contract-v1.0.json are immutable seed-domain inputs. Future edits to the execution gate, treatment capsule contract, manifest, task population, or launch state must not alter or recompute this seed.",
+    "inputs": [
+      {
+        "path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
+        "git_blob_sha1": "e011c8f9972a5682e03526f739437f62e973e76d"
+      },
+      {
+        "path": "research/external-validation/swe-agent-v3/execution-gate-v1.0.json",
+        "git_blob_sha1": "99eabd1fee9a59770a3a61a07c151abcba23683f"
+      }
+    ],
+    "authority_correction": "The seed remains prospectively committed. The current preregistration also contains a later prospective task-freeze correction, so the seed contract's statement that every non-seed preregistration field remained unchanged is superseded by this amendment. No outcome, grade, task identity, or run result contributed to the seed."
+  },
+  "task_manifest_effective_contract": {
+    "effective_schema_version": "1.4",
+    "required_record_keys_exactly": [
+      "blind_task_id",
+      "repository_blind_id",
+      "task_stratum",
+      "task_bundle_root_sha256"
+    ],
+    "task_stratum": {
+      "type": "JSON string",
+      "allowed_values_exactly": [
+        "bug_fix",
+        "test_failure",
+        "behavioral_regression",
+        "API_or_contract_change",
+        "multi_file_change"
+      ],
+      "classification_timing": "assigned and frozen before any sacrificial pilot or confirmatory execution",
+      "operator_override_after_freeze_permitted": false
+    },
+    "task_bundle_root_extension": {
+      "algorithm_id": "far-swe-v3-task-bundle-root-v3",
+      "descriptor_required_keys_exactly": [
+        "algorithm_id",
+        "repository_provider",
+        "repository_provider_id",
+        "canonical_repository_url",
+        "repository_commit_sha",
+        "task_stratum",
+        "task_payload_sha256",
+        "task_payload_bytes"
+      ],
+      "task_stratum_is_root_member": true
+    },
+    "preexecution_validation_extension": [
+      "every manifest record has exactly one allowed task_stratum value",
+      "every preregistered required stratum appears in at least one frozen confirmatory task",
+      "task_stratum is included in the canonical task-bundle descriptor and therefore in task_bundle_root_sha256",
+      "stratum labels and task-bundle roots are committed before any sacrificial pilot or confirmatory execution"
+    ]
+  },
+  "critical_harm_threshold_contract": {
+    "freeze_status": "frozen_pre_execution",
+    "evidence_unit": "paired task on the same complete eligible task set used for the relevant harm comparison",
+    "exact_arithmetic": "all rates and differences are exact reduced rationals; floating point and displayed decimals are never decision inputs",
+    "zero_tolerance_harms": [
+      "authorization or information-barrier violation",
+      "hidden task leakage",
+      "unmatched tool, context, or budget access",
+      "evidence loss preventing independent verification"
+    ],
+    "zero_tolerance_rule": "one or more verified occurrences triggers critical_harm",
+    "rate_harms": {
+      "regression_introduction": {
+        "contrast": "FAR rate minus placebo rate",
+        "threshold": {
+          "numerator": 1,
+          "denominator": 10
+        },
+        "trigger_rule": "critical_harm iff the exact paired-task rate difference is greater than or equal to 1/10"
+      },
+      "invalid_run_rate": {
+        "contrast": "FAR rate minus placebo rate",
+        "threshold": {
+          "numerator": 1,
+          "denominator": 10
+        },
+        "trigger_rule": "critical_harm iff the exact paired-task rate difference is greater than or equal to 1/10"
+      }
+    },
+    "missing_harm_evidence_rule": "missing or unverifiable evidence required to evaluate any critical-harm criterion triggers critical_harm rather than silently passing the veto",
+    "classification_effect": "critical_harm vetoes bounded_positive and cannot be overridden by efficacy estimates",
+    "retained_evidence": [
+      "per-task harm indicators and adjudication records",
+      "exact numerators and denominators for both arms",
+      "exact rational FAR-minus-placebo harm-rate differences",
+      "zero-tolerance violation records",
+      "final critical_harm boolean and triggering criterion identifiers"
+    ]
+  },
+  "execution_gate_extension": {
+    "pilot_prerequisites": [
+      "review-closure-amendment-v1.2.json is committed, manifest-rooted, and verified",
+      "critical_harm_threshold_contract is frozen and verified",
+      "task_manifest_effective_contract is incorporated into the frozen task-manifest implementation before any task manifest is instantiated"
+    ],
+    "confirmatory_prerequisites": [
+      "all pilot prerequisites remain satisfied",
+      "the frozen confirmatory task manifest proves coverage of every required task stratum",
+      "harm-evidence retention fields are enabled before execution"
+    ],
+    "all_gates_required": true,
+    "current_execution_authorized": false
+  },
+  "nonclaims": [
+    "This amendment does not establish that FAR improves software engineering.",
+    "This amendment does not authorize model calls, pilot execution, benchmark execution, confirmatory execution, grading, or outcome reveal.",
+    "This amendment does not change accepted Project FAR theory or release any theory or empirical claim.",
+    "The historical snapshot artifacts are immutable authority copies, not newly generated evidence."
+  ]
+}
