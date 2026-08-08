@@ -39,7 +39,7 @@ class SweAgentV3DesignTests(unittest.TestCase):
     def sync_committed(self) -> None:
         self.committed = {
             str(path.relative_to(self.root)).replace("\\", "/"): path.read_bytes()
-            for path in self.here.iterdir()
+            for path in self.here.rglob("*")
             if path.is_file() and not path.is_symlink()
         }
 
@@ -51,17 +51,32 @@ class SweAgentV3DesignTests(unittest.TestCase):
 
     def run_verify(self) -> None:
         manifest = self.here / "design-manifest-v1.0.json"
-        with (
-            mock.patch.object(verify_module, "ROOT", self.root),
-            mock.patch.object(verify_module, "HERE", self.here),
-            mock.patch.object(verify_module, "MANIFEST", manifest),
-            mock.patch.object(
-                verify_module,
-                "_committed_blob_bytes",
-                side_effect=self.committed_blob,
-            ),
-        ):
-            verify_module.verify()
+        integrity = verify_module.integrity
+        original_integrity = (
+            integrity.ROOT,
+            integrity.HERE,
+            integrity.MANIFEST,
+            integrity._committed_blob_bytes,
+        )
+        try:
+            with (
+                mock.patch.object(verify_module, "ROOT", self.root),
+                mock.patch.object(verify_module, "HERE", self.here),
+                mock.patch.object(verify_module, "MANIFEST", manifest),
+                mock.patch.object(
+                    verify_module,
+                    "_committed_blob_bytes",
+                    side_effect=self.committed_blob,
+                ),
+            ):
+                verify_module.verify()
+        finally:
+            (
+                integrity.ROOT,
+                integrity.HERE,
+                integrity.MANIFEST,
+                integrity._committed_blob_bytes,
+            ) = original_integrity
 
     def refresh_manifest(self, commit: bool = True) -> None:
         path = self.here / "design-manifest-v1.0.json"
