@@ -228,7 +228,25 @@ class CompositionalInvariantTests(unittest.TestCase):
             failures = {finding.path: finding.failures for finding in report.findings}
             for protected in weakening.REQUIRED_SEMANTIC_CALLS:
                 self.assertIn(protected, failures)
-                self.assertTrue(any("required semantic validator calls removed" in item for item in failures[protected]))
+                self.assertTrue(any("required semantic validator calls absent from live verify path" in item for item in failures[protected]))
+
+            subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)
+            direct = "    validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)\n"
+            dead = "    if False:\n        validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)\n"
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                target = repo / protected
+                source = target.read_text(encoding="utf-8")
+                self.assertEqual(source.count(direct), 1)
+                target.write_text(source.replace(direct, dead, 1), encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "hide authority calls behind dead branches"], cwd=repo, check=True)
+            dead_report = weakening.detect_weakening(repo, base=base)
+            self.assertFalse(dead_report.successful)
+            dead_failures = {finding.path: finding.failures for finding in dead_report.findings}
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                self.assertIn(protected, dead_failures)
+                self.assertTrue(any("required semantic validator calls absent from live verify path" in item for item in dead_failures[protected]))
+                self.assertTrue(any("required semantic validator calls absent from live verify path" in item for item in failures[protected]))
 
 
 if __name__ == "__main__":

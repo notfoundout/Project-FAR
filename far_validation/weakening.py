@@ -63,6 +63,27 @@ def _called_functions(source: str, path: str) -> set[str]:
     return {_call_name(node) for node in ast.walk(tree) if isinstance(node, ast.Call)}
 
 
+def _live_direct_calls(source: str, path: str, function_name: str = "verify") -> set[str]:
+    """Return direct calls on the live top-level path of exactly one function.
+
+    Calls nested under conditionals/loops/try blocks are deliberately excluded: the
+    protected verifier contract requires the semantic authority check as an
+    unconditional statement on the public verify path. Statements after an
+    unconditional return/raise are unreachable and are excluded as well.
+    """
+    tree = ast.parse(source, filename=path)
+    matches = [node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == function_name]
+    if len(matches) != 1:
+        return set()
+    calls: set[str] = set()
+    for statement in matches[0].body:
+        if isinstance(statement, (ast.Return, ast.Raise)):
+            break
+        if isinstance(statement, ast.Expr) and isinstance(statement.value, ast.Call):
+            calls.add(_call_name(statement.value))
+    return calls
+
+
 def analyze(source: str, path: str) -> StrengthMetrics:
     tree = ast.parse(source, filename=path)
     nodes = list(ast.walk(tree))
@@ -207,9 +228,9 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
             finding.after = analyze(after_source, path)
             required_calls = REQUIRED_SEMANTIC_CALLS.get(path, frozenset())
             if required_calls:
-                missing_calls = sorted(required_calls - _called_functions(after_source, path))
+                missing_calls = sorted(required_calls - _live_direct_calls(after_source, path))
                 if missing_calls:
-                    finding.failures.append("required semantic validator calls removed: " + ", ".join(missing_calls))
+                    finding.failures.append("required semantic validator calls absent from live verify path: " + ", ".join(missing_calls))
         except SyntaxError as exc:
             finding.failures.append(f"current source has syntax error: {exc}")
             findings.append(finding)
