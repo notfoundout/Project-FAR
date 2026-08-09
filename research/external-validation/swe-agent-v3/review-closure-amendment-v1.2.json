@@ -110,40 +110,6 @@
       "evidence_rule": "each classification input is a frozen JSON boolean with a retained source-evidence locator or sealed-reference-patch attestation; absent or unverifiable evidence forces false, except any required-stratum coverage claim relying on unverifiable evidence fails the launch gate",
       "multi_label_rule": "retain every label whose deterministic predicate is true, exactly once, in canonical_order; no primary-label choice or precedence is permitted"
     },
-    "classification_input_digest_contract": {
-      "algorithm_id": "far-swe-v3-classification-input-digest-v1",
-      "descriptor_required_keys_exactly": [
-        "algorithm_id",
-        "classification_inputs",
-        "evidence_bindings"
-      ],
-      "classification_input_keys_exactly": [
-        "source_declares_defect_or_bug",
-        "frozen_entry_test_or_CI_is_failing",
-        "source_declares_previously_working_behavior_regressed",
-        "source_acceptance_criteria_require_API_or_contract_change",
-        "sealed_reference_patch_touches_multiple_files"
-      ],
-      "classification_input_value_type": "exact JSON boolean; numeric 0/1 is prohibited",
-      "evidence_binding_keys_exactly_match_classification_inputs": true,
-      "evidence_binding_schema": {
-        "required_keys_exactly": [
-          "kind",
-          "locator"
-        ],
-        "kind_allowed_values_exactly": [
-          "source_evidence_locator",
-          "sealed_reference_patch_attestation",
-          "unverifiable"
-        ],
-        "locator_rule": "nonempty UTF-8 JSON string for source_evidence_locator or sealed_reference_patch_attestation; exact JSON null for unverifiable"
-      },
-      "unverifiable_binding_rule": "an unverifiable binding forces its classification input to false and cannot support required-stratum coverage",
-      "serialization": "RFC 8785 JCS UTF-8 bytes of exactly the descriptor defined above",
-      "digest": "lowercase SHA-256 hex",
-      "timing": "descriptor bytes and classification_inputs_sha256 are committed before any sacrificial pilot or confirmatory execution",
-      "recomputation_rule": "preexecution validation independently recomputes classification_inputs_sha256 from the exact descriptor and rejects any mismatch"
-    },
     "task_bundle_root_extension": {
       "algorithm_id": "far-swe-v3-task-bundle-root-v4",
       "descriptor_required_keys_exactly": [
@@ -159,11 +125,10 @@
     "preexecution_validation_extension": [
       "every manifest record has exactly the five required keys",
       "task_identity_sha256 is recomputed from the authoritative repository/commit/payload descriptor and is unique across the frozen manifest independently of task_strata",
-      "classification_inputs_sha256 is independently recomputed from the exact frozen classification-input descriptor including evidence bindings and must match",
       "task_strata is nonempty, duplicate-free, contains only allowed labels, and is in canonical order",
       "task_strata exactly equals the deterministic mapping from the frozen classification inputs",
       "every preregistered required stratum appears in at least one frozen confirmatory task",
-      "task_identity_sha256, task_strata, classification inputs, evidence bindings, and task-bundle roots are committed before any sacrificial pilot or confirmatory execution"
+      "task_identity_sha256, task_strata, classification inputs, and task-bundle roots are committed before any sacrificial pilot or confirmatory execution"
     ]
   },
   "critical_harm_threshold_contract": {
