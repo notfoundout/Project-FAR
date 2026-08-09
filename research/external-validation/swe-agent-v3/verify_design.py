@@ -178,7 +178,7 @@ def verify_text_boundaries() -> None:
         raise DesignError("primary narrative contrast drifted")
     if "independently committed before any pilot or confirmatory execution" not in evidence or "authoritative repository provider identity, canonical repository URL, and exact commit" not in evidence:
         raise DesignError("evidence identity boundary drifted")
-    if "Execution authorized: **No**" not in readme or "A sacrificial pilot may only be separately authorized after every pre-pilot gate" not in readme or "confirmatory execution additionally requires the completed-and-excluded pilot gate" not in readme:
+    if "Execution authorized: **No**" not in readme or "A sacrificial pilot may only be separately authorized after every pre-pilot gate" not in readme or "Confirmatory execution additionally requires the exact v1.2 confirmatory prerequisites plus every remaining base gate." not in readme:
         raise DesignError("README execution boundary drifted")
     if "would not establish" not in question:
         raise DesignError("question nonclaim boundary missing")
