@@ -1,8 +1,8 @@
 """Shallow-checkout-safe semantic verifier for FAR-SWE-V3-001 amendment v1.1.
 
 This adapter preserves the complete v1.1 semantic validator while replacing its
-historical Git-object lookups with the immutable historical snapshot bytes that
-are already rooted by the design manifest. It does not authorize execution.
+historical Git-object lookups with immutable historical snapshot bytes rooted in
+the caller's active verification tree. It does not authorize execution.
 """
 from __future__ import annotations
 
@@ -15,8 +15,8 @@ import verify_amendment_v1_1 as legacy
 HERE = Path(__file__).resolve().parent
 HIST = HERE / "historical-base-83c951"
 SNAPSHOTS = {
-    legacy.PREREG_REL: (HIST / "preregistration-v1.0.json", legacy.PREREG_BLOB),
-    legacy.PLAN_REL: (HIST / "evidence-and-analysis-plan-v1.0.md", legacy.PLAN_BLOB),
+    legacy.PREREG_REL: ("preregistration-v1.0.json", legacy.PREREG_BLOB),
+    legacy.PLAN_REL: ("evidence-and-analysis-plan-v1.0.md", legacy.PLAN_BLOB),
 }
 
 AmendmentError = legacy.AmendmentError
@@ -35,11 +35,13 @@ def _git_blob_sha1(data: bytes) -> str:
     return hashlib.sha1(f"blob {len(data)}\0".encode("ascii") + data).hexdigest()
 
 
-def _snapshot(relative: str) -> tuple[bytes, str]:
+def _snapshot(relative: str, historical_root: Path | None = None) -> tuple[bytes, str]:
     try:
-        path, expected = SNAPSHOTS[relative]
+        filename, expected = SNAPSHOTS[relative]
     except KeyError as exc:
         raise AmendmentError(f"unregistered historical snapshot: {relative}") from exc
+    root = historical_root or HIST
+    path = root / filename
     data = _regular_bytes(path)
     actual = _git_blob_sha1(data)
     if actual != expected:
@@ -51,20 +53,21 @@ def validate(
     amend: Path = legacy.AMEND,
     readme: Path = legacy.README,
     gate: Path = legacy.GATE,
+    historical_root: Path | None = None,
 ) -> dict[str, Any]:
-    """Run the full legacy semantic validator against rooted snapshot bytes."""
+    """Run the full legacy semantic validator against caller-bound snapshot bytes."""
     original_id = legacy.historical_blob_id
     original_bytes = legacy.historical_blob_bytes
 
     def rooted_id(head: str, relative: str) -> str:
         if head != legacy.BASE_HEAD:
             raise AmendmentError("historical authority head drifted")
-        return _snapshot(relative)[1]
+        return _snapshot(relative, historical_root)[1]
 
     def rooted_bytes(head: str, relative: str) -> bytes:
         if head != legacy.BASE_HEAD:
             raise AmendmentError("historical authority head drifted")
-        return _snapshot(relative)[0]
+        return _snapshot(relative, historical_root)[0]
 
     legacy.historical_blob_id = rooted_id
     legacy.historical_blob_bytes = rooted_bytes
