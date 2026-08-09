@@ -4,7 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 import verify_integrity as integrity
@@ -34,6 +34,39 @@ EXPECTED_BINDING_KINDS = [
     "sealed_reference_patch_attestation",
     "unverifiable",
 ]
+EXPECTED_BINDING_KEYS = {"kind", "locator", "sha256", "bytes"}
+EXPECTED_KIND_BY_INPUT = {
+    "source_declares_defect_or_bug": "source_evidence_locator",
+    "frozen_entry_test_or_CI_is_failing": "source_evidence_locator",
+    "source_declares_previously_working_behavior_regressed": "source_evidence_locator",
+    "source_acceptance_criteria_require_API_or_contract_change": "source_evidence_locator",
+    "sealed_reference_patch_touches_multiple_files": "sealed_reference_patch_attestation",
+}
+LOCATOR_RULE = (
+    "for verifiable bindings, a nonempty canonical POSIX relative path below the evidence-registry directory; "
+    "absolute paths, dot segments, parent traversal, backslashes, symlinks, and non-regular targets are prohibited; "
+    "exact JSON null for unverifiable"
+)
+SHA256_RULE = (
+    "for verifiable bindings, lowercase SHA-256 of the exact retained evidence bytes; exact JSON null for unverifiable"
+)
+BYTES_RULE = (
+    "for verifiable bindings, nonnegative exact JSON integer byte count of the same retained evidence bytes with booleans prohibited; "
+    "exact JSON null for unverifiable"
+)
+EVIDENCE_VERIFICATION_RULE = (
+    "resolve each verifiable locator below the evidence-registry directory without following symlinks, read the retained regular-file bytes, "
+    "and require both the committed sha256 and bytes fields to match those exact bytes before the classification input can support a stratum"
+)
+TIMING_RULE = (
+    "descriptor bytes, evidence byte identities, classification_inputs_sha256, and retained evidence bytes are committed before any sacrificial "
+    "pilot or confirmatory execution and before outcome reveal"
+)
+RECOMPUTATION_RULE = (
+    "preexecution validation independently recomputes classification_inputs_sha256 from the exact descriptor, verifies task_identity_sha256 "
+    "equality to the enclosing manifest record, resolves and hashes every retained evidence file, and rejects any descriptor, evidence-byte, "
+    "size, digest, or task-binding mismatch"
+)
 
 
 def _load(path: Path = CONTRACT) -> dict[str, Any]:
@@ -45,6 +78,28 @@ def _load(path: Path = CONTRACT) -> dict[str, Any]:
 
 def _canonical_json(value: Any) -> bytes:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8")
+
+
+def _relative_locator(value: Any) -> PurePosixPath:
+    if type(value) is not str or not value or "\\" in value:
+        raise DesignError("evidence locator must be a nonempty canonical POSIX relative path")
+    locator = PurePosixPath(value)
+    if locator.is_absolute() or any(part in {"", ".", ".."} for part in locator.parts) or str(locator) != value:
+        raise DesignError("evidence locator must not escape or normalize outside its registry root")
+    return locator
+
+
+def _read_retained_evidence(evidence_root: Path, locator: PurePosixPath) -> bytes:
+    if evidence_root.is_symlink() or not evidence_root.is_dir():
+        raise DesignError("evidence registry directory must be a real directory")
+    candidate = evidence_root
+    for part in locator.parts:
+        candidate = candidate / part
+        if candidate.is_symlink():
+            raise DesignError(f"symlinked retained evidence is prohibited: {locator}")
+    if not candidate.is_file():
+        raise DesignError(f"retained evidence locator does not resolve to a regular file: {locator}")
+    return candidate.read_bytes()
 
 
 def validate_contract(path: Path = CONTRACT) -> dict[str, Any]:
@@ -64,11 +119,20 @@ def validate_contract(path: Path = CONTRACT) -> dict[str, Any]:
         raise DesignError("classification-input digest semantics drifted")
     if digest.get("task_identity_sha256") != {"type":"lowercase 64-character SHA-256 hex JSON string","binding_rule":"must exactly equal the task manifest record task_identity_sha256 for the same record","cross_task_transplantation_permitted":False}:
         raise DesignError("classification-input task-identity binding drifted")
-    if digest.get("evidence_binding_schema") != {"required_keys_exactly":["kind","locator"],"kind_allowed_values_exactly":EXPECTED_BINDING_KINDS,"locator_rule":"nonempty UTF-8 JSON string for source_evidence_locator or sealed_reference_patch_attestation; exact JSON null for unverifiable"}:
+    expected_binding_schema = {
+        "required_keys_exactly": ["kind", "locator", "sha256", "bytes"],
+        "kind_allowed_values_exactly": EXPECTED_BINDING_KINDS,
+        "kind_mapping": EXPECTED_KIND_BY_INPUT,
+        "locator_rule": LOCATOR_RULE,
+        "sha256_rule": SHA256_RULE,
+        "bytes_rule": BYTES_RULE,
+        "preexecution_verification_rule": EVIDENCE_VERIFICATION_RULE,
+    }
+    if digest.get("evidence_binding_schema") != expected_binding_schema:
         raise DesignError("classification-input evidence-binding schema drifted")
-    if digest.get("unverifiable_binding_rule") != "an unverifiable binding forces its paired classification input to false and cannot support required-stratum coverage" or digest.get("serialization") != "RFC 8785 JCS UTF-8 bytes of exactly the descriptor defined above" or digest.get("digest") != "lowercase SHA-256 hex" or digest.get("timing") != "descriptor bytes and classification_inputs_sha256 are committed before any sacrificial pilot or confirmatory execution and before outcome reveal":
+    if digest.get("unverifiable_binding_rule") != "an unverifiable binding forces its paired classification input to false and cannot support required-stratum coverage" or digest.get("serialization") != "RFC 8785 JCS UTF-8 bytes of exactly the descriptor defined above" or digest.get("digest") != "lowercase SHA-256 hex" or digest.get("timing") != TIMING_RULE:
         raise DesignError("classification-input digest rule drifted")
-    if digest.get("recomputation_rule") != "preexecution validation independently recomputes classification_inputs_sha256 from the exact descriptor, verifies task_identity_sha256 equality to the enclosing manifest record, and rejects any mismatch":
+    if digest.get("recomputation_rule") != RECOMPUTATION_RULE:
         raise DesignError("classification-input digest recomputation rule drifted")
     interpretation = data.get("frozen_v1_2_interpretation")
     if not isinstance(interpretation, dict) or interpretation.get("classification_timing_exactly") != EXPECTED_TIMING:
@@ -76,7 +140,13 @@ def validate_contract(path: Path = CONTRACT) -> dict[str, Any]:
     return data
 
 
-def validate_descriptor(enclosing_task_identity_sha256: str, descriptor: dict[str, Any], expected_digest: str) -> str:
+def validate_descriptor(
+    enclosing_task_identity_sha256: str,
+    descriptor: dict[str, Any],
+    expected_digest: str,
+    *,
+    evidence_root: Path | None = None,
+) -> str:
     validate_contract(integrity.HERE / "classification-input-digest-contract-v1.0.json")
     if type(enclosing_task_identity_sha256) is not str or re.fullmatch(r"[0-9a-f]{64}", enclosing_task_identity_sha256) is None:
         raise DesignError("enclosing task identity must be lowercase SHA-256 hex")
@@ -92,16 +162,31 @@ def validate_descriptor(enclosing_task_identity_sha256: str, descriptor: dict[st
         raise DesignError("classification-input evidence-binding key set drifted")
     for key in CLASSIFICATION_INPUTS:
         item = bindings.get(key)
-        if not isinstance(item, dict) or set(item) != {"kind","locator"}:
+        if not isinstance(item, dict) or set(item) != EXPECTED_BINDING_KEYS:
             raise DesignError(f"classification-input evidence binding shape drifted: {key}")
-        kind, locator = item.get("kind"), item.get("locator")
+        kind = item.get("kind")
+        locator = item.get("locator")
+        evidence_sha = item.get("sha256")
+        evidence_bytes = item.get("bytes")
         if kind not in EXPECTED_BINDING_KINDS:
             raise DesignError(f"classification-input evidence binding kind drifted: {key}")
         if kind == "unverifiable":
-            if locator is not None or inputs[key] is not False:
-                raise DesignError(f"unverifiable classification input must be false with null locator: {key}")
-        elif type(locator) is not str or not locator:
-            raise DesignError(f"verified classification input requires nonempty evidence locator: {key}")
+            if locator is not None or evidence_sha is not None or evidence_bytes is not None or inputs[key] is not False:
+                raise DesignError(f"unverifiable classification input must be false with null evidence identity: {key}")
+            continue
+        if kind != EXPECTED_KIND_BY_INPUT[key]:
+            raise DesignError(f"classification-input evidence kind does not match its frozen source: {key}")
+        relative = _relative_locator(locator)
+        if type(evidence_sha) is not str or re.fullmatch(r"[0-9a-f]{64}", evidence_sha) is None:
+            raise DesignError(f"classification-input evidence SHA-256 drifted: {key}")
+        if type(evidence_bytes) is not int or evidence_bytes < 0:
+            raise DesignError(f"classification-input evidence byte count drifted: {key}")
+        if evidence_root is not None:
+            retained = _read_retained_evidence(evidence_root, relative)
+            if len(retained) != evidence_bytes:
+                raise DesignError(f"retained evidence byte count mismatch: {key}")
+            if hashlib.sha256(retained).hexdigest() != evidence_sha:
+                raise DesignError(f"retained evidence SHA-256 mismatch: {key}")
     if type(expected_digest) is not str or re.fullmatch(r"[0-9a-f]{64}", expected_digest) is None:
         raise DesignError("classification_inputs_sha256 encoding drifted")
     actual = hashlib.sha256(_canonical_json(descriptor)).hexdigest()
@@ -115,4 +200,4 @@ if __name__ == "__main__":
         validate_contract(integrity.HERE / "classification-input-digest-contract-v1.0.json")
     except DesignError as exc:
         raise SystemExit(f"FAIL: {exc}")
-    print("PASS: prospective classification-input digest authority is exact, task-bound, and execution remains blocked.")
+    print("PASS: prospective classification-input digest authority is exact, task-bound, evidence-byte-bound, and execution remains blocked.")
