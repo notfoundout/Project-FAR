@@ -101,6 +101,7 @@ def _live_call_prefix(source: str, path: str, function_name: str = "verify", cou
             names.append("")
     return tuple(names)
 
+
 def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[str, ...]]:
     """Return structural module-scope binding events for protected validators."""
     protected = REQUIRED_SEMANTIC_CALLS.get(path, frozenset())
@@ -108,6 +109,17 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
     if not protected:
         return {}
     tree = ast.parse(source, filename=path)
+
+    def namespace_scope(node: ast.AST) -> str | None:
+        if (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id in {"globals", "locals"}
+            and not node.args
+            and not node.keywords
+        ):
+            return node.func.id
+        return None
 
     def record_target(target: ast.AST, kind: str) -> None:
         if isinstance(target, ast.Name) and target.id in protected:
@@ -119,23 +131,84 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
             root = target.value.id if isinstance(target.value, ast.Name) else ast.unparse(target.value)
             events[target.attr].append(f"attribute:{root}")
         elif isinstance(target, ast.Subscript):
-            value = target.value
+            scope = namespace_scope(target.value)
             key = target.slice
             if (
-                isinstance(value, ast.Call)
-                and isinstance(value.func, ast.Name)
-                and value.func.id in {"globals", "locals"}
-                and not value.args
+                scope is not None
                 and isinstance(key, ast.Constant)
                 and isinstance(key.value, str)
                 and key.value in protected
             ):
-                events[key.value].append(value.func.id)
+                events[key.value].append(scope)
+
+    def record_namespace_mutator(node: ast.Call) -> None:
+        """Record method-based writes to module namespace dictionaries.
+
+        Direct ``globals()[name] = value`` assignments are handled by
+        ``record_target``. This additionally catches equivalent method writes such
+        as ``globals().__setitem__(name, value)`` and ``globals().update(...)``.
+        Dynamic update mappings are treated conservatively as capable of changing
+        every protected binding.
+        """
+        if not isinstance(node.func, ast.Attribute):
+            return
+        scope = namespace_scope(node.func.value)
+        if scope is None:
+            return
+        method = node.func.attr
+        if method == "__setitem__":
+            if not node.args:
+                return
+            key = node.args[0]
+            if isinstance(key, ast.Constant) and isinstance(key.value, str):
+                if key.value in protected:
+                    events[key.value].append(f"{scope}.__setitem__")
+            else:
+                for name in protected:
+                    events[name].append(f"{scope}.__setitem__:dynamic")
+            return
+        if method not in {"update", "__ior__"}:
+            return
+
+        touched: set[str] = set()
+        dynamic = False
+        for arg in node.args:
+            if isinstance(arg, ast.Dict):
+                for key in arg.keys:
+                    if isinstance(key, ast.Constant) and isinstance(key.value, str):
+                        if key.value in protected:
+                            touched.add(key.value)
+                    else:
+                        dynamic = True
+            elif (
+                isinstance(arg, ast.Call)
+                and isinstance(arg.func, ast.Name)
+                and arg.func.id == "dict"
+                and not arg.args
+            ):
+                for keyword in arg.keywords:
+                    if keyword.arg is None:
+                        dynamic = True
+                    elif keyword.arg in protected:
+                        touched.add(keyword.arg)
+            else:
+                dynamic = True
+        for keyword in node.keywords:
+            if keyword.arg is None:
+                dynamic = True
+            elif keyword.arg in protected:
+                touched.add(keyword.arg)
+        if dynamic:
+            touched.update(protected)
+        for name in sorted(touched):
+            events[name].append(f"{scope}.{method}")
 
     def scan_expr(expr: ast.AST) -> None:
         for node in ast.walk(expr):
             if isinstance(node, ast.NamedExpr):
                 record_target(node.target, "namedexpr")
+            if isinstance(node, ast.Call):
+                record_namespace_mutator(node)
             if (
                 isinstance(node, ast.Call)
                 and isinstance(node.func, ast.Name)
