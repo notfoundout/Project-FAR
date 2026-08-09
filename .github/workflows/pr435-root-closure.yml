@@ -66,14 +66,7 @@ jobs:
               s += note
           p.write_text(s, encoding='utf-8')
           PY
-      - name: Run complete relevant validation
-        shell: bash
-        run: |
-          python research/external-validation/swe-agent-v3/verify_design.py
-          python research/external-validation/swe-agent-v3/verify_review_closure.py
-          python research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py
-          python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v
-      - name: Commit validated repair and remove one-shot workflow
+      - name: Create local candidate commit
         shell: bash
         run: |
           rm .github/workflows/pr435-root-closure.yml
@@ -81,6 +74,14 @@ jobs:
           git config user.email 'lexdekidd@icloud.com'
           git add research/external-validation/swe-agent-v3/verify_review_closure_required_impl.py research/external-validation/swe-agent-v3/verify_classification_input_digest_contract.py research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py research/external-validation/swe-agent-v3/verify_review_closure.py research/external-validation/swe-agent-v3/verify_integrity.py research/external-validation/swe-agent-v3/README.md .github/workflows/pr435-root-closure.yml
           git commit -m 'Close PR435 instantiated validation gaps'
+      - name: Run complete relevant validation on candidate HEAD
+        shell: bash
+        run: |
+          python research/external-validation/swe-agent-v3/verify_design.py
+          python research/external-validation/swe-agent-v3/verify_review_closure.py
+          python research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py
+          python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v
+      - name: Push validated candidate
+        shell: bash
+        run: |
           git push origin HEAD:research/swe-agent-v3-design-clean
-
-# trigger: rerun exact root-closure repair
