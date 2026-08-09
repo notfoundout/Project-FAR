@@ -126,7 +126,18 @@ def _load_waivers(root: Path) -> dict[str, dict[str, Any]]:
 
 
 def _changed_python(root: Path, base: str) -> list[tuple[str, str]]:
-    completed = _git(root, "diff", "--name-status", f"{base}...HEAD", "--", "tests", "tools", "far_validation", "validation_bootstrap")
+    completed = _git(
+        root,
+        "diff",
+        "--name-status",
+        f"{base}...HEAD",
+        "--",
+        "tests",
+        "tools",
+        "far_validation",
+        "validation_bootstrap",
+        "research",
+    )
     if completed.returncode != 0:
         raise RuntimeError(completed.stderr.strip() or "git diff failed")
     changed: list[tuple[str, str]] = []
@@ -135,7 +146,14 @@ def _changed_python(root: Path, base: str) -> list[tuple[str, str]]:
         if len(fields) < 2:
             continue
         status, path = fields[0], fields[-1]
-        if path.endswith(".py") and (path.startswith("tests/") or "/check_" in path or path.startswith("far_validation/") or path.startswith("validation_bootstrap/")):
+        protected_research_validator = path.startswith("research/") and Path(path).name.startswith("verify_")
+        if path.endswith(".py") and (
+            path.startswith("tests/")
+            or "/check_" in path
+            or path.startswith("far_validation/")
+            or path.startswith("validation_bootstrap/")
+            or protected_research_validator
+        ):
             changed.append((status[0], path))
     return sorted(changed)
 
