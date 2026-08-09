@@ -1,0 +1,83 @@
+name: PR436 live-call assurance
+
+on:
+  push:
+    branches:
+      - repair/pr436-live-call-assurance
+
+permissions:
+  contents: write
+
+jobs:
+  harden-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: repair/pr436-live-call-assurance
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Require semantic calls on the live verify path
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('far_validation/weakening.py')
+          s = p.read_text(encoding='utf-8')
+          anchor = '''def _called_functions(source: str, path: str) -> set[str]:\n    tree = ast.parse(source, filename=path)\n    return {_call_name(node) for node in ast.walk(tree) if isinstance(node, ast.Call)}\n\n\n'''
+          helper = anchor + '''def _live_direct_calls(source: str, path: str, function_name: str = "verify") -> set[str]:\n    """Return direct calls on the live top-level path of exactly one function.\n\n    Calls nested under conditionals/loops/try blocks are deliberately excluded: the\n    protected verifier contract requires the semantic authority check as an\n    unconditional statement on the public verify path. Statements after an\n    unconditional return/raise are unreachable and are excluded as well.\n    """\n    tree = ast.parse(source, filename=path)\n    matches = [node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == function_name]\n    if len(matches) != 1:\n        return set()\n    calls: set[str] = set()\n    for statement in matches[0].body:\n        if isinstance(statement, (ast.Return, ast.Raise)):\n            break\n        if isinstance(statement, ast.Expr) and isinstance(statement.value, ast.Call):\n            calls.add(_call_name(statement.value))\n    return calls\n\n\n'''
+          if s.count(anchor) != 1:
+              raise SystemExit(f'called-functions helper anchor count={s.count(anchor)}')
+          s = s.replace(anchor, helper, 1)
+          old = '''            required_calls = REQUIRED_SEMANTIC_CALLS.get(path, frozenset())\n            if required_calls:\n                missing_calls = sorted(required_calls - _called_functions(after_source, path))\n                if missing_calls:\n                    finding.failures.append("required semantic validator calls removed: " + ", ".join(missing_calls))\n'''
+          new = '''            required_calls = REQUIRED_SEMANTIC_CALLS.get(path, frozenset())\n            if required_calls:\n                missing_calls = sorted(required_calls - _live_direct_calls(after_source, path))\n                if missing_calls:\n                    finding.failures.append("required semantic validator calls absent from live verify path: " + ", ".join(missing_calls))\n'''
+          if s.count(old) != 1:
+              raise SystemExit(f'detect-weakening call guard anchor count={s.count(old)}')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8', newline='\n')
+
+          p = Path('tests/test_target_category_compositional_invariant.py')
+          s = p.read_text(encoding='utf-8')
+          anchor = '''            failures = {finding.path: finding.failures for finding in report.findings}\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                self.assertIn(protected, failures)\n'''
+          addition = anchor + '''                self.assertTrue(any("required semantic validator calls absent from live verify path" in item for item in failures[protected]))\n\n            subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)\n            direct = "    validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)\\n"\n            dead = "    if False:\\n        validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)\\n"\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                target = repo / protected\n                source = target.read_text(encoding="utf-8")\n                self.assertEqual(source.count(direct), 1)\n                target.write_text(source.replace(direct, dead, 1), encoding="utf-8")\n            subprocess.run(["git", "add", "."], cwd=repo, check=True)\n            subprocess.run(["git", "commit", "-qm", "hide authority calls behind dead branches"], cwd=repo, check=True)\n            dead_report = weakening.detect_weakening(repo, base=base)\n            self.assertFalse(dead_report.successful)\n            dead_failures = {finding.path: finding.failures for finding in dead_report.findings}\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                self.assertIn(protected, dead_failures)\n                self.assertTrue(any("required semantic validator calls absent from live verify path" in item for item in dead_failures[protected]))\n'''
+          if s.count(anchor) != 1:
+              raise SystemExit(f'weakening regression anchor count={s.count(anchor)}')
+          p.write_text(s.replace(anchor, addition, 1), encoding='utf-8', newline='\n')
+          PY
+      - name: Remove workflow from candidate
+        run: rm -f .github/workflows/pr436-live-call-assurance.yml
+      - name: Create exact local candidate commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "Require empirical authority calls on live verify paths"
+          git rev-parse HEAD
+      - name: Target-category governing verifier
+        run: python research/target-category-discovery/verify_compositional_invariant.py
+      - name: Target-category regression suite
+        run: python -m unittest tests.test_target_category_compositional_invariant -v
+      - name: Weakening assurance tests
+        run: python -m unittest tests.test_target_category_compositional_invariant.TargetCategoryCompositionalInvariantTests.test_weakening_detector_includes_research_verifiers -v
+      - name: Repository hygiene
+        run: python tools/check_repository_hygiene.py
+      - name: Canonical fast suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/run_tests.py --fast 2>&1 | tee /tmp/fast-suite.log
+      - name: Push exact validated candidate
+        run: git push origin HEAD:repair/pr436-live-call-assurance
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr436-live-call-assurance-diagnostics
+          path: /tmp/fast-suite.log
+          if-no-files-found: ignore
