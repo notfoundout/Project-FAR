@@ -58,7 +58,7 @@ def verify_manifest():
             import verify_review_closure_hardened as hardening
         except ImportError as exc:
             raise DesignError("mandatory additive review-closure hardening is unavailable") from exc
-        hardening.validate()
+        hardening.validate(here=HERE)
         return index
     finally:
         _pop_legacy_context(prior)
