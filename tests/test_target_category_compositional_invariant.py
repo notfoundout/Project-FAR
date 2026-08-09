@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -152,7 +153,7 @@ class CompositionalInvariantTests(unittest.TestCase):
                 path = Path(tmp) / "gates.json"
                 path.write_text(json.dumps(changed), encoding="utf-8")
                 with self.assertRaisesRegex(module.VerificationError, "evidence_release and theorem_release"):
-                    module.validate_gate(path)
+                    module.verify(SPEC_PATH, RESULT_PATH, REPORT_PATH, README_PATH, CHARTER_PATH, path)
 
     def test_release_cannot_be_claimed_by_mutating_result(self) -> None:
         data = module.load_json(RESULT_PATH)
@@ -204,6 +205,30 @@ class CompositionalInvariantTests(unittest.TestCase):
             self.assertIn("validate_empirical_authority", weakening._called_functions(protected_source, protected))
             weakened = protected_source.replace("validate_empirical_authority", "removed_empirical_authority_call")
             self.assertNotIn("validate_empirical_authority", weakening._called_functions(weakened, protected))
+
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+            subprocess.run(["git", "config", "user.email", "assurance@example.invalid"], cwd=repo, check=True)
+            subprocess.run(["git", "config", "user.name", "Validator Assurance"], cwd=repo, check=True)
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                target = repo / protected
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text((ROOT / protected).read_text(encoding="utf-8"), encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "baseline"], cwd=repo, check=True)
+            base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                target = repo / protected
+                target.write_text(target.read_text(encoding="utf-8").replace("validate_empirical_authority", "removed_empirical_authority_call"), encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "remove authority calls"], cwd=repo, check=True)
+            report = weakening.detect_weakening(repo, base=base)
+            self.assertFalse(report.successful)
+            failures = {finding.path: finding.failures for finding in report.findings}
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                self.assertIn(protected, failures)
+                self.assertTrue(any("required semantic validator calls removed" in item for item in failures[protected]))
 
 
 if __name__ == "__main__":

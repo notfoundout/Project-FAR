@@ -297,7 +297,7 @@ def validate_gate(gates_path: Path) -> None:
     gate = rg07[0]
     if gate.get("name") != "nonclaim-audit" or gate.get("status") != "not_satisfied" or gate.get("evidence") != []: raise VerificationError("RG-07 state changed; this exploratory artifact requires a new reviewed version")
     required = gate.get("required_before")
-    if not isinstance(required, list) or "theorem_release" not in required: raise VerificationError("RG-07 must remain required before theorem_release")
+    if required != ["evidence_release", "theorem_release"]: raise VerificationError("RG-07 must remain required before evidence_release and theorem_release exactly")
 
 
 def verify(spec_path: Path = DEFAULT_SPEC, result_path: Path = DEFAULT_RESULT, report_path: Path = DEFAULT_REPORT, readme_path: Path = DEFAULT_README, charter_path: Path = DEFAULT_CHARTER, gates_path: Path = DEFAULT_GATES, empirical_charter_path: Path = DEFAULT_EMPIRICAL_CHARTER, empirical_manifest_path: Path = DEFAULT_EMPIRICAL_MANIFEST, audit_path: Path = DEFAULT_CHAT_AUDIT) -> dict[str, Any]:
