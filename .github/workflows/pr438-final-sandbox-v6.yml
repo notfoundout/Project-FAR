@@ -1,0 +1,123 @@
+name: PR438 final exact-commit sandbox v6
+
+on:
+  push:
+    branches:
+      - repair/pr438-zero-review-final
+
+permissions:
+  contents: write
+
+jobs:
+  repair-commit-validate-push:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: repair/pr438-zero-review-final
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install validation dependencies
+        run: python -m pip install pyyaml
+
+      - name: Reproduce v5 semantic transformations
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, yaml
+          wf = yaml.safe_load(Path('.github/workflows/pr438-final-sandbox-v5.yml').read_text(encoding='utf-8'))
+          steps = {s.get('name'): s for s in wf['jobs']['repair-commit-validate-push']['steps'] if s.get('name')}
+          for name in ('Reproduce v4 semantic transformations', 'Collapse narrative verification to one authority'):
+              subprocess.run(['bash', '-euo', 'pipefail', '-c', steps[name]['run']], check=True)
+          PY
+
+      - name: Migrate remaining test fixtures off removed manifest hashes
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('tests/test_swe_agent_v3_contract_locks.py')
+          s = p.read_text(encoding='utf-8')
+          old = '''    def refresh_manifest_and_commit_fixture(self) -> None:\n        manifest = json.loads(self.manifest.read_text(encoding="utf-8"))\n        for entry in manifest["artifacts"]:\n            artifact = self.root / entry["path"]\n            raw = artifact.read_bytes()\n            entry["git_blob_sha1"] = verify_module._git_blob_sha1(raw)\n            entry["bytes"] = len(raw)\n        self.manifest.write_text(json.dumps(manifest, indent=2) + "\\n", encoding="utf-8", newline="\\n")\n        self.sync_committed()\n'''
+          new = '''    def refresh_manifest_and_commit_fixture(self) -> None:\n        # The reviewed Git tree is the current-byte authority. Mutations become the\n        # fixture's new committed HEAD without rewriting a second hash registry.\n        self.sync_committed()\n'''
+          if s.count(old) != 1:
+              raise SystemExit(f'contract-lock repin helper count={s.count(old)}')
+          s = s.replace(old, new, 1)
+          s = s.replace('Semantic mutation tests that deliberately repin fixture byte identities first.', 'Semantic mutation tests that commit mutated fixture bytes before verification.')
+          p.write_text(s, encoding='utf-8', newline='\n')
+
+          p = Path('tests/test_swe_agent_v3_design.py')
+          s = p.read_text(encoding='utf-8')
+          old = '        data["artifacts"][0]["bytes"] += 1; manifest.write_text(json.dumps(data, indent=2) + "\\n"); self.sync_committed(); self.rejected(); self.setUp_after_drift()\n'
+          new = '        data["artifacts"][0]["git_blob_sha1"] = "0" * 40; manifest.write_text(json.dumps(data, indent=2) + "\\n"); self.sync_committed(); self.rejected(); self.setUp_after_drift()\n'
+          if s.count(old) != 1:
+              raise SystemExit(f'design stale-metadata test count={s.count(old)}')
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8', newline='\n')
+
+          p = Path('tests/test_swe_agent_v3_amendment_v1_1.py')
+          s = p.read_text(encoding='utf-8')
+          old = '            self.assertEqual(result["authority_status"], "immutable_historical_evidence")\n'
+          new = '            self.assertEqual(result["authority_status"], "archival_context_not_live_authority")\n            self.assertFalse(result["current_design_authority"])\n            self.assertEqual(result["provenance_status"], "not_self_proving")\n'
+          if s.count(old) != 1:
+              raise SystemExit(f'historical status assertion count={s.count(old)}')
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8', newline='\n')
+          PY
+
+      - name: Remove all repair scaffolding from candidate
+        run: |
+          rm -f .github/workflows/pr438-root-closure*.yml
+          rm -f .github/workflows/pr438-final-sandbox*.yml
+
+      - name: Create exact local candidate commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "Permanently reconcile SWE v3 authority contracts"
+          git rev-parse HEAD
+
+      - name: Governing verifiers on exact local commit
+        run: |
+          python -m compileall -q research/external-validation/swe-agent-v3 tests/test_swe_agent_v3*.py
+          python research/external-validation/swe-agent-v3/verify_amendment_v1_1.py
+          python research/external-validation/swe-agent-v3/verify_review_closure.py
+          python research/external-validation/swe-agent-v3/verify_design.py
+          python research/external-validation/swe-agent-v3/verify_integrity.py
+          python research/external-validation/swe-agent-v3/verify_public_narratives.py
+          python research/external-validation/swe-agent-v3/verify_public_narratives_v2.py
+
+      - name: Complete SWE v3 unit surface
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v 2>&1 | tee /tmp/swe-v3-tests.log
+
+      - name: Repository hygiene
+        run: python tools/check_repository_hygiene.py
+
+      - name: Canonical fast suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/run_tests.py --fast 2>&1 | tee /tmp/fast-suite.log
+
+      - name: Push exact validated candidate
+        run: git push origin HEAD:repair/pr438-zero-review-final
+
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr438-final-sandbox-v6-diagnostics
+          path: |
+            /tmp/swe-v3-tests.log
+            /tmp/fast-suite.log
+          if-no-files-found: ignore
