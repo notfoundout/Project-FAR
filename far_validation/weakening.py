@@ -9,9 +9,12 @@ from pathlib import Path
 from typing import Any
 
 
+REQUIRED_LIVE_CALL_PREFIXES: dict[str, tuple[str, ...]] = {
+    "research/target-category-discovery/verify_compositional_invariant.py": ("validate_empirical_authority", "validate_gate"),
+    "research/target-category-discovery/verify_compositional_invariant_legacy.py": ("validate_empirical_authority", "validate_gate"),
+}
 REQUIRED_SEMANTIC_CALLS: dict[str, frozenset[str]] = {
-    "research/target-category-discovery/verify_compositional_invariant.py": frozenset({"validate_empirical_authority"}),
-    "research/target-category-discovery/verify_compositional_invariant_legacy.py": frozenset({"validate_empirical_authority"}),
+    path: frozenset(prefix) for path, prefix in REQUIRED_LIVE_CALL_PREFIXES.items()
 }
 
 
@@ -63,26 +66,28 @@ def _called_functions(source: str, path: str) -> set[str]:
     return {_call_name(node) for node in ast.walk(tree) if isinstance(node, ast.Call)}
 
 
-def _live_direct_calls(source: str, path: str, function_name: str = "verify") -> set[str]:
-    """Return direct calls on the live top-level path of exactly one function.
+def _live_call_prefix(source: str, path: str, function_name: str = "verify", count: int = 2) -> tuple[str, ...]:
+    """Return the exact unconditional call prefix of the public verification path.
 
-    Calls nested under conditionals/loops/try blocks are deliberately excluded: the
-    protected verifier contract requires the semantic authority check as an
-    unconditional statement on the public verify path. Statements after an
-    unconditional return/raise are unreachable and are excluded as well.
+    The protected verifiers must begin with fail-closed authority checks. Any
+    assignment, conditional, loop, try, return, raise, or other statement inserted
+    before those calls changes the prefix and is rejected, including conditionally
+    terminating branches such as ``if True: return``.
     """
     tree = ast.parse(source, filename=path)
     matches = [node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == function_name]
     if len(matches) != 1:
-        return set()
-    calls: set[str] = set()
-    for statement in matches[0].body:
-        if isinstance(statement, (ast.Return, ast.Raise)):
-            break
+        return ()
+    body = list(matches[0].body)
+    if body and isinstance(body[0], ast.Expr) and isinstance(body[0].value, ast.Constant) and isinstance(body[0].value.value, str):
+        body = body[1:]
+    names: list[str] = []
+    for statement in body[:count]:
         if isinstance(statement, ast.Expr) and isinstance(statement.value, ast.Call):
-            calls.add(_call_name(statement.value))
-    return calls
-
+            names.append(_call_name(statement.value))
+        else:
+            names.append("")
+    return tuple(names)
 
 def analyze(source: str, path: str) -> StrengthMetrics:
     tree = ast.parse(source, filename=path)
@@ -226,11 +231,16 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
         after_source = current_path.read_text(encoding="utf-8")
         try:
             finding.after = analyze(after_source, path)
-            required_calls = REQUIRED_SEMANTIC_CALLS.get(path, frozenset())
-            if required_calls:
-                missing_calls = sorted(required_calls - _live_direct_calls(after_source, path))
-                if missing_calls:
-                    finding.failures.append("required semantic validator calls absent from live verify path: " + ", ".join(missing_calls))
+            required_prefix = REQUIRED_LIVE_CALL_PREFIXES.get(path)
+            if required_prefix:
+                actual_prefix = _live_call_prefix(after_source, path, count=len(required_prefix))
+                if actual_prefix != required_prefix:
+                    finding.failures.append(
+                        "required live verify call prefix changed: expected "
+                        + " -> ".join(required_prefix)
+                        + "; got "
+                        + " -> ".join(name or "<non-call>" for name in actual_prefix)
+                    )
         except SyntaxError as exc:
             finding.failures.append(f"current source has syntax error: {exc}")
             findings.append(finding)

@@ -16,9 +16,6 @@ _core = importlib.util.module_from_spec(_LEGACY_SPEC)
 sys.modules[_LEGACY_SPEC.name] = _core
 _LEGACY_SPEC.loader.exec_module(_core)
 
-_core.EXPECTED_SPEC["version"] = "1.0"
-_core.EXPECTED_SPEC_SHA256 = "2b6ede05f7d5e3525070e1a5893ea599613a64eb114b12ed43606fb114e14128"
-_core.EXPECTED_PUBLIC_SHA256["Report"] = "426b48e0b1a8724bd718bb3ffb5491f2f97b79860c90f4d1f57c35d78434c991"
 
 _original_read_utf8 = _core._read_utf8
 _original_validate_gate = _core.validate_gate
@@ -66,6 +63,10 @@ def verify(
     empirical_manifest_path: Path = DEFAULT_EMPIRICAL_MANIFEST,
     audit_path: Path = DEFAULT_CHAT_AUDIT,
 ) -> dict[str, Any]:
+    # The first two executable statements are fail-closed authority gates.
+    # The weakening detector requires this exact unconditional live prefix.
+    validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)
+    validate_gate(gates_path)
     result = _original_verify(
         spec_path,
         result_path,
@@ -77,10 +78,6 @@ def verify(
         empirical_manifest_path,
         audit_path,
     )
-    # Defense in depth: the public entrypoint itself requires both controlling
-    # empirical authority and the complete RG-07 release boundary.
-    validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)
-    validate_gate(gates_path)
     return result
 
 

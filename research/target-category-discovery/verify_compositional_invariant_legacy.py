@@ -20,11 +20,11 @@ DEFAULT_CHAT_AUDIT = HERE / "chat-audit-2026-08-05.md"
 DEFAULT_GATES = ROOT / "theory/evaluation/research-gates.json"
 
 EXPECTED_BASE = "d1fc8053e1459a7829f6f24b8d187f7887375cf0"
-EXPECTED_SPEC_SHA256 = "9570d1b9f8653269e8ca2a32a84f676ed2c72add192987c9d77c1a6ab52043b4"
+EXPECTED_SPEC_SHA256 = "2b6ede05f7d5e3525070e1a5893ea599613a64eb114b12ed43606fb114e14128"
 EXPECTED_PUBLIC_SHA256 = {
     "README": "248598257d4f1ac23f4156a209fc6088439abdfd5d9f7bb6bb90638ac149b35f",
     "Charter": "6252fbef6c49886f6c8516ebc8f23237b7d2908bdca10230789174daad7c3b53",
-    "Report": "40f44473b86c174157ed8a8b583ef10b0a50a58b7fe80d8d372bf004ca1fc13b",
+    "Report": "426b48e0b1a8724bd718bb3ffb5491f2f97b79860c90f4d1f57c35d78434c991",
 }
 EXPECTED_EMPIRICAL_BLOBS = {
     "scope-and-universality-charter-v1.1.md": "a4f7074c10c92863fc5a37edfd65aa3178b71dba",
@@ -45,7 +45,7 @@ PUBLIC_NONCLAIMS = [
 ]
 EXPECTED_SPEC = {
     "id": "TCD-COMPOSITIONAL-INVARIANT-001",
-    "version": "1.2",
+    "version": "1.0",
     "status": "Research",
     "base_commit": "d1fc8053e1459a7829f6f24b8d187f7887375cf0",
     "question": "Within an independently stated typed-compositional scope, which finitary arrow-valued operations are invariant under every admissible recoding, without assuming RCCD components?",
@@ -301,11 +301,11 @@ def validate_gate(gates_path: Path) -> None:
 
 
 def verify(spec_path: Path = DEFAULT_SPEC, result_path: Path = DEFAULT_RESULT, report_path: Path = DEFAULT_REPORT, readme_path: Path = DEFAULT_README, charter_path: Path = DEFAULT_CHARTER, gates_path: Path = DEFAULT_GATES, empirical_charter_path: Path = DEFAULT_EMPIRICAL_CHARTER, empirical_manifest_path: Path = DEFAULT_EMPIRICAL_MANIFEST, audit_path: Path = DEFAULT_CHAT_AUDIT) -> dict[str, Any]:
+    validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)
+    validate_gate(gates_path)
     actual = build_result(load_json(spec_path))
     if actual != load_json(result_path): raise VerificationError("committed result does not match a fresh rebuild")
     validate_public_surface("README", readme_path); validate_public_surface("Charter", charter_path); validate_public_surface("Report", report_path)
-    validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)
-    validate_gate(gates_path)
     if actual["classification"] != "exploratory_unregistered_derivation": raise VerificationError("classification must remain exploratory")
     if actual["release_status"] != "not_eligible_unregistered_deductive_program": raise VerificationError("unregistered derivation cannot be release-eligible")
     return actual

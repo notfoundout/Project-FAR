@@ -185,6 +185,16 @@ class CompositionalInvariantTests(unittest.TestCase):
             with self.assertRaisesRegex(module.VerificationError, "non-finite"):
                 module.load_json(nonfinite)
 
+    def test_legacy_cli_passes_directly_without_wrapper_patching(self) -> None:
+        completed = subprocess.run(
+            [sys.executable, str(DIR / "verify_compositional_invariant_legacy.py")],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+
     def test_weakening_detector_includes_research_verifiers(self) -> None:
         path = ROOT / "far_validation/weakening.py"
         source = path.read_text(encoding="utf-8")
@@ -200,7 +210,7 @@ class CompositionalInvariantTests(unittest.TestCase):
             "research/target-category-discovery/verify_compositional_invariant.py",
             "research/target-category-discovery/verify_compositional_invariant_legacy.py",
         ):
-            self.assertEqual(weakening.REQUIRED_SEMANTIC_CALLS[protected], frozenset({"validate_empirical_authority"}))
+            self.assertEqual(weakening.REQUIRED_LIVE_CALL_PREFIXES[protected], ("validate_empirical_authority", "validate_gate"))
             protected_source = (ROOT / protected).read_text(encoding="utf-8")
             self.assertIn("validate_empirical_authority", weakening._called_functions(protected_source, protected))
             weakened = protected_source.replace("validate_empirical_authority", "removed_empirical_authority_call")
@@ -228,7 +238,7 @@ class CompositionalInvariantTests(unittest.TestCase):
             failures = {finding.path: finding.failures for finding in report.findings}
             for protected in weakening.REQUIRED_SEMANTIC_CALLS:
                 self.assertIn(protected, failures)
-                self.assertTrue(any("required semantic validator calls absent from live verify path" in item for item in failures[protected]))
+                self.assertTrue(any("required live verify call prefix changed" in item for item in failures[protected]))
 
             subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)
             direct = "    validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)\n"
@@ -245,8 +255,25 @@ class CompositionalInvariantTests(unittest.TestCase):
             dead_failures = {finding.path: finding.failures for finding in dead_report.findings}
             for protected in weakening.REQUIRED_SEMANTIC_CALLS:
                 self.assertIn(protected, dead_failures)
-                self.assertTrue(any("required semantic validator calls absent from live verify path" in item for item in dead_failures[protected]))
-                self.assertTrue(any("required semantic validator calls absent from live verify path" in item for item in failures[protected]))
+                self.assertTrue(any("required live verify call prefix changed" in item for item in dead_failures[protected]))
+                self.assertTrue(any("required live verify call prefix changed" in item for item in failures[protected]))
+
+            subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)
+            direct = "    validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)\n"
+            early_return = "    if True:\n        return None\n" + direct
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                target = repo / protected
+                source = target.read_text(encoding="utf-8")
+                self.assertEqual(source.count(direct), 1)
+                target.write_text(source.replace(direct, early_return, 1), encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "insert conditionally terminating branch before authority calls"], cwd=repo, check=True)
+            early_report = weakening.detect_weakening(repo, base=base)
+            self.assertFalse(early_report.successful)
+            early_failures = {finding.path: finding.failures for finding in early_report.findings}
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                self.assertIn(protected, early_failures)
+                self.assertTrue(any("required live verify call prefix changed" in item for item in early_failures[protected]))
 
 
 if __name__ == "__main__":
