@@ -173,12 +173,19 @@ def verify_gate_closed(path: Path = GATE) -> None:
             raise DesignError(f"execution gate opened: {key}")
 
 
-def verify() -> None:
-    amendment_v1_1.validate()
-    verify_task_identity_contract()
-    verify_seed_contract()
-    closure_v1_2.validate()
-    verify_gate_closed()
+def verify(here: Path | None = None) -> None:
+    """Validate review-closure semantics against one explicit active artifact root."""
+    active = here or integrity.HERE
+    amendment_v1_1.validate(
+        amend=active / "failure-arithmetic-amendment-v1.1.json",
+        readme=active / "AMENDMENT-v1.1.md",
+        gate=active / "execution-gate-v1.0.json",
+        historical_root=active / "historical-base-83c951",
+    )
+    verify_task_identity_contract(active / "task-manifest-contract-v1.0.json")
+    verify_seed_contract(active / "bootstrap-seed-commitment-contract-v1.0.json")
+    closure_v1_2.validate(active / "review-closure-amendment-v1.2.json")
+    verify_gate_closed(active / "execution-gate-v1.0.json")
 
 
 if __name__ == "__main__":
