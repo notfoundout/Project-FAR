@@ -1,0 +1,75 @@
+name: PR436 final assurance lock repin
+
+on:
+  push:
+    branches:
+      - repair/pr436-assurance-lock-final
+
+permissions:
+  contents: write
+
+jobs:
+  repin-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: repair/pr436-assurance-lock-final
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Repin only the legitimately changed weakening verifier
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json
+          target = Path('far_validation/weakening.py')
+          actual = hashlib.sha256(target.read_bytes()).hexdigest()
+          expected = '0302e60c1c16ea99237c4fcb9641c9570ce9826b7323a2ae7ddd99466391c194'
+          if actual != expected:
+              raise SystemExit(f'unexpected weakening.py digest: {actual} != {expected}')
+          lock_path = Path('validation_bootstrap/assurance-lock.json')
+          lock = json.loads(lock_path.read_text(encoding='utf-8'))
+          old = lock['files'].get('far_validation/weakening.py')
+          if old != 'ed9f5e8eeabdc6997178464370edd050e6e49ccd25044feb4abb37b1a562c1ef':
+              raise SystemExit(f'assurance lock moved unexpectedly: {old}')
+          lock['files']['far_validation/weakening.py'] = actual
+          lock_path.write_text(json.dumps(lock, indent=2, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
+          PY
+      - name: Remove repin workflow from candidate
+        run: rm -f .github/workflows/pr436-assurance-lock-final.yml
+      - name: Create exact local candidate commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "Repin validation assurance after live-call hardening"
+          git rev-parse HEAD
+      - name: Independent bootstrap
+        run: python validation_bootstrap/verify.py
+      - name: Target-category verifier and regressions
+        run: |
+          python research/target-category-discovery/verify_compositional_invariant.py
+          python -m unittest tests.test_target_category_compositional_invariant -v
+      - name: Repository hygiene
+        run: python tools/check_repository_hygiene.py
+      - name: Canonical fast suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/run_tests.py --fast 2>&1 | tee /tmp/fast-suite.log
+      - name: Push exact validated candidate
+        run: git push origin HEAD:repair/pr436-assurance-lock-final
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr436-assurance-lock-final-diagnostics
+          path: /tmp/fast-suite.log
+          if-no-files-found: ignore
