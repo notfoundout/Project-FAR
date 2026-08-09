@@ -1,0 +1,56 @@
+name: PR436 integrate final main
+
+on:
+  push:
+    branches:
+      - repair/pr436-final-integrate-main
+
+permissions:
+  contents: write
+
+jobs:
+  integrate-validate-push:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: repair/pr436-final-integrate-main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Remove integration workflow from candidate history
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git rm -f .github/workflows/pr436-integrate-main.yml
+          git commit -m "Remove PR436 integration runner"
+      - name: Merge current main into candidate
+        run: |
+          git fetch origin main
+          git merge --no-edit origin/main
+          git rev-parse HEAD
+      - name: Target-category governing verifier
+        run: python research/target-category-discovery/verify_compositional_invariant.py
+      - name: Target-category regression suite
+        run: python -m unittest tests.test_target_category_compositional_invariant -v
+      - name: Repository hygiene
+        run: python tools/check_repository_hygiene.py
+      - name: Canonical fast suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/run_tests.py --fast 2>&1 | tee /tmp/fast-suite.log
+      - name: Push exact validated integration candidate
+        run: git push origin HEAD:repair/pr436-final-integrate-main
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr436-integrate-main-diagnostics
+          path: /tmp/fast-suite.log
+          if-no-files-found: ignore
