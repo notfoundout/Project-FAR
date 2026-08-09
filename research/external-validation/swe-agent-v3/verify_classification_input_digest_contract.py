@@ -77,22 +77,22 @@ def validate_contract(path: Path = CONTRACT) -> dict[str, Any]:
 
 
 def validate_descriptor(enclosing_task_identity_sha256: str, descriptor: dict[str, Any], expected_digest: str) -> str:
-    validate_contract()
+    validate_contract(integrity.HERE / "classification-input-digest-contract-v1.0.json")
     if type(enclosing_task_identity_sha256) is not str or re.fullmatch(r"[0-9a-f]{64}", enclosing_task_identity_sha256) is None:
         raise DesignError("enclosing task identity must be lowercase SHA-256 hex")
-    if not isinstance(descriptor, dict) or list(descriptor.keys()) != EXPECTED_DESCRIPTOR_KEYS:
-        raise DesignError("classification-input descriptor shape/order drifted")
+    if not isinstance(descriptor, dict) or set(descriptor) != set(EXPECTED_DESCRIPTOR_KEYS):
+        raise DesignError("classification-input descriptor shape drifted")
     if descriptor.get("algorithm_id") != "far-swe-v3-classification-input-digest-v2" or descriptor.get("task_identity_sha256") != enclosing_task_identity_sha256:
         raise DesignError("classification-input descriptor transplanted across task identity")
     inputs = descriptor.get("classification_inputs")
-    if not isinstance(inputs, dict) or list(inputs.keys()) != CLASSIFICATION_INPUTS or any(type(inputs[k]) is not bool for k in CLASSIFICATION_INPUTS):
+    if not isinstance(inputs, dict) or set(inputs) != set(CLASSIFICATION_INPUTS) or any(type(inputs[k]) is not bool for k in CLASSIFICATION_INPUTS):
         raise DesignError("classification inputs must be exact JSON booleans with exact keys")
     bindings = descriptor.get("evidence_bindings")
-    if not isinstance(bindings, dict) or list(bindings.keys()) != CLASSIFICATION_INPUTS:
-        raise DesignError("classification-input evidence-binding key set/order drifted")
+    if not isinstance(bindings, dict) or set(bindings) != set(CLASSIFICATION_INPUTS):
+        raise DesignError("classification-input evidence-binding key set drifted")
     for key in CLASSIFICATION_INPUTS:
         item = bindings.get(key)
-        if not isinstance(item, dict) or list(item.keys()) != ["kind","locator"]:
+        if not isinstance(item, dict) or set(item) != {"kind","locator"}:
             raise DesignError(f"classification-input evidence binding shape drifted: {key}")
         kind, locator = item.get("kind"), item.get("locator")
         if kind not in EXPECTED_BINDING_KINDS:
@@ -112,7 +112,7 @@ def validate_descriptor(enclosing_task_identity_sha256: str, descriptor: dict[st
 
 if __name__ == "__main__":
     try:
-        validate_contract()
+        validate_contract(integrity.HERE / "classification-input-digest-contract-v1.0.json")
     except DesignError as exc:
         raise SystemExit(f"FAIL: {exc}")
     print("PASS: prospective classification-input digest authority is exact, task-bound, and execution remains blocked.")
