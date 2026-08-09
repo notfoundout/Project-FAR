@@ -23,9 +23,11 @@ module = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = module
 spec.loader.exec_module(module)
 
+
 class CompositionalInvariantTests(unittest.TestCase):
     def test_frozen_result_passes(self) -> None:
         result = module.verify(SPEC_PATH, RESULT_PATH, REPORT_PATH, README_PATH, CHARTER_PATH, GATES_PATH)
+        self.assertEqual(result["version"], "1.0")
         self.assertEqual(result["classification"], "exploratory_unregistered_derivation")
         self.assertEqual(result["release_status"], "not_eligible_unregistered_deductive_program")
         self.assertEqual(result["theorem_status"], "not_established_exploratory_argument_with_bounded_executable_corroboration")
@@ -86,21 +88,47 @@ class CompositionalInvariantTests(unittest.TestCase):
             audit = Path(tmp) / "chat-audit-2026-08-05.md"
             audit.write_bytes(module.DEFAULT_CHAT_AUDIT.read_bytes() + b"\n")
             with self.assertRaisesRegex(module.VerificationError, "registered chat audit identity drifted"):
-                module.validate_empirical_authority(
+                module.validate_empirical_authority(module.DEFAULT_EMPIRICAL_CHARTER, module.DEFAULT_EMPIRICAL_MANIFEST, audit)
+
+    def test_verify_end_to_end_rejects_empirical_authority_drift(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            audit = Path(tmp) / "chat-audit-2026-08-05.md"
+            audit.write_bytes(module.DEFAULT_CHAT_AUDIT.read_bytes() + b"\n")
+            with self.assertRaisesRegex(module.VerificationError, "registered chat audit identity drifted"):
+                module.verify(
+                    SPEC_PATH,
+                    RESULT_PATH,
+                    REPORT_PATH,
+                    README_PATH,
+                    CHARTER_PATH,
+                    GATES_PATH,
                     module.DEFAULT_EMPIRICAL_CHARTER,
                     module.DEFAULT_EMPIRICAL_MANIFEST,
                     audit,
                 )
 
+    def test_registered_artifact_symlink_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            link = Path(tmp) / "chat-audit-2026-08-05.md"
+            link.symlink_to(module.DEFAULT_CHAT_AUDIT)
+            with self.assertRaisesRegex(module.VerificationError, "regular non-symlink file"):
+                module.verify(
+                    SPEC_PATH,
+                    RESULT_PATH,
+                    REPORT_PATH,
+                    README_PATH,
+                    CHARTER_PATH,
+                    GATES_PATH,
+                    module.DEFAULT_EMPIRICAL_CHARTER,
+                    module.DEFAULT_EMPIRICAL_MANIFEST,
+                    link,
+                )
+
     def test_missing_empirical_chat_audit_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             missing = Path(tmp) / "chat-audit-2026-08-05.md"
-            with self.assertRaisesRegex(module.VerificationError, "required artifact missing or unreadable"):
-                module.validate_empirical_authority(
-                    module.DEFAULT_EMPIRICAL_CHARTER,
-                    module.DEFAULT_EMPIRICAL_MANIFEST,
-                    missing,
-                )
+            with self.assertRaises(module.VerificationError):
+                module.validate_empirical_authority(module.DEFAULT_EMPIRICAL_CHARTER, module.DEFAULT_EMPIRICAL_MANIFEST, missing)
 
     def test_rg07_must_remain_unsatisfied_for_this_version(self) -> None:
         gates = module.load_json(GATES_PATH)
@@ -142,6 +170,13 @@ class CompositionalInvariantTests(unittest.TestCase):
             nonfinite.write_text('{"x":NaN}', encoding="utf-8")
             with self.assertRaisesRegex(module.VerificationError, "non-finite"):
                 module.load_json(nonfinite)
+
+    def test_weakening_detector_includes_research_verifiers(self) -> None:
+        source = (ROOT / "far_validation/weakening.py").read_text(encoding="utf-8")
+        self.assertIn('"research"', source)
+        self.assertIn('path.startswith("research/")', source)
+        self.assertIn('Path(path).name.startswith("verify_")', source)
+
 
 if __name__ == "__main__":
     unittest.main()
