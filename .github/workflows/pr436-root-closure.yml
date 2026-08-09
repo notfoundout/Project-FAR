@@ -1,0 +1,66 @@
+name: PR436 Root Closure
+
+on:
+  push:
+    branches:
+      - agent/close-structured-reasoning-compositional-question
+    paths:
+      - .github/workflows/pr436-root-closure.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/close-structured-reasoning-compositional-question
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply root-cause repairs
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          legacy = Path('research/target-category-discovery/verify_compositional_invariant_legacy.py')
+          text = legacy.read_text(encoding='utf-8')
+          old = '    if not isinstance(required, list) or "theorem_release" not in required: raise VerificationError("RG-07 must remain required before theorem_release")'
+          new = '    if required != ["evidence_release", "theorem_release"]: raise VerificationError("RG-07 must remain required before evidence_release and theorem_release exactly")'
+          if old not in text:
+              raise SystemExit('legacy RG-07 target not found')
+          legacy.write_text(text.replace(old, new), encoding='utf-8')
+
+          tests = Path('tests/test_target_category_compositional_invariant.py')
+          text = tests.read_text(encoding='utf-8')
+          if 'import subprocess\n' not in text:
+              text = text.replace('import json\n', 'import json\nimport subprocess\n')
+          old = '''                with self.assertRaisesRegex(module.VerificationError, "evidence_release and theorem_release"):\n                    module.validate_gate(path)'''
+          new = '''                with self.assertRaisesRegex(module.VerificationError, "evidence_release and theorem_release"):\n                    module.verify(SPEC_PATH, RESULT_PATH, REPORT_PATH, README_PATH, CHARTER_PATH, path)'''
+          if old not in text:
+              raise SystemExit('public gate mutation test target not found')
+          text = text.replace(old, new)
+          anchor = '''            weakened = protected_source.replace("validate_empirical_authority", "removed_empirical_authority_call")\n            self.assertNotIn("validate_empirical_authority", weakening._called_functions(weakened, protected))\n'''
+          addition = anchor + '''\n        with tempfile.TemporaryDirectory() as tmp:\n            repo = Path(tmp)\n            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)\n            subprocess.run(["git", "config", "user.email", "assurance@example.invalid"], cwd=repo, check=True)\n            subprocess.run(["git", "config", "user.name", "Validator Assurance"], cwd=repo, check=True)\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                target = repo / protected\n                target.parent.mkdir(parents=True, exist_ok=True)\n                target.write_text((ROOT / protected).read_text(encoding="utf-8"), encoding="utf-8")\n            subprocess.run(["git", "add", "."], cwd=repo, check=True)\n            subprocess.run(["git", "commit", "-qm", "baseline"], cwd=repo, check=True)\n            base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                target = repo / protected\n                target.write_text(target.read_text(encoding="utf-8").replace("validate_empirical_authority", "removed_empirical_authority_call"), encoding="utf-8")\n            subprocess.run(["git", "add", "."], cwd=repo, check=True)\n            subprocess.run(["git", "commit", "-qm", "remove authority calls"], cwd=repo, check=True)\n            report = weakening.detect_weakening(repo, base=base)\n            self.assertFalse(report.successful)\n            failures = {finding.path: finding.failures for finding in report.findings}\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                self.assertIn(protected, failures)\n                self.assertTrue(any("required semantic validator calls removed" in item for item in failures[protected]))\n'''
+          if anchor not in text:
+              raise SystemExit('weakening assurance anchor not found')
+          text = text.replace(anchor, addition, 1)
+          tests.write_text(text, encoding='utf-8')
+          PY
+      - name: Run focused validation
+        run: |
+          python -m unittest tests.test_target_category_compositional_invariant -v
+          python research/target-category-discovery/verify_compositional_invariant.py
+      - name: Commit validated repair and remove one-shot workflow
+        shell: bash
+        run: |
+          rm .github/workflows/pr436-root-closure.yml
+          git config user.name 'notfoundout'
+          git config user.email 'lexdekidd@icloud.com'
+          git add research/target-category-discovery/verify_compositional_invariant_legacy.py tests/test_target_category_compositional_invariant.py .github/workflows/pr436-root-closure.yml
+          git commit -m 'Close PR436 verifier and assurance gaps'
+          git push origin HEAD:agent/close-structured-reasoning-compositional-question
