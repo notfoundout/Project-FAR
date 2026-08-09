@@ -141,6 +141,19 @@ class CompositionalInvariantTests(unittest.TestCase):
             with self.assertRaisesRegex(module.VerificationError, "RG-07 state changed"):
                 module.validate_gate(path)
 
+    def test_rg07_must_gate_evidence_and_theorem_release_exactly(self) -> None:
+        gates = module.load_json(GATES_PATH)
+        rg07 = next(g for g in gates["gates"] if g["id"] == "RG-07")
+        self.assertEqual(rg07["required_before"], ["evidence_release", "theorem_release"])
+        for mutated_required in (["theorem_release"], ["evidence_release"], ["theorem_release", "evidence_release"], ["evidence_release", "theorem_release", "other"]):
+            with self.subTest(required_before=mutated_required), tempfile.TemporaryDirectory() as tmp:
+                changed = json.loads(json.dumps(gates))
+                next(g for g in changed["gates"] if g["id"] == "RG-07")["required_before"] = mutated_required
+                path = Path(tmp) / "gates.json"
+                path.write_text(json.dumps(changed), encoding="utf-8")
+                with self.assertRaisesRegex(module.VerificationError, "evidence_release and theorem_release"):
+                    module.validate_gate(path)
+
     def test_release_cannot_be_claimed_by_mutating_result(self) -> None:
         data = module.load_json(RESULT_PATH)
         data["release_status"] = "released"
@@ -172,10 +185,25 @@ class CompositionalInvariantTests(unittest.TestCase):
                 module.load_json(nonfinite)
 
     def test_weakening_detector_includes_research_verifiers(self) -> None:
-        source = (ROOT / "far_validation/weakening.py").read_text(encoding="utf-8")
+        path = ROOT / "far_validation/weakening.py"
+        source = path.read_text(encoding="utf-8")
         self.assertIn('"research"', source)
         self.assertIn('path.startswith("research/")', source)
         self.assertIn('Path(path).name.startswith("verify_")', source)
+        weakening_spec = importlib.util.spec_from_file_location("far_weakening_test", path)
+        assert weakening_spec and weakening_spec.loader
+        weakening = importlib.util.module_from_spec(weakening_spec)
+        sys.modules[weakening_spec.name] = weakening
+        weakening_spec.loader.exec_module(weakening)
+        for protected in (
+            "research/target-category-discovery/verify_compositional_invariant.py",
+            "research/target-category-discovery/verify_compositional_invariant_legacy.py",
+        ):
+            self.assertEqual(weakening.REQUIRED_SEMANTIC_CALLS[protected], frozenset({"validate_empirical_authority"}))
+            protected_source = (ROOT / protected).read_text(encoding="utf-8")
+            self.assertIn("validate_empirical_authority", weakening._called_functions(protected_source, protected))
+            weakened = protected_source.replace("validate_empirical_authority", "removed_empirical_authority_call")
+            self.assertNotIn("validate_empirical_authority", weakening._called_functions(weakened, protected))
 
 
 if __name__ == "__main__":
