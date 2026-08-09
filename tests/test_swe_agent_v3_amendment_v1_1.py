@@ -2,8 +2,8 @@ from __future__ import annotations
 import importlib.util,json,sys,tempfile,unittest
 from fractions import Fraction
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1];DIR=ROOT/'research/external-validation/swe-agent-v3';P=DIR/'verify_amendment_v1_1.py'
-s=importlib.util.spec_from_file_location('v',P);assert s and s.loader;m=importlib.util.module_from_spec(s);sys.modules[s.name]=m;s.loader.exec_module(m)
+ROOT=Path(__file__).resolve().parents[1];DIR=ROOT/'research/external-validation/swe-agent-v3';P=DIR/'verify_amendment_v1_1_rooted.py'
+s=importlib.util.spec_from_file_location('v',P);assert s and s.loader;m=importlib.util.module_from_spec(s);sys.path.insert(0,str(DIR));sys.modules[s.name]=m;s.loader.exec_module(m)
 class Tests(unittest.TestCase):
  def test_canonical(self):
   a=m.validate();self.assertEqual(a['authority']['outcome_exposure_status'],'none');self.assertFalse(a['authority']['execution_authorized'])
@@ -21,4 +21,6 @@ class Tests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as t:
    p=Path(t)/src.name;p.write_text(json.dumps(d,indent=2)+'\n')
    with self.assertRaises(m.AmendmentError):m.validate(amend=p)
+ def test_rooted_snapshots_are_history_independent(self):
+  self.assertEqual(m._snapshot(m.legacy.PREREG_REL)[1],m.legacy.PREREG_BLOB);self.assertEqual(m._snapshot(m.legacy.PLAN_REL)[1],m.legacy.PLAN_BLOB)
 if __name__=='__main__':unittest.main()
