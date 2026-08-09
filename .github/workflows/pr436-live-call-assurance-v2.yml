@@ -1,0 +1,71 @@
+name: PR436 live-call assurance v2
+
+on:
+  push:
+    branches:
+      - repair/pr436-live-call-assurance
+
+permissions:
+  contents: write
+
+jobs:
+  harden-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: repair/pr436-live-call-assurance
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Reproduce live-path hardening and align assertions
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, yaml
+          wf = yaml.safe_load(Path('.github/workflows/pr436-live-call-assurance.yml').read_text(encoding='utf-8'))
+          step = next(s for s in wf['jobs']['harden-validate']['steps'] if s.get('name') == 'Require semantic calls on the live verify path')
+          subprocess.run(['bash', '-euo', 'pipefail', '-c', step['run']], check=True)
+          p = Path('tests/test_target_category_compositional_invariant.py')
+          s = p.read_text(encoding='utf-8')
+          old = '"required semantic validator calls removed"'
+          new = '"required semantic validator calls absent from live verify path"'
+          if old not in s:
+              raise SystemExit('stale weakening failure-message assertion not found')
+          p.write_text(s.replace(old, new), encoding='utf-8', newline='\n')
+          PY
+      - name: Remove assurance workflows from candidate
+        run: rm -f .github/workflows/pr436-live-call-assurance*.yml
+      - name: Create exact local candidate commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "Require empirical authority calls on live verify paths"
+          git rev-parse HEAD
+      - name: Target-category governing verifier
+        run: python research/target-category-discovery/verify_compositional_invariant.py
+      - name: Target-category regression suite
+        run: python -m unittest tests.test_target_category_compositional_invariant -v
+      - name: Repository hygiene
+        run: python tools/check_repository_hygiene.py
+      - name: Canonical fast suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/run_tests.py --fast 2>&1 | tee /tmp/fast-suite.log
+      - name: Push exact validated candidate
+        run: git push origin HEAD:repair/pr436-live-call-assurance
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr436-live-call-assurance-v2-diagnostics
+          path: /tmp/fast-suite.log
+          if-no-files-found: ignore
