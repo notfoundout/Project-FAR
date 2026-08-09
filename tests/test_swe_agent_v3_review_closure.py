@@ -58,7 +58,7 @@ class ReviewClosureTests(unittest.TestCase):
                     with self.assertRaises(module.DesignError):
                         module.verify_seed_contract(path)
 
-    def test_seed_value_is_well_formed_and_owned_by_byte_authority(self) -> None:
+    def test_seed_value_is_well_formed_and_semantically_frozen(self) -> None:
         data = json.loads((DIR / "bootstrap-seed-commitment-contract-v1.0.json").read_text(encoding="utf-8"))
         self.assertEqual(data["commitment"]["method"], "direct_precommitted_value")
         self.assertFalse(data["commitment"]["artifact_inputs_permitted"])
@@ -66,7 +66,14 @@ class ReviewClosureTests(unittest.TestCase):
         self.assertRegex(data["rng_contract"]["seed_hex"], r"^[0-9a-f]{64}$")
         self.assertEqual(len(bytes.fromhex(data["rng_contract"]["seed_hex"])), 32)
         source = (DIR / "verify_review_closure.py").read_text(encoding="utf-8")
-        self.assertNotIn(data["rng_contract"]["seed_hex"], source)
+        self.assertIn(data["rng_contract"]["seed_hex"], source)
+        altered = json.loads(json.dumps(data))
+        altered["rng_contract"]["seed_hex"] = "0" * 64
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "seed.json"
+            path.write_text(json.dumps(altered, indent=2) + "\n", encoding="utf-8")
+            with self.assertRaises(module.DesignError):
+                module.verify_seed_contract(path)
 
     def test_critical_harm_contract_is_exact_and_preexecution(self) -> None:
         data = json.loads((DIR / "critical-harm-thresholds-v1.0.json").read_text(encoding="utf-8"))

@@ -9,6 +9,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import verify_integrity as integrity
 import verify_review_closure as review_closure
+import verify_public_narratives as public_narratives
 
 DesignError = integrity.DesignError
 ROOT = integrity.ROOT
@@ -409,6 +410,10 @@ def verify() -> None:
     verify_capsule_contract()
     verify_execution_gate()
     verify_text_boundaries()
+    try:
+        public_narratives.verify(HERE)
+    except public_narratives.NarrativeError as exc:
+        raise DesignError(f"complete public narrative contract drifted: {exc}") from exc
 
 
 if __name__ == "__main__":

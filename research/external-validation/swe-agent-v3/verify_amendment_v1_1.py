@@ -302,7 +302,7 @@ def main() -> int:
     except AmendmentError as exc:
         print(f"FAIL: {exc}")
         return 1
-    print("PASS: amendment v1.1 validates against self-contained historical authority; execution blocked.")
+    print("PASS: standalone failure/arithmetic authority validates; archival context is non-authoritative; execution blocked.")
     return 0
 
 

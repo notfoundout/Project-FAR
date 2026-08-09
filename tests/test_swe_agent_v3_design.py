@@ -181,7 +181,9 @@ class SweAgentV3DesignTests(unittest.TestCase):
         data = json.loads(seed.read_text(encoding="utf-8"))
         data["rng_contract"]["seed_hex"] = "0" * 64
         seed.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8", newline="\n")
-        # Do not refresh the design manifest or committed-byte fixture: immutable bytes drifted.
+        # Model the mutation as a newly committed HEAD. The semantic seed verifier
+        # must reject the changed frozen value independently of byte-identity drift.
+        self.refresh_manifest()
         self.rejected()
 
     def setUp_after_drift(self) -> None:

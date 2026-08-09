@@ -338,6 +338,8 @@ def verify_seed_contract(path: Path = SEED) -> None:
     seed = rng.get("seed_hex")
     if type(seed) is not str or re.fullmatch(r"[0-9a-f]{64}", seed) is None or len(bytes.fromhex(seed)) != 32:
         raise DesignError("bootstrap seed encoding drifted")
+    if seed != "76764013d297cadd3865295298e160a9fbb1a39833aac5860b0dfb13f54fdf87":
+        raise DesignError("frozen bootstrap seed value drifted")
     integrity._require_type_exact(data.get("commitment"), {
         "method": "direct_precommitted_value",
         "committed_value_source": "rng_contract.seed_hex in this exact integrity-rooted artifact",

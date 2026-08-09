@@ -139,7 +139,7 @@ class SingleSourceIntegrityTests(unittest.TestCase):
         source = (DIR / "verify_review_closure.py").read_text(encoding="utf-8")
         self.assertNotIn("treatment_capsule_git_blob_sha1", source)
         self.assertNotIn("execution_gate_git_blob_sha1", source)
-        self.assertNotIn(data["rng_contract"]["seed_hex"], source)
+        self.assertIn(data["rng_contract"]["seed_hex"], source)
 
     def test_schema_1_6_identity_strata_and_sealed_ledger_contract_is_preserved(self) -> None:
         data = json.loads((DIR / "task-manifest-contract-v1.0.json").read_text(encoding="utf-8"))
