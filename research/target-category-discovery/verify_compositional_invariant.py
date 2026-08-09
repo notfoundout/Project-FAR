@@ -34,12 +34,14 @@ def _read_utf8(path: Path):
 
 def validate_gate(gates_path: Path) -> None:
     """Preserve the complete RG-07 release boundary, not only theorem release."""
-    _original_validate_gate(gates_path)
     gates = _core.load_json(gates_path)
     entries = gates.get("gates")
     rg07 = [item for item in entries if isinstance(item, dict) and item.get("id") == "RG-07"] if isinstance(entries, list) else []
     if len(rg07) != 1 or rg07[0].get("required_before") != EXPECTED_RG07_REQUIRED_BEFORE:
         raise _core.VerificationError("RG-07 must remain required before evidence_release and theorem_release exactly")
+    # Run the complete legacy state validation only after the exact release-boundary
+    # contract has been checked so every boundary mutation has one stable error contract.
+    _original_validate_gate(gates_path)
 
 
 _core._read_utf8 = _read_utf8
