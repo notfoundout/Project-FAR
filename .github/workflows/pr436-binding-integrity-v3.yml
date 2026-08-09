@@ -1,0 +1,63 @@
+name: PR436 validator binding integrity v3
+
+on:
+  push:
+    branches:
+      - repair/pr436-validator-binding-integrity
+
+permissions:
+  contents: write
+
+jobs:
+  harden-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: repair/pr436-validator-binding-integrity
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Apply repair script
+        run: python tools/tmp_pr436_binding_integrity_repair.py
+      - name: Remove all repair scaffolding
+        run: |
+          rm -f tools/tmp_pr436_binding_integrity_repair.py
+          rm -f .github/workflows/pr436-binding-integrity*.yml
+      - name: Create exact local candidate commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "Protect compositional verifier bindings from rebinding"
+          git rev-parse HEAD
+      - name: Independent bootstrap
+        run: python validation_bootstrap/verify.py
+      - name: Direct verifiers and target regressions
+        run: |
+          python research/target-category-discovery/verify_compositional_invariant_legacy.py >/tmp/legacy.json
+          python research/target-category-discovery/verify_compositional_invariant.py >/tmp/public.json
+          python -m unittest tests.test_target_category_compositional_invariant -v
+      - name: Validation assurance tests
+        run: python -m unittest discover -s tests -p 'test_validation_assurance.py' -v
+      - name: Repository hygiene
+        run: python tools/check_repository_hygiene.py
+      - name: Canonical fast suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/run_tests.py --fast 2>&1 | tee /tmp/fast-suite.log
+      - name: Push exact validated candidate
+        run: git push origin HEAD:repair/pr436-validator-binding-integrity
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr436-binding-integrity-v3-diagnostics
+          path: /tmp/fast-suite.log
+          if-no-files-found: ignore
