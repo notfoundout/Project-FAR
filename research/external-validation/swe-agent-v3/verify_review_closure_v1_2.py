@@ -79,6 +79,11 @@ CLASSIFICATION_MAPPING = {
     "API_or_contract_change": "include iff source_acceptance_criteria_require_API_or_contract_change is true",
     "multi_file_change": "include iff sealed_reference_patch_touches_multiple_files is true",
 }
+CLASSIFICATION_EVIDENCE_RULE = (
+    "each classification input is a frozen JSON boolean with a retained source-evidence locator or "
+    "sealed-reference-patch attestation; absent or unverifiable evidence forces false, except any required-stratum "
+    "coverage claim relying on unverifiable evidence fails the launch gate"
+)
 PILOT_PREREQUISITES = [
     "review-closure-amendment-v1.2.json is committed, manifest-rooted, and verified",
     "task-manifest v1.5 implementation enforces unique authoritative task_identity_sha256 independently of strata and deterministic multi-label stratum classification before any manifest is instantiated",
@@ -233,7 +238,7 @@ def validate_task_strata(data: dict[str, Any]) -> None:
         raise DesignError("task stratum classification inputs drifted")
     if strata.get("deterministic_mapping") != CLASSIFICATION_MAPPING:
         raise DesignError("task stratum deterministic mapping drifted")
-    if "absent or unverifiable evidence forces false" not in strata.get("evidence_rule", ""):
+    if strata.get("evidence_rule") != CLASSIFICATION_EVIDENCE_RULE:
         raise DesignError("task stratum evidence rule drifted")
     if strata.get("multi_label_rule") != (
         "retain every label whose deterministic predicate is true, exactly once, in canonical_order; "
