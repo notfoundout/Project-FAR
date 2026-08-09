@@ -1,10 +1,20 @@
 """Hardened entrypoint for the exploratory compositional-invariant verifier."""
 from __future__ import annotations
 
+import importlib.util
+import sys
 from pathlib import Path
 from typing import Any
 
-import verify_compositional_invariant_legacy as _core
+_LEGACY_PATH = Path(__file__).with_name("verify_compositional_invariant_legacy.py")
+_LEGACY_SPEC = importlib.util.spec_from_file_location(
+    "_target_category_compositional_legacy", _LEGACY_PATH
+)
+if _LEGACY_SPEC is None or _LEGACY_SPEC.loader is None:
+    raise ImportError(f"cannot load legacy compositional verifier: {_LEGACY_PATH}")
+_core = importlib.util.module_from_spec(_LEGACY_SPEC)
+sys.modules[_LEGACY_SPEC.name] = _core
+_LEGACY_SPEC.loader.exec_module(_core)
 
 _core.EXPECTED_SPEC["version"] = "1.0"
 _core.EXPECTED_SPEC_SHA256 = "2b6ede05f7d5e3525070e1a5893ea599613a64eb114b12ed43606fb114e14128"
