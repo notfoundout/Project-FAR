@@ -17,10 +17,14 @@ EXPECTED_AMENDMENT_BLOB = "59c862790fee90beb0b3fba93dfd9b4e51921322"
 EXPECTED_NARRATIVE_BLOB = "6089f31d1769349fc1e9f9588ad40dca9e775fef"
 
 
-def validate(path: Path = AMENDMENT) -> dict[str, Any]:
+def validate(path: Path | None = None) -> dict[str, Any]:
+    """Validate hardening against the caller's active repository/fixture root."""
+    path = path or (integrity.HERE / "review-closure-amendment-v1.2.json")
+    narrative = integrity.HERE / "AMENDMENT-v1.2.md"
+    classification_contract = integrity.HERE / "classification-input-digest-contract-v1.0.json"
     if integrity._git_blob_sha1(integrity._read_regular(path)) != EXPECTED_AMENDMENT_BLOB:
         raise DesignError("frozen review-closure amendment bytes drifted")
-    if integrity._git_blob_sha1(integrity._read_regular(base.NARRATIVE)) != EXPECTED_NARRATIVE_BLOB:
+    if integrity._git_blob_sha1(integrity._read_regular(narrative)) != EXPECTED_NARRATIVE_BLOB:
         raise DesignError("frozen review-closure narrative bytes drifted")
     data = base.validate(path)
     effective = data.get("task_manifest_effective_contract")
@@ -29,7 +33,7 @@ def validate(path: Path = AMENDMENT) -> dict[str, Any]:
     strata = effective.get("task_strata")
     if not isinstance(strata, dict) or strata.get("classification_timing") != EXPECTED_TIMING:
         raise DesignError("task-stratum classification timing drifted")
-    classification_digest.validate_contract()
+    classification_digest.validate_contract(classification_contract)
     return data
 
 
