@@ -1,0 +1,219 @@
+name: PR438 final root repair sandbox v2
+
+on:
+  push:
+    branches:
+      - repair/pr438-zero-review-final
+
+permissions:
+  contents: write
+
+jobs:
+  repair-and-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: repair/pr438-zero-review-final
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install validation dependencies
+        run: python -m pip install pyyaml
+
+      - name: Apply existing schema reconciliations
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, yaml
+
+          def execute(workflow: str, step_name: str) -> None:
+              wf = yaml.safe_load(Path(workflow).read_text(encoding='utf-8'))
+              step = next(s for s in wf['jobs']['repair']['steps'] if s.get('name') == step_name)
+              run = step['run']
+              prefix = "python - <<'PY'\n"
+              if not run.startswith(prefix) or not run.rstrip().endswith('\nPY'):
+                  raise SystemExit(f'cannot extract {workflow}: {step_name}')
+              script = run[len(prefix):run.rfind('\nPY')]
+              subprocess.run(['python', '-c', script], check=True)
+
+          execute('.github/workflows/pr438-root-closure.yml', 'Reconcile schema 1.6 verifier and tests')
+          execute('.github/workflows/pr438-root-closure-v2.yml', 'Reconcile standalone schema 1.3 failure/arithmetic authority')
+          execute('.github/workflows/pr438-root-closure-v3.yml', 'Reconcile execution gate schema 1.5')
+          PY
+
+      - name: Convert manifest to governed-path registry
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          p = Path('research/external-validation/swe-agent-v3/design-manifest-v1.0.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          data['scope'] = (
+              'design-only governed-path registry; the reviewed Git commit/tree is the sole authority for current bytes; '
+              'semantic verifier code independently enforces the meaning and fail-closed boundaries of governed artifacts'
+          )
+          data['artifacts'] = [{'path': entry['path']} for entry in data['artifacts']]
+          p.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
+          PY
+
+      - name: Make integrity verifier single-source
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('research/external-validation/swe-agent-v3/verify_integrity.py')
+          s = p.read_text(encoding='utf-8')
+          start = s.index('def verify_manifest() -> dict[str, dict[str, Any]]:')
+          end = s.index('\ndef verify_byte_policy()', start)
+          replacement = '''def verify_manifest() -> dict[str, dict[str, Any]]:\n    worktree = _read_regular(MANIFEST)\n    committed_manifest = _committed_blob_bytes(MANIFEST_RELATIVE)\n    if worktree != committed_manifest:\n        raise DesignError("design manifest differs from committed HEAD blob")\n\n    manifest = _decode_json(worktree, MANIFEST_RELATIVE)\n    expected_top = {"schema_version", "program_id", "artifact_status", "scope", "artifacts"}\n    if not isinstance(manifest, dict) or set(manifest) != expected_top:\n        raise DesignError("design manifest top-level shape drifted")\n    if (manifest.get("schema_version"), manifest.get("program_id"), manifest.get("artifact_status")) != ("1.3", "FAR-SWE-V3-001", "Research"):\n        raise DesignError("design manifest identity or status drifted")\n    expected_scope = (\n        "design-only governed-path registry; the reviewed Git commit/tree is the sole authority for current bytes; "\n        "semantic verifier code independently enforces the meaning and fail-closed boundaries of governed artifacts"\n    )\n    if manifest.get("scope") != expected_scope:\n        raise DesignError("design manifest scope drifted")\n\n    entries = manifest.get("artifacts")\n    if not isinstance(entries, list) or not entries:\n        raise DesignError("manifest artifacts must be non-empty list")\n    seen: set[str] = set()\n    index: dict[str, dict[str, Any]] = {}\n    for entry in entries:\n        if not isinstance(entry, dict) or set(entry) != {"path"}:\n            raise DesignError("manifest entries require exactly path")\n        relative = entry["path"]\n        if type(relative) is not str or relative in seen:\n            raise DesignError(f"invalid or duplicate manifest path: {relative}")\n        seen.add(relative)\n        index[relative] = entry\n        committed = _committed_blob_bytes(relative)\n        if _read_regular(_safe_path(relative)) != committed:\n            raise DesignError(f"worktree differs from committed blob: {relative}")\n\n    if seen != REQUIRED_ARTIFACTS:\n        raise DesignError(f"manifest artifact set mismatch: {sorted(seen ^ REQUIRED_ARTIFACTS)}")\n\n    try:\n        import verify_review_closure as review_closure\n    except ImportError as exc:\n        raise DesignError("mandatory review-closure verifier is unavailable") from exc\n    review_closure.verify()\n    return index\n\n'''
+          s = s[:start] + replacement + s[end + 1:]
+          p.write_text(s, encoding='utf-8', newline='\n')
+          PY
+
+      - name: Make design verifier use HEAD authority only
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('research/external-validation/swe-agent-v3/verify_design.py')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('_git_blob_sha1 = integrity._git_blob_sha1\n', '')
+          old = '''def _require_exact_artifact(name: str) -> bytes:\n    relative = f"research/external-validation/swe-agent-v3/{name}"\n    entry = _manifest_entries().get(relative)\n    if not isinstance(entry, dict):\n        raise DesignError(f"governed artifact missing from manifest: {name}")\n    committed = _committed_blob_bytes(relative)\n    if len(committed) != entry.get("bytes") or _git_blob_sha1(committed) != entry.get("git_blob_sha1"):\n        raise DesignError(f"manifest/current-commit mismatch: {name}")\n    if integrity._read_regular(HERE / name) != committed:\n        raise DesignError(f"worktree differs from committed artifact: {name}")\n    return committed\n'''
+          new = '''def _require_exact_artifact(name: str) -> bytes:\n    relative = f"research/external-validation/swe-agent-v3/{name}"\n    entry = _manifest_entries().get(relative)\n    if not isinstance(entry, dict) or set(entry) != {"path"}:\n        raise DesignError(f"governed artifact missing from manifest: {name}")\n    committed = _committed_blob_bytes(relative)\n    if integrity._read_regular(HERE / name) != committed:\n        raise DesignError(f"worktree differs from committed artifact: {name}")\n    return committed\n'''
+          if s.count(old) != 1:
+              raise SystemExit(f'expected one artifact-authority block, found {s.count(old)}')
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8', newline='\n')
+          PY
+
+      - name: Reconcile current historical archive semantics
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('research/external-validation/swe-agent-v3/verify_amendment_v1_1.py')
+          s = p.read_text(encoding='utf-8')
+          start = s.index('def validate_historical_authority(')
+          end = s.index('\ndef validate(', start)
+          replacement = '''def validate_historical_authority(path: Path = HISTORICAL_AUTHORITY) -> dict[str, Any]:\n    authority = load(path)\n    expected_keys = {\n        "schema_version", "program_id", "artifact_status", "authority_status",\n        "current_design_authority", "execution_authorized", "purpose",\n        "claimed_historical_design_head", "provenance_status", "snapshots",\n        "verification_rule", "external_provenance_rule", "immutability_rule", "nonclaims",\n    }\n    if set(authority) != expected_keys:\n        raise AmendmentError("historical authority shape drifted")\n    expected_identity = {\n        "schema_version": "1.1",\n        "program_id": "FAR-SWE-V3-001",\n        "artifact_status": "Archive",\n        "authority_status": "archival_context_not_live_authority",\n        "current_design_authority": False,\n        "execution_authorized": False,\n        "claimed_historical_design_head": HISTORICAL_BASE_HEAD,\n        "provenance_status": "not_self_proving",\n    }\n    for key, expected in expected_identity.items():\n        if not _type_exact_equal(authority.get(key), expected):\n            raise AmendmentError(f"historical archive identity/boundary drifted: {key}")\n    expected_text = {\n        "purpose": "Self-contained archival copies of two artifacts associated with the historical design reference 83c951aca9be6a09a4517044ae531a3ed1bcc9a9. They preserve review context only and are not an authority dependency for the current FAR-SWE-V3-001 design.",\n        "verification_rule": "Verification proves only that the current archive bytes match the archived_git_blob_sha1 values recorded in this archive record. It does not prove that those bytes occurred at claimed_historical_design_head.",\n        "external_provenance_rule": "Proving that an archived snapshot occurred at the claimed historical commit requires an independent external Git object/history or equivalent trusted provenance source. That proof is deliberately outside this self-contained archive and is not required for current experiment validity.",\n        "immutability_rule": "Any archive-byte, archive-path, archived-blob-identity, or claimed historical-reference change creates a new archive version and cannot silently rewrite v1.1 archival context.",\n    }\n    for key, expected in expected_text.items():\n        if authority.get(key) != expected:\n            raise AmendmentError(f"historical archive semantic drift: {key}")\n    _require_type_exact(authority.get("nonclaims"), [\n        "This archive does not cryptographically prove that the snapshots came from claimed_historical_design_head.",\n        "These snapshots do not restore historical files as current design authority.",\n        "Current failure and arithmetic rules are validated independently of this archive.",\n        "This archive does not authorize model calls, pilot execution, benchmark execution, confirmatory execution, grading, or outcome reveal.",\n        "This archive does not establish that FAR improves software engineering.",\n    ], "historical archive nonclaims")\n\n    snapshots = authority.get("snapshots")\n    if not isinstance(snapshots, list) or len(snapshots) != 2:\n        raise AmendmentError("exactly two historical snapshots required")\n    seen: set[str] = set()\n    for entry in snapshots:\n        if not isinstance(entry, dict) or set(entry) != {"path", "archived_git_blob_sha1", "claimed_historical_source_path"}:\n            raise AmendmentError("historical snapshot entry shape drifted")\n        rel = entry["path"]\n        source = entry["claimed_historical_source_path"]\n        expected_blob = entry["archived_git_blob_sha1"]\n        if type(rel) is not str or rel in seen or EXPECTED_HISTORICAL_PATHS.get(rel) != source:\n            raise AmendmentError("historical snapshot path/source drifted")\n        if type(expected_blob) is not str or len(expected_blob) != 40 or any(ch not in "0123456789abcdef" for ch in expected_blob):\n            raise AmendmentError("invalid archived snapshot blob identity")\n        snapshot = HERE.parents[2] / rel\n        if snapshot.is_symlink() or not snapshot.is_file():\n            raise AmendmentError(f"historical snapshot missing: {rel}")\n        if _git_blob_sha1(snapshot.read_bytes()) != expected_blob:\n            raise AmendmentError(f"historical snapshot bytes drifted: {rel}")\n        seen.add(rel)\n    if seen != set(EXPECTED_HISTORICAL_PATHS):\n        raise AmendmentError("historical snapshot set drifted")\n    return authority\n\n'''
+          s = s[:start] + replacement + s[end + 1:]
+          p.write_text(s, encoding='utf-8', newline='\n')
+          PY
+
+      - name: Reconcile mutation harness and stale test schemas
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          root = Path('.')
+
+          p = root / 'tests/test_swe_agent_v3_design.py'
+          s = p.read_text(encoding='utf-8')
+          start = s.index('    def refresh_manifest(self, commit: bool = True) -> None:')
+          end = s.index('\n    def mutate_json', start)
+          s = s[:start] + '''    def refresh_manifest(self, commit: bool = True) -> None:\n        if commit:\n            self.sync_committed()\n''' + s[end:]
+          p.write_text(s, encoding='utf-8', newline='\n')
+
+          p = root / 'tests/test_swe_agent_v3_decision_rules.py'
+          s = p.read_text(encoding='utf-8')
+          if 'self.assertEqual(task["schema_version"], "1.5")' not in s:
+              raise SystemExit('decision-rules schema anchor missing')
+          s = s.replace('self.assertEqual(task["schema_version"], "1.5")', 'self.assertEqual(task["schema_version"], "1.6")')
+          p.write_text(s, encoding='utf-8', newline='\n')
+
+          p = root / 'tests/test_swe_agent_v3_single_source_integrity.py'
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('def test_schema_1_5_identity_strata_and_sealed_ledger_contract_is_preserved', 'def test_schema_1_6_identity_strata_and_sealed_ledger_contract_is_preserved')
+          s = s.replace('self.assertEqual(data["schema_version"], "1.5")', 'self.assertEqual(data["schema_version"], "1.6")')
+          start = s.index('    def test_historical_authority_is_self_contained_and_not_git_history_dependent(self) -> None:')
+          end = s.index('\n    def test_every_governed_final_contract_is_in_design_manifest', start)
+          historical_test = '''    def test_historical_archive_is_self_contained_and_not_live_authority(self) -> None:\n        verifier = (DIR / "verify_amendment_v1_1.py").read_text(encoding="utf-8")\n        for token in ("import subprocess", "git fetch --unshallow", "rev-parse", "cat-file", "merge-base", "--is-ancestor"):\n            self.assertNotIn(token, verifier)\n        authority = json.loads((DIR / "historical-authority-v1.0.json").read_text(encoding="utf-8"))\n        self.assertEqual(authority["schema_version"], "1.1")\n        self.assertRegex(authority["claimed_historical_design_head"], r"^[0-9a-f]{40}$")\n        self.assertEqual(authority["artifact_status"], "Archive")\n        self.assertEqual(authority["authority_status"], "archival_context_not_live_authority")\n        self.assertEqual(authority["provenance_status"], "not_self_proving")\n        self.assertFalse(authority["current_design_authority"])\n        self.assertFalse(authority["execution_authorized"])\n        self.assertEqual(len(authority["snapshots"]), 2)\n        for entry in authority["snapshots"]:\n            self.assertRegex(entry["archived_git_blob_sha1"], r"^[0-9a-f]{40}$")\n            snapshot = ROOT / entry["path"]\n            self.assertEqual(git_blob_sha1(snapshot.read_bytes()), entry["archived_git_blob_sha1"])\n            self.assertNotIn(entry["archived_git_blob_sha1"], verifier)\n'''
+          s = s[:start] + historical_test + s[end:]
+          fixture_anchor = '            "strata": [STRATA[i % len(STRATA)]],\n'
+          prefix = s[:s.index('class SingleSourceIntegrityTests')]
+          if '"github_fork_source_repository_id"' not in prefix:
+              if fixture_anchor not in s:
+                  raise SystemExit('ledger fixture anchor missing')
+              s = s.replace(fixture_anchor, fixture_anchor + '            "github_fork_source_repository_id": None,\n            "contains_project_far_treatment_material": False,\n', 1)
+          p.write_text(s, encoding='utf-8', newline='\n')
+
+          p = root / 'tests/test_swe_agent_v3_evidence_contract.py'
+          s = p.read_text(encoding='utf-8')
+          old = '- authoritative repository provider identity, canonical repository URL, and exact commit as reconstructed from the sealed identity ledger by the independent identity auditor;'
+          new = '- authoritative repository provider identity, canonical repository URL, exact commit, GitHub fork-source repository ID or null, and treatment-material audit result as reconstructed from the sealed identity ledger by the independent identity auditor;'
+          if old not in s:
+              raise SystemExit('evidence contract anchor missing')
+          s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8', newline='\n')
+
+          p = root / 'tests/test_swe_agent_v3_amendment_v1_1.py'
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('authority["base_design_head"]', 'authority["claimed_historical_design_head"]')
+          s = s.replace('entry["historical_git_blob_sha1"]', 'entry["archived_git_blob_sha1"]')
+          s = s.replace('entry["historical_source_path"]', 'entry["claimed_historical_source_path"]')
+          s = s.replace('"historical_git_blob_sha1"', '"archived_git_blob_sha1"')
+          p.write_text(s, encoding='utf-8', newline='\n')
+          PY
+
+      - name: Delete all repair scaffolding before validation
+        shell: bash
+        run: |
+          rm -f .github/workflows/pr438-root-closure*.yml
+          rm -f .github/workflows/pr438-final-sandbox.yml
+          rm -f .github/workflows/pr438-final-sandbox-v2.yml
+
+      - name: Syntax and governing verifier checks
+        shell: bash
+        run: |
+          python -m compileall -q research/external-validation/swe-agent-v3 tests/test_swe_agent_v3*.py
+          python research/external-validation/swe-agent-v3/verify_amendment_v1_1.py
+          python research/external-validation/swe-agent-v3/verify_review_closure.py
+          python research/external-validation/swe-agent-v3/verify_design.py
+          python research/external-validation/swe-agent-v3/verify_integrity.py
+          python research/external-validation/swe-agent-v3/verify_public_narratives.py
+          python research/external-validation/swe-agent-v3/verify_public_narratives_v2.py
+
+      - name: Complete SWE v3 unit surface
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v 2>&1 | tee /tmp/swe-v3-tests.log
+
+      - name: Repository hygiene
+        run: python tools/check_repository_hygiene.py
+
+      - name: Canonical fast suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/run_tests.py --fast 2>&1 | tee /tmp/fast-suite.log
+
+      - name: Commit and push only after all validation succeeds
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "Permanently reconcile SWE v3 authority contracts"
+          git push origin HEAD:repair/pr438-zero-review-final
+
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr438-final-sandbox-v2-diagnostics
+          path: |
+            /tmp/swe-v3-tests.log
+            /tmp/fast-suite.log
+          if-no-files-found: ignore
