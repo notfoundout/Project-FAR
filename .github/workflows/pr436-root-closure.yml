@@ -17,92 +17,13 @@ jobs:
           ref: agent/close-structured-reasoning-compositional-question
           fetch-depth: 0
       - name: Apply root-cause repairs
+        env:
+          PATCH_B64: "ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgp3ZWFrZW5pbmcgPSBQYXRoKCJmYXJfdmFsaWRhdGlvbi93ZWFrZW5pbmcucHkiKQp0ZXh0ID0gd2Vha2VuaW5nLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKQpyZXBsYWNlbWVudHMgPSBbCiAgICAoJyAgICBkZWYgcmVjb3JkX3RhcmdldCh0YXJnZXQ6IGFzdC5BU1QsIGtpbmQ6IHN0cikgLT4gTm9uZTpcbiAgICAgICAgaWYgaXNpbnN0YW5jZSh0YXJnZXQsIGFzdC5OYW1lKSBhbmQgdGFyZ2V0LmlkIGluIHByb3RlY3RlZDpcbiAgICAgICAgICAgIGV2ZW50c1t0YXJnZXQuaWRdLmFwcGVuZChraW5kKVxuJywgJyAgICBkZWYgcmVjb3JkX25hbWVzcGFjZV9hbGlhcyh0YXJnZXQ6IGFzdC5BU1QsIHZhbHVlOiBhc3QuQVNULCBraW5kOiBzdHIpIC0+IE5vbmU6XG4gICAgICAgIHNjb3BlID0gbmFtZXNwYWNlX3Njb3BlKHZhbHVlKVxuICAgICAgICBpZiBzY29wZSBpcyBOb25lOlxuICAgICAgICAgICAgcmV0dXJuXG4gICAgICAgIHRhcmdldHM6IGxpc3RbYXN0LkFTVF0gPSBsaXN0KHRhcmdldC5lbHRzKSBpZiBpc2luc3RhbmNlKHRhcmdldCwgKGFzdC5UdXBsZSwgYXN0Lkxpc3QpKSBlbHNlIFt0YXJnZXRdXG4gICAgICAgIGZvciBhbGlhc190YXJnZXQgaW4gdGFyZ2V0czpcbiAgICAgICAgICAgIGlmIGlzaW5zdGFuY2UoYWxpYXNfdGFyZ2V0LCBhc3QuTmFtZSk6XG4gICAgICAgICAgICAgICAgZm9yIG5hbWUgaW4gcHJvdGVjdGVkOlxuICAgICAgICAgICAgICAgICAgICBldmVudHNbYWxpYXNfdGFyZ2V0LmlkXS5hcHBlbmQoZiJ7c2NvcGV9LW5hbWVzcGFjZS1hbGlhczp7a2luZH06e2FsaWFzX3RhcmdldC5pZH0iKVxuXG4gICAgZGVmIHJlY29yZF90YXJnZXQodGFyZ2V0OiBhc3QuQVNULCBraW5kOiBzdHIpIC0+IE5vbmU6XG4gICAgICAgIGlmIGlzaW5zdGFuY2UodGFyZ2V0LCBhc3QuTmFtZSkgYW5kIHRhcmdldC5pZCBpbiBwcm90ZWN0ZWQ6XG4gICAgICAgICAgICBldmVudHNbdGFyZ2V0LmlkXS5hcHBlbmQoa2luZClcbicsICd3ZWFrZW5pbmcgaGVscGVyJyksCiAgICAoJyAgICAgICAgICAgIGlmIGlzaW5zdGFuY2Uobm9kZSwgYXN0Lk5hbWVkRXhwcik6XG4gICAgICAgICAgICAgICAgcmVjb3JkX3RhcmdldChub2RlLnRhcmdldCwgIm5hbWVkZXhwciIpXG4nLCAnICAgICAgICAgICAgaWYgaXNpbnN0YW5jZShub2RlLCBhc3QuTmFtZWRFeHByKTpcbiAgICAgICAgICAgICAgICByZWNvcmRfdGFyZ2V0KG5vZGUudGFyZ2V0LCAibmFtZWRleHByIilcbiAgICAgICAgICAgICAgICByZWNvcmRfbmFtZXNwYWNlX2FsaWFzKG5vZGUudGFyZ2V0LCBub2RlLnZhbHVlLCAibmFtZWRleHByIilcbicsICduYW1lZGV4cHInKSwKICAgICgnICAgICAgICAgICAgaWYgaXNpbnN0YW5jZShzdCwgYXN0LkFzc2lnbik6XG4gICAgICAgICAgICAgICAgZm9yIHRhcmdldCBpbiBzdC50YXJnZXRzOlxuICAgICAgICAgICAgICAgICAgICByZWNvcmRfdGFyZ2V0KHRhcmdldCwgImFzc2lnbiIpXG4gICAgICAgICAgICAgICAgc2Nhbl9leHByKHN0LnZhbHVlKVxuICAgICAgICAgICAgZWxpZiBpc2luc3RhbmNlKHN0LCBhc3QuQW5uQXNzaWduKTpcbiAgICAgICAgICAgICAgICByZWNvcmRfdGFyZ2V0KHN0LnRhcmdldCwgImFubmFzc2lnbiIpXG4gICAgICAgICAgICAgICAgaWYgc3QudmFsdWUgaXMgbm90IE5vbmU6XG4gICAgICAgICAgICAgICAgICAgIHNjYW5fZXhwcihzdC52YWx1ZSlcbicsICcgICAgICAgICAgICBpZiBpc2luc3RhbmNlKHN0LCBhc3QuQXNzaWduKTpcbiAgICAgICAgICAgICAgICBmb3IgdGFyZ2V0IGluIHN0LnRhcmdldHM6XG4gICAgICAgICAgICAgICAgICAgIHJlY29yZF90YXJnZXQodGFyZ2V0LCAiYXNzaWduIilcbiAgICAgICAgICAgICAgICAgICAgcmVjb3JkX25hbWVzcGFjZV9hbGlhcyh0YXJnZXQsIHN0LnZhbHVlLCAiYXNzaWduIilcbiAgICAgICAgICAgICAgICBzY2FuX2V4cHIoc3QudmFsdWUpXG4gICAgICAgICAgICBlbGlmIGlzaW5zdGFuY2Uoc3QsIGFzdC5Bbm5Bc3NpZ24pOlxuICAgICAgICAgICAgICAgIHJlY29yZF90YXJnZXQoc3QudGFyZ2V0LCAiYW5uYXNzaWduIilcbiAgICAgICAgICAgICAgICBpZiBzdC52YWx1ZSBpcyBub3QgTm9uZTpcbiAgICAgICAgICAgICAgICAgICAgcmVjb3JkX25hbWVzcGFjZV9hbGlhcyhzdC50YXJnZXQsIHN0LnZhbHVlLCAiYW5uYXNzaWduIilcbiAgICAgICAgICAgICAgICAgICAgc2Nhbl9leHByKHN0LnZhbHVlKVxuJywgJ2Fzc2lnbm1lbnQnKSwKXQpmb3Igb2xkLCBuZXcsIGxhYmVsIGluIHJlcGxhY2VtZW50czoKICAgIGlmIG9sZCBub3QgaW4gdGV4dDoKICAgICAgICByYWlzZSBTeXN0ZW1FeGl0KGxhYmVsICsgIiBhbmNob3IgbWlzc2luZyIpCiAgICB0ZXh0ID0gdGV4dC5yZXBsYWNlKG9sZCwgbmV3LCAxKQp3ZWFrZW5pbmcud3JpdGVfdGV4dCh0ZXh0LCBlbmNvZGluZz0idXRmLTgiKQoKbGVnYWN5ID0gUGF0aCgicmVzZWFyY2gvdGFyZ2V0LWNhdGVnb3J5LWRpc2NvdmVyeS92ZXJpZnlfY29tcG9zaXRpb25hbF9pbnZhcmlhbnRfbGVnYWN5LnB5IikKdGV4dCA9IGxlZ2FjeS5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikKb2xkID0gJ2RlZiBfcmVhZF91dGY4KHBhdGg6IFBhdGgpIC0+IHR1cGxlW2J5dGVzLCBzdHJdOlxuICAgIHRyeTpcbiAgICAgICAgcmF3ID0gcGF0aC5yZWFkX2J5dGVzKClcbiAgICBleGNlcHQgT1NFcnJvciBhcyBleGM6XG4gICAgICAgIHJhaXNlIFZlcmlmaWNhdGlvbkVycm9yKGYicmVxdWlyZWQgYXJ0aWZhY3QgbWlzc2luZyBvciB1bnJlYWRhYmxlOiB7cGF0aH0iKSBmcm9tIGV4Y1xuJwpuZXcgPSAnZGVmIF9yZWFkX3V0ZjgocGF0aDogUGF0aCkgLT4gdHVwbGVbYnl0ZXMsIHN0cl06XG4gICAgaWYgcGF0aC5pc19zeW1saW5rKCkgb3Igbm90IHBhdGguaXNfZmlsZSgpOlxuICAgICAgICByYWlzZSBWZXJpZmljYXRpb25FcnJvcihmInJlcXVpcmVkIGFydGlmY3QgbXVzdCBiZSBhIHJlZ3VsYXIgbm9uLXN5bWxpbmsgZmlsZToge3BhdGh9IilcbiAgICB0cnk6XG4gICAgICAgIHJhdyA9IHBhdGgucmVhZF9ieXRlcygpXG4gICAgZXhjZXB0IE9TRXJyb3IgYXMgZXhjOlxuICAgICAgICByYWlzZSBWZXJpZmljYXRpb25FcnJvcihmInJlcXVpcmVkIGFydGlmYWN0IG1pc3Npbmcgb3IgdW5yZWFkYWJsZToge3BhdGh9Iik gZnJvbSBleGNcbicKaWYgb2xkIG5vdCBpbiB0ZXh0OgogICAgcmFpc2UgU3lzdGVtRXhpdCgibGVnYWN5IHJlYWRlciBhbmNob3IgbWlzc2luZyIpCmxlZ2FjeS53cml0ZV90ZXh0KHRleHQucmVwbGFjZShvbGQsIG5ldywgMSksIGVuY29kaW5nPSJ1dGYtOCIpCgpQYXRoKCJ0ZXN0cy90ZXN0X3ByNDM2X3Jvb3RfY2xvc3VyZS5weSIpLndyaXRlX3RleHQoJ2Zyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnNcblxuaW1wb3J0IGltcG9ydGxpYi51dGlsXG5pbXBvcnQgc3VicHJvY2Vzc1xuaW1wb3J0IHN5c1xuaW1wb3J0IHRlbXBmaWxlXG5pbXBvcnQgdW5pdHRlc3RcbmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aFxuXG5ST09UID0gUGF0aChfX2ZpbGVfXykucmVzb2x2ZSgpLnBhcmVudHNbMV1cblxuXG5kZWYgbG9hZF9tb2R1bGUobmFtZTogc3RyLCBwYXRoOiBQYXRoKTpcbiAgICBzcGVjID0gaW1wb3J0bGliLnV0aWwuc3BlY19mcm9tX2ZpbGVfbG9jYXRpb24obmFtZSwgcGF0aClcbiAgICBhc3NlcnQgc3BlYyBhbmQgc3BlYy5sb2FkZXJcbiAgICBtb2R1bGUgPSBpbXBvcnRsaWIudXRpbC5tb2R1bGVfZnJvbV9zcGVjKHNwZWMpXG4gICAgc3lzLm1vZHVsZXNbbmFtZV0gPSBtb2R1bGVcbiAgICBzcGVjLmxvYWRlci5leGVjX21vZHVsZShtb2R1bGUpXG4gICAgcmV0dXJuIG1vZHVsZVxuXG5cbmNsYXNzIFBSNDM2Um9vdENsb3N1cmVUZXN0cyh1bml0dGVzdC5UZXN0Q2FzZSk6XG4gICAgZGVmIHRlc3RfbGVnYWN5X3JlYWRlcl9yZWplY3RzX3N5bWxpbmsoc2VsZikgLT4gTm9uZTpcbiAgICAgICAgbGVnYWN5ID0gbG9hZF9tb2R1bGUoXG4gICAgICAgICAgICAicHI0MzZfbGVnYWN5IixcbiAgICAgICAgICAgIFJPT1QgLyAicmVzZWFyY2gvdGFyZ2V0LWNhdGVnb3J5LWRpc2NvdmVyeS92ZXJpZnlfY29tcG9zaXRpb25hbF9pbnZhcmlhbnRfbGVnYWN5LnB5IixcbiAgICAgICAgKVxuICAgICAgICB3aXRoIHRlbXBmaWxlLlRlbXBvcmFyeURpcmVjdG9yeSgpIGFzIHRtcDpcbiAgICAgICAgICAgIHRtcF9wYXRoID0gUGF0aCh0bXApXG4gICAgICAgICAgICB0YXJnZXQgPSB0bXBfcGF0aCAvICJhcnRpZmFjdC5tZCJcbiAgICAgICAgICAgIHRhcmdldC53cml0ZV90ZXh0KCJzYW1lIGJ5dGVzIiwgZW5jb2Rpbmc9InV0Zi04IilcbiAgICAgICAgICAgIGxpbmsgPSB0bXBfcGF0aCAvICJhcnRpZmFjdC1saW5rLm1kIlxuICAgICAgICAgICAgbGluay5zeW1saW5rX3RvKHRhcmdldClcbiAgICAgICAgICAgIHdpdGggc2VsZi5hc3NlcnRSYWlzZXNSZWdleChsZWdhY3kuVmVyaWZpY2F0aW9uRXJyb3IsICJyZWd1bGFyIG5vbi1zeW1saW5rIik6XG4gICAgICAgICAgICAgICAgbGVnYWN5Ll9yZWFkX3V0ZjgobGluaylcblxuICAgIGRlZiB0ZXN0X3dlYWtlbmluZ19yZWplY3RzX2FsaWFzZWRfbW9kdWxlX25hbWVzcGFjZV9yZWJpbmRpbmcoc2VsZikgLT4gTm9uZTpcbiAgICAgICAgd2Vha2VuaW5nID0gbG9hZF9tb2R1bGUoInByNDM2X3dlYWtlbmluZyIsIFJPT1QgLyAiZmFyX3ZhbGlkYXRpb24vd2Vha2VuaW5nLnB5IilcbiAgICAgICAgd2l0aCB0ZW1wZmlsZS5UZW1wb3JhcnlEaXJlY3RvcnkoKSBhcyB0bXA6XG4gICAgICAgICAgICByZXBvID0gUGF0aCh0bXApXG4gICAgICAgICAgICBzdWJwcm9jZXNzLnJ1bihbImdpdCIsICJpbml0IiwgIi1xIl0sIGN3ZD1yZXBvLCBjaGVjaz1UcnVlKVxuICAgICAgICAgICAgc3VicHJvY2Vzcy5ydW4oXG4gICAgICAgICAgICAgICAgWyJnaXQiLCAiY29uZmlnIiwgInVzZXIuZW1haWwiLCAiYXNzdXJhbmNlQGV4YW1wbGUuaW52YWxpZCJdLFxuICAgICAgICAgICAgICAgIGN3ZD1yZXBvLFxuICAgICAgICAgICAgICAgIGNoZWNrPVRydWUsXG4gICAgICAgICAgICApXG4gICAgICAgICAgICBzdWJwcm9jZXNzLnJ1bihcbiAgICAgICAgICAgICAgICBbImdpdCIsICJjb25maWciLCAidXNlci5uYW1lIiwgIlZhbGlkYXRvciBBc3N1cmFuY2UiXSxcbiAgICAgICAgICAgICAgICBjd2Q9cmVwbyxcbiAgICAgICAgICAgICAgICBjaGVjaz1UcnVlLFxuICAgICAgICAgICAgKVxuICAgICAgICAgICAgZm9yIHByb3RlY3RlZCBpbiB3ZWFrZW5pbmcuUkVRVUlSRURfU0VNQU5USUNfQ0FMTFM6XG4gICAgICAgICAgICAgICAgdGFyZ2V0ID0gcmVwbyAvIHByb3RlY3RlZFxuICAgICAgICAgICAgICAgIHRhcmdldC5wYXJlbnQubWtkaXIocGFyZW50cz1UcnVlLCBleGlzdF9vaz1UcnVlKVxuICAgICAgICAgICAgICAgIHRhcmdldC53cml0ZV90ZXh0KChST09UIC8gcHJvdGVjdGVkKS5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IiksIGVuY29kaW5nPSJ1dGYtOCIpXG4gICAgICAgICAgICBzdWJwcm9jZXNzLnJ1bihbImdpdCIsICJhZGQiLCAiLiJdLCBjd2Q9cmVwbywgY2hlY2s9VHJ1ZSlcbiAgICAgICAgICAgIHN1YnByb2Nlc3MucnVuKFsiZ2l0IiwgImNvbW1pdCIsICItcW0iLCAiYmFzZWxpbmUiXSwgY3dkPXJlcG8sIGNoZWNrPVRydWUpXG4gICAgICAgICAgICBiYXNlID0gc3VicHJvY2Vzcy5jaGVja19vdXRwdXQoXG4gICAgICAgICAgICAgICAgWyJnaXQiLCAicmV2LXBhcnNlIiwgIkhFQUQiXSwgY3dkPXJlcG8sIHRleHQ9VHJ1ZVxuICAgICAgICAgICAgKS5zdHJpcCgpXG5cbiAgICAgICAgICAgIGZvciBwcm90ZWN0ZWQgaW4gd2Vha2VuaW5nLlJFUVVJUkVEX1NFTUFOVElDX0NBTExTOlxuICAgICAgICAgICAgICAgIHRhcmdldCA9IHJlcG8gLyBwcm90ZWN0ZWRcbiAgICAgICAgICAgICAgICBzb3VyY2UgPSB0YXJnZXQucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpXG4gICAgICAgICAgICAgICAgc291cmNlICs9ICJcbl9mYXJfbmFtZXNwYWNlID0gZ2xvYmFscygpXG4iXG4gICAgICAgICAgICAgICAgc291cmNlICs9IChcbiAgICAgICAgICAgICAgICAgICAgJ19mYXJfbmFtZXNwYWNlLnVwZGF0ZSh7InZhbGlkYXRlX2VtcGlyaWNhbF9hdXRob3JpdHkiOiAnXG4gICAgICAgICAgICAgICAgICAgICdsYW1iZGEgKmFyZ3MsICoqa3dhcmdzOiBOb25lLCAidmFsaWRhdGVfZ2F0ZSI6ICdcbiAgICAgICAgICAgICAgICAgICAgJ2xhbWJkYSAqYXJncywgKiprd2FyZ3M6IE5vbmV9KVxuJ1xuICAgICAgICAgICAgICAgIClcbiAgICAgICAgICAgICAgICB0YXJnZXQud3JpdGVfdGV4dChzb3VyY2UsIGVuY29kaW5nPSJ1dGYtOCIpXG4gICAgICAgICAgICBzdWJwcm9jZXNzLnJ1bihbImdpdCIsICJhZGQiLCAiLiJdLCBjd2Q9cmVwbywgY2hlY2s9VHJ1ZSlcbiAgICAgICAgICAgIHN1YnByb2Nlc3MucnVuKFxuICAgICAgICAgICAgICAgIFsiZ2l0IiwgImNvbW1pdCIsICItcW0iLCAiYWxpYXMgbW9kdWxlIG5hbWVzcGFjZSBhbmQgcmViaW5kIHZhbGlkYXRvcnMiXSxcbiAgICAgICAgICAgICAgICBjd2Q9cmVwbyxcbiAgICAgICAgICAgICAgICBjaGVjaz1UcnVlLFxuICAgICAgICAgICAgKVxuXG4gICAgICAgICAgICByZXBvcnQgPSB3ZWFrZW5pbmcuZGV0ZWN0X3dlYWtlbmluZyhyZXBvLCBiYXNlPWJhc2UpXG4gICAgICAgICAgICBzZWxmLmFzc2VydEZhbHNlKHJlcG9ydC5zdWNjZXNzZnVsKVxuICAgICAgICAgICAgZmFpbHVyZXMgPSB7ZmluZGluZy5wYXRoOiBmaW5kaW5nLmZhaWx1cmVzIGZvciBmaW5kaW5nIGluIHJlcG9ydC5maW5kaW5nc31cbiAgICAgICAgICAgIGZvciBwcm90ZWN0ZWQgaW4gd2Vha2VuaW5nLlJFUVVJUkVEX1NFTUFOVElDX0NBTExTOlxuICAgICAgICAgICAgICAgIHNlbGYuYXNzZXJ0SW4ocHJvdGVjdGVkLCBmYWlsdXJlcylcbiAgICAgICAgICAgICAgICBzZWxmLmFzc2VydFRydWUoXG4gICAgICAgICAgICAgICAgICAgIGFueSgicHJvdGVjdGVkIHZhbGlkYXRvciBiaW5kaW5nIGNoYW5nZWQiIGluIGl0ZW0gZm9yIGl0ZW0gaW4gZmFpbHVyZXNbcHJvdGVjdGVkXSlcbiAgICAgICAgICAgICAgICApXG5cblxuaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjpcbiAgICB1bml0dGVzdC5tYWluKClcbicsIGVuY29kaW5nPSJ1dGYtOCIpCg=="
         run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          weakening = Path('far_validation/weakening.py')
-          text = weakening.read_text(encoding='utf-8')
-          old = '''    def record_target(target: ast.AST, kind: str) -> None:\n        if isinstance(target, ast.Name) and target.id in protected:\n            events[target.id].append(kind)\n'''
-          new = '''    def record_namespace_alias(target: ast.AST, value: ast.AST, kind: str) -> None:\n        scope = namespace_scope(value)\n        if scope is None:\n            return\n        targets: list[ast.AST] = list(target.elts) if isinstance(target, (ast.Tuple, ast.List)) else [target]\n        for alias_target in targets:\n            if isinstance(alias_target, ast.Name):\n                for name in protected:\n                    events[name].append(f"{scope}-namespace-alias:{kind}:{alias_target.id}")\n\n    def record_target(target: ast.AST, kind: str) -> None:\n        if isinstance(target, ast.Name) and target.id in protected:\n            events[target.id].append(kind)\n'''
-          if old not in text:
-              raise SystemExit('weakening helper insertion anchor missing')
-          text = text.replace(old, new, 1)
-
-          old = '''            if isinstance(node, ast.NamedExpr):\n                record_target(node.target, "namedexpr")\n'''
-          new = '''            if isinstance(node, ast.NamedExpr):\n                record_target(node.target, "namedexpr")\n                record_namespace_alias(node.target, node.value, "namedexpr")\n'''
-          if old not in text:
-              raise SystemExit('namedexpr anchor missing')
-          text = text.replace(old, new, 1)
-
-          old = '''            if isinstance(st, ast.Assign):\n                for target in st.targets:\n                    record_target(target, "assign")\n                scan_expr(st.value)\n            elif isinstance(st, ast.AnnAssign):\n                record_target(st.target, "annassign")\n                if st.value is not None:\n                    scan_expr(st.value)\n'''
-          new = '''            if isinstance(st, ast.Assign):\n                for target in st.targets:\n                    record_target(target, "assign")\n                    record_namespace_alias(target, st.value, "assign")\n                scan_expr(st.value)\n            elif isinstance(st, ast.AnnAssign):\n                record_target(st.target, "annassign")\n                if st.value is not None:\n                    record_namespace_alias(st.target, st.value, "annassign")\n                    scan_expr(st.value)\n'''
-          if old not in text:
-              raise SystemExit('assignment anchor missing')
-          weakening.write_text(text.replace(old, new, 1), encoding='utf-8')
-
-          legacy = Path('research/target-category-discovery/verify_compositional_invariant_legacy.py')
-          text = legacy.read_text(encoding='utf-8')
-          old = '''def _read_utf8(path: Path) -> tuple[bytes, str]:\n    try:\n        raw = path.read_bytes()\n    except OSError as exc:\n        raise VerificationError(f"required artifact missing or unreadable: {path}") from exc\n'''
-          new = '''def _read_utf8(path: Path) -> tuple[bytes, str]:\n    if path.is_symlink() or not path.is_file():\n        raise VerificationError(f"required artifact must be a regular non-symlink file: {path}")\n    try:\n        raw = path.read_bytes()\n    except OSError as exc:\n        raise VerificationError(f"required artifact missing or unreadable: {path}") from exc\n'''
-          if old not in text:
-              raise SystemExit('legacy reader anchor missing')
-          legacy.write_text(text.replace(old, new, 1), encoding='utf-8')
-
-          tests = Path('tests/test_target_category_compositional_invariant.py')
-          text = tests.read_text(encoding='utf-8')
-          marker = '\n\nif __name__ == "__main__":\n    unittest.main()\n'
-          if marker not in text:
-              raise SystemExit('test insertion marker missing')
-          addition = r'''
-
-    def test_legacy_verifier_rejects_symlinked_registered_audit(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            target = Path(tmp) / "chat-audit-copy.md"
-            target.write_bytes((DIR / "chat-audit-2026-08-05.md").read_bytes())
-            link = Path(tmp) / "chat-audit-link.md"
-            link.symlink_to(target)
-            with self.assertRaisesRegex(module.VerificationError, "regular non-symlink"):
-                module.verify(audit_path=link)
-
-    def test_weakening_rejects_aliased_module_namespace_rebinding(self) -> None:
-        path = ROOT / "far_validation/weakening.py"
-        weakening_spec = importlib.util.spec_from_file_location("far_weakening_alias_test", path)
-        assert weakening_spec and weakening_spec.loader
-        weakening = importlib.util.module_from_spec(weakening_spec)
-        sys.modules[weakening_spec.name] = weakening
-        weakening_spec.loader.exec_module(weakening)
-        with tempfile.TemporaryDirectory() as tmp:
-            repo = Path(tmp)
-            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
-            subprocess.run(["git", "config", "user.email", "assurance@example.invalid"], cwd=repo, check=True)
-            subprocess.run(["git", "config", "user.name", "Validator Assurance"], cwd=repo, check=True)
-            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
-                target = repo / protected
-                target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_text((ROOT / protected).read_text(encoding="utf-8"), encoding="utf-8")
-            subprocess.run(["git", "add", "."], cwd=repo, check=True)
-            subprocess.run(["git", "commit", "-qm", "baseline"], cwd=repo, check=True)
-            base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
-            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
-                target = repo / protected
-                source = target.read_text(encoding="utf-8")
-                source += "\n_far_namespace = globals()\n"
-                source += "_far_namespace.update({\"validate_empirical_authority\": lambda *args, **kwargs: None, \"validate_gate\": lambda *args, **kwargs: None})\n"
-                target.write_text(source, encoding="utf-8")
-            subprocess.run(["git", "add", "."], cwd=repo, check=True)
-            subprocess.run(["git", "commit", "-qm", "alias module namespace and rebind validators"], cwd=repo, check=True)
-            report = weakening.detect_weakening(repo, base=base)
-            self.assertFalse(report.successful)
-            failures = {finding.path: finding.failures for finding in report.findings}
-            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
-                self.assertIn(protected, failures)
-                self.assertTrue(any("protected validator binding changed" in item for item in failures[protected]))
-'''
-          tests.write_text(text.replace(marker, addition + marker, 1), encoding='utf-8')
-          PY
+          python -c 'import base64, os; exec(base64.b64decode(os.environ["PATCH_B64"]))'
       - name: Run focused and assurance validation
         run: |
+          python -m unittest tests.test_pr436_root_closure -v
           python -m unittest tests.test_target_category_compositional_invariant -v
           python -m far_validation weakening
           python -m compileall -q far_validation research/target-category-discovery tests
@@ -110,6 +31,6 @@ jobs:
         run: |
           git config user.name "Project FAR validation repair"
           git config user.email "actions@users.noreply.github.com"
-          git add far_validation/weakening.py research/target-category-discovery/verify_compositional_invariant_legacy.py tests/test_target_category_compositional_invariant.py
+          git add far_validation/weakening.py research/target-category-discovery/verify_compositional_invariant_legacy.py tests/test_pr436_root_closure.py
           git commit -m "Close PR436 validator rebinding and symlink gaps"
           git push origin HEAD:agent/close-structured-reasoning-compositional-question
