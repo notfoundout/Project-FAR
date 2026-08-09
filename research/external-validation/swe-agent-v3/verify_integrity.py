@@ -13,3 +13,14 @@ for _name, _value in vars(_legacy).items():
         globals()[_name] = _value
 
 REQUIRED_ARTIFACTS = _legacy.REQUIRED_ARTIFACTS
+_legacy_verify_manifest = _legacy.verify_manifest
+
+
+def verify_manifest():
+    index = _legacy_verify_manifest()
+    try:
+        import verify_review_closure_hardened as hardening
+    except ImportError as exc:
+        raise DesignError("mandatory additive review-closure hardening is unavailable") from exc
+    hardening.validate()
+    return index
