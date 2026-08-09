@@ -26,7 +26,9 @@ The frozen bootstrap seed remains bound to its originally committed derivation-i
 
 Future instantiated task manifests must use a separate `task_identity_sha256` derived only from provider-stable repository identity, exact repository commit, and sealed task-payload identity. Strata are excluded from that identity, so relabeling cannot turn one underlying task into multiple tasks. `task_identity_sha256` must be unique across the frozen manifest.
 
-Task strata are deterministic multi-label classifications, not operator-selected primary labels. The five frozen boolean classification inputs map one-to-one to the five preregistered strata; every true predicate is retained exactly once in canonical order, and the supporting source-evidence locator or sealed-reference-patch attestation is retained. Required-stratum coverage is checked only after this deterministic classification is frozen.
+Task strata are deterministic multi-label classifications, not operator-selected primary labels. The five frozen boolean classification inputs map one-to-one to the five preregistered strata; every true predicate is retained exactly once in canonical order. Every verifiable classification binding commits a canonical relative evidence path, exact retained-byte SHA-256, and exact byte count. Before launch eligibility can be established, the required validator resolves each path relative to the evidence-registry directory without following symlinks and independently recomputes the retained byte count and SHA-256. Source-derived predicates must use source-evidence bindings; the multi-file reference-patch predicate must use a sealed-reference-patch binding. Required-stratum coverage is checked only after these bindings and bytes verify.
+
+The same mandatory preexecution path applies the frozen population contract to the instantiated records: at least 24 unique authoritative tasks, at least five provider-stable repository identities, no repository above one fifth of the population, one-to-one repository-identity/blind-ID mapping, fixed-width unique blind task IDs, and complete required-stratum coverage. A nonempty manifest alone is never launch evidence.
 
 Critical-harm rate comparisons use the identical frozen task × repetition-slot index for FAR and placebo. Allowed infrastructure replacements occupy the same slot and do not enlarge the denominator. Regression-introduction and invalid-run indicators are defined per frozen repetition slot; every frozen slot remains in the arm denominator, including invalid slots. FAR-minus-placebo rate differences use exact reduced-rational arithmetic, and any missing/duplicated/unpaired slot or missing evidence needed for the harm decision triggers `critical_harm`.
 
@@ -36,9 +38,11 @@ All model calls and benchmark execution are currently blocked. A sacrificial pil
 
 Every governed data, narrative, prospective-amendment, seed-commitment, and immutable historical-authority snapshot artifact is exact-locked in `design-manifest-v1.0.json`. The verifier checks each committed Git blob and the corresponding worktree bytes, then evaluates the critical semantic contracts. Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing; it remains ordinary reviewed code at the exact PR head.
 
-The historical snapshots make primary verification self-contained in a depth-1 checkout. The required verification path does not depend on fetching historical Git objects or proving an unrelated ancestry relation.
+The historical snapshots make primary verification self-contained in a depth-1 checkout. Delegated v1.1 and v1.2 validators are explicitly bound to the caller's active artifact root, so fixture or alternate-checkout validation cannot silently inspect the canonical checkout instead.
 
 ## Verification
+
+The current design-only package has no instantiated task population, so the static commands verify contracts and keep execution blocked:
 
 ```bash
 python research/external-validation/swe-agent-v3/verify_design.py
@@ -51,3 +55,13 @@ python -m py_compile \
   research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py \
   tests/test_swe_agent_v3*.py
 ```
+
+Before any pilot or confirmatory launch can be considered eligible, the frozen instantiated manifest and its evidence registry must additionally pass the required CLI path together:
+
+```bash
+python research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py \
+  --task-manifest /path/to/frozen-task-manifest.json \
+  --evidence-registry /path/to/frozen-evidence-registry.json
+```
+
+Supplying only one of those artifacts is invalid. If the execution gate ever claims pilot or confirmatory authorization, the no-argument static CLI fails rather than reporting launch eligibility without inspecting instantiated records and retained evidence.
