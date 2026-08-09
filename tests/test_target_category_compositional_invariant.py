@@ -275,6 +275,22 @@ class CompositionalInvariantTests(unittest.TestCase):
                 self.assertIn(protected, early_failures)
                 self.assertTrue(any("required live verify call prefix changed" in item for item in early_failures[protected]))
 
+            subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                target = repo / protected
+                source = target.read_text(encoding="utf-8")
+                source += "\nvalidate_empirical_authority = lambda *args, **kwargs: None\n"
+                source += "validate_gate = lambda *args, **kwargs: None\n"
+                target.write_text(source, encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "rebind protected authority validators"], cwd=repo, check=True)
+            rebound_report = weakening.detect_weakening(repo, base=base)
+            self.assertFalse(rebound_report.successful)
+            rebound_failures = {finding.path: finding.failures for finding in rebound_report.findings}
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                self.assertIn(protected, rebound_failures)
+                self.assertTrue(any("protected validator binding changed" in item for item in rebound_failures[protected]))
+
 
 if __name__ == "__main__":
     unittest.main()
