@@ -1,10 +1,10 @@
-# Compositional Invariant Exploratory Research Note v1.2
+# Compositional Invariant Exploratory Research Note v1.0
 
 Status: **Research — exploratory, unregistered derivation**  
 Result ID: `TCD-COMPOSITIONAL-INVARIANT-001`  
 Repository base: `d1fc8053e1459a7829f6f24b8d187f7887375cf0`
 
-The legacy filename contains `terminal-result`; that path is retained only to avoid breaking existing references. This document is not a terminal result and does not establish a theorem.
+The filename version matches this note’s declared v1.0 identity. The `terminal-result` label is only the artifact type name; this document remains exploratory Research and does not establish a theorem.
 
 ## 1. Research question
 
