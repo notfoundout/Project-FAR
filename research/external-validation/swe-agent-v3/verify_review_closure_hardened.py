@@ -17,11 +17,22 @@ EXPECTED_AMENDMENT_BLOB = "59c862790fee90beb0b3fba93dfd9b4e51921322"
 EXPECTED_NARRATIVE_BLOB = "6089f31d1769349fc1e9f9588ad40dca9e775fef"
 
 
-def validate(path: Path | None = None) -> dict[str, Any]:
-    """Validate hardening against the caller's active repository/fixture root."""
-    path = path or (integrity.HERE / "review-closure-amendment-v1.2.json")
-    narrative = integrity.HERE / "AMENDMENT-v1.2.md"
-    classification_contract = integrity.HERE / "classification-input-digest-contract-v1.0.json"
+def _bind_active_context(active_here: Path) -> None:
+    """Bind every delegated module to the same explicit artifact root."""
+    integrity.HERE = active_here
+    base.integrity.HERE = active_here
+    classification_digest.integrity.HERE = active_here
+    if hasattr(base, "_sync_integrity_context"):
+        base._sync_integrity_context()
+
+
+def validate(path: Path | None = None, *, here: Path | None = None) -> dict[str, Any]:
+    """Validate hardening against one explicit repository/fixture artifact root."""
+    active_here = here or integrity.HERE
+    _bind_active_context(active_here)
+    path = path or (active_here / "review-closure-amendment-v1.2.json")
+    narrative = active_here / "AMENDMENT-v1.2.md"
+    classification_contract = active_here / "classification-input-digest-contract-v1.0.json"
     if integrity._git_blob_sha1(integrity._read_regular(path)) != EXPECTED_AMENDMENT_BLOB:
         raise DesignError("frozen review-closure amendment bytes drifted")
     if integrity._git_blob_sha1(integrity._read_regular(narrative)) != EXPECTED_NARRATIVE_BLOB:
