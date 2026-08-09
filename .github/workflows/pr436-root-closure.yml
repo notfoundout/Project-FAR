@@ -1,0 +1,115 @@
+name: PR436 Root Closure
+
+on:
+  push:
+    branches:
+      - agent/close-structured-reasoning-compositional-question
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/close-structured-reasoning-compositional-question
+          fetch-depth: 0
+      - name: Apply root-cause repairs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          weakening = Path('far_validation/weakening.py')
+          text = weakening.read_text(encoding='utf-8')
+          old = '''    def record_target(target: ast.AST, kind: str) -> None:\n        if isinstance(target, ast.Name) and target.id in protected:\n            events[target.id].append(kind)\n'''
+          new = '''    def record_namespace_alias(target: ast.AST, value: ast.AST, kind: str) -> None:\n        scope = namespace_scope(value)\n        if scope is None:\n            return\n        targets: list[ast.AST] = list(target.elts) if isinstance(target, (ast.Tuple, ast.List)) else [target]\n        for alias_target in targets:\n            if isinstance(alias_target, ast.Name):\n                for name in protected:\n                    events[name].append(f"{scope}-namespace-alias:{kind}:{alias_target.id}")\n\n    def record_target(target: ast.AST, kind: str) -> None:\n        if isinstance(target, ast.Name) and target.id in protected:\n            events[target.id].append(kind)\n'''
+          if old not in text:
+              raise SystemExit('weakening helper insertion anchor missing')
+          text = text.replace(old, new, 1)
+
+          old = '''            if isinstance(node, ast.NamedExpr):\n                record_target(node.target, "namedexpr")\n'''
+          new = '''            if isinstance(node, ast.NamedExpr):\n                record_target(node.target, "namedexpr")\n                record_namespace_alias(node.target, node.value, "namedexpr")\n'''
+          if old not in text:
+              raise SystemExit('namedexpr anchor missing')
+          text = text.replace(old, new, 1)
+
+          old = '''            if isinstance(st, ast.Assign):\n                for target in st.targets:\n                    record_target(target, "assign")\n                scan_expr(st.value)\n            elif isinstance(st, ast.AnnAssign):\n                record_target(st.target, "annassign")\n                if st.value is not None:\n                    scan_expr(st.value)\n'''
+          new = '''            if isinstance(st, ast.Assign):\n                for target in st.targets:\n                    record_target(target, "assign")\n                    record_namespace_alias(target, st.value, "assign")\n                scan_expr(st.value)\n            elif isinstance(st, ast.AnnAssign):\n                record_target(st.target, "annassign")\n                if st.value is not None:\n                    record_namespace_alias(st.target, st.value, "annassign")\n                    scan_expr(st.value)\n'''
+          if old not in text:
+              raise SystemExit('assignment anchor missing')
+          weakening.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          legacy = Path('research/target-category-discovery/verify_compositional_invariant_legacy.py')
+          text = legacy.read_text(encoding='utf-8')
+          old = '''def _read_utf8(path: Path) -> tuple[bytes, str]:\n    try:\n        raw = path.read_bytes()\n    except OSError as exc:\n        raise VerificationError(f"required artifact missing or unreadable: {path}") from exc\n'''
+          new = '''def _read_utf8(path: Path) -> tuple[bytes, str]:\n    if path.is_symlink() or not path.is_file():\n        raise VerificationError(f"required artifact must be a regular non-symlink file: {path}")\n    try:\n        raw = path.read_bytes()\n    except OSError as exc:\n        raise VerificationError(f"required artifact missing or unreadable: {path}") from exc\n'''
+          if old not in text:
+              raise SystemExit('legacy reader anchor missing')
+          legacy.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          tests = Path('tests/test_target_category_compositional_invariant.py')
+          text = tests.read_text(encoding='utf-8')
+          marker = '\n\nif __name__ == "__main__":\n    unittest.main()\n'
+          if marker not in text:
+              raise SystemExit('test insertion marker missing')
+          addition = r'''
+
+    def test_legacy_verifier_rejects_symlinked_registered_audit(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "chat-audit-copy.md"
+            target.write_bytes((DIR / "chat-audit-2026-08-05.md").read_bytes())
+            link = Path(tmp) / "chat-audit-link.md"
+            link.symlink_to(target)
+            with self.assertRaisesRegex(module.VerificationError, "regular non-symlink"):
+                module.verify(audit_path=link)
+
+    def test_weakening_rejects_aliased_module_namespace_rebinding(self) -> None:
+        path = ROOT / "far_validation/weakening.py"
+        weakening_spec = importlib.util.spec_from_file_location("far_weakening_alias_test", path)
+        assert weakening_spec and weakening_spec.loader
+        weakening = importlib.util.module_from_spec(weakening_spec)
+        sys.modules[weakening_spec.name] = weakening
+        weakening_spec.loader.exec_module(weakening)
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+            subprocess.run(["git", "config", "user.email", "assurance@example.invalid"], cwd=repo, check=True)
+            subprocess.run(["git", "config", "user.name", "Validator Assurance"], cwd=repo, check=True)
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                target = repo / protected
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text((ROOT / protected).read_text(encoding="utf-8"), encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "baseline"], cwd=repo, check=True)
+            base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                target = repo / protected
+                source = target.read_text(encoding="utf-8")
+                source += "\n_far_namespace = globals()\n"
+                source += "_far_namespace.update({\"validate_empirical_authority\": lambda *args, **kwargs: None, \"validate_gate\": lambda *args, **kwargs: None})\n"
+                target.write_text(source, encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "alias module namespace and rebind validators"], cwd=repo, check=True)
+            report = weakening.detect_weakening(repo, base=base)
+            self.assertFalse(report.successful)
+            failures = {finding.path: finding.failures for finding in report.findings}
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                self.assertIn(protected, failures)
+                self.assertTrue(any("protected validator binding changed" in item for item in failures[protected]))
+'''
+          tests.write_text(text.replace(marker, addition + marker, 1), encoding='utf-8')
+          PY
+      - name: Run focused and assurance validation
+        run: |
+          python -m unittest tests.test_target_category_compositional_invariant -v
+          python -m far_validation weakening
+          python -m compileall -q far_validation research/target-category-discovery tests
+      - name: Commit validated repair
+        run: |
+          git config user.name "Project FAR validation repair"
+          git config user.email "actions@users.noreply.github.com"
+          git add far_validation/weakening.py research/target-category-discovery/verify_compositional_invariant_legacy.py tests/test_target_category_compositional_invariant.py
+          git commit -m "Close PR436 validator rebinding and symlink gaps"
+          git push origin HEAD:agent/close-structured-reasoning-compositional-question
