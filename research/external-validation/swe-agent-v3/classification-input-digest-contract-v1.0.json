@@ -40,20 +40,32 @@
     "evidence_binding_schema": {
       "required_keys_exactly": [
         "kind",
-        "locator"
+        "locator",
+        "sha256",
+        "bytes"
       ],
       "kind_allowed_values_exactly": [
         "source_evidence_locator",
         "sealed_reference_patch_attestation",
         "unverifiable"
       ],
-      "locator_rule": "nonempty UTF-8 JSON string for source_evidence_locator or sealed_reference_patch_attestation; exact JSON null for unverifiable"
+      "kind_mapping": {
+        "source_declares_defect_or_bug": "source_evidence_locator",
+        "frozen_entry_test_or_CI_is_failing": "source_evidence_locator",
+        "source_declares_previously_working_behavior_regressed": "source_evidence_locator",
+        "source_acceptance_criteria_require_API_or_contract_change": "source_evidence_locator",
+        "sealed_reference_patch_touches_multiple_files": "sealed_reference_patch_attestation"
+      },
+      "locator_rule": "for verifiable bindings, a nonempty canonical POSIX relative path below the evidence-registry directory; absolute paths, dot segments, parent traversal, backslashes, symlinks, and non-regular targets are prohibited; exact JSON null for unverifiable",
+      "sha256_rule": "for verifiable bindings, lowercase SHA-256 of the exact retained evidence bytes; exact JSON null for unverifiable",
+      "bytes_rule": "for verifiable bindings, nonnegative exact JSON integer byte count of the same retained evidence bytes with booleans prohibited; exact JSON null for unverifiable",
+      "preexecution_verification_rule": "resolve each verifiable locator below the evidence-registry directory without following symlinks, read the retained regular-file bytes, and require both the committed sha256 and bytes fields to match those exact bytes before the classification input can support a stratum"
     },
     "unverifiable_binding_rule": "an unverifiable binding forces its paired classification input to false and cannot support required-stratum coverage",
     "serialization": "RFC 8785 JCS UTF-8 bytes of exactly the descriptor defined above",
     "digest": "lowercase SHA-256 hex",
-    "timing": "descriptor bytes and classification_inputs_sha256 are committed before any sacrificial pilot or confirmatory execution and before outcome reveal",
-    "recomputation_rule": "preexecution validation independently recomputes classification_inputs_sha256 from the exact descriptor, verifies task_identity_sha256 equality to the enclosing manifest record, and rejects any mismatch"
+    "timing": "descriptor bytes, evidence byte identities, classification_inputs_sha256, and retained evidence bytes are committed before any sacrificial pilot or confirmatory execution and before outcome reveal",
+    "recomputation_rule": "preexecution validation independently recomputes classification_inputs_sha256 from the exact descriptor, verifies task_identity_sha256 equality to the enclosing manifest record, resolves and hashes every retained evidence file, and rejects any descriptor, evidence-byte, size, digest, or task-binding mismatch"
   },
   "frozen_v1_2_interpretation": {
     "classification_timing_exactly": "computed from the frozen classification inputs and committed before any sacrificial pilot or confirmatory execution",
@@ -64,8 +76,10 @@
     "validate this additive contract and its Git blob through the design integrity root",
     "for every instantiated task record, independently recompute classification_inputs_sha256 from the exact descriptor",
     "require descriptor.task_identity_sha256 to equal the enclosing task record task_identity_sha256",
-    "reject cross-task digest transplantation even when classification booleans and evidence-binding strings are identical",
-    "reject missing, extra, mistyped, post-outcome, or unverifiable bindings that would falsely support required-stratum coverage"
+    "resolve every verifiable evidence locator under the evidence-registry directory and independently verify its exact retained bytes against the descriptor sha256 and byte count",
+    "require source classification inputs to use source-evidence bindings and the multi-file reference-patch input to use the sealed-reference-patch binding",
+    "reject cross-task digest transplantation even when classification booleans and evidence-binding metadata are identical",
+    "reject missing, extra, mistyped, post-outcome, path-traversing, symlinked, byte-drifted, or unverifiable bindings that would falsely support required-stratum coverage"
   ],
   "nonclaims": [
     "This additive hardening does not modify the frozen review-closure-amendment-v1.2.json bytes.",
