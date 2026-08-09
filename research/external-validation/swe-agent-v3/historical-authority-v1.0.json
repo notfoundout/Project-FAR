@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.1",
+  "program_id": "FAR-SWE-V3-001",
+  "artifact_status": "Archive",
+  "authority_status": "archival_context_not_live_authority",
+  "current_design_authority": false,
+  "execution_authorized": false,
+  "purpose": "Self-contained archival copies of two artifacts associated with the historical design reference 83c951aca9be6a09a4517044ae531a3ed1bcc9a9. They preserve review context only and are not an authority dependency for the current FAR-SWE-V3-001 design.",
+  "claimed_historical_design_head": "83c951aca9be6a09a4517044ae531a3ed1bcc9a9",
+  "provenance_status": "not_self_proving",
+  "snapshots": [
+    {
+      "path": "research/external-validation/swe-agent-v3/historical-base-83c951/preregistration-v1.0.json",
+      "archived_git_blob_sha1": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
+      "claimed_historical_source_path": "research/external-validation/swe-agent-v3/preregistration-v1.0.json"
+    },
+    {
+      "path": "research/external-validation/swe-agent-v3/historical-base-83c951/evidence-and-analysis-plan-v1.0.md",
+      "archived_git_blob_sha1": "15b352d54a524d9caf827018b608028c004f8f13",
+      "claimed_historical_source_path": "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md"
+    }
+  ],
+  "verification_rule": "Verification proves only that the current archive bytes match the archived_git_blob_sha1 values recorded in this archive record. It does not prove that those bytes occurred at claimed_historical_design_head.",
+  "external_provenance_rule": "Proving that an archived snapshot occurred at the claimed historical commit requires an independent external Git object/history or equivalent trusted provenance source. That proof is deliberately outside this self-contained archive and is not required for current experiment validity.",
+  "immutability_rule": "Any archive-byte, archive-path, archived-blob-identity, or claimed historical-reference change creates a new archive version and cannot silently rewrite v1.1 archival context.",
+  "nonclaims": [
+    "This archive does not cryptographically prove that the snapshots came from claimed_historical_design_head.",
+    "These snapshots do not restore historical files as current design authority.",
+    "Current failure and arithmetic rules are validated independently of this archive.",
+    "This archive does not authorize model calls, pilot execution, benchmark execution, confirmatory execution, grading, or outcome reveal.",
+    "This archive does not establish that FAR improves software engineering."
+  ]
+}

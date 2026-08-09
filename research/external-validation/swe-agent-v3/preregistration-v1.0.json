@@ -1,0 +1,251 @@
+{
+  "schema_version": "1.2",
+  "program_id": "FAR-SWE-V3-001",
+  "artifact_status": "Research",
+  "stage": "design_only",
+  "execution_authorized": false,
+  "historical_v2_pooling_permitted": false,
+  "question": "Under identical execution conditions, does a frozen Project FAR capsule improve software-engineering task resolution relative to an inert structure-matched placebo?",
+  "primary_contrast": "far_minus_placebo",
+  "secondary_contrasts": [
+    "far_minus_baseline",
+    "placebo_minus_baseline"
+  ],
+  "minimum_practically_important_difference": 0.1,
+  "arms": [
+    {
+      "id": "baseline",
+      "required": true,
+      "description": "Ordinary frozen agent configuration without an auxiliary capsule.",
+      "extra_capsule": null,
+      "tool_permissions": "identical_across_arms",
+      "budget": "identical_across_arms"
+    },
+    {
+      "id": "placebo",
+      "required": true,
+      "description": "Inert auxiliary capsule matched to the FAR capsule for exposure and burden but containing no FAR concepts or task-relevant guidance.",
+      "extra_capsule": "placebo",
+      "matching_requirements": {
+        "relative_tolerance": {
+          "applies_to": [
+            "utf8_bytes",
+            "frozen_tokenizer_tokens"
+          ],
+          "maximum_absolute_relative_difference": {
+            "numerator": 1,
+            "denominator": 100
+          },
+          "reference_count": "far_treatment_count",
+          "far_count_requirement": "positive integer",
+          "placebo_count_requirement": "nonnegative integer",
+          "boundary": "inclusive",
+          "rounding": "none",
+          "floating_point_permitted": false,
+          "integer_acceptance_rule": "abs(placebo_count - far_treatment_count) * 100 <= far_treatment_count"
+        },
+        "file_count_exact": true,
+        "relative_path_shape_exact": true,
+        "directory_depth_exact": true,
+        "read_order_exact": true,
+        "interaction_turns_exact": true,
+        "tool_permissions_exact": true
+      },
+      "forbidden_content": [
+        "FAR terminology",
+        "task identities",
+        "repository-specific facts",
+        "gold patches",
+        "hidden tests",
+        "benchmark outcomes",
+        "software-engineering advice beyond neutral formatting text"
+      ]
+    },
+    {
+      "id": "far",
+      "required": true,
+      "description": "Frozen treatment capsule exported from one exact Project FAR commit after theory freeze.",
+      "extra_capsule": "far",
+      "capsule_contract": "treatment-capsule-contract-v1.0.json",
+      "tool_permissions": "identical_across_arms",
+      "budget": "identical_across_arms"
+    }
+  ],
+  "assignment": {
+    "primary_unit": "task",
+    "paired_design": true,
+    "every_task_in_every_arm": true,
+    "repetitions_per_task_arm_status": "unfrozen",
+    "minimum_repetitions_per_task_arm": 2,
+    "order": "counterbalanced_within_task",
+    "randomization_seed_status": "unfrozen_and_sealed_before_execution",
+    "carryover_control": "fresh_workspace_and_fresh_model_context_for_every_run"
+  },
+  "task_population": {
+    "status": "unfrozen",
+    "confirmatory_source": "external_private_or_sealed_holdout",
+    "minimum_task_count": 24,
+    "minimum_repository_count": 5,
+    "maximum_fraction_from_one_repository": 0.2,
+    "required_strata": [
+      "bug_fix",
+      "test_failure",
+      "behavioral_regression",
+      "API_or_contract_change",
+      "multi_file_change"
+    ],
+    "sealed_identity_ledger_contract": "task-manifest-contract-v1.0.json#/sealed_identity_ledger_contract",
+    "prohibited_task_repositories": [
+      "notfoundout/Project-FAR",
+      "any fork or mirror containing Project FAR treatment material"
+    ],
+    "prohibited_tasks": [
+      "any historical SWE-agent v2 task",
+      "any task used in the sacrificial harness pilot",
+      "any task exposed during capsule construction",
+      "any task with gold patch or hidden-test exposure to an operator or treatment author"
+    ]
+  },
+  "execution_controls": {
+    "same_model_endpoint_across_arms": true,
+    "model_fallback_prohibited": true,
+    "same_system_and_agent_prompts_except_capsule_mount": true,
+    "same_repository_commit_across_arms": true,
+    "same_environment_image_across_arms": true,
+    "same_tools_across_arms": true,
+    "same_call_token_time_and_cost_budgets_across_arms": true,
+    "fresh_context_per_run": true,
+    "parallel_cross_arm_information_sharing_prohibited": true
+  },
+  "outcomes": {
+    "primary": {
+      "id": "task_resolution",
+      "source": "sealed_external_grader",
+      "values": [
+        "resolved",
+        "unresolved",
+        "invalid"
+      ],
+      "invalid_is_not_resolved": true
+    },
+    "secondary": [
+      "target_test_status",
+      "regression_test_status",
+      "patch_applies",
+      "budget_exhausted",
+      "wall_clock_seconds",
+      "model_calls",
+      "input_tokens",
+      "output_tokens",
+      "provider_cost",
+      "tool_calls",
+      "changed_files",
+      "human_adjudication_minutes",
+      "safety_or_authorization_violation"
+    ]
+  },
+  "analysis": {
+    "task_level_aggregation": "mean over repetitions within each task and arm",
+    "primary_estimand": "mean_task_level_resolution_probability_far_minus_placebo",
+    "uncertainty_method": "paired_task_bootstrap",
+    "bootstrap_resamples": 100000,
+    "bootstrap_seed_status": "frozen_by_bootstrap-seed-commitment-contract-v1.0.json_before_execution",
+    "bootstrap_seed_contract": "bootstrap-seed-commitment-contract-v1.0.json",
+    "critical_harm_contract": "critical-harm-thresholds-v1.0.json",
+    "decision_categories": {
+      "inconclusive_due_to_missingness": "one or more FAR or placebo task-arm cells remain missing after the single permitted same-slot infrastructure replacement",
+      "bounded_harm": "no primary cells are missing and 95% paired-task bootstrap upper bound < 0",
+      "bounded_positive": "no primary cells are missing and estimate >= 0.10 and 95% paired-task bootstrap lower bound > 0 and no critical harm triggers under critical-harm-thresholds-v1.0.json",
+      "no_practical_advantage": "no primary cells are missing and 0 <= 95% paired-task bootstrap upper bound < 0.10",
+      "inconclusive": "no primary cells are missing and none of the preceding categories applies"
+    },
+    "multiple_comparison_policy": "primary contrast alone is confirmatory; all secondary contrasts and component ablations are exploratory unless separately frozen before exposure",
+    "equivalence_or_noninferiority_claim_permitted": false,
+    "population_generalization_permitted": false,
+    "invalid_run_and_cell_policy": {
+      "replacement_attempts_per_infrastructure_invalid_slot": 1,
+      "replacement_must_use_same_frozen_task_arm_repetition_and_conditions": true,
+      "replacement_must_finish_before_any_outcome_reveal": true,
+      "cell_valid_only_if_every_frozen_repetition_is_valid": true,
+      "retained_invalid_repetition_makes_entire_task_arm_cell_missing": true,
+      "primary_missingness_rule": "if any FAR or placebo task-arm cell is missing, final confirmatory classification is inconclusive_due_to_missingness",
+      "required_descriptive_sensitivity": [
+        "complete-case paired estimate",
+        "worst-case full-task-set bound with missing FAR=0 and missing placebo=1",
+        "best-case full-task-set bound with missing FAR=1 and missing placebo=0"
+      ],
+      "sensitivity_results_are_confirmatory": false
+    },
+    "decision_precedence": [
+      "inconclusive_due_to_missingness",
+      "bounded_harm",
+      "bounded_positive",
+      "no_practical_advantage",
+      "inconclusive"
+    ],
+    "bootstrap_interval_spec": {
+      "method": "percentile_equal_tailed",
+      "confidence_level": 0.95,
+      "lower_tail_probability": 0.025,
+      "upper_tail_probability": 0.975,
+      "resample_count": 100000,
+      "resample_unit": "task",
+      "resample_size": "number_of_complete_primary_tasks",
+      "draws_with_replacement": true,
+      "task_order": {
+        "contract": "task-manifest-contract-v1.0.json",
+        "source": "exact frozen ordered task manifest committed and integrity-rooted before any sacrificial pilot or confirmatory execution",
+        "sealed_identity_ledger": "the exact sealed identity ledger governed by task-manifest-contract-v1.0.json is committed with the task manifest before execution and binds each blind record to its authoritative GitHub repository/task descriptor",
+        "blind_identifier_pattern": "^TASK-[0-9]{6}$",
+        "blind_identifier_encoding": "ASCII subset of UTF-8; Unicode and normalization-sensitive identifiers are prohibited",
+        "sequence_rule": "manifest JSON array order is authoritative; runtime sorting and locale collation are prohibited",
+        "uniqueness_rule": "blind identifiers and task-bundle roots must each be unique",
+        "strata_rule": "each record carries a frozen nonempty canonical-order subset of the five preregistered strata and the manifest-wide union must cover all five before execution",
+        "complete_case_rule": "remove tasks with missing primary cells while preserving manifest-relative order",
+        "bootstrap_vector_rule": "D_i vector indices are exactly the remaining manifest array positions in order"
+      },
+      "rng_procedure": {
+        "id": "sha256_rejection_stream_v1",
+        "seed_format": "exactly 64 lowercase hexadecimal characters strictly base16-decoded into 32 bytes; the ASCII hex characters are not hashed",
+        "counter_encoding": "decoded_seed_32_bytes || uint64_be(resample_index) || uint64_be(draw_index) || uint32_be(rejection_counter)",
+        "digest": "SHA-256",
+        "integer": "first 8 digest bytes interpreted as unsigned big-endian",
+        "unbiased_index_rule": "reject x >= 2^64 - (2^64 mod N); otherwise index = x mod N; increment rejection_counter from zero until accepted",
+        "resample_index_origin": 0,
+        "draw_index_origin": 0,
+        "rejection_counter_origin": 0
+      },
+      "quantile_convention": {
+        "id": "hyndman_fan_type_7",
+        "sorted_values": "ascending bootstrap estimates including duplicates",
+        "formula": "h=(m-1)*p; q=(1-f)*x[floor(h)] + f*x[ceil(h)], where f=h-floor(h), zero-based indices, and m=100000"
+      },
+      "classification_uses_bounds": "lower p=0.025 and upper p=0.975 from this exact procedure"
+    }
+  },
+  "blinding": {
+    "arm_labels_blinded_to_graders": true,
+    "task_outcomes_hidden_until_all_required_runs_and_evidence_bundles_are_frozen": true,
+    "capsule_authors_prohibited_from_task_identity_access": true,
+    "grader_prohibited_from_capsule_identity_access_until_scoring_freeze": true
+  },
+  "pilot": {
+    "required": true,
+    "status": "not_authorized",
+    "purpose": "harness, evidence retention, randomization, restoration, and grader-interface validation only",
+    "minimum_sacrificial_tasks": 3,
+    "pilot_tasks_excluded_from_confirmatory_evidence": true,
+    "model_calls_currently_prohibited": true
+  },
+  "nonclaims": [
+    "universal software-engineering improvement",
+    "model-independent improvement",
+    "theory truth",
+    "FAR primitive necessity",
+    "FAR minimality",
+    "external replication",
+    "commercial readiness",
+    "equivalence of baseline and placebo",
+    "pooling with historical SWE-agent v2"
+  ]
+}
