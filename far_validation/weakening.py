@@ -121,6 +121,16 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
             return node.func.id
         return None
 
+    def record_namespace_alias(target: ast.AST, value: ast.AST, kind: str) -> None:
+        scope = namespace_scope(value)
+        if scope is None:
+            return
+        targets: list[ast.AST] = list(target.elts) if isinstance(target, (ast.Tuple, ast.List)) else [target]
+        for alias_target in targets:
+            if isinstance(alias_target, ast.Name):
+                for name in protected:
+                    events[name].append(f"{scope}-namespace-alias:{kind}:{alias_target.id}")
+
     def record_target(target: ast.AST, kind: str) -> None:
         if isinstance(target, ast.Name) and target.id in protected:
             events[target.id].append(kind)
@@ -207,6 +217,7 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
         for node in ast.walk(expr):
             if isinstance(node, ast.NamedExpr):
                 record_target(node.target, "namedexpr")
+                record_namespace_alias(node.target, node.value, "namedexpr")
             if isinstance(node, ast.Call):
                 record_namespace_mutator(node)
             if (
@@ -233,10 +244,12 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
             if isinstance(st, ast.Assign):
                 for target in st.targets:
                     record_target(target, "assign")
+                    record_namespace_alias(target, st.value, "assign")
                 scan_expr(st.value)
             elif isinstance(st, ast.AnnAssign):
                 record_target(st.target, "annassign")
                 if st.value is not None:
+                    record_namespace_alias(st.target, st.value, "annassign")
                     scan_expr(st.value)
             elif isinstance(st, ast.AugAssign):
                 record_target(st.target, "augassign")

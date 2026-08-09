@@ -119,6 +119,8 @@ def _no_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
 
 
 def _read_utf8(path: Path) -> tuple[bytes, str]:
+    if path.is_symlink() or not path.is_file():
+        raise VerificationError(f"required artifact must be a regular non-symlink file: {path}")
     try:
         raw = path.read_bytes()
     except OSError as exc:
