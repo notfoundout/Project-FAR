@@ -1,0 +1,2 @@
+# Preserve exact governed bytes regardless of core.autocrlf or platform defaults.
+* -text
