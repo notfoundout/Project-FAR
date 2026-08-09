@@ -8,6 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import verify_integrity as integrity
+import verify_amendment_v1_1_rooted as amendment_v1_1
 import verify_review_closure_v1_2 as closure_v1_2
 
 DesignError = integrity.DesignError
@@ -173,6 +174,7 @@ def verify_gate_closed(path: Path = GATE) -> None:
 
 
 def verify() -> None:
+    amendment_v1_1.validate()
     verify_task_identity_contract()
     verify_seed_contract()
     closure_v1_2.validate()
@@ -182,9 +184,10 @@ def verify() -> None:
 if __name__ == "__main__":
     try:
         verify()
-    except DesignError as exc:
+    except (DesignError, amendment_v1_1.AmendmentError) as exc:
         raise SystemExit(f"FAIL: {exc}")
     print(
         "PASS: PR #435 review-closure semantics are prospective, shallow-checkout reproducible, "
-        "stratum-auditable, harm-threshold frozen, and execution remains blocked."
+        "v1.1 failure/arithmetic semantics are enforced, stratum-auditable, harm-threshold frozen, "
+        "and execution remains blocked."
     )
