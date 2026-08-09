@@ -386,7 +386,7 @@ def verify_text_boundaries() -> None:
         "critical_harm_thresholds_frozen_and_verified",
         "sealed identity ledger governed by `task-manifest-contract-v1.0.json`",
         "`launch_record_required_bindings`",
-        "The reviewed Git commit/tree is the immutable current root.",
+        "The reviewed Git commit/tree is the immutable current-byte authority.",
     )
     for phrase in required_readme:
         if phrase not in readme:

@@ -34,7 +34,7 @@ A true gate alone can never authorize a run. Every pilot or confirmatory launch 
 
 ## Integrity model
 
-The reviewed Git commit/tree is the immutable current root. Every governed current design artifact plus archival context is indexed exactly once by `design-manifest-v1.0.json`. The manifest records committed Git blob identity and byte count; semantic verifiers enforce complete type-exact contract invariants without copying mutable current blob IDs into verifier constants. Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing and remains ordinary reviewed code at the exact PR head.
+The reviewed Git commit/tree is the immutable current-byte authority. Every governed current design artifact plus archival context is indexed exactly once by `design-manifest-v1.0.json`, whose entries contain only governed paths. The manifest does not duplicate current blob identities, byte counts, hashes, or semantic digests; semantic verifiers enforce complete type-exact contract invariants while current bytes are bound solely by the reviewed Git tree. Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing and remains ordinary reviewed code at the exact PR head.
 
 The archival snapshot record is intentionally weaker than live authority: it proves only that the current archive bytes match the archive record’s blob IDs. Establishing that those bytes existed at a claimed historical Git commit requires independent external Git/history provenance. Current experiment validity does not depend on that proof.
 
