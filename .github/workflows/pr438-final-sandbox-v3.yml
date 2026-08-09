@@ -1,0 +1,101 @@
+name: PR438 final exact-commit sandbox v3
+
+on:
+  push:
+    branches:
+      - repair/pr438-zero-review-final
+
+permissions:
+  contents: write
+
+jobs:
+  repair-commit-validate-push:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: repair/pr438-zero-review-final
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install validation dependencies
+        run: python -m pip install pyyaml
+
+      - name: Reproduce v2 transformations exactly
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, yaml
+
+          wf = yaml.safe_load(Path('.github/workflows/pr438-final-sandbox-v2.yml').read_text(encoding='utf-8'))
+          names = [
+              'Apply existing schema reconciliations',
+              'Convert manifest to governed-path registry',
+              'Make integrity verifier single-source',
+              'Make design verifier use HEAD authority only',
+              'Reconcile current historical archive semantics',
+              'Reconcile mutation harness and stale test schemas',
+              'Delete all repair scaffolding before validation',
+          ]
+          steps = {step.get('name'): step for step in wf['jobs']['repair-and-validate']['steps'] if step.get('name')}
+          for name in names:
+              run = steps[name]['run']
+              print(f'Executing transformation: {name}', flush=True)
+              subprocess.run(['bash', '-euo', 'pipefail', '-c', run], check=True)
+          PY
+
+      - name: Remove v3 sandbox from candidate
+        run: rm -f .github/workflows/pr438-final-sandbox-v3.yml
+
+      - name: Create exact local candidate commit
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "Permanently reconcile SWE v3 authority contracts"
+          git status --short
+          git rev-parse HEAD
+
+      - name: Governing verifiers on exact local commit
+        shell: bash
+        run: |
+          python -m compileall -q research/external-validation/swe-agent-v3 tests/test_swe_agent_v3*.py
+          python research/external-validation/swe-agent-v3/verify_amendment_v1_1.py
+          python research/external-validation/swe-agent-v3/verify_review_closure.py
+          python research/external-validation/swe-agent-v3/verify_design.py
+          python research/external-validation/swe-agent-v3/verify_integrity.py
+          python research/external-validation/swe-agent-v3/verify_public_narratives.py
+          python research/external-validation/swe-agent-v3/verify_public_narratives_v2.py
+
+      - name: Complete SWE v3 unit surface
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v 2>&1 | tee /tmp/swe-v3-tests.log
+
+      - name: Repository hygiene
+        run: python tools/check_repository_hygiene.py
+
+      - name: Canonical fast suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/run_tests.py --fast 2>&1 | tee /tmp/fast-suite.log
+
+      - name: Push exact validated candidate
+        run: git push origin HEAD:repair/pr438-zero-review-final
+
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr438-final-sandbox-v3-diagnostics
+          path: |
+            /tmp/swe-v3-tests.log
+            /tmp/fast-suite.log
+          if-no-files-found: ignore
