@@ -59,7 +59,6 @@ jobs:
           s = s.replace('''        hardening.validate()\n        return index\n''', '''        hardening.integrity.ROOT = ROOT\n        hardening.integrity.HERE = HERE\n        hardening.integrity.MANIFEST = MANIFEST\n        hardening.integrity._committed_blob_bytes = _committed_blob_bytes\n        if hasattr(hardening, "_sync_integrity_context"):\n            hardening._sync_integrity_context()\n        hardening.validate(HERE / "review-closure-amendment-v1.2.json")\n        return index\n''')
           p.write_text(s, encoding='utf-8')
 
-          # Documentation: make instantiated validation a mandatory, necessary-not-sufficient launch step.
           p = Path('research/external-validation/swe-agent-v3/README.md')
           s = p.read_text(encoding='utf-8')
           note = '''\n### Instantiated pre-execution validation\n\nOnce a prospective task manifest and its retained classification-evidence registry exist, the following validation is mandatory before any sacrificial pilot or confirmatory execution:\n\n```bash\npython research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py --task-manifest <frozen-task-manifest.json> --evidence-registry <retained-classification-evidence.json>\n```\n\nThis command recomputes every task identity, classification-input digest, deterministic stratum mapping, task-bundle root, retained evidence content hash, repository/blind-ID mapping, minimum task and repository counts, exact per-repository cap, and required-strata coverage. Passing it is necessary but not sufficient for launch: every separately governed execution gate remains required, and the current package authorizes no model call, pilot, benchmark, or confirmatory execution.\n'''
@@ -83,3 +82,5 @@ jobs:
           git add research/external-validation/swe-agent-v3/verify_review_closure_required_impl.py research/external-validation/swe-agent-v3/verify_classification_input_digest_contract.py research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py research/external-validation/swe-agent-v3/verify_review_closure.py research/external-validation/swe-agent-v3/verify_integrity.py research/external-validation/swe-agent-v3/README.md .github/workflows/pr435-root-closure.yml
           git commit -m 'Close PR435 instantiated validation gaps'
           git push origin HEAD:research/swe-agent-v3-design-clean
+
+# trigger: rerun exact root-closure repair
