@@ -55,6 +55,8 @@ def build_manifest_and_ledger() -> tuple[list[dict], list[dict]]:
             "task_payload_sha256": f"{i + 1:064x}",
             "task_payload_bytes": 100 + i,
             "strata": [STRATA[i % len(STRATA)]],
+            "github_fork_source_repository_id": None,
+            "contains_project_far_treatment_material": False,
         }
         identity["task_bundle_root_sha256"] = hashlib.sha256(canonical_descriptor_bytes(identity)).hexdigest()
         ledger.append(identity)
@@ -93,22 +95,24 @@ class SingleSourceIntegrityTests(unittest.TestCase):
             for token in tokens:
                 self.assertNotIn(token, sources[filename], f"mutable/current duplicate identity survived: {filename}:{token}")
 
-    def test_historical_authority_is_self_contained_and_not_git_history_dependent(self) -> None:
+    def test_historical_archive_is_self_contained_and_not_live_authority(self) -> None:
         verifier = (DIR / "verify_amendment_v1_1.py").read_text(encoding="utf-8")
         for token in ("import subprocess", "git fetch --unshallow", "rev-parse", "cat-file", "merge-base", "--is-ancestor"):
             self.assertNotIn(token, verifier)
         authority = json.loads((DIR / "historical-authority-v1.0.json").read_text(encoding="utf-8"))
-        self.assertRegex(authority["base_design_head"], r"^[0-9a-f]{40}$")
+        self.assertEqual(authority["schema_version"], "1.1")
+        self.assertRegex(authority["claimed_historical_design_head"], r"^[0-9a-f]{40}$")
         self.assertEqual(authority["artifact_status"], "Archive")
+        self.assertEqual(authority["authority_status"], "archival_context_not_live_authority")
+        self.assertEqual(authority["provenance_status"], "not_self_proving")
         self.assertFalse(authority["current_design_authority"])
         self.assertFalse(authority["execution_authorized"])
         self.assertEqual(len(authority["snapshots"]), 2)
         for entry in authority["snapshots"]:
-            self.assertRegex(entry["historical_git_blob_sha1"], r"^[0-9a-f]{40}$")
+            self.assertRegex(entry["archived_git_blob_sha1"], r"^[0-9a-f]{40}$")
             snapshot = ROOT / entry["path"]
-            self.assertEqual(git_blob_sha1(snapshot.read_bytes()), entry["historical_git_blob_sha1"])
-            # Historical blob IDs are governed data, not duplicated verifier constants.
-            self.assertNotIn(entry["historical_git_blob_sha1"], verifier)
+            self.assertEqual(git_blob_sha1(snapshot.read_bytes()), entry["archived_git_blob_sha1"])
+            self.assertNotIn(entry["archived_git_blob_sha1"], verifier)
 
     def test_every_governed_final_contract_is_in_design_manifest(self) -> None:
         manifest = json.loads((DIR / "design-manifest-v1.0.json").read_text(encoding="utf-8"))
@@ -137,9 +141,9 @@ class SingleSourceIntegrityTests(unittest.TestCase):
         self.assertNotIn("execution_gate_git_blob_sha1", source)
         self.assertNotIn(data["rng_contract"]["seed_hex"], source)
 
-    def test_schema_1_5_identity_strata_and_sealed_ledger_contract_is_preserved(self) -> None:
+    def test_schema_1_6_identity_strata_and_sealed_ledger_contract_is_preserved(self) -> None:
         data = json.loads((DIR / "task-manifest-contract-v1.0.json").read_text(encoding="utf-8"))
-        self.assertEqual(data["schema_version"], "1.5")
+        self.assertEqual(data["schema_version"], "1.6")
         self.assertFalse(data["execution_authorized"])
         self.assertEqual(data["repository_identity_contract"]["supported_provider"], "github.com only")
         self.assertIn("positive JSON integer", data["task_bundle_root_contract"]["descriptor_values"]["repository_provider_id"])
@@ -153,6 +157,13 @@ class SingleSourceIntegrityTests(unittest.TestCase):
         self.assertIn("exactly one ledger record for every task-manifest record", ledger["array_binding_rule"])
         self.assertIn("committed before any sacrificial pilot or confirmatory execution", ledger["freeze_timing"])
         self.assertIn("agent and capsule authors", ledger["access_control"])
+        prohibited = data["prohibited_repository_contract"]
+        self.assertEqual(prohibited["project_far_repository_provider_id"], 1283452680)
+        self.assertTrue(prohibited["reject_exact_project_far_repository"])
+        self.assertTrue(prohibited["reject_github_fork_source_project_far"])
+        self.assertTrue(prohibited["require_project_far_treatment_material_absent"])
+        self.assertIn("github_fork_source_repository_id", ledger["record_required_keys_exactly"])
+        self.assertIn("contains_project_far_treatment_material", ledger["record_required_keys_exactly"])
 
     def test_instantiated_manifest_enforces_unique_roots_canonical_strata_and_coverage(self) -> None:
         module = load_module("single_source_review_closure_records", DIR / "verify_review_closure.py")
@@ -219,6 +230,46 @@ class SingleSourceIntegrityTests(unittest.TestCase):
             with self.assertRaises(module.DesignError):
                 module.validate_instantiated_identity_ledger(manifest_path, ledger_path)
 
+    def test_sealed_identity_ledger_rejects_project_far_repository_forks_treatment_and_url_aliases(self) -> None:
+        module = load_module("single_source_review_closure_prohibitions", DIR / "verify_review_closure.py")
+        manifest, ledger = build_manifest_and_ledger()
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest_path = Path(tmp) / "manifest.json"
+            ledger_path = Path(tmp) / "ledger.json"
+
+            def write(current_manifest: list[dict], current_ledger: list[dict]) -> None:
+                manifest_path.write_text(json.dumps(current_manifest, indent=2) + "\n", encoding="utf-8")
+                ledger_path.write_text(json.dumps(current_ledger, indent=2) + "\n", encoding="utf-8")
+
+            def bind_root(current_manifest: list[dict], current_ledger: list[dict], index: int) -> None:
+                current_ledger[index]["task_bundle_root_sha256"] = hashlib.sha256(canonical_descriptor_bytes(current_ledger[index])).hexdigest()
+                current_manifest[index]["task_bundle_root_sha256"] = current_ledger[index]["task_bundle_root_sha256"]
+
+            cases: list[tuple[list[dict], list[dict]]] = []
+
+            exact_manifest = json.loads(json.dumps(manifest)); exact_ledger = json.loads(json.dumps(ledger))
+            exact_ledger[0]["repository_provider_id"] = 1283452680
+            bind_root(exact_manifest, exact_ledger, 0)
+            cases.append((exact_manifest, exact_ledger))
+
+            fork_manifest = json.loads(json.dumps(manifest)); fork_ledger = json.loads(json.dumps(ledger))
+            fork_ledger[0]["github_fork_source_repository_id"] = 1283452680
+            cases.append((fork_manifest, fork_ledger))
+
+            treatment_manifest = json.loads(json.dumps(manifest)); treatment_ledger = json.loads(json.dumps(ledger))
+            treatment_ledger[0]["contains_project_far_treatment_material"] = True
+            cases.append((treatment_manifest, treatment_ledger))
+
+            alias_manifest = json.loads(json.dumps(manifest)); alias_ledger = json.loads(json.dumps(ledger))
+            alias_ledger[1]["canonical_repository_url"] = alias_ledger[0]["canonical_repository_url"]
+            bind_root(alias_manifest, alias_ledger, 1)
+            cases.append((alias_manifest, alias_ledger))
+
+            for current_manifest, current_ledger in cases:
+                write(current_manifest, current_ledger)
+                with self.assertRaises(module.DesignError):
+                    module.validate_instantiated_identity_ledger(manifest_path, ledger_path)
+
     def test_semantic_weakening_fails_without_repinning_verifier(self) -> None:
         module = load_module("single_source_review_closure", DIR / "verify_review_closure.py")
         data = json.loads((DIR / "task-manifest-contract-v1.0.json").read_text(encoding="utf-8"))
@@ -229,6 +280,8 @@ class SingleSourceIntegrityTests(unittest.TestCase):
             lambda d: d["task_bundle_root_contract"]["descriptor_values"].__setitem__("repository_provider_id", "owner/name string"),
             lambda d: d["sealed_identity_ledger_contract"].__setitem__("access_control", "agent may inspect identities"),
             lambda d: d["order_contract"].__setitem__("runtime_sorting_permitted", True),
+            lambda d: d["prohibited_repository_contract"].__setitem__("project_far_repository_provider_id", 1),
+            lambda d: d["prohibited_repository_contract"].__setitem__("require_project_far_treatment_material_absent", False),
         )
         for mutation in mutations:
             altered = json.loads(json.dumps(data)); mutation(altered)

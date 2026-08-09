@@ -80,7 +80,7 @@ class SweAgentV3DecisionRuleTests(unittest.TestCase):
         self.assertEqual(order["uniqueness_rule"], "blind identifiers and task-bundle roots must each be unique")
         self.assertIn("manifest-wide union must cover all five before execution", order["strata_rule"])
         task = json.loads(TASK_PATH.read_text(encoding="utf-8"))
-        self.assertEqual(task["schema_version"], "1.5")
+        self.assertEqual(task["schema_version"], "1.6")
         self.assertEqual(task["sealed_identity_ledger_contract"]["status"], "uninstantiated")
         self.assertFalse(task["sealed_identity_ledger_contract"]["execution_authorized"])
         rng = spec["rng_procedure"]

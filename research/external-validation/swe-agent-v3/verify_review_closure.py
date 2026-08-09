@@ -53,26 +53,39 @@ EXPECTED_LEDGER_CONTRACT = {
         "blind_task_id", "repository_blind_id", "task_bundle_root_sha256", "repository_provider",
         "repository_provider_id", "canonical_repository_url", "repository_commit_sha",
         "task_payload_sha256", "task_payload_bytes", "strata",
+        "github_fork_source_repository_id", "contains_project_far_treatment_material",
     ],
     "array_binding_rule": "there is exactly one ledger record for every task-manifest record and no extras; ledger array position, blind_task_id, repository_blind_id, task_bundle_root_sha256, and strata must exactly match the corresponding frozen task-manifest record",
     "descriptor_binding_rule": "the seven descriptor fields algorithm_id=far-swe-v3-task-bundle-root-v2 plus repository_provider, repository_provider_id, canonical_repository_url, repository_commit_sha, task_payload_sha256, and task_payload_bytes reconstructed from each ledger record must recompute that record's task_bundle_root_sha256 exactly",
-    "repository_binding_rule": "repository_provider must be exactly github.com and repository_provider_id must be a positive JSON integer independently resolved from api.github.com before freeze; equal provider/id pairs must use the same repository_blind_id and distinct provider/id pairs must use distinct repository_blind_id values",
+    "repository_binding_rule": "repository_provider must be exactly github.com and repository_provider_id must be a positive JSON integer independently resolved from api.github.com before freeze; equal provider/id pairs must use the same repository_blind_id and canonical_repository_url, distinct provider/id pairs must use distinct repository_blind_id values, and one canonical_repository_url may not map to multiple provider/id pairs",
     "population_rule": "minimum repository count and per-repository task cap are computed from distinct (repository_provider, repository_provider_id) pairs in this sealed ledger, never URL spellings or blind labels alone",
+    "prohibited_repository_binding_rule": "every ledger record must satisfy prohibited_repository_contract: repository_provider_id must not equal the Project FAR repository ID, github_fork_source_repository_id must not equal the Project FAR repository ID, and contains_project_far_treatment_material must be boolean false",
     "access_control": "ledger contents containing repository and task identity material are sealed from the agent and capsule authors; only the independent preexecution identity auditor and explicitly authorized evidence custodians may access them before scoring freeze",
     "freeze_timing": "the exact ledger bytes and Git blob identity are committed before any sacrificial pilot or confirmatory execution and before any task identity is released to an executing agent",
-    "launch_binding": "the separate prospective pilot or confirmatory launch record must name both the frozen task-manifest Git blob identity and frozen sealed-identity-ledger Git blob identity",
-    "retention_rule": "the exact sealed ledger bytes, Git blob identity, and independent validation report are retained in the experiment evidence store for post-run audit",
+    "launch_binding": "the separate prospective pilot or confirmatory launch record must name both the frozen task-manifest Git blob identity and frozen sealed-identity-ledger Git blob identity plus the retained repository-prohibition audit report root",
+    "retention_rule": "the exact sealed ledger bytes, Git blob identity, independent validation report, and repository-prohibition audit report are retained in the experiment evidence store for post-run audit",
+}
+EXPECTED_PROHIBITED_REPOSITORY_CONTRACT = {
+    "project_far_repository_provider": "github.com",
+    "project_far_repository_provider_id": 1283452680,
+    "reject_exact_project_far_repository": True,
+    "reject_github_fork_source_project_far": True,
+    "require_project_far_treatment_material_absent": True,
+    "github_fork_source_rule": "github_fork_source_repository_id is null for a non-fork or a positive JSON integer equal to api.github.com source.id for a GitHub fork; a value equal to project_far_repository_provider_id is prohibited",
+    "treatment_material_audit_rule": "before freeze, the independent task-identity auditor inspects the exact candidate repository commit for Project FAR treatment material using the frozen FAR capsule and current Project FAR source artifacts as the reference set; contains_project_far_treatment_material must be boolean false and the audit report is retained and launch-bound",
+    "canonical_url_uniqueness_rule": "one authoritative (repository_provider, repository_provider_id) pair must map to exactly one canonical_repository_url and one canonical_repository_url must map to exactly one authoritative pair within the frozen sealed identity ledger",
+    "failure_rule": "any exact Project FAR repository, Project FAR GitHub fork-source match, treatment-material-positive audit, canonical-URL/provider-ID inconsistency, or unavailable required prohibition evidence rejects the task population before execution",
 }
 EXPECTED_REPOSITORY_IDENTITY = {
     "supported_provider": "github.com only",
     "authoritative_identity": "the ordered pair (repository_provider, repository_provider_id), where repository_provider is exactly the JSON string github.com and repository_provider_id is a positive JSON integer equal to the api.github.com REST repository id resolved before freeze; URL strings and repository_blind_id labels are never repository identities",
     "github_identity_rule": "repository_provider must equal github.com exactly and repository_provider_id must be a positive JSON integer equal to the decimal GitHub REST repository id; strings, owner/repository text, host aliases, self-hosted GitHub instances, path-case variants, default-port variants, .git suffixes, redirects, and renames cannot create distinct repository identities",
-    "canonical_url_rule": "canonical_repository_url must equal https://github.com/{full_name} using the full_name returned by api.github.com for the authoritative repository id at freeze time and is retained only for auditability; it may not override or split an equal provider-stable identity",
+    "canonical_url_rule": "canonical_repository_url must equal https://github.com/{full_name} using the full_name returned by api.github.com for the authoritative repository id at freeze time and is retained only for auditability; each authoritative provider/id pair has exactly one canonical URL in the ledger and each canonical URL maps to exactly one authoritative pair",
     "equal_authoritative_identities_same_blind_id": True,
     "distinct_authoritative_identities_distinct_blind_ids": True,
     "minimum_repository_count_basis": "count distinct (repository_provider, repository_provider_id) pairs in the sealed identity ledger, never URL strings or repository_blind_id labels alone",
     "per_repository_cap_basis": "apply the preregistered per-repository task cap by the same (repository_provider, repository_provider_id) pair in the sealed identity ledger before execution",
-    "validation_timing": "validate every github.com repository identity from api.github.com, the ledger-to-manifest one-to-one binding, unique task-bundle roots, minimum repository count, per-repository cap, and required-strata coverage before any sacrificial pilot or confirmatory execution",
+    "validation_timing": "validate every github.com repository identity from api.github.com, canonical URL one-to-one mapping, the ledger-to-manifest one-to-one binding, unique task-bundle roots, Project FAR repository/fork/treatment-material prohibitions, minimum repository count, per-repository cap, and required-strata coverage before any sacrificial pilot or confirmatory execution",
 }
 EXPECTED_ORDER = {
     "authoritative_sequence": "top-level JSON array order",
@@ -94,13 +107,15 @@ EXPECTED_PREEXECUTION = [
     "every task bundle root is independently recomputed from the corresponding sealed identity-ledger descriptor",
     "every repository_provider is exactly github.com and every repository_provider_id is a positive JSON integer independently resolved from api.github.com before counting or blind-ID assignment",
     "every canonical repository URL is derived from the authoritative GitHub repository id and returned full_name before counting or blind-ID assignment",
-    "equal authoritative repository identities use the same repository blind ID and distinct authoritative repository identities use distinct blind IDs",
+    "equal authoritative repository identities use the same repository blind ID and canonical URL, distinct authoritative identities use distinct blind IDs, and one canonical URL never maps to multiple authoritative identities",
+    "no ledger repository_provider_id equals the Project FAR repository provider ID, no github_fork_source_repository_id equals it, and every contains_project_far_treatment_material value is boolean false under the retained independent prohibition audit",
     "minimum repository count and per-repository cap are computed from authoritative provider-stable repository identities in the sealed identity ledger rather than URL spellings or blind-ID label count",
-    "the exact task manifest artifact bytes, sealed identity-ledger bytes, and both Git blob identities are committed before any sacrificial pilot or confirmatory execution",
+    "the exact task manifest artifact bytes, sealed identity-ledger bytes, both Git blob identities, and repository-prohibition audit report root are committed before any sacrificial pilot or confirmatory execution",
 ]
 LAUNCH_BINDINGS = [
     "frozen_design_commit", "design_manifest_git_blob_sha1", "task_manifest_git_blob_sha1",
-    "sealed_identity_ledger_git_blob_sha1", "bootstrap_seed_commitment_git_blob_sha1",
+    "sealed_identity_ledger_git_blob_sha1", "task_population_prohibition_audit_report_root",
+    "bootstrap_seed_commitment_git_blob_sha1",
     "critical_harm_threshold_contract_git_blob_sha1", "far_capsule_root_sha256",
     "placebo_capsule_root_sha256", "model_provider_endpoint_version", "prompts_agent_configuration_root",
     "environment_image_digest_dependency_lock", "run_budgets_stopping_rules_root",
@@ -134,10 +149,10 @@ def _strict_object(path: Path, label: str) -> dict[str, Any]:
 def verify_task_identity_contract(path: Path = TASK) -> None:
     data = _strict_object(path, "task manifest contract")
     if (data.get("schema_version"), data.get("program_id"), data.get("artifact_status"), data.get("manifest_status")) != (
-        "1.5", "FAR-SWE-V3-001", "Research", "uninstantiated"
+        "1.6", "FAR-SWE-V3-001", "Research", "uninstantiated"
     ) or type(data.get("execution_authorized")) is not bool or data.get("execution_authorized") is not False:
         raise DesignError("task manifest identity/boundary drifted")
-    if data.get("freeze_timing") != "exact task manifest bytes and Git blob identity must be committed and independently reviewed before any sacrificial pilot or confirmatory execution; freezing or changing task identity, order, repository identity, strata, or the sealed identity ledger after any agent run is prohibited even if outcomes or grades remain concealed":
+    if data.get("freeze_timing") != "exact task manifest bytes and Git blob identity must be committed and independently reviewed before any sacrificial pilot or confirmatory execution; freezing or changing task identity, order, repository identity, strata, repository-prohibition evidence, or the sealed identity ledger after any agent run is prohibited even if outcomes or grades remain concealed":
         raise DesignError("task manifest prospective freeze timing drifted")
     integrity._require_type_exact(data.get("document_shape"), {
         "media_type": "application/json", "top_level_type": "array",
@@ -182,6 +197,7 @@ def verify_task_identity_contract(path: Path = TASK) -> None:
         raise DesignError("task bundle root includes prohibited archive/path metadata")
     if root.get("recomputation_rule") != "independent auditors reconstruct the seven-key descriptor from the sealed identity-ledger record, JCS-canonicalize it, and SHA-256 the resulting bytes":
         raise DesignError("task bundle root recomputation rule drifted")
+    integrity._require_type_exact(data.get("prohibited_repository_contract"), EXPECTED_PROHIBITED_REPOSITORY_CONTRACT, "prohibited repository contract")
     integrity._require_type_exact(data.get("sealed_identity_ledger_contract"), EXPECTED_LEDGER_CONTRACT, "sealed task identity ledger contract")
     integrity._require_type_exact(data.get("repository_identity_contract"), EXPECTED_REPOSITORY_IDENTITY, "repository identity contract")
     integrity._require_type_exact(data.get("order_contract"), EXPECTED_ORDER, "task order contract")
@@ -246,6 +262,8 @@ def validate_instantiated_identity_ledger(manifest_path: Path, ledger_path: Path
     required = set(EXPECTED_LEDGER_CONTRACT["record_required_keys_exactly"])
     provider_to_blind: dict[tuple[str, int], str] = {}
     blind_to_provider: dict[str, tuple[str, int]] = {}
+    provider_to_url: dict[tuple[str, int], str] = {}
+    url_to_provider: dict[str, tuple[str, int]] = {}
     repo_counts: Counter[tuple[str, int]] = Counter()
     for index, (blind_record, identity) in enumerate(zip(manifest, ledger)):
         if not isinstance(identity, dict) or set(identity) != required:
@@ -255,6 +273,16 @@ def validate_instantiated_identity_ledger(manifest_path: Path, ledger_path: Path
                 raise DesignError(f"sealed ledger/manifest binding drifted: {key} at index {index}")
         if identity["repository_provider"] != "github.com" or type(identity["repository_provider_id"]) is not int or identity["repository_provider_id"] <= 0:
             raise DesignError("sealed ledger requires github.com plus positive integer REST repository id")
+        if identity["repository_provider_id"] == EXPECTED_PROHIBITED_REPOSITORY_CONTRACT["project_far_repository_provider_id"]:
+            raise DesignError("Project FAR repository is prohibited from the task population")
+        fork_source = identity["github_fork_source_repository_id"]
+        if fork_source is not None and (type(fork_source) is not int or fork_source <= 0):
+            raise DesignError("GitHub fork source repository id must be null or a positive integer")
+        if fork_source == EXPECTED_PROHIBITED_REPOSITORY_CONTRACT["project_far_repository_provider_id"]:
+            raise DesignError("Project FAR forks are prohibited from the task population")
+        treatment_material = identity["contains_project_far_treatment_material"]
+        if type(treatment_material) is not bool or treatment_material is not False:
+            raise DesignError("Project FAR treatment material must be independently audited absent")
         url = identity["canonical_repository_url"]
         if type(url) is not str or re.fullmatch(r"https://github\.com/[^/?#]+/[^/?#]+", url) is None or url.endswith(".git") or url.endswith("/"):
             raise DesignError("sealed ledger canonical repository URL drifted")
@@ -273,7 +301,15 @@ def validate_instantiated_identity_ledger(manifest_path: Path, ledger_path: Path
             raise DesignError("equal authoritative repositories use different blind IDs")
         if blind_id in blind_to_provider and blind_to_provider[blind_id] != provider_id:
             raise DesignError("one repository blind ID maps to multiple authoritative repositories")
-        provider_to_blind[provider_id] = blind_id; blind_to_provider[blind_id] = provider_id; repo_counts[provider_id] += 1
+        if provider_id in provider_to_url and provider_to_url[provider_id] != url:
+            raise DesignError("one authoritative repository maps to multiple canonical URLs")
+        if url in url_to_provider and url_to_provider[url] != provider_id:
+            raise DesignError("one canonical URL maps to multiple authoritative repositories")
+        provider_to_blind[provider_id] = blind_id
+        blind_to_provider[blind_id] = provider_id
+        provider_to_url[provider_id] = url
+        url_to_provider[url] = provider_id
+        repo_counts[provider_id] += 1
     if len(ledger) < 24:
         raise DesignError("confirmatory ledger contains fewer than 24 tasks")
     if len(repo_counts) < 5:
@@ -384,7 +420,7 @@ def verify_critical_harm_contract(path: Path = HARM) -> None:
 
 def verify_gate_closed(path: Path = GATE) -> None:
     data = integrity._load_json(path)
-    if (data.get("schema_version"), data.get("program_id"), data.get("artifact_status")) != ("1.4", "FAR-SWE-V3-001", "Research"):
+    if (data.get("schema_version"), data.get("program_id"), data.get("artifact_status")) != ("1.5", "FAR-SWE-V3-001", "Research"):
         raise DesignError("execution gate schema/identity drifted")
     for key in ("execution_authorized", "model_calls_authorized", "benchmark_execution_authorized", "pilot_execution_authorized", "confirmatory_execution_authorized"):
         if type(data.get(key)) is not bool or data.get(key) is not False:
@@ -398,7 +434,7 @@ def verify_gate_closed(path: Path = GATE) -> None:
             raise DesignError(f"{group} must contain exact false gate set")
     integrity._require_type_exact(data.get("current_blockers"), [
         "theory version is not frozen for this experiment", "FAR treatment capsule does not exist", "placebo does not exist",
-        "tasks, sealed identity ledger, model, prompts, environments, budgets, randomization, grader, and critical-harm threshold verification are not frozen or complete",
+        "tasks, sealed identity ledger, repository-prohibition audit, model, prompts, environments, budgets, randomization, grader, and critical-harm threshold verification are not frozen or complete",
         "evidence storage and sacrificial pilot are not complete",
         "independent review and separate fully bound pilot/confirmatory launch authorization are absent",
     ], "current execution blockers")

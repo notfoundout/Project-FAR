@@ -64,14 +64,6 @@ class SweAgentV3DesignTests(unittest.TestCase):
             verify_module.verify()
 
     def refresh_manifest(self, commit: bool = True) -> None:
-        path = self.here / "design-manifest-v1.0.json"
-        manifest = json.loads(path.read_text(encoding="utf-8"))
-        for entry in manifest["artifacts"]:
-            artifact = self.root / entry["path"]
-            data = artifact.read_bytes()
-            entry["git_blob_sha1"] = verify_module._git_blob_sha1(data)
-            entry["bytes"] = len(data)
-        path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
         if commit:
             self.sync_committed()
 
@@ -199,7 +191,7 @@ class SweAgentV3DesignTests(unittest.TestCase):
         policy = self.here / ".gitattributes"
         policy.write_text("* text=auto\n", encoding="utf-8", newline="\n"); self.refresh_manifest(); self.rejected(); self.setUp_after_drift()
         manifest = self.here / "design-manifest-v1.0.json"; data = json.loads(manifest.read_text())
-        data["artifacts"][0]["bytes"] += 1; manifest.write_text(json.dumps(data, indent=2) + "\n"); self.sync_committed(); self.rejected(); self.setUp_after_drift()
+        data["artifacts"][0]["git_blob_sha1"] = "0" * 40; manifest.write_text(json.dumps(data, indent=2) + "\n"); self.sync_committed(); self.rejected(); self.setUp_after_drift()
         target = self.here / "question-v1.0.md"; copy = self.here / "question-copy.md"; copy.write_bytes(target.read_bytes()); target.unlink(); target.symlink_to(copy.name); self.rejected()
 
     def test_missingness_decisions_seed_and_harm_semantics_are_exact(self) -> None:

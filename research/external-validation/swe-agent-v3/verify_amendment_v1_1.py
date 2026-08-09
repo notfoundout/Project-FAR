@@ -80,89 +80,87 @@ def validate_historical_authority(path: Path = HISTORICAL_AUTHORITY) -> dict[str
     expected_keys = {
         "schema_version", "program_id", "artifact_status", "authority_status",
         "current_design_authority", "execution_authorized", "purpose",
-        "base_design_head", "snapshots", "verification_rule", "immutability_rule", "nonclaims",
+        "claimed_historical_design_head", "provenance_status", "snapshots",
+        "verification_rule", "external_provenance_rule", "immutability_rule", "nonclaims",
     }
     if set(authority) != expected_keys:
         raise AmendmentError("historical authority shape drifted")
     expected_identity = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "program_id": "FAR-SWE-V3-001",
         "artifact_status": "Archive",
-        "authority_status": "immutable_historical_evidence",
+        "authority_status": "archival_context_not_live_authority",
         "current_design_authority": False,
         "execution_authorized": False,
-        "base_design_head": HISTORICAL_BASE_HEAD,
+        "claimed_historical_design_head": HISTORICAL_BASE_HEAD,
+        "provenance_status": "not_self_proving",
     }
     for key, expected in expected_identity.items():
         if not _type_exact_equal(authority.get(key), expected):
-            raise AmendmentError(f"historical authority identity/boundary drifted: {key}")
-    if authority.get("purpose") != "Self-contained byte authority for the two artifacts superseded in part by failure-arithmetic-amendment-v1.1.json. These snapshots preserve historical evidence and are not current Research design surfaces.":
-        raise AmendmentError("historical/current authority distinction drifted")
-    if authority.get("verification_rule") != "Verification reads the governed snapshot bytes from the current commit, recomputes each Git blob SHA-1 from those bytes, and compares it to historical_git_blob_sha1. Historical Git objects, branch ancestry, network access, and fetch depth are not required.":
-        raise AmendmentError("self-contained historical verification rule drifted")
-    if authority.get("immutability_rule") != "Any snapshot-byte, snapshot-path, historical-blob-identity, or base-design-head change creates a new historical-authority version and cannot silently rewrite v1.0 authority.":
-        raise AmendmentError("historical immutability rule drifted")
+            raise AmendmentError(f"historical archive identity/boundary drifted: {key}")
+    expected_text = {
+        "purpose": "Self-contained archival copies of two artifacts associated with the historical design reference 83c951aca9be6a09a4517044ae531a3ed1bcc9a9. They preserve review context only and are not an authority dependency for the current FAR-SWE-V3-001 design.",
+        "verification_rule": "Verification proves only that the current archive bytes match the archived_git_blob_sha1 values recorded in this archive record. It does not prove that those bytes occurred at claimed_historical_design_head.",
+        "external_provenance_rule": "Proving that an archived snapshot occurred at the claimed historical commit requires an independent external Git object/history or equivalent trusted provenance source. That proof is deliberately outside this self-contained archive and is not required for current experiment validity.",
+        "immutability_rule": "Any archive-byte, archive-path, archived-blob-identity, or claimed historical-reference change creates a new archive version and cannot silently rewrite v1.1 archival context.",
+    }
+    for key, expected in expected_text.items():
+        if authority.get(key) != expected:
+            raise AmendmentError(f"historical archive semantic drift: {key}")
     _require_type_exact(authority.get("nonclaims"), [
+        "This archive does not cryptographically prove that the snapshots came from claimed_historical_design_head.",
         "These snapshots do not restore historical files as current design authority.",
-        "This authority does not authorize model calls, pilot execution, benchmark execution, confirmatory execution, grading, or outcome reveal.",
-        "This authority does not establish that FAR improves software engineering.",
-    ], "historical authority nonclaims")
+        "Current failure and arithmetic rules are validated independently of this archive.",
+        "This archive does not authorize model calls, pilot execution, benchmark execution, confirmatory execution, grading, or outcome reveal.",
+        "This archive does not establish that FAR improves software engineering.",
+    ], "historical archive nonclaims")
 
     snapshots = authority.get("snapshots")
     if not isinstance(snapshots, list) or len(snapshots) != 2:
         raise AmendmentError("exactly two historical snapshots required")
     seen: set[str] = set()
-    historical_prereg: dict[str, Any] | None = None
     for entry in snapshots:
-        if not isinstance(entry, dict) or set(entry) != {"path", "historical_git_blob_sha1", "historical_source_path"}:
+        if not isinstance(entry, dict) or set(entry) != {"path", "archived_git_blob_sha1", "claimed_historical_source_path"}:
             raise AmendmentError("historical snapshot entry shape drifted")
-        rel = entry.get("path")
-        source = entry.get("historical_source_path")
-        expected_blob = entry.get("historical_git_blob_sha1")
+        rel = entry["path"]
+        source = entry["claimed_historical_source_path"]
+        expected_blob = entry["archived_git_blob_sha1"]
         if type(rel) is not str or rel in seen or EXPECTED_HISTORICAL_PATHS.get(rel) != source:
             raise AmendmentError("historical snapshot path/source drifted")
         if type(expected_blob) is not str or len(expected_blob) != 40 or any(ch not in "0123456789abcdef" for ch in expected_blob):
-            raise AmendmentError("invalid historical snapshot blob identity")
+            raise AmendmentError("invalid archived snapshot blob identity")
         snapshot = HERE.parents[2] / rel
         if snapshot.is_symlink() or not snapshot.is_file():
             raise AmendmentError(f"historical snapshot missing: {rel}")
-        raw = snapshot.read_bytes()
-        if _git_blob_sha1(raw) != expected_blob:
+        if _git_blob_sha1(snapshot.read_bytes()) != expected_blob:
             raise AmendmentError(f"historical snapshot bytes drifted: {rel}")
-        if source.endswith("preregistration-v1.0.json"):
-            decoded = _decode(raw, rel)
-            if not isinstance(decoded, dict):
-                raise AmendmentError("historical preregistration must be object")
-            historical_prereg = decoded
         seen.add(rel)
     if seen != set(EXPECTED_HISTORICAL_PATHS):
         raise AmendmentError("historical snapshot set drifted")
-    if historical_prereg is None or type(historical_prereg.get("execution_authorized")) is not bool or historical_prereg.get("execution_authorized") is not False:
-        raise AmendmentError("historical base execution boundary drifted")
     return authority
-
 
 def validate(amend: Path = AMEND, readme: Path = README, gate: Path = GATE) -> dict[str, Any]:
     amendment = load(amend)
     if (
         amendment.get("schema_version"), amendment.get("program_id"),
         amendment.get("artifact_status"), amendment.get("amendment_status"),
-    ) != ("1.2", "FAR-SWE-V3-001", "Research", "prospective_pre_execution_correction"):
+    ) != ("1.3", "FAR-SWE-V3-001", "Research", "current_prospective_failure_and_arithmetic_contract"):
         raise AmendmentError("identity drifted")
     expected_authority = {
-        "historical_authority": "historical-authority-v1.0.json",
-        "superseded_paths": [
-            "/analysis/invalid_run_and_cell_policy/replacement rule",
-            "/analysis/bootstrap_interval_spec/arithmetic representation",
+        "contract_role": "standalone_current_prospective_authority",
+        "historical_context": "historical-authority-v1.0.json",
+        "historical_provenance_required_for_current_validity": False,
+        "governed_subjects": [
+            "replacement eligibility and terminal-reason classification",
+            "exact arithmetic for primary and bootstrap calculations and classification comparisons",
         ],
-        "precedence": "For the two superseded subjects, this amendment controls over the historical v1.0 design identified by historical-authority-v1.0.json; every other subject is governed by the current prospectively amended design artifacts.",
+        "precedence": "For its governed subjects, this contract controls the current FAR-SWE-V3-001 design prospectively. The historical archive is explanatory context only and is not an authority dependency.",
         "outcome_exposure_status": "none",
         "model_calls_authorized": False,
         "benchmark_execution_authorized": False,
         "execution_authorized": False,
     }
-    _require_type_exact(amendment.get("authority"), expected_authority, "amendment authority and precedence")
-    validate_historical_authority(HERE / expected_authority["historical_authority"])
+    _require_type_exact(amendment.get("authority"), expected_authority, "current standalone failure/arithmetic authority")
 
     gate_data = load(gate)
     for key in ("execution_authorized", "model_calls_authorized", "benchmark_execution_authorized", "pilot_execution_authorized", "confirmatory_execution_authorized"):
@@ -243,16 +241,18 @@ def validate(amend: Path = AMEND, readme: Path = README, gate: Path = GATE) -> d
     }
     _require_type_exact(arithmetic, expected_arithmetic, "exact arithmetic contract")
     _require_type_exact(amendment.get("nonclaims"), [
-        "This amendment does not authorize model calls, pilot execution, benchmark execution, or outcome reveal.",
-        "This amendment does not change the FAR treatment, task population, estimand, or decision categories.",
-        "This amendment does not establish that FAR improves software engineering.",
-    ], "amendment nonclaims")
+        "This contract does not require the historical archive to prove its current validity.",
+        "This contract does not authorize model calls, pilot execution, benchmark execution, or outcome reveal.",
+        "This contract does not change the FAR treatment, task population, estimand, or decision categories.",
+        "This contract does not establish that FAR improves software engineering.",
+    ], "current contract nonclaims")
 
     narrative = readme.read_text(encoding="utf-8")
     for phrase in (
         "Execution authorized: **No**",
-        "It supersedes only:",
-        "later prospective design artifacts may independently refine other subjects before execution",
+        "current machine-readable authority is now standalone",
+        "`historical-authority-v1.0.json` is archival context only",
+        "current failure/arithmetic validity does not depend on that claim",
         "Current authority for unrelated subjects comes from the current integrity-rooted design artifacts",
         "Any unlisted reason is invalid and nonreplaceable",
         "Floating-point values and displayed decimals never determine a classification",

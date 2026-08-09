@@ -47,7 +47,7 @@ class SweAgentV3EvidenceContractTests(unittest.TestCase):
                 "- frozen task-manifest Git blob identity;\n",
             ),
             (
-                "- authoritative repository provider identity, canonical repository URL, and exact commit as reconstructed from the sealed identity ledger by the independent identity auditor;\n",
+                "- authoritative repository provider identity, canonical repository URL, exact commit, GitHub fork-source repository ID or null, and treatment-material audit result as reconstructed from the sealed identity ledger by the independent identity auditor;\n",
                 "- canonical repository URL and exact commit;\n",
             ),
             (

@@ -15,7 +15,6 @@ ROOT = integrity.ROOT
 HERE = integrity.HERE
 MANIFEST = integrity.MANIFEST
 _committed_blob_bytes = integrity._committed_blob_bytes
-_git_blob_sha1 = integrity._git_blob_sha1
 
 STRATA_ORDER = ["bug_fix", "test_failure", "behavioral_regression", "API_or_contract_change", "multi_file_change"]
 EXPECTED_TOLERANCE = {
@@ -220,7 +219,8 @@ Every attempted run must retain immutable, hash-addressed copies of:
 
 - task identity under sealed mapping, including the frozen task-manifest strata classification;
 - frozen task-manifest Git blob identity and frozen sealed identity-ledger Git blob identity;
-- authoritative repository provider identity, canonical repository URL, and exact commit as reconstructed from the sealed identity ledger by the independent identity auditor;
+- retained task-population repository-prohibition audit report root;
+- authoritative repository provider identity, canonical repository URL, exact commit, GitHub fork-source repository ID or null, and treatment-material audit result as reconstructed from the sealed identity ledger by the independent identity auditor;
 - environment image digest and dependency lock;
 - model provider, endpoint, model version, parameters, and provider request identifier;
 - all system, agent, task, capsule, and tool instructions;
@@ -263,11 +263,9 @@ def _manifest_entries() -> dict[str, dict[str, Any]]:
 def _require_exact_artifact(name: str) -> bytes:
     relative = f"research/external-validation/swe-agent-v3/{name}"
     entry = _manifest_entries().get(relative)
-    if not isinstance(entry, dict):
+    if not isinstance(entry, dict) or set(entry) != {"path"}:
         raise DesignError(f"governed artifact missing from manifest: {name}")
     committed = _committed_blob_bytes(relative)
-    if len(committed) != entry.get("bytes") or _git_blob_sha1(committed) != entry.get("git_blob_sha1"):
-        raise DesignError(f"manifest/current-commit mismatch: {name}")
     if integrity._read_regular(HERE / name) != committed:
         raise DesignError(f"worktree differs from committed artifact: {name}")
     return committed

@@ -16,7 +16,7 @@ SPEC.loader.exec_module(verify_module)
 
 
 class SweAgentV3ContractLockTests(unittest.TestCase):
-    """Semantic mutation tests that deliberately repin fixture byte identities first."""
+    """Semantic mutation tests that commit mutated fixture bytes before verification."""
 
     def setUp(self) -> None:
         self.tmp = tempfile.TemporaryDirectory()
@@ -44,13 +44,8 @@ class SweAgentV3ContractLockTests(unittest.TestCase):
             raise verify_module.DesignError(f"test committed blob missing: {relative}") from exc
 
     def refresh_manifest_and_commit_fixture(self) -> None:
-        manifest = json.loads(self.manifest.read_text(encoding="utf-8"))
-        for entry in manifest["artifacts"]:
-            artifact = self.root / entry["path"]
-            raw = artifact.read_bytes()
-            entry["git_blob_sha1"] = verify_module._git_blob_sha1(raw)
-            entry["bytes"] = len(raw)
-        self.manifest.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
+        # The reviewed Git tree is the current-byte authority. Mutations become the
+        # fixture's new committed HEAD without rewriting a second hash registry.
         self.sync_committed()
 
     def mutate_json(self, name: str, mutation) -> None:

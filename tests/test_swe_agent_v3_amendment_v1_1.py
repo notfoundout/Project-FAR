@@ -25,7 +25,9 @@ class AmendmentTests(unittest.TestCase):
         amendment = module.validate()
         self.assertEqual(amendment["authority"]["outcome_exposure_status"], "none")
         self.assertFalse(amendment["authority"]["execution_authorized"])
-        self.assertEqual(amendment["authority"]["historical_authority"], "historical-authority-v1.0.json")
+        self.assertEqual(amendment["authority"]["contract_role"], "standalone_current_prospective_authority")
+        self.assertEqual(amendment["authority"]["historical_context"], "historical-authority-v1.0.json")
+        self.assertFalse(amendment["authority"]["historical_provenance_required_for_current_validity"])
 
     def test_taxonomy_is_closed_disjoint_and_nondiscretionary(self) -> None:
         contract = module.validate()["replacement_contract"]
@@ -55,6 +57,7 @@ class AmendmentTests(unittest.TestCase):
             lambda d: d["exact_arithmetic_contract"]["classification_thresholds"]["minimum_practical_difference"].__setitem__("denominator", 20),
             lambda d: d["authority"].__setitem__("execution_authorized", 0),
             lambda d: d["authority"].__setitem__("precedence", "historical v1.0 controls everything"),
+            lambda d: d["authority"].__setitem__("historical_provenance_required_for_current_validity", True),
         )
         for mutation in mutations:
             altered = json.loads(json.dumps(data))
@@ -83,7 +86,9 @@ class AmendmentTests(unittest.TestCase):
             here, authority = self._historical_fixture(tmp)
             with mock.patch.object(module, "HERE", here):
                 result = module.validate_historical_authority(authority)
-            self.assertEqual(result["authority_status"], "immutable_historical_evidence")
+            self.assertEqual(result["authority_status"], "archival_context_not_live_authority")
+            self.assertFalse(result["current_design_authority"])
+            self.assertEqual(result["provenance_status"], "not_self_proving")
 
     def test_historical_snapshot_byte_mutation_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -107,7 +112,7 @@ class AmendmentTests(unittest.TestCase):
             here, authority = self._historical_fixture(tmp)
             base = json.loads(authority.read_text(encoding="utf-8"))
             mutations = (
-                lambda d: d["snapshots"][0].__setitem__("historical_git_blob_sha1", "0" * 40),
+                lambda d: d["snapshots"][0].__setitem__("archived_git_blob_sha1", "0" * 40),
                 lambda d: d.__setitem__("current_design_authority", 0),
                 lambda d: d.__setitem__("execution_authorized", 0),
             )

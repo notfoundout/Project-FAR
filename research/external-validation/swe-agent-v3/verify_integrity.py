@@ -183,15 +183,13 @@ def verify_manifest() -> dict[str, dict[str, Any]]:
     expected_top = {"schema_version", "program_id", "artifact_status", "scope", "artifacts"}
     if not isinstance(manifest, dict) or set(manifest) != expected_top:
         raise DesignError("design manifest top-level shape drifted")
-    if (
-        manifest.get("schema_version"), manifest.get("program_id"), manifest.get("artifact_status")
-    ) != ("1.3", "FAR-SWE-V3-001", "Research"):
+    if (manifest.get("schema_version"), manifest.get("program_id"), manifest.get("artifact_status")) != ("1.3", "FAR-SWE-V3-001", "Research"):
         raise DesignError("design manifest identity or status drifted")
-    if manifest.get("scope") != (
-        "design-only authority; exact-locks all governed current design data, narrative, prospective-amendment, "
-        "seed-commitment, critical-harm, and self-contained historical-authority artifacts while verifier code "
-        "remains reviewable and non-self-referential"
-    ):
+    expected_scope = (
+        "design-only governed-path registry; the reviewed Git commit/tree is the sole authority for current bytes; "
+        "semantic verifier code independently enforces the meaning and fail-closed boundaries of governed artifacts"
+    )
+    if manifest.get("scope") != expected_scope:
         raise DesignError("design manifest scope drifted")
 
     entries = manifest.get("artifacts")
@@ -200,22 +198,14 @@ def verify_manifest() -> dict[str, dict[str, Any]]:
     seen: set[str] = set()
     index: dict[str, dict[str, Any]] = {}
     for entry in entries:
-        if not isinstance(entry, dict) or set(entry) != {"path", "git_blob_sha1", "bytes"}:
-            raise DesignError("manifest entries require exactly path, git_blob_sha1, bytes")
+        if not isinstance(entry, dict) or set(entry) != {"path"}:
+            raise DesignError("manifest entries require exactly path")
         relative = entry["path"]
-        blob = entry["git_blob_sha1"]
-        size = entry["bytes"]
         if type(relative) is not str or relative in seen:
             raise DesignError(f"invalid or duplicate manifest path: {relative}")
-        if type(blob) is not str or re.fullmatch(r"[0-9a-f]{40}", blob) is None:
-            raise DesignError(f"invalid Git blob id: {relative}")
-        _integer(size, f"manifest bytes for {relative}")
         seen.add(relative)
         index[relative] = entry
-
         committed = _committed_blob_bytes(relative)
-        if len(committed) != size or _git_blob_sha1(committed) != blob:
-            raise DesignError(f"committed blob identity mismatch: {relative}")
         if _read_regular(_safe_path(relative)) != committed:
             raise DesignError(f"worktree differs from committed blob: {relative}")
 
@@ -228,7 +218,6 @@ def verify_manifest() -> dict[str, dict[str, Any]]:
         raise DesignError("mandatory review-closure verifier is unavailable") from exc
     review_closure.verify()
     return index
-
 
 def verify_byte_policy() -> None:
     expected = (
