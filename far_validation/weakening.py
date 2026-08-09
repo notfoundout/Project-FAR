@@ -9,6 +9,12 @@ from pathlib import Path
 from typing import Any
 
 
+REQUIRED_SEMANTIC_CALLS: dict[str, frozenset[str]] = {
+    "research/target-category-discovery/verify_compositional_invariant.py": frozenset({"validate_empirical_authority"}),
+    "research/target-category-discovery/verify_compositional_invariant_legacy.py": frozenset({"validate_empirical_authority"}),
+}
+
+
 @dataclass
 class StrengthMetrics:
     tests: tuple[str, ...] = ()
@@ -50,6 +56,11 @@ def _call_name(node: ast.Call) -> str:
     if isinstance(node.func, ast.Attribute):
         return node.func.attr
     return ""
+
+
+def _called_functions(source: str, path: str) -> set[str]:
+    tree = ast.parse(source, filename=path)
+    return {_call_name(node) for node in ast.walk(tree) if isinstance(node, ast.Call)}
 
 
 def analyze(source: str, path: str) -> StrengthMetrics:
@@ -194,6 +205,11 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
         after_source = current_path.read_text(encoding="utf-8")
         try:
             finding.after = analyze(after_source, path)
+            required_calls = REQUIRED_SEMANTIC_CALLS.get(path, frozenset())
+            if required_calls:
+                missing_calls = sorted(required_calls - _called_functions(after_source, path))
+                if missing_calls:
+                    finding.failures.append("required semantic validator calls removed: " + ", ".join(missing_calls))
         except SyntaxError as exc:
             finding.failures.append(f"current source has syntax error: {exc}")
             findings.append(finding)
