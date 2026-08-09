@@ -21,7 +21,9 @@ _core.EXPECTED_SPEC_SHA256 = "2b6ede05f7d5e3525070e1a5893ea599613a64eb114b12ed43
 _core.EXPECTED_PUBLIC_SHA256["Report"] = "426b48e0b1a8724bd718bb3ffb5491f2f97b79860c90f4d1f57c35d78434c991"
 
 _original_read_utf8 = _core._read_utf8
+_original_validate_gate = _core.validate_gate
 _original_verify = _core.verify
+EXPECTED_RG07_REQUIRED_BEFORE = ["evidence_release", "theorem_release"]
 
 
 def _read_utf8(path: Path):
@@ -30,11 +32,25 @@ def _read_utf8(path: Path):
     return _original_read_utf8(path)
 
 
+def validate_gate(gates_path: Path) -> None:
+    """Preserve the complete RG-07 release boundary, not only theorem release."""
+    _original_validate_gate(gates_path)
+    gates = _core.load_json(gates_path)
+    entries = gates.get("gates")
+    rg07 = [item for item in entries if isinstance(item, dict) and item.get("id") == "RG-07"] if isinstance(entries, list) else []
+    if len(rg07) != 1 or rg07[0].get("required_before") != EXPECTED_RG07_REQUIRED_BEFORE:
+        raise _core.VerificationError("RG-07 must remain required before evidence_release and theorem_release exactly")
+
+
 _core._read_utf8 = _read_utf8
+_core.validate_gate = validate_gate
 
 for _name, _value in vars(_core).items():
     if not _name.startswith("__"):
         globals()[_name] = _value
+
+# Re-export the hardened gate validator after copying legacy globals.
+globals()["validate_gate"] = validate_gate
 
 
 def verify(
@@ -59,9 +75,10 @@ def verify(
         empirical_manifest_path,
         audit_path,
     )
-    # Defense in depth: the public entrypoint itself requires the controlling
-    # empirical authority check, so weakening the legacy call cannot bypass it.
+    # Defense in depth: the public entrypoint itself requires both controlling
+    # empirical authority and the complete RG-07 release boundary.
     validate_empirical_authority(empirical_charter_path, empirical_manifest_path, audit_path)
+    validate_gate(gates_path)
     return result
 
 
