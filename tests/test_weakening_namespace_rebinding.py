@@ -74,6 +74,60 @@ class NamespaceRebindingWeakeningTests(unittest.TestCase):
             self._mutate_before_cli_guard(repo, payload)
             self._assert_rejected(repo, base)
 
+    def test_computed_key_subscript_rebinding_is_rejected(self) -> None:
+        payload = (
+            "def _far_no_op(*args, **kwargs):\n"
+            "    return None\n\n"
+            "for _far_name in (\"validate_empirical_authority\", \"validate_gate\"):\n"
+            "    globals()[_far_name] = _far_no_op\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            base = self._baseline_repo(repo)
+            self._mutate_before_cli_guard(repo, payload)
+            self._assert_rejected(repo, base)
+
+    def test_concatenated_key_subscript_rebinding_is_rejected(self) -> None:
+        payload = (
+            "def _far_no_op(*args, **kwargs):\n"
+            "    return None\n\n"
+            "globals()[\"validate_\" + \"gate\"] = _far_no_op\n"
+            "globals()[\"validate_empirical_\" + \"authority\"] = _far_no_op\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            base = self._baseline_repo(repo)
+            self._mutate_before_cli_guard(repo, payload)
+            self._assert_rejected(repo, base)
+
+    def test_vars_namespace_rebinding_is_rejected(self) -> None:
+        payload = (
+            "import sys as _far_sys\n\n"
+            "def _far_no_op(*args, **kwargs):\n"
+            "    return None\n\n"
+            "vars(_far_sys.modules[__name__])[\"validate_empirical_authority\"] = _far_no_op\n"
+            "vars(_far_sys.modules[__name__])[\"validate_gate\"] = _far_no_op\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            base = self._baseline_repo(repo)
+            self._mutate_before_cli_guard(repo, payload)
+            self._assert_rejected(repo, base)
+
+    def test_computed_setattr_rebinding_is_rejected(self) -> None:
+        payload = (
+            "import sys as _far_sys\n\n"
+            "def _far_no_op(*args, **kwargs):\n"
+            "    return None\n\n"
+            "for _far_name in (\"validate_empirical_authority\", \"validate_gate\"):\n"
+            "    setattr(_far_sys.modules[__name__], _far_name, _far_no_op)\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            base = self._baseline_repo(repo)
+            self._mutate_before_cli_guard(repo, payload)
+            self._assert_rejected(repo, base)
+
     def test_dynamic_namespace_update_fails_closed(self) -> None:
         payload = (
             "def _far_no_op(*args, **kwargs):\n"

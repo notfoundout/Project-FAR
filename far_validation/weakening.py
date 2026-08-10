@@ -20,8 +20,8 @@ REQUIRED_SEMANTIC_CALLS: dict[str, frozenset[str]] = {
 
 REQUIRED_MODULE_BINDING_SIGNATURES: dict[str, dict[str, tuple[str, ...]]] = {
     "research/target-category-discovery/verify_compositional_invariant.py": {
-        "validate_empirical_authority": (),
-        "validate_gate": ("function", "attribute:_core", "globals"),
+        "validate_empirical_authority": ("globals:dynamic",),
+        "validate_gate": ("function", "attribute:_core", "globals:dynamic", "globals"),
     },
     "research/target-category-discovery/verify_compositional_invariant_legacy.py": {
         "validate_empirical_authority": ("function",),
@@ -111,14 +111,14 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
     tree = ast.parse(source, filename=path)
 
     def namespace_scope(node: ast.AST) -> str | None:
-        if (
-            isinstance(node, ast.Call)
-            and isinstance(node.func, ast.Name)
-            and node.func.id in {"globals", "locals"}
-            and not node.args
-            and not node.keywords
-        ):
+        if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
+            return None
+        if node.func.id in {"globals", "locals"} and not node.args and not node.keywords:
             return node.func.id
+        # vars() and vars(module) expose the same writable namespace mapping, so a
+        # write through them rebinds exactly what globals() would.
+        if node.func.id == "vars" and not node.keywords and len(node.args) <= 1:
+            return "vars"
         return None
 
     def record_namespace_alias(target: ast.AST, value: ast.AST, kind: str) -> None:
@@ -142,14 +142,17 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
             events[target.attr].append(f"attribute:{root}")
         elif isinstance(target, ast.Subscript):
             scope = namespace_scope(target.value)
+            if scope is None:
+                return
             key = target.slice
-            if (
-                scope is not None
-                and isinstance(key, ast.Constant)
-                and isinstance(key.value, str)
-                and key.value in protected
-            ):
-                events[key.value].append(scope)
+            if isinstance(key, ast.Constant) and isinstance(key.value, str):
+                if key.value in protected:
+                    events[key.value].append(scope)
+                return
+            # A computed key can name any binding, so fail closed and record the
+            # write against every protected validator.
+            for name in protected:
+                events[name].append(f"{scope}:dynamic")
 
     def record_namespace_mutator(node: ast.Call) -> None:
         """Record method-based writes to module namespace dictionaries.
@@ -225,11 +228,15 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
                 and isinstance(node.func, ast.Name)
                 and node.func.id == "setattr"
                 and len(node.args) >= 2
-                and isinstance(node.args[1], ast.Constant)
-                and isinstance(node.args[1].value, str)
-                and node.args[1].value in protected
             ):
-                events[node.args[1].value].append("setattr")
+                attribute = node.args[1]
+                if isinstance(attribute, ast.Constant) and isinstance(attribute.value, str):
+                    if attribute.value in protected:
+                        events[attribute.value].append("setattr")
+                else:
+                    # A computed attribute name can target any protected validator.
+                    for name in protected:
+                        events[name].append("setattr:dynamic")
 
     def scan(stmts: list[ast.stmt]) -> None:
         for st in stmts:

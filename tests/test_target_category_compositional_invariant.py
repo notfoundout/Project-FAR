@@ -174,6 +174,63 @@ class CompositionalInvariantTests(unittest.TestCase):
         with self.assertRaisesRegex(module.VerificationError, "specification"):
             module.build_result(data)
 
+    def test_semantic_field_mutations_are_rejected(self) -> None:
+        """Every field that materially determines scope or result must be frozen.
+
+        Key presence is not sufficient: each mutation below keeps the schema shape
+        and every identifier intact while reversing the substantive claim.
+        """
+        mutations = {
+            "rccd_in_operation_schema": lambda d: d["input_operation_schema"].__setitem__(
+                "invariance",
+                "for every functor H:C->D, H(alpha_C(x))=alpha_D(H composed with x), "
+                "where alpha decomposes as Construct, Differentiate, Restrict, Resolve",
+            ),
+            "theorem_text_rewritten_as_rccd_derivation": lambda d: d["theorem_claims"][3].__setitem__(
+                "statement", "RCCD is derived from typed composition alone."
+            ),
+            "status_promoted_with_unchanged_ids": lambda d: d["theorem_claims"][3].__setitem__(
+                "status", "established_derivation"
+            ),
+            "nonclaim_semantically_reversed": lambda d: d.__setitem__(
+                "nonclaims",
+                ["RCCD is derived." if x == "RCCD is not derived." else x for x in d["nonclaims"]],
+            ),
+            "scope_widened_to_absolute_broadest": lambda d: d["broadness_policy"].__setitem__(
+                "selected_scope", "the broadest possible class of systems"
+            ),
+            "recoding_class_narrowed": lambda d: d["broadness_policy"].__setitem__(
+                "recodings", "all identity functors"
+            ),
+            "axiom_weakened": lambda d: d["axioms"][3].__setitem__(
+                "statement", "Associativity is optional."
+            ),
+            "identity_promoted_to_nontrivial_witness": lambda d: d["fixture"].__setitem__(
+                "identity_is_nontrivial_for_distinguished_shape", True
+            ),
+            "question_text_changed": lambda d: d.__setitem__(
+                "question", "Which finitary operations derive RCCD?"
+            ),
+            "system_class_changed": lambda d: d["broadness_policy"].__setitem__(
+                "scope_criterion", "A system is included exactly when it supplies RCCD components."
+            ),
+        }
+        for name, mutate in mutations.items():
+            with self.subTest(mutation=name):
+                data = module.load_json(SPEC_PATH)
+                mutate(data)
+                with self.assertRaisesRegex(module.VerificationError, "specification|base_commit"):
+                    module.build_result(data)
+
+    def test_canonical_digest_independently_freezes_semantic_content(self) -> None:
+        """The digest must reject drift even if the literal expected spec is relaxed."""
+        data = module.load_json(SPEC_PATH)
+        data["theorem_claims"][3]["statement"] = "RCCD is derived from typed composition alone."
+        self.assertNotEqual(
+            module.hashlib.sha256(module.canonical_json(data)).hexdigest(),
+            module.EXPECTED_SPEC_SHA256,
+        )
+
     def test_duplicate_json_key_and_nonfinite_number_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             duplicate = Path(tmp) / "duplicate.json"
