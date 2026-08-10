@@ -40,6 +40,29 @@ class TargetCategoryWeakeningAliasTests(unittest.TestCase):
         failures = [item for finding in report.findings for item in finding.failures]
         self.assertTrue(any("dynamic execution rejected" in item for item in failures), failures)
 
+    def test_imported_builtins_alias_to_exec_is_rejected(self) -> None:
+        report = self._mutated_report(
+            "\nimport builtins as _far_builtins\n"
+            "_far_dynamic = _far_builtins.exec\n"
+            "class _FarImportedAliasAttack:\n"
+            "    _far_dynamic('globals()[\\\"validate_empirical_authority\\\"] = lambda *a, **k: None')\n"
+        )
+        self.assertFalse(report.successful)
+        failures = [item for finding in report.findings for item in finding.failures]
+        self.assertTrue(any("dynamic execution rejected" in item for item in failures), failures)
+
+    def test_vars_callable_alias_rebinding_is_rejected(self) -> None:
+        report = self._mutated_report(
+            "\n_far_vars = vars\n"
+            "_far_vars()[\"validate_gate\"] = lambda *a, **k: None\n"
+        )
+        self.assertFalse(report.successful)
+        failures = [item for finding in report.findings for item in finding.failures ]
+        self.assertTrue(
+            any("protected validator binding changed for validate_gate" in item for item in failures),
+            failures,
+        )
+
     def test_vars_namespace_rebinding_of_protected_helper_is_rejected(self) -> None:
         report = self._mutated_report(
             "\nvars()[\"_git_blob_sha1\"] = lambda payload: None\n"

@@ -23,6 +23,7 @@ REQUIRED_MODULE_BINDING_SIGNATURES: dict[str, dict[str, tuple[str, ...]]] = {
     "research/target-category-discovery/verify_compositional_invariant.py": {
         "validate_empirical_authority": (),
         "validate_gate": ("function", "attribute:_core", "globals"),
+        "verify": ("function", "attribute:_core"),
     },
     "research/target-category-discovery/verify_compositional_invariant_legacy.py": {
         "validate_empirical_authority": ("function",),
@@ -126,16 +127,71 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
     if not protected:
         return {}
     tree = ast.parse(source, filename=path)
+    namespace_names: dict[str, str] = {name: name for name in ("globals", "locals", "vars")}
+    builtins_names: set[str] = {"builtins"}
+
+    # Resolve aliases before scanning binding writes. Protected verifier code
+    # cannot hide namespace access behind imported builtins aliases, direct
+    # provider aliases, or transitive module-level assignments.
+    for statement in tree.body:
+        if isinstance(statement, ast.Import):
+            for alias in statement.names:
+                if alias.name == "builtins":
+                    builtins_names.add(alias.asname or "builtins")
+        elif isinstance(statement, ast.ImportFrom) and statement.module == "builtins":
+            for alias in statement.names:
+                if alias.name in {"globals", "locals", "vars"}:
+                    namespace_names[alias.asname or alias.name] = alias.name
+
+    changed = True
+    while changed:
+        changed = False
+        for statement in tree.body:
+            value: ast.AST | None = None
+            targets: list[ast.AST] = []
+            if isinstance(statement, ast.Assign):
+                value = statement.value
+                targets = list(statement.targets)
+            elif isinstance(statement, ast.AnnAssign) and statement.value is not None:
+                value = statement.value
+                targets = [statement.target]
+            if value is None:
+                continue
+            for target in targets:
+                if not isinstance(target, ast.Name):
+                    continue
+                if isinstance(value, ast.Name) and value.id in builtins_names and target.id not in builtins_names:
+                    builtins_names.add(target.id)
+                    changed = True
+                provider: str | None = None
+                if isinstance(value, ast.Name) and value.id in namespace_names:
+                    provider = namespace_names[value.id]
+                elif (
+                    isinstance(value, ast.Attribute)
+                    and isinstance(value.value, ast.Name)
+                    and value.value.id in builtins_names
+                    and value.attr in {"globals", "locals", "vars"}
+                ):
+                    provider = value.attr
+                if provider is not None and namespace_names.get(target.id) != provider:
+                    namespace_names[target.id] = provider
+                    changed = True
+
+    def namespace_provider(node: ast.AST) -> str | None:
+        if isinstance(node, ast.Name):
+            return namespace_names.get(node.id)
+        if (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id in builtins_names
+            and node.attr in {"globals", "locals", "vars"}
+        ):
+            return node.attr
+        return None
 
     def namespace_scope(node: ast.AST) -> str | None:
-        if (
-            isinstance(node, ast.Call)
-            and isinstance(node.func, ast.Name)
-            and node.func.id in {"globals", "locals", "vars"}
-            and not node.args
-            and not node.keywords
-        ):
-            return node.func.id
+        if isinstance(node, ast.Call) and not node.args and not node.keywords:
+            return namespace_provider(node.func)
         return None
 
     def record_namespace_alias(target: ast.AST, value: ast.AST, kind: str) -> None:
@@ -383,6 +439,17 @@ def _definition_time_execution_failures(source: str, path: str) -> list[str]:
     failures: list[str] = []
     direct = {"exec", "eval", "compile"}
     dynamic_names = set(direct)
+    builtins_names: set[str] = {"builtins"}
+
+    for statement in tree.body:
+        if isinstance(statement, ast.Import):
+            for alias in statement.names:
+                if alias.name == "builtins":
+                    builtins_names.add(alias.asname or "builtins")
+        elif isinstance(statement, ast.ImportFrom) and statement.module == "builtins":
+            for alias in statement.names:
+                if alias.name in direct:
+                    dynamic_names.add(alias.asname or alias.name)
 
     def dynamic_source(node: ast.AST) -> bool:
         if isinstance(node, ast.Name):
@@ -390,7 +457,7 @@ def _definition_time_execution_failures(source: str, path: str) -> list[str]:
         return (
             isinstance(node, ast.Attribute)
             and isinstance(node.value, ast.Name)
-            and node.value.id == "builtins"
+            and node.value.id in builtins_names
             and node.attr in direct
         )
 
@@ -416,22 +483,25 @@ def _definition_time_execution_failures(source: str, path: str) -> list[str]:
             elif isinstance(statement, ast.AnnAssign) and statement.value is not None:
                 value = statement.value
                 targets = [statement.target]
-            if value is None or not dynamic_source(value):
+            if value is None:
                 continue
-            for target in targets:
-                for name in assigned_names(target):
+            names = set().union(*(assigned_names(target) for target in targets))
+            if isinstance(value, ast.Name) and value.id in builtins_names:
+                for name in names:
+                    if name not in builtins_names:
+                        builtins_names.add(name)
+                        changed = True
+            if dynamic_source(value):
+                for name in names:
                     if name not in dynamic_names:
                         dynamic_names.add(name)
                         changed = True
 
     for node in ast.walk(tree):
-        if (
-            isinstance(node, ast.Call)
-            and isinstance(node.func, ast.Name)
-            and node.func.id in dynamic_names
-        ):
+        if isinstance(node, ast.Call) and dynamic_source(node.func):
             failures.append(
-                f"dynamic execution rejected in protected verifier: {node.func.id}"
+                "dynamic execution rejected in protected verifier: "
+                f"{ast.unparse(node.func) if hasattr(ast, 'unparse') else _call_name(node)}"
             )
         if (
             isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
