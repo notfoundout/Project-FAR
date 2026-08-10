@@ -119,9 +119,13 @@ Per Stage 9, none of this is labelled novel merely for being absent from PROV.
 - Partly **B** — the Semantic Web stack (RDF/OWL model-theoretic semantics + reification + PROV-O + rule languages + named graphs) is an independently established, naturally composed body covering most of the kernel. This is the strongest architectural-reduction evidence found, and it is genuinely non-trivial.
 - Not **C** — the components were not retrospectively collected; each was located by its native coverage of multiple kernel fragments before FARA terminology was introduced.
 
-**Verdict: `H6`, with a substantial Stage-10-B component.** `H4` and `H5` are not established. `H3` holds for PROV on its fragment. `H1` is refuted. `H2` is too weak — the anticipation is not merely componentwise, since PROV covers a connected multi-component fragment.
+**Verdict: `H6`, with a substantial Stage-10-B component, held jointly with `H3`.**
+
+**Scope correction (recorded 2026-08-10).** `H3` and `H6` are **compatible findings, not mutually exclusive terminal outcomes**. PROV reconstructs a substantial proper fragment (`H3`) *and* the overall architecture still requires multiple prior frameworks (`H6`). Both are asserted together. `H4` and `H5` are not established. `H1` is refuted. `H2` is too weak — the anticipation is not merely componentwise, since PROV covers a connected multi-component fragment.
 
 ## 15. Components independently anticipated by prior work
+
+**Scope correction (recorded 2026-08-10).** What follows is **component-level prior-art evidence only**. It does **not** establish prior anticipation of FARA's exact architecture, its dependency structure, the specific combination of components, or its equivalence relation. Stage-12 conclusion 2 is established; conclusion 3 is not.
 
 Every tested component. Reified relation occurrences with roles (Chen 1976; Sowa 1984; Parsons 1990). Identity-bearing events under acyclic causal order (Nielsen–Plotkin–Winskel 1981). Provenance attached to executions (W3C PROV). Interpretation assigning meaning to representations (classical model theory). Calculus-parameterized reasoning with proof calculi (Goguen–Burstall 1984/92; Meseguer 1989). Many-sorted relational structure up to isomorphism (classical model theory; Codd 1970).
 
