@@ -20,7 +20,8 @@
     "bootstrap.manifest": {
       "inputs": [
         "research/target-category-discovery/verify_compositional_invariant.py",
-        "research/target-category-discovery/verify_compositional_invariant_legacy.py"
+        "research/target-category-discovery/verify_compositional_invariant_legacy.py",
+        "tests/test_protected_repin_authorization.py"
       ],
       "outputs": []
     },
