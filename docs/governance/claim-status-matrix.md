@@ -120,3 +120,21 @@ Evidence: `docs/research/fara-admissibility-classification-space-audit-v1.0.md`.
 | `unresolved status` is canonically defined | Refuted | Normatively used at `admissibility-structure.md:111`; not defined in shared definitions, not owned by the terminology authority, not indexed. Recorded as `LIM-029`/`OP-16`/`UQ-T20`. |
 | This audit bears on seven-primitive completeness, `UQ-T2`, or `OP-02` | Rejected | No evidence in either direction; representational adequacy is not primitive completeness. |
 | This audit bears on the terminal UPP theorem | Rejected | The `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
+
+## 2026-08-10 `unresolved status` semantic audit
+
+Evidence: `docs/research/fara-unresolved-status-audit-v1.0.md`. Investigation target `OP-16`/`UQ-T20`. No canonical surface was modified.
+
+| Claim | Status | Required interpretation |
+|---|---|---|
+| Shared theory contains the concept of unresolved status | Refuted | Zero occurrences of unresolved, unknown, uncertain, indeterminate, undetermined, or unclassified in shared theory. The concept is entirely absent upstream of FARA. |
+| FARA owns `unresolved status` | Established | It is a property of `Ω`, a FARA-owned component, and occurs only in FARA. Shared theory, FAR, FARO, and governance are each rejected as owner. |
+| Unresolved is an ordinary member of the calculus-determined classification set (`H1`/`M1`) | Disfavoured, not refuted | Renders `admissibility-structure.md:111` redundant and creates tension with `:84`. Survives only because `:111` is a "should". |
+| Unresolved is a framework-level meta-status outside the classification set (`H2`/`M2`) | **Weakly established** | Rests on a non-redundancy reading of `:111` that is a reading, not a forced inference. Never cite as derived. |
+| Unresolved carries reason structure (`H3`/`M4`) | Rejected | `:111` requires a marker only. FAR records cause separately rather than inside the status. |
+| Unresolved is represented outside `Ω` (`M5`) | Rejected | `:111` is a property of an Admissibility Structure and requires the candidate to possess the status; contradicts `:41`. |
+| The semantic content of unresolved status is canonically determined | **Refuted — `H4` returned** | One "should" clause with no definition and no discriminating text cannot fix whether it covers no-answer, not-yet-computed, evaluator ignorance, or insufficient evidence. Must not be invented. |
+| A source semantics' explicit "undecided" value is unresolved | Rejected | Such a value lies inside the calculus-determined classification set and is a substantive classification. |
+| FAR `Unresolved`, FARO `uncertainty`, Charter `Unknown`, and CRP `Unknown` are the same concept | Rejected | Four distinct subjects at four distinct layers. Lexical similarity is not identity. FAR's definition is downstream and cannot be imported upstream. |
+| A canonical edit is justified on current evidence | Rejected | Replication and Acceptance have not occurred, and a weakly established result is not a basis for canonical promotion. |
+| This audit bears on `Ω`'s type, FARA primitives, seven-primitive completeness, `UQ-T2`/`OP-02`, or the terminal UPP theorem | Rejected | No change and no evidence in either direction on any of these. |
