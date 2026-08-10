@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import textwrap
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WEAKENING = ROOT / "far_validation/weakening.py"
+ASSURANCE_LOCK = ROOT / "validation_bootstrap/assurance-lock.json"
 TEST = ROOT / "tests/test_target_category_weakening_aliases.py"
 
 
@@ -102,6 +105,15 @@ def patch_weakening() -> None:
     WEAKENING.write_text(text, encoding="utf-8")
 
 
+def refresh_assurance_lock() -> None:
+    payload = json.loads(ASSURANCE_LOCK.read_text(encoding="utf-8"))
+    files = payload.get("files")
+    if not isinstance(files, dict) or "far_validation/weakening.py" not in files:
+        raise RuntimeError("weakening assurance-lock entry missing")
+    files["far_validation/weakening.py"] = hashlib.sha256(WEAKENING.read_bytes()).hexdigest()
+    ASSURANCE_LOCK.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+
 def write_tests() -> None:
     TEST.write_text(
         r'''from __future__ import annotations
@@ -167,4 +179,5 @@ if __name__ == "__main__":
 
 if __name__ == "__main__":
     patch_weakening()
+    refresh_assurance_lock()
     write_tests()
