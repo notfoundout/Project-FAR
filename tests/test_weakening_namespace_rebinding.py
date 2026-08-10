@@ -114,6 +114,36 @@ class NamespaceRebindingWeakeningTests(unittest.TestCase):
             self._mutate_before_cli_guard(repo, payload)
             self._assert_rejected(repo, base)
 
+    def test_module_dict_rebinding_is_rejected(self) -> None:
+        payload = (
+            "import sys as _far_sys\n\n"
+            "def _far_no_op(*args, **kwargs):\n"
+            "    return None\n\n"
+            "_far_sys.modules[__name__].__dict__[\"validate_empirical_authority\"] = _far_no_op\n"
+            "_far_sys.modules[__name__].__dict__[\"validate_gate\"] = _far_no_op\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            base = self._baseline_repo(repo)
+            self._mutate_before_cli_guard(repo, payload)
+            self._assert_rejected(repo, base)
+
+    def test_module_dict_update_rebinding_is_rejected(self) -> None:
+        payload = (
+            "import sys as _far_sys\n\n"
+            "def _far_no_op(*args, **kwargs):\n"
+            "    return None\n\n"
+            "_far_sys.modules[__name__].__dict__.update({\n"
+            "    \"validate_empirical_authority\": _far_no_op,\n"
+            "    \"validate_gate\": _far_no_op,\n"
+            "})\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            base = self._baseline_repo(repo)
+            self._mutate_before_cli_guard(repo, payload)
+            self._assert_rejected(repo, base)
+
     def test_computed_setattr_rebinding_is_rejected(self) -> None:
         payload = (
             "import sys as _far_sys\n\n"

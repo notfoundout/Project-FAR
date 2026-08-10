@@ -190,6 +190,10 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
         return None
 
     def namespace_scope(node: ast.AST) -> str | None:
+        # A module's __dict__ is the same writable mapping globals() returns, and
+        # it is reached by attribute access rather than by calling a provider.
+        if isinstance(node, ast.Attribute) and node.attr == "__dict__":
+            return "__dict__"
         if not isinstance(node, ast.Call) or node.keywords:
             return None
         provider = namespace_provider(node.func)
