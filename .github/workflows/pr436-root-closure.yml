@@ -18,22 +18,21 @@ jobs:
         with:
           fetch-depth: 0
           ref: agent/close-structured-reasoning-compositional-question
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Apply root repair
+      - name: Apply complete assurance repair
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
-          import ast, hashlib, pprint
+          import ast, hashlib, json, pprint
 
           weak_path = Path('far_validation/weakening.py')
           weak = weak_path.read_text(encoding='utf-8')
           old = '''                for keyword in st.keywords:\n                    scan_expr(keyword.value)\n                continue\n'''
-          new = '''                for keyword in st.keywords:\n                    scan_expr(keyword.value)\n                # Class bodies execute at definition time. Scan them exactly like\n                # other module-scope executable statements so protected validator\n                # rebinding cannot hide behind a class definition. Method bodies\n                # remain skipped by the FunctionDef branch because they are not\n                # executed merely by defining the class.\n                scan(st.body)\n                continue\n'''
+          new = '''                for keyword in st.keywords:\n                    scan_expr(keyword.value)\n                # Class bodies execute at definition time. Scan them as module-scope\n                # executable code; FunctionDef handling still avoids scanning methods.\n                scan(st.body)\n                continue\n'''
           if weak.count(old) != 1:
               raise SystemExit('unexpected ClassDef scan shape')
           weak = weak.replace(old, new, 1)
@@ -42,60 +41,60 @@ jobs:
               'research/target-category-discovery/verify_compositional_invariant.py',
               'research/target-category-discovery/verify_compositional_invariant_legacy.py',
           ]
-          def function_map(source: str):
-              tree = ast.parse(source)
-              return {node.name: node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))}
-          def closure_digests(path: str):
-              funcs = function_map(Path(path).read_text(encoding='utf-8'))
-              pending = [name for name in ('verify', 'validate_empirical_authority', 'validate_gate') if name in funcs]
-              seen = set()
+          def fmap(path):
+              tree = ast.parse(Path(path).read_text(encoding='utf-8'))
+              return {n.name:n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}
+          def closure(path):
+              funcs=fmap(path); pending=[n for n in ('verify','validate_empirical_authority','validate_gate') if n in funcs]; seen=set()
               while pending:
-                  name = pending.pop()
-                  if name in seen:
-                      continue
+                  name=pending.pop()
+                  if name in seen: continue
                   seen.add(name)
                   for sub in ast.walk(funcs[name]):
-                      if isinstance(sub, ast.Call) and isinstance(sub.func, ast.Name):
-                          dep = sub.func.id
-                          if dep in funcs and dep not in seen:
-                              pending.append(dep)
-              return {name: hashlib.sha256(ast.dump(funcs[name], annotate_fields=True, include_attributes=False).encode()).hexdigest() for name in sorted(seen)}
+                      if isinstance(sub,ast.Call) and isinstance(sub.func,ast.Name) and sub.func.id in funcs and sub.func.id not in seen:
+                          pending.append(sub.func.id)
+              return {n:hashlib.sha256(ast.dump(funcs[n],annotate_fields=True,include_attributes=False).encode()).hexdigest() for n in sorted(seen)}
+          registry={p:closure(p) for p in targets}
+          start=weak.index('EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS:')
+          marker='\n\n\n@dataclass\nclass StrengthMetrics:'
+          end=weak.index(marker,start)
+          weak=weak[:start]+'EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = '+pprint.pformat(registry,width=120,sort_dicts=True)+weak[end:]
+          weak_path.write_text(weak,encoding='utf-8')
 
-          registry = {path: closure_digests(path) for path in targets}
-          start = weak.index('EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS:')
-          marker = '\n\n\n@dataclass\nclass StrengthMetrics:'
-          end = weak.index(marker, start)
-          weak = weak[:start] + 'EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = ' + pprint.pformat(registry, width=120, sort_dicts=True) + weak[end:]
-          weak_path.write_text(weak, encoding='utf-8')
+          test_path=Path('tests/test_target_category_compositional_invariant.py')
+          test=test_path.read_text(encoding='utf-8')
+          anchor='''            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                self.assertIn(protected, rebound_failures)\n                self.assertTrue(any("protected validator binding changed" in item for item in rebound_failures[protected]))\n'''
+          if test.count(anchor)!=1: raise SystemExit('unexpected weakening-test anchor')
+          addition=anchor+'''\n            subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                target = repo / protected\n                source = target.read_text(encoding="utf-8")\n                source += "\\nclass _DefinitionTimeAttack:\\n"\n                source += "    globals()[\\\"validate_empirical_authority\\\"] = lambda *args, **kwargs: None\\n"\n                source += "    globals()[\\\"validate_gate\\\"] = lambda *args, **kwargs: None\\n"\n                target.write_text(source, encoding="utf-8")\n            subprocess.run(["git", "add", "."], cwd=repo, check=True)\n            subprocess.run(["git", "commit", "-qm", "class body rebinding attack"], cwd=repo, check=True)\n            report = weakening.detect_weakening(repo, base=base)\n            self.assertFalse(report.successful)\n            failures = {f.path:f.failures for f in report.findings}\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                self.assertTrue(any("protected validator binding changed" in item for item in failures[protected]))\n\n            subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)\n            legacy_path = repo / "research/target-category-discovery/verify_compositional_invariant_legacy.py"\n            source = legacy_path.read_text(encoding="utf-8")\n            old_helper = "def _git_blob_sha1(raw: bytes) -> str:\\n    return hashlib.sha1(f\\\"blob {len(raw)}\\\\0\\\".encode(\\\"ascii\\\") + raw).hexdigest()\\n"\n            self.assertEqual(source.count(old_helper), 1)\n            legacy_path.write_text(source.replace(old_helper, "def _git_blob_sha1(raw: bytes) -> str:\\n    return \\"0\\" * 40\\n", 1), encoding="utf-8")\n            subprocess.run(["git", "add", "."], cwd=repo, check=True)\n            subprocess.run(["git", "commit", "-qm", "helper weakening attack"], cwd=repo, check=True)\n            report = weakening.detect_weakening(repo, base=base)\n            self.assertFalse(report.successful)\n            failures = {f.path:f.failures for f in report.findings}\n            self.assertTrue(any("protected validator implementation changed for _git_blob_sha1" in item for item in failures[str(legacy_path.relative_to(repo))]))\n\n            subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                target = repo / protected\n                source = target.read_text(encoding="utf-8")\n                gate_call = next(line for line in source.splitlines(keepends=True) if line.startswith("    validate_gate("))\n                target.write_text(source.replace(gate_call, gate_call + "    return {}\\n", 1), encoding="utf-8")\n            subprocess.run(["git", "add", "."], cwd=repo, check=True)\n            subprocess.run(["git", "commit", "-qm", "early return attack"], cwd=repo, check=True)\n            report = weakening.detect_weakening(repo, base=base)\n            self.assertFalse(report.successful)\n            failures = {f.path:f.failures for f in report.findings}\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                self.assertTrue(any("protected validator implementation changed for verify" in item for item in failures[protected]))\n'''
+          test_path.write_text(test.replace(anchor,addition,1),encoding='utf-8')
 
-          test_path = Path('tests/test_target_category_compositional_invariant.py')
-          test = test_path.read_text(encoding='utf-8')
-          anchor = '''            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                self.assertIn(protected, rebound_failures)\n                self.assertTrue(any("protected validator binding changed" in item for item in rebound_failures[protected]))\n'''
-          if test.count(anchor) != 1:
-              raise SystemExit('unexpected weakening-test anchor')
-          addition = anchor + '''\n            subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                target = repo / protected\n                source = target.read_text(encoding="utf-8")\n                source += "\\nclass _DefinitionTimeAttack:\\n"\n                source += "    globals()[\\\"validate_empirical_authority\\\"] = lambda *args, **kwargs: None\\n"\n                source += "    globals()[\\\"validate_gate\\\"] = lambda *args, **kwargs: None\\n"\n                target.write_text(source, encoding="utf-8")\n            subprocess.run(["git", "add", "."], cwd=repo, check=True)\n            subprocess.run(["git", "commit", "-qm", "rebind validators from class body"], cwd=repo, check=True)\n            class_report = weakening.detect_weakening(repo, base=base)\n            self.assertFalse(class_report.successful)\n            class_failures = {finding.path: finding.failures for finding in class_report.findings}\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                self.assertTrue(any("protected validator binding changed" in item for item in class_failures[protected]))\n\n            subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)\n            legacy_path = repo / "research/target-category-discovery/verify_compositional_invariant_legacy.py"\n            legacy_source = legacy_path.read_text(encoding="utf-8")\n            helper_old = "def _git_blob_sha1(raw: bytes) -> str:\\n    return hashlib.sha1(f\\\"blob {len(raw)}\\\\0\\\".encode(\\\"ascii\\\") + raw).hexdigest()\\n"\n            helper_new = "def _git_blob_sha1(raw: bytes) -> str:\\n    return \\"0\\" * 40\\n"\n            self.assertEqual(legacy_source.count(helper_old), 1)\n            legacy_path.write_text(legacy_source.replace(helper_old, helper_new, 1), encoding="utf-8")\n            subprocess.run(["git", "add", "."], cwd=repo, check=True)\n            subprocess.run(["git", "commit", "-qm", "weaken authority digest helper"], cwd=repo, check=True)\n            helper_report = weakening.detect_weakening(repo, base=base)\n            self.assertFalse(helper_report.successful)\n            helper_failures = {finding.path: finding.failures for finding in helper_report.findings}\n            self.assertTrue(any("protected validator implementation changed for _git_blob_sha1" in item for item in helper_failures[str(legacy_path.relative_to(repo))]))\n\n            subprocess.run(["git", "reset", "--hard", base], cwd=repo, check=True, stdout=subprocess.DEVNULL)\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                target = repo / protected\n                source = target.read_text(encoding="utf-8")\n                gate_call = next(line for line in source.splitlines(keepends=True) if line.startswith("    validate_gate("))\n                target.write_text(source.replace(gate_call, gate_call + "    return {}\\n", 1), encoding="utf-8")\n            subprocess.run(["git", "add", "."], cwd=repo, check=True)\n            subprocess.run(["git", "commit", "-qm", "bypass verify remainder"], cwd=repo, check=True)\n            return_report = weakening.detect_weakening(repo, base=base)\n            self.assertFalse(return_report.successful)\n            return_failures = {finding.path: finding.failures for finding in return_report.findings}\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                self.assertTrue(any("protected validator implementation changed for verify" in item for item in return_failures[protected]))\n'''
-          test_path.write_text(test.replace(anchor, addition, 1), encoding='utf-8')
+          lock_path=Path('validation_bootstrap/assurance-lock.json')
+          lock=json.loads(lock_path.read_text(encoding='utf-8'))
+          lock['files']['far_validation/weakening.py']=hashlib.sha256(weak_path.read_bytes()).hexdigest()
+          lock_path.write_text(json.dumps(lock,indent=2,sort_keys=False)+'\n',encoding='utf-8')
           PY
 
-      - name: Targeted validation
+      - name: Targeted repair tests
         run: |
           python -m unittest tests.test_target_category_compositional_invariant -v
+          python validation_bootstrap/verify.py
           python -m far_validation weakening --base "${{ github.event.before }}"
 
-      - name: Build finalized local commit without temporary workflow
+      - name: Finalize without temporary workflow
         shell: bash
         run: |
           rm .github/workflows/pr436-root-closure.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add far_validation/weakening.py tests/test_target_category_compositional_invariant.py .github/workflows/pr436-root-closure.yml
+          git add far_validation/weakening.py tests/test_target_category_compositional_invariant.py validation_bootstrap/assurance-lock.json .github/workflows/pr436-root-closure.yml
           git commit -m "Harden verifier assurance at root"
 
-      - name: Validate finalized commit
+      - name: Validate finalized exact tree
         run: |
+          python validation_bootstrap/verify.py
           python -m far_validation validate --profile pr-full --trace
           python -m unittest tests.test_target_category_compositional_invariant -v
           python -m far_validation weakening --base "${{ github.event.before }}"
 
-      - name: Push only validated repair
+      - name: Push validated exact tree
         run: git push origin HEAD:agent/close-structured-reasoning-compositional-question
