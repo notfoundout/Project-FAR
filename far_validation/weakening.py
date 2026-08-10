@@ -121,7 +121,7 @@ def _live_call_prefix(source: str, path: str, function_name: str = "verify", cou
 
 def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[str, ...]]:
     """Return structural module-scope binding events for protected validators."""
-    protected = REQUIRED_SEMANTIC_CALLS.get(path, frozenset())
+    protected = frozenset(set(REQUIRED_SEMANTIC_CALLS.get(path, frozenset())) | set(EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.get(path, {})))
     events: dict[str, list[str]] = {name: [] for name in protected}
     if not protected:
         return {}
@@ -335,8 +335,10 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
 
 
 def _binding_integrity_failures(source: str, path: str) -> list[str]:
-    expected = REQUIRED_MODULE_BINDING_SIGNATURES.get(path)
-    if expected is None:
+    expected = dict(REQUIRED_MODULE_BINDING_SIGNATURES.get(path, {}))
+    for name in EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.get(path, {}):
+        expected.setdefault(name, ("function",))
+    if not expected:
         return []
     actual = _module_scope_binding_signatures(source, path)
     failures: list[str] = []
@@ -368,15 +370,17 @@ def _protected_implementation_failures(source: str, path: str) -> list[str]:
 
 
 def _definition_time_execution_failures(source: str, path: str) -> list[str]:
+    """Reject dynamic execution and decorators in protected verifier source."""
     if path not in REQUIRED_SEMANTIC_CALLS:
         return []
     tree = ast.parse(source, filename=path)
     failures: list[str] = []
-    for node in tree.body:
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in {"exec", "eval", "compile"}:
+            failures.append(f"dynamic execution rejected in protected verifier: {node.func.id}")
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node.decorator_list:
             failures.append(f"protected verifier definition-time decorator rejected: {getattr(node, 'name', '<definition>')}")
     return failures
-
 
 def analyze(source: str, path: str) -> StrengthMetrics:
     tree = ast.parse(source, filename=path)

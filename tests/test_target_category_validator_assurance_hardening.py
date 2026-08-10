@@ -78,5 +78,49 @@ class ProtectedValidatorAssuranceHardeningTests(unittest.TestCase):
         self.assertTrue(any("protected validator implementation changed" in item for item in failures))
 
 
+    def test_class_body_dynamic_exec_rebinding_is_rejected(self) -> None:
+        tmp, repo, base = self._repo()
+        self.addCleanup(tmp.cleanup)
+        for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+            target = repo / protected
+            text = target.read_text(encoding="utf-8")
+            text += "\nclass _FarDefinitionTimeAttack:\n    exec(\"globals()['validate_empirical_authority'] = lambda *a, **k: None\")\n    exec(\"globals()['validate_gate'] = lambda *a, **k: None\")\n"
+            target.write_text(text, encoding="utf-8")
+        report = self._commit_and_report(repo, base, "class-body dynamic execution attack")
+        self.assertFalse(report.successful)
+        checked = 0
+        for finding in report.findings:
+            if finding.path in weakening.REQUIRED_SEMANTIC_CALLS:
+                checked += 1
+                self.assertTrue(any("dynamic execution rejected" in item for item in finding.failures))
+        self.assertEqual(checked, len(weakening.REQUIRED_SEMANTIC_CALLS))
+
+    def test_protected_helper_rebinding_is_rejected(self) -> None:
+        tmp, repo, base = self._repo()
+        self.addCleanup(tmp.cleanup)
+        rel = "research/target-category-discovery/verify_compositional_invariant_legacy.py"
+        target = repo / rel
+        text = target.read_text(encoding="utf-8")
+        target.write_text(text + "\n_git_blob_sha1 = lambda raw: '0' * 40\n", encoding="utf-8")
+        report = self._commit_and_report(repo, base, "protected helper rebinding attack")
+        self.assertFalse(report.successful)
+        failures = next(f.failures for f in report.findings if f.path == rel)
+        self.assertTrue(any("protected validator binding changed for _git_blob_sha1" in item for item in failures))
+
+    def test_verify_early_return_after_authority_prefix_is_rejected(self) -> None:
+        tmp, repo, base = self._repo()
+        self.addCleanup(tmp.cleanup)
+        rel = "research/target-category-discovery/verify_compositional_invariant_legacy.py"
+        target = repo / rel
+        text = target.read_text(encoding="utf-8")
+        needle = "    validate_gate(gates_path)\n    actual = build_result(load_json(spec_path))\n"
+        self.assertEqual(text.count(needle), 1)
+        target.write_text(text.replace(needle, "    validate_gate(gates_path)\n    return {}\n    actual = build_result(load_json(spec_path))\n", 1), encoding="utf-8")
+        report = self._commit_and_report(repo, base, "verify post-prefix early-return attack")
+        self.assertFalse(report.successful)
+        failures = next(f.failures for f in report.findings if f.path == rel)
+        self.assertTrue(any("protected validator implementation changed for verify" in item for item in failures))
+
+
 if __name__ == "__main__":
     unittest.main()
