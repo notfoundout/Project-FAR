@@ -79,12 +79,28 @@ Evidence: `docs/research/fara-omega-set-valued-admissibility-v1.0.md`. Investiga
 
 | Claim | Status | Required interpretation |
 |---|---|---|
-| Some function `Ω : C → Status` faithfully represents set-valued admissibility | Refuted | Equivariance under source isomorphism forces `Ω` constant on transitive sources; four transitive frameworks on four candidates have four distinct extension families and only three constant values exist. Encoding-independent. |
+| Some function `Ω : C → Status` faithfully represents set-valued admissibility | **Corrected 2026-08-10: not refuted.** Refuted only for `Status` fixed at three values | The equivariance pigeonhole assumed `card Status = 3`, which `frameworks/FARA/admissibility-structure.md:84` shows is not canonical. A per-candidate `Ω` valued in extension-label sets recovers the family exactly and is equivariant. The withdrawn claim must not be cited as a general impossibility. |
 | The skeptical/credulous trichotomy encoding suffices | Refuted | Explicit three-candidate collision `CM-03`. |
-| An extension-indexed family of unchanged canonical `Ω` structures is faithful and conservative | Established only at Project FAR v1.0 finite explicit auditable scope | Single-extension and grounded cases retain their existing interpretation unchanged. Never state without the finite scope. |
+| An extension-indexed family of unchanged canonical `Ω` structures is faithful and conservative | Established only at Project FAR v1.0 finite explicit auditable scope; **reclassified 2026-08-10** as semantic clarification rather than conservative extension | Single-extension and grounded cases retain their existing interpretation unchanged. Never state without the finite scope. The family and a label-set-valued `Ω` are transposes carrying identical information, so no extension was required. |
 | Multi-extension admissibility requires retyping `Ω` | Rejected for set-valued admissibility | Retyping is not required; the repair is additional representational structure over existing primitives. |
 | Multi-extension admissibility indicates a new primitive | Rejected | Extensions are Representations, membership is a Relation, the family is a Relation. Seven candidate primitives unchanged. |
 | FARA predicted multi-extension structure | Rejected | The construction accommodates the structure after observing it. A faithful embedding is not evidence of discovery. |
 | The repair is representationally cheap | Rejected | Extension families can be exponential in candidate count; cost is charged, not hidden. |
 | Graded or ranking-based acceptability is covered | Rejected as out of scope | Degree-valued acceptability is a distinct phenomenon; see `OP-14`/`UQ-T18`. |
 | `CE-ADM-001` bears on the terminal UPP theorem | Rejected, unchanged | The `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
+
+## 2026-08-10 graded and ranking-based admissibility audit
+
+Evidence: `docs/research/fara-graded-admissibility-representation-v1.0.md`. Investigation target `OP-14`/`UQ-T18`. `FAITHFUL-REP-001` reused unchanged; no requirement was found inapplicable.
+
+| Claim | Status | Required interpretation |
+|---|---|---|
+| Canonical FARA fixes the codomain of `Ω` | Refuted | `frameworks/FARA/admissibility-structure.md:84` assigns the available classifications entirely to the applicable reasoning calculus. No canonical text enumerates admissibility status values. |
+| Graded or ranking-based admissibility requires retyping `Ω` | Rejected at finite explicit auditable scope | A numeric status carries gradual semantics; a partially ordered status carries ranking semantics. `Ω`'s type, meaning, and per-candidate character are unchanged. |
+| A totally ordered status codomain suffices for ranking semantics | Refuted | `CM-G1`: incomparability and ties become indistinguishable, or spurious comparability is asserted. `FAITHFUL-REP-001 §5.3` reflection fails. |
+| A three-valued `Ω` plus an auxiliary grade `G` is the weakest adequate account | Refuted for threshold-free semantics | `Ω` has no determinate content without a threshold, and supplying one is evaluator-supplied repair under `§13`. Grade is constitutive, not auxiliary. |
+| Grade is merely auxiliary to admissibility | Rejected | By `§2.1`, degree is material whenever it changes admissibility or its weight. |
+| Gradual degrees may be read as probabilities | Rejected | No normalisation, event space, or conditioning is present in either source semantics. |
+| A canonical surface requires ties, incomparability, uncertainty, and unresolved to stay mutually distinct | Provisional — none located | Negative search result over named canonical surfaces, not a proof of absence. See `LIM-028`, `OP-15`, `UQ-T19`. |
+| This investigation bears on seven-primitive completeness | Rejected in both directions | It produces no evidence for an additional primitive and no evidence for completeness. `UQ-T2` and `OP-02` are unaffected. |
+| Any of the above bears on the terminal UPP theorem | Rejected | The `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
