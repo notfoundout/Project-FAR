@@ -1,1 +1,0 @@
-Exact-head hosted validation trigger. No execution authorization or theory change.
