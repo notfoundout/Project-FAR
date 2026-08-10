@@ -172,3 +172,19 @@ Evidence: `docs/research/fara-status-term-audit-v1.0.md`. Investigation target `
 | The ambiguity at `:111` can be removed without a new design choice | Refuted | It cannot. The remaining non-univocity can. |
 | `formal-kernel.md:3` "Status: Accepted" imports a governance concept into FARA semantics | Rejected | It is document metadata, not FARA-technical content. No layer violation. |
 | This audit resolves `OP-16` or `OP-17` | Rejected | It narrows and explains the blockage without removing it; neither question is resolved. |
+
+## 2026-08-10 prior-framework subsumption audit
+
+Evidence: `docs/research/fara-prior-framework-subsumption-v1.0.md`. Investigation target `OP-20`/`UQ-T23`. No canonical surface was modified. No registered claim is downgraded.
+
+| Claim | Status | Required interpretation |
+|---|---|---|
+| A single independently motivated prior framework subsumes the FARA kernel at its registered scope | Not established | Best single result is `R3` faithful representation on a connected proper fragment (W3C PROV-DM). `H4`/`H5` not established. |
+| No prior framework anticipates FARA components | **Refuted** | Every tested kernel component is independently anticipated: reified relation occurrences with roles (Chen 1976, Sowa 1984, Parsons 1990); identity-bearing events under acyclic causal order (Nielsen–Plotkin–Winskel 1981); provenance on executions (W3C PROV); interpretation assigning meaning (classical model theory); calculus-parameterized proof systems (Goguen–Burstall 1984/92, Meseguer 1989). |
+| Many-sorted model theory subsumes the kernel | True but **theoretically uninformative** | The kernel is by definition a finite many-sorted relational structure and kernel-equivalence is Σ-isomorphism. A meta-language encoding arbitrary relational structures subsumes every such structure. Never cite as an informative reduction. |
+| PROV-DM derives the FARA kernel | Rejected — **forced reconstruction** | Supplying `Interpretation`/`Meaning`/`assigns` amounts to assuming the missing FARA structure. `R3` on a fragment only; no `R4`. |
+| General logics derives the FARA kernel | Rejected — abstraction-level mismatch | Institutions index over signature categories and abstract over logical systems; the kernel is one concrete finite structure. Strongest legitimate relation is `R2` plus `R1`. |
+| FARA lacks historical novelty | **Not established** | Formal subsumption analysis is not a historical search. Stage-12 conclusions 1–7 do not establish conclusion 8. |
+| FARA is architecturally novel | **Not established** | Failure to establish subsumption does not prove novelty. Neither direction is licensed. |
+| The external-validation evidence base is directionally biased in a way that defeats its claims | **Rejected** | All twenty external-system records test only the forward direction, but none claims novelty, originality, irreducibility, or unprecedentedness. The claims drawn are correspondingly bounded, so the asymmetry is a scope limitation, not a defect. Corrects an earlier "blind spot" characterization. |
+| `OP-20` bears on `OP-01`, `OP-02`, `OP-03`, `OP-09`, `OP-12`, `UQ-T2`, or the terminal UPP theorem | Rejected — no dependency demonstrated | Component anticipation says nothing about derivability among the seven candidates. Subsumption does not imply falsity. The terminal theorem remains governed by its frozen premises. |

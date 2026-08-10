@@ -64,3 +64,7 @@ Dependency note: `docs/reports/ax001-circularity-investigation.md` remaining ope
 ## Admissibility branch closure (2026-08-10)
 
 `UQ-T19`, `UQ-T20`, `UQ-T21`, and `UQ-T22` are **closed as evidence-exhausted**, not resolved. Their common residue is reclassified from an unresolved discoverable fact to an architectural decision point recorded in [`ADR-002`](../architecture/adr/ADR-002-Unresolved-Admissibility-Status-Semantics.md). Both alternatives and their established consequences are preserved there; neither is selected. These entries remain in the register as historical record and must not be cited as open research questions.
+
+- **UQ-T23:** Does any independently motivated prior framework subsume, derive, reduce, or establish a materially significant structural equivalence with FARA at a specified scope? **`H6` at the tested scope: every kernel component is independently anticipated, and PROV-DM reaches faithful representation on a connected fragment, but no single independently motivated framework reconstructs the connecting architecture. Novelty and non-novelty both remain unestablished. Evidence: `docs/research/fara-prior-framework-subsumption-v1.0.md`.**
+
+- **UQ-T24:** Does an independently established prior synthesis exist that natively binds semantic interpretation, execution trace, occurrence identity, and provenance under one equivalence relation? **Unresolved; none was located in the `OP-20` search space. The Semantic Web stack is the closest natural composition but is a composition, not a single framework.**
