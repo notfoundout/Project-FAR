@@ -21,6 +21,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          HARDENING_TEST_B64="$(python - <<'PY'
+          from pathlib import Path
+          import re
+          text = Path('.github/workflows/pr436-assurance-root-repair-v3.yml').read_text()
+          match = re.search(r'^\s*HARDENING_TEST_B64:\s*"([A-Za-z0-9+/=]+)"\s*$', text, re.M)
+          if not match:
+              raise SystemExit('hardening fixture not found')
+          print(match.group(1))
+          PY
+          )"
+          export HARDENING_TEST_B64
           awk 'BEGIN{flag=0} /^          python - <<'\''PY'\''$/{flag=1;next} /^          PY$/{if(flag){flag=0;exit}} flag{sub(/^          /,""); print}' .github/workflows/pr436-assurance-root-repair-v3.yml > /tmp/pr436_repair.py
           test -s /tmp/pr436_repair.py
           python /tmp/pr436_repair.py
