@@ -1,0 +1,41 @@
+name: PR435 Main Reconcile Diagnostic
+
+on:
+  push:
+    branches:
+      - research/swe-agent-v3-design-clean
+    paths:
+      - .github/workflows/pr435-main-reconcile-diagnostic.yml
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/swe-agent-v3-design-clean
+          fetch-depth: 0
+      - name: Report exact merge conflicts with current main
+        shell: bash
+        run: |
+          set -u
+          git fetch origin main
+          git config user.name 'merge-diagnostic'
+          git config user.email 'merge-diagnostic@example.invalid'
+          set +e
+          git merge --no-commit --no-ff origin/main
+          status=$?
+          set -e
+          echo "merge_status=$status"
+          echo "merge_base=$(git merge-base HEAD origin/main)"
+          echo "main=$(git rev-parse origin/main)"
+          echo "head=$(git rev-parse HEAD)"
+          echo '--- unmerged paths ---'
+          git diff --name-only --diff-filter=U || true
+          echo '--- conflict stages ---'
+          git ls-files -u || true
+          git merge --abort 2>/dev/null || true
+          exit 0
