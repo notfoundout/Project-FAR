@@ -32,10 +32,14 @@ jobs:
           python /tmp/pr436-repair.py
           python - <<'PY'
           from pathlib import Path
+          import hashlib, json
           p = Path('far_validation/weakening.py')
           text = p.read_text(encoding='utf-8').replace('set{str]', 'set[str]')
           p.write_text(text, encoding='utf-8')
-          import hashlib, json
+          tp = Path('tests/test_target_category_weakening_aliases.py')
+          lines = tp.read_text(encoding='utf-8').splitlines()
+          lines = [line + ']' if line.strip() == 'failures = [item for finding in report.findings for item in finding.failures' else line for line in lines]
+          tp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
           lp = Path('validation_bootstrap/assurance-lock.json')
           lock = json.loads(lp.read_text(encoding='utf-8'))
           lock['files']['far_validation/weakening.py'] = hashlib.sha256(p.read_bytes()).hexdigest()
