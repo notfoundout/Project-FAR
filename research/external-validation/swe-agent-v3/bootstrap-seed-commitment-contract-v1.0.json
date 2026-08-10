@@ -1,13 +1,11 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
   "commitment_status": "frozen_pre_execution",
   "authority": {
-    "base_design_head": "b578239e008617362f66ad5cf069f87b7d0e6d8b",
-    "base_preregistration_git_blob_sha1": "c6c9b5399ef2699ddcd2652dbb2acdd8e820bee1",
-    "superseded_subject": "/analysis/bootstrap_seed_status",
-    "precedence": "This prospective contract freezes the bootstrap seed required by preregistration-v1.0.json; every other preregistration field remains unchanged.",
+    "scope": "bootstrap_seed_value_and_rng_procedure_only",
+    "precedence": "This prospective contract governs only the bootstrap seed value, encoding, RNG procedure identity, and commitment timing. It does not assert that any other preregistration field is unchanged and it does not supersede later prospective amendments on unrelated subjects.",
     "outcome_exposure_status": "none",
     "model_calls_authorized": false,
     "pilot_execution_authorized": false,
@@ -19,22 +17,15 @@
     "seed_encoding": "64 lowercase hexadecimal characters decoded as exactly 32 bytes",
     "seed_hex": "76764013d297cadd3865295298e160a9fbb1a39833aac5860b0dfb13f54fdf87"
   },
-  "derivation": {
-    "method": "SHA-256 over the exact UTF-8 bytes of canonical_payload",
-    "canonical_payload": "FAR-SWE-V3-001/bootstrap-seed/v1\ntreatment_capsule_git_blob_sha1=e011c8f9972a5682e03526f739437f62e973e76d\nexecution_gate_git_blob_sha1=99eabd1fee9a59770a3a61a07c151abcba23683f\n",
-    "sha256": "76764013d297cadd3865295298e160a9fbb1a39833aac5860b0dfb13f54fdf87",
-    "inputs": [
-      {
-        "path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
-        "git_blob_sha1": "e011c8f9972a5682e03526f739437f62e973e76d"
-      },
-      {
-        "path": "research/external-validation/swe-agent-v3/execution-gate-v1.0.json",
-        "git_blob_sha1": "99eabd1fee9a59770a3a61a07c151abcba23683f"
-      }
-    ],
+  "commitment": {
+    "method": "direct_precommitted_value",
+    "committed_value_source": "rng_contract.seed_hex in this exact integrity-rooted artifact",
+    "artifact_inputs_permitted": false,
+    "mutable_launch_inputs_permitted": false,
+    "task_identity_inputs_permitted": false,
     "outcome_or_grade_inputs_permitted": false,
-    "task_identity_inputs_permitted": false
+    "replacement_or_seed_search_after_commitment_permitted": false,
+    "verification_rule": "verify the exact committed seed encoding and value from this artifact; no current capsule, execution-gate, task-manifest, repository-history, or other mutable artifact identity participates in the seed value"
   },
   "timing": {
     "must_be_committed_and_integrity_rooted_before_any_sacrificial_pilot_execution": true,
@@ -44,7 +35,7 @@
   },
   "nonclaims": [
     "This commitment does not authorize model calls, pilot execution, benchmark execution, confirmatory execution, grading, or outcome reveal.",
-    "This commitment does not freeze the task population, randomization seed, treatment capsule, placebo, model endpoint, environment, budgets, or launch authorization.",
+    "This commitment does not freeze the task population, assignment-randomization seed, treatment capsule, placebo, model endpoint, environment, budgets, thresholds, or launch authorization.",
     "This commitment does not establish that FAR improves software engineering."
   ]
 }

@@ -1,35 +1,28 @@
-# Question — FAR-SWE-V3-001
+# Research question — FAR-SWE-V3-001
 
-Status: **Research**  
-Stage: **Question registered; execution not authorized**
+Status: **Research — design only**  
+Execution authorized: **No**
 
-## Causal question
+## Question
 
-Under identical models, tasks, repositories, tools, execution environments, budgets, and scoring, does access to a frozen Project FAR treatment capsule improve software-engineering task resolution compared with an inert structure-matched placebo?
+Under identical execution conditions, does a frozen Project FAR capsule improve software-engineering task resolution relative to an inert structure-matched placebo?
 
-## Primary contrast
+## What a conforming positive result would establish
 
-`far - placebo`
+Only a bounded causal result for the exact frozen FAR-SWE-V3-001 task population, model endpoint/version, treatment capsule, placebo, prompts, tools, environment, budgets, grader, randomization, evidence rules, and analysis contract.
 
-The placebo is required because a baseline-only comparison would confound FAR-specific content with extra instructions, extra context, extra files, and additional procedural burden.
+## What this study would not establish
 
-## Secondary contrasts
+Even a conforming positive result would not establish:
 
-- `far - baseline`
-- `placebo - baseline`
+- universal software-engineering improvement;
+- model-independent improvement;
+- theory truth;
+- FAR primitive necessity;
+- FAR minimality;
+- external replication;
+- commercial readiness;
+- equivalence of baseline and placebo;
+- permission to pool historical SWE-agent v2 evidence.
 
-These separate the effect of FAR-specific content from the generic effect of receiving an additional structured capsule.
-
-## Unit and estimand
-
-The task is the primary analysis unit. Every frozen task is attempted under every arm with the same repetition count. The primary estimand is the mean task-level difference in resolution probability between `far` and `placebo` over the exact frozen confirmatory task set.
-
-## Practically important effect
-
-The preregistered minimum practically important difference is an absolute resolution-rate increase of `0.10`. This is an independent methodological choice, not a discovered property of FAR.
-
-## Claim boundary
-
-A positive result would support only the exact FAR capsule, model family/version, task set, repositories, environment, budgets, and execution protocol tested. It would not establish universal software-engineering improvement, model-independent improvement, theory truth, primitive necessity, minimality, independence, commercial readiness, or model-family invariance.
-
-The historical SWE-agent v2 observations remain separate and are not included in any v3 estimate.
+The current design package itself establishes none of those claims and authorizes no model call, pilot, benchmark execution, confirmatory execution, grading, or outcome reveal.

@@ -1,17 +1,17 @@
-# SWE-agent v3 failure and arithmetic amendment v1.1
+# SWE-agent v3 failure and arithmetic contract
 
-Status: **Research — prospective pre-execution correction**  
+Status: **Research — prospective pre-execution contract**  
 Program ID: `FAR-SWE-V3-001`  
 Execution authorized: **No**
 
-This amendment closes two ambiguities found during exact-head review of the v1.0 design. No model call, pilot, benchmark run, task selection, outcome reveal, or analysis occurred before this correction.
+This file originated as the v1.1 amendment that closed two design ambiguities. The current machine-readable authority is now standalone: `failure-arithmetic-amendment-v1.1.json` prospectively governs replacement/terminal-reason classification and exact arithmetic for FAR-SWE-V3-001 without depending on historical snapshot provenance.
 
-It supersedes only:
+It governs only:
 
-1. the definition of a replacement-eligible infrastructure-invalid run;
-2. the numeric representation and comparison rules for bootstrap estimates, quantiles, and classification thresholds.
+1. the definition of a replacement-eligible infrastructure-invalid run and terminal-reason classification;
+2. the numeric representation and comparison rules for primary estimates, bootstrap estimates, quantiles, and classification thresholds.
 
-All other v1.0 design fields remain unchanged. Where the v1.0 wording conflicts with `failure-arithmetic-amendment-v1.1.json` on either subject, the amendment controls.
+`historical-authority-v1.0.json` is archival context only. It intentionally does not self-prove that its snapshots occurred at the claimed historical commit, and current failure/arithmetic validity does not depend on that claim. Current authority for unrelated subjects comes from the current integrity-rooted design artifacts.
 
 ## Replacement boundary
 

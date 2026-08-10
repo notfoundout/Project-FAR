@@ -35,11 +35,7 @@ class SweAgentV3EvidenceContractTests(unittest.TestCase):
         path = self.here / "evidence-and-analysis-plan-v1.0.md"
         text = path.read_text(encoding="utf-8")
         self.assertIn(old, text)
-        path.write_text(
-            text.replace(old, new, 1),
-            encoding="utf-8",
-            newline="\n",
-        )
+        path.write_text(text.replace(old, new, 1), encoding="utf-8", newline="\n")
         with mock.patch.object(verify_module, "HERE", self.here):
             with self.assertRaises(verify_module.DesignError):
                 verify_module.verify_text_boundaries()
@@ -47,7 +43,11 @@ class SweAgentV3EvidenceContractTests(unittest.TestCase):
     def test_complete_evidence_bundle_section_is_exact(self) -> None:
         mutations = (
             (
-                "- authoritative repository provider identity, canonical repository URL, and exact commit;\n",
+                "- frozen task-manifest Git blob identity and frozen sealed identity-ledger Git blob identity;\n",
+                "- frozen task-manifest Git blob identity;\n",
+            ),
+            (
+                "- authoritative repository provider identity, canonical repository URL, exact commit, GitHub fork-source repository ID or null, and treatment-material audit result as reconstructed from the sealed identity ledger by the independent identity auditor;\n",
                 "- canonical repository URL and exact commit;\n",
             ),
             (
@@ -55,8 +55,7 @@ class SweAgentV3EvidenceContractTests(unittest.TestCase):
                 "",
             ),
             (
-                "- model provider, endpoint, model version, parameters, "
-                "and provider request identifier;\n",
+                "- model provider, endpoint, model version, parameters, and provider request identifier;\n",
                 "",
             ),
             (
@@ -64,9 +63,12 @@ class SweAgentV3EvidenceContractTests(unittest.TestCase):
                 "- repetition only;\n",
             ),
             (
+                "- the critical-harm evaluation inputs and exact results required by `critical-harm-thresholds-v1.0.json`;\n",
+                "- critical-harm summary;\n",
+            ),
+            (
                 "- bundle manifest and content-root digest.\n",
-                "- bundle manifest and content-root digest;\n"
-                "- operator-selected notes.\n",
+                "- bundle manifest and content-root digest;\n- operator-selected notes.\n",
             ),
         )
         for index, (old, new) in enumerate(mutations):

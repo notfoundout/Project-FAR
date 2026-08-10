@@ -2,87 +2,52 @@
   "schema_version": "1.3",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
-  "scope": "design-only authority; exact-locks all governed data, narrative, prospective-amendment, seed-commitment, and immutable historical-authority snapshot artifacts while verifier code remains reviewable and non-self-referential",
+  "scope": "design-only governed-path registry; the reviewed Git commit/tree is the sole authority for current bytes; semantic verifier code independently enforces the meaning and fail-closed boundaries of governed artifacts",
   "artifacts": [
     {
-      "path": "research/external-validation/swe-agent-v3/.gitattributes",
-      "git_blob_sha1": "80dc6c8d82aec41fb85ff6cec8744f31efbad723",
-      "bytes": 90
+      "path": "research/external-validation/swe-agent-v3/.gitattributes"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/README.md",
-      "git_blob_sha1": "ee685f634d165eee5197a9f1f572857bf99e1748",
-      "bytes": 7042
+      "path": "research/external-validation/swe-agent-v3/README.md"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/question-v1.0.md",
-      "git_blob_sha1": "b61da8b21953b835d341331e360405d6783d4cf4",
-      "bytes": 1795
+      "path": "research/external-validation/swe-agent-v3/question-v1.0.md"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/preregistration-v1.0.json",
-      "git_blob_sha1": "b6664cf59ca7a2033c99f512e2b233601ad53d94",
-      "bytes": 10577
+      "path": "research/external-validation/swe-agent-v3/preregistration-v1.0.json"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/task-manifest-contract-v1.0.json",
-      "git_blob_sha1": "b160b713d3b1290f9580f96e1d9f88392a3275be",
-      "bytes": 7553
+      "path": "research/external-validation/swe-agent-v3/task-manifest-contract-v1.0.json"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json",
-      "git_blob_sha1": "e011c8f9972a5682e03526f739437f62e973e76d",
-      "bytes": 3424
+      "path": "research/external-validation/swe-agent-v3/treatment-capsule-contract-v1.0.json"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/execution-gate-v1.0.json",
-      "git_blob_sha1": "99eabd1fee9a59770a3a61a07c151abcba23683f",
-      "bytes": 3104
+      "path": "research/external-validation/swe-agent-v3/execution-gate-v1.0.json"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md",
-      "git_blob_sha1": "04baff3069bc81f5a23fc2b92c5c04fec855b2c4",
-      "bytes": 6773
+      "path": "research/external-validation/swe-agent-v3/evidence-and-analysis-plan-v1.0.md"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/failure-arithmetic-amendment-v1.1.json",
-      "git_blob_sha1": "60dc4a5b3004532ba8a71a27c2191550f0f96c6f",
-      "bytes": 5492
+      "path": "research/external-validation/swe-agent-v3/failure-arithmetic-amendment-v1.1.json"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/AMENDMENT-v1.1.md",
-      "git_blob_sha1": "9b7ac22d91c44d054651fe1b0bc4467d7d87b262",
-      "bytes": 2268
+      "path": "research/external-validation/swe-agent-v3/AMENDMENT-v1.1.md"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/bootstrap-seed-commitment-contract-v1.0.json",
-      "git_blob_sha1": "e5a9b94a0ccbce383cfbc7237d98e400af9d853d",
-      "bytes": 2577
+      "path": "research/external-validation/swe-agent-v3/bootstrap-seed-commitment-contract-v1.0.json"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/review-closure-amendment-v1.2.json",
-      "git_blob_sha1": "59c862790fee90beb0b3fba93dfd9b4e51921322",
-      "bytes": 12835
+      "path": "research/external-validation/swe-agent-v3/critical-harm-thresholds-v1.0.json"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/AMENDMENT-v1.2.md",
-      "git_blob_sha1": "6089f31d1769349fc1e9f9588ad40dca9e775fef",
-      "bytes": 6868
+      "path": "research/external-validation/swe-agent-v3/historical-authority-v1.0.json"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/classification-input-digest-contract-v1.0.json",
-      "git_blob_sha1": "bcfdb969a30cf3f21feb24efffc75d78700292d0",
-      "bytes": 6128
+      "path": "research/external-validation/swe-agent-v3/historical-base-83c951/preregistration-v1.0.json"
     },
     {
-      "path": "research/external-validation/swe-agent-v3/historical-base-83c951/preregistration-v1.0.json",
-      "git_blob_sha1": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
-      "bytes": 10514
-    },
-    {
-      "path": "research/external-validation/swe-agent-v3/historical-base-83c951/evidence-and-analysis-plan-v1.0.md",
-      "git_blob_sha1": "15b352d54a524d9caf827018b608028c004f8f13",
-      "bytes": 6506
+      "path": "research/external-validation/swe-agent-v3/historical-base-83c951/evidence-and-analysis-plan-v1.0.md"
     }
   ]
 }

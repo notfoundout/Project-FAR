@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.3",
+  "schema_version": "1.6",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
   "manifest_status": "uninstantiated",
   "execution_authorized": false,
-  "freeze_timing": "exact task manifest bytes and Git blob identity must be committed and independently reviewed before any sacrificial pilot or confirmatory execution; freezing after any agent run is prohibited even if outcomes or grades remain concealed",
+  "freeze_timing": "exact task manifest bytes and Git blob identity must be committed and independently reviewed before any sacrificial pilot or confirmatory execution; freezing or changing task identity, order, repository identity, strata, repository-prohibition evidence, or the sealed identity ledger after any agent run is prohibited even if outcomes or grades remain concealed",
   "document_shape": {
     "media_type": "application/json",
     "top_level_type": "array",
@@ -14,7 +14,8 @@
     "required_keys_exactly": [
       "blind_task_id",
       "repository_blind_id",
-      "task_bundle_root_sha256"
+      "task_bundle_root_sha256",
+      "strata"
     ],
     "blind_task_id": {
       "pattern": "^TASK-[0-9]{6}$",
@@ -32,6 +33,19 @@
       "pattern": "^[0-9a-f]{64}$",
       "construction": "SHA-256 over the exact UTF-8 bytes of the canonical task-bundle descriptor defined by task_bundle_root_contract",
       "unique": true
+    },
+    "strata": {
+      "type": "nonempty_array_of_unique_strings",
+      "allowed_values_in_canonical_order": [
+        "bug_fix",
+        "test_failure",
+        "behavioral_regression",
+        "API_or_contract_change",
+        "multi_file_change"
+      ],
+      "ordering_rule": "each record lists only applicable labels and preserves their relative order from allowed_values_in_canonical_order; duplicates, unknown labels, empty arrays, and alternative ordering are prohibited",
+      "classification_timing": "classification is frozen in the exact task manifest before any sacrificial pilot or confirmatory execution",
+      "coverage_rule": "the union of strata across the frozen confirmatory task manifest must contain every allowed_values_in_canonical_order label before execution"
     }
   },
   "task_bundle_root_contract": {
@@ -67,18 +81,58 @@
     ],
     "archive_or_filesystem_metadata_in_root": false,
     "path_order_or_archive_format_in_root": false,
-    "recomputation_rule": "independent auditors reconstruct the seven-key descriptor from api.github.com repository metadata and the exact sealed task payload, JCS-canonicalize it, and SHA-256 the resulting bytes"
+    "recomputation_rule": "independent auditors reconstruct the seven-key descriptor from the sealed identity-ledger record, JCS-canonicalize it, and SHA-256 the resulting bytes"
+  },
+  "prohibited_repository_contract": {
+    "project_far_repository_provider": "github.com",
+    "project_far_repository_provider_id": 1283452680,
+    "reject_exact_project_far_repository": true,
+    "reject_github_fork_source_project_far": true,
+    "require_project_far_treatment_material_absent": true,
+    "github_fork_source_rule": "github_fork_source_repository_id is null for a non-fork or a positive JSON integer equal to api.github.com source.id for a GitHub fork; a value equal to project_far_repository_provider_id is prohibited",
+    "treatment_material_audit_rule": "before freeze, the independent task-identity auditor inspects the exact candidate repository commit for Project FAR treatment material using the frozen FAR capsule and current Project FAR source artifacts as the reference set; contains_project_far_treatment_material must be boolean false and the audit report is retained and launch-bound",
+    "canonical_url_uniqueness_rule": "one authoritative (repository_provider, repository_provider_id) pair must map to exactly one canonical_repository_url and one canonical_repository_url must map to exactly one authoritative pair within the frozen sealed identity ledger",
+    "failure_rule": "any exact Project FAR repository, Project FAR GitHub fork-source match, treatment-material-positive audit, canonical-URL/provider-ID inconsistency, or unavailable required prohibition evidence rejects the task population before execution"
+  },
+  "sealed_identity_ledger_contract": {
+    "status": "uninstantiated",
+    "execution_authorized": false,
+    "media_type": "application/json",
+    "top_level_type": "array",
+    "record_required_keys_exactly": [
+      "blind_task_id",
+      "repository_blind_id",
+      "task_bundle_root_sha256",
+      "repository_provider",
+      "repository_provider_id",
+      "canonical_repository_url",
+      "repository_commit_sha",
+      "task_payload_sha256",
+      "task_payload_bytes",
+      "strata",
+      "github_fork_source_repository_id",
+      "contains_project_far_treatment_material"
+    ],
+    "array_binding_rule": "there is exactly one ledger record for every task-manifest record and no extras; ledger array position, blind_task_id, repository_blind_id, task_bundle_root_sha256, and strata must exactly match the corresponding frozen task-manifest record",
+    "descriptor_binding_rule": "the seven descriptor fields algorithm_id=far-swe-v3-task-bundle-root-v2 plus repository_provider, repository_provider_id, canonical_repository_url, repository_commit_sha, task_payload_sha256, and task_payload_bytes reconstructed from each ledger record must recompute that record's task_bundle_root_sha256 exactly",
+    "repository_binding_rule": "repository_provider must be exactly github.com and repository_provider_id must be a positive JSON integer independently resolved from api.github.com before freeze; equal provider/id pairs must use the same repository_blind_id and canonical_repository_url, distinct provider/id pairs must use distinct repository_blind_id values, and one canonical_repository_url may not map to multiple provider/id pairs",
+    "population_rule": "minimum repository count and per-repository task cap are computed from distinct (repository_provider, repository_provider_id) pairs in this sealed ledger, never URL spellings or blind labels alone",
+    "prohibited_repository_binding_rule": "every ledger record must satisfy prohibited_repository_contract: repository_provider_id must not equal the Project FAR repository ID, github_fork_source_repository_id must not equal the Project FAR repository ID, and contains_project_far_treatment_material must be boolean false",
+    "access_control": "ledger contents containing repository and task identity material are sealed from the agent and capsule authors; only the independent preexecution identity auditor and explicitly authorized evidence custodians may access them before scoring freeze",
+    "freeze_timing": "the exact ledger bytes and Git blob identity are committed before any sacrificial pilot or confirmatory execution and before any task identity is released to an executing agent",
+    "launch_binding": "the separate prospective pilot or confirmatory launch record must name both the frozen task-manifest Git blob identity and frozen sealed-identity-ledger Git blob identity plus the retained repository-prohibition audit report root",
+    "retention_rule": "the exact sealed ledger bytes, Git blob identity, independent validation report, and repository-prohibition audit report are retained in the experiment evidence store for post-run audit"
   },
   "repository_identity_contract": {
     "supported_provider": "github.com only",
     "authoritative_identity": "the ordered pair (repository_provider, repository_provider_id), where repository_provider is exactly the JSON string github.com and repository_provider_id is a positive JSON integer equal to the api.github.com REST repository id resolved before freeze; URL strings and repository_blind_id labels are never repository identities",
     "github_identity_rule": "repository_provider must equal github.com exactly and repository_provider_id must be a positive JSON integer equal to the decimal GitHub REST repository id; strings, owner/repository text, host aliases, self-hosted GitHub instances, path-case variants, default-port variants, .git suffixes, redirects, and renames cannot create distinct repository identities",
-    "canonical_url_rule": "canonical_repository_url must equal https://github.com/{full_name} using the full_name returned by api.github.com for the authoritative repository id at freeze time and is retained only for auditability; it may not override or split an equal provider-stable identity",
+    "canonical_url_rule": "canonical_repository_url must equal https://github.com/{full_name} using the full_name returned by api.github.com for the authoritative repository id at freeze time and is retained only for auditability; each authoritative provider/id pair has exactly one canonical URL in the ledger and each canonical URL maps to exactly one authoritative pair",
     "equal_authoritative_identities_same_blind_id": true,
     "distinct_authoritative_identities_distinct_blind_ids": true,
-    "minimum_repository_count_basis": "count distinct (repository_provider, repository_provider_id) pairs, never URL strings or repository_blind_id labels alone",
-    "per_repository_cap_basis": "apply the preregistered per-repository task cap by the same (repository_provider, repository_provider_id) pair before execution",
-    "validation_timing": "resolve and validate every github.com repository identity from api.github.com, the one-to-one identity-to-blind-ID mapping, unique task-bundle-root mapping, minimum repository count, and per-repository cap before any sacrificial pilot or confirmatory execution"
+    "minimum_repository_count_basis": "count distinct (repository_provider, repository_provider_id) pairs in the sealed identity ledger, never URL strings or repository_blind_id labels alone",
+    "per_repository_cap_basis": "apply the preregistered per-repository task cap by the same (repository_provider, repository_provider_id) pair in the sealed identity ledger before execution",
+    "validation_timing": "validate every github.com repository identity from api.github.com, canonical URL one-to-one mapping, the ledger-to-manifest one-to-one binding, unique task-bundle roots, Project FAR repository/fork/treatment-material prohibitions, minimum repository count, per-repository cap, and required-strata coverage before any sacrificial pilot or confirmatory execution"
   },
   "order_contract": {
     "authoritative_sequence": "top-level JSON array order",
@@ -92,13 +146,17 @@
     "record keys match the exact schema",
     "blind task identifiers are unique",
     "task bundle roots are unique so one authoritative task identity cannot occupy multiple manifest records or bootstrap units",
+    "every strata value is a nonempty duplicate-free canonical-order subset of bug_fix, test_failure, behavioral_regression, API_or_contract_change, multi_file_change",
+    "the union of strata across the frozen confirmatory task manifest covers bug_fix, test_failure, behavioral_regression, API_or_contract_change, and multi_file_change before execution",
     "all identifiers match their ASCII fixed-width patterns",
     "all task bundle roots are lowercase 64-character SHA-256 hex",
-    "every task bundle root is independently recomputed from the canonical task-bundle descriptor",
+    "the sealed identity ledger contains exactly one record for every frozen task-manifest record, in the same array order, with exact matching blind identifiers, task root, and strata",
+    "every task bundle root is independently recomputed from the corresponding sealed identity-ledger descriptor",
     "every repository_provider is exactly github.com and every repository_provider_id is a positive JSON integer independently resolved from api.github.com before counting or blind-ID assignment",
     "every canonical repository URL is derived from the authoritative GitHub repository id and returned full_name before counting or blind-ID assignment",
-    "equal authoritative repository identities use the same repository blind ID and distinct authoritative repository identities use distinct blind IDs",
-    "minimum repository count and per-repository cap are computed from authoritative provider-stable repository identities rather than URL spellings or blind-ID label count",
-    "the exact task manifest artifact bytes and Git blob identity are committed before any sacrificial pilot or confirmatory execution"
+    "equal authoritative repository identities use the same repository blind ID and canonical URL, distinct authoritative identities use distinct blind IDs, and one canonical URL never maps to multiple authoritative identities",
+    "no ledger repository_provider_id equals the Project FAR repository provider ID, no github_fork_source_repository_id equals it, and every contains_project_far_treatment_material value is boolean false under the retained independent prohibition audit",
+    "minimum repository count and per-repository cap are computed from authoritative provider-stable repository identities in the sealed identity ledger rather than URL spellings or blind-ID label count",
+    "the exact task manifest artifact bytes, sealed identity-ledger bytes, both Git blob identities, and repository-prohibition audit report root are committed before any sacrificial pilot or confirmatory execution"
   ]
 }

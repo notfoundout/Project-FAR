@@ -1,17 +1,17 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.3",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
-  "amendment_status": "prospective_pre_execution_correction",
+  "amendment_status": "current_prospective_failure_and_arithmetic_contract",
   "authority": {
-    "base_design_head": "83c951aca9be6a09a4517044ae531a3ed1bcc9a9",
-    "base_preregistration_git_blob_sha1": "7147f6814f76eb0f73fd0741b17b2501e38e6f57",
-    "base_evidence_plan_git_blob_sha1": "15b352d54a524d9caf827018b608028c004f8f13",
-    "superseded_paths": [
-      "/analysis/invalid_run_and_cell_policy/replacement rule",
-      "/analysis/bootstrap_interval_spec/arithmetic representation"
+    "contract_role": "standalone_current_prospective_authority",
+    "historical_context": "historical-authority-v1.0.json",
+    "historical_provenance_required_for_current_validity": false,
+    "governed_subjects": [
+      "replacement eligibility and terminal-reason classification",
+      "exact arithmetic for primary and bootstrap calculations and classification comparisons"
     ],
-    "precedence": "For the two superseded subjects, this amendment controls over v1.0; every other v1.0 field remains unchanged.",
+    "precedence": "For its governed subjects, this contract controls the current FAR-SWE-V3-001 design prospectively. The historical archive is explanatory context only and is not an authority dependency.",
     "outcome_exposure_status": "none",
     "model_calls_authorized": false,
     "benchmark_execution_authorized": false,
@@ -104,8 +104,9 @@
     "display_rule": "decimal renderings are secondary, labeled approximations and rounded half-even to six places after the exact classification is fixed"
   },
   "nonclaims": [
-    "This amendment does not authorize model calls, pilot execution, benchmark execution, or outcome reveal.",
-    "This amendment does not change the FAR treatment, task population, estimand, or decision categories.",
-    "This amendment does not establish that FAR improves software engineering."
+    "This contract does not require the historical archive to prove its current validity.",
+    "This contract does not authorize model calls, pilot execution, benchmark execution, or outcome reveal.",
+    "This contract does not change the FAR treatment, task population, estimand, or decision categories.",
+    "This contract does not establish that FAR improves software engineering."
   ]
 }

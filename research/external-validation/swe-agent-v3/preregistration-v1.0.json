@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.2",
   "program_id": "FAR-SWE-V3-001",
   "artifact_status": "Research",
   "stage": "design_only",
@@ -94,6 +94,7 @@
       "API_or_contract_change",
       "multi_file_change"
     ],
+    "sealed_identity_ledger_contract": "task-manifest-contract-v1.0.json#/sealed_identity_ledger_contract",
     "prohibited_task_repositories": [
       "notfoundout/Project-FAR",
       "any fork or mirror containing Project FAR treatment material"
@@ -148,11 +149,13 @@
     "primary_estimand": "mean_task_level_resolution_probability_far_minus_placebo",
     "uncertainty_method": "paired_task_bootstrap",
     "bootstrap_resamples": 100000,
-    "bootstrap_seed_status": "unfrozen_and_independently_committed_before_execution",
+    "bootstrap_seed_status": "frozen_by_bootstrap-seed-commitment-contract-v1.0.json_before_execution",
+    "bootstrap_seed_contract": "bootstrap-seed-commitment-contract-v1.0.json",
+    "critical_harm_contract": "critical-harm-thresholds-v1.0.json",
     "decision_categories": {
       "inconclusive_due_to_missingness": "one or more FAR or placebo task-arm cells remain missing after the single permitted same-slot infrastructure replacement",
       "bounded_harm": "no primary cells are missing and 95% paired-task bootstrap upper bound < 0",
-      "bounded_positive": "no primary cells are missing and estimate >= 0.10 and 95% paired-task bootstrap lower bound > 0 and no preregistered critical-harm gate fails",
+      "bounded_positive": "no primary cells are missing and estimate >= 0.10 and 95% paired-task bootstrap lower bound > 0 and no critical harm triggers under critical-harm-thresholds-v1.0.json",
       "no_practical_advantage": "no primary cells are missing and 0 <= 95% paired-task bootstrap upper bound < 0.10",
       "inconclusive": "no primary cells are missing and none of the preceding categories applies"
     },
@@ -192,10 +195,12 @@
       "task_order": {
         "contract": "task-manifest-contract-v1.0.json",
         "source": "exact frozen ordered task manifest committed and integrity-rooted before any sacrificial pilot or confirmatory execution",
+        "sealed_identity_ledger": "the exact sealed identity ledger governed by task-manifest-contract-v1.0.json is committed with the task manifest before execution and binds each blind record to its authoritative GitHub repository/task descriptor",
         "blind_identifier_pattern": "^TASK-[0-9]{6}$",
         "blind_identifier_encoding": "ASCII subset of UTF-8; Unicode and normalization-sensitive identifiers are prohibited",
         "sequence_rule": "manifest JSON array order is authoritative; runtime sorting and locale collation are prohibited",
-        "uniqueness_rule": "blind identifiers must be unique",
+        "uniqueness_rule": "blind identifiers and task-bundle roots must each be unique",
+        "strata_rule": "each record carries a frozen nonempty canonical-order subset of the five preregistered strata and the manifest-wide union must cover all five before execution",
         "complete_case_rule": "remove tasks with missing primary cells while preserving manifest-relative order",
         "bootstrap_vector_rule": "D_i vector indices are exactly the remaining manifest array positions in order"
       },

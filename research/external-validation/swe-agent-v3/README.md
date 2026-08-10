@@ -18,50 +18,37 @@ The historical v2 result remains immutable and separate: one task, two repetitio
 
 ## Current boundary
 
-This package freezes only the causal question, arm structure, estimands, outcome contract, evidence requirements, capsule constraints, prospective corrections, and fail-closed execution gates. It does not authorize a model call, pilot, benchmark run, confirmatory run, grading, outcome reveal, release, or accepted-theory change.
+This package freezes the causal question, arm structure, estimands, outcome contract, evidence requirements, capsule constraints, exact bootstrap procedure and bootstrap seed, task-manifest and sealed-identity-ledger contracts, required task strata, repository-prohibition contract, critical-harm threshold contract, failure/arithmetic contract, and fail-closed execution gate. It does not select the confirmatory tasks, instantiate the sealed identity ledger, choose a model endpoint, build the FAR capsule, build the placebo, set the final run budget, freeze assignment/counterbalancing randomization, or authorize a pilot or confirmatory run.
 
-`failure-arithmetic-amendment-v1.1.json` controls its two registered subjects. `review-closure-amendment-v1.2.json` prospectively controls only the bootstrap-seed authority correction, authoritative task identity and deterministic stratum classification, critical-harm thresholds and repetition-slot arithmetic, launch prerequisites, and shallow-checkout historical-authority consumption described in `AMENDMENT-v1.2.md`. The original historical authority bytes are preserved under `historical-base-83c951/` and are manifest-rooted immutable snapshots, not new evidence.
+All model calls and benchmark execution are currently blocked. A sacrificial pilot may only be separately authorized after every pre-pilot gate in `execution-gate-v1.0.json` is true, including `critical_harm_thresholds_frozen_and_verified`; confirmatory execution additionally requires the completed-and-excluded pilot gate and every remaining confirmatory gate. No such authorization currently exists.
 
-The frozen bootstrap seed remains bound to its originally committed derivation-input identities; later launch-preparation changes cannot rewrite it.
+The bootstrap seed is already prospectively frozen by `bootstrap-seed-commitment-contract-v1.0.json`. It is a direct committed value and does not depend on mutable capsule, task-manifest, sealed-identity-ledger, or execution-gate identities. This is distinct from the still-unfrozen assignment/counterbalancing randomization seed.
 
-Future instantiated task manifests must use a separate `task_identity_sha256` derived only from provider-stable repository identity, exact repository commit, and sealed task-payload identity. Strata are excluded from that identity, so relabeling cannot turn one underlying task into multiple tasks. `task_identity_sha256` must be unique across the frozen manifest.
+The future frozen task manifest contains blinded task/repository labels, a unique task-bundle root, and prospective strata. A separate sealed identity ledger governed by `task-manifest-contract-v1.0.json` must bind every manifest position one-to-one to the authoritative GitHub repository ID, canonical audit URL, exact repository commit, task-payload digest/byte count, matching strata, GitHub fork-source repository ID or null, and treatment-material audit result. Before any pilot or confirmatory execution, an independent identity auditor must recompute every task root; enforce the minimum 24 tasks, at least five provider-stable repositories, and the 20% per-repository cap; enforce one canonical URL and one blind repository ID per authoritative provider/ID pair; reject repository ID `1283452680` (`notfoundout/Project-FAR`); reject any GitHub fork whose `source.id` is `1283452680`; reject any candidate commit whose retained audit finds Project FAR treatment material; and verify coverage of all five required strata. The exact task-manifest and sealed-ledger bytes and Git blob identities plus the repository-prohibition audit report root must be committed before execution. The ledger remains sealed from the executing agent and capsule authors.
 
-Task strata are deterministic multi-label classifications, not operator-selected primary labels. The five frozen boolean classification inputs map one-to-one to the five preregistered strata; every true predicate is retained exactly once in canonical order. Every verifiable classification binding commits a canonical relative evidence path, exact retained-byte SHA-256, and exact byte count. Before launch eligibility can be established, the required validator resolves each path relative to the evidence-registry directory without following symlinks and independently recomputes the retained byte count and SHA-256. Source-derived predicates must use source-evidence bindings; the multi-file reference-patch predicate must use a sealed-reference-patch binding. Required-stratum coverage is checked only after these bindings and bytes verify.
+`critical-harm-thresholds-v1.0.json` prospectively fixes zero-tolerance harm rules plus exact rational FAR-minus-placebo regression-introduction and invalid-run rate thresholds. The zero-tolerance rules use explicit frozen-slot numerators and denominators and cannot be waived by dilution. Regression introduction is determined from the same frozen regression tests passing in the pristine control and failing against the submitted workspace; no causal-attribution override, operator waiver, or post-hoc exclusion is permitted.
 
-The same mandatory preexecution path applies the frozen population contract to the instantiated records: at least 24 unique authoritative tasks, at least five provider-stable repository identities, no repository above one fifth of the population, one-to-one repository-identity/blind-ID mapping, fixed-width unique blind task IDs, and complete required-stratum coverage. A nonempty manifest alone is never launch evidence.
+`failure-arithmetic-amendment-v1.1.json` is now a standalone current prospective contract for replacement/terminal-reason classification and exact arithmetic. Its validity does not depend on historical snapshot provenance. `historical-authority-v1.0.json` preserves archival context only, explicitly does not self-prove that its snapshots occurred at its claimed historical commit, and is not part of the live authority chain.
 
-Critical-harm rate comparisons use the identical frozen task × repetition-slot index for FAR and placebo. Allowed infrastructure replacements occupy the same slot and do not enlarge the denominator. Regression-introduction and invalid-run indicators are defined per frozen repetition slot; every frozen slot remains in the arm denominator, including invalid slots. FAR-minus-placebo rate differences use exact reduced-rational arithmetic, and any missing/duplicated/unpaired slot or missing evidence needed for the harm decision triggers `critical_harm`.
-
-All model calls and benchmark execution are currently blocked. A sacrificial pilot may only be separately authorized after every pre-pilot gate and every exact v1.2 pilot prerequisite is satisfied. Confirmatory execution additionally requires the exact v1.2 confirmatory prerequisites plus every remaining base gate. No such authorization currently exists.
+A true gate alone can never authorize a run. Every pilot or confirmatory launch also requires a separately committed prospective launch record containing every identity in `launch_record_required_bindings`, including the frozen design commit/manifest, task manifest, sealed identity ledger, repository-prohibition audit report root, seed commitment, harm contract, treatment/placebo roots, model, prompts/configuration, environment/dependencies, budgets/stopping rules, assignment seed, grader, evidence-store configuration, protection reference, and manual authorization record.
 
 ## Integrity model
 
-Every governed data, narrative, prospective-amendment, seed-commitment, and immutable historical-authority snapshot artifact is exact-locked in `design-manifest-v1.0.json`. The verifier checks each committed Git blob and the corresponding worktree bytes, then evaluates the critical semantic contracts. Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing; it remains ordinary reviewed code at the exact PR head.
+The reviewed Git commit/tree is the immutable current-byte authority. Every governed current design artifact plus archival context is indexed exactly once by `design-manifest-v1.0.json`, whose entries contain only governed paths. The manifest does not duplicate current blob identities, byte counts, hashes, or semantic digests; semantic verifiers enforce complete type-exact contract invariants while current bytes are bound solely by the reviewed Git tree. Verifier source is deliberately excluded from the governed-artifact manifest to avoid recursive self-hashing and remains ordinary reviewed code at the exact PR head.
 
-The historical snapshots make primary verification self-contained in a depth-1 checkout. Delegated v1.1 and v1.2 validators are explicitly bound to the caller's active artifact root, so fixture or alternate-checkout validation cannot silently inspect the canonical checkout instead.
+The archival snapshot record is intentionally weaker than live authority: it proves only that the current archive bytes match the archive record’s blob IDs. Establishing that those bytes existed at a claimed historical Git commit requires independent external Git/history provenance. Current experiment validity does not depend on that proof.
 
 ## Verification
 
-The current design-only package has no instantiated task population, so the static commands verify contracts and keep execution blocked:
-
 ```bash
 python research/external-validation/swe-agent-v3/verify_design.py
-python research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py
+python research/external-validation/swe-agent-v3/verify_amendment_v1_1.py
+python research/external-validation/swe-agent-v3/verify_review_closure.py
 python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v
 python -m py_compile \
   research/external-validation/swe-agent-v3/verify_integrity.py \
   research/external-validation/swe-agent-v3/verify_design.py \
   research/external-validation/swe-agent-v3/verify_review_closure.py \
-  research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py \
+  research/external-validation/swe-agent-v3/verify_amendment_v1_1.py \
   tests/test_swe_agent_v3*.py
 ```
-
-Before any pilot or confirmatory launch can be considered eligible, the frozen instantiated manifest and its evidence registry must additionally pass the required CLI path together:
-
-```bash
-python research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py \
-  --task-manifest /path/to/frozen-task-manifest.json \
-  --evidence-registry /path/to/frozen-evidence-registry.json
-```
-
-Supplying only one of those artifacts is invalid. If the execution gate ever claims pilot or confirmatory authorization, the no-argument static CLI fails rather than reporting launch eligibility without inspecting instantiated records and retained evidence.
