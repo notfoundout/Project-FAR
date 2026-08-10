@@ -188,3 +188,19 @@ Evidence: `docs/research/fara-prior-framework-subsumption-v1.0.md`. Investigatio
 | FARA is architecturally novel | **Not established** | Failure to establish subsumption does not prove novelty. Neither direction is licensed. |
 | The external-validation evidence base is directionally biased in a way that defeats its claims | **Rejected** | All twenty external-system records test only the forward direction, but none claims novelty, originality, irreducibility, or unprecedentedness. The claims drawn are correspondingly bounded, so the asymmetry is a scope limitation, not a defect. Corrects an earlier "blind spot" characterization. |
 | `OP-20` bears on `OP-01`, `OP-02`, `OP-03`, `OP-09`, `OP-12`, `UQ-T2`, or the terminal UPP theorem | Rejected — no dependency demonstrated | Component anticipation says nothing about derivability among the seven candidates. Subsumption does not imply falsity. The terminal theorem remains governed by its frozen premises. |
+
+## 2026-08-10 `LIM-016` refutation search
+
+Evidence: `docs/research/lim-016-primitive-derivability-refutation-search-v1.0.md`. Strictly one-directional. No canonical surface modified; no registered claim upgraded or downgraded.
+
+| Claim | Status | Required interpretation |
+|---|---|---|
+| Some candidate primitive is derivable from the other six | **Not established** | No admissible derivation witness survived in either tested formalization family. |
+| Any candidate primitive is independent, irreducible, or minimal | **Not established, and not supported by this null** | Absence of a witness is not evidence of independence. `W1`'s seven `unresolved` adjudications are unchanged. |
+| The seven primitives are minimal or complete | **Not established** | Explicitly outside what a refutation search can deliver. |
+| Property is eliminable by reification as an Object | **Non-testable** | Canonically licensed by `definitions.md:64`, but the construction relocates *characteristic* into a designated relation symbol, and canonical text does not settle whether relocation counts as elimination. |
+| Relation is derivable from Property plus tupling | **Rejected — relocation** | A tuple is an ordered association of objects, which is what Relation denotes. Clean rejection. |
+| `LIM-016` is executable in the refutation direction | **Refuted — corrects the prior prioritization** | The refutation direction is blocked by the same missing semantics as the universal direction, because the hidden-primitive audit cannot be discharged without them. |
+| The W2/W4/W5 auxiliary-model precedent transfers to `LIM-016` | **Rejected** | Those auxiliary models supplied dynamics while primitive meanings were not at issue; here the auxiliary model would have to supply the meanings under test. |
+| This null upgrades `OP-02`, `OP-03`, `OP-09`, `OP-12`, or `UQ-T2` | **Rejected** | They remain unresolved and remain blocked. A null result carries no upgrade. |
+| This bears on `OP-01`, universality, or the terminal UPP theorem | **Rejected** | No dependency demonstrated or asserted. |
