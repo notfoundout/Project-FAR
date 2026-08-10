@@ -59,3 +59,8 @@ Correction note (2026-08-10): the `UQ-T15` entry above was adjudicated as a cons
 - **UQ-T17:** Is the stipulative reading of "reasoning calculus" the canonical one? **Unresolved; the reading is supported by `definitions.md:484` but never stated, and FARA's non-circularity currently depends on it.**
 
 Dependency note: `docs/reports/ax001-circularity-investigation.md` remaining open questions 3 and 10 restate `OP-04`/`UQ-T8` from the FARO side and reached `INCONCLUSIVE`. That report was previously referenced by `AX-001` and repository navigation but by no governance register. It is recorded here as prior evidence bearing on `UQ-T8`, `UQ-T16`, and `UQ-T17`; its status is unchanged.
+
+
+## Admissibility branch closure (2026-08-10)
+
+`UQ-T19`, `UQ-T20`, `UQ-T21`, and `UQ-T22` are **closed as evidence-exhausted**, not resolved. Their common residue is reclassified from an unresolved discoverable fact to an architectural decision point recorded in [`ADR-002`](../architecture/adr/ADR-002-Unresolved-Admissibility-Status-Semantics.md). Both alternatives and their established consequences are preserved there; neither is selected. These entries remain in the register as historical record and must not be cited as open research questions.
