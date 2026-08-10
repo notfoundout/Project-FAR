@@ -1,0 +1,1 @@
+Exact-head hosted validation trigger after assurance relock. No execution authorization or theory change.
