@@ -22,10 +22,22 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Refresh governed artifact identities and freeze candidate HEAD
+      - name: Normalize composed verifier failures and refresh governed identities
         shell: bash
         run: |
           set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('research/external-validation/swe-agent-v3/verify_review_closure.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''    amendment_v1_1.validate(\n        amend=active / "failure-arithmetic-amendment-v1.1.json",\n        readme=active / "AMENDMENT-v1.1.md",\n        gate=active / "execution-gate-v1.0.json",\n        historical_root=active / "historical-base-83c951",\n    )\n'''
+          new = '''    try:\n        amendment_v1_1.validate(\n            amend=active / "failure-arithmetic-amendment-v1.1.json",\n            readme=active / "AMENDMENT-v1.1.md",\n            gate=active / "execution-gate-v1.0.json",\n            historical_root=active / "historical-base-83c951",\n        )\n    except amendment_v1_1.AmendmentError as exc:\n        raise DesignError(f"failure/arithmetic amendment validation failed: {exc}") from exc\n'''
+          if text.count(old) != 1:
+              raise SystemExit(f'expected one amendment delegate block, found {text.count(old)}')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+
           python - <<'PY'
           import json
           import subprocess
@@ -38,24 +50,25 @@ jobs:
               raise SystemExit('design manifest artifacts missing')
           seen = set()
           for entry in artifacts:
-              if not isinstance(entry, dict):
-                  raise SystemExit('design manifest artifact record is not an object')
-              rel = entry.get('path')
+              rel = entry.get('path') if isinstance(entry, dict) else None
               if not isinstance(rel, str) or not rel or rel in seen:
                   raise SystemExit(f'invalid/duplicate governed path: {rel!r}')
               seen.add(rel)
-              blob = subprocess.check_output(['git', 'rev-parse', f'HEAD:{rel}'], text=True).strip()
-              size = int(subprocess.check_output(['git', 'cat-file', '-s', blob], text=True).strip())
+              # Source edits are in the index only after the candidate commit below,
+              # so calculate their Git blob identity from the exact working bytes.
+              raw = Path(rel).read_bytes()
+              blob = subprocess.check_output(['git', 'hash-object', '--stdin'], input=raw).decode().strip()
               entry['git_blob_sha1'] = blob
-              entry['bytes'] = size
+              entry['bytes'] = len(raw)
           manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           PY
+
           rm .github/workflows/pr435-root-closure.yml
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
           git diff --cached --check
-          git commit -m 'Refresh PR435 governed artifact identities'
+          git commit -m 'Normalize PR435 verifier failure boundary'
 
       - name: Verify committed candidate HEAD
         shell: bash
