@@ -456,6 +456,17 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
         if isinstance(node, ast.Call)
     }
     captured: list[str] = []
+    # A namespace handed to another callable is written through that callee, not
+    # through a receiver this scanner can inspect -- operator.setitem(globals(),
+    # name, value) is a module-scope rebinding whose receiver is `operator`.
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        for argument in (*node.args, *(kw.value for kw in node.keywords)):
+            inner = argument.value if isinstance(argument, ast.Starred) else argument
+            scope = namespace_scope(inner)
+            if scope is not None:
+                captured.append(f"namespace-passed-to-call:{scope}:{_call_name(node) or '<expr>'}")
     for node in ast.walk(tree):
         if id(node) in called_directly:
             continue
@@ -668,6 +679,68 @@ def _show(root: Path, revision: str, path: str) -> str | None:
     return completed.stdout if completed.returncode == 0 else None
 
 
+ASSURANCE_REGISTRY_PATH = "far_validation/weakening.py"
+_PINNED_REGISTRIES = (
+    "EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS",
+    "REQUIRED_MODULE_BINDING_SIGNATURES",
+    "REQUIRED_LIVE_CALL_PREFIXES",
+)
+
+
+def _registry_literals(source: str) -> dict[str, Any]:
+    """Read the pinned registries out of a source revision without importing it."""
+    values: dict[str, Any] = {}
+    try:
+        tree = ast.parse(source, filename=ASSURANCE_REGISTRY_PATH)
+    except SyntaxError:
+        return values
+    for statement in tree.body:
+        target: str | None = None
+        if isinstance(statement, ast.AnnAssign) and isinstance(statement.target, ast.Name):
+            target = statement.target.id
+        elif isinstance(statement, ast.Assign) and len(statement.targets) == 1 and isinstance(statement.targets[0], ast.Name):
+            target = statement.targets[0].id
+        if target not in _PINNED_REGISTRIES or statement.value is None:
+            continue
+        try:
+            values[target] = ast.literal_eval(statement.value)
+        except (ValueError, SyntaxError):
+            continue
+    return values
+
+
+def _self_repin_failures(root: Path, revision: str, changed_paths: set[str]) -> dict[str, list[str]]:
+    """Reject changing a protected verifier and its own expected pins together.
+
+    The expected values live in the same tree as the code they protect, so a
+    change can weaken an implementation and refresh its own pin in one step. That
+    cannot be prevented in-tree, but it can be made visible: when a protected
+    path and the pins describing it both move in the same change, say so instead
+    of reporting success. Paths that do not exist at the comparison base are
+    being introduced, which has no prior pin to contradict.
+    """
+    if ASSURANCE_REGISTRY_PATH not in changed_paths:
+        return {}
+    base_registry_source = _show(root, revision, ASSURANCE_REGISTRY_PATH)
+    if base_registry_source is None:
+        return {}
+    base_values = _registry_literals(base_registry_source)
+    head_values = _registry_literals((root / ASSURANCE_REGISTRY_PATH).read_text(encoding="utf-8"))
+    failures: dict[str, list[str]] = {}
+    for path in sorted(changed_paths):
+        if path == ASSURANCE_REGISTRY_PATH or _show(root, revision, path) is None:
+            continue
+        for registry in _PINNED_REGISTRIES:
+            before = (base_values.get(registry) or {}).get(path)
+            after = (head_values.get(registry) or {}).get(path)
+            if before is not None and before != after:
+                failures.setdefault(path, []).append(
+                    f"protected pin {registry} for {path} changed in the same change as {path}; "
+                    "an implementation and its own expected value must not be repinned together"
+                )
+    return failures
+
+
 def _load_waivers(root: Path) -> dict[str, dict[str, Any]]:
     path = root / "validation" / "test-weakening-waivers.json"
     if not path.is_file():
@@ -779,6 +852,18 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
                 finding.failures.clear()
                 used.append(path)
         findings.append(finding)
+
+    # Applied after waivers: a waiver excuses a metric drop on one file, not a
+    # change that rewrites the expected values guarding another file.
+    repin_failures = _self_repin_failures(root, resolved, {path for _status, path in _changed_python(root, resolved)})
+    if repin_failures:
+        by_path = {finding.path: finding for finding in findings}
+        for path, messages in repin_failures.items():
+            finding = by_path.get(path)
+            if finding is None:
+                finding = WeakeningFinding(path=path)
+                findings.append(finding)
+            finding.failures.extend(messages)
     return WeakeningReport(base=resolved, findings=findings, waivers_used=used)
 
 

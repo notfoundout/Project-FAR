@@ -65,6 +65,56 @@ class ProtectedValidatorAssuranceHardeningTests(unittest.TestCase):
             digest = hashlib.sha256(mutated.encode("utf-8")).hexdigest()
             self.assertNotEqual(lock["files"][protected], digest, protected)
 
+    def test_weakening_and_self_repin_in_one_change_is_rejected(self) -> None:
+        """An implementation and its own expected pin must not move together.
+
+        The pins live in the same tree as the code they protect, so a change can
+        weaken a validator and refresh its own digest in one step. That cannot be
+        prevented in-tree, but it must not be silent.
+        """
+        legacy = "research/target-category-discovery/verify_compositional_invariant_legacy.py"
+        registry = weakening.ASSURANCE_REGISTRY_PATH
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+            subprocess.run(["git", "config", "user.email", "assurance@example.invalid"], cwd=repo, check=True)
+            subprocess.run(["git", "config", "user.name", "Validator Assurance"], cwd=repo, check=True)
+            for rel in (registry, legacy, "far_validation/__init__.py"):
+                target = repo / rel
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes((ROOT / rel).read_bytes())
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "baseline"], cwd=repo, check=True)
+            base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
+
+            marker = (
+                "def validate_empirical_authority(charter_path: Path, manifest_path: Path,"
+                " audit_path: Path = DEFAULT_CHAT_AUDIT) -> None:\n"
+            )
+            source = (repo / legacy).read_text(encoding="utf-8")
+            self.assertEqual(source.count(marker), 1)
+            (repo / legacy).write_text(source.replace(marker, marker + "    return\n", 1), encoding="utf-8")
+
+            repinned = weakening._protected_implementation_digest(
+                (repo / legacy).read_text(encoding="utf-8"), legacy, "validate_empirical_authority"
+            )
+            original = weakening.EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS[legacy][
+                "validate_empirical_authority"
+            ]
+            (repo / registry).write_text(
+                (repo / registry).read_text(encoding="utf-8").replace(original, repinned),
+                encoding="utf-8",
+            )
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "weaken and self-repin"], cwd=repo, check=True)
+
+            report = weakening.detect_weakening(repo, base=base)
+            self.assertFalse(report.successful)
+            failures = [item for finding in report.findings for item in finding.failures]
+            self.assertTrue(
+                any("must not be repinned together" in item for item in failures), failures
+            )
+
     def test_implementation_digests_match_committed_sources(self) -> None:
         for path, names in weakening.EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.items():
             source = (ROOT / path).read_text(encoding="utf-8")
