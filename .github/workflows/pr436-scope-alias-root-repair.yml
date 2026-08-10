@@ -1,0 +1,275 @@
+name: PR436 Scope Alias Root Repair
+
+on:
+  push:
+    branches:
+      - agent/close-structured-reasoning-compositional-question
+    paths:
+      - .github/workflows/pr436-scope-alias-root-repair.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/close-structured-reasoning-compositional-question
+          fetch-depth: 0
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Apply scope-aware alias repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+
+          path = Path('far_validation/weakening.py')
+          text = path.read_text(encoding='utf-8')
+
+          start = text.index('def _module_scope_binding_signatures(')
+          end = text.index('\ndef _binding_integrity_failures', start)
+          chunk = text[start:end]
+
+          anchor = '''    namespace_names: dict[str, str] = {name: name for name in ("globals", "locals", "vars")}
+    builtins_names: set[str] = {"builtins"}
+
+'''
+          replacement = '''    namespace_names: dict[str, str] = {name: name for name in ("globals", "locals", "vars")}
+    builtins_names: set[str] = {"builtins"}
+
+    def definition_time_statements(stmts: list[ast.stmt]):
+        for statement in stmts:
+            yield statement
+            if isinstance(statement, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            if isinstance(statement, ast.ClassDef):
+                yield from definition_time_statements(statement.body)
+            elif isinstance(statement, (ast.If, ast.For, ast.AsyncFor, ast.While)):
+                yield from definition_time_statements(statement.body)
+                yield from definition_time_statements(statement.orelse)
+            elif isinstance(statement, (ast.With, ast.AsyncWith)):
+                yield from definition_time_statements(statement.body)
+            elif isinstance(statement, ast.Try):
+                yield from definition_time_statements(statement.body)
+                for handler in statement.handlers:
+                    yield from definition_time_statements(handler.body)
+                yield from definition_time_statements(statement.orelse)
+                yield from definition_time_statements(statement.finalbody)
+            elif isinstance(statement, ast.Match):
+                for case in statement.cases:
+                    yield from definition_time_statements(case.body)
+
+    def alias_pairs(target: ast.AST, value: ast.AST):
+        if isinstance(target, ast.Name):
+            yield target, value
+            return
+        if (
+            isinstance(target, (ast.Tuple, ast.List))
+            and isinstance(value, (ast.Tuple, ast.List))
+            and len(target.elts) == len(value.elts)
+        ):
+            for target_item, value_item in zip(target.elts, value.elts):
+                yield from alias_pairs(target_item, value_item)
+
+    definition_scope = list(definition_time_statements(tree.body))
+
+'''
+          if chunk.count(anchor) != 1:
+              raise SystemExit('binding alias anchor mismatch')
+          chunk = chunk.replace(anchor, replacement, 1)
+          chunk = chunk.replace('for statement in tree.body:', 'for statement in definition_scope:', 2)
+
+          old = '''            for target in targets:
+                if not isinstance(target, ast.Name):
+                    continue
+                if isinstance(value, ast.Name) and value.id in builtins_names and target.id not in builtins_names:
+                    builtins_names.add(target.id)
+                    changed = True
+                provider: str | None = None
+                if isinstance(value, ast.Name) and value.id in namespace_names:
+                    provider = namespace_names[value.id]
+                elif (
+                    isinstance(value, ast.Attribute)
+                    and isinstance(value.value, ast.Name)
+                    and value.value.id in builtins_names
+                    and value.attr in {"globals", "locals", "vars"}
+                ):
+                    provider = value.attr
+                if provider is not None and namespace_names.get(target.id) != provider:
+                    namespace_names[target.id] = provider
+                    changed = True
+'''
+          new = '''            for target in targets:
+                for alias_target, alias_value in alias_pairs(target, value):
+                    if (
+                        isinstance(alias_value, ast.Name)
+                        and alias_value.id in builtins_names
+                        and alias_target.id not in builtins_names
+                    ):
+                        builtins_names.add(alias_target.id)
+                        changed = True
+                    provider: str | None = None
+                    if isinstance(alias_value, ast.Name) and alias_value.id in namespace_names:
+                        provider = namespace_names[alias_value.id]
+                    elif (
+                        isinstance(alias_value, ast.Attribute)
+                        and isinstance(alias_value.value, ast.Name)
+                        and alias_value.value.id in builtins_names
+                        and alias_value.attr in {"globals", "locals", "vars"}
+                    ):
+                        provider = alias_value.attr
+                    if provider is not None and namespace_names.get(alias_target.id) != provider:
+                        namespace_names[alias_target.id] = provider
+                        changed = True
+'''
+          if chunk.count(old) != 1:
+              raise SystemExit('binding tuple alias block mismatch')
+          chunk = chunk.replace(old, new, 1)
+          text = text[:start] + chunk + text[end:]
+
+          start = text.index('def _definition_time_execution_failures(')
+          end = text.index('\ndef analyze(', start)
+          chunk = text[start:end]
+          anchor = '''    dynamic_names = set(direct)
+    builtins_names: set[str] = {"builtins"}
+
+'''
+          replacement = '''    dynamic_names = set(direct)
+    builtins_names: set[str] = {"builtins"}
+
+    def definition_time_statements(stmts: list[ast.stmt]):
+        for statement in stmts:
+            yield statement
+            if isinstance(statement, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            if isinstance(statement, ast.ClassDef):
+                yield from definition_time_statements(statement.body)
+            elif isinstance(statement, (ast.If, ast.For, ast.AsyncFor, ast.While)):
+                yield from definition_time_statements(statement.body)
+                yield from definition_time_statements(statement.orelse)
+            elif isinstance(statement, (ast.With, ast.AsyncWith)):
+                yield from definition_time_statements(statement.body)
+            elif isinstance(statement, ast.Try):
+                yield from definition_time_statements(statement.body)
+                for handler in statement.handlers:
+                    yield from definition_time_statements(handler.body)
+                yield from definition_time_statements(statement.orelse)
+                yield from definition_time_statements(statement.finalbody)
+            elif isinstance(statement, ast.Match):
+                for case in statement.cases:
+                    yield from definition_time_statements(case.body)
+
+    def alias_pairs(target: ast.AST, value: ast.AST):
+        if isinstance(target, ast.Name):
+            yield target, value
+            return
+        if (
+            isinstance(target, (ast.Tuple, ast.List))
+            and isinstance(value, (ast.Tuple, ast.List))
+            and len(target.elts) == len(value.elts)
+        ):
+            for target_item, value_item in zip(target.elts, value.elts):
+                yield from alias_pairs(target_item, value_item)
+
+    definition_scope = list(definition_time_statements(tree.body))
+
+'''
+          if chunk.count(anchor) != 1:
+              raise SystemExit('dynamic alias anchor mismatch')
+          chunk = chunk.replace(anchor, replacement, 1)
+          chunk = chunk.replace('for statement in tree.body:', 'for statement in definition_scope:', 2)
+          old = '''            names = set().union(*(assigned_names(target) for target in targets))
+            if isinstance(value, ast.Name) and value.id in builtins_names:
+                for name in names:
+                    if name not in builtins_names:
+                        builtins_names.add(name)
+                        changed = True
+            if dynamic_source(value):
+                for name in names:
+                    if name not in dynamic_names:
+                        dynamic_names.add(name)
+                        changed = True
+'''
+          new = '''            for target in targets:
+                for alias_target, alias_value in alias_pairs(target, value):
+                    name = alias_target.id
+                    if isinstance(alias_value, ast.Name) and alias_value.id in builtins_names:
+                        if name not in builtins_names:
+                            builtins_names.add(name)
+                            changed = True
+                    if dynamic_source(alias_value) and name not in dynamic_names:
+                        dynamic_names.add(name)
+                        changed = True
+'''
+          if chunk.count(old) != 1:
+              raise SystemExit('dynamic tuple alias block mismatch')
+          chunk = chunk.replace(old, new, 1)
+          text = text[:start] + chunk + text[end:]
+          path.write_text(text, encoding='utf-8')
+
+          tests = Path('tests/test_target_category_weakening_aliases.py')
+          test_text = tests.read_text(encoding='utf-8')
+          marker = '\n    def test_vars_namespace_rebinding_of_protected_helper_is_rejected(self) -> None:\n'
+          insert = '''
+    def test_class_body_imported_exec_alias_is_rejected(self) -> None:
+        report = self._mutated_report(
+            "\\nclass _FarNestedImportedAliasAttack:\\n"
+            "    from builtins import exec as _far_nested_exec\\n"
+            "    _far_nested_exec('globals()[\\\\\\\"validate_empirical_authority\\\\\\\"] = lambda *a, **k: None')\\n"
+        )
+        self.assertFalse(report.successful)
+        failures = [item for finding in report.findings for item in finding.failures]
+        self.assertTrue(any("dynamic execution rejected" in item for item in failures), failures)
+
+    def test_destructured_vars_alias_rebinding_is_rejected(self) -> None:
+        report = self._mutated_report(
+            "\\n(_far_vars,) = (vars,)\\n"
+            "_far_vars()[\\\"validate_gate\\\"] = lambda *a, **k: None\\n"
+        )
+        self.assertFalse(report.successful)
+        failures = [item for finding in report.findings for item in finding.failures]
+        self.assertTrue(
+            any("protected validator binding changed for validate_gate" in item for item in failures),
+            failures,
+        )
+'''
+          if test_text.count(marker) != 1:
+              raise SystemExit('test insertion marker mismatch')
+          tests.write_text(test_text.replace(marker, insert + marker, 1), encoding='utf-8')
+
+          lock_path = Path('validation_bootstrap/assurance-lock.json')
+          lock = json.loads(lock_path.read_text(encoding='utf-8'))
+          lock['files']['far_validation/weakening.py'] = hashlib.sha256(path.read_bytes()).hexdigest()
+          lock_path.write_text(json.dumps(lock, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+          python -m py_compile far_validation/weakening.py tests/test_target_category_weakening_aliases.py
+          rm .github/workflows/pr436-scope-alias-root-repair.yml
+          git config user.name "Project FAR Closure"
+          git config user.email "actions@users.noreply.github.com"
+          git add far_validation/weakening.py tests/test_target_category_weakening_aliases.py validation_bootstrap/assurance-lock.json .github/workflows/pr436-scope-alias-root-repair.yml
+          git commit -m "Resolve definition-time aliases across executable scopes"
+      - name: Run focused regressions
+        run: |
+          python -m unittest tests.test_target_category_weakening_aliases tests.test_target_category_validator_assurance_hardening tests.test_target_category_compositional_invariant tests.test_pr436_root_closure -v
+      - name: Verify independent bootstrap
+        run: python validation_bootstrap/verify.py
+      - name: Run weakening detector against main
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="$(git merge-base HEAD origin/main)"
+          python -m far_validation weakening --base "$BASE"
+      - name: Run complete relevant validation profile
+        run: python -m far_validation validate --profile pr-full --no-cache
+      - name: Push only validated repair
+        run: git push origin HEAD:agent/close-structured-reasoning-compositional-question
