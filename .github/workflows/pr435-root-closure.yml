@@ -54,8 +54,6 @@ jobs:
               if not isinstance(rel, str) or not rel or rel in seen:
                   raise SystemExit(f'invalid/duplicate governed path: {rel!r}')
               seen.add(rel)
-              # Source edits are in the index only after the candidate commit below,
-              # so calculate their Git blob identity from the exact working bytes.
               raw = Path(rel).read_bytes()
               blob = subprocess.check_output(['git', 'hash-object', '--stdin'], input=raw).decode().strip()
               entry['git_blob_sha1'] = blob
@@ -74,6 +72,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python -m pip install -r requirements.txt
           python research/external-validation/swe-agent-v3/verify_design.py
           python research/external-validation/swe-agent-v3/verify_review_closure.py
           python research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py
