@@ -49,9 +49,17 @@ jobs:
         shell: bash
         run: |
           set +e
-          python tools/run_tests.py --fast; echo "FAST=$?"
-          python tools/check_repository_hygiene.py; echo "HYGIENE=$?"
-          python tools/repo_health_check.py --full; echo "HEALTH=$?"
-          python validation_bootstrap/verify.py; echo "BOOT=$?"
-          python -m unittest tests.test_target_category_compositional_invariant -v; echo "TARGET=$?"
+          {
+            echo '=== FAST ==='; python tools/run_tests.py --fast; echo "FAST=$?"
+            echo '=== HYGIENE ==='; python tools/check_repository_hygiene.py; echo "HYGIENE=$?"
+            echo '=== HEALTH ==='; python tools/repo_health_check.py --full; echo "HEALTH=$?"
+            echo '=== BOOTSTRAP ==='; python validation_bootstrap/verify.py; echo "BOOT=$?"
+            echo '=== TARGET ==='; python -m unittest tests.test_target_category_compositional_invariant -v; echo "TARGET=$?"
+          } > /tmp/pr436-diagnostic.txt 2>&1
+          cat /tmp/pr436-diagnostic.txt
           exit 1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr436-diagnostic
+          path: /tmp/pr436-diagnostic.txt
