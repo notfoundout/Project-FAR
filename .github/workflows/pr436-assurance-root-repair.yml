@@ -1,0 +1,181 @@
+name: PR436 Assurance Root Repair
+
+on:
+  push:
+    branches:
+      - agent/close-structured-reasoning-compositional-question
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply root assurance repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from __future__ import annotations
+          import ast
+          import hashlib
+          from pathlib import Path
+
+          root = Path('.')
+          weakening_path = root / 'far_validation/weakening.py'
+          source = weakening_path.read_text(encoding='utf-8')
+
+          # 1. Definition-time expressions are live module-scope code. Scan decorators,
+          # defaults, annotations, class bases and keywords before skipping bodies.
+          old = '''            if isinstance(st, (ast.FunctionDef, ast.AsyncFunctionDef)):\n                if st.name in protected:\n                    events[st.name].append("function")\n                continue\n            if isinstance(st, ast.ClassDef):\n                if st.name in protected:\n                    events[st.name].append("class")\n                continue\n'''
+          new = '''            if isinstance(st, (ast.FunctionDef, ast.AsyncFunctionDef)):\n                if st.name in protected:\n                    events[st.name].append("function")\n                for decorator in st.decorator_list:\n                    scan_expr(decorator)\n                for default in (*st.args.defaults, *[item for item in st.args.kw_defaults if item is not None]):\n                    scan_expr(default)\n                for arg in (*st.args.posonlyargs, *st.args.args, *st.args.kwonlyargs):\n                    if arg.annotation is not None:\n                        scan_expr(arg.annotation)\n                if st.args.vararg is not None and st.args.vararg.annotation is not None:\n                    scan_expr(st.args.vararg.annotation)\n                if st.args.kwarg is not None and st.args.kwarg.annotation is not None:\n                    scan_expr(st.args.kwarg.annotation)\n                if st.returns is not None:\n                    scan_expr(st.returns)\n                continue\n            if isinstance(st, ast.ClassDef):\n                if st.name in protected:\n                    events[st.name].append("class")\n                for decorator in st.decorator_list:\n                    scan_expr(decorator)\n                for base in st.bases:\n                    scan_expr(base)\n                for keyword in st.keywords:\n                    scan_expr(keyword.value)\n                continue\n'''
+          if old not in source:
+              raise SystemExit('expected definition-scan block not found')
+          source = source.replace(old, new, 1)
+
+          protected_paths = {
+              'research/target-category-discovery/verify_compositional_invariant.py': ('validate_empirical_authority', 'validate_gate'),
+              'research/target-category-discovery/verify_compositional_invariant_legacy.py': ('validate_empirical_authority', 'validate_gate'),
+          }
+
+          def function_digest(path: str, function_name: str) -> str:
+              text = (root / path).read_text(encoding='utf-8')
+              tree = ast.parse(text, filename=path)
+              matches = [n for n in tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name == function_name]
+              if len(matches) != 1:
+                  raise SystemExit(f'expected exactly one {function_name} in {path}')
+              fn = matches[0]
+              # Hash the executable definition, including decorators, arguments and body,
+              # while excluding source-position metadata and comments/formatting.
+              payload = ast.dump(fn, annotate_fields=True, include_attributes=False).encode('utf-8')
+              return hashlib.sha256(payload).hexdigest()
+
+          digests = {
+              path: {name: function_digest(path, name) for name in names}
+              for path, names in protected_paths.items()
+          }
+          constant = 'EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = ' + repr(digests) + '\n\n\n'
+          marker = '@dataclass\nclass StrengthMetrics:'
+          if marker not in source:
+              raise SystemExit('StrengthMetrics marker not found')
+          source = source.replace(marker, constant + marker, 1)
+
+          helper = '''def _protected_implementation_digest(source: str, path: str, function_name: str) -> str | None:\n    tree = ast.parse(source, filename=path)\n    matches = [\n        node\n        for node in tree.body\n        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == function_name\n    ]\n    if len(matches) != 1:\n        return None\n    payload = ast.dump(matches[0], annotate_fields=True, include_attributes=False).encode("utf-8")\n    return hashlib.sha256(payload).hexdigest()\n\n\ndef _protected_implementation_failures(source: str, path: str) -> list[str]:\n    expected = EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.get(path)\n    if expected is None:\n        return []\n    failures: list[str] = []\n    for function_name, expected_digest in expected.items():\n        actual = _protected_implementation_digest(source, path, function_name)\n        if actual != expected_digest:\n            failures.append(\n                f"protected validator implementation changed for {function_name}: "\n                f"expected {expected_digest}; got {actual or '<missing-or-ambiguous>'}"\n            )\n    return failures\n\n\n'''
+          helper_marker = 'def analyze(source: str, path: str) -> StrengthMetrics:\n'
+          if helper_marker not in source:
+              raise SystemExit('analyze marker not found')
+          source = source.replace(helper_marker, helper + helper_marker, 1)
+
+          check_old = '            finding.failures.extend(_binding_integrity_failures(after_source, path))\n'
+          check_new = check_old + '            finding.failures.extend(_protected_implementation_failures(after_source, path))\n'
+          if check_old not in source:
+              raise SystemExit('binding integrity invocation not found')
+          source = source.replace(check_old, check_new, 1)
+
+          # hashlib is needed by the implementation integrity contract.
+          source = source.replace('import ast\nimport json\n', 'import ast\nimport hashlib\nimport json\n', 1)
+          weakening_path.write_text(source, encoding='utf-8')
+
+          test_path = root / 'tests/test_target_category_validator_assurance_hardening.py'
+          test_path.write_text(r'''from __future__ import annotations
+
+import importlib.util
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+WEAKENING_PATH = ROOT / "far_validation/weakening.py"
+
+spec = importlib.util.spec_from_file_location("far_weakening_hardening_test", WEAKENING_PATH)
+assert spec and spec.loader
+weakening = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = weakening
+spec.loader.exec_module(weakening)
+
+
+class ProtectedValidatorAssuranceHardeningTests(unittest.TestCase):
+    def _repo(self) -> tuple[tempfile.TemporaryDirectory[str], Path, str]:
+        tmp = tempfile.TemporaryDirectory()
+        repo = Path(tmp.name)
+        subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+        subprocess.run(["git", "config", "user.email", "assurance@example.invalid"], cwd=repo, check=True)
+        subprocess.run(["git", "config", "user.name", "Validator Assurance"], cwd=repo, check=True)
+        for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+            target = repo / protected
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text((ROOT / protected).read_text(encoding="utf-8"), encoding="utf-8")
+        subprocess.run(["git", "add", "."], cwd=repo, check=True)
+        subprocess.run(["git", "commit", "-qm", "baseline"], cwd=repo, check=True)
+        base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
+        return tmp, repo, base
+
+    def _commit_and_report(self, repo: Path, base: str, message: str):
+        subprocess.run(["git", "add", "."], cwd=repo, check=True)
+        subprocess.run(["git", "commit", "-qm", message], cwd=repo, check=True)
+        return weakening.detect_weakening(repo, base=base)
+
+    def test_definition_time_decorator_rebinding_is_rejected(self) -> None:
+        tmp, repo, base = self._repo()
+        self.addCleanup(tmp.cleanup)
+        for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+            target = repo / protected
+            text = target.read_text(encoding="utf-8")
+            mutation = '''\ndef _far_rebind(fn):\n    globals().__setitem__("validate_empirical_authority", lambda *a, **k: None)\n    globals().__setitem__("validate_gate", lambda *a, **k: None)\n    return fn\n\n@_far_rebind\ndef _far_trigger():\n    return None\n'''
+            target.write_text(text + mutation, encoding="utf-8")
+        report = self._commit_and_report(repo, base, "decorator rebinding attack")
+        self.assertFalse(report.successful)
+        for finding in report.findings:
+            if finding.path in weakening.REQUIRED_SEMANTIC_CALLS:
+                self.assertTrue(any("protected validator binding changed" in item for item in finding.failures))
+
+    def test_protected_validator_early_return_is_rejected(self) -> None:
+        tmp, repo, base = self._repo()
+        self.addCleanup(tmp.cleanup)
+        legacy = repo / "research/target-category-discovery/verify_compositional_invariant_legacy.py"
+        text = legacy.read_text(encoding="utf-8")
+        needle = "def validate_empirical_authority(charter_path: Path, manifest_path: Path, audit_path: Path = DEFAULT_CHAT_AUDIT) -> None:\n"
+        self.assertEqual(text.count(needle), 1)
+        legacy.write_text(text.replace(needle, needle + "    return None\n", 1), encoding="utf-8")
+        report = self._commit_and_report(repo, base, "early-return protected validator attack")
+        self.assertFalse(report.successful)
+        failures = next(f.failures for f in report.findings if f.path == str(legacy.relative_to(repo)))
+        self.assertTrue(any("protected validator implementation changed" in item for item in failures))
+
+
+if __name__ == "__main__":
+    unittest.main()
+''', encoding='utf-8')
+
+          # The one-shot workflow must not remain as branch surface.
+          Path('.github/workflows/pr436-assurance-root-repair.yml').unlink()
+          PY
+
+      - name: Run focused tests
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_target_category_compositional_invariant -v
+          python -m unittest tests.test_target_category_validator_assurance_hardening -v
+          python -m far_validation weakening
+
+      - name: Run repository fast validation
+        run: python -m far_validation run --profile pr-fast --trace-mode required
+
+      - name: Commit validated repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add far_validation/weakening.py tests/test_target_category_validator_assurance_hardening.py .github/workflows/pr436-assurance-root-repair.yml
+          git diff --cached --check
+          git commit -m 'Harden protected validator assurance at root'
+          git push
