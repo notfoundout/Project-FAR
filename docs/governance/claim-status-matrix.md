@@ -71,4 +71,20 @@ Evidence: `docs/research/fara-admissibility-priority-v1.0.md`. Investigation tar
 | `Ω`'s per-candidate form suffices for all admissibility semantics | Refuted at multi-extension scope | `CE-ADM-001a`/`CE-ADM-001b`. Grounded semantics map without loss; the loss is specific to multi-extension semantics. |
 | Multi-extension admissibility indicates a sixth candidate primitive | Rejected on current record | Extension indexing is expressible over existing primitives; the pressure is representational, not primitive. |
 | `CE-ADM-001` bears on the terminal UPP theorem | Rejected | The theorem's `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
-| Argumentation frameworks are a `conservative extension` | Conclusion retained; supporting analysis weakened | `theory/evaluation/external-systems/argumentation-frameworks.md` never tested multi-extension semantics. The classification survives `CE-ADM-001`; its stated justification does not. |
+| Argumentation frameworks are a `conservative extension` | Conclusion retained; supporting analysis weakened | `theory/evaluation/external-systems/argumentation-frameworks.md` never tested multi-extension semantics. The classification survives `CE-ADM-001`; its stated justification does not. Corroborated by explicit construction in the 2026-08-10 `Ω` representation audit below. |
+
+## 2026-08-10 `Ω` set-valued admissibility representation audit
+
+Evidence: `docs/research/fara-omega-set-valued-admissibility-v1.0.md`. Investigation target `OP-13`/`UQ-T15`. Faithfulness criterion reused from `FAITHFUL-REP-001`; no new faithfulness notion was introduced.
+
+| Claim | Status | Required interpretation |
+|---|---|---|
+| Some function `Ω : C → Status` faithfully represents set-valued admissibility | Refuted | Equivariance under source isomorphism forces `Ω` constant on transitive sources; four transitive frameworks on four candidates have four distinct extension families and only three constant values exist. Encoding-independent. |
+| The skeptical/credulous trichotomy encoding suffices | Refuted | Explicit three-candidate collision `CM-03`. |
+| An extension-indexed family of unchanged canonical `Ω` structures is faithful and conservative | Established only at Project FAR v1.0 finite explicit auditable scope | Single-extension and grounded cases retain their existing interpretation unchanged. Never state without the finite scope. |
+| Multi-extension admissibility requires retyping `Ω` | Rejected for set-valued admissibility | Retyping is not required; the repair is additional representational structure over existing primitives. |
+| Multi-extension admissibility indicates a new primitive | Rejected | Extensions are Representations, membership is a Relation, the family is a Relation. Seven candidate primitives unchanged. |
+| FARA predicted multi-extension structure | Rejected | The construction accommodates the structure after observing it. A faithful embedding is not evidence of discovery. |
+| The repair is representationally cheap | Rejected | Extension families can be exponential in candidate count; cost is charged, not hidden. |
+| Graded or ranking-based acceptability is covered | Rejected as out of scope | Degree-valued acceptability is a distinct phenomenon; see `OP-14`/`UQ-T18`. |
+| `CE-ADM-001` bears on the terminal UPP theorem | Rejected, unchanged | The `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
