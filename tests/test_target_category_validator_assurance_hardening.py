@@ -160,7 +160,10 @@ class ProtectedValidatorAssuranceHardeningTests(unittest.TestCase):
             for rel in protected:
                 self.assertIn(rel, failures)
                 self.assertTrue(
-                    any("must not be repinned together" in item for item in failures[rel]),
+                    any(
+                        "may not authorize its own protected-artifact repin" in item
+                        for item in failures[rel]
+                    ),
                     failures[rel],
                 )
 
