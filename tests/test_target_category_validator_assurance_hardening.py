@@ -115,6 +115,55 @@ class ProtectedValidatorAssuranceHardeningTests(unittest.TestCase):
                 any("must not be repinned together" in item for item in failures), failures
             )
 
+    def test_verifier_edit_with_lock_refresh_is_rejected(self) -> None:
+        """A verifier edit paired with a lock refresh needs no detector change.
+
+        The content pins live in the assurance lock, not in this module, so
+        comparing only the in-module registries leaves a two-file weakening that
+        touches nothing the earlier self-repin check inspects.
+        """
+        lock = weakening.ASSURANCE_LOCK_PATH
+        protected = tuple(weakening.REQUIRED_SEMANTIC_CALLS)
+        payload = (
+            "\nimport builtins as _far_b\n"
+            "def _far_no_op(*args, **kwargs):\n    return None\n"
+            "getattr(_far_b, 'globals')()['validate_empirical_authority'] = _far_no_op\n"
+            "getattr(_far_b, 'globals')()['validate_gate'] = _far_no_op\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+            subprocess.run(["git", "config", "user.email", "assurance@example.invalid"], cwd=repo, check=True)
+            subprocess.run(["git", "config", "user.name", "Validator Assurance"], cwd=repo, check=True)
+            for rel in (weakening.ASSURANCE_REGISTRY_PATH, "far_validation/__init__.py", lock, *protected):
+                target = repo / rel
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes((ROOT / rel).read_bytes())
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "baseline"], cwd=repo, check=True)
+            base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
+
+            locked = json.loads((repo / lock).read_text(encoding="utf-8"))
+            for rel in protected:
+                target = repo / rel
+                target.write_text(target.read_text(encoding="utf-8") + payload, encoding="utf-8")
+                locked["files"][rel] = hashlib.sha256(target.read_bytes()).hexdigest()
+            (repo / lock).write_text(
+                json.dumps(locked, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+            )
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(["git", "commit", "-qm", "verifier edit plus lock refresh"], cwd=repo, check=True)
+
+            report = weakening.detect_weakening(repo, base=base)
+            self.assertFalse(report.successful)
+            failures = {finding.path: finding.failures for finding in report.findings}
+            for rel in protected:
+                self.assertIn(rel, failures)
+                self.assertTrue(
+                    any("must not be repinned together" in item for item in failures[rel]),
+                    failures[rel],
+                )
+
     def test_implementation_digests_match_committed_sources(self) -> None:
         for path, names in weakening.EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.items():
             source = (ROOT / path).read_text(encoding="utf-8")

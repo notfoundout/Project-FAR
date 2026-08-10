@@ -680,6 +680,7 @@ def _show(root: Path, revision: str, path: str) -> str | None:
 
 
 ASSURANCE_REGISTRY_PATH = "far_validation/weakening.py"
+ASSURANCE_LOCK_PATH = "validation_bootstrap/assurance-lock.json"
 _PINNED_REGISTRIES = (
     "EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS",
     "REQUIRED_MODULE_BINDING_SIGNATURES",
@@ -709,6 +710,18 @@ def _registry_literals(source: str) -> dict[str, Any]:
     return values
 
 
+def _lock_file_digests(source: str) -> dict[str, str]:
+    """Read the assurance lock's per-file content pins from a source revision."""
+    try:
+        payload = json.loads(source)
+    except json.JSONDecodeError:
+        return {}
+    files = payload.get("files") if isinstance(payload, dict) else None
+    if not isinstance(files, dict):
+        return {}
+    return {key: value for key, value in files.items() if isinstance(key, str) and isinstance(value, str)}
+
+
 def _self_repin_failures(root: Path, revision: str, changed_paths: set[str]) -> dict[str, list[str]]:
     """Reject changing a protected verifier and its own expected pins together.
 
@@ -719,24 +732,48 @@ def _self_repin_failures(root: Path, revision: str, changed_paths: set[str]) -> 
     of reporting success. Paths that do not exist at the comparison base are
     being introduced, which has no prior pin to contradict.
     """
-    if ASSURANCE_REGISTRY_PATH not in changed_paths:
-        return {}
-    base_registry_source = _show(root, revision, ASSURANCE_REGISTRY_PATH)
-    if base_registry_source is None:
-        return {}
-    base_values = _registry_literals(base_registry_source)
-    head_values = _registry_literals((root / ASSURANCE_REGISTRY_PATH).read_text(encoding="utf-8"))
     failures: dict[str, list[str]] = {}
-    for path in sorted(changed_paths):
-        if path == ASSURANCE_REGISTRY_PATH or _show(root, revision, path) is None:
-            continue
-        for registry in _PINNED_REGISTRIES:
-            before = (base_values.get(registry) or {}).get(path)
-            after = (head_values.get(registry) or {}).get(path)
+    candidates = sorted(path for path in changed_paths if _show(root, revision, path) is not None)
+
+    # Registries carried inside the detector module.
+    base_registry_source = _show(root, revision, ASSURANCE_REGISTRY_PATH)
+    if ASSURANCE_REGISTRY_PATH in changed_paths and base_registry_source is not None:
+        base_values = _registry_literals(base_registry_source)
+        head_values = _registry_literals((root / ASSURANCE_REGISTRY_PATH).read_text(encoding="utf-8"))
+        for path in candidates:
+            if path == ASSURANCE_REGISTRY_PATH:
+                continue
+            for registry in _PINNED_REGISTRIES:
+                before = (base_values.get(registry) or {}).get(path)
+                after = (head_values.get(registry) or {}).get(path)
+                if before is not None and before != after:
+                    failures.setdefault(path, []).append(
+                        f"protected pin {registry} for {path} changed in the same change as {path}; "
+                        "an implementation and its own expected value must not be repinned together"
+                    )
+
+    # Content pins carried in the bootstrap assurance lock. These live in a
+    # different file from the registries above, so a verifier edit paired with a
+    # lock refresh needs no change to this module at all.
+    base_lock_source = _show(root, revision, ASSURANCE_LOCK_PATH)
+    if base_lock_source is not None:
+        base_locked = _lock_file_digests(base_lock_source)
+        try:
+            head_locked = _lock_file_digests((root / ASSURANCE_LOCK_PATH).read_text(encoding="utf-8"))
+        except OSError:
+            head_locked = {}
+        for path in candidates:
+            # This module cannot pin itself: any legitimate edit to the detector
+            # necessarily updates its own hash. That irreducible self-reference is
+            # the documented residual, not something this check can decide.
+            if path == ASSURANCE_REGISTRY_PATH:
+                continue
+            before = base_locked.get(path)
+            after = head_locked.get(path)
             if before is not None and before != after:
                 failures.setdefault(path, []).append(
-                    f"protected pin {registry} for {path} changed in the same change as {path}; "
-                    "an implementation and its own expected value must not be repinned together"
+                    f"content pin for {path} in {ASSURANCE_LOCK_PATH} changed in the same change as "
+                    f"{path}; a protected file and its own expected hash must not be repinned together"
                 )
     return failures
 
