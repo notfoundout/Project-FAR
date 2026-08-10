@@ -1,3 +1,5 @@
+import hashlib
+import json
 from pathlib import Path
 
 p = Path("far_validation/weakening.py")
@@ -94,3 +96,8 @@ add = r'''
         self.assertTrue(any("protected validator implementation changed for verify" in item for item in failures))
 '''
 t.write_text(x.replace(anchor, add + anchor, 1), encoding="utf-8")
+
+lock = Path("validation_bootstrap/assurance-lock.json")
+lock_obj = json.loads(lock.read_text(encoding="utf-8"))
+lock_obj["files"]["far_validation/weakening.py"] = hashlib.sha256(p.read_bytes()).hexdigest()
+lock.write_text(json.dumps(lock_obj, indent=2) + "\n", encoding="utf-8")
