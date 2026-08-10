@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import json
 import os
 import subprocess
@@ -28,6 +29,9 @@ REQUIRED_MODULE_BINDING_SIGNATURES: dict[str, dict[str, tuple[str, ...]]] = {
         "validate_gate": ("function",),
     },
 }
+
+
+EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = {'research/target-category-discovery/verify_compositional_invariant.py': {'validate_gate': 'cdc2c4a81cf2a598291aefc6bfe26dc31f3837cc6b3ae264d2dd6fdd8a9392b2'}, 'research/target-category-discovery/verify_compositional_invariant_legacy.py': {'validate_empirical_authority': 'eb8b9adb90077a9914adfacce5dd188233037d375d3a5a7d7deb2d41fe114cbc', 'validate_gate': '228a099165c3878ee2edabb6664826b840f1b6fa7a2a07f935f6c68dd90811da'}}
 
 
 @dataclass
@@ -236,10 +240,29 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
             if isinstance(st, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 if st.name in protected:
                     events[st.name].append("function")
+                for decorator in st.decorator_list:
+                    scan_expr(decorator)
+                for default in (*st.args.defaults, *[item for item in st.args.kw_defaults if item is not None]):
+                    scan_expr(default)
+                for arg in (*st.args.posonlyargs, *st.args.args, *st.args.kwonlyargs):
+                    if arg.annotation is not None:
+                        scan_expr(arg.annotation)
+                if st.args.vararg is not None and st.args.vararg.annotation is not None:
+                    scan_expr(st.args.vararg.annotation)
+                if st.args.kwarg is not None and st.args.kwarg.annotation is not None:
+                    scan_expr(st.args.kwarg.annotation)
+                if st.returns is not None:
+                    scan_expr(st.returns)
                 continue
             if isinstance(st, ast.ClassDef):
                 if st.name in protected:
                     events[st.name].append("class")
+                for decorator in st.decorator_list:
+                    scan_expr(decorator)
+                for base in st.bases:
+                    scan_expr(base)
+                for keyword in st.keywords:
+                    scan_expr(keyword.value)
                 continue
             if isinstance(st, ast.Assign):
                 for target in st.targets:
@@ -309,6 +332,34 @@ def _binding_integrity_failures(source: str, path: str) -> list[str]:
                 f"protected validator binding changed for {name}: "
                 f"expected {expected_signature!r}; got {actual_signature!r}"
             )
+    return failures
+
+
+def _protected_implementation_digest(source: str, path: str, function_name: str) -> str | None:
+    tree = ast.parse(source, filename=path)
+    nodes = [n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name == function_name]
+    if len(nodes) != 1:
+        return None
+    return hashlib.sha256(ast.dump(nodes[0], annotate_fields=True, include_attributes=False).encode()).hexdigest()
+
+
+def _protected_implementation_failures(source: str, path: str) -> list[str]:
+    failures: list[str] = []
+    for name, expected in EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.get(path, {}).items():
+        actual = _protected_implementation_digest(source, path, name)
+        if actual != expected:
+            failures.append(f"protected validator implementation changed for {name}: expected {expected}; got {actual or '<missing-or-ambiguous>'}")
+    return failures
+
+
+def _definition_time_execution_failures(source: str, path: str) -> list[str]:
+    if path not in REQUIRED_SEMANTIC_CALLS:
+        return []
+    tree = ast.parse(source, filename=path)
+    failures: list[str] = []
+    for node in tree.body:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node.decorator_list:
+            failures.append(f"protected verifier definition-time decorator rejected: {getattr(node, 'name', '<definition>')}")
     return failures
 
 
@@ -465,6 +516,8 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
                         + " -> ".join(name or "<non-call>" for name in actual_prefix)
                     )
             finding.failures.extend(_binding_integrity_failures(after_source, path))
+            finding.failures.extend(_definition_time_execution_failures(after_source, path))
+            finding.failures.extend(_protected_implementation_failures(after_source, path))
         except SyntaxError as exc:
             finding.failures.append(f"current source has syntax error: {exc}")
             findings.append(finding)
