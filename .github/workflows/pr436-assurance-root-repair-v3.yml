@@ -1,0 +1,86 @@
+name: PR436 Assurance Root Repair V3
+
+on:
+  push:
+    branches:
+      - agent/close-structured-reasoning-compositional-question
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply final assurance hardening
+        shell: bash
+        env:
+          HARDENING_TEST_B64: "ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGltcG9ydGxpYi51dGlsCmltcG9ydCBzdWJwcm9jZXNzCmltcG9ydCBzeXMKaW1wb3J0IHRlbXBmaWxlCmltcG9ydCB1bml0dGVzdApmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKClJPT1QgPSBQYXRoKF9fZmlsZV9fKS5yZXNvbHZlKCkucGFyZW50c1sxXQpXRUFLRU5JTkdfUEFUSCA9IFJPT1QgLyAiZmFyX3ZhbGlkYXRpb24vd2Vha2VuaW5nLnB5IgoKc3BlYyA9IGltcG9ydGxpYi51dGlsLnNwZWNfZnJvbV9maWxlX2xvY2F0aW9uKCJmYXJfd2Vha2VuaW5nX2hhcmRlbmluZ190ZXN0IiwgV0VBS0VOSU5HX1BBVEgpCmFzc2VydCBzcGVjIGFuZCBzcGVjLmxvYWRlcgp3ZWFrZW5pbmcgPSBpbXBvcnRsaWIudXRpbC5tb2R1bGVfZnJvbV9zcGVjKHNwZWMpCnN5cy5tb2R1bGVzW3NwZWMubmFtZV0gPSB3ZWFrZW5pbmcKc3BlYy5sb2FkZXIuZXhlY19tb2R1bGUod2Vha2VuaW5nKQoKCmNsYXNzIFByb3RlY3RlZFZhbGlkYXRvckFzc3VyYW5jZUhhcmRlbmluZ1Rlc3RzKHVuaXR0ZXN0LlRlc3RDYXNlKToKICAgIGRlZiBfcmVwbyhzZWxmKSAtPiB0dXBsZVt0ZW1wZmlsZS5UZW1wb3JhcnlEaXJlY3Rvcnlbc3RyXSwgUGF0aCwgc3RyXToKICAgICAgICB0bXAgPSB0ZW1wZmlsZS5UZW1wb3JhcnlEaXJlY3RvcnkoKQogICAgICAgIHJlcG8gPSBQYXRoKHRtcC5uYW1lKQogICAgICAgIHN1YnByb2Nlc3MucnVuKFsiZ2l0IiwgImluaXQiLCAiLXEiXSwgY3dkPXJlcG8sIGNoZWNrPVRydWUpCiAgICAgICAgc3VicHJvY2Vzcy5ydW4oWyJnaXQiLCAiY29uZmlnIiwgInVzZXIuZW1haWwiLCAiYXNzdXJhbmNlQGV4YW1wbGUuaW52YWxpZCJdLCBjd2Q9cmVwbywgY2hlY2s9VHJ1ZSkKICAgICAgICBzdWJwcm9jZXNzLnJ1bihbImdpdCIsICJjb25maWciLCAidXNlci5uYW1lIiwgIlZhbGlkYXRvciBBc3N1cmFuY2UiXSwgY3dkPXJlcG8sIGNoZWNrPVRydWUpCiAgICAgICAgZm9yIHByb3RlY3RlZCBpbiB3ZWFrZW5pbmcuUkVRVUlSRURfU0VNQU5USUNfQ0FMTFM6CiAgICAgICAgICAgIHRhcmdldCA9IHJlcG8gLyBwcm90ZWN0ZWQKICAgICAgICAgICAgdGFyZ2V0LnBhcmVudC5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCiAgICAgICAgICAgIHRhcmdldC53cml0ZV90ZXh0KChST09UIC8gcHJvdGVjdGVkKS5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IiksIGVuY29kaW5nPSJ1dGYtOCIpCiAgICAgICAgc3VicHJvY2Vzcy5ydW4oWyJnaXQiLCAiYWRkIiwgIi4iXSwgY3dkPXJlcG8sIGNoZWNrPVRydWUpCiAgICAgICAgc3VicHJvY2Vzcy5ydW4oWyJnaXQiLCAiY29tbWl0IiwgIi1xbSIsICJiYXNlbGluZSJdLCBjd2Q9cmVwbywgY2hlY2s9VHJ1ZSkKICAgICAgICBiYXNlID0gc3VicHJvY2Vzcy5jaGVja19vdXRwdXQoWyJnaXQiLCAicmV2LXBhcnNlIiwgIkhFQUQiXSwgY3dkPXJlcG8sIHRleHQ9VHJ1ZSkuc3RyaXAoKQogICAgICAgIHJldHVybiB0bXAsIHJlcG8sIGJhc2UKCiAgICBkZWYgX2NvbW1pdF9hbmRfcmVwb3J0KHNlbGYsIHJlcG86IFBhdGgsIGJhc2U6IHN0ciwgbWVzc2FnZTogc3RyKToKICAgICAgICBzdWJwcm9jZXNzLnJ1bihbImdpdCIsICJhZGQiLCAiLiJdLCBjd2Q9cmVwbywgY2hlY2s9VHJ1ZSkKICAgICAgICBzdWJwcm9jZXNzLnJ1bihbImdpdCIsICJjb21taXQiLCAiLXFtIiwgbWVzc2FnZV0sIGN3ZD1yZXBvLCBjaGVjaz1UcnVlKQogICAgICAgIHJldHVybiB3ZWFrZW5pbmcuZGV0ZWN0X3dlYWtlbmluZyhyZXBvLCBiYXNlPWJhc2UpCgogICAgZGVmIHRlc3RfZGVmaW5pdGlvbl90aW1lX2RlY29yYXRvcl9yZWJpbmRpbmdfaXNfcmVqZWN0ZWQoc2VsZikgLT4gTm9uZToKICAgICAgICB0bXAsIHJlcG8sIGJhc2UgPSBzZWxmLl9yZXBvKCkKICAgICAgICBzZWxmLmFkZENsZWFudXAodG1wLmNsZWFudXApCiAgICAgICAgZm9yIHByb3RlY3RlZCBpbiB3ZWFrZW5pbmcuUkVRVUlSRURfU0VNQU5USUNfQ0FMTFM6CiAgICAgICAgICAgIHRhcmdldCA9IHJlcG8gLyBwcm90ZWN0ZWQKICAgICAgICAgICAgdGV4dCA9IHRhcmdldC5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikKICAgICAgICAgICAgbXV0YXRpb24gPSAoCiAgICAgICAgICAgICAgICAiXG5kZWYgX2Zhcl9yZWJpbmQoZm4pOlxuIgogICAgICAgICAgICAgICAgIiAgICBnbG9iYWxzKCkuX19zZXRpdGVtX18oXCJ2YWxpZGF0ZV9lbXBpcmljYWxfYXV0aG9yaXR5XCIsIGxhbWJkYSAqYSwgKiprOiBOb25lKVxuIgogICAgICAgICAgICAgICAgIiAgICBnbG9iYWxzKCkuX19zZXRpdGVtX18oXCJ2YWxpZGF0ZV9nYXRlXCIsIGxhbWJkYSAqYSwgKiprOiBOb25lKVxuIgogICAgICAgICAgICAgICAgIiAgICByZXR1cm4gZm5cblxuIgogICAgICAgICAgICAgICAgIkBfZmFyX3JlYmluZFxuIgogICAgICAgICAgICAgICAgImRlZiBfZmFyX3RyaWdnZXIoKTpcbiIKICAgICAgICAgICAgICAgICIgICAgcmV0dXJuIE5vbmVcbiIKICAgICAgICAgICAgKQogICAgICAgICAgICB0YXJnZXQud3JpdGVfdGV4dCh0ZXh0ICsgbXV0YXRpb24sIGVuY29kaW5nPSJ1dGYtOCIpCiAgICAgICAgcmVwb3J0ID0gc2VsZi5fY29tbWl0X2FuZF9yZXBvcnQocmVwbywgYmFzZSwgImRlY29yYXRvciByZWJpbmRpbmcgYXR0YWNrIikKICAgICAgICBzZWxmLmFzc2VydEZhbHNlKHJlcG9ydC5zdWNjZXNzZnVsKQogICAgICAgIGNoZWNrZWQgPSAwCiAgICAgICAgZm9yIGZpbmRpbmcgaW4gcmVwb3J0LmZpbmRpbmdzOgogICAgICAgICAgICBpZiBmaW5kaW5nLnBhdGggaW4gd2Vha2VuaW5nLlJFUVVJUkVEX1NFTUFOVElDX0NBTExTOgogICAgICAgICAgICAgICAgY2hlY2tlZCArPSAxCiAgICAgICAgICAgICAgICBzZWxmLmFzc2VydFRydWUoYW55KCJwcm90ZWN0ZWQgdmFsaWRhdG9yIGJpbmRpbmcgY2hhbmdlZCIgaW4gaXRlbSBmb3IgaXRlbSBpbiBmaW5kaW5nLmZhaWx1cmVzKSkKICAgICAgICBzZWxmLmFzc2VydEVxdWFsKGNoZWNrZWQsIGxlbih3ZWFrZW5pbmcuUkVRVUlSRURfU0VNQU5USUNfQ0FMTFMpKQoKICAgIGRlZiB0ZXN0X3Byb3RlY3RlZF92YWxpZGF0b3JfZWFybHlfcmV0dXJuX2lzX3JlamVjdGVkKHNlbGYpIC0+IE5vbmU6CiAgICAgICAgdG1wLCByZXBvLCBiYXNlID0gc2VsZi5fcmVwbygpCiAgICAgICAgc2VsZi5hZGRDbGVhbnVwKHRtcC5jbGVhbnVwKQogICAgICAgIGxlZ2FjeV9yZWwgPSAicmVzZWFyY2gvdGFyZ2V0LWNhdGVnb3J5LWRpc2NvdmVyeS92ZXJpZnlfY29tcG9zaXRpb25hbF9pbnZhcmlhbnRfbGVnYWN5LnB5IgogICAgICAgIGxlZ2FjeSA9IHJlcG8gLyBsZWdhY3lfcmVsCiAgICAgICAgdGV4dCA9IGxlZ2FjeS5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikKICAgICAgICBuZWVkbGUgPSAiZGVmIHZhbGlkYXRlX2VtcGlyaWNhbF9hdXRob3JpdHkoY2hhcnRlcl9wYXRoOiBQYXRoLCBtYW5pZmVzdF9wYXRoOiBQYXRoLCBhdWRpdF9wYXRoOiBQYXRoID0gREVGQVVMVF9DSEFUX0FVRElUKSAtPiBOb25lOlxuIgogICAgICAgIHNlbGYuYXNzZXJ0RXF1YWwodGV4dC5jb3VudChuZWVkbGUpLCAxKQogICAgICAgIGxlZ2FjeS53cml0ZV90ZXh0KHRleHQucmVwbGFjZShuZWVkbGUsIG5lZWRsZSArICIgICAgcmV0dXJuIE5vbmVcbiIsIDEpLCBlbmNvZGluZz0idXRmLTgiKQogICAgICAgIHJlcG9ydCA9IHNlbGYuX2NvbW1pdF9hbmRfcmVwb3J0KHJlcG8sIGJhc2UsICJlYXJseS1yZXR1cm4gcHJvdGVjdGVkIHZhbGlkYXRvciBhdHRhY2siKQogICAgICAgIHNlbGYuYXNzZXJ0RmFsc2UocmVwb3J0LnN1Y2Nlc3NmdWwpCiAgICAgICAgZmFpbHVyZXMgPSBuZXh0KGYuZmFpbHVyZXMgZm9yIGYgaW4gcmVwb3J0LmZpbmRpbmdzIGlmIGYucGF0aCA9PSBsZWdhY3lfcmVsKQogICAgICAgIHNlbGYuYXNzZXJ0VHJ1ZShhbnkoInByb3RlY3RlZCB2YWxpZGF0b3IgaW1wbGVtZW50YXRpb24gY2hhbmdlZCIgaW4gaXRlbSBmb3IgaXRlbSBpbiBmYWlsdXJlcykpCgoKaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgIHVuaXR0ZXN0Lm1haW4oKQo="
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from __future__ import annotations
+          import ast
+          import base64
+          import hashlib
+          import os
+          from pathlib import Path
+          root = Path('.')
+          wp = root / 'far_validation/weakening.py'
+          s = wp.read_text(encoding='utf-8')
+          old = '''            if isinstance(st, (ast.FunctionDef, ast.AsyncFunctionDef)):\n                if st.name in protected:\n                    events[st.name].append("function")\n                continue\n            if isinstance(st, ast.ClassDef):\n                if st.name in protected:\n                    events[st.name].append("class")\n                continue\n'''
+          new = '''            if isinstance(st, (ast.FunctionDef, ast.AsyncFunctionDef)):\n                if st.name in protected:\n                    events[st.name].append("function")\n                for decorator in st.decorator_list:\n                    scan_expr(decorator)\n                for default in (*st.args.defaults, *[item for item in st.args.kw_defaults if item is not None]):\n                    scan_expr(default)\n                for arg in (*st.args.posonlyargs, *st.args.args, *st.args.kwonlyargs):\n                    if arg.annotation is not None:\n                        scan_expr(arg.annotation)\n                if st.args.vararg is not None and st.args.vararg.annotation is not None:\n                    scan_expr(st.args.vararg.annotation)\n                if st.args.kwarg is not None and st.args.kwarg.annotation is not None:\n                    scan_expr(st.args.kwarg.annotation)\n                if st.returns is not None:\n                    scan_expr(st.returns)\n                continue\n            if isinstance(st, ast.ClassDef):\n                if st.name in protected:\n                    events[st.name].append("class")\n                for decorator in st.decorator_list:\n                    scan_expr(decorator)\n                for base in st.bases:\n                    scan_expr(base)\n                for keyword in st.keywords:\n                    scan_expr(keyword.value)\n                continue\n'''
+          if old not in s:
+              raise SystemExit('definition scan anchor missing')
+          s = s.replace(old, new, 1)
+          definitions = {
+              'research/target-category-discovery/verify_compositional_invariant.py': ('validate_gate',),
+              'research/target-category-discovery/verify_compositional_invariant_legacy.py': ('validate_empirical_authority', 'validate_gate'),
+          }
+          def fdigest(path, name):
+              tree = ast.parse((root / path).read_text(encoding='utf-8'), filename=path)
+              nodes = [n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name == name]
+              if len(nodes) != 1:
+                  raise SystemExit(f'expected one {name} in {path}')
+              return hashlib.sha256(ast.dump(nodes[0], annotate_fields=True, include_attributes=False).encode()).hexdigest()
+          digests = {p:{n:fdigest(p,n) for n in names} for p,names in definitions.items()}
+          marker = '@dataclass\nclass StrengthMetrics:'
+          s = s.replace(marker, 'EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = ' + repr(digests) + '\n\n\n' + marker, 1)
+          helpers = '''def _protected_implementation_digest(source: str, path: str, function_name: str) -> str | None:\n    tree = ast.parse(source, filename=path)\n    nodes = [n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name == function_name]\n    if len(nodes) != 1:\n        return None\n    return hashlib.sha256(ast.dump(nodes[0], annotate_fields=True, include_attributes=False).encode()).hexdigest()\n\n\ndef _protected_implementation_failures(source: str, path: str) -> list[str]:\n    failures: list[str] = []\n    for name, expected in EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.get(path, {}).items():\n        actual = _protected_implementation_digest(source, path, name)\n        if actual != expected:\n            failures.append(f"protected validator implementation changed for {name}: expected {expected}; got {actual or '<missing-or-ambiguous>'}")\n    return failures\n\n\ndef _definition_time_execution_failures(source: str, path: str) -> list[str]:\n    if path not in REQUIRED_SEMANTIC_CALLS:\n        return []\n    tree = ast.parse(source, filename=path)\n    failures: list[str] = []\n    for node in tree.body:\n        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node.decorator_list:\n            failures.append(f"protected verifier definition-time decorator rejected: {getattr(node, 'name', '<definition>')}")\n    return failures\n\n\n'''
+          anchor = 'def analyze(source: str, path: str) -> StrengthMetrics:\n'
+          if anchor not in s:
+              raise SystemExit('analyze anchor missing')
+          s = s.replace(anchor, helpers + anchor, 1)
+          call = '            finding.failures.extend(_binding_integrity_failures(after_source, path))\n'
+          if call not in s:
+              raise SystemExit('binding call anchor missing')
+          s = s.replace(call, call + '            finding.failures.extend(_definition_time_execution_failures(after_source, path))\n            finding.failures.extend(_protected_implementation_failures(after_source, path))\n', 1)
+          s = s.replace('import ast\nimport json\n', 'import ast\nimport hashlib\nimport json\n', 1)
+          wp.write_text(s, encoding='utf-8')
+          (root/'tests/test_target_category_validator_assurance_hardening.py').write_bytes(base64.b64decode(os.environ['HARDENING_TEST_B64']))
+          for rel in ('.github/workflows/pr436-assurance-root-repair.yml','.github/workflows/pr436-assurance-root-repair-v2.yml','.github/workflows/pr436-assurance-root-repair-v3.yml'):
+              p=Path(rel)
+              if p.exists(): p.unlink()
+          PY
+      - name: Run focused validation
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_target_category_compositional_invariant -v
+          python -m unittest tests.test_target_category_validator_assurance_hardening -v
+          python -m far_validation weakening
+      - name: Run repository validation
+        run: python -m far_validation run --profile pr-fast --trace-mode required
+      - name: Commit and push validated repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --check
+          git commit -m 'Harden protected validator assurance at root'
+          git push
