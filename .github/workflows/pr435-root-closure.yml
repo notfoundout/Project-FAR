@@ -21,94 +21,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Apply root-cause repairs
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          p = Path('research/external-validation/swe-agent-v3/verify_review_closure_required_impl.py')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace('    task_ids: set[str] = set()\n    bundle_roots: set[str] = set()\n    observed_strata: set[str] = set()\n', '''    if len(manifest) < 24:\n        raise DesignError("frozen confirmatory manifest must contain at least 24 tasks")\n    task_ids: set[str] = set()\n    blind_task_ids: set[str] = set()\n    bundle_roots: set[str] = set()\n    observed_strata: set[str] = set()\n    repo_to_blind: dict[tuple[str, int], str] = {}\n    blind_to_repo: dict[str, tuple[str, int]] = {}\n    repo_counts: dict[tuple[str, int], int] = {}\n    repo_urls: dict[tuple[str, int], str] = {}\n''')
-          s = s.replace('''        if type(record.get("blind_task_id")) is not str or proof.get("blind_task_id") != record.get("blind_task_id"):\n            raise DesignError(f"{label} evidence registry blind-task binding drifted")\n\n        task_identity =''', '''        blind_task_id = record.get("blind_task_id")\n        if type(blind_task_id) is not str or re.fullmatch(r"TASK-[0-9]{6}", blind_task_id) is None or proof.get("blind_task_id") != blind_task_id:\n            raise DesignError(f"{label} evidence registry blind-task binding drifted")\n        if blind_task_id in blind_task_ids:\n            raise DesignError("duplicate blind task identifier in frozen manifest")\n        blind_task_ids.add(blind_task_id)\n        repository_blind_id = record.get("repository_blind_id")\n        if type(repository_blind_id) is not str or re.fullmatch(r"REPO-[0-9]{4}", repository_blind_id) is None:\n            raise DesignError(f"{label} repository blind identifier drifted")\n\n        task_identity =''')
-          s = s.replace('''        if type(identity_descriptor.get("canonical_repository_url")) is not str or not identity_descriptor["canonical_repository_url"].startswith("https://github.com/"):\n            raise DesignError(f"{label} canonical repository URL drifted")\n''', '''        canonical_url = identity_descriptor.get("canonical_repository_url")\n        if type(canonical_url) is not str or re.fullmatch(r"https://github\\.com/[^/]+/[^/]+", canonical_url) is None or canonical_url.endswith(".git"):\n            raise DesignError(f"{label} canonical repository URL drifted")\n        repo_identity = (identity_descriptor["repository_provider"], identity_descriptor["repository_provider_id"])\n        if repo_identity[1] == 1283452680 or canonical_url.casefold() == "https://github.com/notfoundout/project-far":\n            raise DesignError("Project FAR repository is prohibited from the confirmatory task population")\n        prior_blind = repo_to_blind.setdefault(repo_identity, repository_blind_id)\n        if prior_blind != repository_blind_id:\n            raise DesignError("equal authoritative repository identities must use the same blind ID")\n        prior_repo = blind_to_repo.setdefault(repository_blind_id, repo_identity)\n        if prior_repo != repo_identity:\n            raise DesignError("distinct authoritative repository identities must use distinct blind IDs")\n        prior_url = repo_urls.setdefault(repo_identity, canonical_url)\n        if prior_url != canonical_url:\n            raise DesignError("authoritative repository identity maps to conflicting canonical URLs")\n        repo_counts[repo_identity] = repo_counts.get(repo_identity, 0) + 1\n''')
-          s = s.replace('''        classification_descriptor = proof.get("classification_descriptor")\n        classification_digest_value = _require_sha256(bundle_descriptor.get("classification_inputs_sha256"), f"{label} classification inputs")\n        classification_digest.validate_descriptor(task_identity, classification_descriptor, classification_digest_value)\n''', '''        classification_descriptor = proof.get("classification_descriptor")\n        classification_digest_value = _require_sha256(bundle_descriptor.get("classification_inputs_sha256"), f"{label} classification inputs")\n        classification_digest.validate_descriptor(task_identity, classification_descriptor, classification_digest_value)\n        retained_evidence = proof.get("retained_evidence")\n        classification_digest.validate_retained_evidence(classification_descriptor, retained_evidence)\n''')
-          s = s.replace('EVIDENCE_RECORD_KEYS = {"blind_task_id", "task_identity_descriptor", "classification_descriptor", "task_bundle_descriptor"}', 'EVIDENCE_RECORD_KEYS = {"blind_task_id", "task_identity_descriptor", "classification_descriptor", "task_bundle_descriptor", "retained_evidence"}')
-          s = s.replace('''    if observed_strata != set(STRATA_ORDER):\n        missing = [item for item in STRATA_ORDER if item not in observed_strata]\n        raise DesignError("required task-strata coverage missing: " + ", ".join(missing))\n''', '''    if observed_strata != set(STRATA_ORDER):\n        missing = [item for item in STRATA_ORDER if item not in observed_strata]\n        raise DesignError("required task-strata coverage missing: " + ", ".join(missing))\n    if len(repo_counts) < 5:\n        raise DesignError("frozen confirmatory manifest must contain at least five authoritative repositories")\n    total = len(manifest)\n    if any(count * 5 > total for count in repo_counts.values()):\n        raise DesignError("per-repository task cap exceeds exact 20 percent limit")\n''')
-          p.write_text(s, encoding='utf-8')
-
-          p = Path('research/external-validation/swe-agent-v3/verify_classification_input_digest_contract.py')
-          s = p.read_text(encoding='utf-8')
-          marker = '\n\nif __name__ == "__main__":\n'
-          fn = '''\n\ndef validate_retained_evidence(descriptor: dict[str, Any], retained_evidence: Any) -> None:\n    """Resolve every verifiable classification binding to retained, content-hashed evidence."""\n    if not isinstance(retained_evidence, list):\n        raise DesignError("retained classification evidence must be a JSON array")\n    index: dict[str, dict[str, Any]] = {}\n    for item in retained_evidence:\n        if not isinstance(item, dict) or set(item) != {"locator", "kind", "content_utf8", "content_sha256"}:\n            raise DesignError("retained classification evidence record shape drifted")\n        locator = item.get("locator")\n        kind = item.get("kind")\n        content = item.get("content_utf8")\n        digest = item.get("content_sha256")\n        if type(locator) is not str or not locator or locator in index:\n            raise DesignError("retained classification evidence locator must be unique and nonempty")\n        if kind not in {"source_evidence_locator", "sealed_reference_patch_attestation"}:\n            raise DesignError("retained classification evidence kind drifted")\n        if type(content) is not str or type(digest) is not str or re.fullmatch(r"[0-9a-f]{64}", digest) is None:\n            raise DesignError("retained classification evidence content/hash encoding drifted")\n        if hashlib.sha256(content.encode("utf-8")).hexdigest() != digest:\n            raise DesignError("retained classification evidence content hash mismatch")\n        index[locator] = item\n    descriptor_bindings = descriptor.get("evidence_bindings") if isinstance(descriptor, dict) else None\n    if not isinstance(descriptor_bindings, dict):\n        raise DesignError("classification-input evidence bindings missing")\n    required: set[str] = set()\n    for key in CLASSIFICATION_INPUTS:\n        binding = descriptor_bindings.get(key)\n        if not isinstance(binding, dict):\n            raise DesignError(f"classification-input evidence binding missing: {key}")\n        if binding.get("kind") == "unverifiable":\n            continue\n        locator = binding.get("locator")\n        if type(locator) is not str or locator not in index:\n            raise DesignError(f"classification-input evidence locator does not resolve: {key}")\n        if index[locator]["kind"] != binding.get("kind"):\n            raise DesignError(f"classification-input retained evidence kind mismatch: {key}")\n        required.add(locator)\n    if set(index) != required:\n        raise DesignError("retained classification evidence contains unreferenced records")\n'''
-          if marker not in s:
-              raise SystemExit('classification digest insertion marker missing')
-          s = s.replace(marker, fn + marker)
-          p.write_text(s, encoding='utf-8')
-
-          p = Path('research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py')
-          p.write_text('''"""Required review-closure verifier for frozen v1.2 plus additive prospective hardening."""\nfrom __future__ import annotations\n\nimport argparse\nfrom pathlib import Path\nimport verify_review_closure_required_impl as _impl\n\nfor _name, _value in vars(_impl).items():\n    if not _name.startswith("__"):\n        globals()[_name] = _value\n\n\ndef main() -> int:\n    parser = argparse.ArgumentParser()\n    parser.add_argument("--task-manifest", type=Path)\n    parser.add_argument("--evidence-registry", type=Path)\n    args = parser.parse_args()\n    try:\n        if (args.task_manifest is None) != (args.evidence_registry is None):\n            raise DesignError("--task-manifest and --evidence-registry must be supplied together")\n        if args.task_manifest is None:\n            validate()\n            print("PASS: frozen v1.2 and additive classification-input hardening verify; execution remains blocked.")\n        else:\n            validate_instantiated_task_manifest(args.task_manifest, args.evidence_registry)\n            print("PASS: frozen instantiated task population and retained classification evidence verify; execution remains blocked pending all independent launch gates.")\n    except DesignError as exc:\n        print(f"FAIL: {exc}")\n        return 1\n    return 0\n\nif __name__ == "__main__":\n    raise SystemExit(main())\n''', encoding='utf-8')
-
-          p = Path('research/external-validation/swe-agent-v3/verify_review_closure.py')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace('''def verify() -> None:\n    amendment_v1_1.validate()\n''', '''def _sync_delegated_context() -> None:\n    amendment_v1_1.HERE = integrity.HERE\n    amendment_v1_1.HIST = integrity.HERE / "historical-base-83c951"\n    amendment_v1_1.SNAPSHOTS = {\n        amendment_v1_1.legacy.PREREG_REL: (amendment_v1_1.HIST / "preregistration-v1.0.json", amendment_v1_1.legacy.PREREG_BLOB),\n        amendment_v1_1.legacy.PLAN_REL: (amendment_v1_1.HIST / "evidence-and-analysis-plan-v1.0.md", amendment_v1_1.legacy.PLAN_BLOB),\n    }\n    closure_v1_2.integrity.ROOT = integrity.ROOT\n    closure_v1_2.integrity.HERE = integrity.HERE\n    closure_v1_2.integrity.MANIFEST = integrity.MANIFEST\n    closure_v1_2.integrity._committed_blob_bytes = integrity._committed_blob_bytes\n\ndef verify() -> None:\n    _sync_delegated_context()\n    amendment_v1_1.validate(\n        amend=integrity.HERE / "failure-arithmetic-amendment-v1.1.json",\n        readme=integrity.HERE / "README.md",\n        gate=integrity.HERE / "execution-gate-v1.0.json",\n    )\n''')
-          p.write_text(s, encoding='utf-8')
-
-          p = Path('research/external-validation/swe-agent-v3/verify_integrity.py')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace('''        hardening.validate()\n        return index\n''', '''        hardening.integrity.ROOT = ROOT\n        hardening.integrity.HERE = HERE\n        hardening.integrity.MANIFEST = MANIFEST\n        hardening.integrity._committed_blob_bytes = _committed_blob_bytes\n        if hasattr(hardening, "_sync_integrity_context"):\n            hardening._sync_integrity_context()\n        hardening.validate(HERE / "review-closure-amendment-v1.2.json")\n        return index\n''')
-          p.write_text(s, encoding='utf-8')
-
-          p = Path('research/external-validation/swe-agent-v3/README.md')
-          s = p.read_text(encoding='utf-8')
-          note = '''\n### Instantiated pre-execution validation\n\nOnce a prospective task manifest and its retained classification-evidence registry exist, the following validation is mandatory before any sacrificial pilot or confirmatory execution:\n\n```bash\npython research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py --task-manifest <frozen-task-manifest.json> --evidence-registry <retained-classification-evidence.json>\n```\n\nThis command recomputes every task identity, classification-input digest, deterministic stratum mapping, task-bundle root, retained evidence content hash, repository/blind-ID mapping, minimum task and repository counts, exact per-repository cap, and required-strata coverage. Passing it is necessary but not sufficient for launch: every separately governed execution gate remains required, and the current package authorizes no model call, pilot, benchmark, or confirmatory execution.\n'''
-          if '### Instantiated pre-execution validation' not in s:
-              s += note
-          p.write_text(s, encoding='utf-8')
-          PY
-
-      - name: Commit semantic repair candidate
-        shell: bash
-        run: |
-          set -euo pipefail
-          rm .github/workflows/pr435-root-closure.yml
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
-          git diff --cached --check
-          git commit -m 'Close PR435 instantiated validation gaps'
-
-      - name: Refresh canonical design manifest from committed Git bytes
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import json
-          import subprocess
-          from pathlib import Path
-
-          manifest_path = Path('research/external-validation/swe-agent-v3/design-manifest-v1.0.json')
-          manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
-          artifacts = manifest.get('artifacts')
-          if not isinstance(artifacts, list) or not artifacts:
-              raise SystemExit('design manifest artifacts missing')
-          seen = set()
-          for entry in artifacts:
-              rel = entry.get('path')
-              if not isinstance(rel, str) or rel in seen:
-                  raise SystemExit(f'invalid/duplicate governed path: {rel!r}')
-              seen.add(rel)
-              blob = subprocess.check_output(['git', 'rev-parse', f'HEAD:{rel}'], text=True).strip()
-              size = int(subprocess.check_output(['git', 'cat-file', '-s', blob], text=True).strip())
-              entry['git_blob_sha1'] = blob
-              entry['bytes'] = size
-          manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-          PY
-          git add research/external-validation/swe-agent-v3/design-manifest-v1.0.json
-          git diff --cached --check
-          git commit -m 'Refresh SWE-agent v3 governed artifact identities'
-
-      - name: Run complete relevant validation on canonical candidate HEAD
+      - name: Verify current root-closure implementation
         shell: bash
         run: |
           set -euo pipefail
@@ -120,9 +33,14 @@ jobs:
           python3 tools/check_cre002_ext001_checksums.py
           python tools/verify_theory.py
           python tools/repo_health_check.py --fast
-
-      - name: Push validated candidate
+      - name: Remove obsolete one-shot workflow and commit
         shell: bash
         run: |
           set -euo pipefail
+          rm .github/workflows/pr435-root-closure.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --check
+          git commit -m 'Remove completed PR435 root-closure migration'
           git push origin HEAD:research/swe-agent-v3-design-clean
