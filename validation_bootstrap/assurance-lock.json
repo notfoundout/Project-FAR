@@ -19,6 +19,8 @@
     "far_validation/weakening.py": "6655083be6c502b41ee1cee0492b51436bf461a084a3507a87cbc127f43f2e54",
     "formal/ValidationEngine.tla": "73697921f7f34efc4acc10a224e1ac1aae75a821b9f6b366cc3f669b374a6a40",
     "mechanization/lean/ValidationEngine.lean": "54372afeb15f9025ea477d33aab9a4714a34f223862c27b37ad292ee63208269",
+    "research/target-category-discovery/verify_compositional_invariant.py": "3f665776ab6319f122ae493e10731e66f566ce598dc37dc47d0332c9890e6e2e",
+    "research/target-category-discovery/verify_compositional_invariant_legacy.py": "8b7ed09f5f7f57396ddab50a8c97362f98a54aef5302efc03eeb074609fbfb4d",
     "tests/test_validation_assurance.py": "edbd3610ca7def54b75bab7e982cf669273fb291a9125b2c16f90daac3b4073c",
     "tests/test_validation_trace_regression.py": "e7e6b68884c98fcfbf548a03b416b9226d47969b91420742a427be03a2e2fac3",
     "tools/assemble_validation_certificate.py": "8d2e3692e5530879d7e9d183cbe27981d0c2e3444d6fce05b52888beaf47dec8",

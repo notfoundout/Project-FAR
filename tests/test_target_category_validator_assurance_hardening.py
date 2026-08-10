@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
+import json
 import subprocess
 import sys
 import tempfile
@@ -37,6 +39,31 @@ class ProtectedValidatorAssuranceHardeningTests(unittest.TestCase):
         subprocess.run(["git", "add", "."], cwd=repo, check=True)
         subprocess.run(["git", "commit", "-qm", message], cwd=repo, check=True)
         return weakening.detect_weakening(repo, base=base)
+
+    def test_protected_verifiers_are_content_pinned_in_assurance_lock(self) -> None:
+        """Whole-file pins are the backstop behind the AST-level controls.
+
+        The structural scanners approximate "this verifier was not weakened" by
+        enumerating rebinding forms, which can never be complete: a namespace
+        provider can be re-derived through ``getattr(builtins, ...)``,
+        ``__builtins__[...]``, or ``importlib``. Pinning the verifier bytes makes
+        any such edit fail the bootstrap gate regardless of technique.
+        """
+        lock = json.loads((ROOT / "validation_bootstrap/assurance-lock.json").read_text(encoding="utf-8"))
+        for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+            self.assertIn(protected, lock["files"], protected)
+            digest = hashlib.sha256((ROOT / protected).read_bytes()).hexdigest()
+            self.assertEqual(lock["files"][protected], digest, protected)
+
+    def test_assurance_lock_rejects_protected_verifier_edits(self) -> None:
+        lock = json.loads((ROOT / "validation_bootstrap/assurance-lock.json").read_text(encoding="utf-8"))
+        for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+            mutated = (ROOT / protected).read_text(encoding="utf-8") + (
+                "\nimport builtins as _far_b\n"
+                "getattr(_far_b, 'globals')()['validate_gate'] = lambda *a, **k: None\n"
+            )
+            digest = hashlib.sha256(mutated.encode("utf-8")).hexdigest()
+            self.assertNotEqual(lock["files"][protected], digest, protected)
 
     def test_implementation_digests_match_committed_sources(self) -> None:
         for path, names in weakening.EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.items():
