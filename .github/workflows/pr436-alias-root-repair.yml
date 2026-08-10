@@ -1,0 +1,309 @@
+name: PR436 Alias Root Repair
+
+on:
+  push:
+    branches:
+      - agent/close-structured-reasoning-compositional-question
+    paths:
+      - .github/workflows/pr436-alias-root-repair.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/close-structured-reasoning-compositional-question
+          fetch-depth: 0
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Apply root repair and regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+
+          weakening = Path('far_validation/weakening.py')
+          text = weakening.read_text(encoding='utf-8')
+
+          old = '''    "research/target-category-discovery/verify_compositional_invariant.py": {
+              "validate_empirical_authority": (),
+              "validate_gate": ("function", "attribute:_core", "globals"),
+          },'''
+          new = '''    "research/target-category-discovery/verify_compositional_invariant.py": {
+              "validate_empirical_authority": (),
+              "validate_gate": ("function", "attribute:_core", "globals"),
+              "verify": ("function", "attribute:_core"),
+          },'''
+          if text.count(old) != 1:
+              raise SystemExit('unexpected wrapper binding-signature source')
+          text = text.replace(old, new, 1)
+
+          old = '''    tree = ast.parse(source, filename=path)
+
+              def namespace_scope(node: ast.AST) -> str | None:
+                  if (
+                      isinstance(node, ast.Call)
+                      and isinstance(node.func, ast.Name)
+                      and node.func.id in {"globals", "locals", "vars"}
+                      and not node.args
+                      and not node.keywords
+                  ):
+                      return node.func.id
+                  return None
+          '''
+          # Exact source is indented four spaces, not fourteen; keep a second literal for clarity.
+          old = '''    tree = ast.parse(source, filename=path)
+
+              def namespace_scope(node: ast.AST) -> str | None:
+          ''' if False else '''    tree = ast.parse(source, filename=path)
+
+    def namespace_scope(node: ast.AST) -> str | None:
+        if (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id in {"globals", "locals", "vars"}
+            and not node.args
+            and not node.keywords
+        ):
+            return node.func.id
+        return None
+'''
+          new = '''    tree = ast.parse(source, filename=path)
+    namespace_names: dict[str, str] = {name: name for name in ("globals", "locals", "vars")}
+    builtins_names: set[str] = {"builtins"}
+
+    # Resolve module aliases before scanning binding writes. A protected verifier
+    # must not be able to hide namespace access behind `v = vars`, an imported
+    # builtins alias, or a transitive assignment.
+    for statement in tree.body:
+        if isinstance(statement, ast.Import):
+            for alias in statement.names:
+                if alias.name == "builtins":
+                    builtins_names.add(alias.asname or "builtins")
+        elif isinstance(statement, ast.ImportFrom) and statement.module == "builtins":
+            for alias in statement.names:
+                if alias.name in namespace_names:
+                    namespace_names[alias.asname or alias.name] = alias.name
+
+    changed = True
+    while changed:
+        changed = False
+        for statement in tree.body:
+            value: ast.AST | None = None
+            targets: list[ast.AST] = []
+            if isinstance(statement, ast.Assign):
+                value = statement.value
+                targets = list(statement.targets)
+            elif isinstance(statement, ast.AnnAssign) and statement.value is not None:
+                value = statement.value
+                targets = [statement.target]
+            if value is None:
+                continue
+            for target in targets:
+                if not isinstance(target, ast.Name):
+                    continue
+                if isinstance(value, ast.Name) and value.id in builtins_names and target.id not in builtins_names:
+                    builtins_names.add(target.id)
+                    changed = True
+                provider: str | None = None
+                if isinstance(value, ast.Name) and value.id in namespace_names:
+                    provider = namespace_names[value.id]
+                elif (
+                    isinstance(value, ast.Attribute)
+                    and isinstance(value.value, ast.Name)
+                    and value.value.id in builtins_names
+                    and value.attr in {"globals", "locals", "vars"}
+                ):
+                    provider = value.attr
+                if provider is not None and namespace_names.get(target.id) != provider:
+                    namespace_names[target.id] = provider
+                    changed = True
+
+    def namespace_provider(node: ast.AST) -> str | None:
+        if isinstance(node, ast.Name):
+            return namespace_names.get(node.id)
+        if (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id in builtins_names
+            and node.attr in {"globals", "locals", "vars"}
+        ):
+            return node.attr
+        return None
+
+    def namespace_scope(node: ast.AST) -> str | None:
+        if isinstance(node, ast.Call) and not node.args and not node.keywords:
+            return namespace_provider(node.func)
+        return None
+'''
+          if text.count(old) != 1:
+              raise SystemExit('unexpected namespace_scope source')
+          text = text.replace(old, new, 1)
+
+          old = '''    tree = ast.parse(source, filename=path)
+    failures: list[str] = []
+    direct = {"exec", "eval", "compile"}
+    dynamic_names = set(direct)
+
+    def dynamic_source(node: ast.AST) -> bool:
+        if isinstance(node, ast.Name):
+            return node.id in dynamic_names
+        return (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id == "builtins"
+            and node.attr in direct
+        )
+
+    def assigned_names(node: ast.AST) -> set[str]:
+'''
+          new = '''    tree = ast.parse(source, filename=path)
+    failures: list[str] = []
+    direct = {"exec", "eval", "compile"}
+    dynamic_names = set(direct)
+    builtins_names: set[str] = {"builtins"}
+
+    for statement in tree.body:
+        if isinstance(statement, ast.Import):
+            for alias in statement.names:
+                if alias.name == "builtins":
+                    builtins_names.add(alias.asname or "builtins")
+        elif isinstance(statement, ast.ImportFrom) and statement.module == "builtins":
+            for alias in statement.names:
+                if alias.name in direct:
+                    dynamic_names.add(alias.asname or alias.name)
+
+    def dynamic_source(node: ast.AST) -> bool:
+        if isinstance(node, ast.Name):
+            return node.id in dynamic_names
+        return (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id in builtins_names
+            and node.attr in direct
+        )
+
+    def assigned_names(node: ast.AST) -> set[str]:
+'''
+          if text.count(old) != 1:
+              raise SystemExit('unexpected dynamic alias source')
+          text = text.replace(old, new, 1)
+
+          old = '''            if value is None or not dynamic_source(value):
+                continue
+            for target in targets:
+                for name in assigned_names(target):
+                    if name not in dynamic_names:
+                        dynamic_names.add(name)
+                        changed = True
+
+    for node in ast.walk(tree):
+        if (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id in dynamic_names
+        ):
+            failures.append(
+                f"dynamic execution rejected in protected verifier: {node.func.id}"
+            )
+'''
+          new = '''            if value is None:
+                continue
+            names = set().union(*(assigned_names(target) for target in targets))
+            if isinstance(value, ast.Name) and value.id in builtins_names:
+                for name in names:
+                    if name not in builtins_names:
+                        builtins_names.add(name)
+                        changed = True
+            if dynamic_source(value):
+                for name in names:
+                    if name not in dynamic_names:
+                        dynamic_names.add(name)
+                        changed = True
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call) and dynamic_source(node.func):
+            failures.append(
+                "dynamic execution rejected in protected verifier: "
+                f"{ast.unparse(node.func) if hasattr(ast, 'unparse') else _call_name(node)}"
+            )
+'''
+          if text.count(old) != 1:
+              raise SystemExit('unexpected dynamic call scan source')
+          text = text.replace(old, new, 1)
+          weakening.write_text(text, encoding='utf-8')
+
+          tests = Path('tests/test_target_category_weakening_aliases.py')
+          test_text = tests.read_text(encoding='utf-8')
+          marker = '''    def test_vars_namespace_rebinding_of_protected_helper_is_rejected(self) -> None:
+'''
+          insert = '''    def test_imported_builtins_alias_to_exec_is_rejected(self) -> None:
+        report = self._mutated_report(
+            "\\nimport builtins as _far_builtins\\n"
+            "_far_dynamic = _far_builtins.exec\\n"
+            "class _FarImportedAliasAttack:\\n"
+            "    _far_dynamic('globals()[\\\\\\\"validate_empirical_authority\\\\\\\"] = lambda *a, **k: None')\\n"
+        )
+        self.assertFalse(report.successful)
+        failures = [item for finding in report.findings for item in finding.failures]
+        self.assertTrue(any("dynamic execution rejected" in item for item in failures), failures)
+
+    def test_vars_callable_alias_rebinding_is_rejected(self) -> None:
+        report = self._mutated_report(
+            "\\n_far_vars = vars\\n"
+            "_far_vars()[\\\"validate_gate\\\"] = lambda *a, **k: None\\n"
+        )
+        self.assertFalse(report.successful)
+        failures = [item for finding in report.findings for item in finding.failures]
+        self.assertTrue(
+            any("protected validator binding changed for validate_gate" in item for item in failures),
+            failures,
+        )
+
+'''
+          if test_text.count(marker) != 1:
+              raise SystemExit('unexpected alias test source')
+          test_text = test_text.replace(marker, insert + marker, 1)
+          tests.write_text(test_text, encoding='utf-8')
+
+          lock_path = Path('validation_bootstrap/assurance-lock.json')
+          lock = json.loads(lock_path.read_text(encoding='utf-8'))
+          lock['files']['far_validation/weakening.py'] = hashlib.sha256(weakening.read_bytes()).hexdigest()
+          lock_path.write_text(json.dumps(lock, indent=2, sort_keys=True) + '\\n', encoding='utf-8')
+          PY
+          rm .github/workflows/pr436-alias-root-repair.yml
+          git config user.name "Project FAR Closure"
+          git config user.email "actions@users.noreply.github.com"
+          git add far_validation/weakening.py tests/test_target_category_weakening_aliases.py validation_bootstrap/assurance-lock.json .github/workflows/pr436-alias-root-repair.yml
+          git commit -m "Harden verifier alias resolution at root"
+      - name: Run focused root regressions
+        run: |
+          python -m unittest \
+            tests.test_target_category_weakening_aliases \
+            tests.test_target_category_validator_assurance_hardening \
+            tests.test_target_category_compositional_invariant \
+            tests.test_pr436_root_closure -v
+      - name: Verify bootstrap integrity
+        run: python validation_bootstrap/verify.py
+      - name: Run weakening detector against current main base
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="$(git merge-base HEAD origin/main)"
+          python -m far_validation weakening --base "$BASE"
+      - name: Run complete relevant validation profile
+        run: python -m far_validation validate --profile pr-full --no-cache
+      - name: Push validated repair
+        shell: bash
+        run: git push origin HEAD:agent/close-structured-reasoning-compositional-question
