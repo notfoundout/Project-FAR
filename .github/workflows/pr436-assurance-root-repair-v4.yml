@@ -62,8 +62,16 @@ jobs:
           python -m unittest tests.test_target_category_validator_assurance_hardening -v
           python -m far_validation weakening
 
-      - name: Run complete PR-fast validation
-        run: python -m far_validation run --profile pr-fast --trace-mode required
+      - name: Run canonical fast repository health validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/check_cre002_lock.py
+          python3 tools/check_cre002_ext001_checksums.py
+          python3 tools/reconcile_merged_pr_review_findings.py --baseline docs/audits/merged-pr-review-classification/findings.json --decisions docs/audits/merged-pr-review-reconciliation/reconciliation-decisions.json --output-dir docs/audits/merged-pr-review-reconciliation --check
+          pip install -r requirements.txt
+          python tools/verify_theory.py
+          python tools/repo_health_check.py --fast
 
       - name: Commit and push validated repair
         shell: bash
