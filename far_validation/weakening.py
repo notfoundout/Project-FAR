@@ -766,8 +766,17 @@ def _changed_paths(root: Path, base: str) -> set[str]:
     alongside Python. Deriving the protected candidate set from the Python
     analyzer would leave every locked non-Python path free to be edited beside
     its own pin, so protected scope is never inferred from a file extension.
+
+    Rename detection is disabled deliberately. With it enabled git reports only
+    the destination of a rename, so moving a protected artifact would hide its
+    base identity and neither the repin nor the drop-from-lock check would ever
+    evaluate it. Because detection is similarity-based, that concealment applied
+    exactly to the surgical edits worth catching. ``--no-renames`` decomposes a
+    rename into a delete and an add, so every path protected by the base lock is
+    evaluated under its base identity whether it was edited, deleted, moved, or
+    renamed, independent of git's similarity classification.
     """
-    completed = _git(root, "diff", "--name-only", f"{base}...HEAD")
+    completed = _git(root, "diff", "--name-only", "--no-renames", f"{base}...HEAD")
     if completed.returncode != 0:
         raise RuntimeError(completed.stderr.strip() or "git diff failed")
     return {line.strip() for line in completed.stdout.splitlines() if line.strip()}

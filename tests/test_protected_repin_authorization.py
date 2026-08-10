@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOCK = weakening.ASSURANCE_LOCK_PATH
 WAIVERS = weakening.WAIVER_PATH
 WORKFLOW = ".github/workflows/validator-assurance.yml"
+RENAMED_WORKFLOW = ".github/workflows/validator-assurance-v2.yml"
 FORMAL = "formal/ValidationEngine.tla"
 POLICY = "validation/runtime-policy.json"
 VERIFIER = "research/target-category-discovery/verify_compositional_invariant_legacy.py"
@@ -281,6 +282,90 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
         self._commit()
         self._assert_accepted(base, POLICY)
         self._assert_accepted(base, FORMAL)
+
+    def _fabricate_workflow(self, original: bytes) -> bytes:
+        """Rewrite the real workflow so the weakening gate reports success without running."""
+        text = original.decode("utf-8")
+        step = """      - name: Detect test and validator weakening
+        run: >-
+          python -m far_validation weakening --base "${{ steps.base.outputs.sha }}" --json
+          > artifacts/validation/runtime/test-weakening.json"""
+        self.assertIn(step, text)
+        fabricated = text.replace(
+            step,
+            """      - name: Detect test and validator weakening
+        run: |
+          echo '{"successful": true}' > artifacts/validation/runtime/test-weakening.json""",
+            1,
+        )
+        self.assertNotIn("far_validation weakening", fabricated)
+        return fabricated.encode("utf-8")
+
+    def _relocate_lock_entry(self, old: str, new: str, data: bytes) -> None:
+        """Move a protected artifact's lock entry to a new path, as the rename attack does."""
+        lock_path = self.repo / LOCK
+        lock = json.loads(lock_path.read_text(encoding="utf-8"))
+        lock["files"].pop(old, None)
+        lock["files"][new] = sha256(data)
+        workflow = lock.get("workflow")
+        if isinstance(workflow, dict):
+            workflow["path"] = new
+            workflow["required_fragments"] = [
+                fragment
+                for fragment in workflow.get("required_fragments", [])
+                if "far_validation weakening" not in fragment
+            ]
+        lock_path.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
+
+    def _build_workflow_base(self, original: bytes) -> str:
+        base = self._build_base({WORKFLOW: original})
+        lock_path = self.repo / LOCK
+        lock = json.loads(lock_path.read_text(encoding="utf-8"))
+        lock["workflow"] = {
+            "path": WORKFLOW,
+            "required_fragments": ["python -m far_validation weakening"],
+        }
+        lock_path.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
+        self._run("add", "-A")
+        self._run("commit", "-qm", "base workflow contract")
+        return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=self.repo, text=True).strip()
+
+    # N. renaming a protected artifact must not hide its base identity.
+    # Git reports only a rename's destination, so the base-protected source path
+    # would never be evaluated. High similarity is preserved deliberately: git
+    # classifies this as R09x, which is exactly the case that used to evade the
+    # check, so this test fails if rename detection is ever re-enabled.
+    def test_high_similarity_rename_of_protected_workflow_is_rejected(self) -> None:
+        original = (ROOT / WORKFLOW).read_bytes()
+        base = self._build_workflow_base(original)
+        fabricated = self._fabricate_workflow(original)
+
+        self._run("mv", WORKFLOW, RENAMED_WORKFLOW)
+        (self.repo / RENAMED_WORKFLOW).write_bytes(fabricated)
+        self._relocate_lock_entry(WORKFLOW, RENAMED_WORKFLOW, fabricated)
+        self._commit("rename workflow and fabricate weakening success")
+
+        status = subprocess.check_output(
+            ["git", "diff", "--name-status", f"{base}...HEAD"], cwd=self.repo, text=True
+        )
+        self.assertRegex(status, r"R0?9\d\s", f"expected a high-similarity rename, got:\n{status}")
+        self._assert_rejected(base, WORKFLOW)
+
+    # O. the same attack expressed as delete + add must be rejected identically,
+    # so protection never depends on git's rename-similarity heuristic.
+    def test_delete_plus_add_of_protected_workflow_is_rejected(self) -> None:
+        original = (ROOT / WORKFLOW).read_bytes()
+        base = self._build_workflow_base(original)
+        fabricated = self._fabricate_workflow(original)
+
+        self._run("rm", "-q", WORKFLOW)
+        target = self.repo / RENAMED_WORKFLOW
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(fabricated)
+        self._relocate_lock_entry(WORKFLOW, RENAMED_WORKFLOW, fabricated)
+        self._commit("delete and re-add workflow with fabricated weakening success")
+
+        self._assert_rejected(base, WORKFLOW)
 
     # M. a path introduced by the candidate is not a base-protected artifact
     def test_new_candidate_path_is_not_treated_as_protected(self) -> None:
