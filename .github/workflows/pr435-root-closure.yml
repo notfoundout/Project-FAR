@@ -21,7 +21,43 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify current root-closure implementation
+
+      - name: Refresh governed artifact identities and freeze candidate HEAD
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          manifest_path = Path('research/external-validation/swe-agent-v3/design-manifest-v1.0.json')
+          manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+          artifacts = manifest.get('artifacts')
+          if not isinstance(artifacts, list) or not artifacts:
+              raise SystemExit('design manifest artifacts missing')
+          seen = set()
+          for entry in artifacts:
+              if not isinstance(entry, dict):
+                  raise SystemExit('design manifest artifact record is not an object')
+              rel = entry.get('path')
+              if not isinstance(rel, str) or not rel or rel in seen:
+                  raise SystemExit(f'invalid/duplicate governed path: {rel!r}')
+              seen.add(rel)
+              blob = subprocess.check_output(['git', 'rev-parse', f'HEAD:{rel}'], text=True).strip()
+              size = int(subprocess.check_output(['git', 'cat-file', '-s', blob], text=True).strip())
+              entry['git_blob_sha1'] = blob
+              entry['bytes'] = size
+          manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+          rm .github/workflows/pr435-root-closure.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --check
+          git commit -m 'Refresh PR435 governed artifact identities'
+
+      - name: Verify committed candidate HEAD
         shell: bash
         run: |
           set -euo pipefail
@@ -33,14 +69,9 @@ jobs:
           python3 tools/check_cre002_ext001_checksums.py
           python tools/verify_theory.py
           python tools/repo_health_check.py --fast
-      - name: Remove obsolete one-shot workflow and commit
+
+      - name: Push only the validated candidate
         shell: bash
         run: |
           set -euo pipefail
-          rm .github/workflows/pr435-root-closure.yml
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
-          git diff --cached --check
-          git commit -m 'Remove completed PR435 root-closure migration'
           git push origin HEAD:research/swe-agent-v3-design-clean
