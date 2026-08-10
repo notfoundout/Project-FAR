@@ -32,20 +32,20 @@ REQUIRED_MODULE_BINDING_SIGNATURES: dict[str, dict[str, tuple[str, ...]]] = {
 }
 
 
-EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = {'research/target-category-discovery/verify_compositional_invariant.py': {'validate_gate': 'cdc2c4a81cf2a598291aefc6bfe26dc31f3837cc6b3ae264d2dd6fdd8a9392b2',
-                                                                          'verify': '957e2638ee31f343367c153c03ae881f326b51e1cee1b571f6b11e1f3c8f2fcc'},
- 'research/target-category-discovery/verify_compositional_invariant_legacy.py': {'_free_category': '02552df6cd7ba5d4e795792819b2aaa68a14c5cdf1590e95b39a47935ceb56cb',
-                                                                                 '_git_blob_sha1': 'b3af787b941adfb26fa95275252cfa7c063e610018eccbcb60e3ad8e24ab7d5e',
-                                                                                 '_read_utf8': '5b9fe168d4b08a41951d9d39f8c832d6397c6170ecd9e5e09c8d57a6aa3ebdba',
-                                                                                 '_render': 'e7b291475f6859f5a6ae8452124016eb1e080d5c759f325d16e6a649dfb43bfc',
-                                                                                 'build_result': 'c6b8b2881459d686a4296a0df6fe66a034ecc8a079a413249b439824a36881aa',
-                                                                                 'canonical_json': '8c56324447ec578fa3966b725ca77b2204dccc2d1156e35a563f5450d6005220',
-                                                                                 'load_json': '1804352134db5a6bbdf4adb8a640a6a1513bde226d80a91edb32feb1f8ddf3c4',
-                                                                                 'validate_empirical_authority': 'eb8b9adb90077a9914adfacce5dd188233037d375d3a5a7d7deb2d41fe114cbc',
-                                                                                 'validate_gate': '228a099165c3878ee2edabb6664826b840f1b6fa7a2a07f935f6c68dd90811da',
-                                                                                 'validate_public_surface': '8e611a7f7f5254f2eef0173d14ca37910c04e03495eec88605af992f3f97859b',
-                                                                                 'validate_spec': 'd907f23869756758a43b96f0542e4131b0bf20857850efc3241531caca27baff',
-                                                                                 'verify': '0a4675b2285452c0ce0cfc61f026eb1a2b3d0383c984d433542195337739677e'}}
+EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = {'research/target-category-discovery/verify_compositional_invariant.py': {'validate_gate': 'af3e3a20584f8b19e8989c99c7c85822dab584d1a2155df990c148ecca1f67b2',
+                                                                          'verify': 'b8b2aa2a4ac0f68e9d420ab5e273954ab46eb5ee9a58f8967ced2d773709af30'},
+ 'research/target-category-discovery/verify_compositional_invariant_legacy.py': {'_free_category': '6dbae7c5fddbfe20a0ac0595395ffdf3dbf15c5db76881c43fb91ea5ce65758e',
+                                                                                 '_git_blob_sha1': '0f84477ad146c85a9318c60d418d4b933481f6737e3c06a0786290b3fd221c41',
+                                                                                 '_read_utf8': 'fb4ceb108ae5a5fb3eceb5181194c10945c673ef44e475a30d4a6961cf932bd6',
+                                                                                 '_render': '7cdd6ca537e18171a48447c15b962e3a834d77d2e1921bc077f9001355ef744c',
+                                                                                 'build_result': '256b1ea5340f9bde32f8a484a920e57fdb5158fb5dd93f1889db37ed9a3ad7ab',
+                                                                                 'canonical_json': 'c98c9d6c980564fd8c377cdb14a1761ac6741577ef67faf9a2a68530424bea5c',
+                                                                                 'load_json': '7186a47690f7cbf22cdd43c7be7abd2c024f546d57d8ff855e5251abd492f177',
+                                                                                 'validate_empirical_authority': '973ddba18912d256c0f1442c098821f628bfd3516f6f19b9ae7c3dd329c346b9',
+                                                                                 'validate_gate': '5f7006458d9a9542dd7965914229b82cbee549b7e2cb2c822cd7f73cb8a27920',
+                                                                                 'validate_public_surface': 'bf91d77e74fa48ca3f461266012afe8d8e3f9c7abca7bfdca6ce49b3425fd9e0',
+                                                                                 'validate_spec': 'dc15bb4595e1f24b0bc3bfd58289e451af7ff269d7a8d00fdc177e5325ea3ee4',
+                                                                                 'verify': 'c05b14ff5e9d37f4eb1ede9aee3ce8b797fe64107fd6d5f2e2ffb7980fb7d6bf'}}
 
 
 @dataclass
@@ -425,11 +425,19 @@ def _binding_integrity_failures(source: str, path: str) -> list[str]:
 
 
 def _protected_implementation_digest(source: str, path: str, function_name: str) -> str | None:
+    """Digest a protected function's implementation reproducibly.
+
+    ``ast.dump`` is a debugging representation with no cross-version stability
+    guarantee: byte-identical source digests differently on CPython 3.11, 3.12,
+    and 3.13, which would make this integrity pin pass only on the interpreter
+    that generated it. ``ast.unparse`` renders canonical source instead, so the
+    digest tracks the implementation rather than the interpreter.
+    """
     tree = ast.parse(source, filename=path)
     nodes = [n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name == function_name]
     if len(nodes) != 1:
         return None
-    return hashlib.sha256(ast.dump(nodes[0], annotate_fields=True, include_attributes=False).encode()).hexdigest()
+    return hashlib.sha256(ast.unparse(nodes[0]).encode("utf-8")).hexdigest()
 
 
 def _protected_implementation_failures(source: str, path: str) -> list[str]:

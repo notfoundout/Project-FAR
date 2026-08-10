@@ -38,6 +38,46 @@ class ProtectedValidatorAssuranceHardeningTests(unittest.TestCase):
         subprocess.run(["git", "commit", "-qm", message], cwd=repo, check=True)
         return weakening.detect_weakening(repo, base=base)
 
+    def test_implementation_digests_match_committed_sources(self) -> None:
+        for path, names in weakening.EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.items():
+            source = (ROOT / path).read_text(encoding="utf-8")
+            self.assertEqual(weakening._protected_implementation_failures(source, path), [], path)
+            self.assertTrue(names)
+
+    def test_implementation_digest_is_reproducible_across_interpreters(self) -> None:
+        """The pin must track the implementation, not the interpreter.
+
+        ``ast.dump`` output is a debugging representation that differs between
+        CPython minor versions, so digesting it would make this control pass only
+        on the interpreter that generated the pins.
+        """
+        candidates = [Path(f"/usr/bin/python3.{minor}") for minor in (11, 12, 13)]
+        interpreters = [str(c) for c in candidates if c.exists()]
+        if len(interpreters) < 2:
+            self.skipTest("need at least two CPython minor versions to compare")
+        program = (
+            "import json,sys\n"
+            "sys.path.insert(0, sys.argv[1])\n"
+            "from far_validation import weakening as w\n"
+            "from pathlib import Path\n"
+            "out={}\n"
+            "for path, names in w.EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.items():\n"
+            "    src=Path(sys.argv[1], path).read_text(encoding='utf-8')\n"
+            "    out[path]={n: w._protected_implementation_digest(src, path, n) for n in names}\n"
+            "print(json.dumps(out, sort_keys=True))\n"
+        )
+        digests = set()
+        for interpreter in interpreters:
+            completed = subprocess.run(
+                [interpreter, "-c", program, str(ROOT)],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            digests.add(completed.stdout.strip())
+        self.assertEqual(len(digests), 1, f"digests differ across {interpreters}")
+
     def test_definition_time_decorator_rebinding_is_rejected(self) -> None:
         tmp, repo, base = self._repo()
         self.addCleanup(tmp.cleanup)
