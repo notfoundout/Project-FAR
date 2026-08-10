@@ -291,6 +291,17 @@ class CompositionalInvariantTests(unittest.TestCase):
                 self.assertIn(protected, rebound_failures)
                 self.assertTrue(any("protected validator binding changed" in item for item in rebound_failures[protected]))
 
+            subprocess.run(["git","reset","--hard",base],cwd=repo,check=True,stdout=subprocess.DEVNULL)
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                target=repo/protected; source=target.read_text(); source += "\nclass _DefinitionTimeAttack:\n    globals()[\"validate_empirical_authority\"] = lambda *args, **kwargs: None\n    globals()[\"validate_gate\"] = lambda *args, **kwargs: None\n"; target.write_text(source)
+            subprocess.run(["git","add","."],cwd=repo,check=True); subprocess.run(["git","commit","-qm","class attack"],cwd=repo,check=True); report=weakening.detect_weakening(repo,base=base); self.assertFalse(report.successful)
+            subprocess.run(["git","reset","--hard",base],cwd=repo,check=True,stdout=subprocess.DEVNULL)
+            lp=repo/"research/target-category-discovery/verify_compositional_invariant_legacy.py"; source=lp.read_text(); oldh="def _git_blob_sha1(raw: bytes) -> str:\n    return hashlib.sha1(f\"blob {len(raw)}\\0\".encode(\"ascii\") + raw).hexdigest()\n"; self.assertEqual(source.count(oldh),1); lp.write_text(source.replace(oldh,"def _git_blob_sha1(raw: bytes) -> str:\n    return \"0\" * 40\n",1)); subprocess.run(["git","add","."],cwd=repo,check=True); subprocess.run(["git","commit","-qm","helper attack"],cwd=repo,check=True); report=weakening.detect_weakening(repo,base=base); self.assertFalse(report.successful)
+            subprocess.run(["git","reset","--hard",base],cwd=repo,check=True,stdout=subprocess.DEVNULL)
+            for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+                target=repo/protected; source=target.read_text(); line=next(l for l in source.splitlines(keepends=True) if l.startswith("    validate_gate(")); target.write_text(source.replace(line,line+"    return {}\n",1))
+            subprocess.run(["git","add","."],cwd=repo,check=True); subprocess.run(["git","commit","-qm","return attack"],cwd=repo,check=True); report=weakening.detect_weakening(repo,base=base); self.assertFalse(report.successful)
+
 
 if __name__ == "__main__":
     unittest.main()

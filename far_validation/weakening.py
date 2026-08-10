@@ -31,7 +31,20 @@ REQUIRED_MODULE_BINDING_SIGNATURES: dict[str, dict[str, tuple[str, ...]]] = {
 }
 
 
-EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = {'research/target-category-discovery/verify_compositional_invariant.py': {'validate_gate': 'cdc2c4a81cf2a598291aefc6bfe26dc31f3837cc6b3ae264d2dd6fdd8a9392b2'}, 'research/target-category-discovery/verify_compositional_invariant_legacy.py': {'validate_empirical_authority': 'eb8b9adb90077a9914adfacce5dd188233037d375d3a5a7d7deb2d41fe114cbc', 'validate_gate': '228a099165c3878ee2edabb6664826b840f1b6fa7a2a07f935f6c68dd90811da'}}
+EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = {'research/target-category-discovery/verify_compositional_invariant.py': {'validate_gate': 'cdc2c4a81cf2a598291aefc6bfe26dc31f3837cc6b3ae264d2dd6fdd8a9392b2',
+                                                                          'verify': '957e2638ee31f343367c153c03ae881f326b51e1cee1b571f6b11e1f3c8f2fcc'},
+ 'research/target-category-discovery/verify_compositional_invariant_legacy.py': {'_free_category': '02552df6cd7ba5d4e795792819b2aaa68a14c5cdf1590e95b39a47935ceb56cb',
+                                                                                 '_git_blob_sha1': 'b3af787b941adfb26fa95275252cfa7c063e610018eccbcb60e3ad8e24ab7d5e',
+                                                                                 '_read_utf8': '5b9fe168d4b08a41951d9d39f8c832d6397c6170ecd9e5e09c8d57a6aa3ebdba',
+                                                                                 '_render': 'e7b291475f6859f5a6ae8452124016eb1e080d5c759f325d16e6a649dfb43bfc',
+                                                                                 'build_result': 'c6b8b2881459d686a4296a0df6fe66a034ecc8a079a413249b439824a36881aa',
+                                                                                 'canonical_json': '8c56324447ec578fa3966b725ca77b2204dccc2d1156e35a563f5450d6005220',
+                                                                                 'load_json': '1804352134db5a6bbdf4adb8a640a6a1513bde226d80a91edb32feb1f8ddf3c4',
+                                                                                 'validate_empirical_authority': 'eb8b9adb90077a9914adfacce5dd188233037d375d3a5a7d7deb2d41fe114cbc',
+                                                                                 'validate_gate': '228a099165c3878ee2edabb6664826b840f1b6fa7a2a07f935f6c68dd90811da',
+                                                                                 'validate_public_surface': '8e611a7f7f5254f2eef0173d14ca37910c04e03495eec88605af992f3f97859b',
+                                                                                 'validate_spec': 'd907f23869756758a43b96f0542e4131b0bf20857850efc3241531caca27baff',
+                                                                                 'verify': '0a4675b2285452c0ce0cfc61f026eb1a2b3d0383c984d433542195337739677e'}}
 
 
 @dataclass
@@ -263,6 +276,8 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
                     scan_expr(base)
                 for keyword in st.keywords:
                     scan_expr(keyword.value)
+                # Class bodies execute at definition time; inspect that executable scope.
+                scan(st.body)
                 continue
             if isinstance(st, ast.Assign):
                 for target in st.targets:
