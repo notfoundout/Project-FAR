@@ -131,7 +131,7 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
         if (
             isinstance(node, ast.Call)
             and isinstance(node.func, ast.Name)
-            and node.func.id in {"globals", "locals"}
+            and node.func.id in {"globals", "locals", "vars"}
             and not node.args
             and not node.keywords
         ):
@@ -370,16 +370,77 @@ def _protected_implementation_failures(source: str, path: str) -> list[str]:
 
 
 def _definition_time_execution_failures(source: str, path: str) -> list[str]:
-    """Reject dynamic execution and decorators in protected verifier source."""
+    """Reject dynamic execution aliases and decorators in protected verifier source.
+
+    Definition-time dynamic execution can rewrite protected verifier bindings even
+    when the call is reached through a module-level alias such as ``runner = exec``.
+    Resolve those aliases transitively before scanning calls. Explicit
+    ``builtins.exec/eval/compile`` aliases are treated identically.
+    """
     if path not in REQUIRED_SEMANTIC_CALLS:
         return []
     tree = ast.parse(source, filename=path)
     failures: list[str] = []
+    direct = {"exec", "eval", "compile"}
+    dynamic_names = set(direct)
+
+    def dynamic_source(node: ast.AST) -> bool:
+        if isinstance(node, ast.Name):
+            return node.id in dynamic_names
+        return (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id == "builtins"
+            and node.attr in direct
+        )
+
+    def assigned_names(node: ast.AST) -> set[str]:
+        if isinstance(node, ast.Name):
+            return {node.id}
+        if isinstance(node, (ast.Tuple, ast.List)):
+            names: set[str] = set()
+            for item in node.elts:
+                names.update(assigned_names(item))
+            return names
+        return set()
+
+    changed = True
+    while changed:
+        changed = False
+        for statement in tree.body:
+            value: ast.AST | None = None
+            targets: list[ast.AST] = []
+            if isinstance(statement, ast.Assign):
+                value = statement.value
+                targets = list(statement.targets)
+            elif isinstance(statement, ast.AnnAssign) and statement.value is not None:
+                value = statement.value
+                targets = [statement.target]
+            if value is None or not dynamic_source(value):
+                continue
+            for target in targets:
+                for name in assigned_names(target):
+                    if name not in dynamic_names:
+                        dynamic_names.add(name)
+                        changed = True
+
     for node in ast.walk(tree):
-        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in {"exec", "eval", "compile"}:
-            failures.append(f"dynamic execution rejected in protected verifier: {node.func.id}")
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node.decorator_list:
-            failures.append(f"protected verifier definition-time decorator rejected: {getattr(node, 'name', '<definition>')}")
+        if (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id in dynamic_names
+        ):
+            failures.append(
+                f"dynamic execution rejected in protected verifier: {node.func.id}"
+            )
+        if (
+            isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
+            and node.decorator_list
+        ):
+            failures.append(
+                "protected verifier definition-time decorator rejected: "
+                f"{getattr(node, 'name', '<definition>')}"
+            )
     return failures
 
 def analyze(source: str, path: str) -> StrengthMetrics:
