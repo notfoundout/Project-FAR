@@ -138,3 +138,20 @@ Evidence: `docs/research/fara-unresolved-status-audit-v1.0.md`. Investigation ta
 | FAR `Unresolved`, FARO `uncertainty`, Charter `Unknown`, and CRP `Unknown` are the same concept | Rejected | Four distinct subjects at four distinct layers. Lexical similarity is not identity. FAR's definition is downstream and cannot be imported upstream. |
 | A canonical edit is justified on current evidence | Rejected | Replication and Acceptance have not occurred, and a weakly established result is not a basis for canonical promotion. |
 | This audit bears on `Ω`'s type, FARA primitives, seven-primitive completeness, `UQ-T2`/`OP-02`, or the terminal UPP theorem | Rejected | No change and no evidence in either direction on any of these. |
+
+## 2026-08-10 unresolved-candidate obligation-scope audit
+
+Evidence: `docs/research/fara-unresolved-obligation-scope-audit-v1.0.md`. Investigation target `OP-17`/`UQ-T21`. No canonical surface was modified. `OP-16`'s typing result is neither strengthened nor weakened.
+
+| Claim | Status | Required interpretation |
+|---|---|---|
+| Unresolved candidates carry no traceability or auditability obligation | **Premise not established** | True only under the narrow reading of "admissibility classification". The broad reading is equally coherent. Whether the asymmetry exists is interpretation-relative and the ambiguity is preserved. |
+| The asymmetry is intentional | Rejected as unestablished | No canonical text states or defends it; `admissibility-structure.md:204` marks completeness of admissibility classification as open research. |
+| `unresolved status` denotes an `admissibility status` | Unresolved | The lexical bridge from `:23` would establish it, but `status` is used in five distinct senses across canonical FARA and no text asserts the identification. |
+| Traceability implies recording the cause of unresolved | Refuted | Its four targets are the candidate, investigation, calculus, and producing process. None is a cause. Read broadly it requires path-linking, not cause-recording. |
+| Auditability of unresolved causes is generally satisfiable | Refuted | The unknown-cause countermodel makes cause-reconstruction unsatisfiable; the surviving weak form adds nothing to the existing `:111` marker requirement. |
+| An unresolved result can be auditable without being a substantive classification | Established | Audit the derivation/path rather than a nonexistent object — the form `transition-signatures.md:85` already uses for transformation executions. |
+| A missing substantive classification is itself an auditable object | Rejected | Canonical text does not support treating an absent classification as an object of audit. |
+| The obligation structure is evidence about `M1` vs `M2` typing | Rejected | Preferring `M1` to remove an awkward asymmetry would infer upstream ontology from downstream convenience. One weak non-convenience consideration favours `M2` and is not treated as strengthening it. |
+| A normative change to FARA is justified | Rejected | `H5`. Both readings are coherent, and neither fork of the broad reading yields an obligation worth adding. |
+| `status` is used univocally in canonical FARA | Refuted | Five distinct senses, no disambiguation. Recorded as `LIM-030`/`OP-18`/`UQ-T22`. |
