@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import json
 import os
 import subprocess
@@ -22,12 +23,29 @@ REQUIRED_MODULE_BINDING_SIGNATURES: dict[str, dict[str, tuple[str, ...]]] = {
     "research/target-category-discovery/verify_compositional_invariant.py": {
         "validate_empirical_authority": ("globals:dynamic",),
         "validate_gate": ("function", "attribute:_core", "globals:dynamic", "globals"),
+        "verify": ("globals:dynamic", "function", "attribute:_core"),
     },
     "research/target-category-discovery/verify_compositional_invariant_legacy.py": {
         "validate_empirical_authority": ("function",),
         "validate_gate": ("function",),
     },
 }
+
+
+EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = {'research/target-category-discovery/verify_compositional_invariant.py': {'validate_gate': 'cdc2c4a81cf2a598291aefc6bfe26dc31f3837cc6b3ae264d2dd6fdd8a9392b2',
+                                                                          'verify': '957e2638ee31f343367c153c03ae881f326b51e1cee1b571f6b11e1f3c8f2fcc'},
+ 'research/target-category-discovery/verify_compositional_invariant_legacy.py': {'_free_category': '02552df6cd7ba5d4e795792819b2aaa68a14c5cdf1590e95b39a47935ceb56cb',
+                                                                                 '_git_blob_sha1': 'b3af787b941adfb26fa95275252cfa7c063e610018eccbcb60e3ad8e24ab7d5e',
+                                                                                 '_read_utf8': '5b9fe168d4b08a41951d9d39f8c832d6397c6170ecd9e5e09c8d57a6aa3ebdba',
+                                                                                 '_render': 'e7b291475f6859f5a6ae8452124016eb1e080d5c759f325d16e6a649dfb43bfc',
+                                                                                 'build_result': 'c6b8b2881459d686a4296a0df6fe66a034ecc8a079a413249b439824a36881aa',
+                                                                                 'canonical_json': '8c56324447ec578fa3966b725ca77b2204dccc2d1156e35a563f5450d6005220',
+                                                                                 'load_json': '1804352134db5a6bbdf4adb8a640a6a1513bde226d80a91edb32feb1f8ddf3c4',
+                                                                                 'validate_empirical_authority': 'eb8b9adb90077a9914adfacce5dd188233037d375d3a5a7d7deb2d41fe114cbc',
+                                                                                 'validate_gate': '228a099165c3878ee2edabb6664826b840f1b6fa7a2a07f935f6c68dd90811da',
+                                                                                 'validate_public_surface': '8e611a7f7f5254f2eef0173d14ca37910c04e03495eec88605af992f3f97859b',
+                                                                                 'validate_spec': 'd907f23869756758a43b96f0542e4131b0bf20857850efc3241531caca27baff',
+                                                                                 'verify': '0a4675b2285452c0ce0cfc61f026eb1a2b3d0383c984d433542195337739677e'}}
 
 
 @dataclass
@@ -104,21 +122,85 @@ def _live_call_prefix(source: str, path: str, function_name: str = "verify", cou
 
 def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[str, ...]]:
     """Return structural module-scope binding events for protected validators."""
-    protected = REQUIRED_SEMANTIC_CALLS.get(path, frozenset())
+    protected = frozenset(set(REQUIRED_SEMANTIC_CALLS.get(path, frozenset())) | set(EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.get(path, {})))
     events: dict[str, list[str]] = {name: [] for name in protected}
     if not protected:
         return {}
     tree = ast.parse(source, filename=path)
+    namespace_names: dict[str, str] = {name: name for name in ("globals", "locals", "vars")}
+    builtins_names: set[str] = {"builtins"}
+
+    # Resolve aliases before scanning binding writes. Protected verifier code
+    # cannot hide namespace access behind imported builtins aliases, direct
+    # provider aliases, or transitive module-level assignments.
+    for statement in tree.body:
+        if isinstance(statement, ast.Import):
+            for alias in statement.names:
+                if alias.name == "builtins":
+                    builtins_names.add(alias.asname or "builtins")
+        elif isinstance(statement, ast.ImportFrom) and statement.module == "builtins":
+            for alias in statement.names:
+                if alias.name in {"globals", "locals", "vars"}:
+                    namespace_names[alias.asname or alias.name] = alias.name
+
+    changed = True
+    while changed:
+        changed = False
+        for statement in tree.body:
+            value: ast.AST | None = None
+            targets: list[ast.AST] = []
+            if isinstance(statement, ast.Assign):
+                value = statement.value
+                targets = list(statement.targets)
+            elif isinstance(statement, ast.AnnAssign) and statement.value is not None:
+                value = statement.value
+                targets = [statement.target]
+            if value is None:
+                continue
+            for target in targets:
+                if not isinstance(target, ast.Name):
+                    continue
+                if isinstance(value, ast.Name) and value.id in builtins_names and target.id not in builtins_names:
+                    builtins_names.add(target.id)
+                    changed = True
+                provider: str | None = None
+                if isinstance(value, ast.Name) and value.id in namespace_names:
+                    provider = namespace_names[value.id]
+                elif (
+                    isinstance(value, ast.Attribute)
+                    and isinstance(value.value, ast.Name)
+                    and value.value.id in builtins_names
+                    and value.attr in {"globals", "locals", "vars"}
+                ):
+                    provider = value.attr
+                if provider is not None and namespace_names.get(target.id) != provider:
+                    namespace_names[target.id] = provider
+                    changed = True
+
+    def namespace_provider(node: ast.AST) -> str | None:
+        if isinstance(node, ast.Name):
+            return namespace_names.get(node.id)
+        if (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id in builtins_names
+            and node.attr in {"globals", "locals", "vars"}
+        ):
+            return node.attr
+        return None
 
     def namespace_scope(node: ast.AST) -> str | None:
-        if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
+        if not isinstance(node, ast.Call) or node.keywords:
             return None
-        if node.func.id in {"globals", "locals"} and not node.args and not node.keywords:
-            return node.func.id
-        # vars() and vars(module) expose the same writable namespace mapping, so a
-        # write through them rebinds exactly what globals() would.
-        if node.func.id == "vars" and not node.keywords and len(node.args) <= 1:
-            return "vars"
+        provider = namespace_provider(node.func)
+        if provider is None:
+            return None
+        if not node.args:
+            return provider
+        # vars(module) exposes the same writable namespace mapping as globals(),
+        # so a single-argument vars() call is still a namespace provider.
+        if provider == "vars" and len(node.args) == 1:
+            return provider
         return None
 
     def record_namespace_alias(target: ast.AST, value: ast.AST, kind: str) -> None:
@@ -243,10 +325,31 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
             if isinstance(st, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 if st.name in protected:
                     events[st.name].append("function")
+                for decorator in st.decorator_list:
+                    scan_expr(decorator)
+                for default in (*st.args.defaults, *[item for item in st.args.kw_defaults if item is not None]):
+                    scan_expr(default)
+                for arg in (*st.args.posonlyargs, *st.args.args, *st.args.kwonlyargs):
+                    if arg.annotation is not None:
+                        scan_expr(arg.annotation)
+                if st.args.vararg is not None and st.args.vararg.annotation is not None:
+                    scan_expr(st.args.vararg.annotation)
+                if st.args.kwarg is not None and st.args.kwarg.annotation is not None:
+                    scan_expr(st.args.kwarg.annotation)
+                if st.returns is not None:
+                    scan_expr(st.returns)
                 continue
             if isinstance(st, ast.ClassDef):
                 if st.name in protected:
                     events[st.name].append("class")
+                for decorator in st.decorator_list:
+                    scan_expr(decorator)
+                for base in st.bases:
+                    scan_expr(base)
+                for keyword in st.keywords:
+                    scan_expr(keyword.value)
+                # Class bodies execute at definition time; inspect that executable scope.
+                scan(st.body)
                 continue
             if isinstance(st, ast.Assign):
                 for target in st.targets:
@@ -304,8 +407,10 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
 
 
 def _binding_integrity_failures(source: str, path: str) -> list[str]:
-    expected = REQUIRED_MODULE_BINDING_SIGNATURES.get(path)
-    if expected is None:
+    expected = dict(REQUIRED_MODULE_BINDING_SIGNATURES.get(path, {}))
+    for name in EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.get(path, {}):
+        expected.setdefault(name, ("function",))
+    if not expected:
         return []
     actual = _module_scope_binding_signatures(source, path)
     failures: list[str] = []
@@ -318,6 +423,111 @@ def _binding_integrity_failures(source: str, path: str) -> list[str]:
             )
     return failures
 
+
+def _protected_implementation_digest(source: str, path: str, function_name: str) -> str | None:
+    tree = ast.parse(source, filename=path)
+    nodes = [n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name == function_name]
+    if len(nodes) != 1:
+        return None
+    return hashlib.sha256(ast.dump(nodes[0], annotate_fields=True, include_attributes=False).encode()).hexdigest()
+
+
+def _protected_implementation_failures(source: str, path: str) -> list[str]:
+    failures: list[str] = []
+    for name, expected in EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.get(path, {}).items():
+        actual = _protected_implementation_digest(source, path, name)
+        if actual != expected:
+            failures.append(f"protected validator implementation changed for {name}: expected {expected}; got {actual or '<missing-or-ambiguous>'}")
+    return failures
+
+
+def _definition_time_execution_failures(source: str, path: str) -> list[str]:
+    """Reject dynamic execution aliases and decorators in protected verifier source.
+
+    Definition-time dynamic execution can rewrite protected verifier bindings even
+    when the call is reached through a module-level alias such as ``runner = exec``.
+    Resolve those aliases transitively before scanning calls. Explicit
+    ``builtins.exec/eval/compile`` aliases are treated identically.
+    """
+    if path not in REQUIRED_SEMANTIC_CALLS:
+        return []
+    tree = ast.parse(source, filename=path)
+    failures: list[str] = []
+    direct = {"exec", "eval", "compile"}
+    dynamic_names = set(direct)
+    builtins_names: set[str] = {"builtins"}
+
+    for statement in tree.body:
+        if isinstance(statement, ast.Import):
+            for alias in statement.names:
+                if alias.name == "builtins":
+                    builtins_names.add(alias.asname or "builtins")
+        elif isinstance(statement, ast.ImportFrom) and statement.module == "builtins":
+            for alias in statement.names:
+                if alias.name in direct:
+                    dynamic_names.add(alias.asname or alias.name)
+
+    def dynamic_source(node: ast.AST) -> bool:
+        if isinstance(node, ast.Name):
+            return node.id in dynamic_names
+        return (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id in builtins_names
+            and node.attr in direct
+        )
+
+    def assigned_names(node: ast.AST) -> set[str]:
+        if isinstance(node, ast.Name):
+            return {node.id}
+        if isinstance(node, (ast.Tuple, ast.List)):
+            names: set[str] = set()
+            for item in node.elts:
+                names.update(assigned_names(item))
+            return names
+        return set()
+
+    changed = True
+    while changed:
+        changed = False
+        for statement in tree.body:
+            value: ast.AST | None = None
+            targets: list[ast.AST] = []
+            if isinstance(statement, ast.Assign):
+                value = statement.value
+                targets = list(statement.targets)
+            elif isinstance(statement, ast.AnnAssign) and statement.value is not None:
+                value = statement.value
+                targets = [statement.target]
+            if value is None:
+                continue
+            names = set().union(*(assigned_names(target) for target in targets))
+            if isinstance(value, ast.Name) and value.id in builtins_names:
+                for name in names:
+                    if name not in builtins_names:
+                        builtins_names.add(name)
+                        changed = True
+            if dynamic_source(value):
+                for name in names:
+                    if name not in dynamic_names:
+                        dynamic_names.add(name)
+                        changed = True
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call) and dynamic_source(node.func):
+            failures.append(
+                "dynamic execution rejected in protected verifier: "
+                f"{ast.unparse(node.func) if hasattr(ast, 'unparse') else _call_name(node)}"
+            )
+        if (
+            isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
+            and node.decorator_list
+        ):
+            failures.append(
+                "protected verifier definition-time decorator rejected: "
+                f"{getattr(node, 'name', '<definition>')}"
+            )
+    return failures
 
 def analyze(source: str, path: str) -> StrengthMetrics:
     tree = ast.parse(source, filename=path)
@@ -472,6 +682,8 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
                         + " -> ".join(name or "<non-call>" for name in actual_prefix)
                     )
             finding.failures.extend(_binding_integrity_failures(after_source, path))
+            finding.failures.extend(_definition_time_execution_failures(after_source, path))
+            finding.failures.extend(_protected_implementation_failures(after_source, path))
         except SyntaxError as exc:
             finding.failures.append(f"current source has syntax error: {exc}")
             findings.append(finding)
