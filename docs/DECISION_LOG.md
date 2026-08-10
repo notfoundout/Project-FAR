@@ -237,3 +237,11 @@ The repository now follows the dependency order:
 **Observation:** All applied patches failed the same target and all runs stopped at call-budget autosubmission, while exact trajectories and patch text remain external-only. The experiment contains one task, not two.
 **Discovery/acceptance:** Preserve `no_observed_resolution_difference` and `REVIEW_REQUIRED`; accept patch failure, budget termination and diagnostic artifact loss as bounded facts; leave first agent mistakes and deepest patch causes Unknown.
 **Repository change:** Add derived forensic records and fail-closed validation only. No v3 implementation, frozen rerun, held-out execution, or frozen evidence change is authorized.
+
+## 2026-08-10 — Unresolved-questions identifier collision correction
+
+**Question:** Did `docs/governance/unresolved-questions-register.md` assign one identifier to two distinct questions?
+**Execution:** Enumerated `UQ-T` identifiers in the register; searched the non-archive repository, tooling, and machine-readable records for external references; used `git log -S` to establish which entry introduced the collision.
+**Observation:** `UQ-T10` named two distinct questions. The representation-invariance entry entered in PR #419 (`6e63e28`); the `FARA-VOC-001` necessity entry entered later in PR #420 (`1665125`) and created the collision. Neither entry was referenced anywhere outside the register.
+**Decision (not a discovery):** Reassign the later-introduced `FARA-VOC-001` entry to the next unused identifier `UQ-T14`. The earlier entry retains `UQ-T10`. This is an identifier-integrity correction determined by provenance, not by preference among the questions.
+**Repository change:** Identifier only. No substantive wording, status, scope, or meaning changed; no external reference required updating; no question was opened, closed, merged, or reprioritized.
