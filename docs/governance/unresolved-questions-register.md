@@ -28,7 +28,7 @@ The registers identify questions, not authorization to execute them. New investi
 - **UQ-T9:** Can one non-vacuous architecture preserve all six W3 dimensions for continuous/hybrid, embodied, changing-ontology, distributed, and oracle-dependent systems without copying the missing machinery into typed payloads? **Unresolved; `FARA-ARCH-W3-001` refutes only the internal-state-only lossless universal form.**
 - **UQ-E5:** Would independent CRP implementations agree on all canonicalization, clause-segmentation, and tie cases? **Unresolved; v1.1 fixtures proposed.**
 - **UQ-E6:** Do independently administered alternative-vocabulary and domain cases reproduce bounded sufficiency observations? **Unresolved.**
-- **UQ-T10:** Are the `FARA-VOC-001` extension candidates necessary outside its frozen auxiliary model? **Unresolved; finite mappings and ablations cannot establish global necessity or minimality.**
+- **UQ-T14:** Are the `FARA-VOC-001` extension candidates necessary outside its frozen auxiliary model? **Unresolved; finite mappings and ablations cannot establish global necessity or minimality.**
 - **UQ-T11:** Which coherent formal foundation, identity criteria, and equivalence relation match intended canonical FARA without substantive theory change? **Resolved only for Project FAR v1.0 finite explicit auditable representational architecture: `FARA-FORMAL-KERNEL-001` accepts and promotes the identity-bearing many-sorted relational kernel under eight mandatory gates after clean-room implementation replication. Global uniqueness, unbounded adequacy, alternative identity criteria, nonfinite/oracle/embodied semantics, and external-investigator independence remain unresolved.**
 - **UQ-T12:** Would independent candidate implementations, neutral reformulations, or executable oracle/nonfinite/environment semantics change the Pareto relation among the retained FARA foundations? **Unresolved; `FARA-FOUNDATION-COMP-001` finds many-sorted relational → algebraic/state-transition under the frozen dimensions, while typed hypergraph remains incomparable with many-sorted relational. The later clean-room kernel replication does not execute nonfinite, oracle, embodied, or externally administered cases.**
 - **UQ-T13:** Do the `FARA-EXPANDED-BOUND-001` target-specific paired-reduct results survive full-signature cross-products, carriers above four, alternative admissibility definitions, or independent reimplementation? **Unresolved. The campaign executes 66,098 independent unary/binary interpretations and 30 admissible witnesses, but excludes size zero for five targets and does not search the complete signature space.**
@@ -42,3 +42,13 @@ The registers identify questions, not authorization to execute them. New investi
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
 
 - **FARA-EXPANDED-BOUND-001:** persistence above carrier size 4, across full-signature cross-products, or outside the exact target-specific support bounds is Unknown.
+
+## Added by the 2026-08-10 admissibility-priority investigation
+
+Evidence: `docs/research/fara-admissibility-priority-v1.0.md`.
+
+- **UQ-T15:** Does `Ω`'s canonical per-candidate form admit a faithful representation of set-valued admissibility, or does multi-extension admissibility require retyping `Ω`? **Unresolved; `CE-ADM-001` establishes expressive loss under a single-valued per-candidate map but does not adjudicate between conservative extension and retyping.**
+- **UQ-T16:** Do history-sensitive admissibility criteria require a well-foundedness or strict-past condition, and does canonical FARA supply one? **Unresolved; the `Ω`-non-determination clause does not cover reasoning-trace reference. No claim follows about `UPP-W8` or the terminal theorem.**
+- **UQ-T17:** Is the stipulative reading of "reasoning calculus" the canonical one? **Unresolved; the reading is supported by `definitions.md:484` but never stated, and FARA's non-circularity currently depends on it.**
+
+Dependency note: `docs/reports/ax001-circularity-investigation.md` remaining open questions 3 and 10 restate `OP-04`/`UQ-T8` from the FARO side and reached `INCONCLUSIVE`. That report was previously referenced by `AX-001` and repository navigation but by no governance register. It is recorded here as prior evidence bearing on `UQ-T8`, `UQ-T16`, and `UQ-T17`; its status is unchanged.

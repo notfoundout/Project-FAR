@@ -57,3 +57,18 @@ Examples, methodology, research, validation, papers and archive are never prereq
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
 
 - **FARA-EXPANDED-BOUND-001:** Research — all 66,098 unary/binary relation interpretations on independent axes over carriers 0..4 were concretely constructed and evaluated. Thirty admissible paired-reduct witnesses support target-specific bounds: Object, Property, Relation, Representation, and Interpretation at 1..4; Investigation and Reasoning Calculus at 0..4. No full-signature, global, or size-0 claim beyond that coverage is licensed.
+
+## 2026-08-10 admissibility-priority audit
+
+Evidence: `docs/research/fara-admissibility-priority-v1.0.md`. Investigation target `OP-04`/`UQ-T8`.
+
+| Claim | Status | Required interpretation |
+|---|---|---|
+| Admissibility is logically prior to valid state transition | Unresolved | The alleged circularity is lexical and dissolves only under a stipulative reading of "reasoning calculus" that canonical text supports but never states. |
+| The `D1`/`D2` self-reference is vicious | Provisional — not established | Dissolved under the stipulative reading; retained as a defect of definitional text, not of reasoning. Never cite as a proven circularity. |
+| Determinant-set asymmetry (admissibility determinants are a proper subset of valid-transition determinants) | Provisional; definitional, not derived | Holds only under one of three available readings of the canonical `valid state transition` definition, and follows from how the calculus is partitioned. Never cite as a priority theorem. |
+| Canonical FARA constrains history-sensitive admissibility criteria | Provisional — no such constraint located | The `Ω`-non-determination clause does not cover reasoning-trace reference. No claim follows about `UPP-W8` or the terminal theorem. |
+| `Ω`'s per-candidate form suffices for all admissibility semantics | Refuted at multi-extension scope | `CE-ADM-001a`/`CE-ADM-001b`. Grounded semantics map without loss; the loss is specific to multi-extension semantics. |
+| Multi-extension admissibility indicates a sixth candidate primitive | Rejected on current record | Extension indexing is expressible over existing primitives; the pressure is representational, not primitive. |
+| `CE-ADM-001` bears on the terminal UPP theorem | Rejected | The theorem's `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
+| Argumentation frameworks are a `conservative extension` | Conclusion retained; supporting analysis weakened | `theory/evaluation/external-systems/argumentation-frameworks.md` never tested multi-extension semantics. The classification survives `CE-ADM-001`; its stated justification does not. |
