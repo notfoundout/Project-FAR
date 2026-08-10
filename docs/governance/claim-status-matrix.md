@@ -104,3 +104,19 @@ Evidence: `docs/research/fara-graded-admissibility-representation-v1.0.md`. Inve
 | A canonical surface requires ties, incomparability, uncertainty, and unresolved to stay mutually distinct | Provisional — none located | Negative search result over named canonical surfaces, not a proof of absence. See `LIM-028`, `OP-15`, `UQ-T19`. |
 | This investigation bears on seven-primitive completeness | Rejected in both directions | It produces no evidence for an additional primitive and no evidence for completeness. `UQ-T2` and `OP-02` are unaffected. |
 | Any of the above bears on the terminal UPP theorem | Rejected | The `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
+
+## 2026-08-10 admissibility classification-space authority audit
+
+Evidence: `docs/research/fara-admissibility-classification-space-audit-v1.0.md`. Investigation target `OP-15`/`UQ-T19`. No canonical surface was modified.
+
+| Claim | Status | Required interpretation |
+|---|---|---|
+| A canonical requirement governs `Ω`'s classification-space granularity | Refuted on the surfaces searched | Only category-separation, totality, traceability, and auditability requirements exist. `admissibility-structure.md:84` delegates the classification space to the calculus. Bounded negative search, not a proof of absence. |
+| The absence of such a requirement is a defect | **Rejected; corrects the prior `LIM-028` framing** | The permissive stance is deliberate and triply attested by `definitions.md:344`, `definitions.md:378`, and `admissibility-structure.md:84`, and is held open as research by `:204`. |
+| Shared theory requires representational fidelity | Refuted | Shared theory defines fidelity and expressly permits mappings to discard. Fidelity is a demonstrable claim, not a default. |
+| A faithfulness obligation should be added to shared theory | Rejected | Would contradict `definitions.md:344` and invert the `:378` default. |
+| An admissibility preservation obligation should be added to FARA | Rejected | `admissibility-structure.md:204` lists admissibility preservation as open research; stating it as a requirement would promote research to canonical requirement. |
+| A new weakest sufficient rule is required | Rejected | The general invariant is `FAITHFUL-REP-001` §5.2 specialized to the admissibility axis; it is derivable and already stated. `§5.2` alone does not supply reflection and must not be cited as complete faithfulness. |
+| `unresolved status` is canonically defined | Refuted | Normatively used at `admissibility-structure.md:111`; not defined in shared definitions, not owned by the terminology authority, not indexed. Recorded as `LIM-029`/`OP-16`/`UQ-T20`. |
+| This audit bears on seven-primitive completeness, `UQ-T2`, or `OP-02` | Rejected | No evidence in either direction; representational adequacy is not primitive completeness. |
+| This audit bears on the terminal UPP theorem | Rejected | The `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
