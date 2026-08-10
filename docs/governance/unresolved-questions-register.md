@@ -47,7 +47,8 @@ The registers identify questions, not authorization to execute them. New investi
 
 Evidence: `docs/research/fara-admissibility-priority-v1.0.md`.
 
-- **UQ-T15:** Does `Ω`'s canonical per-candidate form admit a faithful representation of set-valued admissibility, or does multi-extension admissibility require retyping `Ω`? **Unresolved; `CE-ADM-001` establishes expressive loss under a single-valued per-candidate map but does not adjudicate between conservative extension and retyping.**
+- **UQ-T15:** Does `Ω`'s canonical per-candidate form admit a faithful representation of set-valued admissibility, or does multi-extension admissibility require retyping `Ω`? **Resolved only at Project FAR v1.0 finite explicit auditable scope: no function `C → Status` suffices, and an extension-indexed family of unchanged canonical `Ω` structures is faithful and conservative over existing primitives. Retyping is not required for set-valued admissibility. The construction accommodates extension structure rather than predicting it. Infinite extension families, graded acceptability, and independent replication remain unresolved. Evidence: `docs/research/fara-omega-set-valued-admissibility-v1.0.md`.**
+- **UQ-T18:** Do graded or ranking-based acceptability semantics require retyping `Ω`'s `Status` codomain? **Unresolved; not covered by the `UQ-T15` construction.**
 - **UQ-T16:** Do history-sensitive admissibility criteria require a well-foundedness or strict-past condition, and does canonical FARA supply one? **Unresolved; the `Ω`-non-determination clause does not cover reasoning-trace reference. No claim follows about `UPP-W8` or the terminal theorem.**
 - **UQ-T17:** Is the stipulative reading of "reasoning calculus" the canonical one? **Unresolved; the reading is supported by `definitions.md:484` but never stated, and FARA's non-circularity currently depends on it.**
 
