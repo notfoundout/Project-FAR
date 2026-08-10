@@ -16,7 +16,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Apply repair
+      - run: python -m pip install pyyaml
+      - name: Apply complete root repair
         shell: bash
         run: |
           python - <<'PY'
@@ -28,15 +29,15 @@ jobs:
           assert s.count(old)==1; s=s.replace(old,new,1)
           targets=['research/target-category-discovery/verify_compositional_invariant.py','research/target-category-discovery/verify_compositional_invariant_legacy.py']
           def closure(path):
-            t=ast.parse(Path(path).read_text()); fs={n.name:n for n in t.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}; q=[n for n in ('verify','validate_empirical_authority','validate_gate') if n in fs]; seen=set()
-            while q:
-              n=q.pop()
-              if n in seen: continue
-              seen.add(n)
-              for x in ast.walk(fs[n]):
-                if isinstance(x,ast.Call) and isinstance(x.func,ast.Name) and x.func.id in fs and x.func.id not in seen: q.append(x.func.id)
-            return {n:hashlib.sha256(ast.dump(fs[n],annotate_fields=True,include_attributes=False).encode()).hexdigest() for n in sorted(seen)}
-          reg={x:closure(x) for x in targets}; a=s.index('EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS:'); marker='\n\n\n@dataclass\nclass StrengthMetrics:'; b=s.index(marker,a); s=s[:a]+'EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = '+pprint.pformat(reg,width=120,sort_dicts=True)+s[b:]; p.write_text(s)
+            tree=ast.parse(Path(path).read_text()); funcs={n.name:n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}; pending=[n for n in ('verify','validate_empirical_authority','validate_gate') if n in funcs]; seen=set()
+            while pending:
+              name=pending.pop()
+              if name in seen: continue
+              seen.add(name)
+              for node in ast.walk(funcs[name]):
+                if isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id in funcs and node.func.id not in seen: pending.append(node.func.id)
+            return {name:hashlib.sha256(ast.dump(funcs[name],annotate_fields=True,include_attributes=False).encode()).hexdigest() for name in sorted(seen)}
+          registry={path:closure(path) for path in targets}; a=s.index('EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS:'); marker='\n\n\n@dataclass\nclass StrengthMetrics:'; b=s.index(marker,a); s=s[:a]+'EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS: dict[str, dict[str, str]] = '+pprint.pformat(registry,width=120,sort_dicts=True)+s[b:]; p.write_text(s)
           t=Path('tests/test_target_category_compositional_invariant.py'); x=t.read_text(); anchor='''            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                self.assertIn(protected, rebound_failures)\n                self.assertTrue(any("protected validator binding changed" in item for item in rebound_failures[protected]))\n'''; assert x.count(anchor)==1
           add=anchor+'''\n            subprocess.run(["git","reset","--hard",base],cwd=repo,check=True,stdout=subprocess.DEVNULL)\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                target=repo/protected; source=target.read_text(); source += "\\nclass _DefinitionTimeAttack:\\n    globals()[\\\"validate_empirical_authority\\\"] = lambda *args, **kwargs: None\\n    globals()[\\\"validate_gate\\\"] = lambda *args, **kwargs: None\\n"; target.write_text(source)\n            subprocess.run(["git","add","."],cwd=repo,check=True); subprocess.run(["git","commit","-qm","class attack"],cwd=repo,check=True); report=weakening.detect_weakening(repo,base=base); self.assertFalse(report.successful)\n            subprocess.run(["git","reset","--hard",base],cwd=repo,check=True,stdout=subprocess.DEVNULL)\n            lp=repo/"research/target-category-discovery/verify_compositional_invariant_legacy.py"; source=lp.read_text(); oldh="def _git_blob_sha1(raw: bytes) -> str:\\n    return hashlib.sha1(f\\\"blob {len(raw)}\\\\0\\\".encode(\\\"ascii\\\") + raw).hexdigest()\\n"; self.assertEqual(source.count(oldh),1); lp.write_text(source.replace(oldh,"def _git_blob_sha1(raw: bytes) -> str:\\n    return \\"0\\" * 40\\n",1)); subprocess.run(["git","add","."],cwd=repo,check=True); subprocess.run(["git","commit","-qm","helper attack"],cwd=repo,check=True); report=weakening.detect_weakening(repo,base=base); self.assertFalse(report.successful)\n            subprocess.run(["git","reset","--hard",base],cwd=repo,check=True,stdout=subprocess.DEVNULL)\n            for protected in weakening.REQUIRED_SEMANTIC_CALLS:\n                target=repo/protected; source=target.read_text(); line=next(l for l in source.splitlines(keepends=True) if l.startswith("    validate_gate(")); target.write_text(source.replace(line,line+"    return {}\\n",1))\n            subprocess.run(["git","add","."],cwd=repo,check=True); subprocess.run(["git","commit","-qm","return attack"],cwd=repo,check=True); report=weakening.detect_weakening(repo,base=base); self.assertFalse(report.successful)\n'''; t.write_text(x.replace(anchor,add,1))
           lock=Path('validation_bootstrap/assurance-lock.json'); obj=json.loads(lock.read_text()); obj['files']['far_validation/weakening.py']=hashlib.sha256(p.read_bytes()).hexdigest(); lock.write_text(json.dumps(obj,indent=2)+'\n')
@@ -45,21 +46,13 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add . && git commit -m 'Harden verifier assurance at root'
-      - name: Diagnose exact final tree
-        shell: bash
+      - name: Validate finalized tree
         run: |
-          set +e
-          {
-            echo '=== FAST ==='; python tools/run_tests.py --fast; echo "FAST=$?"
-            echo '=== HYGIENE ==='; python tools/check_repository_hygiene.py; echo "HYGIENE=$?"
-            echo '=== HEALTH ==='; python tools/repo_health_check.py --full; echo "HEALTH=$?"
-            echo '=== BOOTSTRAP ==='; python validation_bootstrap/verify.py; echo "BOOT=$?"
-            echo '=== TARGET ==='; python -m unittest tests.test_target_category_compositional_invariant -v; echo "TARGET=$?"
-          } > /tmp/pr436-diagnostic.txt 2>&1
-          cat /tmp/pr436-diagnostic.txt
-          exit 1
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: pr436-diagnostic
-          path: /tmp/pr436-diagnostic.txt
+          python validation_bootstrap/verify.py
+          python tools/run_tests.py --fast
+          python tools/check_repository_hygiene.py
+          python tools/repo_health_check.py --full
+          python -m unittest tests.test_target_category_compositional_invariant -v
+          python -m far_validation weakening --base "${{ github.event.before }}"
+      - name: Push validated repair
+        run: git push origin HEAD:agent/close-structured-reasoning-compositional-question
