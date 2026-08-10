@@ -1,75 +1,61 @@
 # Target-Category Discovery Clean-Room Program
 
 Status: **Research**  
-Program ID: `TCD-CLEANROOM-001`  
-Audit base: `aaf070a0253c5510308a9ad11ffe80f14c4cba45`  
-Audit date: 2026-08-05
+Program ID: `TCD-CLEANROOM-001`
 
 ## Purpose
 
-This directory records an audit of the target-category discovery work developed in a ChatGPT research session and registers a corrected, architecture-neutral clean-room program for explicitly auditable reasoning artifacts.
+This directory separates two tracks:
 
-The work is subordinate to the repository's existing authorities:
+1. an exploratory, unregistered compositional argument about functor-invariant operations on small categories;
+2. an unexecuted clean-room empirical program for explicitly auditable reasoning artifacts.
 
-- [`../../docs/governance/research-execution-charter.md`](../../docs/governance/research-execution-charter.md)
-- [`../../docs/governance/central-research-program.md`](../../docs/governance/central-research-program.md)
-- [`../../docs/governance/anti-self-validation-standard.md`](../../docs/governance/anti-self-validation-standard.md)
-- [`../../theory/evaluation/research-gates.json`](../../theory/evaluation/research-gates.json)
+Neither track changes accepted Project FAR theory.
 
-It does not supersede the terminal UPP theorem, the accepted scoped FARA formal kernel, or any accepted repository authority. It changes no theory, primitive, theorem statement, proof object, framework interface, or software behavior.
+## Exploratory compositional argument
 
-## Audit verdict
+A candidate argument suggests that, for a fixed finite input graph, finitary arrow-valued operations invariant across all small categories and all functors correspond to path evaluations in the free category. The argument is preserved for scrutiny, not as an established theorem.
 
-The session produced one valid formal barrier and several useful relative constructions, but repeatedly promoted relative results into absolute claims and then retracted them.
+The path language uses identities and typed sequential composition. In the committed `A->B->C` fixture, `b∘a:A->C` is the nontrivial invariant witness. Identity is not a nontrivial witness and is not type-admissible for the distinguished `A->C` output shape.
 
-The stable result is narrow:
+No prospective deductive program for this argument was frozen before it was derived. Repository governance therefore requires this historical derivation to remain exploratory. Any theorem attempt must begin under a newly registered prospective deductive program with independently frozen controls.
 
-> On bare sets with every function admitted as a recoding, every natural finitary element-valued operation is a coordinate projection. Consequently, representation neutrality alone does not supply a nontrivial operation or select which additional structure should be adopted.
+## Empirical program status
 
-This does **not** prove that no broad universal architecture exists under a richer, independently justified formalization. It also does not refute the repository's strictly weakened, premise-relative RCCD theorem.
+The sampling design is verified, but source instantiation, packet freezing, information barriers, and execution have not occurred. No clean-room derivation is authorized.
 
-See [`chat-audit-2026-08-05.md`](chat-audit-2026-08-05.md) for the complete claim and artifact audit.
+## Public claim boundary
+
+- No weakest invariant-supporting structure has been proved.
+- No first invariant-supporting structure has been proved.
+- No minimal invariant-supporting structure has been proved.
+- No globally optimal invariant-supporting structure has been proved.
+- Small categories are not claimed to be broader than bare sets under a common comparison order.
+- No complete architecture of reasoning is established.
+- RCCD is not derived.
+- The empirical clean-room program has not been executed.
+- Accepted Project FAR theory is unchanged.
+- This derivation is exploratory and is not a registered theorem.
 
 ## Registered artifacts
 
-- [`chat-audit-2026-08-05.md`](chat-audit-2026-08-05.md) — claim retraction ledger, artifact defects, corrected status, and nonclaims.
-- [`scope-and-universality-charter-v1.1.md`](scope-and-universality-charter-v1.1.md) — scoped Research charter for this subprogram only.
-- [`clean-room-derivation-protocol-v1.2.md`](clean-room-derivation-protocol-v1.2.md) — corrected two-stage protocol separating neutral question derivation from later structural analysis.
-- [`sampling-design-v1.1.md`](sampling-design-v1.1.md) — public sampling design and its limitations.
-- [`covering-array-v1.0.csv`](covering-array-v1.0.csv) — public blind-ID covering array with no source identities.
-- [`pairwise-coverage-report-v1.0.csv`](pairwise-coverage-report-v1.0.csv) — machine-readable pair coverage summary.
-- [`verify_sampling_design.py`](verify_sampling_design.py) — deterministic standard-library verifier.
-- [`protocol-amendment-001.md`](protocol-amendment-001.md) — correction from 26 to 36 primary rows.
-- [`restricted-artifacts-policy.md`](restricted-artifacts-policy.md) — repository exclusion and reveal controls for sealed material.
-- [`audit-manifest-v1.0.json`](audit-manifest-v1.0.json) — machine-readable audit status and artifact disposition.
+### Exploratory compositional track
 
-## Current state
+- `compositional-invariant-spec-v1.0.json` — exact exploratory contract and governance disposition.
+- `compositional-invariant-result-v1.0.json` — deterministic bounded corroboration of the preserved exploratory argument.
+- `compositional-invariant-terminal-result-v1.0.md` — exploratory Research note retained at its legacy path.
+- `scope-and-universality-charter-v1.2.md` — compositional-only scope and governance boundary.
+- `verify_compositional_invariant.py` — strict verifier for the spec, result, public surfaces, and exploratory disposition.
 
-The pairwise **design** is verified. The cases are not yet fully instantiated or frozen.
+### Registered empirical clean-room track
 
-No clean-room derivation is authorized until all of the following are complete:
-
-1. every public or operational source is identified at record level;
-2. source bytes or stable archival captures are stored outside the repository and hashed;
-3. every synthetic case is generated from a frozen executable or fully specified manual procedure;
-4. eligibility and leakage review pass for every packet;
-5. blind packet identifiers replace internal project identifiers;
-6. Stage A and Stage B role separation is operational;
-7. the sealed registry remains inaccessible to derivators.
-
-## Terminal outcomes
-
-The program permits every outcome below:
-
-- one provisional requirement basis;
-- several incomparable bases;
-- requirements that conflict with RCCD;
-- failure of held-out coverage;
-- protocol invalidation from leakage or source defects;
-- no stable common basis.
-
-A favorable result is not required for procedural success.
-
-## Claim boundary
-
-This directory establishes no empirical necessity, minimality, universality, comparative superiority, external independence, or population generalization. Pairwise coverage refers only to the seven declared coding dimensions.
+- `audit-manifest-v1.0.json` — registered empirical program manifest.
+- `chat-audit-2026-08-05.md` — complete claim-and-artifact audit and retraction ledger registered by the empirical manifest.
+- `scope-and-universality-charter-v1.1.md` — controlling empirical clean-room charter.
+- `clean-room-derivation-protocol-v1.2.md` — empirical derivation and review protocol.
+- `sampling-design-v1.1.md` — frozen sampling design.
+- `covering-array-v1.0.csv` — empirical covering array.
+- `pairwise-coverage-report-v1.0.csv` — pairwise coverage verification output.
+- `restricted-artifacts-policy.md` — restricted-artifact and information-barrier policy.
+- `protocol-amendment-001.md` — registered empirical protocol amendment.
+- `verify_sampling_design.py` — sampling-design verifier.

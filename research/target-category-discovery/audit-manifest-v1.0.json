@@ -47,11 +47,11 @@
   "committed_artifacts": [
     {
       "path": "docs/CHANGELOG.md",
-      "git_blob_sha1": "5109a259e5d81659856012ecafad290d1b13a30d"
+      "git_blob_sha1": "53e8877593242bf8a36cac7eb2ba44ca24dea69a"
     },
     {
       "path": "research/target-category-discovery/README.md",
-      "git_blob_sha1": "6a62fb00c4157ba9c7ed75a39d9565a5049abf5e"
+      "git_blob_sha1": "a4ba0ce65197f8630e9533d28ced92eec52e24f1"
     },
     {
       "path": "research/target-category-discovery/chat-audit-2026-08-05.md",
@@ -87,11 +87,11 @@
     },
     {
       "path": "research/target-category-discovery/verify_sampling_design.py",
-      "git_blob_sha1": "e7f90fbc4893e8a102baf4517c3e1cd5248d0939"
+      "git_blob_sha1": "e783f38770b2cbc5de04bb3745f7059435bea04d"
     },
     {
       "path": "tests/test_target_category_discovery.py",
-      "git_blob_sha1": "9fb056ebc19d4bc75c16b61250d4ea57f759bc7d"
+      "git_blob_sha1": "f2754d1e9ee7554bc636343bac5ef8c2a20db830"
     }
   ]
 }
