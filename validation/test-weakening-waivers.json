@@ -1,4 +1,20 @@
 {
   "schema_version": "1.0",
-  "waivers": []
+  "waivers": [],
+  "repin_authorizations": [
+    {
+      "id": "REPIN-PR436-0001",
+      "path": "far_validation/weakening.py",
+      "base_sha256": "aae88e582f096015e5246ffb079ae263b212e66177a5a4e041176253990b0fde",
+      "authorized_sha256": "647e758cd11f23afa184f1b5b19ae0d759b6f72d74514502fef2f669cef62993",
+      "justification": "Authorizes PR #436 to replace the weakening detector with the version that adds trusted base authorization for protected-artifact repins, rename-independent and extension-independent protected scope, and the namespace-capture controls."
+    },
+    {
+      "id": "REPIN-PR436-0002",
+      "path": "validation/runtime-dependencies.json",
+      "base_sha256": "b3870cfc05317ffa40f45f1251cc7f17fc6dc228b067001ffe92c28f08a46426",
+      "authorized_sha256": "b6aed75ed3d44fab314558b19f116120787b781c5a7e6bb242f2a3f3a3112401",
+      "justification": "Authorizes PR #436 to declare the two compositional verifiers and the repin-authorization regression module as runtime inputs of bootstrap.manifest, which became real reads once those files were content-pinned."
+    }
+  ]
 }
