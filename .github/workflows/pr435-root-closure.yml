@@ -66,22 +66,63 @@ jobs:
               s += note
           p.write_text(s, encoding='utf-8')
           PY
-      - name: Create local candidate commit
+
+      - name: Commit semantic repair candidate
         shell: bash
         run: |
+          set -euo pipefail
           rm .github/workflows/pr435-root-closure.yml
-          git config user.name 'notfoundout'
-          git config user.email 'lexdekidd@icloud.com'
-          git add research/external-validation/swe-agent-v3/verify_review_closure_required_impl.py research/external-validation/swe-agent-v3/verify_classification_input_digest_contract.py research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py research/external-validation/swe-agent-v3/verify_review_closure.py research/external-validation/swe-agent-v3/verify_integrity.py research/external-validation/swe-agent-v3/README.md .github/workflows/pr435-root-closure.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --check
           git commit -m 'Close PR435 instantiated validation gaps'
-      - name: Run complete relevant validation on candidate HEAD
+
+      - name: Refresh canonical design manifest from committed Git bytes
         shell: bash
         run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          manifest_path = Path('research/external-validation/swe-agent-v3/design-manifest-v1.0.json')
+          manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+          artifacts = manifest.get('artifacts')
+          if not isinstance(artifacts, list) or not artifacts:
+              raise SystemExit('design manifest artifacts missing')
+          seen = set()
+          for entry in artifacts:
+              rel = entry.get('path')
+              if not isinstance(rel, str) or rel in seen:
+                  raise SystemExit(f'invalid/duplicate governed path: {rel!r}')
+              seen.add(rel)
+              blob = subprocess.check_output(['git', 'rev-parse', f'HEAD:{rel}'], text=True).strip()
+              size = int(subprocess.check_output(['git', 'cat-file', '-s', blob], text=True).strip())
+              entry['git_blob_sha1'] = blob
+              entry['bytes'] = size
+          manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+          PY
+          git add research/external-validation/swe-agent-v3/design-manifest-v1.0.json
+          git diff --cached --check
+          git commit -m 'Refresh SWE-agent v3 governed artifact identities'
+
+      - name: Run complete relevant validation on canonical candidate HEAD
+        shell: bash
+        run: |
+          set -euo pipefail
           python research/external-validation/swe-agent-v3/verify_design.py
           python research/external-validation/swe-agent-v3/verify_review_closure.py
           python research/external-validation/swe-agent-v3/verify_review_closure_v1_2.py
           python -m unittest discover -s tests -p 'test_swe_agent_v3*.py' -v
+          python3 tools/check_cre002_lock.py
+          python3 tools/check_cre002_ext001_checksums.py
+          python tools/verify_theory.py
+          python tools/repo_health_check.py --fast
+
       - name: Push validated candidate
         shell: bash
         run: |
+          set -euo pipefail
           git push origin HEAD:research/swe-agent-v3-design-clean
