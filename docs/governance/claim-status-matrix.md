@@ -155,3 +155,20 @@ Evidence: `docs/research/fara-unresolved-obligation-scope-audit-v1.0.md`. Invest
 | The obligation structure is evidence about `M1` vs `M2` typing | Rejected | Preferring `M1` to remove an awkward asymmetry would infer upstream ontology from downstream convenience. One weak non-convenience consideration favours `M2` and is not treated as strengthening it. |
 | A normative change to FARA is justified | Rejected | `H5`. Both readings are coherent, and neither fork of the broad reading yields an obligation worth adding. |
 | `status` is used univocally in canonical FARA | Refuted | Five distinct senses, no disambiguation. Recorded as `LIM-030`/`OP-18`/`UQ-T22`. |
+
+## 2026-08-10 `status` term audit
+
+Evidence: `docs/research/fara-status-term-audit-v1.0.md`. Investigation target `OP-18`/`UQ-T22`. No canonical surface was modified. `OP-16` and `OP-17` are left unchanged.
+
+| Claim | Status | Required interpretation |
+|---|---|---|
+| Canonical FARA uses `status` in at least five distinct senses | **Refuted — corrects the prior `LIM-030` record** | The word is univocal under one recoverable definition: the standing of an entity under an explicitly specified categorization. Never cite the five-sense claim. |
+| The compound `N status` is systematically ambiguous | Established | It names either the categorization (admissibility status, maintenance status) or the value (candidate, candidate primitive, unique foundation, primitive/derived, unresolved). |
+| `primitive status` and `foundation status` are distinct senses | Refuted | Both are value-naming and both denote epistemic standing; substituting "epistemic status" preserves meaning in each. |
+| Eleven of twelve technical occurrences are unambiguous | Established | Each has a governing definition or a contextually recoverable categorization. |
+| `admissibility-structure.md:111` is ambiguous | Established | Sole technical occurrence with no governing definition and no stated categorization. |
+| `unresolved status` denotes an admissibility status | **Unresolved — `H3` preserved** | Canonical evidence is exhausted and the construction is neutral between the readings. Not to be resolved by authorial reconstruction. Downstream consequences, typing preference, and awkwardness are not lexical authority. |
+| The substitution failure at `:111` is independent corroboration of the meta-status reading | Rejected | It restates `OP-16`'s non-redundancy argument and must not be counted twice. |
+| The ambiguity at `:111` can be removed without a new design choice | Refuted | It cannot. The remaining non-univocity can. |
+| `formal-kernel.md:3` "Status: Accepted" imports a governance concept into FARA semantics | Rejected | It is document metadata, not FARA-technical content. No layer violation. |
+| This audit resolves `OP-16` or `OP-17` | Rejected | It narrows and explains the blockage without removing it; neither question is resolved. |
