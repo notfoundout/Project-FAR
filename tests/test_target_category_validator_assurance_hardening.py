@@ -135,6 +135,28 @@ class ProtectedValidatorAssuranceHardeningTests(unittest.TestCase):
                 self.assertTrue(any("dynamic execution rejected" in item for item in finding.failures))
         self.assertEqual(checked, len(weakening.REQUIRED_SEMANTIC_CALLS))
 
+    def test_nested_scope_builtins_import_exec_is_rejected(self) -> None:
+        tmp, repo, base = self._repo()
+        self.addCleanup(tmp.cleanup)
+        for protected in weakening.REQUIRED_SEMANTIC_CALLS:
+            target = repo / protected
+            text = target.read_text(encoding="utf-8")
+            text += (
+                "\nclass _FarNestedImportAttack:\n"
+                "    from builtins import exec as _far_exec\n"
+                "    _far_exec(\"globals()['validate_empirical_authority'] = lambda *a, **k: None\")\n"
+                "    _far_exec(\"globals()['validate_gate'] = lambda *a, **k: None\")\n"
+            )
+            target.write_text(text, encoding="utf-8")
+        report = self._commit_and_report(repo, base, "nested-scope builtins import execution attack")
+        self.assertFalse(report.successful)
+        checked = 0
+        for finding in report.findings:
+            if finding.path in weakening.REQUIRED_SEMANTIC_CALLS:
+                checked += 1
+                self.assertTrue(any("dynamic execution rejected" in item for item in finding.failures))
+        self.assertEqual(checked, len(weakening.REQUIRED_SEMANTIC_CALLS))
+
     def test_protected_helper_rebinding_is_rejected(self) -> None:
         tmp, repo, base = self._repo()
         self.addCleanup(tmp.cleanup)

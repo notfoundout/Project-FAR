@@ -144,6 +144,64 @@ class NamespaceRebindingWeakeningTests(unittest.TestCase):
             self._mutate_before_cli_guard(repo, payload)
             self._assert_rejected(repo, base)
 
+    def test_destructured_namespace_alias_is_rejected(self) -> None:
+        payload = (
+            "def _far_no_op(*args, **kwargs):\n"
+            "    return None\n\n"
+            "(_far_vars,) = (vars,)\n"
+            "_far_vars()[\"validate_gate\"] = _far_no_op\n"
+            "_far_vars()[\"validate_empirical_authority\"] = _far_no_op\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            base = self._baseline_repo(repo)
+            self._mutate_before_cli_guard(repo, payload)
+            self._assert_rejected(repo, base)
+
+    def test_class_attribute_captured_provider_is_rejected(self) -> None:
+        payload = (
+            "def _far_no_op(*args, **kwargs):\n"
+            "    return None\n\n"
+            "class _FarHolder:\n"
+            "    _far_vars = vars\n\n"
+            "_FarHolder._far_vars()[\"validate_gate\"] = _far_no_op\n"
+            "_FarHolder._far_vars()[\"validate_empirical_authority\"] = _far_no_op\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            base = self._baseline_repo(repo)
+            self._mutate_before_cli_guard(repo, payload)
+            self._assert_rejected(repo, base)
+
+    def test_container_captured_provider_is_rejected(self) -> None:
+        payload = (
+            "def _far_no_op(*args, **kwargs):\n"
+            "    return None\n\n"
+            "_far_providers = {\"g\": globals}\n"
+            "_far_providers[\"g\"]()[\"validate_gate\"] = _far_no_op\n"
+            "_far_providers[\"g\"]()[\"validate_empirical_authority\"] = _far_no_op\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            base = self._baseline_repo(repo)
+            self._mutate_before_cli_guard(repo, payload)
+            self._assert_rejected(repo, base)
+
+    def test_helper_returned_provider_is_rejected(self) -> None:
+        payload = (
+            "def _far_no_op(*args, **kwargs):\n"
+            "    return None\n\n"
+            "def _far_get_namespace():\n"
+            "    return globals\n\n"
+            "_far_get_namespace()()[\"validate_gate\"] = _far_no_op\n"
+            "_far_get_namespace()()[\"validate_empirical_authority\"] = _far_no_op\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            base = self._baseline_repo(repo)
+            self._mutate_before_cli_guard(repo, payload)
+            self._assert_rejected(repo, base)
+
     def test_computed_setattr_rebinding_is_rejected(self) -> None:
         payload = (
             "import sys as _far_sys\n\n"

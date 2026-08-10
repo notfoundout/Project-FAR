@@ -120,6 +120,39 @@ def _live_call_prefix(source: str, path: str, function_name: str = "verify", cou
     return tuple(names)
 
 
+def _definition_time_statements(tree: ast.AST) -> list[ast.stmt]:
+    """Return every statement in the module, not only module-scope statements.
+
+    Class bodies, conditionals, loops, and try blocks all execute at definition
+    time, so an import or alias assignment placed inside one binds a name just as
+    a module-scope statement would. Alias resolution that inspects only
+    ``tree.body`` misses those bindings.
+    """
+    return [node for node in ast.walk(tree) if isinstance(node, ast.stmt)]
+
+
+def _alias_pairs(target: ast.AST, value: ast.AST) -> list[tuple[str, ast.AST]]:
+    """Pair each assigned name with the expression it is bound to.
+
+    Destructuring such as ``(alias,) = (vars,)`` binds the alias just as a plain
+    assignment does. When the arities line up the pairing is element-wise;
+    otherwise every extracted name is conservatively paired with the whole value.
+    """
+    if isinstance(target, ast.Name):
+        return [(target.id, value)]
+    if isinstance(target, (ast.Tuple, ast.List)):
+        if isinstance(value, (ast.Tuple, ast.List)) and len(value.elts) == len(target.elts):
+            pairs: list[tuple[str, ast.AST]] = []
+            for item, item_value in zip(target.elts, value.elts):
+                pairs.extend(_alias_pairs(item, item_value))
+            return pairs
+        pairs = []
+        for item in target.elts:
+            pairs.extend(_alias_pairs(item, value))
+        return pairs
+    return []
+
+
 def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[str, ...]]:
     """Return structural module-scope binding events for protected validators."""
     protected = frozenset(set(REQUIRED_SEMANTIC_CALLS.get(path, frozenset())) | set(EXPECTED_PROTECTED_IMPLEMENTATION_DIGESTS.get(path, {})))
@@ -132,8 +165,10 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
 
     # Resolve aliases before scanning binding writes. Protected verifier code
     # cannot hide namespace access behind imported builtins aliases, direct
-    # provider aliases, or transitive module-level assignments.
-    for statement in tree.body:
+    # provider aliases, destructured aliases, or transitive assignments, in any
+    # definition-time scope.
+    statements = _definition_time_statements(tree)
+    for statement in statements:
         if isinstance(statement, ast.Import):
             for alias in statement.names:
                 if alias.name == "builtins":
@@ -146,7 +181,7 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
     changed = True
     while changed:
         changed = False
-        for statement in tree.body:
+        for statement in statements:
             value: ast.AST | None = None
             targets: list[ast.AST] = []
             if isinstance(statement, ast.Assign):
@@ -158,24 +193,23 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
             if value is None:
                 continue
             for target in targets:
-                if not isinstance(target, ast.Name):
-                    continue
-                if isinstance(value, ast.Name) and value.id in builtins_names and target.id not in builtins_names:
-                    builtins_names.add(target.id)
-                    changed = True
-                provider: str | None = None
-                if isinstance(value, ast.Name) and value.id in namespace_names:
-                    provider = namespace_names[value.id]
-                elif (
-                    isinstance(value, ast.Attribute)
-                    and isinstance(value.value, ast.Name)
-                    and value.value.id in builtins_names
-                    and value.attr in {"globals", "locals", "vars"}
-                ):
-                    provider = value.attr
-                if provider is not None and namespace_names.get(target.id) != provider:
-                    namespace_names[target.id] = provider
-                    changed = True
+                for name, bound in _alias_pairs(target, value):
+                    if isinstance(bound, ast.Name) and bound.id in builtins_names and name not in builtins_names:
+                        builtins_names.add(name)
+                        changed = True
+                    provider: str | None = None
+                    if isinstance(bound, ast.Name) and bound.id in namespace_names:
+                        provider = namespace_names[bound.id]
+                    elif (
+                        isinstance(bound, ast.Attribute)
+                        and isinstance(bound.value, ast.Name)
+                        and bound.value.id in builtins_names
+                        and bound.attr in {"globals", "locals", "vars"}
+                    ):
+                        provider = bound.attr
+                    if provider is not None and namespace_names.get(name) != provider:
+                        namespace_names[name] = provider
+                        changed = True
 
     def namespace_provider(node: ast.AST) -> str | None:
         if isinstance(node, ast.Name):
@@ -407,6 +441,37 @@ def _module_scope_binding_signatures(source: str, path: str) -> dict[str, tuple[
                 scan_expr(st)
 
     scan(tree.body)
+
+    # Fail closed when a namespace provider is captured rather than called.
+    #
+    # Recognising individual namespace expressions is open-ended: a provider
+    # stored in a class attribute, container, or returned from a helper can be
+    # called later through an expression this scanner cannot resolve. Protected
+    # verifiers never need to capture globals/locals/vars -- every legitimate use
+    # is a direct call -- so treat any non-call reference as capable of rebinding
+    # every protected validator.
+    called_directly = {
+        id(node.func)
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Call)
+    }
+    captured: list[str] = []
+    for node in ast.walk(tree):
+        if id(node) in called_directly:
+            continue
+        if isinstance(node, ast.Name) and node.id in namespace_names:
+            captured.append(f"captured-namespace-provider:{node.id}")
+        elif (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id in builtins_names
+            and node.attr in {"globals", "locals", "vars"}
+        ):
+            captured.append(f"captured-namespace-provider:{node.value.id}.{node.attr}")
+    for marker in captured:
+        for name in protected:
+            events[name].append(marker)
+
     return {name: tuple(kinds) for name, kinds in events.items()}
 
 
@@ -469,7 +534,8 @@ def _definition_time_execution_failures(source: str, path: str) -> list[str]:
     dynamic_names = set(direct)
     builtins_names: set[str] = {"builtins"}
 
-    for statement in tree.body:
+    statements = _definition_time_statements(tree)
+    for statement in statements:
         if isinstance(statement, ast.Import):
             for alias in statement.names:
                 if alias.name == "builtins":
@@ -502,7 +568,7 @@ def _definition_time_execution_failures(source: str, path: str) -> list[str]:
     changed = True
     while changed:
         changed = False
-        for statement in tree.body:
+        for statement in statements:
             value: ast.AST | None = None
             targets: list[ast.AST] = []
             if isinstance(statement, ast.Assign):
