@@ -22,21 +22,37 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         cp=subprocess.run([sys.executable,'tools/generate_next_tasks.py'],cwd=ROOT,text=True,capture_output=True)
         self.assertEqual(cp.returncode,0,cp.stdout+cp.stderr)
         text=path.read_text(encoding='utf-8'); self.assertEqual(text,before)
-        ranked=text.split('## Maintainer Task Briefs',1)[0]
+        ranked=text.split('## Maintainer Boundaries',1)[0]
         ids=re.findall(r'^### ([A-Z]+-\d{3}):',ranked,re.M); self.assertEqual(len(ids),len(set(ids)))
-        self.assertNotIn('### STRATEGIC-001: Freeze the concrete reasoning and contrast corpora',ranked)
-        self.assertNotIn('### STRATEGIC-002: Execute dimensioned GREL-FARA factorization',ranked)
-        self.assertNotIn('### STRATEGIC-002: Execute reasoning/contrast discrimination and FARA specificity',ranked)
-        self.assertIn('### STRATEGIC-003: Execute evidence-complete candidate ablation and reconstruction',ranked)
-        self.assertIn('### STRATEGIC-004: Complete W3.5 machinery cost, claim-impact, and preserved-failure closure',ranked)
-        self.assertIn('### STRATEGIC-005: Assemble the finite-core theorem or strongest obstruction',ranked)
-        self.assertIn('Candidate testing is not complete',ranked)
-        self.assertIn('648 atomic trials require execution',ranked)
-        self.assertIn('structural indispensability remains unresolved',ranked)
-        self.assertIn('- Source: central research program',ranked)
-        self.assertIn('- Priority: blocked',ranked)
-        self.assertNotIn('W5 is authorized',ranked)
-        self.assertNotIn('No registered candidate is indispensable within the frozen class',ranked)
-        for stale in ('Execute the W4 S_core formal negative controls','Execute W3.5 baseline factorization and universal-discovery gate','Prove the W0 S_core normalization kernel','Prove the W1 S_core base carriers and direct axes','Prove the W2 S_core dynamics history and revision package','Prove the W3 S_core global witness obligations','Build the S_core construction and obstruction ledger','Resolve the formal role of P8','Formalize faithful representation and nontriviality','Freeze THM-TARGET-001 and premise ledger','Plan independent replication of CRE-002-EXT-001','Source gap:'):
+        self.assertIn('Program: `POST-TERM-EVAL-001`.',ranked)
+        self.assertIn('Canonical next workstream: `PTE-W1-INDEPENDENT-REVIEW`.',ranked)
+        self.assertIn('### STRATEGIC-006: Prepare independent terminal-theorem proof review',ranked)
+        self.assertIn('### STRATEGIC-007: Attempt end-to-end kernel-checked reconstruction',ranked)
+        self.assertIn('### STRATEGIC-008: Run adversarial countermodel and scope challenge',ranked)
+        self.assertIn('### STRATEGIC-009: Prepare independent bounded replication',ranked)
+        self.assertIn('- Registered workstream: `PTE-W1-INDEPENDENT-REVIEW`',ranked)
+        self.assertIn('- Priority: high',ranked)
+        self.assertIn('The `POST-TUE-UPP-001` deductive queue is closed.',ranked)
+        self.assertIn('There is no `UPP-W16`.',ranked)
+        for stale in (
+            '### STRATEGIC-003: Execute evidence-complete candidate ablation and reconstruction',
+            '### STRATEGIC-004: Complete W3.5 machinery cost, claim-impact, and preserved-failure closure',
+            '### STRATEGIC-005: Assemble the finite-core theorem or strongest obstruction',
+            'Candidate testing is not complete',
+            '648 atomic trials require execution',
+            'structural indispensability remains unresolved',
+            'W5 remains blocked',
+            'Execute the W4 S_core formal negative controls',
+            'Execute W3.5 baseline factorization and universal-discovery gate',
+            'Prove the W0 S_core normalization kernel',
+            'Prove the W1 S_core base carriers and direct axes',
+            'Prove the W2 S_core dynamics history and revision package',
+            'Prove the W3 S_core global witness obligations',
+            'Build the S_core construction and obstruction ledger',
+            'Resolve the formal role of P8',
+            'Formalize faithful representation and nontriviality',
+            'Freeze THM-TARGET-001 and premise ledger',
+            'Source gap:',
+        ):
             self.assertNotIn(stale,ranked)
 if __name__=='__main__': unittest.main()

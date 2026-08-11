@@ -57,9 +57,15 @@ Application-correspondence studies are an evaluation channel under `POST-TERM-EV
 
 The FARA formal-kernel Acceptance remains scoped. It does not establish global uniqueness, unrestricted universality, primitive necessity/minimality, nonfinite/oracle/embodied adequacy, or external-investigator independence.
 
-## Preserved bounded evidence
+## Preserved bounded evidence and claim boundaries
 
-The frozen SWE-agent v2 comparison remains a bounded result: v1.0.0 resolved 0/2 runs and v1.0.1 resolved 0/2 runs on one preregistered task. The recorded observation is `no_observed_resolution_difference`; the bounded decision remains `REVIEW_REQUIRED`. No equivalence, superiority, safety, readiness, or general-performance conclusion follows.
+The frozen SWE-agent v2 comparison remains a bounded result: v1.0.0 resolved 0/2 runs and v1.0.1 resolved 0/2 runs on one preregistered task. The recorded observation is `no_observed_resolution_difference`; the bounded decision remains `REVIEW_REQUIRED`. This does not demonstrate equivalence, superiority, safety, readiness, or general performance, and it is not independent replication or independent external validation.
+
+The associated forensic postmortem establishes only the recorded applied-patch target failures, uniform budget termination, and external-only diagnostic evidence as causal facts. The first agent mistakes and deepest patch causes remain `Unknown`.
+
+The deterministic CRE-001 implementation remains established only at its registered CRE-001 scope. Vocabulary Semantics Baseline 1.0 is prospective for CRE-002 and later and is not retrospective validation of CRE-001.
+
+Conditional primitive results do not establish global primitive minimality or global primitive independence. Those broader claims remain outside the established conditional deletion-only results and must not be inferred from the terminal theorem, framework stability, implementation success, or finite registered testing.
 
 Earlier REP, ADJ, W3.5, CRE, FARA-kernel, validation, and external-system records remain evidence only at their recorded scope and assurance level. Later terminal adjudication does not retroactively convert bounded empirical or project-authored evidence into independent validation.
 
