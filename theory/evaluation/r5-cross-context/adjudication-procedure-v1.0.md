@@ -78,7 +78,7 @@ Role C assigns one primary outcome from the frozen registry `O1`–`O12`, plus a
 
 **No outcome is scored as supporting the programme by default.** `O1` requires `EXPLICIT RECOVERY` or `LOGICAL CONSEQUENCE` on every element of the project formulation, at contamination level `C0` or `C1`, or it is `O2` at best.
 
-**The asymmetry rule from the contamination questionnaire applies:** contamination degrades evidence of agreement and does not degrade evidence of divergence.
+**The contamination two-value model applies** (`contamination-questionnaire-v1.0.json`): a contaminated response retains full **descriptive value**, but its **independence value** degrades in **both** directions. The earlier asymmetry rule — that contamination degrades agreement but not divergence — is **withdrawn**, because target exposure can itself produce divergence through reactance, deliberate differentiation, or anchoring away.
 
 ---
 
@@ -86,8 +86,10 @@ Role C assigns one primary outcome from the frozen registry `O1`–`O12`, plus a
 
 | Can establish | Cannot establish |
 |---|---|
-| That one independently constituted party did or did not arrive at a comparable formulation | That the project formulation is correct, natural, or uniquely selected |
-| That specific requirements were or were not independently recovered | Universality, from any number of positive runs |
-| That a specific falsification condition was or was not met | That no dominating formulation exists outside what was elicited |
-| That the elicited answer is or is not stable across two framings | That the answer is framing-independent in general |
-| Divergence, counterexamples, and alien formulations at full weight | A comparison relation over formulations, which this package does not supply and does not attempt to derive |
+| That one party did or did not arrive at a comparable formulation, at the tier and contamination level recorded | That the project formulation is correct, natural, or uniquely selected |
+| That specific requirements were or were not recovered, as a **Layer-1 descriptive** outcome | Universality, from any number of positive runs |
+| That a **single-run-testable** falsification condition (`F2`, `F3`, `F4`) was or was not met, at `T4`+ and `C0`–`C1` | That `F1`, `F5`, or `F6` was met — these are multi-run cumulative and **not operationalized** |
+| Divergence, counterexamples, and alien formulations as **descriptive** content, at any tier | Divergence as **independent** evidence at contamination `C2` or worse, in either direction |
+| A recorded observation of how one respondent answered under one packet arm | Causal prompt sensitivity from one A respondent versus one B respondent — arm and respondent are confounded |
+| Any recorded procedural, anonymization, or leakage finding | That no dominating formulation exists outside what was elicited |
+| A **Layer-2 warranted claim**, only where tier, contamination, qualification and integrity all permit it | A comparison relation over formulations, which this package does not supply and does not attempt to derive |

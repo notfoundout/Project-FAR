@@ -2,7 +2,10 @@
 
 **Program ID:** `R5-CROSS-CONTEXT-001`
 **Status:** `PROTOCOL FROZEN / EVIDENCE NOT YET COLLECTED`
-**Repository base:** `3ba4986b86b6e211d9e01e78018ef8324297f86c`
+**Package version:** `1.1`
+**Evidence base (target pinned here):** `3ba4986b86b6e211d9e01e78018ef8324297f86c`
+**Protocol initial commit:** `5d482a9c4cb760e3af6f2bcccff2e0461a971a9b`
+See `preregistration-v1.0.json#provenance_sha_model` for each field's meaning and the self-reference limitation.
 
 Nothing has been executed. No participant exists. No result is registered. This directory contains a protocol and the means to check it, and nothing else.
 
@@ -37,7 +40,7 @@ Steps are ordered. None may be reordered, merged, or skipped.
 | 12 | Adjudicate against the frozen registry | `adjudication-procedure-v1.0.md`, `outcome-registry-v1.0.json` | Role C |
 | 13 | Record the run manifest | `freeze-procedure-v1.0.md` §4 | executor |
 
-The mutation packet `elicitation-packet-B-mutation-v1.0.md` follows the same path with a **different respondent** for cross-respondent comparison. Same respondent yields a within-respondent framing check only.
+Controls `B1` and `B2` follow the same path. Under this package's frozen campaign policy each arm is a **single descriptive pilot run**; any A/B difference is compatible with both a packet effect and a respondent effect, and **no causal framing claim is permitted**.
 
 ---
 
@@ -48,8 +51,11 @@ The mutation packet `elicitation-packet-B-mutation-v1.0.md` follows the same pat
 | `README.md` | This file; execution order |
 | `preregistration-v1.0.json` | Frozen question reference, outcome space, falsification and strengthening conditions, prohibited inferences, stopping rule |
 | `elicitation-packet-A-v1.0.md` | Blinded primary packet |
-| `elicitation-packet-B-mutation-v1.0.md` | Alternative wording; prompt-sensitivity control |
-| `contamination-questionnaire-v1.0.json` | Twelve items, six levels, asymmetry rule |
+| `elicitation-packet-B1-reword-v1.1.md` | Semantic-preserving reword; surface-form sensitivity |
+| `elicitation-packet-B2-ablation-v1.1.md` | Decomposition ablation; tests whether the A–I axes shape the answer |
+| `participant-surface-v1.1.json` | The complete participant-facing surface `S1`–`S7` |
+| `target-pin-v1.1.json` | **RESTRICTED.** Target pinned to the evidence-base commit with per-file hashes |
+| `contamination-questionnaire-v1.0.json` | Twelve items, six levels, descriptive-vs-independence two-value model |
 | `role-a-output-schema-v1.0.json` | Structured transcription; `unsettled` is valid |
 | `freeze-procedure-v1.0.md` | Roles, delivery checklist, freeze-before-reveal, manifest fields, execution controls |
 | `reveal-packet-v1.0.md` | **RESTRICTED.** Release gate and Role B prohibitions |
@@ -77,4 +83,28 @@ The package is complete when another investigator can execute it without making 
 
 ## What this package cannot do
 
-It cannot establish that R5 is obtainable, only that it is specified. It cannot close `LIM-031`: a faithful external execution supplies an externally authored answer but not an externally chosen question. It cannot make a single positive run establish universality. It cannot supply a comparison relation over formulations — none is established, and the withdrawn seven-dimension rubric is explicitly not reused. It cannot remove the residual structural hint in the A–I decomposition, which `package-audit-v1.0.md` §3 discloses as a known limitation of the instrument.
+It cannot establish that R5 is obtainable, only that it is specified. It cannot close `LIM-031`, and it cannot address `LIM-032` at all. Its blinding claim is **lexical only**: no registered watchlist term occurs in the mechanically checked participant-facing text. That is not proof of no semantic leakage; the clean-room read is a separate, non-mechanical judgement. It cannot make a single positive run establish universality. It cannot supply a comparison relation over formulations — none is established, and the withdrawn seven-dimension rubric is explicitly not reused. It cannot remove the residual structural hint in the A–I decomposition, which `package-audit-v1.0.md` §3 discloses as a known limitation of the instrument.
+
+---
+
+## File and hash model
+
+**18 tracked files = 17 frozen payload artifacts + 1 verifier (tooling); 17 of them hashed.** Earlier revisions said "fourteen artifacts" ambiguously: `REQUIRED_ARTIFACTS` excluded the verifier while the manifest excluded *itself*, so the two counts named **different sets**.
+
+- The manifest hashes a **declared list**, never a directory scan. A directory scan would silently admit stray files such as `__pycache__` contents into the freeze.
+- The manifest cannot hash itself — writing the hash would change the bytes being hashed — so it is excluded from its own list and its integrity is checked via git. That is why 17 files are hashed, not 18.
+- The verifier **is** hashed by the manifest, so tooling drift is detectable, but it is not a payload artifact.
+
+## Separate adversarial review gate
+
+Before any evidence-critical protocol here is merged or executed:
+
+1. the author declares the package complete;
+2. a **logically separate adversarial review pass** occurs, in a fresh context or by a separate reviewer;
+3. every finding is resolved;
+4. the full semantic sweep reruns;
+5. only then may merge-readiness be declared.
+
+**This is a process-quality gate, not an epistemic independence claim.** A same-model fresh-context review is *not* independent evidence and must never be reported as such.
+
+**Why it exists:** across two review rounds, multiple substantive defects survived author self-audit, and **two defects were introduced by the repairs themselves** — an outcome list overcorrected to 6:0 negative, and a blinding verifier that passed vacuously. Single-pass self-audit is demonstrably unreliable for this package.

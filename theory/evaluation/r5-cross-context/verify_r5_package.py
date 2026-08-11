@@ -27,8 +27,15 @@ PKG = Path(__file__).resolve().parent
 # files subject to the blinding check.
 PARTICIPANT_FACING = [
     "elicitation-packet-A-v1.0.md",
-    "elicitation-packet-B-mutation-v1.0.md",
+    "elicitation-packet-B1-reword-v1.1.md",
+    "elicitation-packet-B2-ablation-v1.1.md",
 ]
+
+# The participant-facing surface is NOT only the packet bodies. Every string the
+# protocol authorizes anyone to send Role A before reveal is registered in
+# participant-surface-v1.1.json and is checked here. An earlier revision modelled
+# only packet sections 2-3, which left the fallback clarification unchecked.
+SURFACE_REGISTRY = "participant-surface-v1.1.json"
 
 # In both packets the delivered material is exactly sections 2 and 3. Section 1
 # is deliverer instructions or design notes and section 4 is retained-for-record
@@ -42,11 +49,16 @@ DELIVERED_END = "## 4."
 # future edit silently reducing the scanned text to nothing.
 MIN_DELIVERED_CHARS = 600
 
+# 15 frozen payload artifacts. The verifier itself is tooling, listed separately
+# in TOOLING, and is hashed by the manifest but is not a payload artifact.
 REQUIRED_ARTIFACTS = [
     "README.md",
+    "participant-surface-v1.1.json",
+    "target-pin-v1.1.json",
     "preregistration-v1.0.json",
     "elicitation-packet-A-v1.0.md",
-    "elicitation-packet-B-mutation-v1.0.md",
+    "elicitation-packet-B1-reword-v1.1.md",
+    "elicitation-packet-B2-ablation-v1.1.md",
     "contamination-questionnaire-v1.0.json",
     "role-a-output-schema-v1.0.json",
     "freeze-procedure-v1.0.md",
@@ -59,6 +71,7 @@ REQUIRED_ARTIFACTS = [
     "package-audit-v1.0.md",
 ]
 
+TOOLING = ["verify_r5_package.py"]
 JSON_ARTIFACTS = [a for a in REQUIRED_ARTIFACTS if a.endswith(".json")]
 
 # Literal identifiers that must not appear in delivered text.
@@ -116,7 +129,10 @@ def delivered_text(path: Path) -> tuple[str, str | None]:
         return "", f"{path.name}: no delivered section found (expected {DELIVERED_START!r})"
     end = text.find(DELIVERED_END, start)
     if end == -1:
-        return "", f"{path.name}: delivered span is unterminated (expected {DELIVERED_END!r})"
+        # No retained-for-record section. Scan to end of file. Over-scanning is
+        # the FAIL-SAFE direction: extra text checked can only add findings,
+        # whereas under-scanning silently hides leaks.
+        end = len(text)
     span = text[start:end]
     if len(span) < MIN_DELIVERED_CHARS:
         return span, (f"{path.name}: delivered span is only {len(span)} chars, "
@@ -170,6 +186,42 @@ def main() -> int:
             for hit in scan(text, needles, word_boundary=wb):
                 failures.append(f"{label} in delivered text of {name}: {hit!r}")
 
+    # 2b. participant-facing SURFACE: every registered string, fail closed
+    surface_path = PKG / SURFACE_REGISTRY
+    registered_strings: list[tuple[str, str]] = []
+    if not surface_path.is_file():
+        failures.append(f"MISSING SURFACE REGISTRY: {SURFACE_REGISTRY}")
+    else:
+        surface = json.loads(surface_path.read_text(encoding="utf-8"))
+        for group, entries in surface["surface"].items():
+            for entry in entries:
+                if "exact_string" in entry:
+                    registered_strings.append((entry["id"], entry["exact_string"]))
+                elif "file" in entry and entry["file"] not in PARTICIPANT_FACING:
+                    failures.append(
+                        f"SURFACE ENTRY {entry['id']} names {entry['file']!r}, which is not in PARTICIPANT_FACING")
+        for sid, text in registered_strings:
+            for label, needles, wb in (
+                ("BANNED LITERAL", BANNED_LITERALS, False),
+                ("BANNED TOKEN", BANNED_TOKENS, True),
+                ("BANNED PARAPHRASE", BANNED_PARAPHRASES, True),
+                ("FIELD SEED", BANNED_FIELD_SEEDS, False),
+            ):
+                for hit in scan(text, needles, word_boundary=wb):
+                    failures.append(f"{label} in registered surface string {sid}: {hit!r}")
+
+        # fail closed: any quoted fallback in a packet must be registered
+        for name in PARTICIPANT_FACING:
+            path = PKG / name
+            if not path.is_file():
+                continue
+            body = path.read_text(encoding="utf-8")
+            for quoted in re.findall(r'reply only[^\n]*?[*>"]\s*([^*"\n][^*"\n]{20,})', body):
+                cleaned = quoted.strip().strip('*">').strip()
+                if cleaned and not any(cleaned in reg for _, reg in registered_strings):
+                    failures.append(
+                        f"UNREGISTERED PARTICIPANT-FACING STRING in {name}: {cleaned[:70]!r}")
+
     # 3. state: protocol frozen, nothing executed
     prereg_path = PKG / "preregistration-v1.0.json"
     if prereg_path.is_file():
@@ -196,8 +248,10 @@ def main() -> int:
 
     print("PASS")
     print(f"  artifacts: {len(REQUIRED_ARTIFACTS)} present and parsing")
-    print(f"  blinding:  {len(PARTICIPANT_FACING)} participant-facing packets clean "
-          f"against {len(BANNED_LITERALS) + len(BANNED_TOKENS) + len(BANNED_PARAPHRASES) + len(BANNED_FIELD_SEEDS)} watchlist terms")
+    n_terms = len(BANNED_LITERALS) + len(BANNED_TOKENS) + len(BANNED_PARAPHRASES) + len(BANNED_FIELD_SEEDS)
+    print(f"  blinding:  {len(PARTICIPANT_FACING)} packet bodies + {len(registered_strings)} registered surface "
+          f"strings clean against {n_terms} watchlist terms")
+    print("             (lexical check only; absence of watchlist terms is NOT proof of no semantic leakage)")
     print("  state:     protocol frozen, no run recorded, no result registered")
     return 0
 

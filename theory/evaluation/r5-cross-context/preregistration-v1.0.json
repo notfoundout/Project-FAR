@@ -1,19 +1,16 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "program_id": "R5-CROSS-CONTEXT-001",
   "status": "PROTOCOL_FROZEN_EVIDENCE_NOT_YET_COLLECTED",
   "registered_prospectively": true,
   "execution_authorized": false,
-  "repository_base": "3ba4986b86b6e211d9e01e78018ef8324297f86c",
-
   "motivating_deficit": {
     "id": "LIM-031",
     "statement": "No party outside Project FAR has ever chosen or evaluated a preservation contract for the universality question. The OP-21 comparison reconstructed six independently motivated external contracts, but the dimension set, the scoring, and the placement were all performed with knowledge of the target contract's profile.",
     "why_internal_work_cannot_close_it": "The deficit is definitionally about the absence of an external party. USD-W6 established that one agent can isolate computational paths but cannot create human or organizational independence, terminating at internal_robustness_only. No internally authored bridge can close LIM-031."
   },
-
   "consumed_dispositions": {
-    "note": "Reconstructed from origin/main at the repository_base above. Recorded so that a later change to any of these is detectable as a premise change.",
+    "note": "Reconstructed from origin/main at evidence_base_sha (see provenance_sha_model). Recorded so that a later change to any of these is detectable as a premise change.",
     "OP-21": "Executed and corrected. H5 supported; H1 not established; H2 NOT established; H3 and H4 unresolved; H6 split. Terminal classification E+F. No global comparison relation over contracts is established.",
     "UQ-T25": "H5 supported jointly with H2 withdrawn. Every P* component independently anticipated; the conjunction is not independently recovered.",
     "UQ-T26": "Unresolved and not answerable internally. No dominance relation over contracts is established at all.",
@@ -25,16 +22,18 @@
     "USD-W6": "internal_robustness_only. Explicitly not independent proof review, not R3, not R4, not R5.",
     "evidence_rules_R3_R4_R5": "R3 requires a separate implementation team or organization with independent code and verifier paths, artifact isolation, and deterministic comparison. R4 requires independently designed alternatives and counterexamples. R5 requires a new reasoning context and an independently defined source contract."
   },
-
   "what_this_program_is": "Construction and freezing of an elicitation protocol. It is not evidence collection. No participant exists. No result is registered.",
-
   "frozen_question_reference": {
     "primary_packet": "elicitation-packet-A-v1.0.md",
-    "mutation_packet": "elicitation-packet-B-mutation-v1.0.md",
     "exact_wording_is_frozen": true,
-    "executor_may_not_reword": true
+    "executor_may_not_reword": true,
+    "controls": [
+      "elicitation-packet-B1-reword-v1.1.md",
+      "elicitation-packet-B2-ablation-v1.1.md"
+    ],
+    "superseded": "elicitation-packet-B-mutation-v1.0.md, removed: it reproduced the A-I axes while also introducing a substantive pragmatic criterion, so it was simultaneously too structurally similar and too semantically different.",
+    "participant_surface": "participant-surface-v1.1.json defines the COMPLETE participant-facing surface."
   },
-
   "outcome_space": {
     "note": "Pre-registered before execution. No outcome is scored as supporting Project FAR by default. Outcomes are descriptive classifications, not verdicts.",
     "O1": "Independent formulation substantially equivalent to the project's target contract.",
@@ -50,17 +49,70 @@
     "O11": "Contamination invalidates the run.",
     "O12": "Evidence insufficient."
   },
-
   "falsification_conditions": {
-    "note": "Registered before execution. These would materially damage the stronger project ambition. None is established by this package.",
-    "F1": "Repeated independent formulations systematically omit one of the target contract's requirements.",
-    "F2": "Independently chosen criteria make one of the target contract's components irrelevant rather than merely unstated.",
-    "F3": "An alien formulation covers the same phenomena with materially fewer commitments under criteria the participant independently supplied.",
-    "F4": "An independently derived architecture contradicts a claimed invariant.",
-    "F5": "No independently elicited formulation produces a unified answer across the participant's own declared scope.",
-    "F6": "Formulation choice is consistently domain-relative across independent participants."
+    "note": "Each condition is classified by what evidence it actually needs. No numeric threshold is invented where none can be justified.",
+    "classes": {
+      "SINGLE_RUN_TESTABLE": "One qualifying run can bear on it.",
+      "MULTI_RUN_CUMULATIVE": "Requires repeated runs; a single run contributes one data point and cannot establish it.",
+      "EXTERNAL_REPLICATION_REQUIRED": "Requires execution outside the programme.",
+      "NOT_OPERATIONALIZED": "No defensible threshold exists yet; may not be claimed either way."
+    },
+    "F1": {
+      "statement": "Repeated independent formulations systematically omit one of the target contract's requirements.",
+      "class": "MULTI_RUN_CUMULATIVE",
+      "single_run_contribution": "One observation of omission or non-omission of a named requirement.",
+      "min_tier": "T4",
+      "max_contamination": "C1",
+      "repeated_and_systematically": "NOT OPERATIONALIZED. No justified count or rate exists. Until a future aggregation protocol fixes one, F1 may not be reported as met or unmet.",
+      "packets_required": "unspecified pending aggregation protocol"
+    },
+    "F2": {
+      "statement": "Independently chosen criteria make one of the target contract's components irrelevant rather than merely unstated.",
+      "class": "SINGLE_RUN_TESTABLE",
+      "single_run_contribution": "A respondent's own criteria can render a component irrelevant within their own frame, observable in one run.",
+      "min_tier": "T4",
+      "max_contamination": "C1",
+      "falsifies_itself_if": "The respondent's criteria are found incoherent, or the irrelevance depends on a mapper-supplied auxiliary definition.",
+      "packets_required": "A alone suffices; B2 strengthens it by removing the axis prompt"
+    },
+    "F3": {
+      "statement": "An alien formulation covers the same phenomena with materially fewer commitments under criteria the respondent independently supplied.",
+      "class": "SINGLE_RUN_TESTABLE",
+      "single_run_contribution": "Directly observable in one run if the respondent supplies both the formulation and the criterion.",
+      "min_tier": "T4",
+      "max_contamination": "C1",
+      "falsifies_itself_if": "'Fewer commitments' is established only under a programme-supplied criterion, or coverage is not actually equal.",
+      "packets_required": "A alone suffices"
+    },
+    "F4": {
+      "statement": "An independently derived architecture contradicts a claimed invariant.",
+      "class": "SINGLE_RUN_TESTABLE",
+      "single_run_contribution": "Observable in one architecture-phase run.",
+      "min_tier": "T4",
+      "max_contamination": "C1",
+      "additional_condition": "Requires the architecture phase to have been run BEFORE the contamination questionnaire, and carries the S5 disclosure limitation.",
+      "packets_required": "any, with architecture phase"
+    },
+    "F5": {
+      "statement": "No independently elicited formulation produces a unified answer across the respondent's own declared scope.",
+      "class": "MULTI_RUN_CUMULATIVE",
+      "single_run_contribution": "One observation of internal non-unification.",
+      "min_tier": "T4",
+      "max_contamination": "C1",
+      "no_independently_elicited": "NOT OPERATIONALIZED as a universal. A single run can show that THIS respondent produced no unified answer; it cannot show that none does.",
+      "packets_required": "unspecified pending aggregation protocol"
+    },
+    "F6": {
+      "statement": "Formulation choice is consistently domain-relative across independent participants.",
+      "class": "MULTI_RUN_CUMULATIVE",
+      "single_run_contribution": "One observation of domain-relativity.",
+      "min_tier": "T4",
+      "max_contamination": "C1",
+      "consistently_across_participants": "NOT OPERATIONALIZED. Requires multiple participants and a justified consistency criterion; neither exists yet.",
+      "packets_required": "unspecified pending aggregation protocol"
+    },
+    "governing_prohibition": "It may NOT be stated that one completed run can establish whether every falsification condition is met. F1, F5 and F6 are multi-run cumulative and are currently NOT OPERATIONALIZED at the aggregate level."
   },
-
   "strengthening_conditions": {
     "note": "These would strengthen the ambition without proving it. No single positive replication establishes universality.",
     "S1": "Independent recovery of the same conjunction of requirements.",
@@ -68,7 +120,6 @@
     "S3": "Independent justification of machinery-charging of the kind the project's admissible-representation family imposes.",
     "S4": "Equivalent formulations under an equivalence relation the participant independently chose."
   },
-
   "prohibited_inferences": [
     "Treating agreement across elicitation wordings as proof of naturalness.",
     "Treating disagreement across elicitation wordings as automatic refutation.",
@@ -78,7 +129,6 @@
     "Converting the neutral structural comparison relations into better or worse without a justified preference relation.",
     "Reusing the withdrawn OP-21 global Pareto rubric."
   ],
-
   "stopping_rule": {
     "package_complete_when": "Another investigator can execute R5 without making any new methodological decision that could materially affect the result.",
     "not_frozen_if_executor_must_decide": [
@@ -91,7 +141,6 @@
       "which outcomes count"
     ]
   },
-
   "nonclaims": [
     "No R5 result is registered.",
     "No independent recovery is claimed.",
@@ -100,5 +149,37 @@
     "No contract support is claimed.",
     "Nothing has been executed.",
     "This package does not establish that R5 is obtainable, only that it is specified."
-  ]
+  ],
+  "package_version": "1.1",
+  "campaign_policy": {
+    "status": "frozen",
+    "scope_of_this_package": "SINGLE-RUN DESCRIPTIVE EVIDENCE ONLY.",
+    "rationale": "No defensible sample size can be justified from current evidence. Inventing one would be pseudo-statistics, and leaving the count open would permit optional stopping after a favourable or unfavourable result.",
+    "first_run_status": "Exploratory pilot. Not confirmatory.",
+    "minimum_T4_runs": "Not fixed by this package. Any repeated-run claim requires a future aggregation protocol registered BEFORE further runs.",
+    "T5_required": "No. T5 is available but not required for the single-run descriptive claims this package supports.",
+    "packet_arms": "A single run may use A, B1, or B2. Executing more than one arm invokes the comparison-design rules and is a multi-run activity.",
+    "continuation_after_result": "This package authorizes ONE run per arm as a pilot. Continuing after seeing a result is a multi-run activity requiring the aggregation protocol. This is the anti-optional-stopping control.",
+    "failed_or_contaminated_runs": "Preserved and reported. They do not free a slot and are not replaced silently.",
+    "aggregation": "None defined. No aggregation may be performed under this package.",
+    "claims_unaffected_by_campaign_stopping": [
+      "Layer-1 descriptive outcomes of any completed run.",
+      "F2, F3 and F4, which are single-run testable at T4/C1.",
+      "Any recorded procedural or leakage finding."
+    ],
+    "claims_blocked_until_an_aggregation_protocol_exists": [
+      "F1",
+      "F5",
+      "F6",
+      "any claim about repetition, consistency, systematicity, or rates"
+    ]
+  },
+  "provenance_sha_model": {
+    "note": "Replaces the overloaded single 'repository_base' field, which meant the evidence base in one artifact and the first protocol commit in another.",
+    "evidence_base_sha": "3ba4986b86b6e211d9e01e78018ef8324297f86c \u2014 the commit the TARGET is pinned to, and the state whose dispositions this protocol consumed.",
+    "protocol_initial_commit_sha": "5d482a9c4cb760e3af6f2bcccff2e0461a971a9b \u2014 first commit of this package.",
+    "protocol_current_revision_sha": "recorded in provenance-manifest-v1.1.json at each refreeze; the commit whose tree the artifact hashes describe.",
+    "pr_head_sha": "the PR #445 head at the time of reading; not a protocol constant.",
+    "self_reference_limitation": "The manifest cannot contain the hash of the commit that contains it. Artifact hashes are therefore content hashes of the files, and protocol_current_revision_sha is recorded one commit behind or supplied out of band by the verifier at check time. The manifest also cannot hash itself; the verifier recomputes every other artifact hash and checks the manifest's own integrity only via git."
+  }
 }

@@ -8,7 +8,11 @@
 
 ## 1. Instructions to the person delivering this packet
 
-Deliver §2 and §3 verbatim and nothing else. Do not answer clarifying questions about what the requester "is looking for", what a good answer resembles, or whether a direction is promising. If asked, reply only: *"Answer as you see fit; there is no target answer, and concluding that the question is ill-posed is an acceptable outcome."*
+Deliver §2 and §3 verbatim and nothing else. Do not answer clarifying questions about what the requester "is looking for", what a good answer resembles, or whether a direction is promising. If asked, reply only with the frozen fallback string, verbatim and without addition:
+
+> *"Answer as you see fit; there is no target answer. Any conclusion you can justify from your own analysis is acceptable."*
+
+This string is registered in `participant-surface-v1.1.json` and is mechanically checked. Any other clarification is an unregistered participant-facing message and makes the run a procedural failure.
 
 Do not disclose who commissioned the work, what body of prior work it relates to, or that any prior answer exists.
 
@@ -71,4 +75,6 @@ The wording above was constructed to avoid vocabulary, framing, examples, and st
 
 The six candidate fields identified by the commissioning analysis are deliberately not named, hinted at, or gestured toward, per the source rule in `preregistration-v1.0.json`. The respondent's independently chosen literature is one of the outputs under test.
 
-Outcome symmetry is deliberate: the "equally acceptable" list contains more negative and dissolving outcomes than positive ones, so that a respondent reading for cues cannot infer that a positive result is wanted.
+Outcome symmetry is deliberate and **balanced**: the list of answer shapes contains two unified-positive, two pluralistic or domain-relative, and two negative or undecidable shapes, is explicitly unranked, and is explicitly non-exhaustive. Neither a positive nor a negative result is signalled as wanted.
+
+An earlier revision of this packet deliberately overrepresented negative and dissolving shapes, on the reasoning that this counters positive-result bias. That reasoning was wrong and the design is superseded; it is preserved as provenance in `package-audit-v1.0.md` §5 and is **not** the rationale for the current list.

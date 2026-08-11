@@ -1,87 +1,135 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "artifact_id": "R5-PROVENANCE-MANIFEST-001",
   "program_id": "R5-CROSS-CONTEXT-001",
+  "package_version": "1.1",
   "status": "PROTOCOL_FROZEN_EVIDENCE_NOT_YET_COLLECTED",
-  "repository_base": "5d482a9c4cb760e3af6f2bcccff2e0461a971a9b",
-  "base_description": "origin/main after the merge of PR #443 (merge commit 3ba4986b86b6e211d9e01e78018ef8324297f86c, parents 5f26792 and bc784b4).",
-  "hash_algorithm": "sha256",
+  "sha_model": {
+    "evidence_base_sha": "3ba4986b86b6e211d9e01e78018ef8324297f86c",
+    "evidence_base_meaning": "The commit the comparison TARGET is pinned to, and whose dispositions this protocol consumed. See target-pin-v1.1.json.",
+    "protocol_initial_commit_sha": "5d482a9c4cb760e3af6f2bcccff2e0461a971a9b",
+    "protocol_current_revision_sha": "recorded by the committing revision; not knowable from inside the commit it describes",
+    "pr_head_sha": "PR #445 head at read time; not a protocol constant",
+    "self_reference_limitation": "A manifest cannot contain the hash of the commit containing it, and cannot hash itself. Artifact hashes are content hashes; the manifest's own integrity is checked via git, not self-hash."
+  },
+  "file_model": {
+    "tracked_files": 18,
+    "payload_artifacts": 17,
+    "tooling_artifacts": 1,
+    "hashed_here": 17,
+    "why_hashed_is_one_fewer": "The manifest cannot hash itself: writing the hash changes the bytes it hashes. It is excluded from its own list and its integrity is checked via git.",
+    "note": "Earlier revisions said 'fourteen artifacts' ambiguously: REQUIRED_ARTIFACTS excluded the verifier while the manifest excluded itself, naming different sets.",
+    "hashing_rule": "Hashes a DECLARED LIST, never a directory scan. A scan would silently admit stray files such as __pycache__ contents."
+  },
   "artifact_hashes": {
     "README.md": {
-      "sha256": "43e9290e43c39383ec1d51e6aa1c14b678f2ac7df302a55c769a0300c1742bc2",
-      "bytes": 5970
+      "sha256": "3d31303df75d7863177a6b19982548769ad2302c342829d651851d2397281f45",
+      "bytes": 8436,
+      "class": "payload"
     },
-    "adjudication-procedure-v1.0.md": {
-      "sha256": "121a45c1f43de0eb5afea1c6ab7a6e1b22c65be650071bfa896b20e68baafb26",
-      "bytes": 6490
+    "participant-surface-v1.1.json": {
+      "sha256": "7e1fee6714be47c39a98186bf67b62833813198b0b2b3bacac932807f16e187e",
+      "bytes": 4329,
+      "class": "payload"
     },
-    "contamination-questionnaire-v1.0.json": {
-      "sha256": "8130d4f8e15da09ac72fcf966c9b5d3a3de124bc6deef7bd2439e2557c7962d3",
-      "bytes": 5246
+    "target-pin-v1.1.json": {
+      "sha256": "5f47f208ac0dc5d78a34de75c414010a7ab82a1b4c5f4eb5c55fd7f4255ea5d6",
+      "bytes": 1997,
+      "class": "payload"
+    },
+    "preregistration-v1.0.json": {
+      "sha256": "84b8a5c1f8d2a10b78ea55abf46784ad9cf68ad566da28163c7b33aa3730d226",
+      "bytes": 13631,
+      "class": "payload"
     },
     "elicitation-packet-A-v1.0.md": {
-      "sha256": "d1c9dd0fea78ed8a30458a31c0f108326cf1eda1f826aa6f998295778fad9f19",
-      "bytes": 4767
+      "sha256": "078962186d2bde6475e973df369fd937ea60856aa5633d6dbf3346d63d3bf978",
+      "bytes": 5444,
+      "class": "payload"
     },
-    "elicitation-packet-B-mutation-v1.0.md": {
-      "sha256": "0169da49d800ca5fd6bc4afa923fe6f5790719ef1af2aa494b813f312e8d667c",
-      "bytes": 4331
+    "elicitation-packet-B1-reword-v1.1.md": {
+      "sha256": "932b658de5df186a68251d1d3f23e07e6436c9af75345a54cb7dd8f7c5b4ac0c",
+      "bytes": 3419,
+      "class": "payload"
     },
-    "evidence-tier-rules-v1.0.json": {
-      "sha256": "578bdc52c3cd6a99f5e9a8149239ebfbc5aeaa535ef65ae29f670e4edb8dba3e",
-      "bytes": 9567
+    "elicitation-packet-B2-ablation-v1.1.md": {
+      "sha256": "078f3d657c7230513b7e071267791a740df602c3c45a515db3ac831342c30af3",
+      "bytes": 2599,
+      "class": "payload"
+    },
+    "contamination-questionnaire-v1.0.json": {
+      "sha256": "4fddd72df1f74b719f1d8bc0d67c72404edd0d5a2bf96fb27a36f4890e35ce32",
+      "bytes": 7553,
+      "class": "payload"
+    },
+    "role-a-output-schema-v1.0.json": {
+      "sha256": "705739d419405f1ae205b7bb72619b01865cd9eab16d7d573033caa46ddf1883",
+      "bytes": 4727,
+      "class": "payload"
     },
     "freeze-procedure-v1.0.md": {
-      "sha256": "fced42f1ecaa5632e30fc45657f04c2325eec501cdb5453315f3d85cfca1d5c9",
-      "bytes": 5176
+      "sha256": "2bd76430c20fc4abbb99265cc46f74edbefe20ff627ec9b0f8a8cfc090738d57",
+      "bytes": 6448,
+      "class": "payload"
+    },
+    "reveal-packet-v1.0.md": {
+      "sha256": "712b5b04cfe6cc90ee566a747bfb73219bc3535b55fcf3613ab5253832b38edf",
+      "bytes": 3625,
+      "class": "payload"
     },
     "normalization-mapping-schema-v1.0.json": {
       "sha256": "ab8607a2b95133bcc52398b228ae04eab6ca555c3e9ff899404eb9fa321c0a23",
-      "bytes": 3252
+      "bytes": 3252,
+      "class": "payload"
+    },
+    "adjudication-procedure-v1.0.md": {
+      "sha256": "8e65f9b490e876e86730cad8d5e2464637d0a9850d7c585fe98f20350fb52471",
+      "bytes": 7336,
+      "class": "payload"
     },
     "outcome-registry-v1.0.json": {
-      "sha256": "93619d4d48751735672fe5b8795dddf3fbc513316f462e86d24ebba527c55cd0",
-      "bytes": 3542
+      "sha256": "408e62e439fce336aa07d5666e68e1c8d005381f16b430ee1c30e0f56f76b7de",
+      "bytes": 9831,
+      "class": "payload"
+    },
+    "evidence-tier-rules-v1.0.json": {
+      "sha256": "383c7bea0b5d82c93e8a5156d26d17ac35f07d9a5f6dff60ac1f5e7ca1075156",
+      "bytes": 13514,
+      "class": "payload"
     },
     "package-audit-v1.0.md": {
-      "sha256": "3cb0600cdf56226980721c57fb5f64729d7b03c5f7b7a92e39f69134d328cbeb",
-      "bytes": 11521
-    },
-    "preregistration-v1.0.json": {
-      "sha256": "efdfb3ea60c89795933ff176c94a3edef89782708dbabd52a67e999167cae8cc",
-      "bytes": 7088
-    },
-    "reveal-packet-v1.0.md": {
-      "sha256": "a106af6759d8f3eeacae19c9636afe8f97a34f056e0d5c9ac8c22e093d70acb0",
-      "bytes": 3261
-    },
-    "role-a-output-schema-v1.0.json": {
-      "sha256": "9a43130a3519ae835a4f657b5de903707bb9af702e55696012e4443dc1c0bd59",
-      "bytes": 3697
+      "sha256": "3d13acc85347b1960fe6c82312b214f16264263ae8432aff955dd2246f60432c",
+      "bytes": 17751,
+      "class": "payload"
     },
     "verify_r5_package.py": {
-      "sha256": "44e1fe492b7e0455e4d504a39a89548fcfc5567444a33cf147521ffb1f49c032",
-      "bytes": 8074
+      "sha256": "636caba8352c4065a0b1461cb3194a3ccbbff4036e88c7207284d3ddce7ddfe7",
+      "bytes": 11048,
+      "class": "tooling"
     }
   },
   "restricted_artifacts": {
-    "reveal-packet-v1.0.md": "Contains the programme formulation. Never to Role A.",
-    "verify_r5_package.py": "Names the full banned-term watchlist in order to detect it. Never to Role A."
+    "reveal-packet-v1.0.md": "Contains the target formulation. Never to Role A.",
+    "verify_r5_package.py": "Names the full watchlist. Never to Role A.",
+    "target-pin-v1.1.json": "Names the target source files. Never to Role A."
   },
-  "participant_facing_artifacts": {
-    "elicitation-packet-A-v1.0.md": "sections 2 and 3 only",
-    "elicitation-packet-B-mutation-v1.0.md": "sections 2 and 3 only"
-  },
-  "consumed_dispositions_recorded_in": "preregistration-v1.0.json#consumed_dispositions",
+  "participant_facing_surface": "participant-surface-v1.1.json entries S1-S7. Complete by declaration; the verifier fails closed on any unregistered string.",
   "verifier": {
     "path": "verify_r5_package.py",
     "result_at_freeze": "PASS",
-    "checks": [
-      "blinding of delivered text against 76 watchlist terms",
-      "presence and parse of 14 required artifacts",
-      "protocol-frozen state, zero runs recorded, no runs/ directory"
+    "blinding_claim": "LEXICAL ONLY. No registered watchlist term occurs in the mechanically checked participant-facing text. This is NOT proof of absent semantic leakage.",
+    "negative_controls": [
+      "A banned identifier - FAIL",
+      "B banned paraphrase - FAIL",
+      "C field seed - FAIL",
+      "D contamination in fallback string - FAIL",
+      "E contamination in architecture wording - FAIL",
+      "F unregistered participant-facing string - FAIL"
     ],
-    "negative_control": "Verified to FAIL on a deliberately leaked packet containing 'commitments', 'grounds', and a field-seed term, and to return to PASS on restoration."
+    "all_restored_to_PASS": true
+  },
+  "superseded_artifacts": {
+    "elicitation-packet-B-mutation-v1.0.md": "Removed in v1.1. Reproduced the A-I axes while adding a substantive pragmatic criterion. Design preserved in package-audit-v1.0.md sections 5 and 7."
   },
   "runs": [],
   "results": [],
@@ -89,13 +137,14 @@
     "No run exists.",
     "No outcome is registered.",
     "No independence, replication, recovery, or architecture support is claimed.",
-    "This manifest records the existence and frozen status of a protocol only."
+    "This manifest records the existence and frozen status of a protocol only.",
+    "This package does not close LIM-031 and does not address LIM-032."
   ],
-  "second_round_audit": {
-    "date": "2026-08-11",
-    "outcome_priming": "Repaired. The first repair overcorrected to zero-of-six positive shapes, which primed a negative result. Option C selected: balanced, explicitly unranked, explicitly non-exhaustive. Applied to both packets.",
-    "t5_stopping_rule": "Resolved as interpretation A. T5 is faithful external execution of this protocol under external preregistration. Interpretation B is reclassified as class X1 and is not an execution tier.",
-    "consequential_withdrawal": "The claim that LIM-031 is closed at T5 is withdrawn as overstated. T5 substantially addresses it; full closure additionally requires X1.",
-    "hashes_regenerated": true
+  "separate_adversarial_review": {
+    "performed": "2026-08-11",
+    "findings": 1,
+    "finding": "B2 delivered span lacked the non-exhaustiveness clause; repaired",
+    "status": "all findings resolved",
+    "claim_boundary": "Process-quality gate. Same author, separate pass. NOT independent review and never to be reported as such."
   }
 }

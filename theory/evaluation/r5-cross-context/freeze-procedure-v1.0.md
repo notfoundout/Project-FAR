@@ -10,7 +10,7 @@ Three logically separated roles. **One person or system may not hold two roles i
 
 | Role | Receives | Produces | Must never |
 |---|---|---|---|
-| **A — Formulation respondent** | Packet A (or B) and nothing else | The answer to A–I, then optionally the architecture answer | Receive any programme material before their answer is hashed and declared final |
+| **A — Formulation respondent** | One packet (A, B1, or B2) and nothing else | The answer to A–I, then optionally the architecture answer | Receive any programme material before their answer is hashed and declared final |
 | **B — Normalizer / mapper** | Role A's frozen output **plus** the reveal packet | A descriptive mapping between the two formulations | Alter, strengthen, weaken, reinterpret, or repair Role A's answer to make comparison easier |
 | **C — Adjudicator** | Normalized forms only, source-anonymized where practical | An outcome classification against the frozen registry | See the raw packets or know which formulation came from the programme, where anonymization is practical |
 
@@ -22,7 +22,8 @@ Three logically separated roles. **One person or system may not hold two roles i
 
 Every item must be confirmed by the deliverer and recorded.
 
-- [ ] Only `elicitation-packet-A-v1.0.md` §2–§3 (or Packet B §2–§3) is being sent.
+- [ ] Only the §2–§3 span of the selected packet — `elicitation-packet-A-v1.0.md`, `elicitation-packet-B1-reword-v1.1.md`, or `elicitation-packet-B2-ablation-v1.1.md` — is being sent.
+- [ ] No participant-facing string outside `participant-surface-v1.1.json` (`S1`–`S7`) will be sent at any point before reveal.
 - [ ] No other file from this repository is attached, quoted, summarised, or linked.
 - [ ] `verify_r5_package.py` has been run and reports `PASS` on the packet being sent.
 - [ ] The respondent has not been told who commissioned the work.
@@ -41,9 +42,13 @@ Every item must be confirmed by the deliverer and recorded.
 4. Timestamp recorded (UTC, ISO-8601).
 5. **SHA-256** of the raw bytes recorded. This is the repository-standard hash used elsewhere in this evidence tree.
 6. Sources recorded and classified.
-7. **Contamination questionnaire administered and recorded.** Not before this point — administering it earlier discloses that a specific body of prior work exists.
-8. Optional architecture phase, if run: asked, answered, declared final, preserved byte-for-byte, timestamped, and hashed as a **separate** artifact.
+7. **Optional architecture phase, if run.** Asked using the frozen string `S5`, answered, declared final, preserved byte-for-byte, timestamped, and hashed as a **separate** artifact.
+8. **Contamination questionnaire administered and recorded.** Not before this point.
 9. **Only now** may the reveal packet be shown, and only to Role B.
+
+**Why the architecture phase precedes the questionnaire — corrected 2026-08-11.** An earlier revision ordered these the other way. That was a methodological contamination: the questionnaire names minimal architectures, four- and five-part decompositions, and the equivalence problem, so a respondent who has completed it has learned that a target architecture exists. Any architecture answer given afterwards could not count as pre-reveal independent recovery. The questionnaire is administered as late as possible, after every answer is frozen and hashed, because it is deliberately **not** blinded and cannot contaminate an artifact that is already sealed.
+
+**Residual, disclosed:** the architecture question `S5` itself discloses that a structuring question is of interest. It cannot contaminate the contract answer, which is frozen and hashed at step 5, but it does contaminate the architecture answer with respect to the *existence* of such a question — though not with respect to any particular structure. This limitation is carried on every architecture-phase claim.
 
 **No post-reveal edit to the original answer counts as independent evidence.** Corrections, retractions, and elaborations offered after reveal are recorded as a separate, clearly labelled post-reveal artifact with its own hash. They never overwrite, replace, or amend the frozen pre-reveal artifact.
 

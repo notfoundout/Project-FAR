@@ -22,7 +22,7 @@ If any box is unchecked, stop. The run is a procedural failure and is preserved 
 
 ## 2. The programme's formulation, stated for mapping
 
-The programme's target formulation is the pair `C*`/`P*` over the admissible representation family `E*`, as registered on `main`. Role B reads it from the canonical records rather than from any paraphrase:
+The programme's target formulation is the pair `C*`/`P*` over the admissible representation family `E*`, **pinned to the immutable evidence-base commit `3ba4986b86b6e211d9e01e78018ef8324297f86c`**. Role B reads every target file **at that commit** — `git show 3ba4986:<path>` — and records the sha256 of each as read, confirming it against `target-pin-v1.1.json` before mapping. **Reading the working tree or current `main` is a protocol violation**, because it lets the comparison target drift after preregistration. Read the canonical records, never a paraphrase:
 
 - Source class `C*` and preservation contract `P*`: `docs/research/ikd-w7-lower-bounds-v1.0.md`, `docs/research/tue-w4-final-question-answer-v1.0.md`
 - Admissible representation family `E*` and machinery closure: same records

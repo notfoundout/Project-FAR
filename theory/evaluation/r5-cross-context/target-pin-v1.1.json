@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.1",
+  "artifact_id": "R5-TARGET-PIN-001",
+  "status": "frozen",
+  "purpose": "Pins the comparison target to an immutable commit. An earlier revision told Role B to read the target 'as registered on main', which let the target drift after preregistration.",
+  "evidence_base_sha": "3ba4986b86b6e211d9e01e78018ef8324297f86c",
+  "access_rule": "Role B reads every target file at commit 3ba4986b86b6e211d9e01e78018ef8324297f86c, e.g. `git show 3ba4986b86b6e211d9e01e78018ef8324297f86c:<path>`. Reading the working tree or current main is a protocol violation.",
+  "target_source_files": {
+    "docs/research/ikd-w7-lower-bounds-v1.0.md": {
+      "sha256": "25b01aab009a2f539dffc60405e06dd08854545236c7972060f13d2d80bb4973",
+      "bytes": 4157
+    },
+    "docs/research/tue-w4-final-question-answer-v1.0.md": {
+      "sha256": "4b43f33160692d7dd0207f295b0654b9a7ef3c5eaf40fe2436246cfa14675c2d",
+      "bytes": 3629
+    },
+    "docs/research/ikd-w3-common-factor-v1.0.md": {
+      "sha256": "e8dd48203465170979b1fdd28c417ecc12102d316089a1a3a9af7e11b914c15a",
+      "bytes": 1909
+    },
+    "docs/research/ikd-w9-terminal-adjudication-v1.0.md": {
+      "sha256": "ebd7d569f2f5562f8bd3fa7511c12b3697e02fa20d09954a437ed16b63dda52f",
+      "bytes": 3856
+    },
+    "docs/research/contract-frontier-discovery-v1.0.md": {
+      "sha256": "831ebdf514079779ef3962229ffec7171234f839f2124c70d78a0e08e154f7a5",
+      "bytes": 74740
+    },
+    "theory/evaluation/far-canonical-universality-decision-v1.0.json": {
+      "sha256": "6febefbdd62b16d409c3ad7e181937944ad775bc43b992aa17737c3737d0542d",
+      "bytes": 1454
+    }
+  },
+  "drift_rule": "If any target file changes after this pin, the executor must EITHER execute against the pinned commit as recorded here, OR register a new protocol version with a new pin. Silent remapping against current main is prohibited.",
+  "verification": "Role B records the sha256 of each file as read and confirms it matches this pin before mapping."
+}

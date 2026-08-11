@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.1",
+  "artifact_id": "R5-PARTICIPANT-SURFACE-001",
+  "package_version": "1.1",
+  "status": "frozen",
+
+  "purpose": "Defines the COMPLETE set of text that the protocol authorizes anyone to send to Role A before reveal. The verifier checks every entry and fails closed if the protocol authorizes a participant-facing string that is not registered here. An earlier revision modelled only packet sections 2 and 3 as participant-facing, which left the fallback clarification unchecked.",
+
+  "governing_rule": "Any text the protocol authorizes a deliverer to send to Role A is participant-facing, regardless of which file it lives in. Sending an unregistered string to Role A is a procedural failure and the run is not an R5 run.",
+
+  "surface": {
+    "A_initial_delivered_packet_text": [
+      {"id": "S1", "file": "elicitation-packet-A-v1.0.md", "span": "sections 2 and 3", "delivered_to": "Role A", "when": "elicitation start"},
+      {"id": "S2", "file": "elicitation-packet-B1-reword-v1.1.md", "span": "sections 2 and 3", "delivered_to": "Role A", "when": "elicitation start, B1 arm"},
+      {"id": "S3", "file": "elicitation-packet-B2-ablation-v1.1.md", "span": "sections 2 and 3", "delivered_to": "Role A", "when": "elicitation start, B2 arm"}
+    ],
+    "B_authorized_fallback_clarifications": [
+      {
+        "id": "S4",
+        "exact_string": "Answer as you see fit; there is no target answer. Any conclusion you can justify from your own analysis is acceptable.",
+        "applies_to": ["S1", "S2", "S3"],
+        "when": "the respondent asks what is wanted, what a good answer resembles, or whether a direction is promising",
+        "rule": "Delivered verbatim. No addition, no paraphrase, no elaboration. Names no answer shape.",
+        "supersedes": "An earlier fallback ended '...and concluding that the question is ill-posed is an acceptable outcome', which named one answer shape and reintroduced directional priming."
+      }
+    ],
+    "C_architecture_phase_question": [
+      {
+        "id": "S5",
+        "exact_string": "Given the answer you have just finalised, what minimal or canonical way of structuring such a description, if any, follows from it? Concluding that none follows, or that several do, is an acceptable answer.",
+        "when": "after the contract answer is declared final, preserved and hashed, and BEFORE the contamination questionnaire and before any reveal",
+        "optional": true,
+        "contamination_note": "This question discloses that a structuring question is of interest, which the contract elicitation did not. It therefore contaminates the ARCHITECTURE answer with respect to the existence of a structuring question, though not with respect to any particular structure. It cannot contaminate the contract answer, which is already frozen and hashed. This limitation is disclosed on every architecture-phase claim."
+      }
+    ],
+    "D_other_pre_reveal_messages": [
+      {
+        "id": "S6",
+        "exact_string": "Please confirm that your answer is final.",
+        "when": "before freezing",
+        "rule": "The only permitted finality prompt. Carries no content about the answer."
+      },
+      {
+        "id": "S7",
+        "exact_string": "Thank you. Please complete the following questionnaire.",
+        "when": "immediately before the contamination questionnaire, after all freezing",
+        "rule": "The questionnaire body itself is registered separately in contamination-questionnaire-v1.0.json and is DELIBERATELY NOT BLINDED, because it must name the concepts it asks about. It is therefore administered only after every answer is frozen and hashed."
+      }
+    ]
+  },
+
+  "completeness_declaration": "The protocol authorizes no participant-facing text other than S1-S7. Adding one without registering it here is a protocol violation. The verifier enforces that every registered string passes the blinding watchlist, and that no packet file contains an unregistered quoted fallback.",
+
+  "exempt_from_blinding_with_reason": {
+    "contamination-questionnaire-v1.0.json": "Must name the concepts it screens for. Administered only after all answers are frozen and hashed, so it cannot contaminate any frozen artifact. It CAN contaminate a later architecture phase, which is why the architecture phase is ordered before it."
+  }
+}
