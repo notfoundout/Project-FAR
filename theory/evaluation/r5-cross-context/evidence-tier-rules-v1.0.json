@@ -37,7 +37,7 @@
       "native_class": "implementation or model-family independence",
       "can_establish": [
         "That the formulation is or is not specific to one model family.",
-        "Divergence at full weight."
+        "That a materially different model or provider produced the recorded formulation under the recorded contamination level."
       ],
       "cannot_establish": [
         "Human or organizational independence.",
@@ -56,7 +56,7 @@
         "Organizational independence, if the investigator was engaged and briefed solely by the programme.",
         "Universality from a single run."
       ],
-      "satisfies_R5": "partially \u2014 this is the minimum tier at which an R5 claim becomes arguable",
+      "satisfies_R5": "partially — this is the minimum tier at which an R5 claim becomes arguable",
       "operational_eligibility": {
         "note": "An earlier revision said only 'qualified human investigator', leaving a material methodological choice to the executor. Criteria are capability-based; credentials are sufficient evidence of capability but are not required.",
         "required_all_of": [
@@ -72,14 +72,14 @@
         "recorded_as_covariate_not_gate": [
           "Field of expertise.",
           "Years of experience.",
-          "Whether the respondent is human or a machine system."
+          "Which permitted route was used to evidence capability."
         ],
         "if_criteria_cannot_be_met": "The run is recorded at the tier its actual separation supports, not at T4."
       }
     },
     "T5_independent_expert_preregistered": {
       "description": "An expert or organization meeting the operational_independence criteria below, executing THIS frozen protocol faithfully under their own preregistration of the execution, with role separation held externally.",
-      "interpretation_resolved": "A \u2014 independently preregistering faithful execution of this frozen protocol, with no methodological alteration. Interpretation B, independently designing a different preregistered protocol, is NOT this tier and is not an execution tier of this package; it is class X1 below.",
+      "interpretation_resolved": "A — independently preregistering faithful execution of this frozen protocol, with no methodological alteration. Interpretation B, independently designing a different preregistered protocol, is NOT this tier and is not an execution tier of this package; it is class X1 below.",
       "native_class": "human and organizational independence",
       "may_be_added_administratively": [
         "Ethics, IRB, or institutional review and approval.",
@@ -110,20 +110,21 @@
         "Universality, from any number of runs.",
         "That the programme's formulation is correct.",
         "Independence from the programme's FRAMING. The question, the A-I decomposition, and the comparison procedure remain programme-authored, so a faithful external execution supplies an externally chosen ANSWER but not an externally chosen QUESTION.",
-        "Full closure of LIM-031. See the closure analysis below."
+        "Full closure of LIM-031. See the scope analysis below."
       ],
       "satisfies_R5": true,
       "is_an_execution_tier_of_this_package": true,
       "operational_independence": {
         "required_all_of": [
+          "Role A meets the T4 operational_eligibility criteria.",
           "No authorship of or contribution to Project FAR by the executing party or any role holder.",
-          "No employment, supervision, funding, or direct project-control relationship that materially compromises independence. Arm's-length commissioning is permitted and must be recorded.",
+          "No employment, supervision, or project-control relationship with Project FAR. Funding is limited to an arm's-length contract to execute the frozen protocol, all compensation is disclosed, and no compensation may depend on the outcome.",
           "No access to restricted programme material by any role holder before the freeze completes.",
           "Role separation held externally: Roles A, B and C are distinct persons or systems within the external organization.",
           "Independent preregistration of faithful execution, per interpretation A."
         ],
         "recorded_not_gating": [
-          "Commissioning and payment relationship.",
+          "Commissioning and payment relationship, once it satisfies the required arm's-length rule.",
           "Organization size and type."
         ]
       }
@@ -134,7 +135,7 @@
     "A pair of runs is reported at the LOWER of the two tiers.",
     "A run at T1 or T2 may never be described as replication, independence, or cross-context.",
     "A T3 run may be described as model-family independent and must not be described as independent without qualification.",
-    "LIM-031 is addressed only from T4 upward and most strongly at T5. This package does NOT close it. Framing independence is a SEPARATE registered limitation for which X1 is the instrument; no necessity or sufficiency relation between T5 and X1 is claimed.",
+    "LIM-031 is addressed only from T4 upward and most strongly at T5. This package does NOT close it. Framing independence is a SEPARATE registered limitation, LIM-032, for which X1 is a candidate instrument; no necessity or sufficiency relation between T5 and X1 is claimed.",
     "A contaminated run is reported at its tier with its contamination level attached; contamination is never silently absorbed into the tier.",
     "A T5 run that alters any item in creates_a_new_protocol_version_and_is_therefore_not_T5 is not a T5 run; it is a different protocol and is reported as such."
   ],
@@ -143,21 +144,22 @@
     "X1_independent_protocol_design": {
       "description": "An independent party designs and preregisters their own protocol for the underlying question, without using this package's instrument.",
       "relation_to_this_package": "NOT an execution tier. This package cannot produce X1, and nothing in it should be read as specifying X1.",
-      "why_it_matters": "Addresses the separate framing-independence limitation: the question, the axis decomposition, and the comparison procedure in this package are programme-authored. That is a distinct deficit from LIM-031's external contract selection and evaluation, and is registered separately.",
+      "why_it_matters": "Addresses the separate framing-independence limitation LIM-032: the question, the axis decomposition, and the comparison procedure in this package are programme-authored. That is a distinct deficit from LIM-031's external contract selection and evaluation.",
       "can_establish": [
-        "The remaining half of LIM-031 that T5 cannot reach."
+        "That an external party independently selected a protocol framing for the underlying question, subject to that protocol's own provenance and contamination controls."
       ],
       "cannot_establish": [
-        "Anything about this package's instrument, which it does not use."
+        "Anything about this package's instrument, which it does not use.",
+        "Closure of LIM-031 or LIM-032 by itself."
       ]
     }
   },
-  "lim_031_closure_analysis": {
+  "lim_031_and_lim_032_scope_analysis": {
     "correction_2026_08_11": "An earlier revision asserted that LIM-031 decomposes into two halves and that 'full closure requires T5 and X1'. That decomposition is not established as necessary and sufficient, and asserting it silently redefined a limitation whose registered text was unchanged. WITHDRAWN.",
-    "current_language": "T5 addresses external answer and evaluation independence for the elicitation this protocol specifies. Independent protocol design, class X1, addresses a SEPARATE framing-independence deficit, registered as its own limitation. No necessity or sufficiency relation between them is claimed.",
+    "current_language": "T5 addresses external answer and evaluation independence for the elicitation this protocol specifies. Independent protocol design, class X1, addresses a SEPARATE framing-independence deficit, registered as LIM-032. No necessity or sufficiency relation between them is claimed.",
     "T4_reaches": "External elicitation by a party outside the programme, at the descriptive layer, subject to the two-layer warrant model.",
     "T5_reaches": "The same with human and organizational independence.",
-    "X1_reaches": "The separate framing-independence deficit. Not an execution tier of this package.",
+    "X1_reaches": "The separate LIM-032 framing-independence deficit. Not an execution tier of this package.",
     "prohibited": [
       "Stating that this package closes LIM-031.",
       "Stating that T5 plus X1 is necessary or sufficient for closure.",
