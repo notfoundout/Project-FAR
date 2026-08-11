@@ -25,6 +25,8 @@ Role A field `comparison_H` is the respondent's own account of how competing ans
 
 Applying a project-supplied criterion where the respondent supplied one, or supplying one where they did not, **invalidates the adjudication**.
 
+For the B2 ablation arm, `comparison_H` exists only if Role A explicitly supplied a comparison criterion in the raw response. The transcriber may not infer one merely to populate the schema.
+
 ---
 
 ## 3. Neutral structural relations — recorded separately, never ranked
@@ -62,7 +64,7 @@ Every apparent match is classified. Only the first two carry strong evidential w
 
 **The mapper may not introduce auxiliary definitions absent from Role A in order to produce agreement.** Any mapping that needs one is `FORCED RECONSTRUCTION` by definition. Every failed mapping is preserved with its reason; failed mappings are evidence and are never discarded.
 
-**Machinery charging.** If Role A's formulation requires a decoder, interpreter, schedule, lookup, or side-channel to reproduce a project requirement, that machinery is recorded and charged against the mapping. Whether Role A independently imposed a comparable charging rule is recorded separately as `S3`.
+**Machinery charging.** If Role A's formulation requires a decoder, interpreter, schedule, lookup, or side-channel to reproduce a project requirement, that machinery is recorded and charged against the mapping. Whether Role A supplied a comparable charging rule is recorded separately as `S3` only where the respondent actually stated one.
 
 ---
 
@@ -72,11 +74,15 @@ Where practical, Role C receives the two normalized formulations with origin lab
 
 ---
 
-## 6. Outcome assignment
+## 6. Outcome assignment — two layers
 
-Role C assigns one primary outcome from the frozen registry `O1`–`O12`, plus any secondary outcomes that also hold, and cites the specific §3 relations and §4 classes supporting each.
+Role C assigns one primary **Layer-1 descriptive outcome** from the frozen registry `O1`–`O12`, plus any secondary Layer-1 outcomes that also hold, and cites the specific §3 relations and §4 classes supporting each.
 
-**No outcome is scored as supporting the programme by default.** `O1` requires `EXPLICIT RECOVERY` or `LOGICAL CONSEQUENCE` on every element of the project formulation, at contamination level `C0` or `C1`, or it is `O2` at best.
+**Layer 1 never asserts independence.** For example, `O1` is available at any tier if the mapping establishes `EXPLICIT RECOVERY` or `LOGICAL CONSEQUENCE` on every target element and the reverse-direction mapping is complete. A T1 `O1` means only that this run produced a substantially equivalent formulation under the frozen mapping; it is not "independent recovery."
+
+**Layer 2 is a separate warrant judgment.** To turn a descriptive outcome into a claim about independent elicitation, apply that outcome's `layer_2_requires` field in `outcome-registry-v1.0.json`, plus the evidence-tier and contamination rules. For substantive independent-elicitation claims this means at least `T4`, `C0`/`C1` with independence value intact, a qualified respondent, and no procedural failure. `O11` and `O12` are boundary outcomes and do not generate independent substantive claims by themselves.
+
+**No outcome is scored as supporting the programme by default.** Favorable and unfavorable outcomes carry the same independence bar.
 
 **The contamination two-value model applies** (`contamination-questionnaire-v1.0.json`): a contaminated response retains full **descriptive value**, but its **independence value** degrades in **both** directions. The earlier asymmetry rule — that contamination degrades agreement but not divergence — is **withdrawn**, because target exposure can itself produce divergence through reactance, deliberate differentiation, or anchoring away.
 
@@ -88,8 +94,8 @@ Role C assigns one primary outcome from the frozen registry `O1`–`O12`, plus a
 |---|---|
 | That one party did or did not arrive at a comparable formulation, at the tier and contamination level recorded | That the project formulation is correct, natural, or uniquely selected |
 | That specific requirements were or were not recovered, as a **Layer-1 descriptive** outcome | Universality, from any number of positive runs |
-| That a **single-run-testable** falsification condition (`F2`, `F3`, `F4`) was or was not met, at `T4`+ and `C0`–`C1` | That `F1`, `F5`, or `F6` was met — these are multi-run cumulative and **not operationalized** |
-| Divergence, counterexamples, and alien formulations as **descriptive** content, at any tier | Divergence as **independent** evidence at contamination `C2` or worse, in either direction |
+| That a **single-run-testable** falsification condition (`F2`, `F3`, `F4`) was or was not met, at `T4`+ and `C0`–`C1` and subject to its condition-specific requirements | That `F1`, `F5`, or `F6` was met — these are multi-run cumulative and **not operationalized** |
+| Divergence, counterexamples, and alien formulations as **descriptive** content, at any tier | Divergence as **independent** evidence where independence value is not intact |
 | A recorded observation of how one respondent answered under one packet arm | Causal prompt sensitivity from one A respondent versus one B respondent — arm and respondent are confounded |
 | Any recorded procedural, anonymization, or leakage finding | That no dominating formulation exists outside what was elicited |
 | A **Layer-2 warranted claim**, only where tier, contamination, qualification and integrity all permit it | A comparison relation over formulations, which this package does not supply and does not attempt to derive |
