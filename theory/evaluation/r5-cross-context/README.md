@@ -109,9 +109,11 @@ Before any evidence-critical protocol here is merged or executed:
 
 **Review-loop stop condition.** A substantive defect is one that can change participant exposure, methodological execution, evidential warrant, target identity, role separation, contamination status, campaign interpretation, governance scope, or freeze/hash integrity.
 
+**Counter initialization:** this rule applies prospectively from its registration. The failure counter starts at zero here. Review rounds completed before this rule existed are historical provenance and do not count toward the three-cycle failure stop.
+
 - **Success stop:** after the latest substantive repair, one complete separate adversarial review finds **zero new substantive defects**, every required check is green, and no substantive file changes afterward. The review loop stops and merge-readiness may be declared. Re-reviewing the unchanged state is prohibited.
 - **Reset rule:** any substantive repair resets the clean-pass count to zero and requires exactly one new separate adversarial review. Editorial-only fixes that cannot affect any substantive surface require validation but do not reset the review loop.
-- **Failure stop:** if **three consecutive post-completion adversarial review cycles** each discover at least one new substantive defect, stop iterating and do **not** merge. Mark the package `REVIEW_EXHAUSTED_NOT_MERGE_READY`; further progress requires a reviewer from a different model/provider or a qualified human, plus explicit authorization for another repair cycle.
+- **Failure stop:** if **three consecutive post-completion adversarial review cycles after this rule's registration** each discover at least one new substantive defect, stop iterating and do **not** merge. Mark the package `REVIEW_EXHAUSTED_NOT_MERGE_READY`; further progress requires a reviewer from a different model/provider or a qualified human, plus explicit authorization for another repair cycle.
 
 This bounds the process in both directions: one clean pass ends review successfully; repeated defect discovery cannot create an infinite self-review loop.
 
