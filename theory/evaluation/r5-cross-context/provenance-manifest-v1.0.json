@@ -103,8 +103,8 @@
       "class": "payload"
     },
     "verify_r5_package.py": {
-      "sha256": "636caba8352c4065a0b1461cb3194a3ccbbff4036e88c7207284d3ddce7ddfe7",
-      "bytes": 11048,
+      "sha256": "7043ac8bdb0b2a241176b2dbd6a056b6c9f93e2a50a068b8a26c572007f86fd5",
+      "bytes": 10965,
       "class": "tooling"
     }
   },
@@ -142,7 +142,7 @@
   ],
   "separate_adversarial_review": {
     "previous_pass": "A prior separate pass found one B2 non-exhaustiveness defect and repaired it.",
-    "latest_substantive_repair": "2026-08-11 final consistency repair: execution-order alignment, neutral S5 wording, LIM-031/LIM-032 scope cleanup, tier tightening, and bounded review-loop rule.",
+    "latest_substantive_repair": "2026-08-11 final consistency repair: execution-order alignment, neutral S5 wording, LIM-031/LIM-032 scope cleanup, tier tightening, verifier file-model correction, and bounded review-loop rule.",
     "clean_pass_after_latest_repair": false,
     "required_before_merge": true,
     "review_stop_policy": "One zero-substantive-defect pass after the latest substantive repair ends review successfully. Three consecutive defect-finding post-completion cycles stop review unsuccessfully and require escalation. See README and preregistration.",
