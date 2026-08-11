@@ -1,10 +1,32 @@
 # FARA `Ω` set-valued admissibility representation investigation v1.0
 
-Status: **Research result — H1 refuted deductively; H2 established as a faithful conservative extension at finite scope; H3 not required for set-valued admissibility**
+Status: **Research result — SUPERSEDED IN PART. The `§4.4` general impossibility argument is WITHDRAWN; the `§5` repair is reclassified from conservative extension to semantic clarification. The current adjudication of `OP-13`/`UQ-T15` is `docs/research/fara-graded-admissibility-representation-v1.0.md` §0. Retained in full as research history; encoding-specific results in `§4.1`–`§4.3` survive unchanged.**
 Investigation target: `OP-13` / `UQ-T15`
 Kind: deductive. No experiment, no software added to the repository, no claim depends on execution.
 
 Verification note: every extension family, automorphism group, and status assignment recorded below is finite and hand-checkable. They were additionally re-derived once by a throwaway enumeration outside the repository, purely to check the author's arithmetic. That enumeration is not a repository artifact, is not evidence, and no result here depends on it. Any reader can confirm the tables by hand.
+
+## 0. Supersession notice (recorded 2026-08-10)
+
+This record is preserved complete as research history. It must not be cited as the current adjudication of `OP-13`/`UQ-T15`.
+
+**Withdrawn.**
+
+- The `§4.4` argument rejecting **every** function `C → Status`. Its premise `|Status| = 3` is **not canonical**: `frameworks/FARA/admissibility-structure.md:84` assigns the available admissibility classifications entirely to the applicable reasoning calculus, so canonical FARA never fixes `Ω`'s codomain. The equivariance/pigeonhole step is sound *given* a three-valued codomain and unsound without it.
+- The consequent claim in `§8` that `CE-ADM-001` is **strengthened** to a deductive impossibility for the whole function class.
+- The `§7` classification of "every `C → Status` function" as lossy.
+
+**Reclassified.**
+
+- The `§5` repair was recorded as a **conservative extension**. Because the status codomain was already calculus-parametric, no extension was required. The correct weakest outcome is **semantic clarification**. The extension-indexed family `{Ω_E}` and a label-set-valued `Ω` are transposes carrying identical information.
+
+**Surviving unchanged.**
+
+- `§4.1`–`§4.3`: the `E-CRED`, `E-SKEP`, and `E-TRI` encodings each admit explicit finite collisions (`CM-01`–`CM-03`). These are **encoding-specific** refutations and remain valid.
+- The substantive verdict: no retyping of `Ω`, no new primitive, and the same unavoidable representational cost, which can be exponential in the candidate count.
+- Every nonclaim in `§9`.
+
+**Current adjudication.** `docs/research/fara-graded-admissibility-representation-v1.0.md` §0, which supplies the label-set-valued construction `Ω(x) = the set of labels of the selected extensions containing x`, verified equivariant and exactly recovering `σ` on the two frameworks that carried the withdrawn argument. `CE-ADM-001` refutes the **three-valued** reading of `Ω`, not every per-candidate `Ω`; see `docs/governance/counterexample-register.md`.
 
 ## 1. Formal problem statement
 
@@ -25,7 +47,9 @@ The applicable source axis is `S_5` (`§3.5`), the admissibility-and-dynamics re
 
 A **set-valued admissibility semantics** is a pair `𝔄 = ⟨C, σ⟩` where `C` is a finite candidate set and `σ ⊆ 𝒫(C)` is the family of selected admissible sets. `σ = ∅` (no admissible set exists) is permitted and is distinct from `σ = {∅}` (exactly one admissible set, the empty one).
 
-Canonical FARA supplies `Ω : C → Status` with `Status = {admissible, inadmissible, unresolved}` (`theory/definitions/definitions.md:606,614`; `frameworks/FARA/admissibility-structure.md:111`).
+Canonical FARA supplies `Ω : C → Status` (`theory/definitions/definitions.md:614`).
+
+**Correction (2026-08-10).** This section originally read `Status = {admissible, inadmissible, unresolved}`, citing `theory/definitions/definitions.md:606,614` and `frameworks/FARA/admissibility-structure.md:111`. That was a **misattribution**: `definitions.md:606` says only that an admissibility classification is "the explicit assignment of admissibility status to a candidate" and enumerates nothing, and `:111` distinguishes a classification from an explicitly represented unresolved status without making the classification three-valued. `frameworks/FARA/admissibility-structure.md:84` assigns the available classifications entirely to the applicable reasoning calculus. **Canonical FARA does not fix the codomain of `Ω`.** Everything below that depends on `|Status| = 3` is scoped to a three-valued reading, not to canonical FARA.
 
 **Question.** Does there exist a uniform constructor producing a canonical `Ω` from `𝔄` such that admissible recovery reconstructs `σ`?
 
@@ -81,7 +105,9 @@ Countermodel `CM-03` (`|C| = 3`), both frameworks fully worked:
 
 Identical `Ω`; materially different `σ`. In `𝔈₄`, `b` and `c` are jointly admissible; in `𝔈₃` no two candidates are jointly admissible. **Rejected.**
 
-### 4.4 `E-*` — general impossibility, encoding-independent
+### 4.4 `E-*` — general impossibility, encoding-independent — **WITHDRAWN**
+
+> **WITHDRAWN 2026-08-10.** The argument in this subsection is **unsound as a general result** and must not be cited. It assumes `|Status| = 3`, which `frameworks/FARA/admissibility-structure.md:84` shows is not canonical — the available classifications are determined entirely by the applicable reasoning calculus. Under a calculus-determined status set the pigeonhole does not close, and `Ω(x) =` the set of labels of the selected extensions containing `x` recovers `σ` exactly while remaining equivariant. The subsection is retained verbatim below as research history. It remains valid **only** as a statement about a three-valued codomain. See `docs/research/fara-graded-admissibility-representation-v1.0.md` §0.
 
 The three rejections above are encoding-specific. The following argument rejects **every** function `C → Status`, using only `FAITHFUL-REP-001 §10.6` equivariance and `|Status| = 3`.
 
@@ -99,6 +125,8 @@ Four frameworks on `C = {a,b,c,d}`, each with a transitive automorphism group an
 Four materially distinct sources, all forced to constant `Ω`, three constant values available. By pigeonhole at least two receive the same `Ω`, so no injective uniform constructor exists and admissible recovery of `σ` is impossible.
 
 **`H1` is refuted.** The refutation is deductive, encoding-independent, and does not depend on which multi-extension semantics is chosen.
+
+> **End of withdrawn subsection.** The sentence immediately above is **withdrawn as stated**. What survives is the strictly weaker claim: *`H1` fails for a three-valued codomain.* `H1` is **not** refuted for calculus-determined status sets, and the surviving refutations of `H1` are the encoding-specific collisions `CM-01`–`CM-03` in `§4.1`–`§4.3`.
 
 ## 5. H2 construction and conservativity test
 
@@ -156,16 +184,17 @@ All four are preserved and mutually distinguishable.
 
 ## 7. Embedding classification
 
-- H1 encodings (`E-CRED`, `E-SKEP`, `E-TRI`) and every `C → Status` function: **lossy**.
-- H2 extension-indexed family: **faithful** at finite scope, with declared and charged cost.
+- H1 encodings (`E-CRED`, `E-SKEP`, `E-TRI`): **lossy**. Established by explicit finite collisions; survives.
+- ~~and every `C → Status` function~~: **withdrawn** — see `§0` and `§4.4`. A label-set-valued `Ω` under a calculus-determined status set is faithful.
+- H2 extension-indexed family: **faithful** at finite scope, with declared and charged cost. Reclassified from conservative extension to **semantic clarification**.
 
 **Prediction versus relabeling.** H2 accommodates extension structure after observing it; it does not predict that multi-extension semantics arise. Per the counterexample discipline against post-hoc mappings, H2 is recorded as **accommodation, not prediction**. A faithful embedding does not show that FARA discovered this structure.
 
 ## 8. Impact on existing FARA claims and dependencies
 
-- `CE-ADM-001` is **strengthened** from an expressive-loss observation to a deductive impossibility result for the whole function class `C → Status` (`§4.4`).
-- `LIM-026` remains open in substance but its repair is now identified: the boundary is the single-valued form, not FARA's primitives.
-- `OP-13` / `UQ-T15` are **resolved at finite scope** in favour of H2. H3 is not required for set-valued admissibility.
+- ~~`CE-ADM-001` is **strengthened** from an expressive-loss observation to a deductive impossibility result for the whole function class `C → Status` (`§4.4`).~~ **WITHDRAWN 2026-08-10.** `CE-ADM-001` stands at its original scope: it refutes the **three-valued** per-candidate reading of `Ω`, not every per-candidate `Ω`. The corrected row is in `docs/governance/counterexample-register.md`.
+- `LIM-026` remains open in substance, narrowed to the **three-valued** reading: the boundary is that reading, not per-candidate `Ω` as such, and not FARA's primitives.
+- `OP-13` / `UQ-T15` are **resolved at finite scope** in favour of semantic clarification, not conservative extension. H3 is not required for set-valued admissibility. The current adjudication is `docs/research/fara-graded-admissibility-representation-v1.0.md` §0.
 - `theory/evaluation/external-systems/argumentation-frameworks.md`'s `conservative extension` classification is **corroborated**, and its justification gap is now closed by an explicit construction rather than by assertion. The record itself is unmodified.
 - `docs/research/fara-admissibility-priority-v1.0.md` F6 is **superseded** by `§5.5` above: the apparent order inversion was an artifact.
 - The seven candidate primitives are unchanged. No sixth primitive is indicated.
@@ -178,3 +207,5 @@ This investigation does not establish: that FARA predicted or discovered multi-e
 ## 10. Highest-information unresolved question remaining
 
 Whether graded and ranking-based acceptability semantics, whose values are degrees rather than sets, require retyping `Ω`'s `Status` codomain. H2 does not cover that case, and the `§4.4` equivariance argument suggests a finite `Status` set is vulnerable to the same pigeonhole pressure whenever the source admits more equivariance classes than `Status` has values.
+
+**Answered, and it defeated `§4.4` (2026-08-10).** `OP-14`/`UQ-T18` resolved this: retyping is **not** required, because `frameworks/FARA/admissibility-structure.md:84` already makes the status set calculus-determined. That same clause removes the `|Status| = 3` premise on which `§4.4` rested, which is why `§4.4` is withdrawn. Evidence: `docs/research/fara-graded-admissibility-representation-v1.0.md`.

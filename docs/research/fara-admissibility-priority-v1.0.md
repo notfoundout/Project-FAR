@@ -67,7 +67,9 @@ Status: **Accepted with restricted scope.** Scope: multi-extension admissibility
 - does **not** refute "admissibility is determined solely by the applicable reasoning calculus";
 - does **not** indicate a sixth candidate primitive — extension indexing is expressible over existing primitives;
 - does **not** bear on the terminal UPP theorem;
-- does establish that a single-valued per-candidate `Ω` cannot represent set-valued admissibility without loss, at the stated scope.
+- does establish that a **three-valued** per-candidate `Ω` cannot represent set-valued admissibility without loss, at the stated scope.
+
+**Scope correction (2026-08-10).** This clause originally read "a single-valued per-candidate `Ω`", which asserts an unrestricted per-candidate impossibility. That is **narrowed and partly withdrawn**. `frameworks/FARA/admissibility-structure.md:84` assigns the available admissibility classifications entirely to the applicable reasoning calculus, so canonical FARA never fixes `Ω`'s codomain, and a per-candidate `Ω` valued in extension-label sets recovers `σ` exactly. What survives is the loss under a **three-valued** reading. The `CE-ADM-001a`/`CE-ADM-001b` witnesses, the grounded-semantics carve-out, and the multi-extension scoping are unaffected. Evidence: `docs/research/fara-graded-admissibility-representation-v1.0.md` §0; corrected row in `docs/governance/counterexample-register.md`.
 
 ### F5 — Rejected constructions (preserved)
 

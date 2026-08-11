@@ -1,6 +1,6 @@
 # Externally grounded contract-frontier discovery v1.0
 
-Status: **Research result — `H2` held jointly with `H5` at the tested scope. Several independently motivated contracts are Pareto-incomparable; `C*`/`P*`/`E*` occupies a defensible frontier position but its defining conjunction is not independently recovered. Terminal classification `B` + `F`. No canonical surface modified.**
+Status: **Research result — `H5` supported at the searched scope; `H2` NOT established; `H3` and `H4` unresolved; `H6` split. Terminal classification `E` + `F`. Every `P*` component is independently anticipated and the defining conjunction is not independently recovered; no global comparison relation over contracts is established, so no frontier, dominance, or maximality claim survives. Corrected in place 2026-08-10 — see `§0`. No canonical surface modified.**
 Investigation target: `OP-21` / `UQ-T25` / `UQ-T26`
 Kind: deductive contract reconstruction plus primary-literature search. No experiment, no software, no canonical promotion.
 Repository base: `6a3343bb3483583a6e09f1e660555253858a077c`
@@ -8,6 +8,39 @@ Repository base: `6a3343bb3483583a6e09f1e660555253858a077c`
 **Directionality, stated before results.** This investigation searched for contracts that could dominate, recover, or displace `C*`/`P*`/`E*`. A finding that no external contract dominates is **not** evidence that `C*`/`P*`/`E*` is correct, uniquely selected, or independently justified. The campaign was designed so that the strongest available outcome for Project FAR is `H2`, which is explicitly not uniqueness.
 
 ---
+
+## 0. Correction notice (2026-08-10)
+
+An internal re-audit found a load-bearing logical defect. It is corrected in place; nothing is deleted, and every withdrawn claim is retained at its original site under a marker.
+
+**The defect.** `§4`–`§5` constructed a Pareto dominance relation over contracts **without assigning any dimension a justified preference orientation**. Pareto dominance is undefined until every dimension has a direction, and no direction was supplied. The error is visible on the record's own table: the bare-set boundary scores *maximal* on `D1` coverage and `D4` transformation invariance and *minimal* on `D5` structural assumptions, so it cannot be dominated "at no cost on any admitted dimension" under any consistent orientation. The dominance claim was false as stated.
+
+**Withdrawn.**
+
+- Every claim that a global Pareto relation over contracts exists (`§5`, `§5.1`).
+- The dominance of every serious contract over the bare-set boundary (`§5.1`).
+- "Multiple maximal elements", "at least four maximal elements", "`K7` a fifth" (`§5.1`, `§10`).
+- "Pairwise incomparable **maximal** elements" (`§5.1`, `§10`) — the pairwise observations are retained as *non-comparability under the dimension set*, which is not the same as established incomparability under a justified relation.
+- `H2` as established (`§6.3`).
+- The rejection of `H4` on the ground that `H2`+`H5` is "more informative" (`§6.3`) — a proposition is not falsified by another proposition carrying more information.
+- The rejection of `H3` and of `H6` (`§6.3`).
+- Terminal classification `B` (`§10`).
+- Three of seven Stage-5 "forced canonical object" rows (`§7`) and the claim that *every* contract yields a canonical quotient (`§7.1`).
+- "RCCD is contract-relative, established" and "FARA is contract-relative" as global claims (`§7.2`).
+- The `maximal_knowability` consequences asserted in `§8`.
+- "Contract selection is a known unsolved problem in three mature fields", "not a project defect", and "`not_derivable` is not a gap awaiting closure" (`§10.1`).
+
+**Surviving, and unaffected by the defect.**
+
+- `H5` — every `P*` component is independently anticipated; the conjunction is not recovered by any framework located. This is a componentwise negative finding that does not depend on any ordering.
+- `H1` not established — no external contract reproduces the conjunction.
+- The native reconstructions of all six external traditions (`§2`).
+- The candidate set and every rejection, including the forced-reconstruction failures (`§3`).
+- The proved bare-set barrier and the conclusion that **coverage maximization alone does not select a useful reasoning contract**.
+- The existence of restricted, field-specific comparison orders at their own scopes.
+- The self-authorship deficit (`§9`, `LIM-031`) — which the correction *strengthens*.
+
+**Corrected terminal classification: `E` + `F`.** `B` required Pareto-incomparability, now withdrawn. `E` — no non-arbitrary comparison is possible — is the corrected fit for the global cross-contract question. `F` survives unchanged.
 
 ## 1. Stage 0 — Existing contract inventory
 
@@ -189,7 +222,36 @@ No global preorder is revived. Each dimension is admitted only because at least 
 | **D6** effectivity requirements | computability/finiteness demands | automata theory; Project FAR `E*` |
 | **D7** observational discrimination | what an observer can detect | testing equivalences; full abstraction |
 
-### 4.1 The dimensions do **not** all point toward "better"
+### 4.1 Preference orientation — the test the original record omitted
+
+A Pareto relation is undefined until every dimension carries a direction. Each dimension is therefore examined for (1) the raw property measured, (2) whether larger or smaller is normatively preferred, (3) whether that preference is **externally** justified, and (4) whether the dimension is instead a pure tradeoff axis.
+
+| Dim | Raw property | Preferred direction | Externally justified? | Verdict |
+|---|---|---|---|---|
+| `D1` | size of the admitted system class | — | **No.** Blackwell and coalgebra range over everything in their setting; neither treats wider as better. The bare-set limit shows maximal coverage forcing triviality. | **tradeoff axis** |
+| `D2` | number of source distinctions preserved | — | **No.** Van Glabbeek orders semantics by discriminating power but explicitly does **not** rank them: the field's position is that the appropriate equivalence depends on how the system is to be used. | **tradeoff axis** |
+| `D3` | exactness of source reconstruction | — | **No.** Nerode and Kalman construct exact minimal realizations, but exactness is purpose-relative; testing semantics deliberately forgo recovery. | **tradeoff axis** |
+| `D4` | size of the admissible recoding class | — | **No.** Institutions motivate invariance under signature change as a *coherence* requirement, not a maximand; enlarging the class strictly reduces the invariants available. | **tradeoff axis** |
+| `D5` | structural prerequisites before the contract applies | — | **No.** Abstract interpretation accepts a heavy prerequisite (a fixed concrete lattice) precisely to buy a lattice of abstractions. Fewer prerequisites is not better; it is different. | **tradeoff axis** |
+| `D6` | computability/finiteness demands | — | **No.** `USD-W1` showed the excluded families return once certificates are supplied, so effectivity buys tractability at the cost of coverage. | **tradeoff axis** |
+| `D7` | what an observer can detect | — | **No.** Same as `D2`; testing equivalences are chosen per application, not maximized. | **tradeoff axis** |
+
+**Result: no dimension carries an externally justified global preference direction.** All seven are tradeoff axes. **Therefore no dimension may participate in a global Pareto dominance relation, and no such relation is established by this record.**
+
+### 4.2 What actually survives
+
+Four claims were previously run together. They are now separated, because they have different warrants.
+
+1. **Refutation of coverage-only optimization — established.** Increasing coverage and transformation invariance while weakening preserved observations reaches the bare-set limit, where only coordinate projections survive. Therefore **coverage maximization alone does not select a useful reasoning contract.** This follows from the proved bare-set barrier and requires no ordering.
+2. **Absence of an independently justified global total order — established** (`§4.1`).
+3. **Existence of restricted field-specific orders — established**, and usable only at their own scopes: van Glabbeek's discriminating-power order *within* LTS-presented processes; the Blackwell order *within* information structures over a common state space; the precision order *within* abstract domains over a fixed concrete semantics.
+4. **Existence of a justified global Pareto order — NOT established.** It does not follow from (1), and (2) counts against it. Nothing here shows Pareto is the unique admissible global comparison method, nor that some other method could not be justified later.
+
+### 4.3 Original subsection, retained — **claims superseded by `§4.1`–`§4.2`**
+
+> The reasoning below correctly observed the tradeoffs but wrongly converted them into a dominance relation. Retained as history; the anti-monotonicity observations survive as *tradeoffs*, not as orientations.
+
+#### The dimensions do **not** all point toward "better"
 
 This was checked explicitly, as required.
 
@@ -198,11 +260,13 @@ This was checked explicitly, as required.
 - **D5 is anti-monotone with D1.** Abstract interpretation buys a lattice with meets and joins precisely by fixing the concrete semantics first, which shrinks applicability.
 - **D6 trades against D1.** Effectivity requirements exclude non-effective sources; `USD-W1` showed the excluded families return once certificates are supplied.
 
-**Consequence.** Any coverage-monotone total order over contracts is maximized at the degenerate contract, whose forced architecture is trivial. A total order is therefore not merely unavailable — it is **known to rank the worst contract highest**. Only a Pareto relation is admissible.
+**Consequence, as originally written:** ~~Any coverage-monotone total order over contracts is maximized at the degenerate contract, whose forced architecture is trivial. A total order is therefore not merely unavailable — it is **known to rank the worst contract highest**. Only a Pareto relation is admissible.~~
+
+**Corrected.** The first two sentences survive. The third — "**Only a Pareto relation is admissible**" — is **withdrawn**: it presupposes that a Pareto relation *is* admissible, which `§4.1` refutes for want of any justified dimension orientation. The corrected consequence is that **no global comparison relation over contracts is established here**, by Pareto or otherwise.
 
 ---
 
-## 5. Stage 3 result — the Pareto relation
+## 5. Stage 3 result — no global comparison relation is established
 
 Dimensions scored qualitatively as `high` / `mid` / `low`. Scores are relative placements, not measurements.
 
@@ -217,13 +281,23 @@ Dimensions scored qualitatively as `high` / `mid` / `low`. Scores are relative p
 | **K6** minimal realization | **low** | high | **max** (exact, unique up to iso) | low | mid | **high** | mid |
 | **K7** `C*`/`P*`/`E*` | mid | **high** | high (uniform finite recovery) | mid | high | **high** | high |
 
+### 5.1 What the profile table does and does not license
+
+The table above records **relative positions on seven tradeoff axes**. Because `§4.1` establishes that no axis carries an externally justified preference direction, the table does not induce a dominance relation, and the claims below are corrected accordingly.
+
+- **Dominance — WITHDRAWN.** No dominance relation is established, including against the bare-set boundary. The boundary scores maximal on `D1` and `D4` and minimal on `D5`, so it is not dominated under any consistent orientation. What survives is the separate, proved statement of `§4.2`(1): coverage maximization alone does not select a useful reasoning contract.
+- **Maximality — WITHDRAWN.** No element is established as maximal. Maximality presupposes the relation `§4.1` refutes. Independently, `K2`'s profile varies with the choice of `F` and `K5`'s is tunable, so neither could have been evaluated as maximal even had a relation been available. No non-domination proof is offered against the admitted competitors, because none is available. `H4`-style incomparability is therefore **unresolved**, not established.
+- **Non-comparability under the dimension set — retained, weaker reading.** The pairwise observations below are genuine: each pair trades a recorded axis against another, so no pair is ordered *by these seven axes*. That is weaker than incomparability under a justified relation, and must not be cited as the latter.
+
+### 5.2 Original subsection, retained — **claims corrected by `§5.1`**
+
 ### 5.1 Established relations
 
-- **Dominance:** only against the degenerate boundary. Every `K1`–`K7` strictly dominates the bare-set contract on `D2`, `D3`, and `D7` at no cost on any admitted dimension. This is the campaign's one clean dominance result, and it is the formal content of "some premise is required."
-- **Incomparability, pairwise:** `K1 ⟂ K3` (Blackwell buys decision-theoretic ranking at the cost of a state space; testing buys discrimination at the cost of a stipulated test class). `K1 ⟂ K4`. `K3 ⟂ K4` (satisfaction-invariance vs. observer-discrimination are different `Q`). `K4 ⟂ K6` (maximal invariance vs. maximal recovery). `K5 ⟂ everything on D1`. **`K7 ⟂ K1`, `K7 ⟂ K3`, `K7 ⟂ K4`, `K7 ⟂ K6`** — see §6.
+- **WITHDRAWN — Dominance:** only against the degenerate boundary. Every `K1`–`K7` strictly dominates the bare-set contract on `D2`, `D3`, and `D7` at no cost on any admitted dimension. This is the campaign's one clean dominance result, and it is the formal content of "some premise is required."
+- **Non-comparability under the seven axes (weaker than the original "incomparability"), pairwise:** `K1 ⟂ K3` (Blackwell buys decision-theoretic ranking at the cost of a state space; testing buys discrimination at the cost of a stipulated test class). `K1 ⟂ K4`. `K3 ⟂ K4` (satisfaction-invariance vs. observer-discrimination are different `Q`). `K4 ⟂ K6` (maximal invariance vs. maximal recovery). `K5 ⟂ everything on D1`. **`K7 ⟂ K1`, `K7 ⟂ K3`, `K7 ⟂ K4`, `K7 ⟂ K6`** — see §6.
 - **No joins or meets in general.** `K5` alone supplies a lattice, and only by fixing `D5` maximally. Blackwell's order is famously incomplete; van Glabbeek's is a partial order with layers, not a lattice.
 - **Restricted principled preorders, usable only at their own scope:** van Glabbeek's discriminating-power order **within** LTS-presented processes; the Blackwell order **within** information structures over a common state space; the precision order **within** abstract domains over a fixed concrete semantics. Each is used here only at that scope, as required.
-- **Multiple maximal elements.** No admitted contract dominates all others on all dimensions. The frontier has at least four maximal elements (`K1`, `K3`, `K4`, `K6`), with `K7` a fifth (§6).
+- **WITHDRAWN — Multiple maximal elements.** ~~No admitted contract dominates all others on all dimensions. The frontier has at least four maximal elements (`K1`, `K3`, `K4`, `K6`), with `K7` a fifth (§6).~~ No maximality and no frontier is established; see `§5.1`.
 
 ---
 
@@ -247,19 +321,19 @@ Each `P*` component is independently anticipated outside Project FAR:
 
 **No independently motivated framework located by this search binds commitment content, constrained evolution, dependency-sensitive revision, historical identity, and uniform effective recovery into one preservation contract.** This exactly mirrors `OP-20`'s finding one layer down — every FARA kernel component independently anticipated, the connecting architecture not — and it is recorded as an independent replication of that pattern at the contract layer.
 
-### 6.3 Adjudication
+### 6.3 Adjudication — corrected 2026-08-10
 
-**`H2` held jointly with `H5`.**
+**`H5` is the only hypothesis supported. `H2` is not established.**
 
-- **`H2`** — `C*`/`P*`/`E*` lies on an independently motivated Pareto frontier and is **not uniquely selected**. Its profile (high `D2`, high `D3`, high `D6`, high `D7`, mid `D1`, mid `D4`) is a legitimate frontier position, and every dimension on which it scores high is a dimension some external tradition also maximizes.
-- **`H5`** — the *conjunction* defining it rests on project-specific normative choices not independently recovered.
-- **`H1` rejected** — no external contract reproduces `C*`/`P*`/`E*`.
-- **`H3` rejected** — no external contract dominates it; each trades a dimension against it.
-- **`H4` rejected as the sole verdict** — it is incomparable with `K1`, `K3`, `K4`, `K6`, but "incomparable" understates the situation, because the components *are* componentwise anticipated. `H2`+`H5` is strictly more informative.
-- **`H6` rejected** — non-trivial comparison **is** justified; three independently developed comparison orders exist and were applied at their own scopes.
-- **`H7` rejected for placement**, retained for the *warrant* question (§9).
+- **`H5` — supported at the searched scope.** The conjunction defining `C*`/`P*`/`E*` rests on project-specific normative choices not independently recovered, while each component is independently anticipated (`§6.1`–`§6.2`). This is a componentwise negative finding and **does not depend on the dimension set or on any ordering**, so it is unaffected by the `§0` defect.
+- **`H2` — NOT established.** Its content is that `C*`/`P*`/`E*` lies on an independently motivated **Pareto frontier**. `§4.1` shows no dimension carries a justified orientation, so no such frontier is established and the claim has no support. What survives is only the weaker, non-comparative observation that its profile trades the same axes external traditions trade.
+- **`H1` — not established.** No external contract reproduces the conjunction. This is a direct negative finding from `§6.2` and needs no ordering.
+- **`H3` — unresolved.** Previously "rejected." That rejection required a dominance relation to fail, and no dominance relation is established, so neither dominance nor its absence can be asserted.
+- **`H4` — unresolved.** Previously "rejected as the sole verdict" on the ground that `H2`+`H5` is "strictly more informative." **That reasoning is invalid and is withdrawn**: a proposition is not falsified by another proposition carrying more information, and `H4` can coexist with `H5`. `H4` asserts incomparability, which presupposes the relation `§4.1` refutes; it is therefore neither supported nor refuted. Where non-comparability *under the seven axes* is recorded (`§5.2`), that is weaker than `H4` and must not be reported as `H4`.
+- **`H6` — split.** Previously "rejected." Corrected: **supported** for global cross-contract comparison, since `§4.1` establishes no non-arbitrary global relation; **refuted** within field-specific scopes, since three independently developed orders exist and were applied at their own scopes. The two readings were previously conflated.
+- **`H7` — applies to placement.** Previously "rejected for placement." Corrected: with `H2` unestablished and `H3`/`H4` unresolved, the placement question is exactly the case `H7` covers. It is also retained for the *warrant* question (`§9`).
 
-**`H2` is not uniqueness. `H4`-style incomparability is not vindication. `H5` does not falsify any bounded theorem** — `G2`'s derivation of RCCD from `P*`/`E*` is unaffected; only its *reach* is at issue.
+**Interpretation rules.** `H5` does not falsify any bounded theorem — `G2`'s conditional derivation of RCCD from `P*`/`E*` is unaffected; only the strength of the *external* placement is at issue. `H1` not established is **not** evidence that `C*`/`P*`/`E*` is correct or uniquely selected. `H3`/`H4` unresolved is **not** vindication.
 
 ### 6.4 Strongest competitor, and the strongest argument against it
 
@@ -275,51 +349,82 @@ Each `P*` component is independently anticipated outside Project FAR:
 
 Existing repository results were reused wherever premises matched. No campaign was re-run.
 
-| Contract | Forced canonical object | Is it RCCD? |
-|---|---|---|
-| boundary bare-set | coordinate projections only | **no — triviality** |
-| `K1` Blackwell | minimal sufficient statistic | no |
-| `K2` coalgebraic (motivated `F`) | final coalgebra / behaviour quotient for `F` | no |
-| `K3` testing | fully abstract model; test-outcome quotient | no |
-| `K4` institutional | the institution itself; architecture deliberately **parameterized** | no |
-| `K5` abstraction | best abstraction / upper closure operator | no |
-| `K6` minimal realization | Nerode automaton, unique up to isomorphism | no |
-| `K7` `P*`/`E*` | **RCCD `R1`–`R5`** (`IKD-W7`, `G2`) | yes |
+**Corrected 2026-08-10.** The original table asserted that each contract *forces* a canonical object. Each row is now classified by what the cited native theory actually proves, with missing assumptions stated. Classes: **THEOREM** · **CONDITIONAL THEOREM** · **NATIVE CONSTRUCTION** · **ANALOGY** · **NOT ESTABLISHED**.
 
-### 7.1 The decisive discrimination
+| Contract | Object originally claimed | Classification | Missing assumptions / reason |
+|---|---|---|---|
+| boundary bare-set | coordinate projections only | **THEOREM** | Naturality of finitary element-valued operations on `Set` under all functions. Proved; no gap. |
+| `K1` Blackwell | minimal sufficient statistic | **NOT ESTABLISHED** | Blackwell's theorem concerns the informativeness order and garbling equivalence. It does **not** construct a minimal sufficient statistic; sufficiency and minimal sufficiency are a separate classical development (Fisher; Lehmann–Scheffé). Downgraded to an adjacent native construction in a neighbouring theory. |
+| `K2` coalgebraic (motivated `F`) | final coalgebra / behaviour quotient | **CONDITIONAL THEOREM** | Final coalgebras do **not** exist for arbitrary `F` — the powerset functor admits none by Lambek's cardinality argument. Requires a bounded/accessible functor. Behavioural equivalence and bisimilarity also coincide only for suitable `F`. |
+| `K3` testing | fully abstract model | **NOT ESTABLISHED** | Full abstraction is a property one *proves* of a proposed model, not something a contract yields; it is famously hard and open in cases such as PCF. What survives is the **NATIVE CONSTRUCTION** of the quotient by the chosen testing equivalence, which is immediate but weaker. |
+| `K4` institutional | the institution itself as canonical object | **NOT ESTABLISHED** | Category error: the contract *is* the institution, so the row asserts only that a contract is itself. Removed as a substantive claim. |
+| `K5` abstraction | best abstraction / upper closure operator | **CONDITIONAL THEOREM** | A best abstraction exists only when every concrete property has a most precise abstraction, i.e. when a Galois connection exists. Widening/narrowing frameworks exist precisely because it need not. |
+| `K6` minimal realization | Nerode automaton, unique up to isomorphism | **THEOREM** | Genuine and unconditional within its stated setting: for a regular language the Nerode congruence has finite index and yields a canonical minimal DFA unique up to isomorphism. Conditional on regularity/finite index. |
+| `K7` `P*`/`E*` | RCCD `R1`–`R5` | **CONDITIONAL THEOREM** | `G2`, Lean-mechanized: conditional on admissibility, machinery closure, and full faithfulness. Not unconditional. |
 
-**Different independently justified contracts force different architectures.** No two of `K1`–`K7` force the same object, and only `K7` forces RCCD.
+**Tally: one unconditional theorem, one theorem conditional on regularity, three conditional theorems, three not established.**
 
-But the honest reading is not "incompatible architectures." It is:
+### 7.1 What the table supports — corrected 2026-08-10
 
-> **Every one of these contracts yields a canonical minimal object relative to itself** — minimal sufficient statistic, final coalgebra, fully abstract model, Nerode automaton, best abstraction, RCCD. The invariant across contracts is the *construction pattern* — canonical quotient relative to declared observations — **not the architecture**.
+**Withdrawn.** ~~Every one of these contracts yields a canonical minimal object relative to itself. The invariant across contracts is the construction pattern — canonical quotient relative to declared observations.~~ No common formal schema was defined, and none was proved across the candidate set. Three of the seven rows are **NOT ESTABLISHED**, so the universally quantified statement is unsupported on its own evidence.
 
-That pattern is independently established in five separate mature fields. It is also precisely what the 2026-08-05 `TCD` audit recorded as its surviving positive residue: once a contract is declared, descent, observational quotienting, closure, coalgebraic behaviour, and localization become canonical **relative to that contract**. This campaign confirms that residue against primary literature and extends it: the residue is not a Project FAR observation, it is the settled shape of the field.
+**Withdrawn.** ~~Different independently justified contracts *force* different architectures.~~ "Forces" overstates three rows. The defensible residue is that the objects associated with these contracts differ, and that only `K7` is associated with RCCD.
+
+**Surviving observation, stated at the warranted strength:**
+
+> Several mature traditions construct equivalence or minimal representations **relative to declared observations**. In two cases this is a theorem (bare-set naturality; Nerode minimal realization), in three it is a theorem conditional on stated assumptions (final coalgebra for suitable `F`; best abstraction under a Galois connection; `G2` under machinery closure and full faithfulness), and in the remaining cases it is a native construction or is not established.
+
+This is consistent with, and weaker than, the surviving positive residue the 2026-08-05 `TCD` audit recorded — that once a contract is declared, constructions such as descent, observational quotienting, closure, coalgebraic behaviour, and localization become canonical *relative to that contract*. It does **not** establish that residue as a general theorem.
+
+**Registered as a future question, not manufactured here.** Whether a common formal schema — "every contract of a specified class induces a canonical quotient" — can be defined and proved across the candidate set is recorded as an open question in `UQ-T26`'s neighbourhood. It is not asserted by this record.
 
 ### 7.2 Answers to the two invariance questions
 
-**Is RCCD contract-invariant or contract-relative? — Contract-relative, established.**
-`G2` derives RCCD from `P*`/`E*`. No other independently motivated contract in the search space forces RCCD, and six force materially different canonical objects. RCCD's *components* are individually anticipated externally; its *conjunction* is not. This does not weaken `G2`; it states `G2`'s reach exactly as `G2` itself does.
+**Corrected 2026-08-10.** Both answers previously asserted global contract-relativity. The inference was invalid twice over: three of the six contrasting associations are **NOT ESTABLISHED** (`§7`), and six contracts not entailing RCCD does not show that *no* legitimate contract entails RCCD. Corrected to the strongest logically warranted form.
 
-**Is FARA contract-invariant or contract-relative? — Contract-relative, and one step further removed.**
-FARA is one realization inside `CEC-RCCD-001` alongside `LTS-PROV` and `COALG-DYN` (`IKD-W8`), and that class is itself relative to `P*`/`E*`. `OP-20` independently established that every FARA kernel component is anticipated by prior work while the connecting architecture is not. FARA is therefore contract-relative *and* realization-plural.
+**RCCD.**
+
+- **Established:** `G2` derives RCCD **conditionally** on `P*`/`E*` together with admissibility, machinery closure, and full faithfulness. Lean-mechanized. Unchanged by this campaign.
+- **Established:** RCCD's components are individually anticipated externally; its conjunction is not recovered by any framework located (`§6.1`–`§6.2`).
+- **NOT established:** that no alternative legitimate contract could also entail RCCD. No search over contracts entailing RCCD was performed, and none is possible without the comparison relation `§4.1` refutes.
+- **Warranted statement:** *RCCD is established only conditionally under the currently proved `P*`/`E*` result. Contract-invariance across the serious contract space is **neither established nor refuted**.*
+- ~~"RCCD is contract-relative, established"~~ — **withdrawn**.
+
+**FARA.**
+
+- **Established, independently of this campaign:** FARA is one realization inside `CEC-RCCD-001` alongside `LTS-PROV` and `COALG-DYN` (`IKD-W8`), and every FARA kernel component is anticipated by prior work while the connecting architecture is not (`OP-20`). Both stand on their own evidence and are unaffected by the `§0` defect.
+- **NOT established:** global contract-relativity of FARA, for the same reason as RCCD.
+- **Warranted statement:** *FARA is realization-plural within `CEC-RCCD-001`, and that class is defined relative to `P*`/`E*`. Whether FARA or an equivalent would be entailed under other legitimate contracts is **not established**.*
+- ~~"FARA is contract-relative"~~ as a global claim — **withdrawn**.
 
 ---
 
-## 8. Stage 6 — Bridge-witness prioritization
+## 8. Stage 6 — Bridge-witness prioritization — corrected 2026-08-10
 
-Ranked by ability to change the frontier. A bridge that cannot change the frontier is not built.
+The original ranking scored bridges by "ability to change the frontier." **No frontier is established** (`§5.1`), so that criterion is void and every EIV assigned under it is withdrawn. Bridges are re-scored by what a proof would actually license.
 
-| Rank | Bridge | Can it eliminate a contract? | Can it distinguish incomparables? | Can it falsify architecture invariance? | EIV |
-|---|---|---|---|---|---|
-| **1** | `maximal_knowability` | **yes** | **yes** — it is the contract-comparison question in Lean | yes | **highest**. Concrete test now available: does a warrant-preserving embedding of the `K3` testing scope into `C*` exist? A proved *non*-embedding establishes ≥2 maximal frontier elements and settles `H4` formally. |
-| **2** | `quotient_minimality` | **yes** — failure refutes minimality | partly | yes | **high**, and the external witness template now exists: Nerode's coarsest-congruence argument and final-coalgebra minimality are the canonical forms. Requires proving the FAR kernel `Separated`. |
-| 3 | `representation_invariance` | no | **yes** | yes | mid-high. Final-coalgebra uniqueness is the template. |
-| 4 | `unique_factorization` | no | yes | **yes** — non-uniqueness gives plural kernels, consistent with `USD-W5`'s `multiple_incomparable_minima` | mid. |
-| 5 | `definitional_completeness` | no | no | partly | **low** — wholly contract-relative; its invariant class is part of `Q`, so it cannot discriminate between contracts. |
-| 6 | `conservative_extensibility` | no | no | no | **lowest** — concerns extensions *within* a fixed contract. **Do not build before the frontier is settled.** |
+### 8.1 `maximal_knowability` — corrected consequences
 
-**Recommendation:** build only bridges 1 and 2 until the frontier moves. Bridges 5 and 6 currently fail the "can change the frontier" test.
+The original entry claimed a proved non-embedding of the `K3` testing scope into `C*` would "establish ≥2 maximal frontier elements and settle `H4` formally." **Withdrawn.** A proof that `K3 ↛ K7` under one warrant-preserving embedding notion establishes exactly one thing:
+
+> Under that embedding notion, that one directed reduction fails.
+
+It does **not** establish `K7 ↛ K3`; nor incomparability of `K3` and `K7`; nor maximality of either; nor that no `K2`, `K5`, or unexamined `Kx` dominates either; nor "≥2 maximal frontier elements"; nor `H4` in general. Asymmetry requires the converse to be tested separately, and maximality requires a relation over the whole admitted set.
+
+It is also **internally authored**, so by construction it cannot address `LIM-031`, the self-authorship deficit that `§9` and `§12` identify as dominant.
+
+### 8.2 Re-scored ranking
+
+| Rank | Bridge | What a proof licenses | What it cannot license | EIV |
+|---|---|---|---|---|
+| **1** | `quotient_minimality` | Failure refutes minimality of the FAR kernel at its registered scope — a genuine falsifier. Nerode's coarsest-congruence argument and final-coalgebra minimality supply an external witness template. Requires proving the kernel `Separated`. | Anything about contract comparison; anything about external independence. | **high**, and highest among the bridges |
+| 2 | `representation_invariance` | Invariance of a declared FAR invariant across the admissible presentation class. Final-coalgebra uniqueness is the template. | Contract comparison. | mid |
+| 3 | `unique_factorization` | Non-uniqueness would give plural kernels, consistent with `USD-W5`'s `multiple_incomparable_minima`. | Contract comparison. | mid |
+| 4 | `maximal_knowability` | One directed embedding result (`§8.1`). | Incomparability · maximality · any frontier claim · `H4` · `LIM-031`. | **downgraded from highest to low** — its entire prior justification was the frontier consequences now withdrawn |
+| 5 | `definitional_completeness` | Factorization of registered invariants through a basis. | Contract discrimination — its invariant class is part of `Q`. | low |
+| 6 | `conservative_extensibility` | Conservativity of admissible extensions within a fixed contract. | Anything cross-contract. | lowest |
+
+**Recommendation, corrected.** `quotient_minimality` is the only bridge with high independent standing, because its falsification power does not depend on any contract comparison. `maximal_knowability` is **not** a priority: it was ranked first solely for consequences it does not have.
 
 The formal↔actual bridge (`USD-W1-APC-001`) is **not** in this family and must not be ranked with it: it returned `new_assumption_required`, and its separation theorem shows it is not closable by formal work at all.
 
@@ -342,27 +447,32 @@ Per `USD-W6`, none of this may be promoted. This campaign is **not** R3, R4, or 
 
 ---
 
-## 10. Stage 8 — Termination
+## 10. Stage 8 — Termination — corrected 2026-08-10
 
-**Terminal classification: `B` + `F`.**
+**Terminal classification: `E` + `F`.** (Previously `B` + `F`.)
 
-- **`B`** — several independently motivated contracts remain Pareto-incomparable. Established: `K1`, `K3`, `K4`, `K6` are pairwise incomparable maximal elements, and `K7` is incomparable with each of them.
-- **`F`** — evidence is exhausted for the *placement* question, and specific external evidence is required. The `H2` component cannot be strengthened by further internal work, because the dimension set is the contaminated object and only an external party can supply an uncontaminated one.
+- **`E` — no non-arbitrary comparison is possible**, for the global cross-contract question. `§4.1` establishes that no comparison dimension carries an externally justified preference orientation, so no global relation — Pareto or otherwise — is available to rank or separate the candidates.
+- **`F` — evidence is exhausted for the placement question, and specific external evidence is required.** Unchanged, and strengthened: the dimension set is the contaminated object, and only an external party can supply an uncontaminated one.
+- ~~**`B`** — several independently motivated contracts remain Pareto-incomparable; `K1`, `K3`, `K4`, `K6` are pairwise incomparable maximal elements.~~ **WITHDRAWN.** Incomparability and maximality both presuppose the relation `§4.1` refutes. What survives is non-comparability *under the seven axes* (`§5.2`), which is weaker and is not `B`.
 
-Both are successful research terminations under the campaign's own rules.
+Both `E` and `F` are successful research terminations under the campaign's own rules.
 
-### 10.1 The campaign's strongest result
+### 10.1 The campaign's strongest result — narrowed 2026-08-10
 
-> **Contract selection is a known, unsolved problem in at least three mature, independently developed fields, and none has solved it.**
->
-> Concurrency theory has not converged on which observations are "reasonable" after four decades. The Blackwell order is deliberately partial and most experiments are unrankable. Universal coalgebra is *parametric* in the observation functor by design, and its own literature states that with no observation component every system becomes equivalent — the general form of the `TCD` bare-set barrier.
+The original formulation is **withdrawn**: ~~"Contract selection is a known, unsolved problem in at least three mature, independently developed fields, and none has solved it."~~ The cited sources establish *analogous parameterization and incomparability phenomena* in their own settings; they do not establish that those fields are working on the same problem as the Project FAR universality question. Same-problem identity was asserted, not shown.
 
-Two consequences follow, and they change the interpretation of an existing repository record without changing the record:
+**Narrowed statement, at the strength the sources support:**
 
-1. **Project FAR's inability to independently justify `C*`/`P*`/`E*` is not a project defect.** It is the expected state of the art in every adjacent field that has confronted the same question.
-2. **`FAR-CANONICAL-UNIVERSALITY-DECISION-001`'s `not_derivable` verdict is not a gap awaiting closure.** Results conditioned on a declared contract, presented over a frontier, are the *normal terminal form* for this class of question. `ADR-002` is the same phenomenon at the intra-FARA scale: where evidence underdetermines, the residue is a decision, not a discoverable fact.
+> Several mature external traditions also leave observational choices parameterized, use partial rather than total comparison orders, or produce results explicitly relative to a declared observational structure. Concurrency theory records continuing disagreement about which observations are "reasonable"; the Blackwell order is partial and many experiments are unrankable under it; universal coalgebra is parametric in the observation functor by design, and with no observation component every system becomes equivalent — a phenomenon of the same shape as the `TCD` bare-set barrier.
 
-This is a positive result about the shape of the answer. It is **not** a claim that `C*`/`P*`/`E*` is correct, that RCCD is universal, or that no better contract exists.
+Two consequences follow, both narrowed:
+
+1. ~~Project FAR's inability to independently justify `C*`/`P*`/`E*` is not a project defect.~~ **Narrowed:** *this limitation is not unique to Project FAR.* Adjacent traditions exhibit the same parameterization; that is an evidential observation about the landscape, not an exoneration.
+2. ~~`FAR-CANONICAL-UNIVERSALITY-DECISION-001`'s `not_derivable` verdict is not a gap awaiting closure.~~ **Narrowed:** *`not_derivable` is terminal for the currently available internally authored evidence class; genuine external contract selection or replication could change the warrant.* The earlier phrasing was also internally incoherent — it implied external replication could not change the conclusion while `§12` lists external replication as the missing evidence. That incoherence is removed.
+
+`ADR-002` remains a comparable phenomenon at the intra-FARA scale — where evidence underdetermines, the residue is a decision — but that is an analogy, not a derivation.
+
+This is **not** a claim that `C*`/`P*`/`E*` is correct, that RCCD is universal, or that no better contract exists.
 
 ---
 
@@ -429,12 +539,43 @@ No canonical surface, evaluation record, frozen evidence, primitive classificati
 
 ---
 
-## 16. Primary sources
+## 16. Sources, classified
 
-- D. Blackwell, "Equivalent Comparisons of Experiments" (1953); Bohnenblust–Shapley–Sherman criterion. [Blackwell's informativeness theorem](https://en.wikipedia.org/wiki/Blackwell%27s_informativeness_theorem) · [general state space proof](https://www.sciencedirect.com/science/article/pii/S016517652400630X) · [weighted garbling](https://arxiv.org/pdf/2410.21694)
-- R. J. van Glabbeek, "The Linear Time – Branching Time Spectrum" [I](https://link.springer.com/chapter/10.1007/BFb0039066) and [II](https://link.springer.com/chapter/10.1007/3-540-57208-2_6); [unifying account](https://arxiv.org/abs/1304.6574); [spectrum for nondeterministic and probabilistic processes](https://arxiv.org/pdf/1306.2696)
-- J. Goguen and R. Burstall, ["Institutions: abstract model theory for specification and programming"](https://dl.acm.org/doi/10.1145/147508.147524), JACM 1992; J. Meseguer, general logics (1989); [Three Decades of Institution Theory](https://www.researchgate.net/publication/228376347_Three_Decades_of_Institution_Theory)
-- P. Cousot and R. Cousot, abstract interpretation. [Abstract Interpretation Frameworks](https://faculty.sist.shanghaitech.edu.cn/faculty/songfu/cav/AIF.pdf) · [A Galois Connection Calculus for Abstract Interpretation](https://cs.nyu.edu/~pcousot/publications.www/CousotCousot-POPL14-ACM-p2-3-2014.pdf)
-- Myhill–Nerode theorem; R. E. Kalman, minimal realization. [Congruence-based perspective on automata minimization](https://arxiv.org/pdf/1906.06194) · [Kalman minimal state-space realization](https://arxiv.org/pdf/1910.02546) · [General Myhill–Nerode theorems](https://coalg.org/cmcs24/papers/2-iwaniack.pdf)
-- J. J. M. M. Rutten, ["Universal coalgebra: a theory of systems"](https://www.sciencedirect.com/science/article/pii/S0304397500000566), TCS 2000; [The Method of Coalgebra](https://ir.cwi.nl/pub/28550/rutten.pdf); [Characterising Behavioural Equivalence](https://link.springer.com/content/pdf/10.1007/978-3-642-03741-2_8.pdf)
-- R. De Nicola and M. Hennessy, ["Testing equivalences for processes"](https://www.sciencedirect.com/science/article/pii/0304397584901130), TCS 1984; [Observation equivalence as a testing equivalence](https://www.sciencedirect.com/science/article/pii/030439758790065X); Milner and Plotkin, contextual equivalence and full abstraction; [Definability and full abstraction](https://www.irif.fr/~curien/gordon-fs-plc.pdf)
+**Corrected 2026-08-10.** The original section was headed "Primary sources" and mixed original papers with encyclopaedia entries, repository mirrors, and later surveys. Sources are now classified by kind. Substantive claims in this record rest on the primary tier; the secondary tier is retained as navigational aid only and carries no evidential weight.
+
+### 16.1 Primary — original works
+
+| Result used | Citation |
+|---|---|
+| Informativeness order; sufficiency and garbling | D. Blackwell, "Comparison of Experiments", *Proc. 2nd Berkeley Symposium on Mathematical Statistics and Probability* (1951), 93–102; and "Equivalent Comparisons of Experiments", *Annals of Mathematical Statistics* 24(2) (1953), 265–272. |
+| Partial order of process semantics by discriminating power | R. J. van Glabbeek, "The Linear Time – Branching Time Spectrum", *CONCUR '90*, LNCS 458 (1990), 278–297; "The Linear Time – Branching Time Spectrum II", *CONCUR '93*, LNCS 715 (1993), 66–81. |
+| Institutions; the satisfaction condition | J. A. Goguen and R. M. Burstall, "Institutions: Abstract Model Theory for Specification and Programming", *Journal of the ACM* 39(1) (1992), 95–146. |
+| General logics; entailment systems and proof calculi | J. Meseguer, "General Logics", *Logic Colloquium '87*, North-Holland (1989), 275–329. |
+| Abstract interpretation; Galois connections; lattice of abstractions | P. Cousot and R. Cousot, "Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs by Construction or Approximation of Fixpoints", *POPL* (1977), 238–252. |
+| Testing equivalences | R. De Nicola and M. Hennessy, "Testing Equivalences for Processes", *Theoretical Computer Science* 34(1–2) (1984), 83–133. |
+| Universal coalgebra; behavioural equivalence; finality | J. J. M. M. Rutten, "Universal Coalgebra: A Theory of Systems", *Theoretical Computer Science* 249(1) (2000), 3–80. |
+| Nerode congruence; canonical minimal automaton | A. Nerode, "Linear Automaton Transformations", *Proc. AMS* 9(4) (1958), 541–544; J. Myhill, "Finite Automata and the Representation of Events", WADD TR-57-624 (1957). |
+| Minimal state-space realization | R. E. Kalman, "Mathematical Description of Linear Dynamical Systems", *SIAM J. Control* 1(2) (1963), 152–192. |
+| Multi-extension argumentation semantics (`CE-ADM-001` witnesses) | P. M. Dung, "On the Acceptability of Arguments and its Fundamental Role in Nonmonotonic Reasoning, Logic Programming and n-Person Games", *Artificial Intelligence* 77(2) (1995), 321–357. |
+| Ranking-based semantics (used by `OP-14`) | L. Amgoud and J. Ben-Naim, "Ranking-Based Semantics for Argumentation Frameworks", *SUM 2013*, LNCS 8078, 134–147. |
+
+### 16.2 Authoritative technical sources — used for formal definitions only
+
+Final-coalgebra existence and the cardinality obstruction for the powerset functor (Lambek's lemma) and the standard treatment of accessible/bounded functors, as presented in the coalgebra literature; the standard treatment of sufficiency and minimal sufficiency (Fisher; Lehmann–Scheffé) in mathematical statistics; full abstraction as a property of a proposed model (Milner; Plotkin) in programming-language semantics.
+
+### 16.3 Secondary and expository — **not primary; no evidential weight**
+
+Retained only as navigational aids. These are encyclopaedia entries, indexing-service mirrors, later surveys, and expository notes; none is cited in support of a substantive claim above.
+
+- Wikipedia, ["Blackwell's informativeness theorem"](https://en.wikipedia.org/wiki/Blackwell%27s_informativeness_theorem) — *encyclopaedia entry*.
+- [Semantic Scholar](https://www.semanticscholar.org/paper/The-Linear-Time-Branching-Time-Spectrum-I-Glabbeek/7fd6e52fa68830a31c86ed9aabc020bb8bb45057) and [ResearchGate](https://www.researchgate.net/publication/228376347_Three_Decades_of_Institution_Theory) records — *indexing-service mirrors of the primary works above; not independent sources*.
+- ["Three Decades of Institution Theory"](https://www.researchgate.net/publication/228376347_Three_Decades_of_Institution_Theory) — *later survey*.
+- ["Unifying the Linear Time-Branching Time Spectrum of Process Semantics"](https://arxiv.org/abs/1304.6574); ["The Spectrum of Strong Behavioral Equivalences for Nondeterministic and Probabilistic Processes"](https://arxiv.org/pdf/1306.2696) — *later refinements, consistent with but not the source of the claims used*.
+- [A Galois Connection Calculus for Abstract Interpretation](https://cs.nyu.edu/~pcousot/publications.www/CousotCousot-POPL14-ACM-p2-3-2014.pdf); [Abstract Interpretation Frameworks](https://faculty.sist.shanghaitech.edu.cn/faculty/songfu/cav/AIF.pdf) — *later expositions by the original authors*.
+- [The Method of Coalgebra](https://ir.cwi.nl/pub/28550/rutten.pdf); [Characterising Behavioural Equivalence](https://link.springer.com/content/pdf/10.1007/978-3-642-03741-2_8.pdf) — *expository*.
+- [A Congruence-based Perspective on Automata Minimization Algorithms](https://arxiv.org/pdf/1906.06194); [General Myhill–Nerode Theorems](https://coalg.org/cmcs24/papers/2-iwaniack.pdf) — *later generalizations*.
+- [Observation equivalence as a testing equivalence](https://www.sciencedirect.com/science/article/pii/030439758790065X); [Definability and full abstraction](https://www.irif.fr/~curien/gordon-fs-plc.pdf) — *related primary work and expository notes respectively, not load-bearing here*.
+
+### 16.4 Verification boundary
+
+Bibliographic details in `§16.1` are recorded from standard citation data. They have **not** been verified against the physical publications by this investigation, and no claim in this record depends on a page range. Any citation found to be inaccurate should be corrected without disturbing the substantive findings, which rest on the results themselves rather than on their pagination.
