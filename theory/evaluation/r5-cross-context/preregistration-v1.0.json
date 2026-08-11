@@ -142,9 +142,10 @@
     ],
     "review_loop": {
       "substantive_defect": "Any defect that can change participant exposure, methodological execution, evidential warrant, target identity, role separation, contamination status, campaign interpretation, governance scope, or freeze/hash integrity.",
+      "counter_initialization": "Prospective from registration of this rule. The failure counter starts at zero. Review rounds completed before this rule existed are historical provenance and do not count toward the three-cycle failure stop.",
       "success_stop": "After the latest substantive repair, one complete logically separate adversarial review finds zero new substantive defects, all required mechanical checks and the semantic sweep pass, and no substantive file changes occur afterward. Stop reviewing and permit merge-readiness. Re-reviewing the unchanged state is prohibited.",
-      "reset_rule": "Any substantive repair resets the clean-pass count to zero and requires exactly one new logically separate adversarial review. Editorial-only corrections that cannot affect a substantive surface require validation but do not reset the loop.",
-      "failure_stop": "If three consecutive post-completion adversarial review cycles each discover at least one new substantive defect, stop reviewing without merge. Mark the package REVIEW_EXHAUSTED_NOT_MERGE_READY. Further repair requires a reviewer from a different model/provider or a qualified human plus explicit authorization for another cycle.",
+      "reset_rule": "Any substantive repair resets the clean-pass count to zero and requires exactly one logically separate adversarial review. Editorial-only corrections that cannot affect a substantive surface require validation but do not reset the loop.",
+      "failure_stop": "If three consecutive post-completion adversarial review cycles after this rule's registration each discover at least one new substantive defect, stop reviewing without merge. Mark the package REVIEW_EXHAUSTED_NOT_MERGE_READY. Further repair requires a reviewer from a different model/provider or a qualified human plus explicit authorization for another cycle.",
       "purpose": "Bounds the review process in both directions: one clean pass ends it successfully; persistent defect discovery cannot produce an infinite self-review loop."
     }
   },
