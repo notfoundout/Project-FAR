@@ -2,16 +2,16 @@
 """Generate advisory tasks for the registered post-terminal evaluation program."""
 from __future__ import annotations
 
+import posixpath
 from pathlib import Path
-
-from report_link_utils import markdown_link
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs/planning/next-actions.md"
-STATUS = ROOT / "docs/project-status.md"
-HISTORICAL_STATUS = ROOT / "docs/reports/project-status-generated.md"
-GAP = ROOT / "docs/reports/research-gap-report.md"
-PROGRAM = ROOT / "docs/governance/post-terminal-public-evaluation-program-v1.0.md"
+OUT_REPO_PATH = "docs/planning/next-actions.md"
+STATUS = "docs/project-status.md"
+HISTORICAL_STATUS = "docs/reports/project-status-generated.md"
+GAP = "docs/reports/research-gap-report.md"
+PROGRAM = "docs/governance/post-terminal-public-evaluation-program-v1.0.md"
 
 TASKS = [
     {
@@ -83,14 +83,20 @@ TASKS = [
 ]
 
 
+def repository_link(path: str) -> str:
+    """Return a repository-relative Markdown link without reading the target file."""
+    href = posixpath.relpath(path, posixpath.dirname(OUT_REPO_PATH))
+    return f"[{path}]({href})"
+
+
 def nav_links() -> list[str]:
     return [
-        f"- README Command Center: {markdown_link(ROOT / 'README.md', OUT)}",
-        f"- Current Project Status: {markdown_link(STATUS, OUT)}",
-        f"- Post-Terminal Program: {markdown_link(PROGRAM, OUT)}",
-        f"- Historical Bounded Status: {markdown_link(HISTORICAL_STATUS, OUT)}",
-        f"- Research Gaps: {markdown_link(GAP, OUT)}",
-        f"- Next Actions: {markdown_link(OUT, OUT)}",
+        f"- README Command Center: {repository_link('README.md')}",
+        f"- Current Project Status: {repository_link(STATUS)}",
+        f"- Post-Terminal Program: {repository_link(PROGRAM)}",
+        f"- Historical Bounded Status: {repository_link(HISTORICAL_STATUS)}",
+        f"- Research Gaps: {repository_link(GAP)}",
+        f"- Next Actions: {repository_link(OUT_REPO_PATH)}",
     ]
 
 
@@ -121,12 +127,12 @@ def main() -> int:
     ]
 
     for task in TASKS:
-        affected = [markdown_link(ROOT / path, OUT) for path in task["affected"]]
+        affected = [repository_link(path) for path in task["affected"]]
         lines += [
             f"### {task['id']}: {task['title']}",
             "",
             f"- Registered workstream: `{task['workstream']}`",
-            f"- Source: {markdown_link(PROGRAM, OUT)}",
+            f"- Source: {repository_link(PROGRAM)}",
             f"- Priority: {task['priority']}",
             f"- Why it matters: {task['why']}",
             "- Affected authority/evidence surfaces:",
