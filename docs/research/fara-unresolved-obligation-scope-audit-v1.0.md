@@ -19,7 +19,19 @@ Preserved from `OP-16` and not strengthened: unresolved appears structurally dis
 
 The two Ω clauses do not share a subject: Traceability is per-classification, Auditability is package-level. That asymmetry exists **between the clauses themselves**, independently of unresolved.
 
-### 1.2 The `status` non-univocity — the decisive finding
+### 1.2 The `status` non-univocity — the decisive finding — **SUPERSEDED; WITHDRAWN RESULT PRESERVED FOR PROVENANCE**
+
+> **Superseded 2026-08-10 by the `OP-18` term audit** (`docs/research/fara-status-term-audit-v1.0.md`).
+>
+> **Original question.** Does the lexical bridge from `admissibility-structure.md:23` carry enough force to bring the unresolved result inside the scope of the traceability and auditability obligations?
+>
+> **Original argument.** The bridge fails because `status` is used in at least five distinct senses across canonical FARA — admissibility, candidate, unresolved, primitive, foundation — with no disambiguation.
+>
+> **Why it failed.** The five-sense premise is **refuted**. Substitution testing shows `primitive status` and `foundation status` both collapse under "epistemic status", and every technical occurrence is recoverable under one abstract definition. The word is univocal; the ambiguity lies in the compound construction `N status`, and it bites at exactly one occurrence, `admissibility-structure.md:111`.
+>
+> **Current adjudication.** The bridge still fails, but for a narrower reason: `:111` is the sole technical occurrence with no governing definition and no stated categorization, and the construction is neutral between the readings. `H3` is preserved as unresolved and the residue is an architectural decision point, `ADR-002`. The `H5` verdict of this investigation, and its independent results on path-linking and unknown-cause auditability, do **not** depend on the withdrawn premise and stand unchanged.
+
+The original subsection is retained verbatim below.
 
 `admissibility-structure.md:23` and `theory/definitions/definitions.md:606` define the key term:
 

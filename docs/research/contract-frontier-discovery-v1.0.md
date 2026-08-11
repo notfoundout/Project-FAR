@@ -42,6 +42,31 @@ An internal re-audit found a load-bearing logical defect. It is corrected in pla
 
 **Corrected terminal classification: `E` + `F`.** `B` required Pareto-incomparability, now withdrawn. `E` — no non-arbitrary comparison is possible — is the corrected fit for the global cross-contract question. `F` survives unchanged.
 
+## 0.1 Post-rebase semantic reconciliation (2026-08-10)
+
+The record was rebased onto `main@5f26792`. A textually conflict-free rebase is **not** a semantically conflict-free rebase, so the imported content was audited against every finding here.
+
+**What `main` actually added.** Restricted to theory-bearing paths, the entire import is the PR #436 target-category-discovery material — the compositional-invariant spec, result, terminal note, charter v1.2, and its verifiers. Everything else in the imported range is validator and tooling machinery with no theoretical content.
+
+**Audit result: the imported evidence corroborates the `§0` corrections and changes no corrected finding.** It is *exploratory, governance-demoted* Research (`Status: Research — exploratory, unregistered derivation`) and therefore cannot serve as a premise; but its recorded claim boundaries state, independently of this campaign:
+
+> "The original word 'broadest' is not itself a mathematical criterion. It requires a comparison order over candidate classes and recoding policies. **No such common order has been established.**"
+> "Small categories are not claimed to be broader than bare sets **under a common comparison order**."
+> The argument "does not derive Construct, Differentiate, Restrict, Resolve, a four-part decomposition, an observation contract, an audit objective, a failure policy, or an `Unknown` policy."
+
+| Item audited | Effect of imported evidence |
+|---|---|
+| `OP-21` overall | **Strengthened, not changed.** An in-repository artifact, written without reference to this campaign, independently records that no common comparison order over candidate classes has been established — the same conclusion `§4.1` reaches from the dimension-orientation test. |
+| `H2` | **Withdrawal corroborated.** `H2` asserted a position on a frontier; the imported charter denies that a common comparison order exists at all. |
+| `H4` | **Unchanged — still unresolved.** The imported material supplies no comparison relation either, so it neither establishes nor refutes incomparability. |
+| `H5` | **Unchanged.** The imported material concerns categories and functors, not the `P*` components, and bears on neither the componentwise anticipation nor the non-recovery of the conjunction. |
+| Bare-set boundary claims | **Withdrawal corroborated nearly verbatim** — "not claimed to be broader than bare sets under a common comparison order" is the same refusal `§5.1` now makes. |
+| Canonical-quotient claims | **Withdrawal supported.** The compositional argument yields free-category path evaluation but explicitly derives no observation contract, so it cannot be counted as an eighth instance of a common quotient schema. Being exploratory and unregistered, it could not be counted as a theorem in any case — consistent with the `§7` reclassification. |
+| RCCD contract-scope | **Unchanged.** The imported material explicitly does **not** derive RCCD, which corroborates that this contract does not entail it, and says nothing about whether some other contract might. `§7.2`'s "neither established nor refuted" stands. |
+| Next-action ranking (`§8.2`, `§12`) | **Unchanged.** The TCD clean-room program remains unexecuted and its own audit blocks execution pending source and packet freeze, so it does not compete with the external-independence deficit for priority. |
+
+**Net effect:** no corrected finding is disturbed, and two withdrawals (`H2`, the bare-set dominance claim) gain independent in-repository corroboration that was unavailable at the analysed base.
+
 ## 1. Stage 0 — Existing contract inventory
 
 Every component is marked: **[1]** independently motivated · **[2]** project-authored but derived · **[3]** methodological choice · **[4]** frozen premise · **[5]** unresolved · **[6]** externally unvalidated.
@@ -236,7 +261,7 @@ A Pareto relation is undefined until every dimension carries a direction. Each d
 | `D6` | computability/finiteness demands | — | **No.** `USD-W1` showed the excluded families return once certificates are supplied, so effectivity buys tractability at the cost of coverage. | **tradeoff axis** |
 | `D7` | what an observer can detect | — | **No.** Same as `D2`; testing equivalences are chosen per application, not maximized. | **tradeoff axis** |
 
-**Result: no dimension carries an externally justified global preference direction.** All seven are tradeoff axes. **Therefore no dimension may participate in a global Pareto dominance relation, and no such relation is established by this record.**
+**Result: no dimension carries an externally justified global preference direction.** All seven are tradeoff axes. This is independently corroborated inside the repository by `research/target-category-discovery/`, which records that "broadest" requires a comparison order over candidate classes and recoding policies and that **no such common order has been established** (`§0.1`). **Therefore no dimension may participate in a global Pareto dominance relation, and no such relation is established by this record.**
 
 ### 4.2 What actually survives
 
@@ -285,7 +310,7 @@ Dimensions scored qualitatively as `high` / `mid` / `low`. Scores are relative p
 
 The table above records **relative positions on seven tradeoff axes**. Because `§4.1` establishes that no axis carries an externally justified preference direction, the table does not induce a dominance relation, and the claims below are corrected accordingly.
 
-- **Dominance — WITHDRAWN.** No dominance relation is established, including against the bare-set boundary. The boundary scores maximal on `D1` and `D4` and minimal on `D5`, so it is not dominated under any consistent orientation. What survives is the separate, proved statement of `§4.2`(1): coverage maximization alone does not select a useful reasoning contract.
+- **Dominance — WITHDRAWN.** No dominance relation is established, including against the bare-set boundary. The boundary scores maximal on `D1` and `D4` and minimal on `D5`, so it is not dominated under any consistent orientation. What survives is the separate, proved statement of `§4.2`(1): coverage maximization alone does not select a useful reasoning contract. The refusal is corroborated by the imported target-category-discovery charter, which declines to claim small categories are broader than bare sets **under a common comparison order** (`§0.1`).
 - **Maximality — WITHDRAWN.** No element is established as maximal. Maximality presupposes the relation `§4.1` refutes. Independently, `K2`'s profile varies with the choice of `F` and `K5`'s is tunable, so neither could have been evaluated as maximal even had a relation been available. No non-domination proof is offered against the admitted competitors, because none is available. `H4`-style incomparability is therefore **unresolved**, not established.
 - **Non-comparability under the dimension set — retained, weaker reading.** The pairwise observations below are genuine: each pair trades a recorded axis against another, so no pair is ordered *by these seven axes*. That is weaker than incomparability under a justified relation, and must not be cited as the latter.
 
@@ -510,13 +535,21 @@ Items 1–3 are all instances of one deficit: **no party outside this project ha
 
 ## 13. Quality Gate disposition
 
-**ACCEPT WITH RESTRICTED SCOPE** for: the external contract reconstructions (§2), the candidate set and rejections (§3), the dimension justification and anti-monotonicity finding (§4), the incomparability results (§5), the componentwise-anticipation finding (§6.1–6.2), the induced-architecture table and the canonical-quotient pattern (§7), the bridge ranking (§8), and the terminal `B`+`F` classification (§10).
+**Re-adjudicated 2026-08-10.** The original disposition accepted several items that `§0` withdraws. It is replaced; the superseded disposition is recorded at the end of this section.
 
-**RESTRICTED FURTHER** for `H2`: the placement depends on a dimension set selected with knowledge of `K7`'s profile. `H5` is not so restricted.
+**ACCEPT WITH RESTRICTED SCOPE** for: the external contract reconstructions (`§2`); the candidate set and every rejection, including the forced-reconstruction failures (`§3`); the dimension-orientation test and its negative result (`§4.1`); the four separated survivors (`§4.2`), namely the refutation of coverage-only optimization, the absence of a justified global order, the existence of restricted field-specific orders, and the non-establishment of a global Pareto order; the componentwise-anticipation finding and the non-recovery of the conjunction (`§6.1`–`§6.2`, `H5`); the Stage-5 theorem audit **as reclassified** (`§7`); the corrected bridge ranking (`§8.2`); the post-rebase reconciliation (`§0.1`); and the terminal `E`+`F` classification (`§10`).
+
+**NOT ACCEPTED — WITHDRAWN** (`§0`): any global Pareto, frontier, dominance, or maximality result; `H2`; the rejections of `H3`, `H4`, and `H6`; terminal `B`; the three unestablished Stage-5 rows and the universal canonical-quotient pattern; global contract-relativity of RCCD or FARA; the original `maximal_knowability` consequences; and the three state-of-the-art claims.
+
+**UNRESOLVED, not accepted and not refuted:** `H3` and `H4`.
+
+**RESTRICTED FURTHER:** `H5` is the only supported hypothesis and is robust to the dimension set. Every finding that depended on the dimension set is withdrawn rather than merely restricted, because `§4.1` shows the set could not bear a comparison at all.
 
 **INSUFFICIENT EVIDENCE** for: any claim that `C*`/`P*`/`E*` is optimal, uniquely selected, or independently justified; any claim that no dominating contract exists outside the searched space; any novelty claim; any change to `FAR-CANONICAL-UNIVERSALITY-DECISION-001`.
 
 **No canonical surface modified. No registered claim upgraded or downgraded.**
+
+> **Superseded disposition, retained for provenance.** The original read: *ACCEPT WITH RESTRICTED SCOPE for … the incomparability results (§5), the induced-architecture table and the canonical-quotient pattern (§7), the bridge ranking (§8), and the terminal `B`+`F` classification (§10)*, with `H2` merely *RESTRICTED FURTHER*. Those acceptances are withdrawn per `§0`.
 
 ---
 
