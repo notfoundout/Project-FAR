@@ -86,7 +86,7 @@
   },
   "optional_architecture_phase": {
     "gate": "Run only after every contract field above is declared final, preserved byte-for-byte and hashed, and BEFORE the contamination questionnaire and before any reveal. See freeze-procedure-v1.0.md section 3 steps 5-8. Ordering it after the questionnaire is a protocol violation, because the questionnaire discloses that a target architecture exists.",
-    "question_asked": "Given the answer you have just finalised, what minimal or canonical way of structuring such a description, if any, follows from it? Concluding that none follows, or that several do, is an acceptable answer.",
+    "question_asked": "Given the answer you have just finalised, determine whether it implies any minimal or canonical way of structuring such a description. State and justify whatever conclusion you reach.",
     "fields": {
       "architecture_or_none": {
         "type": "text_or_unsettled"
