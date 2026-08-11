@@ -49,7 +49,7 @@ The original subsection is retained verbatim below.
 | `primitive status` | `architecture.md:82`, `design-principles.md:66` | epistemic standing of a primitive candidate |
 | `foundation status` | `architecture.md:239` | epistemic standing of a foundation |
 
-No canonical text asserts that "unresolved status" is an **admissibility** status. With `status` used in five senses and no disambiguation, the lexical bridge carries no force — but it is also not refuted. **Both I1 and I2 survive.**
+No canonical text asserts that "unresolved status" is an **admissibility** status. **Corrected 2026-08-10:** the original reason given here was that `status` is used in five senses without disambiguation; `OP-18` refuted that premise. The bridge still carries no decisive force, for the narrower reason that `admissibility-structure.md:111` is the sole technical occurrence whose categorization is unstated, so the compound `unresolved status` is neutral between naming an admissibility categorization/value and naming a framework-level meta-status. It is also not refuted. **Both I1 and I2 survive**, and the conclusion is unchanged.
 
 ### 1.3 Two different auditability formulations inside FARA
 
@@ -64,7 +64,7 @@ The transition-signature form takes an event that happened as its object; the Ω
 | | Reading | Status |
 |---|---|---|
 | **I1** | "admissibility classification" means only a substantive member of `S_K` | **Coherent.** Obligations are then **vacuous** for unresolved candidates — a coverage gap, not a violation. |
-| **I2** | "admissibility classification" includes the explicit unresolved result | **Coherent.** Supported by the `status` bridge, weakened by non-univocity (§1.2). |
+| **I2** | "admissibility classification" includes the explicit unresolved result | **Coherent.** The lexical bridge is not decisive because `admissibility-structure.md:111` is the sole technical occurrence whose categorization is unstated. `OP-18` established that `status` itself is **univocal**; the ambiguity lies in whether the compound `unresolved status` names an admissibility categorization/value or a framework-level meta-status. *(Corrected 2026-08-10; the original cited non-univocity of `status`, a premise `OP-18` refuted.)* |
 | **I3** | obligations attach to the structure as a whole and so indirectly cover unresolved | **Partially correct and independently true**: the Auditability subject *is* the Admissibility Structure. But its object is still per-candidate and still presupposes receipt, so I3 does not by itself settle coverage. |
 | **I4** | canonical FARA intentionally imposes weaker obligations on unresolved | **Not established.** No canonical text states or defends any such intent, and `:204` lists "completeness of admissibility classification" as **open research**, indicating an unfinished area rather than a designed one. |
 
@@ -107,7 +107,7 @@ Finding 4 is the clean discriminator: **traceability and auditability come apart
 | | Verdict |
 |---|---|
 | **H1** current asymmetry intentional and justified | **Rejected as unestablished.** No canonical text states or defends intent; `:204` marks the area as open research. |
-| **H2** broad reading already covers it; semantic clarification only | **Available, not established.** Depends on the `status` bridge that §1.2 shows carries no force. |
+| **H2** broad reading already covers it; semantic clarification only | **Available, not established.** Depends on the `status` bridge, which §1.2 shows is not decisive because the categorization at `admissibility-structure.md:111` is unstated. |
 | **H3** traceability extends, substantive-classification auditability does not | **Best-motivated content**, from finding 4 and case G — but it is a *proposal*, not something canonical text establishes. |
 | **H4** both extend, object being the derivation/path | **Coherent**, with in-FARA precedent (§1.3). The auditability half still meets case G. |
 | **H5** evidence insufficient to establish any normative change | **Accepted.** |
@@ -126,19 +126,21 @@ One **non-convenience** consideration exists and is recorded at its true weight.
 
 ## Stage 7 — Minimal revision test
 
-**One canonical defect is established**, and it is terminological rather than architectural:
+**One canonical defect is established, narrower than originally reported:**
 
-> `status` is used in at least five distinct senses across canonical FARA — admissibility status, candidate status, unresolved status, primitive status, foundation status — with no disambiguation. This non-univocity is precisely what makes the scope of the Traceability and Auditability obligations undecidable.
+> `admissibility-structure.md:111` leaves the categorization of `unresolved status` unstated.
 
-This defect is demonstrable and is **not** interpretation-relative, unlike the asymmetry itself.
+The earlier claim that `status` has five distinct senses is **withdrawn by `OP-18`**, which established that the word is univocal under one recoverable definition. The surviving defect is the unstated categorization at that single occurrence, which is what makes the scope of the Traceability and Auditability obligations undecidable. This defect is demonstrable and is **not** interpretation-relative, unlike the asymmetry itself.
 
-**Repair site identified; repair content not supplied.** The smallest repair is a single scope clarification stating whether "admissibility classification", as used in the Traceability and Auditability properties, includes the explicit unresolved result — preferred over duplicated clauses or a new obligation. **Which way it should be clarified is exactly the undetermined question**, and this investigation supplies no evidence to settle it. Supplying content would select a design, which the standing instruction forbids.
+> **Superseded text, retained for provenance.** The original read: *"`status` is used in at least five distinct senses across canonical FARA — admissibility status, candidate status, unresolved status, primitive status, foundation status — with no disambiguation. This non-univocity is precisely what makes the scope of the Traceability and Auditability obligations undecidable."* The five-sense premise is refuted; the defect it named survives in the narrower form above.
+
+**Repair site identified; repair content not supplied.** The smallest repair remains a single scope clarification stating whether the explicit unresolved result falls within "admissibility classification" as used in the Traceability and Auditability properties — preferred over duplicated clauses or a new obligation. **Which interpretation should be selected remains underdetermined and is therefore an [`ADR-002`](../architecture/adr/ADR-002-Unresolved-Admissibility-Status-Semantics.md) decision point.** This investigation supplies no evidence to settle it, and supplying content would select a design, which the standing instruction forbids.
 
 No definition of unresolved's semantic meaning is proposed: `OP-17` supplied no evidence resolving `OP-16`'s `H4` underdetermination.
 
 ## Quality Gate disposition
 
-**No canonical change justified.** The asymmetry is not established as architectural; the terminological defect is established but its repair requires a decision no current evidence supports.
+**No canonical change justified by research alone.** The asymmetry is not established as architectural. The ambiguity at `admissibility-structure.md:111` **is** established; its resolution requires an architectural choice not determined by current evidence, and is therefore an [`ADR-002`](../architecture/adr/ADR-002-Unresolved-Admissibility-Status-Semantics.md) decision point rather than a research outcome.
 
 ## Nonclaims
 
