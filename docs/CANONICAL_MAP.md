@@ -18,6 +18,7 @@ Each concept should have one canonical source. Other documents should link to th
 |---|---|---|
 | Project FAR | [`OVERVIEW.md`](OVERVIEW.md) | Provides the project overview. |
 | Central Research Program | [`governance/central-research-program.md`](governance/central-research-program.md) | Defines the central research question, research objectives, evidence standard, counterexample policy, and completion criteria. |
+| Post-Terminal Public Evaluation Program | [`governance/post-terminal-public-evaluation-program-v1.0.md`](governance/post-terminal-public-evaluation-program-v1.0.md) | Governs evaluation of the completed terminal theorem without reopening the closed UPP deductive queue. |
 | Architecture | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Describes the repository architecture. |
 | Project Status | [`project-status.md`](project-status.md) | Records current governance and milestone status. |
 | Canonical Terminology | [`glossary/canonical-terminology.md`](glossary/canonical-terminology.md) | Owns canonical names, meanings, framework ownership, and epistemic class. |
@@ -145,6 +146,7 @@ Each concept should have one canonical source. Other documents should link to th
 ## Related Documents
 
 - [Central Research Program](governance/central-research-program.md)
+- [Post-Terminal Public Evaluation Program](governance/post-terminal-public-evaluation-program-v1.0.md)
 - [Project roadmap](ROADMAP.md)
 - [Project status](project-status.md)
 - [Root README](../README.md)
@@ -154,7 +156,7 @@ Each concept should have one canonical source. Other documents should link to th
 ## Self-Advancement Planning
 
 - [Planning overview](planning/README.md)
-- [Generated project status](reports/project-status-generated.md)
+- [Historical bounded-program status report](reports/project-status-generated.md) — generated from frozen W3.5 artifacts; not current project-status authority.
 - [Research gap report](reports/research-gap-report.md)
 - [Next actions](planning/next-actions.md)
 - [Planner maintenance](maintenance/self-advancement-planner.md)
@@ -171,9 +173,16 @@ Each concept should have one canonical source. Other documents should link to th
 
 ## Release Navigation
 
-- Current Project FAR release: [`releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md).
-- Previous maintenance release: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md).
-- Internal-validation baseline release: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
+- Current Project FAR release: [`releases/project-far-v1.0.0.md`](releases/project-far-v1.0.0.md).
+- Historical external-validation baseline: [`releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md).
+- Historical maintenance baseline: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md).
+- Historical internal-validation baseline: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
+
+## Post-Terminal Evaluation Authority
+
+- Terminal theorem disclosure: `docs/research/upp-w15-terminal-theorem-v1.0.md` records the exact terminal result, frozen premises, boundaries, and nonclaims.
+- Terminal theorem audit: `docs/audits/upp-w15-terminal-theorem-audit.md` records the terminal dependency and assurance audit.
+- Post-terminal evaluation: `docs/governance/post-terminal-public-evaluation-program-v1.0.md` governs independent proof review, countermodel/scope challenge, kernel-checked reconstruction, independent bounded replication, and application correspondence. It does not reopen the closed UPP deductive queue.
 
 ## Comparative Representation Evaluation Authority
 
