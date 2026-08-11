@@ -5,12 +5,13 @@ RESTRICTED: this file names the banned terms in order to detect them. It must
 never be delivered to a Role A respondent.
 
 Enforces, mechanically:
-  1. blinding  - the participant-facing packets contain no programme vocabulary,
-                 and no semantic paraphrase from the watchlist;
+  1. blinding  - registered participant-facing text contains no registered
+                 banned identifiers, paraphrases, or field seeds;
   2. structure - every required artifact exists and parses;
   3. state     - the package declares protocol-frozen, evidence-not-collected,
                  and registers no run and no result.
 
+This is a lexical verifier, not proof of absent semantic leakage.
 Exit code 0 = PASS, 1 = FAIL. Run from the repository root or anywhere.
 """
 
@@ -23,8 +24,9 @@ from pathlib import Path
 
 PKG = Path(__file__).resolve().parent
 
-# Files delivered to, or readable by, a Role A respondent. These are the only
-# files subject to the blinding check.
+# Files delivered to, or readable by, a Role A respondent. These packet bodies
+# are subject to the blinding check; additional authorized strings are registered
+# separately in participant-surface-v1.1.json and are also checked.
 PARTICIPANT_FACING = [
     "elicitation-packet-A-v1.0.md",
     "elicitation-packet-B1-reword-v1.1.md",
@@ -37,11 +39,8 @@ PARTICIPANT_FACING = [
 # only packet sections 2-3, which left the fallback clarification unchecked.
 SURFACE_REGISTRY = "participant-surface-v1.1.json"
 
-# In both packets the delivered material is exactly sections 2 and 3. Section 1
-# is deliverer instructions or design notes and section 4 is retained-for-record
-# material; neither is shown to the respondent. Extracting the span explicitly
-# avoids the failure mode where cutting at the first non-delivered heading
-# truncates the delivered sections too and the blinding check passes vacuously.
+# In the packets the delivered material begins at section 2. Packet A has a
+# retained-for-record section 4; B1/B2 end after their delivered section 3.
 DELIVERED_START = "## 2."
 DELIVERED_END = "## 4."
 
@@ -49,7 +48,7 @@ DELIVERED_END = "## 4."
 # future edit silently reducing the scanned text to nothing.
 MIN_DELIVERED_CHARS = 600
 
-# 15 frozen payload artifacts. The verifier itself is tooling, listed separately
+# 17 frozen payload artifacts. The verifier itself is tooling, listed separately
 # in TOOLING, and is hashed by the manifest but is not a payload artifact.
 REQUIRED_ARTIFACTS = [
     "README.md",
@@ -90,9 +89,9 @@ BANNED_TOKENS = [
     "upp", "g1", "g2", "g3",
 ]
 
-# Semantic paraphrases of the programme's own vocabulary. These are the terms a
-# leak would most plausibly take, and are banned even though they are ordinary
-# English, because they are the programme's load-bearing terms.
+# Registered semantic paraphrases of the programme's own vocabulary. These are
+# banned as lexical watchlist items; the verifier does not claim that all possible
+# semantic paraphrases have been enumerated.
 BANNED_PARAPHRASES = [
     "commitment", "commitments",
     "admissibility", "admissible",
@@ -169,7 +168,7 @@ def main() -> int:
             except json.JSONDecodeError as exc:
                 failures.append(f"INVALID JSON: {name}: {exc}")
 
-    # 2. blinding, against delivered text only
+    # 2. blinding, against delivered packet text
     for name in PARTICIPANT_FACING:
         path = PKG / name
         if not path.is_file():
