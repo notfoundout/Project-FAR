@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "R5-MAPPING-SCHEMA-001",
+  "status": "frozen",
+  "role": "B",
+  "gate": "Populated only after freeze-procedure-v1.0.md §3 steps 1-8 and the reveal-packet release gate are complete.",
+
+  "ordering": ["contract_to_contract", "then_optionally architecture_to_architecture"],
+  "collapse_prohibited": true,
+
+  "element_mapping": {
+    "type": "list",
+    "item_fields": {
+      "project_element": {"type": "string", "note": "A single requirement of the programme formulation."},
+      "role_a_element": {"type": "string_or_null", "note": "Verbatim quotation from Role A, or null if none."},
+      "structural_relation": {
+        "enum": ["exact_clause_recovery", "implies_forward", "implies_backward", "overlap_without_implication", "contradiction", "domain_mismatch", "assumption_mismatch", "no_meaningful_comparison"],
+        "note": "Descriptive only. Never converted to better/worse."
+      },
+      "recovery_class": {
+        "enum": ["EXPLICIT_RECOVERY", "LOGICAL_CONSEQUENCE", "NATURAL_REFORMULATION", "OPTIONAL_ENCODING", "FORCED_RECONSTRUCTION"],
+        "note": "Only the first two carry strong weight without further argument."
+      },
+      "argument": {"type": "text", "note": "Required for LOGICAL_CONSEQUENCE and NATURAL_REFORMULATION. Must use no premise Role A did not supply."},
+      "auxiliary_definitions_introduced": {"type": "list", "note": "If non-empty, recovery_class is FORCED_RECONSTRUCTION by definition."},
+      "machinery_charged": {"type": "list", "note": "Decoders, interpreters, schedules, lookups, side-channels needed to reproduce the project requirement from Role A's."}
+    }
+  },
+
+  "reverse_mapping": {
+    "type": "list",
+    "note": "Role A elements with no counterpart in the programme formulation. REQUIRED. Omitting this direction produces a one-sided comparison and invalidates the mapping.",
+    "item_fields": {
+      "role_a_element": "string",
+      "project_counterpart": "string_or_null",
+      "structural_relation": "same enum as above",
+      "note": "text"
+    }
+  },
+
+  "failed_mappings": {
+    "type": "list",
+    "required": true,
+    "note": "Preserved, never discarded. Each with the exact reason it failed.",
+    "item_fields": {"attempted": "string", "reason": "string"}
+  },
+
+  "primary_comparison": {
+    "role_a_criterion_present": "boolean",
+    "criterion_verbatim": "string_or_null",
+    "criterion_coherent": "boolean_or_null",
+    "result_under_role_a_criterion": "text_or_not_available",
+    "project_criterion_applied": {"type": "boolean", "must_be": false, "note": "Applying a project criterion where Role A supplied one, or supplying one where they did not, invalidates the adjudication."}
+  },
+
+  "anonymization": {
+    "attempted": "boolean",
+    "achieved": "boolean",
+    "failure_reason": "string_or_null"
+  },
+
+  "mapper_declarations": [
+    "I did not alter, strengthen, weaken, reinterpret, or repair Role A's formulation.",
+    "I introduced no auxiliary definition absent from Role A in order to produce agreement.",
+    "I applied no withdrawn rubric and no project-supplied dimension set.",
+    "I recorded every failed mapping.",
+    "I completed the reverse direction.",
+    "I did not classify the outcome."
+  ]
+}

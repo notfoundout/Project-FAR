@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "R5-ROLE-A-OUTPUT-SCHEMA-001",
+  "status": "frozen",
+  "purpose": "Structures the Role A answer for downstream mapping WITHOUT interpreting it. The transcriber records what the respondent said, verbatim where possible, and marks every item the respondent did not settle.",
+
+  "hard_rules": [
+    "The raw response is preserved byte-for-byte and hashed BEFORE this schema is populated. This schema is a derived view, never a replacement.",
+    "The transcriber may not supply, complete, tidy, or infer any field the respondent left unsettled. 'unsettled' is a valid and expected value.",
+    "The transcriber may not translate the respondent's vocabulary into any other framework's vocabulary. Terms are recorded as the respondent used them.",
+    "If the transcriber believes a field is implied but not stated, it is recorded as unsettled with the belief noted in transcriber_observations, never promoted into the field."
+  ],
+
+  "fields": {
+    "scope_A": {"type": "text_or_unsettled", "source_item": "A", "note": "System classes in scope and excluded, in the respondent's own words."},
+    "observables_B": {"type": "list_or_unsettled", "source_item": "B", "note": "Facts or behaviours the respondent says matter."},
+    "droppable_C": {"type": "list_or_unsettled", "source_item": "C"},
+    "carryover_D": {"type": "text_or_unsettled", "source_item": "D", "note": "The respondent's own definition of what carrying over means."},
+    "sameness_E": {"type": "text_or_unsettled", "source_item": "E", "note": "The respondent's own equivalence notion."},
+    "legitimate_rewritings_F": {"type": "text_or_unsettled", "source_item": "F"},
+    "assumptions_G": {"type": "list_or_unsettled", "source_item": "G"},
+    "comparison_H": {"type": "text_or_unsettled", "source_item": "H", "note": "Whether the respondent offers any way to compare competing answers, and what they say makes it natural. THIS FIELD IS LOAD-BEARING: it is the respondent's own comparison criterion, and the adjudication procedure privileges it over any project-supplied criterion."},
+    "no_single_answer_I": {"type": "text_or_unsettled", "source_item": "I"},
+    "counterexamples": {"type": "list_or_unsettled"},
+    "rejected_approaches": {"type": "list_or_unsettled"},
+    "unresolved_points": {"type": "list_or_unsettled"},
+    "sources": {
+      "type": "list",
+      "item_fields": {
+        "citation": "string",
+        "class": ["primary_original", "authoritative_technical", "secondary_expository"],
+        "classified_by": ["respondent", "transcriber"],
+        "used_for": "string"
+      }
+    },
+    "declared_final": {"type": "boolean"},
+    "transcriber_observations": {"type": "text", "note": "Anything the transcriber noticed that is NOT part of the answer. Never feeds a field above."}
+  },
+
+  "optional_architecture_phase": {
+    "gate": "Populated only after every field above is frozen and hashed, and still BEFORE any reveal.",
+    "question_asked": "Given the answer you have just finalised, what minimal or canonical way of structuring such a description, if any, follows from it? Concluding that none follows, or that several do, is an acceptable answer.",
+    "fields": {
+      "architecture_or_none": {"type": "text_or_unsettled"},
+      "derivation_from_own_contract": {"type": "text_or_unsettled", "note": "How the respondent says it follows from their own answer above."},
+      "declared_final": {"type": "boolean"}
+    },
+    "separation_rule": "This is a SECOND frozen artifact with its own hash. Contract-to-contract and architecture-to-architecture comparisons are reported separately and are never collapsed into a single agreement score."
+  }
+}

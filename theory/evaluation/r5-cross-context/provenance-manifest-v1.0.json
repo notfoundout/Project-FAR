@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "R5-PROVENANCE-MANIFEST-001",
+  "program_id": "R5-CROSS-CONTEXT-001",
+  "status": "PROTOCOL_FROZEN_EVIDENCE_NOT_YET_COLLECTED",
+  "repository_base": "3ba4986b86b6e211d9e01e78018ef8324297f86c",
+  "base_description": "origin/main after the merge of PR #443 (merge commit 3ba4986b86b6e211d9e01e78018ef8324297f86c, parents 5f26792 and bc784b4).",
+  "hash_algorithm": "sha256",
+  "artifact_hashes": {
+    "README.md": {
+      "sha256": "a404af8e2e453048bbdc508c7e8749069e9601ff3bc40252c5993cc7a661d3d3",
+      "bytes": 5329
+    },
+    "adjudication-procedure-v1.0.md": {
+      "sha256": "121a45c1f43de0eb5afea1c6ab7a6e1b22c65be650071bfa896b20e68baafb26",
+      "bytes": 6490
+    },
+    "contamination-questionnaire-v1.0.json": {
+      "sha256": "8130d4f8e15da09ac72fcf966c9b5d3a3de124bc6deef7bd2439e2557c7962d3",
+      "bytes": 5246
+    },
+    "elicitation-packet-A-v1.0.md": {
+      "sha256": "bbc2bc42f0b6b1120a07aa40660a93fd9cf3e3894f969efd4db284cb5822b04e",
+      "bytes": 4583
+    },
+    "elicitation-packet-B-mutation-v1.0.md": {
+      "sha256": "892dbe92052ef8138275ef3bb08dd1a7549fa59ceab0fcdc6268cb3062c82391",
+      "bytes": 4107
+    },
+    "evidence-tier-rules-v1.0.json": {
+      "sha256": "380638bc3097e5cc712468152e6545cb71c3edefbddcb272f4d251492634f053",
+      "bytes": 4400
+    },
+    "freeze-procedure-v1.0.md": {
+      "sha256": "fced42f1ecaa5632e30fc45657f04c2325eec501cdb5453315f3d85cfca1d5c9",
+      "bytes": 5176
+    },
+    "normalization-mapping-schema-v1.0.json": {
+      "sha256": "ab8607a2b95133bcc52398b228ae04eab6ca555c3e9ff899404eb9fa321c0a23",
+      "bytes": 3252
+    },
+    "outcome-registry-v1.0.json": {
+      "sha256": "93619d4d48751735672fe5b8795dddf3fbc513316f462e86d24ebba527c55cd0",
+      "bytes": 3542
+    },
+    "package-audit-v1.0.md": {
+      "sha256": "6c7997afe1bfe50b49f728e7df87365dd0d39c74e83fddee37d3b03a77824af2",
+      "bytes": 6824
+    },
+    "preregistration-v1.0.json": {
+      "sha256": "efdfb3ea60c89795933ff176c94a3edef89782708dbabd52a67e999167cae8cc",
+      "bytes": 7088
+    },
+    "reveal-packet-v1.0.md": {
+      "sha256": "a106af6759d8f3eeacae19c9636afe8f97a34f056e0d5c9ac8c22e093d70acb0",
+      "bytes": 3261
+    },
+    "role-a-output-schema-v1.0.json": {
+      "sha256": "9a43130a3519ae835a4f657b5de903707bb9af702e55696012e4443dc1c0bd59",
+      "bytes": 3697
+    },
+    "verify_r5_package.py": {
+      "sha256": "44e1fe492b7e0455e4d504a39a89548fcfc5567444a33cf147521ffb1f49c032",
+      "bytes": 8074
+    }
+  },
+  "restricted_artifacts": {
+    "reveal-packet-v1.0.md": "Contains the programme formulation. Never to Role A.",
+    "verify_r5_package.py": "Names the full banned-term watchlist in order to detect it. Never to Role A."
+  },
+  "participant_facing_artifacts": {
+    "elicitation-packet-A-v1.0.md": "sections 2 and 3 only",
+    "elicitation-packet-B-mutation-v1.0.md": "sections 2 and 3 only"
+  },
+  "consumed_dispositions_recorded_in": "preregistration-v1.0.json#consumed_dispositions",
+  "verifier": {
+    "path": "verify_r5_package.py",
+    "result_at_freeze": "PASS",
+    "checks": [
+      "blinding of delivered text against 76 watchlist terms",
+      "presence and parse of 14 required artifacts",
+      "protocol-frozen state, zero runs recorded, no runs/ directory"
+    ],
+    "negative_control": "Verified to FAIL on a deliberately leaked packet containing 'commitments', 'grounds', and a field-seed term, and to return to PASS on restoration."
+  },
+  "runs": [],
+  "results": [],
+  "nonclaims": [
+    "No run exists.",
+    "No outcome is registered.",
+    "No independence, replication, recovery, or architecture support is claimed.",
+    "This manifest records the existence and frozen status of a protocol only."
+  ]
+}

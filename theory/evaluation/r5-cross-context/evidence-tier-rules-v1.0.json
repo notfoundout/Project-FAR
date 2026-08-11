@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "R5-EVIDENCE-TIERS-001",
+  "status": "frozen",
+  "native_terminology_source": "docs/research/usd-w6-independence-execution-v1.0.md, which already separates isolated-run independence, implementation or model-family independence, and human or organizational independence, and separates R3 technical replication, R4 adversarial conceptual replication, and R5 cross-context replication. Those distinctions are reused rather than replaced.",
+
+  "governing_rule": "No stronger label may be inferred from a weaker one. Context separation is not investigator independence. A fixed number of runs is a design choice, not a statistical guarantee.",
+
+  "tiers": {
+    "T1_same_model_new_context": {
+      "description": "Same model, fresh context, no shared memory or retrieval.",
+      "native_class": "isolated-run independence",
+      "can_establish": [
+        "That the formulation is or is not reproduced when prior context is removed.",
+        "Gross prompt-carryover effects."
+      ],
+      "cannot_establish": [
+        "Independence of any kind.",
+        "That the formulation is not an artefact of the model's training distribution.",
+        "Anything about naturalness."
+      ],
+      "satisfies_R5": false
+    },
+    "T2_same_family_isolated": {
+      "description": "Same provider or model family, with isolation controls on context, retrieval, and memory.",
+      "native_class": "isolated-run independence with implementation controls",
+      "can_establish": ["Robustness to run-level variation within one family."],
+      "cannot_establish": [
+        "Model-family independence, which requires a different family.",
+        "Investigator independence.",
+        "R5."
+      ],
+      "satisfies_R5": false
+    },
+    "T3_different_model_or_provider": {
+      "description": "A materially different model or provider, separately operated.",
+      "native_class": "implementation or model-family independence",
+      "can_establish": [
+        "That the formulation is or is not specific to one model family.",
+        "Divergence at full weight."
+      ],
+      "cannot_establish": [
+        "Human or organizational independence.",
+        "R5 on its own. Shared training corpora are a common cause that model-family separation does not remove."
+      ],
+      "satisfies_R5": false
+    },
+    "T4_qualified_human_no_exposure": {
+      "description": "A qualified human investigator with no prior exposure, at contamination level C0 or C1, operating without the programme's material.",
+      "native_class": "human independence",
+      "can_establish": [
+        "Genuine cross-context elicitation by a party outside the programme.",
+        "The first evidence that bears directly on LIM-031."
+      ],
+      "cannot_establish": [
+        "Organizational independence, if the investigator was engaged and briefed solely by the programme.",
+        "Universality from a single run."
+      ],
+      "satisfies_R5": "partially — this is the minimum tier at which an R5 claim becomes arguable"
+    },
+    "T5_independent_expert_preregistered": {
+      "description": "An independent expert or organization, executing under their own preregistration, with role separation held externally.",
+      "native_class": "human and organizational independence",
+      "can_establish": [
+        "R5 cross-context replication as the repository defines it.",
+        "The strongest available evidence against or for LIM-031."
+      ],
+      "cannot_establish": [
+        "Universality from any number of runs.",
+        "That the programme's formulation is correct."
+      ],
+      "satisfies_R5": true
+    }
+  },
+
+  "reporting_rules": [
+    "Every claim states its tier explicitly and inherits that tier's cannot_establish list verbatim.",
+    "A pair of runs is reported at the LOWER of the two tiers.",
+    "A run at T1 or T2 may never be described as replication, independence, or cross-context.",
+    "A T3 run may be described as model-family independent and must not be described as independent without qualification.",
+    "LIM-031 is addressed only from T4 upward, and closed only at T5.",
+    "A contaminated run is reported at its tier with its contamination level attached; contamination is never silently absorbed into the tier."
+  ],
+
+  "current_state": "No run exists at any tier. This package specifies the tiers; it collects nothing."
+}

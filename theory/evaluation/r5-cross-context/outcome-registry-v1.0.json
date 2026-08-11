@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "R5-OUTCOME-REGISTRY-001",
+  "status": "frozen_before_execution",
+  "role": "C",
+  "runs_recorded": 0,
+  "note": "Pre-registered outcome space. No outcome is scored as supporting the programme by default. Assignment requires cited evidence from the mapping.",
+
+  "outcomes": {
+    "O1": {"label": "independent recovery substantially equivalent", "evidence_required": "EXPLICIT_RECOVERY or LOGICAL_CONSEQUENCE on EVERY project element, reverse direction complete, contamination C0 or C1, tier T4 or higher. Anything less is O2 at best.", "supports_programme": "yes, at the stated tier only; never universality"},
+    "O2": {"label": "partial or componentwise recovery only", "evidence_required": "Recovery on a proper subset of elements.", "supports_programme": "weakly; mirrors the existing componentwise-anticipation finding rather than extending it"},
+    "O3": {"label": "independently derived formulation strictly stronger", "evidence_required": "Strictness established under a criterion Role A supplied, not a project criterion.", "supports_programme": "no"},
+    "O4": {"label": "independently derived formulation strictly weaker", "evidence_required": "As O3.", "supports_programme": "no"},
+    "O5": {"label": "incomparable under independently supplied criteria", "evidence_required": "BOTH embedding directions tested and a criterion under which incomparability is defined. One failed direction is not sufficient.", "supports_programme": "no"},
+    "O6": {"label": "materially alien formulation", "evidence_required": "No structural relation other than no_meaningful_comparison or domain_mismatch across most elements.", "supports_programme": "no; this is a live threat to the ambition"},
+    "O7": {"label": "multiple domain-relative formulations", "evidence_required": "Role A scopes different answers to different system classes.", "supports_programme": "no; meets falsification condition F6 if repeated"},
+    "O8": {"label": "no non-arbitrary comparison relation", "evidence_required": "Role A states this in comparison_H, or comparison_H is unsettled and no criterion is available.", "supports_programme": "no; independently corroborates the existing internal finding that no global relation is established"},
+    "O9": {"label": "question judged malformed", "evidence_required": "Role A concludes the question is ill-posed, with reasons recorded.", "supports_programme": "no"},
+    "O10": {"label": "no stable formulation derivable", "evidence_required": "Role A cannot reach a stable answer.", "supports_programme": "no; evidence about elicitability, not about the answer"},
+    "O11": {"label": "contamination invalidates the run", "evidence_required": "Contamination level C4 or C5, per the questionnaire.", "supports_programme": "no; divergence evidence from the run remains usable under the asymmetry rule"},
+    "O12": {"label": "evidence insufficient", "evidence_required": "Default when no other outcome is supported by cited mapping evidence.", "supports_programme": "no"}
+  },
+
+  "assignment_rules": [
+    "Exactly one primary outcome. Secondary outcomes permitted where they also hold.",
+    "Every assignment cites specific structural relations and recovery classes.",
+    "Contamination degrades agreement evidence and does not degrade divergence evidence.",
+    "No single positive replication establishes universality, at any tier.",
+    "An outcome may not be revised after origins are disclosed, except as a separately recorded correction with its reason."
+  ]
+}
