@@ -1,0 +1,188 @@
+{
+  "schema_version": "1.1",
+  "artifact_id": "R5-EVIDENCE-TIERS-001",
+  "status": "frozen",
+  "native_terminology_source": "docs/research/usd-w6-independence-execution-v1.0.md, which already separates isolated-run independence, implementation or model-family independence, and human or organizational independence, and separates R3 technical replication, R4 adversarial conceptual replication, and R5 cross-context replication. Those distinctions are reused rather than replaced.",
+  "governing_rule": "No stronger label may be inferred from a weaker one. Context separation is not investigator independence. A fixed number of runs is a design choice, not a statistical guarantee.",
+  "tiers": {
+    "T1_same_model_new_context": {
+      "description": "Same model, fresh context, no shared memory or retrieval.",
+      "native_class": "isolated-run independence",
+      "can_establish": [
+        "That the formulation is or is not reproduced when prior context is removed.",
+        "Gross prompt-carryover effects."
+      ],
+      "cannot_establish": [
+        "Independence of any kind.",
+        "That the formulation is not an artefact of the model's training distribution.",
+        "Anything about naturalness."
+      ],
+      "satisfies_R5": false
+    },
+    "T2_same_family_isolated": {
+      "description": "Same provider or model family, with isolation controls on context, retrieval, and memory.",
+      "native_class": "isolated-run independence with implementation controls",
+      "can_establish": [
+        "Robustness to run-level variation within one family."
+      ],
+      "cannot_establish": [
+        "Model-family independence, which requires a different family.",
+        "Investigator independence.",
+        "R5."
+      ],
+      "satisfies_R5": false
+    },
+    "T3_different_model_or_provider": {
+      "description": "A materially different model or provider, separately operated.",
+      "native_class": "implementation or model-family independence",
+      "can_establish": [
+        "That the formulation is or is not specific to one model family.",
+        "That a materially different model or provider produced the recorded formulation under the recorded contamination level."
+      ],
+      "cannot_establish": [
+        "Human or organizational independence.",
+        "R5 on its own. Shared training corpora are a common cause that model-family separation does not remove."
+      ],
+      "satisfies_R5": false
+    },
+    "T4_qualified_human_no_exposure": {
+      "description": "A human investigator meeting the operational_eligibility criteria below, with no prior exposure, at contamination C0 or C1, operating without the programme's material. 'Qualified' is defined operationally; it is not left to executor judgement.",
+      "native_class": "human independence",
+      "can_establish": [
+        "Genuine cross-context elicitation by a party outside the programme.",
+        "The first evidence that bears directly on LIM-031."
+      ],
+      "cannot_establish": [
+        "Organizational independence, if the investigator was engaged and briefed solely by the programme.",
+        "Universality from a single run."
+      ],
+      "satisfies_R5": "partially — this is the minimum tier at which an R5 claim becomes arguable",
+      "operational_eligibility": {
+        "note": "An earlier revision said only 'qualified human investigator', leaving a material methodological choice to the executor. Criteria are capability-based; credentials are sufficient evidence of capability but are not required.",
+        "required_all_of": [
+          "Contamination level C0 or C1 on the frozen questionnaire.",
+          "No authorship of, contribution to, or prior exposure to the programme.",
+          "Demonstrated capability to independently locate and evaluate technical literature in at least one of: formal logic, philosophy of logic or science, theoretical computer science, mathematics, or scientific methodology. Evidenced by EITHER graduate-level training in such a field OR documented professional or research work of equivalent depth.",
+          "Capability to produce a sustained written technical argument, evidenced by prior written work the executor records."
+        ],
+        "explicitly_not_required": [
+          "Any specific degree, institution, title, or seniority.",
+          "Familiarity with any particular formalism."
+        ],
+        "recorded_as_covariate_not_gate": [
+          "Field of expertise.",
+          "Years of experience.",
+          "Which permitted route was used to evidence capability."
+        ],
+        "if_criteria_cannot_be_met": "The run is recorded at the tier its actual separation supports, not at T4."
+      }
+    },
+    "T5_independent_expert_preregistered": {
+      "description": "An expert or organization meeting the operational_independence criteria below, executing THIS frozen protocol faithfully under their own preregistration of the execution, with role separation held externally.",
+      "interpretation_resolved": "A — independently preregistering faithful execution of this frozen protocol, with no methodological alteration. Interpretation B, independently designing a different preregistered protocol, is NOT this tier and is not an execution tier of this package; it is class X1 below.",
+      "native_class": "human and organizational independence",
+      "may_be_added_administratively": [
+        "Ethics, IRB, or institutional review and approval.",
+        "Consent, engagement, contracting, payment, and scheduling.",
+        "The executing organization's own record-keeping, audit trail, and internal sign-off.",
+        "Their own preregistration of who executes which role, when, and under what supervision.",
+        "Selection of the respondent, within the tier and contamination rules already fixed here.",
+        "Delivery logistics and channel, provided the delivery checklist is satisfied.",
+        "Additional observations recorded alongside, but never in place of, the required fields."
+      ],
+      "creates_a_new_protocol_version_and_is_therefore_not_T5": [
+        "Any change to the delivered wording of packet section 2 or 3.",
+        "Any change to the A-I sub-question set, or to packet B's checklist.",
+        "Adding examples, a reading list, or any field or domain suggestion.",
+        "Any change to contamination items, levels, or their consequences.",
+        "Any change to tier definitions or their cannot_establish lists.",
+        "Any change to outcome definitions or per-outcome evidence requirements.",
+        "Any change to the recovery classes or the structural relation set.",
+        "Any change to the freeze ordering or the reveal gate.",
+        "Substituting any comparison criterion for the respondent's own."
+      ],
+      "can_establish": [
+        "R5 cross-context replication as the repository defines it, for the elicitation this protocol specifies.",
+        "That a party with human and organizational independence did or did not arrive at a comparable formulation when asked this question.",
+        "The strongest evidence this package alone can produce bearing on LIM-031."
+      ],
+      "cannot_establish": [
+        "Universality, from any number of runs.",
+        "That the programme's formulation is correct.",
+        "Independence from the programme's FRAMING. The question, the A-I decomposition, and the comparison procedure remain programme-authored, so a faithful external execution supplies an externally chosen ANSWER but not an externally chosen QUESTION.",
+        "Full closure of LIM-031. See the scope analysis below."
+      ],
+      "satisfies_R5": true,
+      "is_an_execution_tier_of_this_package": true,
+      "operational_independence": {
+        "required_all_of": [
+          "Role A meets the T4 operational_eligibility criteria.",
+          "No authorship of or contribution to Project FAR by the executing party or any role holder.",
+          "No employment, supervision, or project-control relationship with Project FAR. Funding is limited to an arm's-length contract to execute the frozen protocol, all compensation is disclosed, and no compensation may depend on the outcome.",
+          "No access to restricted programme material by any role holder before the freeze completes.",
+          "Role separation held externally: Roles A, B and C are distinct persons or systems within the external organization.",
+          "Independent preregistration of faithful execution, per interpretation A."
+        ],
+        "recorded_not_gating": [
+          "Commissioning and payment relationship, once it satisfies the required arm's-length rule.",
+          "Organization size and type."
+        ]
+      }
+    }
+  },
+  "reporting_rules": [
+    "Every claim states its tier explicitly and inherits that tier's cannot_establish list verbatim.",
+    "A pair of runs is reported at the LOWER of the two tiers.",
+    "A run at T1 or T2 may never be described as replication, independence, or cross-context.",
+    "A T3 run may be described as model-family independent and must not be described as independent without qualification.",
+    "LIM-031 is addressed only from T4 upward and most strongly at T5. This package does NOT close it. Framing independence is a SEPARATE registered limitation, LIM-032, for which X1 is a candidate instrument; no necessity or sufficiency relation between T5 and X1 is claimed.",
+    "A contaminated run is reported at its tier with its contamination level attached; contamination is never silently absorbed into the tier.",
+    "A T5 run that alters any item in creates_a_new_protocol_version_and_is_therefore_not_T5 is not a T5 run; it is a different protocol and is reported as such."
+  ],
+  "current_state": "No run exists at any tier. This package specifies the tiers; it collects nothing.",
+  "external_classes_not_executable_from_this_package": {
+    "X1_independent_protocol_design": {
+      "description": "An independent party designs and preregisters their own protocol for the underlying question, without using this package's instrument.",
+      "relation_to_this_package": "NOT an execution tier. This package cannot produce X1, and nothing in it should be read as specifying X1.",
+      "why_it_matters": "Addresses the separate framing-independence limitation LIM-032: the question, the axis decomposition, and the comparison procedure in this package are programme-authored. That is a distinct deficit from LIM-031's external contract selection and evaluation.",
+      "can_establish": [
+        "That an external party independently selected a protocol framing for the underlying question, subject to that protocol's own provenance and contamination controls."
+      ],
+      "cannot_establish": [
+        "Anything about this package's instrument, which it does not use.",
+        "Closure of LIM-031 or LIM-032 by itself."
+      ]
+    }
+  },
+  "lim_031_and_lim_032_scope_analysis": {
+    "correction_2026_08_11": "An earlier revision asserted that LIM-031 decomposes into two halves and that 'full closure requires T5 and X1'. That decomposition is not established as necessary and sufficient, and asserting it silently redefined a limitation whose registered text was unchanged. WITHDRAWN.",
+    "current_language": "T5 addresses external answer and evaluation independence for the elicitation this protocol specifies. Independent protocol design, class X1, addresses a SEPARATE framing-independence deficit, registered as LIM-032. No necessity or sufficiency relation between them is claimed.",
+    "T4_reaches": "External elicitation by a party outside the programme, at the descriptive layer, subject to the two-layer warrant model.",
+    "T5_reaches": "The same with human and organizational independence.",
+    "X1_reaches": "The separate LIM-032 framing-independence deficit. Not an execution tier of this package.",
+    "prohibited": [
+      "Stating that this package closes LIM-031.",
+      "Stating that T5 plus X1 is necessary or sufficient for closure.",
+      "Redescribing LIM-031's scope without a registered amendment."
+    ]
+  },
+  "stopping_rule_consistency": "The package stopping rule requires that an executor make no new methodological decision that could materially affect the result. T5 under interpretation A is consistent with that rule: the executing organization supplies procedural and organizational independence while making no methodological decision, because every such decision is already fixed here. Procedural independence and methodological alteration are distinct, and only the former is permitted at T5.",
+  "packet_comparison_design": {
+    "arms": {
+      "A": "primary",
+      "B1": "semantic-preserving reword; tests surface-form sensitivity",
+      "B2": "decomposition ablation; tests whether the A-I axes shape the answer"
+    },
+    "confound_warning": "A/B divergence CANNOT automatically establish framing sensitivity. Between-subject assignment confounds packet with respondent identity. Within-subject sequential administration confounds packet with order and carryover.",
+    "frozen_design_under_this_package": "DESCRIPTIVE-ONLY PILOT INTERPRETATION. With one respondent per arm, any A/B difference is reported as an observation compatible with BOTH packet effect and respondent effect, and no causal framing claim is permitted.",
+    "designs_that_would_license_a_causal_claim_but_are_NOT_authorized_here": [
+      "Randomized between-subject assignment with enough respondents to separate respondent variance from packet variance. Sample size not justified; requires the future aggregation protocol.",
+      "Counterbalanced within-subject design with carryover explicitly modelled and disclosed."
+    ],
+    "prohibited": [
+      "Claiming causal prompt sensitivity from one A respondent versus one B respondent.",
+      "Averaging across arms.",
+      "Treating B2 silence on an axis as denial of that axis."
+    ]
+  }
+}

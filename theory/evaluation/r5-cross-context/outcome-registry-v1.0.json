@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.1",
+  "artifact_id": "R5-OUTCOME-REGISTRY-001",
+  "status": "frozen_before_execution",
+  "role": "C",
+  "runs_recorded": 0,
+  "note": "Pre-registered outcome space. Layer-1 labels describe what the run produced and intentionally do NOT contain the word independent. Independence is a Layer-2 warrant property, not part of the descriptive outcome label.",
+  "outcomes": {
+    "O1": {
+      "label": "substantially equivalent formulation",
+      "evidence_required": "EXPLICIT_RECOVERY or LOGICAL_CONSEQUENCE on EVERY project element, with reverse-direction mapping complete. If this is not met, use O2 or another supported descriptive outcome.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level. At Layer 1 this means only that the recorded formulation mapped substantially equivalently under the frozen procedure.",
+      "layer_2_requires": "To claim INDEPENDENT substantial recovery: tier T4+, contamination C0 or C1, qualified respondent, no procedural failure, plus the O1 mapping requirements. C1 is usable only with its uncertainty attached and may never be called clean or fully independent.",
+      "direction_neutrality": "The same independence bar applies to favorable and unfavorable outcomes."
+    },
+    "O2": {
+      "label": "partial or componentwise recovery",
+      "evidence_required": "Recovery on a proper subset of target elements.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level.",
+      "layer_2_requires": "To claim INDEPENDENT partial/componentwise recovery: tier T4+, contamination C0 or C1, qualified respondent, no procedural failure, plus the O2 evidence. C1 uncertainty must be attached.",
+      "direction_neutrality": "The same independence bar applies to favorable and unfavorable outcomes."
+    },
+    "O3": {
+      "label": "formulation strictly stronger under respondent-supplied criteria",
+      "evidence_required": "Strictness established under a coherent criterion Role A supplied, not a project criterion.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level as a fact about this run's mapping.",
+      "layer_2_requires": "To claim an INDEPENDENT stronger formulation: tier T4+, contamination C0 or C1, qualified respondent, no procedural failure, plus the O3 evidence. C1 uncertainty must be attached.",
+      "direction_neutrality": "The same independence bar applies to favorable and unfavorable outcomes."
+    },
+    "O4": {
+      "label": "formulation strictly weaker under respondent-supplied criteria",
+      "evidence_required": "Strictness established under a coherent criterion Role A supplied, not a project criterion.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level as a fact about this run's mapping.",
+      "layer_2_requires": "To claim an INDEPENDENT weaker formulation: tier T4+, contamination C0 or C1, qualified respondent, no procedural failure, plus the O4 evidence. C1 uncertainty must be attached.",
+      "direction_neutrality": "The same independence bar applies to favorable and unfavorable outcomes."
+    },
+    "O5": {
+      "label": "incomparable under respondent-supplied criteria",
+      "evidence_required": "BOTH embedding directions tested and a coherent respondent-supplied criterion under which incomparability is defined. One failed direction is insufficient.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level as a fact about this run's comparison.",
+      "layer_2_requires": "To claim INDEPENDENT incomparability evidence: tier T4+, contamination C0 or C1, qualified respondent, no procedural failure, plus the O5 evidence. C1 uncertainty must be attached.",
+      "direction_neutrality": "The same independence bar applies to favorable and unfavorable outcomes."
+    },
+    "O6": {
+      "label": "materially alien formulation",
+      "evidence_required": "No structural relation other than no_meaningful_comparison or domain_mismatch across most target elements.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level. This says only that this run produced an alien formulation under the mapping.",
+      "layer_2_requires": "To claim an INDEPENDENT alien-formulation finding: tier T4+, contamination C0 or C1, qualified respondent, no procedural failure, plus the O6 evidence. C1 uncertainty must be attached.",
+      "direction_neutrality": "The same independence bar applies to favorable and unfavorable outcomes."
+    },
+    "O7": {
+      "label": "multiple domain-relative formulations",
+      "evidence_required": "Role A scopes materially different answers to different system classes.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level.",
+      "layer_2_requires": "To claim INDEPENDENT domain-relative evidence from this run: tier T4+, contamination C0 or C1, qualified respondent, no procedural failure, plus the O7 evidence. C1 uncertainty must be attached. Repeated-domain-relativity claims remain blocked by F6's aggregation rule.",
+      "direction_neutrality": "The same independence bar applies to favorable and unfavorable outcomes."
+    },
+    "O8": {
+      "label": "no justified comparison relation supplied",
+      "evidence_required": "Role A states no comparison is justified, or comparison_H is unsettled and no coherent criterion is available.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level.",
+      "layer_2_requires": "To claim that an INDEPENDENT respondent supplied no justified comparison relation: tier T4+, contamination C0 or C1, qualified respondent, no procedural failure, plus the O8 evidence. C1 uncertainty must be attached.",
+      "direction_neutrality": "The same independence bar applies to favorable and unfavorable outcomes."
+    },
+    "O9": {
+      "label": "question judged malformed",
+      "evidence_required": "Role A concludes the question is ill-posed or malformed, with reasons recorded.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level.",
+      "layer_2_requires": "To claim an INDEPENDENT malformed-question judgment: tier T4+, contamination C0 or C1, qualified respondent, no procedural failure, plus the O9 evidence. C1 uncertainty must be attached.",
+      "direction_neutrality": "The same independence bar applies to favorable and unfavorable outcomes."
+    },
+    "O10": {
+      "label": "no stable formulation reached",
+      "evidence_required": "Role A cannot reach a stable answer and records that fact.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level.",
+      "layer_2_requires": "To claim an INDEPENDENT no-stable-formulation observation: tier T4+, contamination C0 or C1, qualified respondent, no procedural failure, plus the O10 evidence. C1 uncertainty must be attached. It does not imply that no respondent can reach one.",
+      "direction_neutrality": "The same independence bar applies to favorable and unfavorable outcomes."
+    },
+    "O11": {
+      "label": "run contaminated for independence claims",
+      "evidence_required": "Contamination level C4 or C5, or another recorded contamination pathway that removes INDEPENDENCE_VALUE.",
+      "layer_1_descriptive": "Classifiable at any tier. The run is preserved and its descriptive content remains available.",
+      "layer_2_requires": "No independent-elicitation claim follows from O11 itself. O11 is the finding that independence warrant is absent for the affected content.",
+      "direction_neutrality": "Contamination removes independence warrant in both agreement and divergence directions."
+    },
+    "O12": {
+      "label": "evidence insufficient for another outcome",
+      "evidence_required": "Default when no other Layer-1 outcome is supported by cited mapping evidence.",
+      "layer_1_descriptive": "Classifiable at any tier and contamination level.",
+      "layer_2_requires": "No independent substantive conclusion follows merely from O12. Any claim is limited to insufficiency of this recorded run under this protocol.",
+      "direction_neutrality": "Insufficiency is not scored for or against the programme."
+    }
+  },
+  "assignment_rules": [
+    "Exactly one primary Layer-1 outcome. Secondary Layer-1 outcomes are permitted where they also hold.",
+    "Layer-1 labels are descriptive and do not themselves assert independence.",
+    "Layer-2 claims are stated separately from Layer-1 classification and never merged with it.",
+    "Every assignment cites specific structural relations and recovery classes.",
+    "Contamination degrades INDEPENDENCE_VALUE in both directions; descriptive value is retained at every level.",
+    "C0 carries full contamination-based independence warrant; C1 is eligible only with explicit uncertainty; C2-C5 do not support this package's Layer-2 independent-elicitation claims.",
+    "No single run establishes universality, at any tier.",
+    "An outcome may not be revised after origins are disclosed, except as a separately recorded correction with its reason."
+  ],
+  "two_layer_model": {
+    "rationale": "An earlier revision applied a tier and contamination bar to O1 alone, then retained the word independent inside several Layer-1 labels even though Layer 1 is classifiable at any tier. Both defects are removed: descriptive classification and independence warrant are now separate for every outcome.",
+    "LAYER_1_descriptive_run_outcome": "What this respondent actually produced. Classifiable at ANY tier and ANY contamination level. A descriptive outcome is a fact about the run, not a claim of independence.",
+    "LAYER_2_warranted_claim": "What may be inferred from that outcome, gated by evidence tier, contamination level, respondent qualification, protocol integrity, and replication count. C0 is clean; C1 is eligible only with explicit uncertainty; C2-C5 do not support independent-elicitation claims under this package.",
+    "worked_example": "A T1 run may descriptively produce an alien formulation (Layer 1, O6). It may NOT support 'an independent investigator derived an alien formulation' (Layer 2), because T1 establishes no independence of any kind.",
+    "uniform_bar": "For a substantive Layer-2 claim about independent elicitation, the run requires tier T4 or higher, contamination C0 or C1, a qualified respondent per the tier rules, and no recorded procedural failure, plus the outcome-specific evidence. Every C1 claim carries the uncertainty explicitly. O11 and O12 are boundary outcomes and do not create independent substantive claims by themselves."
+  }
+}

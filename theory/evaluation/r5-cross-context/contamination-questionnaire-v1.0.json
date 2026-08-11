@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.1",
+  "artifact_id": "R5-CONTAMINATION-QUESTIONNAIRE-001",
+  "status": "frozen",
+  "administration_rule": "Administered AFTER the respondent declares every evidentiary answer final and AFTER the raw outputs are hashed, and BEFORE any reveal. Administering it earlier would itself disclose the existence of a specific body of prior work and contaminate later answers.",
+  "disposal_rule": "A contaminated respondent is NOT automatically discarded. Contamination is classified, recorded, and carried on every downstream claim.",
+  "items": [
+    {"id": "Q1", "text": "Before today, had you encountered a research programme concerned with a minimal architecture for structured, explicit, auditable reasoning?", "response": ["no", "unsure", "yes"]},
+    {"id": "Q2", "text": "Before today, had you encountered any framework identified by a short acronym whose stated subject is the architecture, methodology, or operations of reasoning analysis?", "response": ["no", "unsure", "yes"]},
+    {"id": "Q3", "text": "Before today, had you encountered a proposed four- or five-part decomposition of reasoning into named components?", "response": ["no", "unsure", "yes"]},
+    {"id": "Q4", "text": "Before today, had you read, browsed, cloned, or been shown any part of a repository concerned with the above?", "response": ["no", "unsure", "yes"]},
+    {"id": "Q5", "text": "Have you previously been asked any question in this research programme, in this or any other session, context, or thread?", "response": ["no", "unsure", "yes"]},
+    {"id": "Q6", "text": "Before today, had you seen a description of a specific set of requirements that two descriptions of one reasoning episode must satisfy to count as equivalent?", "response": ["no", "unsure", "yes"]},
+    {"id": "Q7", "text": "Before today, had you seen a comparison of several candidate answers to that question drawn from different mathematical traditions?", "response": ["no", "unsure", "yes"]},
+    {"id": "Q8", "text": "Before today, had you encountered any published paper, preprint, talk, post, or documentation from the programme described in Q1?", "response": ["no", "unsure", "yes"]},
+    {"id": "Q9", "text": "Have you discussed this topic with the person or organisation that commissioned this work?", "response": ["no", "unsure", "yes"]},
+    {"id": "Q10", "text": "If you are a machine system: does your context window, system prompt, retrieval corpus, fine-tuning data, or persistent memory contain material matching Q1-Q8, to the extent you can determine this? State what you can and cannot determine.", "response": ["no", "unsure", "yes", "cannot_determine", "not_applicable"]},
+    {"id": "Q11", "text": "During this task, did you consult any source that appeared to originate from the programme described in Q1? List it.", "response": ["no", "unsure", "yes"]},
+    {"id": "Q12", "text": "Did you at any point form a belief about what answer the requester wanted? If so, state the belief and when it formed.", "response": ["free_text"]}
+  ],
+  "contamination_levels": {
+    "C0_clean": "All of Q1-Q11 answered 'no', and Q12 reports no belief about a wanted answer.",
+    "C1_uncertain": "Any 'unsure' or 'cannot_determine', with no 'yes'.",
+    "C2_indirect": "'Yes' to Q1, Q2, Q3, or Q8 only. General topic exposure without access to the specific formulation under test.",
+    "C3_specific": "'Yes' to Q4, Q6, or Q7. Exposure to the repository or to the specific formulation or comparison.",
+    "C4_direct": "'Yes' to Q5, Q9, or Q11. Prior participation, direct discussion with the commissioning party, or in-task consultation of programme material.",
+    "C5_target_inferred": "Q12 reports a belief about the wanted answer that matches the target formulation, at any other level."
+  },
+  "level_consequences": {
+    "C0_clean": {
+      "descriptive": "full",
+      "independence": "full at the respondent's tier",
+      "note": "No known contamination pathway."
+    },
+    "C1_uncertain": {
+      "descriptive": "full",
+      "independence": "usable but uncertain; every Layer-2 claim must carry the uncertainty explicitly",
+      "note": "Eligible where a rule permits C1, but may never be reported as clean or as full independence."
+    },
+    "C2_indirect": {
+      "descriptive": "full",
+      "independence": "insufficient for this package's Layer-2 independent-elicitation claims in either direction",
+      "note": "Reported with the indirect-exposure finding. The descriptive response remains usable."
+    },
+    "C3_specific": {
+      "descriptive": "full",
+      "independence": "none for this package's independent-elicitation claims, in either agreement or divergence direction",
+      "note": "Specific exposure can cause conformity, reactance, deliberate differentiation, selective omission, or anchoring away. The content remains descriptively usable but is not independent-recovery or independent-falsification evidence."
+    },
+    "C4_direct": {
+      "descriptive": "full — objections and counterexamples remain usable as content",
+      "independence": "none in either direction",
+      "note": "Outcome O11. Preserved, never deleted."
+    },
+    "C5_target_inferred": {
+      "descriptive": "full, and the inference itself is a finding about packet leakage",
+      "independence": "none in either direction",
+      "note": "Outcome O11. Triggers a packet audit."
+    }
+  },
+  "asymmetry_rule": "**WITHDRAWN 2026-08-11.** The earlier rule read: contamination degrades evidence of agreement but not of divergence, because exposure to a target cannot manufacture disagreement. That inference is INVALID. Target exposure can produce reactance, deliberate differentiation, selective omission, adversarial rejection, reframing, and anchoring away from the target — all of which are target-conditioned divergence. Contaminated divergence is therefore not automatically independent evidence. Replaced by the two-value model below.",
+  "packet_audit_trigger": "Any C5 result, or any Q12 free text in which the respondent correctly infers a specific target formulation, requires re-running the adversarial package audit before further runs.",
+  "two_value_model": {
+    "rationale": "A contaminated response retains its content but loses or weakens its claim to have been independently elicited. Descriptive content and independence warrant are different properties and are recorded separately.",
+    "DESCRIPTIVE_VALUE": "What the response actually contains: objections, counterexamples, divergent constructions, alternative formulations. Retained at EVERY contamination level, including C4 and C5. Never discarded.",
+    "INDEPENDENCE_VALUE": "Whether the content can be attributed to independent elicitation rather than exposure. C0 is full. C1 is usable only with explicit uncertainty. C2-C5 are not eligible for this package's Layer-2 independent-elicitation claims. Agreement and divergence are treated symmetrically."
+  },
+  "prohibited": [
+    "Reporting C2-C5 divergence as independent falsification evidence.",
+    "Reporting C2-C5 agreement as independent recovery evidence.",
+    "Reporting C1 as clean or fully independent.",
+    "Discarding a contaminated run; its descriptive value is retained.",
+    "Citing the withdrawn asymmetry rule."
+  ]
+}

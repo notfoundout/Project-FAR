@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.1",
+  "artifact_id": "R5-ROLE-A-OUTPUT-SCHEMA-001",
+  "status": "frozen",
+  "purpose": "Structures the Role A answer for downstream mapping WITHOUT interpreting it. The raw response remains primary evidence; this schema is only a derived view.",
+  "hard_rules": [
+    "The raw response is preserved byte-for-byte and hashed BEFORE this schema is populated. This schema is a derived view, never a replacement.",
+    "The packet arm is recorded as A, B1, or B2.",
+    "For A and B1, fields A-I correspond to the explicit lettered prompts.",
+    "For B2, which deliberately contains NO A-I decomposition, a field may be populated only from an explicit passage whose content directly states that field. The exact source passage must be quoted in transcriber_observations. If assigning the passage to an A-I field would require inference, decomposition, completion, or reinterpretation, the field remains unsettled.",
+    "B2 silence on an A-I field is never evidence that the respondent rejects, omits, or lacks that concept. It means only that the ablation packet did not require a separately labelled answer on that axis.",
+    "The transcriber may not supply, complete, tidy, or infer any field the respondent left unsettled. 'unsettled' is a valid and expected value.",
+    "The transcriber may not translate the respondent's vocabulary into any other framework's vocabulary. Terms are recorded as the respondent used them.",
+    "If the transcriber believes a field is implied but not stated, it is recorded as unsettled with the belief noted in transcriber_observations, never promoted into the field."
+  ],
+  "fields": {
+    "packet_arm": {"type": "enum", "values": ["A", "B1", "B2"]},
+    "scope_A": {"type": "text_or_unsettled", "source_item": "A for A/B1; explicit passage only for B2", "note": "System classes in scope and excluded, in the respondent's own words."},
+    "observables_B": {"type": "list_or_unsettled", "source_item": "B for A/B1; explicit passage only for B2", "note": "Facts or behaviours the respondent says matter."},
+    "droppable_C": {"type": "list_or_unsettled", "source_item": "C for A/B1; explicit passage only for B2"},
+    "carryover_D": {"type": "text_or_unsettled", "source_item": "D for A/B1; explicit passage only for B2", "note": "The respondent's own definition of what carrying over means."},
+    "sameness_E": {"type": "text_or_unsettled", "source_item": "E for A/B1; explicit passage only for B2", "note": "The respondent's own equivalence notion."},
+    "legitimate_rewritings_F": {"type": "text_or_unsettled", "source_item": "F for A/B1; explicit passage only for B2"},
+    "assumptions_G": {"type": "list_or_unsettled", "source_item": "G for A/B1; explicit passage only for B2"},
+    "comparison_H": {"type": "text_or_unsettled", "source_item": "H for A/B1; explicit passage only for B2", "note": "Whether the respondent offers any way to compare competing answers, and what they say makes it natural. This field is load-bearing only when Role A actually supplied a criterion; the adjudication procedure never manufactures one."},
+    "no_single_answer_I": {"type": "text_or_unsettled", "source_item": "I for A/B1; explicit passage only for B2"},
+    "counterexamples": {"type": "list_or_unsettled"},
+    "rejected_approaches": {"type": "list_or_unsettled"},
+    "unresolved_points": {"type": "list_or_unsettled"},
+    "sources": {
+      "type": "list",
+      "item_fields": {
+        "citation": "string",
+        "class": ["primary_original", "authoritative_technical", "secondary_expository"],
+        "classified_by": ["respondent", "transcriber"],
+        "used_for": "string"
+      }
+    },
+    "declared_final": {"type": "boolean"},
+    "transcriber_observations": {"type": "text", "note": "Anything the transcriber noticed that is NOT part of the answer. For B2, include exact source passages used to populate any A-I field. Observations never become respondent claims."}
+  },
+  "optional_architecture_phase": {
+    "gate": "Run only after the contract answer is declared final, preserved byte-for-byte and hashed, and BEFORE the contamination questionnaire and before any reveal. See freeze-procedure-v1.0.md section 3. Ordering it after the questionnaire is a protocol violation, because the questionnaire discloses that a target architecture exists.",
+    "question_asked": "Given the answer you have just finalised, determine whether it implies any minimal or canonical way of structuring such a description. State and justify whatever conclusion you reach. If you consult any additional source for this phase, list it.",
+    "fields": {
+      "architecture_or_none": {"type": "text_or_unsettled"},
+      "derivation_from_own_contract": {"type": "text_or_unsettled", "note": "How the respondent says it follows from their own answer above."},
+      "additional_sources": {"type": "list", "note": "Every source consulted only after S5 was asked. Empty list if none."},
+      "declared_final": {"type": "boolean"}
+    },
+    "separation_rule": "This is a SECOND frozen artifact with its own hash. Contract-to-contract and architecture-to-architecture comparisons are reported separately and are never collapsed into a single agreement score.",
+    "question_asked_is_frozen_as": "participant-surface-v1.1.json entry S5",
+    "contamination_note": "S5 discloses that a structuring question is of interest. It cannot contaminate the contract answer, already sealed. It does contaminate the architecture answer as to the existence of such a question, though not as to any particular structure. Disclosed on every architecture-phase claim."
+  }
+}
