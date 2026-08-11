@@ -65,7 +65,7 @@ Twenty-one defect classes were raised externally; all were verified against the 
 
 | # | Defect | Repair |
 |---|---|---|
-| 1 | Verifier modelled only packet §§2–3 as participant-facing, leaving fallback text unchecked | `participant-surface-v1.1.json` registers the complete authorized pre-reveal surface; unregistered text fails closed |
+| 1 | Verifier modelled only packet §§2–§3 as participant-facing, leaving fallback text unchecked | `participant-surface-v1.1.json` registers the complete authorized pre-reveal surface; unregistered text fails closed |
 | 2 | Packet A provenance still claimed deliberate negative overrepresentation | Corrected; failed 6:0 repair preserved only as provenance |
 | 3 | Contamination asymmetry invalid | Replaced by descriptive-value vs independence-value model; independence degrades in both directions |
 | 4 | Architecture phase ordered after the questionnaire; procedure/schema also disagreed | Reordered contract → freeze → architecture → freeze → questionnaire → reveal; contradiction removed |
@@ -117,3 +117,11 @@ A later full-state audit found additional cross-surface defects that did not req
 - **Failure:** if three consecutive post-completion adversarial review cycles after this rule's registration each discover at least one new substantive defect, stop without merge and mark `REVIEW_EXHAUSTED_NOT_MERGE_READY`. Further repair requires a different model/provider or qualified human reviewer and explicit authorization.
 
 This rule prevents both endless review of an unchanged clean state and endless same-reviewer repair loops.
+
+## 11. Post-rule review cycle 1 — substantive defect found and repaired
+
+The first adversarial review cycle after registration of the bounded review-loop rule found one substantive defect: the two-layer model allowed Layer-1 classification at any tier, but several Layer-1 outcome labels themselves still asserted **independence** (for example, `O1` was labelled "independent recovery" and `O3`/`O4` "independently derived"). A T1 run could therefore receive a descriptive label whose wording claimed an evidential property T1 cannot establish.
+
+**Repair:** Layer-1 labels and the preregistered outcome-space descriptions are now purely descriptive. Independence appears only in Layer-2 warrant language. `O11` and `O12` were also narrowed so they do not inherit a nonsensical generic independent-elicitation bar. This is a substantive evidential-warrant repair and therefore resets the clean-pass count to zero.
+
+**Failure-counter state:** `1` defect-finding cycle out of the prospective maximum of `3`. Exactly one new separate adversarial review is now required. A zero-defect result on that review satisfies the success stop; a new substantive defect would produce cycle 2 and require repair plus another review.
