@@ -36,6 +36,14 @@
     "generator.next-actions": {
       "inputs": [
         "README.md",
+        "docs/audits/upp-w15-terminal-theorem-audit.md",
+        "docs/doctrine/isolation-classification.md",
+        "docs/governance/counterexample-register.md",
+        "docs/governance/limitations-register.md",
+        "docs/governance/open-problems-register.md",
+        "docs/governance/post-terminal-public-evaluation-program-v1.0.md",
+        "docs/governance/theorem-proof-status-register.md",
+        "docs/project-status.md",
         "docs/reports/**",
         "docs/research/**",
         "theory/**"
