@@ -40,16 +40,16 @@ Address each of the following. Where you cannot settle an item, say so and say w
 
 You may also record counterexamples you constructed, approaches you tried and rejected, and anything you regard as unresolved.
 
-### Outcomes that are equally acceptable
+### Shapes an answer may take
 
-Any of the following is a complete and acceptable answer. None is regarded as a failure.
+An answer of any of the following shapes is complete and acceptable. **This list is neither exhaustive nor ranked, and its order carries no preference.** An answer of a shape not listed here is equally acceptable.
 
-- The question is ill-posed as asked.
-- Several answers are equally defensible.
-- Different domains require different answers.
-- No non-trivial answer exists that is not empty or arbitrary.
-- Additional structure must be supplied before the question has an answer.
-- You are unable to reach a stable answer.
+- A single set of requirements applies across all the systems you admit.
+- A single set applies, under assumptions that you state.
+- Several different sets are equally defensible.
+- Different kinds of system require different sets.
+- No non-trivial set exists; any candidate is empty or arbitrary.
+- The question cannot be settled as asked, or you cannot reach a stable answer.
 
 **There is no target answer.** Do not attempt to infer one from the phrasing of the question, and do not optimise for agreement with any body of work you may suspect lies behind it.
 

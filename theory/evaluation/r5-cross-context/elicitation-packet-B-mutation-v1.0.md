@@ -43,7 +43,7 @@ In whatever order suits your answer:
 
 Record counterexamples, rejected approaches, unresolved points, and every source you used, marking each source as primary/original, authoritative technical, or secondary/expository.
 
-Concluding that the request is ill-posed, that the answer is domain-dependent, that several answers are equally good, or that you cannot reach a stable answer, are all complete and acceptable outcomes. There is no target answer.
+Any shape of answer is acceptable, and the following are equally so, in no particular order and not exhaustively: that one set of conditions covers every case you admit; that one set covers them under assumptions you state; that several sets are equally good; that different kinds of case need different sets; that no non-trivial set exists; or that the request cannot be settled as asked or you cannot reach a stable answer. There is no target answer.
 
 ---
 

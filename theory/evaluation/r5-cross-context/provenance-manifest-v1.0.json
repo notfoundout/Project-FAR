@@ -3,13 +3,13 @@
   "artifact_id": "R5-PROVENANCE-MANIFEST-001",
   "program_id": "R5-CROSS-CONTEXT-001",
   "status": "PROTOCOL_FROZEN_EVIDENCE_NOT_YET_COLLECTED",
-  "repository_base": "3ba4986b86b6e211d9e01e78018ef8324297f86c",
+  "repository_base": "5d482a9c4cb760e3af6f2bcccff2e0461a971a9b",
   "base_description": "origin/main after the merge of PR #443 (merge commit 3ba4986b86b6e211d9e01e78018ef8324297f86c, parents 5f26792 and bc784b4).",
   "hash_algorithm": "sha256",
   "artifact_hashes": {
     "README.md": {
-      "sha256": "a404af8e2e453048bbdc508c7e8749069e9601ff3bc40252c5993cc7a661d3d3",
-      "bytes": 5329
+      "sha256": "43e9290e43c39383ec1d51e6aa1c14b678f2ac7df302a55c769a0300c1742bc2",
+      "bytes": 5970
     },
     "adjudication-procedure-v1.0.md": {
       "sha256": "121a45c1f43de0eb5afea1c6ab7a6e1b22c65be650071bfa896b20e68baafb26",
@@ -20,16 +20,16 @@
       "bytes": 5246
     },
     "elicitation-packet-A-v1.0.md": {
-      "sha256": "bbc2bc42f0b6b1120a07aa40660a93fd9cf3e3894f969efd4db284cb5822b04e",
-      "bytes": 4583
+      "sha256": "d1c9dd0fea78ed8a30458a31c0f108326cf1eda1f826aa6f998295778fad9f19",
+      "bytes": 4767
     },
     "elicitation-packet-B-mutation-v1.0.md": {
-      "sha256": "892dbe92052ef8138275ef3bb08dd1a7549fa59ceab0fcdc6268cb3062c82391",
-      "bytes": 4107
+      "sha256": "0169da49d800ca5fd6bc4afa923fe6f5790719ef1af2aa494b813f312e8d667c",
+      "bytes": 4331
     },
     "evidence-tier-rules-v1.0.json": {
-      "sha256": "380638bc3097e5cc712468152e6545cb71c3edefbddcb272f4d251492634f053",
-      "bytes": 4400
+      "sha256": "578bdc52c3cd6a99f5e9a8149239ebfbc5aeaa535ef65ae29f670e4edb8dba3e",
+      "bytes": 9567
     },
     "freeze-procedure-v1.0.md": {
       "sha256": "fced42f1ecaa5632e30fc45657f04c2325eec501cdb5453315f3d85cfca1d5c9",
@@ -44,8 +44,8 @@
       "bytes": 3542
     },
     "package-audit-v1.0.md": {
-      "sha256": "6c7997afe1bfe50b49f728e7df87365dd0d39c74e83fddee37d3b03a77824af2",
-      "bytes": 6824
+      "sha256": "3cb0600cdf56226980721c57fb5f64729d7b03c5f7b7a92e39f69134d328cbeb",
+      "bytes": 11521
     },
     "preregistration-v1.0.json": {
       "sha256": "efdfb3ea60c89795933ff176c94a3edef89782708dbabd52a67e999167cae8cc",
@@ -90,5 +90,12 @@
     "No outcome is registered.",
     "No independence, replication, recovery, or architecture support is claimed.",
     "This manifest records the existence and frozen status of a protocol only."
-  ]
+  ],
+  "second_round_audit": {
+    "date": "2026-08-11",
+    "outcome_priming": "Repaired. The first repair overcorrected to zero-of-six positive shapes, which primed a negative result. Option C selected: balanced, explicitly unranked, explicitly non-exhaustive. Applied to both packets.",
+    "t5_stopping_rule": "Resolved as interpretation A. T5 is faithful external execution of this protocol under external preregistration. Interpretation B is reclassified as class X1 and is not an execution tier.",
+    "consequential_withdrawal": "The claim that LIM-031 is closed at T5 is withdrawn as overstated. T5 substantially addresses it; full closure additionally requires X1.",
+    "hashes_regenerated": true
+  }
 }

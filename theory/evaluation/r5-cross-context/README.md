@@ -56,7 +56,7 @@ The mutation packet `elicitation-packet-B-mutation-v1.0.md` follows the same pat
 | `normalization-mapping-schema-v1.0.json` | Mapping fields, both directions, failed mappings, mapper declarations |
 | `adjudication-procedure-v1.0.md` | Primary comparison, neutral relations, anti-reconstruction scale, outcome assignment |
 | `outcome-registry-v1.0.json` | `O1`–`O12` with per-outcome evidence requirements |
-| `evidence-tier-rules-v1.0.json` | `T1`–`T5`, each with an explicit `cannot_establish` list |
+| `evidence-tier-rules-v1.0.json` | `T1`–`T5`, each with an explicit `cannot_establish` list; class `X1` recorded as **not** an execution tier; `LIM-031` closure analysis |
 | `provenance-manifest-v1.0.json` | Hashes and consumed dispositions |
 | `package-audit-v1.0.md` | Adversarial audit, negative control, clean-room read, residual risk |
 | `verify_r5_package.py` | **RESTRICTED.** Mechanical blinding, structure, and state check |
@@ -71,8 +71,10 @@ The mutation packet `elicitation-packet-B-mutation-v1.0.md` follows the same pat
 
 The package is complete when another investigator can execute it without making any new methodological decision that could materially affect the result. If the executor must decide what the question means, what counts as contamination, when to reveal, how to freeze, how to compare, how to score, or which outcomes count — it is **not** frozen. Each of those is fixed in the artifacts above.
 
+**`T5` and the stopping rule.** `T5` means an independent organization preregistering **faithful execution of this protocol** — procedural and organizational independence with no methodological alteration. Seven administrative additions are permitted and nine alterations create a new protocol version instead. Independently designing a *different* protocol is class `X1`, which is **not** an execution tier of this package.
+
 ---
 
 ## What this package cannot do
 
-It cannot establish that R5 is obtainable, only that it is specified. It cannot make a single positive run establish universality. It cannot supply a comparison relation over formulations — none is established, and the withdrawn seven-dimension rubric is explicitly not reused. It cannot remove the residual structural hint in the A–I decomposition, which `package-audit-v1.0.md` §3 discloses as a known limitation of the instrument.
+It cannot establish that R5 is obtainable, only that it is specified. It cannot close `LIM-031`: a faithful external execution supplies an externally authored answer but not an externally chosen question. It cannot make a single positive run establish universality. It cannot supply a comparison relation over formulations — none is established, and the withdrawn seven-dimension rubric is explicitly not reused. It cannot remove the residual structural hint in the A–I decomposition, which `package-audit-v1.0.md` §3 discloses as a known limitation of the instrument.

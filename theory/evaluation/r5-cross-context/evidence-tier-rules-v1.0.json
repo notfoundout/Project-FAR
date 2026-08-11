@@ -3,9 +3,7 @@
   "artifact_id": "R5-EVIDENCE-TIERS-001",
   "status": "frozen",
   "native_terminology_source": "docs/research/usd-w6-independence-execution-v1.0.md, which already separates isolated-run independence, implementation or model-family independence, and human or organizational independence, and separates R3 technical replication, R4 adversarial conceptual replication, and R5 cross-context replication. Those distinctions are reused rather than replaced.",
-
   "governing_rule": "No stronger label may be inferred from a weaker one. Context separation is not investigator independence. A fixed number of runs is a design choice, not a statistical guarantee.",
-
   "tiers": {
     "T1_same_model_new_context": {
       "description": "Same model, fresh context, no shared memory or retrieval.",
@@ -24,7 +22,9 @@
     "T2_same_family_isolated": {
       "description": "Same provider or model family, with isolation controls on context, retrieval, and memory.",
       "native_class": "isolated-run independence with implementation controls",
-      "can_establish": ["Robustness to run-level variation within one family."],
+      "can_establish": [
+        "Robustness to run-level variation within one family."
+      ],
       "cannot_establish": [
         "Model-family independence, which requires a different family.",
         "Investigator independence.",
@@ -56,31 +56,79 @@
         "Organizational independence, if the investigator was engaged and briefed solely by the programme.",
         "Universality from a single run."
       ],
-      "satisfies_R5": "partially — this is the minimum tier at which an R5 claim becomes arguable"
+      "satisfies_R5": "partially \u2014 this is the minimum tier at which an R5 claim becomes arguable"
     },
     "T5_independent_expert_preregistered": {
-      "description": "An independent expert or organization, executing under their own preregistration, with role separation held externally.",
+      "description": "An independent expert or organization executing THIS frozen protocol faithfully, under their own preregistration of the execution, with role separation held externally.",
+      "interpretation_resolved": "A \u2014 independently preregistering faithful execution of this frozen protocol, with no methodological alteration. Interpretation B, independently designing a different preregistered protocol, is NOT this tier and is not an execution tier of this package; it is class X1 below.",
       "native_class": "human and organizational independence",
+      "may_be_added_administratively": [
+        "Ethics, IRB, or institutional review and approval.",
+        "Consent, engagement, contracting, payment, and scheduling.",
+        "The executing organization's own record-keeping, audit trail, and internal sign-off.",
+        "Their own preregistration of who executes which role, when, and under what supervision.",
+        "Selection of the respondent, within the tier and contamination rules already fixed here.",
+        "Delivery logistics and channel, provided the delivery checklist is satisfied.",
+        "Additional observations recorded alongside, but never in place of, the required fields."
+      ],
+      "creates_a_new_protocol_version_and_is_therefore_not_T5": [
+        "Any change to the delivered wording of packet section 2 or 3.",
+        "Any change to the A-I sub-question set, or to packet B's checklist.",
+        "Adding examples, a reading list, or any field or domain suggestion.",
+        "Any change to contamination items, levels, or their consequences.",
+        "Any change to tier definitions or their cannot_establish lists.",
+        "Any change to outcome definitions or per-outcome evidence requirements.",
+        "Any change to the recovery classes or the structural relation set.",
+        "Any change to the freeze ordering or the reveal gate.",
+        "Substituting any comparison criterion for the respondent's own."
+      ],
       "can_establish": [
-        "R5 cross-context replication as the repository defines it.",
-        "The strongest available evidence against or for LIM-031."
+        "R5 cross-context replication as the repository defines it, for the elicitation this protocol specifies.",
+        "That a party with human and organizational independence did or did not arrive at a comparable formulation when asked this question.",
+        "The strongest evidence this package alone can produce bearing on LIM-031."
       ],
       "cannot_establish": [
-        "Universality from any number of runs.",
-        "That the programme's formulation is correct."
+        "Universality, from any number of runs.",
+        "That the programme's formulation is correct.",
+        "Independence from the programme's FRAMING. The question, the A-I decomposition, and the comparison procedure remain programme-authored, so a faithful external execution supplies an externally chosen ANSWER but not an externally chosen QUESTION.",
+        "Full closure of LIM-031. See the closure analysis below."
       ],
-      "satisfies_R5": true
+      "satisfies_R5": true,
+      "is_an_execution_tier_of_this_package": true
     }
   },
-
   "reporting_rules": [
     "Every claim states its tier explicitly and inherits that tier's cannot_establish list verbatim.",
     "A pair of runs is reported at the LOWER of the two tiers.",
     "A run at T1 or T2 may never be described as replication, independence, or cross-context.",
     "A T3 run may be described as model-family independent and must not be described as independent without qualification.",
-    "LIM-031 is addressed only from T4 upward, and closed only at T5.",
-    "A contaminated run is reported at its tier with its contamination level attached; contamination is never silently absorbed into the tier."
+    "LIM-031 is addressed only from T4 upward and substantially addressed at T5. It is NOT closed by T5 alone: T5 supplies external evaluation, not external framing. Full closure requires T5 together with X1 independent protocol design. No claim of closure may be made from this package's execution alone.",
+    "A contaminated run is reported at its tier with its contamination level attached; contamination is never silently absorbed into the tier.",
+    "A T5 run that alters any item in creates_a_new_protocol_version_and_is_therefore_not_T5 is not a T5 run; it is a different protocol and is reported as such."
   ],
-
-  "current_state": "No run exists at any tier. This package specifies the tiers; it collects nothing."
+  "current_state": "No run exists at any tier. This package specifies the tiers; it collects nothing.",
+  "external_classes_not_executable_from_this_package": {
+    "X1_independent_protocol_design": {
+      "description": "An independent party designs and preregisters their own protocol for the underlying question, without using this package's instrument.",
+      "relation_to_this_package": "NOT an execution tier. This package cannot produce X1, and nothing in it should be read as specifying X1.",
+      "why_it_matters": "LIM-031 records that no external party has ever CHOSEN or EVALUATED a preservation contract. A faithful T5 execution supplies external evaluation and an externally authored answer, but the question and the comparison procedure remain programme-authored. Only X1 supplies an externally chosen framing.",
+      "can_establish": [
+        "The remaining half of LIM-031 that T5 cannot reach."
+      ],
+      "cannot_establish": [
+        "Anything about this package's instrument, which it does not use."
+      ]
+    }
+  },
+  "lim_031_closure_analysis": {
+    "deficit_has_two_halves": {
+      "evaluation_half": "No external party has evaluated a preservation contract.",
+      "framing_half": "No external party has chosen the question or the comparison procedure."
+    },
+    "T4_reaches": "Neither half fully. T4 supplies human independence in answering, and is the first tier that bears on the evaluation half at all.",
+    "T5_reaches": "The evaluation half, substantially. NOT the framing half.",
+    "X1_reaches": "The framing half.",
+    "correction": "An earlier statement in this package read 'LIM-031 is addressed only from T4 upward, and closed only at T5.' The second clause is WITHDRAWN as overstated. T5 substantially addresses LIM-031 but does not close it, because the residual structural hint disclosed in package-audit-v1.0.md section 3 is programme-authored and survives any faithful execution. Full closure requires T5 and X1 together."
+  },
+  "stopping_rule_consistency": "The package stopping rule requires that an executor make no new methodological decision that could materially affect the result. T5 under interpretation A is consistent with that rule: the executing organization supplies procedural and organizational independence while making no methodological decision, because every such decision is already fixed here. Procedural independence and methodological alteration are distinct, and only the former is permitted at T5."
 }
