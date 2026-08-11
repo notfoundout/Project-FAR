@@ -27,7 +27,7 @@
     "C_architecture_phase_question": [
       {
         "id": "S5",
-        "exact_string": "Given the answer you have just finalised, what minimal or canonical way of structuring such a description, if any, follows from it? Concluding that none follows, or that several do, is an acceptable answer.",
+        "exact_string": "Given the answer you have just finalised, determine whether it implies any minimal or canonical way of structuring such a description. State and justify whatever conclusion you reach.",
         "when": "after the contract answer is declared final, preserved and hashed, and BEFORE the contamination questionnaire and before any reveal",
         "optional": true,
         "contamination_note": "This question discloses that a structuring question is of interest, which the contract elicitation did not. It therefore contaminates the ARCHITECTURE answer with respect to the existence of a structuring question, though not with respect to any particular structure. It cannot contaminate the contract answer, which is already frozen and hashed. This limitation is disclosed on every architecture-phase claim."
