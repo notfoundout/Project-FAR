@@ -1,231 +1,76 @@
 # Project Roadmap
 
-## Post–SWE-agent v2 gates
+This roadmap records gated future work. It is a planning surface, not theory or evidence, and it cannot authorize work that the Research Execution Charter or a registered program does not authorize.
 
-1. Preserve the completed four-run evidence and keep execution/reveal mutation paths closed.
-2. Resolve provenance gaps (notably unverifiable SWE-ReX revisions) before any new comparison.
-3. Preregister additional tasks, independent repetitions, infrastructure-failure classes, and an analysis rule before execution.
-4. Treat replication as a new experiment; never pool it with the frozen v2 case without a separately justified aggregation protocol.
-5. Apply the forensic P0/P1/P2/P3 requirements as constraints for any separately authorized architecture phase; requirements do not select or implement v3.
+## Current release and phase
 
-These are gates, not commitments that the additional experiments will validate FAR or either SWE-agent release.
+Current published repository release: [`v1.0.0`](releases/project-far-v1.0.0.md).
 
-## Purpose
+Current program: [`POST-TERM-EVAL-001`](governance/post-terminal-public-evaluation-program-v1.0.md).
 
-This document describes the long-term development plan of Project FAR.
+The Universal Proof Program `POST-TUE-UPP-001` is complete and its deductive queue is closed. There is no `UPP-W16`. Any stronger deductive theorem requires a separately registered program.
 
-It identifies the major phases of the project, their objectives, and their current status.
+## Ordered post-terminal work
 
-Unlike the formal theory, this document serves as a project management and planning resource.
+The current order follows the registered post-terminal evaluation program:
 
-## Governing Research Direction
+1. **`PTE-W1-INDEPENDENT-REVIEW` — next.** Prepare the exact terminal theorem, frozen premises, dependency audit, proof obligations, mechanization boundary, nonclaims, and reviewer-disclosure requirements for genuinely independent proof review.
+2. **`PTE-W2-KERNEL-RECONSTRUCTION`.** Attempt one end-to-end proof-assistant reconstruction of the terminal semantic composition. If full reconstruction fails, preserve the strongest explicit obstruction and identify every external assumption that remains outside the kernel.
+3. **`PTE-W3-COUNTERMODEL-SEARCH`.** Seek countermodels and scope challenges against class membership, admissibility, faithfulness, machinery closure, equivalence, component necessity, construction sufficiency, independence, maximality, and terminal composition. Failed challenges remain evidence; unresolved challenges remain `Unknown`.
+4. **`PTE-W4-EMPIRICAL-REPLICATION`.** Obtain independent bounded replication under a frozen protocol. Project-authored or same-implementation-path execution is not independent replication and cannot establish the deductive theorem by itself.
+5. **Application correspondence.** Test whether real systems actually satisfy the terminal theorem's premises and whether representation preserves the registered commitments. Application success or failure affects correspondence evidence, not the theorem automatically.
 
-The [Central Research Program](governance/central-research-program.md), [Anti-Self-Validation Standard](governance/anti-self-validation-standard.md), and [Research Priority Reset](governance/research-priority-reset.md) govern future major work.
+These workstreams may proceed only within their registered scope. Completion of one does not silently upgrade another evidence dimension.
 
-Project FAR exists to determine whether reasoning instantiates a common underlying structure and, if so, whether that structure is universal and minimal. Roadmap work must therefore be classified as one of:
+## Current gates
 
-- core research advancing existence, universality, necessity, minimality, nontriviality, or boundary analysis;
-- supporting engineering enabling reproducible research;
-- maintenance preserving repository and implementation integrity;
-- applications demonstrating or testing bounded use cases.
+Before claiming progress in a post-terminal channel:
 
-Completion of infrastructure, validation, or mechanization does not by itself resolve the central research question.
+- identify the exact theorem, premise, bounded result, or application claim under review;
+- preserve the terminal theorem's frozen premise set and open-world boundary;
+- preregister empirical execution when the governing protocol requires it;
+- disclose evaluator independence and prior exposure;
+- preserve negative results, failed reconstructions, ambiguity, and protocol deviations;
+- issue a claim-impact record for confirmed defects;
+- keep unresolved defects or observationally indistinguishable alternatives as `Unknown`;
+- never use CI success, finite testing, internal replication, or absence of known counterexamples as proof of unrestricted claims.
 
-## Current Research Reset
+## Theory and stronger-claim policy
 
-The active milestone is a decisive prospective test of nontrivial adequacy, local necessity, comparative economy, and independence. The controlling gate registry is [`theory/evaluation/research-gates.json`](../theory/evaluation/research-gates.json).
+Post-terminal evaluation is not a hidden continuation of the closed deductive program.
 
-The active sequence is:
+A stronger theorem, broader target class, weaker premise set, stronger maximality claim, or changed equivalence criterion requires a separately registered deductive program before derivation. It may not be smuggled into review, replication, application work, or maintenance.
 
-1. freeze a vocabulary-neutral external observation contract;
-2. register positive and negative controls;
-3. freeze full-cost accounting and anti-reintroduction rules;
-4. complete an explicitly nonconfirmatory internal pilot;
-5. freeze a confirmatory package;
-6. execute independent and adversarial replications;
-7. publish the full result distribution, failures, unresolved outcomes, and nonclaims;
-8. decide whether to continue, revise, restrict, reduce, or reject the candidate theory.
+## Engineering and experiments
 
-New certification layers, dashboards, release packaging, favorable-case expansion, generic cleanup, and unrelated applications are paused by default unless required for this sequence.
+Supporting engineering is justified only when required by an authorized evaluation channel, reproducibility obligation, security/integrity defect, or accepted repository-maintenance requirement.
 
----
+Do not prioritize generic product expansion, another benchmark version, new dashboards, favorable-case accumulation, or speculative infrastructure merely because implementation is possible.
 
-# Phase I — Repository Architecture
+A new empirical run must have an authorized protocol, frozen inputs, acceptance/adjudication rules, provenance, independence classification, and evidence-preservation path before execution.
 
-## Objective
+## Framework maintenance
 
-Establish the organizational and conceptual structure of Project FAR.
+FARA, FAR, FARO, FARE, and FARM remain maintained at their current governed scopes. Framework stability is not evidence for unrestricted universality or superiority. Changes to stable layers require the applicable change-control and provenance rules.
 
-### Components
+## Release track
 
-- Documentation (`docs/`)
-- Foundational Architecture of Reasoning Analysis (`frameworks/FARA/`)
-- Foundational Analysis of Reasoning (`frameworks/FAR/`)
-- Foundational Analysis of Reasoning Operations (`frameworks/FARO/`)
-- Repository organization
-- Canonical terminology
-- Dependency structure
+- Current published repository release: [`v1.0.0`](releases/project-far-v1.0.0.md).
+- The installable package version remains a separate surface governed by `pyproject.toml`.
+- Historical release baselines remain preserved under [`releases/`](releases/).
 
-### Status
+Release packaging does not strengthen theorem assurance, independence, empirical validity, or application correspondence.
 
-✅ Complete
+## Historical roadmap
 
----
+The superseded pre-terminal roadmap, including the v0.4.0, anti-self-validation, REP/ADJ/W3.5, and earlier validation planning sequence, is preserved byte-for-byte at [`../archive/superseded/status/roadmap-pre-terminal-2026-08-10.txt`](../archive/superseded/status/roadmap-pre-terminal-2026-08-10.txt).
 
-# Phase II — Formal Theory
+The `.txt` extension is deliberate: historical relative links remain part of the preserved bytes but are not presented as live repository documentation.
 
-## Objective
+That snapshot is historical and does not define current priorities.
 
-Develop the mathematical foundation of Project FAR.
+## Long-term objective
 
-### Components
+Determine the strongest justified account of the structure of explicit, auditable reasoning; expose the exact boundaries under which the terminal relative result holds; identify countermodels, unnecessary commitments, failed correspondences, and simpler rivals where they exist; and reduce or retract claims when evidence requires it.
 
-- Definitions
-- Axioms
-- Conjectures
-- Propositions
-- Lemmas
-- Theorems
-- Proofs
-
-### Status
-
-🟡 In Progress, but theory strengthening is subordinate to current falsification and comparative gates.
-
----
-
-# Phase III — Validation
-
-## Objective
-
-Evaluate the applicability of Project FAR across existing reasoning frameworks without allowing successful representation alone to count as universality, necessity, minimality, or superiority.
-
-### Validation Studies
-
-- Scientific Method
-- Mathematical Proof
-- Bayesian Reasoning
-- Legal Reasoning
-- Historical Method
-- Software Engineering
-- Additional reasoning frameworks
-
-### Status
-
-Bounded internal and external-validation work exists. Confirmatory independence and nontriviality remain unsatisfied. Current completion state is recorded in `project-status.md` and `theory/evaluation/research-gates.json`.
-
----
-
-# Phase IV — Examples
-
-## Objective
-
-Demonstrate Project FAR through complete worked investigations.
-
-### Examples
-
-- Simple Investigation
-- Mathematical Proof
-- Scientific Investigation
-- Historical Analysis
-- Disagreement Analysis
-
-### Status
-
-Current completion state is recorded in `project-status.md`. New favorable examples are not an active priority unless they serve a frozen boundary or negative-control experiment.
-
----
-
-# Phase V — Decisive Research
-
-## Objective
-
-Evaluate the central hypothesis under the [Central Research Program](governance/central-research-program.md) and prevent the project from becoming its own sole source of theory, cases, metrics, verification, and adjudication.
-
-### Required Gates
-
-- external observation contract;
-- nontriviality and negative controls;
-- local primitive ablation with anti-reintroduction review;
-- full-cost comparative accounting;
-- independent implementation or evaluation;
-- private-holdout counterexample challenge;
-- nonclaim audit before evidence release.
-
-### Status
-
-🟡 Active. All gates are prospectively registered as not satisfied until evidence is recorded.
-
----
-
-# Phase VI — Publication
-
-## Objective
-
-Prepare mature portions of Project FAR for public dissemination.
-
-### Deliverables
-
-- Technical papers
-- Reference manual
-- Tutorials
-- Case studies
-- External documentation
-
-### Status
-
-⚪ Deferred for central-claim publication until the required evidential gates are satisfied. Bounded engineering or methods publications must retain explicit nonclaims.
-
----
-
-# Release Track
-
-## Current Release
-
-v0.4.0 is the current release baseline. The v0.4.0 milestone is complete and is documented in [`docs/releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md). The previous v0.3.0 internal-validation baseline remains documented in [`docs/releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
-
-## Current Phase
-
-Post-v0.4.0 work has produced deterministic comparative-representation infrastructure and bounded prospective evidence. The next phase is not general expansion. It is execution of the registered anti-self-validation research gates.
-
-## Completed v0.3 Milestones
-
-- v0.3.0 internal validation baseline: complete.
-- Primitive-sufficiency evaluation: complete for the analyzed internal corpus.
-- Dashboard, planning, repository-health, and release-readiness automation: complete for the v0.3 release checkpoint.
-- Release documentation and GitHub release notes: complete.
-
-## v0.4 Objectives
-
-Status: ✅ Complete as v0.4.0.
-
-The historical v0.4.0 objectives are preserved:
-
-- Preserve v0.3.0 as the internal-validation baseline.
-- Execute external validation without silently rewriting v0.3 conclusions.
-- Separate external evidence from internal fixture evidence.
-- Identify recurring external pressure points.
-
-Completed v0.4.0 work also exceeded the original milestone by adopting CRP v1.0 as the frozen canonical methodology for future comparative representation studies and registering comparative experiments. Later work completed deterministic implementation at registered scopes.
-
-## Next Development Milestone
-
-Complete the external observation contract, negative-control suite, full-cost model, and anti-reintroduction ablation method; then package and run the first prospective pilot governed by the anti-self-validation standard. Do not prioritize the next evidence release before these gates generate a result worth releasing.
-
-# Long-Term Goal
-
-Reach the strongest justified conclusion about whether a common structure of reasoning exists, whether FAR captures it within an explicitly justified scope, whether every retained component is necessary, and whether any simpler competing structure has equal expressive power.
-
-Project success is measured by answering that question rigorously, not by forcing confirmation of FAR.
-
-## Comparative Representation Evaluation Roadmap
-
-Comparative Representation Protocol v1.0 remains a registered baseline. Completed deterministic implementation and bounded experiments remain preserved evidence, but they do not satisfy the new prospective gates by themselves. Legacy external-validation evidence remains preliminary rather than prospective independent comparative evidence. Future confirmatory work must use the confirmatory research package, the research-gate registry, full-cost accounting, negative controls, and declared independence levels.
-
-## Post-audit gated research (not authorized by listing)
-
-1. Seek independent criticism and countermodels for the registered open problems.
-2. Propose CRP v1.1 only through preregistration, with executable decision fixtures and adjudication edge cases.
-3. Attempt end-to-end kernel reconstruction without strengthening the terminal theorem.
-4. Test changing-rule, continuous/probabilistic, embodied, nonclassical, and incompatible-ontology cases only after charter justification.
-5. Do not add product features, execution infrastructure, or another benchmark version in this correction phase.
+Project success is measured by the accuracy and auditability of the final claim boundary, not by forcing Project FAR to survive criticism.

@@ -1,0 +1,199 @@
+# Project FAR Status
+
+The root [README Command Center](../README.md) is the canonical entry point for current repository status and generated planning reports.
+
+- [`docs/maintenance/repository-health-checks.md`](maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
+
+## Current Status
+
+### FARA formal-kernel Acceptance and Promotion
+
+`FARA-FORMAL-KERNEL-001` is Accepted and promoted for **Project FAR v1.0 finite, explicit, auditable representational architecture**. The canonical formal foundation at that scope is the identity-bearing many-sorted relational kernel in [`frameworks/FARA/formal-kernel.md`](../frameworks/FARA/formal-kernel.md).
+
+The source execution and separate clean-room Node.js implementation reproduced every registered candidate classification and failed-gate set. The promotion does not alter the seven candidate primitive classifications. Typed hypergraph remains an admissible derived representation; algebraic/state-transition remains a derived backend requiring explicit preservation machinery; pure extensional relational projection is noncanonical where parallel occurrence identity matters.
+
+This status does not establish global uniqueness, universality, primitive necessity/minimality, completeness, full-signature or unbounded adequacy, nonfinite continuous semantics, live-oracle semantics, embodied/environment-inclusive semantics, external-investigator independence, or superiority under every comparison criterion. Those boundaries are enforced by `LIM-025`, the claim matrix, and the unresolved/open-problem registers.
+
+### SWE-agent v2 bounded comparison (completed)
+
+The frozen comparison is complete: v1.0.0 resolved 0/2 runs and v1.0.1 resolved 0/2 runs on the single preregistered task. The observation is `no_observed_resolution_difference`; both the outcome-blind integrity decision and bounded case decision are `REVIEW_REQUIRED`. No equivalence, superiority, safety, readiness, or general performance conclusion follows. The [audit](audits/post-swe-agent-v2-stabilization-audit.md), [limitations register](governance/limitations-register.md), and [reproducibility guide](reproducibility/swe-agent-v2.md) are the current interpretive surfaces; frozen evidence remains authoritative for the recorded runs. The [forensic postmortem](audits/swe-agent-v2-forensic-postmortem.md) establishes only the applied-patch target failures, uniform budget termination, and external-only diagnostic evidence as causal facts; first agent mistakes and deepest patch causes remain Unknown.
+
+Project FAR has completed the v0.4.0 external-validation milestone. The current baseline includes the v0.3.0 internal-validation milestone, the v0.3.1 repository-maturity maintenance release, preliminary external validation EV-001 through EV-029, frozen CRP v1.0 methodology, and a merged deterministic CRE-001 result.
+
+The v0.4.0 release does not change FAR primitives, definitions, axioms, theorem statements, proof objects, parser behavior, reasoning-engine behavior, metadata schemas, or accepted doctrine.
+
+| Framework | Role | Status |
+|---|---|---|
+| FARA | Representation | Stable; `FARA-FORMAL-KERNEL-001` Accepted at finite explicit auditable v1.0 scope |
+| FAR | Methodology | Stable |
+| FARO | Operations | Stable |
+| FARE | Mathematics | Frozen, requirement-driven |
+| FARM | Meta-framework coordination | Stable |
+
+Active development now moves from the scoped FARA formal-kernel decision and completed CRE-002/CRE-002-EXT-001 execution toward canonical theory/dependency reconciliation, experiment preregistration, independent criticism, boundary-focused falsification, and comparative representation-cost analysis. The merged deterministic CRE-001 result established, at CRE-001 scope only, vocabulary-native compilation, executable lowering, deterministic verification against the registered reference behavior, replayable lowering traces, mutation testing, adversarial compiler audit, and repository integration. T-001 and T-002 are conditionally established only at their recorded scope and assurance level. VI-002 is `Research / incomplete (non-passing)`: only 3 of its 7 required methodology steps are complete, while reconstruction, per-removal VI-001 execution, and complete hidden-assumption evidence remain missing. VI-003 remains active and cannot consume VI-002 as completed execution. Universal sufficiency, primitive-only sufficiency, necessity, minimality, independence, global primitive minimality, global primitive independence, superiority, a FAR proof, and universal reasoning structure are not established. Vocabulary Semantics Baseline 1.0 is prospective for CRE-002 and later; it is not retrospective validation of CRE-001.
+
+---
+
+## Latest Release
+
+### Project FAR v0.4.0 — External Validation and Comparative Methodology
+
+Status: Current release baseline.
+
+Release document: [`releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md)
+
+Prior maintenance release: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md)
+
+Prior internal-validation release: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md)
+
+---
+
+## Completed Milestones
+
+### FARA formal-kernel scoped selection
+
+Status: Complete after source execution, clean-room implementation replication, Acceptance, and Promotion.
+
+The repository now has one canonical formal carrier architecture within the exact registered scope. The source and replication artifacts remain Research evidence; the Acceptance and Promotion records supply repository authority. Broader foundation questions remain open.
+
+---
+
+### Project FAR v0.4.0 External Validation and Comparative Methodology
+
+Status: Complete.
+
+v0.4.0 completes the historical external-validation milestone and additionally registers frozen CRP v1.0 plus the original CRE-001 preparation artifacts; the current repository baseline now also includes the later merged deterministic CRE-001 implementation result.
+
+---
+
+### Project FAR v0.3.1 Repository Maturity and Automation
+
+Status: Complete after release publication.
+
+v0.3.1 packages repository maturity work around the v0.3.0 baseline: README command center, dashboard generation, repository index, dashboard metrics, improved health diagnostics, GitHub Actions, release-readiness reporting, and repository automation documentation.
+
+---
+
+### Project FAR v0.3.0 Internal Validation
+
+Status: Complete.
+
+v0.3.0 evaluates primitive sufficiency across the internal corpus, expanded reasoning-system fixtures, and adversarial test suite. Current repository-grounded analysis finds no analyzed case requiring a sixth primitive, while keeping the conclusion provisional and subject to future falsification.
+
+---
+
+### Project FAR v0.2.0 Evidence Framework
+
+Status: Complete.
+
+v0.2.0 introduced the evidence-bearing infrastructure: machine-readable theory, structured proof objects, proof-step semantics, reasoning-engine traces, falsification harness, counterexample fixtures, and hard-case derived concepts.
+
+---
+
+### FARA — Representation
+
+Status: Stable architecture layer with `FARA-FORMAL-KERNEL-001` Accepted at its stated scope.
+
+FARA provides the representational architecture used by the rest of Project FAR. The canonical scoped formal kernel is [`frameworks/FARA/formal-kernel.md`](../frameworks/FARA/formal-kernel.md). No separate FARA milestone file is currently present.
+
+---
+
+### FARE Mathematics v0.1
+
+Status: Frozen.
+
+FARE Mathematics v0.1 is requirement-driven. It shall not expand unless FAR, FARO, FARA, or FARM requires mathematical support.
+
+Milestone: [`milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md`](milestones/FAR-MILESTONE-001-FARE-v0.1-Frozen.md)
+
+---
+
+### FAR v1.0 Stable
+
+Status: Stable.
+
+Milestone: [`milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md`](milestones/FAR-MILESTONE-002-FAR-v1.0-Stable.md)
+
+---
+
+### FARO v1.0 Stable
+
+Status: Stable.
+
+Milestone: [`milestones/FAR-MILESTONE-004-FARO-v1.0-Stable.md`](milestones/FAR-MILESTONE-004-FARO-v1.0-Stable.md)
+
+---
+
+### FARM v1.0 Stable
+
+Status: Stable.
+
+Milestone: [`milestones/FARM-v1.0-Stable.md`](milestones/FARM-v1.0-Stable.md)
+
+Stable components:
+
+- FARM architecture;
+- FARM dependency graph;
+- FARM design principles;
+- FARM requirement routing;
+- FARM defect classification;
+- FARM change control;
+- FARM integration record;
+- FARM v1.0 criteria;
+- FARM Phase 1 through Phase 4 audit records.
+
+---
+
+## Active Focus
+
+### Theory/dependency freeze before experiment preregistration
+
+The next project-level prerequisite is to reconcile the active FARA, FAR, and FARO authority surfaces against the accepted scoped kernel without promoting unsupported global claims or misclassifying independent methodology as theory. After that reconciliation is frozen, the experiment protocol can be preregistered.
+
+### Post-CRE-001 Deterministic Reconciliation
+
+CRE-002 is complete as a prospective semantic-licensing boundary result under Baseline 1.0, and CRE-002-EXT-001 is complete as a prospective bounded behavioral result under Baseline 1.1. All three official vocabularies completed the extension's licensed native construction, trace replay, behavioral verification, output preservation, deterministic regeneration, and mutation gates over the registered 73-state graph. The result depends on five licensed derived constructs and nine ambiguity policies, provides no ranking, and does not establish universal or primitive-only sufficiency, necessity, minimality, independence, superiority, a FAR proof, universal reasoning structure, or independent replication. The active evidential target is independent replication.
+
+---
+
+## Development Order
+
+The current project order is:
+
+1. FARA stable representational architecture recognized.
+2. FAR / FARO / FARM stable layers maintained.
+3. v0.3.0 internal validation baseline preserved.
+4. v0.3.1 repository maturity baseline published.
+5. v0.4.0 external validation completes and preserves EV-001 through EV-029 as preliminary evidence.
+6. CRP v1.0 is frozen and CRE-001 was registered.
+7. Deterministic CRE-001 implementation is merged for the registered CRE-001 scope, with vocabulary-native compilation, executable lowering, deterministic verification, replayable traces, mutation testing, adversarial compiler audit, and repository integration.
+8. CRE-002 is complete as a prospective Baseline 1.0 semantic-licensing boundary result.
+9. CRE-002-EXT-001 is complete as a prospective Baseline 1.1 bounded behavioral result; independent replication is the next evidential requirement.
+10. `FARA-FORMAL-KERNEL-001` completes source execution, clean-room replication, scoped Acceptance, and Promotion.
+11. Canonical theory/dependency reconciliation is the next prerequisite before experiment preregistration.
+
+---
+
+## Canonical Maturity Dimensions
+
+This lowercase path, `docs/project-status.md`, is the canonical case-stable project-level status document. Generated status summaries, release-readiness reports, framework README files, milestone records, theorem catalogs, validation investigations, and open-question lists remain subordinate or domain-specific status sources.
+
+| Dimension | Current maturity | Notes |
+|---|---|---|
+| Repository maturity | Mature for documentation, governance, repository-health automation, preliminary external-system evaluation records, comparative-study preparation, and scoped formal-kernel promotion. | This does not imply research completion. |
+| Framework maturity | FARA, FAR, FARO, and FARM are stable framework layers; FARE Mathematics v0.1 is frozen and requirement-driven. FARA now has an Accepted formal kernel at the registered finite explicit auditable scope. | Framework stability or scoped kernel acceptance does not imply universality or comparative superiority. |
+| Implementation maturity | Prototype/mechanization support is limited to IR loading, validation, graph construction, trace inspection, selected transition summaries, structural proof-object validation, and the executable formal-kernel/replication campaigns. | General semantic inference and general calculus execution remain unsupported. |
+| Proof-assurance maturity | Canonical theorem records are established only at their stated scope and assurance level. Current proof objects are structurally checked, not machine-verified formal proofs. | Assurance metadata is authoritative in `theory/metadata/theorems.yaml`. |
+| Empirical-validation maturity | EV-001 through EV-029 are preliminary external-system evaluations, not independent validation. CRE-001 deterministic comparison is complete at registered CRE-001 scope. CRE-002 records a prospective Baseline 1.0 licensing boundary. CRE-002-EXT-001 records prospective bounded success for all three candidates under Baseline 1.1, five licensed derived constructs, and nine ambiguity policies. `FARA-FORMAL-KERNEL-001` has implementation-independent clean-room replication but not external-investigator independence. | Independent validation requires isolated prospective execution under a preregistered protocol. |
+| Release maturity | v0.4.0 is the current release baseline. | Release maturity does not strengthen theorem or validation claims. |
+
+## Preserved Unique Notes from Prior Status File
+
+- Status and maturity labels in this document describe project maturity only. They do not assign Charter artifact status.
+- Current research remains focused on preserving the distinct CRE-001, CRE-002, and CRE-002-EXT-001 evidence records, maintaining their claim boundaries, preparing independent replication and boundary-focused falsification, and reconciling canonical theory before the next experiment.
+- Central research questions remain open: common reasoning structure, universality, primitive and assumption necessity, architectural and semantic minimality, counterexample construction, boundary identification, competing simpler structures, expressive power, alternative formulations outside the accepted kernel scope, and unresolved uncertainty.
+- Current priorities are canonical theory/dependency reconciliation, experiment preregistration, independent replication of CRE-002-EXT-001, boundary-focused CRE-003 design, comparative representation-cost auditing, semantic/result drift monitoring, and a post-CRE-002 evidence release while keeping deterministic comparison, prospective evaluation, and independent replication distinct.
+
+## Non-software theory correction phase (2026-07-26)
+
+The canonical dependency chain is foundations → shared theory → FARA → FAR → FARO. FAR/FARO procedures are compatible independent methodology/operations unless an explicit derivation is registered. Global universality, minimality, operator sufficiency, and lossless translation remain unresolved; stability labels do not promote them. The [terminology authority](glossary/canonical-terminology.md), [boundary specification](governance/framework-boundaries.md), [claim matrix](governance/claim-status-matrix.md), and [audit](audits/theory-correction-audit-2026-07-26.md) are the current correction surfaces. Frozen SWE-agent v2 evidence was not altered.
