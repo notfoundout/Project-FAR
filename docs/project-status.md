@@ -81,8 +81,10 @@ If these surfaces materially conflict on a current-state claim, the conflict mus
 
 ## Superseded status snapshots
 
-The former pre-terminal `docs/project-status.md` snapshot is preserved at [`../archive/superseded/status/project-status-pre-terminal-2026-08-10.md`](../archive/superseded/status/project-status-pre-terminal-2026-08-10.md).
+The former pre-terminal `docs/project-status.md` snapshot is preserved byte-for-byte at [`../archive/superseded/status/project-status-pre-terminal-2026-08-10.txt`](../archive/superseded/status/project-status-pre-terminal-2026-08-10.txt).
 
-The former generated W3.5 status snapshot is preserved at [`../archive/superseded/status/project-status-generated-w3.5-2026-08-10.md`](../archive/superseded/status/project-status-generated-w3.5-2026-08-10.md).
+The former generated W3.5 status snapshot is preserved byte-for-byte at [`../archive/superseded/status/project-status-generated-w3.5-2026-08-10.txt`](../archive/superseded/status/project-status-generated-w3.5-2026-08-10.txt).
+
+The `.txt` extension is deliberate: historical relative links remain part of the preserved bytes but are not presented as live repository documentation.
 
 Those artifacts are historical. They do not define the current project phase.

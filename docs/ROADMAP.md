@@ -63,7 +63,9 @@ Release packaging does not strengthen theorem assurance, independence, empirical
 
 ## Historical roadmap
 
-The superseded pre-terminal roadmap, including the v0.4.0, anti-self-validation, REP/ADJ/W3.5, and earlier validation planning sequence, is preserved at [`../archive/superseded/status/roadmap-pre-terminal-2026-08-10.md`](../archive/superseded/status/roadmap-pre-terminal-2026-08-10.md).
+The superseded pre-terminal roadmap, including the v0.4.0, anti-self-validation, REP/ADJ/W3.5, and earlier validation planning sequence, is preserved byte-for-byte at [`../archive/superseded/status/roadmap-pre-terminal-2026-08-10.txt`](../archive/superseded/status/roadmap-pre-terminal-2026-08-10.txt).
+
+The `.txt` extension is deliberate: historical relative links remain part of the preserved bytes but are not presented as live repository documentation.
 
 That snapshot is historical and does not define current priorities.
 
