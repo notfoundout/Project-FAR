@@ -110,8 +110,10 @@ A later full-state audit found additional cross-surface defects that did not req
 
 **Review-loop stop condition:**
 
+**Counter initialization:** this rule applies prospectively from its registration. The failure counter starts at zero here. Review rounds completed before this rule existed are historical provenance and do not count toward the three-cycle failure stop.
+
 - **Success:** after the latest substantive repair, one complete logically separate adversarial review finds zero new substantive defects, all required checks and the semantic sweep pass, and no substantive file changes occur afterward. Review stops; re-reviewing the unchanged state is prohibited.
 - **Reset:** any substantive repair resets the clean-pass count to zero and requires exactly one new separate adversarial review. Editorial-only changes that cannot affect participant exposure, methodology, warrant, target identity, role separation, contamination, campaign interpretation, governance scope, or hash integrity require validation but do not reset the loop.
-- **Failure:** if three consecutive post-completion adversarial review cycles each discover at least one new substantive defect, stop without merge and mark `REVIEW_EXHAUSTED_NOT_MERGE_READY`. Further repair requires a different model/provider or qualified human reviewer and explicit authorization.
+- **Failure:** if three consecutive post-completion adversarial review cycles after this rule's registration each discover at least one new substantive defect, stop without merge and mark `REVIEW_EXHAUSTED_NOT_MERGE_READY`. Further repair requires a different model/provider or qualified human reviewer and explicit authorization.
 
 This rule prevents both endless review of an unchanged clean state and endless same-reviewer repair loops.
