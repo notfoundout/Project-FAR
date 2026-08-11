@@ -23,13 +23,13 @@
   },
   "artifact_hashes": {
     "README.md": {
-      "sha256": "3d31303df75d7863177a6b19982548769ad2302c342829d651851d2397281f45",
-      "bytes": 8436,
+      "sha256": "f731440d2b1b01c3968848d2dad6629266075d97f9c2a34b7942685a6cdd597b",
+      "bytes": 10083,
       "class": "payload"
     },
     "participant-surface-v1.1.json": {
-      "sha256": "7e1fee6714be47c39a98186bf67b62833813198b0b2b3bacac932807f16e187e",
-      "bytes": 4329,
+      "sha256": "9546c5ba3d6033abc293bb4004dc00af326ff51b65acece2dfa016ff8ed029e7",
+      "bytes": 4306,
       "class": "payload"
     },
     "target-pin-v1.1.json": {
@@ -38,8 +38,8 @@
       "class": "payload"
     },
     "preregistration-v1.0.json": {
-      "sha256": "84b8a5c1f8d2a10b78ea55abf46784ad9cf68ad566da28163c7b33aa3730d226",
-      "bytes": 13631,
+      "sha256": "103272b3c68356d193977f3394a7d853bd6d30177bfc9c1d2a9a0d3190489d7f",
+      "bytes": 15047,
       "class": "payload"
     },
     "elicitation-packet-A-v1.0.md": {
@@ -63,8 +63,8 @@
       "class": "payload"
     },
     "role-a-output-schema-v1.0.json": {
-      "sha256": "705739d419405f1ae205b7bb72619b01865cd9eab16d7d573033caa46ddf1883",
-      "bytes": 4727,
+      "sha256": "546d104483c2fe6941e847894b01cf23ea687281078d0da99a916386d9f9cbc8",
+      "bytes": 4704,
       "class": "payload"
     },
     "freeze-procedure-v1.0.md": {
@@ -93,13 +93,13 @@
       "class": "payload"
     },
     "evidence-tier-rules-v1.0.json": {
-      "sha256": "383c7bea0b5d82c93e8a5156d26d17ac35f07d9a5f6dff60ac1f5e7ca1075156",
-      "bytes": 13514,
+      "sha256": "97059f42a24ee6e8b3b67ca356616e0470e7570b59e4f0aef642679b77d3f0d5",
+      "bytes": 13940,
       "class": "payload"
     },
     "package-audit-v1.0.md": {
-      "sha256": "3d13acc85347b1960fe6c82312b214f16264263ae8432aff955dd2246f60432c",
-      "bytes": 17751,
+      "sha256": "0fef694c3ea9866ee6648e10881a1eec06aca5f32ec5d32c41481df4ae02d294",
+      "bytes": 11738,
       "class": "payload"
     },
     "verify_r5_package.py": {
@@ -141,10 +141,11 @@
     "This package does not close LIM-031 and does not address LIM-032."
   ],
   "separate_adversarial_review": {
-    "performed": "2026-08-11",
-    "findings": 1,
-    "finding": "B2 delivered span lacked the non-exhaustiveness clause; repaired",
-    "status": "all findings resolved",
-    "claim_boundary": "Process-quality gate. Same author, separate pass. NOT independent review and never to be reported as such."
+    "previous_pass": "A prior separate pass found one B2 non-exhaustiveness defect and repaired it.",
+    "latest_substantive_repair": "2026-08-11 final consistency repair: execution-order alignment, neutral S5 wording, LIM-031/LIM-032 scope cleanup, tier tightening, and bounded review-loop rule.",
+    "clean_pass_after_latest_repair": false,
+    "required_before_merge": true,
+    "review_stop_policy": "One zero-substantive-defect pass after the latest substantive repair ends review successfully. Three consecutive defect-finding post-completion cycles stop review unsuccessfully and require escalation. See README and preregistration.",
+    "claim_boundary": "Process-quality gate. A same-model fresh-context pass is NOT independent evidence and never to be reported as such."
   }
 }
