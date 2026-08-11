@@ -43,8 +43,8 @@ Every item must be confirmed by the deliverer and recorded.
 3. Raw output is preserved **byte-for-byte**, in the form received, with no reformatting, whitespace normalization, or encoding change.
 4. Timestamp recorded (UTC, ISO-8601).
 5. **SHA-256** of the raw bytes recorded. This is the repository-standard hash used elsewhere in this evidence tree.
-6. Sources recorded and classified.
-7. **Optional architecture phase, if run.** Asked using the frozen string `S5`, answered, declared final, preserved byte-for-byte, timestamped, and hashed as a **separate** artifact.
+6. Sources used for the contract answer are recorded and classified.
+7. **Optional architecture phase, if run.** Asked using the frozen string `S5`; answered; any additional sources consulted for this phase are listed, recorded, and classified; then the architecture answer is declared final, preserved byte-for-byte, timestamped, and hashed as a **separate** artifact.
 8. **Contamination questionnaire administered and recorded.** Not before this point.
 9. **Only now** may the reveal packet be shown, and only to Role B.
 
@@ -65,8 +65,9 @@ Recorded per run, in `runs/<run-id>/manifest.json`:
 ```
 run_id, packet_version, packet_sha256, respondent_tier, delivery_timestamp,
 raw_output_sha256, raw_output_bytes, final_declaration_timestamp,
-contamination_level, architecture_phase_run, architecture_output_sha256,
-reveal_timestamp, mapper_identity_class, adjudicator_identity_class,
+contract_sources, contamination_level, architecture_phase_run,
+architecture_output_sha256, architecture_sources, reveal_timestamp,
+mapper_identity_class, adjudicator_identity_class,
 role_separation_confirmed, procedural_failures
 ```
 
