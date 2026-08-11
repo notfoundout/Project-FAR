@@ -139,7 +139,14 @@
       "how to compare formulations",
       "how to score mappings",
       "which outcomes count"
-    ]
+    ],
+    "review_loop": {
+      "substantive_defect": "Any defect that can change participant exposure, methodological execution, evidential warrant, target identity, role separation, contamination status, campaign interpretation, governance scope, or freeze/hash integrity.",
+      "success_stop": "After the latest substantive repair, one complete logically separate adversarial review finds zero new substantive defects, all required mechanical checks and the semantic sweep pass, and no substantive file changes occur afterward. Stop reviewing and permit merge-readiness. Re-reviewing the unchanged state is prohibited.",
+      "reset_rule": "Any substantive repair resets the clean-pass count to zero and requires exactly one new logically separate adversarial review. Editorial-only corrections that cannot affect a substantive surface require validation but do not reset the loop.",
+      "failure_stop": "If three consecutive post-completion adversarial review cycles each discover at least one new substantive defect, stop reviewing without merge. Mark the package REVIEW_EXHAUSTED_NOT_MERGE_READY. Further repair requires a reviewer from a different model/provider or a qualified human plus explicit authorization for another cycle.",
+      "purpose": "Bounds the review process in both directions: one clean pass ends it successfully; persistent defect discovery cannot produce an infinite self-review loop."
+    }
   },
   "nonclaims": [
     "No R5 result is registered.",
@@ -176,9 +183,9 @@
   },
   "provenance_sha_model": {
     "note": "Replaces the overloaded single 'repository_base' field, which meant the evidence base in one artifact and the first protocol commit in another.",
-    "evidence_base_sha": "3ba4986b86b6e211d9e01e78018ef8324297f86c \u2014 the commit the TARGET is pinned to, and the state whose dispositions this protocol consumed.",
-    "protocol_initial_commit_sha": "5d482a9c4cb760e3af6f2bcccff2e0461a971a9b \u2014 first commit of this package.",
-    "protocol_current_revision_sha": "recorded in provenance-manifest-v1.1.json at each refreeze; the commit whose tree the artifact hashes describe.",
+    "evidence_base_sha": "3ba4986b86b6e211d9e01e78018ef8324297f86c — the commit the TARGET is pinned to, and the state whose dispositions this protocol consumed.",
+    "protocol_initial_commit_sha": "5d482a9c4cb760e3af6f2bcccff2e0461a971a9b — first commit of this package.",
+    "protocol_current_revision_sha": "recorded in provenance-manifest-v1.0.json at each refreeze; the commit whose tree the artifact hashes describe.",
     "pr_head_sha": "the PR #445 head at the time of reading; not a protocol constant.",
     "self_reference_limitation": "The manifest cannot contain the hash of the commit that contains it. Artifact hashes are therefore content hashes of the files, and protocol_current_revision_sha is recorded one commit behind or supplied out of band by the verifier at check time. The manifest also cannot hash itself; the verifier recomputes every other artifact hash and checks the manifest's own integrity only via git."
   }
