@@ -37,6 +37,9 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         self.assertIn('- Priority: high',ranked)
         self.assertIn('The `POST-TUE-UPP-001` deductive queue is closed.',ranked)
         self.assertIn('There is no `UPP-W16`.',ranked)
+        self.assertNotIn('- Source: central research program',ranked)
+        self.assertNotIn('W5 is authorized',ranked)
+        self.assertNotIn('No registered candidate is indispensable within the frozen class',ranked)
         for stale in (
             '### STRATEGIC-003: Execute evidence-complete candidate ablation and reconstruction',
             '### STRATEGIC-004: Complete W3.5 machinery cost, claim-impact, and preserved-failure closure',
