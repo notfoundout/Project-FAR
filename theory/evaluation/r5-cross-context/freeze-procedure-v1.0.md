@@ -10,11 +10,13 @@ Three logically separated roles. **One person or system may not hold two roles i
 
 | Role | Receives | Produces | Must never |
 |---|---|---|---|
-| **A — Formulation respondent** | One packet (A, B1, or B2) and nothing else | The answer to A–I, then optionally the architecture answer | Receive any programme material before their answer is hashed and declared final |
+| **A — Formulation respondent** | One packet (A, B1, or B2) and nothing else | The answer to the selected packet, then optionally the architecture answer | Receive any programme material before their answer is hashed and declared final |
 | **B — Normalizer / mapper** | Role A's frozen output **plus** the reveal packet | A descriptive mapping between the two formulations | Alter, strengthen, weaken, reinterpret, or repair Role A's answer to make comparison easier |
 | **C — Adjudicator** | Normalized forms only, source-anonymized where practical | An outcome classification against the frozen registry | See the raw packets or know which formulation came from the programme, where anonymization is practical |
 
 **Role A may not certify its own mapping.** Role B may not classify the outcome. Role C may not revise the mapping; it may only return it to Role B as underspecified, with a recorded reason.
+
+**B2 transcription rule.** Packet B2 deliberately removes the A–I decomposition. Its raw answer is primary evidence. The derived Role-A schema may populate an A–I field only from an explicit passage that directly states that content; inference or decomposition by the transcriber is prohibited. B2 silence on an axis is not evidence of rejection or omission. See `role-a-output-schema-v1.0.json`.
 
 ---
 
@@ -52,7 +54,7 @@ Every item must be confirmed by the deliverer and recorded.
 
 **No post-reveal edit to the original answer counts as independent evidence.** Corrections, retractions, and elaborations offered after reveal are recorded as a separate, clearly labelled post-reveal artifact with its own hash. They never overwrite, replace, or amend the frozen pre-reveal artifact.
 
-If any step 1–8 is missed, the run is **not** an R5 run. It is recorded as a procedural failure and preserved as such.
+If any step 1–8 is missed, the run is **not** an R5 run. It is recorded as a procedural failure and preserved as such. If step 9 is not reached, the elicitation artifact remains preserved but no contract-to-contract R5 comparison/adjudication has occurred.
 
 ---
 
