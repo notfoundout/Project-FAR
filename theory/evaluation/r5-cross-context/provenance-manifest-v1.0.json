@@ -23,8 +23,8 @@
   },
   "artifact_hashes": {
     "README.md": {
-      "sha256": "f731440d2b1b01c3968848d2dad6629266075d97f9c2a34b7942685a6cdd597b",
-      "bytes": 10083,
+      "sha256": "a1b44148c6e88f0d6de2116cffe7125c043e2a097eff037bbe1adacb8f9800da",
+      "bytes": 10368,
       "class": "payload"
     },
     "participant-surface-v1.1.json": {
@@ -38,8 +38,8 @@
       "class": "payload"
     },
     "preregistration-v1.0.json": {
-      "sha256": "103272b3c68356d193977f3394a7d853bd6d30177bfc9c1d2a9a0d3190489d7f",
-      "bytes": 15047,
+      "sha256": "7fafc1b2610b640e408fcb28c5b153e49989e1a2d6e9795a5197e9cdd59e1497",
+      "bytes": 15318,
       "class": "payload"
     },
     "elicitation-packet-A-v1.0.md": {
@@ -98,8 +98,8 @@
       "class": "payload"
     },
     "package-audit-v1.0.md": {
-      "sha256": "0fef694c3ea9866ee6648e10881a1eec06aca5f32ec5d32c41481df4ae02d294",
-      "bytes": 11738,
+      "sha256": "70f5c7889e9378146fe6173f7f1f5e6940a0587d6214daf56f1bf0ba7fb5f87a",
+      "bytes": 12023,
       "class": "payload"
     },
     "verify_r5_package.py": {
@@ -145,7 +145,8 @@
     "latest_substantive_repair": "2026-08-11 final consistency repair: execution-order alignment, neutral S5 wording, LIM-031/LIM-032 scope cleanup, tier tightening, verifier file-model correction, and bounded review-loop rule.",
     "clean_pass_after_latest_repair": false,
     "required_before_merge": true,
-    "review_stop_policy": "One zero-substantive-defect pass after the latest substantive repair ends review successfully. Three consecutive defect-finding post-completion cycles stop review unsuccessfully and require escalation. See README and preregistration.",
+    "counter_initialization": "Prospective from registration of the bounded review-loop rule; counter starts at zero and pre-rule review rounds are historical provenance only.",
+    "review_stop_policy": "One zero-substantive-defect pass after the latest substantive repair ends review successfully. Three consecutive defect-finding post-completion cycles after the rule's registration stop review unsuccessfully and require escalation. See README and preregistration.",
     "claim_boundary": "Process-quality gate. A same-model fresh-context pass is NOT independent evidence and never to be reported as such."
   }
 }
