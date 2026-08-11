@@ -35,14 +35,6 @@
     },
     "generator.next-actions": {
       "inputs": [
-        ".far/post-terminal-authority-acceptance.json",
-        ".far/post-terminal-capacity-proof.json",
-        ".far/post-terminal-consolidation-proof.json",
-        ".far/post-terminal-evidence-acceptance.json",
-        ".far/post-terminal-external-validator-acceptance.json",
-        ".far/post-terminal-external-validator-supplemental-review-acceptance.json",
-        ".far/post-terminal-formalization-acceptance.json",
-        ".far/post-terminal-novel-consequence-acceptance.json",
         "README.md",
         "docs/reports/**",
         "docs/research/**",
