@@ -67,7 +67,7 @@ The deterministic CRE-001 implementation remains established only at its registe
 
 Conditional primitive results do not establish global primitive minimality or global primitive independence. Those broader claims remain outside the established conditional deletion-only results and must not be inferred from the terminal theorem, framework stability, implementation success, or finite registered testing.
 
-Earlier REP, ADJ, W3.5, CRE, FARA-kernel, validation, and external-system records remain evidence only at their recorded scope and assurance level. Later terminal adjudication does not retroactively convert bounded empirical or project-authored evidence into independent validation.
+Earlier REP, ADJ, W3.5, CRE, FARA-kernel, validation, and external-system records remain evidence only at their recorded scope and assurance level. Later terminal adjudication does not retroactively make bounded empirical or project-authored evidence independently validated.
 
 ## Current authority navigation
 
