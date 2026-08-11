@@ -24,6 +24,9 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         text=path.read_text(encoding='utf-8'); self.assertEqual(text,before)
         ranked=text.split('## Maintainer Boundaries',1)[0]
         ids=re.findall(r'^### ([A-Z]+-\d{3}):',ranked,re.M); self.assertEqual(len(ids),len(set(ids)))
+        self.assertNotIn('### STRATEGIC-001: Freeze the concrete reasoning and contrast corpora',ranked)
+        self.assertNotIn('### STRATEGIC-002: Execute dimensioned GREL-FARA factorization',ranked)
+        self.assertNotIn('### STRATEGIC-002: Execute reasoning/contrast discrimination and FARA specificity',ranked)
         self.assertIn('Program: `POST-TERM-EVAL-001`.',ranked)
         self.assertIn('Canonical next workstream: `PTE-W1-INDEPENDENT-REVIEW`.',ranked)
         self.assertIn('### STRATEGIC-006: Prepare independent terminal-theorem proof review',ranked)
