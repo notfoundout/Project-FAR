@@ -35,19 +35,19 @@
     "participant_surface": "participant-surface-v1.1.json defines the COMPLETE participant-facing surface."
   },
   "outcome_space": {
-    "note": "Pre-registered before execution. No outcome is scored as supporting Project FAR by default. Outcomes are descriptive classifications, not verdicts.",
-    "O1": "Independent formulation substantially equivalent to the project's target contract.",
-    "O2": "Partial or componentwise recovery only.",
-    "O3": "Independently derived formulation strictly stronger under criteria the participant independently supplied.",
-    "O4": "Independently derived formulation strictly weaker under criteria the participant independently supplied.",
-    "O5": "Formulations incomparable under criteria the participant independently supplied.",
+    "note": "Pre-registered before execution. These are Layer-1 descriptive classifications and intentionally do not assert independence. Any independent-elicitation claim is a separate Layer-2 warrant governed by outcome-registry-v1.0.json and the tier/contamination rules.",
+    "O1": "Substantially equivalent formulation.",
+    "O2": "Partial or componentwise recovery.",
+    "O3": "Formulation strictly stronger under respondent-supplied criteria.",
+    "O4": "Formulation strictly weaker under respondent-supplied criteria.",
+    "O5": "Incomparable under respondent-supplied criteria.",
     "O6": "A materially alien formulation.",
     "O7": "Multiple domain-relative formulations.",
-    "O8": "No non-arbitrary comparison relation available.",
-    "O9": "Participant concludes the underlying question is malformed.",
-    "O10": "Participant cannot derive a stable formulation.",
-    "O11": "Contamination invalidates the run.",
-    "O12": "Evidence insufficient."
+    "O8": "No justified comparison relation supplied.",
+    "O9": "Participant judges the underlying question malformed.",
+    "O10": "Participant reaches no stable formulation.",
+    "O11": "Run contaminated for independence claims.",
+    "O12": "Evidence insufficient for another outcome."
   },
   "falsification_conditions": {
     "note": "Each condition is classified by what evidence it actually needs. No numeric threshold is invented where none can be justified.",
