@@ -29,16 +29,18 @@ Steps are ordered. None may be reordered, merged, or skipped.
 | 1 | Run the package verifier; require `PASS` | `verify_r5_package.py` | executor |
 | 2 | Select respondent; record the tier they qualify for | `evidence-tier-rules-v1.0.json` | executor |
 | 3 | Complete the delivery checklist | `freeze-procedure-v1.0.md` §2 | deliverer |
-| 4 | Deliver §2–§3 verbatim, nothing else | `elicitation-packet-A-v1.0.md` | → Role A |
+| 4 | Deliver §2–§3 verbatim, nothing else | selected packet | → Role A |
 | 5 | Role A answers; declares final | — | Role A |
-| 6 | Preserve byte-for-byte, timestamp, SHA-256 | `freeze-procedure-v1.0.md` §3 | executor |
+| 6 | Preserve contract answer byte-for-byte, timestamp, SHA-256 | `freeze-procedure-v1.0.md` §3 | executor |
 | 7 | Transcribe into the schema without interpreting | `role-a-output-schema-v1.0.json` | executor |
-| 8 | Administer contamination questionnaire; assign level | `contamination-questionnaire-v1.0.json` | executor |
-| 9 | *Optional:* architecture phase; separately frozen and hashed | schema, `optional_architecture_phase` | Role A |
+| 8 | *Optional:* ask frozen architecture question `S5`; separately finalise, preserve and hash the architecture answer | `participant-surface-v1.1.json`, schema | Role A |
+| 9 | Administer contamination questionnaire; assign level | `contamination-questionnaire-v1.0.json` | executor |
 | 10 | **Reveal gate.** Release programme material to Role B only | `reveal-packet-v1.0.md` | Role B |
 | 11 | Map, both directions, preserving failures | `normalization-mapping-schema-v1.0.json` | Role B |
 | 12 | Adjudicate against the frozen registry | `adjudication-procedure-v1.0.md`, `outcome-registry-v1.0.json` | Role C |
 | 13 | Record the run manifest | `freeze-procedure-v1.0.md` §4 | executor |
+
+The architecture phase is intentionally before the contamination questionnaire. The questionnaire names architecture-related concepts and would contaminate any architecture answer given afterward. The contract answer is already sealed before `S5`, so `S5` cannot alter the frozen contract artifact.
 
 Controls `B1` and `B2` follow the same path. Under this package's frozen campaign policy each arm is a **single descriptive pilot run**; any A/B difference is compatible with both a packet effect and a respondent effect, and **no causal framing claim is permitted**.
 
@@ -49,7 +51,7 @@ Controls `B1` and `B2` follow the same path. Under this package's frozen campaig
 | File | Purpose |
 |---|---|
 | `README.md` | This file; execution order |
-| `preregistration-v1.0.json` | Frozen question reference, outcome space, falsification and strengthening conditions, prohibited inferences, stopping rule |
+| `preregistration-v1.0.json` | Frozen question reference, outcome space, falsification and strengthening conditions, stopping rule |
 | `elicitation-packet-A-v1.0.md` | Blinded primary packet |
 | `elicitation-packet-B1-reword-v1.1.md` | Semantic-preserving reword; surface-form sensitivity |
 | `elicitation-packet-B2-ablation-v1.1.md` | Decomposition ablation; tests whether the A–I axes shape the answer |
@@ -62,14 +64,14 @@ Controls `B1` and `B2` follow the same path. Under this package's frozen campaig
 | `normalization-mapping-schema-v1.0.json` | Mapping fields, both directions, failed mappings, mapper declarations |
 | `adjudication-procedure-v1.0.md` | Primary comparison, neutral relations, anti-reconstruction scale, outcome assignment |
 | `outcome-registry-v1.0.json` | `O1`–`O12` with per-outcome evidence requirements |
-| `evidence-tier-rules-v1.0.json` | `T1`–`T5`, each with an explicit `cannot_establish` list; class `X1` recorded as **not** an execution tier; `LIM-031` closure analysis |
+| `evidence-tier-rules-v1.0.json` | `T1`–`T5`, explicit `cannot_establish` lists, plus the separation between `LIM-031` evaluation evidence and `LIM-032` framing independence |
 | `provenance-manifest-v1.0.json` | Hashes and consumed dispositions |
 | `package-audit-v1.0.md` | Adversarial audit, negative control, clean-room read, residual risk |
 | `verify_r5_package.py` | **RESTRICTED.** Mechanical blinding, structure, and state check |
 
 ### Restricted artifacts
 
-`reveal-packet-v1.0.md` and `verify_r5_package.py` must never reach Role A. The verifier names the banned terms in order to detect them; showing it to a respondent would disclose the entire watchlist.
+`target-pin-v1.1.json`, `reveal-packet-v1.0.md`, and `verify_r5_package.py` must never reach Role A. The target pin and reveal packet disclose the programme target; the verifier names the banned-term watchlist.
 
 ---
 
@@ -101,10 +103,18 @@ Before any evidence-critical protocol here is merged or executed:
 
 1. the author declares the package complete;
 2. a **logically separate adversarial review pass** occurs, in a fresh context or by a separate reviewer;
-3. every finding is resolved;
-4. the full semantic sweep reruns;
+3. every substantive finding is resolved;
+4. the full semantic sweep and mechanical validation rerun;
 5. only then may merge-readiness be declared.
+
+**Review-loop stop condition.** A substantive defect is one that can change participant exposure, methodological execution, evidential warrant, target identity, role separation, contamination status, campaign interpretation, governance scope, or freeze/hash integrity.
+
+- **Success stop:** after the latest substantive repair, one complete separate adversarial review finds **zero new substantive defects**, every required check is green, and no substantive file changes afterward. The review loop stops and merge-readiness may be declared. Re-reviewing the unchanged state is prohibited.
+- **Reset rule:** any substantive repair resets the clean-pass count to zero and requires exactly one new separate adversarial review. Editorial-only fixes that cannot affect any substantive surface require validation but do not reset the review loop.
+- **Failure stop:** if **three consecutive post-completion adversarial review cycles** each discover at least one new substantive defect, stop iterating and do **not** merge. Mark the package `REVIEW_EXHAUSTED_NOT_MERGE_READY`; further progress requires a reviewer from a different model/provider or a qualified human, plus explicit authorization for another repair cycle.
+
+This bounds the process in both directions: one clean pass ends review successfully; repeated defect discovery cannot create an infinite self-review loop.
 
 **This is a process-quality gate, not an epistemic independence claim.** A same-model fresh-context review is *not* independent evidence and must never be reported as such.
 
-**Why it exists:** across two review rounds, multiple substantive defects survived author self-audit, and **two defects were introduced by the repairs themselves** — an outcome list overcorrected to 6:0 negative, and a blinding verifier that passed vacuously. Single-pass self-audit is demonstrably unreliable for this package.
+**Why it exists:** across multiple review rounds, substantive defects survived author self-audit, and some defects were introduced by repairs themselves. Single-pass self-audit is demonstrably unreliable for this package.
