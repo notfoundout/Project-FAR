@@ -159,3 +159,21 @@ Complete means:
 - remaining uncertainty is labeled.
 
 Final report: files changed; substantive result; checks and results; unresolved/`Unknown`; claim/status impact.
+
+## 13. Compound Workflow Learning
+
+When Claude makes a meaningful mistake or requires a substantive correction, do not automatically add another instruction or mechanism.
+
+First determine whether the failure should persist as a workflow lesson:
+1. record the concrete failure and its demonstrated cause;
+2. determine whether it is recurring, or whether a single occurrence is severe enough to justify deterministic prevention;
+3. check whether an existing rule, test, validator, hook, skill, or other control already covers it;
+4. identify the smallest candidate intervention that would have prevented the observed failure;
+5. test that candidate against the actual failure and attempt to falsify its necessity or sufficiency;
+6. persist the intervention only if the evidence shows that it prevents the demonstrated failure without duplicating existing controls or adding speculative architecture.
+
+Prefer deterministic tests, validators, or hooks when the failure condition is itself deterministic. Use prose instructions only when deterministic enforcement is not appropriate.
+
+A one-off correction is not automatically a permanent rule. Repeated model agreement is not independent validation. `NONE` is a valid outcome when no persistent control is justified.
+
+Periodically review accumulated Claude-specific instructions and controls for redundancy, staleness, or supersession; remove or consolidate them only when doing so preserves the demonstrated protection they provide.
