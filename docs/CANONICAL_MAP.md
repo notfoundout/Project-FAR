@@ -20,6 +20,7 @@ Each concept should have one canonical source. Other documents should link to th
 | Central Research Program | [`governance/central-research-program.md`](governance/central-research-program.md) | Defines the central research question, research objectives, evidence standard, counterexample policy, and completion criteria. |
 | Post-Terminal Public Evaluation Program | [`governance/post-terminal-public-evaluation-program-v1.0.md`](governance/post-terminal-public-evaluation-program-v1.0.md) | Governs evaluation of the completed terminal theorem without reopening the closed UPP deductive queue. |
 | Architecture | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Describes the repository architecture. |
+| Agent Execution Skills | [`../.claude/skills/`](../.claude/skills/) | Holds the `far-*` skills that execute the routing and authority rules stated in `AGENTS.md`. |
 | Project Status | [`project-status.md`](project-status.md) | Records current governance and milestone status. |
 | Canonical Terminology | [`glossary/canonical-terminology.md`](glossary/canonical-terminology.md) | Owns canonical names, meanings, framework ownership, and epistemic class. |
 | Vocabulary discovery index | [`glossary/canonical-vocabulary-index.md`](glossary/canonical-vocabulary-index.md) | Indexes locations without redefining terms. |
