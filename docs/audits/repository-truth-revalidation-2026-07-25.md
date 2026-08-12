@@ -1,7 +1,7 @@
 # Repository truth revalidation
 
-Tracking issue: #370  
-Parent program: #364  
+Tracking issue: #370
+Parent program: #364
 Original audit IDs: 13 and 23–25
 
 ## Method

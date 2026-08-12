@@ -1,9 +1,9 @@
 # FARA W4 representation boundary result v1.0
 
-Status: **Research result — bounded sufficient condition, registered failures, global question unresolved**  
-Execution object: `FARA-REP-W4-001`  
-Proof object: `FARA-W4-PROOF-001`  
-Theorem record: `THM-REP-001` (bounded; executable corroboration)  
+Status: **Research result — bounded sufficient condition, registered failures, global question unresolved**
+Execution object: `FARA-REP-W4-001`
+Proof object: `FARA-W4-PROOF-001`
+Theorem record: `THM-REP-001` (bounded; executable corroboration)
 Claim record: `CLM-REP-W4-001`
 
 ## Authority recovery and dependency boundary

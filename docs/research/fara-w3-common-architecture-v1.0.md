@@ -1,6 +1,6 @@
 # FARA W3 common-architecture adversarial execution v1.0
 
-Status: **Research result — bounded representational existence; uniqueness and internal-state-only lossless universality refuted; broader claim unresolved**  
+Status: **Research result — bounded representational existence; uniqueness and internal-state-only lossless universality refuted; broader claim unresolved**
 Execution/proof object: `FARA-ARCH-W3-001`
 
 ## Authority recovery and discrepancy

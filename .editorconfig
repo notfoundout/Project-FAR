@@ -1,0 +1,44 @@
+# Project FAR editor configuration.
+#
+# Scope is deliberately limited to the two whitespace rules enforced by
+# tools/check_whitespace_hygiene.py. No indentation, line-length, code
+# formatting, or serialization style is declared here, and none is enforced.
+
+root = true
+
+[*]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+[*.{cff,html,js,json,lean,md,py,sh,toml,txt,yaml,yml}]
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Integrity- and provenance-protected material is exempt: editors must not
+# rewrite bytes that a recorded digest or freeze package depends on. These
+# mirror the path-based exemptions in tools/check_whitespace_hygiene.py. That
+# tool additionally exempts any file whose own SHA-256 is recorded in the
+# repository, which EditorConfig cannot express; the tool is authoritative.
+[{archive,artifacts,conformance,exports}/**]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+[tests/fixtures/**]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+[**/external-validation/**]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+[**/*freeze*/**]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+[**/*{manifest,lock}*.json]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+[**/*.sha256]
+trim_trailing_whitespace = false
+insert_final_newline = false

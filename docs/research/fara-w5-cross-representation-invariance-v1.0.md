@@ -2,10 +2,10 @@
 
 Status: **Unresolved; bounded invariance established for two executable admissible pairs**
 
-Execution object: `FARA-INV-W5-001`  
-Proof object: `FARA-W5-PROOF-001`  
-Claim: `CLM-INV-W5-001`  
-Theorem-status record: `THM-INV-001`  
+Execution object: `FARA-INV-W5-001`
+Proof object: `FARA-W5-PROOF-001`
+Claim: `CLM-INV-W5-001`
+Theorem-status record: `THM-INV-001`
 Limitation: `LIM-020`
 
 ## Corrected adjudication
