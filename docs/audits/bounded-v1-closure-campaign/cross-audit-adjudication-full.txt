@@ -1,0 +1,253 @@
+PROJECT FAR — THREE-LANE CROSS-AUDIT ADJUDICATION
+(verbatim cross-auditor report, delivered 2026-08-13 against frozen commit
+f6645a77f3b0af0b12897fa9bc2c329cdb345261 / root tree
+a870c1213873158d288ba40bad3952c465e5acab)
+
+## 1. Baseline Verification
+
+- git cat-file -t f6645a77f3b0af0b12897fa9bc2c329cdb345261 → commit.
+- git rev-parse f6645a77…^{tree} → a870c1213873158d288ba40bad3952c465e5acab — exact match.
+- git status --porcelain → empty at audit start and end.
+- git diff --stat f6645a77… HEAD → exactly one additive file, docs/governance/bounded-v1-closure-source-freeze-f6645a77.md (administrative freeze record, used as no substantive evidence). HEAD = a4d8ea4e.
+- Every substantive read/search below was commit-pinned (git show f6645a77…:<path>, git grep <pat> f6645a77… -- <paths>, git ls-tree -r f6645a77…). No working-tree read was used as substantive evidence. No file in the repository was modified.
+
+Verdict: PASS. (No CROSS_AUDIT_BASELINE_FAIL.)
+
+## 2. Three-Lane Disagreement Ledger
+
+Issue | Lane A | Lane B | Lane C | Frozen evidence | Adjudication
+W9 empty-dependency countermodel (C-D1) | Not tested; N-R3 treated generically nonblocking | Not addressed (assurance scope only) | VALID_COUNTERMODEL | theory/foundation/upp-dependency-structure-v1.0.json (witness requires "nonempty typed dependency edge set", "at least one support or defeat edge exists"); upp_dependency_structure_v1.py (empty edges → UNKNOWN, never PROVED); tests/test_upp_dependency_structure.py::test_empty_edges_are_unknown_not_proved; C*/E*/P*/W5/W6 JSONs force no edge; P* information_fidelity forbids fabrication | C-D1 valid against W9's universal positive-witness lemma (§3)
+W8 side-condition propagation | Listed as hidden assumption #9 but treated nonblocking; not propagated | Noted R2 semantic mismatch in Lean only | LOGICAL_DEFECT (C-T1) | W8 JSON antecedent at_least_one_commitment_changing_transition; W15 JSON/doc antecedent restates only C*/E*/P*/closure/equivalence; no degenerate-case artifact exists (exhaustive grep); upp_w8_constrained_evolution_v1.py:72-74 (no changing transitions → UNKNOWN) | Confirmed dropped; terminal derivation defective (§4)
+W11 side-condition propagation | Not flagged | Noted R5 mismatch in Lean only | LOGICAL_DEFECT (C-H1) | W11 JSON antecedents history_sensitive_behavior, registered_history_query_totality; witness requires nontrivial_structurally_valid_trace; no degenerate bridge in frozen tree | Confirmed dropped; terminal derivation defective (§5)
+W13 five_component_necessity import | Treated as conditionally derived edge | SUFF row: "MISSING / SEMANTIC_MISMATCH" (Lean scope) | Propagation issue | W13 JSON lists it as an antecedent; upp_sufficiency_construction_v1.py never represents it; check_upp_w15_terminal_theorem.py:60-62 consumes it as queue-completion of PRs 281–296 | Status-level import; composition defective (§6)
+Bounded-v1 closure verdict | V1_SEMANTICALLY_CLOSED_ON_FROZEN_SCOPE | No verdict on truth (assurance only) | V1_NOT_REFUTED_BUT_LOGICALLY_DEFECTIVE | Items above | Lane C's verdict sustained; Lane A overturned (§9, §19)
+P*/W6 conclusion-loading | Benign stipulative reading (hidden-assumption register #10) | Not in scope | LOGICAL_DEFECT vs neutrality program | P* clauses/independence_controls; W6 dimensions; W7–W11 witness structures; W15 proof_standard.definitions_do_not_encode_terminal_outcome; claim boundaries in every lemma | Informational loading confirmed, no logical circularity; the "neutral discovery" reading Lane C attacks is not claimed by any frozen surface (§8)
+G1 status conflict | DEFECT-1 (moderate) | Conflicts C-1…C-4; PA-OP06-007 | Consistent (assurance not attacked) | Lean header "closes remainder obligation G1"; g1-end-to-end-semantic-kernel-v1.0.md "supplies that missing proof-object layer"; decision JSON g1…: "established"; vs OP-06 open, UQ-T3 "Unresolved", LIM-007 "Open", g1-semantic-kernel-v1.0.json implemented_pending_validation | Confirmed internal status inconsistency (XA-006)
+OP-06 closure state | Lean fidelity matrix: name-level only | OP06_BLOCKED_BY_MISSING_FORMAL_SEMANTICS; PTE_W2_PARTIAL | Consistent | UPPSemanticKernel.lean (all substantive content = opaque structure fields; ∀ source only, no ∀ R, no existential RCCD package); test_upp_semantic_kernel_alignment.py (regex/textual); G1 text forbids replacing semantic premises with status assertions | Confirmed: formal semantic bridges required (§10)
+ADR-002 relevance | OFF_GRAPH_NONBLOCKING | Not addressed | Not selected/reopened | ADR-002 (frozen path docs/architecture/adr/ADR-002-…) is FARA :111-scoped; zero FARA|omega|Ω|unresolved status matches across the entire UPP premise/lemma chain (theory/{class,contract,equivalence,representations,machinery,necessity,foundation/upp-*,history,sufficiency,irreducibility,terminal}) | Off-graph confirmed, incl. under the new defects (§11)
+Post-terminal Lean hygiene | DRIFT-2/3/4, DEFECT-2 | PA-OP06-009 | Not in scope | G2OpenWorldLowerBound.lean:136 (_hAdmissible _hClosed unused); MaximalKnowability.lean:20-23 (¬X ⊢ ¬X verbatim); FARCanonicalCountermodel.lean:49-63 (groundedModel with fun _ => True) | Confirmed, minor, off bounded-v1 graph (XA-008)
+UQ-T8/T16/T17 off-graph | IRRELEVANT_TO_V1_CLOSURE | — | — | Zero FARA/Ω references in the UPP chain; W8's relation is answer-extensional; UPP artifacts define their own three-valued semantics | Lane A's analysis survives
+
+## 3. W9 Countermodel Adjudication
+
+Exact proposition at issue. UPP-R3-DEPENDENCY-NECESSITY-001 (theory/foundation/upp-dependency-structure-v1.0.json): under seven antecedents — target_class_member, representation_admissible, machinery_closed, fully_faithful, equivalence_preserved, dependency_queries_total, failure_unknown_separated — a recoverable typed dependency relation exists, where the frozen positive-result witness requirements include "nonempty typed dependency edge set" and "at least one support or defeat edge exists" (JSON witness_requirements; doc: "The witness is a nonempty directed relation… A positive theorem result additionally requires at least one support or defeat edge").
+
+Do the antecedents imply (A) nonemptiness and (B) a support/defeat edge? No, on both counts:
+
+- C* (upp-target-class-v1.0.json): the five criteria are behavioral; appraisal_sensitive_response is satisfiable through "changing the supplied grounds or standard", and normative_appraisability is a disjunction whose "permitted/prohibited under an explicitly supplied standard" branch requires no inter-commitment support. No criterion mentions dependency edges.
+- E* (E1–E6): finiteness/effectivity/inventory/totality/identity — no edge forced.
+- P*: dependency_fidelity asks whether registered support/defeat/revision questions "can be correctly answered". A truthful "none/empty" answer is correct. Decisively, information_fidelity requires recovery to "avoid both omission and fabrication" — a faithful representation of a dependency-free system is forbidden from exposing a support/defeat edge. The clause-independence witness for dependency fidelity ("fabricated support and defeat relations" as a failure case) confirms fabrication is a P* violation.
+- W5 closure / W6 equivalence: dependencies_preserved is trivially satisfied by preserving the empty relation bijectively. No forcing.
+- No other frozen proposition (W1 foundation, definitions, glossary) classifies an appraisal standard as a support or defeat edge. Dismissing C-D1 by redefining "standard" as an edge would be exactly the post-hoc redefinition the frozen definitions do not license (and even an "admissibility"-kind edge would not satisfy the support-or-defeat requirement).
+
+Premise-by-premise test of C-D1 (finite threshold adjudicator; two responses; explicit standard; standard-sensitive; total registered dependency queries all truthfully answered "empty"): C* — pass (all five criteria); E* — pass (finite explicit package, effective, inventoried, total, stable); P* — pass on all eight clauses (empty dependency answers are the correct answers; fabrication would fail); machinery closure — pass (trivial disclosed machinery); W6 — pass (empty relation round-trips exactly); dependency_queries_total — pass; failure_unknown_separated — pass. Every antecedent is satisfiable and satisfied.
+
+Conclusion test. The positive witness fails: no nonempty edge set and no support/defeat edge exists to recover, and none may be fabricated. The frozen executable model corroborates this exactly: assess_dependency_structure with all premises YES and edges=() returns UNKNOWN (never PROVED), and the frozen test suite pins this behavior by name — test_empty_edges_are_unknown_not_proved. So the frozen chain itself demonstrates that W9 cannot deliver its positive witness on this antecedent-satisfying corner; yet the workstream's terminal result records the necessity lemma as universally "established relative to" the frozen premises, and W12/W13/W15 consume it in that universal form (W12's distinctive_obligations.dependency_structure includes support_or_defeat_edge).
+
+Secondary finding. The model's classification of a positively established empty relation as UNKNOWN conflates determinate absence with unresolved evidence, in tension with the frozen error/Unknown separation discipline (P* error_and_unknown_separation; W9's own anti-trivialization "failure may not be collapsed into Unknown"). The frozen vocabulary cannot express "established-empty".
+
+Empty-but-typed relation question. Yes: W9's JSON statement field ("a recoverable typed dependency relation exists") is already satisfied by an empty typed, query-total, equivalence-stable relation; only the witness-requirement pair excludes it. Permitting an explicitly established-empty typed relation is the mathematically honest weakening (see §14), but it produces a revised lemma — it is not entailed by the frozen positive-witness formulation.
+
+W9_COUNTERMODEL_VALID
+
+Failing proposition, exactly: the universal claim that W9's seven antecedents entail the positive dependency witness — specifically the conjuncts "nonempty typed dependency edge set" and "at least one support or defeat edge exists" — the form in which W12/W13/W15 consume the lemma. The weaker statement-field reading (existence of a possibly-empty typed relation) is not refuted, but that reading is excluded by the frozen witness requirements and is not what the composition consumed.
+
+## 4. W8 Propagation Adjudication
+
+W8 (theory/necessity/upp-w8-constrained-evolution-v1.0.json) explicitly lists at_least_one_commitment_changing_transition among its antecedent_premises; its executable model returns UNKNOWN when no commitment-changing transition exists (upp_w8_constrained_evolution_v1.py:72-74) — it never proves a witness for static systems.
+
+W13's theorem quantifies over "every S in C* and admissible machinery-closed R that satisfies P*" and W15's adjudicated theorem over "every S and R satisfying the frozen C*, E*, P*, closure, and equivalence premises". Neither restates the transition side condition. The searches mandated by the task found, in the entire frozen tree: no bridge proving all C* systems have commitment-changing transitions (C* membership is satisfiable by a static adjudicator); no degenerate constrained-evolution theorem for static systems; no rule that an empty/trivial evolution component satisfies the terminal component obligation; no W13 construction branch for the no-transition case (the W13 model checks only component/interface presence and boolean flags; the W13 audit's adversarial coverage removes components/interfaces but contains no static-system case). The terminal checker consumes W8 solely as queue completion of PR #289 (check_upp_w15_terminal_theorem.py:60-62).
+
+Because W8's universal conditional is vacuously true on static systems (antecedent fails), W8 itself is not refuted; but the terminal composition claims the five-component package for all antecedent-satisfying S,R while its only registered basis for the constrained-evolution component delivers nothing on the static corner, and no frozen degenerate case fills the gap.
+
+W8_SIDE_CONDITION_DROPPED_AND_TERMINAL_DERIVATION_DEFECTIVE
+
+## 5. W11 Propagation Adjudication
+
+W11 (theory/history/upp-historical-trace-v1.0.json) lists antecedents history_sensitive_behavior and registered_history_query_totality, and its witness obligations begin with nontrivial_structurally_valid_trace. W13/W15 restate neither antecedent. Frozen handling of memoryless systems, no path-sensitive distinction, singleton/no-event histories, empty/trivial traces, or a generic harmless-trace constructor: none exists (exhaustive grep over the UPP chain; the only "nontrivial" hits are W11's own obligation). A memoryless C* adjudicator satisfies the terminal displayed antecedent while W11 delivers no trace witness for it, and no degenerate-case theorem exists.
+
+W11_SIDE_CONDITION_DROPPED_AND_TERMINAL_DERIVATION_DEFECTIVE
+
+## 6. W13 Composition Adjudication
+
+What five_component_necessity imports. Mechanical provenance: it appears only as an entry in W13's JSON antecedents list. The executable model (upp_sufficiency_construction_v1.py) never represents it — assess checks component presence, seven interfaces, seven boolean obligations, and eight preservation flags of a package; no necessity-lemma verdict is consumed per instance. The W13 checker validates artifact/queue consistency and the canonical package; the W15 checker verifies set(range(281, 297)) - completed == ∅. Therefore five_component_necessity means "the five necessity theorem schemas exist as completed workstreams" — a repository-status-level premise — not "the five necessity lemmas hold for this exact S,R", and not a per-instance constructibility or nontriviality condition.
+
+Lawfulness of consumption. W13's universal statement covers systems outside W8's transition antecedent, outside W11's history-sensitivity antecedent, and (per §3) systems on which W9's positive witness is false. For those corners the imported schemas deliver no component witness, there is no case split, and no degenerate constructor exists. The W13 model would mechanically accept a package with trivial/empty components (it counts presence and flags, not edge/transition/event cardinality) — but no frozen proposition licenses that acceptance as satisfying the necessity-backed component obligations that W12 (support_or_defeat_edge, history_sensitive_admissibility, predecessor_and_revision_lineage) and the terminal statement attach to the components. The composition is therefore unsound over part of its stated quantifier domain.
+
+W13_COMPONENT_COMPOSITION_DEFECTIVE
+
+## 7. W15 Terminal Impact
+
+- Q1 — Is a registered prerequisite lemma false? Yes: W9's universal positive-witness lemma, as consumed, is refuted by C-D1 (§3). W8/W11 are not false (their side conditions make them vacuously true off their special domains); their defect is compositional.
+- Q2 — Is the W15 dependency proof invalid? Yes: it discharges the five component obligations from lemmas whose antecedents its own antecedent does not entail, with no case split or degenerate bridge (§§4–6), and W9's contribution is refuted on part of the domain.
+- Q3 — Is the terminal proposition itself false? Not established. No S,R was exhibited satisfying the literal W15 antecedent for which no RCCD-equivalent operational package exists: for the degenerate corners, a package with all five typed interfaces, an established-empty dependency relation, a trivial evolution component, and a trivial trace plausibly preserves all eight dimensions (each preservation being trivially satisfied), and W6 equivalence holds. Whether such degenerate components legally count as "the RCCD package" is exactly what the frozen source leaves undetermined — so no refutation exists.
+- Q4 — Potentially true but not established? Yes. That is the exact frozen state.
+- Q5 — Does repair require changing the theorem statement? Yes, on every legitimate path: either the terminal scope is explicitly reduced, or component obligations are restated to admit established-empty/degenerate components (a revised theorem), because neither move is entailed by the frozen statement (§14).
+
+TERMINAL_THEOREM_NOT_ESTABLISHED_DUE_TO_DEPENDENCY_DEFECT
+
+## 8. P*/W6 Conclusion-Loading Adjudication
+
+Proposition-by-proposition comparison: P*'s eight clauses (and W6's ten dimensions) impose informational preservation requirements — recoverability of registered structural facts, meanings, operational distinctions, dependence answers, provenance/path identity, query totality, error/Unknown separation. The five RCCD components are recoverable carriers of those same information categories, plus additional structure (typed directed edges with temporal scope; history-sensitive admissibility relation; event lineage with replay fidelity; context-indexed interpretation functions; component interfaces and cross-component identity).
+
+- Architectural component assumption? No. P*/W6 nowhere require a five-way decomposition, component interfaces, or any particular carrier architecture; a package could satisfy P*/W6 in a radically different decomposition (single monolithic query engine, relational store, learned model with disclosed decoder — all within E*'s included families). W13 then constructs RCCD from the recovered information; the construction is where the architecture enters.
+- Conclusion-equivalent premise? No clause literally asserts a component's existence; P*'s independence_controls ("contract_pass_does_not_imply_any_kernel", "clause_names_may_not_use_target_conclusion_vocabulary") are respected in the frozen texts.
+- What the necessity lemmas actually prove: essentially "if the contract requires recovery of X-information, some recoverable, effective, equivalence-stable carrier of X-information must exist (with the lemma's extra antecedents)". That is informational necessity inherited largely from P*/W6, plus witness-structure content. Characterized accurately, W7–W11 are contract-relative reconstruction lemmas, not neutral discoveries of five architectural necessities.
+- Anti-conclusion-loading controls test: the controls block lexical/definitional encoding of the terminal outcome and they hold; they do not (and cannot) make the necessity lemmas premise-independent. The frozen claim surfaces consistently label the lemmas "relative operational necessity only", and no frozen surface asserts neutral discovery — Lane C's LOGICAL_DEFECT classification attacks a stronger claim than the frozen theorem makes. Lane C's own countermodel demonstrates the loading is not full circularity: C-D1 satisfies P* while refuting a necessity lemma's witness, which would be impossible if the premises logically contained the conclusions.
+
+INFORMATIONAL_CONCLUSION_LOADING_BUT_NO_LOGICAL_CIRCULARITY
+
+## 9. Lane A Verdict
+
+Lane A's own record contains the seed of its error: hidden-assumption register item #9 explicitly lists W8's commitment-changing-transition antecedent as "absent from every summary surface," and its dependency graph annotates N-R2 with "same + ≥1 commitment-changing transition." Lane A then failed to run the propagation check it ran everywhere else: it never asked whether W13/W15's generic antecedents entail that side condition (they do not), never identified W11's parallel antecedent at all, and never tested W9 against empty relations (its graph lists N-R3 with generic antecedents, though the frozen JSON pins nonemptiness and a support/defeat edge in the witness).
+
+Exact edges Lane A got wrong: N-R2 → N-SUF, N-R3 → N-SUF, and N-R5 → N-SUF (hence → N-T). Lane A recorded these as "conditionally derived" lemmas feeding sufficiency without verifying that the lemmas' antecedent domains cover N-SUF's quantifier domain. They do not: the composition consumes the lemmas outside their antecedents (W8/W11) and in a form refuted on part of the domain (W9). No frozen bridge exists to repair those edges (§§4–6). Lane A's ADR-002, UQ-T8/T16/T17, Lean-fidelity, and G1-status findings all survive; its closure verdict does not.
+
+LANE_A_VERDICT_OVERTURNED
+
+## 10. Lane B / OP-06 Verdict
+
+Independently verified against mechanization/lean/UPPSemanticKernel.lean and governing surfaces:
+
+- FrozenUPPSemantics encodes unconstrained predicates/fields: inTargetClass : Source → Prop, admissible, machineryClosed, five component predicates, componentIndependent, nontrivial, relativelyMaximal — all opaque; no C* criteria, P* clause semantics, E* conditions, closure accounting, or W6 dimensions appear. FARCanonicalCountermodel.lean instantiates the substantive predicates as fun _ => True, proving the interface admits vacuous interpretations.
+- g1_end_to_end_relative_semantic_theorem is a projection of supplied fields into a record (exact constructRelativeSemanticConclusion …); it derives nothing beyond assembly.
+- Canonical ∀S, ∀R quantification is not preserved: the theorem quantifies over source only and concludes about encode source; no existential RCCD package, no arbitrary admissible R (the candidate theorem covers arbitrary candidates only via the assumed faithfulCandidateEquivalent field).
+- W7–W11 witness-rich propositions, W12's indexed separating witnesses, W14's ledger/rules, and W13's existential construction are not represented (unary predicates / assumed implications only).
+- Alignment tests are textual (regex identifier presence, comment-stripped forbidden-token scan; test_upp_semantic_kernel_alignment.py).
+- Genuine kernel content exists but is narrow: AllPass conjunction bookkeeping and the two Unknown/failure non-inflation lemmas.
+- OP-06 remains open under frozen authority: OP-06 row open, UQ-T3 "Unresolved", LIM-007 "Open", registry implemented_pending_validation; G1's text expressly forbids "replacing semantic premises with repository-status assertions", which name-level fields plus regex tests do not satisfy.
+
+Lane B's verdicts (OP06_BLOCKED_BY_MISSING_FORMAL_SEMANTICS; PTE_W2_PARTIAL) are confirmed in substance.
+
+OP06_FORMAL_SEMANTIC_BRIDGES_REQUIRED
+
+## 11. ADR-002 Status
+
+Dependency proof under the newly confirmed defects: the W9/W8/W11/composition defects live entirely in the UPP chain's own vocabulary — its per-artifact three-valued disciplines, witness requirements, and antecedent lists. Commit-pinned grep confirms zero occurrences of FARA, omega/Ω, or unresolved status across theory/{class,contract,equivalence,representations,machinery,necessity,foundation/upp-*,history,sufficiency,irreducibility,terminal}. ADR-002 (frozen at docs/architecture/adr/ADR-002-Unresolved-Admissibility-Status-Semantics.md) is scoped to FARA admissibility-structure.md:111 unresolved-status semantics (Ω_K typing). The new defects' Unknown-conflation issue (XA-005) concerns the UPP models' own Truth.UNKNOWN/Verdict.UNKNOWN values, which are UPP-internal and definitionally separate from FARA unresolved status. Selecting A or B changes no proposition in any confirmed defect or its repair. No A/B selection is made; the evidence-exhausted investigation is not reopened.
+
+ADR002_OFF_GRAPH_NONBLOCKING
+
+## 12. Confirmed Defects
+
+DEFECT XA-001 — W9 universal positive-witness lemma refuted.
+- Proposition: seven generic antecedents entail a nonempty typed dependency relation with ≥1 support/defeat edge.
+- Source: theory/foundation/upp-dependency-structure-v1.0.json (witness_requirements), docs/research/upp-w9-dependency-structure-v1.0.md (Witness §), as consumed by W12/W13/W15.
+- Counterexample: C-D1 (§3), corroborated by the frozen model/test (empty edges → UNKNOWN, never PROVED).
+- Severity: High. Local impact: lemma false in its consumed universal form. Terminal impact: breaks the dependency-component discharge over part of the terminal domain.
+- Repair required: yes. Class: LEMMA_WEAKENING (primary; alternatives §14).
+
+DEFECT XA-002 — W8 antecedent dropped in terminal composition.
+- Proposition: W15/W13's generic antecedent suffices to invoke W8's constrained-evolution witness.
+- Source: W8 JSON antecedent_premises vs W15 JSON registered_target/adjudicated_theorem; absence of any degenerate-case artifact (verified by search).
+- Proof: static C* adjudicator satisfies the terminal antecedent; W8 delivers nothing for it (model line 72–74); no frozen bridge.
+- Severity: High. Local: W8 itself sound (conditional). Terminal: derivation defective on the static corner.
+- Repair: yes. Class: DEGENERATE_CASE_THEOREM + MISSING_ANTECEDENT_PROPAGATION (composition restatement).
+
+DEFECT XA-003 — W11 antecedents dropped in terminal composition.
+- Same structure as XA-002 for history_sensitive_behavior / registered_history_query_totality; memoryless systems. Severity: High. Repair: same classes.
+
+DEFECT XA-004 — W13/W15 composition consumes five_component_necessity at repository-status level.
+- Proposition: the composition lawfully discharges per-instance component obligations from workstream-completion bookkeeping.
+- Source: W13 JSON antecedents; upp_sufficiency_construction_v1.py (premise unrepresented); check_upp_w15_terminal_theorem.py:60-62.
+- Proof: §6. Severity: High (structural root of XA-001's terminal impact and of XA-002/003). Repair: yes. Class: MISSING_ANTECEDENT_PROPAGATION (case-split composition; revised statement).
+
+DEFECT XA-005 — Established-absence/Unknown conflation in the frozen adjudication vocabulary.
+- Proposition: the models' UNKNOWN branch correctly classifies positively established empty dependency relations (W9) and positively established transition absence (W8).
+- Source: upp_dependency_structure_v1.py (empty-edge branch), upp_w8_constrained_evolution_v1.py:72-74, vs P* error_and_unknown_separation and the anti-trivialization "failure may not be collapsed into Unknown".
+- Proof: C-D1's emptiness is determinate, not unresolved; the vocabulary cannot express it. Severity: Moderate. Repair: yes. Class: DEFINITION_CHANGE (add an established-empty/determinate-absence outcome; prerequisite for expressing XA-001–003 repairs).
+
+DEFECT XA-006 — G1 status inconsistency.
+- Proposition set in conflict: Lean header "closes remainder obligation G1" + G1 doc "supplies that missing proof-object layer" + decision JSON "g1_relative_semantic_composition": "established" vs OP-06 open, UQ-T3 Unresolved, LIM-007 Open, registry implemented_pending_validation, project-status "not one kernel-checked proof object".
+- Severity: Moderate (post-terminal assurance labeling; no bounded-v1 truth impact). Repair: yes. Class: STATUS_ONLY_CORRECTION.
+
+DEFECT XA-007 — G1 artifact not faithful to the G1 obligation.
+- Proposition: UPPSemanticKernel.lean connects the ten enumerated semantic items. It connects names, not semantics; drops ∀R and the existential package; alignment is regex-level (§10).
+- Severity: High for OP-06/PTE-W2 only; none for bounded-v1's declared assurance (weakening reason #1 already disclaims kernel composition).
+- Repair: yes, on the OP-06 path. Class: MECHANIZATION_ONLY + CHECKER_ALIGNMENT.
+
+DEFECT XA-008 — Post-terminal Lean hygiene.
+- MaximalKnowability.lean:20-23 proves ¬X from ¬X; G2OpenWorldLowerBound.lean:136 leaves stated hypotheses unused; FARCanonicalUniversalityDecision "independence" wording proved only as Boolean decide bookkeeping.
+- Severity: Minor; off bounded-v1 graph. Repair: yes. Class: MECHANIZATION_ONLY.
+
+## 13. Rejected / Unresolved Claims
+
+- Lane A: V1_SEMANTICALLY_CLOSED_ON_FROZEN_SCOPE — rejected (§9). Also rejected: "No defect was found in the bounded-v1 theorem statement, its premises, its dependency closure" — XA-001…XA-004 are on-graph.
+- Lane A surviving claims: ADR-002 off-graph analysis; UQ-T8/T16/T17 irrelevance; Lean fidelity matrix; DEFECT-1/DEFECT-2 (absorbed into XA-006/XA-008); failed-attack register.
+- Lane C: C-003 as LOGICAL_DEFECT — downgraded: the "neutral discovery of five necessary dimensions" claim it refutes is asserted by no frozen surface; the frozen lemmas are labeled contract-relative throughout. Adjudicated as informational loading without circularity (§8).
+- Lane C: any implication that C-T1/C-H1 refute W8/W11 as lemmas — rejected as Lane C itself noted; the lemmas are conditionals, sound on their own antecedents. The defect is compositional only.
+- Lane B: no material claim rejected. Its "no determination" on theorem truth is now superseded by §7's not-established finding (which Lane B's scope did not cover).
+- Unresolved (all lanes): whether degenerate/established-empty components legally satisfy the terminal package obligations — the frozen source genuinely underdetermines this; it is the pivot of the repair (§14), not adjudicable from frozen text.
+
+## 14. Minimal Complete Repair Alternatives
+
+XA-001 (W9):
+1. Local lemma correction / LEMMA_WEAKENING (preferred): W9′ concludes a recoverable typed dependency relation that is either positively established-empty or nonempty with all frozen edge obligations; the support-or-defeat-edge conjunct becomes conditional on a new explicit antecedent ("≥1 registered support/defeat-relevant dependency fact"), mirroring W8's existing conditional pattern. Requires XA-005's vocabulary change. Creates a revised lemma (successor theory), not a vindication of frozen W9.
+2. MISSING_ANTECEDENT_PROPAGATION + TERMINAL_SCOPE_REDUCTION: add the nonemptiness antecedent to W9 unchanged and restrict W13/W15 to dependency-bearing systems. Logically valid; needlessly excludes dependency-free systems from the terminal theorem.
+3. DEFINITION_CHANGE (redefine standards as support edges): prohibited — the ad hoc rescue the mandate forbids; no frozen definition entails it.
+4. NO_REPAIR: invalid; defect confirmed.
+
+XA-002/XA-003 (W8/W11 composition):
+1. DEGENERATE_CASE_THEOREM (preferred): separate theorems — for S with no commitment-changing transitions, a typed constrained-evolution component answering the (empty) registered operational domain correctly satisfies the component obligation; for history-insensitive S, a typed trivial trace likewise. Both are honest: they fabricate no transitions and no history.
+2. TERMINAL_SCOPE_REDUCTION: restate W15's antecedent to include transition-bearing + history-sensitive conditions. Valid but strictly weaker.
+3. NEW_THEOREM_PREMISE (all C* systems have transitions/history): prohibited — invented premise contradicted by C*'s satisfiability by static/memoryless systems.
+
+XA-004: MISSING_ANTECEDENT_PROPAGATION: restate W13′/W15′ as a case-split composition — specialized-lemma branch where W8/W9′/W11 antecedents hold, degenerate branch otherwise — consuming per-instance propositions, not queue status. Required under either alternative above.
+
+XA-005: DEFINITION_CHANGE: extend the adjudication vocabulary with a determinate-absence outcome (or an established_empty witness form) distinct from Unknown. No alternative expresses repairs 1 above.
+
+XA-006: STATUS_ONLY_CORRECTION: either downgrade the decision JSON's G1 entry (and the Lean/doc closure language) to "conditional composition wrapper; premise semantics external," or update UQ-T3/LIM-007/OP-06 rows with an exact statement of what is and is not discharged. Governance record change only. (Adjudication note: given §10, the registers are correct and the closure claims are the overstatement.)
+
+XA-007: MECHANIZATION_ONLY + CHECKER_ALIGNMENT: after the semantic repairs, formalize C*/E*/P*/closure/W6 and the witness content of W7–W14 at exactly the repaired scope, derive bridges, restate the exact ∀S ∀R … → ∃K theorem; replace regex alignment with proposition-level verification.
+
+XA-008: MECHANIZATION_ONLY: rename/re-document or replace with genuine countermodels per bridge.
+
+## 15. Preferred Successor-Theory Repair
+
+Package: XA-005 vocabulary change → XA-001 alternative 1 (W9′ established-empty weakening + conditional edge sub-lemma) → XA-002/003 alternative 1 (two degenerate-case theorems) → XA-004 case-split recomposition of W13′/W15′ with per-instance premise consumption → XA-006 status correction → XA-007/XA-008 mechanization work on the repaired semantics.
+
+Why it dominates: (1) it preserves the strongest defensible theorem — the terminal quantifier domain stays the full C*/E*/P* class, whereas scope-reduction alternatives shrink it; (2) it introduces the least new assumption — no invented transitions, edges, or history; the degenerate components assert exactly the determinate absences the sources exhibit; (3) it changes the least canonical semantics — C*, E*, P*, W5, W6, W7, W10, W12's witnesses, and W14 are untouched; only W9's witness clause, the outcome vocabulary, and the composition statements change; (4) it avoids ad hoc rescue — the empty-relation reading is already the W9 JSON statement-field reading, and the conditional-edge sub-lemma mirrors W8's frozen conditional pattern rather than inventing one; (5) it is independently testable — every branch is a finite executable corner (§16); (6) it preserves frozen evidence — f6645a77 artifacts and all three lane reports remain immutable; the repair is a successor baseline. The honest cost is stated plainly: the resulting terminal theorem is a revised theorem in which componentwise nontriviality is conditional on the corresponding registered phenomena; the frozen v1 composition is not retroactively vindicated.
+
+## 16. Exact Regression Matrix Required
+
+Finite corner family; dimensions varied independently: standard sensitivity (T required for C*), grounds sensitivity (T/F), transitions (0/>0), dependency edges (0/>0), support-or-defeat presence (F/T given edges), history sensitivity (F/T), registered dependency-query presence (T), registered history-query presence (T/F), semantic distinction cardinality (1/≥2). Minimum cases and expected results under the repaired semantics (frozen-semantics expectation in brackets where it differs — these bracketed results are the defect reproducers):
+
+K1 baseline rich (trans>0, edges>0 incl. support, hist-sens): C* in; E* adm; P* Pass; W7 proved; W8 proved; W9′ proved (nonempty); W10 proved; W11 proved; W12 applicable; W13′ proved; W15′ proved.
+K2 = C-D1 static, no deps, memoryless: C* in; E* adm; P* Pass; W7 proved; W8 degenerate-branch (established-static) [frozen: UNKNOWN]; W9′ established-empty [frozen: UNKNOWN; positive lemma refuted]; W10 proved; W11 degenerate-branch (trivial trace) [frozen: inapplicable]; W12 witnesses n/a on empty dims; W13′ proved via degenerate branch [frozen: underived]; W15′ proved (revised statement) [frozen: underived].
+K3 transitions>0, no deps, hist-sens: W9′ established-empty [frozen: UNKNOWN]; rest proved; W13′ degenerate dep branch; W15′ proved (revised).
+K4 provenance-only edges: W9′ — established relation with no sup/def edge; the edge sub-lemma's antecedent absent; must remain a correct negative for the positive-witness sub-lemma [frozen: REFUTED]; rest proved; W13′/W15′ case-split.
+K5 static, deps present, hist-insens: W8 degenerate; W9′ proved (nonempty); W11 degenerate trace; W13′ mixed branch; W15′ proved (revised).
+K6 history-sensitive, history queries unregistered: W11 antecedent fails (query totality) → inapplicable, recorded as such, not Unknown-promoted; W15′ blocked or proved per registration.
+K7 fabricated-edge package for K2 source: P* Fail (information_fidelity: fabrication); W13 refuted; out of terminal antecedent.
+K8 Unknown-access dependency queries: P* Unknown; W9′ Unknown (genuine) — must remain distinct from K2/K3's established-empty; W13 Unknown; W15 blocked.
+
+Each case must pin: the established-empty vs Unknown separation (K2/K3 vs K8 is the decisive pair), the anti-fabrication direction (K7), degenerate-branch correctness (K2/K5), and that K4's negative verdict survives the weakening. Specification only — not implemented in this pass.
+
+## 17. OP-06 / PTE-W2 Consequences
+
+Before any kernel reconstruction: the semantic repairs must land first — W9′ (established-empty weakening + conditional edge sub-lemma), the two degenerate-case theorems, the W13′/W15′ case-split recomposition with per-instance premise consumption, and the XA-005 outcome-vocabulary extension. Mechanizing the frozen composition as-is would formalize a defective derivation; mechanizing around it would silently revise the theorem inside the proof assistant, which PTE-W2 forbids ("if exact formalization encounters an irreducible semantic ambiguity, publish the obstruction report rather than inventing semantics"). Until the successor semantics exist, the honest PTE-W2 deliverable for the frozen theorem is an obstruction report citing XA-001…XA-005.
+
+Minimum faithful Lean target after semantic repair: formal source/package types with C*'s five criteria, E*'s E1–E6, P*'s eight clause semantics over a registered-query universe with a four-way error/Unknown/absence discipline, machinery-closure accounting, the W6 relation with its required properties; witness structures for W7–W11 carrying their exact antecedents (including W8/W11 side conditions and W9′'s conditional edge clause) and degenerate branches; W12's indexed separating witnesses; W14's ledger and extension rules; and the exact case-split terminal conditional ∀S ∀R, C*(S) → E*(R) → P*(S,R) → Closed(R) → ∃K, RCCDPackage K ∧ … derived from bridged lemmas — with any residual external assumptions stated as the actual canonical propositions and enumerated, and alignment tests upgraded from regex to proposition-level bridges.
+
+## 18. Successor Freeze Requirement
+
+YES. The confirmed repairs alter theorem antecedents (case-split composition), necessity statements (W9′; conditional component nontriviality), failure conditions and equivalence-adjacent adjudication vocabulary (established-empty outcome), and terminal interpretation (revised statement). Under the Project FAR freeze standard these are material; a successor source freeze is required before any repair implementation. The historical f6645a77 source and the three first-pass lane reports remain immutable evidence; no history editing is proposed.
+
+## 19. Overall Project State
+
+FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED
+
+No S,R satisfying the literal terminal antecedent has been shown to lack every RCCD-equivalent package (so not refuted); the frozen derivation fails to establish the terminal claim over its stated domain because W9's consumed lemma is refuted on part of that domain and W8/W11's side conditions do not propagate (so not established).
+
+## 20. Exact Next Action
+
+Submit this cross-audit adjudication for charter-governed review and acceptance as the campaign's adjudication record (the gate that authorizes registering the successor-repair workstream of §15 with its new source freeze). Not performed here.
+
+## 21. Repository Integrity Declaration
+
+- All substantive evidence was read from frozen commit f6645a77f3b0af0b12897fa9bc2c329cdb345261 (root tree a870c1213873158d288ba40bad3952c465e5acab) via commit-pinned Git object reads.
+- No repository file was modified; no commit, push, branch change, or PR was made; git status --porcelain is empty at completion.
+- No repair was implemented; no test was created; no register, ADR, theory, or Lean artifact was edited; no ADR-002 alternative was selected; no successor freeze was created.
+- No status was changed on any governance surface.
+- The Lane A, Lane B, and Lane C first-pass reports were used solely as claim sources and are preserved unchanged.
+
+STOP.

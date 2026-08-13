@@ -1,0 +1,746 @@
+LANE C — ADVERSARIAL COUNTERMODEL REPORT
+
+4. C* Attack Results
+
+Vacuity
+
+Attack: determine whether C^* simply defines away systems that would challenge RCCD.
+
+The frozen membership definition requires distinguishable response alternatives, explicit appraisal under a supplied standard, sensitivity to altered grounds or standard, finite specifiability of the membership facts, and repeatable membership determination. It explicitly does not require commitments, histories, dependencies, RCCD components, or successful RCCD reconstruction. Later RCCD failure also cannot retroactively remove a system from C^*.
+
+This prevents the strongest form of vacuity: C^* is not defined as “systems reconstructible as RCCD.”
+
+Systems such as finite rule adjudicators and Bayesian updaters are expressly contemplated.
+
+Classification: FAILED_ATTACK
+
+Boundary manipulation
+
+The finite-specifiability and repeatability requirements exclude some dynamic/open-ended systems, but this restriction is explicit. Nothing in the terminal theorem claims otherwise.
+
+Classification: SCOPE_MISMATCH only if external prose calls bounded-v1 universal across arbitrary reasoning systems; it is not an internal theorem countermodel.
+
+Neutrality/circularity
+
+C^* itself survives the semantic-circularity attack better than P^* and W6. Its criteria are formulated behaviorally and do not already require the five RCCD components.
+
+Classification: FAILED_ATTACK
+
+Challenge case
+
+A finite standard-switching adjudicator can satisfy C^* while having no substantive evidential dependency graph:
+
+- alternatives: approve / reject;
+- appraisal: determined by an explicit threshold standard;
+- changing the threshold changes the result;
+- finite facts determine membership;
+- membership test is repeatable.
+
+This case becomes important against W9.
+
+5. E* Attack Results
+
+E^* requires packages to be finitely described, effectively constructible, effectively usable, total over the registered query domain, stably identifiable, and explicit about all required supporting machinery. The universe deliberately covers symbolic, relational, functional, graph, probabilistic, learned, distributed, and other representational media.
+
+Attempts using:
+
+- universal virtual machines;
+- interpreters in data;
+- generated code;
+- compressed lookup tables;
+- learned models;
+- external registries;
+- schedulers;
+- opaque encoding plus decoder;
+- distributed stores
+
+do not automatically escape the theorem. If necessary for operation or interpretation, they become part of the representation package through machinery closure.
+
+Conversely, genuinely unavailable or non-effective oracles are inadmissible.
+
+That restriction makes E^* narrower than all conceivable representations, but it is explicit.
+
+The more material issue is registered-query totality: what must be preserved depends materially on which queries were frozen. A representation can be admissible only relative to that registered observational interface.
+
+This is not logically defective by itself.
+
+Primary classification: HIDDEN_ASSUMPTION
+
+The theorem’s strength is materially conditional on the adequacy of the frozen query domain, not merely on generic representational faithfulness.
+
+6. P* Attack Results
+
+This is the strongest semantic attack surface.
+
+A package passes P^* only if it positively preserves:
+
+1. registered structural facts;
+2. registered meanings and commitment contents;
+3. permitted, forbidden, and realized operational changes;
+4. support, defeat, and revision-relevant dependencies;
+5. the registered fact inventory;
+6. provenance/path-sensitive historical information;
+7. answers or explicit failure for every registered query; and
+8. distinctions among falsehood, unavailable access, unresolved status, and out-of-domain results.
+
+Any failed clause gives Fail; unresolved clauses give Unknown; Unknown is not Pass.
+
+The problem is not simply that P^* is strong. The frozen assumption discipline separately requires that no definition conceal a substantive RCCD obligation under alternate vocabulary and requires semantic rather than merely lexical conclusion-loading audits.
+
+Yet several components later advertised as necessary correspond almost directly to mandatory P^* dimensions:
+
+- recoverable commitment ↔ commitment-bearing contents + query totality + stable identity;
+- constrained evolution ↔ operational/admissibility fidelity;
+- dependency structure ↔ dependency fidelity;
+- semantic interpretation ↔ semantic fidelity;
+- historical trace ↔ historical fidelity.
+
+This establishes semantic dependence, not merely shared words.
+
+A theorem of the form:
+
+any representation required beforehand to preserve dependency information necessarily contains enough machinery to recover dependency information
+
+can be valid, but it is not an architecture-neutral derivation of the necessity of dependency information.
+
+The same applies to semantics, history and commitment information.
+
+Therefore two claims must be separated:
+
+- conditional reconstruction theorem: potentially valid;
+- neutral discovery of five necessary informational dimensions: substantially conclusion-loaded by P^*.
+
+Classification: LOGICAL_DEFECT with respect to the frozen anti-conclusion-loading premise/control and any claim that W7–W11 independently derive those informational obligations rather than reconstruct obligations frozen into P^*.
+
+This does not by itself produce a model satisfying all premises while falsifying W15’s conditional conclusion.
+
+7. Machinery-Closure Attack Results
+
+W5 defines closure transitively over every disclosed required support dependency needed to construct, execute, interpret, query, or identify a package. Relevant decoders, runtimes, codebooks, model artifacts, randomness sources, registries, query interfaces and related machinery are included.
+
+Attack results:
+
+- Interpreter in data: captured if required.
+- Universal VM: runtime becomes machinery.
+- Generated code: generator/runtime becomes machinery.
+- Compressed lookup table: decoder becomes machinery.
+- Opaque/cryptographic encoding: required key/decoder becomes machinery; absent one causes failure/inadmissibility.
+- External identifiers: registry/resolution mechanism becomes machinery.
+- Lazy derivation: derivation algorithm becomes machinery.
+- Meta-interpreter: transitive closure incorporates it.
+- Hidden environmental state: valid escape only if the supposedly complete package can use it without disclosure; W5 expressly denies closure in that case.
+- Oracle reference: non-effective/unavailable oracle defeats E^*/closure rather than refuting the theorem.
+
+No surviving machinery-escape countermodel was established.
+
+Classification: FAILED_ATTACK
+
+The price is a deliberately expansive package boundary, but it is exposed rather than hidden.
+
+8. Commitment-Equivalence Attack Results
+
+W6 is exceptionally strong.
+
+Positive equivalence requires effective correspondences in both directions preserving:
+
+- facts and commitment-bearing contents;
+- states and identity classes;
+- transition/admissibility structure;
+- dependency relations;
+- complete histories;
+- registered query answers;
+- failure/rejection/Unknown distinctions;
+- transitive support machinery;
+- every P^* preservation dimension;
+
+with both compositions acting as identity on commitment-relevant domains.
+
+This successfully blocks obvious lossy countermodels:
+
+- behavioral equivalence with different provenance;
+- state minimization erasing registered history;
+- output equivalence erasing dependency structure;
+- many-to-one semantic coding that destroys a required meaning distinction;
+- hidden reconstruction channels;
+- representations that collapse failure and Unknown.
+
+But it creates another problem: the relation used to establish “RCCD-equivalence” already demands reversible preservation of most of the information RCCD is supposed to recover.
+
+Thus W13’s reconstruction result is much closer to:
+
+a representation equipped with reversible correspondences preserving every relevant dimension can be reversibly represented in a package exposing those dimensions
+
+than to a neutral theorem that RCCD uniquely emerges from weak representational assumptions.
+
+That narrower theorem can be true. It is simply less informative.
+
+No pair of frozen-equivalent packages was found that provably loses a distinction which the frozen equivalence itself later requires; W6 is too strong for that simple attack.
+
+Primary classification: HIDDEN_ASSUMPTION
+
+The hidden strength is not the existence of equivalence—it is how much semantic structure “equivalence” already requires before RCCD reconstruction begins.
+
+9. Necessity Attacks
+
+Recoverable commitment
+
+Strongest attempted construction: quotient representation in which commitments exist only as distributed equivalence classes and are computed on demand rather than stored as explicit objects.
+
+W7 allows exactly that sort of derived representation. It needs an effectively identifiable referent with identity surviving permitted representational changes, not a primitive “commitment record.” Its proof extracts the relevant referents through the P^* query interface and charges required decoding machinery to closure.
+
+A representation with no recoverable commitment referent fails P^*, query totality, stable identity, or W6 rather than satisfying the antecedent.
+
+So no in-scope countermodel survives.
+
+However, this demonstrates informational necessity, not necessity of a distinct primitive architectural component.
+
+Classification: HIDDEN_ASSUMPTION
+
+The necessity is largely inherited from the contract/equivalence definitions.
+
+Constrained evolution
+
+W8 does not claim constrained evolution for every terminal antecedent. Its actual necessity theorem additionally assumes:
+
+at least one commitment-changing transition is in the registered operational domain.
+
+The positive witness additionally requires meaningful permitted/forbidden differentiation. Null operational domains defeat the W8 antecedent rather than proving W8.
+
+A static finite C^* system can therefore potentially satisfy the generic W15 displayed premises without satisfying W8’s additional antecedent.
+
+W15’s displayed universal antecedent does not reproduce that additional side condition before citing W8 as one of the recovered components.
+
+This is a dependency-composition failure unless “RCCD-equivalent operational package” explicitly allows a degenerate empty constrained-evolution component whose existence does not require W8’s theorem.
+
+The frozen W15 proof sketch does not establish that bridge.
+
+Classification: LOGICAL_DEFECT
+
+The defect is loss of a necessary lemma antecedent in terminal composition, not proof that every static system falsifies the terminal package conclusion.
+
+Dependency structure
+
+This yielded the strongest explicit countermodel candidate.
+
+Construction C-D1: Empty-dependency standard adjudicator
+
+Construct a finite deterministic system S:
+
+- one proposition p;
+- responses {accept, reject};
+- one explicit appraisal standard T;
+- appraisal rule: accept iff a registered score exceeds T;
+- changing T can change appraisal;
+- no claim is supported by, defeated by, revised because of, or dependent on another commitment;
+- the dependency-query domain is present and total, but every dependency query returns the empty relation / “none.”
+
+This can satisfy C^*:
+
+1. distinguishable alternatives — yes;
+2. explicit appraisal standard — yes;
+3. altering supplied standard changes permitted/warranted response — yes;
+4. finite membership facts — yes;
+5. repeatability — yes.
+
+Take a finite explicit representation R containing the proposition, threshold, appraisal result, semantic labels, complete query interface, appropriate current/history record, and empty dependency relation.
+
+It can satisfy E^*: finite, effective, usable, total, stable, disclosed.
+
+It can satisfy dependency fidelity under P^*: the correct registered answer to every dependency question is that no such dependency exists. Faithfulness requires preservation, not fabrication, of support/defeat edges.
+
+Machinery closure can trivially hold.
+
+W6 can preserve the empty dependency relation bijectively.
+
+But W9’s positive witness conditions require:
+
+- a recoverable dependency relation; and
+- at least one support or defeat edge.
+
+Nothing in C^*’s “grounds or standard” condition logically entails such an edge.
+
+Self-refutation attempt
+
+Possible objection: the threshold or standard itself could be interpreted as a dependency source.
+
+That fails unless the frozen dependency vocabulary classifies ordinary semantic/appraisal parameters as support, defeat, or revision/replacement dependencies. If every appraisal standard automatically creates such a dependency, then W9’s nonemptiness is definitional and the theorem must expose that bridge. W9’s own separate demand for a support/defeat edge makes such an identification non-obvious.
+
+Possible objection: P^* dependency fidelity implicitly requires nonempty dependencies.
+
+The frozen contract requires preservation of registered support/defeat/revision dependence questions; it does not state that the truthful answer cannot be empty.
+
+Possible objection: the system falls outside C^* because no supplied “grounds” matter.
+
+W2 uses grounds or standard, so changing the standard suffices.
+
+Therefore the countermodel survives the stated frozen conditions available in the dependency chain.
+
+Classification: VALID_COUNTERMODEL
+
+It directly refutes W9’s advertised nonempty dependency conclusion under its frozen antecedent and therefore breaks a dependency used by W15.
+
+Whether it falsifies W15’s terminal package existence statement rather than its registered derivation depends on whether a terminal RCCD dependency component may legally be empty. The frozen terminal composition does not resolve that distinction.
+
+Semantic interpretation
+
+Attempted countermodels included:
+
+- pure token tables;
+- extensional black-box mappings;
+- latent numeric codes;
+- dynamically generated symbols;
+- semantics encoded entirely in a decoder.
+
+They fail because semantic fidelity under P^* and W6 already requires registered meanings to survive. W10 permits codebooks, translators and interpreters rather than demanding a primitive semantic field.
+
+Thus no faithful package can discard a registered semantic distinction and remain in the antecedent.
+
+Classification: HIDDEN_ASSUMPTION
+
+This is an informational necessity already substantially supplied by semantic fidelity, not evidence for a uniquely irreducible semantic architecture.
+
+Historical trace
+
+W11 is explicitly conditional on history sensitivity:
+
+two accessible histories can reach the same visible current state yet differ on a registered provenance/path-sensitive query. Null histories or systems without such a distinction do not satisfy that antecedent.
+
+A memoryless finite adjudicator therefore defeats application of W11 without defeating the generic W15 displayed antecedent.
+
+W15 does not restate this side condition when composing W7–W11.
+
+Again, W15 could survive if its “historical-trace component” is permitted to be a trivial/empty trace for non-history-sensitive systems. But W11 does not prove that proposition.
+
+Classification: LOGICAL_DEFECT
+
+The registered terminal derivation applies a conditional necessity result outside its demonstrated antecedent unless a separate degenerate-case bridge exists.
+
+10. Independence / Non-Redundancy Attacks
+
+W12 is narrower than a global irreducibility theorem.
+
+Its frozen meaning of component independence is demonstrated by five registered separating reductions:
+
+- remove commitment identity → commitment query failure;
+- permissivize transition policy → forbidden mutation accepted;
+- remove dependency edge → dependency query failure;
+- collapse distinct meanings → semantic failure;
+- collapse distinct traces → historical query failure.
+
+This establishes something like registered deletion sensitivity.
+
+It does not establish:
+
+- joint mathematical independence;
+- unique decomposition;
+- cardinal minimality;
+- global basis minimality;
+- impossibility of alternative decomposition;
+- irreducibility under arbitrary transformations.
+
+W12 explicitly disclaims those stronger readings.
+
+The terminal theorem correspondingly says “componentwise independent under registered reduction controls,” not globally irreducible.
+
+Therefore an attack based merely on alternative distributed encodings does not refute the frozen independence proposition.
+
+There is nevertheless a dependence on nontrivial witnesses. The dependency and historical separating examples presuppose an actual dependency edge and distinguishable histories. Their existence does not demonstrate that every individual C^* system realizes nontrivial instances of all five dimensions.
+
+Primary classification: FAILED_ATTACK
+
+A stronger global-independence criticism would attack a theorem that bounded-v1 explicitly does not state.
+
+11. Sufficiency / Reconstruction Attacks
+
+W13 constructs a five-part RCCD package from recoverable source material, then supplies encode/decode maps using frozen correspondences and closed support machinery. Correctness is only up to frozen commitment equivalence, not byte identity or unrestricted source isomorphism.
+
+I attempted the principal failure classes.
+
+Two non-isomorphic sources with same package
+
+Not sufficient. Frozen equivalence intentionally permits representational differences while requiring preservation of commitment-relevant domains.
+
+FAILED_ATTACK
+
+History-erasing quotient
+
+Fails W6/P* if the erased history supports a registered provenance distinction.
+
+FAILED_ATTACK
+
+Semantically aliased representation
+
+Fails W6/P* when a registered meaning distinction collapses.
+
+FAILED_ATTACK
+
+Hidden reconstruction channel
+
+Machinery closure absorbs required machinery or marks the package open/inadmissible.
+
+FAILED_ATTACK
+
+Computation-on-demand
+
+Allowed if effective and disclosed. This attacks explicit storage, not recoverability.
+
+FAILED_ATTACK
+
+Coarse equivalence
+
+This attack partly survives conceptually, but W6 is not especially coarse: it requires reversible commitment-relevant correspondences across essentially the entire P^* interface.
+
+The resulting problem is not information loss. It is that sufficiency becomes close to definitional once reversible preservation has already been assumed.
+
+Classification: HIDDEN_ASSUMPTION
+
+Side-condition propagation
+
+W13 consumes W7–W11 outputs but the terminal chain does not expose the additional W8/W11 antecedents. That affects the proof of sufficiency for generic terminal cases.
+
+Classification: LOGICAL_DEFECT
+
+12. Maximality Attacks
+
+W14 is unusually disciplined about scope.
+
+Its candidate universe is the finite frozen extension ledger, generated before freeze under the declared registration rules. Maximality means that no registered extension yields strictly greater fidelity across the frozen preservation dimensions while preserving the remaining constraints.
+
+It expressly does not quantify over:
+
+- all logically possible architectures;
+- future formalisms;
+- unregistered empirical assumptions;
+- all optimization objectives;
+- open-world alternatives.
+
+Consequently:
+
+1. an architecture outside the frozen challenge grammar does not refute W14;
+2. an architecture never registered before freeze does not refute W14;
+3. a structurally different but equivalently powerful representation does not refute maximality unless it is an admitted registered extension and strictly dominates under the frozen criterion.
+
+No evidence examined established an extension that satisfied W14’s frozen admissibility rules yet was missing from the ledger.
+
+The finite ledger therefore supports only ledger-relative maximality, but that is exactly what W14 and W15 state.
+
+Classification: FAILED_ATTACK
+
+Any later prose calling this open-world maximality would create a scope mismatch, but that overclaim is not present in the frozen terminal statement examined.
+
+13. Unknown / Failure Attacks
+
+The frozen status discipline generally resists three-valued exploitation:
+
+- failed P^* clause → Fail;
+- unresolved clause without a demonstrated failure → Unknown;
+- Unknown is not Pass;
+- unresolved C^* membership is not membership;
+- unresolved E^* admissibility is not admissibility.
+
+I did not find a status path of:
+
+Unknown → Pass
+
+or:
+
+failed access → truthful negative answer
+
+that is licensed by the frozen rules.
+
+Unknown therefore narrows the admitted quantifier domain instead of falsifying a proposition inside it.
+
+This can remove difficult representations from the theorem until their status becomes determinable, but that is explicit.
+
+Potential vacuity would require all meaningful candidates to become Unknown. C^* includes concrete finite examples and the frozen artifacts construct positive witnesses, so that stronger vacuity attack does not succeed.
+
+Classification: FAILED_ATTACK
+
+A methodological concern remains: difficult opaque or open-ended representations can remain outside the theorem through Unknown rather than Fail. That affects external generality, not internal bounded-v1 validity.
+
+14. Lean Semantic Attack
+
+The frozen terminal materials do not claim one monolithic Lean theorem whose kernel establishes the entire semantic result. The W15 audit expressly distinguishes executable/formal checking from proof-assistant proof status, and the terminal theorem itself disclaims a single kernel-checked end-to-end semantic proof.
+
+Consequently an attack of:
+
+“the Lean artifacts do not independently prove the whole English theorem”
+
+does not refute what the frozen repository actually claims.
+
+The semantic problem lies earlier: if formal interfaces take P^*, closure, equivalence, or component witnesses as abstract assumptions, type-checking their composition cannot independently establish that those assumptions are RCCD-neutral. That semantic burden remains in the prose/model layer.
+
+No Lean result inspected provides a basis for upgrading the theorem beyond those frozen semantic dependencies.
+
+Primary classification: FAILED_ATTACK
+
+No independent Lean-based theorem countermodel was needed to establish the W9 and terminal-composition defects above.
+
+15. Potential Countermodels
+
+COUNTERMODEL-ID: C-D1
+
+Targeted proposition: W9 dependency-structure necessity.
+
+Construction: finite deterministic standard-sensitive adjudicator with no support, defeat, or revision-dependency edges.
+
+System:
+
+- finite proposition set;
+- explicit threshold/appraisal standard;
+- two distinguishable responses;
+- changing the standard can alter appraisal;
+- no evidential dependency relation among commitments;
+- registered dependency queries return an explicit empty relation.
+
+Representation:
+
+- finite explicit record of state, standard, semantics and appraisal;
+- total query interface;
+- explicit empty dependency relation;
+- disclosed interpreter;
+- stable identifiers;
+- complete machinery package.
+
+Frozen premises satisfied:
+
+- C^*: yes, because W2 permits appraisal sensitivity through altered grounds or standard.
+- E^*: finite, effective, total, stable and closed.
+- P^*: preservation of an empty dependency relation is faithful; nothing requires fabrication of an edge.
+- machinery closure: yes.
+- W6 equivalence: empty relation maps reversibly to empty relation.
+- registered dependency queries: yes; every query receives the correct negative/empty answer.
+
+Violated conclusion: W9 requires a recoverable nonempty dependency relation and at least one support or defeat edge.
+
+Mechanism: degenerate construction / omitted case / empty relation.
+
+Self-refutation attempt: rejected for the reasons given in §9. Neither W2 nor P^* visibly requires a nonempty support/defeat edge.
+
+Final classification: VALID_COUNTERMODEL
+
+COUNTERMODEL-ID: C-T1
+
+Targeted proposition: terminal composition through W8.
+
+Construction: static C^* adjudicator with no commitment-changing transition in its registered operational domain.
+
+Premise check: W15’s displayed antecedent does not itself require a nonempty commitment-changing transition. W8 does.
+
+Potential violated conclusion: use of W8 to establish a nontrivial constrained-evolution component.
+
+Self-refutation: if RCCD permits an empty/trivial evolution component, W15’s package-existence conclusion can still hold even though W8 does not prove it.
+
+Final classification: LOGICAL_DEFECT
+
+The invalidity is in dependency composition; terminal falsity is not established.
+
+COUNTERMODEL-ID: C-H1
+
+Targeted proposition: terminal composition through W11.
+
+Construction: memoryless finite C^* system for which no registered provenance/path-sensitive query distinguishes convergent histories.
+
+Premise check: generic W15 conditions can still hold; W11’s special history-sensitive antecedent does not.
+
+Potential violated conclusion: use of W11 to recover a nontrivial historical trace.
+
+Self-refutation: a trivial history component may satisfy the terminal package if no historical distinction exists.
+
+Final classification: LOGICAL_DEFECT
+
+Again the demonstrated defect is the inference chain, not necessarily the terminal existential proposition.
+
+16. Confirmed Defects
+
+DEFECT C-001
+
+Classification: VALID_COUNTERMODEL
+Severity: High
+Source: W9 dependency-structure theorem.
+
+Proposition: qualifying systems/packages answering registered dependency queries necessarily support a nonempty dependency structure including at least one support or defeat edge.
+
+Countermodel: C-D1, the finite standard-sensitive adjudicator described above.
+
+Theorem impact: W9 is a registered dependency of W15. The frozen terminal composition therefore cannot rely on W9 as universally discharging the dependency component without adding an antecedent requiring a nonempty relevant dependency or weakening W9’s conclusion to permit an empty dependency structure.
+
+DEFECT C-002
+
+Classification: LOGICAL_DEFECT
+Severity: High
+Source: W8/W11 → W15 composition.
+
+Proposition: W15 composes W7–W11 into the terminal five-component result under its displayed generic antecedent.
+
+Proof of defect: W8 requires an additional nonempty commitment-changing-transition antecedent. W11 requires an additional history-sensitive antecedent. W15’s displayed antecedent omits both while treating W7–W11 as discharged component obligations.
+
+This is invalid dependency composition unless separate frozen lemmas establish the missing degenerate cases. No such bridge is identified in the frozen W15 composition.
+
+Theorem impact: the frozen derivation does not establish the terminal result for all cases quantified by W15.
+
+DEFECT C-003
+
+Classification: LOGICAL_DEFECT
+Severity: High for the claimed neutrality/necessity program; Moderate for the bare conditional package theorem
+Source: P^*, W6, W7–W11, frozen anti-conclusion-loading assumption.
+
+Proposition: the registered necessity argument obtains the five RCCD informational dimensions without semantically assuming substantive RCCD obligations.
+
+Proof: P^* and W6 already positively demand recoverability/preservation of commitment content, operational distinctions, dependency relations, meanings, histories, registered queries, identities and relevant machinery. W7–W11 then derive structures carrying those same information categories.
+
+This is more than lexical overlap. Removing those premise obligations removes the corresponding necessity argument.
+
+Theorem impact: bounded-v1 can still be interpreted as a conditional canonicalization/reconstruction theorem, but the stronger interpretation that the five informational obligations were neutrally discovered from materially weaker premises does not survive the frozen anti-circularity standard.
+
+17. Hidden Assumptions / Ambiguities / Scope Mismatches
+
+HIDDEN_ASSUMPTION — adequacy of the registered query set
+
+The theorem preserves everything its frozen query/fact contract says matters. It does not independently establish that this registered observational interface captures every materially relevant distinction.
+
+This is unavoidable for any bounded observational theorem, but it substantially determines the result.
+
+HIDDEN_ASSUMPTION — equivalence strength
+
+“Up to commitment equivalence” sounds weaker than the frozen relation actually is. W6 requires reversible preservation across nearly the entire semantic/operational/history/dependency interface.
+
+The strength of reconstruction is therefore purchased partly by the strength of the assumed equivalence relation.
+
+STATEMENT_AMBIGUITY — “component”
+
+Across the necessity chain, “component” can mean:
+
+- independent stored architectural module;
+- recoverable informational structure;
+- derived view;
+- effective query capability.
+
+The proofs generally support the latter categories more clearly than a distinct irreducible architectural module.
+
+SCOPE_MISMATCH — open-ended representations
+
+Dynamic/open-world systems that cannot meet finite/effective/query-totality requirements are outside E^* or Unknown. That does not falsify bounded-v1, but general prose must not erase this distinction.
+
+SCOPE_MISMATCH — independence
+
+W12 establishes registered reduction sensitivity, not unique/global irreducibility. The frozen terminal wording mostly respects this limitation.
+
+SCOPE_MISMATCH — maximality
+
+Only frozen-ledger maximality is established. W14/W15 expressly acknowledge this, so no internal defect follows.
+
+18. Assurance Defects
+
+No independent assurance defect severe enough to change theorem truth was established.
+
+The frozen terminal audit already says the result is not one single kernel-checked end-to-end semantic theorem and distinguishes executable verification from proof-assistant proof.
+
+The principal failures found in Lane C are semantic/logical dependency defects, not merely missing mechanization.
+
+19. Failed Attacks
+
+Significant attacks that did not survive premise/scope checking:
+
+1. “C simply defines RCCD in advance.”
+   Failed. C^* is behaviorally stated and explicitly permits later RCCD failure without retroactive exclusion.
+
+2. “Hidden interpreters evade machinery closure.”
+   Failed. Required interpreters/runtimes/codebooks become package machinery.
+
+3. “Black-box behavioral equivalence defeats history/dependency preservation.”
+   Failed. W6 rejects output-only equivalence.
+
+4. “A quotient or minimal sufficient statistic automatically refutes RCCD.”
+   Failed. Quotient/derived encodings are admitted when all frozen commitment-relevant distinctions remain reversibly recoverable.
+
+5. “W12 claims unique decomposition.”
+   Failed. It explicitly does not.
+
+6. “Finite challenge testing is presented as unrestricted maximality.”
+   Failed. W14/W15 explicitly restrict maximality to the frozen ledger.
+
+7. “Unknown silently counts as Pass.”
+   Failed. The frozen status rules expressly prohibit it.
+
+8. “Different byte-level/source representations defeat W13.”
+   Failed. Reconstruction is expressly only up to frozen equivalence.
+
+9. “Absence of a monolithic Lean theorem falsifies the frozen assurance claim.”
+   Failed. The repository expressly disclaims such an assurance level.
+
+20. Strongest Surviving Challenge
+
+THEOREM_LOGICAL_DEFECT_FOUND
+
+Reason: an explicit W9 countermodel survives its frozen premise check, and W15 additionally composes W8 and W11 without carrying their necessary side conditions. This is stronger than a mere scope criticism.
+
+21. Bounded-v1 Adversarial Verdict
+
+V1_NOT_REFUTED_BUT_LOGICALLY_DEFECTIVE
+
+The distinction is deliberate.
+
+Lane C found a valid countermodel to a theorem dependency and invalid terminal dependency composition. That prevents the registered frozen proof chain from establishing bounded-v1 as written.
+
+I did not establish that there exists a single S,R satisfying every literal W15 antecedent for which no RCCD-equivalent package whatsoever exists. In particular, trivial empty dependency/evolution/history components may allow the bare terminal existential conclusion to remain true for degenerate systems even where W9/W8/W11 cannot prove it.
+
+Therefore V1_REFUTED_ON_OWN_FROZEN_PREMISES would overstate the result.
+
+The correct adversarial result is that the frozen theorem is not presently established by its own dependency structure.
+
+22. Minimal Next Actions
+
+Semantic defect response
+
+1. Test C-D1 formally against the exact frozen dependency vocabulary.
+2. Determine whether an empty dependency relation is legally a dependency structure.
+3. If yes, W9’s “nonempty / at least one support-or-defeat edge” conclusion is too strong.
+4. If no, identify the frozen premise that logically forces a support/defeat edge for every W9 system. It cannot be supplied post hoc.
+
+Theorem scope issue
+
+Audit W15’s quantifier antecedent against every W7–W11 antecedent mechanically.
+
+At minimum resolve:
+
+- W8: commitment-changing-transition existence;
+- W11: history sensitivity;
+- W9: nonempty support/defeat requirement.
+
+Do not merely add conditions unless they were already frozen dependencies; doing so would create a repaired theorem rather than vindicate this frozen one.
+
+Assurance issue
+
+After semantic resolution, check whether the executable/Lean artifacts encode the same side conditions. Do not increase assurance language until semantic and machine-readable scopes coincide.
+
+New countermodel experiment/evidence
+
+The highest-value next adversarial experiment is a small exhaustive model family varying independently:
+
+- standard sensitivity;
+- grounds sensitivity;
+- transition count;
+- dependency-edge count;
+- history sensitivity;
+- semantic cardinality.
+
+Enumerate cases satisfying C^*, then evaluate W7–W11 antecedents/conclusions and W15 composition. The zero-edge, zero-transition and history-insensitive corners are specifically diagnostic.
+
+No repository change is part of this recommendation.
+
+23. Blindness Declaration
+
+- No Lane A findings were read.
+- No Lane B findings were read.
+- No cross-lane findings conditioned this audit.
+- No post-freeze repository content was used as substantive evidence.
+- All substantive repository reads were pinned to frozen commit f6645a77f3b0af0b12897fa9bc2c329cdb345261.
+- The independently retrieved frozen root tree matched a870c1213873158d288ba40bad3952c465e5acab.
+- The repository was not modified.
+- No files were edited.
+- No commits were created.
+- No branches were changed.
+- No PR was opened or updated.
+- No repair was implemented.
+- ADR-002 was not selected or reopened.

@@ -1,0 +1,267 @@
+LANE A — BOUNDED-v1 SEMANTIC CLOSURE REPORT
+
+1. Baseline Verification
+
+• Frozen commit: f6645a77f3b0af0b12897fa9bc2c329cdb345261 — verified present locally; git cat-file -t returns commit.
+• Frozen tree: git rev-parse f6645a77…^{tree} returns exactly a870c1213873158d288ba40bad3952c465e5acab.
+• Working tree: git status --porcelain empty at audit start and audit end. HEAD (a4d8ea4) differs from the frozen commit by exactly one additive file — docs/governance/bounded-v1-closure-source-freeze-f6645a77.md, the administrative freeze record, which was read solely for campaign-isolation rules and used as no substantive evidence.
+• Method: every substantive read and search was commit-addressed to the frozen SHA (git show f6645a77…:<path>, git grep <pattern> f6645a77… -- <paths>, git ls-tree -r f6645a77…). Working-tree tools were used only for baseline verification and for reading cached copies of git show output. No file was modified, no commit/push/PR was made, no build was run.
+• Verdict: PASS.
+
+2. Reconstructed Terminal Theorem
+
+The strongest theorem the frozen canonical source actually supports, reconstructed from docs/research/upp-w15-terminal-theorem-v1.0.md, theory/terminal/upp-terminal-theorem-v1.0.json, docs/research/post-tue-universal-proof-program-v1.0.md, and the premise artifacts:
+
+For every system S in the independently frozen target class C* (C-STAR-V1), and every representation package R in the independently frozen admissible universe E* (E_STAR_V1) that is machinery-closed under the W5 least-fixed-point closure operator and satisfies the independently frozen full faithfulness contract P* (P_STAR_V1) for S with commitment-equivalence preservation under the W6 relation, the registered executable constructions recover an RCCD-equivalent operational package preserving the eight frozen dimensions (structural, semantic, operational, dependency, informational, historical, registered-query totality, failure/Unknown separation). The package is sufficient by effective bidirectional reconstruction up to frozen commitment equivalence (W13), the five components (recoverable commitment, constrained evolution, dependency structure, semantic interpretation, historical trace) are each necessary as relative operational lemmas (W7–W11) and jointly non-redundant by separating witnesses (W12), and the package is maximal only relative to the frozen extension rules and the finite five-challenge registered ledger (W14).
+
+Premises (all stipulated by frozen artifacts, RCCD-independent by construction): C* membership (five criteria + Unknown rule, theory/class/upp-target-class-v1.0.json); E* admissibility E1–E6 (theory/representations/upp-representation-universe-v1.0.json); machinery closure (theory/machinery/upp-w5-machinery-closure-v1.0.json); P* eight clauses with six classified assumptions A-P-001…A-P-006 (theory/contract/upp-faithfulness-contract-v1.0.json); commitment equivalence (theory/equivalence/upp-representation-equivalence-v1.0.json); the W1 typed foundation.
+
+Conclusion: existence of the RCCD-equivalent package with the properties above, relative to those premises.
+
+Explicit scope: relative and operational only; maximality closed over the finite registered challenge ledger; per-lemma verdicts three-valued with Unknown neither support nor defeat.
+
+Explicit nonclaims (frozen): no unrestricted/metaphysical universality; no open-world maximality; no unique/final ontology; no primitive global necessity/minimality (FARA’s seven primitives are not the RCCD components and are not claimed); no proof by finite testing or absence of counterexamples; no independent external validation; no complete application correspondence.
+
+Assurance level: the composition is executable, deterministic-checker verified, adversarially tested, and repository-validated, but not represented as one kernel-checked theorem over the full semantic model — this is weakening reason #1 inside the theorem itself (upp-terminal-theorem-v1.0.json.mechanization.single_kernel_checked_semantic_terminal_theorem: false).
+
+3. Canonical Authority Map
+
+Authority	Path	Role	Conflicts found
+Framework boundaries	docs/governance/framework-boundaries.md	Layer ownership, dependency direction, nonclaims	None
+Canonical terminology	docs/glossary/canonical-terminology.md	Names, meanings, ownership, epistemic class	None material; unresolved status deliberately absent (LIM-029)
+Shared definitions	theory/definitions/definitions.md	Canonical definitions incl. admissibility, calculus, Ω	UQ-T17 ambiguity at D1/D2 (documented, preserved)
+FARA admissibility structure	frameworks/FARA/admissibility-structure.md	Ω architecture; :84, :111, :204	:111 semantically underdetermined — by design of ADR-002
+Project status	docs/project-status.md	Current phase and central result	Consistent with README, central-research-program, terminal artifacts
+Canonical map	docs/CANONICAL_MAP.md	Canonical locations	None
+Research execution charter	docs/governance/research-execution-charter.md	Lifecycle, selection authority	None; note it provides no selection rule for evidence-underdetermined alternatives (see §6)
+Claim-status matrix	docs/governance/claim-status-matrix.md	Claim classifications	None; repeatedly asserts E* independence from FARA Ω
+Theorem-proof register	docs/governance/theorem-proof-status-register.md	Assurance classes	“Terminal UPP theorem: bounded theorem with mixed assurance” — consistent
+Limitations / open-problems / unresolved registers	docs/governance/*.md	Status surfaces	Register rows for LIM-007/UQ-T3/OP-06 unchanged by the G1 Lean artifact — see §10/§11 for the tension with the decision record
+Terminal theorem + audit	docs/research/upp-w15-terminal-theorem-v1.0.md, docs/audits/upp-w15-terminal-theorem-audit.md, theory/terminal/upp-terminal-theorem-v1.0.json	The bounded-v1 result	Internally consistent
+Remainder registration	docs/research/universality-remainder-theorem-v1.0.md	Defines G1/G2/G3 obligations	G1 requirement vs. delivered G1 artifact — see §8/§11
+Post-terminal program	docs/governance/post-terminal-public-evaluation-program-v1.0.md	Evaluation governance	None
+
+No conflict was found that leaves the bounded-v1 theorem statement itself ambiguous. The one genuine authority tension found (G1 “established” vs. registers still open) sits in post-terminal artifacts, off the bounded-v1 graph (§10, DRIFT-1).
+
+4. Bounded-v1 Dependency Graph
+
+Edges run upward: each node is required by the node(s) listed under “Required by”. “Stipulated” means an explicit frozen premise; “conditionally derived” means proved relative to the stipulated premises by executable adjudication (not kernel derivation).
+
+ID	Claim / dependency	Canonical source	Depends on	Required by	Status	Reasoning	Blocking?
+N-W1	Typed formal foundation (sorts, relations, three-valued statuses)	theory/foundation/upp-foundation-v1.0.json	—	all below	Stipulated (definitional)	Explicitly RCCD-neutral; foundation_neutrality block	No
+N-C*	Target class C* (5 criteria, Unknown rule, closure rules)	theory/class/upp-target-class-v1.0.json	N-W1	N-R1…N-R5, N-SUF, N-MAX, N-T	Stipulated	Neutrality obligations verified: no RCCD vocabulary; mechanically verified no FARA/Ω reference	No
+N-P*	Faithfulness contract P* (8 clauses, A-P-001…006)	theory/contract/upp-faithfulness-contract-v1.0.json	N-W1	N-R1…N-R5, N-SUF, N-T	Stipulated	Assumptions classified and visible; clause-independence witnesses recorded	No
+N-E*	Admissible representation universe E* (E1–E6)	theory/representations/upp-representation-universe-v1.0.json	N-W1	N-R1…N-R5, N-SUF, N-MAX, N-T	Stipulated	“Admissibility” here = package effectiveness/disclosure, not FARA Ω admissibility (mechanically verified — zero FARA/Ω/unresolved status matches in the premise directories)	No
+N-CLO	Machinery closure operator (least fixed point)	theory/machinery/upp-w5-machinery-closure-v1.0.json	N-E*	N-R1…N-R5, N-SUF, N-T	Conditionally derived (procedure established; properties test-verified)	Closed/open/unknown adjudication; anti-evasion rules	No
+N-EQ	Commitment equivalence (10 dimensions, round-trip)	theory/equivalence/upp-representation-equivalence-v1.0.json	N-CLO	N-R2, N-SUF, N-T	Stipulated relation + adjudication rules	Unknown rules explicit	No
+N-R1	Recoverable-commitment necessity (relative lemma)	theory/necessity/upp-recoverable-commitment-v1.0.json	N-C*, N-E*, N-CLO, N-P*, N-EQ	N-IND, N-T	Conditionally derived	Executable adjudication under frozen antecedents	No
+N-R2	Constrained-evolution necessity (history-sensitive admissibility relation witness)	theory/necessity/upp-w8-constrained-evolution-v1.0.json	same + ≥1 commitment-changing transition	N-IND, N-T	Conditionally derived	Witness relation is answer-extensional (constructed from registered query answers); explicit-Unknown discharge; see §7 UQ-T16	No
+N-R3	Dependency-structure necessity	theory/foundation/upp-dependency-structure-v1.0.json	same	N-IND, N-T	Conditionally derived	—	No
+N-R4	Semantic-interpretation necessity	theory/foundation/upp-semantic-interpretation-v1.0.json	same	N-IND, N-T	Conditionally derived	—	No
+N-R5	Historical-trace necessity	theory/history/upp-historical-trace-v1.0.json	same	N-IND, N-T	Conditionally derived	—	No
+N-IND	Five-component relative independence/non-redundancy	theory/independence/upp-component-independence-v1.0.json	N-R1…N-R5	N-SUF, N-T	Conditionally derived (separating witnesses)	Relative to frozen premises; absolute independence explicitly unproved	No
+N-SUF	RCCD sufficiency by bidirectional reconstruction	theory/sufficiency/upp-sufficiency-construction-v1.0.json	N-C*, N-E*, N-CLO, N-P*, N-EQ, N-R1…5, N-IND	N-T	Conditionally derived	Reconstruction up to frozen equivalence	No
+N-MAX	Relative maximality over frozen extension rules + 5-challenge ledger	theory/irreducibility/upp-irreducibility-maximality-v1.0.json, docs/research/upp-w14-maximality-v1.0.md	N-C*, N-E*, N-CLO, N-SUF	N-T	Conditionally derived, finite by construction	Open-world boundary explicit; new admissible challenges can reopen	No
+N-COMP	Terminal composition of W2–W14 into one adjudication	docs/research/upp-w15-terminal-theorem-v1.0.md, checker tools/check_upp_w15_terminal_theorem.py	all above	N-T	Architectural/methodological (assurance choice: executable composition, not kernel derivation)	Constitutive of the theorem’s stated assurance level, declared as weakening reason #1	No
+N-T	Bounded-v1 terminal theorem	theory/terminal/upp-terminal-theorem-v1.0.json	all above	—	Conditionally derived at declared mixed assurance	Dependencies PRs #281–295 recorded complete, none refuted/unresolved at artifact level	—
+
+Nodes verified to be OFF this graph (mentioned in the repository but not logically required by N-T): FARA’s Ω architecture and all its semantics (D1–D5, :111); the seven FARA candidate primitives; FARA formal kernel FARA-FORMAL-KERNEL-001; the FAR/FARO procedure layers; the Lean G1/G2/G3 and canonical-universality artifacts (post-terminal, strictly additive); the contract-frontier comparison (OP-21); prior-art subsumption (OP-20). The mechanical evidence for the FARA cut: git grep -iE 'FARA|omega|Ω|unresolved status' over theory/{class,contract,equivalence,representations,machinery} at the frozen commit returns zero matches, and every P*/E*/W8 use of “admissibility” is internally defined within the respective artifact.
+
+5. Potentially Blocking Items
+
+Item	Exact unresolved proposition	Graph path to terminal theorem	Classification	Blocking?	Evidence	Confidence
+UQ-T1	Universality outside frozen C*	None — outside the quantifier	STRONGER_CLAIM_ONLY	No	Theorem quantifies only over C*	High
+UQ-T2 / OP-02 / OP-03 / UQ-T5 / UQ-T6	FARA primitive necessity/minimality; Resolve status	None — RCCD components ≠ FARA primitives; theorem makes no primitive claim	IRRELEVANT_TO_V1_CLOSURE	No	project-status: “Conditional primitive results… must not be inferred from the terminal theorem” ; N-T premises never mention primitives	High
+UQ-T3 / OP-06 / LIM-007	Kernel-checked end-to-end reconstruction	Touches only the assurance upgrade path (full outcome), not the frozen weakened outcome	STRONGER_CLAIM_ONLY	No	Non-kernel-checked composition is weakening reason #1 inside N-T; upgrading changes the theorem	High
+UQ-T4	Boundary adequacy under representation escape	None for v1	STRONGER_CLAIM_ONLY	No	Registered scope only	Medium-High
+UQ-T7 / OP-05	Expressive loss across changing/incompatible ontologies	Cases either fail C*/E*/P* premises (out of scope) or are W14 boundary cases	STRONGER_CLAIM_ONLY	No	W14: “Challenges outside the target class are recorded as boundary cases”	High
+UQ-T8 / OP-04	Admissibility vs. valid-transition priority in FARA	None — see §7	IRRELEVANT_TO_V1_CLOSURE	No	§7 counter-dependency test	High
+UQ-T9 / OP-01	Non-vacuous common architecture outside bounded classes	None for v1	STRONGER_CLAIM_ONLY	No	W3 refutation concerns the internal-state-only unbounded form	High
+UQ-T10 / LIM-020	FAR/FARA invariance beyond W5 pairs	FARA-side campaign, not on N-T	IRRELEVANT_TO_V1_CLOSURE	No	N-T’s invariance is internal to its frozen equivalence premise (N-EQ), not the W5 families	Medium-High
+UQ-T11–T14 / OP-09–OP-12 / LIM-016–LIM-025	FARA kernel/vocabulary/foundation scope questions	FARA-side	IRRELEVANT_TO_V1_CLOSURE	No	Same cut as §4; each record itself disclaims N-T bearing and the disclaimers survive counter-dependency checks	High
+UQ-T15/T18–T22, OP-13–OP-18, LIM-026/028/029/030	Ω codomain, graded/set-valued admissibility, unresolved status semantics	None — E* independently frozen; see §6	ARCHITECTURAL_DECISION (the ADR-002 residue) — off-graph	No	§6 proof; LIM-026 row: “Does not affect the terminal UPP theorem, whose E* admissibility premise is independently frozen” — independently re-verified	High
+UQ-T16 / LIM-027	Well-foundedness of history-sensitive admissibility	None — see §7	IRRELEVANT_TO_V1_CLOSURE	No	§7 counter-dependency test	High
+UQ-T17	Stipulative reading of “reasoning calculus”	None — see §7	IRRELEVANT_TO_V1_CLOSURE	No	§7 counter-dependency test	High
+UQ-T23/T24 / OP-20	Prior-framework subsumption of FARA	None	IRRELEVANT_TO_V1_CLOSURE	No	Subsumption of FARA would not alter C*/E*/P*→RCCD; record’s own rejection independently verified	High
+UQ-T25/T26 / OP-21 / LIM-031 / LIM-032	External justification/selection of the C*/P*/E* contract; framing independence	The premises are stipulations; their external justification is not a premise	EXTERNAL_VALIDATION	No (for internal closure)	Theorem is conditional on the contract; it nowhere claims the contract is externally selected — LIM-031 guards this	High
+OP-07 / UQ-E1–E6	Independent replication; empirical questions	Not on the deductive graph	EXTERNAL_VALIDATION	No	Empirical evidence packages are downstream	High
+OP-08 / LIM-014	FAR/FARO necessity	Methodology layer	IRRELEVANT_TO_V1_CLOSURE	No	Explicitly independent methodology	High
+OP-19	candidate polysemy	None shown to bite anywhere	IRRELEVANT_TO_V1_CLOSURE	No	Register: “No ambiguity has been shown to bite”	High
+LIM-008	Universality/maximality relative to frozen premises	This is the theorem’s scope statement	Not an unresolved item — constitutive boundary	No	—	High
+LIM-010–LIM-013	Embodied/tacit/continuous, changing rules, incompatible ontologies, nonmonotonic systems	Outside C*/E* or Unknown by the three-valued rules	STRONGER_CLAIM_ONLY	No	Premise structure absorbs them	High
+
+No item classifies as BLOCKS_V1.
+
+6. ADR-002 Classification
+
+Classification: OFF_GRAPH_NONBLOCKING.
+
+Dependency proof.
+
+1. The exact proposition affected by A vs. B. Whether unresolved at frameworks/FARA/admissibility-structure.md:111 is (A) a substantive value inside the calculus-determined classification set S_K, or (B) a FARA-level meta-status outside S_K (Ω_K : C → S_K ∪ {⊥}). Consequences differ only in: redundancy of :111’s second disjunct, attachment of the Traceability (:117) and Auditability (:144) obligations to unresolved candidates, and satisfiability of :111 under calculi lacking an unresolved value.
+2. Trace to bounded-v1. The bounded-v1 theorem’s admissibility content resides in exactly three places, none of which is FARA’s Ω: (i) E*‘s package-admissibility criteria E1–E6 with its own three-valued rule; (ii) P*‘s structural_fidelity clause requiring recoverability of the source system’s registered admissibility distinctions (whatever the source’s own semantics declares — not FARA’s); (iii) W8’s constructed history-sensitive admissibility relation, which is extensionally defined from registered query answers with its own effective_admissibility_decision_or_explicit_unknown discharge. Mechanical verification: zero occurrences of FARA, Ω/omega, or unresolved status in theory/class, theory/contract, theory/equivalence, theory/representations, theory/machinery at the frozen commit. The UPP chain’s third truth-values are separately defined per artifact (W1 undetermined, E* unknown, P* aggregation Unknown), and the frozen record itself establishes these are distinct concepts from FARA unresolved status (UQ-T20 four-way distinction — verified against the underlying texts, not merely cited).
+3. Distinctions maintained. (a) Unresolved-status representation — pure FARA/Ω, off-graph. (b) Broader Ω/admissibility semantics — off-graph for the same reason; CE-ADM-001’s expressive-loss result targets Ω’s three-valued reading, not E*. (c) Theorem-relevant admissibility — E* and W8, both self-contained. (d) Downstream auditability/traceability — the A/B difference changes FARA’s obligations for unresolved candidates; no bounded-v1 artifact inherits those obligations.
+4. Charter authorization. The Research Execution Charter provides no mechanism that lawfully selects between evidence-underdetermined alternatives: its Discovery Standard forbids preference/consensus/authority as evidence; its Human Judgment section mandates “Stop. Produce competing hypotheses. Do not guess.”; its lifecycle requires Replication → Acceptance → Promotion, which ADR-002 records as not having occurred. So if ADR-002 were on-graph, it would be an unresolved governance blocker — there is no existing authorized selection rule. This is why the off-graph proof matters and why the third label (ON_GRAPH_WITH_EXISTING_AUTHORIZED_SELECTION_RULE) would be wrong even as a fallback.
+5. Counter-dependency test (§11 discipline). Select A: :111 becomes redundant; traceability/auditability attach; a tension with :84 arises. Not one token of C*, E*, P*, closure, equivalence, W7–W14 lemma statements, or the terminal conclusion changes, because none of them contains the affected term or imports Ω’s type. Select B: :111 non-redundant; obligations don’t attach. Same result. The interpretation of every required premise is likewise unchanged — the premises define their own three-valued semantics internally. “Documented accurately” was not used as “resolved”: ADR-002 remains a genuinely open architectural decision; it is nonblocking for bounded-v1 solely because bounded-v1 does not depend on the decided proposition.
+
+The closed investigation downstream of admissibility-structure.md:111 was not reopened; no Alternative C was invented; no preference between A and B is expressed.
+
+7. UQ-T8 / UQ-T16 / UQ-T17
+
+UQ-T8 (with OP-04)
+
+• Unresolved proposition: whether admissibility is logically prior to valid state transition in FARA, or both are jointly specified by a calculus; the D1/D2 self-reference dissolves only under a stipulative reading that is supported (definitions.md:484) but never stated.
+• Canonical evidence: docs/research/fara-admissibility-priority-v1.0.md F1–F2; theory/definitions/definitions.md:475–482, 596–600; docs/glossary/canonical-terminology.md (D3).
+• Theorem dependency: the propositions that would change under resolution are FARA’s D1/D2/D3 and the priority ordering between two FARA-defined concepts. Bounded-v1 never uses D1/D2/D3: C*‘s “explicitly supplied standard,” E*‘s E1–E6, W8’s constructed relation, and W1’s transition_status are each self-contained. The Lane-relevant check that “valid transition” semantics could leak into W8 fails: W8 defines permitted/forbidden separation operationally from registered answers, not from D3.
+• Counter-dependency test: resolve either way (admissibility prior; or jointly specified; or even D1/D2 declared viciously circular under the characterizing reading) — no bounded-v1 premise, conclusion, or premise-interpretation changes, because the theorem’s vocabulary chain never resolves through the FARA definitions. The frozen record’s own claim to this effect (fara-admissibility-priority-v1.0.md §Authority: “it does not touch the terminal UPP theorem”) was verified independently, not assumed.
+• Classification: IRRELEVANT_TO_V1_CLOSURE. Blocker verdict: not a blocker.
+
+UQ-T16 (with LIM-027)
+
+• Unresolved proposition: whether history-sensitive admissibility criteria require a well-foundedness or strict-past condition, and whether canonical FARA supplies one (it does not; the D5 guard blocks Ω-reference but not reasoning-trace reference).
+• Canonical evidence: fara-admissibility-priority-v1.0.md F3; LIM-027; upp-w8-constrained-evolution-audit.md.
+• Theorem dependency: the exposure point is W8 (N-R2), which uses a time-indexed history-sensitive admissibility relation. Inspection of the W8 artifact shows the relation is a witness constructed extensionally from registered query answers through the faithful interface, with obligations effective_admissibility_decision_or_explicit_unknown and failure may not be collapsed into Unknown. A source system with non-well-founded history-sensitive criteria either (i) fails E* effectiveness (E2/E3/E5) and leaves the quantifier domain, or (ii) still yields effective total registered answers, in which case the constructed relation is well-defined regardless of the criteria’s internal recursion, or (iii) yields unresolved answers, which the three-valued discipline records as Unknown and which blocks rather than falsifies. In no branch does the truth of N-R2’s conditional lemma depend on whether FARA (or anyone) imposes a well-foundedness condition.
+• Counter-dependency test: resolve “yes, a well-foundedness condition is required and FARA lacks one” — this convicts FARA’s architecture of an omission but changes no bounded-v1 premise: the theorem never routes through FARA’s Ω or its criteria typing. Resolve “no condition needed” — same. LIM-027’s own “No claim is made that this affects the UPP-W8 result” is thereby independently confirmed rather than taken on faith.
+• Classification: IRRELEVANT_TO_V1_CLOSURE. Blocker verdict: not a blocker. (It remains a genuine open FARA-architecture question and correctly lives in LIM-027 as Open/Provisional.)
+
+UQ-T17
+
+• Unresolved proposition: whether the stipulative reading of “reasoning calculus” is canonical; FARA’s non-circularity currently depends on this unstated reading.
+• Canonical evidence: fara-admissibility-priority-v1.0.md F1; definitions.md:484.
+• Theorem dependency: “Reasoning Calculus” enters the repository as a FARA candidate primitive and shared-theory definition. The bounded-v1 chain does not define anything through it: C* speaks of “explicitly supplied standard(s)”; P*‘s clauses reference registered facts and queries; W1’s typed foundation declares its own sorts and never a calculus. Mechanically, the UPP artifact chain contains no dependence on the D1 definition.
+• Counter-dependency test: adopt the characterizing reading and declare D1/D2 circular — FARA’s definitional architecture would carry a vicious circle, but every bounded-v1 premise remains well-defined because each is frozen in its own artifact with self-contained semantics. Adopt the stipulative reading — same. Neither changes N-T’s statement, premises, conclusion, or premise interpretation.
+• Classification: IRRELEVANT_TO_V1_CLOSURE. Blocker verdict: not a blocker.
+
+8. Lean Fidelity Matrix
+
+Central answer first: the Lean kernel does not derive the terminal semantic conclusion from lower-level formal semantics. It proves conditional theorems whose strongest substantive propositions are supplied as hypotheses — structure fields of FrozenUPPSemantics (G1) and of IndependentLowerBoundBridge (G2), plus opaque Prop fields in the six bridge modules. The linkage between the Lean predicates and the frozen premise artifacts (C* criteria, P* clauses, E* criteria) is name-level only, enforced by regex tests (tests/test_upp_semantic_kernel_alignment.py checks identifier presence, not semantics). This matches the frozen theorem’s own declared assurance (weakening reason #1), so it does not degrade bounded-v1; it does bound what G1 “established” may mean (see §10/§11).
+
+Canonical obligation	Canonical source	Lean file/declaration	Lean representation	Kernel-derived?	Assumed/hypothesized?	Executable/external?	Semantic drift?	Impact on bounded-v1 assurance
+C* class construction / membership	upp-target-class-v1.0.json	UPPSemanticKernel.lean inTargetClass, classConstruction	Opaque Source → Prop field; construction implication assumed	No	Yes (field)	C* semantics live in JSON + Python checker	Name-only encoding of C*’s five criteria	None (matches declared assurance)
+E* representation admissibility	upp-representation-universe-v1.0.json	admissible, representationAdmissible	Opaque predicate; implication assumed	No	Yes	Yes	Name-only	None
+Machinery closure	upp-w5-machinery-closure-v1.0.json	machineryClosed, classConstruction	Opaque predicate; assumed	No	Yes	Yes	Least-fixed-point content absent	None
+P* eight-dimension preservation	upp-faithfulness-contract-v1.0.json	PreservationVector, preservationComplete	Genuine 8-field vector with Pass/Fail/Unknown; completeness assumed	Partially (AllPass structure and the two non-inflation theorems unknown_semantic_dimension_not_all_pass, failed_operational_dimension_not_all_pass are kernel-derived)	Completeness: yes	Yes	Clause semantics absent; only arity and three-valuedness carried	None; the non-inflation lemmas are genuine small guarantees
+Bidirectional reconstruction	W13 upp-sufficiency-construction-v1.0.json	sourceRoundTrip, packageRoundTrip	Exact equalities assumed for all sources and all packages	No	Yes	Yes	Strengthening drift: prose is reconstruction up to frozen commitment equivalence; Lean assumes a literal bijection over the entire Package type, including inadmissible packages	None for bounded-v1 (Lean is additive), but the Lean model is a stronger idealization than the prose theorem
+Commitment equivalence	W6 upp-representation-equivalence-v1.0.json	commitmentEquivalent, equivalenceReflexive, faithfulCandidateEquivalent	Opaque relation; reflexivity and the faithful-candidate-equivalence property assumed	No	Yes	Yes	W6’s ten required dimensions absent	None
+R1 recoverable-commitment necessity	W7 JSON	recoverableCommitment, commitmentNecessary	Opaque Source → Prop; implication assumed	No	Yes	Yes	Name-only	None
+R2 constrained-evolution necessity	W8 JSON	constrainedEvolution, evolutionNecessary	Same	No	Yes	Yes	Name-only; W8’s witness obligations absent	None
+R3 dependency necessity	W9 JSON	dependencyStructure, dependencyNecessary	Same	No	Yes	Yes	Name-only	None
+R4 meaning necessity	W10 JSON	semanticInterpretation, meaningNecessary	Same	No	Yes	Yes	Name-only	None
+R5 history necessity	W11 JSON	historicalTrace, historyNecessary	Same	No	Yes	Yes	Name-only	None
+Component independence	W12 JSON	componentIndependent, independenceEstablished	Single opaque predicate; W12’s separating-witness structure absent	No	Yes	Yes	Independence collapsed to a name	None
+Nontriviality	W12/W14	nontrivial, nontrivialityEstablished	Same pattern	No	Yes	Yes	Name-only	None
+Frozen-rule maximality	W14 JSON	relativelyMaximal, frozenRuleMaximality	Same pattern; no ledger, no extension rules	No	Yes	Yes	Finite-challenge content absent	None
+Terminal composition (G1)	universality-remainder-theorem-v1.0.md G1; g1-semantic-kernel-v1.0.json	g1_end_to_end_relative_semantic_theorem	Conditional: model M carrying all fields ⊢ conjunction	The composition step is kernel-checked; the composed content is hypothesized	All substantive content	Yes	See DRIFT-1 (§10): “supplies that missing proof-object layer” overstates against the registered G1 requirement to “connect… C*… P*… E*… the exact terminal conclusion”	None on bounded-v1 (its weakening reason stands unchanged); material for the G1-closure claim
+Faithful-candidate uniqueness-up-to-equivalence	W6/W13	faithful_candidate_equivalent_to_canonical	Rewriting wrapper over the assumed faithfulCandidateEquivalent field	No	Yes	Yes	—	None
+G2 open-world lower bound	g2-open-world-lower-bound-v1.0.md; theory/terminal/g2-…json	g2_open_world_structural_lower_bound	P*→RCCD obligations via assumed 5-implication IndependentLowerBoundBridge	Composition only	Bridge: yes (the doc concedes “the scientific burden is concentrated in… these bridge lemmas”)	Yes	admissible and machineryClosed hypotheses are unused (underscored) in the proof — the mechanized theorem never uses two of its stated premises; prose presents them as operative conditions	None on bounded-v1; G2 is post-terminal
+G3 epistemic maximality boundary	g3-…md; G3 JSON	indistinguishable_incompatible_sources_block_joint_soundness, g3_epistemic_maximality_theorem	Observational-twin impossibility	Yes — genuine kernel derivation (elementary but real)	Model structure only	—	Scope: a small twin lemma carries the label “epistemic maximality”	Positive: one genuinely derived boundary result
+Canonical-uniqueness non-entailment	FARCanonicalCountermodel.lean	current_g1_semantics_do_not_entail_canonical_uniqueness	Concrete 3-node instantiation of FrozenUPPSemantics with two qualified, mutually non-equivalent candidates	Yes — genuine countermodel; also proves FrozenUPPSemantics is satisfiable	No	—	None	Positive: strongest genuine Lean result; real independence proof for the uniqueness bridge
+Six canonical bridges (canonicality, invariance, quotient minimality, definitional completeness, conservative extensibility, maximal knowability)	six Lean files + canonical-universality-v1.0.json	respective theorems	Abstract structures; theorems are projections of assumed fields, except QuotientMinimality (genuine elementary derivations) and MaximalKnowability.no_embedding_no_registered_scope_dominance (literal tautology ¬X ⊢ ¬X)	Mostly no	Mostly yes	—	Theorem names promise more than content (see DEFECT-2)	None on bounded-v1 (all post-terminal, and the decision verdict is the self-limiting not_derivable)
+Decision adjudication	FARCanonicalUniversalityDecision.lean; far-canonical-universality-decision-v1.0.json	current_far_terminal_verdict etc.	Boolean records evaluated by decide	The Boolean evaluations, yes; the labels (“logically independent”), no	Record values hand-supplied	—	“Each bridge is logically independent of the… base evidence” proved only as Boolean bookkeeping; genuine independence exists only for unique-factorization (via the countermodel)	None on bounded-v1
+T-003 representation theorem	theory/proofs/, T003-MECHANIZATION.md	FARCore.lean t003_representation_theorem	Conditional construction from A1–A5 premise bundle	Construction: yes; premises: supplied	No	—	None — file honestly proves its own near-vacuity (t003_existence_is_not_assumption_minimal) and that typing ≠ faithfulness	None (FARA-side)
+Bounded S_core W5 assembly	s-core-w5-lean-mechanization-v1.0.md	SCoreW5.lean thm_core_rep_001	FaithfulSplit = definitional list equalities; holds by construction of encode	Yes, but true-by-construction	No	—	None; doc states boundary correctly	None (bounded, pre-terminal side branch)
+Validation-engine safety	formal/ValidationEngine.tla, ValidationEngine.lean	dependency-blocking and certificate-binding lemmas	Genuine small derivations	Yes	No	Explicitly no refinement claim from the Python implementation	None	Assurance honestly scoped
+
+9. Hidden-Assumption Register
+
+Assumptions required by the bounded theorem that are not obvious from its public-facing one-line statement:
+
+1. A-P-001 (registered-fact inventory fixes preservation targets). The theorem preserves registered facts only; what gets registered per case is an input, not a derived object. — Explicit frozen premise (P*), but easily missed in summaries.
+2. Finite specifiability and repeatability of membership adjudication (C* criteria 4–5). — Explicit frozen premise.
+3. Effectiveness everywhere (E2/E3, closure effective_availability, W13 effective assembly): the whole theorem lives inside effective, finitely-described packages. — Explicit frozen premise.
+4. The five-challenge maximality ledger is exhaustive of nothing: maximality is a claim about those five registered challenges plus the frozen extension rules only. — Explicit frozen premise, prominently disclosed, but the single word “maximal” in short summaries hides it.
+5. Cross-artifact coherence of the three-valued disciplines (W1 undetermined, E* unknown, P* Unknown, W15 outcome precedence): treated as one “Unknown discipline,” but each artifact defines its own third value and their mutual consistency is enforced by checkers, not derived. — Implicit but derivable (no conflict found in this audit); worth naming.
+6. “Independently frozen” = RCCD-independent (anti-circularity), not externally justified. LIM-031 establishes no external party chose or evaluated the contract. — Explicit elsewhere (LIM-031); a semantic ambiguity risk in the theorem prose itself.
+7. Terminal composition validity rests on the checker toolchain (check_upp_w15_terminal_theorem.py and predecessors) and PR-sequence bookkeeping, not on a formal calculus. — Implementation-only assumption, declared at the assurance level.
+8. Lean-model idealizations (exact encode/decode bijection over all packages; opaque premise predicates). — Implementation-only; stronger than prose in one direction, weaker (contentless) in the other.
+9. At least one commitment-changing transition for R2’s positive witness (W8 antecedent). — Explicit frozen premise, absent from every summary surface.
+10. Stipulative reading of premise definitions generally: each frozen JSON is used as a stipulated tuple, never as a characterized natural kind. This is the same interpretive move UQ-T17 identifies for FARA, applied benignly and consistently in the UPP chain. — Implicit but derivable from the artifacts’ neutrality blocks.
+
+10. Statement-Drift Findings
+
+DRIFT-1 (material, but not for bounded-v1’s own statement).
+
+• Source A: docs/research/g1-end-to-end-semantic-kernel-v1.0.md — “The UPP-W15 terminal adjudication stated that the complete semantic result was… not represented by one kernel-checked proof object. This artifact supplies that missing proof-object layer for the exact relative theorem,” and theory/evaluation/far-canonical-universality-decision-v1.0.json — "g1_relative_semantic_composition": "established".
+• Source B: docs/research/universality-remainder-theorem-v1.0.md G1 — “The proof object must connect… 1. C* target-class membership; 2. P* faithfulness; 3. E* admissibility; 4. machinery closure; … 10. the exact terminal conclusion”; and the registers at freeze: UQ-T3 “Unresolved”, LIM-007 “Open”, OP-06 open; and README/project-status: “is not one kernel-checked proof object.”
+• Exact difference: the delivered Lean object connects names of the premises (opaque, unconstrained predicates), not the frozen premise semantics; the alignment test is regex-level. Whether that satisfies “connect” as registered is at minimum underdetermined; the registers were not updated, and the same repository simultaneously carries “established” (decision JSON) and “Unresolved/Open” (registers) for adjacent propositions.
+• Material? Yes, for the G1-closure and decision-record claims. Not material for bounded-v1: its weakening reason #1 is still asserted verbatim on every authority surface, and the registers’ conservative rows are the ones consistent with the artifact’s actual content.
+• Theorem impact: none on N-T; assurance-labeling defect on the post-terminal layer (see DEFECT-1).
+
+DRIFT-2 (minor). G2OpenWorldLowerBound.lean g2_open_world_structural_lower_bound lists admissible and machineryClosed as hypotheses but never uses them (_hAdmissible, _hClosed). Prose (g2-open-world-lower-bound-v1.0.md) presents admissibility and closure as operative conditions of the lower bound. The mechanized theorem is therefore a different (strictly stronger) conditional than the stated one, revealing that all load is on the assumed bridge. Not material to bounded-v1 (G2 is post-terminal), but a fidelity gap between prose and mechanization.
+
+DRIFT-3 (minor). Lean theorem names overstate content in two places: MaximalKnowability.no_embedding_no_registered_scope_dominance proves ¬X from ¬X (pure tautology), and FARCanonicalUniversalityDecision names like …_not_derivable_from_base / doc-comment “Each bridge is logically independent of the already-registered base evidence” are proved only as Boolean-record evaluations (decide), which cannot establish logical independence. (Genuine independence is proved only for unique-factorization, via FARCanonicalCountermodel.) “Important words encoded only by names” — confirmed instances.
+
+DRIFT-4 (checked, low materiality). packageRoundTrip : ∀ package, encode (decode package) = package in FrozenUPPSemantics quantifies over all packages, whereas W13’s prose reconstruction is bidirectional up to frozen commitment equivalence and only for the constructed package. Same-direction idealization as DRIFT-2: the Lean model’s hypotheses are not the prose premises.
+
+No drift found in: the terminal result string (identical across JSON, W15 prose, audit, project-status, README, central-research-program); “relative”/“strictly weakened” qualifiers (present on every surface inspected); the eight preservation dimensions (identical lists); the nonclaims (consistent and repeated); the finite-maximality boundary; the Unknown discipline. The outward-facing sweep of papers/, commercial/, exports/, far/ found no unqualified universality language.
+
+11. Confirmed Defects
+
+DEFECT-1
+
+• Severity: Moderate (assurance labeling in post-terminal artifacts; zero impact on the bounded-v1 statement).
+• Affected claim: “G1 — single-kernel semantic composition — established” (theory/evaluation/far-canonical-universality-decision-v1.0.json base_evidence), and the G1 doc’s “supplies that missing proof-object layer.”
+• Canonical source of the obligation: docs/research/universality-remainder-theorem-v1.0.md §G1.
+• Logical failure: the registered obligation requires the proof object to connect the ten listed items “without replacing semantic premises with repository-status assertions.” The delivered object (UPPSemanticKernel.lean) contains no formal content of C*, P*, E*, closure, or equivalence — only opaque predicates whose correspondence to the frozen artifacts is enforced by identifier regexes. Marking that obligation “established” while UQ-T3/LIM-007/OP-06 simultaneously stand Unresolved/Open is an internal inconsistency between an evaluation artifact and the governing registers.
+• Dependency impact: none on bounded-v1 (N-T’s declared assurance already excludes kernel-checked composition and was not upgraded on any authority surface). Impacts only the post-terminal G1-closure claim and anything later built on “G1 established.”
+• Repair changes theorem semantics/scope? No — bounded-v1 unchanged either way.
+• Minimal lawful repair class: status/assurance reconciliation — either downgrade the decision-record’s G1 entry to a conditional-composition label consistent with the registers, or update UQ-T3/LIM-007/OP-06 with an explicit statement of exactly what the Lean artifact does and does not discharge (PTE-W2’s own “partial formalization must state exactly which definitions… remain external assumptions” rule is the template). A governance record change, not a theory change.
+
+DEFECT-2
+
+• Severity: Minor (Lean assurance hygiene).
+• Affected claim: mechanization-layer theorem names/docstrings (no_embedding_no_registered_scope_dominance; “logically independent of the… base evidence”; unused G2 hypotheses).
+• Canonical source: mechanization/lean/MaximalKnowability.lean, FARCanonicalUniversalityDecision.lean, G2OpenWorldLowerBound.lean.
+• Logical failure: names/comments assert properties (scope-dominance non-establishment as a substantive result; logical independence; premise-conditionality) that the proof terms do not contain (tautology; Boolean evaluation; unused hypotheses).
+• Dependency impact: none on bounded-v1; degrades the evidential value of the post-terminal Lean layer if cited by name.
+• Repair changes theorem semantics/scope? No.
+• Minimal lawful repair class: mechanization documentation/naming correction (comments and names), or genuine countermodels per bridge on the FARCanonicalCountermodel pattern.
+
+No defect was found in the bounded-v1 theorem statement, its premises, its dependency closure, or its register discipline.
+
+12. Failed Attacks / False Alarms
+
+1. “E*/W8 admissibility smuggles FARA Ω semantics into the theorem” — failed. Mechanical grep plus artifact-by-artifact reading shows E* admissibility is package effectiveness (E1–E6) and W8’s relation is answer-extensional; zero FARA/Ω references in the premise chain.
+2. “ADR-002 blocks v1 because the theorem needs an unresolved-status semantics” — failed. The theorem’s third values are per-artifact UPP definitions, established distinct from FARA unresolved status (UQ-T20), and no premise resolves through :111 (§6).
+3. “UQ-T16’s missing well-foundedness condition undermines W8” — failed; the constructed relation needs answer effectiveness/totality, which E*/P* premises supply or the case exits the quantifier/goes Unknown (§7).
+4. “UQ-T17 circularity infects the theorem’s definitions” — failed; no bounded-v1 definition resolves through D1/D2 (§7).
+5. “README vs. project-status phase conflict is a live canonical conflict” — failed. The recurring DECISION_LOG line is boilerplate inside dated historical entries; in the frozen tree README and project-status agree on phase and central result, and the README’s generated dashboard is explicitly labeled historical and non-overriding. No live conflict at freeze.
+6. “The counterexample register or CE-ADM-001 refutes a theorem premise” — failed. The register is explicitly a threat ledger, and the CE-ADM-001 row’s terminal-theorem disclaimer is correct because the loss targets Ω’s three-valued reading, not E*.
+7. “Absence of sorry/axiom in Lean means strong mechanized assurance” — rejected as an inference in both directions: no forbidden constructs exist, but the substantive content is hypothesized in structures, exactly as the terminal theorem’s own assurance statement says. (Recorded so future reviewers neither re-raise the sorry hunt nor cite compilation as semantic fidelity.)
+8. ”strictly_weakened… result string drifts somewhere in the repo” — failed; the string and its qualifiers are byte-consistent across all inspected surfaces, including outward-facing ones.
+
+13. External-Validation Boundaries
+
+Correctly outside internal bounded-v1 closure (and correctly labeled in the frozen source):
+
+• Independent proof review (PTE-W1) — not yet performed; T4/T5 evidence tiers absent.
+• Kernel-checked reconstruction by an independent party (PTE-W2 / OP-06 upgrade path).
+• Independent countermodel search against any registered premise (PTE-W3).
+• Independent bounded empirical replication (PTE-W4, OP-07, UQ-E3); internal lanes — including this three-lane campaign, per the freeze record — are not R3/R4/R5 and not independent validation.
+• External selection/evaluation of the C*/P*/E* preservation contract (LIM-031) and independent framing of the universality question itself (LIM-032) — closable only by externally supplied evidence, by construction.
+• Application correspondence: whether real systems satisfy the premises (A-P-006 makes this case-specific and never settled by definition).
+
+Internal closure of bounded-v1 is not evidence for any of these, and none of their absences is an internal defect of bounded-v1.
+
+14. Closure Verdict
+
+V1_SEMANTICALLY_CLOSED_ON_FROZEN_SCOPE
+
+Basis: every node on the reconstructed dependency graph is either an explicit frozen premise or a conditionally derived lemma at its declared assurance level; no unresolved item in the frozen registers is semantically load-bearing for the theorem as frozen (§§5–7); the two confirmed defects live in post-terminal assurance labeling, off the bounded-v1 graph, and the frozen theorem’s own weakening clauses already state the exact assurance the mechanization audit confirms. The closure is internal and relative; it neither requires nor implies external validation (§13).
+
+15. Minimal Next Actions
+
+Only what the findings logically require; none performed here.
+
+• Semantic repair: none required for bounded-v1.
+• Governance resolution: reconcile the G1 status inconsistency (DEFECT-1) — one record correction in either the decision JSON or the UQ-T3/LIM-007/OP-06 rows, stating precisely which G1 sub-obligation the Lean artifact discharges (composition) and which remain external (premise semantics). ADR-002 requires an authorized decision only if and when something that actually depends on :111 is built; bounded-v1 imposes no deadline.
+• Theorem scope change: none required; no scope reduction is needed because nothing on-graph is unresolved.
+• Lean assurance work: correct the misleading names/docstrings and unused hypotheses (DEFECT-2); if G1 is ever to be claimed in the OP-06 sense, the premise artifacts (C* criteria, P* clauses, E* criteria, closure operator, W6 relation) must be given formal Lean semantics and the bridge/necessity implications derived, not assumed — that is precisely PTE-W2, already registered.
+• External evaluation: proceed per POST-TERM-EVAL-001 (PTE-W1 next); nothing in this audit changes its ordering.
+
+16. Blindness Declaration
+
+• No Codex Lane B report was read, requested, or searched for.
+• No GPT Lane C report was read, requested, or searched for.
+• No findings from any other lane conditioned this first pass; the only campaign document consulted was the administrative freeze record on current main, used solely for isolation rules.
+• The repository was not modified: no file edits, no commits, no pushes, no PRs, no builds. git status --porcelain is empty at completion; HEAD still differs from the frozen commit only by the freeze record.

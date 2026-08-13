@@ -9,7 +9,7 @@ Status: **Accepted classification index; source records remain authoritative**
 | FAR investigation workflow | Independent methodological choice | A procedure, not a theorem or prerequisite of theory. |
 | FARO comparison/audit operations | Derived framework operations | Depend on foundations → shared theory → FARA → FAR. |
 | Common minimal reasoning architecture | Empirical hypothesis / conjecture | Not universally established. |
-| Terminal UPP theorem | Validated only within a bounded case | Relative to frozen target class, admissibility, faithfulness, closure and equivalence premises. |
+| Terminal UPP theorem | Not refuted; not established by the frozen derivation (2026-08-13 cross-audit) | Relative to frozen target class, admissibility, faithfulness, closure and equivalence premises. The 2026-08-13 three-lane cross-audit confirmed derivation defects `XA-001`–`XA-005`; see the dated section below and `docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md`. |
 | Global maximality/minimality | Unresolved | Finite registered challenges do not establish open-world maximality. |
 | CRE bounded executions | Validated only within bounded cases | Not independent replication or universal evidence. |
 | SWE-agent v2: v1.0.0 0/2 and v1.0.1 0/2 | Validated only within a bounded case | One task; four budget-limited runs. |
@@ -232,3 +232,19 @@ Evidence: `docs/research/contract-frontier-discovery-v1.0.md` §0. Investigation
 | A proof that the testing scope does not embed into `C*` settles `H4`, establishes ≥2 maximal frontier elements, or establishes maximality | **Refuted** | It establishes exactly one failed directed reduction under one embedding notion. It does not give the converse direction, incomparability, maximality of either contract, absence of an unexamined dominating contract, or `H4`. `maximal_knowability` is correspondingly **downgraded from highest to low** EIV; `quotient_minimality` becomes the highest-standing bridge because its falsification power does not depend on contract comparison. |
 | This campaign constitutes external independence | **Rejected** | The external sources are independent; the reconstruction, dimension selection, scoring, and placement are not. Single path, no mutation controls, no external reviewer. **Weaker than `USD-W6`'s `internal_robustness_only`.** Recorded as `LIM-031`, which the correction strengthens. |
 | This campaign bears on the FARA primitive layer, `LIM-016`, `ADR-002`, `UQ-T2`, `OP-02`, or the terminal UPP theorem | **Rejected — no dependency demonstrated** | The campaign operates entirely at the contract layer and asserts no propagation into the primitive layer, in the same sense and for the same reason that the primitive layer asserts none into the contract layer. |
+
+## 2026-08-13 bounded-v1 three-lane cross-audit
+
+Evidence: `docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md` (internal, model-assisted, non-independent). Repair program: `docs/research/upp-successor-repair-program-v1.0.md` (`UPP-SR-001`).
+
+| Claim or concept | Classification | Boundary |
+|---|---|---|
+| Bounded-v1 terminal proposition | Not refuted | No S,R satisfying the literal W15 antecedent was exhibited for which no RCCD-equivalent package exists. |
+| Bounded-v1 frozen derivation (`f6645a77`) | Defective; does not establish the terminal claim over its stated domain | `XA-001`–`XA-005`: W9 positive witness refuted on the empty-dependency corner (`CE-UPP-W9-001`); W8/W11 side conditions unpropagated; `five_component_necessity` consumed as workstream-completion status; determinate absence inexpressible distinctly from Unknown (`LIM-033`, `LIM-034`). Permanent for the frozen source; repairs create successor versions only. |
+| W9 universal positive dependency witness | Refuted in its consumed universal form | Valid countermodel `CE-UPP-W9-001` (C-D1); the weaker possibly-empty-relation reading is not refuted but is not what W12/W13/W15 consumed. |
+| W8 and W11 necessity lemmas | Sound conditionals on their own antecedents | The confirmed defect is compositional (side conditions dropped in W13/W15), not lemma falsity. |
+| Lane A closure verdict (`V1_SEMANTICALLY_CLOSED_ON_FROZEN_SCOPE`) | Overturned | Missed propagation of W8/W11 side conditions and the W9 empty-relation corner. |
+| G1 closure / `g1_relative_semantic_composition: established` | Not established; partial name-level formalization only | `XA-006`/`XA-007`; the conservative register rows (OP-06 open, UQ-T3 Unresolved, LIM-007 Open) are correct. Reconciliation gated by `SR-W8`. |
+| P*/W6 conclusion-loading | Informational loading without logical circularity | The necessity lemmas are contract-relative reconstruction lemmas and must not be described as neutral discoveries; no frozen surface claims neutral discovery. Not a confirmed semantic defect; reopening requires new evidence from a separately authorized investigation. |
+| ADR-002 bearing on the cross-audit defects | Rejected — off-graph, nonblocking | Zero FARA/Ω references in the UPP chain; `XA-005` concerns UPP-internal vocabulary, not FARA `:111`. |
+| This campaign constitutes independent validation or R3–R5 replication | Rejected — not established | All lanes and the cross-audit are internal model-assisted work under the campaign freeze record's evidence qualifier. |

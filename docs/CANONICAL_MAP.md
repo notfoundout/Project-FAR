@@ -30,6 +30,8 @@ Each concept should have one canonical source. Other documents should link to th
 | Unresolved Questions | [`governance/unresolved-questions-register.md`](governance/unresolved-questions-register.md) | Records unresolved theoretical and empirical questions. |
 | Open Problems | [`governance/open-problems-register.md`](governance/open-problems-register.md) | Indexes research problems without authorizing execution. |
 | Counterexamples | [`governance/counterexample-register.md`](governance/counterexample-register.md) | Records strongest surviving threats and expressive-loss risks. |
+| Bounded-v1 Cross-Audit Adjudication | [`audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md`](audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md) | Records the 2026-08-13 three-lane closure-campaign adjudication (`FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED`) and the confirmed defects `XA-001`–`XA-008`, with preserved lane evidence. |
+| UPP Successor Repair Program | [`research/upp-successor-repair-program-v1.0.md`](research/upp-successor-repair-program-v1.0.md) | Registers `UPP-SR-001`: repair hypotheses, forbidden repairs, regression matrix, gates, freeze timing, and OP-06 sequencing for the bounded-v1 derivation defects. |
 | Framework Boundaries | [`governance/framework-boundaries.md`](governance/framework-boundaries.md) | Fixes framework ownership and nonclaims. |
 | Dependency Specification | [`governance/dependency-specification.md`](governance/dependency-specification.md) | Fixes and machine-checks canonical dependency direction. |
 | Procedure Derivation Status | [`governance/derivation-status-matrix.md`](governance/derivation-status-matrix.md) | Separates derivation from method and governance choices. |
