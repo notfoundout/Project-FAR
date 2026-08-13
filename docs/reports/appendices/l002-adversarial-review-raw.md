@@ -103,7 +103,7 @@ Axiom 2 says every collection of representations participating in a reasoning pr
 
 For a singleton collection, the phrase “relations among representations” is potentially ambiguous. It could mean:
 
-a. relations between two or more distinct representations; or
+a. relations between two or more distinct representations; or  
 b. organization involving the one representation, including identity, placement, role, admissibility status, or other explicit relational facts supplied by the reasoning process.
 
 If interpretation (a) is required, a singleton may not have inter-representational relations. Then either Axiom 2 excludes singleton cases, requires a vacuous or degenerate structure, or is difficult to satisfy.
@@ -134,8 +134,8 @@ If the empty collection can participate, then the question becomes whether it po
 
 No direct falsification follows unless the framework admits all three claims:
 
-a. an empty collection can participate in a reasoning process;
-b. an empty collection lacks representational structure; and
+a. an empty collection can participate in a reasoning process;  
+b. an empty collection lacks representational structure; and  
 c. an empty collection nevertheless satisfies Axiom 2.
 
 But claim (c) contradicts Axiom 2 unless Axiom 2 is interpreted as vacuously satisfied without possession. The wording “possesses a representational structure” blocks that.
@@ -187,8 +187,8 @@ This avoids the individual-versus-collective participation ambiguity.
 
 “Without representational structure” could mean at least three things:
 
-a. lacking any representational structure whatsoever;
-b. lacking an explicitly specified representational structure;
+a. lacking any representational structure whatsoever;  
+b. lacking an explicitly specified representational structure;  
 c. lacking a structure recognized by Project FAR evaluation.
 
 The definition says representational structure is “the explicit organization of relations among representations in a reasoning process.” Therefore, an implicit, hidden, natural, accidental, or externally inferable relation among representations may not count unless it is explicit.
@@ -433,25 +433,25 @@ Status: non-defeating.
 
 L-002 depends on the following assumptions:
 
-A. Domain assumption
+A. Domain assumption  
 The relevant collection is a collection of representations participating in a reasoning process, not merely an arbitrary collection whose members participate separately.
 
-B. Satisfaction/conformity assumption
+B. Satisfaction/conformity assumption  
 To “satisfy Axiom 2” means to meet the condition Axiom 2 imposes: possessing representational structure.
 
-C. Defined-term assumption
+C. Defined-term assumption  
 “Representational structure” means the supplied definition: explicit organization of relations among representations in a reasoning process.
 
-D. No equivocation assumption
+D. No equivocation assumption  
 “Structure” in L-002 is not generic structure, physical arrangement, implicit relation, or semantic connectedness unless it qualifies as representational structure.
 
-E. Framework-internal assumption
+E. Framework-internal assumption  
 The impossibility is internal to Project FAR Axiom 2, not a theory-independent metaphysical impossibility.
 
-F. Participation assumption
+F. Participation assumption  
 The collection itself participates in the reasoning process.
 
-G. Possibly non-empty or degenerate-structure assumption
+G. Possibly non-empty or degenerate-structure assumption  
 If singleton or empty collections are allowed, the framework needs a position on whether their representational structures may be empty, unary, vacuous, or degenerate.
 
 ---
@@ -460,19 +460,19 @@ If singleton or empty collections are allowed, the framework needs a position on
 
 Strictly required:
 
-1. Axiom 2.
-2. Definition of Representational Structure.
-3. Definition of Representation.
-4. Definition of Participating collection of representations.
-5. Ordinary logical interpretation of “cannot satisfy P without Q” as “Q is necessary for satisfying P.”
+1. Axiom 2.  
+2. Definition of Representational Structure.  
+3. Definition of Representation.  
+4. Definition of Participating collection of representations.  
+5. Ordinary logical interpretation of “cannot satisfy P without Q” as “Q is necessary for satisfying P.”  
 6. A domain premise that the collection at issue is a collection of representations participating in a reasoning process.
 
 Not strictly required:
 
-1. AX-001, except for background distinction between reasoning and arbitrary manipulation.
-2. L-001, except for background support that scoped reasoning processes require at least one explicit representation.
-3. Axiom 1, except indirectly for scoped-process representation existence.
-4. Definition of Operation.
+1. AX-001, except for background distinction between reasoning and arbitrary manipulation.  
+2. L-001, except for background support that scoped reasoning processes require at least one explicit representation.  
+3. Axiom 1, except indirectly for scoped-process representation existence.  
+4. Definition of Operation.  
 5. Normativity, validity, warrant, or semantics claims from AX-001.
 
 ---

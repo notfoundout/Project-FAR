@@ -1,44 +1,33 @@
 # Project FAR editor configuration.
 #
-# Scope is deliberately limited to the two whitespace rules enforced by
-# tools/check_whitespace_hygiene.py. No indentation, line-length, code
-# formatting, or serialization style is declared here, and none is enforced.
+# This file deliberately does NOT enable automatic whitespace rewriting.
+#
+# Roughly a fifth of tracked files are under integrity control: their SHA-256,
+# SHA-1, or Git blob SHA-1 is recorded in a manifest, freeze package, or audit
+# ledger, and rewriting a single byte invalidates that record. Those files are
+# interleaved with unprotected files in the same directories, across every text
+# extension and fifteen top-level directories, so no path glob separates them.
+# EditorConfig cannot express a digest-based condition, which means any
+# `trim_trailing_whitespace = true` or `insert_final_newline = true` rule broad
+# enough to be useful would also silently rewrite frozen evidence on save.
+#
+# Setting both to false is therefore the protective choice: it overrides editor
+# defaults that would otherwise corrupt those records.
+#
+# The enforced standard lives in tools/check_whitespace_hygiene.py, which
+# applies the same two rules only to files that are not under integrity
+# control, and runs in CI via tools/repo_health_check.py:
+#
+#   1. no trailing whitespace, except in Markdown, where two or more trailing
+#      spaces encode a hard line break and are content;
+#   2. a non-empty file ends with a newline.
+#
+# Run `make whitespace-check`, or `python tools/check_whitespace_hygiene.py
+# --fix` to repair eligible files. Do not hand-edit protected files to satisfy
+# the standard; they are exempt by design.
 
 root = true
 
 [*]
-trim_trailing_whitespace = false
-insert_final_newline = false
-
-[*.{cff,html,js,json,lean,md,py,sh,toml,txt,yaml,yml}]
-trim_trailing_whitespace = true
-insert_final_newline = true
-
-# Integrity- and provenance-protected material is exempt: editors must not
-# rewrite bytes that a recorded digest or freeze package depends on. These
-# mirror the path-based exemptions in tools/check_whitespace_hygiene.py. That
-# tool additionally exempts any file whose own SHA-256 is recorded in the
-# repository, which EditorConfig cannot express; the tool is authoritative.
-[{archive,artifacts,conformance,exports}/**]
-trim_trailing_whitespace = false
-insert_final_newline = false
-
-[tests/fixtures/**]
-trim_trailing_whitespace = false
-insert_final_newline = false
-
-[**/external-validation/**]
-trim_trailing_whitespace = false
-insert_final_newline = false
-
-[**/*freeze*/**]
-trim_trailing_whitespace = false
-insert_final_newline = false
-
-[**/*{manifest,lock}*.json]
-trim_trailing_whitespace = false
-insert_final_newline = false
-
-[**/*.sha256]
 trim_trailing_whitespace = false
 insert_final_newline = false

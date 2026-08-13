@@ -53,13 +53,13 @@ All inputs supplied to P1 are contained in the prompt above. No repository files
 
 ## Complete Unedited Output
 
-Independent Blind Primitive Evaluation (P1)
-Project FAR AX-001
-Date: 2026-07-08 UTC
-Evaluator: P1
-Context flag: fork_context_false
-Repository access: prohibited by instruction
-External context: not used
+Independent Blind Primitive Evaluation (P1)  
+Project FAR AX-001  
+Date: 2026-07-08 UTC  
+Evaluator: P1  
+Context flag: fork_context_false  
+Repository access: prohibited by instruction  
+External context: not used  
 Input basis: prompt only
 
 ---
@@ -211,9 +211,9 @@ The notation used below is:
 
 ### Operation
 
-`Operation → executable`
-`Operation → act`
-`Operation → performed`
+`Operation → executable`  
+`Operation → act`  
+`Operation → performed`  
 `Operation → reasoning process`
 
 The working characterization makes operation depend on executable act, performance, and reasoning-process membership.
@@ -222,16 +222,16 @@ The working characterization makes operation depend on executable act, performan
 
 Possible reductions:
 
-`Act → action`
-`Act → event`
-`Act → deed`
-`Act → occurrence`
-`Act → agency`
+`Act → action`  
+`Act → event`  
+`Act → deed`  
+`Act → occurrence`  
+`Act → agency`  
 `Act → effect/change`
 
 Problematic reductions:
 
-`Act → operation`
+`Act → operation`  
 `Act → performed operation`
 
 If act is reduced to operation, then using act to define operation is circular.
@@ -240,15 +240,15 @@ If act is reduced to operation, then using act to define operation is circular.
 
 Possible reductions:
 
-`Action → act`
-`Action → event`
-`Action → agent`
-`Action → intentional occurrence`
+`Action → act`  
+`Action → event`  
+`Action → agent`  
+`Action → intentional occurrence`  
 `Action → state change caused by an agent`
 
 Problematic reductions:
 
-`Action → operation`
+`Action → operation`  
 `Action → act performed`
 
 Action is usually not safer than act. It often adds agency and intentionality.
@@ -257,10 +257,10 @@ Action is usually not safer than act. It often adds agency and intentionality.
 
 Possible reductions:
 
-`Perform → execute`
-`Perform → carry out`
-`Perform → do`
-`Perform → enact`
+`Perform → execute`  
+`Perform → carry out`  
+`Perform → do`  
+`Perform → enact`  
 `Perform → cause occurrence of act/action`
 
 Problematic reductions:
@@ -273,9 +273,9 @@ If perform is understood as “carry out an operation,” then it cannot reduce 
 
 Possible reductions:
 
-`Performed → perform`
-`Performed → occurred`
-`Performed → completed`
+`Performed → perform`  
+`Performed → occurred`  
+`Performed → completed`  
 `Performed → instantiated`
 
 Problematic reductions:
@@ -288,10 +288,10 @@ Problematic reductions:
 
 Possible reductions:
 
-`Execute → perform`
-`Execute → carry out`
-`Execute → instantiate instruction`
-`Execute → realize rule`
+`Execute → perform`  
+`Execute → carry out`  
+`Execute → instantiate instruction`  
+`Execute → realize rule`  
 `Execute → produce prescribed transition`
 
 Problematic reductions:
@@ -304,16 +304,16 @@ Problematic reductions:
 
 Possible reductions:
 
-`Executable → capable of being executed`
-`Executable → admissible for execution`
-`Executable → rule-realizable`
+`Executable → capable of being executed`  
+`Executable → admissible for execution`  
+`Executable → rule-realizable`  
 `Executable → capable of producing a transition`
 
 Expanded dependency:
 
-`Executable → execute`
-`Executable → capability/modality`
-`Executable → admissibility/permission`
+`Executable → execute`  
+`Executable → capability/modality`  
+`Executable → admissibility/permission`  
 `Executable → possible realization`
 
 Problematic reductions:
@@ -326,10 +326,10 @@ Problematic reductions:
 
 Possible reductions:
 
-`Act upon → act`
-`Act upon → target/object`
-`Act upon → affect`
-`Act upon → cause change in target`
+`Act upon → act`  
+`Act upon → target/object`  
+`Act upon → affect`  
+`Act upon → cause change in target`  
 `Act upon → relation between actor/event and object`
 
 Problematic reductions:
@@ -1606,8 +1606,8 @@ The token version reintroduces occurrence, realization, or instantiation.
 
 ## Available answer choices
 
-A. A successful non-circular reduction exists.
-B. Every reduction ultimately becomes circular.
+A. A successful non-circular reduction exists.  
+B. Every reduction ultimately becomes circular.  
 C. Multiple equally valid primitive candidates remain.
 
 ## Conclusion

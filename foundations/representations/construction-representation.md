@@ -509,7 +509,7 @@ No stronger property has presently been justified.
 
 ---
 
-## Failure Conditions
+## Failure Conditions 
 
 This construction fails if:
 

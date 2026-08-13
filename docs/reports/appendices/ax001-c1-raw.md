@@ -55,13 +55,13 @@ All inputs supplied to C1 are contained in the prompt above. No repository docum
 
 ## Complete Unedited Output
 
-RAW APPENDIX — INDEPENDENT BLIND ADVERSARIAL EVALUATION C1
-Project FAR AX-001
-Date: 2026-07-08 UTC
-Evaluator: C1
-Context: fork_context_false; repository_access_prohibited_by_instruction; independent_from_P1_by_separate_subagent
-Model: GPT-5.5 via Codex sub-agent; exact runtime metadata unavailable
-Permitted context: prompt only
+RAW APPENDIX — INDEPENDENT BLIND ADVERSARIAL EVALUATION C1  
+Project FAR AX-001  
+Date: 2026-07-08 UTC  
+Evaluator: C1  
+Context: fork_context_false; repository_access_prohibited_by_instruction; independent_from_P1_by_separate_subagent  
+Model: GPT-5.5 via Codex sub-agent; exact runtime metadata unavailable  
+Permitted context: prompt only  
 
 ---
 
@@ -237,8 +237,8 @@ This is dangerous if a reasoning process is itself understood as:
 
 If “reasoning process” means “a process constituted by reasoning operations,” the definition becomes explicitly circular:
 
-> operation = executable act within reasoning process
-> reasoning process = structured sequence of operations
+> operation = executable act within reasoning process  
+> reasoning process = structured sequence of operations  
 > therefore operation = executable act within a structured sequence of operations
 
 This is circular.
@@ -1115,8 +1115,8 @@ If process is defined by operations, circularity follows.
 
 Possible circularity:
 
-> operation = act within process
-> process = ordered operations
+> operation = act within process  
+> process = ordered operations  
 > operation = act within ordered operations
 
 ## 4.5 Transformation
@@ -1152,8 +1152,8 @@ Manipulation is action-laden and likely presupposes act/action.
 
 Potential circularity:
 
-> operation = manipulation
-> manipulation = action performed on object
+> operation = manipulation  
+> manipulation = action performed on object  
 > action = operation-like act
 
 ## 4.7 State Transition
@@ -1238,8 +1238,8 @@ If reasoning states are individuated by the operations available or applied in t
 
 Possible cycle:
 
-> operation → transition between reasoning states
-> reasoning state → state in a process defined by possible operations
+> operation → transition between reasoning states  
+> reasoning state → state in a process defined by possible operations  
 > operation
 
 ---

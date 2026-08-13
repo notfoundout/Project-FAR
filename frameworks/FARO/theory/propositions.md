@@ -24,4 +24,4 @@ Future propositions shall include:
 - rewrite properties; and
 - normalization properties.
 
-
+  

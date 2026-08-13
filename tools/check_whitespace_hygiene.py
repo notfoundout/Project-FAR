@@ -3,12 +3,13 @@
 
 Enforces exactly two rules on eligible text files:
 
-1. no line ends with trailing whitespace;
+1. no line ends with trailing whitespace, except where that whitespace is
+   content: Markdown, where two or more trailing spaces encode a hard line
+   break, and multi-line Python string literals, which carry such Markdown;
 2. a non-empty file ends with a newline.
 
-These are the two rules declared in `.editorconfig`. This gate deliberately
-enforces nothing else: no code formatting, no Markdown normalization, and no
-JSON/YAML reserialization.
+This gate deliberately enforces nothing else: no code formatting, no Markdown
+normalization, and no JSON/YAML reserialization.
 
 Files under integrity or provenance control are exempt. Exemption is decided
 two ways:
@@ -31,6 +32,11 @@ from pathlib import Path
 from common_health import ROOT, SKIP_DIRS, rel
 
 ELIGIBLE_SUFFIXES = {'.cff', '.html', '.js', '.json', '.lean', '.md', '.py', '.sh', '.toml', '.txt', '.yaml', '.yml'}
+
+# Markdown encodes a hard line break as two or more trailing spaces, so trailing
+# whitespace is content there rather than cruft. Markdown is subject to the
+# final-newline rule only.
+TRAILING_WHITESPACE_EXEMPT_SUFFIXES = {'.md'}
 
 # Generated output, historical archives, and byte-exact fixture corpora.
 EXEMPT_ROOTS = ('archive/', 'artifacts/', 'conformance/', 'exports/', 'tests/fixtures/')
@@ -91,21 +97,49 @@ def candidate_files():
             yield path
 
 
-def violations(text: str) -> list[str]:
+def protected_lines(text: str, suffix: str) -> set[int]:
+    """1-based line numbers whose trailing whitespace is string content.
+
+    A multi-line Python string literal can carry meaningful trailing spaces --
+    for example a Markdown hard break in a report template -- so those lines
+    are not cruft. Unparseable Python is treated as fully protected.
+    """
+    if suffix != '.py':
+        return set()
+    import io, token as token_module, tokenize
+    protected = set()
+    try:
+        for tok in tokenize.generate_tokens(io.StringIO(text).readline):
+            if tok.type in (token_module.STRING, getattr(token_module, 'FSTRING_MIDDLE', -1)):
+                if tok.end[0] > tok.start[0]:
+                    protected.update(range(tok.start[0], tok.end[0] + 1))
+    except (tokenize.TokenError, IndentationError, SyntaxError):
+        return set(range(1, len(text.split('\n')) + 1))
+    return protected
+
+
+def violations(text: str, trim_trailing: bool = True, suffix: str = '') -> list[str]:
     # Split on '\n' only: splitlines() also breaks on form feed and U+2028,
     # which would corrupt content rather than repair whitespace.
     lines = text.split('\n')
     found = []
-    for number, line in enumerate(lines, 1):
-        if line != line.rstrip():
-            found.append(f'{number}: trailing whitespace')
+    if trim_trailing:
+        protected = protected_lines(text, suffix)
+        for number, line in enumerate(lines, 1):
+            if line != line.rstrip() and number not in protected:
+                found.append(f'{number}: trailing whitespace')
     if text and not text.endswith('\n'):
         found.append(f'{len(lines)}: missing final newline')
     return found
 
 
-def repair(text: str) -> str:
-    repaired = '\n'.join(line.rstrip() for line in text.split('\n'))
+def repair(text: str, trim_trailing: bool = True, suffix: str = '') -> str:
+    if trim_trailing:
+        protected = protected_lines(text, suffix)
+        repaired = '\n'.join(line if number in protected else line.rstrip()
+                             for number, line in enumerate(text.split('\n'), 1))
+    else:
+        repaired = text
     if repaired and not repaired.endswith('\n'):
         repaired += '\n'
     return repaired
@@ -138,11 +172,13 @@ def main() -> int:
             text = blob.decode('utf-8')
         except UnicodeDecodeError:
             continue
-        found = violations(text)
+        suffix = path.suffix.lower()
+        trim_trailing = suffix not in TRAILING_WHITESPACE_EXEMPT_SUFFIXES
+        found = violations(text, trim_trailing, suffix)
         if not found:
             continue
         if args.fix:
-            path.write_text(repair(text), encoding='utf-8')
+            path.write_text(repair(text, trim_trailing, suffix), encoding='utf-8')
             repaired.append(relative)
         else:
             failures.extend(f'{relative}:{item}' for item in found)

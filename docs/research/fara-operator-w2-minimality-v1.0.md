@@ -1,6 +1,6 @@
 # FARA operator W2 bounded minimality result v1.0
 
-Status: **Research result — coordinate-separation-induced bounded minimality; global claim unresolved**
+Status: **Research result — coordinate-separation-induced bounded minimality; global claim unresolved**  
 Proof object: `FARA-OPS-W2-001`
 
 ## Authority and scope
