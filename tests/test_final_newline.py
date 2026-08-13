@@ -1,4 +1,4 @@
-import importlib.util, sys, unittest
+import importlib.util, sys, tempfile, unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 P=ROOT/'tools/check_final_newline.py'
@@ -84,6 +84,37 @@ class DigestProtectionTests(unittest.TestCase):
         recorded={m.content_digests(unterminated)[2]}  # its Git blob SHA-1
         self.assertTrue(m.is_violation(unterminated))
         self.assertEqual(m.exemption_reason('a/b.md', unterminated, recorded), 'digest-recorded')
+
+
+class WalkExclusionTests(unittest.TestCase):
+    """Generated, gitignored tool state must never become eligible content.
+
+    Regression: running the validation framework writes JSON runtime state
+    under .far/ (cache, runs, failures). That directory is gitignored and
+    absent from a fresh checkout, so walking it was previously untested; the
+    gate must not treat framework-generated state as repository content.
+    """
+
+    def test_skip_dirs_covers_far_runtime_directory(self):
+        self.assertIn('.far', m.SKIP_DIRS)
+
+    def test_files_under_a_skip_dir_are_never_yielded_as_candidates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            skipped = root / '.far' / 'cache'
+            skipped.mkdir(parents=True)
+            (skipped / 'run.json').write_bytes(b'{}')  # missing final newline
+            kept = root / 'docs'
+            kept.mkdir()
+            (kept / 'x.md').write_bytes(b'x')
+            original_root = m.ROOT
+            m.ROOT = root
+            try:
+                candidates = {p.relative_to(root).as_posix() for p in m.candidate_files()}
+            finally:
+                m.ROOT = original_root
+            self.assertNotIn('.far/cache/run.json', candidates)
+            self.assertIn('docs/x.md', candidates)
 
 
 class PathExemptionTests(unittest.TestCase):

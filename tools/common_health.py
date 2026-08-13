@@ -3,7 +3,7 @@ import os, re, subprocess, sys, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SKIP_DIRS = {'.git', '.mypy_cache', '.pytest_cache', '__pycache__', '.venv', 'venv', 'node_modules'}
+SKIP_DIRS = {'.git', '.mypy_cache', '.pytest_cache', '__pycache__', '.venv', 'venv', 'node_modules', '.far'}
 LINK_RE = re.compile(r'(!?)\[([^\]\n]*)\]\(([^)\n]*)\)')
 HEADING_RE = re.compile(r'^(#{1,6})\s+(.+?)\s*#*\s*$')
 
