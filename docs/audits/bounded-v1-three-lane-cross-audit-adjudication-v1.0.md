@@ -37,7 +37,7 @@ Exact interpretation — these clauses must travel together:
 - Lane A's closure verdict (`V1_SEMANTICALLY_CLOSED_ON_FROZEN_SCOPE`) is **overturned**.
 - Lane B's OP-06 finding is **confirmed**: `OP06_FORMAL_SEMANTIC_BRIDGES_REQUIRED`; the current Lean artifact is partial, name-level formalization (`PTE_W2_PARTIAL`).
 - Lane C's W9/W8/W11 challenges are **materially sustained** (with the corrections recorded under "Rejected and adjusted claims" below).
-- **No independent validation is claimed.** All three lanes and the cross-audit are internal model-assisted work.
+- **Independent validation is not claimed.** All three lanes and the cross-audit are internal model-assisted work.
 
 The historical conclusion for the frozen source is permanent: `f6645a77` remains immutable failed-closure evidence. Later successor repairs, however successful, do not vindicate the frozen derivation.
 
