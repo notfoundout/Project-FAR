@@ -27,6 +27,18 @@ Canonical result surfaces:
 - [`governance/post-terminal-public-evaluation-program-v1.0.md`](governance/post-terminal-public-evaluation-program-v1.0.md) — current evaluation program.
 - [`governance/central-research-program.md`](governance/central-research-program.md) — central research program.
 
+### Bounded-v1 cross-audit finding (2026-08-13)
+
+The bounded-v1 three-lane internal closure campaign (frozen source `f6645a77`, per [`governance/bounded-v1-closure-source-freeze-f6645a77.md`](governance/bounded-v1-closure-source-freeze-f6645a77.md)) was adjudicated on 2026-08-13:
+
+`FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED`
+
+The terminal proposition was **not refuted**, but the frozen registered derivation was found **defective** over part of its stated domain (`XA-001`–`XA-005`: a valid W9 empty-dependency countermodel `CE-UPP-W9-001`, unpropagated W8/W11 side conditions, status-level composition, and inexpressible determinate absence — `LIM-033`/`LIM-034`). This is internal, model-assisted, non-independent evidence. The terminal adjudication string above remains the historical record for the frozen source; it is not silently rewritten, and the frozen result stays classified on its original terms.
+
+- Adjudication record: [`audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md`](audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md).
+- Registered successor repair program: [`research/upp-successor-repair-program-v1.0.md`](research/upp-successor-repair-program-v1.0.md) (`UPP-SR-001`, `OP-22`) — registered; implementation not yet begun; a successor source freeze occurs only after repair, regression, and validation complete.
+- Sequencing: OP-06/`PTE-W2-KERNEL-RECONSTRUCTION` is downstream of the semantic repair and must target the repaired successor theorem; the current Lean G1 wrapper remains a partial formalization.
+
 ## Current phase
 
 Current program: `POST-TERM-EVAL-001` — Post-Terminal Public Evaluation Program v1.0.

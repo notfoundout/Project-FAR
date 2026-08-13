@@ -1,0 +1,1208 @@
+LANE B — OP-06 / PROOF-ASSURANCE REPORT
+
+1. Baseline Verification
+
+Frozen commit: f6645a77f3b0af0b12897fa9bc2c329cdb345261
+Frozen root tree: a870c1213873158d288ba40bad3952c465e5acab
+Working-tree state: clean; git status --porcelain=v1 returned no entries.
+Commit-pinned read method: I fetched refs, verified the commit with git cat-file -e, verified its tree with git rev-parse "$FROZEN^{tree}", enumerated it with git ls-tree, and made a temporary, read-only cache outside the repository from git archive "$FROZEN". Every substantive citation and conclusion below comes from that frozen object, not current HEAD.
+Verification result: PASS
+The pinned Lean toolchain is Lean 4.19.0.
+
+2. Governing Obligation Reconstruction
+
+G1 — single-kernel semantic composition
+
+Exact wording: “The complete semantic theorem must be represented as one end-to-end proof object checked by a declared trusted kernel.” The object must connect C*, P*, E*, machinery closure, representation/commitment equivalence, five necessity lemmas, independence/nontriviality, constructive sufficiency, relative maximality, and the exact terminal conclusion. A Python-checker wrapper is expressly insufficient.
+
+Authority: frozen research remainder theorem defining the post-terminal proof-composition boundary.
+
+Scope: the existing weakened, relative, operational terminal theorem—not G2 open-world maximality, G3 epistemic maximality, or unrestricted universality.
+
+Status issue: the original G1 registry says it began unresolved and requires “one_end_to_end_trusted_kernel_proof_object.” A later implementation artifact claims to close it, but the accepted current-state governance surfaces still say it is open/unresolved.
+
+OP-06 — repository proof-assurance problem
+
+Exact wording: “Reconstruct the terminal theorem in one kernel-checked object.”
+
+Recorded reason: “Current composition is audited but heterogeneous.”
+
+Authority: Accepted problem index, explicitly not itself execution authorization.
+
+Scope: proof assurance for the terminal theorem.
+
+Relationship: OP-06 is the governance-register formulation of the same central proof-object deficit that G1 operationalizes. G1 is more detailed because it enumerates required semantic connections and disallowed substitutes.
+
+PTE-W2 — kernel reconstruction workstream
+
+Exact objective: “one proof-assistant artifact representing the complete terminal semantic composition.” Partial formalization must disclose exactly what is kernel checked and what remains an external assumption.
+
+Workstream wording: “complete proof-assistant reconstruction or obstruction report.”
+
+Authority: canonical post-terminal public-evaluation program.
+
+Scope: broader procedurally than G1/OP-06: it permits either a complete reconstruction or an explicit obstruction report and governs disclosure of partial formalizations. An obstruction report can satisfy the workstream’s alternative deliverable without closing OP-06.
+
+Relationship: successful complete reconstruction would close the G1/OP-06 proof-composition boundary. A partial artifact or obstruction report can advance/complete an evaluation deliverable but does not make the theorem one faithfully connected kernel object.
+
+UQ-T3
+
+Exact wording/status: “Can the terminal relative theorem be reconstructed as one kernel-checked end-to-end proof? Unresolved.”
+
+Authority: Accepted governance register.
+
+Scope: feasibility/result question corresponding extensionally to the core OP-06 question.
+
+Relationship: it remains unresolved in the frozen accepted status surface despite the existence of the later Lean implementation.
+
+LIM-007
+
+Exact wording/status: “End-to-end UPP composition is not one kernel-checked proof object”; proof-assurance status Open.
+
+Authority: current limitations register.
+
+Scope: the presently acknowledged assurance limitation, not theorem falsity.
+
+Relationship: LIM-007 is the negative current-state assertion; OP-06 is the repair objective; UQ-T3 is the unresolved question; G1 gives the acceptance test; PTE-W2 is the authorized evaluation channel.
+
+Extensional comparison
+
+G1 and OP-06: same core deficit, but G1 is the stricter and more explicit acceptance criterion.
+UQ-T3: asks whether that same reconstruction is possible; it is not itself a completion criterion.
+LIM-007: records the deficit as a present limitation.
+PTE-W2: contains the reconstruction objective but also permits an obstruction-report outcome. It is therefore procedurally broader.
+
+“Single proof object” does require premise semantics to be formally represented. It does not require proving frozen premises from first principles, but it does require Lean premises that are formally the same propositions as the frozen premises. The G1 text specifically forbids replacing semantic premises with repository-status assertions.
+
+Legitimate partial formalization: formally defined portions plus explicitly declared external assumptions, with no claim that the external semantic connection is kernel checked. That is expressly authorized by PTE-W2.
+
+3. Exact Frozen Terminal Assurance
+
+What the frozen terminal theorem claims
+
+For all systems and representations satisfying frozen C*, E*, P*, machinery closure, and commitment equivalence:
+registered executable constructions recover an RCCD-equivalent package;
+eight dimensions are preserved: structural, semantic, operational, dependency, informational, historical, registered-query totality, and failure/Unknown separation;
+sufficiency holds by bidirectional reconstruction;
+components are nontrivial/independent under registered controls; and
+maximality holds only under frozen extension rules and the finite registered challenge ledger.
+
+Assurance by category
+
+Proved/established at repository level: the strictly weakened relative operational theorem is adjudicated “proved,” conditional on the frozen premises.
+
+Executable: predecessor models and construction/checker pipelines; the terminal JSON explicitly records executable_composition: true.
+
+Checker-verified: artifact presence/status, dependency completion, registered verdicts, adversarial cases, and cross-artifact alignment. The terminal audit says this supports the weaker result by executable composition and deterministic cross-artifact checks.
+
+Kernel-checked: in UPPSemanticKernel.lean:
+the conjunction-like PreservationVector.AllPass;
+projection/repackaging from FrozenUPPSemantics fields into RelativeSemanticConclusion;
+the conditional theorem that every model supplying those fields yields that certificate;
+a conditional candidate-equivalence projection;
+two narrow Unknown/failure noninflation lemmas.
+
+Not kernel-checked: the semantic content and external-artifact correspondence of C*, E*, P*, machinery closure, commitment equivalence, W7–W14, the actual RCCD package construction, and the quantified theorem over arbitrary admissible representation R.
+
+Frozen canonical assurance statement: the project-status surface says the composition is executable and audited but is not one kernel-checked proof object.
+
+Terminal theorem’s own mechanism record: single_kernel_checked_semantic_terminal_theorem is false.
+
+Thus the frozen terminal theorem has heterogeneous/mixed assurance: conditional theory statements plus executable witnesses and checker bookkeeping, but not a faithful end-to-end kernel derivation. The accepted proof-status register states exactly that.
+
+4. Terminal Obligation Graph
+
+Canonical graph
+
+C* definition ─────┐
+E* admissibility ──┼──> admissible R / effective R
+P*(S,R) ───────────┤
+machinery closure ─┤
+commitment equivalence ─┘
+          │
+          ├──> W7 recoverable-commitment witness
+          ├──> W8 constrained-evolution witness
+          ├──> W9 dependency-structure witness
+          ├──> W10 semantic-interpretation witness
+          └──> W11 historical-trace witness
+                         │
+                         ├──> W12 component independence
+                         ├──> component nontriviality/irreducibility
+                         └──> W13 effective RCCD assembly
+                                   │
+                                   ├──> bidirectional reconstruction
+                                   ├──> preservation of all 8 dimensions
+                                   └──> RCCD/commitment equivalence
+                                             │
+W14 frozen challenge ledger + rules ─────────┤
+                                             v
+                Exact weakened relative terminal conclusion
+
+The terminal target quantifies over every S and every admissible, effective, machinery-closed R satisfying P*.
+
+Lean graph actually present
+
+M : FrozenUPPSemantics
+source : M.Source
+hClass : M.inTargetClass source
+          │
+          ├── project M.representationAdmissible
+          ├── project M.classConstruction
+          ├── project M.preservationComplete
+          ├── project M.sourceRoundTrip
+          ├── project M.packageRoundTrip
+          ├── project M.equivalenceReflexive
+          ├── project five “Necessary” fields
+          ├── project independenceEstablished
+          ├── project nontrivialityEstablished
+          └── project frozenRuleMaximality
+                          │
+                          v
+              RelativeSemanticConclusion
+
+Every substantive edge in the second graph is supplied as a structure field. The constructor simply copies those fields into a new structure.
+
+Missing canonical edges include:
+
+canonical artifacts → Lean definitions;
+arbitrary representation R → constructed RCCD package;
+W7–W14 propositions → their Lean counterparts;
+independence witness family → componentIndependent;
+effective assembly/reconstruction → encode/decode;
+frozen extension rules/challenge ledger → relativelyMaximal;
+external executable/checker verdicts → propositions in the kernel.
+
+5. Exhaustive Obligation Matrix
+
+Column abbreviations:
+CP canonical proposition; Src canonical source/location; Need why needed; Lean/Decl file and declaration; LP actual Lean proposition; Deps formal imports/dependencies; Mech/Class proof mechanism and classification; Sem semantic fidelity; Δ strengthening/weakening, quantifier/domain omissions, and unused hypotheses; Material whether the proof materially establishes the canonical claim; Gap/Action present gap and minimum closure action.
+
+OBLIGATION-ID	CP	Src	Need	Lean/Decl	LP	Deps	Mech/Class	Sem	Δ	Material	Gap/Action
+
+CSTAR
+CP: S ∈ C*, under the independently frozen operational target-class definition
+Src: G1 item 1.
+Need: Establishes domain of terminal quantification
+Lean/Decl: UPPSemanticKernel.lean; inTargetClass, theorem input hClass
+LP: Arbitrary field Source → Prop; theorem assumes it
+Deps: Std only
+Mech/Class: STRUCTURE_FIELD_ASSUMED / HYPOTHESIS_DERIVED
+Sem: Name-level only
+Δ: Omits all defining predicates, effectivity, and frozen domain restrictions
+Material: No; kernel only tracks an arbitrary proposition
+Gap/Action: Define the actual C* source model/predicate or an exact formal interface plus a proved bridge from the frozen definition
+
+CSTAR-CONSTRUCTION
+CP: Construction/closure produces the relevant package for an in-class source
+Src: terminal dependency chain
+Need: Supplies canonical witness
+Lean/Decl: classConstruction
+LP: inTargetClass source → machineryClosed (encode source)
+Deps: Same structure
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Name-level
+Δ: The field name says “class construction,” but proposition proves only closure; no C* construction and no arbitrary R
+Material: No
+Gap/Action: Separate actual construction from closure and prove the construction theorem
+
+ESTAR
+CP: R ∈ E*: admissible, effective, with frozen exclusions
+Src: G1 item 3 and terminal target
+Need: Restricts represented candidates
+Lean/Decl: admissible, representationAdmissible
+LP: Arbitrary Package → Prop; assumed for encode source
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Name-level
+Δ: Omits effectivity, uniform recovery, no hidden decoder/oracle, and quantification over arbitrary R
+Material: No
+Gap/Action: Formalize E* and prove canonical encoding/candidate membership
+
+PSTAR
+CP: Full P*(S,R) over eight dimensions with total registered queries and failure/Unknown separation
+Src: terminal disclosure and G1 item 2
+Need: Main faithfulness antecedent and preservation target
+Lean/Decl: PreservationVector, preservation, preservationComplete
+LP: Eight enum-valued fields; AllPass is conjunction of equality to .pass
+Deps: Std
+Mech/Class: AllPass DEFINITIONAL; completeness STRUCTURE_FIELD_ASSUMED
+Sem: Same labels only
+Δ: No definitions of what “structural,” etc. mean; no query universe or preservation relation
+Material: Only conjunction bookkeeping is material
+Gap/Action: Define each dimension semantically and prove P* ↔ AllPass or state P* directly
+
+MACH
+CP: All decoding, scheduling, proof, oracle, and reconstruction machinery is charged to R
+Src: frozen terminal premise; G1 item 4
+Need: Prevents hidden machinery
+Lean/Decl: machineryClosed, classConstruction
+LP: Arbitrary unary predicate, proved only by a field
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Name-level
+Δ: Omits machinery inventory/accounting and exclusions
+Material: No
+Gap/Action: Formalize package machinery and closure accounting; bridge checker evidence
+
+EQ-REP
+CP: Bidirectional reconstruction of representation/package
+Src: G1 items 5 and 8; W13
+Need: Constructive sufficiency
+Lean/Decl: sourceRoundTrip, packageRoundTrip
+LP: decode (encode s)=s; encode (decode p)=p for every p
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Abstract algebraic equality only
+Δ: packageRoundTrip is stronger than mere existence/up-to-equivalence but unconnected to canonical packages
+Material: No semantic sufficiency
+Gap/Action: Define effective maps on canonical types and prove the required scoped round trips
+
+EQ-COMMIT
+CP: Frozen bidirectional commitment equivalence
+Src: G1 item 5
+Need: States permitted reconstruction equality
+Lean/Decl: commitmentEquivalent, equivalenceReflexive
+LP: Arbitrary binary relation; only reflexivity assumed
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Name-level
+Δ: Omits symmetry, transitivity, preservation/reflection, identity stability, and frozen equivalence clauses
+Material: No
+Gap/Action: Define canonical equivalence and prove required properties/bridges
+
+R1
+CP: For all qualified S,R, an effective query-total equivalence-stable recoverable commitment domain exists, separating failure/Unknown
+Src: W7 record; terminal G1 item 6
+Need: First RCCD necessity component
+Lean/Decl: recoverableCommitment, commitmentNecessary
+LP: Arbitrary Source → Prop; inTargetClass s → recoverableCommitment s
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Semantic mismatch
+Δ: Drops R, admissibility, closure, P*, equivalence, existential witness, effectiveness, totality, and failure/Unknown
+Material: No
+Gap/Action: Formalize witness type/domain and prove conditional existence with all canonical antecedents
+
+R2
+CP: Qualified transition-bearing S,R exposes effective history-sensitive permitted/forbidden evolution invariant under equivalence
+Src: W8 record
+Need: Second component
+Lean/Decl: constrainedEvolution, evolutionNecessary
+LP: Arbitrary source predicate from class membership
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Semantic mismatch
+Δ: Drops R, transition antecedent, effective decision/Unknown, history, reasons, equivalence stability
+Material: No
+Gap/Action: Formalize transition/admissibility witness and exact conditional theorem
+
+R3
+CP: Qualified S,R admits recoverable typed dependency/revision structure
+Src: W9 result/foundation records
+Need: Third component
+Lean/Decl: dependencyStructure, dependencyNecessary
+LP: Arbitrary source predicate from class membership
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Semantic mismatch
+Δ: Drops representation, typed edges, operational relevance, support/defeat, machinery and equivalence conditions
+Material: No
+Gap/Action: Define dependency witness and prove exact W9 proposition
+
+R4
+CP: Qualified S,R admits recoverable semantic interpretation preserving content/roles/conditions
+Src: W10 result/foundation records
+Need: Fourth component
+Lean/Decl: semanticInterpretation, meaningNecessary
+LP: Arbitrary source predicate from class membership
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Semantic mismatch
+Δ: Drops representation, interpretation map, identity/role/truth conditions, recoverability, and equivalence
+Material: No
+Gap/Action: Define semantic witness and exact W10 bridge theorem
+
+R5
+CP: Under history-sensitive and query-total antecedents, qualified S,R admits effective trace witness with identity, lineage, replay/rollback, and Unknown separation
+Src: W11 canonical record
+Need: Fifth component
+Lean/Decl: historicalTrace, historyNecessary
+LP: Arbitrary source predicate from class membership
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Semantic mismatch
+Δ: Drops R, both additional antecedents, witness, effectiveness, event identity, lineage, replay, and machinery accounting
+Material: No
+Gap/Action: Formalize trace/event/query model and prove exact W11 theorem
+
+IND
+CP: Each component has a separating witness preserving the other four; no circular total reduction recovers it
+Src: W12 independence record
+Need: Supports componentwise independence/irreducibility
+Lean/Decl: componentIndependent, independenceEstablished
+LP: Arbitrary source predicate from membership
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Semantic mismatch
+Δ: No component-indexed quantification, witnesses, “other four,” reduction relation, or anti-circularity
+Material: No
+Gap/Action: Formalize component index, obligations, reductions, and five separating witnesses
+
+NONTRIV
+CP: Proper-subset/ablation controls show the package is nontrivial at registered scope
+Src: terminal theorem and W14 support rule
+Need: Required separately from independence
+Lean/Decl: nontrivial, nontrivialityEstablished
+LP: Arbitrary source predicate
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Name-level
+Δ: No reduction controls or lost obligations
+Material: No
+Gap/Action: Define registered reduction/nontriviality criterion and prove it
+
+SUFF
+CP: For every qualified S,R, an effective RCCD package K and effective assembly/reconstruction maps preserve all dimensions and reconstruct R up to equivalence
+Src: W13 record; G1 item 8
+Need: Converts components into terminal package
+Lean/Decl: No exact declaration; encode, decode, round-trip fields, constructRelativeSemanticConclusion
+LP: An already-given encode/decode pair and assumed equalities; no existential K
+Deps: Std
+Mech/Class: MISSING / SEMANTIC_MISMATCH
+Sem: Not present
+Δ: Drops arbitrary R, RCCD type, component interfaces, effectiveness, assembly, machinery, and equivalence-up-to relation; global package round trip is an unrelated strengthening
+Material: No
+Gap/Action: Introduce RCCD package and maps, then prove W13’s exact existential construction
+
+MAX
+CP: Every registered extension challenge embeds preserving all dimensions or is excluded, with no unresolved challenge
+Src: W14 record; terminal boundary
+Need: Establishes only frozen-rule relative maximality
+Lean/Decl: relativelyMaximal, frozenRuleMaximality
+LP: Arbitrary source predicate from class membership
+Deps: Std
+Mech/Class: STRUCTURE_FIELD_ASSUMED
+Sem: Name-level
+Δ: No rule set, challenge ledger, quantification, embed/exclude alternatives, or unresolved exclusion
+Material: No
+Gap/Action: Formalize frozen rules/ledger and prove the finite relative-maximality proposition
+
+UNK
+CP: Unknown is neither support nor defeat; failure and Unknown remain distinct theorem-relevantly
+Src: W15 proof standard and G1 failure conditions
+Need: Prevents result inflation
+Lean/Decl: Status; unknown_semantic_dimension_not_all_pass; failed_operational_dimension_not_all_pass
+LP: If semantic=unknown, not AllPass; if operational=fail, not AllPass
+Deps: Std
+Mech/Class: KERNEL_DERIVED
+Sem: Partial
+Δ: Proves only two selected coordinates, while definition excludes non-pass on every coordinate; no blocked terminal adjudication semantics
+Material: Yes, but narrow
+Gap/Action: Generalize from any dimension if needed and bridge to canonical checker/result discipline
+
+CAND-EQ
+CP: Every faithful admissible closed candidate preserving S is commitment-equivalent to canonical encoding
+Src: terminal conclusion/recovery claim
+Need: Relates arbitrary candidates to canonical package
+Lean/Decl: faithful_candidate_equivalent_to_canonical
+LP: Follows directly from faithfulCandidateEquivalent after rewriting source package equality
+Deps: Std
+Mech/Class: HYPOTHESIS_DERIVED
+Sem: Name-level predicates
+Δ: Uses arbitrary candidate but all content is assumed; source : Package is otherwise unused except equality to encoding
+Material: Only rewrite/projection is material
+Gap/Action: Replace field with theorem over formal C*,E*,P*, closure, and canonical equivalence
+
+TERM
+CP: Exact weakened theorem over every qualified S,R, yielding recovered RCCD-equivalent package with preservation, sufficiency, independence/nontriviality, and relative maximality
+Src: terminal JSON/disclosure
+Need: Final result
+Lean/Decl: g1_end_to_end_relative_semantic_theorem
+LP: ∀ source, inTargetClass source → RelativeSemanticConclusion M source
+Deps: Std; only local structure
+Mech/Class: HYPOTHESIS_DERIVED / SEMANTIC_MISMATCH
+Sem: Not exact
+Δ: Omits arbitrary R; conclusion is fields about encode source; no RCCD object, existential construction, or semantic bridges
+Material: Only repackages assumptions
+Gap/Action: State the exact terminal conditional theorem over formal source/representation/package semantics and derive it from bridged W7–W14 lemmas
+
+Removed/non-terminal obligations
+
+The six “canonical universality” bridges in CanonicalUniversalityTerminal.lean—canonicality, representation invariance, quotient minimality, definitional completeness, conservative extensibility, maximal knowability—are not obligations of the frozen weakened terminal theorem or OP-06. They belong to a stronger FAR-specific canonical-universality question. Their theorem is also merely conjunction introduction from an Established structure.
+
+6. FrozenUPPSemantics Field Audit
+
+All fields below are interface assumptions. None is derived for the frozen Project FAR semantics. groundedModel demonstrates that an instance can assign True to every named substantive predicate and discharge the associated “theorems” by trivial.
+
+Field	Proposition asserted	Intended frozen artifact	Correspondence encoded?	Derived anywhere?	Merely supplied?	Terminal use	Arbitrary-meaning model possible?	Genuine theorem-level gain
+
+Source, Package
+Two arbitrary types
+Frozen source systems and representations/RCCD packages
+No
+No
+Yes
+Domains for all later fields
+Yes
+Type separation only
+
+inTargetClass
+Arbitrary Source → Prop
+C*
+No
+No
+Yes
+Input hypothesis
+Yes
+Tracks a conditional proposition
+
+admissible
+Arbitrary Package → Prop
+E* admissibility/effectivity
+No
+No
+Yes
+Conclusion and candidate theorem
+Yes
+None beyond propagation
+
+machineryClosed
+Arbitrary Package → Prop
+machinery-closure/accounting artifact
+No
+No
+Yes
+Conclusion and candidate theorem
+Yes
+None beyond propagation
+
+preservation
+Arbitrary enum vector
+P* eight-dimensional semantics
+No
+No
+Yes
+AllPass conclusion
+Yes
+Eight status labels are conjoined
+
+commitmentEquivalent
+Arbitrary binary proposition
+frozen commitment equivalence
+No
+No
+Yes
+self-equivalence/candidate conclusion
+Yes
+None beyond projection
+
+encode
+Arbitrary source-to-package function
+W13 effective assembly
+No
+No
+Yes
+Canonical package
+Yes
+Function exists by assumption
+
+decode
+Arbitrary package-to-source function
+W13 reconstruction
+No
+No
+Yes
+Round-trip fields
+Yes
+Function exists by assumption
+
+recoverableCommitment
+Arbitrary source predicate
+W7 witness proposition
+No
+No
+Yes
+Terminal certificate
+Yes
+None
+
+constrainedEvolution
+Arbitrary source predicate
+W8 witness proposition
+No
+No
+Yes
+Terminal certificate
+Yes
+None
+
+dependencyStructure
+Arbitrary source predicate
+W9 witness proposition
+No
+No
+Yes
+Terminal certificate
+Yes
+None
+
+semanticInterpretation
+Arbitrary source predicate
+W10 witness proposition
+No
+No
+Yes
+Terminal certificate
+Yes
+None
+
+historicalTrace
+Arbitrary source predicate
+W11 witness proposition
+No
+No
+Yes
+Terminal certificate
+Yes
+None
+
+componentIndependent
+Arbitrary source predicate
+W12 five-way independence
+No
+No
+Yes
+Terminal certificate
+Yes
+None
+
+nontrivial
+Arbitrary source predicate
+W13/W14 reduction evidence
+No
+No
+Yes
+Terminal certificate
+Yes
+None
+
+relativelyMaximal
+Arbitrary source predicate
+W14 ledger/rule theorem
+No
+No
+Yes
+Terminal certificate
+Yes
+None
+
+classConstruction
+Class membership implies closure of encoding
+construction/closure artifacts
+No
+No
+Yes
+Projected as closed
+Yes
+Modus ponens from supplied field
+
+representationAdmissible
+Class membership implies encoding admissibility
+E* construction result
+No
+No
+Yes
+Projected as admissible
+Yes
+Modus ponens
+
+preservationComplete
+Class membership implies encoding has all status labels pass
+P*
+No
+No
+Yes
+Projected as preserved
+Yes
+Modus ponens plus definitional conjunction
+
+sourceRoundTrip
+decode (encode s)=s for every source
+W13 reconstruction
+No
+No
+Yes
+Copied
+Yes
+Equality is kernel-tracked but assumed
+
+packageRoundTrip
+encode (decode p)=p for every package
+W13 reconstruction
+No
+No
+Yes
+Applied to canonical encoding
+Yes
+Equality is kernel-tracked but assumed
+
+equivalenceReflexive
+Every package equivalent to itself
+commitment equivalence
+No
+No
+Yes
+Copied as self-equivalence
+Yes
+Reflexivity instance only
+
+Five *Necessary fields
+Class membership implies five arbitrary source predicates
+W7–W11
+No
+No
+Yes
+Copied individually
+Yes
+Five applications of supplied functions
+
+independenceEstablished
+Class membership implies arbitrary independence predicate
+W12
+No
+No
+Yes
+Copied
+Yes
+Modus ponens only
+
+nontrivialityEstablished
+Class membership implies arbitrary nontriviality predicate
+W13/W14
+No
+No
+Yes
+Copied
+Yes
+Modus ponens only
+
+frozenRuleMaximality
+Class membership implies arbitrary maximality predicate
+W14
+No
+No
+Yes
+Copied
+Yes
+Modus ponens only
+
+faithfulCandidateEquivalent
+Candidate with four arbitrary conditions is equivalent to encoding
+W13/terminal equivalence
+No
+No
+Yes
+Used by separate theorem, not by g1_end_to_end_relative_semantic_theorem
+Yes
+Rewrite and field application
+
+The answer to the special audit’s central question is therefore yes: a model can assign arbitrary or vacuous meanings to all named predicates. The committed countermodel does exactly this for the substantive component predicates, setting them to fun _ => True. Consequently, the kernel theorem is parametric in vocabulary names and cannot establish their intended scientific meaning.
+
+7. Semantic Connection Audit
+
+Criterion applied
+
+A connection is genuine only when Lean contains:
+formal types/relations sufficient to state the frozen proposition’s operative content;
+the same quantifiers, antecedents, witnesses, scope restrictions, and equivalence notion;
+a definitional equality, equivalence theorem, or verified translation linking that proposition to the canonical artifact; and
+a proof term deriving/composing that proposition rather than merely accepting a same-named Prop.
+
+Comments, identifier matching, regex alignment tests, JSON adjacency, CI compilation, and explicit structure fields fail this criterion.
+
+Artifact/obligation	Formal semantics present?	Name-level only?	Exact bridge?	Assurance status
+
+C*
+No
+Yes
+No
+External frozen definition/status only
+
+E*
+No
+Yes
+No
+External admissibility/effectivity artifact
+
+P*
+Only eight status labels and AllPass
+Yes for substantive meanings
+No
+Kernel checks conjunction bookkeeping; semantics external
+
+Machinery closure
+No machinery model/accounting
+Yes
+No
+External executable/checker proposition
+
+Representation equivalence
+Abstract round-trip equality only
+Mostly
+No
+Assumed interface equations
+
+Commitment equivalence
+Arbitrary binary Prop; reflexivity field
+Yes
+No
+Assumed
+
+W7 recoverable commitment
+No witness/domain/effectivity
+Yes
+No
+Semantic mismatch
+
+W8 constrained evolution
+No transitions/admissibility/history
+Yes
+No
+Semantic mismatch
+
+W9 dependency structure
+No typed dependency graph/revision relation
+Yes
+No
+Semantic mismatch
+
+W10 semantic interpretation
+No interpretation/content semantics
+Yes
+No
+Semantic mismatch
+
+W11 historical trace
+No event/lineage/query/replay structure
+Yes
+No
+Semantic mismatch
+
+W12 independence
+No indexed separating witnesses/reductions
+Yes
+No
+Semantic mismatch
+
+W13 sufficiency
+No RCCD package existential/effective assembly
+Partial names only
+No
+Missing exact theorem
+
+W14 maximality
+No rule set, challenge ledger, embedding/exclusion proof
+Yes
+No
+Semantic mismatch
+
+Exact terminal composition
+No arbitrary R, RCCD witness, or artifact bridges
+Same conceptual labels
+No
+Conditional name-level repackaging
+
+The alignment test verifies textual occurrence of field names and the existence of theorem declarations, not semantic correspondence. It correctly checks absence of admissions, but that addresses proof-term completeness only after accepting the stated types—not fidelity of those types to the canonical theorem.
+
+8. Proof-Term Deconstruction
+
+constructRelativeSemanticConclusion
+
+Conclusion: RelativeSemanticConclusion M source.
+Inputs: M : FrozenUPPSemantics, source, hClass.
+Substantive content: entirely in M’s fields and hClass.
+Genuine derivation: structure construction and applications of fields to source, hClass, or encode source.
+Stronger than inputs? No. It is a projection/repackaging of fourteen supplied facts.
+Opaque-renaming test: it remains valid if every scientific predicate is replaced by an unrelated predicate of the same type.
+Meaning: Lean verifies only that supplied propositions can be assembled into a record.
+
+g1_end_to_end_relative_semantic_theorem
+
+Conclusion: every source satisfying arbitrary inTargetClass receives the above certificate.
+Inputs: a complete FrozenUPPSemantics instance and target membership.
+Substantive content: all in structure fields.
+Genuine derivation: invokes the constructor.
+Stronger than inputs? No.
+Opaque-renaming test: yes, unchanged.
+Assurance implication: this is kernel-valid parametric logic but not the canonical semantic theorem.
+
+faithful_candidate_equivalent_to_canonical
+
+Conclusion: candidate equivalent to a package asserted equal to the source encoding.
+Inputs: target membership, source-package equality, candidate admissibility, closure, all-pass, and the faithfulCandidateEquivalent field.
+Substantive content: the final field already contains the candidate-equivalence theorem.
+Genuine derivation: rewrite by the supplied equality, then exact projection.
+Stronger than inputs? No.
+Unused/redundant aspect: source : M.Package matters only through source = encode sourceObject.
+Opaque-renaming test: yes.
+
+Unknown/failure lemmas
+
+Conclusion: a vector whose semantic field is .unknown, or operational field is .fail, cannot satisfy the eight-way AllPass conjunction.
+Inputs: the relevant equality.
+Genuine derivation: extracts the required .pass equality and eliminates impossible constructor equality.
+Stronger than inputs? Yes, as a small fact about the concrete inductive status type and AllPass.
+Semantic limitation: does not connect those status values to canonical query/failure behavior.
+
+construction_requires_independent_class_membership
+
+Conclusion: encoding is closed.
+Inputs: class membership and the identically shaped classConstruction structure field.
+Genuine derivation: direct projection.
+Stronger than inputs? No.
+
+canonical_universality_terminal_theorem
+
+Conclusion: conjunction of six stronger canonical-universality propositions.
+Inputs: an Established structure containing those exact six propositions.
+Genuine derivation: conjunction construction.
+Terminal relevance: none for the weakened OP-06 theorem; it concerns a stronger question.
+Opaque-renaming test: yes.
+
+g1_g2_g3_only_support_partial_bridge
+
+Conclusion: direct propositions all hold and remaining bridge conjunction does not.
+Inputs: exactly those two facts.
+Genuine derivation: pair construction.
+Substantive gain: none beyond repackaging.
+Terminal relevance: status logic for the stronger canonical-universality question, not OP-06.
+
+Boolean terminal decision theorems
+
+completeBase stipulates G1/G2/G3 booleans to true; noBridgeWitnesses stipulates the six bridge booleans to false. The subsequent by decide theorems prove evaluations of those stipulated constants, not the scientific propositions represented by the field names.
+
+current_far_terminal_verdict is therefore kernel-derived Boolean computation over status inputs, not a proof that G1’s canonical semantics is established.
+
+groundedModel and its countermodel
+
+The model is a genuine Lean instance of the interface.
+It assigns True to admissibility, closure, all five component predicates, independence, nontriviality, and maximality.
+It demonstrates formally that the interface admits vacuous scientific interpretations and that candidate-to-canonical equivalence need not provide pairwise equivalence/uniqueness.
+This does not refute the frozen terminal theorem; it refutes an overreading of the abstract interface.
+
+9. Status/Authority Contradictions
+
+Conflict C-1: G1 claimed closed vs OP-06 open
+
+Source A: UPPSemanticKernel.lean says the file “closes remainder obligation G1” and places the complete composition in one proof object.
+Source B: OP-06 says reconstruction remains an open problem because composition is heterogeneous.
+
+Nature: genuine current-status conflict, not merely different scope, because both address the terminal proof-object boundary.
+Authority: Source B is an Accepted governance register; Source A is an implementation comment/declaration and cannot silently override it.
+Impact: assurance/post-terminal status only; bounded theorem truth does not change.
+
+Conflict C-2: G1 completion artifact vs UQ-T3/LIM-007
+
+Source A: G1 completion document says the artifact supplies the missing proof-object layer for the exact relative theorem.
+Source B: UQ-T3 remains unresolved.
+Source C: LIM-007 remains open and says no one kernel proof object exists.
+
+Nature: genuine status conflict. Semantic inspection additionally shows Source A overstates fidelity: it has one proof object over arbitrary fields, not the frozen semantic propositions.
+Impact: bounded theorem truth unchanged; bounded theorem assurance and PTE-W2 completion materially affected.
+
+Conflict C-3: G1 “established” in canonical-universality decision vs mixed assurance
+
+Source A: decision JSON records g1_relative_semantic_composition: established.
+Source B: theorem-proof register says terminal composition is not one kernel object.
+
+Nature: genuinely contradictory if “G1” means the remainder theorem’s semantic-connection criterion. It is only reconcilable by treating Source A’s “G1” as “the abstract Lean wrapper exists,” but that narrower scope is not stated in the decision JSON.
+Impact: proof-assurance/status conflict; no effect on the stronger canonical-universality verdict, which remains “not derivable.”
+
+Conflict C-4: project status vs G1 implementation registry
+
+Source A: G1 registry says implemented_pending_validation and claims single_kernel_semantic_composition.
+Source B: project status says the end-to-end semantic composition is not one kernel object.
+
+Nature: status conflict, possibly reflecting an uncompleted promotion/validation step. Even under that reading, “implemented” is not “accepted/closed.”
+Impact: PTE-W2 is at most partial.
+
+Apparent, not genuine: terminal theorem “proved” vs not kernel checked
+
+The terminal disclosure deliberately defines a weaker assurance outcome: executable/checker composition suffices for the weakened adjudication, while full outcome requires kernel composition.
+
+Therefore “weakened theorem proved” and “not one kernel proof object” are different assurance scopes, not a logical contradiction.
+
+Apparent, not genuine: G1/G2/G3 established vs full canonical universality not derivable
+
+The decision artifact explicitly distinguishes base evidence from six additional canonical bridges and says the stronger result does not follow.
+
+This affects a stronger theorem only, not the bounded terminal theorem.
+
+10. Strongest Case That OP-06 Is Already Closed
+
+The strongest defensible case is:
+
+The frozen theorem is explicitly conditional on C*, E*, P*, closure, and equivalence; it need not prove those premises from metaphysical first principles.
+FrozenUPPSemantics makes all semantic assumptions explicit as fields rather than hidden global axioms.
+RelativeSemanticConclusion lists admissibility, closure, all eight preservation dimensions, round trips, equivalence, five RCCD obligations, independence, nontriviality, and relative maximality.
+g1_end_to_end_relative_semantic_theorem is a single Lean theorem with no sorry, admit, global axiom, or unsafe declaration.
+Lean checks that every supplied semantic model satisfying those obligations yields the complete certificate.
+PTE-W2 allows external assumptions in partial formalization; hence frozen JSON/prose semantics could arguably be treated as externally axiomatized, while Lean checks terminal composition.
+The implementation record openly states it does not independently re-prove the methodological/empirical truth of each premise.
+The theorem therefore genuinely improves assurance over Python orchestration: conjunction/projection mistakes in the terminal assembly are kernel checked.
+
+Under a permissive interpretation—“G1 requires only a kernel-checked implication from explicitly named assumptions”—the artifact would close the syntactic composition layer.
+
+11. Refutation or Confirmation of That Case
+
+The case succeeds only as a partial formalization, not as G1/OP-06 closure.
+
+The issue is not that premises are assumed. Conditional premises are legitimate.
+
+The issue is that Lean does not state the same premises. inTargetClass : Source → Prop does not formalize C*; admissible : Package → Prop does not formalize E*; an eight-label vector does not formalize P*; and the five unary source predicates do not state W7–W11.
+
+Quantifier mismatch is material. The canonical theorem quantifies over every source S and qualified representation R. The Lean terminal theorem quantifies only over source and discusses the single stipulated encode source.
+
+Witness mismatch is material. Canonical necessity and sufficiency propositions existentially require effective domains, relations, traces, an RCCD package, and reconstruction maps. Lean replaces them with arbitrary unary predicates and pre-existing functions.
+
+Independence mismatch is decisive. A Boolean/unary assertion named componentIndependent does not encode five separating witnesses or failure of reductions.
+
+Maximality mismatch is decisive. No registered rule or challenge ledger exists in Lean.
+
+The countermodel proves the interface’s semantic unconstrainedness. An instance sets substantive predicates to True and proves their fields trivially.
+
+Names can be replaced without affecting the theorem. This establishes that kernel correctness is parametric logical bookkeeping, not semantic assurance.
+
+G1 expressly requires semantic premises to be connected and forbids replacement by status assertions.
+
+No canonical authority declares this abstraction level sufficient. The accepted registers instead preserve OP-06, UQ-T3, and LIM-007 as open.
+
+Conclusion: existing Lean is a useful, successful partial formalization of the terminal certificate’s outer shape. It does not close OP-06/PTE-W2’s complete reconstruction objective.
+
+12. Minimum Faithful Kernel Closure
+
+The minimum is not to prove all frozen premises unconditionally. It is to represent their actual conditional propositions faithfully and connect them.
+
+Obligation	Minimum necessary Lean object
+
+C*
+A formal source-system type plus predicate encoding the frozen class criteria, or a formal record whose fields are exactly those criteria; external membership evidence may remain a theorem premise
+
+E*
+A representation/package type with formal effectiveness, uniform registered-query recovery, and prohibited-hidden-machinery conditions; external admissibility may remain a premise only at this exact semantic type
+
+P*
+Formal query/observation and preservation relations for all eight dimensions, including query totality and distinct failure/Unknown outcomes
+
+Machinery closure
+Formal machinery inventory/accounting predicate over the complete representation package
+
+Commitment equivalence
+Formal relation over packages/sources encoding preservation and reflection of frozen commitments; prove only properties actually required
+
+W7
+Witness structure for effective recoverable commitments and theorem with exact S,R antecedents
+
+W8
+Transition/admissibility witness, additional transition antecedent, effective decision/Unknown result, and equivalence invariance
+
+W9
+Typed dependency/revision witness with operational relevance and required recovery/equivalence conditions
+
+W10
+Interpretation/content witness with semantic identity/role/condition obligations
+
+W11
+Event/trace witness with history-sensitive and query-total antecedents, lineage, recovery, and failure/Unknown separation
+
+W12 independence
+Finite component index; obligation family; reduction notion; five separating witnesses preserving the other four; anti-circularity/effectivity condition
+
+Nontriviality
+Registered reduction/ablation criterion and witness that losing components loses frozen obligations
+
+W13 sufficiency
+RCCD package type; typed component interfaces; effective assembly and reconstruction maps; total-query and machinery accounting proofs; round-trip up to frozen equivalence
+
+W14 maximality
+Formal frozen extension-rule datatype and exact finite challenge ledger; theorem that each challenge embeds with preservation or is excluded, with no Unknown challenge
+
+Unknown discipline
+A general theorem that no required Unknown/failure result can establish terminal success, connected to the formal query/checker semantics
+
+Terminal theorem
+∀ S R, CStar S → EStar R → PStar S R → Closed R → … → ∃ K, RCCDPackage K ∧ … with the exact weakened relative conclusion and frozen maximality boundary
+
+External artifacts
+Either import/generated formal data with verified hashes/schema interpretation, or prove bridge theorems from a formally parsed artifact representation; mere regex alignment is insufficient
+
+Status
+After proof completion, reconcile OP-06, UQ-T3, LIM-007, theorem-proof register, project status, G1 registry, and decision JSON through governance—not comments alone
+
+Existing abstract definitions can be reused as scaffolding only after their predicates are instantiated by, or proved equivalent to, the canonical formal propositions. The smallest faithful repair is therefore semantic definitions plus bridge theorems, not a larger conjunction wrapper.
+
+13. Obstruction Classification
+
+FORMAL_SEMANTIC_BRIDGES_REQUIRED
+
+Existing declarations are insufficient for composition-only closure. The dominant obstruction is missing formal semantic content and exact bridges, not an impossibility of formalization. Some details may require careful choices, but the frozen artifacts state enough operational witness obligations to begin a faithful bounded formalization without strengthening the theorem.
+
+14. OP-06 Verdict
+
+OP06_BLOCKED_BY_MISSING_FORMAL_SEMANTICS
+
+15. PTE-W2 Verdict
+
+PTE_W2_PARTIAL
+
+The outer certificate, status datatype, no-admission Lean proof, and narrow failure/Unknown lemmas constitute substantive partial formalization. Complete reconstruction has not been achieved, and no canonical PTE-W2 obstruction report closes the alternative deliverable.
+
+16. Confirmed Proof-Assurance Defects
+
+PA-OP06-001
+
+Severity: Critical
+Affected artifact: mechanization/lean/UPPSemanticKernel.lean
+Failure: the theorem claimed as G1 closure quantifies over arbitrary, unconstrained predicate fields rather than formal C*, E*, P*, closure, equivalence, and W7–W14 semantics.
+Bounded theorem truth changes? No determination; the external theorem may remain true.
+Bounded theorem assurance changes? Yes; it is not kernel assured end to end.
+Minimum repair class: formal semantic definitions and bridge theorems.
+
+PA-OP06-002
+
+Severity: Critical
+Affected artifact: g1_end_to_end_relative_semantic_theorem
+Failure: canonical ∀ S, ∀ R quantification is weakened to ∀ source over only the stipulated canonical encoding; no arbitrary qualified R or existential RCCD package appears.
+Truth changes? Not necessarily.
+Assurance changes? Yes; theorem is not extensionally the terminal theorem.
+Minimum repair class: restate exact quantified conclusion and prove it from faithful lemmas.
+
+PA-OP06-003
+
+Severity: High
+Affected artifacts: five *Necessary fields
+Failure: witness-rich necessity theorems are replaced by unary source predicates and assumed implications, omitting representations, antecedents, witnesses, effectiveness, recovery, and equivalence conditions.
+Truth changes? No determination.
+Assurance changes? Yes.
+Minimum repair class: formal witness structures and exact conditional theorems.
+
+PA-OP06-004
+
+Severity: High
+Affected artifact: independenceEstablished
+Failure: component independence is encoded as an arbitrary predicate, not five separating witnesses or a non-reduction theorem.
+Truth changes? No.
+Assurance changes? Yes.
+Minimum repair class: formalize component-indexed independence standard and witnesses.
+
+PA-OP06-005
+
+Severity: High
+Affected artifact: frozenRuleMaximality
+Failure: no frozen extension rules, registered challenge ledger, embed/exclude relation, or Unknown exclusion is represented.
+Truth changes? No.
+Assurance changes? Yes.
+Minimum repair class: checker-only ledger content must be imported/formalized and proved.
+
+PA-OP06-006
+
+Severity: High
+Affected artifact: W13 representation in Lean
+Failure: no effective RCCD package construction or bidirectional reconstruction up to canonical equivalence exists; arbitrary encode/decode and assumed equalities are substituted.
+Truth changes? No.
+Assurance changes? Yes.
+Minimum repair class: formal RCCD datatype/package, maps, and constructive theorem.
+
+PA-OP06-007
+
+Severity: High
+Affected artifacts: G1 completion document/registry and accepted status registers
+Failure: implementation surfaces claim G1 closure/establishment while OP-06, UQ-T3, LIM-007, theorem-proof register, and project status retain the opposite assurance state.
+Truth changes? No.
+Assurance changes? Status is internally inconsistent and cannot honestly be promoted.
+Minimum repair class: governance reconciliation after semantic audit; do not close registers merely because Lean compiles.
+
+PA-OP06-008
+
+Severity: Medium
+Affected artifact: semantic-kernel alignment test
+Failure: textual occurrence tests can validate same-named placeholders without validating semantic correspondence.
+Truth changes? No.
+Assurance changes? It cannot support the claimed fidelity upgrade.
+Minimum repair class: add type/proposition-level bridge verification after formal semantics exist.
+
+PA-OP06-009
+
+Severity: Medium
+Affected artifact: FARCanonicalUniversalityDecision.lean
+Failure: completeBase stipulates G1/G2/G3 as true; by decide proves only Boolean evaluation, yet adjacent wording describes base evidence as established.
+Truth changes? No effect on the stronger “not derivable” status if understood as a status model.
+Assurance changes? Yes if cited as proof of G1 semantics.
+Minimum repair class: label as status computation or connect Boolean fields to actual proof objects.
+
+17. False Alarms / Failed Attacks
+
+“Any assumed premise is a defect.” — Rejected. Conditional theorems may legitimately accept C*, E*, P*, and other frozen premises. The defect is failure to state those same propositions formally.
+
+“The Lean file contains sorry or admit.” — Rejected. The frozen substantive code has no such declaration. The alignment test strips comments before checking.
+
+“No kernel-checked content exists.” — Rejected. Lean genuinely checks record construction, equality rewriting, conjunction extraction, and the narrow Unknown/failure lemmas.
+
+“Package round trip is too weak.” — Rejected in isolation. ∀ package, encode (decode package)=package is stronger than the terminal theorem likely needs. Its defect is lack of canonical semantics, not logical weakness.
+
+“The countermodel refutes the frozen terminal theorem.” — Rejected. It refutes an overreading of the abstract interface and canonical uniqueness; it does not show the external frozen premises are jointly satisfiable with failure of the terminal conclusion.
+
+“OP-06 requires G2 or G3.” — Rejected. G1 closes only proof composition; G2 and G3 are separate remainder obligations.
+
+“The six FAR canonical bridges are missing OP-06 obligations.” — Rejected. They belong to a stronger canonical-universality theorem, not the frozen weakened relative terminal theorem.
+
+“Executable/checker composition has no evidential value.” — Rejected. It supports the repository’s weaker mixed-assurance adjudication; it simply does not equal kernel assurance.
+
+“Unknown discipline is wholly absent.” — Rejected. The Lean status datatype and two noninflation lemmas provide a real but incomplete formal fragment.
+
+“The terminal theorem is false because it is not kernel checked.” — Rejected. Proof assurance and theorem truth are distinct. The audit establishes an assurance gap, not a counterexample.
+
+18. Minimal Next Actions
+
+Status reconciliation
+
+Record the exact conflict among the G1 implementation claim, OP-06, UQ-T3, LIM-007, project status, theorem-proof register, and G1 decision surfaces.
+Until semantic bridges exist, classify the current Lean result explicitly as partial formalization.
+Do not infer closure from the G1 file name, comment, registry claim, or CI result.
+
+Formal semantics
+
+Formalize the bounded source and representation domains for C* and E*.
+Formalize the eight P* dimensions, registered queries, and failure/Unknown separation.
+Formalize machinery accounting and frozen commitment equivalence.
+Formalize the witness content of W7–W14 at exactly the frozen scope.
+
+Lean bridge work
+
+Prove exact bridges from frozen definitions/artifact data to Lean predicates.
+Replace or instantiate opaque fields with these definitions.
+State the exact ∀ S, ∀ R terminal theorem with an existential effective RCCD package.
+Reuse existing outer certificate construction only after semantic equivalence is proved.
+Retain external assumptions where legitimate, but state them as the actual canonical propositions and identify them explicitly.
+
+Theorem change, if any
+
+No substantive theorem strengthening is required.
+The Lean theorem statement must change because it currently does not express the frozen theorem.
+Do not add G2, G3, unrestricted maximality, uniqueness, metaphysical universality, or the six stronger FAR canonical bridges.
+
+Governance work, if any
+
+After genuine kernel reconstruction, execute the Charter-governed validation/acceptance process.
+Then synchronize OP-06, UQ-T3, LIM-007, theorem-proof status, project status, G1 registry, and public disclosure.
+If exact formalization encounters an irreducible semantic ambiguity, publish the PTE-W2 obstruction report rather than inventing semantics.
+Preserve the weakened theorem’s finite maximality boundary and all nonclaims.
+
+19. Blindness Declaration
+
+No Lane A report was read.
+No Lane C report was read.
+No cross-lane findings were requested, inferred, or used.
+Only artifacts belonging to frozen commit f6645a77f3b0af0b12897fa9bc2c329cdb345261 were used substantively.
+The repository remained unmodified.
+No tests, proofs, repairs, commits, pushes, or pull requests were created.

@@ -1,5 +1,17 @@
 # Decision Log
 
+## 2026-08-13 — Register the bounded-v1 cross-audit adjudication and the successor semantic repair program
+
+**Question:** How should the repository represent the completed three-lane internal closure campaign on frozen source `f6645a77`, whose cross-audit found the terminal derivation defective without refuting the terminal proposition?
+
+**Execution:** Three blind first-pass lanes (semantic closure, OP-06/proof assurance, adversarial countermodels) followed by a source-grounded cross-audit that verified every material disagreement against the frozen Git objects. Lane reports and the full adjudication are preserved verbatim under `docs/audits/bounded-v1-closure-campaign/`.
+
+**Observation:** `FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED`. Confirmed defects: W9's universal positive dependency witness fails on the empty-dependency corner (`CE-UPP-W9-001`); W8/W11 side conditions do not propagate through W13/W15 and no degenerate bridge exists; the composition consumes `five_component_necessity` as workstream-completion status; determinate absence is not representable distinctly from Unknown; G1/OP-06 status surfaces are inconsistent and the Lean G1 wrapper is partial, name-level formalization.
+
+**Decision:** Register the adjudication canonically (`docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md`), register the successor semantic repair program `UPP-SR-001` (`docs/research/upp-successor-repair-program-v1.0.md`, indexed as `OP-22`), and synchronize the registers (`LIM-033`/`LIM-034`, `UQ-T27`–`UQ-T29`, `CE-UPP-W9-001`, theorem-proof and claim-status rows). No repair is implemented, no successor freeze is created, ADR-002 is untouched, OP-06 stays open, and kernel reconstruction is sequenced after semantic repair.
+
+**Claim boundary:** The frozen `f6645a77` result remains immutable failed-closure evidence; later repairs do not vindicate it. The campaign is internal, model-assisted, and non-independent; no replication layer or independent validation is claimed, and the terminal proposition is not claimed false.
+
 ## 2026-07-29 — Accept and promote the scoped FARA formal kernel
 
 **Question:** Which coherent formal carrier architecture should govern canonical FARA within Project FAR v1.0 finite explicit auditable representational scope?
