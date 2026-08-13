@@ -76,8 +76,8 @@ health-fast:
 docs-check:
 	python tools/validate_docs.py
 
-whitespace-check:
-	python tools/check_whitespace_hygiene.py
+final-newline-check:
+	python tools/check_final_newline.py
 
 links-check:
 	python tools/check_internal_links.py

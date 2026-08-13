@@ -14,17 +14,19 @@
 # Setting both to false is therefore the protective choice: it overrides editor
 # defaults that would otherwise corrupt those records.
 #
-# The enforced standard lives in tools/check_whitespace_hygiene.py, which
-# applies the same two rules only to files that are not under integrity
-# control, and runs in CI via tools/repo_health_check.py:
+# The enforced standard lives in tools/check_final_newline.py, which applies a
+# single byte-level rule -- a non-empty file ends with a newline -- only to
+# files that are not under integrity control, and runs in CI via
+# tools/repo_health_check.py.
 #
-#   1. no trailing whitespace, except in Markdown, where two or more trailing
-#      spaces encode a hard line break and are content;
-#   2. a non-empty file ends with a newline.
+# Trailing whitespace is deliberately not enforced anywhere. In Markdown two or
+# more trailing spaces encode a hard line break, and the same sequence appears
+# inside string literals that generate Markdown, so removing it is a content
+# change rather than hygiene.
 #
-# Run `make whitespace-check`, or `python tools/check_whitespace_hygiene.py
-# --fix` to repair eligible files. Do not hand-edit protected files to satisfy
-# the standard; they are exempt by design.
+# Run `make final-newline-check`, or `python tools/check_final_newline.py --fix`
+# to repair eligible files. Do not hand-edit protected files to satisfy the
+# rule; they are exempt by design.
 
 root = true
 
