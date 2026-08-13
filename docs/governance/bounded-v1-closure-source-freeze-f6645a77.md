@@ -12,8 +12,10 @@ This document is itself an administrative freeze-record artifact. Creating it is
 
 This freeze is made under [`docs/governance/evidence-replication-and-freeze-standard-v1.0.md`](evidence-replication-and-freeze-standard-v1.0.md). Per that standard:
 
-- Any output produced from this campaign against this frozen source is, at most, **Implementation** (establishes model-assisted analysis behavior, not theory validity) or **Exploratory** (used to discover cases). No campaign output may be classified **Confirmatory**, or **Replication** at layer R3 or above, on the strength of this freeze alone.
-- Three model-assisted lanes analyzing the same frozen source without access to one another's outputs is, at most, replication layer **R2** — isolated implementation replication. It does not by itself support R3 (independent person/organization) or R4 (adversarial, non-proponent) claims.
+- This source freeze itself confers no substantive result classification. Each artifact resulting from this campaign must receive exactly one primary evidence class according to what it actually establishes under the standard's evidence classes — **Exploratory**, **Confirmatory**, **Implementation**, **Replication**, **Boundary**, **Counterexample**, or **Unresolved** — as warranted by that artifact's own execution, not predicted in advance by this record.
+- **Confirmatory** may not be assigned retrospectively and is not conferred merely by this source freeze.
+- Lane isolation does not itself confer any replication layer. **Replication** may be assigned to a resulting artifact only if its execution independently satisfies the exact requirements of the specific replication layer (R1–R5) it claims.
+- The three internal model-assisted lanes alone do not constitute R3 independent technical replication, R4 adversarial conceptual replication, R5 cross-context replication, or independent validation — nor does blindness between lanes, by itself, make any output independent validation.
 - The more conservative classification controls until a dispute over evidence class, replication layer, or materiality is resolved (per the standard's Governance section).
 
 ## Frozen source baseline
@@ -55,7 +57,7 @@ The exact task, question, or artifact subset assigned to each lane is defined se
 
 ## Prior verification referenced
 
-Issue #449 skill-environment verification, performed in this session immediately before this freeze: **PASS, 13/13** repository-scoped `far-*` skills discovered in a fresh session after removal of account-scoped copies (`far-canonical-source-resolver`, `far-claim-registry`, `far-contradiction-detector`, `far-counterexample-hunter`, `far-discovery-engine`, `far-embedding-tester`, `far-evidence-ledger`, `far-formalizer`, `far-prior-art-adversary`, `far-project-state-manager`, `far-research-orchestrator`, `far-research-quality-gate`, `far-theory-auditor`).
+PR #449 skill-environment verification, performed in this session immediately before this freeze: **PASS, 13/13** repository-scoped `far-*` skills discovered in a fresh session after removal of account-scoped copies (`far-canonical-source-resolver`, `far-claim-registry`, `far-contradiction-detector`, `far-counterexample-hunter`, `far-discovery-engine`, `far-embedding-tester`, `far-evidence-ledger`, `far-formalizer`, `far-prior-art-adversary`, `far-project-state-manager`, `far-research-orchestrator`, `far-research-quality-gate`, `far-theory-auditor`).
 
 ## Participating blind lanes
 
@@ -81,7 +83,7 @@ Errors discovered against this frozen source remain attributable to this source 
 
 ## Evidence qualifier
 
-This freeze enables **bounded internal model-assisted evaluation** of the frozen source by three model-assisted lanes. Per `docs/governance/evidence-replication-and-freeze-standard-v1.0.md`, this does **not** constitute independent validation, independent technical replication (R3), or adversarial conceptual replication (R4). Findings from this campaign must not be described as independent validation, and any implementation-style result must not be characterized beyond the Implementation/Exploratory evidence classes defined in the freeze standard.
+This freeze enables **bounded internal model-assisted evaluation** of the frozen source by three model-assisted lanes. This source freeze alone does not establish, predict, or restrict which primary evidence class (per `docs/governance/evidence-replication-and-freeze-standard-v1.0.md`) any resulting artifact will receive; that classification is determined solely by what each artifact's own execution actually establishes, and may include Exploratory, Confirmatory, Implementation, Replication, Boundary, Counterexample, or Unresolved as warranted. This freeze alone does not confer independent validation, or any replication layer beyond what a given execution separately and independently satisfies. Findings from this campaign must not be described as independent validation, R3 independent technical replication, R4 adversarial conceptual replication, or R5 cross-context replication merely because the three lanes were blind to one another.
 
 ## Scope of this record
 
@@ -90,7 +92,7 @@ This record is itself an administrative freeze-record artifact. It:
 - does not modify, reclassify, or reinterpret any frozen historical evidence, manifest, or canonical artifact;
 - does not open, begin, or authorize Lane A, Lane B, or Lane C execution;
 - does not change `main`, any theory content, Lean/mechanization content, or ADR-002;
-- does not assert independent validation, replication above R2, or any claim promotion beyond what is stated above.
+- does not assert independent validation, any replication layer, or any claim promotion beyond what is stated above.
 
 ---
 
