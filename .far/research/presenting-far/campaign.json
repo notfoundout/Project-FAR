@@ -1,0 +1,12 @@
+{
+  "declared_evidence_paths": [
+    "docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md",
+    "docs/governance/bounded-v1-closure-source-freeze-f6645a77.md",
+    "docs/governance/limitations-register.md",
+    "docs/research/upp-successor-repair-program-v1.0.md"
+  ],
+  "registered_at_ref": "HEAD",
+  "source_commit": "0ca73cb06420c3035bc7a973f6f3a4e0f8deeff8",
+  "source_identity": "git:0ca73cb06420c3035bc7a973f6f3a4e0f8deeff8:b95a559ae561a454ea0dc4557b4e68db12c3dac1",
+  "source_kind": "git"
+}
