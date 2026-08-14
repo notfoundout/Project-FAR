@@ -38,13 +38,21 @@ from far_adversarial.ledger import (  # noqa: E402
 )
 
 TRANSCRIPT = ".far/inbox/presenting-project-far.md"
+ADDENDUM = ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md"
 STATE_ROOT = ROOT / ".far" / "research" / "presenting-far"
 LEDGER_PATH = STATE_ROOT / "live-theory-state.json"
 
+RESEARCH_STATE_VERSION = "v3"
+
+# Corrected scope. The v1 ledger asserted that no Presenting FAR protocol
+# identifier occurred anywhere; the addendum shows that was true only of
+# repository and local-file search, not of recoverable conversation state.
 NOT_RECOVERED_NOTE = (
-    "NOT_RECOVERED: no occurrence anywhere in the repository working tree or in "
-    "any reachable object across all 400+ branches of notfoundout/Project-FAR, "
-    "nor in local session state. Searched 2026-08-14."
+    "NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, "
+    "in any reachable object across all branches of notfoundout/Project-FAR, or "
+    "in local session state (searched 2026-08-14). This is a statement about "
+    "file-based search only; retained conversation state is a separate evidence "
+    "channel and did yield further content, per the recovery addendum."
 )
 
 
@@ -64,7 +72,20 @@ def build() -> Ledger:
             "executor read out of the reconstruction, not one it derived. Recorded "
             "dispositions do not satisfy downstream dependency edges by default."
         ),
+        "research_state_version": RESEARCH_STATE_VERSION,
+        "successor_of": (
+            "v1 (continuation-freeze-v1.md, original reconstruction); "
+            "v2 (continuation-freeze-v2.md, executor audit repair). Both are "
+            "preserved unamended. v3 ingests the recovery addendum."
+        ),
         "primary_source": TRANSCRIPT,
+        "supplementary_source": ADDENDUM,
+        "supplementary_source_class": (
+            "NONCANONICAL / RECOVERED CONVERSATION-STATE EVIDENCE. Not a verbatim "
+            "scrape of the shared conversation URL: the public fetch did not expose "
+            "the conversation body. Items are RECONSTRUCTED-HIGH unless labelled "
+            "otherwise and must not be upgraded to verbatim transcript."
+        ),
         "source_class": "NONCANONICAL / INCOMPLETE RECONSTRUCTION",
         "investigation": "Presenting Project FAR (Claude<->GPT adversarial), 2026-08-14",
         "research_question": (
@@ -94,7 +115,10 @@ def build() -> Ledger:
             status=READY_UNDER_INTERNAL_PROTOCOL,
             status_basis=STATUS_RECORDED,
             confidence_class=RECONSTRUCTED_RESEARCH_STATE,
-            provenance=f"{TRANSCRIPT}: TURN 25, CLAUDE TURN 33, GPT TURN 34",
+            provenance=(
+                f"{TRANSCRIPT}: TURN 25, CLAUDE TURN 33, GPT TURN 34; "
+                f"{ADDENDUM}: TURNS 25, 32, 34 (RECONSTRUCTED-HIGH)"
+            ),
             repository_relationship=(
                 "TRANSCRIPT_AHEAD. No S1, SR-B2, CDE-v1, or FDI record exists in the "
                 "canonical repository. This target has no canonical counterpart."
@@ -111,20 +135,43 @@ def build() -> Ledger:
                 "'No eligible source encountered so far has been certified to determine "
                 "the frozen frontier-level search structure.' Not 'the calculus does not "
                 "determine search structure.'",
+                "FDI-v1 (addendum Turn 32): a five-condition frontier-DI certificate "
+                "for frozen S1, requiring source-defined partial derivations, an "
+                "open-leaf frontier with its multiplicity/structure, one-step "
+                "source-induced evolution, and frontier-quotient well-definedness. "
+                "Partial derivations alone were explicitly insufficient.",
+                "CDE-v1 (addendum Turn 34): canonical definitional expansions from "
+                "source-defined structure with no free methodological parameters.",
+                "Adjudication route (addendum Turn 34): FDI4 satisfied by DI2; CDE-v1 "
+                "fixed; Liang-Miller member 2 classified DIRECT under DI1 plus the "
+                "FDI1-FDI5 structure; c0 survived; S1 adjudicated READY.",
             ],
             concessions=[
                 "Turn 33 §4: Claude accepted that intra-sequent and frontier "
                 "representation had been conflated.",
                 "Turn 33: Claude weakened the DF-02b negative source claim.",
             ],
+            source_dependencies=[
+                "Miller, 'A Survey of the Proof-Theoretic Foundations of Logic "
+                "Programming', arXiv:2109.01483 (2021). SOURCE-IDENTIFICATION-HIGH "
+                "candidate for the Turn 33 '1000 choices' / 'proofs are formless' "
+                "reference. An identification, not transcript wording.",
+                "Liang and Miller, 'Focusing and Polarization in Intuitionistic "
+                "Logic', arXiv:0708.2252 (2007). SOURCE-IDENTIFICATION-HIGH candidate "
+                "for 'Liang-Miller member 2' in the retained Turn 34 state. Do not "
+                "collapse the two without the original candidate ledger: the dialogue "
+                "may have used them as distinct members of the source set.",
+            ],
             missing_evidence=[
-                "Exact frozen S1 statement (NOT_RECOVERED)",
-                "CDE-v1 definition (NOT_RECOVERED)",
-                "FDI1-FDI5 determination criteria (NOT_RECOVERED)",
-                "FDI-v1 definition (NOT_RECOVERED)",
-                "SR-B2 v2 executable protocol text (NOT_RECOVERED)",
-                "GPT Turn 34 full wording (GAP)",
-                "Turn 33 final sentence (source truncates mid-sentence)",
+                "Exact frozen S1 statement (still NOT_RECOVERED)",
+                "Exact full CDE-v1 definition (rule partially recovered in v3)",
+                "Exact FDI1-FDI5 clause text; the addendum recovers the five "
+                "conditions' content but explicitly warns against inventing the "
+                "phrase-to-label mapping",
+                "Exact SR-B2 v2 protocol text (procedure recovered in v3)",
+                "GPT Turn 34 full wording (adjudication route partially recovered)",
+                "Turn 33 final sentence (source truncates mid-sentence; the addendum "
+                "recovered no completion)",
             ],
             notes=[
                 "DO NOT RESTART. S1 is internally closed under the then-current frozen "
@@ -187,6 +234,78 @@ def build() -> Ledger:
             raised_by="reconstruction",
             provenance=f"{TRANSCRIPT}; {NOT_RECOVERED_NOTE}",
         )
+
+    # -- S2, revealed by the Turn 24 precondition stop ---------------------
+    ledger.add_target(
+        Target(
+            id="PFAR-S2",
+            original_formulation=(
+                "NOT_RECOVERED. S2 is known only as the second gating S-target named "
+                "alongside S1 in the addendum's Turn 24 precondition stop."
+            ),
+            current_formulation="NOT_RECOVERED.",
+            frozen_scope="SR-B2 v2; same determination machinery as S1 (unrecovered).",
+            status=UNDERDETERMINED,
+            status_basis=STATUS_RECORDED,
+            confidence_class=MISSING_TRANSCRIPT_EVIDENCE,
+            provenance=f"{ADDENDUM}: GPT TURN 24 (RECONSTRUCTED-HIGH)",
+            repository_relationship="TRANSCRIPT_AHEAD; no canonical counterpart.",
+            authorized=False,
+            missing_evidence=[
+                "Exact S2 statement.",
+                "S2's disposition. The reconstruction records that S1 reached READY "
+                "and says nothing about S2. Do not infer S2's status from S1's.",
+            ],
+            notes=[
+                "Turn 24 (addendum): if S1 or S2 were non-READY, the E0 shared-content "
+                "fragments became UNTESTABLE, no substitute domain or fragment was "
+                "permitted, and the correct outcome was a PRECONDITION STOP / "
+                "domain-instantiation failure rather than an invented replacement.",
+                "S2's disposition therefore gates the E0 fragments independently of S1.",
+            ],
+        )
+    )
+    ledger.register_obligation(
+        target_id="PFAR-S2", kind=OBLIGATION_SOURCE,
+        statement="Exact S2 statement and its recorded disposition",
+        raised_by="reconstruction", provenance=f"{ADDENDUM}: GPT TURN 24",
+    )
+
+    # -- the recorded next Presenting FAR action ---------------------------
+    ledger.add_target(
+        Target(
+            id="PFAR-S6-S7",
+            original_formulation=(
+                "NOT_RECOVERED. Recorded only as the remaining action after the Turn "
+                "34 S1 adjudication: 'S6 -> S7'."
+            ),
+            current_formulation="NOT_RECOVERED.",
+            frozen_scope="NOT_RECOVERED.",
+            status=SOURCE_REQUIRED,
+            status_basis=STATUS_RECORDED,
+            confidence_class=MISSING_TRANSCRIPT_EVIDENCE,
+            provenance=f"{ADDENDUM}: GPT TURN 34 (RECONSTRUCTED-HIGH)",
+            repository_relationship="TRANSCRIPT_AHEAD; no canonical counterpart.",
+            authorized=False,
+            missing_evidence=[
+                "Exact S6 and S7 statements.",
+                "What the S6 -> S7 transition requires.",
+                "Whether S3, S4, and S5 exist and what their dispositions were.",
+            ],
+            notes=[
+                "This is the successor step the Presenting FAR investigation actually "
+                "recorded as next. It is the first time the reconstruction names one: "
+                "v1 and v2 could only say the successor queue lived inside T1-T8.",
+                "It remains unexecutable. Naming the next action is not the same as "
+                "recovering its content, and inventing S6 or S7 is forbidden.",
+            ],
+        )
+    )
+    ledger.register_obligation(
+        target_id="PFAR-S6-S7", kind=OBLIGATION_SOURCE,
+        statement="Exact S6 and S7 statements and the S6 -> S7 transition requirement",
+        raised_by="reconstruction", provenance=f"{ADDENDUM}: GPT TURN 34",
+    )
 
     # -- frozen target/protocol block T1-T8 --------------------------------
     ledger.add_target(
@@ -338,33 +457,69 @@ def build() -> Ledger:
         Target(
             id="PFAR-SRB2",
             original_formulation=(
-                "SR-B2 v1: judged infeasible and retired (Turn 26). SR-B2 v2: frozen "
-                "as executable. Exact text of neither version is recovered."
+                "SR-B2 v1: retired as capability-infeasible (Turn 26). Under v1, S1 "
+                "remained OPEN until a finite retrieval procedure was exhausted; "
+                "strong negative-looking evidence could not by itself produce "
+                "SOURCE-FAIL before the registered search completed (Turn 25)."
             ),
-            current_formulation="SR-B2 v2 (executable). NOT_RECOVERED.",
-            frozen_scope="NOT_RECOVERED",
+            current_formulation=(
+                "SR-B2 v2, executable finite search procedure (RECOVERED_PARTIALLY, "
+                "addendum Turn 26): six fixed queries per OPEN target; ten results "
+                "per query; up to five NM-v1 near-matches eligible for follow-up; two "
+                "title/author follow-up queries per near-match; an EXACT/DIRECT "
+                "positive permits an early positive stop; a negative SOURCE-FAIL "
+                "requires exhaustion of all prescribed invocations; S1 reruns from "
+                "query 1 under the repaired protocol. Exact protocol text still "
+                "unrecovered."
+            ),
+            frozen_scope=(
+                "Two-stage design (addendum Turn 27): broad NM-v1 recall at "
+                "retrieval, strict K-P1 precision at admissibility."
+            ),
             status=SOURCE_REQUIRED,
             status_basis=STATUS_RECORDED,
-            confidence_class=MISSING_TRANSCRIPT_EVIDENCE,
-            provenance=f"{TRANSCRIPT}: TURNS 23, 26, 27, 28, 32 (RECONSTRUCTED-HIGH)",
+            confidence_class=RECONSTRUCTED_RESEARCH_STATE,
+            provenance=(
+                f"{TRANSCRIPT}: TURNS 23, 26, 27, 28, 32 (RECONSTRUCTED-HIGH); "
+                f"{ADDENDUM}: TURNS 23, 25, 26, 27, 28, 32 (RECONSTRUCTED-HIGH)"
+            ),
             repository_relationship="TRANSCRIPT_AHEAD; no canonical counterpart.",
             authorized=False,
+            supporting_arguments=[
+                "NM-v1 (addendum Turn 27): deliberately broad at retrieval — same "
+                "formal family, structural role, or provenance qualifies a near-match "
+                "for inspection.",
+                "K-P1 (addendum Turn 27): strict at final eligibility. A focused-LK "
+                "paper may enter the N1/near-match pool and still fail admissibility.",
+                "Direct instantiation (addendum Turn 23): specialization plus "
+                "source-internal definitional expansion, bounded by an explicit "
+                "DI1-DI6 boundary; analyst-supplied primitive structure and "
+                "cross-source assembly both excluded.",
+                "Exhaustion rule (Turns 26/28): all six queries are mandatory, so "
+                "selective query execution cannot manufacture a negative source "
+                "result.",
+            ],
             missing_evidence=[
-                f"SR-B2 v1 and v2 text. {NOT_RECOVERED_NOTE}",
-                f"NM-v1 retrieval definition. {NOT_RECOVERED_NOTE}",
-                f"K-P1 strictness criterion. {NOT_RECOVERED_NOTE}",
-                f"FDI-v1 definition. {NOT_RECOVERED_NOTE}",
+                "Exact SR-B2 v1 and v2 protocol text (procedure recovered, wording not).",
+                "Exact NM-v1 criterion wording (criterion recovered, wording not).",
+                "Exact K-P1 test wording (role recovered, wording not).",
+                "Exact DI1-DI6 clause text.",
+                "The six fixed queries themselves.",
             ],
             notes=[
-                "Recovered protocol facts, definitions absent: broad NM-v1 retrieval "
-                "retained while K-P1 made strict (Turn 27); all six queries mandatory "
-                "so selective retrieval cannot silently decide an outcome (Turn 28); "
-                "'direct instantiation' means specialization plus source-internal "
-                "definitional expansion, excluding new primitive structure and "
-                "cross-source assembly (Turn 23).",
+                "Upgraded in v3 from 'an executable v2 was frozen' to a recoverable "
+                "finite search procedure, per the recovery addendum.",
             ],
         )
     )
+    for statement in (
+        "Exact SR-B2 v2 protocol text and the six fixed queries",
+        "Exact DI1-DI6 direct-instantiation boundary text",
+    ):
+        ledger.register_obligation(
+            target_id="PFAR-SRB2", kind=OBLIGATION_SOURCE, statement=statement,
+            raised_by="reconstruction", provenance=f"{ADDENDUM}: TURNS 23, 26",
+        )
 
     # -- repository-side successor programme ------------------------------
     ledger.add_target(

@@ -128,13 +128,16 @@ Presenting FAR's own queue is source-blocked at step 0. The shortest
 dependency-valid executable route from the current live state is therefore:
 
 ```
-[A] Recover 𝔈₀, T1-T8, S1, SR-B2 v2, CDE-v1, FDI1-FDI5 from the original
-    ChatGPT export.                                   SOURCE_REQUIRED (external)
+[A] Recover the exact 𝔈₀, T1-T8, S1 and S2 statements, and the exact S6/S7
+    text, from the original ChatGPT export.           SOURCE_REQUIRED (external)
         |
-        |  (blocks every Presenting FAR successor target; nothing internal
-        |   can substitute, and inventing the definitions is forbidden)
+        |  (blocks every Presenting FAR successor target. Turn 24 makes this
+        |   binding rather than inconvenient: with 𝔈₀ absent or S1/S2 readiness
+        |   unconfirmed, the protocol's correct outcome is a PRECONDITION STOP,
+        |   no substitute domain or fragment is permitted, and inventing the
+        |   definitions is forbidden.)
         v
-[B] Presenting FAR successor target after S1              BLOCKED on [A]
+[B] S6 -> S7, the successor step Turn 34 actually recorded  BLOCKED on [A]
 
 Independent, and not blocked by [A]:
 

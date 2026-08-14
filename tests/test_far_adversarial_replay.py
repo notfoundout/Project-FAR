@@ -106,6 +106,52 @@ class ReplayHarness:
         return replay(**kwargs)
 
 
+class ModuleNamespaceTests(unittest.TestCase):
+    """The replay submodule must stay reachable under its own name.
+
+    Re-exporting the function as ``far_adversarial.replay`` rebound the package
+    attribute from the submodule to the function, so ``import
+    far_adversarial.replay`` handed back a function with none of the module's
+    contents. An audit probe checking ``hasattr(module, 'replay')`` was misled
+    by exactly this.
+    """
+
+    def test_importing_the_submodule_yields_the_module_not_a_function(self):
+        import importlib
+        import far_adversarial  # noqa: F401
+
+        module = importlib.import_module("far_adversarial.replay")
+        self.assertTrue(hasattr(module, "replay"))
+        self.assertTrue(hasattr(module, "ReplayResult"))
+        self.assertFalse(callable(module))
+
+    def test_the_package_attribute_is_the_submodule(self):
+        import types
+        import far_adversarial
+
+        self.assertIsInstance(far_adversarial.replay, types.ModuleType)
+
+    def test_the_function_is_exported_under_a_non_shadowing_name(self):
+        import far_adversarial
+
+        self.assertIn("replay_recorded_run", far_adversarial.__all__)
+        self.assertTrue(callable(far_adversarial.replay_recorded_run))
+        self.assertNotIn("replay", far_adversarial.__all__)
+
+    def test_no_export_shadows_a_submodule(self):
+        import importlib
+        import pkgutil
+        import far_adversarial
+
+        submodules = {name for _, name, _ in pkgutil.iter_modules(far_adversarial.__path__)}
+        for name in far_adversarial.__all__:
+            self.assertNotIn(name, submodules,
+                             f"{name} is exported and also names a submodule")
+        # And every submodule still imports cleanly under its own name.
+        for name in sorted(submodules):
+            importlib.import_module(f"far_adversarial.{name}")
+
+
 class CleanReplayTests(unittest.TestCase):
     def test_clean_replay_reproduces_the_exact_final_digest(self):
         with tempfile.TemporaryDirectory() as tmp:

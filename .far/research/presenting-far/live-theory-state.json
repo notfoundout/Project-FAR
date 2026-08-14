@@ -9,7 +9,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3718052,
+          "at": 1786722801.654546,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -33,7 +33,7 @@
           "action": "RAISE",
           "actor": "claude",
           "agreement": {},
-          "at": 1786720108.3714387,
+          "at": 1786722801.6542468,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -45,7 +45,7 @@
           "action": "REBUT",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3714538,
+          "at": 1786722801.6542597,
           "evidence_ref": "",
           "from_state": "OPEN",
           "invocation_id": null,
@@ -61,7 +61,7 @@
             "gpt": "rebut",
             "note": "agreement is metadata; the owner's withdrawal decided this"
           },
-          "at": 1786720108.3714602,
+          "at": 1786722801.6542656,
           "evidence_ref": "",
           "from_state": "REBUTTED",
           "invocation_id": null,
@@ -85,7 +85,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3717968,
+          "at": 1786722801.654538,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -109,7 +109,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3717415,
+          "at": 1786722801.6544862,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -121,7 +121,7 @@
           "action": "CONCEDE",
           "actor": "claude",
           "agreement": {},
-          "at": 1786720108.3717442,
+          "at": 1786722801.6544893,
           "evidence_ref": "",
           "from_state": "OPEN",
           "invocation_id": null,
@@ -145,7 +145,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3716018,
+          "at": 1786722801.6544027,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -157,7 +157,7 @@
           "action": "CONCEDE",
           "actor": "claude",
           "agreement": {},
-          "at": 1786720108.3716059,
+          "at": 1786722801.6544065,
           "evidence_ref": "",
           "from_state": "OPEN",
           "invocation_id": null,
@@ -181,7 +181,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.371778,
+          "at": 1786722801.6545253,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -205,7 +205,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3717523,
+          "at": 1786722801.6544998,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -217,7 +217,7 @@
           "action": "CONCEDE",
           "actor": "claude",
           "agreement": {},
-          "at": 1786720108.3717582,
+          "at": 1786722801.6545062,
           "evidence_ref": "",
           "from_state": "OPEN",
           "invocation_id": null,
@@ -241,7 +241,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3718157,
+          "at": 1786722801.6545556,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -265,7 +265,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3718283,
+          "at": 1786722801.654568,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -289,7 +289,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3715851,
+          "at": 1786722801.65439,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -301,7 +301,7 @@
           "action": "CONCEDE",
           "actor": "claude",
           "agreement": {},
-          "at": 1786720108.3715892,
+          "at": 1786722801.6543934,
           "evidence_ref": "",
           "from_state": "OPEN",
           "invocation_id": null,
@@ -325,7 +325,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3717253,
+          "at": 1786722801.6544645,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -337,7 +337,7 @@
           "action": "CONCEDE",
           "actor": "claude",
           "agreement": {},
-          "at": 1786720108.371728,
+          "at": 1786722801.654468,
           "evidence_ref": "",
           "from_state": "OPEN",
           "invocation_id": null,
@@ -361,7 +361,7 @@
           "action": "RAISE",
           "actor": "gpt",
           "agreement": {},
-          "at": 1786720108.3717077,
+          "at": 1786722801.6544147,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -373,7 +373,7 @@
           "action": "CONCEDE",
           "actor": "claude",
           "agreement": {},
-          "at": 1786720108.3717115,
+          "at": 1786722801.6544168,
           "evidence_ref": "",
           "from_state": "OPEN",
           "invocation_id": null,
@@ -396,10 +396,14 @@
     "primary_source": ".far/inbox/presenting-project-far.md",
     "reducer": "far-adversarial-reducer/2",
     "research_question": "Discover the minimal architecture of reasoning without inserting Project FAR / RCCD into the premises.",
+    "research_state_version": "v3",
     "schema": "far-adversarial-ledger/2",
     "source_class": "NONCANONICAL / INCOMPLETE RECONSTRUCTION",
     "status": "NONCANONICAL LIVE RESEARCH STATE",
-    "status_basis_note": "Targets carrying RECORDED_TRANSCRIPT_DISPOSITION hold a status this executor read out of the reconstruction, not one it derived. Recorded dispositions do not satisfy downstream dependency edges by default."
+    "status_basis_note": "Targets carrying RECORDED_TRANSCRIPT_DISPOSITION hold a status this executor read out of the reconstruction, not one it derived. Recorded dispositions do not satisfy downstream dependency edges by default.",
+    "successor_of": "v1 (continuation-freeze-v1.md, original reconstruction); v2 (continuation-freeze-v2.md, executor audit repair). Both are preserved unamended. v3 ingests the recovery addendum.",
+    "supplementary_source": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md",
+    "supplementary_source_class": "NONCANONICAL / RECOVERED CONVERSATION-STATE EVIDENCE. Not a verbatim scrape of the shared conversation URL: the public fetch did not expose the conversation body. Items are RECONSTRUCTED-HIGH unless labelled otherwise and must not be upgraded to verbatim transcript."
   },
   "obligations": {
     "OBL-3A8187C96ACF": {
@@ -408,18 +412,18 @@
           "action": "RAISE",
           "actor": "reconstruction",
           "agreement": {},
-          "at": 1786720108.3715649,
+          "at": 1786722801.6543753,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
-          "provenance": "NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+          "provenance": "NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
           "rationale": "E0 frozen source-corpus contents",
           "to_state": "UNRESOLVED"
         }
       ],
       "id": "OBL-3A8187C96ACF",
       "kind": "SOURCE",
-      "provenance": "NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+      "provenance": "NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
       "raised_by": "reconstruction",
       "required_by_protocol": true,
       "resolution_provenance": "",
@@ -433,18 +437,18 @@
           "action": "RAISE",
           "actor": "reconstruction",
           "agreement": {},
-          "at": 1786720108.3715026,
+          "at": 1786722801.6543114,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
-          "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+          "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
           "rationale": "SR-B2 v2 executable protocol text",
           "to_state": "UNRESOLVED"
         }
       ],
       "id": "OBL-53AA70274E5A",
       "kind": "SOURCE",
-      "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+      "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
       "raised_by": "reconstruction",
       "required_by_protocol": true,
       "resolution_provenance": "",
@@ -452,24 +456,49 @@
       "statement": "SR-B2 v2 executable protocol text",
       "target_id": "PFAR-S1"
     },
+    "OBL-93FF7CC302BD": {
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "reconstruction",
+          "agreement": {},
+          "at": 1786722801.6543436,
+          "evidence_ref": "",
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: GPT TURN 34",
+          "rationale": "Exact S6 and S7 statements and the S6 -> S7 transition requirement",
+          "to_state": "UNRESOLVED"
+        }
+      ],
+      "id": "OBL-93FF7CC302BD",
+      "kind": "SOURCE",
+      "provenance": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: GPT TURN 34",
+      "raised_by": "reconstruction",
+      "required_by_protocol": true,
+      "resolution_provenance": "",
+      "state": "UNRESOLVED",
+      "statement": "Exact S6 and S7 statements and the S6 -> S7 transition requirement",
+      "target_id": "PFAR-S6-S7"
+    },
     "OBL-A186FA00BF55": {
       "history": [
         {
           "action": "RAISE",
           "actor": "reconstruction",
           "agreement": {},
-          "at": 1786720108.3715181,
+          "at": 1786722801.6543584,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
-          "provenance": "NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+          "provenance": "NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
           "rationale": "T1-T8 frozen target and protocol definitions",
           "to_state": "UNRESOLVED"
         }
       ],
       "id": "OBL-A186FA00BF55",
       "kind": "SOURCE",
-      "provenance": "NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+      "provenance": "NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
       "raised_by": "reconstruction",
       "required_by_protocol": true,
       "resolution_provenance": "",
@@ -477,24 +506,74 @@
       "statement": "T1-T8 frozen target and protocol definitions",
       "target_id": "PFAR-T1-T8"
     },
+    "OBL-A517A4741870": {
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "reconstruction",
+          "agreement": {},
+          "at": 1786722801.6545966,
+          "evidence_ref": "",
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: TURNS 23, 26",
+          "rationale": "Exact DI1-DI6 direct-instantiation boundary text",
+          "to_state": "UNRESOLVED"
+        }
+      ],
+      "id": "OBL-A517A4741870",
+      "kind": "SOURCE",
+      "provenance": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: TURNS 23, 26",
+      "raised_by": "reconstruction",
+      "required_by_protocol": true,
+      "resolution_provenance": "",
+      "state": "UNRESOLVED",
+      "statement": "Exact DI1-DI6 direct-instantiation boundary text",
+      "target_id": "PFAR-SRB2"
+    },
+    "OBL-A543F84303D7": {
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "reconstruction",
+          "agreement": {},
+          "at": 1786722801.6545882,
+          "evidence_ref": "",
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: TURNS 23, 26",
+          "rationale": "Exact SR-B2 v2 protocol text and the six fixed queries",
+          "to_state": "UNRESOLVED"
+        }
+      ],
+      "id": "OBL-A543F84303D7",
+      "kind": "SOURCE",
+      "provenance": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: TURNS 23, 26",
+      "raised_by": "reconstruction",
+      "required_by_protocol": true,
+      "resolution_provenance": "",
+      "state": "UNRESOLVED",
+      "statement": "Exact SR-B2 v2 protocol text and the six fixed queries",
+      "target_id": "PFAR-SRB2"
+    },
     "OBL-B52BB4181FDB": {
       "history": [
         {
           "action": "RAISE",
           "actor": "reconstruction",
           "agreement": {},
-          "at": 1786720108.371493,
+          "at": 1786722801.654302,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
-          "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+          "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
           "rationale": "CDE-v1 and FDI1-FDI5 determination criteria",
           "to_state": "UNRESOLVED"
         }
       ],
       "id": "OBL-B52BB4181FDB",
       "kind": "SOURCE",
-      "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+      "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
       "raised_by": "reconstruction",
       "required_by_protocol": true,
       "resolution_provenance": "",
@@ -508,18 +587,18 @@
           "action": "RAISE",
           "actor": "reconstruction",
           "agreement": {},
-          "at": 1786720108.3714812,
+          "at": 1786722801.6542866,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
-          "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+          "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
           "rationale": "Exact frozen S1 statement",
           "to_state": "UNRESOLVED"
         }
       ],
       "id": "OBL-B53F7307C36A",
       "kind": "SOURCE",
-      "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+      "provenance": ".far/inbox/presenting-project-far.md; NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
       "raised_by": "reconstruction",
       "required_by_protocol": true,
       "resolution_provenance": "",
@@ -527,13 +606,38 @@
       "statement": "Exact frozen S1 statement",
       "target_id": "PFAR-S1"
     },
+    "OBL-BB293CD31EF1": {
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "reconstruction",
+          "agreement": {},
+          "at": 1786722801.6543279,
+          "evidence_ref": "",
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: GPT TURN 24",
+          "rationale": "Exact S2 statement and its recorded disposition",
+          "to_state": "UNRESOLVED"
+        }
+      ],
+      "id": "OBL-BB293CD31EF1",
+      "kind": "SOURCE",
+      "provenance": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: GPT TURN 24",
+      "raised_by": "reconstruction",
+      "required_by_protocol": true,
+      "resolution_provenance": "",
+      "state": "UNRESOLVED",
+      "statement": "Exact S2 statement and its recorded disposition",
+      "target_id": "PFAR-S2"
+    },
     "OBL-C0BD4B2E2E98": {
       "history": [
         {
           "action": "RAISE",
           "actor": "registration",
           "agreement": {},
-          "at": 1786720108.3718536,
+          "at": 1786722801.6546178,
           "evidence_ref": "",
           "from_state": "",
           "invocation_id": null,
@@ -567,7 +671,7 @@
       "frozen_scope": "NOT_RECOVERED",
       "id": "PFAR-E0",
       "missing_evidence": [
-        "E0 source-corpus freeze contents. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14."
+        "E0 source-corpus freeze contents. NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum."
       ],
       "notes": [
         "E0 is the eligible-evidence set for every Presenting FAR target. Without it no lane can be given equivalent frozen evidence, so blind first passes cannot be executed at all for this line of work."
@@ -597,7 +701,7 @@
       "frozen_scope": "NOT_RECOVERED",
       "id": "PFAR-RC1",
       "missing_evidence": [
-        "RC1 contract text. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14."
+        "RC1 contract text. NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum."
       ],
       "notes": [
         "Verdict: RC1 was not safe to hash/freeze."
@@ -627,7 +731,7 @@
       "frozen_scope": "NOT_RECOVERED",
       "id": "PFAR-RC2",
       "missing_evidence": [
-        "RC2 contract text. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+        "RC2 contract text. NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
         "Turns 18-22 (GAP): whether the five Turn 17 repairs were discharged is not recoverable. Absence of a recorded resolution is not evidence that the turns did not occur."
       ],
       "notes": [
@@ -661,13 +765,12 @@
       "frozen_scope": "SR-B2 v2 (executable), CDE-v1 / FDI1-FDI5 determination structure",
       "id": "PFAR-S1",
       "missing_evidence": [
-        "Exact frozen S1 statement (NOT_RECOVERED)",
-        "CDE-v1 definition (NOT_RECOVERED)",
-        "FDI1-FDI5 determination criteria (NOT_RECOVERED)",
-        "FDI-v1 definition (NOT_RECOVERED)",
-        "SR-B2 v2 executable protocol text (NOT_RECOVERED)",
-        "GPT Turn 34 full wording (GAP)",
-        "Turn 33 final sentence (source truncates mid-sentence)"
+        "Exact frozen S1 statement (still NOT_RECOVERED)",
+        "Exact full CDE-v1 definition (rule partially recovered in v3)",
+        "Exact FDI1-FDI5 clause text; the addendum recovers the five conditions' content but explicitly warns against inventing the phrase-to-label mapping",
+        "Exact SR-B2 v2 protocol text (procedure recovered in v3)",
+        "GPT Turn 34 full wording (adjudication route partially recovered)",
+        "Turn 33 final sentence (source truncates mid-sentence; the addendum recovered no completion)"
       ],
       "notes": [
         "DO NOT RESTART. S1 is internally closed under the then-current frozen protocol per GPT Turn 34. Re-running it would recycle settled work.",
@@ -675,17 +778,88 @@
         "status_basis is RECORDED_TRANSCRIPT_DISPOSITION: this executor did not derive READY and could not, since the frozen protocol is unrecovered."
       ],
       "original_formulation": "NOT_RECOVERED. The exact frozen S1 statement is absent from every searched artifact. Recovered constraints only: S1 specifies a relation whose transitions are all one-rule backward applications, and it requires a completely determined transition relation at the frontier level. It never required a canonical deterministic search strategy.",
-      "provenance": ".far/inbox/presenting-project-far.md: TURN 25, CLAUDE TURN 33, GPT TURN 34",
+      "provenance": ".far/inbox/presenting-project-far.md: TURN 25, CLAUDE TURN 33, GPT TURN 34; .far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: TURNS 25, 32, 34 (RECONSTRUCTED-HIGH)",
       "repository_relationship": "TRANSCRIPT_AHEAD. No S1, SR-B2, CDE-v1, or FDI record exists in the canonical repository. This target has no canonical counterpart.",
       "requires_fresh_blind_pass": true,
-      "source_dependencies": [],
+      "source_dependencies": [
+        "Miller, 'A Survey of the Proof-Theoretic Foundations of Logic Programming', arXiv:2109.01483 (2021). SOURCE-IDENTIFICATION-HIGH candidate for the Turn 33 '1000 choices' / 'proofs are formless' reference. An identification, not transcript wording.",
+        "Liang and Miller, 'Focusing and Polarization in Intuitionistic Logic', arXiv:0708.2252 (2007). SOURCE-IDENTIFICATION-HIGH candidate for 'Liang-Miller member 2' in the retained Turn 34 state. Do not collapse the two without the original candidate ledger: the dialogue may have used them as distinct members of the source set."
+      ],
       "status": "READY_UNDER_INTERNAL_PROTOCOL",
       "status_basis": "RECORDED_TRANSCRIPT_DISPOSITION",
       "supporting_arguments": [
         "Turn 33 (VERBATIM): a highly nondeterministic transition relation is still a completely determined transition relation, so LK search nondeterminism does not bear on what S1 requires.",
         "Turn 33 (VERBATIM): intra-sequent representation (lists/sets/multisets) and frontier representation are distinct analytical levels; the earlier argument merged them.",
-        "Turn 33 (VERBATIM) revised record, replacing the earlier DF-02b wording: 'No eligible source encountered so far has been certified to determine the frozen frontier-level search structure.' Not 'the calculus does not determine search structure.'"
+        "Turn 33 (VERBATIM) revised record, replacing the earlier DF-02b wording: 'No eligible source encountered so far has been certified to determine the frozen frontier-level search structure.' Not 'the calculus does not determine search structure.'",
+        "FDI-v1 (addendum Turn 32): a five-condition frontier-DI certificate for frozen S1, requiring source-defined partial derivations, an open-leaf frontier with its multiplicity/structure, one-step source-induced evolution, and frontier-quotient well-definedness. Partial derivations alone were explicitly insufficient.",
+        "CDE-v1 (addendum Turn 34): canonical definitional expansions from source-defined structure with no free methodological parameters.",
+        "Adjudication route (addendum Turn 34): FDI4 satisfied by DI2; CDE-v1 fixed; Liang-Miller member 2 classified DIRECT under DI1 plus the FDI1-FDI5 structure; c0 survived; S1 adjudicated READY."
       ],
+      "sustained_objections": [],
+      "upheld_objections": [],
+      "withdrawn_objections": []
+    },
+    "PFAR-S2": {
+      "authorized": false,
+      "concessions": [],
+      "confidence_class": "MISSING_TRANSCRIPT_EVIDENCE",
+      "counterexamples": [],
+      "current_formulation": "NOT_RECOVERED.",
+      "defeated_objections": [],
+      "depends_on": [],
+      "formal_obligations": [],
+      "frozen_evidence_paths": [],
+      "frozen_scope": "SR-B2 v2; same determination machinery as S1 (unrecovered).",
+      "id": "PFAR-S2",
+      "missing_evidence": [
+        "Exact S2 statement.",
+        "S2's disposition. The reconstruction records that S1 reached READY and says nothing about S2. Do not infer S2's status from S1's."
+      ],
+      "notes": [
+        "Turn 24 (addendum): if S1 or S2 were non-READY, the E0 shared-content fragments became UNTESTABLE, no substitute domain or fragment was permitted, and the correct outcome was a PRECONDITION STOP / domain-instantiation failure rather than an invented replacement.",
+        "S2's disposition therefore gates the E0 fragments independently of S1."
+      ],
+      "original_formulation": "NOT_RECOVERED. S2 is known only as the second gating S-target named alongside S1 in the addendum's Turn 24 precondition stop.",
+      "provenance": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: GPT TURN 24 (RECONSTRUCTED-HIGH)",
+      "repository_relationship": "TRANSCRIPT_AHEAD; no canonical counterpart.",
+      "requires_fresh_blind_pass": true,
+      "source_dependencies": [],
+      "status": "UNDERDETERMINED",
+      "status_basis": "RECORDED_TRANSCRIPT_DISPOSITION",
+      "supporting_arguments": [],
+      "sustained_objections": [],
+      "upheld_objections": [],
+      "withdrawn_objections": []
+    },
+    "PFAR-S6-S7": {
+      "authorized": false,
+      "concessions": [],
+      "confidence_class": "MISSING_TRANSCRIPT_EVIDENCE",
+      "counterexamples": [],
+      "current_formulation": "NOT_RECOVERED.",
+      "defeated_objections": [],
+      "depends_on": [],
+      "formal_obligations": [],
+      "frozen_evidence_paths": [],
+      "frozen_scope": "NOT_RECOVERED.",
+      "id": "PFAR-S6-S7",
+      "missing_evidence": [
+        "Exact S6 and S7 statements.",
+        "What the S6 -> S7 transition requires.",
+        "Whether S3, S4, and S5 exist and what their dispositions were."
+      ],
+      "notes": [
+        "This is the successor step the Presenting FAR investigation actually recorded as next. It is the first time the reconstruction names one: v1 and v2 could only say the successor queue lived inside T1-T8.",
+        "It remains unexecutable. Naming the next action is not the same as recovering its content, and inventing S6 or S7 is forbidden."
+      ],
+      "original_formulation": "NOT_RECOVERED. Recorded only as the remaining action after the Turn 34 S1 adjudication: 'S6 -> S7'.",
+      "provenance": ".far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: GPT TURN 34 (RECONSTRUCTED-HIGH)",
+      "repository_relationship": "TRANSCRIPT_AHEAD; no canonical counterpart.",
+      "requires_fresh_blind_pass": true,
+      "source_dependencies": [],
+      "status": "SOURCE_REQUIRED",
+      "status_basis": "RECORDED_TRANSCRIPT_DISPOSITION",
+      "supporting_arguments": [],
       "sustained_objections": [],
       "upheld_objections": [],
       "withdrawn_objections": []
@@ -693,32 +867,38 @@
     "PFAR-SRB2": {
       "authorized": false,
       "concessions": [],
-      "confidence_class": "MISSING_TRANSCRIPT_EVIDENCE",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
       "counterexamples": [],
-      "current_formulation": "SR-B2 v2 (executable). NOT_RECOVERED.",
+      "current_formulation": "SR-B2 v2, executable finite search procedure (RECOVERED_PARTIALLY, addendum Turn 26): six fixed queries per OPEN target; ten results per query; up to five NM-v1 near-matches eligible for follow-up; two title/author follow-up queries per near-match; an EXACT/DIRECT positive permits an early positive stop; a negative SOURCE-FAIL requires exhaustion of all prescribed invocations; S1 reruns from query 1 under the repaired protocol. Exact protocol text still unrecovered.",
       "defeated_objections": [],
       "depends_on": [],
       "formal_obligations": [],
       "frozen_evidence_paths": [],
-      "frozen_scope": "NOT_RECOVERED",
+      "frozen_scope": "Two-stage design (addendum Turn 27): broad NM-v1 recall at retrieval, strict K-P1 precision at admissibility.",
       "id": "PFAR-SRB2",
       "missing_evidence": [
-        "SR-B2 v1 and v2 text. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
-        "NM-v1 retrieval definition. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
-        "K-P1 strictness criterion. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
-        "FDI-v1 definition. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14."
+        "Exact SR-B2 v1 and v2 protocol text (procedure recovered, wording not).",
+        "Exact NM-v1 criterion wording (criterion recovered, wording not).",
+        "Exact K-P1 test wording (role recovered, wording not).",
+        "Exact DI1-DI6 clause text.",
+        "The six fixed queries themselves."
       ],
       "notes": [
-        "Recovered protocol facts, definitions absent: broad NM-v1 retrieval retained while K-P1 made strict (Turn 27); all six queries mandatory so selective retrieval cannot silently decide an outcome (Turn 28); 'direct instantiation' means specialization plus source-internal definitional expansion, excluding new primitive structure and cross-source assembly (Turn 23)."
+        "Upgraded in v3 from 'an executable v2 was frozen' to a recoverable finite search procedure, per the recovery addendum."
       ],
-      "original_formulation": "SR-B2 v1: judged infeasible and retired (Turn 26). SR-B2 v2: frozen as executable. Exact text of neither version is recovered.",
-      "provenance": ".far/inbox/presenting-project-far.md: TURNS 23, 26, 27, 28, 32 (RECONSTRUCTED-HIGH)",
+      "original_formulation": "SR-B2 v1: retired as capability-infeasible (Turn 26). Under v1, S1 remained OPEN until a finite retrieval procedure was exhausted; strong negative-looking evidence could not by itself produce SOURCE-FAIL before the registered search completed (Turn 25).",
+      "provenance": ".far/inbox/presenting-project-far.md: TURNS 23, 26, 27, 28, 32 (RECONSTRUCTED-HIGH); .far/inbox/presenting-project-far-recovery-addendum-2026-08-14.md: TURNS 23, 25, 26, 27, 28, 32 (RECONSTRUCTED-HIGH)",
       "repository_relationship": "TRANSCRIPT_AHEAD; no canonical counterpart.",
       "requires_fresh_blind_pass": true,
       "source_dependencies": [],
       "status": "SOURCE_REQUIRED",
       "status_basis": "RECORDED_TRANSCRIPT_DISPOSITION",
-      "supporting_arguments": [],
+      "supporting_arguments": [
+        "NM-v1 (addendum Turn 27): deliberately broad at retrieval — same formal family, structural role, or provenance qualifies a near-match for inspection.",
+        "K-P1 (addendum Turn 27): strict at final eligibility. A focused-LK paper may enter the N1/near-match pool and still fail admissibility.",
+        "Direct instantiation (addendum Turn 23): specialization plus source-internal definitional expansion, bounded by an explicit DI1-DI6 boundary; analyst-supplied primitive structure and cross-source assembly both excluded.",
+        "Exhaustion rule (Turns 26/28): all six queries are mandatory, so selective query execution cannot manufacture a negative source result."
+      ],
       "sustained_objections": [],
       "upheld_objections": [],
       "withdrawn_objections": []
@@ -736,7 +916,7 @@
       "frozen_scope": "NOT_RECOVERED",
       "id": "PFAR-T1-T8",
       "missing_evidence": [
-        "T1-T8 definitions. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+        "T1-T8 definitions. NOT_RECOVERED_IN_REPOSITORY: no occurrence in the repository working tree, in any reachable object across all branches of notfoundout/Project-FAR, or in local session state (searched 2026-08-14). This is a statement about file-based search only; retained conversation state is a separate evidence channel and did yield further content, per the recovery addendum.",
         "Turns 6-11 (GAP), 14 (GAP), 18-22 (GAP), 24 (GAP)"
       ],
       "notes": [

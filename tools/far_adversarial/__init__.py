@@ -22,7 +22,11 @@ from .evidence import EvidenceStore, RunRecord  # noqa: F401
 from .frozen_source import GitFrozenSource, ManifestFrozenSource  # noqa: F401
 from .ledger import Candidate, Dependency, Issue, Ledger, Obligation, Target  # noqa: F401
 from .orchestrator import Orchestrator  # noqa: F401
-from .replay import replay  # noqa: F401
+# Exported under a distinct name on purpose: re-exporting it as ``replay``
+# would rebind the ``far_adversarial.replay`` attribute from the submodule to
+# the function, so ``import far_adversarial.replay`` would hand an auditor a
+# function and hide the module's contents.
+from .replay import replay as replay_recorded_run  # noqa: F401
 
 __all__ = [
     "Candidate",
@@ -36,5 +40,5 @@ __all__ = [
     "Orchestrator",
     "RunRecord",
     "Target",
-    "replay",
+    "replay_recorded_run",
 ]

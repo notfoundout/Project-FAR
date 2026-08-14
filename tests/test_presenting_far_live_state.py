@@ -24,6 +24,8 @@ sys.modules[_spec.name] = build_live_state
 _spec.loader.exec_module(build_live_state)
 
 TRANSCRIPT = ROOT / ".far" / "inbox" / "presenting-project-far.md"
+ADDENDUM = (ROOT / ".far" / "inbox"
+            / "presenting-project-far-recovery-addendum-2026-08-14.md")
 
 
 class TranscriptConfidenceTests(unittest.TestCase):
@@ -43,6 +45,111 @@ class TranscriptConfidenceTests(unittest.TestCase):
     @unittest.skipUnless(TRANSCRIPT.exists(), "transcript reconstruction not present")
     def test_transcript_is_marked_noncanonical(self):
         self.assertIn("NONCANONICAL", TRANSCRIPT.read_text(encoding="utf-8").upper())
+
+    @unittest.skipUnless(ADDENDUM.exists(), "recovery addendum not present")
+    def test_addendum_is_marked_noncanonical_and_not_verbatim(self):
+        text = ADDENDUM.read_text(encoding="utf-8")
+        self.assertIn("NONCANONICAL", text.upper())
+        # The addendum is explicitly not a scrape of the shared conversation.
+        self.assertIn("not** a verbatim scrape", text)
+
+    @unittest.skipUnless(ADDENDUM.exists(), "recovery addendum not present")
+    def test_addendum_forbids_inventing_the_fdi_clause_mapping(self):
+        self.assertIn("do not invent that mapping",
+                      ADDENDUM.read_text(encoding="utf-8"))
+
+
+class AddendumIngestTests(unittest.TestCase):
+    """The v3 successor must carry the newly recovered content, and only it."""
+
+    def setUp(self):
+        self.ledger = build_live_state.build()
+
+    def test_the_state_is_a_declared_successor_version(self):
+        self.assertEqual(self.ledger.meta["research_state_version"], "v3")
+        self.assertIn("preserved unamended", self.ledger.meta["successor_of"])
+
+    def test_the_addendum_is_recorded_as_a_supplementary_source(self):
+        self.assertIn("recovery-addendum", self.ledger.meta["supplementary_source"])
+        self.assertIn("Not a verbatim scrape",
+                      self.ledger.meta["supplementary_source_class"])
+
+    def test_sr_b2_v2_carries_the_recovered_finite_procedure(self):
+        current = self.ledger.targets["PFAR-SRB2"].current_formulation
+        for fragment in ("six fixed queries", "ten results per query",
+                         "five NM-v1 near-matches", "early positive stop",
+                         "exhaustion of all prescribed invocations"):
+            self.assertIn(fragment, current)
+
+    def test_nm_v1_and_k_p1_record_the_two_stage_design(self):
+        supporting = " ".join(self.ledger.targets["PFAR-SRB2"].supporting_arguments)
+        self.assertIn("deliberately broad at retrieval", supporting)
+        self.assertIn("strict at final eligibility", supporting)
+        self.assertIn("DI1-DI6", supporting)
+
+    def test_fdi_v1_and_cde_v1_are_recorded_without_inventing_clause_labels(self):
+        supporting = " ".join(self.ledger.targets["PFAR-S1"].supporting_arguments)
+        self.assertIn("five-condition frontier-DI certificate", supporting)
+        self.assertIn("no free methodological parameters", supporting)
+        # FDI4 is the only clause label the addendum actually pins.
+        self.assertIn("FDI4 satisfied by DI2", supporting)
+        missing = " ".join(self.ledger.targets["PFAR-S1"].missing_evidence)
+        self.assertIn("warns against inventing", missing)
+
+    def test_turn_34_adjudication_route_is_recorded(self):
+        supporting = " ".join(self.ledger.targets["PFAR-S1"].supporting_arguments)
+        self.assertIn("Liang-Miller member 2 classified DIRECT", supporting)
+        self.assertIn("c0 survived", supporting)
+
+    def test_both_candidate_sources_are_kept_distinct(self):
+        deps = self.ledger.targets["PFAR-S1"].source_dependencies
+        self.assertEqual(len(deps), 2)
+        joined = " ".join(deps)
+        self.assertIn("arXiv:2109.01483", joined)
+        self.assertIn("arXiv:0708.2252", joined)
+        self.assertIn("Do not collapse the two", joined)
+        self.assertIn("SOURCE-IDENTIFICATION-HIGH", joined)
+
+    def test_turn_24_reveals_s2_as_a_second_gating_target(self):
+        s2 = self.ledger.targets["PFAR-S2"]
+        self.assertEqual(s2.status, L.UNDERDETERMINED)
+        self.assertFalse(s2.authorized)
+        notes = " ".join(s2.notes)
+        self.assertIn("PRECONDITION STOP", notes)
+        self.assertIn("UNTESTABLE", notes)
+
+    def test_s2_status_is_not_inferred_from_s1(self):
+        missing = " ".join(self.ledger.targets["PFAR-S2"].missing_evidence)
+        self.assertIn("Do not infer S2's status from S1's", missing)
+        self.assertNotEqual(self.ledger.targets["PFAR-S2"].status,
+                            self.ledger.targets["PFAR-S1"].status)
+
+    def test_the_recorded_next_action_is_named_but_not_executable(self):
+        target = self.ledger.targets["PFAR-S6-S7"]
+        self.assertEqual(target.status, L.SOURCE_REQUIRED)
+        self.assertFalse(target.authorized)
+        self.assertTrue(self.ledger.blocking_obligations_for("PFAR-S6-S7"))
+        self.assertIn("inventing S6 or S7 is forbidden", " ".join(target.notes))
+
+    def test_the_not_recovered_claim_is_narrowed_to_repository_scope(self):
+        # v1 claimed no occurrence anywhere; that held only for file search.
+        note = build_live_state.NOT_RECOVERED_NOTE
+        self.assertIn("NOT_RECOVERED_IN_REPOSITORY", note)
+        self.assertIn("file-based search only", note)
+        self.assertIn("retained conversation state is a separate evidence", note)
+
+    def test_turn_33_verbatim_content_is_unchanged_by_the_addendum(self):
+        supporting = " ".join(self.ledger.targets["PFAR-S1"].supporting_arguments)
+        self.assertIn("still a completely determined transition relation", supporting)
+        self.assertIn("No eligible source encountered so far has been certified",
+                      supporting)
+        missing = " ".join(self.ledger.targets["PFAR-S1"].missing_evidence)
+        self.assertIn("addendum \nrecovered no completion".replace("\n", ""), missing)
+
+    def test_recovering_more_protocol_does_not_authorize_any_presenting_far_target(self):
+        for tid, target in self.ledger.targets.items():
+            if tid.startswith("PFAR-"):
+                self.assertFalse(target.authorized, tid)
 
 
 class LiveStateTests(unittest.TestCase):
