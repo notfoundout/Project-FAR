@@ -136,6 +136,26 @@ class PathExemptionTests(unittest.TestCase):
     def test_path_exemption_reported_before_digest_lookup(self):
         self.assertEqual(m.exemption_reason('archive/x.md', b'x', set()), 'path')
 
+    def test_bounded_v1_closure_campaign_root_is_exempt_but_not_all_of_docs_audits(self):
+        """#451's adjudicated immutable campaign evidence: exempt by path, exactly."""
+        self.assertTrue(m.is_path_exempt(
+            'docs/audits/bounded-v1-closure-campaign/lane-a-first-pass.txt'))
+        self.assertTrue(m.is_path_exempt(
+            'docs/audits/bounded-v1-closure-campaign/cross-audit-adjudication-full.txt'))
+        self.assertFalse(m.is_path_exempt('docs/audits/some-other-audit.md'))
+        self.assertFalse(m.is_path_exempt(
+            'docs/audits/bounded-v1-closure-campaign-similar-name/x.txt'))
+
+    def test_unterminated_campaign_file_is_a_violation_yet_exempt_and_unrepaired(self):
+        """The end-to-end guarantee for #451's evidence root: a hypothetical
+        protected campaign file missing its final newline is a violation in
+        isolation, but main() checks exemption_reason() before is_violation()
+        (see the loop in main()), so it is reported exempt rather than fixed."""
+        unterminated = b'campaign evidence with no trailing newline'
+        path = 'docs/audits/bounded-v1-closure-campaign/hypothetical-lane-d.txt'
+        self.assertTrue(m.is_violation(unterminated))
+        self.assertEqual(m.exemption_reason(path, unterminated, set()), 'path')
+
 
 if __name__ == '__main__':
     unittest.main()

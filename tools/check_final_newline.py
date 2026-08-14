@@ -34,7 +34,10 @@ from common_health import ROOT, SKIP_DIRS, rel
 ELIGIBLE_SUFFIXES = {'.cff', '.html', '.js', '.json', '.lean', '.md', '.py', '.sh', '.toml', '.txt', '.yaml', '.yml'}
 
 # Generated output, historical archives, and byte-exact fixture corpora.
-EXEMPT_ROOTS = ('archive/', 'artifacts/', 'conformance/', 'exports/', 'tests/fixtures/')
+# docs/audits/bounded-v1-closure-campaign/ is the #451-adjudicated immutable
+# campaign evidence root; only that exact root is exempt, not all of docs/audits/.
+EXEMPT_ROOTS = ('archive/', 'artifacts/', 'conformance/', 'exports/', 'tests/fixtures/',
+                 'docs/audits/bounded-v1-closure-campaign/')
 
 DIGEST_RE = re.compile(rb'[0-9a-fA-F]{64}|[0-9a-fA-F]{40}')
 DIGEST_SCAN_MAX_BYTES = 8_000_000
