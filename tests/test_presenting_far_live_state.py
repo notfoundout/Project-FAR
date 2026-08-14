@@ -286,6 +286,70 @@ class LiveStateTests(unittest.TestCase):
         self.assertEqual(self.ledger.digest(), other.digest())
 
 
+class AuthorityConflictTests(unittest.TestCase):
+    """The conflict between README/central-program and project-status is real.
+
+    This executor's earlier delta asserted no authority conflict existed. It was
+    wrong. These tests check the conflict against the files directly, so the
+    finding cannot be dropped by editing the delta prose alone, and so it fails
+    loudly if the underlying repository surfaces are ever reconciled.
+    """
+
+    DEFECT_MARKERS = ("FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED", "bounded-v1",
+                      "XA-001", "UPP-SR-001", "OP-22")
+
+    def _text(self, relative):
+        path = ROOT / relative
+        if not path.exists():
+            self.skipTest(f"{relative} not present")
+        return path.read_text(encoding="utf-8")
+
+    def test_project_status_records_the_defect_finding(self):
+        status = self._text("docs/project-status.md")
+        self.assertIn("FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED", status)
+        self.assertIn("defective", status)
+
+    def test_readme_presents_the_result_as_proved(self):
+        self.assertIn("theorem_proved_with_complete_dependency_audit",
+                      self._text("README.md"))
+
+    def test_readme_does_not_disclose_the_defect_finding(self):
+        # If this ever fails, the conflict has been repaired upstream and
+        # REPO-AUTHORITY-CONFLICT-001 should be re-adjudicated, not deleted.
+        readme = self._text("README.md")
+        for marker in self.DEFECT_MARKERS:
+            self.assertNotIn(marker, readme, f"README now mentions {marker}")
+
+    def test_central_research_program_does_not_disclose_the_defect_finding(self):
+        program = self._text("docs/governance/central-research-program.md")
+        for marker in self.DEFECT_MARKERS:
+            self.assertNotIn(marker, program, f"central program now mentions {marker}")
+
+    def test_the_conflict_is_registered_and_not_silently_resolved(self):
+        ledger = build_live_state.build()
+        target = ledger.targets["REPO-AUTHORITY-CONFLICT-001"]
+        self.assertEqual(target.status, L.GOVERNANCE_DECISION_REQUIRED)
+        self.assertEqual(target.repository_relationship, "CONFLICT")
+        self.assertFalse(target.authorized)
+        notes = " ".join(target.notes)
+        self.assertIn("surface, not to choose", notes)
+        self.assertIn("separate governance authorization", notes)
+
+    def test_the_conflict_is_not_treated_as_an_executable_target(self):
+        # A governance decision is not something the relay can adjudicate.
+        ledger = build_live_state.build()
+        with self.assertRaises(PermissionError):
+            ledger.select_target("REPO-AUTHORITY-CONFLICT-001")
+        self.assertNotEqual(ledger.next_target().id, "REPO-AUTHORITY-CONFLICT-001")
+
+    def test_the_delta_withdraws_its_earlier_no_conflict_claim(self):
+        delta = self._text(".far/research/presenting-far/repo-research-delta.md")
+        self.assertIn("AUTHORITY_CONFLICT (recorded 2026-08-14)", delta)
+        self.assertIn("That was wrong", delta)
+        self.assertIn("README.md:14-16", delta)
+        self.assertIn("project-status.md:31-37", delta)
+
+
 class CalibrationImmutabilityTests(unittest.TestCase):
     """Regression for audit finding 12: v1 and its MISS must not be softened."""
 

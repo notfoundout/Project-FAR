@@ -48,8 +48,55 @@ The two lines do differ in framing, and that difference is itself recoverable:
 | Frozen source | `f6645a77f3b0af0b12897fa9bc2c329cdb345261`. | `𝔈₀` — `NOT_RECOVERED`. |
 | Targets | `SR-W0`–`SR-W8`. | `T1`–`T8`, `S1` — all `NOT_RECOVERED` except `S1`'s disposition history. |
 
-**No `AUTHORITY_CONFLICT` was found** between canonical authority surfaces: none
-of them contradicts another on a current-state claim.
+## AUTHORITY_CONFLICT (recorded 2026-08-14)
+
+An earlier version of this document stated that no `AUTHORITY_CONFLICT` was
+found between canonical authority surfaces. **That was wrong**, and the claim is
+withdrawn. A conflict exists and is recorded here rather than resolved, per
+`AGENTS.md` §4 and `CLAUDE.md` §Authority: surface the conflict, do not silently
+choose by recency or convenience, and do not rewrite it away.
+
+`docs/project-status.md` §"Current authority navigation" ranks the surfaces:
+`README.md` is #1, `project-status.md` is #2. Both are current authority. They
+disagree about the standing of the central result.
+
+| Surface | What it says | Location |
+|---|---|---|
+| `README.md` | "The registered Universal Proof Program `POST-TUE-UPP-001` is complete. Its terminal adjudication is: `strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary`." No mention of the later defect finding. | `README.md:14-16` |
+| `docs/governance/central-research-program.md` | "`POST-TUE-UPP-001` completed registered workstreams PR #281 through PR #296. The terminal result is: `…theorem_proved_with_complete_dependency_audit…`." No mention of the later defect finding. | `central-research-program.md:19-21` |
+| `docs/project-status.md` | Adjudicated 2026-08-13: `FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED`. "the frozen registered derivation was found **defective** over part of its stated domain (`XA-001`–`XA-005`…)". Registers `UPP-SR-001`/`OP-22` as the successor repair. | `project-status.md:31-37` |
+
+Mechanical check: `FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED`, `bounded-v1`,
+`XA-00*`, `UPP-SR-001`, and `OP-22` each occur **zero** times in `README.md` and
+zero times in `central-research-program.md`. They occur in `project-status.md`,
+`open-problems-register.md`, `claim-status-matrix.md`,
+`theorem-proof-status-register.md`, and `limitations-register.md`.
+
+`project-status.md` is explicit that the terminal adjudication string "remains
+the historical record for the frozen source; it is not silently rewritten." So
+the two surfaces are not straightforwardly contradictory *about the frozen
+record*. The conflict is about **presentation of current standing**: a reader
+who stops at the higher-ranked surface (`README.md`) is told a theorem is proved
+with a complete dependency audit, and is not told that a later dated authority
+classifies that derivation as defective over part of its domain and has
+registered a repair program for it.
+
+**Affected inference, now stopped:** any claim that the repository's
+current-authority surfaces agree on the standing of `POST-TUE-UPP-001`. That
+claim is unresolved until governance rules on it.
+
+**Not resolved here, deliberately.** Repairing `README.md` or
+`central-research-program.md` would be a canonical documentation change, which
+this noncanonical work is not authorized to make and which the charter forbids
+choosing unilaterally. Registered in the live ledger as
+`REPO-AUTHORITY-CONFLICT-001`, status `GOVERNANCE_DECISION_REQUIRED`,
+unauthorized for autonomous execution.
+
+**Provenance of the finding.** Surfaced by an independent parallel
+reconstruction of this same investigation and verified here against the files
+directly. This delta's own earlier "no conflict" claim was the defect.
+
+## Authority-surface agreement elsewhere
 
 **No canonical contradiction or supersession is currently established** by the
 reconstruction either. That is a statement about what the recovered evidence

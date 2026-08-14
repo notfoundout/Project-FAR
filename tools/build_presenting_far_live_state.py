@@ -20,6 +20,7 @@ from far_adversarial.ledger import (  # noqa: E402
     CONCEDE,
     Dependency,
     EXACT_TRANSCRIPT_EVIDENCE,
+    GOVERNANCE_DECISION_REQUIRED,
     Ledger,
     MISSING_TRANSCRIPT_EVIDENCE,
     OBLIGATION_FORMAL,
@@ -575,6 +576,56 @@ def build() -> Ledger:
         ),
         raised_by="registration",
         provenance="docs/research/upp-successor-repair-program-v1.0.md",
+    )
+
+    # -- registered governance conflict -----------------------------------
+    # Recorded, not resolved. Repairing the higher-ranked surface would be a
+    # canonical documentation change this noncanonical work cannot authorize,
+    # and the charter forbids choosing between conflicting authorities.
+    ledger.add_target(
+        Target(
+            id="REPO-AUTHORITY-CONFLICT-001",
+            original_formulation=(
+                "README.md:14-16 and docs/governance/central-research-program.md:19-21 "
+                "present POST-TUE-UPP-001's terminal adjudication as a theorem proved "
+                "with a complete dependency audit, with no mention of the 2026-08-13 "
+                "bounded-v1 finding. docs/project-status.md:31-37 records that same "
+                "derivation as FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED and defective "
+                "over part of its stated domain (XA-001-XA-005), and registers "
+                "UPP-SR-001/OP-22 as the successor repair. All three are current "
+                "authority surfaces; README.md outranks project-status.md in the "
+                "navigation order project-status.md itself declares."
+            ),
+            current_formulation=(
+                "Unresolved. The affected inference — that the current-authority "
+                "surfaces agree on the standing of POST-TUE-UPP-001 — is stopped."
+            ),
+            frozen_scope=(
+                "Presentation of current standing, not the frozen historical record. "
+                "project-status.md is explicit that the terminal adjudication string "
+                "is not silently rewritten."
+            ),
+            status=GOVERNANCE_DECISION_REQUIRED,
+            status_basis=STATUS_DERIVED,
+            confidence_class=RECONSTRUCTED_RESEARCH_STATE,
+            provenance=(
+                "README.md:14-16; docs/governance/central-research-program.md:19-21; "
+                "docs/project-status.md:31-37. Surfaced by an independent parallel "
+                "reconstruction and verified directly against the files."
+            ),
+            repository_relationship="CONFLICT",
+            authorized=False,
+            notes=[
+                "Charter action is to surface, not to choose: AGENTS.md section 4 and "
+                "CLAUDE.md Authority both forbid silently resolving a conflict between "
+                "current-authority surfaces.",
+                "Repair requires separate governance authorization. It is a canonical "
+                "documentation change and is out of scope for noncanonical research "
+                "state.",
+                "This executor's own earlier delta asserted no authority conflict "
+                "existed. That assertion was the defect and is withdrawn.",
+            ],
+        )
     )
 
     ledger.add_target(
