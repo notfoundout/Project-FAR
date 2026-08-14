@@ -1,0 +1,21 @@
+{
+  "notes": [
+    "Run 3 (graded). Run 1: EXECUTION_FAILURE, claude CLI turn budget too low. Run 2: leakage detected \u2014 the lane had filesystem access and read the recorded Turn 33 answer plus the marker list; not scorable as blind, recorded as a harness defect not a pass. Run 3: lane sandboxed (all tools denied, cwd outside the repository).",
+    "Acceptance criteria were never revised: the preregistration digest is identical across runs 1-3.",
+    "Single-lane calibration only: LIVE_GPT_BLOCKED: OPENAI_CREDENTIALS_REQUIRED."
+  ],
+  "preregistration_digest": "6e03129580bbd98bd5010819da3c5405a4e7e91c56f059b2af6066e833651374",
+  "results": [
+    {
+      "case_id": "CAL-DI3-S1",
+      "execution_failure": null,
+      "fired_failure_markers": [],
+      "invocation_id": "c974ba570cd54f0b8512ec3b953a13d3",
+      "missed_groups": [
+        1
+      ],
+      "passed": false
+    }
+  ],
+  "version": "far-adversarial-calibration/1"
+}

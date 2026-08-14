@@ -1,0 +1,690 @@
+{
+  "issues": {
+    "ISS-102F9B0FCCD2": {
+      "claim": "S7 requires an outcome-independent rationale.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.0029452,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH)",
+          "rationale": "S7 requires an outcome-independent rationale.",
+          "to_state": "OPEN"
+        }
+      ],
+      "id": "ISS-102F9B0FCCD2",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "OPEN",
+      "superseded_by": null,
+      "target_id": "PFAR-RC2"
+    },
+    "ISS-18E95054D155": {
+      "claim": "DI3: LK has no canonical deterministic search strategy (Miller: '1000 choices', 'proofs are formless'), therefore the calculus does not determine search structure, therefore S1 must stay OPEN.",
+      "confidence_class": "EXACT_TRANSCRIPT_EVIDENCE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "claude",
+          "agreement": {},
+          "at": 1786717280.0027337,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: TURNS 25, 28, 31, 32; withdrawn in CLAUDE TURN 33",
+          "rationale": "DI3: LK has no canonical deterministic search strategy (Miller: '1000 choices', 'proofs are formless'), therefore the calculus does not determine search structure, therefore S1 must stay OPEN.",
+          "to_state": "OPEN"
+        },
+        {
+          "action": "SUSTAIN",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.002748,
+          "from_state": "OPEN",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 33 reporting GPT §3",
+          "rationale": "GPT ran the counter-argument in its Turn 33 §3 correction: the frozen target never required a canonical deterministic strategy.",
+          "to_state": "SUSTAINED"
+        },
+        {
+          "action": "WITHDRAW",
+          "actor": "claude",
+          "agreement": {
+            "claude": "concede",
+            "gpt": "sustain",
+            "note": "agreement is metadata; the argument decided this"
+          },
+          "at": 1786717280.0027533,
+          "from_state": "SUSTAINED",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 33 (VERBATIM-RECOVERED)",
+          "rationale": "VERBATIM (Turn 33): 'A highly nondeterministic transition relation is still a completely determined transition relation. My DI3 argument, run across Turns 25, 28, 31, and 32, conflated the two.' DI3 is withdrawn as a valid reason to keep S1 open and must never be re-run.",
+          "to_state": "WITHDRAWN"
+        }
+      ],
+      "id": "ISS-18E95054D155",
+      "provenance": ".far/inbox/presenting-project-far.md: TURNS 25, 28, 31, 32; withdrawn in CLAUDE TURN 33",
+      "raised_by": "claude",
+      "state": "WITHDRAWN",
+      "superseded_by": null,
+      "target_id": "PFAR-S1"
+    },
+    "ISS-210E4DC7B71D": {
+      "claim": "Variation in intra-sequent representation (lists/sets/multisets of formulas) was merged with frontier-level representation; they are distinct analytical levels.",
+      "confidence_class": "EXACT_TRANSCRIPT_EVIDENCE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.0027823,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 33 §4 (VERBATIM-RECOVERED)",
+          "rationale": "Variation in intra-sequent representation (lists/sets/multisets of formulas) was merged with frontier-level representation; they are distinct analytical levels.",
+          "to_state": "OPEN"
+        },
+        {
+          "action": "CONCEDE",
+          "actor": "claude",
+          "agreement": {},
+          "at": 1786717280.0027857,
+          "from_state": "OPEN",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 33 (VERBATIM-RECOVERED)",
+          "rationale": "VERBATIM (Turn 33): 'Also accepted: §4 ... and I merged them.'",
+          "to_state": "CONCEDED"
+        }
+      ],
+      "id": "ISS-210E4DC7B71D",
+      "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 33 §4 (VERBATIM-RECOVERED)",
+      "raised_by": "gpt",
+      "state": "CONCEDED",
+      "superseded_by": null,
+      "target_id": "PFAR-S1"
+    },
+    "ISS-24D4506B1266": {
+      "claim": "S7 requires paired concrete/abstract transfer maps and correctly typed native structure.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.002937,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH)",
+          "rationale": "S7 requires paired concrete/abstract transfer maps and correctly typed native structure.",
+          "to_state": "OPEN"
+        }
+      ],
+      "id": "ISS-24D4506B1266",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "OPEN",
+      "superseded_by": null,
+      "target_id": "PFAR-RC2"
+    },
+    "ISS-4B8B70D5C823": {
+      "claim": "RC1 S11 discrete-gradient conflicts with C3.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.002885,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+          "rationale": "RC1 S11 discrete-gradient conflicts with C3.",
+          "to_state": "OPEN"
+        },
+        {
+          "action": "CONCEDE",
+          "actor": "claude",
+          "agreement": {},
+          "at": 1786717280.0028875,
+          "from_state": "OPEN",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 16 (GAP for exact wording)",
+          "rationale": "Claude Turn 16 produced RC2 instead of freezing RC1.",
+          "to_state": "CONCEDED"
+        }
+      ],
+      "id": "ISS-4B8B70D5C823",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "CONCEDED",
+      "superseded_by": null,
+      "target_id": "PFAR-RC1"
+    },
+    "ISS-5BF796DE238D": {
+      "claim": "RC1 interpretation grammar is undefined.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.0028446,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+          "rationale": "RC1 interpretation grammar is undefined.",
+          "to_state": "OPEN"
+        },
+        {
+          "action": "CONCEDE",
+          "actor": "claude",
+          "agreement": {},
+          "at": 1786717280.0028467,
+          "from_state": "OPEN",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 16 (GAP for exact wording)",
+          "rationale": "Claude Turn 16 produced RC2 instead of freezing RC1.",
+          "to_state": "CONCEDED"
+        }
+      ],
+      "id": "ISS-5BF796DE238D",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "CONCEDED",
+      "superseded_by": null,
+      "target_id": "PFAR-RC1"
+    },
+    "ISS-66FCA46D65FF": {
+      "claim": "S2 requires an explicit constraint/propagator association.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.0029187,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH)",
+          "rationale": "S2 requires an explicit constraint/propagator association.",
+          "to_state": "OPEN"
+        }
+      ],
+      "id": "ISS-66FCA46D65FF",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "OPEN",
+      "superseded_by": null,
+      "target_id": "PFAR-RC2"
+    },
+    "ISS-96FFC627CA51": {
+      "claim": "RC1 leaks its frame.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.002902,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+          "rationale": "RC1 leaks its frame.",
+          "to_state": "OPEN"
+        },
+        {
+          "action": "CONCEDE",
+          "actor": "claude",
+          "agreement": {},
+          "at": 1786717280.0029037,
+          "from_state": "OPEN",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 16 (GAP for exact wording)",
+          "rationale": "Claude Turn 16 produced RC2 instead of freezing RC1.",
+          "to_state": "CONCEDED"
+        }
+      ],
+      "id": "ISS-96FFC627CA51",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "CONCEDED",
+      "superseded_by": null,
+      "target_id": "PFAR-RC1"
+    },
+    "ISS-B0983F459D2D": {
+      "claim": "G2/G3 must be standard finite-tuple first-order with no parameters.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.0029576,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH)",
+          "rationale": "G2/G3 must be standard finite-tuple first-order with no parameters.",
+          "to_state": "OPEN"
+        }
+      ],
+      "id": "ISS-B0983F459D2D",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "OPEN",
+      "superseded_by": null,
+      "target_id": "PFAR-RC2"
+    },
+    "ISS-B55257943EF3": {
+      "claim": "An explicit determination invariant is required: a = a' implies S_{i,a} = S_{i,a'}.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.0029693,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH)",
+          "rationale": "An explicit determination invariant is required: a = a' implies S_{i,a} = S_{i,a'}.",
+          "to_state": "OPEN"
+        }
+      ],
+      "id": "ISS-B55257943EF3",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "OPEN",
+      "superseded_by": null,
+      "target_id": "PFAR-RC2"
+    },
+    "ISS-CAA57FC56063": {
+      "claim": "RC1 instance-class quantification is unspecified.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.002832,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+          "rationale": "RC1 instance-class quantification is unspecified.",
+          "to_state": "OPEN"
+        },
+        {
+          "action": "CONCEDE",
+          "actor": "claude",
+          "agreement": {},
+          "at": 1786717280.0028353,
+          "from_state": "OPEN",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 16 (GAP for exact wording)",
+          "rationale": "Claude Turn 16 produced RC2 instead of freezing RC1.",
+          "to_state": "CONCEDED"
+        }
+      ],
+      "id": "ISS-CAA57FC56063",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "CONCEDED",
+      "superseded_by": null,
+      "target_id": "PFAR-RC1"
+    },
+    "ISS-EE7946D83D90": {
+      "claim": "RC1 c0 calibration status is dialogue-derived.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.002865,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+          "rationale": "RC1 c0 calibration status is dialogue-derived.",
+          "to_state": "OPEN"
+        },
+        {
+          "action": "CONCEDE",
+          "actor": "claude",
+          "agreement": {},
+          "at": 1786717280.00287,
+          "from_state": "OPEN",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 16 (GAP for exact wording)",
+          "rationale": "Claude Turn 16 produced RC2 instead of freezing RC1.",
+          "to_state": "CONCEDED"
+        }
+      ],
+      "id": "ISS-EE7946D83D90",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "CONCEDED",
+      "superseded_by": null,
+      "target_id": "PFAR-RC1"
+    },
+    "ISS-F1018A46C15F": {
+      "claim": "DF-02b as originally worded ('the calculus does not determine search structure') overstates the negative source finding.",
+      "confidence_class": "EXACT_TRANSCRIPT_EVIDENCE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.002804,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 33 (VERBATIM-RECOVERED)",
+          "rationale": "DF-02b as originally worded ('the calculus does not determine search structure') overstates the negative source finding.",
+          "to_state": "OPEN"
+        },
+        {
+          "action": "CONCEDE",
+          "actor": "claude",
+          "agreement": {},
+          "at": 1786717280.0028064,
+          "from_state": "OPEN",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 33 (VERBATIM-RECOVERED)",
+          "rationale": "VERBATIM (Turn 33) revised record: 'No eligible source encountered so far has been certified to determine the frozen frontier-level search structure.' Not 'the calculus does not determine search structure.'",
+          "to_state": "CONCEDED"
+        }
+      ],
+      "id": "ISS-F1018A46C15F",
+      "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 33 (VERBATIM-RECOVERED)",
+      "raised_by": "gpt",
+      "state": "CONCEDED",
+      "superseded_by": null,
+      "target_id": "PFAR-S1"
+    },
+    "ISS-FF80F3CE5C02": {
+      "claim": "RC1 lexical exclusion is RCCD-driven.",
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "history": [
+        {
+          "action": "RAISE",
+          "actor": "gpt",
+          "agreement": {},
+          "at": 1786717280.0028546,
+          "from_state": "",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+          "rationale": "RC1 lexical exclusion is RCCD-driven.",
+          "to_state": "OPEN"
+        },
+        {
+          "action": "CONCEDE",
+          "actor": "claude",
+          "agreement": {},
+          "at": 1786717280.0028567,
+          "from_state": "OPEN",
+          "invocation_id": null,
+          "provenance": ".far/inbox/presenting-project-far.md: CLAUDE TURN 16 (GAP for exact wording)",
+          "rationale": "Claude Turn 16 produced RC2 instead of freezing RC1.",
+          "to_state": "CONCEDED"
+        }
+      ],
+      "id": "ISS-FF80F3CE5C02",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+      "raised_by": "gpt",
+      "state": "CONCEDED",
+      "superseded_by": null,
+      "target_id": "PFAR-RC1"
+    }
+  },
+  "meta": {
+    "investigation": "Presenting Project FAR (Claude<->GPT adversarial), 2026-08-14",
+    "not_acceptance": "READY_UNDER_INTERNAL_PROTOCOL is an internal research disposition under a frozen protocol. It is not Project FAR Acceptance or Promotion, and it confers no canonical authority.",
+    "primary_source": ".far/inbox/presenting-project-far.md",
+    "research_question": "Discover the minimal architecture of reasoning without inserting Project FAR / RCCD into the premises.",
+    "schema": "far-adversarial-ledger/1",
+    "source_class": "NONCANONICAL / INCOMPLETE RECONSTRUCTION",
+    "status": "NONCANONICAL LIVE RESEARCH STATE"
+  },
+  "targets": {
+    "PFAR-E0": {
+      "authorized": false,
+      "concessions": [],
+      "confidence_class": "MISSING_TRANSCRIPT_EVIDENCE",
+      "counterexamples": [],
+      "current_formulation": "NOT_RECOVERED.",
+      "defeated_objections": [],
+      "depends_on": [],
+      "formal_obligations": [],
+      "frozen_scope": "NOT_RECOVERED",
+      "id": "PFAR-E0",
+      "missing_evidence": [
+        "E0 source-corpus freeze contents. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14."
+      ],
+      "notes": [
+        "E0 is the eligible-evidence set for every Presenting FAR target. Without it no lane can be given equivalent frozen evidence, so blind first passes cannot be executed at all for this line of work."
+      ],
+      "original_formulation": "NOT_RECOVERED. Turn 13 fixed the immediate sequence: freeze E0, native extraction, witnesses, joint profiles, common theory, frame/prior-art comparison, and only then minimality.",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 13 (RECONSTRUCTED-HIGH)",
+      "repository_relationship": "TRANSCRIPT_AHEAD; no canonical counterpart.",
+      "source_dependencies": [],
+      "status": "SOURCE_REQUIRED",
+      "supporting_arguments": [],
+      "sustained_objections": [],
+      "withdrawn_objections": []
+    },
+    "PFAR-RC1": {
+      "authorized": false,
+      "concessions": [],
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "counterexamples": [],
+      "current_formulation": "Superseded by RC2; not re-freezable as written.",
+      "defeated_objections": [],
+      "depends_on": [],
+      "formal_obligations": [],
+      "frozen_scope": "NOT_RECOVERED",
+      "id": "PFAR-RC1",
+      "missing_evidence": [
+        "RC1 contract text. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14."
+      ],
+      "notes": [
+        "Verdict: RC1 was not safe to hash/freeze."
+      ],
+      "original_formulation": "NOT_RECOVERED (RC1 research contract text).",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 15 (RECONSTRUCTED-HIGH)",
+      "repository_relationship": "TRANSCRIPT_AHEAD; no canonical counterpart.",
+      "source_dependencies": [],
+      "status": "REFUTED",
+      "supporting_arguments": [],
+      "sustained_objections": [],
+      "withdrawn_objections": []
+    },
+    "PFAR-RC2": {
+      "authorized": false,
+      "concessions": [],
+      "confidence_class": "MISSING_TRANSCRIPT_EVIDENCE",
+      "counterexamples": [],
+      "current_formulation": "NOT_RECOVERED. Turn 17 verdict: still not safe to hash, pending five repairs.",
+      "defeated_objections": [],
+      "depends_on": [],
+      "formal_obligations": [],
+      "frozen_scope": "NOT_RECOVERED",
+      "id": "PFAR-RC2",
+      "missing_evidence": [
+        "RC2 contract text. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+        "Turns 18-22 (GAP): whether the five Turn 17 repairs were discharged is not recoverable. Absence of a recorded resolution is not evidence that the turns did not occur."
+      ],
+      "notes": [
+        "Do not infer from the GAP that RC2 remained unrepaired; equally, do not infer that it was repaired."
+      ],
+      "original_formulation": "NOT_RECOVERED (RC2 research contract text; Turn 16 GAP).",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 17 (RECONSTRUCTED-HIGH); TURNS 18-22 GAP",
+      "repository_relationship": "TRANSCRIPT_AHEAD; no canonical counterpart.",
+      "source_dependencies": [],
+      "status": "UNDERDETERMINED",
+      "supporting_arguments": [],
+      "sustained_objections": [],
+      "withdrawn_objections": []
+    },
+    "PFAR-S1": {
+      "authorized": false,
+      "concessions": [
+        "ISS-210E4DC7B71D"
+      ],
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "counterexamples": [],
+      "current_formulation": "NOT_RECOVERED (same as original; no revision to the S1 text itself is recorded in the reconstruction). The adjudication record moved, the target text did not.",
+      "defeated_objections": [
+        "ISS-18E95054D155"
+      ],
+      "depends_on": [],
+      "formal_obligations": [],
+      "frozen_scope": "SR-B2 v2 (executable), CDE-v1 / FDI1-FDI5 determination structure",
+      "id": "PFAR-S1",
+      "missing_evidence": [
+        "Exact frozen S1 statement (NOT_RECOVERED)",
+        "CDE-v1 definition (NOT_RECOVERED)",
+        "FDI1-FDI5 determination criteria (NOT_RECOVERED)",
+        "FDI-v1 definition (NOT_RECOVERED)",
+        "SR-B2 v2 executable protocol text (NOT_RECOVERED)",
+        "GPT Turn 34 full wording (GAP)",
+        "Turn 33 final sentence (source truncates mid-sentence)"
+      ],
+      "notes": [
+        "DO NOT RESTART. S1 is internally closed under the then-current frozen protocol per GPT Turn 34. Re-running it would recycle settled work.",
+        "READY here is the internal protocol disposition only. It is not Acceptance and has no canonical standing."
+      ],
+      "original_formulation": "NOT_RECOVERED. The exact frozen S1 statement is absent from every searched artifact. Recovered constraints only: S1 specifies a relation whose transitions are all one-rule backward applications, and it requires a completely determined transition relation at the frontier level. It never required a canonical deterministic search strategy.",
+      "provenance": ".far/inbox/presenting-project-far.md: TURN 25, CLAUDE TURN 33, GPT TURN 34",
+      "repository_relationship": "TRANSCRIPT_AHEAD. No S1, SR-B2, CDE-v1, or FDI record exists in the canonical repository. This target has no canonical counterpart.",
+      "source_dependencies": [
+        "Miller, sequent calculus / LK proof search ('1000 choices', 'proofs are formless') - cited in Turn 33, artifact NOT_RECOVERED"
+      ],
+      "status": "READY_UNDER_INTERNAL_PROTOCOL",
+      "supporting_arguments": [
+        "Turn 33 (VERBATIM): a highly nondeterministic transition relation is still a completely determined transition relation, so LK search nondeterminism does not bear on what S1 requires.",
+        "Turn 33 (VERBATIM): intra-sequent representation (lists/sets/multisets) and frontier representation are distinct analytical levels."
+      ],
+      "sustained_objections": [],
+      "withdrawn_objections": [
+        "ISS-18E95054D155"
+      ]
+    },
+    "PFAR-SRB2": {
+      "authorized": false,
+      "concessions": [],
+      "confidence_class": "MISSING_TRANSCRIPT_EVIDENCE",
+      "counterexamples": [],
+      "current_formulation": "SR-B2 v2 (executable). NOT_RECOVERED.",
+      "defeated_objections": [],
+      "depends_on": [],
+      "formal_obligations": [],
+      "frozen_scope": "NOT_RECOVERED",
+      "id": "PFAR-SRB2",
+      "missing_evidence": [
+        "SR-B2 v1 and v2 text. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+        "NM-v1 retrieval definition. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+        "K-P1 strictness criterion. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+        "FDI-v1 definition. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14."
+      ],
+      "notes": [
+        "Recovered protocol facts, definitions absent: broad NM-v1 retrieval retained while K-P1 made strict (Turn 27); all six queries mandatory so selective retrieval cannot silently decide an outcome (Turn 28); 'direct instantiation' means specialization plus source-internal definitional expansion, excluding new primitive structure and cross-source assembly (Turn 23)."
+      ],
+      "original_formulation": "SR-B2 v1: judged infeasible and retired (Turn 26). SR-B2 v2: frozen as executable. Exact text of neither version is recovered.",
+      "provenance": ".far/inbox/presenting-project-far.md: TURNS 23, 26, 27, 28, 32 (RECONSTRUCTED-HIGH)",
+      "repository_relationship": "TRANSCRIPT_AHEAD; no canonical counterpart.",
+      "source_dependencies": [],
+      "status": "SOURCE_REQUIRED",
+      "supporting_arguments": [],
+      "sustained_objections": [],
+      "withdrawn_objections": []
+    },
+    "PFAR-T1-T8": {
+      "authorized": false,
+      "concessions": [],
+      "confidence_class": "MISSING_TRANSCRIPT_EVIDENCE",
+      "counterexamples": [],
+      "current_formulation": "NOT_RECOVERED.",
+      "defeated_objections": [],
+      "depends_on": [],
+      "formal_obligations": [],
+      "frozen_scope": "NOT_RECOVERED",
+      "id": "PFAR-T1-T8",
+      "missing_evidence": [
+        "T1-T8 definitions. NOT_RECOVERED: no occurrence anywhere in the repository working tree or in any reachable object across all 400+ branches of notfoundout/Project-FAR, nor in local session state. Searched 2026-08-14.",
+        "Turns 6-11 (GAP), 14 (GAP), 18-22 (GAP), 24 (GAP)"
+      ],
+      "notes": [
+        "The successor target queue after S1 lives inside T1-T8. Without these definitions the next dependency-valid Presenting FAR target cannot be identified, let alone executed."
+      ],
+      "original_formulation": "NOT_RECOVERED. GPT Turn 4 froze targets/protocol items T1-T8 after replacing 'irredundant size' with intrinsic minimum generating rank and introducing a translation-rank spectrum.",
+      "provenance": ".far/inbox/presenting-project-far.md: GPT TURN 4 (RECONSTRUCTED-HIGH)",
+      "repository_relationship": "TRANSCRIPT_AHEAD; no canonical counterpart.",
+      "source_dependencies": [],
+      "status": "SOURCE_REQUIRED",
+      "supporting_arguments": [],
+      "sustained_objections": [],
+      "withdrawn_objections": []
+    },
+    "REPO-UPP-SR-001-W1": {
+      "authorized": true,
+      "concessions": [],
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "counterexamples": [],
+      "current_formulation": "Unchanged from its registration in docs/research/upp-successor-repair-program-v1.0.md.",
+      "defeated_objections": [],
+      "depends_on": [],
+      "formal_obligations": [
+        "Determinate absence must be representable distinctly from epistemic Unknown wherever the repaired theorem requires it (XA-005)."
+      ],
+      "frozen_scope": "Frozen bounded-v1 source f6645a77f3b0af0b12897fa9bc2c329cdb345261; defects XA-001 to XA-005; forbidden-repair list.",
+      "id": "REPO-UPP-SR-001-W1",
+      "missing_evidence": [],
+      "notes": [
+        "This is the only fully specified, canonically authorized, dependency-valid live target found in this run. Execution still requires both adversarial lanes."
+      ],
+      "original_formulation": "SR-W1-ABSENCE-REPRESENTATION: adjudicate the determinate-absence representation for the bounded-v1 successor repair (H1 local/typed degenerate vs H2 applicability-indexed vs H4 new global status), with falsification attempts recorded and H4 requiring proof of necessity.",
+      "provenance": "docs/research/upp-successor-repair-program-v1.0.md; docs/governance/open-problems-register.md OP-22; docs/project-status.md (canonical repository state)",
+      "repository_relationship": "REPO_AHEAD. Fully specified canonically and untouched by the Presenting FAR investigation, which never reached the bounded-v1 successor line.",
+      "source_dependencies": [
+        "docs/research/upp-successor-repair-program-v1.0.md",
+        "docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md",
+        "docs/governance/bounded-v1-closure-source-freeze-f6645a77.md",
+        "docs/governance/limitations-register.md"
+      ],
+      "status": "OPEN",
+      "supporting_arguments": [],
+      "sustained_objections": [],
+      "withdrawn_objections": []
+    },
+    "REPO-UPP-SR-001-W2": {
+      "authorized": true,
+      "concessions": [],
+      "confidence_class": "RECONSTRUCTED_RESEARCH_STATE",
+      "counterexamples": [],
+      "current_formulation": "Unchanged from registration.",
+      "defeated_objections": [],
+      "depends_on": [
+        "REPO-UPP-SR-001-W1"
+      ],
+      "formal_obligations": [],
+      "frozen_scope": "As SR-W1; K-matrix corners must be derivable.",
+      "id": "REPO-UPP-SR-001-W2",
+      "missing_evidence": [],
+      "notes": [
+        "Blocked behind SR-W1 by the program's own declared sequencing."
+      ],
+      "original_formulation": "SR-W2-W9-REPAIR: settle the exact weakest true W9 successor theorem over the frozen C*/E*/P*/closure/equivalence domain, testing questions A-D without assuming them.",
+      "provenance": "docs/research/upp-successor-repair-program-v1.0.md",
+      "repository_relationship": "REPO_AHEAD.",
+      "source_dependencies": [
+        "docs/research/upp-successor-repair-program-v1.0.md",
+        "docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md"
+      ],
+      "status": "OPEN",
+      "supporting_arguments": [],
+      "sustained_objections": [],
+      "withdrawn_objections": []
+    }
+  }
+}

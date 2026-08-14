@@ -1,0 +1,71 @@
+## Blindness disclosure (record this first)
+
+This run is **not blind**. Before reasoning, I resolved repository state per `AGENTS.md`, and the working tree contains the recorded resolution of this exact issue — `.far/inbox/presenting-project-far.md` CLAUDE TURN 33 (`VERBATIM-RECOVERED`), the reconstructed ledger in `tools/build_presenting_far_live_state.py:122-197`, and the preregistered answer key in `tools/far_adversarial/calibration.py:127-135`.
+
+So **CAL-DI3-S1 cannot be scored as a blind calibration pass from this run.** The case design (`calibration.py:146-155`) keeps `known_answer` out of the prompt, but it does not sandbox the filesystem, and a lane with repository access reaches the answer in two greps. That is a defect in the calibration harness, not in the case. Recording it as a pass would be exactly the "successful software execution → proof of upstream theory" promotion the charter forbids.
+
+The audit below is my own reasoning on the merits, and I flag where it merely agrees with the recorded correction rather than independently confirming it.
+
+## Verdict
+
+**The argument is invalid.** It is not weak, not merely unproven — the inference chain breaks at a specific step, and it breaks in two independent ways, either of which is sufficient. Running it across four turns adds nothing: repetition of one invalid inference is one invalid inference, not four pieces of evidence.
+
+## What S1 actually requires
+
+Reconstructing the semantics from the target as stated plus the recovered constraints (`build_presenting_far_live_state.py:71-76` — exact frozen S1 text is `NOT_RECOVERED`, so this is a reconstruction, not a quotation):
+
+S1 requires a source to determine a relation `R ⊆ Frontier × Frontier`, where states are proof frontiers and every transition is a single backward rule application. Three distinct properties are in play, and they are logically independent:
+
+| Property | Formal content | Required by S1? |
+|---|---|---|
+| **Completely determined** | For every state `s`, the successor set `R(s)` is fixed — `R` is a well-defined total map into `P(Frontier)` | **Yes** |
+| **Deterministic** | `\|R(s)\| ≤ 1` for all `s` | No |
+| **Canonical strategy** | ∃ a distinguished selection `σ` with `σ(s) ∈ R(s)` | No |
+
+Complete determination is a property of the relation's *extension*. Determinism is a property of its *cardinality*. Canonicity is a property of a *selection function layered over it*. A relation with branching factor 1000 is exactly as completely determined as one with branching factor 1.
+
+## What the argument conflates
+
+**1. Determination with determinism (the fatal step).** The move from "no canonical deterministic search strategy" to "the calculus does not determine search structure" replaces column 3 with column 1. It is not a weak inference; it is a category substitution.
+
+Worse for the analyst: the "1000 choices" figure is *evidence for* determination, not against it. To count the choices available at a frontier state, the successor set must already be fixed — otherwise there is nothing to count. The analyst's own premise presupposes what its conclusion denies.
+
+**2. The calculus with a procedure over the calculus.** A search strategy is not an object *in* a proof calculus; it is an artifact *over* it. LK's rules fix, for any frontier, exactly which one-rule backward applications are licensed — that just *is* determination of the transition relation. The absence of a canonical strategy is a fact about proof-search heuristics and proof identity, not about rule applicability. Negating an object at level *n+1* leaves level *n* untouched.
+
+**3. Unstructuredness with underdetermination.** Read strictly by what it says, "proofs are formless" asserts that raw LK proof objects lack useful canonical structure — the standard motivation for focusing and uniform proofs. It does not assert that rule applicability is underdetermined. Using it that way silently strengthens "has no canonical form" into "is not determined." Separately, "on the order of 1000 choices" is an order-of-magnitude illustration; describing it as something the source *establishes* overstates the source. I could not retrieve the Miller artifact (`build_presenting_far_live_state.py:99-102` records it `NOT_RECOVERED`), so I am auditing the analyst's *use* of the quoted claims, not the source itself.
+
+## The lists/sets/multisets point is a second, distinct error
+
+Two separate things are wrong with treating intra-sequent collection type as evidence of the same indeterminacy:
+
+- **Level.** S1's states are frontiers — collections of open sequents. How formulas are collected *inside one sequent* is the datatype of a sequent, one level below the frontier state. Variation there does not automatically propagate to variation in the frontier transition relation, and no propagation argument was offered.
+- **Kind.** It is not indeterminacy at all. LK-with-lists-plus-exchange, LK-with-multisets, and LK-with-sets are each fully determined systems; they are different calculus presentations, each with its own completely determined `R`. Variation *across formalizations* is not underdetermination *within* one. It would bear on S1 only if a candidate source left the choice open while claiming to fix the structure — and then the defect is source underspecification, not calculus indeterminacy.
+
+This is the error the recorded Turn 33 concedes at line 223 as a level-merge. I reach it independently, and I would add the kind-error above, which the recovered record does not state.
+
+## The strongest negative claim that survives
+
+The audit **does not vindicate S1**. It kills one argument. What survives is weaker in three specific respects — it is epistemic rather than ontic, it is about *sources* rather than about the *calculus*, and it is corpus-relative and defeasible:
+
+> **No eligible source encountered so far has been certified, under the frozen retrieval and eligibility protocol, to determine the frozen frontier-level search structure.**
+
+Preserved distinctions, all load-bearing: *eligible* (SR-B2 v2 / K-P1 strictness, per `build_presenting_far_live_state.py:352-365`); *encountered so far* (bounded by the six mandatory queries — further retrieval can defeat it); *certified to determine* (absence of established certification, not established absence); *frontier-level* (not intra-sequent); *the frozen structure* (not "any determined relation").
+
+It is **not**: "the calculus does not determine search structure" — that is a false universal about the object, and it is the wording the record explicitly retracts at line 225. It is also not "no source can," which would be a modal claim with no supporting evidence at all.
+
+## The live question the analyst should have raised
+
+There is a defensible residual concern in the neighbourhood, and it is not the one that was argued. The gap is between:
+
+- *LK's rules determine a transition relation* — nearly immediate, arguably too cheap to need a source at all; and
+- *an eligible source determines **the** frozen frontier-level structure* — including whatever S1 fixes about frontier state representation (ordering of open branches, set vs multiset of open sequents, contraction/duplication bookkeeping), by direct instantiation only, without cross-source assembly or new primitive structure (`GPT TURN 23`, transcript:154-159).
+
+A source can determine *a* completely determined relation while failing to determine *the one S1 names*. That is a source-matching and underspecification question. It is the question worth running, and DI3 was never it.
+
+## Uncertainty, labelled
+
+- **Unknown:** the exact frozen S1 text, `CDE-v1`, and `FDI1–FDI5` are all `NOT_RECOVERED`. My audit holds against S1 *as stated in the case* plus the recovered constraints. If the actual frozen text requires more than "completely determined transition relation at the frontier level," conclusions above could shift.
+- **Unknown:** Turn 33 truncates mid-sentence (transcript:227-229) and GPT Turn 34's full wording is a `GAP`. I have not completed either.
+- **No status change proposed.** `PFAR-S1` sits at `READY_UNDER_INTERNAL_PROTOCOL` / `RECONSTRUCTED_RESEARCH_STATE`, `authorized=False`, with no canonical counterpart. Nothing here is Acceptance, and my agreement with the recorded Turn 33 correction is metadata, not evidence — as the ledger itself notes at line 155.
+
+No files changed.
