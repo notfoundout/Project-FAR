@@ -1,0 +1,35 @@
+# Project FAR editor configuration.
+#
+# This file deliberately does NOT enable automatic whitespace rewriting.
+#
+# Roughly a fifth of tracked files are under integrity control: their SHA-256,
+# SHA-1, or Git blob SHA-1 is recorded in a manifest, freeze package, or audit
+# ledger, and rewriting a single byte invalidates that record. Those files are
+# interleaved with unprotected files in the same directories, across every text
+# extension and fifteen top-level directories, so no path glob separates them.
+# EditorConfig cannot express a digest-based condition, which means any
+# `trim_trailing_whitespace = true` or `insert_final_newline = true` rule broad
+# enough to be useful would also silently rewrite frozen evidence on save.
+#
+# Setting both to false is therefore the protective choice: it overrides editor
+# defaults that would otherwise corrupt those records.
+#
+# The enforced standard lives in tools/check_final_newline.py, which applies a
+# single byte-level rule -- a non-empty file ends with a newline -- only to
+# files that are not under integrity control, and runs in CI via
+# tools/repo_health_check.py.
+#
+# Trailing whitespace is deliberately not enforced anywhere. In Markdown two or
+# more trailing spaces encode a hard line break, and the same sequence appears
+# inside string literals that generate Markdown, so removing it is a content
+# change rather than hygiene.
+#
+# Run `make final-newline-check`, or `python tools/check_final_newline.py --fix`
+# to repair eligible files. Do not hand-edit protected files to satisfy the
+# rule; they are exempt by design.
+
+root = true
+
+[*]
+trim_trailing_whitespace = false
+insert_final_newline = false

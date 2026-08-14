@@ -76,6 +76,9 @@ health-fast:
 docs-check:
 	python tools/validate_docs.py
 
+final-newline-check:
+	python tools/check_final_newline.py
+
 links-check:
 	python tools/check_internal_links.py
 	python tools/check_post_swe_agent_v2_stabilization.py
