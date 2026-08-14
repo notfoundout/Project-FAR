@@ -18,15 +18,20 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from far_adversarial.ledger import (  # noqa: E402
     CONCEDE,
+    Dependency,
     EXACT_TRANSCRIPT_EVIDENCE,
     Ledger,
     MISSING_TRANSCRIPT_EVIDENCE,
+    OBLIGATION_FORMAL,
+    OBLIGATION_SOURCE,
     OPEN,
     READY_UNDER_INTERNAL_PROTOCOL,
+    REBUT,
     RECONSTRUCTED_RESEARCH_STATE,
     REFUTED,
     SOURCE_REQUIRED,
-    SUSTAIN,
+    STATUS_DERIVED,
+    STATUS_RECORDED,
     Target,
     UNDERDETERMINED,
     WITHDRAW,
@@ -46,12 +51,18 @@ NOT_RECOVERED_NOTE = (
 def build() -> Ledger:
     ledger = Ledger(LEDGER_PATH)
     ledger.meta = {
-        "schema": "far-adversarial-ledger/1",
+        "schema": "far-adversarial-ledger/2",
+        "reducer": "far-adversarial-reducer/2",
         "status": "NONCANONICAL LIVE RESEARCH STATE",
         "not_acceptance": (
             "READY_UNDER_INTERNAL_PROTOCOL is an internal research disposition under "
             "a frozen protocol. It is not Project FAR Acceptance or Promotion, and it "
             "confers no canonical authority."
+        ),
+        "status_basis_note": (
+            "Targets carrying RECORDED_TRANSCRIPT_DISPOSITION hold a status this "
+            "executor read out of the reconstruction, not one it derived. Recorded "
+            "dispositions do not satisfy downstream dependency edges by default."
         ),
         "primary_source": TRANSCRIPT,
         "source_class": "NONCANONICAL / INCOMPLETE RECONSTRUCTION",
@@ -81,6 +92,7 @@ def build() -> Ledger:
             ),
             frozen_scope="SR-B2 v2 (executable), CDE-v1 / FDI1-FDI5 determination structure",
             status=READY_UNDER_INTERNAL_PROTOCOL,
+            status_basis=STATUS_RECORDED,
             confidence_class=RECONSTRUCTED_RESEARCH_STATE,
             provenance=f"{TRANSCRIPT}: TURN 25, CLAUDE TURN 33, GPT TURN 34",
             repository_relationship=(
@@ -93,14 +105,18 @@ def build() -> Ledger:
                 "still a completely determined transition relation, so LK search "
                 "nondeterminism does not bear on what S1 requires.",
                 "Turn 33 (VERBATIM): intra-sequent representation (lists/sets/multisets) "
-                "and frontier representation are distinct analytical levels.",
+                "and frontier representation are distinct analytical levels; the earlier "
+                "argument merged them.",
+                "Turn 33 (VERBATIM) revised record, replacing the earlier DF-02b wording: "
+                "'No eligible source encountered so far has been certified to determine "
+                "the frozen frontier-level search structure.' Not 'the calculus does not "
+                "determine search structure.'",
             ],
-            counterexamples=[],
-            source_dependencies=[
-                "Miller, sequent calculus / LK proof search ('1000 choices', "
-                "'proofs are formless') - cited in Turn 33, artifact NOT_RECOVERED",
+            concessions=[
+                "Turn 33 §4: Claude accepted that intra-sequent and frontier "
+                "representation had been conflated.",
+                "Turn 33: Claude weakened the DF-02b negative source claim.",
             ],
-            formal_obligations=[],
             missing_evidence=[
                 "Exact frozen S1 statement (NOT_RECOVERED)",
                 "CDE-v1 definition (NOT_RECOVERED)",
@@ -115,10 +131,15 @@ def build() -> Ledger:
                 "protocol per GPT Turn 34. Re-running it would recycle settled work.",
                 "READY here is the internal protocol disposition only. It is not "
                 "Acceptance and has no canonical standing.",
+                "status_basis is RECORDED_TRANSCRIPT_DISPOSITION: this executor did not "
+                "derive READY and could not, since the frozen protocol is unrecovered.",
             ],
         )
     )
 
+    # The one registered objection against S1, and its actual lifecycle: Claude
+    # raised it, GPT rebutted it, Claude withdrew it. GPT never had standing to
+    # end it, and did not.
     di3 = ledger.register_issue(
         target_id="PFAR-S1",
         claim=(
@@ -133,10 +154,11 @@ def build() -> Ledger:
     ledger.apply_action(
         di3.id,
         actor="gpt",
-        action=SUSTAIN,
+        action=REBUT,
         rationale=(
-            "GPT ran the counter-argument in its Turn 33 §3 correction: the frozen "
-            "target never required a canonical deterministic strategy."
+            "GPT's Turn 33 §3 correction: the frozen target never required a canonical "
+            "deterministic strategy, only a completely determined transition relation. "
+            "This is a rebuttal; GPT could not and did not end the objection."
         ),
         provenance=f"{TRANSCRIPT}: CLAUDE TURN 33 reporting GPT §3",
     )
@@ -147,57 +169,24 @@ def build() -> Ledger:
         rationale=(
             "VERBATIM (Turn 33): 'A highly nondeterministic transition relation is "
             "still a completely determined transition relation. My DI3 argument, run "
-            "across Turns 25, 28, 31, and 32, conflated the two.' DI3 is withdrawn as "
-            "a valid reason to keep S1 open and must never be re-run."
+            "across Turns 25, 28, 31, and 32, conflated the two.' The owner withdrew; "
+            "that is what defeated it."
         ),
         provenance=f"{TRANSCRIPT}: CLAUDE TURN 33 (VERBATIM-RECOVERED)",
-        agreement={"claude": "concede", "gpt": "sustain",
-                   "note": "agreement is metadata; the argument decided this"},
+        agreement={"claude": "withdraw", "gpt": "rebut",
+                   "note": "agreement is metadata; the owner's withdrawal decided this"},
     )
 
-    conflation = ledger.register_issue(
-        target_id="PFAR-S1",
-        claim=(
-            "Variation in intra-sequent representation (lists/sets/multisets of "
-            "formulas) was merged with frontier-level representation; they are "
-            "distinct analytical levels."
-        ),
-        raised_by="gpt",
-        provenance=f"{TRANSCRIPT}: CLAUDE TURN 33 §4 (VERBATIM-RECOVERED)",
-        confidence_class=EXACT_TRANSCRIPT_EVIDENCE,
-    )
-    ledger.apply_action(
-        conflation.id,
-        actor="claude",
-        action=CONCEDE,
-        rationale="VERBATIM (Turn 33): 'Also accepted: §4 ... and I merged them.'",
-        provenance=f"{TRANSCRIPT}: CLAUDE TURN 33 (VERBATIM-RECOVERED)",
-    )
-
-    df02b = ledger.register_issue(
-        target_id="PFAR-S1",
-        claim=(
-            "DF-02b as originally worded ('the calculus does not determine search "
-            "structure') overstates the negative source finding."
-        ),
-        raised_by="gpt",
-        provenance=f"{TRANSCRIPT}: CLAUDE TURN 33 (VERBATIM-RECOVERED)",
-        confidence_class=EXACT_TRANSCRIPT_EVIDENCE,
-    )
-    ledger.apply_action(
-        df02b.id,
-        actor="claude",
-        action=CONCEDE,
-        rationale=(
-            "VERBATIM (Turn 33) revised record: 'No eligible source encountered so "
-            "far has been certified to determine the frozen frontier-level search "
-            "structure.' Not 'the calculus does not determine search structure.'"
-        ),
-        provenance=f"{TRANSCRIPT}: CLAUDE TURN 33 (VERBATIM-RECOVERED)",
-    )
-    s1.concessions.append(conflation.id)
-    s1.withdrawn_objections.append(di3.id)
-    s1.defeated_objections.append(di3.id)
+    for statement in (
+        "Exact frozen S1 statement",
+        "CDE-v1 and FDI1-FDI5 determination criteria",
+        "SR-B2 v2 executable protocol text",
+    ):
+        ledger.register_obligation(
+            target_id="PFAR-S1", kind=OBLIGATION_SOURCE, statement=statement,
+            raised_by="reconstruction",
+            provenance=f"{TRANSCRIPT}; {NOT_RECOVERED_NOTE}",
+        )
 
     # -- frozen target/protocol block T1-T8 --------------------------------
     ledger.add_target(
@@ -211,6 +200,7 @@ def build() -> Ledger:
             current_formulation="NOT_RECOVERED.",
             frozen_scope="NOT_RECOVERED",
             status=SOURCE_REQUIRED,
+            status_basis=STATUS_RECORDED,
             confidence_class=MISSING_TRANSCRIPT_EVIDENCE,
             provenance=f"{TRANSCRIPT}: GPT TURN 4 (RECONSTRUCTED-HIGH)",
             repository_relationship="TRANSCRIPT_AHEAD; no canonical counterpart.",
@@ -226,6 +216,11 @@ def build() -> Ledger:
             ],
         )
     )
+    ledger.register_obligation(
+        target_id="PFAR-T1-T8", kind=OBLIGATION_SOURCE,
+        statement="T1-T8 frozen target and protocol definitions",
+        raised_by="reconstruction", provenance=NOT_RECOVERED_NOTE,
+    )
 
     # -- source freeze -----------------------------------------------------
     ledger.add_target(
@@ -239,6 +234,7 @@ def build() -> Ledger:
             current_formulation="NOT_RECOVERED.",
             frozen_scope="NOT_RECOVERED",
             status=SOURCE_REQUIRED,
+            status_basis=STATUS_RECORDED,
             confidence_class=MISSING_TRANSCRIPT_EVIDENCE,
             provenance=f"{TRANSCRIPT}: GPT TURN 13 (RECONSTRUCTED-HIGH)",
             repository_relationship="TRANSCRIPT_AHEAD; no canonical counterpart.",
@@ -251,6 +247,11 @@ def build() -> Ledger:
             ],
         )
     )
+    ledger.register_obligation(
+        target_id="PFAR-E0", kind=OBLIGATION_SOURCE,
+        statement="E0 frozen source-corpus contents",
+        raised_by="reconstruction", provenance=NOT_RECOVERED_NOTE,
+    )
 
     # -- RC1 / RC2 ---------------------------------------------------------
     ledger.add_target(
@@ -260,6 +261,7 @@ def build() -> Ledger:
             current_formulation="Superseded by RC2; not re-freezable as written.",
             frozen_scope="NOT_RECOVERED",
             status=REFUTED,
+            status_basis=STATUS_RECORDED,
             confidence_class=RECONSTRUCTED_RESEARCH_STATE,
             provenance=f"{TRANSCRIPT}: GPT TURN 15 (RECONSTRUCTED-HIGH)",
             repository_relationship="TRANSCRIPT_AHEAD; no canonical counterpart.",
@@ -277,16 +279,14 @@ def build() -> Ledger:
         "RC1 leaks its frame.",
     ]:
         issue = ledger.register_issue(
-            target_id="PFAR-RC1",
-            claim=blocker,
-            raised_by="gpt",
+            target_id="PFAR-RC1", claim=blocker, raised_by="gpt",
             provenance=f"{TRANSCRIPT}: GPT TURN 15 (RECONSTRUCTED-HIGH)",
             confidence_class=RECONSTRUCTED_RESEARCH_STATE,
         )
+        # Claude was the challenged party and conceded: the objection stands
+        # against RC1, which is why RC1 is REFUTED rather than resolved.
         ledger.apply_action(
-            issue.id,
-            actor="claude",
-            action=CONCEDE,
+            issue.id, actor="claude", action=CONCEDE,
             rationale="Claude Turn 16 produced RC2 instead of freezing RC1.",
             provenance=f"{TRANSCRIPT}: CLAUDE TURN 16 (GAP for exact wording)",
         )
@@ -301,6 +301,7 @@ def build() -> Ledger:
             ),
             frozen_scope="NOT_RECOVERED",
             status=UNDERDETERMINED,
+            status_basis=STATUS_RECORDED,
             confidence_class=MISSING_TRANSCRIPT_EVIDENCE,
             provenance=f"{TRANSCRIPT}: GPT TURN 17 (RECONSTRUCTED-HIGH); TURNS 18-22 GAP",
             repository_relationship="TRANSCRIPT_AHEAD; no canonical counterpart.",
@@ -327,9 +328,7 @@ def build() -> Ledger:
         "S_{i,a} = S_{i,a'}.",
     ]:
         ledger.register_issue(
-            target_id="PFAR-RC2",
-            claim=repair,
-            raised_by="gpt",
+            target_id="PFAR-RC2", claim=repair, raised_by="gpt",
             provenance=f"{TRANSCRIPT}: GPT TURN 17 (RECONSTRUCTED-HIGH)",
             confidence_class=RECONSTRUCTED_RESEARCH_STATE,
         )
@@ -345,6 +344,7 @@ def build() -> Ledger:
             current_formulation="SR-B2 v2 (executable). NOT_RECOVERED.",
             frozen_scope="NOT_RECOVERED",
             status=SOURCE_REQUIRED,
+            status_basis=STATUS_RECORDED,
             confidence_class=MISSING_TRANSCRIPT_EVIDENCE,
             provenance=f"{TRANSCRIPT}: TURNS 23, 26, 27, 28, 32 (RECONSTRUCTED-HIGH)",
             repository_relationship="TRANSCRIPT_AHEAD; no canonical counterpart.",
@@ -386,6 +386,7 @@ def build() -> Ledger:
                 "defects XA-001 to XA-005; forbidden-repair list."
             ),
             status=OPEN,
+            status_basis=STATUS_DERIVED,
             confidence_class=RECONSTRUCTED_RESEARCH_STATE,
             provenance=(
                 "docs/research/upp-successor-repair-program-v1.0.md; "
@@ -398,23 +399,29 @@ def build() -> Ledger:
                 "successor line."
             ),
             authorized=True,
-            source_dependencies=[
+            frozen_evidence_paths=[
                 "docs/research/upp-successor-repair-program-v1.0.md",
                 "docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md",
                 "docs/governance/bounded-v1-closure-source-freeze-f6645a77.md",
                 "docs/governance/limitations-register.md",
             ],
-            formal_obligations=[
-                "Determinate absence must be representable distinctly from epistemic "
-                "Unknown wherever the repaired theorem requires it (XA-005).",
-            ],
             notes=[
-                "This is the only fully specified, canonically authorized, "
-                "dependency-valid live target found in this run. Execution still "
-                "requires both adversarial lanes.",
+                "The next fully specified, authorized executable research path while "
+                "Presenting FAR is source-blocked. Not a proven global critical path.",
+                "Execution still requires both adversarial lanes.",
             ],
         )
     )
+    ledger.register_obligation(
+        target_id="REPO-UPP-SR-001-W1", kind=OBLIGATION_FORMAL,
+        statement=(
+            "Determinate absence must be representable distinctly from epistemic "
+            "Unknown wherever the repaired theorem requires it (XA-005)."
+        ),
+        raised_by="registration",
+        provenance="docs/research/upp-successor-repair-program-v1.0.md",
+    )
+
     ledger.add_target(
         Target(
             id="REPO-UPP-SR-001-W2",
@@ -426,12 +433,17 @@ def build() -> Ledger:
             current_formulation="Unchanged from registration.",
             frozen_scope="As SR-W1; K-matrix corners must be derivable.",
             status=OPEN,
+            status_basis=STATUS_DERIVED,
             confidence_class=RECONSTRUCTED_RESEARCH_STATE,
             provenance="docs/research/upp-successor-repair-program-v1.0.md",
             repository_relationship="REPO_AHEAD.",
             authorized=True,
-            depends_on=["REPO-UPP-SR-001-W1"],
-            source_dependencies=[
+            # SR-W2 needs SR-W1 to have established a representation. A refuted,
+            # source-blocked, or governance-blocked SR-W1 redirects the program;
+            # it does not unlock this.
+            depends_on=[Dependency(target_id="REPO-UPP-SR-001-W1",
+                                   requires=[READY_UNDER_INTERNAL_PROTOCOL])],
+            frozen_evidence_paths=[
                 "docs/research/upp-successor-repair-program-v1.0.md",
                 "docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md",
             ],
@@ -446,7 +458,8 @@ def main() -> int:
     path = ledger.save()
     print(f"wrote {path}")
     print(f"digest {ledger.digest()}")
-    print(f"targets {len(ledger.targets)} issues {len(ledger.issues)}")
+    print(f"targets {len(ledger.targets)} issues {len(ledger.issues)} "
+          f"obligations {len(ledger.obligations)}")
     nxt = ledger.next_target()
     print(f"next dependency-valid authorized target: {nxt.id if nxt else 'NONE'}")
     return 0

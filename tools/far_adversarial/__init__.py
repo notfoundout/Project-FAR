@@ -8,12 +8,33 @@ Governance boundaries enforced here:
 
 - ``READY_UNDER_INTERNAL_PROTOCOL`` is an internal disposition, never Acceptance.
 - Model agreement is recorded as metadata and is never an input to a disposition.
-- Execution failures are typed separately from research dispositions.
+- No lane adjudicates: a challenged lane rebuts, only an owner withdraws, and
+  only non-model evidence settles.
+- Execution stops (round, token, rate, time ceilings) never write a research
+  disposition and never satisfy a dependency.
+- Unresolved source and formal obligations block readiness.
+- Both lanes read the same frozen bytes from a registered source; neither reads
+  the working tree.
 - Analytical lanes are read-only; the orchestrator owns every runtime write.
 """
 
-from .ledger import Ledger, Target, Issue  # noqa: F401
-from .evidence import EvidenceStore  # noqa: F401
+from .evidence import EvidenceStore, RunRecord  # noqa: F401
+from .frozen_source import GitFrozenSource, ManifestFrozenSource  # noqa: F401
+from .ledger import Candidate, Dependency, Issue, Ledger, Obligation, Target  # noqa: F401
 from .orchestrator import Orchestrator  # noqa: F401
+from .replay import replay  # noqa: F401
 
-__all__ = ["Ledger", "Target", "Issue", "EvidenceStore", "Orchestrator"]
+__all__ = [
+    "Candidate",
+    "Dependency",
+    "EvidenceStore",
+    "GitFrozenSource",
+    "Issue",
+    "Ledger",
+    "ManifestFrozenSource",
+    "Obligation",
+    "Orchestrator",
+    "RunRecord",
+    "Target",
+    "replay",
+]

@@ -54,6 +54,9 @@ class Invocation:
     failure: str | None = None
     prompt_text: str = ""
     tags: list[str] = field(default_factory=list)
+    # The model identity the provider actually served, which the campaign
+    # records in preference to the requested alias.
+    resolved_model: str | None = None
 
     def key(self) -> str:
         return replay_key(self.provider, self.model, self.prompt_hash, self.source_freeze)
@@ -91,6 +94,7 @@ class EvidenceStore:
         replayed_from: str | None = None,
         failure: str | None = None,
         tags: list[str] | None = None,
+        resolved_model: str | None = None,
     ) -> Invocation:
         safe_prompt = redact(prompt_text)
         safe_raw = redact(raw_response)
@@ -116,6 +120,7 @@ class EvidenceStore:
             failure=failure,
             prompt_text=safe_prompt,
             tags=list(tags or []),
+            resolved_model=resolved_model,
         )
         raw_path = self.raw_dir / f"{safe_component(inv.invocation_id)}.txt"
         raw_path.write_text(safe_raw, encoding="utf-8")
@@ -143,14 +148,57 @@ class EvidenceStore:
         return None
 
     def verify_integrity(self) -> list[str]:
-        """Detect tampering with stored raw evidence."""
+        """Detect tampering with stored raw or normalized evidence.
+
+        Both directions matter: editing the raw blob changes what a replay
+        re-parses, and editing the normalized field in the index changes what a
+        naive reader believes was parsed.
+        """
         problems: list[str] = []
         for inv in self.all_invocations():
             raw_path = self.raw_dir / f"{safe_component(inv.invocation_id)}.txt"
             if not raw_path.exists():
                 problems.append(f"{inv.invocation_id}: raw evidence missing")
-                continue
-            actual = sha256_hex(raw_path.read_text(encoding="utf-8"))
-            if actual != inv.raw_response_hash:
-                problems.append(f"{inv.invocation_id}: raw evidence hash mismatch")
+            else:
+                actual = sha256_hex(raw_path.read_text(encoding="utf-8"))
+                if actual != inv.raw_response_hash:
+                    problems.append(f"{inv.invocation_id}: raw evidence hash mismatch")
+            if sha256_hex(inv.raw_response) != inv.raw_response_hash:
+                problems.append(f"{inv.invocation_id}: index raw hash mismatch")
+            normalized = json.dumps(inv.normalized_response, sort_keys=True,
+                                    ensure_ascii=False)
+            if sha256_hex(normalized) != inv.normalized_response_hash:
+                problems.append(f"{inv.invocation_id}: normalized response hash mismatch")
         return problems
+
+
+@dataclass
+class RunRecord:
+    """What a replay needs to reconstruct a run and check the reconstruction."""
+
+    run_id: str
+    source_identity: str
+    baseline_ledger_digest: str
+    final_ledger_digest: str
+    invocation_ids: list[str]
+    reducer_version: str
+    ledger_schema: str
+    protocol_version: str
+    lane_models: dict[str, str]
+    resolved_models: dict[str, str] = field(default_factory=dict)
+    stop_reasons: list[str] = field(default_factory=list)
+    schema_version: str = SCHEMA_VERSION
+
+    def save(self, root: Path) -> Path:
+        directory = Path(root) / "runs"
+        directory.mkdir(parents=True, exist_ok=True)
+        path = directory / f"{safe_component(self.run_id)}.json"
+        path.write_text(
+            json.dumps(asdict(self), indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+        return path
+
+    @classmethod
+    def load(cls, path: Path) -> "RunRecord":
+        return cls(**json.loads(Path(path).read_text(encoding="utf-8")))

@@ -1,10 +1,12 @@
 """The reconstructed live state must keep saying what the transcript says.
 
-These tests guard the two failure modes that would silently corrupt the
-research record: collapsing the transcript's confidence classes, and letting
-the withdrawn DI3 argument creep back into the live queue.
+These tests guard the failure modes that would silently corrupt the research
+record: collapsing the transcript's confidence classes, letting the withdrawn
+DI3 argument creep back into the live queue, presenting a transcribed
+disposition as a derived one, and weakening a calibration case after it missed.
 """
 
+import importlib.util
 import sys
 import unittest
 from pathlib import Path
@@ -13,8 +15,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from far_adversarial import calibration, ledger as L  # noqa: E402
-
-import importlib.util  # noqa: E402
 
 _spec = importlib.util.spec_from_file_location(
     "build_live_state", ROOT / "tools" / "build_presenting_far_live_state.py"
@@ -42,8 +42,7 @@ class TranscriptConfidenceTests(unittest.TestCase):
 
     @unittest.skipUnless(TRANSCRIPT.exists(), "transcript reconstruction not present")
     def test_transcript_is_marked_noncanonical(self):
-        text = TRANSCRIPT.read_text(encoding="utf-8")
-        self.assertIn("NONCANONICAL", text.upper())
+        self.assertIn("NONCANONICAL", TRANSCRIPT.read_text(encoding="utf-8").upper())
 
 
 class LiveStateTests(unittest.TestCase):
@@ -60,6 +59,10 @@ class LiveStateTests(unittest.TestCase):
             self.assertTrue(issue.provenance, issue.id)
             self.assertIn(issue.confidence_class, L.CONFIDENCE_CLASSES, issue.id)
 
+    def test_every_obligation_carries_provenance(self):
+        for obligation in self.ledger.obligations.values():
+            self.assertTrue(obligation.provenance, obligation.id)
+
     def test_di3_is_withdrawn_and_stays_withdrawn(self):
         di3 = [i for i in self.ledger.issues.values() if i.claim.startswith("DI3:")]
         self.assertEqual(len(di3), 1)
@@ -67,6 +70,16 @@ class LiveStateTests(unittest.TestCase):
         with self.assertRaises(L.IssueReopenError):
             self.ledger.apply_action(di3[0].id, actor="claude", action=L.SUSTAIN,
                                      rationale="resurrecting a settled argument")
+
+    def test_di3_was_defeated_by_its_owner_not_by_the_other_lane(self):
+        # GPT rebutted; only Claude, who raised it, could end it.
+        di3 = [i for i in self.ledger.issues.values() if i.claim.startswith("DI3:")][0]
+        self.assertEqual(di3.raised_by, "claude")
+        actions = {(e.actor, e.action) for e in di3.history}
+        self.assertIn(("gpt", L.REBUT), actions)
+        self.assertIn(("claude", L.WITHDRAW), actions)
+        self.assertNotIn("gpt", {e.actor for e in di3.history
+                                 if e.to_state in L.DEFEATED_ISSUE_STATES})
 
     def test_di3_records_all_four_turns_it_ran_across(self):
         di3 = [i for i in self.ledger.issues.values() if i.claim.startswith("DI3:")][0]
@@ -77,6 +90,13 @@ class LiveStateTests(unittest.TestCase):
         s1 = self.ledger.targets["PFAR-S1"]
         self.assertFalse(s1.authorized)
         self.assertEqual(s1.status, L.READY_UNDER_INTERNAL_PROTOCOL)
+
+    def test_s1_ready_is_recorded_not_derived(self):
+        # This executor could not have derived READY: the frozen protocol that
+        # produced it is unrecovered.
+        s1 = self.ledger.targets["PFAR-S1"]
+        self.assertEqual(s1.status_basis, L.STATUS_RECORDED)
+        self.assertIn("RECORDED", " ".join(s1.notes))
 
     def test_s1_ready_is_recorded_as_non_acceptance(self):
         self.assertIn("not Acceptance",
@@ -90,10 +110,33 @@ class LiveStateTests(unittest.TestCase):
             self.assertIn(identifier, joined)
         self.assertIn("NOT_RECOVERED", s1.original_formulation)
 
-    def test_intra_sequent_frontier_conflation_is_conceded(self):
-        conceded = [i for i in self.ledger.issues.values()
-                    if "intra-sequent" in i.claim and i.state == L.ISSUE_CONCEDED]
-        self.assertEqual(len(conceded), 1)
+    def test_s1_source_obligations_are_registered_and_unresolved(self):
+        blocking = self.ledger.blocking_obligations_for("PFAR-S1")
+        self.assertGreaterEqual(len(blocking), 3)
+        self.assertTrue(all(o.kind == L.OBLIGATION_SOURCE for o in blocking))
+
+    def test_turn_33_corrections_are_preserved_verbatim_on_the_target(self):
+        # The intra-sequent/frontier concession and the DF-02b weakening were
+        # corrections to Claude's defeated argument, not standing objections to
+        # S1, so they live as recorded supporting material.
+        s1 = self.ledger.targets["PFAR-S1"]
+        supporting = " ".join(s1.supporting_arguments)
+        self.assertIn("intra-sequent", supporting)
+        self.assertIn("frontier representation are distinct analytical levels", supporting)
+        self.assertIn("No eligible source encountered so far has been certified",
+                      supporting)
+        self.assertTrue(any("conflated" in c for c in s1.concessions))
+
+    def test_rc1_objections_stand_against_it(self):
+        # Claude was challenged and conceded, so the objections are upheld and
+        # RC1 is refuted rather than quietly resolved.
+        upheld = [i for i in self.ledger.issues_for("PFAR-RC1") if i.is_upheld()]
+        self.assertEqual(len(upheld), 6)
+        self.assertEqual(self.ledger.evaluate_target("PFAR-RC1"), L.REFUTED)
+        self.assertEqual(self.ledger.targets["PFAR-RC1"].status, L.REFUTED)
+
+    def test_rc2_repairs_remain_live(self):
+        self.assertEqual(len(self.ledger.live_issues_for("PFAR-RC2")), 5)
 
     def test_targets_with_unrecovered_protocol_are_not_authorized(self):
         for tid in ("PFAR-T1-T8", "PFAR-E0", "PFAR-SRB2", "PFAR-RC2"):
@@ -101,20 +144,81 @@ class LiveStateTests(unittest.TestCase):
 
     def test_the_next_dependency_valid_target_is_the_repository_successor_repair(self):
         # The Presenting FAR queue is source-blocked; the repository's
-        # registered successor repair is the only executable next step.
+        # registered successor repair is the next executable path.
         self.assertEqual(self.ledger.next_target().id, "REPO-UPP-SR-001-W1")
 
-    def test_sr_w2_is_blocked_behind_sr_w1(self):
+    def test_sr_w1_carries_its_registered_formal_obligation(self):
+        blocking = self.ledger.blocking_obligations_for("REPO-UPP-SR-001-W1")
+        self.assertEqual(len(blocking), 1)
+        self.assertEqual(blocking[0].kind, L.OBLIGATION_FORMAL)
+
+    def test_sr_w2_requires_sr_w1_to_be_established_not_merely_terminal(self):
+        dependency = self.ledger.targets["REPO-UPP-SR-001-W2"].depends_on[0]
+        self.assertEqual(dependency.requires, [L.READY_UNDER_INTERNAL_PROTOCOL])
+        self.assertFalse(dependency.accept_recorded)
         with self.assertRaises(PermissionError):
             self.ledger.select_target("REPO-UPP-SR-001-W2")
 
-    def test_build_is_deterministic_in_structure(self):
+    def test_a_refuted_sr_w1_does_not_unlock_sr_w2(self):
+        self.ledger.set_target_status("REPO-UPP-SR-001-W1", L.REFUTED)
+        self.assertFalse(self.ledger.dependencies_satisfied("REPO-UPP-SR-001-W2"))
+
+    def test_sr_w1_is_described_as_the_next_executable_path_not_a_proven_critical_path(self):
+        notes = " ".join(self.ledger.targets["REPO-UPP-SR-001-W1"].notes)
+        self.assertIn("next fully specified, authorized executable research path", notes)
+        self.assertIn("Not a proven global critical path", notes)
+
+    def test_declared_frozen_evidence_paths_are_repository_relative(self):
+        for target in self.ledger.targets.values():
+            for path in target.frozen_evidence_paths:
+                self.assertFalse(path.startswith("/"), path)
+                self.assertNotIn("..", path)
+
+    def test_build_is_deterministic(self):
         other = build_live_state.build()
-        self.assertEqual(sorted(self.ledger.targets), sorted(other.targets))
-        self.assertEqual(sorted(self.ledger.issues), sorted(other.issues))
+        self.assertEqual(self.ledger.digest(), other.digest())
 
 
-class CalibrationTests(unittest.TestCase):
+class CalibrationImmutabilityTests(unittest.TestCase):
+    """Regression for audit finding 12: v1 and its MISS must not be softened."""
+
+    # Pinned at the value the graded sandboxed run was scored against. Any edit
+    # to a case's stimulus, markers, or failure markers changes this and fails.
+    FROZEN_PREREGISTRATION_DIGEST = (
+        "6e03129580bbd98bd5010819da3c5405a4e7e91c56f059b2af6066e833651374"
+    )
+
+    def test_the_preregistration_digest_is_unchanged(self):
+        self.assertEqual(
+            calibration.preregistration_digest(list(calibration.CASES)),
+            self.FROZEN_PREREGISTRATION_DIGEST,
+        )
+
+    def test_the_missed_marker_group_still_exists(self):
+        # Group 1 is the intra-sequent/frontier level distinction: the group
+        # the sandboxed run missed. Deleting or loosening it would convert a
+        # recorded miss into a pass without rerunning anything.
+        self.assertEqual(len(calibration.DI3_CASE.required_markers), 3)
+        group = calibration.DI3_CASE.required_markers[1]
+        self.assertTrue(any("intra" in marker for marker in group))
+        self.assertTrue(any("frontier" in marker for marker in group))
+
+    def test_the_recorded_report_still_records_a_miss(self):
+        import json
+
+        report_path = (ROOT / ".far" / "research" / "presenting-far"
+                       / "calibration-report.json")
+        if not report_path.exists():
+            self.skipTest("calibration report not present")
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        self.assertEqual(report["preregistration_digest"],
+                         self.FROZEN_PREREGISTRATION_DIGEST)
+        result = report["results"][0]
+        self.assertFalse(result["passed"])
+        self.assertEqual(result["missed_groups"], [1])
+
+
+class CalibrationCaseTests(unittest.TestCase):
     def test_stimulus_never_contains_the_known_answer(self):
         for case in calibration.CASES.values():
             self.assertNotIn(case.known_answer, case.stimulus)

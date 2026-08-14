@@ -29,7 +29,11 @@ from far_adversarial.ledger import (  # noqa: E402
     DEFEATED_ISSUE_STATES,
     LIVE_ISSUE_STATES,
     Ledger,
+    OBLIGATION_STATES,
     READY_UNDER_INTERNAL_PROTOCOL,
+    STATUS_BASES,
+    STATUS_RECORDED,
+    UPHELD_ISSUE_STATES,
 )
 
 STATE_ROOT = ROOT / ".far" / "research" / "presenting-far"
@@ -54,6 +58,27 @@ def check() -> list[str]:
             problems.append(f"{tid}: no provenance")
         if target.confidence_class not in CONFIDENCE_CLASSES:
             problems.append(f"{tid}: unknown confidence class {target.confidence_class!r}")
+        if target.status_basis not in STATUS_BASES:
+            problems.append(f"{tid}: unknown status basis {target.status_basis!r}")
+        # A status transcribed from a conversation must not be presented as one
+        # this executor derived.
+        if (target.status == READY_UNDER_INTERNAL_PROTOCOL
+                and target.status_basis == STATUS_RECORDED
+                and "RECORDED" not in " ".join(target.notes)):
+            problems.append(
+                f"{tid}: READY carried as a recorded transcript disposition without "
+                "saying so in its notes"
+            )
+        # An unresolved blocking obligation and a READY status cannot coexist.
+        if target.status == READY_UNDER_INTERNAL_PROTOCOL and target.status_basis != STATUS_RECORDED:
+            blocking = ledger.blocking_obligations_for(tid)
+            if blocking:
+                problems.append(
+                    f"{tid}: READY while {len(blocking)} obligation(s) are unresolved"
+                )
+            upheld = [i for i in ledger.issues_for(tid) if i.state in UPHELD_ISSUE_STATES]
+            if upheld:
+                problems.append(f"{tid}: READY while {len(upheld)} objection(s) stand")
         if target.status == READY_UNDER_INTERNAL_PROTOCOL:
             joined = " ".join(target.notes) + " " + ledger.meta.get("not_acceptance", "")
             if "not Acceptance" not in joined and "not Project FAR Acceptance" not in joined:
@@ -86,6 +111,30 @@ def check() -> list[str]:
                 seen_defeat = True
         if seen_defeat and issue.state in LIVE_ISSUE_STATES:
             problems.append(f"{iid}: defeated objection is live again ({issue.state})")
+        # Only the owner can defeat an objection.
+        for event in issue.history:
+            if event.to_state in DEFEATED_ISSUE_STATES and event.action == "WITHDRAW":
+                if event.actor != issue.raised_by:
+                    problems.append(
+                        f"{iid}: withdrawn by {event.actor}, who does not own it"
+                    )
+
+    for oid, obligation in sorted(ledger.obligations.items()):
+        if not obligation.provenance:
+            problems.append(f"{oid}: no provenance")
+        if obligation.state not in OBLIGATION_STATES:
+            problems.append(f"{oid}: unknown state {obligation.state!r}")
+        if obligation.state != "UNRESOLVED" and not obligation.resolution_provenance:
+            problems.append(f"{oid}: resolved without resolution provenance")
+
+    for cid, candidate in sorted(ledger.candidates.items()):
+        predecessor = ledger.targets.get(candidate.predecessor_target_id)
+        if predecessor is None:
+            problems.append(f"{cid}: predecessor target is missing")
+        elif candidate.proposed_formulation == predecessor.current_formulation:
+            problems.append(f"{cid}: candidate is identical to its predecessor")
+        if candidate.successor_target_id and candidate.successor_target_id not in ledger.targets:
+            problems.append(f"{cid}: successor target is missing")
 
     if EVIDENCE_ROOT.exists():
         problems.extend(EvidenceStore(EVIDENCE_ROOT).verify_integrity())

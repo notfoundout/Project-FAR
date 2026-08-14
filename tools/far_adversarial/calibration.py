@@ -16,7 +16,6 @@ import json
 import re
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
-from typing import Any
 
 from .safety import sha256_hex
 
