@@ -1,0 +1,81 @@
+{
+  "schema": "dialogue-theory-state/1",
+  "run": "E0-closure",
+  "date": "2026-08-15",
+  "terminal_classification": "BLOCKED",
+  "terminal_sentence": "The dialogue-built theory is BLOCKED, relative to D_0^plan (eleven preregistered target schemas), the literal grammar G_1 and joint profile J_0 for c_0, corpus profile K_1,L&M for S1, procedures E_0a + K-P1-DI + SRF-v1 + CDE-v1 + SR-B2 v2 + TSI-v1 + FDI-v1 + MFDI-v1, budgets B_1/B_2, evidence date 2026-08-15.",
+
+  "stop_condition": {
+    "which": 3,
+    "name": "Hard blocker",
+    "required_input_unavailable": "full text of any scholarly source",
+    "cause": "organization egress policy denies every scholarly document host; search metadata only",
+    "permitted_alternative": "none — see PROTOCOL-SUCCESSOR.md for the replacement procedures considered and rejected",
+    "unblocked_work_completed": true
+  },
+
+  "stage_status": {
+    "E_0a": "FROZEN (recovered, not redesigned)",
+    "E_0b.2": "retrieval COMPLETE for both remaining OPEN targets; adjudication BLOCKED",
+    "E_0b.3": "BLOCKED (exact R_S, exact Pi_0)",
+    "E_0c": "BLOCKED (U_0 requires K4 verbatim quotation + page reference)",
+    "W_star": "NOT BEGUN — frozen staging requires all three hashes; also blocked on U_0",
+    "c_0_only": "EXECUTED under separately versioned E0-c0-only-v1"
+  },
+
+  "targets": {
+    "READY_firm": ["S1"],
+    "READY_provisional": ["S2","S3","S4","S5","S8","S9","S10","S11"],
+    "UNDERDETERMINED": ["S6"],
+    "OPEN_inspection_blocked": ["S7"],
+    "S6_note": "terminal on retrieval-independent grounds (PROOFS.md T1/T3); branch disjunction UNDERDETERMINED vs OPEN-trending-SOURCE-FAIL recorded, both agreeing S6 is not READY",
+    "R_primary": true,
+    "PRECONDITION_STOP": "does not fire"
+  },
+
+  "results": {
+    "T1": {"claim": "no single-sequent binary transition structure represents MLL backward search", "status": "PROVED", "method": "two explicit finite countermodels + atom-balance lemma", "retrieval_dependent": false},
+    "T2": {"claim": "frontier state internalises AND-branching; single-sequent state does not", "status": "PROVED", "retrieval_dependent": false},
+    "T3": {"claim": "frozen S6 is UNDERDETERMINED (or OPEN trending SOURCE-FAIL); Turn 17's determination check for S6 was incorrect", "status": "PROVED, terminal, defect preserved not repaired", "retrieval_dependent": false},
+    "T4": {"claim": "preregistered prediction A2 is FALSIFIED at (J_0, G_1, K_1,L&M) by phi_irr = forall x . not(x -> x)", "status": "PROVED, profile-relative, NOT profile-invariant", "procedure": "E0-c0-only-v1", "retrieval_dependent": false}
+  },
+
+  "not_established": [
+    "shared vocabulary across the panel (U_0 never populated)",
+    "maximal jointly interpretable fragments; first-failure frontier d_1",
+    "common laws beyond the single c_0 fragment",
+    "computed frames beyond Gamma_c0 = empty",
+    "substantive-content test beyond c_0",
+    "prior-art / novelty verdict for anything (UNRESOLVED, never positive)",
+    "definability, dependency, irreducibility, rank, minimality, alternative bases",
+    "DF-04-H evaluation (frozen evaluation point not reached: S7 lacks terminal status)",
+    "C1-C12 registry run (no candidate architecture was produced to run it against)",
+    "any universality, representativeness, or class theorem"
+  ],
+
+  "live_objections_carried": [
+    {"id": "A3", "target": "T3", "effect": "splits S6 into a two-branch disjunction; needs exact Turn 36 text, absent from corpus"},
+    {"id": "A6", "target": "T4", "effect": "A2's falsification is corpus-profile-relative; under a list-with-exchange LK profile C_c0 is UNRESOLVED"},
+    {"id": "A7", "target": "S1 READY and thus c_0", "effect": "CDE-v1 provenance risk remains live; robustness programme on unrelated source/target pairs is owed"}
+  ],
+
+  "minimal_unblock_action": {
+    "statement": "Grant the executing environment read access to scholarly full texts, or supply the documents directly. Nothing else is required; every other input is already frozen and hashed.",
+    "first_documents_to_inspect": [
+      {"for": "S7", "doc": "Cousot & Cousot, Abstract Interpretation Frameworks, J. Logic Comput. 2(4):511-547, 1992", "question": "does the archetypal framework bundle a Galois connection with widening/narrowing as ONE source-defined formalism (then DI4 satisfied, S7 DIRECT by DI1) or present them as mutually relaxed alternatives (then DI4 cross-source assembly stands)?"},
+      {"for": "S7", "doc": "Cousot & Cousot, Comparing the Galois connection and widening/narrowing approaches, PLILP'92, LNCS 631:269-295", "question": "counterweight to the above"},
+      {"for": "S6", "doc": "the SEP Linear Logic entry (Di Cosmo & Miller) and Acclavio & Maieli, Logic Programming with Multiplicative Structures", "question": "only relevant if T3's branch disjunction is resolved toward the ordinary-graph reading; T3 is otherwise retrieval-independent"},
+      {"for": "the whole content phase", "doc": "the K-P1-eligible primary source for each of the eleven targets", "question": "K4 verbatim quotations to populate U_0, without which W* cannot begin"}
+    ]
+  },
+
+  "artifact_validation": {
+    "corpus_hashes_verified": true,
+    "turn_36_absent_and_flagged": true,
+    "no_reconstructed_quotation": true,
+    "all_snippet_attributions_marked_unverified": true,
+    "successor_procedures_versioned_separately": true,
+    "frozen_objects_unmodified": true,
+    "frozen_run_defect_preserved_not_repaired": true
+  }
+}

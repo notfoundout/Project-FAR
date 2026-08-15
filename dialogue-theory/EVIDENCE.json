@@ -1,0 +1,139 @@
+{
+  "schema": "dialogue-theory-evidence/1",
+  "generated": "2026-08-15",
+  "environment": {
+    "search": "available (snippet/metadata only)",
+    "document_retrieval": "BLOCKED — organization egress policy denies every scholarly host probed",
+    "hosts_probed_blocked": [
+      "arxiv.org", "export.arxiv.org", "plato.stanford.edu", "ncatlab.org",
+      "link.springer.com", "www.sciencedirect.com", "hal.science",
+      "www.researchgate.net", "en.wikipedia.org", "doi.org",
+      "api.semanticscholar.org", "www.semanticscholar.org", "openreview.net",
+      "dl.acm.org", "citeseerx.ist.psu.edu", "www.cs.cmu.edu",
+      "web2.qatar.cmu.edu", "www.pls-lab.org"
+    ],
+    "hosts_reachable": ["github.com", "raw.githubusercontent.com"],
+    "consequence": "TSI-v1 is inexecutable. Every REQUIRES INSPECTION candidate is INSPECTION-OPEN. By TR-31:140 no target with an INSPECTION-OPEN candidate may receive SOURCE-FAIL; by TR-31:183 no target may receive READY without source inspection. Both terminal directions are closed for any target whose verdict depends on retrieval.",
+    "recorded_as": "DF-06"
+  },
+
+  "corpus_verification": {
+    "TR-1":  {"sha256": "2c5bf81202a345ed04e23336c44cf360d559742cb1498cbf3513ac2e38a4ec96", "lines": 7189,  "match": true},
+    "TR-11": {"sha256": "9bf15fbcf3fa775d7855ab8ffd2b9f4fc0e76faa79b02958dc9951bfd686037f", "lines": 10979, "match": true},
+    "TR-31": {"sha256": "65146a43ba4c02d652bb598244ee36501ad30268b9bc7ad4be536a974034c347", "lines": 1622,  "match": true},
+    "turn_36": "NOT PRESENT in supplied corpus. Resume state taken from the closure prompt's summary, recorded as RESUME-SUMMARY (non-verbatim). No Turn 36 text reconstructed or quoted.",
+    "duplicates_deduplicated": [
+      "TR-11:10142-10405 == TR-11:10407-10670 (GPT Turn 29)",
+      "TR-31:500-568 == TR-31:1098-1166 (Claude Turns 33-34)"
+    ],
+    "nonidentical_variants_found": "none"
+  },
+
+  "target_manifest": {
+    "S1":  {"status": "READY", "certificate": "DI1 + FDI1-FDI5 + CDE-v1", "source": "Liang & Miller, Focusing Gentzen's LK Proof System", "caveats": ["quantifier-free restriction not performed by the source", "CDE-v1 provenance risk"], "established": "GPT Turn 34 / Claude Turn 35"},
+    "S2":  {"status": "READY (provisional)", "route": "DIRECT by source-internal definitional expansion, not EXACT", "established": "Turn 23"},
+    "S3":  {"status": "READY (provisional)", "source_shape": "Kolmogorov conditioning"},
+    "S4":  {"status": "READY (provisional)", "route": "DIRECT under DI1 (countable to finite)", "note": "rigidity is the constitutive Ax law"},
+    "S5":  {"status": "READY (provisional)", "route": "EXACT (finite/discrete restriction under DI1)"},
+    "S6":  {"status": "UNDERDETERMINED (target specification)", "alternative_branch": "OPEN, trending SOURCE-FAIL", "basis": "PROOFS.md T1/T3 — retrieval-independent", "retrieval": "SR-B2 v2 Channel A and Channel B both executed in full"},
+    "S7":  {"status": "OPEN (inspection-blocked)", "basis": "DI4 cross-source assembly unadjudicable without full text", "retrieval": "SR-B2 v2 Channel A and Channel B both executed in full"},
+    "S8":  {"status": "READY (provisional)", "source_shape": "Plotkin labelled transition system"},
+    "S9":  {"status": "READY (provisional)", "route": "DIRECT under DI1 (forgetting I, G)", "note": "sources imposing del∩add=∅ formalize a NARROWER class and are INELIGIBLE by direction"},
+    "S10": {"status": "READY (provisional)", "note": "state structure only; native transformation ABSENT in Dung (A,R)"},
+    "S11": {"status": "READY (provisional)", "source_shape": "gradient flow"},
+    "tally": "9 READY (1 firm + 8 provisional), 1 UNDERDETERMINED (S6), 1 OPEN (S7)"
+  },
+
+  "S6_SR_B2_v2": {
+    "F_6": "multiplicative linear logic",
+    "C_6": "sequent with resource context",
+    "C_6_provenance": "verbatim from the frozen native-state specification, TR-11:2145",
+    "channel_A": {
+      "invocations_prescribed": 6,
+      "invocations_executed": 6,
+      "literal_phrase_C_6_found_in_any_result": false,
+      "novelty_sequence_note": "recorded descriptively only; zero stopping authority (TR-11:10096)",
+      "early_stop_taken": false
+    },
+    "N_6_frozen_under_NM_v1": [
+      {"n": 1, "title": "Logic Programming with Multiplicative Structures", "first_author": "Acclavio", "coauthor": "Maieli", "venue": "EPTCS 408:42-61, 2024", "appearance": "Q1 p2", "NM1": true, "NM2": true, "NM3": true},
+      {"n": 2, "title": "Linear Logic (Stanford Encyclopedia of Philosophy)", "first_author": "Di Cosmo", "coauthor": "Miller", "appearance": "Q1 p7", "NM1": true, "NM2": true, "NM3": true, "note": "NM2 evidence surfaced in the Q4 snippet; ordering by first appearance retained"},
+      {"n": 3, "title": "Proof-theoretic Semantics for Intuitionistic Multiplicative Linear Logic", "first_author": "Gheorghiu", "coauthors": "Gu, Pym", "venue": "TABLEAUX 2023; Studia Logica", "appearance": "Q3 p2", "NM1": "marginal — IMLL vs MLL must be adjudicated under SRF-v1 at inspection", "NM2": true, "NM3": true},
+      {"n": 4, "title": "Inferentialist Resource Semantics", "first_author": "Gheorghiu", "coauthors": "Gu, Pym", "appearance": "Q3 p6", "NM1": "marginal", "NM2": true, "NM3": true},
+      {"n": 5, "title": "A Proof-Theoretic Approach to the Semantics of Classical Linear Logic", "first_author": "Barroso-Nascimento", "coauthors": "Piotrovskaya, Pimentel", "venue": "MFPS 2025", "appearance": "Q3 p9", "NM1": "marginal — MALL, MLL its fragment", "NM2": true, "NM3": true}
+    ],
+    "N_6_excluded_with_reason": [
+      {"candidate": "nLab: linear logic", "reason": "NM2 false on returned metadata — presents the logic, not a proof-search state; also no first author, so Q8 is not instantiable"},
+      {"candidate": "Non-normal modalities in variants of Linear Logic", "reason": "NM2 false"},
+      {"candidate": "Individual Resource Games and Resource Redistributions", "reason": "NM1 false"},
+      {"candidate": "Introduction to Categories and Categorical Logic", "reason": "NM2 false — categorical semantics, not search state"},
+      {"candidate": "A survey of proof nets and matrices for substructural logics", "reason": "first appears Q6, after N_6 closed at five"}
+    ],
+    "channel_B": {
+      "invocations_prescribed": 10,
+      "invocations_executed": 10,
+      "deduplicated": "Q8 for members 3 and 4 is the identical string (same first author); evaluated once per TR-11:9550",
+      "EXACT_or_DIRECT_certified": false,
+      "reason_no_certificate": "TSI-v1 inexecutable — all candidate hosts blocked. Not 'no eligible source exists'."
+    },
+    "candidate_dispositions": "Every unique candidate returned by S6 Channel A and B is REQUIRES INSPECTION -> INSPECTION-OPEN. Zero candidates were adjudicated INELIGIBLE, because SI1-SI3 (TR-31:59) cannot be satisfied by these snippets and 'uninformative snippet => REQUIRES INSPECTION, never INELIGIBLE' (TR-31:167).",
+    "substantive_returned_passages": [
+      {
+        "text": "According to the proof as computation interpretation of linear logic, sequents represent the state of a computation. Sequents can assume the form Gamma; Delta -> Omega, where Gamma and Delta are multisets of formulae (respectively the unbounded and bounded context), and Omega is a multiset which contains the concurrent resources present in the state.",
+        "returned_by": "S6 Channel A Q4",
+        "attribution": "UNVERIFIED — most plausibly the SEP Linear Logic entry, but the host is blocked and the attribution was not confirmed by inspection",
+        "bearing": "closest returned match to frozen C_6; would be the first document to inspect on unblock"
+      },
+      {
+        "text": "the work focuses on extending frameworks for logic programming by employing generalized multiplicative connectives and proof nets to model program execution rather than traditional proof search in sequent calculus",
+        "returned_by": "S6 Channel B Q8 (Acclavio)",
+        "attribution": "UNVERIFIED",
+        "bearing": "if confirmed, evidence that the field's own move for the multiplicative fragment is away from sequent proof search toward proof nets — relevant to, but not decisive for, T3"
+      }
+    ],
+    "L_6_unfollowed_bibliographic_leads": "not enumerated; no returned document could be opened, so no bibliography was visible. RD-01 applies vacuously here."
+  },
+
+  "S7_SR_B2_v2": {
+    "F_7": "abstract interpretation",
+    "C_7": "Galois connection and widening",
+    "C_7_provenance": "the disputed component is the BUNDLE (C,A,alpha,gamma,F,nabla) recorded at TR-11:6890 and TR-11:8084; term list confirmed by GPT Turn 31 s10 (TR-31:212)",
+    "channel_A": {"invocations_prescribed": 6, "invocations_executed": 6, "early_stop_taken": false},
+    "N_7_frozen_under_NM_v1": [
+      {"n": 1, "title": "Comparing the Galois connection and widening/narrowing approaches to abstract interpretation", "first_author": "Cousot", "coauthor": "Cousot", "venue": "PLILP'92, LNCS 631:269-295", "appearance": "Q1 p1"},
+      {"n": 2, "title": "#1 Abstract Interpretation (Galois, Collections, Widening)", "first_author": "Weimer", "venue": "course lecture notes", "appearance": "Q1 p3"},
+      {"n": 3, "title": "Notes on Abstract Interpretation", "first_author": "Salcianu", "venue": "unpublished manuscript, Nov 2001", "appearance": "Q1 p9"},
+      {"n": 4, "title": "Lecturecise 10 Galois Connection and Abstract Interpretation", "first_author": "Kuncak", "venue": "EPFL course material", "appearance": "Q2 p9"},
+      {"n": 5, "title": "Abstract Interpretation Frameworks", "first_author": "Cousot", "coauthor": "Cousot", "venue": "J. Logic and Computation 2(4):511-547, Aug 1992", "appearance": "Q3 p1"}
+    ],
+    "channel_B": {
+      "invocations_prescribed": 10,
+      "invocations_executed": 9,
+      "deduplicated": "Q8 for members 1 and 5 is the identical string (both first author Cousot); evaluated once",
+      "EXACT_or_DIRECT_certified": false
+    },
+    "decisive_lead": {
+      "candidate": "Cousot & Cousot, Abstract Interpretation Frameworks, J. Logic Comput. 2(4):511-547, 1992",
+      "returned_metadata": "Abstract interpretation frameworks are variations on the archetypal framework using Galois connections between concrete and abstract semantics, widenings and narrowings and are obtained by relaxation of the original hypotheses.",
+      "attribution": "UNVERIFIED — host blocked",
+      "bearing": "If confirmed by inspection, this is a SINGLE source presenting an archetypal framework containing BOTH a Galois connection AND widening/narrowing. That would defeat the DI4 cross-source-assembly objection to frozen S7 and make S7 DIRECT by DI1 specialization. It therefore runs AGAINST the trending negative expectation and is recorded prominently.",
+      "counterweight": "N_7 member 1 (the same authors' PLILP'92 paper) treats the two as approaches to be COMPARED, and establishes that widening/narrowing on infinite domains is more powerful than the Galois-connection approach restricted to finite lattices. Whether the JLC'92 archetypal framework bundles them as one formalism, or presents them as relaxations of one another, is exactly what inspection must settle. Both directions remain live."
+    },
+    "status_reason": "OPEN (inspection-blocked). NOT SOURCE-FAIL: TR-31:140 forbids SOURCE-FAIL while any required candidate is INSPECTION-OPEN. NOT UNDERDETERMINED: S7's native structure (TR-11:5392) is a static algebraic tuple with no transition graph imposed, and is determined by the instance; the determination invariant holds for S7."
+  },
+
+  "findings_ledger_additions": {
+    "DF-06": {
+      "title": "Document-retrieval inexecutability of TSI-v1",
+      "statement": "In the executing environment the organization's egress policy denies every scholarly document host. Search snippets and metadata remain available; full texts do not. TSI-v1, which GPT Turn 31 introduced precisely so that neither positive nor negative source verdicts could rest on search-engine summaries, is therefore inexecutable, and every candidate is INSPECTION-OPEN.",
+      "classification": "PROCEDURE-INEXECUTABILITY, environmental. NOT a result about the theory, the targets, or the literature.",
+      "relation_to_DF_05": "Structurally the same class as DF-05, one stage later: DF-05 was inexecutability of a RETRIEVAL procedure, DF-06 is inexecutability of an INSPECTION procedure. Unlike DF-05, no capability-feasible replacement is admissible, because any replacement would have to lower the evidentiary standard to exactly the level TSI-v1 exists to exclude. See PROTOCOL-SUCCESSOR.md.",
+      "must_not_be_generalized_into": "'the experiment is inexecutable' — it is executable by any executor with ordinary library access."
+    }
+  },
+
+  "counterexample_registry_C1_C12": {
+    "status": "NOT RUN",
+    "reason": "The frozen rule (TR-11:2220) requires every CANDIDATE to be run against all twelve before report. No candidate architecture, operator set, or invariant was produced by this run: P1 never returned, because U_0 is blocked. There is nothing to run C1-C12 against. Recorded as not-applicable-because-upstream-blocked, not as passed."
+  }
+}
