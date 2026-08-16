@@ -1,6 +1,6 @@
 # The dialogue-built theory
 
-**Revision 2.** The Revision-1 name and formulation are withdrawn; see §5.
+**Revision 3.** The Revision-1 name and formulation remain withdrawn; see §5. SSS-3's scope is extended to propositional LK, verified from a primary source.
 
 **Name (fixed after the content was fixed): Search-State Sufficiency — SSS.**
 
@@ -68,10 +68,14 @@ Proofs: `PROOFS.md` §1–§2.
 
 ## 4. Scope and profile sensitivity
 
-SSS-3's witness conditions (W1), (W2) are verified for **MLL**. For classical LK they hold
-under presentations with single-conjunct $\wedge L$ rules or unrestricted cut, and are
-**undecided here** for a purely additive-context G3 presentation. SSS-1 and SSS-2 hold for any
-finitary rule system.
+SSS-3's witness conditions (W1), (W2) are verified for **MLL**, and — from `SS-LM24` Figure 1,
+p. 277 — for **propositional LK under the certified corpus profile $K_{1,\mathrm{L\&M}}$**:
+$p\vdash q\wedge p$ witnesses (W1) and $p\vdash p\vee q$ with the $i=2$ instance of $\vee R$
+witnesses (W2). That presentation also makes $\supset L$ and $cut$ multiplicative, so the
+context-splitting phenomenon driving SSS-3 for MLL is present in LK too. A purely
+additive-context presentation with no single-conjunct $\vee R$ remains undecided — a
+presentation question, not an open mathematical one. SSS-1 and SSS-2 hold for any finitary rule
+system.
 
 Nothing is promoted to a class theorem. Stage-B promotion — a candidate-independent, natively
 determinate admission predicate, established by proof rather than finite-panel induction — is
@@ -108,11 +112,16 @@ and returned S6 to the ordinary source track, where the supplied primary source 
 These are results of the experiment, not of SSS:
 
 - **A2 falsified** at $(\mathbf{J}_0, G_1, K_{1,\mathrm{L\&M}})$ by $\forall x\,\neg(x\to x)$ —
-  profile-relative, weak, novelty UNRESOLVED, S1 half transcript-attested rather than
-  independently verified.
+  profile-relative, weak, novelty UNRESOLVED. Now **independently verified** from `SS-LM24`:
+  irreflexivity checked exhaustively against Figure 1's rule set, and the source states in its
+  own words that the exchange rule is not used.
 - **DF-04-H refuted** at its frozen evaluation point: all three dialogue-assembled schemas
   (S1, S6, S7) reached READY by direct instantiation. Relative to `E0-supplied-v1`, since S6's
   terminal status came from a supplied source.
 - **DF-07 recorded**: the frozen SR-B2 v2 battery never returned a 1994 publication squarely on
   S6's disputed component. The gap between S6's original verdict (OPEN) and its supplied verdict
   (READY) is a property of the retrieval design, not of the literature.
+- **DF-08 recorded**: frozen $\Pi_0$ is **UNEXECUTABLE** — its twelve labels are internally
+  composite and it fixes neither individuation nor per-label certification. My own earlier count
+  of thirteen was wrong and is corrected. The sealed successor `PI0-BIB-v1` repairs this
+  prospectively; the frozen verdict is preserved.

@@ -1,17 +1,30 @@
 {
-  "schema": "dialogue-theory-evidence/2",
-  "revision": 2,
+  "schema": "dialogue-theory-evidence/3",
+  "revision": 3,
   "generated": "2026-08-16",
-  "evidence_cutoff": "2026-08-15 (preserved; both supplied documents are 1992/1994 publications already eligible at the cutoff, so later delivery does not move it)",
-
+  "evidence_cutoff": "2026-08-15 (preserved). All four supplied documents (1992, 1994, 2019, 2024) were published on or before the cutoff and were already eligible at it; later delivery of an already-eligible publication does not move the cutoff.",
   "corpus_verification": {
-    "TR-1":  {"sha256": "2c5bf81202a345ed04e23336c44cf360d559742cb1498cbf3513ac2e38a4ec96", "lines": 7189,  "match": true},
-    "TR-11": {"sha256": "9bf15fbcf3fa775d7855ab8ffd2b9f4fc0e76faa79b02958dc9951bfd686037f", "lines": 10979, "match": true},
-    "TR-31": {"sha256": "65146a43ba4c02d652bb598244ee36501ad30268b9bc7ad4be536a974034c347", "lines": 1622,  "match": true},
+    "TR-1": {
+      "sha256": "2c5bf81202a345ed04e23336c44cf360d559742cb1498cbf3513ac2e38a4ec96",
+      "lines": 7189,
+      "match": true
+    },
+    "TR-11": {
+      "sha256": "9bf15fbcf3fa775d7855ab8ffd2b9f4fc0e76faa79b02958dc9951bfd686037f",
+      "lines": 10979,
+      "match": true
+    },
+    "TR-31": {
+      "sha256": "65146a43ba4c02d652bb598244ee36501ad30268b9bc7ad4be536a974034c347",
+      "lines": 1622,
+      "match": true
+    },
     "turn_36": "NOT PRESENT. Resume state used only as the closure prompt's non-verbatim RESUME-SUMMARY. No Turn 36 text reconstructed or quoted.",
-    "duplicates_deduplicated": ["TR-11:10142-10405 == TR-11:10407-10670 (GPT Turn 29)", "TR-31:500-568 == TR-31:1098-1166 (Claude Turns 33-34)"]
+    "duplicates_deduplicated": [
+      "TR-11:10142-10405 == TR-11:10407-10670 (GPT Turn 29)",
+      "TR-31:500-568 == TR-31:1098-1166 (Claude Turns 33-34)"
+    ]
   },
-
   "supplied_primary_sources": {
     "SS-CC92": {
       "citation": "P. Cousot and R. Cousot, Abstract Interpretation Frameworks, Journal of Logic and Computation 2(4):511-547, 1992",
@@ -19,9 +32,21 @@
       "bytes": 799423,
       "identity_verified_from": "title block p.511; running heads and printed page numbers 511-547 present throughout",
       "text_layer": "present; flat/sharp superscripts lost in extraction and restored in brackets in K4-RECORDS.md",
-      "frozen_candidate_status": "N_7 member 5 — in the frozen near-match set BEFORE supply",
+      "frozen_candidate_status": "N_7 member 5 \u2014 in the frozen near-match set BEFORE supply",
       "procedure_applied": "ORIGINAL frozen procedure (TSI-v1 + K-P1-DI). Not a successor verdict.",
-      "sections_inspected": ["abstract p.511", "s1 p.512", "s3 pp.513-514", "s4 eq.(4.6)-(4.8) p.517, Prop 4.5", "Example 4.6 eq.(4.12) pp.518-519", "s6 eq.(4.18) p.520", "Prop 6.14 and eq.(4.39) p.531", "Example 6.15 p.532", "Prop 6.17 p.533", "Prop 6.20 eq.(4.46) pp.536-537", "s9 p.545"],
+      "sections_inspected": [
+        "abstract p.511",
+        "s1 p.512",
+        "s3 pp.513-514",
+        "s4 eq.(4.6)-(4.8) p.517, Prop 4.5",
+        "Example 4.6 eq.(4.12) pp.518-519",
+        "s6 eq.(4.18) p.520",
+        "Prop 6.14 and eq.(4.39) p.531",
+        "Example 6.15 p.532",
+        "Prop 6.17 p.533",
+        "Prop 6.20 eq.(4.46) pp.536-537",
+        "s9 p.545"
+      ],
       "verdict": "DIRECT -> S7 READY"
     },
     "SS-GP94": {
@@ -32,40 +57,130 @@
       "text_layer": "ABSENT in body (bitmap-font/scanned). Body rendered at 200 dpi and OCR'd. All quotations marked [OCR]; symbol corruption marked [sic].",
       "frozen_candidate_status": "NOT in frozen N_6. Never returned by any of the 16 prescribed S6 SR-B2 v2 invocations.",
       "procedure_applied": "E0-supplied-v1 successor procedure. NOT retrofitted into N_6.",
-      "sections_inspected": ["abstract p.1", "s1 p.1", "s4.3 p.5 (MLL fragment named)", "s5 p.6", "s5.1 p.6", "s5.3 p.7", "s6 pp.8-9", "Appendix A p.12 (calculus)", "Appendix B Def B.1-B.2 p.12"],
+      "sections_inspected": [
+        "abstract p.1",
+        "s1 p.1",
+        "s4.3 p.5 (MLL fragment named)",
+        "s5 p.6",
+        "s5.1 p.6",
+        "s5.3 p.7",
+        "s6 pp.8-9",
+        "Appendix A p.12 (calculus)",
+        "Appendix B Def B.1-B.2 p.12"
+      ],
       "verdict": "DIRECT under E0-supplied-v1 -> S6 READY (successor); S6 remains OPEN under original E_0"
+    },
+    "SS-LM24": {
+      "citation": "C. Liang and D. Miller, Focusing Gentzen's LK Proof System, in T. Piecha and K. F. Wehmeier (eds.), Peter Schroeder-Heister on Proof-Theoretic Semantics, Springer 2024, ch.9, pp.275ff; DOI 10.1007/978-3-031-50981-0_9",
+      "sha256": "044ac192a6fcdea5425a068a254dea99ca32c3a60f3441bbf1bf4b2bfca465ef",
+      "identity_verified_from": "chapter title and author block p.275; volume/editor statement p.275; running heads pp.276-285",
+      "text_layer": "present; no OCR required",
+      "frozen_candidate_status": "N_1 member 2 (TR-11:10689) \u2014 in the frozen near-match set BEFORE supply",
+      "procedure_applied": "ORIGINAL frozen procedure",
+      "sections_inspected": [
+        "abstract p.275",
+        "s1 pp.276-277",
+        "Figure 1 p.277",
+        "s2 pp.277-278",
+        "s2.1 p.278",
+        "s3 p.281"
+      ],
+      "verdict": "S1 certificate independently verified; FDI1/FDI2 confirmed verbatim; A2 witness verified against the full rule set; K4 complete"
+    },
+    "SS-P19": {
+      "citation": "J. Pearl, The Seven Tools of Causal Inference, with Reflections on Machine Learning, UCLA Technical Report R-481, February 2019; DOI 10.1145/3241036",
+      "sha256": "6adca12cb7817602ed4557ff67893287ef429bdd30586ddeb23ac4fc7dd3c914",
+      "identity_verified_from": "report banner TECHNICAL REPORT R-481 / February 2019; DOI line; byline BY JUDEA PEARL",
+      "role": "NOT a target source. Assigned document for Pi0 label 9 under sealed PI0-BIB-v1.",
+      "grounds_no_verdict": "grounds no target verdict and no novelty verdict"
     }
   },
-
   "target_manifest": {
-    "S1":  {"status": "READY", "route": "DIRECT: DI1 + FDI1-FDI5 + CDE-v1", "source": "Liang & Miller (NOT supplied; certificate inherited from frozen dialogue record)", "caveats": ["quantifier-free restriction not performed by the source", "CDE-v1 provenance risk", "source not independently inspected in this session"]},
-    "S2":  {"status": "READY (provisional)", "route": "DIRECT by source-internal definitional expansion"},
-    "S3":  {"status": "READY (provisional)"},
-    "S4":  {"status": "READY (provisional)", "route": "DIRECT under DI1 (countable to finite)"},
-    "S5":  {"status": "READY (provisional)", "route": "EXACT"},
-    "S6":  {"status_original_E0": "OPEN (all 16 prescribed invocations executed; no eligible source returned)", "status_E0_supplied_v1": "READY", "route": "DIRECT: DI1 (source-recognised restriction of CLL to MLL; forgetting the strategy layer) + DI2/CDE-v1 + MFDI1-MFDI6", "source": "SS-GP94", "revision_1_verdict_withdrawn": "UNDERDETERMINED - withdrawn, see PROOFS.md s3"},
-    "S7":  {"status": "READY", "route": "DIRECT: DI1 + DI2/CDE-v1", "source": "SS-CC92", "procedure": "ORIGINAL frozen procedure", "note": "DI4 cross-source-assembly objection REFUTED verbatim by the source's own abstract and s1"},
-    "S8":  {"status": "READY (provisional)"},
-    "S9":  {"status": "READY (provisional)", "note": "sources imposing del∩add=∅ are INELIGIBLE by direction"},
-    "S10": {"status": "READY (provisional)", "note": "state structure only; native transformation ABSENT in Dung (A,R)"},
-    "S11": {"status": "READY (provisional)"},
-    "tally": "11 of 11 terminal. S1 and S7 firm; S6 firm under E0-supplied-v1 and OPEN under original E_0; eight provisional.",
+    "S1": {
+      "status": "READY",
+      "route": "DIRECT: DI1 + FDI1-FDI5 + CDE-v1",
+      "source": "SS-LM24",
+      "procedure": "ORIGINAL frozen procedure",
+      "verification": "INDEPENDENTLY VERIFIED in this session",
+      "caveats": [
+        "propositional restriction is analyst-performed under DI1; Figure 1 is first-order and the source does not carve out the quantifier-free fragment \u2014 confirmed by inspection as the thinnest point",
+        "CDE-v1 provenance risk"
+      ]
+    },
+    "S2": {
+      "status": "READY (provisional)",
+      "route": "DIRECT by source-internal definitional expansion"
+    },
+    "S3": {
+      "status": "READY (provisional)"
+    },
+    "S4": {
+      "status": "READY (provisional)",
+      "route": "DIRECT under DI1 (countable to finite)"
+    },
+    "S5": {
+      "status": "READY (provisional)",
+      "route": "EXACT"
+    },
+    "S6": {
+      "status_original_E0": "OPEN (all 16 prescribed invocations executed; no eligible source returned)",
+      "status_E0_supplied_v1": "READY",
+      "route": "DIRECT: DI1 (source-recognised restriction of CLL to MLL; forgetting the strategy layer) + DI2/CDE-v1 + MFDI1-MFDI6",
+      "source": "SS-GP94",
+      "revision_1_verdict_withdrawn": "UNDERDETERMINED - withdrawn, see PROOFS.md s3"
+    },
+    "S7": {
+      "status": "READY",
+      "route": "DIRECT: DI1 + DI2/CDE-v1",
+      "source": "SS-CC92",
+      "procedure": "ORIGINAL frozen procedure",
+      "note": "DI4 cross-source-assembly objection REFUTED verbatim by the source's own abstract and s1"
+    },
+    "S8": {
+      "status": "READY (provisional)"
+    },
+    "S9": {
+      "status": "READY (provisional)",
+      "note": "sources imposing del\u2229add=\u2205 are INELIGIBLE by direction"
+    },
+    "S10": {
+      "status": "READY (provisional)",
+      "note": "state structure only; native transformation ABSENT in Dung (A,R)"
+    },
+    "S11": {
+      "status": "READY (provisional)"
+    },
+    "tally": "11 of 11 terminal. S1, S7 firm and source-verified; S6 firm under E0-supplied-v1 and OPEN under original E_0; eight provisional and resting on no inspected document.",
     "R_primary": true
   },
-
   "hypothesis_dispositions": {
     "DF-04-H": {
       "frozen_evaluation_point": "after terminal source statuses for all eleven (TR-11:9620)",
       "point_reached": "yes, relative to E0-supplied-v1",
-      "assembled_schemas": ["S1", "S6", "S7"],
-      "outcomes": {"S1": "READY", "S6": "READY", "S7": "READY"},
+      "assembled_schemas": [
+        "S1",
+        "S6",
+        "S7"
+      ],
+      "outcomes": {
+        "S1": "READY",
+        "S6": "READY",
+        "S7": "READY"
+      },
       "verdict": "REFUTED",
       "note": "Evaluated as frozen, without rewording. The predicted split between found and constructed schemas did not occur. Relative to E0-supplied-v1: under original E_0 alone, S6 is OPEN and the evaluation point is not reached."
     },
-    "A2": {"verdict": "FALSIFIED at (J_0, G_1, K_1-L&M) only", "not_profile_invariant": true, "witness": "forall x . not(x -> x)", "novelty": "UNRESOLVED, none claimed", "provenance_caveat": "S1 half is transcript-attested (TR-31:538), not independently verified in this session"},
-    "N6": {"verdict": "OPEN - domain-criterion regress not established"}
+    "A2": {
+      "verdict": "FALSIFIED at (J_0, G_1, K_1-L&M) only",
+      "not_profile_invariant": true,
+      "witness": "forall x . not(x -> x)",
+      "novelty": "UNRESOLVED, none claimed",
+      "provenance": "INDEPENDENTLY VERIFIED from SS-LM24 Figure 1, p.277; Revision-2 transcript-attested caveat DISCHARGED"
+    },
+    "N6": {
+      "verdict": "OPEN - domain-criterion regress not established"
+    }
   },
-
   "findings_ledger": {
     "DF-01": "Taxonomy non-comparability. AR2 deleted. Recorded.",
     "DF-02b": "No eligible source encountered had been certified to determine the frozen frontier-level search structure. SUPERSEDED for S1 (Turn 34) and now for S6 (SS-GP94).",
@@ -84,19 +199,46 @@
       "classification": "Defect of the retrieval procedure. Recorded against the procedure, not absorbed into any target verdict.",
       "confirms": "RD-01 concretely: SOURCE-FAIL or OPEN under SR-B2 v2 measures the bounded retrieval design, never the scholarly record."
     },
-    "RD-01": "Unfollowed citation leads; documents-only candidacy. Confirmed by DF-07."
+    "RD-01": "Unfollowed citation leads; documents-only candidacy. Confirmed by DF-07.",
+    "DF-08": {
+      "title": "Pi0 individuation underdetermined by the frozen text",
+      "statement": "Frozen Pi0 is a semicolon-delimited list of TWELVE labels, not thirteen; Revisions 1-2 of these artifacts said thirteen, which was an error now corrected. Six of the twelve labels are internally composite. The frozen text fixes neither how many bodies each label denotes nor which document certifies each. Since Pi_c renderings must be certificate-carrying (TR-11:2212), frozen Pi0 is UNEXECUTABLE as an exact corpus.",
+      "classification": "Defect of the frozen object. Recorded and preserved, not repaired.",
+      "successor": "PI0-BIB-v1 \u2014 sealed, hashed before any W* candidate existed; adopts one body per frozen label (twelve); DECLINES the continuation packet's thirteen-body split because the thirteen-count originated in my error, not the frozen text."
+    }
   },
-
   "K4_extraction": {
-    "targets_with_complete_K4_records": ["S6", "S7"],
-    "targets_missing": ["S1", "S2", "S3", "S4", "S5", "S8", "S9", "S10", "S11"],
-    "U_0_status": "NOT SEALED, NOT HASHED",
-    "W_star_status": "NOT BEGUN - frozen staging requires K_0, U_0, Pi_0 hashes",
-    "codex_material": "NOT consulted, NOT imported, NOT used anywhere. It lacks the required K4 source record and may be revealed only after independently extracted objects are sealed, which has not occurred."
+    "targets_with_complete_K4_records": [
+      "S1",
+      "S6",
+      "S7"
+    ],
+    "targets_missing": [
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S8",
+      "S9",
+      "S10",
+      "S11"
+    ],
+    "U_0_status": "NOT SEALED, NOT HASHED \u2014 3 of 11",
+    "W_star_status": "NOT BEGUN",
+    "codex_material": "NOT consulted, NOT imported, NOT used anywhere. Reveal precondition (sealed independent extraction) remains unmet."
   },
-
   "counterexample_registry_C1_C12": {
     "status": "NOT APPLICABLE",
     "reason": "The frozen rule requires every CANDIDATE to be run against all twelve before report. No candidate architecture, operator set, or invariant was produced: P1 never returned because U_0 is unsealed. Recorded as not-applicable-because-upstream-blocked, not as passed."
+  },
+  "pi0": {
+    "frozen_status": "UNEXECUTABLE (DF-08)",
+    "successor": "PI0-BIB-v1",
+    "successor_status": "SEALED, NOT OPERATIVE",
+    "labels_total": 12,
+    "labels_supplied": 2,
+    "labels_missing": 10,
+    "documents_missing": 11,
+    "sha256_of_sealed_bibliography": "3e5f6d6eeb6e9f9badd2ada852c2a282d362e2e85d5c381821e1a631df338c8c"
   }
 }

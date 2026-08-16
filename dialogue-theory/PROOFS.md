@@ -17,7 +17,9 @@ an already-eligible publication does not move the cutoff.
 | ID | Document | SHA-256 | Identity verified from |
 |---|---|---|---|
 | `SS-CC92` | P. Cousot & R. Cousot, *Abstract Interpretation Frameworks*, **J. Logic and Computation 2(4):511–547, 1992** | `19591e44a5584e27547538d3ed553a7b26b78d9fe234f129fbba3c2a735f89bb` | title block p. 511; running heads and page numbers 511–547 present in the document |
-| `SS-GP94` | D. Galmiche & G. Perrier, *Foundations of Proof Search Strategies Design in Linear Logic*, **Logical Foundations of Computer Science (LFCS), St-Petersburg, 1994, pp. 101–113**; HAL `hal-01297758` | `622f2f9ee49f8c8b7201b2937ea88509f4ecac345739fd84c357bbf2193132ee` | HAL cover page; PDF metadata (Title, Author); §1 title block |
+| `SS-GP94` | D. Galmiche & G. Perrier, *Foundations of Proof Search Strategies Design in Linear Logic*, **LFCS, St-Petersburg, 1994, pp. 101–113**; HAL `hal-01297758` | `622f2f9ee49f8c8b7201b2937ea88509f4ecac345739fd84c357bbf2193132ee` | HAL cover page; PDF metadata (Title, Author); §1 title block |
+| `SS-LM24` | C. Liang & D. Miller, *Focusing Gentzen's LK Proof System*, in Piecha & Wehmeier (eds.), **Peter Schroeder-Heister on Proof-Theoretic Semantics**, Springer 2024, ch. 9, pp. 275ff.; DOI `10.1007/978-3-031-50981-0_9` | `044ac192a6fcdea5425a068a254dea99ca32c3a60f3441bbf1bf4b2bfca465ef` | chapter title and author block p. 275; volume/editor statement p. 275; running heads pp. 276–285 |
+| `SS-P19` | J. Pearl, *The Seven Tools of Causal Inference, with Reflections on Machine Learning*, **UCLA Technical Report R-481, February 2019**; DOI `10.1145/3241036` | `6adca12cb7817602ed4557ff67893287ef429bdd30586ddeb23ac4fc7dd3c914` | report banner "TECHNICAL REPORT R-481 / February 2019"; DOI line; byline "BY JUDEA PEARL" |
 
 `SS-CC92` has a text layer. `SS-GP94` is a bitmap-font/scanned body; its body was rendered at
 200 dpi and OCR'd. **All `SS-GP94` quotations below are OCR transcriptions** and are marked
@@ -32,6 +34,15 @@ inspection is therefore ordinary execution of the original frozen procedure, not
 invocations and is **not** in frozen $N_6$. It is **not retrofitted**. It is inspected only
 under the separately versioned `E0-supplied-v1` (see `PROTOCOL-SUCCESSOR.md`), and the
 difference between the two verdicts is reported as source-supply sensitivity (§5.3).
+
+**Status of `SS-LM24`.** It is frozen **$N_1$ member 2** (`TR-11:10689`), placed in the
+near-match set by the original Channel-A ordering long before supply, and it is the source
+already carrying S1's DIRECT certificate. Its inspection is therefore **ordinary execution of
+the original frozen procedure**. See §4bis.
+
+**Status of `SS-P19`.** Not a target source. It is the assigned document for one label of the
+prior-art baseline under the sealed `PI0-BIB-v1`. It grounds **no** target verdict and **no**
+novelty verdict; see `PI0-BIB-v1.md` §5.
 
 ---
 
@@ -182,10 +193,31 @@ conditions:
 - **(W1)** some non-terminal underivable $S$ has an instance with a derivable premise;
 - **(W2)** some non-terminal derivable $S$ has an instance with an underivable premise.
 
-MLL satisfies both (§1.4). Classical LK satisfies both under presentations with
-$\wedge L_1/\wedge L_2$-style single-conjunct rules or with unrestricted cut; under a purely
-additive-context G3 presentation the question is presentation-relative and **is not decided
-here**.
+MLL satisfies both (§1.4).
+
+**Classical LK satisfies both, verified against `SS-LM24` Figure 1 (p. 277).** Revision 2 left
+this "not decided here"; the supplied source decides it for the certified corpus profile
+$K_{1,\mathrm{L\&M}}$.
+
+- **(W1).** $S=\ p\vdash q\wedge p$ is not derivable. The $\wedge R$ instance
+  $\dfrac{\Gamma\vdash\Delta,B\quad\Gamma\vdash\Delta,C}{\Gamma\vdash\Delta,B\wedge C}$ with
+  $\Gamma=\{p\},\Delta=\varnothing,B=q,C=p$ has the premise $p\vdash p$, which is derivable by
+  $init$. ✓
+- **(W2).** $S=\ p\vdash p\vee q$ is derivable, via $\vee R$ with $i=1$. Figure 1's $\vee R$ is
+  $\dfrac{\Gamma\vdash\Delta,B_i}{\Gamma\vdash\Delta,B_1\vee B_2}$ with $i\in\{1,2\}$ (caption,
+  p. 277), so the instance with $i=2$ is a legitimate rule instance at the same conclusion and
+  has the premise $p\vdash q$, which is not derivable. ✓
+
+Figure 1 also makes $\supset L$ and $cut$ **multiplicative**, with the context split between
+premises — "the cut rule and the implication-left rule are multiplicative" (`SS-LM24`, p. 281) —
+so the context-splitting phenomenon that drives T1′ for MLL is present in this LK presentation
+too.
+
+$$\boxed{\text{SSS-3's hypotheses hold for propositional LK under } K_{1,\mathrm{L\&M}}, \text{ as well as for MLL.}}$$
+
+A purely additive-context presentation with only single-premise left rules and no
+single-conjunct $\vee R$ remains undecided, and that residue is a presentation question, not an
+open mathematical one.
 
 $$\boxed{\text{The S1/S6 contrast in the frozen shell is a contrast of \emph{state typing}, not of logic.}}$$
 
@@ -355,6 +387,86 @@ trending since Turn 21, and it refutes a conjecture the dialogue had held for fo
 
 ---
 
+## 4bis. S1 — certificate and A2 witness **independently verified** from `SS-LM24`
+
+TSI-v1 executed on frozen $N_1$ member 2, original procedure. Sections inspected: abstract
+p. 275; §1 pp. 276–277; **Figure 1 p. 277**; §2 pp. 277–278; §2.1 p. 278; §3 p. 281. Fixed terms
+searched: *proof search, search state, open sequent(s), goal(s), multiset, frontier, backward,
+transition, unproved, exchange, derivation*.
+
+Revision 2 recorded S1's certificate and the whole A2 result as **transcript-attested, not
+independently verified**. That caveat is now **discharged**.
+
+### 4bis.1 FDI1–FDI2 confirmed verbatim
+
+The Turn-34 quotation is exact. `SS-LM24` §2, p. 278:
+
+> "For this paper, we shall make the following distinction between proof and derivation. By
+> proof, we mean a tree structure of inference rules and sequents such that all premises are
+> closed, in the sense that the inference rules at the leaves have zero premises (such as the
+> initial rule). By derivation, we mean a similar tree structure of inference rules and
+> sequents, but we do not assume that all leaves are closed: derivations can have unproved
+> premises."
+
+**FDI1** (partial derivations source-defined) and **FDI2** (the open/closed leaf distinction
+source-made and load-bearing) are satisfied by the source's own words. FDI3–FDI5 follow from
+this plus the rule set, as certified at GPT Turn 34; the propositional restriction that FDI5
+needs is examined in §4bis.3.
+
+### 4bis.2 The A2 witness, now verified against the actual rule set
+
+T4's S1 half requires: *no LK rule instance has a single premise identical to its conclusion.*
+Figure 1's complete rule set is now visible and can be checked exhaustively.
+
+| Group | Rules | Single-premise instance with premise $=$ conclusion? |
+|---|---|---|
+| Structural | $cL\ \frac{\Gamma,B,B\vdash\Delta}{\Gamma,B\vdash\Delta}$, $cR\ \frac{\Gamma\vdash\Delta,B,B}{\Gamma\vdash\Delta,B}$ | no — premise multiset strictly larger |
+| Structural | $wL\ \frac{\Gamma\vdash\Delta}{\Gamma,B\vdash\Delta}$, $wR\ \frac{\Gamma\vdash\Delta}{\Gamma\vdash\Delta,B}$ | no — premise strictly smaller |
+| Identity | $init$ | $k=0$ |
+| Identity | $cut$ | $k=2$ |
+| Introduction, 1 premise | $\wedge L$, $\vee R$, $\supset R$ | no — conclusion carries one more connective occurrence |
+| Introduction, 0 premises | $tR$, $fL$ | $k=0$ |
+| Introduction, 2 premises | $\wedge R$, $\vee L$, $\supset L$ | $k=2$ |
+| Quantifier | $\forall L,\forall R,\exists L,\exists R$ | outside the frozen propositional fragment |
+| **Exchange** | **absent** | — |
+
+The decisive fact is stated by the source itself, §2, p. 277, difference 1:
+
+> "In Gentzen's system, contexts are lists of formulas, and the exchange rule, which allowed two
+> adjacent formulas to be swapped, was used. In Figure 1, contexts ($\Gamma$ and $\Delta$) are
+> multisets of formulas, and the exchange rule is not used."
+
+and §2, p. 277: "Inference rules are between sequents which are pairs of multisets of formula".
+
+For $M\to M$ we need $k=1$ and $P_1=S$; the table shows no such instance exists. Hence every
+$\mathcal{S}_{1,a}$ is irreflexive.
+
+$$\boxed{\varphi_{\mathrm{irr}}\text{ holds in every admissible LK proof-search graph — verified from the primary source.}}$$
+
+The exchange-rule escape route that made T4 profile-relative is confirmed to be **exactly** the
+route the source describes as *Gentzen's* presentation and *not* its own. T4's profile
+sensitivity is therefore real and correctly stated, and the certified profile
+$K_{1,\mathrm{L\&M}}$ is confirmed to be the multiset/no-exchange one.
+
+### 4bis.3 The residual restriction, re-examined and unchanged
+
+Figure 1 is **first-order**: formulas are built "using both the logical connectives $\wedge$, t,
+$\vee$, f, $\supset$ as well as the two first-order quantifiers $\forall$ and $\exists$" (§2,
+p. 277), and the caption carries the eigenvariable condition "In the $\forall R$ and $\exists L$
+rules, the variable $y$ is not free in the conclusion."
+
+Frozen S1 is propositional. The source does **not** formally carve out the quantifier-free
+fragment. The restriction remains **analyst-performed under DI1**, exactly as Claude flagged at
+Turn 35 (`TR-31:1193`) — and inspection confirms the flag was accurate rather than
+over-cautious. It is licensed by DI1 (restriction to a formally specified subclass, stated
+independently of any result) and it is what makes FDI5 hold, since the eigenvariable side
+condition — the only source-stated constraint that could couple a leaf's expansion to material
+outside it — lives exactly on the four rules the restriction removes.
+
+$$\boxed{\mathrm{Status}(S1)=\mathbf{READY}\ \text{— certificate independently verified; the DI1 propositional restriction remains the thinnest point, and is now confirmed as such rather than inferred.}}$$
+
+---
+
 ## 5. S6 = **READY** under `E0-supplied-v1`; **OPEN** under original $\mathfrak{E}_0$
 
 ### 5.1 Procedure separation, stated first
@@ -500,12 +612,13 @@ exchange rule, the instance with two equal adjacent context formulas has premise
 conclusion, the graphs are reflexive, $\varphi_{\mathrm{irr}}$ fails, and
 $\mathcal{C}_{c_0}$ under that profile is **UNRESOLVED**, not empty.
 
-**Evidence provenance caveat, newly recorded.** The S1 half rests on Liang & Miller's Figure 1
-using multiset contexts with exchange unused. That source was **not supplied** and was **not
-inspected in this session**. The reading is inherited from the frozen dialogue record at
-`TR-31:538`, where it was recorded as a full-text inspection. It is therefore
-**transcript-attested, not independently verified here**, and is marked as such wherever T4 is
-used.
+**Evidence provenance — caveat DISCHARGED.** Revision 2 marked the S1 half transcript-attested.
+`SS-LM24` has since been supplied and inspected, and §4bis.2 verifies the claim exhaustively
+against Figure 1's actual rule set, including the source's own statement that the exchange rule
+is not used. **T4 is now independently verified at $K_{1,\mathrm{L\&M}}$.** Its profile
+sensitivity is unchanged and is confirmed rather than weakened: the source itself identifies the
+list-plus-exchange presentation as Gentzen's, which is the profile under which
+$\varphi_{\mathrm{irr}}$ fails.
 
 **Novelty: UNRESOLVED**, never positive — $\Pi_0$ is unfixed. Author's own assessment,
 recorded so it cannot later read as a novelty claim: irreflexivity of a one-step reduction
@@ -518,9 +631,9 @@ $\Pi_0$. **No novelty is claimed.**
 
 | Obligation | Requires | Status |
 |---|---|---|
-| $U_0$ extraction ($\mathfrak{E}_{0c}$) | K4 verbatim quotation + exact locator from the eligible primary source of **each of the eleven** targets | **BLOCKED — 9 of 11 primary documents not supplied.** See `MISSING-SOURCE-MANIFEST.md`. Per-target K4 records for the two supplied sources are complete: `K4-RECORDS.md`. |
+| $U_0$ extraction ($\mathfrak{E}_{0c}$) | K4 verbatim quotation + exact locator from the eligible primary source of **each of the eleven** targets | **BLOCKED — 8 of 11 primary documents not supplied.** K4 complete for S1, S6, S7: `K4-RECORDS.md`. See `MISSING-SOURCE-MANIFEST.md`. |
 | exact $\mathcal{K}_0$, exact $\mathfrak{R}_S$ | full-text inspection per target | **BLOCKED**, same cause |
-| exact $\Pi_0$ + certified translations | full text of the thirteen prior-art bodies | **BLOCKED**, same cause |
+| exact $\Pi_0$ + certified translations | one authoritative primary source per frozen $\Pi_0$ label | **DOUBLY BLOCKED.** (i) **DF-08** — frozen $\Pi_0$ is UNEXECUTABLE: its twelve labels are internally composite and the frozen text fixes neither individuation nor per-label certification. (ii) The sealed successor `PI0-BIB-v1` fixes both, but 10 of its 12 labels have no supplied document. |
 | $W^\ast$ over $U_0$; both arms; $\partial_1$; maximal fragments; common theories; mechanically generated frames; substantive-content test; prior-art tests; P2a→P2b→P1 | a sealed $U_0$ | **BLOCKED**, downstream of the above |
 | definability, dependency, irreducibility, rank, minimality, alternative bases | P1 to return; frozen ordering opens rank only then | **BLOCKED**, gate not passed |
 | C1–C12 registry | a candidate architecture to run against | **NOT APPLICABLE** — none produced, because P1 never returned |
@@ -574,9 +687,38 @@ re-verify against a clean copy. This is a **transcription-fidelity** limitation,
 limitation: the document is present and was inspected.
 
 ### A7 — against T4: profile sensitivity, and unverified S1 provenance
-**Succeeds; incorporated.** T4 is stated with its corpus-profile index and is explicitly not
-profile-invariant, and the Liang & Miller reading is now marked transcript-attested rather than
-independently verified.
+**Half succeeds, half now discharged.** The profile-sensitivity half stands and is incorporated:
+T4 carries its corpus-profile index and is explicitly not profile-invariant. The provenance half
+is **discharged** — `SS-LM24` was supplied and inspected, and §4bis.2 verifies the claim against
+Figure 1's actual rule set.
+
+### A10 — against §4bis: "the propositional restriction is analyst-supplied, so DI3 fires on S1"
+**Live, and now confirmed as the certificate's thinnest point rather than merely suspected.**
+Figure 1 is first-order and the source does not carve out the quantifier-free fragment.
+Inspection settles that this is a real gap, not an artefact of incomplete reading. The defence
+is unchanged and is DI1's, not DI2's: restriction to a formally specified subclass, stated
+independently of any result. An auditor reading SRF-v1 rather than DI1 as governing
+within-formalism restriction would return S1 to OPEN, and with it $c_0$, A2, and the mandatory
+stratum. Recorded prominently, as Turn 35 required.
+
+### A11 — against `PI0-BIB-v1`: "fixing $\Pi_0$'s individuation is a repair of a frozen object"
+**Fails as stated, but the concern is honoured.** Frozen $\Pi_0$ is **not** modified: it is
+recorded as UNEXECUTABLE with its defect (DF-08) preserved, and its verdict is kept separate.
+The successor is versioned, its selection rule was fixed before assignment, and it was hashed
+before any $W^\ast$ candidate or $U_0$ item existed. The continuation packet's proposed
+re-individuation into thirteen bodies was **declined**, because the thirteen-count originated in
+an error of mine rather than in the frozen text; declining it keeps the successor strictly less
+invasive than proposed.
+
+### A12 — against the whole run: "each round of supplied documents flips a verdict, so the
+verdicts track supply rather than evidence"
+**Partially succeeds, and is the single most important limitation of this programme.** Three
+targets have now changed status on document supply (S7, S6, and S1's verification), and DF-07
+records that the frozen retrieval battery missed a decisive in-cutoff source. The honest reading
+is that SR-B2 v2's *negative* verdicts carry very little evidential weight, exactly as RD-01
+warned; its *positive* verdicts, which require a source-level certificate, are unaffected. No
+terminal negative in this run rests on a failed search: every negative is either a proof
+(SSS-3, T1′) or a preregistered hypothesis refuted by positive certificates (DF-04-H).
 
 ### A8 — against DF-04-H's refutation: "S6's READY comes from a successor procedure, so the
 evaluation point was reached by changing the rules"

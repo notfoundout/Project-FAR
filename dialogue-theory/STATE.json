@@ -1,82 +1,162 @@
 {
-  "schema": "dialogue-theory-state/2",
-  "revision": 2,
+  "schema": "dialogue-theory-state/3",
+  "revision": 3,
   "run": "E0-closure",
   "date": "2026-08-16",
   "evidence_cutoff": "2026-08-15 (preserved)",
-
-  "terminal_classification": "BLOCKED — MISSING PRIMARY SOURCES; source stage INTERNALLY TERMINAL",
+  "terminal_classification": "BLOCKED \u2014 MISSING PRIMARY SOURCES; source stage INTERNALLY TERMINAL",
   "stop_condition": {
-    "which": "permitted non-final hard stop — required primary documents genuinely absent",
-    "missing": 9,
+    "which": "permitted non-final hard stop \u2014 required primary documents genuinely absent",
+    "missing_target_documents": 8,
     "of": 11,
+    "missing_pi0_documents": 11,
+    "pi0_labels_missing": 10,
+    "pi0_labels_total": 12,
     "manifest": "MISSING-SOURCE-MANIFEST.md",
-    "not_an_access_failure": "two documents were supplied, both fully inspected and adjudicated; no locally present source is called blocked",
+    "not_an_access_failure": "four documents supplied; all four fully inspected and adjudicated; no locally present source is called blocked",
     "unblocked_work_completed": true
   },
-
   "stage_status": {
     "E_0a": "FROZEN (recovered, not redesigned)",
-    "E_0b.2": "COMPLETE — all eleven targets hold terminal source statuses",
-    "E_0b.3": "BLOCKED — exact R_S and exact Pi_0 need the nine missing documents",
-    "E_0c": "BLOCKED — U_0 needs K4 records for all eleven; 2 of 11 complete",
+    "E_0b.2": "COMPLETE \u2014 all eleven targets hold terminal source statuses",
+    "E_0b.3": "BLOCKED \u2014 exact R_S needs the eight missing target documents; exact Pi_0 is UNEXECUTABLE (DF-08) and its sealed successor PI0-BIB-v1 lacks 10 of 12 labels",
+    "E_0c": "BLOCKED \u2014 U_0 needs K4 records for all eleven; 3 of 11 complete (S1, S6, S7)",
     "W_star": "NOT BEGUN",
-    "c_0_only": "EXECUTED under E0-c0-only-v1"
+    "c_0_only": "EXECUTED under E0-c0-only-v1; result now independently source-verified"
   },
-
   "targets": {
-    "READY_firm": ["S1", "S7"],
-    "READY_under_E0_supplied_v1": ["S6"],
-    "READY_provisional": ["S2", "S3", "S4", "S5", "S8", "S9", "S10", "S11"],
+    "READY_firm_source_verified": [
+      "S1",
+      "S7"
+    ],
+    "READY_under_E0_supplied_v1": [
+      "S6"
+    ],
+    "READY_provisional_no_inspected_document": [
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S8",
+      "S9",
+      "S10",
+      "S11"
+    ],
     "S6_original_E0_status": "OPEN (all 16 prescribed SR-B2 v2 invocations executed)",
     "R_primary": true,
     "PRECONDITION_STOP": "does not fire"
   },
-
   "results": {
-    "SSS-1": {"claim": "frontier state sufficiency for any finitary rule system", "status": "PROVED"},
-    "SSS-2": {"claim": "hyperedge sufficiency on individual sequents", "status": "PROVED"},
-    "SSS-3": {"claim": "over individual MLL sequents with the rule-induced projected relation and uniform monotone successor-set decoders, no pair computes MLL provability; decoder class has exactly four members, all refuted", "status": "PROVED, bounded over explicit classes", "false_without_restrictions": true},
-    "S7_READY": {"status": "PROVED", "procedure": "ORIGINAL frozen", "source": "SS-CC92", "note": "DI4 objection refuted verbatim by the source"},
-    "S6_READY": {"status": "PROVED", "procedure": "E0-supplied-v1", "source": "SS-GP94"},
-    "DF-04-H": {"status": "REFUTED at its frozen evaluation point, unreworded"},
-    "A2": {"status": "FALSIFIED at (J_0, G_1, K_1-L&M) only; NOT profile-invariant"}
+    "SSS-1": {
+      "claim": "frontier state sufficiency for any finitary rule system",
+      "status": "PROVED"
+    },
+    "SSS-2": {
+      "claim": "hyperedge sufficiency on individual sequents",
+      "status": "PROVED"
+    },
+    "SSS-3": {
+      "claim": "over individual MLL sequents with the rule-induced projected relation and uniform monotone successor-set decoders, no pair computes MLL provability; decoder class has exactly four members, all refuted",
+      "status": "PROVED, bounded over explicit classes",
+      "false_without_restrictions": true
+    },
+    "S7_READY": {
+      "status": "PROVED",
+      "procedure": "ORIGINAL frozen",
+      "source": "SS-CC92",
+      "note": "DI4 objection refuted verbatim by the source"
+    },
+    "S6_READY": {
+      "status": "PROVED",
+      "procedure": "E0-supplied-v1",
+      "source": "SS-GP94"
+    },
+    "DF-04-H": {
+      "status": "REFUTED at its frozen evaluation point, unreworded"
+    },
+    "A2": {
+      "status": "FALSIFIED at (J_0, G_1, K_1-L&M) only; NOT profile-invariant; now INDEPENDENTLY VERIFIED"
+    },
+    "S1_verified": {
+      "claim": "S1 DIRECT certificate and the A2 witness independently verified from SS-LM24",
+      "status": "VERIFIED",
+      "procedure": "ORIGINAL frozen",
+      "note": "Revision-2 transcript-attested caveat discharged"
+    },
+    "SSS-3_LK": {
+      "claim": "SSS-3's witness conditions W1 and W2 hold for propositional LK under K_1-L&M",
+      "status": "PROVED against SS-LM24 Figure 1",
+      "note": "closes a residue Revision 2 left undecided"
+    }
   },
-
   "withdrawn_by_self_audit": [
     "BIA (Branching-Internalisation Adequacy), its iff formulation, and its arity framing",
-    "Revision-1 T1 as an unbounded impossibility — replaced by SSS-3, bounded over explicit classes",
+    "Revision-1 T1 as an unbounded impossibility \u2014 replaced by SSS-3, bounded over explicit classes",
     "Revision-1 T3 verdict that S6 is UNDERDETERMINED",
     "Revision-1 claim that Turn 17's S6 determination check was incorrect",
-    "Revision-1 suggestion that LK is intrinsically better behaved than MLL — the contrast is state typing, not logic"
+    "Revision-1 suggestion that LK is intrinsically better behaved than MLL \u2014 the contrast is state typing, not logic"
   ],
-
   "not_established": [
     "shared vocabulary across the panel (U_0 unsealed)",
     "maximal jointly interpretable fragments; first-failure frontier",
     "common laws beyond the single c_0 fragment",
     "computed frames beyond Gamma_c0 = empty",
     "prior-art / novelty verdict for anything (UNRESOLVED, never positive)",
-    "definability, dependency, irreducibility, rank, minimality, alternative bases — P1 gate not passed",
-    "C1-C12 registry run — no candidate architecture exists to run it against",
+    "definability, dependency, irreducibility, rank, minimality, alternative bases \u2014 P1 gate not passed",
+    "C1-C12 registry run \u2014 no candidate architecture exists to run it against",
     "any universality, representativeness, or class theorem"
   ],
-
   "live_objections_carried": [
-    {"id": "A2-audit", "target": "SSS-3", "effect": "decoder class deliberately excludes state-inspecting decoders; conceded in PROOFS.md s1.0 and s1.6"},
-    {"id": "A4", "target": "S7 READY", "effect": "the finite family F rests on CDE-v1; a stricter auditor could return S7 to OPEN. Does not affect the independent, verbatim DI4 finding."},
-    {"id": "A6", "target": "S6 READY", "effect": "SS-GP94 read via OCR; transcription fidelity should be re-checked against a clean copy"},
-    {"id": "A7", "target": "A2", "effect": "profile-relative; S1 half transcript-attested, not independently verified here"},
-    {"id": "A8", "target": "DF-04-H refutation", "effect": "relative to E0-supplied-v1; under original E_0 alone the evaluation point is not reached"},
-    {"id": "A9", "target": "S1, S6, S7 certificates", "effect": "CDE-v1 is load-bearing in three certificates; robustness programme still owed"}
+    {
+      "id": "A2-audit",
+      "target": "SSS-3",
+      "effect": "decoder class excludes state-inspecting decoders; conceded in PROOFS.md s1.0/s1.6"
+    },
+    {
+      "id": "A4",
+      "target": "S7 READY",
+      "effect": "finite family F rests on CDE-v1; a stricter auditor could return S7 to OPEN. Independent, verbatim DI4 finding unaffected."
+    },
+    {
+      "id": "A6",
+      "target": "S6 READY",
+      "effect": "SS-GP94 read via OCR; transcription fidelity should be re-checked against a clean copy"
+    },
+    {
+      "id": "A7",
+      "target": "A2",
+      "effect": "profile-relative (stands); provenance half DISCHARGED by SS-LM24"
+    },
+    {
+      "id": "A8",
+      "target": "DF-04-H refutation",
+      "effect": "relative to E0-supplied-v1; under original E_0 alone the evaluation point is not reached"
+    },
+    {
+      "id": "A9",
+      "target": "S1, S6, S7 certificates",
+      "effect": "CDE-v1 load-bearing in three certificates; robustness programme owed"
+    },
+    {
+      "id": "A10",
+      "target": "S1 READY",
+      "effect": "propositional restriction analyst-performed under DI1; confirmed by inspection as the certificate's thinnest point"
+    },
+    {
+      "id": "A11",
+      "target": "PI0-BIB-v1",
+      "effect": "answered: frozen Pi0 preserved as UNEXECUTABLE; successor versioned, sealed pre-candidate; packet's 13-body split declined"
+    },
+    {
+      "id": "A12",
+      "target": "the whole run",
+      "effect": "PARTIALLY SUCCEEDS \u2014 three targets changed status on document supply. SR-B2 v2 negative verdicts carry little evidential weight. No terminal negative here rests on a failed search."
+    }
   ],
-
   "minimal_unblock_action": {
-    "statement": "Attach the nine missing primary documents listed in MISSING-SOURCE-MANIFEST.md. Nothing else is required to seal U_0 and start W*.",
-    "highest_marginal_value_single_document": "S1 — Liang & Miller, Focusing Gentzen's LK Proof System: carries an existing certificate whose thinnest point is flagged, is required for the mandatory exhaustive stratum, and would convert the A2 result from transcript-attested to independently verified.",
-    "for_full_novelty_verdict": "the nine, plus one primary source for each of the twelve remaining Pi_0 bodies (SS-CC92 already supplies the abstract-interpretation body)"
+    "statement": "Attach the eight missing target documents in MISSING-SOURCE-MANIFEST.md to seal U_0 and start W*; plus the eleven PI0-BIB-v1 documents for any novelty verdict.",
+    "highest_marginal_value": "S5 and S11 \u2014 both carry a flagged DI4 risk that could move them off READY, and both rest on no inspected document."
   },
-
   "artifact_validation": {
     "transcript_hashes_verified": true,
     "supplied_source_hashes_recorded": true,
@@ -87,6 +167,13 @@
     "frozen_objects_unmodified": true,
     "superseded_claims_retained_as_superseded": true,
     "successor_procedures_versioned_separately": true,
-    "codex_material_not_consulted": true
-  }
+    "codex_material_not_consulted": true,
+    "pi0_bib_sealed_before_any_W_star_candidate": true,
+    "self_audit_corrections_this_revision": [
+      "Pi0 count corrected from thirteen to twelve (DF-08)",
+      "T4 provenance caveat discharged",
+      "SSS-3 LK residue closed"
+    ]
+  },
+  "pi0_bib_v1_sha256": "3e5f6d6eeb6e9f9badd2ada852c2a282d362e2e85d5c381821e1a631df338c8c"
 }

@@ -11,11 +11,12 @@ changes, or evidences any Project FAR theory, claim, status, or boundary.
 Repository status and dialogue-theory status are kept strictly separate. Repository placement
 is not epistemic authority.
 
-## Terminal state (Revision 2)
+## Terminal state (Revision 3)
 
 **BLOCKED — MISSING PRIMARY SOURCES**, with the **source stage internally terminal**: all
-eleven targets hold terminal source statuses, and $U_0$ cannot be sealed because nine of the
-eleven primary documents are absent.
+eleven targets hold terminal source statuses, and $U_0$ cannot be sealed because **eight** of
+the eleven target documents are absent. Four documents have been supplied and all four are
+fully inspected; S1, S6 and S7 have complete K4 records.
 
 Start with [`TERMINAL-REPORT.md`](TERMINAL-REPORT.md), then
 [`MISSING-SOURCE-MANIFEST.md`](MISSING-SOURCE-MANIFEST.md) for the minimum attachments needed
@@ -29,10 +30,11 @@ to continue.
 | [`PROTOCOL-SUCCESSOR.md`](PROTOCOL-SUCCESSOR.md) | Separately versioned successor procedures — including `E0-supplied-v1` for supplied primary documents — and the replacements considered and **rejected**, with reasons. |
 | [`S6-PREREGISTRATION.md`](S6-PREREGISTRATION.md) | S6 retrieval parameters, fixed before any S6 search ran. |
 | [`EVIDENCE.json`](EVIDENCE.json) | Corpus and supplied-source hashes, target manifest, the executed SR-B2 v2 record, near-match sets, hypothesis dispositions, and the findings ledger. |
-| [`K4-RECORDS.md`](K4-RECORDS.md) | Per-target K4 primitive extraction with verbatim quotations and exact locators, for the two supplied sources. $U_0$ sealing status. |
-| [`PROOFS.md`](PROOFS.md) | Revision 2: SSS-1/2/3, the state-type taxonomy, the S6 and S7 certificates, the DF-04-H refutation, blocked obligations, and the hostile closure audit. |
+| [`K4-RECORDS.md`](K4-RECORDS.md) | Per-target K4 primitive extraction with verbatim quotations and exact locators, for S1, S6 and S7. $U_0$ sealing status. |
+| [`PI0-BIB-v1.md`](PI0-BIB-v1.md) | Sealed, outcome-independent prior-art bibliography, hashed before any $W^\ast$ candidate existed. Records **DF-08**: frozen $\Pi_0$ is unexecutable, and the count correction from thirteen to twelve. |
+| [`PROOFS.md`](PROOFS.md) | SSS-1/2/3, the state-type taxonomy, the S1/S6/S7 certificates, the DF-04-H refutation, blocked obligations, and the hostile closure audit. |
 | [`DIALOGUE-THEORY.md`](DIALOGUE-THEORY.md) | The extracted theory: **Search-State Sufficiency (SSS)**, with its indices, scope, non-claims, and falsifiers. Records the withdrawal of Revision 1's BIA. |
-| [`MISSING-SOURCE-MANIFEST.md`](MISSING-SOURCE-MANIFEST.md) | The nine absent primary documents, the sections required from each, and the minimum the user must attach. |
+| [`MISSING-SOURCE-MANIFEST.md`](MISSING-SOURCE-MANIFEST.md) | The eight absent target documents and eleven absent prior-art documents, the sections required from each, and the minimum the user must attach. |
 | [`TERMINAL-REPORT.md`](TERMINAL-REPORT.md) | Terminal classification, results, refutations, scope, unresolved items, evidence limitations, and validation status. |
 | [`STATE.json`](STATE.json) / [`CHECKPOINT.md`](CHECKPOINT.md) | Machine-readable and compact resume state. |
 | [`FAR-COMPARISON.md`](FAR-COMPARISON.md) | Written **last**. Relational classification only: partial overlap on one narrow question, otherwise independent. |
@@ -57,7 +59,8 @@ to continue.
 - No Codex-generated $U_0$, witness matrix, rank, or minimality claim has been consulted,
   imported, or used: it lacks the required K4 source record, and the precondition for revealing
   it — sealed independent extraction — has not been met.
-- The frozen run's own defect (Turn 17's incorrect S6 determination check) is **preserved as
-  observed**, not repaired.
+- Defects of the frozen objects are **preserved as observed**, not repaired: **DF-08** records
+  that frozen $\Pi_0$ is unexecutable, and its verdict is kept separate from the sealed
+  successor that makes a bibliography operative.
 - `OPEN` never counts as `NO`; novelty is never returned positive on an uncertified
   translation; failure, falsification, and `Unknown` are recorded as outcomes.

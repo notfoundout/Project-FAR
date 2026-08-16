@@ -26,6 +26,51 @@ transcriptions of a bitmap-font body and are marked `[OCR]`.
 
 ---
 
+## K4 / S1 — `SS-LM24`
+
+C. Liang & D. Miller, *Focusing Gentzen's LK Proof System*, in T. Piecha & K. F. Wehmeier
+(eds.), *Peter Schroeder-Heister on Proof-Theoretic Semantics*, Springer, 2024, chapter 9,
+pp. 275ff.; DOI `10.1007/978-3-031-50981-0_9`. SHA-256
+`044ac192a6fcdea5425a068a254dea99ca32c3a60f3441bbf1bf4b2bfca465ef`.
+
+**Procedure: ORIGINAL.** This is frozen $N_1$ **member 2** (`TR-11:10689`), in the frozen
+near-match set before supply. Text layer present; no OCR required. Identity verified from the
+chapter title block, author block, and the volume statement on printed p. 275.
+
+Corpus profile: $K_{1,\mathrm{L\&M}}$ — the profile already carried by S1's certificate.
+
+| # | Item | Verbatim designation | Locator |
+|---|---|---|---|
+| 1 | atomic formula | "Atomic formulas are of the form $P(t_1,\ldots,t_n)$, where $n\ge0$, $P$ is a predicate of arity $n$, and $t_1,\ldots,t_n$ is a list of first-order terms." | §2, p. 277 |
+| 2 | formula | "Formulas are built from atomic formulas using both the logical connectives $\wedge$, t, $\vee$, f, $\supset$ as well as the two first-order quantifiers $\forall$ and $\exists$." | §2, p. 277 |
+| 3 | substitution | "the expression $[s/x]B$ denotes the result of performing a capture-avoiding substitution of term $s$ for all free occurrences of the variable $x$ in the formula $B$." | §2, p. 277 |
+| 4 | sequent | "Inference rules are between sequents which are **pairs of multisets of formula**, formally written with an infix $\vdash$." | §2, p. 277 |
+| 5 | the LK inference rules | "Figure 1 presents the LK sequent proof calculus of Gentzen (1935). … The rules there are divided into introduction rules, structural rules, and identity rules." | §2 and Fig. 1, p. 277 |
+| 6 | structural rules cL, cR, wL, wR | displayed under the heading "**Structural rules**": $\dfrac{\Gamma,B,B\vdash\Delta}{\Gamma,B\vdash\Delta}\,cL$, $\dfrac{\Gamma\vdash\Delta,B,B}{\Gamma\vdash\Delta,B}\,cR$, $\dfrac{\Gamma\vdash\Delta}{\Gamma,B\vdash\Delta}\,wL$, $\dfrac{\Gamma\vdash\Delta}{\Gamma\vdash\Delta,B}\,wR$ | Fig. 1, p. 277 |
+| 7 | proof | "By **proof**, we mean a tree structure of inference rules and sequents such that all premises are closed, in the sense that the inference rules at the leaves have zero premises (such as the initial rule)." | §2, p. 278 |
+| 8 | derivation | "By **derivation**, we mean a similar tree structure of inference rules and sequents, but we do not assume that all leaves are closed: **derivations can have unproved premises**." | §2, p. 278 |
+
+$m=8$, the U-b bound, reached. Later definitional material (polarized formulas; the LKF
+sequents $\vdash\Gamma\Uparrow\Theta$ and $\vdash A\Downarrow\Theta$; storage) falls outside the
+bound, and the cut point is the source's own definition order.
+
+### $\mathrm{Ax}(u)$ packages carried
+
+- $\mathrm{Ax}(\text{4})$ — that a sequent is a **pair of multisets**, and the source's own
+  statement of what this changes: "In Gentzen's system, contexts are lists of formulas, and the
+  exchange rule, which allowed two adjacent formulas to be swapped, was used. In Figure 1,
+  contexts ($\Gamma$ and $\Delta$) are multisets of formulas, and **the exchange rule is not
+  used**." (§2, p. 277, difference 1). This is the constitutive representation law and is the
+  load-bearing $\mathrm{Ax}$ item for T4.
+- $\mathrm{Ax}(\text{7,8})$ — the closed/unclosed leaf distinction quoted above, which is what
+  makes FDI1 and FDI2 source-satisfied.
+- $\mathrm{Ax}(\text{5,6})$ — the displayed rule schemata of Fig. 1, p. 277, with the side
+  conditions stated in the caption: "In the $\forall R$ and $\exists L$ rules, the variable $y$
+  is not free in the conclusion. In the $\wedge L$ and $\vee R$ rules, $i\in\{1,2\}$. In
+  $\forall L$ and $\exists R$, $s$ is a first-order term."
+
+---
+
 ## K4 / S7 — `SS-CC92`
 
 P. Cousot & R. Cousot, *Abstract Interpretation Frameworks*, J. Logic and Computation
@@ -107,7 +152,10 @@ source in its own words, not imposed by the analyst.
 
 ## Sealing status
 
-$$\boxed{U_0\ \textbf{NOT SEALED, NOT HASHED} — 2\ \text{of}\ 11\ \text{targets have K4 records}}$$
+$$\boxed{U_0\ \textbf{NOT SEALED, NOT HASHED} — 3\ \text{of}\ 11\ \text{targets have K4 records}}$$
+
+Complete: **S1** (`SS-LM24`, original procedure), **S6** (`SS-GP94`, `E0-supplied-v1`),
+**S7** (`SS-CC92`, original procedure). Missing: S2, S3, S4, S5, S8, S9, S10, S11.
 
 Per the frozen staging (`TR-11:4956`), $W^\ast$ begins only after $\mathcal{K}_0$, $U_0$ and
 $\Pi_0$ are hashed. It has not begun and, on the evidence available in this session, cannot.
