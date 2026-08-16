@@ -1,397 +1,607 @@
 # PROOFS — theorems, objections, countermodels, dispositions
 
-Every result below is **retrieval-independent**: it is proved from objects frozen in
-$\mathfrak{E}_{0a}$ plus standard definitions of MLL and LK, and does not depend on any source
-that the execution environment could not reach. Results that *do* depend on blocked sources
-are recorded as `BLOCKED`, not as findings.
+**Revision 2.** Revision 1's T1–T3 are reopened and corrected below under the audit points
+raised against them. Every superseded claim is stated as superseded rather than deleted.
 
-Notation and rule statuses are as in `PROTOCOL.md`.
+Notation and rule statuses are as in `PROTOCOL.md`. Source locators are exact.
 
 ---
 
-## T1 — No single-sequent binary transition structure represents MLL backward search
+## 0. Supplied primary sources
 
-**Status: PROVED.** Dependencies: frozen S6 tuple (`TR-11:2145`, `TR-11:4076`); standard
-one-sided MLL. Falsifier: exhibit a binary relation on MLL sequents, derived from the MLL rule
-instances without additional analyst structure, whose induced provability predicate agrees
-with MLL provability on all sequents.
+Both were supplied as local files, hashed, bibliographically verified from their own front
+matter, and cached. They are **SOURCE-SUPPLIED** evidence. Evidence cutoff **2026-08-15** is
+preserved: both are 1992/1994 publications, already eligible at that cutoff; later delivery of
+an already-eligible publication does not move the cutoff.
 
-### Setup
+| ID | Document | SHA-256 | Identity verified from |
+|---|---|---|---|
+| `SS-CC92` | P. Cousot & R. Cousot, *Abstract Interpretation Frameworks*, **J. Logic and Computation 2(4):511–547, 1992** | `19591e44a5584e27547538d3ed553a7b26b78d9fe234f129fbba3c2a735f89bb` | title block p. 511; running heads and page numbers 511–547 present in the document |
+| `SS-GP94` | D. Galmiche & G. Perrier, *Foundations of Proof Search Strategies Design in Linear Logic*, **Logical Foundations of Computer Science (LFCS), St-Petersburg, 1994, pp. 101–113**; HAL `hal-01297758` | `622f2f9ee49f8c8b7201b2937ea88509f4ecac345739fd84c357bbf2193132ee` | HAL cover page; PDF metadata (Title, Author); §1 title block |
 
-One-sided MLL without exponentials. Formulas from atoms $p,p^{\perp}$ by $\otimes,⅋$; negation
-involutive on atoms. Sequents $\vdash\Gamma$, $\Gamma$ a finite multiset of formulas. Rules:
+`SS-CC92` has a text layer. `SS-GP94` is a bitmap-font/scanned body; its body was rendered at
+200 dpi and OCR'd. **All `SS-GP94` quotations below are OCR transcriptions** and are marked
+`[OCR]`; obvious OCR corruption of symbols is marked `[sic]`. Page references for `SS-GP94`
+are to the preprint's own printed page numbers.
 
-$$\frac{}{\vdash A, A^{\perp}}\ (\mathrm{ax})
-\qquad
-\frac{\vdash \Gamma, A, B}{\vdash \Gamma, A ⅋ B}\ (⅋)
-\qquad
-\frac{\vdash \Gamma, A \quad \vdash \Delta, B}{\vdash \Gamma, \Delta, A\otimes B}\ (\otimes)$$
+**Status of `SS-CC92` within the frozen experiment.** It is **$N_7$ member 5**, frozen into the
+candidate set by the original SR-B2 v2 Channel-A ordering *before* it was supplied. Its
+inspection is therefore ordinary execution of the original frozen procedure, not a successor.
 
-Read backwards, $(\otimes)$ applied to $\vdash\Sigma, A\otimes B$ requires a partition
-$\Sigma=\Gamma\uplus\Delta$ and yields the **pair** of premises
-$(\vdash\Gamma,A;\ \vdash\Delta,B)$, both of which must be proved.
-
-Frozen S6 fixes: native state = *sequent with resource context* (one sequent), native
-transformation = *one rule application*, native structure = *backward MLL search graph*.
-
-**Definition (projected relation).** $\to_{\pi}\ \subseteq\mathsf{Seq}\times\mathsf{Seq}$ is
-the relation $S\to_{\pi}P$ iff $P$ is a premise of some backward MLL rule instance with
-conclusion $S$. This is the only binary relation on single sequents obtainable from the rule
-set without adding structure the source does not supply (DI3).
-
-Two readings assign a provability predicate to $\to_\pi$:
-
-- **OR-reading.** $\mathrm{Prov}_{\vee}$ = least set containing every axiom and every $S$ such
-  that $S\to_{\pi}P$ for some $P\in\mathrm{Prov}_{\vee}$.
-- **AND-reading.** $\mathrm{Prov}_{\wedge}$ = greatest/least set containing every axiom and
-  every $S$ all of whose $\to_{\pi}$-successors lie in the set.
-
-### Lemma 1 (atom balance)
-
-If $\vdash\Gamma$ is MLL-provable then for every atom $p$, the number of occurrences of $p$ in
-$\Gamma$ equals the number of occurrences of $p^{\perp}$.
-
-*Proof.* Induction. $(\mathrm{ax})$: $\vdash A,A^{\perp}$ is balanced. $(⅋)$ does not change
-the atom multiset. $(\otimes)$: the conclusion's atom multiset is the union of the premises',
-each balanced by hypothesis. ∎
-
-### Countermodel C-OR — the OR-reading is unsound
-
-Let $$S_{\vee}\ :=\ \vdash a^{\perp},\, a^{\perp},\, a\otimes b .$$
-
-*$S_\vee$ is not MLL-provable.* Its atom multiset has $a$ twice negatively and once
-positively, and $b$ once positively and never negatively. Lemma 1 fails. ∎
-
-*But $S_\vee$ has a provable $\to_\pi$-successor.* The $(\otimes)$ instance with conclusion
-$S_\vee$ and partition $\Gamma=\{a^{\perp}\}$, $\Delta=\{a^{\perp}\}$ has premises
-$\vdash a^{\perp},a$ and $\vdash a^{\perp},b$. The first is an instance of $(\mathrm{ax})$.
-Hence $S_\vee\to_\pi\ \vdash a^{\perp},a$ and the successor is provable, so
-$S_\vee\in\mathrm{Prov}_{\vee}$.
-
-$$\boxed{\mathrm{Prov}_{\vee}\not\subseteq\ \vdash_{\mathrm{MLL}}}$$
-
-### Countermodel C-AND — the AND-reading is incomplete
-
-Let $$S_{\wedge}\ :=\ \vdash a^{\perp},\, b^{\perp},\, a\otimes b .$$
-
-*$S_\wedge$ is MLL-provable.* The $(\otimes)$ instance with $\Gamma=\{a^{\perp}\}$,
-$\Delta=\{b^{\perp}\}$ has premises $\vdash a^{\perp},a$ and $\vdash b^{\perp},b$, both axioms.
-
-*But it has an unprovable $\to_\pi$-successor.* The $(\otimes)$ instance with
-$\Gamma=\varnothing$, $\Delta=\{a^{\perp},b^{\perp}\}$ has premises $\vdash a$ and
-$\vdash a^{\perp},b^{\perp},b$. The first is unprovable by Lemma 1. Hence
-$S_\wedge\notin\mathrm{Prov}_{\wedge}$.
-
-$$\boxed{\vdash_{\mathrm{MLL}}\ \not\subseteq\ \mathrm{Prov}_{\wedge}}$$
-
-### Theorem T1
-
-The projected single-sequent relation $\to_\pi$ does not determine MLL provability: the
-OR-reading over-generates (C-OR) and the AND-reading under-generates (C-AND). Consequently a
-native structure whose states are single MLL sequents and whose transition structure is an
-ordinary binary relation **fails MFDI4** — the joint premise family $(P_1,P_2)$ generated by
-one $(\otimes)$ instance is not recoverable from the edge set, and neither is the pairing
-between premises arising from the *same* resource partition. ∎
-
-**Remark (what T1 does not show).** T1 does not show that MLL proof search is undefinable, nor
-that resource nondeterminism is a defect. GPT Turn 35 §2 is upheld: retaining *all* admissible
-partitions is ordinary nondeterminism. The failure is one of **arity**, not of determinacy.
+**Status of `SS-GP94`.** It was **never returned** by any of the 16 prescribed S6 SR-B2 v2
+invocations and is **not** in frozen $N_6$. It is **not retrofitted**. It is inspected only
+under the separately versioned `E0-supplied-v1` (see `PROTOCOL-SUCCESSOR.md`), and the
+difference between the two verdicts is reported as source-supply sensitivity (§5.3).
 
 ---
 
-## T2 — The frontier state internalises AND-branching; the single-sequent state does not
+## 1. T1 superseded by T1′ — bounded impossibility over explicit classes
 
-**Status: PROVED.** This is the over-generation check demanded of T1: a correct account must
-condemn frozen S6's ordinary-graph reading *without* condemning frozen S1.
+### 1.0 What was wrong with T1
 
-### Setup
+Revision 1's T1 asserted that *no* single-sequent binary transition structure represents MLL
+backward search, having tested exactly two decoders (OR and AND) against exactly one relation
+($\to_\pi$). That is not an impossibility theorem. Two specific defects:
 
-Frozen S1 state: finite multiset $M$ of open sequents; transition
-$$M\to M' \iff \exists\, S\in M,\ \exists\ \text{rule instance}\ \tfrac{P_1\cdots P_k}{S}:\quad
-M' = M-[S]+[P_1]+\cdots+[P_k].$$
+- **Unrestricted representation class is fatal.** If $\to$ may be *any* binary relation on
+  $\mathsf{Seq}$, the claim is **false**: put $S\to S'$ iff $S$ is MLL-provable and $S'$ is a
+  fixed axiom. Then "some successor is provable" decides provability exactly. The answer has
+  simply been encoded into the relation.
+- **Unrestricted decoder class is fatal.** MLL provability is a function of $S$ alone, since
+  $S$ determines all its rule instances. Any decoder permitted to inspect $S$ can recompute
+  provability and ignore $\to$ entirely.
 
-Call $M$ **closable** iff every sequent occurring in $M$ is provable.
+So an impossibility result exists only relative to an explicit representation class **and** an
+explicit decoder class. T1′ supplies both and is exhaustive over them.
 
-### Proposition T2.1 (adequacy of the frontier state)
+### 1.1 The two classes, fixed explicitly
 
-$M$ is closable $\iff$ $M=[\,]$ or there exists $M'$ with $M\to M'$ and $M'$ closable.
+**Representation class $\mathcal{R}_{\mathrm{bin}}^{\mathsf{Seq}}$.** The state type is
+$\mathsf{Seq}$ = individual MLL sequents (frozen S6's stated state type). The transition
+structure is the **rule-induced projected relation**
+$$S\to_\pi P \iff P \text{ is a premise of some backward MLL rule instance with conclusion } S.$$
+This is the *unique* member of the class: any other binary relation on $\mathsf{Seq}$ requires
+an analyst-supplied selection, orientation, or encoding, which DI3 forbids.
 
-*Proof.* ($\Leftarrow$) Let $M'=M-[S]+[P_1..P_k]$ be closable. Each $P_i$ is provable, so by the
-rule instance $S$ is provable; every other member of $M$ occurs in $M'$ and is provable. Hence
-$M$ closable. ($\Rightarrow$) Let $M$ be closable and $M\neq[\,]$. Pick $S\in M$; it is
-provable, so some rule instance $\frac{P_1\cdots P_k}{S}$ has all $P_i$ provable. The resulting
-$M'$ is closable. ∎
+**Decoder class $\mathcal{D}_{\mathrm{succ}}$ — uniform monotone successor-set decoders.**
+$\mathrm{Prov}$ is the least fixpoint of
+$$\Phi(X)(S)\ =\ T(S)\ \vee\ g\big(\{X(P) : S\to P\}\big)$$
+where $T(S)$ holds iff $S$ is the conclusion of a zero-premise rule instance, and
+$g:\wp(\{0,1\})\to\{0,1\}$ is monotone with $g(\varnothing)=0$. **Uniform** means one $g$ for
+all $S$: $g$ may not inspect $S$. This is exactly the information a binary relation carries —
+a *set* of successors, hence a *set* of successor truth values.
 
-### Theorem T2
+### 1.2 Lemma (four decoders)
 
-The frontier representation admits a **purely disjunctive** fixpoint characterisation of
-closability (T2.1), because conjunction over sibling premises is absorbed into multiset union
-inside a single successor state. The single-sequent representation admits no such
-characterisation (T1). Hence:
+$\mathcal{D}_{\mathrm{succ}}$ has exactly four members.
 
-$$\boxed{\text{adequacy of a backward-search state representation}\ =\ \text{internalisation of rule branching}}$$
+*Proof.* As $X$ increases pointwise, the value set $V(S)=\{X(P):S\to P\}$ moves along
+$\{0\}\to\{0,1\}\to\{1\}$. Monotonicity of $\Phi$ therefore requires
+$g(\{0\})\le g(\{0,1\})\le g(\{1\})$, and $g(\varnothing)=0$ is fixed. A monotone chain of
+three Booleans has exactly four solutions:
 
-The frozen shell satisfies this criterion for S1 and does not settle it for S6. ∎
+| $g(\{0\}),g(\{0,1\}),g(\{1\})$ | decoder | meaning |
+|---|---|---|
+| $0,0,0$ | $\mathbf{TERM}$ | provable iff terminal |
+| $0,0,1$ | $\mathbf{AND}$ | all successors provable |
+| $0,1,1$ | $\mathbf{OR}$ | some successor provable |
+| $1,1,1$ | $\mathbf{NONEMPTY}$ | some successor exists |
+∎
 
-**Disposition.** T2 is the reason CDE-v1 correctly delivered S1 (`TR-31:1207`) and correctly
-does **not** transfer to S6 (`TR-31:1282`). GPT Turn 35's choice of option (B) is confirmed by
-proof rather than by expectation.
+### 1.3 Lemma (atom balance)
 
----
+If $\vdash\Gamma$ is MLL-provable then every atom $p$ occurs in $\Gamma$ as often as
+$p^{\perp}$. *Proof.* Induction: $(\mathrm{ax})$ is balanced; $(⅋)$ preserves the atom
+multiset; $(\otimes)$ takes the union of two balanced multisets. ∎
 
-## T3 — Frozen S6 is UNDERDETERMINED, independently of retrieval
+### 1.4 The two witnesses
 
-**Status: PROVED, terminal.** Dependencies: T1, T2, determination invariant (`TR-11:5424`),
-UNDERDETERMINED definition (`TR-11:6426`), Turn 18 §6 disposition rule.
+$$S_\vee := \ \vdash a^{\perp},\,a^{\perp},\,a\otimes b
+\qquad\qquad
+S_\wedge := \ \vdash a^{\perp},\,b^{\perp},\,a\otimes b$$
 
-### Argument
+- $S_\vee$ is **not** provable ($a$ occurs twice negatively, once positively; $b$ never
+  negatively — Lemma 1.3), is **not** terminal, and **has** a provable successor: the
+  $(\otimes)$ instance with partition $\Gamma=\{a^{\perp}\},\Delta=\{a^{\perp}\}$ has premises
+  $\vdash a^{\perp},a$ (an axiom) and $\vdash a^{\perp},b$.
+- $S_\wedge$ **is** provable (partition $\Gamma=\{a^{\perp}\},\Delta=\{b^{\perp}\}$ gives the
+  axioms $\vdash a^{\perp},a$ and $\vdash b^{\perp},b$), is **not** terminal, and **has** an
+  unprovable successor: the partition $\Gamma=\varnothing,\Delta=\{a^{\perp},b^{\perp}\}$ gives
+  the premise $\vdash a$, unprovable by Lemma 1.3.
 
-The frozen S6 schema fixes the **states** (single sequents with resource context) and the
-**step granularity** (one rule application). It does not fix the **arity of the transition
-structure**: "backward MLL search graph" (`TR-11:4076`) is satisfied by
+### 1.5 Theorem T1′
 
-- $\mathcal{X}_1$ — an ordinary binary relation $\to_\pi\subseteq\mathsf{Seq}\times\mathsf{Seq}$;
-- $\mathcal{X}_2$ — a resource-labelled hyperedge structure
-  $S\to_{\rho,\Gamma,\Delta}\{P_1,\ldots,P_n\}$, one hyperedge per rule instance.
+No pair in
+$\mathcal{R}_{\mathrm{bin}}^{\mathsf{Seq}}\times\mathcal{D}_{\mathrm{succ}}$ computes MLL
+provability.
 
-$\mathcal{X}_1\not\equiv\mathcal{X}_2$: by T1, $\mathcal{X}_1$ does not determine MLL
-provability, while $\mathcal{X}_2$ does (each hyperedge records one complete rule instance, so
-the closability recursion of T2.1 lifts). They are therefore not two presentations of one
-structure; they differ in what they represent.
+*Proof.* By Lemma 1.2 there are four decoders. $\mathbf{TERM}$ is refuted by $S_\wedge$
+(provable, non-terminal). $\mathbf{NONEMPTY}$ is refuted by $S_\vee$ (unprovable, has
+successors). $\mathbf{OR}$ is refuted by $S_\vee$ (unprovable, has a provable successor).
+$\mathbf{AND}$ is refuted by $S_\wedge$ (provable, has an unprovable successor). ∎
 
-Applying the shell's own operative test — **if two inequivalent structures are compatible with
-the same specification, the specification does not determine the structure** (DI3's form,
-`TR-11:8211`; determination invariant, `TR-11:5424`) — the instance $a$ (a finite MLL sequent)
-does **not** determine $\mathcal{S}_{6,a}$. An analyst choice made after the instance tuple is
-supplied is required to construct the native structure. That is exactly the failure the
-determination invariant forbids.
+### 1.6 Exactly what T1′ does and does not establish
 
-$$\boxed{\mathrm{Status}(S6)=\mathbf{UNDERDETERMINED\ (target\ specification)}}$$
+**Does:** over the individual-sequent state type, with the rule-induced relation and uniform
+successor-set decoding, MLL provability is not computable — and the reason is identifiable:
+the projected relation destroys the pairing between premises arising from the *same* resource
+partition.
 
-### Why this is not repairable and not retrieval-sensitive
-
-- Turn 18 §6 (`TR-11:5426`): a target failing the determination check is *reported as
-  underdetermined target specification, **not repaired by analyst convention mid-experiment***.
-- GPT Turn 35 §5 (`TR-31:1503`): *"Do not repair S6 now."* Selecting $\mathcal{X}_2$ because it
-  works is precisely the analyst construction DI3 exists to block.
-- K-P1 asks whether a source formalizes *the exact frozen target*. When the frozen target does
-  not denote a unique structure, there is no object for a source to be checked against.
-  **The ambiguity is prior to retrieval and cannot be resolved by retrieval.** Completing
-  SR-B2 v2 for S6 (done — see `EVIDENCE.json`) therefore cannot change this verdict.
-
-### Correction to the frozen shell's own record — preserved, not repaired
-
-Turn 17's determination check (`TR-11:4906`) recorded **S6 ✓ — "MLL rule set fixed; $a$ = root
-sequent."** That check verified that the rules and the root are fixed. It did not verify that
-the *arity of the transition structure* is fixed. T3 shows the ✓ was **incorrect**.
-
-Per the closure prompt's rule on frozen-run defects, this is recorded as a **terminal defect of
-the $\mathfrak{E}_0$ run**, preserved as observed. Any repair belongs to a separately versioned
-$\mathfrak{E}_1$ and may not alter this run's result.
-
-### Relation to the adjudicated resume state
-
-`RESUME-SUMMARY` reports that a proposed `S6 = SOURCE-FAIL` was rejected as terminal because
-MFDI3 ruled out ordinary $\mathsf{Seq}\times\mathsf{Seq}$ while a permitted resource-labelled
-hyperedge might preserve joint premises. T3 **agrees that SOURCE-FAIL is wrong** and sharpens
-the reason: the two readings are not a search problem to be settled by finding the right
-source, they are two inequivalent targets, and the frozen text does not pick one. The correct
-terminal status is UNDERDETERMINED, which is a status the frozen shell already provides.
+**Does not:** it does not show MLL provability is undefinable (it is definable from $S$ alone);
+it does not show that binary relations on *richer* state types fail (§2 proves one succeeds);
+it does not show that resource nondeterminism is a defect (GPT Turn 35 §2 stands — retaining
+all admissible partitions is ordinary nondeterminism); and it is **not** a characterisation.
 
 ---
 
-## T4 — Falsification of the preregistered prediction A2 at the literal joint profile
+## 2. State-type taxonomy, replacing the arity framing
 
-**Status: PROVED, profile-relative.** Executed under separately versioned procedure
-`E0-c0-only-v1` (see `PROTOCOL-SUCCESSOR.md`), **not** as an in-order $\mathfrak{E}_0$ result.
+Revision 1 phrased the result as being about **arity**. That was imprecise: a binary relation
+on a rich enough state encodes conjunction perfectly well. Every claim is now indexed by
+**state type**.
 
-### The prediction
+| | State type | Transition structure | Adequate for MLL? |
+|---|---|---|---|
+| $\mathcal{X}_1$ | individual sequent $\mathsf{Seq}$ | rule-induced **binary relation** | **No** — T1′, over $\mathcal{D}_{\mathrm{succ}}$ |
+| $\mathcal{X}_2$ | individual sequent $\mathsf{Seq}$ | resource-labelled **hyperedges** $S\to_{\rho,\text{split}}\{P_1,\ldots,P_k\}$ | **Yes** — Prop. 2.2 |
+| $\mathcal{X}_3$ | frontier $\mathsf{MSet}(\mathsf{Seq})$ | **binary relation** | **Yes** — Prop. 2.1 |
 
-A2 (`TR-11:3319`, sharpened at `TR-11:4088`): for $c_0=(\{S1,S2\},L_\to)$,
-$\mathcal{T}_{c_0,\mathbf{J}}\subseteq\mathcal{F}_{c_0,\mathbf{J}}=\mathrm{Cn}(\varnothing)$ —
-*every first-order directed-graph sentence true of every admissible LK proof-search graph and
-every admissible CSP propagation graph is logically valid.* Falsified by one shared
-non-logically-valid $L_\to$-sentence.
+$\mathcal{X}_3$ is a *binary relation* and is adequate. This is the direct refutation of the
+Revision-1 arity framing, and it is retained as the correction.
 
-$\Gamma_{c_0}=\varnothing$ was fixed in $\mathfrak{E}_{0a}$ (`TR-11:4179`), before this
-computation, so the frame is not tuned to the result.
+### Proposition 2.1 (frontier sufficiency — any finitary rule system)
 
-### The joint certificate
+Let $R$ be any rule system with finitary rules $\frac{P_1\cdots P_k}{S}$, $k\ge0$. Define
+$M\to M'$ iff $M'=M-[S]+[P_1]+\cdots+[P_k]$ for some $S\in M$ and some instance. Call $M$
+*closable* iff every sequent occurring in $M$ is derivable. Then
 
-$\mathbf{J}_0$: for S1, interpret $\to$ as the literal frontier-transition relation at profile
-$r_{\mathrm{syn}}$ = (configuration, syntactic identity mod α); for S2, interpret $\to$ as the
-literal propagator-application relation at $r_{\mathrm{store}}$ = (store, store equality).
-Both are grammar $G_1$ (literal — a native primitive relation), uniform over
-$\mathsf{Inst}_i$, $E$-factorization trivial (identity on the named profile), $O$-respect
-immediate. $\mathrm{Ax}(\to)=\varnothing$ since $L_\to$ is dialogue-constructed.
+$$M \text{ closable} \iff M=[\,]\ \text{ or }\ \exists M'.\, M\to M' \wedge M' \text{ closable.}$$
 
-$$\widehat{\mathfrak{J}}_{c_0,B}\ni\mathbf{J}_0 \implies \mathrm{Status}(c_0)=\textbf{JOINT-YES}$$
+*Proof.* ($\Leftarrow$) All members of $M'$ derivable ⇒ each $P_i$ derivable ⇒ $S$ derivable by
+the instance; the other members of $M$ occur in $M'$. ($\Rightarrow$) $M$ closable, $M\neq[\,]$;
+pick $S\in M$, take the last rule of a derivation of $S$; its premises are derivable, so the
+resulting $M'$ is closable. ∎
 
-as A2 predicted. JOINT-COMPLETE is **not** claimed.
+**This holds for MLL exactly as for LK.** The conjunction is absorbed into multiset union.
 
-### The witness
+### Proposition 2.2 (hyperedge sufficiency on individual sequents)
 
-$$\varphi_{\mathrm{irr}}\ :=\ \forall x\,\neg(x\to x)$$
+Define $S\rightarrowtail\{P_1,\ldots,P_k\}$ iff $\frac{P_1\cdots P_k}{S}$ is a rule instance
+(for MLL, the label carries the resource partition). Then
+$$S \text{ derivable} \iff \exists\, S\rightarrowtail\{P_1,\ldots,P_k\}\ \text{with every } P_i \text{ derivable.}$$
+*Proof.* Immediate from the definition of derivability by rule application. ∎
 
-**$\varphi_{\mathrm{irr}}$ is not logically valid.** The one-point graph with a loop refutes it.
-Hence $\varphi_{\mathrm{irr}}\notin\mathrm{Cn}(\varnothing)=\mathcal{F}_{c_0,\mathbf{J}_0}$.
+This is the standard AND/OR characterisation; the hyperedge retains the joint premise family
+that $\to_\pi$ discards.
 
-**$\varphi_{\mathrm{irr}}$ holds in every $\mathcal{S}_{2,a}$.** Edges are exactly
-$(D,p_j(D))$ for $p_j(D)\neq D$ (frozen edge convention, `TR-11:5378`). No loop exists by
-construction.
+### Proposition 2.3 (individual-sequent insufficiency is not MLL-specific)
 
-**$\varphi_{\mathrm{irr}}$ holds in every $\mathcal{S}_{1,a}$.** Suppose $M\to M$, i.e.
-$M=M-[S]+[P_1]+\cdots+[P_k]$ for $S\in M$ and a rule instance $\frac{P_1\cdots P_k}{S}$.
-Comparing cardinalities, $|M|=|M|-1+k$, so $k=1$; and then $[P_1]=[S]$, so $P_1=S$. So the
-claim reduces to: *no LK rule instance has a single premise identical to its conclusion.*
-Under the certified S1 corpus profile (Liang & Miller Figure 1: propositional restriction,
-contexts are multisets, exchange is not used — `TR-31:538`):
+Proposition 2.1's proof uses nothing about MLL, and T1′'s proof uses only the two witness
+conditions:
 
-| rule form | premise vs conclusion |
-|---|---|
-| logical rules ($\wedge,\vee,\neg,\supset$ introductions) | conclusion has one more connective occurrence; $P_1\neq S$ |
-| weakening $\frac{\Gamma\vdash\Delta}{\Gamma,A\vdash\Delta}$ | premise multiset strictly smaller; $P_1\neq S$ |
-| contraction $\frac{\Gamma,A,A\vdash\Delta}{\Gamma,A\vdash\Delta}$ | premise multiset strictly larger; $P_1\neq S$ |
-| axiom | $k=0$, excluded above |
-| cut | $k=2$, excluded above |
-| exchange | **not a rule** under multiset contexts |
+- **(W1)** some non-terminal underivable $S$ has an instance with a derivable premise;
+- **(W2)** some non-terminal derivable $S$ has an instance with an underivable premise.
 
-Hence no such instance exists and every $\mathcal{S}_{1,a}$ is irreflexive. ∎
+MLL satisfies both (§1.4). Classical LK satisfies both under presentations with
+$\wedge L_1/\wedge L_2$-style single-conjunct rules or with unrestricted cut; under a purely
+additive-context G3 presentation the question is presentation-relative and **is not decided
+here**.
 
-### Verdict
+$$\boxed{\text{The S1/S6 contrast in the frozen shell is a contrast of \emph{state typing}, not of logic.}}$$
 
-$$\varphi_{\mathrm{irr}}\in\mathcal{T}_{c_0,\mathbf{J}_0}\setminus\mathcal{F}_{c_0,\mathbf{J}_0}
-\implies \mathcal{C}_{c_0,\mathbf{J}_0}\neq\varnothing
-\implies \boxed{\textbf{A2 FALSIFIED at }\mathbf{J}_0,\ G_1,\ K_{1,\mathrm{L\&M}}}$$
-
-### Profile sensitivity — recorded, not suppressed
-
-The S1 half of the proof **is corpus-profile dependent**, and this is the sharpest
-demonstration in the whole run of why K-P4 indexing exists.
-
-If a corpus profile presents LK with **list** contexts and an explicit exchange rule
-$\frac{\Gamma,A,B,\Delta\vdash\Theta}{\Gamma,B,A,\Delta\vdash\Theta}$, then the instance with
-$A=B$ has premise identical to conclusion. Such graphs are **reflexive** at every node
-containing a sequent with two equal adjacent context formulas, and $\varphi_{\mathrm{irr}}$
-fails.
-
-- Under $K_{1,\mathrm{L\&M}}$ (multiset contexts, certified at Turn 34): **A2 FALSIFIED.**
-- Under a list-with-exchange profile: $\varphi_{\mathrm{irr}}$ fails, and whether any other
-  shared non-valid sentence exists was **not** determined within budget:
-  $\mathcal{C}_{c_0}$ under that profile is **UNRESOLVED**, not empty.
-
-$$\boxed{\text{A2's truth value is corpus-profile-relative. It is not profile-invariantly falsified.}}$$
-
-### Substantiveness and novelty — stated without inflation
-
-$\varphi_{\mathrm{irr}}$ is a weak law. On the S2 side it is close to a consequence of the
-frozen edge convention ($p_j(D)\neq D$); on the S1 side it is a genuine proof-theoretic fact.
-It is shared content in the exact technical sense the experiment defines, and nothing more.
-
-**Novelty verdict: UNRESOLVED.** $\Pi_0$'s exact corpus is fixed only at $\mathfrak{E}_{0b}$,
-which is blocked, and the frozen rule (`TR-11:2214`) is explicit that an uncertified $\Pi_c$
-translation makes novelty UNRESOLVED, never positive. Independently, the author's own
-assessment — recorded so that it cannot later be read as a novelty claim — is that
-irreflexivity of a one-step reduction relation with trivial steps excluded is entirely
-standard in rewriting theory, which is inside $\Pi_0$. **No novelty is claimed for
-$\varphi_{\mathrm{irr}}$.**
+Had the shell given S6 a frontier state it would have been adequate; had it given S1 an
+individual-sequent state, S1 would have faced T1′'s problem. Revision 1's suggestion that LK
+is intrinsically better behaved than MLL here is **withdrawn**.
 
 ---
 
-## Blocked obligations — stated as blocked, not as findings
+## 3. T3 superseded by T3′ — S6 is **not** UNDERDETERMINED
+
+### 3.0 What was wrong with T3
+
+Revision 1 classified S6 UNDERDETERMINED because $\mathcal{X}_1$ and $\mathcal{X}_2$ are both
+compatible with the frozen text and are inequivalent. That misapplies DI3. **DI3's test ranges
+over *admissible* additions.** A structure that fails a frozen obligation is not a competing
+witness merely because it is mathematically definable.
+
+### 3.1 Correct application
+
+Frozen S6's state type is fixed by the shell: *sequent with resource context* — an individual
+sequent (`TR-11:2145`). Candidate structures over that state type:
+
+- $\mathcal{X}_1$ **fails MFDI4**: by T1′ the projected relation does not preserve the jointly
+  generated premise family, and the AND/OR distinction is lost. **Inadmissible.**
+- $\mathcal{X}_2$ satisfies MFDI3 (each premise $\vdash\Gamma,A$, $\vdash\Delta,B$ carries its
+  own allocated linear context), MFDI4 (Prop. 2.2 — one hyperedge per rule instance, grouping
+  preserved), MFDI5 (the hyperedges out of $S$ are a function of $S$ alone, so the root-sequent
+  quotient is well defined on successors), and MFDI6 (in exponential-free, quantifier-free MLL,
+  applicability at $S$ depends only on $S$; no branch history, proof-net linkage, focusing
+  phase, or unrepresented allocation can affect it). **Admissible.**
+
+$\mathcal{X}_3$ is not a candidate: it has a *different state type* and so is not a reading of
+frozen S6 at all.
+
+Exactly **one** admissible structure survives. The determination invariant therefore **holds**:
+
+$$\boxed{\text{S6 is NOT UNDERDETERMINED. Its native structure is } \mathcal{X}_2.}$$
+
+### 3.2 Consequences
+
+- Revision 1's claim that **Turn 17's determination check for S6 was incorrect** is
+  **withdrawn**. Turn 17's ✓ is correct once inadmissible readings are excluded.
+- Revision 1's two-branch disjunction for S6 is **withdrawn**.
+- S6 reverts to the ordinary source question: does an eligible source supply MFDI1–MFDI2 for
+  $\mathcal{X}_2$ restricted to MLL? Answered in §5.
+
+---
+
+## 4. S7 = **READY** — original procedure, frozen candidate `SS-CC92`
+
+TSI-v1 executed on $N_7$ member 5. Sections inspected: abstract; §1; §3; §4 (extrapolation
+operators); Example 4.6; §6 (approximation, Prop. 6.14, Prop. 6.17, Prop. 6.20); §9. Fixed
+terms searched: *Galois connection, widening, narrowing, transfer, soundness, complete lattice,
+abstraction, concretization, framework*.
+
+### 4.1 The frozen target
+
+$\mathsf{Inst}_7=\{(C,A,\alpha,\gamma,\mathcal{F},\nabla)\}$ with $C,A$ complete lattices,
+$(\alpha,\gamma)$ a Galois connection, $\mathcal{F}=\{(f_C,f_A)\}$ finite with
+$\alpha\circ f_C\sqsubseteq_A f_A\circ\alpha$, and $\nabla:A\times A\to A$ satisfying
+$x\sqsubseteq x\nabla y$, $y\sqsubseteq x\nabla y$, and stabilisation of $\nabla$-iterated
+chains (`TR-11:5382`).
+
+### 4.2 Component-by-component certificate
+
+**(a) The bundle is ONE source-defined framework.** This is the DI4 question, and the source
+settles it in its own abstract, p. 511:
+
+> "We introduce abstract interpretation frameworks which are variations on the archetypal
+> framework using Galois connections between concrete and abstract semantics, widenings and
+> narrowings and are obtained by relaxation of the original hypotheses."
+
+and §1, p. 512:
+
+> "The abstract interpretation framework that we introduced in [6, 8, 7, 9, 10, 12, 18, 19] is
+> based on the use of Galois connections … However, in some practical cases, this might lead to
+> a combinatorial explosion … In this case and more generally, when the abstract domain is
+> large or infinite, widening and narrowing operators [6, 7] should be used to tune the
+> cost/precision compromise."
+
+The archetypal framework **is** the Galois-connection framework **with** widening and
+narrowing. **DI4 is satisfied**, and the Turn-21 worry (`TR-11:6890`) that a Galois connection
+and a widening are "distinct approaches" that no primary source presents as a unit is
+**refuted by the primary source**.
+
+**(b) Complete lattices and the Galois connection.** Example 4.6, p. 518:
+
+> "In the classical framework of [7, 10, 12], the concrete properties $P^\flat;\sqsubseteq^\flat,
+> \sqcup^\flat,\bot^\flat,\top^\flat$ and abstract properties $P^\sharp;\sqsubseteq^\sharp,
+> \sqcup^\sharp,\bot^\sharp,\top^\sharp$ are complete lattices. The correspondence between
+> concrete and abstract properties is given by a Galois connection … that is an abstraction map
+> $\alpha\in P^\flat\to P^\sharp$ and a concretization map $\gamma\in P^\sharp\to P^\flat$ such
+> that, by definition: $\forall c\in P^\flat:\forall a\in P^\sharp:\alpha(c)\sqsubseteq^\sharp a
+> \Leftrightarrow c\sqsubseteq^\flat\gamma(a)$." — eq. (4.12), p. 518
+
+Gives $C,A$ complete lattices and $(\alpha,\gamma)$ exactly. **DI1**, verbatim.
+
+**(c) The soundness condition, verbatim.** Proposition 6.14, p. 531:
+
+> "the concrete $F^\flat\in P^\flat\to P^\flat$ and abstract $F^\sharp\in P^\sharp\to P^\sharp$
+> semantic functions such that $\forall c\in P^\flat:\forall a\in P^\sharp:\alpha(c)\sqsubseteq a
+> \Rightarrow\alpha(F^\flat(c))\sqsubseteq F^\sharp(a)$ (… holds in particular when $F^\sharp$ is
+> monotonic for $\sqsubseteq$ and $\alpha\circ F^\flat\sqsubseteq F^\sharp\circ\alpha$)"
+
+The frozen soundness condition $\alpha\circ f_C\sqsubseteq f_A\circ\alpha$ appears **verbatim**
+in the source. **DI1**.
+
+**(d) The widening's upper-bound conditions.** Eq. (4.39), p. 531:
+
+> "$\nabla A$ exists $\wedge\ a\in A\ \Rightarrow\ a\sqsubseteq\nabla A$"
+>
+> "which holds when the widening is a partially defined upper bound in $P^\sharp$ (but not
+> necessarily the least one)."
+
+For $A=\{x,y\}$ this yields **both** $x\sqsubseteq x\nabla y$ and $y\sqsubseteq x\nabla y$ — the
+frozen conditions. The source's $\nabla\in\wp(P^\sharp)\to P^\sharp$ is set-indexed; the frozen
+binary $\nabla:A\times A\to A$ is its **restriction to two-element argument sets**, which is the
+form the source itself iterates (Prop. 6.20's chain $y_{i+1}=y_i\nabla x_i$). **DI1**, correct
+direction: frozen is narrower.
+
+**(e) The chain-stabilisation condition.** Proposition 6.20, condition list (4.46), p. 537:
+
+> "For every $\mathbb{N}$-termed sequence $x_0,\ldots,x_i,\ldots$ in $P^\sharp$, the chain
+> $y_0=x_0\ \ldots\ y_{i+1}=y_i\nabla x_i\ \ldots$ is not strictly increasing"
+
+Together with (4.39) — which makes the chain increasing — "not strictly increasing" is exactly
+"stabilises". Frozen condition matched. **DI1**.
+
+**(f) The finite family $\mathcal{F}$.** The source's framework carries one pair
+$(F^\flat,F^\sharp)$. A finite indexed family of sound pairs over a shared
+$(C,A,\alpha,\gamma,\nabla)$ is admitted under **DI2/CDE-v1**: it is definable solely from the
+source's own primitive "sound concrete/abstract semantic function pair" (Prop. 6.14); it has no
+free methodological parameter, since $\mathcal{F}$ is supplied as *instance data*, not
+constructed by the analyst after the instance is given; no scheduler, ordering, strategy or
+granularity is chosen; and its granularity is anchored by that source primitive. It is part of
+the source's formal apparatus rather than an arbitrary derived object — the source lifts Galois
+connections to monotonic function spaces precisely to support families, eq. (4.17), p. 519, and
+works with systems of abstract equations over vectors of abstract functions in Example 6.15,
+p. 532.
+
+**(g) DI3.** Frozen S7 imposes **no transition graph** (`TR-11:5394`); $\mathcal{S}_{7,a}$ is a
+static algebraic structure. No scheduler, search discipline, orientation, update rule,
+aggregation, quotient, completion, resource policy, equivalence, intervention or control
+strategy is supplied by the analyst. **DI3 satisfied vacuously on the dynamics**, which is
+exactly the component that made S1 and S6 hard.
+
+**(h) DI5, DI6.** Forgetting $\gamma$, the family structure, and the completeness of the
+lattices recovers the source's framework (**DI5**). The instance tuple determines
+$\mathcal{S}_{7,a}=(C,A,\alpha,\gamma,\{f_C\},\{f_A\},\nabla,\sqsubseteq_C,\sqsubseteq_A)$
+componentwise (**DI6**, and the determination invariant).
+
+**(i) K-P2.** Cousot & Cousot originated abstract interpretation; this is an authoritative
+formalization by the framework's originators. **Primary-source priority satisfied.**
+
+### 4.3 Verdict
+
+$$\boxed{\mathrm{Status}(S7)=\mathbf{READY}\quad\text{(DIRECT: DI1 + DI2/CDE-v1, source }
+\texttt{SS-CC92}\text{)}}$$
+
+Established by the **original** frozen procedure on the **original** frozen candidate set. The
+existential early-stop fires; the remaining $N_7$ inspections are not required for
+instantiation status.
+
+**Recorded against interest:** this outcome is the opposite of the direction S7 had been
+trending since Turn 21, and it refutes a conjecture the dialogue had held for fourteen turns.
+
+---
+
+## 5. S6 = **READY** under `E0-supplied-v1`; **OPEN** under original $\mathfrak{E}_0$
+
+### 5.1 Procedure separation, stated first
+
+`SS-GP94` is **not** in frozen $N_6$ and is **not** retrofitted. Under the original frozen
+$\mathfrak{E}_0$, S6's status is unchanged: **OPEN**, because all sixteen prescribed SR-B2 v2
+invocations were executed and none returned an inspectable eligible source. The verdict below
+belongs to `E0-supplied-v1` only.
+
+### 5.2 MFDI1–MFDI6 against `SS-GP94`
+
+The source treats **CLL**; frozen S6 is **MLL without exponentials**. The restriction is
+**source-recognised** (SRF-v1): §4.3, p. 5 names the fragment —
+
+> "In the multiplicative fragment MLL (extended with $\otimes$ [sic, OCR]) we have only
+> non-determinism in the way to associate literals in the axioms." `[OCR]`
+
+— and Appendix A, p. 12 sets out the calculus with **"Multiplicative rules"** as a separately
+displayed group, including the $\otimes$ rule with split contexts
+$\dfrac{\vdash F_1,\Gamma_1\quad \vdash F_2,\Gamma_2}{\vdash F_1\otimes F_2,\Gamma_1,\Gamma_2}$.
+Direction is correct: MLL is **narrower** than CLL, so frozen S6 is a restriction of the
+source's formalism, not a generalisation of it.
+
+**MFDI1 — source-defined incomplete derivations. SATISFIED.** §5, p. 6 `[OCR]`:
+
+> "a bottom-up proof strategy consists in starting from the final conclusion $\vdash\Delta$ and
+> applying step by step inference rules to construct a proof tree, the nodes of which
+> constitute subgoals to prove at each step and that is closed by axioms."
+
+and §5.3, p. 7 `[OCR]`: "At this step, we have the following **partial proof tree** with
+$\Delta=\ldots$"; §6, p. 8 `[OCR]`: "A top-down strategy will consist in building a set of
+**partial proofs**, the conclusions of which being multi-sets of subformulas of the final
+conclusion." Open-versus-closed is load-bearing and source-made: the tree "is closed by
+axioms", so nodes not yet closed are the open subgoals.
+
+**MFDI2 — resource-sensitive rule instances source-determined. SATISFIED.** §5.1(c), p. 6
+`[OCR]`:
+
+> "(ii) when the principal formula has the form $F_1\otimes F_2$. The goal to prove has the form
+> $\vdash F_1\otimes F_2,\Delta'$ and can be replaced by $2^n$ possibilities ($n$ being the
+> number of formulas in $\Delta'$) of the subgoals $\vdash F_1,\Delta_1$ and $\vdash F_2,\Delta_2$
+> where $\{\Delta_1,\Delta_2\}$ is a partition of $\Delta'$."
+
+The source itself enumerates **all** $2^n$ admissible splits as the complete choice set. No
+heuristic split is introduced; retaining all of them is the source's own base non-determinism.
+
+**MFDI3 — pending obligations retain multiplicity and resource content. SATISFIED.** The same
+passage writes the two subgoals as $\vdash F_1,\Delta_1$ **and** $\vdash F_2,\Delta_2$ with
+$\{\Delta_1,\Delta_2\}$ a partition: each pending sequent carries its own allocated linear
+context, and which resources belong to which obligation is explicit in the source's notation.
+
+**MFDI4 — one-step extension preserves premise grouping. SATISFIED, and the source makes the
+AND/OR distinction itself.** Immediately preceding the $\otimes$ clause, §5.1(c)(i), p. 6
+`[OCR]`:
+
+> "(i) when the principal formula has the form $F_1\oplus F_2$ [sic, OCR] … can be replaced
+> **either** by $\vdash F_1,\Delta'$ **or** $\vdash F_2,\Delta'$"
+
+against the $\otimes$ clause's "the subgoals $\vdash F_1,\Delta_1$ **and** $\vdash F_2,\Delta_2$".
+The source distinguishes the disjunctive replacement from the conjunctive one in its own
+words. That is precisely the joint premise family MFDI4 requires, and it is source-supplied
+rather than analyst-imposed.
+
+**MFDI5 — state sufficiency. SATISFIED.** Quotient: a partial proof tree maps to the sequent
+labelling the node under consideration. The admissible replacements at that node are, by the
+source's §5.1(b)–(c), a function of the goal sequent's principal formula and context alone.
+Hence equal states induce equal successor structures, including partitions and joint families.
+
+**MFDI6 — no hidden branch history. SATISFIED for the frozen fragment.** The source's
+non-determinism factors (§5.1) that depend on more than the goal — the exponential rules
+$w?,c?,?$ (§5.1(b)) and the $\forall$ eigenvariable side condition ("In $\forall$ rule, $y$ is
+not free in $\vdash\forall F,\Gamma$", Appendix A, p. 12) — are **all outside MLL without
+exponentials and without quantifiers**. Within the frozen fragment nothing below or beside a
+node constrains its expansion.
+
+### 5.3 Verdict and the sensitivity finding
+
+$$\boxed{\mathrm{Status}(S6)=\mathbf{READY}\ \text{under \texttt{E0-supplied-v1}};\quad
+\mathbf{OPEN}\ \text{under original }\mathfrak{E}_0}$$
+
+Certificate: DI1 (source-recognised restriction of CLL to its multiplicative fragment, plus
+forgetting the source's strategy layer to retain the unrestricted relation) + DI2/CDE-v1
+($\mathcal{X}_2$'s hyperedge structure is the source's own goal-replacement formulation, with
+the partition as label) + MFDI1–MFDI6.
+
+**Finding DF-07 — source-supply / search-provider sensitivity.** `SS-GP94` is a 1994
+publication squarely on the frozen disputed component, well inside the evidence cutoff, and
+directly decisive for S6. **The frozen SR-B2 v2 query battery never returned it** across all
+sixteen prescribed invocations on the available search provider. The gap between S6's original
+verdict (OPEN) and its supplied verdict (READY) is therefore attributable to **retrieval
+design and provider coverage**, not to the state of the literature. RD-01's warning is
+confirmed concretely: SOURCE-FAIL or OPEN under SR-B2 v2 measures the bounded retrieval design,
+not the scholarly record. This is a defect of the retrieval procedure, and it is recorded
+against the procedure rather than absorbed into any target verdict.
+
+---
+
+## 6. DF-04-H — evaluated at its frozen evaluation point and **REFUTED**
+
+DF-04-H's frozen evaluation point is *after terminal source statuses for all eleven*
+(`TR-11:9620`). With S7 READY (original procedure) and S6 READY (`E0-supplied-v1`), all eleven
+targets now hold terminal statuses. The hypothesis is evaluated **as frozen**, without
+rewording.
+
+> **DF-04-H.** Where a target's dynamics is source-native, the schema passes K-P1; where the
+> analyst supplied the dynamics, K-P1 exposes it.
+
+The three dialogue-assembled schemas were **S1, S6, S7** — precisely the three where the
+analyst supplied operational content. Outcomes:
+
+| Target | Assembled? | Verdict | Route |
+|---|---|---|---|
+| S1 | yes | READY | DIRECT, DI1+FDI1–5+CDE-v1 |
+| S6 | yes | READY (`E0-supplied-v1`) | DIRECT, DI1+DI2/CDE-v1+MFDI1–6 |
+| S7 | yes | READY | DIRECT, DI1+DI2/CDE-v1 |
+
+$$\boxed{\textbf{DF-04-H is REFUTED.}}$$
+
+All three assembled schemas were directly instantiable from source-defined ancestors by
+specialization plus canonical definitional expansion. The predicted split between "found" and
+"constructed" schemas did not occur. The correct generalisation is the one GPT Turn 34 stated
+after S1 and which now holds for all three: **dialogue-assembled ≠ not source-grounded**.
+
+Recorded as a refutation of a hypothesis this programme itself registered and expected to
+confirm.
+
+---
+
+## 7. T4 — retained, profile-relative only
+
+Unchanged from Revision 1 in substance; scope restated as required.
+
+At $c_0=(\{S1,S2\},L_\to)$ with $\Gamma_{c_0}=\varnothing$ fixed in $\mathfrak{E}_{0a}$
+(`TR-11:4179`), under `E0-c0-only-v1`: $\mathrm{Status}(c_0)=$ **JOINT-YES** at the literal
+profile $\mathbf{J}_0$; and $\varphi_{\mathrm{irr}}=\forall x\,\neg(x\to x)$ lies in
+$\mathcal{T}_{c_0,\mathbf{J}_0}\setminus\mathrm{Cn}(\varnothing)$, so
+$\mathcal{C}_{c_0,\mathbf{J}_0}\neq\varnothing$.
+
+$$\boxed{\textbf{A2 is falsified at }(\mathbf{J}_0,\ G_1,\ K_{1,\mathrm{L\&M}})\textbf{ — and only there.}}$$
+
+**Not profile-invariant.** Under an LK corpus profile with list contexts and an explicit
+exchange rule, the instance with two equal adjacent context formulas has premise identical to
+conclusion, the graphs are reflexive, $\varphi_{\mathrm{irr}}$ fails, and
+$\mathcal{C}_{c_0}$ under that profile is **UNRESOLVED**, not empty.
+
+**Evidence provenance caveat, newly recorded.** The S1 half rests on Liang & Miller's Figure 1
+using multiset contexts with exchange unused. That source was **not supplied** and was **not
+inspected in this session**. The reading is inherited from the frozen dialogue record at
+`TR-31:538`, where it was recorded as a full-text inspection. It is therefore
+**transcript-attested, not independently verified here**, and is marked as such wherever T4 is
+used.
+
+**Novelty: UNRESOLVED**, never positive — $\Pi_0$ is unfixed. Author's own assessment,
+recorded so it cannot later read as a novelty claim: irreflexivity of a one-step reduction
+relation with trivial steps excluded is standard in rewriting theory, which lies inside
+$\Pi_0$. **No novelty is claimed.**
+
+---
+
+## 8. Blocked obligations — with the reason for each
 
 | Obligation | Requires | Status |
 |---|---|---|
-| S7 terminal status | full text of the $N_7$ candidates, above all Cousot & Cousot, *Abstract Interpretation Frameworks*, J. Logic Comput. 2(4):511–547, 1992 | **INSPECTION-OPEN** — hosts blocked |
-| S6 SOURCE-FAIL alternative | irrelevant: T3 is terminal and retrieval-independent | n/a |
-| $\mathcal{K}_0$ exact | source inspection + K4 verbatim quotation | **BLOCKED** |
-| $\mathfrak{R}_S$ exact definitions | source inspection | **BLOCKED** |
-| $\Pi_0$ exact corpus | source inspection | **BLOCKED** |
-| $U_0$ extraction ($\mathfrak{E}_{0c}$) | K4 verbatim quotation + page reference per item | **BLOCKED** |
-| $W^\ast$ over $U_0$; both arms | $U_0$ | **BLOCKED** |
-| $\partial_1(c_0)$, maximal fragments, first-failure frontier | $U_0$ | **BLOCKED** |
-| P1 content; rank, minimality, alternative bases | P1 returns; and P1 requires $U_0$ | **BLOCKED** (also gated by the frozen ordering rule) |
-| DF-04-H evaluation | terminal status for all eleven; S7 lacks one | **NOT REACHED** |
+| $U_0$ extraction ($\mathfrak{E}_{0c}$) | K4 verbatim quotation + exact locator from the eligible primary source of **each of the eleven** targets | **BLOCKED — 9 of 11 primary documents not supplied.** See `MISSING-SOURCE-MANIFEST.md`. Per-target K4 records for the two supplied sources are complete: `K4-RECORDS.md`. |
+| exact $\mathcal{K}_0$, exact $\mathfrak{R}_S$ | full-text inspection per target | **BLOCKED**, same cause |
+| exact $\Pi_0$ + certified translations | full text of the thirteen prior-art bodies | **BLOCKED**, same cause |
+| $W^\ast$ over $U_0$; both arms; $\partial_1$; maximal fragments; common theories; mechanically generated frames; substantive-content test; prior-art tests; P2a→P2b→P1 | a sealed $U_0$ | **BLOCKED**, downstream of the above |
+| definability, dependency, irreducibility, rank, minimality, alternative bases | P1 to return; frozen ordering opens rank only then | **BLOCKED**, gate not passed |
+| C1–C12 registry | a candidate architecture to run against | **NOT APPLICABLE** — none produced, because P1 never returned |
 
-The frozen rule is that OPEN never counts as NO and any claim depending on an OPEN cell
-returns UNRESOLVED. Every entry above is therefore UNRESOLVED, not negative.
+Every entry is blocked by a **missing primary document**, not by an incomplete search. The
+distinction matters: OPEN never counts as NO, and every claim depending on these returns
+UNRESOLVED.
 
 ---
 
-## Hostile closure audit
+## 9. Hostile closure audit — Revision 2
 
-Each terminal claim is attacked. Attacks that succeed are recorded as defeats.
+### A1 — against T1′: "the countermodels are degenerate"
+**Fails.** $\mathsf{Inst}_6$ is *finite MLL sequents* with no balance restriction, and a search
+relation is by definition defined on sequents of unknown provability. $S_\wedge$ is balanced
+and provable, so the $\mathbf{AND}$ and $\mathbf{TERM}$ refutations do not use degeneracy.
 
-### A1 — against T1: "the countermodels use degenerate sequents"
+### A2 — against T1′: "the decoder class is gerrymandered to exclude what works"
+**Partially succeeds; already conceded in §1.6.** $\mathcal{D}_{\mathrm{succ}}$ deliberately
+excludes state-inspecting decoders, and §1.0 states plainly that without that exclusion the
+theorem is false. T1′ is explicitly a **bounded** impossibility, not a characterisation, and
+BIA's former "iff" is withdrawn (§10).
 
-$S_\vee$ is atom-unbalanced. Does that make it an illegitimate instance?
-**Fails.** $\mathsf{Inst}_6$ is *finite MLL sequents* (`TR-11:4076`) with no balance
-restriction, and the whole point of a search relation is that it is defined on sequents whose
-provability is unknown. Excluding unbalanced sequents would require an analyst-supplied
-admissibility filter — DI3. Moreover C-AND uses $S_\wedge$, which **is** balanced and provable,
-so the incompleteness half does not rely on degeneracy at all.
+### A3 — against T3′: "excluding $\mathcal{X}_1$ by MFDI4 is circular"
+**Fails.** MFDI1–6 were fixed by GPT Turn 35 *before* S6 retrieval and before any of this
+analysis, specifically to be applied de novo to S6. Applying a preregistered admissibility
+condition is not circular. The circularity would lie in the *opposite* move — Revision 1's —
+which let a structure that fails a preregistered obligation count as a competing witness.
 
-### A2′ — against T1: "use the OR-reading over rule instances rather than over premises"
+### A4 — against S7 READY: "the finite family $\mathcal{F}$ is analyst-supplied, so DI3 fires"
+**Live, and the thinnest point of the S7 certificate.** The source carries one
+$(F^\flat,F^\sharp)$ pair; the frozen tuple carries a finite set. The defence is CDE-v1 clauses
+1–5 plus the source's own function-space lifting (4.17, p. 519) and systems of abstract
+equations (Example 6.15, p. 532). An auditor who reads CDE-v1 more strictly would return S7 to
+OPEN pending a source that carries an explicit family. Recorded, not suppressed. It does not
+affect the S7 **DI4** finding, which is independent and verbatim.
 
-I.e. define $S\to\{P_1..P_k\}$ implicitly by quantifying over instances.
-**Fails as an objection, succeeds as a concession.** That is precisely $\mathcal{X}_2$, the
-hyperedge structure. It is not a binary relation on sequents. Conceding it concedes T3: the
-frozen text admits two inequivalent structures.
+### A5 — against S6 READY: "Galmiche–Perrier is about *strategies*, so DI3 fires"
+**Fails, but narrowly.** The paper's contribution is strategy design, which would indeed be an
+analyst-forbidden discipline if imported. Frozen S6 takes the **unrestricted** relation, which
+the source presents in §5.1 as the base non-determinism *prior to* strategy application; taking
+it is DI1 *forgetting*, the licensed direction. Had frozen S6 required a focused or normalized
+search, the verdict would be INELIGIBLE.
 
-### A3 — against T3: "'graph' plainly means ordinary graph, so S6 is determinate, not underdetermined"
+### A6 — against S6 READY: "OCR is not full-text inspection"
+**Partially succeeds; disclosed.** `SS-GP94`'s body is bitmap-font/scanned and was OCR'd. All
+quotations are marked `[OCR]` and symbol corruption is marked `[sic]`. The load-bearing
+passages — §5 p. 6, §5.1(c) p. 6, §5.3 p. 7, Appendix A p. 12 — were read as rendered images at
+200 dpi and their content is unambiguous in the prose, but a verbatim-fidelity auditor should
+re-verify against a clean copy. This is a **transcription-fidelity** limitation, not an access
+limitation: the document is present and was inspected.
 
-**Partially succeeds; disposition recorded.** If "backward MLL search graph" is read as
-determinately an ordinary graph, then S6 is determinate and, by T1, its native structure fails
-to represent MLL proof search — in which case no eligible MLL source would formalize it and the
-expected verdict is SOURCE-FAIL, subject to completing inspection (blocked).
-Under this reading S6 is **OPEN (inspection-blocked), trending SOURCE-FAIL**, rather than
-UNDERDETERMINED. The evidence for ambiguity is that GPT Turn 35 §5 itself enumerated four
-candidate native objects for S6 (frontier, AND/OR graph, hypergraph, derivation-extension
-system) and treated the ordinary-graph reading as conditional (*"If $\mathcal{S}_{6,a}$ really
-has…"*), and that the shell names S1's search configuration explicitly (`TR-11:3164`) while
-never naming S6's.
-$$\boxed{\text{S6}\in\{\mathbf{UNDERDETERMINED},\ \mathbf{OPEN}\rightsquigarrow\mathbf{SOURCE\text{-}FAIL}\}}$$
-**Both branches agree that S6 is not READY and that the frozen single-sequent state is
-inadequate (T1).** That disjunction is the terminal claim; picking between its branches
-requires an exact-text adjudication of Turn 36 that is not in the supplied corpus.
+### A7 — against T4: profile sensitivity, and unverified S1 provenance
+**Succeeds; incorporated.** T4 is stated with its corpus-profile index and is explicitly not
+profile-invariant, and the Liang & Miller reading is now marked transcript-attested rather than
+independently verified.
 
-### A4 — against T4: "irreflexivity is an artifact of S2's edge convention, hence frame-forced"
+### A8 — against DF-04-H's refutation: "S6's READY comes from a successor procedure, so the
+evaluation point was reached by changing the rules"
+**Live and material.** Under the original $\mathfrak{E}_0$ alone, S6 is OPEN and DF-04-H's
+evaluation point is **not** reached. The refutation is therefore relative to
+`E0-supplied-v1`. Recorded in the terminal report as such. Note the direction: the successor
+procedure was executed on a source supplied by the user, was preregistered outcome-independently,
+and produced the verdict *least* favourable to the hypothesis being defended — DF-04-H was the
+programme's own prediction.
 
-**Fails on the letter, is conceded on the substance.** $\Gamma_{c_0}$ is generated only from
-$\mathrm{Ax}(u)$, $\Sigma_{\mathbf{J}}$ and $\Xi$ (`TR-11:4173`); $L_\to$ has no source and no
-$\mathrm{Ax}$, and no typing law forces irreflexivity, so $\varphi_{\mathrm{irr}}$ is not in
-$\mathcal{F}_{c_0}$ and A2 is falsified as written. The substance of the objection is granted
-and recorded in T4: the law is weak and half-conventional. A2 was a prediction about a
-*language*, and it is false about that language; that is what "falsified" means here and no
-more.
+### A9 — against everything: "CDE-v1 over-permissiveness"
+**Live, and now heavier.** CDE-v1 carries `TR-31:1597`'s provenance risk and is now
+load-bearing in **three** certificates (S1, S6, S7). Over-generation checks re-run: it does not
+rescue $N_1$ member 1 (no partial-derivation notion); it does not admit the HOL goal-stack
+(blocked at NM1/SRF-v1); it does not manufacture transformations for S10 (Dung supplies no
+stepwise constructor); and by T1′ it does **not** rescue $\mathcal{X}_1$ for S6, which is the
+sharpest available test since $\mathcal{X}_1$ is definable from the source yet still fails.
+That last check is new and is the strongest evidence so far that CDE-v1 is not unboundedly
+wide. It remains short of a proof of optimal restrictiveness, and the owed robustness
+programme on unrelated source/target pairs is **still owed**.
 
-### A5 — against T4: "sample-to-universal overreach"
+---
 
-**Does not apply.** T4 quantifies over *all* admissible instances of exactly two frozen
-targets and claims nothing about any other system. No class theorem is asserted. Stage-B
-promotion is not attempted.
+## 10. Disposition of the Revision-1 theory name
 
-### A6 — against T4: profile sensitivity
-
-**Succeeds, and is incorporated.** See T4's profile-sensitivity section. The claim is stated
-with its corpus-profile index and is explicitly *not* profile-invariant.
-
-### A7 — against the whole run: "CDE-v1 over-permissiveness taints S1 READY, hence $c_0$"
-
-**Live, unresolved, and carried forward.** CDE-v1's provenance risk (`TR-31:1597`) is
-attached. Turn 35's four over-generation checks are re-verified here and one is strengthened:
-T2 gives a *proof* that the S1 frontier construction is adequate while the S6 single-sequent
-construction is not, so CDE-v1 is not doing the work of papering over an inadequate
-representation in the S1 case. This weakens but does not eliminate the concern. A robustness
-programme defeating CDE-v1 on unrelated source/target pairs remains **owed**.
-
-### A8 — against everything: "the egress blocker was used to avoid an unwelcome result"
-
-**Fails, and the record is constructed to make it checkable.** The blocker was discovered
-*after* S6 Channel A had been executed in full and *before* any terminal verdict was proposed;
-it is symmetric (it blocks READY and SOURCE-FAIL alike, for S6 and S7 alike); the prescribed
-invocations were executed anyway; and the one terminal target verdict reached (T3) is
-retrieval-independent and was reached by proof. The strongest candidate found for the
-*rescue* direction — Cousot & Cousot's *Abstract Interpretation Frameworks*, whose returned
-metadata describes exactly the Galois-connection-plus-widening bundle frozen S7 requires — is
-recorded prominently rather than buried, and it is the reason S7 is **not** reported as failing.
+**BIA — "Branching-Internalisation Adequacy" — is withdrawn**, together with its "iff"
+formulation, which was a class-level characterisation asserted from two instances. The
+surviving content is renamed and downgraded in `DIALOGUE-THEORY.md`.

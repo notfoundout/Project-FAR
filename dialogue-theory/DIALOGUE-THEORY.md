@@ -1,131 +1,118 @@
 # The dialogue-built theory
 
-**Name (fixed only after the content was fixed): Branching-Internalisation Adequacy — BIA.**
+**Revision 2.** The Revision-1 name and formulation are withdrawn; see §5.
 
-The name is descriptive of the content and carries no claim of priority, novelty, generality,
-or relation to any other framework. See `FAR-COMPARISON.md`, written last, for the only
-relational claim made anywhere in these artifacts.
+**Name (fixed after the content was fixed): Search-State Sufficiency — SSS.**
+
+Descriptive only. No claim of priority, novelty, generality, or relation to any other
+framework. See `FAR-COMPARISON.md`, written last.
 
 ---
 
 ## 1. What kind of theory this is
 
-Not an operator architecture. Not a shared-vocabulary result. Not a minimal basis.
+Not an operator architecture. Not a shared-vocabulary result. Not a minimal basis. Not a
+characterisation.
 
-The strongest result this run supports is a **boundary theory about representation typing**:
-a statement of when a chosen state representation is adequate to the rule system it is meant
-to represent, plus the observation that this adequacy question is *prior to*, and gates, the
-entire shared-vocabulary programme — and that the frozen panel itself failed it at one target.
+A small **sufficiency taxonomy** for backward-proof-search representations, consisting of two
+positive sufficiency results and one bounded impossibility, together with the use of that
+taxonomy as an admissibility filter on frozen target specifications. The closure protocol
+admits this outcome shape: *"If the strongest result is a boundary theory rather than an
+operator architecture, formalize it as the result — not as failed FAR."*
 
-The closure protocol explicitly admits this outcome shape: *"If the strongest result is a
-boundary theory rather than an operator architecture, formalize it as the result — not as
-failed FAR."* That is what is done here.
+## 2. The content, with its indices
 
-## 2. The content
+Every claim is indexed by **state type**, **transition structure**, and — for the negative —
+**decoder class**. Nothing is asserted outside those indices.
 
-### BIA — the criterion
+| | State type | Transition structure | Verdict for MLL |
+|---|---|---|---|
+| $\mathcal{X}_1$ | individual sequent | rule-induced binary relation | **insufficient**, over $\mathcal{D}_{\mathrm{succ}}$ (SSS-3) |
+| $\mathcal{X}_2$ | individual sequent | resource-labelled hyperedges | **sufficient** (SSS-2) |
+| $\mathcal{X}_3$ | frontier multiset | binary relation | **sufficient** (SSS-1) |
 
-Let $R$ be a rule system whose rules have the form $\frac{P_1\ \cdots\ P_k}{S}$ with $k\ge 0$,
-where deriving $S$ requires deriving **all** of $P_1,\ldots,P_k$. Let a *state representation*
-be a map $q$ from the objects of backward search to a set $\mathsf{St}$, together with an
-induced successor structure on $\mathsf{St}$.
+**SSS-1 (frontier sufficiency).** For any rule system with finitary rules, the frontier
+representation admits a purely disjunctive fixpoint characterisation of closability. Holds
+uniformly — LK and MLL alike.
 
-> **$q$ is BIA-adequate for $R$** iff the derivability predicate on $\mathsf{St}$ admits a
-> purely disjunctive fixpoint characterisation — i.e. the conjunction over sibling premises is
-> absorbed into the successor states themselves, so that
-> *"$s$ succeeds iff $s$ is terminal-successful or some successor of $s$ succeeds."*
+**SSS-2 (hyperedge sufficiency).** On individual sequents, one hyperedge per rule instance
+(labelled, for MLL, by the resource partition) yields the standard AND/OR characterisation.
 
-Equivalently: a state representation is adequate exactly when it **internalises the rule
-system's conjunctive branching**. Where it does not, the conjunction has to live in the
-transition structure's arity, and an ordinary binary relation cannot carry it.
+**SSS-3 (bounded individual-sequent insufficiency).** Over the state type of individual MLL
+sequents, with the **rule-induced projected relation** as the only admissible representation and
+**uniform monotone successor-set decoders** $\mathcal{D}_{\mathrm{succ}}$ as the decoder class,
+no representation/decoder pair computes MLL provability. The decoder class has exactly four
+members and all four are refuted by two explicit finite witnesses.
 
-### The two theorems that give BIA content
+Proofs: `PROOFS.md` §1–§2.
 
-- **Positive instance (T2.1).** The finite-multiset-of-open-sequents representation is
-  BIA-adequate for propositional LK. Proved.
-- **Negative instance (T1).** The single-sequent representation is **not** BIA-adequate for
-  MLL. Proved by two explicit finite countermodels: the disjunctive reading over-generates at
-  $\vdash a^{\perp},a^{\perp},a\otimes b$, and the conjunctive reading under-generates at
-  $\vdash a^{\perp},b^{\perp},a\otimes b$. The failure is one of **arity**, not of determinacy:
-  retaining all admissible resource partitions is ordinary nondeterminism and is harmless.
+## 3. What SSS explicitly does not say
 
-Full statements and proofs: `PROOFS.md` T1, T2.
+- **It is not an "iff" and not a characterisation.** Revision 1 asserted a class-level
+  equivalence from two instances. Withdrawn.
+- **It is not an impossibility for binary relations as such.** $\mathcal{X}_3$ *is* a binary
+  relation and is sufficient. The Revision-1 framing in terms of "arity" was imprecise and is
+  withdrawn: a binary relation on a rich enough state encodes conjunction perfectly well.
+- **SSS-3 is false without its two class restrictions**, and `PROOFS.md` §1.0 gives the
+  counterexamples: an arbitrary binary relation can encode the answer, and a state-inspecting
+  decoder can recompute provability from the sequent alone.
+- **It is not a claim that LK is better behaved than MLL.** The frozen shell's S1/S6 contrast
+  is a contrast of **state typing**, not of logic. Had S6 been given a frontier state it would
+  have been sufficient; had S1 been given an individual-sequent state it would have faced
+  SSS-3's problem under presentations satisfying the witness conditions.
+- **It is not claimed novel.** SSS-1 and SSS-2 are elementary and are very probably folklore —
+  goal stacks and AND/OR search are old. What this run contributes is their use as a
+  preregistered admissibility filter on target specifications. No novelty verdict is available
+  for anything, because $\Pi_0$ is unfixed and the frozen rule returns novelty **UNRESOLVED,
+  never positive**, on an uncertified translation.
 
-### The boundary datum
+## 4. Scope and profile sensitivity
 
-The frozen panel assigned a BIA-adequate state typing to S1 (frontier multiset) and a
-BIA-inadequate — or at best undetermined — one to S6 (single sequent with resource context),
-for two structurally analogous sequent-calculus targets. The shell's own determination check
-recorded S6 as satisfying the determination invariant; **that check was wrong**, because it
-verified that the rules and the root are fixed without verifying that the arity of the
-transition structure is fixed (`PROOFS.md` T3).
+SSS-3's witness conditions (W1), (W2) are verified for **MLL**. For classical LK they hold
+under presentations with single-conjunct $\wedge L$ rules or unrestricted cut, and are
+**undecided here** for a purely additive-context G3 presentation. SSS-1 and SSS-2 hold for any
+finitary rule system.
 
-$$\boxed{\mathrm{Status}(S6)\in\{\mathbf{UNDERDETERMINED},\ \mathbf{OPEN}\rightsquigarrow\mathbf{SOURCE\text{-}FAIL}\}}$$
+Nothing is promoted to a class theorem. Stage-B promotion — a candidate-independent, natively
+determinate admission predicate, established by proof rather than finite-panel induction — is
+**not attempted**.
 
-Both branches of that disjunction agree that S6 is **not READY** and that the frozen
-single-sequent state is inadequate. Distinguishing the branches requires exact Turn-36 text
-that is not in the supplied corpus. This is preserved as a **terminal defect of the
-$\mathfrak{E}_0$ run**, not repaired: selecting the hyperedge reading because it works is
-precisely the analyst construction DI3 exists to block.
+## 5. Disposition of the Revision-1 theory
 
-### The one piece of shared content actually established
+**BIA — "Branching-Internalisation Adequacy" — is withdrawn**, with its "iff", its arity
+framing, and its claim that Turn 17's S6 determination check was incorrect. What survives is
+SSS above, which is weaker, indexed, and proved.
 
-At the calibration fragment $c_0=(\{S1,S2\},L_\to)$, computed under separately versioned
-`E0-c0-only-v1` because it is the unique fragment independent of the blocked registry $U_0$:
+## 6. Where the theory was applied, and what it decided
 
-- $\mathrm{Status}(c_0)=$ **JOINT-YES** at the literal profile $\mathbf{J}_0$, as A2 predicted.
-- $\varphi_{\mathrm{irr}} = \forall x\,\neg(x\to x)$ holds in every admissible LK proof-search
-  graph and every admissible CSP propagation graph, and is not logically valid.
-- Hence $\mathcal{C}_{c_0,\mathbf{J}_0}\neq\varnothing$ and the preregistered prediction **A2 is
-  falsified** at $(\mathbf{J}_0,\ G_1,\ K_{1,\mathrm{L\&M}})$.
+Used as an admissibility filter under the frozen MFDI obligations, SSS decided one live
+question: $\mathcal{X}_1$ fails MFDI4 and is therefore **not** an admissible competing structure
+for frozen S6, so exactly one admissible structure ($\mathcal{X}_2$) remains and S6's
+determination invariant **holds**. That is what removed the Revision-1 UNDERDETERMINED verdict
+and returned S6 to the ordinary source track, where the supplied primary source then closed it.
 
-Stated without inflation: $\varphi_{\mathrm{irr}}$ is a weak law, half-conventional on the S2
-side, and its novelty verdict is **UNRESOLVED** — with the author's own assessment recorded
-that it is almost certainly subsumed by rewriting theory, which lies inside $\Pi_0$. **No
-novelty is claimed.**
+## 7. Falsifiers
 
-And it is **not profile-invariant**: under an LK corpus profile using list contexts with an
-explicit exchange rule, the exchange instance with two equal adjacent formulas has premise
-identical to conclusion, the graphs are reflexive, and $\varphi_{\mathrm{irr}}$ fails. Under
-that profile $\mathcal{C}_{c_0}$ is **UNRESOLVED**, not empty. A2's truth value is
-corpus-profile-relative — which is the sharpest vindication in this run of the K-P4 decision
-to carry corpus-profile indices into every downstream result.
+- **SSS-3** is falsified by a member of $\mathcal{D}_{\mathrm{succ}}$, paired with the
+  rule-induced projected relation, that computes MLL provability; or by showing the four-decoder
+  lemma incomplete.
+- **SSS-1** is falsified by a finitary rule system and a frontier configuration where the
+  disjunctive recursion fails.
+- **SSS-2** is falsified by a rule instance whose hyperedge fails to preserve the joint premise
+  family.
+- The **application** in §6 is falsified by an admissible structure over frozen S6's state type,
+  inequivalent to $\mathcal{X}_2$, that satisfies MFDI1–MFDI6.
 
-## 3. What is *not* claimed
+## 8. The separate empirical results
 
-- No shared vocabulary across the panel. $U_0$ was never populated.
-- No maximal jointly interpretable fragment, no first-failure frontier $\partial_1$, no
-  common-law theory beyond the single fragment above. All require $U_0$.
-- No definability, dependency, irreducibility, rank, minimality, or alternative-basis result.
-  The frozen ordering opens rank questions only after P1 returns, and P1 never returned.
-- No novelty, for anything.
-- No universality, representativeness, or breadth. $D_0^{\mathrm{plan}}$ is an explicit
-  methodological panel of eleven schemas chosen by two models during protocol development;
-  panel sensitivity is untested and untestable at $|D_0^{\mathrm{plan}}|=11$.
-- No evaluation of DF-04-H. Its frozen evaluation point is *after terminal statuses for all
-  eleven*, and S7 has none. The partial pattern — of the three dialogue-assembled schemas,
-  S1 passed, S6 failed, S7 is unresolved — is recorded and explicitly **not** promoted.
-- No claim that BIA is new. It is a criterion made precise and proved in two instances; the
-  underlying observation that AND/OR search structure must be represented as such is old.
-  What is established here is the *proof pattern* and the *audit consequence*, not priority.
+These are results of the experiment, not of SSS:
 
-## 4. Scope of BIA
-
-BIA is stated for rule systems with multi-premise conjunctive rules and proved for exactly two:
-propositional LK (adequate under the frontier representation) and MLL (inadequate under the
-single-sequent representation). It is **not** established for any other target in the panel and
-is **not** a class theorem. Promoting it would require Stage-B treatment: a candidate-
-independent, natively determinate admission predicate, with proof rather than finite-panel
-induction. That work is not done.
-
-## 5. Falsifiers
-
-- **BIA's negative instance (T1)** is falsified by exhibiting a binary relation on MLL
-  sequents, derived from the MLL rule instances without added analyst structure, whose induced
-  provability predicate agrees with MLL provability everywhere.
-- **BIA's positive instance (T2.1)** is falsified by an LK rule system and a frontier
-  configuration where the disjunctive recursion fails.
-- **T3** is falsified by an exact-text adjudication fixing frozen S6's transition arity, which
-  would move S6 from UNDERDETERMINED into the ordinary source-adjudication track.
-- **T4** is falsified by showing $\varphi_{\mathrm{irr}}$ fails in some admissible instance of
-  S1 or S2 under the certified corpus profile, or by showing $\Gamma_{c_0}\neq\varnothing$.
+- **A2 falsified** at $(\mathbf{J}_0, G_1, K_{1,\mathrm{L\&M}})$ by $\forall x\,\neg(x\to x)$ —
+  profile-relative, weak, novelty UNRESOLVED, S1 half transcript-attested rather than
+  independently verified.
+- **DF-04-H refuted** at its frozen evaluation point: all three dialogue-assembled schemas
+  (S1, S6, S7) reached READY by direct instantiation. Relative to `E0-supplied-v1`, since S6's
+  terminal status came from a supplied source.
+- **DF-07 recorded**: the frozen SR-B2 v2 battery never returned a 1994 publication squarely on
+  S6's disputed component. The gap between S6's original verdict (OPEN) and its supplied verdict
+  (READY) is a property of the retrieval design, not of the literature.

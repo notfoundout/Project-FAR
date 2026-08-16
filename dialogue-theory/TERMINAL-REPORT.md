@@ -1,125 +1,146 @@
-# TERMINAL REPORT
+# TERMINAL REPORT — Revision 2
 
-> The dialogue-built theory is **BLOCKED**, relative to: the eleven preregistered target
-> schemas of $D_0^{\mathrm{plan}}$; joint profile $\mathbf{J}_0$ and grammar $G_1$ for the
-> calibration fragment; corpus profile $K_{1,\mathrm{L\&M}}$ for S1; procedures
-> $\mathfrak{E}_{0a}$ + K-P1-DI + SRF-v1 + CDE-v1 + SR-B2 v2 + TSI-v1 + FDI-v1 + MFDI-v1;
-> budgets $B_1 \subsetneq B_2$; evidence date 2026-08-15.
+## 1. Terminal classification and exact relativization
 
-Stop condition **3 — hard blocker**: a required input is unavailable with no permitted
-alternative. All unblocked work is finished and the minimal unblock action is stated below.
+> The dialogue-built theory is **BLOCKED — MISSING PRIMARY SOURCES**, with the **source stage
+> INTERNALLY TERMINAL**, relative to: the eleven preregistered target schemas of
+> $D_0^{\mathrm{plan}}$; procedures $\mathfrak{E}_{0a}$ + K-P1-DI + SRF-v1 + CDE-v1 + SR-B2 v2 +
+> TSI-v1 + FDI-v1 + MFDI-v1, plus the versioned successors `E0-supplied-v1` and
+> `E0-c0-only-v1`; budgets $B_1\subsetneq B_2$; representation class
+> $\mathcal{R}_{\mathrm{bin}}^{\mathsf{Seq}}$ and decoder class $\mathcal{D}_{\mathrm{succ}}$ for
+> SSS-3; joint profile $\mathbf{J}_0$, grammar $G_1$ and corpus profile $K_{1,\mathrm{L\&M}}$ for
+> the A2 result; evidence cutoff **2026-08-15**, preserved.
 
----
+The stop is the single permissible non-final hard stop: nine of eleven required primary
+documents are genuinely absent from attached files, repository and cache. See
+`MISSING-SOURCE-MANIFEST.md`. Every other obligation reachable without them is discharged.
 
-## Neutral theory name and content
+## 2. Theory name and precisely proved content
 
-**Branching-Internalisation Adequacy (BIA).** A boundary theory about representation typing,
-not an operator architecture and not a shared-vocabulary result.
+**Search-State Sufficiency (SSS).** A sufficiency taxonomy for backward-proof-search
+representations. Not a characterisation, not an "iff", not a class theorem.
 
-A state representation of a rule system with multi-premise conjunctive rules is *BIA-adequate*
-iff its derivability predicate admits a purely disjunctive fixpoint characterisation — that is,
-iff the representation internalises the rule system's conjunctive branching. Where it does not,
-the conjunction must live in the transition structure's **arity**, and an ordinary binary
-relation cannot carry it.
+| | State type | Transition structure | MLL |
+|---|---|---|---|
+| $\mathcal{X}_1$ | individual sequent | rule-induced binary relation | **insufficient** over $\mathcal{D}_{\mathrm{succ}}$ |
+| $\mathcal{X}_2$ | individual sequent | resource-labelled hyperedges | **sufficient** |
+| $\mathcal{X}_3$ | frontier multiset | binary relation | **sufficient** |
 
-## Proved results
+- **SSS-1** frontier sufficiency, any finitary rule system: closability has a purely disjunctive
+  fixpoint characterisation.
+- **SSS-2** hyperedge sufficiency on individual sequents: the standard AND/OR characterisation.
+- **SSS-3** bounded insufficiency: over individual MLL sequents, with the rule-induced projected
+  relation and uniform monotone successor-set decoders, **no** pair computes MLL provability.
+  The decoder class has **exactly four** members and all four are refuted by two explicit finite
+  witnesses.
 
-**T1.** No single-sequent binary transition structure represents MLL backward proof search.
-Proved by two explicit finite countermodels against the only two readings available to a binary
-relation: the disjunctive reading over-generates at $\vdash a^{\perp},a^{\perp},a\otimes b$
-(unprovable, yet it has the axiom $\vdash a^{\perp},a$ as a successor), and the conjunctive
-reading under-generates at $\vdash a^{\perp},b^{\perp},a\otimes b$ (provable, yet the
-partition $\Gamma=\varnothing$ yields the unprovable successor $\vdash a$). The failure is one
-of **arity, not determinacy** — retaining all admissible resource partitions is ordinary
-nondeterminism and is harmless, confirming GPT Turn 35 §2 by proof.
+Applied use: SSS-3 shows $\mathcal{X}_1$ fails the preregistered MFDI4, so $\mathcal{X}_1$ is not
+an admissible competing structure for frozen S6; exactly one admissible structure remains and
+S6's determination invariant **holds**.
 
-**T2.** The finite-multiset-of-open-sequents representation *is* BIA-adequate for propositional
-LK: $M$ is closable iff $M=[\,]$ or some successor is closable. This is the over-generation
-check T1 required — the argument condemning frozen S6 does not condemn frozen S1 — and it
-explains by proof why CDE-v1 correctly delivered S1 and correctly does not transfer to S6.
+## 3. Proofs and refutations
 
-**T3.** Frozen S6 is **UNDERDETERMINED**: the schema fixes states and step granularity but not
-the arity of the transition structure, and the two compatible structures are inequivalent
-(one fails T1, one does not). Turn 17's determination check recorded S6 as ✓; **that check was
-incorrect**. Preserved as a terminal defect of the $\mathfrak{E}_0$ run, not repaired —
-selecting the hyperedge reading because it works is exactly the analyst construction DI3
-exists to block. This verdict is **independent of the retrieval blocker**.
+**Proved.** SSS-1, SSS-2, SSS-3 (`PROOFS.md` §1–§2). S7 = **READY**, DIRECT under DI1 + DI2/
+CDE-v1 from `SS-CC92`, by the **original** frozen procedure on the **original** frozen candidate
+$N_7$ member 5 (§4). S6 = **READY**, DIRECT under DI1 + DI2/CDE-v1 + MFDI1–MFDI6 from `SS-GP94`,
+under `E0-supplied-v1` (§5).
 
-**T4.** The preregistered prediction **A2 is FALSIFIED**. At $c_0=(\{S1,S2\},L_\to)$ with
-$\Gamma_{c_0}=\varnothing$ fixed in $\mathfrak{E}_{0a}$: $\mathrm{Status}(c_0)=$ JOINT-YES as
-predicted, but $\varphi_{\mathrm{irr}}=\forall x\,\neg(x\to x)$ holds in every admissible LK
-proof-search graph and every admissible CSP propagation graph and is not logically valid, so
-$\mathcal{C}_{c_0,\mathbf{J}_0}\neq\varnothing$.
+**Refuted.**
+- **DF-04-H — REFUTED** at its frozen evaluation point, unreworded. All three
+  dialogue-assembled schemas (S1, S6, S7) reached READY by direct instantiation. The programme's
+  own registered prediction, defeated.
+- **The DI4 cross-source-assembly objection to S7 — REFUTED verbatim by the primary source.**
+  Its abstract (p. 511) names "the archetypal framework using Galois connections between
+  concrete and abstract semantics, widenings and narrowings"; §1 (p. 512) places widening inside
+  the Galois-connection framework. The Turn-21 conjecture that no primary source presents the
+  bundle as a unit was wrong.
+- **A2 — FALSIFIED** at $(\mathbf{J}_0, G_1, K_{1,\mathrm{L\&M}})$ by $\forall x\,\neg(x\to x)$.
 
-## Refutations and reversals recorded
+**Withdrawn by self-audit.** Revision 1's **BIA**, its "iff", and its arity framing; Revision 1's
+**T1** as an unbounded impossibility; Revision 1's **T3** verdict that S6 is UNDERDETERMINED and
+that Turn 17's S6 determination check was incorrect. Superseded, not deleted.
 
-- **A2 refuted** — the dialogue's own preregistered prediction, at the certified profile.
-- **Turn 17's S6 determination check refuted.**
-- The proposal `S6 = SOURCE-FAIL` is **rejected** — as `RESUME-SUMMARY` reported, and for a
-  sharper reason: the two readings are not a search problem but two inequivalent targets.
-- The prior expectation that S7 trends negative is **not** supported: the strongest lead found
-  (Cousot & Cousot, *Abstract Interpretation Frameworks*, 1992) points toward S7 being
-  rescuable, and is recorded prominently rather than buried.
+## 4. Scope and profile sensitivity
 
-## Scope
+SSS-3 is false without both class restrictions, and the counterexamples are given: an arbitrary
+binary relation can encode the answer; a state-inspecting decoder can recompute provability from
+the sequent alone. SSS-3's witness conditions are verified for MLL; for LK they hold under some
+presentations and are **undecided here** for a purely additive-context G3 presentation.
 
-Eleven schemas chosen by two models during protocol development. **No claim of
-representativeness, breadth, or universality.** Panel sensitivity is untested and untestable at
-$|D_0^{\mathrm{plan}}|=11$. BIA is proved for exactly two rule systems and is **not** a class
-theorem. T4 is **not profile-invariant**: under an LK corpus profile with list contexts and an
-explicit exchange rule, $\varphi_{\mathrm{irr}}$ fails and $\mathcal{C}_{c_0}$ is UNRESOLVED.
+The S1/S6 contrast is a contrast of **state typing, not of logic**.
 
-## Minimal architecture
+A2 is **not profile-invariant**: under an LK profile with list contexts and an explicit exchange
+rule, $\varphi_{\mathrm{irr}}$ fails and $\mathcal{C}_{c_0}$ is UNRESOLVED there.
 
-**None.** No operator architecture, no basis, no rank, no minimality result. $U_0$ was never
-populated, so $W^\ast$ never began, P1 never returned, and the frozen ordering opens rank
-questions only after P1 returns. Reporting an architecture here would be fabrication.
+$D_0^{\mathrm{plan}}$ is an explicit methodological panel of eleven schemas chosen by two models.
+No representativeness, breadth, or universality claim. Panel sensitivity is untested and
+untestable at $n=11$. No Stage-B promotion attempted.
 
-## Unresolved, and what would close each
+## 5. Minimal architecture, basis, rank — and why none exists
 
-| Unresolved | Closed by |
-|---|---|
-| S7 terminal status | one document: Cousot & Cousot, JLC 2(4):511–547, 1992 |
-| S6 branch (UNDERDETERMINED vs OPEN⇝SOURCE-FAIL) | exact Turn-36 text, absent from the supplied corpus |
-| DF-04-H | terminal status for all eleven; S7 lacks one |
-| $U_0$, $W^\ast$, $\partial_1$, maximal fragments, common laws | K4 verbatim quotations from the eleven primary sources |
-| Novelty of anything | exact $\Pi_0$ + certified translations; currently UNRESOLVED, never positive |
-| CDE-v1 robustness | a programme attempting to defeat it on unrelated source/target pairs |
-| $\mathcal{C}_{c_0}$ under a list-with-exchange LK profile | that profile's source, then recomputation |
+**None, and the reason is a gate that did not pass, not a search that stopped early.**
 
-## External validation
+$U_0$ is unsealed because nine targets lack K4 records, so $W^\ast$ never began, so P1 never
+returned. The frozen ordering opens rank, minimality, irreducibility, dependency, definability
+and alternative-basis questions **only after P1 returns** (`TR-11:3309`). Reporting a basis or
+rank here would be fabrication. C1–C12 is not applicable for the same reason: there is no
+candidate architecture to run it against.
 
-**None.** Everything here is internal, model-executed, non-independent. No result has been
-externally reviewed, kernel-checked, or independently replicated. Internal adversarial passes
-— including the hostile audit in `PROOFS.md` — do not substitute for independent validation.
+The one content result that exists is a single sentence at a single fragment, profile-relative,
+and is not an architecture.
 
-## Artifact validation
+## 6. Genuine unresolved items and external-validation status
 
-Corpus hashes verified against the manifest ✓ · Turn 36 absence flagged, no text reconstructed
-✓ · every snippet attribution marked *unverified* where the host was blocked ✓ · no source
-content asserted from training recall ✓ · frozen objects unmodified ✓ · the frozen run's defect
-preserved rather than repaired ✓ · successor procedures versioned separately and their rejected
-alternatives recorded with reasons ✓.
+| Unresolved | Reason | Closed by |
+|---|---|---|
+| $U_0$, $W^\ast$, joint profiles, $\partial_1$, maximal fragments, common theories, frames, content test, prior-art tests, P2a/P2b/P1 | **evidentiary** — nine primary documents absent | the nine documents in `MISSING-SOURCE-MANIFEST.md` |
+| rank, minimality, irreducibility, bases | **gate** — P1 has not returned | P1 returning |
+| novelty of anything | **evidentiary** — $\Pi_0$ unfixed; frozen rule returns UNRESOLVED, never positive | twelve further $\Pi_0$ primary sources |
+| $\mathcal{C}_{c_0}$ under a list-with-exchange LK profile | **evidentiary** — that profile's source absent | S1 corpus sources |
+| SSS-3's witness conditions for additive-context G3 LK | **mathematical** — not settled here | a proof or countermodel |
+| CDE-v1 optimal restrictiveness | **mathematical** — owed robustness programme | attempts to defeat CDE-v1 on unrelated source/target pairs |
+| S10 extensions first-class or metatheoretic (DF-03) | **evidentiary** | Dung (1995) |
 
-## The blocker
+**External validation: none.** Everything here is internal, model-executed, non-independent. No
+result has been externally reviewed, kernel-checked, or independently replicated. The hostile
+audit in `PROOFS.md` §9 is internal adversarial work and does not substitute for it.
 
-`DF-06` — the organization's egress policy denies every scholarly document host probed
-(arXiv, SEP, Springer, ACM, ScienceDirect, HAL, ResearchGate, Semantic Scholar, nLab,
-university hosts). Search metadata remains available; full texts do not. TSI-v1 — introduced by
-GPT Turn 31 precisely so that no verdict could rest on search-engine summaries — is therefore
-inexecutable, every candidate is INSPECTION-OPEN, and **both** terminal directions close for
-any retrieval-dependent verdict.
+## 7. Source and evidence limitations
 
-The blocker is **symmetric** and was discovered after S6 Channel A had run in full and before
-any terminal verdict was proposed. Snippet-level adjudication was considered and **rejected**:
-it would weaken the evidentiary standard in exactly the way TSI-v1 exists to prevent.
+- **Two of eleven** primary documents inspected. Nine targets rest on source *shapes* recorded
+  in the frozen dialogue transcript, not on documents inspected in this session.
+- **S1's certificate and the A2 result are transcript-attested, not independently verified
+  here.** Liang & Miller was not supplied.
+- **`SS-GP94` was read via OCR** of a bitmap-font body. All its quotations are marked `[OCR]`
+  and symbol corruption `[sic]`. The load-bearing prose passages are unambiguous, but
+  verbatim fidelity should be re-checked against a clean copy. This is a transcription limit,
+  not an access limit.
+- **`SS-CC92`'s** flat/sharp superscripts are lost by text extraction and are restored in
+  brackets in `K4-RECORDS.md`.
+- **DF-07**: the frozen retrieval battery failed to surface a decisive, long-published,
+  in-cutoff source. Any OPEN or SOURCE-FAIL under SR-B2 v2 measures the retrieval design, not
+  the literature.
+- **DF-06**: network policy denies scholarly hosts, so nothing beyond supplied files could be
+  inspected. It never applied to supplied files, and no locally present source was called
+  blocked.
+- **No Codex-generated $U_0$, witness matrix, rank, or minimality claim was consulted, imported,
+  or used.** It lacks the K4 record and the reveal precondition has not been met.
 
-**Minimal unblock action:** grant read access to scholarly full texts, or supply the documents.
-Nothing else is needed — every other input is frozen and hashed. Start with Cousot & Cousot,
-*Abstract Interpretation Frameworks*, J. Logic and Computation 2(4):511–547 (1992); it settles
-S7 in one step.
+## 8. Artifact, validation, commit and branch status
 
-## Relation to FAR
+Artifacts: `PROTOCOL.md`, `PROTOCOL-SUCCESSOR.md`, `S6-PREREGISTRATION.md`, `EVIDENCE.json`,
+`K4-RECORDS.md`, `PROOFS.md`, `DIALOGUE-THEORY.md`, `MISSING-SOURCE-MANIFEST.md`,
+`TERMINAL-REPORT.md`, `STATE.json`, `CHECKPOINT.md`, `FAR-COMPARISON.md`, `README.md`.
 
-Deliberately deferred to `FAR-COMPARISON.md`, written after the above was fixed, and incapable
-of changing any of it.
+Validation: transcript hashes verified; supplied-source hashes recorded and identity verified
+from each document's own front matter; Turn 36 absence flagged with no text reconstructed;
+OCR and extraction limits disclosed per quotation; frozen objects unmodified; superseded claims
+retained as superseded; successor procedures versioned separately with their rejected
+alternatives recorded.
+
+Repository checks and commit/push status are reported in the final response.
+
+## 9. Project FAR relation
+
+Deliberately last, in `FAR-COMPARISON.md`, written after the above was fixed and incapable of
+changing it.

@@ -1,63 +1,55 @@
-# CHECKPOINT
+# CHECKPOINT — Revision 2
 
-Terminal for this environment. Resume only if the blocker in `DF-06` is lifted.
+**Classification:** `BLOCKED — MISSING PRIMARY SOURCES`, with the **source stage internally
+terminal**. Resume when documents from `MISSING-SOURCE-MANIFEST.md` are attached.
 
-**Classification:** `BLOCKED` (stop condition 3 — hard blocker), with all unblocked work
-completed and four proved retrieval-independent results.
+## Delta since Revision 1
+
+| Item | Revision 1 | Revision 2 |
+|---|---|---|
+| S7 | OPEN, inspection-blocked | **READY** — DIRECT from `SS-CC92`, **original** frozen procedure, $N_7$ member 5 |
+| S6 | UNDERDETERMINED | **READY** under `E0-supplied-v1` from `SS-GP94`; **OPEN** under original $\mathfrak{E}_0$ |
+| T1 | unbounded impossibility | **SSS-3** — bounded, exhaustive over $\mathcal{R}_{\mathrm{bin}}^{\mathsf{Seq}}\times\mathcal{D}_{\mathrm{succ}}$ (exactly four decoders, all refuted) |
+| T2 | "arity" framing | **state-type taxonomy**; $\mathcal{X}_3$ is a binary relation and is sufficient |
+| T3 | S6 UNDERDETERMINED; Turn 17 check wrong | **both withdrawn** — $\mathcal{X}_1$ fails MFDI4, so it is not an admissible competing witness |
+| Theory | BIA, with an "iff" | **SSS**, downgraded, indexed, no characterisation claimed |
+| DF-04-H | not reached | **REFUTED**, unreworded, at its frozen evaluation point |
+| T4 / A2 | falsified | unchanged; now also marked **transcript-attested**, not independently verified |
+| Blocker | DF-06 network policy | **DF-06 partially superseded**; the operative stop is nine absent documents |
 
 ## State
 
-| Item | Value |
-|---|---|
-| $\mathfrak{E}_{0a}$ | FROZEN, recovered into `PROTOCOL.md` from verified transcripts |
-| Corpus hashes | all three match; **Turn 36 absent** — resume state is `RESUME-SUMMARY`, non-verbatim |
-| S1 | READY (DI1+FDI1–5+CDE-v1, Liang & Miller) — carries quantifier-free-restriction and CDE-v1 provenance caveats |
-| S2–S5, S8–S11 | READY (provisional) |
-| S6 | **UNDERDETERMINED** (or OPEN⇝SOURCE-FAIL) — `PROOFS.md` T3, retrieval-independent |
-| S7 | **OPEN**, inspection-blocked; decisive lead identified |
-| $R_{\mathrm{primary}}$ | true; PRECONDITION STOP does not fire |
-| $U_0$, $\mathcal{K}_0$, $\Pi_0$ | BLOCKED — K4 verbatim quotation impossible |
-| $W^\ast$ over $U_0$ | NOT BEGUN |
-| DF-04-H | evaluation point **not reached** (S7 has no terminal status); partial pattern recorded, not promoted |
-| C1–C12 | not run — no candidate architecture was produced |
+- All eleven targets hold terminal source statuses. $R_{\mathrm{primary}}$ true.
+- $U_0$ **not sealed**: K4 records complete for S6 and S7 only (`K4-RECORDS.md`).
+- $W^\ast$ not begun; P1 gate not passed; no basis, rank, or minimality exists to report.
+- C1–C12 not applicable — no candidate architecture was produced.
+- Codex-generated material: **not consulted, not imported**; reveal precondition unmet.
 
-## Retrieval executed (all prescribed invocations)
+## Supplied sources
 
-- **S6** SR-B2 v2: Channel A 6/6; $N_6$ frozen at five under NM-v1; Channel B 10/10.
-- **S7** SR-B2 v2: Channel A 6/6; $N_7$ frozen at five under NM-v1; Channel B 9 distinct
-  (one Q8 deduplicated — members 1 and 5 share first author).
-- No existential early stop was taken; no saturation stop; no cost truncation.
+| ID | Document | SHA-256 (prefix) | Procedure |
+|---|---|---|---|
+| `SS-CC92` | Cousot & Cousot, *Abstract Interpretation Frameworks*, JLC 2(4):511–547, 1992 | `19591e44…` | **original** (was $N_7$ #5) |
+| `SS-GP94` | Galmiche & Perrier, LFCS 1994, pp. 101–113 (`hal-01297758`) | `622f2f9e…` | `E0-supplied-v1` (not in $N_6$) |
 
-## Results proved
+## New finding
 
-| ID | Result |
-|---|---|
-| T1 | No single-sequent binary transition structure represents MLL backward search. Two explicit countermodels. |
-| T2 | Frontier state internalises AND-branching; single-sequent state does not. Gives BIA content. |
-| T3 | Frozen S6 UNDERDETERMINED; Turn 17's S6 determination check was incorrect. Defect **preserved**, not repaired. |
-| T4 | **A2 FALSIFIED** at $(\mathbf{J}_0,G_1,K_{1,\mathrm{L\&M}})$ by $\forall x\,\neg(x\to x)$. Profile-relative; UNRESOLVED under a list-with-exchange LK profile. Novelty UNRESOLVED, none claimed. |
-
-Theory extracted: **Branching-Internalisation Adequacy (BIA)** — a boundary theory about
-representation typing, not an operator architecture. See `DIALOGUE-THEORY.md`.
+**DF-07 — source-supply / search-provider sensitivity.** The frozen SR-B2 v2 battery never
+returned `SS-GP94` across 16 prescribed invocations, though it is a 1994 publication squarely on
+S6's disputed component and inside the evidence cutoff. The OPEN/READY gap for S6 is a property
+of the retrieval design, not the literature. Confirms RD-01 concretely.
 
 ## Live objections
 
-`A3` splits S6 into a two-branch disjunction (needs absent Turn-36 text) · `A6` A2's
-falsification is corpus-profile-relative · `A7` CDE-v1 provenance risk; robustness programme
-owed.
+`A4` S7's finite family rests on CDE-v1 · `A6` `SS-GP94` read via OCR · `A7` A2 profile-relative
+and transcript-attested · `A8` DF-04-H refutation relative to `E0-supplied-v1` · `A9` CDE-v1
+load-bearing in three certificates, robustness programme owed.
 
-## Blocker
+## Next action when unblocked
 
-`DF-06` — organization egress policy denies every scholarly document host; search metadata
-only. TSI-v1 inexecutable ⇒ every candidate INSPECTION-OPEN ⇒ neither READY nor SOURCE-FAIL
-reachable for any retrieval-dependent verdict. **Symmetric**: it blocks positive and negative
-alike. Replacement procedures were considered and **rejected** — see `PROTOCOL-SUCCESSOR.md`.
-
-## Next action if unblocked
-
-1. Inspect Cousot & Cousot, *Abstract Interpretation Frameworks*, JLC 2(4):511–547 (1992) →
-   settles S7's DI4 question in one step.
-2. Adjudicate remaining $N_6$/$N_7$ candidates under TSI-v1.
-3. Only if S7 terminates: evaluate DF-04-H.
-4. Then $\mathfrak{E}_{0b}$.3 → $\mathfrak{E}_{0c}$ ($U_0$ with K4 quotations) → $W^\ast$ →
-   joint profiles → $\partial_1$ → content → prior art.
+1. Attach the nine documents. Highest single value: **S1 — Liang & Miller**.
+2. Complete K4 records for the nine; seal and hash $U_0$; hash $\mathcal{K}_0$ and $\Pi_0$.
+3. $W^\ast$ under $B_1$ then $B_2$ → joint profiles and $J^\ast$ → maximal fragments and
+   $\partial_1$ → common theories → mechanical frames → content test → $\Pi_0$ and search
+   prior-art tests → P2a → P2b → P1 → rank/minimality **only if** the P1 gate passes →
+   C1–C12 → versioned repairs or bounded terminal verdict.

@@ -1,81 +1,92 @@
 {
-  "schema": "dialogue-theory-state/1",
+  "schema": "dialogue-theory-state/2",
+  "revision": 2,
   "run": "E0-closure",
-  "date": "2026-08-15",
-  "terminal_classification": "BLOCKED",
-  "terminal_sentence": "The dialogue-built theory is BLOCKED, relative to D_0^plan (eleven preregistered target schemas), the literal grammar G_1 and joint profile J_0 for c_0, corpus profile K_1,L&M for S1, procedures E_0a + K-P1-DI + SRF-v1 + CDE-v1 + SR-B2 v2 + TSI-v1 + FDI-v1 + MFDI-v1, budgets B_1/B_2, evidence date 2026-08-15.",
+  "date": "2026-08-16",
+  "evidence_cutoff": "2026-08-15 (preserved)",
 
+  "terminal_classification": "BLOCKED — MISSING PRIMARY SOURCES; source stage INTERNALLY TERMINAL",
   "stop_condition": {
-    "which": 3,
-    "name": "Hard blocker",
-    "required_input_unavailable": "full text of any scholarly source",
-    "cause": "organization egress policy denies every scholarly document host; search metadata only",
-    "permitted_alternative": "none — see PROTOCOL-SUCCESSOR.md for the replacement procedures considered and rejected",
+    "which": "permitted non-final hard stop — required primary documents genuinely absent",
+    "missing": 9,
+    "of": 11,
+    "manifest": "MISSING-SOURCE-MANIFEST.md",
+    "not_an_access_failure": "two documents were supplied, both fully inspected and adjudicated; no locally present source is called blocked",
     "unblocked_work_completed": true
   },
 
   "stage_status": {
     "E_0a": "FROZEN (recovered, not redesigned)",
-    "E_0b.2": "retrieval COMPLETE for both remaining OPEN targets; adjudication BLOCKED",
-    "E_0b.3": "BLOCKED (exact R_S, exact Pi_0)",
-    "E_0c": "BLOCKED (U_0 requires K4 verbatim quotation + page reference)",
-    "W_star": "NOT BEGUN — frozen staging requires all three hashes; also blocked on U_0",
-    "c_0_only": "EXECUTED under separately versioned E0-c0-only-v1"
+    "E_0b.2": "COMPLETE — all eleven targets hold terminal source statuses",
+    "E_0b.3": "BLOCKED — exact R_S and exact Pi_0 need the nine missing documents",
+    "E_0c": "BLOCKED — U_0 needs K4 records for all eleven; 2 of 11 complete",
+    "W_star": "NOT BEGUN",
+    "c_0_only": "EXECUTED under E0-c0-only-v1"
   },
 
   "targets": {
-    "READY_firm": ["S1"],
-    "READY_provisional": ["S2","S3","S4","S5","S8","S9","S10","S11"],
-    "UNDERDETERMINED": ["S6"],
-    "OPEN_inspection_blocked": ["S7"],
-    "S6_note": "terminal on retrieval-independent grounds (PROOFS.md T1/T3); branch disjunction UNDERDETERMINED vs OPEN-trending-SOURCE-FAIL recorded, both agreeing S6 is not READY",
+    "READY_firm": ["S1", "S7"],
+    "READY_under_E0_supplied_v1": ["S6"],
+    "READY_provisional": ["S2", "S3", "S4", "S5", "S8", "S9", "S10", "S11"],
+    "S6_original_E0_status": "OPEN (all 16 prescribed SR-B2 v2 invocations executed)",
     "R_primary": true,
     "PRECONDITION_STOP": "does not fire"
   },
 
   "results": {
-    "T1": {"claim": "no single-sequent binary transition structure represents MLL backward search", "status": "PROVED", "method": "two explicit finite countermodels + atom-balance lemma", "retrieval_dependent": false},
-    "T2": {"claim": "frontier state internalises AND-branching; single-sequent state does not", "status": "PROVED", "retrieval_dependent": false},
-    "T3": {"claim": "frozen S6 is UNDERDETERMINED (or OPEN trending SOURCE-FAIL); Turn 17's determination check for S6 was incorrect", "status": "PROVED, terminal, defect preserved not repaired", "retrieval_dependent": false},
-    "T4": {"claim": "preregistered prediction A2 is FALSIFIED at (J_0, G_1, K_1,L&M) by phi_irr = forall x . not(x -> x)", "status": "PROVED, profile-relative, NOT profile-invariant", "procedure": "E0-c0-only-v1", "retrieval_dependent": false}
+    "SSS-1": {"claim": "frontier state sufficiency for any finitary rule system", "status": "PROVED"},
+    "SSS-2": {"claim": "hyperedge sufficiency on individual sequents", "status": "PROVED"},
+    "SSS-3": {"claim": "over individual MLL sequents with the rule-induced projected relation and uniform monotone successor-set decoders, no pair computes MLL provability; decoder class has exactly four members, all refuted", "status": "PROVED, bounded over explicit classes", "false_without_restrictions": true},
+    "S7_READY": {"status": "PROVED", "procedure": "ORIGINAL frozen", "source": "SS-CC92", "note": "DI4 objection refuted verbatim by the source"},
+    "S6_READY": {"status": "PROVED", "procedure": "E0-supplied-v1", "source": "SS-GP94"},
+    "DF-04-H": {"status": "REFUTED at its frozen evaluation point, unreworded"},
+    "A2": {"status": "FALSIFIED at (J_0, G_1, K_1-L&M) only; NOT profile-invariant"}
   },
 
+  "withdrawn_by_self_audit": [
+    "BIA (Branching-Internalisation Adequacy), its iff formulation, and its arity framing",
+    "Revision-1 T1 as an unbounded impossibility — replaced by SSS-3, bounded over explicit classes",
+    "Revision-1 T3 verdict that S6 is UNDERDETERMINED",
+    "Revision-1 claim that Turn 17's S6 determination check was incorrect",
+    "Revision-1 suggestion that LK is intrinsically better behaved than MLL — the contrast is state typing, not logic"
+  ],
+
   "not_established": [
-    "shared vocabulary across the panel (U_0 never populated)",
-    "maximal jointly interpretable fragments; first-failure frontier d_1",
+    "shared vocabulary across the panel (U_0 unsealed)",
+    "maximal jointly interpretable fragments; first-failure frontier",
     "common laws beyond the single c_0 fragment",
     "computed frames beyond Gamma_c0 = empty",
-    "substantive-content test beyond c_0",
     "prior-art / novelty verdict for anything (UNRESOLVED, never positive)",
-    "definability, dependency, irreducibility, rank, minimality, alternative bases",
-    "DF-04-H evaluation (frozen evaluation point not reached: S7 lacks terminal status)",
-    "C1-C12 registry run (no candidate architecture was produced to run it against)",
+    "definability, dependency, irreducibility, rank, minimality, alternative bases — P1 gate not passed",
+    "C1-C12 registry run — no candidate architecture exists to run it against",
     "any universality, representativeness, or class theorem"
   ],
 
   "live_objections_carried": [
-    {"id": "A3", "target": "T3", "effect": "splits S6 into a two-branch disjunction; needs exact Turn 36 text, absent from corpus"},
-    {"id": "A6", "target": "T4", "effect": "A2's falsification is corpus-profile-relative; under a list-with-exchange LK profile C_c0 is UNRESOLVED"},
-    {"id": "A7", "target": "S1 READY and thus c_0", "effect": "CDE-v1 provenance risk remains live; robustness programme on unrelated source/target pairs is owed"}
+    {"id": "A2-audit", "target": "SSS-3", "effect": "decoder class deliberately excludes state-inspecting decoders; conceded in PROOFS.md s1.0 and s1.6"},
+    {"id": "A4", "target": "S7 READY", "effect": "the finite family F rests on CDE-v1; a stricter auditor could return S7 to OPEN. Does not affect the independent, verbatim DI4 finding."},
+    {"id": "A6", "target": "S6 READY", "effect": "SS-GP94 read via OCR; transcription fidelity should be re-checked against a clean copy"},
+    {"id": "A7", "target": "A2", "effect": "profile-relative; S1 half transcript-attested, not independently verified here"},
+    {"id": "A8", "target": "DF-04-H refutation", "effect": "relative to E0-supplied-v1; under original E_0 alone the evaluation point is not reached"},
+    {"id": "A9", "target": "S1, S6, S7 certificates", "effect": "CDE-v1 is load-bearing in three certificates; robustness programme still owed"}
   ],
 
   "minimal_unblock_action": {
-    "statement": "Grant the executing environment read access to scholarly full texts, or supply the documents directly. Nothing else is required; every other input is already frozen and hashed.",
-    "first_documents_to_inspect": [
-      {"for": "S7", "doc": "Cousot & Cousot, Abstract Interpretation Frameworks, J. Logic Comput. 2(4):511-547, 1992", "question": "does the archetypal framework bundle a Galois connection with widening/narrowing as ONE source-defined formalism (then DI4 satisfied, S7 DIRECT by DI1) or present them as mutually relaxed alternatives (then DI4 cross-source assembly stands)?"},
-      {"for": "S7", "doc": "Cousot & Cousot, Comparing the Galois connection and widening/narrowing approaches, PLILP'92, LNCS 631:269-295", "question": "counterweight to the above"},
-      {"for": "S6", "doc": "the SEP Linear Logic entry (Di Cosmo & Miller) and Acclavio & Maieli, Logic Programming with Multiplicative Structures", "question": "only relevant if T3's branch disjunction is resolved toward the ordinary-graph reading; T3 is otherwise retrieval-independent"},
-      {"for": "the whole content phase", "doc": "the K-P1-eligible primary source for each of the eleven targets", "question": "K4 verbatim quotations to populate U_0, without which W* cannot begin"}
-    ]
+    "statement": "Attach the nine missing primary documents listed in MISSING-SOURCE-MANIFEST.md. Nothing else is required to seal U_0 and start W*.",
+    "highest_marginal_value_single_document": "S1 — Liang & Miller, Focusing Gentzen's LK Proof System: carries an existing certificate whose thinnest point is flagged, is required for the mandatory exhaustive stratum, and would convert the A2 result from transcript-attested to independently verified.",
+    "for_full_novelty_verdict": "the nine, plus one primary source for each of the twelve remaining Pi_0 bodies (SS-CC92 already supplies the abstract-interpretation body)"
   },
 
   "artifact_validation": {
-    "corpus_hashes_verified": true,
+    "transcript_hashes_verified": true,
+    "supplied_source_hashes_recorded": true,
+    "supplied_source_identity_verified_from_own_front_matter": true,
     "turn_36_absent_and_flagged": true,
     "no_reconstructed_quotation": true,
-    "all_snippet_attributions_marked_unverified": true,
-    "successor_procedures_versioned_separately": true,
+    "ocr_and_extraction_limits_disclosed_per_quotation": true,
     "frozen_objects_unmodified": true,
-    "frozen_run_defect_preserved_not_repaired": true
+    "superseded_claims_retained_as_superseded": true,
+    "successor_procedures_versioned_separately": true,
+    "codex_material_not_consulted": true
   }
 }

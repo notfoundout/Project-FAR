@@ -43,6 +43,47 @@ UNRESOLVED under a list-with-exchange S1 corpus profile; novelty UNRESOLVED.
 
 ---
 
+## `E0-supplied-v1` — SOURCE-SUPPLIED primary-document procedure
+
+**Motivation.** Primary documents were supplied directly as local files. SR-B2 v2 governs
+*retrieval*; it says nothing about documents that arrive without retrieval. TSI-v1 governs
+*inspection* and is fully executable on a local file. A supplied document that is already in a
+frozen near-match set is therefore ordinary frozen execution; a supplied document that is not
+requires a separately versioned procedure so that the frozen candidate set is not retrofitted.
+
+**Procedure, fixed before any supplied document was opened.**
+
+1. Hash every supplied file. Verify bibliographic identity **from the document's own front
+   matter or embedded metadata**, never from recall or from the filename.
+2. Determine membership in the frozen near-match set $N_i$ for the target concerned.
+   - **In $N_i$** ⇒ inspect under the **original** frozen procedure. The verdict is an
+     $\mathfrak{E}_0$ verdict.
+   - **Not in $N_i$** ⇒ inspect under this successor procedure. The verdict is an
+     `E0-supplied-v1` verdict and is reported **separately** from the original
+     $\mathfrak{E}_0$ verdict, which is left unchanged.
+3. Apply TSI-v1 unchanged, with the target's already-fixed search terms.
+4. Apply the already-frozen adjudication order K-P1 → DI1–DI6 (with SRF-v1, CDE-v1) →
+   target-specific certificate (FDI-v1 / MFDI-v1) → K-P2 → K-P4. **No criterion is altered,
+   relaxed, or added.**
+5. Extract K4 records under U-a, U-b, U-c, U-e unchanged.
+6. Where the two procedures disagree for one target, record the difference as
+   **source-supply / search-provider sensitivity** and attribute it to the retrieval design,
+   never to the target or to the literature.
+7. Preserve the evidence cutoff. A supplied document already eligible at the cutoff is
+   admissible; delivery date is not publication date.
+
+**Outcome-independence.** Steps 1–7 branch on *membership in $N_i$* and on *the frozen
+criteria*, never on what a document turns out to say. The procedure was fixed before either
+document was opened and was applied unchanged to both, including where it produced the verdict
+least favourable to the programme's own registered hypothesis (DF-04-H).
+
+**Executed.** `SS-CC92` fell in $N_7$ ⇒ original procedure ⇒ **S7 READY** as an
+$\mathfrak{E}_0$ verdict. `SS-GP94` fell outside $N_6$ ⇒ successor procedure ⇒ **S6 READY**
+under `E0-supplied-v1`, with S6 remaining **OPEN** under original $\mathfrak{E}_0$, and the
+difference recorded as **DF-07**.
+
+---
+
 ## Procedures considered and **rejected**
 
 ### Rejected: `TSI-v2-snippet` — replace TSI-v1 with a snippet-level evidentiary standard
