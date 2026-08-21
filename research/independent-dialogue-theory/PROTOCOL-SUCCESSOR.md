@@ -84,6 +84,45 @@ difference recorded as **DF-07**.
 
 ---
 
+## `E1-transparent-source-recovery` — executable closure successor
+
+**Why a new version is necessary.** Three frozen preconditions cannot honestly be certified:
+
+1. U-c requires cognitive blindness, but the closing analyst had already seen multiple
+   targets and the downstream vocabulary.
+2. S4 names Jeffrey's exact 1965 edition; the located scan is access-restricted, so no K4
+   quotation can be certified from it.
+3. The exact corpus says the secondary-order seed was published but contains no seed value;
+   frozen $\sigma$ is therefore unexecutable.
+
+E1 preserves the eleven target tuples, U-a/U-b/U-d/U-e, K4, grammars, YES/NO/OPEN burdens,
+dual streams, the two arms, budgets, JOINT rules, frame rule, prior-art rule, obligation order,
+and C1–C12. It makes only these prospective repairs:
+
+- replace U-c cognitive blindness with **procedural source-local isolation**: take the first
+  eight formal primitives in each source's own definition order, retain all of them, and log
+  source text/locator before any cell result;
+- allow a same-author primary S4 document that directly states probability kinematics and
+  rigidity, while preserving S4 as INSPECTION-OPEN in E0;
+- set successor $\sigma$ seed to
+  `9eeaa695a4b0a06b96be0560d7049d7e4fff50da5d325ade96bb8f16ce34d0bb`, the SHA-256 of
+  `E1-transparent-source-recovery|2026-08-21|secondary-v1`;
+- make the outcome-independent `PI0-BIB-v1` assignment operative by identity-checking and
+  hashing every assigned document; frozen $\Pi_0$ remains UNEXECUTABLE (DF-08).
+
+**Execution order.** Exact corpus → bibliography → source manifest → K4 → `U0.json` seal →
+`W-STAR.json` → `FRAMES.json` seal → common theory/content → prior-art translations →
+conditional basis tests → C1–C12 and hostile audit → terminal verdict. Hashes are in
+`SEALS.json`.
+
+**Executed.** U0-E1 contains 88 entries. The full 968-cell matrix has a status at B1 and B2;
+the mandatory 176 cells were exhaustively attempted and the first 100/400 secondary cells
+were reached under successor $\sigma$. Both frozen fragment arms have joint statuses, and the
+only certified source-registry extensions are `u058` (configuration carrier) and `u059`
+(binary transition relation). Results are in `W-STAR.json` and `JOINT-RESULTS.md`.
+
+---
+
 ## Procedures considered and **rejected**
 
 ### Rejected: `TSI-v2-snippet` — replace TSI-v1 with a snippet-level evidentiary standard

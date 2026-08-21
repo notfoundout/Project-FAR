@@ -13,11 +13,12 @@ this directory.
 
 | ID | File | Coverage | SHA-256 (verified) | Lines |
 |---|---|---|---|---|
-| `TR-1` | `# CLAUDE TURN 1.md` | turns 1–10 | `2c5bf81202a345ed04e23336c44cf360d559742cb1498cbf3513ac2e38a4ec96` | 7,189 |
-| `TR-11` | `# CLAUDE TURN 11.md` | turns 11–30 | `9bf15fbcf3fa775d7855ab8ffd2b9f4fc0e76faa79b02958dc9951bfd686037f` | 10,979 |
-| `TR-31` | `# CLAUDE TURN 31.md` | turns 31–35 + GPT 35 | `65146a43ba4c02d652bb598244ee36501ad30268b9bc7ad4be536a974034c347` | 1,622 |
+| `TR-1` | `corpus/# CLAUDE TURN 1.md` | turns 1–10 | `2c5bf81202a345ed04e23336c44cf360d559742cb1498cbf3513ac2e38a4ec96` | 7,189 |
+| `TR-11` | `corpus/# CLAUDE TURN 11.md` | turns 11–30 | `9bf15fbcf3fa775d7855ab8ffd2b9f4fc0e76faa79b02958dc9951bfd686037f` | 10,979 |
+| `TR-31` | `corpus/# CLAUDE TURN 31.md` | turns 31–35 + GPT 35 | `65146a43ba4c02d652bb598244ee36501ad30268b9bc7ad4be536a974034c347` | 1,622 |
 
-All three hashes match the manifest supplied in the closure prompt. Locators below are
+All three hashes match the manifest supplied in the closure prompt. The exact files and prompt
+are committed, with sizes and hashes, under `corpus/CORPUS-MANIFEST.json`. Locators below are
 `TR-11:4084` = file `TR-11`, line 4084.
 
 **Turn 36 is NOT in the supplied corpus.** The transcripts terminate at GPT Turn 35

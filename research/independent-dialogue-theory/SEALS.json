@@ -1,0 +1,50 @@
+{
+  "schema": "dialogue-theory-seals/1",
+  "procedure": "E1-transparent-source-recovery",
+  "ordering": [
+    {
+      "ordinal": 1,
+      "object": "corpus/CORPUS-MANIFEST.json",
+      "sha256": "04bdace17d0dcc97b1a76a25e719455b6754e891e973e0673b2985fd4d36d517",
+      "event": "exact transcript and closure-prompt corpus frozen"
+    },
+    {
+      "ordinal": 2,
+      "object": "PI0-BIB-v1.md",
+      "sha256": "b3bd5bc94b31898f378a849f9b9e22c0587d79d289b94e7bdd3f654a44b66a8d",
+      "event": "outcome-independent successor bibliography preserved before U0 and W-star"
+    },
+    {
+      "ordinal": 3,
+      "object": "SOURCE-MANIFEST.json",
+      "sha256": "f774eadbbadc8e5b3a1be70e3f1741a557d56d15cc286f22ce3074cc293a9e28",
+      "event": "target and PI0 bodies fixed by URL, bytes, pages and SHA-256"
+    },
+    {
+      "ordinal": 4,
+      "object": "K4-RECORDS.md",
+      "sha256": "22ec72ba1e171ebf0d608326cbdd518b15b545fa63029dd0584e0a8904fea21a",
+      "event": "all eleven source-local K4 records completed"
+    },
+    {
+      "ordinal": 5,
+      "object": "U0.json",
+      "sha256": "ff4145c7541e5fb25fd958335119ebc42ab98199e85fc93fc048190bb72d0f4d",
+      "event": "U0-E1 sealed with 88 retained entries"
+    },
+    {
+      "ordinal": 6,
+      "object": "W-STAR.json",
+      "sha256": "85ad51cdac8497b248723efafb578ecbd7b0257999ddb187080f7db880fdd3f7",
+      "event": "mandatory matrix and both fragment arms completed"
+    },
+    {
+      "ordinal": 7,
+      "object": "FRAMES.json",
+      "sha256": "66b7810a51e476e5101be12bfcdde43f182e999f5d5e3107e3a524faa0467047",
+      "event": "all witnessed interface frames generated and frozen before common-theory computation"
+    }
+  ],
+  "frozen_E0_disposition": "No seal is asserted for U0-E0: exact S4 inspection and U-c cognitive blindness were not satisfied.",
+  "immutability_rule": "Any edit to a sealed object requires a new version and new run; hashes are verified by validate.py."
+}

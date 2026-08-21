@@ -1,7 +1,8 @@
 # FAR comparison — written last
 
-**Revision 2.** Written *after* `PROOFS.md`, `DIALOGUE-THEORY.md` and `TERMINAL-REPORT.md` were
-fixed. Nothing here can change them. This is a relational classification only; it establishes
+**Revision 4.** Written *after* the E1 matrix, joint results, frames, common-content test,
+prior-art test, hostile audit, `DIALOGUE-THEORY.md`, and `TERMINAL-REPORT.md` were fixed.
+Nothing here can change them. This is a relational classification only; it establishes
 nothing about Project FAR and nothing about SSS.
 
 FAR-side statements are read from the repository's current canonical surfaces
@@ -13,8 +14,9 @@ FAR-side statements are read from the repository's current canonical surfaces
 $$\boxed{\textbf{PARTIAL OVERLAP on one narrow question; otherwise INDEPENDENT}}$$
 
 Not equivalent. Not stronger. Not weaker. Neither subsumes the other. Not contradictory.
-Unchanged from Revision 1 in direction, but the overlap is now **narrower and better specified**,
-because the theory itself was narrowed.
+Unchanged in direction. E1's profile-relative irreflexivity kernel does not widen the overlap:
+it is a bounded fact about two target graph profiles, not a FAR operator, architecture, or
+universality statement.
 
 ## Where they touch
 
@@ -64,6 +66,10 @@ claim could be measured against.
 - **No transfer of status in either direction.** SSS's proofs are internal, OCR-assisted in one
   case, and unreviewed; they confer nothing on FAR. FAR's repository status confers nothing on
   SSS. Repository placement is not epistemic authority in either direction.
+- **E1's common-content kernel transfers nothing.** `J-star`, the 88-item successor registry,
+  and $\forall x\neg(x\to x)$ are Research-status, profile-relative results with no
+  JOINT-COMPLETE or novelty certificate. They neither instantiate RCCD nor constrain any FAR
+  artifact.
 
 ## One observation, offered without any claim of authority
 

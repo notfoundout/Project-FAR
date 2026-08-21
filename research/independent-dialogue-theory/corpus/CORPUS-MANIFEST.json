@@ -1,0 +1,39 @@
+{
+  "schema": "dialogue-theory-corpus-manifest/1",
+  "sealed_at_utc": "2026-08-21T00:00:00Z",
+  "files": [
+    {
+      "id": "TR-1",
+      "path": "# CLAUDE TURN 1.md",
+      "sha256": "2c5bf81202a345ed04e23336c44cf360d559742cb1498cbf3513ac2e38a4ec96",
+      "bytes": 271906,
+      "lines": 7189
+    },
+    {
+      "id": "TR-11",
+      "path": "# CLAUDE TURN 11.md",
+      "sha256": "9bf15fbcf3fa775d7855ab8ffd2b9f4fc0e76faa79b02958dc9951bfd686037f",
+      "bytes": 412676,
+      "lines": 10979
+    },
+    {
+      "id": "TR-31",
+      "path": "# CLAUDE TURN 31.md",
+      "sha256": "65146a43ba4c02d652bb598244ee36501ad30268b9bc7ad4be536a974034c347",
+      "bytes": 76688,
+      "lines": 1622
+    },
+    {
+      "id": "CLOSURE-PROMPT",
+      "path": "Claude-GPT-Dialogue-Theory-Autonomous-Closure-Prompt.md",
+      "sha256": "fe48d6f0cda8799519a343ebbe84e6a2c4ccde987e930023c388073a5c8e4f8c",
+      "bytes": 11658,
+      "lines": 136
+    }
+  ],
+  "turn_36": {
+    "status": "ABSENT",
+    "rule": "No reconstruction or quotation; resume material is RESUME-SUMMARY only."
+  }
+}
+

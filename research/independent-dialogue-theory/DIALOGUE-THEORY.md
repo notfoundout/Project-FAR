@@ -1,6 +1,8 @@
 # The dialogue-built theory
 
-**Revision 3.** The Revision-1 name and formulation remain withdrawn; see §5. SSS-3's scope is extended to propositional LK, verified from a primary source.
+**Revision 4.** The Revision-1 name and formulation remain withdrawn; see §5. SSS-3's scope
+is extended to propositional LK, verified from a primary source. E1 closure adds one separate,
+profile-relative common-content kernel; it does not turn SSS into an operator architecture.
 
 **Name (fixed after the content was fixed): Search-State Sufficiency — SSS.**
 
@@ -61,10 +63,9 @@ Proofs: `PROOFS.md` §1–§2.
   have been sufficient; had S1 been given an individual-sequent state it would have faced
   SSS-3's problem under presentations satisfying the witness conditions.
 - **It is not claimed novel.** SSS-1 and SSS-2 are elementary and are very probably folklore —
-  goal stacks and AND/OR search are old. What this run contributes is their use as a
-  preregistered admissibility filter on target specifications. No novelty verdict is available
-  for anything, because $\Pi_0$ is unfixed and the frozen rule returns novelty **UNRESOLVED,
-  never positive**, on an uncertified translation.
+  goal stacks and AND/OR search are old. E1 made the successor PI0 bibliography operative and
+  tested all bodies, but several translations remain OPEN. The result is still **NOVELTY
+  UNRESOLVED, never positive**.
 
 ## 4. Scope and profile sensitivity
 
@@ -125,3 +126,15 @@ These are results of the experiment, not of SSS:
   composite and it fixes neither individuation nor per-label certification. My own earlier count
   of thirteen was wrong and is corrected. The sealed successor `PI0-BIB-v1` repairs this
   prospectively; the frozen verdict is preserved.
+
+## 9. Separate E1 common-content kernel
+
+E1 does not alter SSS. It establishes, at the certified S1/S2 profile and the maximal
+certified joint profile `J-star`, only the lower bound
+
+$$Cn_\Gamma\{\forall x\,\neg(x\to x)\}\subseteq\mathcal T.$$
+
+The sentence is substantive relative to the mechanically sealed interface frames, but it is
+profile- and frame-convention-sensitive. Its one-generator kernel has rank 1 and is minimal
+over the frame. Exact common theory, robust theory, maximality, and novelty are unresolved.
+See `JOINT-RESULTS.md`; do not read this bounded empirical kernel as part of SSS's definition.

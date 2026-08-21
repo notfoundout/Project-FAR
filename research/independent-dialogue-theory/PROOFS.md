@@ -620,14 +620,19 @@ sensitivity is unchanged and is confirmed rather than weakened: the source itsel
 list-plus-exchange presentation as Gentzen's, which is the profile under which
 $\varphi_{\mathrm{irr}}$ fails.
 
-**Novelty: UNRESOLVED**, never positive — $\Pi_0$ is unfixed. Author's own assessment,
+**Novelty: UNRESOLVED**, never positive — frozen $\Pi_0$ is unfixed; E1 later tested the full
+successor bibliography but retained OPEN translations. Author's own assessment,
 recorded so it cannot later read as a novelty claim: irreflexivity of a one-step reduction
 relation with trivial steps excluded is standard in rewriting theory, which lies inside
 $\Pi_0$. **No novelty is claimed.**
 
 ---
 
-## 8. Blocked obligations — with the reason for each
+## 8. Historical Revision-3 blocked obligations — superseded in E1 only
+
+This table records the state before the 2026-08-21 source recovery. It remains the correct
+frozen-E0 history; it is **not** the current E1 status. Current results are in §11 and
+`JOINT-RESULTS.md`.
 
 | Obligation | Requires | Status |
 |---|---|---|
@@ -638,7 +643,7 @@ $\Pi_0$. **No novelty is claimed.**
 | definability, dependency, irreducibility, rank, minimality, alternative bases | P1 to return; frozen ordering opens rank only then | **BLOCKED**, gate not passed |
 | C1–C12 registry | a candidate architecture to run against | **NOT APPLICABLE** — none produced, because P1 never returned |
 
-Every entry is blocked by a **missing primary document**, not by an incomplete search. The
+At Revision 3, every entry was blocked by a **missing primary document**, not by an incomplete search. The
 distinction matters: OPEN never counts as NO, and every claim depending on these returns
 UNRESOLVED.
 
@@ -747,3 +752,49 @@ programme on unrelated source/target pairs is **still owed**.
 **BIA — "Branching-Internalisation Adequacy" — is withdrawn**, together with its "iff"
 formulation, which was a class-level characterisation asserted from two instances. The
 surviving content is renamed and downgraded in `DIALOGUE-THEORY.md`.
+
+---
+
+## 11. Revision 4: E1 hostile closure audit
+
+Sections 1–10 are retained as the historical proof ledger. The former missing-source stop is
+superseded only in `E1-transparent-source-recovery`; frozen E0 is unchanged.
+
+| ID | Hostile challenge | Disposition | Consequence |
+|---|---|---|---|
+| A13 | U-c blindness cannot be asserted after cross-target exposure | **succeeds against E0** | U0-E0 is not certified; E1 uses logged source-local isolation |
+| A14 | Jeffrey 1965 was never inspected | **succeeds against E0** | S4 remains INSPECTION-OPEN in E0; same-author successor evidence counts only in E1 |
+| A15 | frozen $\sigma$ says a seed was published but supplies no value | **succeeds** | secondary E0 order is unexecutable; E1 publishes a versioned seed before its matrix |
+| A16 | URL-only sources may disappear | **partially succeeds** | exact hashes, byte/page counts, and locators permit copy verification; third-party PDFs are not redistributed |
+| A17 | source recovery after seeing targets is outcome-directed | **narrows** | selection answers frozen target definitions, not matrix outcomes; it is successor evidence and no source is retrofitted into E0 |
+| A18 | `u058`/`u059` are trivial aliases, not discoveries | **succeeds** | reported as extensional coincidence; native and calibration rates are never pooled |
+| A19 | zero NO certificates makes the observed boundary too wide | **succeeds** | $\partial_1=\varnothing$ but OPEN frontier has 86 items; no complete maximality claim |
+| A20 | non-stuttering may belong in the frame, collapsing “content” | **live and material** | frozen frame rule excludes target truths; under an alternative interface convention irreflexivity would be frame-forced, so content is frame-sensitive |
+| A21 | LK list/exchange profiles can create self-loops | **succeeds as a scope objection** | irreflexivity remains indexed to `K1-LM-frontier-multiset`; P2b is OPEN |
+| A22 | a lower bound is being sold as the common theory | **fails after correction** | only $Cn(\Gamma\cup\{\varphi_{irr}\})\subseteq\mathcal T$ is claimed; exact $\mathcal T$ is UNRESOLVED |
+| A23 | rank 1 overstates an unknown theory | **fails after correction** | rank/minimality apply only to the certified irreflexivity kernel |
+| A24 | recovered PI0 documents prove novelty | **fails** | several translations remain OPEN; verdict is NOVELTY UNRESOLVED, never positive |
+| A25 | secondary sampling can support maximality | **fails** | all 792 secondary cells are recorded, but sampled results are excluded from maximality |
+| A26 | “all joint profiles” implies exhaustive mathematics | **fails after qualification** | all four certified profiles are listed; JOINT-COMPLETE is false and the mathematical class is not enumerated |
+| A27 | S10 READY smuggles in a transformation | **fails** | only AF/evaluation semantics are READY; native transformation remains unassigned |
+| A28 | S5 assembles probability, acyclicity, and intervention from different sources | **fails** | Beckers–Halpern supplies all components in one source |
+| A29 | S11 assembles ODE and semigroup facts across sources | **fails narrowly** | Mielke states the gradient equation, globally-Lipschitz ODE uniqueness on arbitrary horizons, global flow assumption, and semigroup in one source |
+| A30 | one-step irreflexivity is prior-art commonplace | **succeeds as a novelty warning** | the result is weak and likely familiar; no priority or novelty claim survives |
+
+### 11.1 Exact closure effects
+
+- **Original E0:** blocked at non-repairable assurance/source/seed conditions. No U0-E0 or E0
+  W-star result is claimed.
+- **E1:** internally terminates: 968 cells have B1/B2 status, 177 frozen-arm fragments have
+  joint status, every JOINT-YES fragment has frame/content disposition, and prior art has a
+  certificate status.
+- **Mathematics:** one profile-relative non-frame sentence survives; 86 extension questions,
+  exact common theory, profile robustness, mathematical maximality, and novelty remain OPEN.
+
+### 11.2 Terminal countermodel for the content test
+
+For each witnessed relation-language frame, take a one-element State carrier $\{a\}$ and
+$\to=\{(a,a)\}$. It satisfies equality, congruence, relation typing, and the `u058`/`u059`
+aliases, while falsifying $\forall x\neg(x\to x)$. Therefore irreflexivity is not frame-forced.
+Removing it from the one-generator kernel leaves a model of the frame, establishing rank 1,
+irredundancy, and inclusion minimality for that kernel only.

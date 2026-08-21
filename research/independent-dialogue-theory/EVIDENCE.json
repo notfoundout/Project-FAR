@@ -1,0 +1,106 @@
+{
+  "schema": "dialogue-theory-evidence/4",
+  "generated": "2026-08-21",
+  "evidence_cutoff": "2026-08-21",
+  "exact_corpus": {
+    "manifest": "corpus/CORPUS-MANIFEST.json",
+    "manifest_sha256": "04bdace17d0dcc97b1a76a25e719455b6754e891e973e0673b2985fd4d36d517",
+    "files_present": true,
+    "turn_36": "ABSENT; no reconstructed quotation"
+  },
+  "previously_inspected_primary_sources": {
+    "SS-LM24": {
+      "target": "S1",
+      "sha256": "044ac192a6fcdea5425a068a254dea99ca32c3a60f3441bbf1bf4b2bfca465ef",
+      "status": "READY under original procedure"
+    },
+    "SS-GP94": {
+      "target": "S6",
+      "sha256": "622f2f9ee49f8c8b7201b2937ea88509f4ecac345739fd84c357bbf2193132ee",
+      "status": "READY under E0-supplied-v1; OPEN in original E0"
+    },
+    "SS-CC92": {
+      "target": "S7 and PI0 label 8",
+      "sha256": "19591e44a5584e27547538d3ed553a7b26b78d9fe234f129fbba3c2a735f89bb",
+      "status": "READY under original procedure"
+    },
+    "SS-P19": {
+      "role": "PI0 label 9",
+      "sha256": "6adca12cb7817602ed4557ff67893287ef429bdd30586ddeb23ac4fc7dd3c914",
+      "status": "INSPECTED; no target verdict"
+    }
+  },
+  "recovered_sources": {
+    "manifest": "SOURCE-MANIFEST.json",
+    "manifest_sha256": "f774eadbbadc8e5b3a1be70e3f1741a557d56d15cc286f22ce3074cc293a9e28",
+    "target_documents": {"requested": 8, "retrieved": 8, "inspected": 8},
+    "pi0_documents": {"requested": 11, "retrieved": 11, "inspected": 11, "missing_labels_covered": 10},
+    "third_party_pdfs_vendored": false
+  },
+  "K4": {
+    "record": "K4-RECORDS.md",
+    "sha256": "22ec72ba1e171ebf0d608326cbdd518b15b545fa63029dd0584e0a8904fea21a",
+    "targets_complete": 11,
+    "items_per_target": 8,
+    "procedure": "E1-transparent-source-recovery for the eight recovered targets; historical procedure labels preserved for S1/S6/S7"
+  },
+  "seals": {
+    "ledger": "SEALS.json",
+    "U0": {"path": "U0.json", "sha256": "ff4145c7541e5fb25fd958335119ebc42ab98199e85fc93fc048190bb72d0f4d", "count": 88},
+    "W_star": {"path": "W-STAR.json", "sha256": "85ad51cdac8497b248723efafb578ecbd7b0257999ddb187080f7db880fdd3f7"},
+    "frames": {"path": "FRAMES.json", "sha256": "66b7810a51e476e5101be12bfcdde43f182e999f5d5e3107e3a524faa0467047"}
+  },
+  "matrix": {
+    "population": 968,
+    "mandatory": {"population": 176, "B2": {"YES": 20, "NO": 0, "OPEN": 156}},
+    "secondary": {"population": 792, "B1_reached": 100, "B2_reached": 400, "B2": {"YES": 39, "NO": 0, "OPEN": 753}},
+    "global_B2": {"YES": 59, "NO": 0, "OPEN": 909}
+  },
+  "joint": {
+    "profiles_certified": ["J0", "J-u058", "J-u059", "J-star"],
+    "J_star_fragment": "c0+u058+u059",
+    "calibration": {"JOINT_YES": 3, "JOINT_NO": 0, "JOINT_OPEN": 86},
+    "native": {"JOINT_YES": 2, "JOINT_NO": 0, "JOINT_OPEN": 86},
+    "joint_complete": false,
+    "failure_frontier": [],
+    "open_frontier_count": 86
+  },
+  "content": {
+    "certified_kernel": "Cn_Gamma({forall x not(x -> x)})",
+    "status": "substantive at certified profile; exact theory unresolved",
+    "frame_countermodel": "one-state reflexive relation",
+    "rank": 1,
+    "irreducible": true,
+    "minimal": true,
+    "scope": "kernel only"
+  },
+  "prior_art": {
+    "bibliography": "PI0-BIB-v1.md",
+    "bibliography_sha256": "b3bd5bc94b31898f378a849f9b9e22c0587d79d289b94e7bdd3f654a44b66a8d",
+    "document_bodies_tested": 13,
+    "labels_tested": 12,
+    "translation_OPEN_exists": true,
+    "verdict": "NOVELTY UNRESOLVED—NEVER POSITIVE"
+  },
+  "findings": {
+    "SSS-1": "PROVED",
+    "SSS-2": "PROVED",
+    "SSS-3": "PROVED WITH EXPLICIT BOUNDS",
+    "A2": "FALSIFIED at J0 / G1 / K1-LM-frontier-multiset",
+    "DF-04-H": "REFUTED under successor source procedure only",
+    "DF-07": "retrieval-provider sensitivity recorded",
+    "DF-08": "frozen Pi0 unexecutable",
+    "DF-09": "frozen sigma seed absent from exact corpus",
+    "BIA": "WITHDRAWN"
+  },
+  "hostile_audit": {
+    "location": "PROOFS.md §11",
+    "new_attacks": 18,
+    "live_material_objections": ["U-c blindness", "exact S4 edition", "missing frozen seed", "frame sensitivity", "LK profile sensitivity", "NO-certificate scarcity"]
+  },
+  "terminal": {
+    "dialogue_theory": "INTERNALLY TERMINAL—THEORY UNRESOLVED",
+    "frozen_E0": "INTERNALLY TERMINAL—BLOCKED",
+    "E1-transparent-source-recovery": "INTERNALLY TERMINAL—FRAGMENTED"
+  }
+}

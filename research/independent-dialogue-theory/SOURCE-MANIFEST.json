@@ -1,0 +1,122 @@
+{
+  "schema": "dialogue-theory-source-manifest/1",
+  "retrieved_and_inspected_on": "2026-08-21",
+  "redistribution": "Third-party PDFs are not vendored. URL, byte count, page count, and SHA-256 identify each inspected body.",
+  "target_documents": [
+    {
+      "target": "S2",
+      "citation": "Christian Schulte and Peter J. Stuckey, Efficient Constraint Propagation Engines",
+      "url": "https://arxiv.org/pdf/cs/0611009",
+      "sha256": "1e46a8c47750c1783b11d9915dc36eadd4ae312687b3d32cd6d669cf1d2d920e",
+      "bytes": 403660,
+      "pages": 45,
+      "procedure": "E1-transparent-source-recovery",
+      "certificate": "DIRECT via source-internal definitions and DI1 finite restriction",
+      "status": "READY"
+    },
+    {
+      "target": "S3",
+      "citation": "A. N. Kolmogorov, Foundations of the Theory of Probability, English translation, 1950",
+      "url": "https://archive.org/details/kolmogorov_202112",
+      "sha256": "427e0fd315c5bec6c123838ed9510acb7ac354755dd7ac5ddc34b236d9891674",
+      "bytes": 1256646,
+      "pages": 88,
+      "procedure": "E1-transparent-source-recovery",
+      "certificate": "DIRECT by DI1 restriction to a finite field and positive conditioning events",
+      "status": "READY"
+    },
+    {
+      "target": "S4",
+      "citation": "Richard C. Jeffrey, probability-kinematics treatment in After Logical Empiricism / Radical Probabilism (same-author successor evidence)",
+      "url": "https://www.princeton.edu/~bayesway/pu/Lisbon.pdf",
+      "sha256": "21c778ee0d64f2e97531c0f878c80a4063ce873ddc3e8788ea22d8a3da52cbc6",
+      "bytes": 273659,
+      "pages": 27,
+      "procedure": "E1-transparent-source-recovery",
+      "certificate": "DIRECT for the frozen tuple under a source-substitution successor only",
+      "status": "READY_IN_E1",
+      "frozen_E0_boundary": "The exact 1965 Logic of Decision scan at https://archive.org/details/logicofdecision0000jeff is access-restricted and was not inspected; E0 S4 remains INSPECTION-OPEN."
+    },
+    {
+      "target": "S5",
+      "citation": "Sander Beckers and Joseph Y. Halpern, Abstracting Causal Models",
+      "url": "https://www.cs.cornell.edu/home/halpern/papers/abstraction.pdf",
+      "sha256": "49ebd3238aaf589071eaafe95164cea08d6f7b4d38febe7d168f4dbfe53a87c3",
+      "bytes": 242577,
+      "pages": 8,
+      "procedure": "E1-transparent-source-recovery",
+      "certificate": "DIRECT; one source supplies signature, mechanisms, recursive/acyclic unique solutions, interventions, and context probability",
+      "status": "READY"
+    },
+    {
+      "target": "S8",
+      "citation": "Gordon D. Plotkin, A Structural Approach to Operational Semantics",
+      "url": "https://research.nii.ac.jp/~ichiro/lecture/model2002/SOS.pdf",
+      "sha256": "7479be4ee1786caec996796e5fcaff7c972d8290e5c553944f34d7899ce7288e",
+      "bytes": 824821,
+      "pages": 133,
+      "procedure": "E1-transparent-source-recovery",
+      "certificate": "DIRECT by DI1 restriction to finite alphabet and finitely branching instances",
+      "status": "READY"
+    },
+    {
+      "target": "S9",
+      "citation": "Martin Suda, Duality in STRIPS Planning",
+      "url": "https://arxiv.org/pdf/1304.0897",
+      "sha256": "75e320d8c52f8c58df913c63a060da890d8b057a0fd5c5c73a6679bbbbef5c07",
+      "bytes": 113977,
+      "pages": 6,
+      "procedure": "E1-transparent-source-recovery",
+      "certificate": "EXACT; action triples are unconstrained and induce the stated transition system",
+      "status": "READY"
+    },
+    {
+      "target": "S10",
+      "citation": "Phan Minh Dung, On the Acceptability of Arguments and Its Fundamental Role in Nonmonotonic Reasoning, Logic Programming and n-Person Games",
+      "url": "https://www.umiacs.umd.edu/~horty/courses/readings/dung-1995-acceptability.pdf",
+      "sha256": "8a3139ba974401551f5f762910da8f933e7e23d3efc24a710c9028b198ec327d",
+      "bytes": 2592409,
+      "pages": 37,
+      "procedure": "E1-transparent-source-recovery",
+      "certificate": "DIRECT for AF and extension semantics; no native transformation is source-assigned",
+      "status": "READY_STATE_SEMANTICS_ONLY"
+    },
+    {
+      "target": "S11",
+      "citation": "Alexander Mielke, An Introduction to the Analysis of Gradient Systems",
+      "url": "https://arxiv.org/pdf/2306.05026",
+      "sha256": "f5d39f2977eca3a7cfb764197650fea5147ec41dfa4ca63ba55173af757832b2",
+      "bytes": 1089040,
+      "pages": 105,
+      "procedure": "E1-transparent-source-recovery",
+      "certificate": "DIRECT within one source: gradient equation, globally Lipschitz ODE uniqueness on arbitrary finite horizons, global flow, and semigroup",
+      "status": "READY"
+    }
+  ],
+  "pi0_bib_v1_recovered_documents": [
+    {"label": 1, "id": "P01", "citation": "Goguen and Burstall, Institutions: Abstract Model Theory for Specification and Programming", "url": "https://cseweb.ucsd.edu/~goguen/pps/ins.pdf", "sha256": "59b4d7e6a1f9e57713b3ff74643f95d64786a6aa1854ae91e7ce6385972193a6", "bytes": 524137, "pages": 73, "status": "INSPECTED"},
+    {"label": 2, "id": "P02", "citation": "Rabe and Kohlhase, A Scalable Module System", "url": "https://arxiv.org/pdf/1105.0548", "sha256": "3cc69a48a1a9788b0b04945c11c9b9a535838f6f1cc35b547faf263c854f8d4f", "bytes": 807879, "pages": 92, "status": "INSPECTED"},
+    {"label": 3, "id": "P03a", "citation": "Wille, Why Can Concept Lattices Support Knowledge Discovery in Databases?", "url": "https://ceur-ws.org/Vol-42/paper1_wille.pdf", "sha256": "8abc0b88d557c420042620279d6088785d153db5a354cda71c83730af80921d5", "bytes": 188038, "pages": 14, "status": "INSPECTED"},
+    {"label": 3, "id": "P03b", "citation": "Gupta, Chu Spaces: A Model of Concurrency", "url": "http://boole.stanford.edu/pub/gupthes.pdf", "sha256": "346c58338aaa11bb0410d84a8153089faf406b2d69422a3e7facd22ab0ebfd74", "bytes": 546293, "pages": 98, "status": "INSPECTED"},
+    {"label": 4, "id": "P04", "citation": "Lawvere, Adjointness in Foundations", "url": "http://www.tac.mta.ca/tac/reprints/articles/16/tr16.pdf", "sha256": "e1f0ab8479a46d0c39395e9e999d999bdc955a3d8d5bf5fb9e5872b095a721f9", "bytes": 231071, "pages": 17, "status": "INSPECTED"},
+    {"label": 5, "id": "P05", "citation": "Fritz, A Synthetic Approach to Markov Kernels, Conditional Independence and Theorems on Sufficient Statistics", "url": "https://arxiv.org/pdf/1908.07021", "sha256": "99ee420f2e620a1e40e23d7dd8b3608c01f9f07bb32850703d33b9e03d48cb4e", "bytes": 1040967, "pages": 98, "status": "INSPECTED"},
+    {"label": 6, "id": "P06", "citation": "Cho, Jacobs, Westerbaan and Westerbaan, An Introduction to Effectus Theory", "url": "https://arxiv.org/pdf/1512.05813", "sha256": "5f47241d561df649a763034ffc1fcf160906edcfa20cded142bff7f8f8e4c8eb", "bytes": 1784364, "pages": 153, "status": "INSPECTED"},
+    {"label": 7, "id": "P07", "citation": "Cockett and Lack, Restriction Categories I: Categories of Partial Maps", "url": "https://pages.cpsc.ucalgary.ca/~robin/FMCS/FMCS_06/RestrictionsI.pdf", "sha256": "fc26e5eafaee374717fd7422064ec4ea9f24345344f309f040169df24653a4c9", "bytes": 313679, "pages": 37, "status": "INSPECTED"},
+    {"label": 10, "id": "P10", "citation": "Coecke, Fritz and Spekkens, A Mathematical Theory of Resources", "url": "https://arxiv.org/pdf/1409.5531", "sha256": "e4650c41eab931402ef2ad9effe81315d26cd4ddf3cc7ba6b4802eb364685a19", "bytes": 584655, "pages": 32, "status": "INSPECTED"},
+    {"label": 11, "id": "P11", "citation": "Jacobs and Rutten, A Tutorial on (Co)Algebras and (Co)Induction", "url": "http://www.cs.ru.nl/B.Jacobs/PAPERS/JR.pdf", "sha256": "b51631dd63d62a9dce9f9008860652080e97da375dd740186504f5aeb40bf54b", "bytes": 435985, "pages": 38, "status": "INSPECTED"},
+    {"label": 12, "id": "P12", "citation": "Meseguer, Twenty Years of Rewriting Logic", "url": "https://maude.cs.illinois.edu/papers/pdf/20-years.pdf", "sha256": "b2a30365b1288d46e67af10b5b457b25162ee85a509e61b74e4e8a0931a6ab04", "bytes": 745146, "pages": 133, "status": "INSPECTED"}
+  ],
+  "pi0_existing_documents": [
+    {"label": 8, "id": "SS-CC92", "sha256": "19591e44a5584e27547538d3ed553a7b26b78d9fe234f129fbba3c2a735f89bb", "status": "PREVIOUSLY_INSPECTED"},
+    {"label": 9, "id": "SS-P19", "sha256": "6adca12cb7817602ed4557ff67893287ef429bdd30586ddeb23ac4fc7dd3c914", "status": "PREVIOUSLY_INSPECTED"}
+  ],
+  "coverage": {
+    "missing_target_documents_requested": 8,
+    "target_documents_retrieved": 8,
+    "pi0_missing_labels_requested": 10,
+    "pi0_documents_retrieved": 11,
+    "pi0_labels_covered": [1, 2, 3, 4, 5, 6, 7, 10, 11, 12],
+    "pi0_total_documents_after_existing": 13,
+    "pi0_total_labels": 12
+  }
+}

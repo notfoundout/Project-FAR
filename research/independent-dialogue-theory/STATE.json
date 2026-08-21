@@ -1,0 +1,159 @@
+{
+  "schema": "dialogue-theory-state/4",
+  "revision": 4,
+  "date": "2026-08-21",
+  "evidence_cutoff": "2026-08-21",
+  "primary_terminal_verdict": "INTERNALLY TERMINAL—THEORY UNRESOLVED",
+  "verdicts": {
+    "frozen_E0": {
+      "classification": "INTERNALLY TERMINAL—BLOCKED",
+      "reasons": [
+        "U-c cognitive blindness cannot be recreated after cross-target exposure",
+        "the exact Jeffrey 1965 S4 scan located is access-restricted and was not inspected",
+        "the exact corpus says the secondary-order seed was published but contains no seed value",
+        "frozen Pi0 remains unexecutable under DF-08"
+      ]
+    },
+    "E1-transparent-source-recovery": {
+      "classification": "INTERNALLY TERMINAL—FRAGMENTED",
+      "termination_conditions_met": true,
+      "scope": "frozen target tuples, G1–G3, B1/B2, successor source/isolation/seed repairs, evidence through 2026-08-21"
+    }
+  },
+  "artifact": {
+    "primary_class": "Report",
+    "repository_status": "Research",
+    "path": "research/independent-dialogue-theory",
+    "far_authority": false
+  },
+  "stages": {
+    "E0a": "FROZEN AND MATERIALIZED",
+    "E0b": "E0 LIMITS PRESERVED; E1 TARGET AND PI0 SOURCE RECOVERY COMPLETE",
+    "E0c": "U0-E0 NOT CERTIFIED; U0-E1 SEALED",
+    "W_star_E1": "COMPLETE TO B2",
+    "joint_E1": "ALL 177 FROZEN-ARM FRAGMENTS HAVE STATUS; J-star CERTIFIED; NONE JOINT-COMPLETE",
+    "frames": "SIX WITNESSED FRAMES SEALED BEFORE COMMON-THEORY COMPUTATION",
+    "content": "IRREFLEXIVITY KERNEL SURVIVES AT CERTIFIED PROFILE",
+    "prior_art": "ALL PI0-BIB-v1 BODIES TESTED; NOVELTY UNRESOLVED",
+    "hostile_audit": "COMPLETE"
+  },
+  "source_recovery": {
+    "target_documents_requested": 8,
+    "target_documents_retrieved_and_inspected": 8,
+    "pi0_missing_documents_requested": 11,
+    "pi0_documents_retrieved_and_inspected": 11,
+    "pi0_missing_labels_covered": 10,
+    "pi0_total_labels_covered_after_existing": 12,
+    "pi0_total_document_bodies_after_existing": 13,
+    "S4_boundary": "READY only in E1; E0 remains INSPECTION-OPEN",
+    "S10_boundary": "state/evaluation semantics READY; native transformation unassigned"
+  },
+  "targets_E1": {
+    "S1": "READY",
+    "S2": "READY",
+    "S3": "READY",
+    "S4": "READY_IN_E1_ONLY",
+    "S5": "READY",
+    "S6": "READY_IN_E0-supplied-v1_AND_E1; OPEN_IN_ORIGINAL_E0",
+    "S7": "READY",
+    "S8": "READY",
+    "S9": "READY",
+    "S10": "READY_STATE_SEMANTICS_ONLY",
+    "S11": "READY"
+  },
+  "sealed_objects": {
+    "corpus_manifest_sha256": "04bdace17d0dcc97b1a76a25e719455b6754e891e973e0673b2985fd4d36d517",
+    "pi0_bib_v1_sha256": "b3bd5bc94b31898f378a849f9b9e22c0587d79d289b94e7bdd3f654a44b66a8d",
+    "source_manifest_sha256": "f774eadbbadc8e5b3a1be70e3f1741a557d56d15cc286f22ce3074cc293a9e28",
+    "k4_records_sha256": "22ec72ba1e171ebf0d608326cbdd518b15b545fa63029dd0584e0a8904fea21a",
+    "u0_E1_sha256": "ff4145c7541e5fb25fd958335119ebc42ab98199e85fc93fc048190bb72d0f4d",
+    "w_star_sha256": "85ad51cdac8497b248723efafb578ecbd7b0257999ddb187080f7db880fdd3f7",
+    "frames_sha256": "66b7810a51e476e5101be12bfcdde43f182e999f5d5e3107e3a524faa0467047"
+  },
+  "u0": {
+    "id": "U0-E1",
+    "count": 88,
+    "per_target": 8,
+    "frozen_E0_certified": false
+  },
+  "w_star": {
+    "cell_population": 968,
+    "mandatory": {
+      "total": 176,
+      "B2": {"YES": 20, "NO": 0, "OPEN": 156}
+    },
+    "secondary": {
+      "population": 792,
+      "B1_reached": 100,
+      "B2_reached": 400,
+      "B2": {"YES": 39, "NO": 0, "OPEN": 753},
+      "maximality_support": false
+    },
+    "global_B2": {"YES": 59, "NO": 0, "OPEN": 909},
+    "movement_B1_to_B2": {"OPEN_to_YES": 30, "OPEN_to_NO": 0}
+  },
+  "joint": {
+    "calibration": {"total": 89, "JOINT_YES": 3, "JOINT_NO": 0, "JOINT_OPEN": 86},
+    "native": {"total": 88, "JOINT_YES": 2, "JOINT_NO": 0, "JOINT_OPEN": 86},
+    "all_certified_profiles": ["J0", "J-u058", "J-u059", "J-star"],
+    "joint_complete_fragments": 0,
+    "J_star": {
+      "profile": "J-star",
+      "fragment": "c0+u058+u059",
+      "status": "MAXIMAL_CERTIFIED_NOT_MATHEMATICALLY_MAXIMAL"
+    },
+    "failure_frontier": [],
+    "witness_frontier": ["u058", "u059"],
+    "open_frontier_count": 86,
+    "maximality": "UNRESOLVED"
+  },
+  "common_content": {
+    "sentence": "forall x not(x -> x)",
+    "profile": "J0 / K1-LM-frontier-multiset / K2-SS-domain-store",
+    "status": "PROVED LOWER BOUND, SUBSTANTIVE BEYOND FRAME",
+    "exact_common_theory": "UNRESOLVED",
+    "robust_common_theory": "UNRESOLVED",
+    "profile_independence": "OPEN",
+    "A2": "FALSIFIED AT CERTIFIED PROFILE"
+  },
+  "conditional_basis_results": {
+    "object": "certified irreflexivity kernel only",
+    "rank_over_frame": 1,
+    "irreducible": true,
+    "inclusion_minimal": true,
+    "alternative_bases": "all singleton formulas equivalent to irreflexivity modulo the frame; infinitely many syntactic presentations",
+    "full_common_theory": "UNRESOLVED"
+  },
+  "prior_art": {
+    "bodies_tested": 13,
+    "labels_tested": 12,
+    "open_translation_exists": true,
+    "novelty": "UNRESOLVED—NEVER POSITIVE"
+  },
+  "preserved_results": {
+    "SSS-1": "PROVED",
+    "SSS-2": "PROVED",
+    "SSS-3": "PROVED WITH EXPLICIT BOUNDS",
+    "DF-04-H": "REFUTED ONLY UNDER SUCCESSOR SOURCE PROCEDURE",
+    "DF-08": "FROZEN PI0 UNEXECUTABLE",
+    "BIA": "WITHDRAWN"
+  },
+  "not_established": [
+    "U0 compliance for frozen E0",
+    "an exact or robust common theory",
+    "JOINT-COMPLETE for any fragment",
+    "a mathematical maximal fragment or complete failure frontier",
+    "profile-invariant irreflexivity",
+    "rank, irreducibility, minimality, or bases for the full common theory",
+    "novelty or priority",
+    "any class theorem, universality, representativeness, or Project FAR implication"
+  ],
+  "validation": {
+    "validate_py": "PASS",
+    "json_parse": "PASS",
+    "transcript_hashes": "PASS",
+    "sealed_hashes": "PASS",
+    "matrix_counts": "PASS",
+    "blank_cell_statuses": 0
+  }
+}

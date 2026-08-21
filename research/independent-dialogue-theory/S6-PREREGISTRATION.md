@@ -66,3 +66,4 @@ single-sequent state, and the resume summary reports that a proposed `S6 = SOURC
 **rejected as terminal** because MFDI3 ruled out ordinary $\mathsf{Seq}\times\mathsf{Seq}$
 while a permitted resource-labelled hyperedge might preserve joint premises. Both directions
 are therefore live. The frozen procedure, not this expectation, decides the verdict.
+

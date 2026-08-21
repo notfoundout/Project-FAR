@@ -96,3 +96,4 @@ everything is **UNRESOLVED, never positive** (`TR-11:2214`).
 - **May not:** that $\Pi_0$ is now executable. Ten labels have no supplied document.
 - **May:** that the exact attachment set required to make $\Pi_0$ operative is now fixed,
   outcome-independently, and sealed against later tuning.
+
