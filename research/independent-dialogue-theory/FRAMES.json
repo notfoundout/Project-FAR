@@ -1,0 +1,75 @@
+{
+  "schema": "dialogue-theory-frames/1",
+  "procedure": "E1-transparent-source-recovery",
+  "generated_before_common_theory": true,
+  "rule": "Only translated constitutive Ax, profile-forced typing, and host equality/congruence occur here.",
+  "frames": [
+    {
+      "id": "Gamma-c0",
+      "fragment": "c0",
+      "profile": "J0",
+      "Gamma": {
+        "translated_Ax": [],
+        "typing": ["arrow is a binary relation on State"],
+        "host": ["first-order equality", "congruence"]
+      }
+    },
+    {
+      "id": "Gamma-c0-u058",
+      "fragment": "c0+u058",
+      "profile": "J-u058",
+      "Gamma": {
+        "translated_Ax": ["Configuration is definitionally the native State carrier"],
+        "typing": ["arrow is a binary relation on State"],
+        "host": ["first-order equality", "congruence"]
+      }
+    },
+    {
+      "id": "Gamma-c0-u059",
+      "fragment": "c0+u059",
+      "profile": "J-u059",
+      "Gamma": {
+        "translated_Ax": ["the source transition relation is definitionally arrow"],
+        "typing": ["arrow is a binary relation on State"],
+        "host": ["first-order equality", "congruence"]
+      }
+    },
+    {
+      "id": "Gamma-J-star",
+      "fragment": "c0+u058+u059",
+      "profile": "J-star",
+      "Gamma": {
+        "translated_Ax": ["Configuration is definitionally the native State carrier", "the source transition relation is definitionally arrow"],
+        "typing": ["arrow is a binary relation on State"],
+        "host": ["first-order equality", "congruence"]
+      }
+    },
+    {
+      "id": "Gamma-native-u058",
+      "fragment": "native-u058",
+      "profile": "J-u058",
+      "Gamma": {
+        "translated_Ax": ["Configuration is definitionally the native State carrier"],
+        "typing": [],
+        "host": ["first-order equality", "congruence"]
+      }
+    },
+    {
+      "id": "Gamma-native-u059",
+      "fragment": "native-u059",
+      "profile": "J-u059",
+      "Gamma": {
+        "translated_Ax": ["the source transition relation is definitionally a binary relation on State"],
+        "typing": ["transition is a binary relation on State"],
+        "host": ["first-order equality", "congruence"]
+      }
+    }
+  ],
+  "excluded_by_rule": [
+    "irreflexivity",
+    "termination",
+    "acyclicity",
+    "contraction",
+    "any sentence added because it happens to hold in S1 or S2"
+  ]
+}
