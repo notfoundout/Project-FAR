@@ -72,5 +72,7 @@ def test_export_carries_exact_core_theory():
     assert manifest["exporter_version"] == "1.1.0"
     entries = {artifact["path"]: artifact for artifact in manifest["artifacts"]}
     record = entries["theorems/Project-FAR-Theory-Closure-v1.0.md"]
+    assert record["category"] == "theorems"
+    assert record["status"] == "canonical"
     assert record["source"] == "theory/theorems/Project-FAR-Theory-Closure-v1.0.md"
     assert record["sha256"] == expected_sha256
