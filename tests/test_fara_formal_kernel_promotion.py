@@ -99,11 +99,19 @@ class FaraFormalKernelPromotionTests(unittest.TestCase):
             checker.validate(manifest, check_files=False),
         )
 
-    def test_primitive_reclassification_fails(self):
+    def test_historical_role_registry_mutation_fails(self):
         manifest = copy.deepcopy(self.manifest)
         manifest["primitive_registry_unchanged"].remove("Property")
         self.assertIn(
-            "candidate primitive registry changed",
+            "historical seven-role registry changed",
+            checker.validate(manifest, check_files=False),
+        )
+
+    def test_terminal_reclassification_mutation_fails(self):
+        manifest = copy.deepcopy(self.manifest)
+        manifest["terminal_reclassification"]["current_classification"] = "global-primitives"
+        self.assertIn(
+            "terminal schema-role reclassification mismatch",
             checker.validate(manifest, check_files=False),
         )
 
@@ -232,10 +240,12 @@ class FaraFormalKernelPromotionTests(unittest.TestCase):
             ),
         )
 
-    def test_canonical_primitive_list_mutation_fails(self):
-        text = self.primitive_text.replace("- Reasoning Calculus", "- Operation")
+    def test_canonical_schema_role_list_mutation_fails(self):
+        text = self.primitive_text.replace(
+            "| Reasoning Calculus |", "| Operation |"
+        )
         self.assertIn(
-            "canonical candidate primitive list changed",
+            "canonical schema-role list changed",
             checker.validate(
                 self.manifest,
                 check_files=False,

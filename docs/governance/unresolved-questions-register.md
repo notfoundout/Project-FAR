@@ -21,7 +21,7 @@ The core theory has no unresolved completion-critical obligation. Current questi
 - Exact representational loss is decided by factorization/collision for a fixed contract; absence of a certificate remains `OPEN`.
 - Common-content questions require fixed language, profiles, frame, and targets.
 - Historical UPP repair questions remain optional bounded questions and do not block the core.
-- Novelty and independent validation remain unclaimed rather than silently inferred.
+- Neither novelty nor third-party review is claimed or silently inferred.
 
 ## Historical pre-closure register
 

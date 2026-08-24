@@ -28,6 +28,20 @@ class ProjectFARTheoryClosureTest(unittest.TestCase):
         self.assertEqual("superseded", old["status"])
         self.assertEqual("POST-CLOSURE-001", old["superseded_by"])
 
+    def test_historical_primitive_and_operator_results_are_reclassified(self):
+        primitive = (ROOT / "frameworks/FARA/research/primitive-independence-w1-result.md").read_text()
+        operator = (ROOT / "theory/evaluation/generated-fara-operator-w2-summary.md").read_text()
+        self.assertIn("global primitive-independence/minimality search is closed", primitive)
+        self.assertIn("global finite-basis search is closed", operator)
+        self.assertNotIn("remains only a candidate primitive", primitive)
+        self.assertNotIn("**Global claim:** unresolved.", operator)
+
+    def test_legacy_open_question_path_cannot_claim_current_status(self):
+        old = (ROOT / "research/open-problems/open-questions.md").read_text()
+        self.assertIn("Historical Open Questions Register (Superseded)", old)
+        self.assertNotIn("**Status:** Active", old)
+        self.assertNotIn("**Status:** Open", old)
+
 
 if __name__ == "__main__":
     unittest.main()

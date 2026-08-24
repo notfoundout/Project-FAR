@@ -23,9 +23,13 @@ class FaraOperatorW2Tests(unittest.TestCase):
     def test_required_nonclaims_and_obligations_are_pinned(self):
         bad=copy.deepcopy(DATA); bad["nonclaims"].pop(); self.assertTrue(W2.validate(bad))
         bad=copy.deepcopy(DATA); bad["remaining_obligations"].pop(); self.assertTrue(W2.validate(bad))
-    def test_resolve_and_select_remain_unresolved(self):
+    def test_historical_resolve_and_select_classifications_are_preserved(self):
         actual={c["name"]:c["classification"] for c in DATA["fourth_candidates"]}
-        self.assertEqual("outside_scope_unresolved",actual["Resolve"]); self.assertEqual("outside_scope_unresolved",actual["Select"])
+        self.assertEqual("outside_scope_unresolved",actual["Resolve"])
+        self.assertEqual("outside_scope_unresolved",actual["Select"])
+        rendered=W2.render(DATA)
+        self.assertIn("Resolve is derived rule application",rendered)
+        self.assertIn("global finite-basis search is closed",rendered)
     def test_fourth_search_retains_counterexample_and_unknowns(self):
         classes={c["classification"] for c in DATA["fourth_candidates"]}; self.assertIn("outside_scope_counterexample",classes); self.assertIn("outside_scope_unresolved",classes)
 if __name__=="__main__": unittest.main()

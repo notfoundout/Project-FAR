@@ -79,6 +79,31 @@ def validate(root: Path = ROOT) -> list[str]:
         "frameworks/FARO/comparison.md": ["comparison contract", "factorization"],
         "docs/mechanization/capability-statement.md": ["does not encode a complete comparison contract", "far-ir/1.1"],
         "docs/planning/next-actions.md": ["PCA-W1-INDEPENDENT-REVIEW", "POST-CLOSURE-001"],
+        "governance/repository-truth-authority-v1.json": [
+            "PROJECT-FAR-CORE-THEORY-1.0",
+            "POST-CLOSURE-001",
+            "post-closure assurance and application",
+        ],
+        "docs/governance/fara-formal-kernel-promotion-v1.0.json": [
+            "terminal_reclassification",
+            "schema-and-contract-roles",
+            "FAR-CORE-007",
+        ],
+        "frameworks/FARA/research/primitive-independence-w1-result.md": [
+            "Historical research evidence",
+            "schema or contract roles",
+            "global primitive-independence/minimality search is closed",
+        ],
+        "theory/evaluation/generated-fara-operator-w2-summary.md": [
+            "Terminal reclassification",
+            "workflow verbs, not primitive operators",
+            "global finite-basis search is closed",
+        ],
+        "research/open-problems/open-questions.md": [
+            "Historical Open Questions Register (Superseded)",
+            "superseded as current authority",
+            "POST-CLOSURE-001",
+        ],
     }
     for relative, needles in required_text.items():
         path = root / relative
@@ -94,6 +119,19 @@ def validate(root: Path = ROOT) -> list[str]:
     for stale in ("# Current Candidate Primitives", "smallest unreduced conceptual foundation"):
         if stale in primitives:
             errors.append(f"FARA primitive registry retains superseded claim: {stale}")
+
+    superseded_questions = (root / "research/open-problems/open-questions.md").read_text(encoding="utf-8")
+    for stale in ("**Status:** Active", "**Status:** Open"):
+        if stale in superseded_questions:
+            errors.append(f"historical open-question path retains current status: {stale}")
+
+    primitive_w1 = (root / "frameworks/FARA/research/primitive-independence-w1-result.md").read_text(encoding="utf-8")
+    if "remains only a candidate primitive" in primitive_w1:
+        errors.append("historical W1 summary retains superseded primitive implication")
+
+    operator_w2 = (root / "theory/evaluation/generated-fara-operator-w2-summary.md").read_text(encoding="utf-8")
+    if "**Global claim:** unresolved." in operator_w2:
+        errors.append("historical W2 summary retains an unbounded current-open implication")
 
     return errors
 

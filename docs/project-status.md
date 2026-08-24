@@ -75,7 +75,9 @@ The seven formerly named FARA primitive candidates are schema or contract roles,
 
 ## Preserved bounded evidence
 
-SWE-agent, REP, ADJ, W3.5, CRE, FARA-kernel, comparative-representation, and external-system records retain their original scope and assurance. No finite execution establishes open-domain universality, independent validation, commercial value, safety, readiness, or general performance.
+SWE-agent, REP, ADJ, W3.5, CRE, FARA-kernel, comparative-representation, and external-system records retain their original scope and assurance. No finite execution establishes open-domain universality, third-party confirmation, commercial value, safety, readiness, or general performance.
+
+The completed SWE-agent v2 comparison observed **0/2** resolved runs for v1.0.0 and **0/2** for v1.0.1, yielding `no_observed_resolution_difference` and the bounded decision `REVIEW_REQUIRED`. It establishes neither equivalence, superiority, safety, readiness, nor general performance.
 
 ## Current authority navigation
 

@@ -88,6 +88,12 @@ EXPECTED_PRIMITIVES = [
     "Investigation",
     "Reasoning Calculus",
 ]
+EXPECTED_TERMINAL_RECLASSIFICATION = {
+    "authority": "PROJECT-FAR-CORE-THEORY-1.0/FAR-CORE-007",
+    "status": "superseded-as-global-primitives",
+    "current_classification": "schema-and-contract-roles",
+    "kernel_scope_unchanged": True,
+}
 EXPECTED_ROLES = {
     "identity-bearing-many-sorted-relational": "canonical-formal-kernel-within-scope",
     "typed-hypergraph": "admissible-derived-representation",
@@ -176,7 +182,9 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     if manifest.get("candidate_roles") != EXPECTED_ROLES:
         errors.append("candidate role adjudication mismatch")
     if manifest.get("primitive_registry_unchanged") != EXPECTED_PRIMITIVES:
-        errors.append("candidate primitive registry changed")
+        errors.append("historical seven-role registry changed")
+    if manifest.get("terminal_reclassification") != EXPECTED_TERMINAL_RECLASSIFICATION:
+        errors.append("terminal schema-role reclassification mismatch")
 
     nonclaims = set(manifest.get("nonclaims", []))
     required_nonclaims = {
@@ -470,7 +478,7 @@ def validate_canonical_text(
         "FARA-FORMAL-KERNEL-001",
         "identity-bearing many-sorted relational structure",
         "finite, explicit, auditable representational architectures in Project FAR v1.0",
-        "The formal carrier names do not reclassify FARA's seven candidate primitives.",
+        "The formal carrier names instantiate FARA's seven schema roles and do not confer global primitive status.",
         "Literal token spelling is not semantic by itself.",
         "sort-preserving relational isomorphism",
         "external-investigator independence",
@@ -494,17 +502,27 @@ def validate_primitive_text(
 ) -> list[str]:
     errors: list[str] = []
     match = re.search(
-        r"# Current Candidate Primitives\s+"
-        r"The current candidate primitive concepts are:\s+"
-        r"(.*?)\s+These concepts presently serve",
+        r"## Current schema and contract roles\s+"
+        r"\| Role \| Terminal classification \|\s+"
+        r"\|---\|---\|\s+"
+        r"(.*?)\s+## Derived architectural concepts",
         text,
         flags=re.DOTALL,
     )
     if not match:
-        return ["candidate primitive section not found"]
-    found = re.findall(r"^- (.+)$", match.group(1), flags=re.MULTILINE)
+        return ["schema-role section not found"]
+    found = re.findall(
+        r"^\| ([^|]+?) \| [^|]+ \|$",
+        match.group(1),
+        flags=re.MULTILINE,
+    )
+    found = [value.strip() for value in found]
     if found != manifest.get("primitive_registry_unchanged"):
-        errors.append("canonical candidate primitive list changed")
+        errors.append("canonical schema-role list changed")
+    if "not global primitives" not in text:
+        errors.append("schema-role nonprimitive boundary missing")
+    if "global primitive-independence and primitive-minimality search is closed" not in text:
+        errors.append("global primitive-search closure missing")
     return errors
 
 

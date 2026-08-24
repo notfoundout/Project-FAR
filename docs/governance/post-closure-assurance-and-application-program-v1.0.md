@@ -54,7 +54,7 @@ The program prohibits:
 - native common structure inferred from arbitrary encoding;
 - open-domain universality inferred from finite panels;
 - mathematical proof inferred from CI or schema conformance;
-- independent validation inferred from internal execution.
+- third-party review status inferred from internal execution.
 
 ## Terminal outputs
 
