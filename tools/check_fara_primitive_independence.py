@@ -40,10 +40,14 @@ def validate(data: dict) -> None:
         raise ValueError("terminal primitive-search closure missing")
     if "FAR-CORE-007" not in CORE.read_text():
         raise ValueError("terminal reclassification authority missing")
-    if "neither can be derived from the other" not in section(DEFINITIONS.read_text(), "Independence"):
-        raise ValueError("canonical binary independence criterion drift")
-    if "specified scope and objective" not in section(DEFINITIONS.read_text(), "Reduction"):
-        raise ValueError("canonical reduction criterion drift")
+    independence = section(DEFINITIONS.read_text(), "Independence")
+    if "relative to a stated theory and derivability regime" not in independence:
+        raise ValueError("contract-relative independence criterion drift")
+    if "invariance under the admitted re-representations" not in independence:
+        raise ValueError("representation-independence boundary drift")
+    reduction = section(DEFINITIONS.read_text(), "Reduction")
+    if "specified contract, scope, and objective" not in reduction:
+        raise ValueError("contract-relative reduction criterion drift")
     results = data.get("results", [])
     if [row.get("primitive") for row in results] != canonical:
         raise ValueError("results must cover each primitive exactly once in canonical order")
