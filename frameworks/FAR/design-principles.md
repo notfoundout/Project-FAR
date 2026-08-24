@@ -42,7 +42,7 @@ Different investigations may use different calculi, provided the chosen calculus
 
 FAR workflow stages organize investigation activity.
 
-They are not new primitives.
+They are not new primitives. Construct, Differentiate, and Restrict are workflow verbs, and Resolve is derived rule application.
 
 They should be understood as methodological roles performed during an investigation.
 
@@ -111,3 +111,7 @@ Every FAR methodological claim should be traceable to:
 - or an explicit audit finding.
 
 Unsupported methodological expansion should remain provisional until reviewed.
+
+## Contract before adequacy
+
+Freeze the comparison contract before calling a representation sufficient, invariant, lossless, common, or minimal. Prefer a decoder/factorization proof; actively search for collisions; return OPEN when neither direction is established. Charge hidden interpreters and audit-only distinctions.

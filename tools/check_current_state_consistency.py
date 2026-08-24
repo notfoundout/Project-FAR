@@ -15,7 +15,7 @@ CURRENT_FILES = {
     "generated": ROOT / "docs/reports/project-status-generated.md",
     "next_actions": ROOT / "docs/planning/next-actions.md",
 }
-PROGRAM = ROOT / "docs/governance/post-terminal-public-evaluation-program-v1.0.md"
+PROGRAM = ROOT / "docs/governance/post-closure-assurance-and-application-program-v1.0.md"
 
 
 def newest_release_tag(root: Path = ROOT) -> str | None:
@@ -49,8 +49,8 @@ def validate_texts(
             errors.append(f"{surface}: {reason}: missing {needle!r}")
 
     require("readme", f"## Latest release: {expected_release}", "README release summary drifted")
-    require("readme", "## Post-terminal phase", "README no longer identifies the post-terminal phase")
-    require("readme", "`POST-TUE-UPP-001` is complete", "README terminal-program state drifted")
+    require("readme", "## Post-closure phase", "README no longer identifies the post-closure phase")
+    require("readme", "`PROJECT-FAR-CORE-THEORY-1.0`", "README core-theory identity drifted")
 
     require("status", f"Current published repository release: [`{expected_release}`]", "canonical status release drifted")
     require("status", f"Current program: `{program_id}`", "canonical status program drifted")
@@ -58,7 +58,7 @@ def validate_texts(
 
     release_doc = f"releases/project-far-{expected_release}.md"
     require("map", f"Current Project FAR release: [`{release_doc}`]({release_doc})", "canonical map current-release navigation drifted")
-    require("map", "Post-Terminal Public Evaluation Program", "canonical map lacks current evaluation authority")
+    require("map", "Post-Closure Assurance and Application Program", "canonical map lacks current assurance authority")
 
     require("roadmap", f"Current published repository release: [`{expected_release}`]", "roadmap release drifted")
     require("roadmap", f"Current program: [`{program_id}`]", "roadmap program drifted")
@@ -71,8 +71,8 @@ def validate_texts(
 
     require("next_actions", f"Program: `{program_id}`.", "next-actions program drifted")
     require("next_actions", f"Canonical next workstream: `{next_workstream}`.", "next-actions workstream drifted")
-    if "W5 remains blocked" in texts.get("next_actions", ""):
-        errors.append("next_actions: obsolete W5-blocked planning survived into the current task queue")
+    if "PTE-W1-INDEPENDENT-REVIEW" in texts.get("next_actions", ""):
+        errors.append("next_actions: superseded UPP evaluation planning survived into the current task queue")
 
     require("agents", "If purported current-authority surfaces conflict", "agent routing does not fail closed on authority conflicts")
     require("agents", "project memory", "agent routing does not subordinate memory to repository authority")

@@ -8,7 +8,7 @@
 
 FARO defines the operational layer of Project FAR.
 
-It operationalizes FAR v1.0 Stable over FARA representations and FAR investigation artifacts without redefining FAR, FARA, FARE, or FARM.
+It operationalizes contract-relative FAR investigations and FARA representations without redefining shared theory, FAR, FARA, FARE, or FARM.
 
 ---
 
@@ -22,7 +22,7 @@ Future FARO changes should be driven by concrete downstream requirements, worked
 
 ## Framework Role
 
-FARO owns operations.
+FARO owns downstream execution, materialization, comparison, audit, and reporting operations.
 
 It defines execution, audit, comparison, disagreement analysis, reporting, and operational evaluation procedures over explicit reasoning artifacts.
 
@@ -90,7 +90,7 @@ FARO may expose mathematical needs, but it does not expand FARE without a review
 
 ## Next Steps
 
-Use FARO audit, comparison, disagreement-analysis, and reporting examples to test the stable operational layer.
+Use FARO to materialize contracts and Ω views, run decoder/collision checks, compare profiles, expose machinery cost, and produce typed reports.
 
 ---
 
@@ -106,3 +106,7 @@ Use FARO audit, comparison, disagreement-analysis, and reporting examples to tes
 ## Derivation boundary
 
 FARO is downstream of FAR and FARA, but its operational interfaces and decision/reporting rules are independently selected methodology/governance rather than necessary consequences. See the [derivation-status matrix](../../docs/governance/derivation-status-matrix.md).
+
+## Core-theory boundary
+
+FARO may execute a factorization or collision check but does not make the contract objective and does not turn schema conformance or successful encoding into mathematical proof. Ω is a materialized view, not an independent cause.

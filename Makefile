@@ -10,6 +10,7 @@ health:
 	python tools/check_s_core_lemma_ledger.py
 	python tools/check_s_core_w0.py
 	python tools/check_fara_primitive_independence.py
+	python tools/check_project_far_theory_closure.py
 	python tools/check_fara_w4_representation.py
 	python tools/check_fara_w5_invariance.py
 	python tools/check_fara_core_formalization.py
@@ -48,6 +49,7 @@ health-fast:
 	python tools/check_s_core_lemma_ledger.py
 	python tools/check_s_core_w0.py
 	python tools/check_fara_primitive_independence.py
+	python tools/check_project_far_theory_closure.py
 	python tools/check_fara_w4_representation.py
 	python tools/check_fara_w5_invariance.py
 	python tools/check_s_core_w1.py
@@ -101,6 +103,7 @@ research-check:
 	python tools/check_s_core_lemma_ledger.py
 	python tools/check_s_core_w0.py
 	python tools/check_fara_primitive_independence.py
+	python tools/check_project_far_theory_closure.py
 	python tools/check_fara_w4_representation.py
 	python tools/check_fara_w5_invariance.py
 	python tools/check_s_core_w1.py
@@ -200,6 +203,7 @@ cre002-execute:
 	python tools/cre002_execute.py --write --check
 
 semantic-check:
+	python tools/check_project_far_theory_closure.py
 	python tools/check_fara_foundation_comparison.py
 	python tools/check_semantic_consistency.py
 	python tools/check_fara_operator_w2.py

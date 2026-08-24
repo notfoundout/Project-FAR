@@ -1,20 +1,24 @@
 # FAR and FARO Derivation-Status Matrix
 
-Status: **Accepted classification register**
+Status: **Accepted**
 
-| Procedure | Owner | Status | Rationale |
+| Item | Owner | Current status | Basis |
 |---|---|---|---|
-| FAR staged/multi-pass workflow | FAR | compatible independent methodology | Ordered auditability choice; no FARA derivation is recorded. |
-| property selection | FAR | usability-motivated method | Selection is required to bound a claim, but the selection rule is not logically forced. |
-| framework selection | FAR | usability-motivated method | Makes commitments explicit; alternatives remain possible. |
-| claim-dimension analysis | FAR | independent methodology | Guards overclaiming; not a theorem. |
-| evaluator mapping | CRP/FARO | empirical protocol | Produces evidence under a registered design. |
-| evaluator independence/competence/calibration | CRP | experimental-design choice | Bias and reproducibility controls, not FARA consequences. |
-| canonicalization and CIR | CRP | protocol design choice | Compatible with FARA; version-locked normalization. |
-| preservation vector and Pass/Partial/Fail/Unknown | CRP | protocol decision rule | Epistemic reporting scheme, independently selected. |
-| Pareto comparison / CIR cost metrics | CRP/FARO | protocol decision rule | Avoids hidden weights; not uniquely required. |
-| nontriviality / commitment equivalence | CRP | governance/design rule | Prevents vacuous mappings; requires adjudication. |
-| local ablation / wider-vocabulary comparison | CRP | empirical protocol | Tests local necessity/alternatives, not global proof. |
-| preregistration and frozen evidence | methodology/governance | governance rule | Protects evidential integrity. |
-| fail reports and uncertainty outputs | FARO | governance/usability choice | Required by project policy, not by FARA logic. |
-| operational audit/comparison/reporting | FARO | compatible independent operations | Operate over upstream artifacts; no necessity theorem exists. |
+| freeze claim and target class | FAR | theory-constrained method | Needed to make quantifiers and finite-panel boundaries explicit; exact field design is methodological. |
+| freeze comparison contract | FAR | theory-constrained method | Sufficiency/minimality are not well formed without cases, tests, typed outcomes, and semantics. |
+| totalize typed outcomes | FAR | theory-constrained method | `FAR-CORE-012` forbids collapsing distinctions observed by the contract; concrete types remain selected. |
+| representation construction | FAR | independent methodology | The candidate mapping and machinery are chosen, then audited. |
+| decoder/factorization test | FAR | derived criterion | `FAR-CORE-001`. |
+| collision search | FAR/FARO | derived falsification criterion | One in-scope collision refutes exact sufficiency. |
+| observational quotient | shared theory / FAR | derived construction | `FAR-CORE-002`; algorithms remain implementation choices. |
+| cost/Pareto comparison | FAR/FARO | protocol-relative decision rule | Requires a declared preorder; no universal order is derived. |
+| common-content computation | FAR/FARO | theory-constrained method | Indexed by language, profile, frame, and target class. |
+| Construct/Differentiate/Restrict | FAR | workflow verbs | Not primitive operators. |
+| Resolve | FARA/FAR interface | derived procedure | Application of a declared resolution rule. |
+| Ω materialization | FARA/FARO | derived materialized view | Classification is produced by the calculus; Ω records it. |
+| staged workflow and optional-stage policy | FAR | compatible independent methodology | One auditable implementation of the derived obligations, not uniquely forced. |
+| evaluator independence, competence, and calibration | governance/methodology | independent experimental-design choices | Assurance controls, not FARA consequences. |
+| fail/Unknown reports | FARO | governance-required output | Justified by Project FAR's audit objective, not metaphysical necessity. |
+| operational audit/comparison/reporting | FARO | compatible downstream operations | No necessity theorem. |
+
+The dependency direction remains foundations → shared theory → FARA → FAR → FARO.

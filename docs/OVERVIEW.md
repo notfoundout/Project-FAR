@@ -1,72 +1,43 @@
 # Overview
 
-The root [README Command Center](../README.md) is the canonical entry point for repository status, planning, and navigation.
+The root [README Command Center](../README.md) is the canonical entry point for current status and navigation.
 
-- [`docs/maintenance/repository-health-checks.md`](maintenance/repository-health-checks.md) — Repository health-check commands and failure remediation.
 ## Purpose
 
-This document provides an overview of Project FAR.
+Project FAR is a contract-relative framework for representing, analyzing, comparing, and auditing structured, explicit reasoning. Its closed core proves that exact sufficiency is a factorization property and that each fixed exact comparison contract induces a unique least-informative observational quotient. It also proves that no nontrivial representation is minimal across unrestricted observation contracts.
 
-Project FAR is a research program investigating whether structured, explicit, and auditable reasoning can be represented by a common minimal architecture and analyzed through a general methodology.
-
-The project develops formal definitions, architectural models, investigative methods, comparative tools, and mathematical theory toward that objective.
-
----
+Project FAR does not claim one universal primitive ontology or one fixed minimal operator basis.
 
 ## Project Structure
 
-Project FAR is organized into four primary components.
+### Theory
+
+[Project FAR Core Theory v1.0](../theory/theorems/Project-FAR-Theory-Closure-v1.0.md) owns contracts, behavior maps, factorization, observational equivalence and quotients, invariance, finite-panel boundaries, and the current claim ledger.
 
 ### FARA
 
-The **Foundational Architecture of Reasoning Analysis (FARA)** defines the architectural components required to represent structured reasoning.
-
-FARA identifies candidate primitive concepts and derives the remaining architectural concepts from them.
-
----
+The Foundational Architecture of Reasoning Analysis is the selected finite explicit auditable v1 representation target. Its named concepts are schema or contract roles; the accepted many-sorted relational kernel is an engineering standard, not a universal source ontology.
 
 ### FAR
 
-The **Foundational Analysis of Reasoning (FAR)** defines the methodology for conducting investigations using the architectural framework established by FARA.
-
----
+The Foundational Analysis of Reasoning freezes comparison contracts, constructs mappings, tests factorization or collisions, minimizes relative to declared objectives, and reports loss and `Unknown`.
 
 ### FARO
 
-The **Foundational Analysis of Reasoning Operations (FARO)** defines methods for comparing, auditing, and analyzing reasoning processes represented using FARA and conducted using FAR.
-
----
-
-### Theory
-
-The formal theory provides the mathematical foundation of Project FAR through definitions, axioms, propositions, lemmas, theorems, conjectures, and proofs.
-
----
+The Foundational Analysis of Reasoning Operations executes investigations and materializes contracts, Ω views, comparisons, audits, and typed reports. Its operations remain downstream choices.
 
 ## Design Objectives
 
-Project FAR is guided by the following objectives.
-
-- Explicit representation
-- Minimal architecture
-- General applicability
-- Auditability
-- Reproducibility
-- Formal rigor
-
----
+- explicit contracts and scope;
+- exact or explicitly approximate adequacy criteria;
+- collision-based falsification;
+- relative minimality;
+- auditable provenance and machinery cost;
+- typed failure and `Unknown`;
+- preservation of negative and historical results.
 
 ## Current Status
 
-Project FAR remains an active research program.
+The theory is `TERMINAL—THEORY CLOSED` as an Accepted internal deductive result, not independently reviewed. Current work is assurance, mechanization, domain-contract, and application work under [`POST-CLOSURE-001`](governance/post-closure-assurance-and-application-program-v1.0.md).
 
-The architecture, methodology, comparative framework, and formal theory continue to undergo refinement, validation, and formalization.
-
-
-## Self-Advancement Planning
-
-- [Planning overview](planning/README.md)
-- [Generated project status](reports/project-status-generated.md)
-- [Research gap report](reports/research-gap-report.md)
-- [Next actions](planning/next-actions.md)
-- [Planner maintenance](maintenance/self-advancement-planner.md)
+See [project status](project-status.md), [canonical map](CANONICAL_MAP.md), and [claim status](governance/claim-status-matrix.md).

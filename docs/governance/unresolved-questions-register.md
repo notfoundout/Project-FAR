@@ -2,6 +2,34 @@
 
 Status: **Accepted governance register**
 
+The core theory has no unresolved completion-critical obligation. Current questions concern assurance, applicability, computation, approximation, and contract selection.
+
+## Current questions
+
+- **UQ-T30:** Will independent mathematical review confirm, narrow, or refute any of `FAR-CORE-001`–`014`? **Unresolved assurance question.**
+- **UQ-T31:** What is the smallest faithful proof-assistant formalization of the Set-based exact core? **Unresolved implementation/assurance question.**
+- **UQ-T32:** Which domain-specific test/context families and outcome types are independently justified for logic, Bayesian/causal, argumentation, model-based, type-theoretic, and proof-theoretic applications? **Unresolved application question.**
+- **UQ-T33:** Under which computability assumptions can (Q_C) be constructed, approximated, or learned? **Unresolved algorithmic question.**
+- **UQ-T34:** Which metrics, decision losses, tolerances, and cost preorders are justified for approximate or implementation-minimal claims? **Unresolved contract question.**
+- **UQ-T35:** Does use of the contract/factorization audit improve real investigations? **Unresolved empirical question.**
+- **UQ-T36:** Is the retained FARA kernel cost-effective under independently supplied real-world audit contracts? **Unresolved engineering question.**
+
+## Closure disposition
+
+- Former global universality, primitive-minimality, and fixed operator-basis questions are closed negatively or rendered contract-relative by `FAR-CORE-004`, `007`, and `008`.
+- Resolve is derived and Ω is a derived materialized view.
+- Exact representational loss is decided by factorization/collision for a fixed contract; absence of a certificate remains `OPEN`.
+- Common-content questions require fixed language, profiles, frame, and targets.
+- Historical UPP repair questions remain optional bounded questions and do not block the core.
+- Novelty and independent validation remain unclaimed rather than silently inferred.
+
+## Historical pre-closure register
+
+The following entries preserve earlier questions and their then-current statuses. They must not be cited as current open core-theory obligations when the closure disposition above applies.
+
+
+Status: **Accepted governance register**
+
 ## Theoretical
 
 - **UQ-T1:** Is the proposed common reasoning structure universal outside the frozen target class? **Unresolved.**
@@ -85,3 +113,4 @@ Evidence: `docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md`. 
 - **UQ-T27:** What is the exact weakest true W9 dependency-structure theorem over the frozen `C*`/`E*`/`P*`/closure/equivalence domain, given that the frozen positive witness (nonempty edge set with a support/defeat edge) is refuted on the empty-dependency corner (`CE-UPP-W9-001`)? **Unresolved; adjudicated by `SR-W2` against candidate propositions A–D of the repair program. The candidates may not be assumed.**
 - **UQ-T28:** Do explicitly degenerate components — a static/empty-domain constrained-evolution representation for systems with no commitment-changing transitions, and a trivial trace for history-insensitive systems — genuinely satisfy the intended RCCD component semantics, or must the successor terminal theorem exclude those corners by recorded scope reduction? **Unresolved; adjudicated by `SR-W3`/`SR-W4`. A trivial component may not be assumed to qualify.**
 - **UQ-T29:** What is the smallest representation of determinate absence that is distinct from epistemic Unknown and justified by the existing semantics — an established-empty typed witness, an applicability predicate, a local result type, or (only if proven necessary) a new status value? **Unresolved; adjudicated by `SR-W1`. A global fourth status value is not registered as required.**
+

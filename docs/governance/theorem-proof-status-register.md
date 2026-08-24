@@ -1,5 +1,29 @@
 # Theorem and Proof-Status Register
 
+Status: **Accepted current assurance register**
+
+| Claim family | Current status | Assurance and boundary |
+|---|---|---|
+| `FAR-CORE-001` exact factorization | **Proved** | Explicit narrative proof; internal deductive, not proof-assistant checked or independently reviewed. |
+| `FAR-CORE-002` observational quotient | **Proved** | Explicit construction/universality proof; information minimality only. |
+| `FAR-CORE-003` dynamic descent | **Proved** | Requires declared context/test closure. |
+| `FAR-CORE-004` no contract-free minimum | **Proved negative** | Constant/injective observer proof on nontrivial domains. |
+| `FAR-CORE-005`–`008` invariance/transport/noninvariance | **Proved** | Explicit set-theoretic inclusions and reification/tagging constructions. |
+| `FAR-CORE-009` finite-panel boundary | **Proved** | Requires a proper finite subset of an open domain. |
+| `FAR-CORE-010` profile-relative common theory | **Proved** | Fixed language, interpretation profiles, frame, and target class. |
+| `FAR-CORE-011`–`013` parameter/typed-outcome/Ω results | **Proved** | Exact contracts; Ω result uses the current canonical definition. |
+| `FAR-CORE-014` SSS classification | **Supported/derived** | Depends on the merged PR #453 bounded proofs and stated decoder classes. |
+| Historical terminal UPP theorem | **Not established by frozen derivation** | Proposition not refuted; defects `XA-001`–`XA-005`; historical artifacts preserved. |
+| `FARA-FORMAL-KERNEL-001` | Accepted bounded specification/engineering result | Finite explicit auditable v1 target; not a global primitive/minimality theorem. |
+| Empirical and executable campaigns | Observations or bounded corroboration | Never proofs of the core or open-domain universality. |
+
+Independent review and proof-assistant reconstruction remain open assurance dimensions under `POST-CLOSURE-001`. Their absence limits assurance, not core closure.
+
+## Historical pre-closure entries
+
+The following text preserves the earlier register at its evidence cutoff. Its broader unresolved labels are superseded where the current table gives a terminal disposition.
+
+
 Status: **Accepted classification index; proof objects remain authoritative**
 
 | Family | Status | Exact boundary |
@@ -32,3 +56,4 @@ Any active canonical use of “theorem”, “lemma”, “proposition”, “pr
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
 
 The expanded campaign proof, trace summaries, cost accounting, immutable base identities, target-specific coverage, and mutation checks are machine validated. They do not create a theorem.
+

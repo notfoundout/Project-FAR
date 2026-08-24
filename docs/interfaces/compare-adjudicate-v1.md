@@ -94,3 +94,8 @@ Backward-compatible documentation corrections and additional non-authoritative e
 ## Claim boundary
 
 Passing this interface proves only that the artifacts conform to the frozen v1.0 contract and that the recorded hashes and references are internally consistent. It does not prove factual correctness, domain adequacy, fairness, policy legitimacy, certification, external validation, or commercial readiness.
+
+
+## Core-theory conformance note
+
+This evidence interface compares declared package contents; it is not the full comparison contract of `PROJECT-FAR-CORE-THEORY-1.0`. A representation-sufficiency claim additionally requires cases, tests/contexts, typed outcomes, observation semantics, a representation mapping, and either a decoder/factorization certificate or a collision witness. Evidence-package agreement cannot substitute for that proof.

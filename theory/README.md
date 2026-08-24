@@ -1,35 +1,28 @@
 # Theory Index
 
-This directory contains the canonical theory of Project FAR. Research notes and unresolved investigations belong in `../research/`; framework-specific extensions belong under `../frameworks/`.
+This directory contains Project FAR's canonical shared theory. Research notes remain under `../research/`; framework-specific commitments remain under `../frameworks/`.
 
-## Canonical Areas
+## Governing theory
 
-- `definitions/` — canonical definitions and derived concepts.
-- `axioms/` — core axioms and accepted axiom schemas.
-- `semantics/` — semantic and model-theoretic material.
-- `operators/` — canonical theoretical operators.
-- `notation/` — notation and symbolic conventions.
-- `theorems/` — propositions, conjectures, and theorems.
-- `proofs/` — proof material and proof-theoretic foundations.
-- `consistency/` — verification and consistency checks.
-- `independence/` — falsifiable primitive-independence criteria, schemas, and future execution artifacts.
+- [Project FAR Core Theory v1.0](theorems/Project-FAR-Theory-Closure-v1.0.md) — contract-relative representation, sufficiency, observational quotients, invariance, and terminal boundary results.
+- [Machine-readable core ledger](terminal/project-far-core-theory-v1.0.json) — current claim IDs, scopes, dispositions, and assurance.
+- [Shared definitions](definitions/definitions.md) — canonical vocabulary used by the core and frameworks.
 
-## Reading Order
+## Supporting areas
 
-1. `definitions/definitions.md`
-2. `notation/notation.md`
-3. `axioms/axioms.md`
-4. `semantics/scope.md`
-5. `theorems/propositions.md`
-6. `theorems/theorems.md`
-7. `proofs/proofs.md`
-8. `consistency/verification.md`
-9. `independence/primitive-independence-framework.md`
+- `axioms/` — legacy and scoped axiom records; none overrides the core theory.
+- `theorems/`, `proofs/`, and `proof-objects/` — theorem and proof artifacts at their recorded assurance.
+- `evaluation/` — bounded protocols, historical programs, and the post-closure assurance program.
+- `independence/` — historical primitive-independence criteria and research artifacts.
+
+## Reading order
+
+1. `theorems/Project-FAR-Theory-Closure-v1.0.md`
+2. `definitions/definitions.md`
+3. `../docs/governance/project-far-theory-closure-acceptance-v1.0.md`
+4. `../docs/governance/framework-boundaries.md`
+5. FARA, FAR, then FARO.
 
 ## Canonical boundary
 
-Shared theory depends on foundations and precedes FARA. Framework procedures and validation outcomes are not theory premises. “Meta-Theory” is a retired historical label. Canonical terminology and epistemic classes are controlled by the [terminology authority](../docs/glossary/canonical-terminology.md).
-
-## Supporting navigation
-
-- [Proof-step semantics](semantics/proof-step-semantics.md) records the semantic contract used by machine-readable proof objects; canonical proof authority remains with the registered theorem and proof sources.
+Shared theory depends on foundations and precedes FARA. FARA is a selected representation target; FAR and FARO are downstream methodology and operations. Historical UPP artifacts remain evidence and history, not current theorem authority.

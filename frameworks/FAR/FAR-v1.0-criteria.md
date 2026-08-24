@@ -44,7 +44,7 @@ Status: verified by Phase 4 consistency audit.
 
 Candidate generation shall remain part of Stage 6 — Perform Reasoning.
 
-Candidate admissibility shall be classified in Stage 7 through the Admissibility Structure (Ω).
+Candidate admissibility shall be produced by the applicable calculus and materialized in Stage 7 through the derived Admissibility Structure (Ω).
 
 Candidate generation is not a separate universal FAR workflow stage.
 
@@ -116,7 +116,7 @@ Status: verified by Phase 4 consistency audit.
 
 FAR shall not introduce new primitives.
 
-FAR workflow stages are procedural roles, not primitive concepts.
+FAR workflow stages and Construct/Differentiate/Restrict labels are procedural roles, not primitive concepts.
 
 Status: verified by Phase 4 consistency audit.
 
@@ -206,7 +206,7 @@ Before FAR v1.0 Stable is declared, verify:
 
 - [x] `workflow.md` is the canonical stage source.
 - [x] candidate generation is treated as part of Stage 6.
-- [x] candidate admissibility classification is treated as part of Stage 7.
+- [x] calculus-produced candidate classifications are materialized in Stage 7.
 - [x] optional-stage policy is present.
 - [x] revision-record policy is present.
 - [x] closure policy is present.

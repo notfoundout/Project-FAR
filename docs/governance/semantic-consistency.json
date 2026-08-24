@@ -1,43 +1,234 @@
 {
   "schema_version": "1.0",
-  "dependency_order": ["foundations", "shared-theory", "FARA", "FAR", "FARO"],
+  "dependency_order": [
+    "foundations",
+    "shared-theory",
+    "FARA",
+    "FAR",
+    "FARO"
+  ],
   "dependencies": [
-    ["shared-theory", "foundations"], ["FARA", "shared-theory"],
-    ["FAR", "FARA"], ["FARO", "FAR"]
+    [
+      "shared-theory",
+      "foundations"
+    ],
+    [
+      "FARA",
+      "shared-theory"
+    ],
+    [
+      "FAR",
+      "FARA"
+    ],
+    [
+      "FARO",
+      "FAR"
+    ]
   ],
   "canonical_terms": [
-    {"term":"object","owner":"shared-theory","status":"candidate-primitive"},
-    {"term":"property","owner":"FARA","status":"candidate-primitive"},
-    {"term":"relation","owner":"FARA","status":"candidate-primitive"},
-    {"term":"representation","owner":"FARA","status":"candidate-primitive"},
-    {"term":"Construct","owner":"shared-theory","status":"candidate-operator"},
-    {"term":"Differentiate","owner":"shared-theory","status":"candidate-operator"},
-    {"term":"Restrict","owner":"shared-theory","status":"candidate-operator"},
-    {"term":"Resolve","owner":"FARA","status":"derived-procedural"},
-    {"term":"mapping","owner":"shared-theory","status":"derived"},
-    {"term":"canonicalization","owner":"methodology","status":"independent-method"},
-    {"term":"CIR","owner":"methodology","status":"protocol-artifact"},
-    {"term":"Pareto dominance","owner":"methodology","status":"decision-rule"}
+    {
+      "term": "object",
+      "owner": "shared-theory",
+      "status": "schema-role"
+    },
+    {
+      "term": "property",
+      "owner": "FARA",
+      "status": "schema-role"
+    },
+    {
+      "term": "relation",
+      "owner": "FARA",
+      "status": "schema-role"
+    },
+    {
+      "term": "representation",
+      "owner": "shared-theory",
+      "status": "contract-role"
+    },
+    {
+      "term": "interpretation",
+      "owner": "shared-theory",
+      "status": "contract-parameter"
+    },
+    {
+      "term": "investigation",
+      "owner": "FARA",
+      "status": "schema-role"
+    },
+    {
+      "term": "reasoning calculus",
+      "owner": "FARA",
+      "status": "contract-parameter"
+    },
+    {
+      "term": "local comparison contract",
+      "owner": "shared-theory",
+      "status": "contract-parameter"
+    },
+    {
+      "term": "behavior map",
+      "owner": "shared-theory",
+      "status": "derived"
+    },
+    {
+      "term": "observational equivalence",
+      "owner": "shared-theory",
+      "status": "derived"
+    },
+    {
+      "term": "observational quotient",
+      "owner": "shared-theory",
+      "status": "derived"
+    },
+    {
+      "term": "factorization audit",
+      "owner": "FAR",
+      "status": "theory-constrained-method"
+    },
+    {
+      "term": "Construct",
+      "owner": "FAR",
+      "status": "workflow-verb"
+    },
+    {
+      "term": "Differentiate",
+      "owner": "FAR",
+      "status": "workflow-verb"
+    },
+    {
+      "term": "Restrict",
+      "owner": "FAR",
+      "status": "workflow-verb"
+    },
+    {
+      "term": "Resolve",
+      "owner": "FARA",
+      "status": "derived-procedural"
+    },
+    {
+      "term": "Admissibility Structure (Ω)",
+      "owner": "FARA",
+      "status": "derived-materialized-view"
+    },
+    {
+      "term": "mapping",
+      "owner": "shared-theory",
+      "status": "derived"
+    },
+    {
+      "term": "canonicalization",
+      "owner": "methodology",
+      "status": "independent-method"
+    },
+    {
+      "term": "CIR",
+      "owner": "methodology",
+      "status": "protocol-artifact"
+    },
+    {
+      "term": "Pareto dominance",
+      "owner": "methodology",
+      "status": "decision-rule"
+    }
   ],
   "strong_claims": [
-    {"id":"CLM-ARCH","status":"conjecture","scope":"outside frozen target class"},
-    {"id":"CLM-OPS","status":"unresolved","scope":"global sufficiency and irreducibility"},
-    {"id":"CLM-OPS-W2-BOUNDED","status":"bounded","scope":"coordinate-separation-induced minimality in finite_coordinate_trace_v1 only"},
-    {"id":"CLM-ARCH-W3-BOUNDED","status":"bounded","scope":"by-construction CTC reconstruction for B_W3_closed_explicit only; internal-state-only lossless universality and uniqueness refuted"},
-    {"id":"CLM-LOSSLESS","status":"unresolved","scope":"cross-system translation"},
-    {"id":"CLM-MIN","status":"unresolved","scope":"global FARA minimality"},
-    {"id":"CLM-UNIV","status":"bounded","scope":"frozen UPP premises only"},
-    {"id":"CLM-PROTOCOL-DERIVATION","status":"rejected","scope":"no derivation of independent methodology"}
+    {
+      "id": "FAR-CORE-001",
+      "status": "proved",
+      "scope": "Set-based exact contracts"
+    },
+    {
+      "id": "FAR-CORE-002",
+      "status": "proved",
+      "scope": "unique least-informative exact quotient for a fixed contract"
+    },
+    {
+      "id": "FAR-CORE-004",
+      "status": "proved-negative",
+      "scope": "no contract-free minimum on a nontrivial domain"
+    },
+    {
+      "id": "FAR-CORE-007",
+      "status": "proved",
+      "scope": "primitive-count noninvariance under faithful re-presentation"
+    },
+    {
+      "id": "FAR-CORE-008",
+      "status": "proved",
+      "scope": "finite operator-count noninvariance under tagged combination"
+    },
+    {
+      "id": "FAR-CORE-009",
+      "status": "proved",
+      "scope": "finite-panel boundary"
+    },
+    {
+      "id": "FAR-CORE-013",
+      "status": "proved",
+      "scope": "canonical Ω is derived"
+    },
+    {
+      "id": "FAR-UPP-FROZEN",
+      "status": "not-established",
+      "scope": "historical frozen UPP derivation"
+    },
+    {
+      "id": "FARA-FORMAL-KERNEL-001",
+      "status": "retained-bounded",
+      "scope": "finite explicit auditable Project FAR v1"
+    },
+    {
+      "id": "CLM-PROTOCOL-DERIVATION",
+      "status": "rejected",
+      "scope": "FAR/FARO choices are not logical consequences of FARA"
+    }
   ],
-  "procedures": ["FAR workflow","property selection","framework selection","evaluator mapping","evaluator independence","evaluator competence","canonicalization","preservation vector","status vocabulary","Pareto comparison","commitment equivalence","local ablation","preregistration","frozen evidence","fail report","uncertainty output","claim-dimension analysis"],
-  "theorem_families": ["legacy root-theory limits","FARA representation/minimality","T/L/P series","terminal UPP","empirical validation","operator sufficiency"],
+  "procedures": [
+    "FAR workflow",
+    "property selection",
+    "framework selection",
+    "evaluator mapping",
+    "evaluator independence",
+    "evaluator competence",
+    "canonicalization",
+    "preservation vector",
+    "status vocabulary",
+    "Pareto comparison",
+    "commitment equivalence",
+    "local ablation",
+    "preregistration",
+    "frozen evidence",
+    "fail report",
+    "uncertainty output",
+    "claim-dimension analysis"
+  ],
+  "theorem_families": [
+    "contract-relative core",
+    "historical UPP (defective derivation)",
+    "FARA bounded representation",
+    "empirical validation",
+    "bounded operator and architecture campaigns"
+  ],
   "required_documents": [
-    "docs/glossary/canonical-terminology.md", "docs/governance/framework-boundaries.md",
-    "docs/governance/dependency-specification.md", "docs/audits/theory-correction-audit-2026-07-26.md",
-    "docs/audits/protocol-v1-audit-2026-07-26.md", "docs/governance/claim-status-matrix.md",
-    "docs/governance/limitations-register.md", "docs/governance/unresolved-questions-register.md",
-    "docs/governance/open-problems-register.md", "docs/governance/counterexample-register.md",
-    "docs/governance/derivation-status-matrix.md", "docs/governance/theorem-proof-status-register.md",
-    "docs/research/fara-operator-w2-minimality-v1.0.md", "docs/research/fara-w3-common-architecture-v1.0.md"
+    "docs/glossary/canonical-terminology.md",
+    "docs/governance/framework-boundaries.md",
+    "docs/governance/dependency-specification.md",
+    "docs/audits/theory-correction-audit-2026-07-26.md",
+    "docs/audits/protocol-v1-audit-2026-07-26.md",
+    "docs/governance/claim-status-matrix.md",
+    "docs/governance/limitations-register.md",
+    "docs/governance/unresolved-questions-register.md",
+    "docs/governance/open-problems-register.md",
+    "docs/governance/counterexample-register.md",
+    "docs/governance/derivation-status-matrix.md",
+    "docs/governance/theorem-proof-status-register.md",
+    "docs/research/fara-operator-w2-minimality-v1.0.md",
+    "docs/research/fara-w3-common-architecture-v1.0.md",
+    "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+    "theory/terminal/project-far-core-theory-v1.0.json",
+    "docs/governance/project-far-theory-closure-acceptance-v1.0.md",
+    "docs/governance/post-closure-assurance-and-application-program-v1.0.md",
+    "docs/audits/project-far-theory-closure-conformity-audit-v1.0.md"
   ]
 }

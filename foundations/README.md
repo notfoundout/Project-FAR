@@ -14,13 +14,13 @@ Unless explicitly stated otherwise, every subsystem of Project FAR shall conform
 
 # The Objective of Project FAR
 
-Project FAR seeks to develop a universal formal framework for representing, analyzing, evaluating, and operating upon reasoning.
+Project FAR develops a formal contract and audit framework for representing, analyzing, evaluating, and operating upon reasoning.
 
-The objective is not to defend particular conclusions.
+The objective is not to defend particular conclusions or to impose one universal primitive architecture.
 
-The objective is to discover and develop a framework within which conclusions may be investigated according to explicit and formally defined principles.
+The objective is to make the cases, tests, contexts, outcomes, transformations, and objectives controlling a conclusion explicit and formally auditable.
 
-Accordingly, Project FAR is concerned with the structure of reasoning rather than the truth of any particular belief.
+Accordingly, Project FAR studies the structure of reasoning only relative to declared comparison contracts; its terminal core refutes a nontrivial contract-free minimal architecture.
 
 ---
 
@@ -80,12 +80,12 @@ Canonical documents shall contain only accepted definitions, assumptions, propos
 
 # Principle 5 — Minimal Foundations
 
-Every formal theory should be constructed from the smallest possible collection of primitive concepts and assumptions.
+Every formal theory should use the least information and assumptions required by its declared objective and contract.
 
 Whenever possible:
 
 - definitions should be reduced;
-- primitives should be minimized;
+- schema commitments should be minimized relative to the objective;
 - axioms should be minimized.
 
 Complexity should arise through derivation rather than assumption.
@@ -173,7 +173,7 @@ Work in `discovery/` is research unless explicitly promoted under the governing 
 
 # Commitment
 
-Project FAR is committed to constructing a formally rigorous, explicitly defined, systematically justified, and self-correcting framework for reasoning.
+Project FAR is committed to a formally rigorous, explicitly contracted, systematically justified, and self-correcting audit framework for reasoning. It makes no contract-free primitive or minimality claim.
 
 Every component of the project shall be developed according to these foundational principles.
 

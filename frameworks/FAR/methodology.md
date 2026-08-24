@@ -18,7 +18,7 @@ The canonical ordered stage sequence is maintained in:
 
 ## Objective
 
-The objective of FAR is to conduct investigations that are:
+The objective of FAR is to conduct contract-explicit investigations that are:
 
 - structured;
 - explicit;
@@ -33,11 +33,11 @@ The methodology is independent of any particular reasoning calculus or applicati
 
 FAR does not define the architecture of reasoning.
 
-FAR applies the architecture supplied by FARA.
+FAR may apply the representation target supplied by FARA, but adequacy is established only relative to a declared contract and factorization proof.
 
 FAR does not introduce new primitives.
 
-FAR workflow stages are procedural roles used to organize investigation activity.
+FAR workflow stages are procedural roles used to organize investigation activity. Construct, Differentiate, and Restrict name actions in that workflow; they are not primitive operators.
 
 ---
 
@@ -73,7 +73,7 @@ FAR does not redefine them.
 
 ## Principles
 
-Every FAR investigation should satisfy the following principles.
+Every FAR investigation should satisfy the following principles and the contract-relative conformance overlay in `workflow.md`.
 
 ### Explicitness
 
@@ -85,7 +85,7 @@ Silent omission weakens the investigation record.
 
 ### Auditability
 
-The complete investigation should be reconstructible from its recorded reasoning states, transition signatures, revision records, validation status, and closure status.
+The complete investigation should be reconstructible from its contract, mappings, reasoning states, transition signatures, decoder/collision evidence, revision records, validation status, and closure status.
 
 ---
 
@@ -133,7 +133,7 @@ FARA defines the architectural components used during an investigation.
 
 FAR defines the methodology for applying those components.
 
-The methodology depends upon the architecture but does not modify it.
+The methodology depends on shared theory and may use FARA, but it does not make FARA a universal ontology. It must report when behavior fails to factor through the selected representation.
 
 ---
 
@@ -147,11 +147,6 @@ FARO should not redefine FAR methodology, alter FAR workflow stages, or introduc
 
 ## Current Status
 
-The FAR methodology remains under Phase 3 methodology audit.
+FAR v1.0 remains Stable as the selected Project FAR methodology. The terminal core theory adds a mandatory contract-relative conformance overlay without claiming that the full workflow is uniquely derived.
 
-Current work includes:
-
-- verifying methodological neutrality;
-- strengthening revision and closure policies;
-- ensuring artifact-based reconstructibility;
-- and preparing for Phase 4 consistency audit.
+Current post-closure work concerns independent assurance, proof-assistant formalization, contract-schema implementation, domain contracts, approximation/cost objectives, and empirical audit utility under `POST-CLOSURE-001`.

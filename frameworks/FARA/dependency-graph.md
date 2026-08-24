@@ -1,5 +1,7 @@
 # FARA Dependency Graph
 
+Terminal note: `primitives.md` is now the schema-role registry at a historical path. References below to candidate-primitive campaigns describe bounded historical investigations and do not restore current primitive status.
+
 ## Purpose
 
 This document records the dependency structure among the core concepts and documents of the Foundational Architecture of Reasoning Analysis (FARA).
@@ -16,7 +18,7 @@ The core FARA document dependency order is:
 
 ```text
 theory/definitions/definitions.md
-  -> frameworks/FARA/primitives.md
+  -> frameworks/FARA/primitives.md (schema-role registry)
   -> frameworks/FARA/ontology.md
   -> frameworks/FARA/formal-kernel.md
   -> frameworks/FARA/semantics.md
@@ -25,7 +27,7 @@ theory/definitions/definitions.md
   -> frameworks/FARA/admissibility-structure.md
 ```
 
-The formal kernel consumes canonical definitions plus the candidate-primitive and ontology classifications. It provides a scoped formal carrier architecture; it does not redefine the canonical terminology or reclassify the seven candidate primitives.
+The formal kernel consumes canonical definitions plus the schema-role and ontology classifications. It provides a scoped target architecture; it does not redefine canonical terminology or make the seven roles global primitives.
 
 Navigation and maintenance documents depend on the whole FARA set:
 
@@ -74,9 +76,9 @@ This flow expresses conceptual dependency, not chronological reasoning order.
 
 ---
 
-## Candidate Primitive Basis
+## Current Schema-Role Basis
 
-The current candidate primitive basis is:
+Project FAR v1 uses these named schema or contract roles:
 
 - Object
 - Property
@@ -86,22 +88,11 @@ The current candidate primitive basis is:
 - Investigation
 - Reasoning Calculus
 
-These concepts are listed in:
+They are registered in `primitives.md` and organized in `ontology.md`. They are not global primitives. `FAR-CORE-007` proves that faithful reification/tagging can change primitive counts, so historical independence campaigns cannot promote the seven-field presentation into a representation-independent basis.
 
-`primitives.md`
+The completed W1 execution in `research/primitive-independence-w1-result.md` remains bounded historical evidence. Its dependency hazards are useful audit warnings, not current primitive adjudications.
 
-and organized in:
-
-`ontology.md`
-
-Candidate primitive status is provisional and remains subject to grounding investigations.
-
-The completed W1 execution in `research/primitive-independence-w1-result.md` does not establish that these nodes are mutually or jointly independent. It identifies dependency hazards
-`Object <- Representation <- Object`, `Representation <-> Interpretation`, and
-`Investigation <-> Reasoning Calculus`. These are audit warnings rather than derived
-edges or equivalence proofs; all seven adjudications remain unresolved.
-
-`FARA-FORMAL-KERNEL-001` does not change this basis. It selects a formal carrier architecture within a bounded scope and does not establish primitive independence, necessity, minimality, or irreducibility.
+`FARA-FORMAL-KERNEL-001` instantiates the seven roles within the finite explicit auditable v1 engineering contract and does not establish a native common ontology or contract-free minimality.
 
 ---
 
@@ -110,7 +101,7 @@ edges or equivalence proofs; all seven adjudications remain unresolved.
 The accepted formal kernel depends on:
 
 - canonical definitions in `theory/definitions/definitions.md`;
-- the unchanged seven-candidate primitive registry in `primitives.md`;
+- the seven-role v1 schema registry in `primitives.md`;
 - the conceptual classifications in `ontology.md`;
 - the mandatory category separations and design constraints in FARA;
 - the accepted source execution `FARA-CANONICAL-KERNEL-001`;
@@ -122,7 +113,7 @@ The dependency consequence is:
 
 ```text
 canonical definitions
-  + candidate primitive/ontology classifications
+  + schema-role/ontology classifications
   + mandatory FARA architectural gates
   + accepted and replicated evidence
     -> identity-bearing many-sorted relational formal kernel
@@ -310,7 +301,7 @@ Depends on:
 
 The following constraints must be preserved:
 
-- No derived concept should be listed as a candidate primitive unless reduction attempts justify reclassification.
+- No schema role should be called a global primitive without a new scoped contract and an invariant lower-bound theorem.
 - No architectural document should redefine a term already canonically defined in `theory/definitions/definitions.md`.
 - No document should collapse a rule with an execution.
 - No document should collapse an object with its representation.
@@ -376,7 +367,7 @@ This descriptively named, unnumbered campaign executes the selection obligation 
 
 This dependency graph should be updated whenever:
 
-- a candidate primitive is added or removed;
+- a schema role is added, removed, or re-scoped;
 - a derived concept is added;
 - a canonical definition changes;
 - a concept dependency changes;

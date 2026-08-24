@@ -187,14 +187,10 @@ Those concepts are defined by the canonical definitions and related architectura
 
 ---
 
-## Research Status
+## Theory-Derived Constraint
 
-Current research investigates:
+A transition signature is sufficient only relative to declared tests, contexts, continuations, outcomes, and execution parameters. If future behavior matters, the contract must include or be closed under the relevant continuations. Semantic-preservation claims require an explicit factorization or collision audit.
 
-- minimal transition representations;
-- transition composition;
-- transition decomposition;
-- transition equivalence;
-- semantic preservation across transformations;
-- transition algebra;
-- reasoning trace verification.
+## Open Implementation Questions
+
+Post-closure work may investigate compositional certificates, trace normalization, transition-algebra profiles, and verification cost. These are contract-relative engineering questions, not searches for an unconditional primitive transition format.

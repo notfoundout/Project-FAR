@@ -10,6 +10,23 @@ FARO may later operationalize or automate these checks, but the checks themselve
 
 ---
 
+## Contract-Relative Validation Gates
+
+Before the existing checklist, validate the following whenever the investigation makes a representation claim:
+
+- claim, domain, quantifiers, evidence cutoff, and nonclaims are frozen;
+- cases, tests/contexts, typed outcomes, observation semantics, and consequence-affecting parameters are explicit;
+- admitted translations/equivalences, interpretation profiles, and interface frame are explicit;
+- approximation or cost orders are present for any non-exact or non-information minimality claim;
+- the representation mapping and charged auxiliary machinery are reconstructible;
+- a decoder/factorization certificate, a collision witness, or `OPEN` is recorded;
+- determinate absence and epistemic Unknown are not collapsed when observable;
+- common content is profile/frame/target indexed;
+- primitive/operator language is not inferred from spelling;
+- the terminal report uses a typed outcome and exposes falsifiers and remaining boundaries.
+
+Passing methodological validation does not itself prove factual premises, mathematical theorems, domain adequacy, or independent validation.
+
 ## Validation Standard
 
 A FAR investigation is methodologically valid only if its required artifacts are explicit enough to support audit, reconstruction, and review.
@@ -80,11 +97,11 @@ A completed FAR investigation should satisfy the following checks.
 
 ---
 
-### 7. Admissibility Structure Constructed When Required
+### 7. Admissibility Structure Materialized When Required
 
 - Candidate admissibility is classified when relevant.
-- Ω records admissibility classifications.
-- Ω is not treated as the source of admissibility criteria.
+- Ω records classifications and provenance produced by the applicable calculus.
+- Ω is not treated as the source or cause of admissibility criteria or consequences.
 - If no candidates exist, Ω is marked empty or not applicable with an explicit reason.
 
 ---

@@ -32,6 +32,10 @@ FARO may produce:
 
 Every FARO report should identify:
 
+- comparison contract or `NOT APPLICABLE`;
+- exact/approximate objective and any loss or cost order;
+- decoder/factorization, collision, or OPEN status;
+- profile, frame, admitted transformations, and charged auxiliary machinery;
 - report type;
 - operation performed;
 - input artifacts;
@@ -41,7 +45,7 @@ Every FARO report should identify:
 - limitations;
 - failure modes encountered;
 - boundary notes;
-- output status.
+- output status from `PROVED`, `REFUTED`, `OPEN`, `BLOCKED`, `UNDERDETERMINED`, `NOT APPLICABLE`, or `HISTORICAL/SUPERSEDED`.
 
 ---
 

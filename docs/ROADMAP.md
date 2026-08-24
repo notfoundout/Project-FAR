@@ -1,76 +1,44 @@
 # Project Roadmap
 
-This roadmap records gated future work. It is a planning surface, not theory or evidence, and it cannot authorize work that the Research Execution Charter or a registered program does not authorize.
+This is a planning surface, not theory or evidence. It cannot authorize work outside the Research Execution Charter or the registered post-closure program.
 
 ## Current release and phase
 
 Current published repository release: [`v1.0.0`](releases/project-far-v1.0.0.md).
 
-Current program: [`POST-TERM-EVAL-001`](governance/post-terminal-public-evaluation-program-v1.0.md).
+Current program: [`POST-CLOSURE-001`](governance/post-closure-assurance-and-application-program-v1.0.md).
 
-The Universal Proof Program `POST-TUE-UPP-001` is complete and its deductive queue is closed. There is no `UPP-W16`. Any stronger deductive theorem requires a separately registered program.
+The core theory is closed. The historical UPP queue remains closed, and its defective frozen derivation is not a target for silent repair.
 
-## Ordered post-terminal work
+## Ordered post-closure work
 
-The current order follows the registered post-terminal evaluation program:
+1. **`PCA-W1-INDEPENDENT-REVIEW` — next.** Review the exact premises and proofs of `FAR-CORE-001`–`FAR-CORE-014`; disclose independence, prior exposure, tools, checked obligations, and unresolved objections.
+2. **`PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.** Formalize the factorization, quotient, dynamic-descent, and no-contract-free-minimum results, or preserve an exact obstruction report.
+3. **`PCA-W3-CONTRACT-SCHEMA`.** Implement a successor to `far-ir/1.0` that records comparison contracts, typed outcomes, decoders/collisions, quotients, profiles, frames, and cost/loss orders.
+4. **`PCA-W4-DOMAIN-CONTRACTS`.** Build independently motivated contracts for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory.
+5. **`PCA-W5-APPROXIMATION-AND-COST`.** Add explicit metrics, tolerances, decision losses, and cost preorders; do not call one optimum universal.
+6. **`PCA-W6-EMPIRICAL-AUDIT-UTILITY`.** Preregister tests of whether the discipline catches material loss or reduces disagreement.
 
-1. **`PTE-W1-INDEPENDENT-REVIEW` — next.** Prepare the exact terminal theorem, frozen premises, dependency audit, proof obligations, mechanization boundary, nonclaims, and reviewer-disclosure requirements for genuinely independent proof review.
-2. **`PTE-W2-KERNEL-RECONSTRUCTION`.** Attempt one end-to-end proof-assistant reconstruction of the terminal semantic composition. If full reconstruction fails, preserve the strongest explicit obstruction and identify every external assumption that remains outside the kernel.
-3. **`PTE-W3-COUNTERMODEL-SEARCH`.** Seek countermodels and scope challenges against class membership, admissibility, faithfulness, machinery closure, equivalence, component necessity, construction sufficiency, independence, maximality, and terminal composition. Failed challenges remain evidence; unresolved challenges remain `Unknown`.
-4. **`PTE-W4-EMPIRICAL-REPLICATION`.** Obtain independent bounded replication under a frozen protocol. Project-authored or same-implementation-path execution is not independent replication and cannot establish the deductive theorem by itself.
-5. **Application correspondence.** Test whether real systems actually satisfy the terminal theorem's premises and whether representation preserves the registered commitments. Application success or failure affects correspondence evidence, not the theorem automatically.
+## Gates
 
-These workstreams may proceed only within their registered scope. Completion of one does not silently upgrade another evidence dimension.
+Every workstream must preserve scope, provenance, typed outcomes, negative results, `Unknown`, and claim impact. CI success, internal agreement, finite panels, and successful encoding are not mathematical proof or independent validation.
 
-## Current gates
+## Reopening policy
 
-Before claiming progress in a post-terminal channel:
-
-- identify the exact theorem, premise, bounded result, or application claim under review;
-- preserve the terminal theorem's frozen premise set and open-world boundary;
-- preregister empirical execution when the governing protocol requires it;
-- disclose evaluator independence and prior exposure;
-- preserve negative results, failed reconstructions, ambiguity, and protocol deviations;
-- issue a claim-impact record for confirmed defects;
-- keep unresolved defects or observationally indistinguishable alternatives as `Unknown`;
-- never use CI success, finite testing, internal replication, or absence of known counterexamples as proof of unrestricted claims.
-
-## Theory and stronger-claim policy
-
-Post-terminal evaluation is not a hidden continuation of the closed deductive program.
-
-A stronger theorem, broader target class, weaker premise set, stronger maximality claim, or changed equivalence criterion requires a separately registered deductive program before derivation. It may not be smuggled into review, replication, application work, or maintenance.
-
-## Engineering and experiments
-
-Supporting engineering is justified only when required by an authorized evaluation channel, reproducibility obligation, security/integrity defect, or accepted repository-maintenance requirement.
-
-Do not prioritize generic product expansion, another benchmark version, new dashboards, favorable-case accumulation, or speculative infrastructure merely because implementation is possible.
-
-A new empirical run must have an authorized protocol, frozen inputs, acceptance/adjudication rules, provenance, independence classification, and evidence-preservation path before execution.
+Do not reopen the settled core for another primitive search, operator count, finite heterogeneous panel, or UPP repair. Reopening requires a reproducible contradiction to a stated core premise, proof step, theorem, or derivation.
 
 ## Framework maintenance
 
-FARA, FAR, FARO, FARE, and FARM remain maintained at their current governed scopes. Framework stability is not evidence for unrestricted universality or superiority. Changes to stable layers require the applicable change-control and provenance rules.
+FARA remains a finite explicit auditable representation target. FAR implements contract-relative audit methodology. FARO operationalizes execution and reporting. Stable status is not evidence of universality or global minimality.
 
 ## Release track
 
-- Current published repository release: [`v1.0.0`](releases/project-far-v1.0.0.md).
-- The installable package version remains a separate surface governed by `pyproject.toml`.
-- Historical release baselines remain preserved under [`releases/`](releases/).
-
-Release packaging does not strengthen theorem assurance, independence, empirical validity, or application correspondence.
+The repository release and installable package version remain separate surfaces. A future release may package the closure integration, but packaging does not strengthen theorem assurance.
 
 ## Historical roadmap
 
-The superseded pre-terminal roadmap, including the v0.4.0, anti-self-validation, REP/ADJ/W3.5, and earlier validation planning sequence, is preserved byte-for-byte at [`../archive/superseded/status/roadmap-pre-terminal-2026-08-10.txt`](../archive/superseded/status/roadmap-pre-terminal-2026-08-10.txt).
-
-The `.txt` extension is deliberate: historical relative links remain part of the preserved bytes but are not presented as live repository documentation.
-
-That snapshot is historical and does not define current priorities.
+Earlier post-terminal UPP and bounded-program roadmaps remain recoverable from Git history and `archive/superseded/status/`. They do not define current priorities.
 
 ## Long-term objective
 
-Determine the strongest justified account of the structure of explicit, auditable reasoning; expose the exact boundaries under which the terminal relative result holds; identify countermodels, unnecessary commitments, failed correspondences, and simpler rivals where they exist; and reduce or retract claims when evidence requires it.
-
-Project success is measured by the accuracy and auditability of the final claim boundary, not by forcing Project FAR to survive criticism.
+Apply the contract-relative theory accurately: expose consequential choices, certify factorization or collisions, compute or approximate contract-indexed quotients, report losses and `Unknown`, and retract any claim that exceeds its contract.

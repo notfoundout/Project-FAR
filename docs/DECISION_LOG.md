@@ -1,5 +1,20 @@
 # Decision Log
 
+## 2026-08-24 — Accept and promote the contract-relative core theory
+
+**Question:** What governs Project FAR after the defective frozen UPP derivation, bounded FARA campaigns, Ω-elimination result, and independent dialogue-theory experiment are reconciled?
+
+**Execution:** Audited the detached `Project-FAR-Theory-Closure-v1.0.md`, current canonical authorities, framework boundaries, claim and theorem registers, open obligations, planning, mechanization capability, and executable consistency controls. Preserved PR #453 unchanged as Research before integration.
+
+**Observation:** Exact sufficiency is equivalent to behavior factorization; each fixed exact contract induces a unique least-informative observational quotient; no nontrivial representation is minimal across unrestricted observation contracts; primitive and operator counts are not invariant under admitted faithful re-presentation; Ω and Resolve are derived. No current Accepted artifact contradicts the stated proofs. The UPP cross-audit already records its frozen derivation as defective and the theorem as not established.
+
+**Acceptance:** Accept `FAR-CORE-001`–`FAR-CORE-013` as internal deductive results at their stated scopes and `FAR-CORE-014` as a supported derived classification. No independent review or novelty claim is made.
+
+**Promotion:** Promote `theory/theorems/Project-FAR-Theory-Closure-v1.0.md` and its machine ledger; supersede `POST-TERM-EVAL-001` with `POST-CLOSURE-001`; make `UPP-SR-001` optional bounded work; reconcile FARA, FAR, FARO, governance, planning, specifications, and validators.
+
+**Claim boundary:** FARA remains a finite explicit auditable v1 engineering target. The seven named concepts are schema roles, Construct/Differentiate/Restrict are workflow verbs, Resolve and Ω are derived, and no finite panel or arbitrary encoding establishes native universal architecture. The core remains internally derived and not independently reviewed.
+
+
 ## 2026-08-13 — Register the bounded-v1 cross-audit adjudication and the successor semantic repair program
 
 **Question:** How should the repository represent the completed three-lane internal closure campaign on frozen source `f6645a77`, whose cross-audit found the terminal derivation defective without refuting the terminal proposition?

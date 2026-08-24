@@ -15,14 +15,16 @@ This document does not redefine FAR, FARA, or FARE.
 FARO is downstream of both FARA and FAR.
 
 ```text
-FARA -> FAR v1.0 Stable -> FARO
+shared theory -> FARA -> FAR -> FARO
 ```
 
-FARA defines representational architecture.
+Shared theory defines contracts, behavior, factorization, and observational quotients.
 
-FAR defines investigation methodology.
+FARA supplies a selected representation target.
 
-FARO defines operations performed over explicit reasoning artifacts produced or governed by FAR and FARA.
+FAR defines contract-relative investigation methodology.
+
+FARO defines operations performed over explicit contracts, reasoning artifacts, assessments, and materialized views.
 
 ---
 
@@ -74,6 +76,7 @@ Assesses operational qualities of investigation artifacts using FAR-grounded cri
 Every FARO operation shall specify:
 
 - its category;
+- its comparison contract or an explicit `NOT APPLICABLE` reason;
 - required inputs;
 - produced outputs;
 - preconditions;
@@ -81,7 +84,8 @@ Every FARO operation shall specify:
 - failure modes;
 - FAR dependency;
 - FARA dependency;
-- boundary notes.
+- boundary notes;
+- a factorization certificate, collision witness, or `OPEN` status when representation sufficiency is assessed.
 
 The canonical operation format is defined in `operation-interface-standard.md`.
 

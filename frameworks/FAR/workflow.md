@@ -24,6 +24,22 @@ The Admissibility Structure (Ω) is defined by FARA. FAR specifies when it is co
 
 ---
 
+## Contract-Relative Conformance Overlay
+
+The stage sequence below is Project FAR's operational profile. Every investigation making an adequacy, preservation, common-content, invariance, or minimality claim must also satisfy these theory-derived gates:
+
+1. **Freeze claim and target class.** State quantifiers, membership, evidence cutoff, and nonclaims.
+2. **Freeze the comparison contract.** Declare cases, tests/contexts, typed outcomes, observation semantics, calculus/query/execution parameters, admitted translations/equivalences, profile, frame, and any loss/cost order.
+3. **Totalize without collapse.** Keep determinate absence, falsity, inapplicability, failure, unresolvedness, and epistemic Unknown distinct whenever observable.
+4. **Construct and charge the representation.** Record the mapping and every analyst-supplied tag, interpreter, sidecar, quotient, or hidden dependency.
+5. **Run the factorization audit.** Construct a decoder proving \(\beta_C=d\circ\rho\) and search for a collision \(\rho(x)=\rho(y)\) with \(\beta_C(x)\ne\beta_C(y)\). Decoder proof means \`PROVED\`; collision means \`REFUTED\`; neither means \`OPEN\`.
+6. **Minimize relative to the objective.** Use the observational quotient for exact information minimality; declare a preorder for runtime, storage, cognitive, or explanatory cost.
+7. **Compute common content only after profiles are fixed.** Fix language, interpretations, frame, and target class; subtract frame consequences.
+8. **Attack by re-presentation.** Test reification, tagging, dualization, state/decoder enrichment, alternative bases, and cost reversal.
+9. **Issue a typed terminal report.** Preserve scope, contract, evidence, provenance, falsifiers, losses, machinery cost, and unresolved boundaries.
+
+The overlay is mandatory for the affected claim types; stages that are not relevant must be marked \`NOT APPLICABLE\` with a reason.
+
 ## Stage 1 — Define the Investigation
 
 Specify the investigation and its objective.
@@ -74,11 +90,11 @@ Candidates generated during reasoning should be identified before admissibility 
 
 ---
 
-## Stage 7 — Construct the Admissibility Structure (Ω)
+## Stage 7 — Materialize the Admissibility Structure (Ω)
 
 Classify the candidates admitted for consideration according to the applicable reasoning calculus.
 
-The resulting Admissibility Structure records the admissibility status of each candidate.
+The resulting Admissibility Structure materializes the admissibility classification and provenance for each candidate. It is derived from the applicable calculus and does not cause the classifications.
 
 If no candidates are generated, the investigation record should state that Ω is not applicable or empty, together with the reason.
 
@@ -98,7 +114,7 @@ If no resolution rule is applicable, the investigation may close as unresolved, 
 
 Record the resolution together with the reasoning process that produced it.
 
-The complete investigation should remain explicit, auditable, and reconstructible.
+The complete investigation should remain explicit, auditable, and reconstructible. Any sufficiency or minimality verdict must also carry its comparison contract and factorization/collision certificate.
 
 A resolution record may state that the investigation is resolved, provisionally resolved, unresolved, suspended, incomplete, or invalid.
 

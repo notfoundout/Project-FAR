@@ -7,6 +7,8 @@ Project-level documentation lives here. This directory is for orientation, proje
 - `ARCHITECTURE.md` — repository architecture and structural decisions.
 - `ROADMAP.md` — project roadmap.
 - `project-status.md` — current project status.
+- `../theory/theorems/Project-FAR-Theory-Closure-v1.0.md` — canonical closed core theory.
+- `governance/post-closure-assurance-and-application-program-v1.0.md` — current assurance and application program.
 - `CHANGELOG.md` — chronological change history.
 - `DECISION_LOG.md` — canonical project decision log.
 - `OVERVIEW.md` — project overview.
@@ -27,7 +29,7 @@ Project-level documentation lives here. This directory is for orientation, proje
 - `../frameworks/` — FAR, FARA, and FARO framework material.
 - `../methodology/README.md` — proof, validation, falsification, and comparison methodology.
 - `../research/README.md` — exploratory research index.
-- [Central Research Program](governance/central-research-program.md) - governing research question and standards for evaluating existence, universality, necessity, and minimality.
+- [Central Research Program](governance/central-research-program.md) - terminal core answer and standards for post-closure assurance and application.
 - [Repository Certification Inventory Audit](audits/repository-certification-inventory-audit.md) - inventory baseline, classification, metrics, findings, and architecture map.
 - [Canonical Vocabulary Index](glossary/canonical-vocabulary-index.md) - semantic certification glossary and authoritative vocabulary index by reference to canonical definitions.
 - [Semantic Certification Report](audits/semantic-certification-report.md) - semantic, terminology, glossary, reachability, and canonical-home certification report.
@@ -47,7 +49,7 @@ Project-level documentation lives here. This directory is for orientation, proje
 
 ## Release Navigation
 
-- Current release: [`releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md).
+- Current release: [`releases/project-far-v1.0.0.md`](releases/project-far-v1.0.0.md).
 - Previous maintenance release: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md).
 - Internal-validation baseline: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
 

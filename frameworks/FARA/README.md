@@ -6,7 +6,7 @@
 
 ## Purpose
 
-FARA defines the representational architecture layer of Project FAR.
+FARA defines Project FAR's selected representation-target layer. It supplies a finite explicit auditable v1 engineering schema; it is not a universal source ontology.
 
 It specifies the architectural objects used to represent structured, explicit, and auditable reasoning.
 
@@ -18,7 +18,7 @@ Formal shared definitions are maintained in [`../../theory/definitions/definitio
 
 FARA is treated as the stable representational architecture layer of Project FAR.
 
-`FARA-FORMAL-KERNEL-001` is Accepted within Project FAR v1.0 finite explicit auditable representational architecture. The canonical formal foundation for that scope is the [identity-bearing many-sorted relational kernel](formal-kernel.md). This scoped selection does not establish global uniqueness, universality, primitive necessity/minimality, completeness, nonfinite/oracle/embodied coverage, or external-investigator independence.
+`FARA-FORMAL-KERNEL-001` is Accepted within Project FAR v1.0 finite explicit auditable representational architecture. The canonical target for that scope is the [identity-bearing many-sorted relational kernel](formal-kernel.md). Its seven named concepts are schema/contract roles rather than global primitives, and Ω is a derived materialized view. This selection does not establish global uniqueness, universality, minimality, completeness, or external-investigator independence.
 
 Future FARA changes should be driven by concrete downstream requirements, worked examples, validated representational deficiencies, or the accepted discovery lifecycle.
 
@@ -48,7 +48,7 @@ It defines the architectural objects that FAR applies methodologically, FARO ope
 - [`dependency-graph.md`](dependency-graph.md) — Records FARA document-maintenance dependencies.
 - [`design-principles.md`](design-principles.md) — Records governing design constraints for FARA.
 - [`document-map.md`](document-map.md) — Maps FARA documents and their roles.
-- [`primitives.md`](primitives.md) — Identifies candidate primitive concepts.
+- [`primitives.md`](primitives.md) — Records the seven FARA schema roles at the historical path.
 - [`ontology.md`](ontology.md) — Defines the FARA ontology.
 - [`semantics.md`](semantics.md) — Defines the semantic component of FARA.
 - [`reasoning-states.md`](reasoning-states.md) — Defines reasoning states.
@@ -97,7 +97,7 @@ The canonical formal kernel is a representation architecture. It does not make t
 
 ## Next Steps
 
-Use worked examples and external criticism to test the accepted kernel outside its current finite explicit auditable scope without widening its claims prematurely.
+Use declared contracts and factorization/collision tests to evaluate mappings into the kernel. Preserve every added tag, interpreter, sidecar, and audit-only distinction as charged machinery.
 
 ---
 
@@ -112,4 +112,8 @@ Use worked examples and external criticism to test the accepted kernel outside i
 
 ## Epistemic boundary
 
-“Stable” is a maintenance status, not proof that FARA is universal, globally minimal, necessary, or lossless. Candidate primitives remain candidates; FAR methods and FARO operations are downstream and are not FARA axioms. `FARA-FORMAL-KERNEL-001` is Accepted only at its registered scope. See the [framework-boundary specification](../../docs/governance/framework-boundaries.md) and [limitations register](../../docs/governance/limitations-register.md).
+“Stable” is a maintenance status, not proof that FARA is universal, globally minimal, necessary, or lossless. The seven named concepts are schema roles, not global primitives; FAR methods and FARO operations are downstream and are not FARA axioms. `FARA-FORMAL-KERNEL-001` is Accepted only at its registered scope. See the [framework-boundary specification](../../docs/governance/framework-boundaries.md) and [limitations register](../../docs/governance/limitations-register.md).
+
+## Contract-relative adequacy
+
+A mapping into FARA is sufficient only for a declared comparison contract and only when behavior factors through the mapping. The kernel may retain more distinctions than the contract's observational quotient for auditability; that is an explicit engineering choice, not a minimality theorem.

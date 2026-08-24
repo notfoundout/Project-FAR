@@ -191,55 +191,55 @@ Universality is always relative to an explicitly specified domain.
 
 ## Universal Architecture
 
-A **universal architecture** is an architecture capable of representing every member within its stated scope.
+A **universal architecture** is an architecture capable of representing every member within its stated scope and declared comparison contract.
 
-Universality does not imply uniqueness, optimality, minimality, or irreducibility.
+Universality does not imply native common structure, uniqueness, optimality, minimality, or irreducibility. Unconstrained encoding establishes host capacity only. No nontrivial architecture is least-informative across the unrestricted class of observation contracts.
 
 ---
 
 ## Minimal
 
-A structure is **minimal** with respect to a specified objective if removing any required component reduces its expressive power relative to that objective.
+A structure is **minimal** with respect to a specified objective and comparison contract if no strictly less informative or lower-cost admissible structure satisfies that objective under the declared order.
 
-Minimality is always relative to an explicitly specified objective and scope.
+Minimality is always relative to an explicitly specified objective, scope, equivalence regime, and order. For exact information minimality, the canonical object is the observational quotient; runtime, storage, cognitive, or explanatory minimality requires an additional cost order.
 
 ---
 
 ## Candidate Primitive
 
-A **candidate primitive** is a concept that has not yet been successfully reduced to simpler concepts within the current framework.
+A **candidate primitive** is a concept treated as basic within a stated presentation, language, theory, derivability regime, equivalence relation, and objective because no qualifying reduction is currently established there.
 
-Candidate primitive status is provisional and remains subject to future reduction.
+Candidate-primitive status is contract-relative and provisional. It is not a global claim and does not follow from use as a schema field.
 
 ---
 
 ## Established Primitive
 
-An **established primitive** is a concept for which repeated reduction attempts have failed within the current framework.
+An **established primitive** is a concept for which a stated nondefinability or lower-bound theorem has been proved within a frozen presentation, language, model class, derivability regime, equivalence relation, and objective.
 
-Established primitive status remains revisable if future reductions succeed.
+Failure of repeated reduction attempts is evidence, not proof. Established status does not become representation-independent unless it is invariant under the declared re-representations.
 
 ---
 
 ## Derived Concept
 
-A **derived concept** is a concept explicitly defined in terms of one or more other concepts within the framework.
+A **derived concept** is a concept explicitly defined in terms of one or more other concepts within a stated framework or contract.
 
-A concept may transition between candidate primitive and derived status as the framework evolves.
+A concept may be primitive in one presentation and derived in another without contradiction.
 
 ---
 
 ## Reduction
 
-A **reduction** is a demonstration that one concept can be completely defined in terms of other concepts without loss of expressive power relative to a specified scope and objective.
+A **reduction** is a declared mapping or definition showing that one concept can be represented in terms of others with the preservation and reflection required by a specified contract, scope, and objective.
 
 ---
 
 ## Independence
 
-Two concepts are **independent** if neither can be derived from the other within the current framework.
+Two concepts are **independent** only relative to a stated theory and derivability regime when neither is derivable from the other under the declared background and equivalence.
 
-Independence claims remain provisional and may be overturned by future reductions.
+Representation-independent independence additionally requires invariance under the admitted re-representations.
 
 ---
 
@@ -256,6 +256,100 @@ Equivalence exists only relative to the defining relation.
 The **expressive power** of a framework is the collection of objects, relations, structures, or systems that the framework is capable of representing within its stated scope.
 
 Expressive power should always be evaluated relative to explicitly specified objectives and scope.
+
+---
+
+# Contract-Relative Representation Concepts
+
+These concepts are governed by [Project FAR Core Theory v1.0](../theorems/Project-FAR-Theory-Closure-v1.0.md).
+
+## Local Comparison Contract
+
+A **local comparison contract** is a tuple \(C=(X,T,V,\operatorname{obs})\), where \(X\) is a declared set of cases, \(T\) is a declared set of tests or contexts, \(V\) is a typed outcome space, and \(\operatorname{obs}:T\times X\to V\) records the declared outcome.
+
+A cross-system contract additionally fixes the target class, comparison language, interpretation profiles, interface frame, admitted re-representations, and any approximation or cost order that affects the claim.
+
+---
+
+## Test or Context
+
+A **test or context** is a declared query, continuation, intervention, action sequence, proof obligation, decision problem, or observation protocol applied to a case.
+
+When future behavior matters, the declared tests must include or be closed under the relevant continuations.
+
+---
+
+## Typed Outcome
+
+A **typed outcome** is a value in the contract's outcome space. Partiality, nondeterminism, probability, inapplicability, failure, determinate absence, and epistemic Unknown are represented in the outcome type rather than silently collapsed whenever a declared test distinguishes them.
+
+---
+
+## Behavior Map
+
+The **behavior map** of a contract is the function
+
+\[
+\beta_C:X\to V^T,\qquad \beta_C(x)(t)=\operatorname{obs}(t,x).
+\]
+
+It packages the outcomes of all declared tests and does not imply that the native system stores that function.
+
+---
+
+## Exact Representation Sufficiency
+
+For a representation \(\rho:X\to R\), **exact representation sufficiency** for \(C\) means that a decoder \(d:\rho[X]\to V^T\) exists with \(\beta_C=d\circ\rho\).
+
+Equivalently, \(\ker(\rho)\subseteq\ker(\beta_C)\). Sufficiency is therefore always contract-relative.
+
+---
+
+## Representation Collision
+
+A **representation collision** is a pair \(x,y\in X\) with \(\rho(x)=\rho(y)\) but \(\beta_C(x)\ne\beta_C(y)\). One valid in-scope collision refutes exact sufficiency for that contract.
+
+---
+
+## Factorization Audit
+
+A **factorization audit** attempts to construct a decoder proving \(\beta_C=d\circ\rho\) and independently searches for a representation collision. If neither is established, the sufficiency result is \`OPEN\`.
+
+---
+
+## Observational Equivalence
+
+Two cases are **observationally equivalent** under \(C\), written \(x\sim_C y\), exactly when every declared test gives the same outcome. Thus \(\sim_C=\ker(\beta_C)\).
+
+---
+
+## Observational Quotient
+
+The **observational quotient** is \(Q_C=X/{\sim_C}\). It is the unique least-informative exact representation up to isomorphism for the fixed contract. Existence does not imply computability, finite rank, or implementation optimality.
+
+---
+
+## Contract-Relative Minimality
+
+A representation has **contract-relative information minimality** when it is sufficient and its kernel equals \(\sim_C\). Stronger minimality claims require a declared preorder or cost function.
+
+---
+
+## Comparison Profile
+
+A **comparison profile** fixes the interpretation assigned to a target in a common language. Common-content claims must identify every profile capable of changing the interpreted target.
+
+---
+
+## Interface Frame
+
+An **interface frame** contains only the constitutive typing and declared definitions assumed before common-content computation. Substantive common content is evaluated relative to, and separated from, consequences of that frame.
+
+---
+
+## Admitted Re-representation
+
+An **admitted re-representation** is a mapping, translation, equivalence, isomorphism, quotient, duality, or other transformation explicitly allowed by the contract. “Representation-independent” is incomplete until this class is fixed.
 
 ---
 
@@ -373,7 +467,7 @@ Fidelity is always relative to:
 - the interpretation;
 - the properties being preserved.
 
-No representation is assumed to possess complete fidelity unless explicitly demonstrated.
+No representation is assumed to possess complete fidelity unless explicitly demonstrated. Exact behavioral fidelity for a fixed comparison contract is certified by the factorization criterion; examples or encodability alone are insufficient.
 
 ---
 
@@ -612,6 +706,8 @@ Classification is distinct from both the criterion used to produce it and the re
 ## Admissibility Structure (Ω)
 
 The **Admissibility Structure**, denoted **Ω**, is the representation of the admissibility classifications of candidates within an investigation.
+
+Ω is a derived materialized representation of admissibility classifications produced by the applicable calculus. It may carry provenance and audit metadata, but it does not cause or determine a classification.
 
 Ω records admissibility classifications.
 

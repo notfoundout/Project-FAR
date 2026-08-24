@@ -2,7 +2,21 @@
 
 Status: **Accepted red-team register**
 
-These are threats, not claims that a counterexample has already refuted the bounded terminal theorem.
+The first table preserves historical threat classes. The accepted closure counterexamples below have explicit dispositions and refute only the named claims.
+
+## Accepted core-theory counterexamples and constructions
+
+| ID | Target | Witness / construction | Disposition |
+|---|---|---|---|
+| FAR-CE-001 | contract-free minimality | constant versus injective observer on the same nontrivial case set | Refutes one representation being least-informative for every observation contract. |
+| FAR-CE-002 | native common structure from universal storage | byte-perfect archive plus target-specific interpreter | Establishes capacity only; hidden machinery is charged. |
+| FAR-CE-003 | invariant primitive count | reify relation tuples as objects with typed incidence edges | Faithful inverse changes primitive vocabulary. |
+| FAR-CE-004 | invariant operator count | one tagged universal operator versus a split finite family | Faithful translations change the count. |
+| FAR-CE-005 | context-free argumentation state | fixed attacks with context-dependent defeat | Omitting active context creates a factorization collision. |
+| FAR-CE-006 | observational sufficiency for causal intervention | models equal observationally and unequal interventionally | Test family determines adequacy. |
+| FAR-CE-007 | projected successor sufficiency | PR #453 MLL projected-successor witnesses | Factorization fails for the stated four decoders; hyperedges/frontiers restore information. |
+| FAR-CE-008 | Ω as independent cause | manually different Ω with every causal input fixed | Bad record or hidden parameter, not a lawful Ω-only effect. |
+| FAR-CE-009 | finite-panel universality | extend an eleven-target panel by one untested counterexample | Panel truth does not entail open-domain universality. |
 
 | Class | Threatened claim | Representability / expressive-loss risk | Hidden assumption / disposition |
 |---|---|---|---|

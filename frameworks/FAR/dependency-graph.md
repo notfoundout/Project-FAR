@@ -16,6 +16,7 @@ The FAR document dependency order is:
 
 ```text
 theory/definitions/definitions.md
+  -> theory/theorems/Project-FAR-Theory-Closure-v1.0.md
   -> frameworks/FARA/
   -> frameworks/FAR/workflow.md
   -> frameworks/FAR/methodology.md
@@ -54,9 +55,9 @@ FAR documents use these definitions rather than redefining them.
 
 ---
 
-### FARA
+### Shared theory and FARA
 
-FARA provides the architecture used by FAR.
+Shared theory supplies contracts, behavior maps, factorization, observational quotients, and boundary theorems. FARA provides the selected v1 representation target used by FAR when applicable.
 
 FAR depends on FARA for concepts such as:
 
@@ -67,7 +68,7 @@ FAR depends on FARA for concepts such as:
 - resolution executions;
 - resolutions.
 
-FAR applies these architectural concepts methodologically.
+FAR applies these roles methodologically and must separately establish adequacy under the declared contract.
 
 It does not modify their definitions.
 
@@ -81,7 +82,7 @@ Other FAR documents may summarize the workflow, but they should not maintain ind
 
 Candidate generation belongs within Stage 6 — Perform Reasoning.
 
-Stage 7 evaluates and records candidate admissibility through the Admissibility Structure (Ω).
+Stage 7 materializes calculus-produced classifications and provenance through the derived Admissibility Structure (Ω).
 
 ---
 
@@ -154,3 +155,7 @@ This dependency graph should be updated whenever:
 - a methodological stage is added, removed, or renamed.
 
 Dependency updates should be justified by artifact audits, framework revisions, or explicit architectural review.
+
+## Contract-relative dependency
+
+A sufficiency claim depends on the comparison contract, behavior map, representation mapping, and decoder/collision evidence. A minimality claim additionally depends on the observational equivalence or a declared cost order. None may depend on a downstream implementation's success as a substitute for the theorem.
