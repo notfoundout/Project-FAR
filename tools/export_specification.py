@@ -13,8 +13,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-EXPORT_VERSION = "1.0.0"
-EXPORTER_VERSION = "1.0.0"
+EXPORT_VERSION = "1.1.0"
+EXPORTER_VERSION = "1.1.0"
 SCHEMA_VERSION = "far-ir/1.0"
 COMPATIBILITY_VERSION = "1.0.0"
 EXPORT_DIRNAME = "far-spec-v1"
@@ -41,6 +41,7 @@ ARTIFACTS: tuple[Artifact, ...] = (
     Artifact(ROOT / "theory/semantics/scope.md", Path("semantics/scope.md"), "semantics"),
     Artifact(ROOT / "theory/formal-semantics/far-semantics.md", Path("semantics/far-semantics.md"), "semantics"),
     Artifact(ROOT / "theory/definitions/definitions.md", Path("terminology/definitions.md"), "terminology"),
+    Artifact(ROOT / "theory/theorems/Project-FAR-Theory-Closure-v1.0.md", Path("theorems/Project-FAR-Theory-Closure-v1.0.md"), "theorems"),
     Artifact(ROOT / "theory/definitions/derived-concepts.md", Path("terminology/derived-concepts.md"), "terminology"),
     Artifact(ROOT / "theory/definitions/derivation.md", Path("terminology/derivation.md"), "terminology"),
     Artifact(ROOT / "theory/definitions/meta-theory-definitions.md", Path("terminology/meta-theory-definitions.md"), "terminology"),
@@ -126,7 +127,7 @@ def vcs_metadata(out: Path) -> dict[str, str]:
 def build(out: Path) -> None:
     metadata = vcs_metadata(out)
     if out.exists(): shutil.rmtree(out)
-    for d in ["grammar","schemas","semantics","terminology","compatibility","examples/valid","examples/invalid"]:
+    for d in ["grammar","schemas","semantics","terminology","theorems","compatibility","examples/valid","examples/invalid"]:
         (out/d).mkdir(parents=True, exist_ok=True)
     records = copy_artifacts(out) + write_generated(out)
     files = sorted(p for p in out.rglob("*") if p.is_file() and p.name not in {"manifest.json","checksums.json"})

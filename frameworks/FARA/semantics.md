@@ -78,18 +78,16 @@ Reasoning states organize representations.
 
 Transition signatures describe transformations between reasoning states.
 
-The Admissibility Structure (Ω) classifies candidates according to the applicable reasoning calculus.
+The applicable reasoning calculus classifies candidates. The Admissibility Structure (Ω) is a derived materialized view of those classifications and their provenance.
 
 Each component is defined separately within FARA.
 
 ---
 
-## Research Status
+## Theory-Derived Constraint
 
-Current research investigates:
+Semantic equivalence and preservation are always relative to a declared observation contract and admitted class of re-representations. Exact preservation requires factorization of the declared behavior map; a representation collision refutes it. Encodability alone is not a preservation theorem.
 
-- formal semantic models,
-- semantic equivalence,
-- semantic preservation,
-- semantic completeness,
-- and representation theorems.
+## Open Implementation Questions
+
+Post-closure work may investigate formal semantic profiles, executable decoders, collision search, and quotient construction without asserting a universal comparison contract.

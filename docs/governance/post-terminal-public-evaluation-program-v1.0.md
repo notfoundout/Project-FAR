@@ -1,5 +1,10 @@
 # Post-Terminal Public Evaluation Program v1.0
 
+Status: **Superseded on 2026-08-24 by `POST-CLOSURE-001`**
+
+This program is preserved as historical governance for evaluation of the former UPP theorem claim. The accepted UPP cross-audit and Project FAR Core Theory v1.0 now govern: the frozen proposition was not refuted, the derivation is defective, and the theorem is not established. Nothing below is current authorization to treat that theorem as proved.
+
+
 ## Identity
 
 Program: `POST-TERM-EVAL-001`

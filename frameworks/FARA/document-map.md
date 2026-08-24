@@ -28,8 +28,8 @@ Framework documents may specify architectural roles, relationships, examples, fo
 |---|---|
 | `architecture.md` | Architectural overview and layer organization |
 | `formal-kernel.md` | Accepted identity-bearing many-sorted relational formal kernel within the registered v1.0 scope |
-| `primitives.md` | Current candidate primitive registry |
-| `ontology.md` | Conceptual organization of candidate primitives and derived concepts |
+| `primitives.md` | Current FARA schema-role registry (historical path) |
+| `ontology.md` | Conceptual organization of schema roles, derived concepts, and optional views |
 | `semantics.md` | Representation, interpretation, and meaning relationships |
 | `reasoning-states.md` | Architectural role of reasoning states |
 | `transition-signatures.md` | Architectural role of transition signatures |
@@ -106,13 +106,13 @@ A new concept should not be added directly to multiple documents.
 The correct order is:
 
 1. Define the concept canonically in `theory/definitions/definitions.md`, or explicitly mark it as a local formal symbol or non-canonical exploratory term.
-2. Place it in `ontology.md` as either candidate primitive or derived when it is a conceptual category.
-3. If it is a candidate primitive, list it in `primitives.md` with justification.
+2. Place it in `ontology.md` as a schema role, derived concept, or optional view.
+3. If it is a mandatory v1 schema role, list it in `primitives.md` with the governing contract justification.
 4. Add architectural discussion in the relevant FARA document.
 5. Update this document map.
 6. Update `dependency-graph.md` if the concept changes dependencies.
 
-`formal-kernel.md` may introduce scoped formal carrier names only when it maps them explicitly to canonical FARA terminology and does not silently create new candidate primitives.
+`formal-kernel.md` may introduce scoped formal carrier names only when it maps them explicitly to canonical FARA terminology and does not silently create global primitive claims.
 
 ---
 
@@ -121,7 +121,7 @@ The correct order is:
 This document should be updated whenever:
 
 - a new FARA document is added;
-- a concept moves between primitive and derived status;
+- a concept moves between schema-role, derived, or optional-view status;
 - a canonical definition is added or revised;
 - an architectural document changes scope;
 - a new dependency relationship is introduced;

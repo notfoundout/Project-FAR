@@ -21,6 +21,13 @@ class FaraPrimitiveIndependenceTests(unittest.TestCase):
         self.assertEqual([r["primitive"] for r in self.data["results"]], checker.EXPECTED)
         self.assertEqual({r["classification"] for r in self.data["results"]}, {"unresolved"})
 
+    def test_terminal_reclassification_is_explicit(self):
+        generated = checker.render(self.data)
+        self.assertIn("PROJECT-FAR-CORE-THEORY-1.0", generated)
+        self.assertIn("schema or contract roles", generated)
+        self.assertIn("global primitive-independence/minimality search is closed", generated)
+        self.assertNotIn("remains only a candidate primitive", generated)
+
     def test_missing_primitive_rejected(self):
         bad = copy.deepcopy(self.data); bad["results"].pop()
         with self.assertRaisesRegex(ValueError, "cover each primitive"):

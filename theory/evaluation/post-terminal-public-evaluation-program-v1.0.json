@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "program_id": "POST-TERM-EVAL-001",
-  "status": "registered",
+  "status": "superseded",
   "predecessor_program": "POST-TUE-UPP-001",
   "predecessor_terminal_pr": 296,
   "predecessor_terminal_result": "strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary",
@@ -61,13 +61,39 @@
     "kernel_checked_terminal_reconstruction": "may support reconsideration of the full registered outcome through a newly registered adjudication program"
   },
   "workstreams": [
-    {"id": "PTE-W0-DISCLOSURE", "state": "complete", "deliverable": "canonical public disclosure and repository integration"},
-    {"id": "PTE-W1-INDEPENDENT-REVIEW", "state": "open", "deliverable": "independent proof review package and findings"},
-    {"id": "PTE-W2-KERNEL-RECONSTRUCTION", "state": "open", "deliverable": "single proof-assistant reconstruction or explicit obstruction report"},
-    {"id": "PTE-W3-COUNTERMODEL-SEARCH", "state": "open", "deliverable": "registered external challenge ledger"},
-    {"id": "PTE-W4-EMPIRICAL-REPLICATION", "state": "open", "deliverable": "independent bounded replication evidence"}
+    {
+      "id": "PTE-W0-DISCLOSURE",
+      "state": "complete",
+      "deliverable": "canonical public disclosure and repository integration"
+    },
+    {
+      "id": "PTE-W1-INDEPENDENT-REVIEW",
+      "state": "open",
+      "deliverable": "independent proof review package and findings"
+    },
+    {
+      "id": "PTE-W2-KERNEL-RECONSTRUCTION",
+      "state": "open",
+      "deliverable": "single proof-assistant reconstruction or explicit obstruction report"
+    },
+    {
+      "id": "PTE-W3-COUNTERMODEL-SEARCH",
+      "state": "open",
+      "deliverable": "registered external challenge ledger"
+    },
+    {
+      "id": "PTE-W4-EMPIRICAL-REPLICATION",
+      "state": "open",
+      "deliverable": "independent bounded replication evidence"
+    }
   ],
-  "next_action": {"workstream": "PTE-W1-INDEPENDENT-REVIEW"},
+  "next_action": {
+    "workstream": "PTE-W1-INDEPENDENT-REVIEW"
+  },
   "public_evaluation_authorized": true,
-  "new_deductive_claim_requires_new_program": true
+  "new_deductive_claim_requires_new_program": true,
+  "superseded_on": "2026-08-24",
+  "superseded_by": "POST-CLOSURE-001",
+  "current_authority": false,
+  "historical_authorized_claim_status": "proposition_not_refuted_derivation_defective_theorem_not_established"
 }

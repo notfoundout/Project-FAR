@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "program_id": "POST-CLOSURE-001",
+  "name": "Post-Closure Assurance and Application Program",
+  "status": "registered",
+  "governing_theory": "PROJECT-FAR-CORE-THEORY-1.0",
+  "purpose": "Increase assurance and utility of the closed contract-relative core without reopening it or restoring superseded universal primitive claims.",
+  "core_theory_closed": true,
+  "reopening_condition": "a reproducible contradiction to a stated theorem, proof step, or formal premise",
+  "workstreams": [
+    {
+      "id": "PCA-W0-REPOSITORY-CONFORMITY",
+      "state": "complete",
+      "deliverable": "canonical repository, framework, claim, obligation, and specification reconciliation"
+    },
+    {
+      "id": "PCA-W1-INDEPENDENT-REVIEW",
+      "state": "open",
+      "deliverable": "independent mathematical review of FAR-CORE-001 through FAR-CORE-014"
+    },
+    {
+      "id": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
+      "state": "open",
+      "deliverable": "kernel-checked formalization or exact obstruction report for the core theorems"
+    },
+    {
+      "id": "PCA-W3-CONTRACT-SCHEMA",
+      "state": "open",
+      "deliverable": "versioned contract and factorization-report schema with conformance fixtures"
+    },
+    {
+      "id": "PCA-W4-DOMAIN-CONTRACTS",
+      "state": "open",
+      "deliverable": "independently motivated domain contracts and collision audits"
+    },
+    {
+      "id": "PCA-W5-APPROXIMATION-AND-COST",
+      "state": "open",
+      "deliverable": "declared metric/loss/cost extensions and algorithms"
+    },
+    {
+      "id": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+      "state": "open",
+      "deliverable": "preregistered evidence on whether the audit discipline catches material representational loss"
+    }
+  ],
+  "next_action": {
+    "workstream": "PCA-W1-INDEPENDENT-REVIEW"
+  },
+  "prohibited_promotions": [
+    "contract_free_universal_minimal_architecture",
+    "global_primitive_necessity_from_schema_usage",
+    "global_operator_basis_from_named_workflow_verbs",
+    "native_common_structure_from_encoding_capacity",
+    "open_domain_universality_from_finite_panels",
+    "independent_validation_from_internal_review",
+    "software_conformance_as_mathematical_proof"
+  ],
+  "typed_outcomes": [
+    "PROVED",
+    "REFUTED",
+    "OPEN",
+    "BLOCKED",
+    "UNDERDETERMINED",
+    "NOT_APPLICABLE",
+    "HISTORICAL_SUPERSEDED"
+  ],
+  "supersedes_current_authority": [
+    "POST-TERM-EVAL-001",
+    "UPP-SR-001_as_core_closure_dependency"
+  ]
+}

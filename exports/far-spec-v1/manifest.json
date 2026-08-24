@@ -130,7 +130,7 @@
     {
       "category": "terminology",
       "path": "terminology/definitions.md",
-      "sha256": "f874587159aec7a5b2225c8b4d650845f9f6ee9d2dd56ef005904f56a6814cfb",
+      "sha256": "202f089277d2f39cf3f04ea35395c4223d8814cc3048165e6033569e69f03adf",
       "source": "theory/definitions/definitions.md",
       "status": "canonical"
     },
@@ -161,13 +161,20 @@
       "sha256": "cf41362d5307cff4f04a7fb956238f3b96eb75dbc47cc46f890cbd2e98d2f81a",
       "source": "theory/definitions/meta-theory-definitions.md",
       "status": "canonical"
+    },
+    {
+      "category": "theorems",
+      "path": "theorems/Project-FAR-Theory-Closure-v1.0.md",
+      "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+      "source": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+      "status": "canonical"
     }
   ],
   "commit_sha": "6d3c114c922ee9f67a5c2790836f498d52803ebb",
   "compatibility_version": "1.0.0",
   "export_timestamp": "2026-07-16T14:00:05-04:00",
-  "export_version": "1.0.0",
-  "exporter_version": "1.0.0",
+  "export_version": "1.1.0",
+  "exporter_version": "1.1.0",
   "project_far_repository": "/workspace/Project-FAR",
   "schema_version": "far-ir/1.0"
 }

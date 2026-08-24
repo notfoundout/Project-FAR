@@ -70,3 +70,7 @@ Every FARO operation should trace to:
 FARO operations may inspect, transform, compare, or report on artifacts only when their effects are explicit.
 
 No operation should silently alter the meaning of an investigation record.
+
+## Contract and proof boundary
+
+Operational execution may produce decoder, collision, quotient, or report artifacts. It cannot by itself prove a theorem, select a normatively correct contract, or confer primitive status on a schema field or operation name.

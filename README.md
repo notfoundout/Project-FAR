@@ -11,30 +11,30 @@ The latest published GitHub repository release is [v1.0.0](https://github.com/no
 
 ## Central result
 
-The registered Universal Proof Program `POST-TUE-UPP-001` is complete. Its terminal adjudication is:
+Project FAR's governing result is `PROJECT-FAR-CORE-THEORY-1.0`:
 
-`strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary`
+> **NONTRIVIAL CONTRACT-FREE MINIMAL ARCHITECTURE IS IMPOSSIBLE; CONTRACT-RELATIVE SUFFICIENCY AND A UNIQUE MINIMAL OBSERVATIONAL QUOTIENT ARE PROVED.**
 
-The result is relative and operational. It applies only under the frozen target-class, admissibility, faithfulness, machinery-closure, and commitment-equivalence premises. The end-to-end semantic composition is executable and audited but is not one kernel-checked proof object, and maximality is limited to frozen extension rules and a finite registered challenge ledger.
+For a fixed exact comparison contract, a representation is sufficient exactly when declared behavior factors through it. The contract induces a unique least-informative observational quotient up to isomorphism. Change the cases, tests, contexts, outcomes, semantics, transformations, or loss/cost order and the quotient may change. No nontrivial representation is minimal across all observation contracts.
 
-Public evaluation is authorized only when the exact theorem, premises, mechanization status, open-world boundary, Unknown discipline, and nonclaims are disclosed together.
+Project FAR therefore closes as a **contract and audit discipline**, not as a universal inventory of reasoning primitives. The result is Accepted as an internal deductive result and has not been independently reviewed.
 
-- [Terminal theorem disclosure](docs/research/upp-w15-terminal-theorem-v1.0.md)
-- [Terminal theorem audit](docs/audits/upp-w15-terminal-theorem-audit.md)
-- [Post-terminal public-evaluation program](docs/governance/post-terminal-public-evaluation-program-v1.0.md)
-- [Central research program](docs/governance/central-research-program.md)
+- [Canonical core theory](theory/theorems/Project-FAR-Theory-Closure-v1.0.md)
+- [Machine-readable claim ledger](theory/terminal/project-far-core-theory-v1.0.json)
+- [Acceptance and promotion record](docs/governance/project-far-theory-closure-acceptance-v1.0.md)
+- [Conformity audit](docs/audits/project-far-theory-closure-conformity-audit-v1.0.md)
 
-## Post-terminal phase
+The historical UPP proposition remains not refuted, but its frozen derivation is defective and the theorem is not established. Its exact terminal string and artifacts remain preserved as history; they are not current theorem authority.
 
-The deductive UPP queue is closed. The active phase is independent criticism, countermodel search, proof review, kernel-checked reconstruction, bounded replication, and application-correspondence testing. There is no `UPP-W16`; any stronger deductive claim requires a newly registered program.
+## Post-closure phase
 
-The generated dashboard below is a historical status surface for the older bounded REP/ADJ/W3.5 program. It does not override the later UPP terminal adjudication or define the repository's current phase.
+The active program is `POST-CLOSURE-001`. Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation. Current work is downstream: independent review, proof-assistant formalization, a contract/conformance schema, domain-specific contracts, approximation/cost extensions, and empirical audit-utility studies.
 
 ## Scoped FARA formal kernel
 
 `FARA-FORMAL-KERNEL-001` is Accepted for **Project FAR v1.0 finite, explicit, auditable representational architecture**. The canonical formal foundation at that scope is an [identity-bearing many-sorted relational kernel](frameworks/FARA/formal-kernel.md) with typed occurrence-sensitive identity and sort-preserving relational isomorphism as model equivalence.
 
-The decision follows an executable source campaign and a separate clean-room Node.js replication over neutral scenarios. It does not establish global uniqueness, universality, primitive necessity/minimality, completeness, nonfinite/oracle/embodied coverage, or external-investigator independence. The seven candidate primitives remain unchanged.
+The decision follows an executable source campaign and a separate clean-room Node.js replication over neutral scenarios. It does not establish global uniqueness, universality, primitive necessity/minimality, completeness, nonfinite/oracle/embodied coverage, or external-investigator independence. The seven named fields remain available as schema roles; no global primitive inventory is claimed.
 
 - [Acceptance record](docs/governance/fara-formal-kernel-acceptance-v1.0.md)
 - [Promotion record](docs/governance/fara-formal-kernel-promotion-v1.0.md)
@@ -100,11 +100,13 @@ make dashboard
 
 <!-- END GENERATED PROJECT FAR DASHBOARD -->
 
-## Post-terminal validation
+## Theory-closure validation
 
 ```bash
-python tools/check_post_terminal_public_evaluation.py
+python tools/check_project_far_theory_closure.py
 ```
+
+The former post-terminal UPP validator remains only to verify that the superseded program and its historical controls are preserved consistently.
 
 ## Certification and Architecture Navigation
 
@@ -134,7 +136,7 @@ far graph examples/mechanization/minimal-investigation.json
 python -m mechanization.far_mechanization.conformance
 ```
 
-The MVP does not by itself verify the terminal theorem or establish application correspondence.
+The MVP does not encode a complete comparison contract, verify factorization, compute the observational quotient, or establish application correspondence. Successor requirements are specified in [Contract-Relative FAR IR v1.1 Requirements](docs/mechanization/contract-relative-far-ir-v1.1-requirements.md).
 
 ## Canonical theory navigation
 

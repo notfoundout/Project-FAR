@@ -16,7 +16,7 @@ This document is an orientation layer. It does not introduce independent definit
 
 ## Architectural Objective
 
-FARA seeks to determine whether structured reasoning can be represented by a common architecture composed of candidate primitives and derived concepts.
+FARA implements Project FAR's selected finite explicit auditable representation target. It does not claim that the target is a common native architecture or a basis of global primitives.
 
 The architecture is designed to support:
 
@@ -40,8 +40,8 @@ The core FARA documents are:
 
 - `architecture.md` — architectural overview and document relationships;
 - `formal-kernel.md` — accepted formal carrier architecture within the registered v1.0 scope;
-- `primitives.md` — current candidate primitive registry;
-- `ontology.md` — conceptual organization of candidate primitives and derived concepts;
+- `primitives.md` — schema/contract role registry retained at its historical path;
+- `ontology.md` — conceptual organization of schema roles and derived concepts;
 - `semantics.md` — relationship between representation, interpretation, and meaning;
 - `reasoning-states.md` — architectural role of reasoning states;
 - `transition-signatures.md` — architectural role of transition signatures;
@@ -71,27 +71,27 @@ All FARA documents depend on this layer.
 
 ---
 
-### 2. Primitive Registry Layer
+### 2. Schema Role Registry Layer
 
-The primitive registry identifies concepts currently treated as candidate primitives.
+The role registry identifies the named fields used by the selected Project FAR v1 schema.
 
 Primary artifact:
 
 `primitives.md`
 
-Candidate primitive status is provisional and remains subject to reduction.
+These fields are schema or contract roles, not global primitives. Their engineering use does not establish an invariant basis.
 
 ---
 
 ### 3. Ontology Layer
 
-The ontology organizes concepts into candidate primitive and derived categories.
+The ontology organizes schema roles and derived or optional representational concepts.
 
 Primary artifact:
 
 `ontology.md`
 
-The ontology must remain synchronized with the primitive registry.
+The ontology must remain synchronized with the schema-role registry.
 
 ---
 
@@ -103,7 +103,7 @@ Primary artifact:
 
 `formal-kernel.md`
 
-`FARA-FORMAL-KERNEL-001` is Accepted only at that scope. The kernel does not reclassify the seven candidate primitives and does not establish global uniqueness, universality, minimality, necessity, or completeness.
+`FARA-FORMAL-KERNEL-001` is Accepted only at that scope. The kernel does not establish global primitive status, uniqueness, universality, minimality, necessity, or completeness.
 
 ---
 
@@ -162,7 +162,7 @@ The core conceptual flow is:
 
 ```text
 Definitions
-  -> Candidate Primitives
+  -> Schema Roles
   -> Ontology
   -> Formal Kernel
   -> Representational Structure
@@ -205,7 +205,7 @@ The kernel is accepted because it preserves the mandatory category separations, 
 
 Typed-hypergraph and algebraic/state-transition forms remain optional derived views. Pure extensional relational projection is insufficient as the canonical kernel where parallel occurrence identity matters.
 
-The accepted kernel does not alter the candidate primitive registry and does not settle broader nonfinite, oracle-dependent, embodied, full-signature, unbounded, or externally administered cases.
+The accepted kernel retains the role registry and does not settle broader nonfinite, oracle-dependent, embodied, full-signature, unbounded, or externally administered cases.
 
 ---
 
@@ -238,4 +238,8 @@ The scoped formal-kernel selection is Accepted under `FARA-FORMAL-KERNEL-001`.
 
 It does not mean that global minimality, universality, primitive irreducibility, completeness, or unique foundation status have been proven.
 
-Those remain active research questions outside the accepted scope.
+Those remain domain-specific engineering and application questions; the contract-free global primitive/minimality branch is closed.
+
+## Terminal theory interpretation
+
+FARA is a candidate representation \(\rho:X\to R\). Its adequacy is never inferred from encodability alone. FAR must freeze the contract, prove a decoder/factorization or find a collision, and state whether FARA intentionally retains audit distinctions beyond the observational quotient.

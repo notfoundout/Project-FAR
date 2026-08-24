@@ -15,6 +15,9 @@ GOVERNANCE = ROOT / "docs" / "governance" / "post-terminal-public-evaluation-pro
 DISCLOSURE = ROOT / "docs" / "research" / "post-terminal-public-evaluation-disclosure-v1.0.md"
 QUEUE = ROOT / "theory" / "evaluation" / "post-tue-universal-proof-queue-checkpoint-v1.0.json"
 README = ROOT / "README.md"
+NEW_PROGRAM = ROOT / "theory" / "evaluation" / "post-closure-assurance-and-application-program-v1.0.json"
+UPP = ROOT / "theory" / "terminal" / "upp-terminal-theorem-v1.0.json"
+LEDGER = ROOT / "theory" / "terminal" / "project-far-core-theory-v1.0.json"
 EXPECTED = "strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary"
 
 
@@ -44,18 +47,31 @@ def normalize(value: str) -> str:
 
 
 def main() -> int:
-    for path in (PROGRAM, MODEL, GOVERNANCE, DISCLOSURE, QUEUE, README):
+    for path in (PROGRAM, MODEL, GOVERNANCE, DISCLOSURE, QUEUE, README, NEW_PROGRAM, UPP, LEDGER):
         if not path.is_file():
             fail(f"missing {path.relative_to(ROOT)}")
 
     program = load_json(PROGRAM)
     queue = load_json(QUEUE)
+    new_program = load_json(NEW_PROGRAM)
+    upp = load_json(UPP)
+    ledger = load_json(LEDGER)
     model = load_model()
 
     if program.get("program_id") != "POST-TERM-EVAL-001" or program.get("predecessor_terminal_pr") != 296:
         fail("program identity mismatch")
     if program.get("predecessor_terminal_result") != EXPECTED:
         fail("terminal result mismatch")
+    if program.get("status") != "superseded" or program.get("superseded_by") != "POST-CLOSURE-001":
+        fail("historical program is not explicitly superseded")
+    if program.get("current_authority") is not False:
+        fail("historical program still claims current authority")
+    if new_program.get("program_id") != "POST-CLOSURE-001" or new_program.get("core_theory_closed") is not True:
+        fail("post-closure program identity or closure gate malformed")
+    if upp.get("terminal_result") != EXPECTED:
+        fail("historical UPP theorem identity drifted")
+    if ledger.get("dispositions", {}).get("frozen_upp") != "proposition_not_refuted_derivation_defective_theorem_not_established":
+        fail("current UPP disposition drifted")
     if queue.get("status") != "complete" or queue.get("terminal_outcome") != "strictly_weakened_universal_theorem_proved":
         fail("predecessor queue is not terminal")
     if queue.get("terminal_next_action") is not None or queue.get("terminal_public_evaluation_authorized") is not True:
@@ -87,8 +103,10 @@ def main() -> int:
             fail(f"public disclosure omits {phrase}")
 
     readme = README.read_text(encoding="utf-8")
-    if EXPECTED not in readme or "There is no `UPP-W16`" not in readme:
-        fail("README does not expose terminal result and closed queue")
+    if "historical UPP" not in readme or "theorem is not established" not in readme:
+        fail("README does not expose the historical UPP disposition")
+    if "POST-CLOSURE-001" not in readme or "Core theory reopens only for a reproducible contradiction" not in readme:
+        fail("README does not expose the current closure program and reopening rule")
 
     test = subprocess.run(
         [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_post_terminal_public_evaluation.py"],
@@ -100,7 +118,7 @@ def main() -> int:
         sys.stderr.write(test.stdout + test.stderr)
         fail("post-terminal evaluation tests failed")
 
-    print("PASS: post-terminal public evaluation program is internally consistent")
+    print("PASS: historical post-terminal program is preserved, fully validated, and superseded by POST-CLOSURE-001")
     return 0
 
 

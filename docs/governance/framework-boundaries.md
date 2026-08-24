@@ -4,14 +4,23 @@ Status: **Accepted architectural specification**
 
 | Layer | Owns | May depend on | Must not claim |
 |---|---|---|---|
-| foundations | motivation, declared scope/assumptions, grounding records | earlier foundations | validation or methodology as a premise |
-| shared theory | common definitions, semantics, operators and scoped formal results | foundations, earlier shared theory | framework procedures as axioms |
-| FARA | representational objects, states, transitions, admissibility architecture, and the scoped `FARA-FORMAL-KERNEL-001` carrier/identity/equivalence contract | foundations, shared theory | FAR workflow or FARO operations as primitives; global uniqueness, universality, primitive necessity/minimality, completeness, or unregistered scope expansion from the formal kernel |
-| FAR | investigation workflow and selections | foundations, shared theory, FARA | that its procedural choices are FARA theorems |
-| FARO | execution, audit, comparison, disagreement and reporting operations | foundations, shared theory, FARA, FAR | that operational choices follow necessarily from FARA/FAR |
+| foundations | motivation, declared scope/assumptions, and ordinary logical/set/equivalence machinery | earlier foundations | downstream validation or methodology as a premise |
+| shared theory | local comparison contracts, typed outcomes, behavior maps, factorization, observational equivalence/quotients, invariance, and boundary theorems | foundations, earlier shared theory | a contract-free primitive inventory or framework procedures as axioms |
+| FARA | a selected finite explicit auditable representation target, schema roles, states/transitions when selected, admissibility interfaces, and `FARA-FORMAL-KERNEL-001` | foundations, shared theory | global primitive necessity, unique ontology, universal/minimal architecture, or sufficiency without a contract and factorization proof |
+| FAR | contract freezing, representation mapping, factorization/collision audit, contract-relative minimization, common-content protocol, re-presentation attacks, loss and typed terminal reporting | foundations, shared theory, FARA | that every procedural choice is logically forced or that bounded success proves universality |
+| FARO | execution, materialization, comparison, disagreement analysis, audit, and reporting | foundations, shared theory, FARA, FAR | that operational choices prove upstream theory or make the contract objective |
 
-The only canonical direction is **foundations → shared theory → FARA → FAR → FARO**. Methodology, validation, research, examples, papers, commercial material, and archive material are downstream evidence, applications, or history. FARE and FARM are support/coordination surfaces and do not alter this chain or own FAR/FARA/FARO primitives.
+The only canonical direction is **foundations → shared theory → FARA → FAR → FARO**. FARE and FARM remain support/coordination surfaces. Methodology, validation, research, examples, papers, software, commercial material, and archive records cannot reverse that direction.
 
-`FARA-FORMAL-KERNEL-001` is Accepted only for Project FAR v1.0 finite explicit auditable representational architecture. It specifies an identity-bearing many-sorted relational carrier architecture, typed occurrence-sensitive identity, and sort-preserving relational isomorphism as kernel-equivalence. It does not derive FAR methodology, FARO operations, or the seven candidate primitive classifications. Typed-hypergraph and algebraic/state-transition forms remain derived views rather than upstream prerequisites.
+## Terminal classifications
 
-Definitions used by several frameworks belong upstream in shared theory. A downstream need may motivate a proposed upstream change, but is not itself a derivation. A stability milestone is a repository state, not proof of necessity, sufficiency, universality, or correctness.
+- Object, Property, Relation, Representation, Interpretation, Investigation, and Reasoning Calculus are FARA schema or contract roles, not global primitives.
+- Construct, Differentiate, and Restrict are FAR workflow verbs, not a representation-independent operator basis.
+- Resolve is a derived application of a declared resolution rule.
+- Ω is a derived materialized classification/provenance view; it records results produced by a calculus and does not cause them.
+- A reasoning state, transition, or trace is an optional representation whose sufficiency depends on the declared contract.
+- `FARA-FORMAL-KERNEL-001` remains Accepted only for finite, explicit, auditable Project FAR v1 records.
+
+All sufficiency and preservation claims concern **contract-relative behavior**. The FARA kernel may intentionally retain distinctions for provenance and audit even when a contract's observational quotient is coarser. That is a declared engineering/cost choice, not global minimality.
+
+Definitions used by several frameworks belong in shared theory. Stability is a maintenance status, not proof of necessity, sufficiency, universality, or correctness.

@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "theory_id": "PROJECT-FAR-CORE-THEORY-1.0",
+  "artifact_status": "Accepted",
+  "result_status": "TERMINAL—THEORY CLOSED",
+  "assurance": "internal_deductive_not_independently_reviewed",
+  "date": "2026-08-24",
+  "terminal_verdict": "NONTRIVIAL CONTRACT-FREE MINIMAL ARCHITECTURE IS IMPOSSIBLE; CONTRACT-RELATIVE SUFFICIENCY AND A UNIQUE MINIMAL OBSERVATIONAL QUOTIENT ARE PROVED.",
+  "canonical_source": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+  "detached_source_sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+  "authority_record": "docs/governance/project-far-theory-closure-acceptance-v1.0.md",
+  "premises": [
+    "set_presentation",
+    "explicit_totalized_semantics",
+    "fixed_contract_evaluation",
+    "extensional_exactness",
+    "declared_invariance"
+  ],
+  "claims": [
+    {
+      "id": "FAR-CORE-001",
+      "status": "proved",
+      "scope": "any Set-based exact contract",
+      "claim": "exact sufficiency iff behavior factors through the representation"
+    },
+    {
+      "id": "FAR-CORE-002",
+      "status": "proved",
+      "scope": "any Set-based exact contract; cardinal minimum when finite",
+      "claim": "the observational quotient is the unique least-informative exact representation up to isomorphism"
+    },
+    {
+      "id": "FAR-CORE-003",
+      "status": "proved",
+      "scope": "declared action/test closure",
+      "claim": "context closure makes observational equivalence action-compatible"
+    },
+    {
+      "id": "FAR-CORE-004",
+      "status": "proved",
+      "scope": "nontrivial domain with observation contract allowed to vary",
+      "claim": "no contract-free least-informative representation is sufficient for every observation contract"
+    },
+    {
+      "id": "FAR-CORE-005",
+      "status": "proved",
+      "scope": "nested admitted transformation classes",
+      "claim": "invariants are antitone in the admitted re-representation class"
+    },
+    {
+      "id": "FAR-CORE-006",
+      "status": "proved",
+      "scope": "injective transport with decoder",
+      "claim": "unconstrained encoding establishes host capacity, not native common structure"
+    },
+    {
+      "id": "FAR-CORE-007",
+      "status": "proved",
+      "scope": "faithful reification/tagging regime",
+      "claim": "primitive vocabulary count is not representation invariant"
+    },
+    {
+      "id": "FAR-CORE-008",
+      "status": "proved",
+      "scope": "finite operator family with tagged tuples",
+      "claim": "finite operator count is not representation invariant"
+    },
+    {
+      "id": "FAR-CORE-009",
+      "status": "proved",
+      "scope": "proper finite subset of an open domain",
+      "claim": "finite panels do not establish open-domain universality"
+    },
+    {
+      "id": "FAR-CORE-010",
+      "status": "proved",
+      "scope": "fixed language, profiles, frame, and target class",
+      "claim": "common theory is profile-relative"
+    },
+    {
+      "id": "FAR-CORE-011",
+      "status": "proved",
+      "scope": "any exact contract",
+      "claim": "omitting a consequence-affecting parameter refutes sufficiency"
+    },
+    {
+      "id": "FAR-CORE-012",
+      "status": "proved",
+      "scope": "contracts distinguishing determinate absence from Unknown",
+      "claim": "sufficient representations must preserve that distinction"
+    },
+    {
+      "id": "FAR-CORE-013",
+      "status": "proved",
+      "scope": "canonical FARA definition of Ω",
+      "claim": "Ω is a semantically eliminable derived materialized view"
+    },
+    {
+      "id": "FAR-CORE-014",
+      "status": "supported_derived",
+      "scope": "PR #453 stated representation and decoder classes",
+      "claim": "Search-State Sufficiency is a bounded factorization instance, not a universal architecture"
+    }
+  ],
+  "dispositions": {
+    "frozen_upp": "proposition_not_refuted_derivation_defective_theorem_not_established",
+    "global_seven_primitive_basis": "rejected_as_unestablished_and_noninvariant",
+    "global_named_operator_basis": "rejected_as_unestablished_and_noninvariant",
+    "omega_primitive": "rejected",
+    "fara_kernel": "retained_finite_explicit_auditable_v1_engineering_standard",
+    "far": "contract_freezing_factorization_collision_minimization_and_loss_methodology",
+    "faro": "downstream_execution_materialized_views_comparison_audit_and_reporting"
+  },
+  "preserved_history": {
+    "upp_terminal_artifact": "theory/terminal/upp-terminal-theorem-v1.0.json",
+    "upp_cross_audit": "docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md",
+    "independent_experiment": "research/independent-dialogue-theory/TERMINAL-REPORT.md",
+    "independent_experiment_merge": "63fe943f91a0758df3bd16e66854f475fec34164"
+  },
+  "core_theory_closed": true,
+  "reopening_rule": "Only a genuine contradiction to a stated proof or premise may reopen the core. Assurance, application, and contract-design work is downstream."
+}

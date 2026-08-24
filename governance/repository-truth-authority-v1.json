@@ -8,10 +8,14 @@
     ]
   },
   "project_status": {
-    "authority": "README.md:Central result and Post-terminal phase",
-    "current_phase": "post-terminal independent evaluation",
+    "authority": "README.md:Central result and Post-closure phase",
+    "current_phase": "post-closure assurance and application",
+    "governing_core": "PROJECT-FAR-CORE-THEORY-1.0",
+    "current_program": "POST-CLOSURE-001",
     "historical_surfaces": [
-      "README.md:generated bounded REP/ADJ/W3.5 dashboard"
+      "README.md:generated bounded REP/ADJ/W3.5 dashboard",
+      "docs/reports/project-status-generated.md",
+      "historical UPP and independent-experiment artifacts"
     ]
   },
   "release_surface": {
@@ -21,7 +25,9 @@
     "release_record": "docs/releases/project-far-v1.0.0.md"
   },
   "claim_boundaries": [
-    "No historical dashboard may identify itself as the current repository phase.",
+    "PROJECT-FAR-CORE-THEORY-1.0 governs current theory status.",
+    "Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.",
+    "No historical dashboard or research artifact may identify itself as the current repository phase or theorem authority.",
     "Package metadata versions must match executable version declarations.",
     "Repository release version and installable package version are distinct authorities and must not be inferred from one another."
   ]

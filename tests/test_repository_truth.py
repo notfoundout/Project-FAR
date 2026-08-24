@@ -26,7 +26,9 @@ class RepositoryTruthTests(unittest.TestCase):
         self.assertTrue(payload["successful"])
         self.assertEqual(payload["package_version"], "0.6.0")
         self.assertEqual(payload["latest_release"], "v1.0.0")
-        self.assertEqual(payload["current_phase"], "post-terminal independent evaluation")
+        self.assertEqual(payload["governing_core"], "PROJECT-FAR-CORE-THEORY-1.0")
+        self.assertEqual(payload["current_program"], "POST-CLOSURE-001")
+        self.assertEqual(payload["current_phase"], "post-closure assurance and application")
 
     def test_version_drift_fails_closed(self) -> None:
         original = truth.read_text

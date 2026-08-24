@@ -1,26 +1,36 @@
 # Claim-Status Matrix
 
-Status: **Accepted classification index; source records remain authoritative**
+Status: **Accepted current classification index**
 
-| Claim or concept | Classification | Boundary |
+The current rows below govern. Dated audit sections are preserved afterward as historical evaluations at their evidence cutoffs and cannot override the terminal closure.
+
+| Claim or concept | Current classification | Boundary |
 |---|---|---|
-| FARA primitive vocabulary | Seven primitive candidates / accepted only within recorded framework scope | W1 tested Object, Property, Relation, Representation, Interpretation, Investigation, and Reasoning Calculus; every result is unresolved. No global necessity, independence, derivability, or equivalence is established. |
-| Terms derived from FARA primitives | Derived | Valid only where cited definitions and premises apply. |
-| FAR investigation workflow | Independent methodological choice | A procedure, not a theorem or prerequisite of theory. |
-| FARO comparison/audit operations | Derived framework operations | Depend on foundations → shared theory → FARA → FAR. |
-| Common minimal reasoning architecture | Empirical hypothesis / conjecture | Not universally established. |
-| Terminal UPP theorem | Not refuted; not established by the frozen derivation (2026-08-13 cross-audit) | Relative to frozen target class, admissibility, faithfulness, closure and equivalence premises. The 2026-08-13 three-lane cross-audit confirmed derivation defects `XA-001`–`XA-005`; see the dated section below and `docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md`. |
-| Global maximality/minimality | Unresolved | Finite registered challenges do not establish open-world maximality. |
-| CRE bounded executions | Validated only within bounded cases | Not independent replication or universal evidence. |
-| SWE-agent v2: v1.0.0 0/2 and v1.0.1 0/2 | Validated only within a bounded case | One task; four budget-limited runs. |
-| No observed resolution-count difference | Validated only within a bounded case | Descriptive observation, not equivalence. |
-| Release equivalence or superiority | Rejected as an inference from v2 | No supporting design or evidence. |
-| Safety, compliance, readiness or general performance from v2 | Rejected | Outside the protocol and evidence. |
-| Candidate provenance change is operationally material | Unresolved | `REVIEW_REQUIRED`; available evidence does not identify an effect. |
+| `PROJECT-FAR-CORE-THEORY-1.0` | Accepted internal deductive theory; not independently reviewed | Exact, extensional, Set-based core under stated premises. |
+| Exact representation sufficiency | **PROVED contract-relative** (`FAR-CORE-001`) | Behavior must factor through the representation for the fixed contract. |
+| Canonical observational quotient | **PROVED contract-relative** (`FAR-CORE-002`) | Unique least-informative exact representation up to isomorphism; not cost/computability optimality. |
+| Contract-free nontrivial minimal architecture | **REFUTED** (`FAR-CORE-004`) | Constant and injective observers require incompatible minima on any nontrivial domain. |
+| Representation-independent claims without a transformation class | **UNDERDETERMINED / malformed** | Admitted re-representations must be fixed. |
+| FARA seven-role vocabulary | Schema and contract roles; **not global primitives** | Primitive count is noninvariant under faithful reification/tagging (`FAR-CORE-007`). |
+| Construct/Differentiate/Restrict | FAR workflow verbs; **not a global operator basis** | Finite operator count is noninvariant under tagged combination (`FAR-CORE-008`). |
+| Resolve | Derived rule application | Not a representation primitive. |
+| Ω | Derived materialized classification/provenance view | Semantically eliminable under the canonical definition (`FAR-CORE-013`). |
+| Common theory | Profile-relative | Must name language, interpretations, frame, and target class (`FAR-CORE-010`). |
+| Open-domain universality from a finite panel | **REJECTED inference** | `FAR-CORE-009`; panel results remain bounded. |
+| Historical UPP theorem | Proposition not refuted; derivation defective; theorem not established | Frozen terminal string remains historical evidence only. |
+| `FARA-FORMAL-KERNEL-001` | Retained bounded engineering standard | Finite explicit auditable Project FAR v1 only; not globally unique/minimal. |
+| FAR workflow | Theory-constrained independent methodology | Factorization/collision obligations derive from shared theory; sequencing and governance choices remain selected methods. |
+| FARO operations | Downstream selected operations | Execution and conformance do not prove upstream theory. |
+| SSS / PR #453 | Supported bounded factorization instance | Exact/robust common theory, maximality, and novelty remain unresolved in that experiment. |
+| Novelty of the core mathematical pattern | No novelty claim | Prior art supplies observer-relative quotient/factorization instances. |
 
-Examples, methodology, research, validation, papers and archive are never prerequisites of canonical theory merely because they discuss these claims.
+## 2026-08-24 terminal closure ledger
 
-## 2026-07-26 central-claim audit
+The authoritative detailed ledger is [`theory/terminal/project-far-core-theory-v1.0.json`](../../theory/terminal/project-far-core-theory-v1.0.json). `FAR-CORE-001`–`013` are PROVED at their stated scopes; `FAR-CORE-014` is SUPPORTED/DERIVED. A new result may narrow or refute one only by addressing its explicit premises and falsifier.
+
+## Historical audit record
+
+## Historical audit — 2026-07-26 central-claim audit
 
 | Claim | Status | Required interpretation |
 |---|---|---|
@@ -58,7 +68,7 @@ Examples, methodology, research, validation, papers and archive are never prereq
 
 - **FARA-EXPANDED-BOUND-001:** Research — all 66,098 unary/binary relation interpretations on independent axes over carriers 0..4 were concretely constructed and evaluated. Thirty admissible paired-reduct witnesses support target-specific bounds: Object, Property, Relation, Representation, and Interpretation at 1..4; Investigation and Reasoning Calculus at 0..4. No full-signature, global, or size-0 claim beyond that coverage is licensed.
 
-## 2026-08-10 admissibility-priority audit
+## Historical audit — 2026-08-10 admissibility-priority audit
 
 Evidence: `docs/research/fara-admissibility-priority-v1.0.md`. Investigation target `OP-04`/`UQ-T8`.
 
@@ -73,7 +83,7 @@ Evidence: `docs/research/fara-admissibility-priority-v1.0.md`. Investigation tar
 | `CE-ADM-001` bears on the terminal UPP theorem | Rejected | The theorem's `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
 | Argumentation frameworks are a `conservative extension` | Conclusion retained; supporting analysis weakened | `theory/evaluation/external-systems/argumentation-frameworks.md` never tested multi-extension semantics. The classification survives `CE-ADM-001`; its stated justification does not. Corroborated by explicit construction in the 2026-08-10 `Ω` representation audit below. |
 
-## 2026-08-10 `Ω` set-valued admissibility representation audit
+## Historical audit — 2026-08-10 `Ω` set-valued admissibility representation audit
 
 Evidence: `docs/research/fara-omega-set-valued-admissibility-v1.0.md`. Investigation target `OP-13`/`UQ-T15`. Faithfulness criterion reused from `FAITHFUL-REP-001`; no new faithfulness notion was introduced.
 
@@ -89,7 +99,7 @@ Evidence: `docs/research/fara-omega-set-valued-admissibility-v1.0.md`. Investiga
 | Graded or ranking-based acceptability is covered | Rejected as out of scope | Degree-valued acceptability is a distinct phenomenon; see `OP-14`/`UQ-T18`. |
 | `CE-ADM-001` bears on the terminal UPP theorem | Rejected, unchanged | The `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
 
-## 2026-08-10 graded and ranking-based admissibility audit
+## Historical audit — 2026-08-10 graded and ranking-based admissibility audit
 
 Evidence: `docs/research/fara-graded-admissibility-representation-v1.0.md`. Investigation target `OP-14`/`UQ-T18`. `FAITHFUL-REP-001` reused unchanged; no requirement was found inapplicable.
 
@@ -105,7 +115,7 @@ Evidence: `docs/research/fara-graded-admissibility-representation-v1.0.md`. Inve
 | This investigation bears on seven-primitive completeness | Rejected in both directions | It produces no evidence for an additional primitive and no evidence for completeness. `UQ-T2` and `OP-02` are unaffected. |
 | Any of the above bears on the terminal UPP theorem | Rejected | The `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
 
-## 2026-08-10 admissibility classification-space authority audit
+## Historical audit — 2026-08-10 admissibility classification-space authority audit
 
 Evidence: `docs/research/fara-admissibility-classification-space-audit-v1.0.md`. Investigation target `OP-15`/`UQ-T19`. No canonical surface was modified.
 
@@ -121,7 +131,7 @@ Evidence: `docs/research/fara-admissibility-classification-space-audit-v1.0.md`.
 | This audit bears on seven-primitive completeness, `UQ-T2`, or `OP-02` | Rejected | No evidence in either direction; representational adequacy is not primitive completeness. |
 | This audit bears on the terminal UPP theorem | Rejected | The `E*` admissibility premise is independently frozen and is not the FARA `Ω` architecture. |
 
-## 2026-08-10 `unresolved status` semantic audit
+## Historical audit — 2026-08-10 `unresolved status` semantic audit
 
 Evidence: `docs/research/fara-unresolved-status-audit-v1.0.md`. Investigation target `OP-16`/`UQ-T20`. No canonical surface was modified.
 
@@ -139,7 +149,7 @@ Evidence: `docs/research/fara-unresolved-status-audit-v1.0.md`. Investigation ta
 | A canonical edit is justified on current evidence | Rejected | Replication and Acceptance have not occurred, and a weakly established result is not a basis for canonical promotion. |
 | This audit bears on `Ω`'s type, FARA primitives, seven-primitive completeness, `UQ-T2`/`OP-02`, or the terminal UPP theorem | Rejected | No change and no evidence in either direction on any of these. |
 
-## 2026-08-10 unresolved-candidate obligation-scope audit
+## Historical audit — 2026-08-10 unresolved-candidate obligation-scope audit
 
 Evidence: `docs/research/fara-unresolved-obligation-scope-audit-v1.0.md`. Investigation target `OP-17`/`UQ-T21`. No canonical surface was modified. `OP-16`'s typing result is neither strengthened nor weakened.
 
@@ -156,7 +166,7 @@ Evidence: `docs/research/fara-unresolved-obligation-scope-audit-v1.0.md`. Invest
 | A normative change to FARA is justified | Rejected | `H5`. Both readings are coherent, and neither fork of the broad reading yields an obligation worth adding. |
 | `status` is used univocally in canonical FARA | **Supported** | **Superseding the disposition originally recorded here.** This row originally read "Refuted — five distinct senses, no disambiguation". The `OP-18` term audit **refuted that premise**: `status` is univocal under one recoverable definition — the standing of an entity under an explicitly specified categorization. What is genuinely ambiguous is the compound construction `N status`, and it bites at exactly one occurrence, `admissibility-structure.md:111`. The obligation-scope conclusion that depended on the five-sense premise is correspondingly weakened, but its independent results — traceability requires path-linking not cause-recording, and auditability of unresolved causes is not generally satisfiable — do not depend on it and stand. See `LIM-030` and the `status` term audit below. |
 
-## 2026-08-10 `status` term audit
+## Historical audit — 2026-08-10 `status` term audit
 
 Evidence: `docs/research/fara-status-term-audit-v1.0.md`. Investigation target `OP-18`/`UQ-T22`. No canonical surface was modified. `OP-16` and `OP-17` are left unchanged.
 
@@ -173,7 +183,7 @@ Evidence: `docs/research/fara-status-term-audit-v1.0.md`. Investigation target `
 | `formal-kernel.md:3` "Status: Accepted" imports a governance concept into FARA semantics | Rejected | It is document metadata, not FARA-technical content. No layer violation. |
 | This audit resolves `OP-16` or `OP-17` | Rejected | It narrows and explains the blockage without removing it; neither question is resolved. |
 
-## 2026-08-10 prior-framework subsumption audit
+## Historical audit — 2026-08-10 prior-framework subsumption audit
 
 Evidence: `docs/research/fara-prior-framework-subsumption-v1.0.md`. Investigation target `OP-20`/`UQ-T23`. No canonical surface was modified. No registered claim is downgraded.
 
@@ -189,7 +199,7 @@ Evidence: `docs/research/fara-prior-framework-subsumption-v1.0.md`. Investigatio
 | The external-validation evidence base is directionally biased in a way that defeats its claims | **Rejected** | All twenty external-system records test only the forward direction, but none claims novelty, originality, irreducibility, or unprecedentedness. The claims drawn are correspondingly bounded, so the asymmetry is a scope limitation, not a defect. Corrects an earlier "blind spot" characterization. |
 | `OP-20` bears on `OP-01`, `OP-02`, `OP-03`, `OP-09`, `OP-12`, `UQ-T2`, or the terminal UPP theorem | Rejected — no dependency demonstrated | Component anticipation says nothing about derivability among the seven candidates. Subsumption does not imply falsity. The terminal theorem remains governed by its frozen premises. |
 
-## 2026-08-10 `LIM-016` refutation search
+## Historical audit — 2026-08-10 `LIM-016` refutation search
 
 Evidence: `docs/research/lim-016-primitive-derivability-refutation-search-v1.0.md`. Strictly one-directional. No canonical surface modified; no registered claim upgraded or downgraded.
 
@@ -205,7 +215,7 @@ Evidence: `docs/research/lim-016-primitive-derivability-refutation-search-v1.0.m
 | This null upgrades `OP-02`, `OP-03`, `OP-09`, `OP-12`, or `UQ-T2` | **Rejected** | They remain unresolved and remain blocked. A null result carries no upgrade. |
 | This bears on `OP-01`, universality, or the terminal UPP theorem | **Rejected** | No dependency demonstrated or asserted. |
 
-## 2026-08-10 externally grounded contract-frontier discovery — **corrected 2026-08-10**
+## Historical audit — 2026-08-10 externally grounded contract-frontier discovery — **corrected 2026-08-10**
 
 Evidence: `docs/research/contract-frontier-discovery-v1.0.md` §0. Investigation target `OP-21`/`UQ-T25`/`UQ-T26`. No canonical surface was modified. No registered claim is upgraded or downgraded. An internal re-audit found that the original block asserted a Pareto relation over contracts without assigning any dimension a justified preference orientation; the affected rows are corrected below and the superseded readings are marked.
 
@@ -233,7 +243,7 @@ Evidence: `docs/research/contract-frontier-discovery-v1.0.md` §0. Investigation
 | This campaign constitutes external independence | **Rejected** | The external sources are independent; the reconstruction, dimension selection, scoring, and placement are not. Single path, no mutation controls, no external reviewer. **Weaker than `USD-W6`'s `internal_robustness_only`.** Recorded as `LIM-031`, which the correction strengthens. |
 | This campaign bears on the FARA primitive layer, `LIM-016`, `ADR-002`, `UQ-T2`, `OP-02`, or the terminal UPP theorem | **Rejected — no dependency demonstrated** | The campaign operates entirely at the contract layer and asserts no propagation into the primitive layer, in the same sense and for the same reason that the primitive layer asserts none into the contract layer. |
 
-## 2026-08-13 bounded-v1 three-lane cross-audit
+## Historical audit — 2026-08-13 bounded-v1 three-lane cross-audit
 
 Evidence: `docs/audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md` (internal, model-assisted, non-independent). Repair program: `docs/research/upp-successor-repair-program-v1.0.md` (`UPP-SR-001`).
 

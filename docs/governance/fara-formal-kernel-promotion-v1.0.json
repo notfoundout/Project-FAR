@@ -7,7 +7,7 @@
   "canonical_kernel": "identity-bearing-many-sorted-relational",
   "canonical_document": {
     "path": "frameworks/FARA/formal-kernel.md",
-    "git_blob_sha": "362567c6d61b3257b76f76532c957b6e1172d01f"
+    "git_blob_sha": "f3ed6af64aca0e1c003426bf3298e2a5adc73c04"
   },
   "lifecycle": {
     "question": "complete",
@@ -79,21 +79,68 @@
     "Provenance"
   ],
   "relations": {
-    "denotes": ["Representation", "Object"],
-    "assigns": ["Interpretation", "Representation", "Meaning"],
-    "contains_rule": ["ReasoningCalculus", "Rule"],
-    "applies": ["Event", "Rule"],
-    "input_state": ["Event", "State"],
-    "output_state": ["Event", "State"],
-    "occurs_in": ["Event", "Investigation"],
-    "uses_calculus": ["Investigation", "ReasoningCalculus"],
-    "objective_of": ["Investigation", "Objective"],
-    "condition_of": ["Investigation", "Condition"],
-    "instance_of": ["RelationOccurrence", "RelationType"],
-    "participant": ["RelationOccurrence", "Role", "Object"],
-    "precedes": ["Event", "Event"],
-    "provenance_of": ["Event", "Provenance"],
-    "represents_event": ["Representation", "Event"]
+    "denotes": [
+      "Representation",
+      "Object"
+    ],
+    "assigns": [
+      "Interpretation",
+      "Representation",
+      "Meaning"
+    ],
+    "contains_rule": [
+      "ReasoningCalculus",
+      "Rule"
+    ],
+    "applies": [
+      "Event",
+      "Rule"
+    ],
+    "input_state": [
+      "Event",
+      "State"
+    ],
+    "output_state": [
+      "Event",
+      "State"
+    ],
+    "occurs_in": [
+      "Event",
+      "Investigation"
+    ],
+    "uses_calculus": [
+      "Investigation",
+      "ReasoningCalculus"
+    ],
+    "objective_of": [
+      "Investigation",
+      "Objective"
+    ],
+    "condition_of": [
+      "Investigation",
+      "Condition"
+    ],
+    "instance_of": [
+      "RelationOccurrence",
+      "RelationType"
+    ],
+    "participant": [
+      "RelationOccurrence",
+      "Role",
+      "Object"
+    ],
+    "precedes": [
+      "Event",
+      "Event"
+    ],
+    "provenance_of": [
+      "Event",
+      "Provenance"
+    ],
+    "represents_event": [
+      "Representation",
+      "Event"
+    ]
   },
   "identity_criteria": {
     "typed_identity": true,
@@ -144,5 +191,11 @@
     "environment-inclusive embodied semantics",
     "external-investigator independence",
     "superiority under every possible comparison criterion"
-  ]
+  ],
+  "terminal_reclassification": {
+    "authority": "PROJECT-FAR-CORE-THEORY-1.0/FAR-CORE-007",
+    "status": "superseded-as-global-primitives",
+    "current_classification": "schema-and-contract-roles",
+    "kernel_scope_unchanged": true
+  }
 }

@@ -1,108 +1,98 @@
 # Project FAR Status
 
-This file is the canonical project-level status surface identified by [`CANONICAL_MAP.md`](CANONICAL_MAP.md). It records current governance and milestone state. It does not upgrade the epistemic status of any linked theory, evidence, implementation, or historical artifact.
+This file is the canonical project-level status surface identified by [`CANONICAL_MAP.md`](CANONICAL_MAP.md). It records current governance and milestone state and does not upgrade any linked artifact beyond its stated scope or assurance.
 
 ## Current release
 
 Current published repository release: [`v1.0.0`](releases/project-far-v1.0.0.md).
 
-The installable package version is a separate version surface governed by `pyproject.toml`; repository release status does not change package-version authority.
+The installable package version remains a separate surface governed by `pyproject.toml`. The core-theory integration is a post-release repository change; it does not silently retag the release or package.
 
 ## Central result
 
-The registered Universal Proof Program `POST-TUE-UPP-001` is complete.
+Current governing theory: `PROJECT-FAR-CORE-THEORY-1.0`.
 
-Terminal adjudication:
+Terminal verdict:
+
+`NONTRIVIAL CONTRACT-FREE MINIMAL ARCHITECTURE IS IMPOSSIBLE; CONTRACT-RELATIVE SUFFICIENCY AND A UNIQUE MINIMAL OBSERVATIONAL QUOTIENT ARE PROVED.`
+
+For a fixed exact contract, sufficiency is equivalent to factorization through the representation and the induced observational quotient is the unique least-informative exact representation up to isomorphism. No nontrivial representation is minimal over the unrestricted class of observation contracts. Primitive and finite-operator counts are not invariant under admitted faithful re-presentation.
+
+Assurance: **Accepted internal deductive result; not independently reviewed.**
+
+Canonical authority:
+
+- [core theory](../theory/theorems/Project-FAR-Theory-Closure-v1.0.md);
+- [machine-readable claim ledger](../theory/terminal/project-far-core-theory-v1.0.json);
+- [acceptance and promotion record](governance/project-far-theory-closure-acceptance-v1.0.md);
+- [conformity audit](audits/project-far-theory-closure-conformity-audit-v1.0.md).
+
+## Historical UPP disposition
+
+The exact historical UPP adjudication string remains preserved:
 
 `strictly_weakened_relative_rccd_universality_theorem_proved_with_complete_dependency_audit_and_open_world_boundary`
 
-The result is relative and operational. It applies only under the frozen target-class, admissibility, faithfulness, machinery-closure, and commitment-equivalence premises. The end-to-end semantic composition is executable and audited but is not one kernel-checked proof object. Maximality is bounded by the frozen extension rules and finite registered challenge ledger.
+It is not current theorem authority. The 2026-08-13 cross-audit governs its status:
 
-This does not establish unrestricted universality, metaphysical universality, open-world maximality, a unique or final ontology, primitive global necessity or minimality, complete application correspondence, or independent external validation.
+> **Frozen proposition not refuted; frozen derivation defective; theorem not established.**
 
-Canonical result surfaces:
+The frozen source and historical theorem artifacts are not rewritten. `POST-TERM-EVAL-001` is superseded. `UPP-SR-001` is no longer required for core closure and may proceed only as an optional bounded contract-relative case study.
 
-- [`research/upp-w15-terminal-theorem-v1.0.md`](research/upp-w15-terminal-theorem-v1.0.md) — terminal theorem disclosure.
-- [`audits/upp-w15-terminal-theorem-audit.md`](audits/upp-w15-terminal-theorem-audit.md) — terminal theorem audit.
-- [`governance/post-terminal-public-evaluation-program-v1.0.md`](governance/post-terminal-public-evaluation-program-v1.0.md) — current evaluation program.
-- [`governance/central-research-program.md`](governance/central-research-program.md) — central research program.
+- [cross-audit adjudication](audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md);
+- [historical UPP theorem disclosure](research/upp-w15-terminal-theorem-v1.0.md);
+- [optional successor repair program](research/upp-successor-repair-program-v1.0.md).
 
-### Bounded-v1 cross-audit finding (2026-08-13)
+## Independent dialogue-theory record
 
-The bounded-v1 three-lane internal closure campaign (frozen source `f6645a77`, per [`governance/bounded-v1-closure-source-freeze-f6645a77.md`](governance/bounded-v1-closure-source-freeze-f6645a77.md)) was adjudicated on 2026-08-13:
-
-`FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED`
-
-The terminal proposition was **not refuted**, but the frozen registered derivation was found **defective** over part of its stated domain (`XA-001`–`XA-005`: a valid W9 empty-dependency countermodel `CE-UPP-W9-001`, unpropagated W8/W11 side conditions, status-level composition, and inexpressible determinate absence — `LIM-033`/`LIM-034`). This is internal, model-assisted, non-independent evidence. The terminal adjudication string above remains the historical record for the frozen source; it is not silently rewritten, and the frozen result stays classified on its original terms.
-
-- Adjudication record: [`audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md`](audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md).
-- Registered successor repair program: [`research/upp-successor-repair-program-v1.0.md`](research/upp-successor-repair-program-v1.0.md) (`UPP-SR-001`, `OP-22`) — registered; implementation not yet begun; a successor source freeze occurs only after repair, regression, and validation complete.
-- Sequencing: OP-06/`PTE-W2-KERNEL-RECONSTRUCTION` is downstream of the semantic repair and must target the repaired successor theorem; the current Lean G1 wrapper remains a partial formalization.
+PR #453 was merged unchanged as noncanonical Research in commit `63fe943f91a0758df3bd16e66854f475fec34164`. Its E0 blocked, E1 fragmented, SSS, profile-relative irreflexivity, and open-boundary results retain exactly their recorded scope. The record does not supply the premises of the accepted core theory.
 
 ## Current phase
 
-Current program: `POST-TERM-EVAL-001` — Post-Terminal Public Evaluation Program v1.0.
-
-The deductive UPP queue is closed. There is no `UPP-W16`. A stronger deductive theorem requires a separately registered program and may not be introduced through post-terminal evaluation.
-
-Current workstreams:
+Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md).
 
 | Workstream | Current state | Boundary |
 |---|---|---|
-| `PTE-W0-DISCLOSURE` | Complete | Canonical disclosure and repository integration only. |
-| `PTE-W1-INDEPENDENT-REVIEW` | Next | Independent proof review must disclose prior exposure, conflicts, tools, scope reviewed, accepted assumptions, checked obligations, and unresolved concerns. |
-| `PTE-W2-KERNEL-RECONSTRUCTION` | Authorized workstream | Complete proof-assistant reconstruction or an explicit obstruction report; partial formalization must identify external assumptions. |
-| `PTE-W3-COUNTERMODEL-SEARCH` | Authorized workstream | Countermodels and scope challenges may attack any registered premise, construction, necessity, independence, maximality, or terminal-composition obligation. |
-| `PTE-W4-EMPIRICAL-REPLICATION` | Authorized workstream | Independent bounded replication only; internal or same-path execution is not independent replication and cannot prove the deductive theorem. |
-
-Application-correspondence studies are an evaluation channel under `POST-TERM-EVAL-001`. They test whether real systems satisfy the theorem premises and preserve registered commitments; they do not automatically strengthen the theorem.
+| `PCA-W0-REPOSITORY-CONFORMITY` | Complete | Canonical theory, claims, frameworks, obligations, planning, specifications, and validators reconciled. |
+| `PCA-W1-INDEPENDENT-REVIEW` | Next | Independent review may upgrade assurance only for the claims actually reviewed. |
+| `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | Open | Formalize the exact core or preserve an explicit obstruction; implementation is not proof by itself. |
+| `PCA-W3-CONTRACT-SCHEMA` | Open | Implement a versioned contract/factorization format; `far-ir/1.0` is not silently reinterpreted. |
+| `PCA-W4-DOMAIN-CONTRACTS` | Open | Domain contracts remain scoped choices and cannot restore contract-free universality. |
+| `PCA-W5-APPROXIMATION-AND-COST` | Open | Approximation and implementation minimality require declared metrics, losses, tolerances, or cost orders. |
+| `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | Open | Empirical utility evidence does not alter deductive theorem status automatically. |
 
 ## Framework status
 
-| Framework | Role | Current status |
+| Framework | Terminal role | Current status |
 |---|---|---|
-| FARA | Representation | Stable; `FARA-FORMAL-KERNEL-001` Accepted at finite, explicit, auditable v1.0 scope. |
-| FAR | Methodology | Stable. |
-| FARO | Operations | Stable. |
-| FARE | Mathematics | Frozen and requirement-driven. |
-| FARM | Meta-framework coordination | Stable. |
+| FARA | Selected representation target | Stable; `FARA-FORMAL-KERNEL-001` retained only for finite, explicit, auditable Project FAR v1 records. |
+| FAR | Contract-relative methodology | Stable with contract freeze, factorization/collision, minimization, and typed-loss conformance. |
+| FARO | Downstream operations | Stable for execution, materialized views, comparison, audit, and reporting. |
+| FARE | Mathematical support | Requirement-driven; does not replace the canonical core theory. |
+| FARM | Change coordination | Stable; does not reverse the canonical dependency direction. |
 
-The FARA formal-kernel Acceptance remains scoped. It does not establish global uniqueness, unrestricted universality, primitive necessity/minimality, nonfinite/oracle/embodied adequacy, or external-investigator independence.
+The seven formerly named FARA primitive candidates are schema or contract roles, not global primitives. Construct, Differentiate, and Restrict are workflow verbs. Resolve and Ω are derived.
 
-## Preserved bounded evidence and claim boundaries
+## Preserved bounded evidence
 
-The frozen SWE-agent v2 comparison remains a bounded result: v1.0.0 resolved 0/2 runs and v1.0.1 resolved 0/2 runs on one preregistered task. The recorded observation is `no_observed_resolution_difference`; the bounded decision remains `REVIEW_REQUIRED`. This does not demonstrate equivalence, superiority, safety, readiness, or general performance, and it is not independent replication or independent external validation.
+SWE-agent, REP, ADJ, W3.5, CRE, FARA-kernel, comparative-representation, and external-system records retain their original scope and assurance. No finite execution establishes open-domain universality, third-party confirmation, commercial value, safety, readiness, or general performance.
 
-The associated forensic postmortem establishes only the recorded applied-patch target failures, uniform budget termination, and external-only diagnostic evidence as causal facts. The first agent mistakes and deepest patch causes remain `Unknown`.
-
-The deterministic CRE-001 implementation remains established only at its registered CRE-001 scope. Vocabulary Semantics Baseline 1.0 is prospective for CRE-002 and later and is not retrospective validation of CRE-001.
-
-Conditional primitive results do not establish global primitive minimality or global primitive independence. Those broader claims remain outside the established conditional deletion-only results and must not be inferred from the terminal theorem, framework stability, implementation success, or finite registered testing.
-
-Earlier REP, ADJ, W3.5, CRE, FARA-kernel, validation, and external-system records remain evidence only at their recorded scope and assurance level. Later terminal adjudication does not retroactively make bounded empirical or project-authored evidence independently validated.
+The completed SWE-agent v2 comparison observed **0/2** resolved runs for v1.0.0 and **0/2** for v1.0.1, yielding `no_observed_resolution_difference` and the bounded decision `REVIEW_REQUIRED`. It establishes neither equivalence, superiority, safety, readiness, nor general performance.
 
 ## Current authority navigation
 
-For state-sensitive work, use this order and resolve scope from the artifact itself:
+For state-sensitive work, use:
 
-1. [`../README.md`](../README.md) — repository command center and current public summary.
-2. [`project-status.md`](project-status.md) — canonical project-level status.
-3. [`CANONICAL_MAP.md`](CANONICAL_MAP.md) — canonical locations.
-4. [`governance/research-execution-charter.md`](governance/research-execution-charter.md) — automated/assisted research governance.
-5. [`governance/claim-status-matrix.md`](governance/claim-status-matrix.md) — important claim status.
-6. [`governance/theorem-proof-status-register.md`](governance/theorem-proof-status-register.md) — theorem/proof assurance.
-7. [`governance/limitations-register.md`](governance/limitations-register.md) — current limitations.
-8. [`governance/open-problems-register.md`](governance/open-problems-register.md) and [`governance/unresolved-questions-register.md`](governance/unresolved-questions-register.md) — unresolved work.
-9. [`governance/framework-boundaries.md`](governance/framework-boundaries.md) and [`governance/dependency-specification.md`](governance/dependency-specification.md) — framework ownership and dependency direction.
+1. [root README](../README.md);
+2. this status;
+3. [canonical map](CANONICAL_MAP.md);
+4. [core theory](../theory/theorems/Project-FAR-Theory-Closure-v1.0.md) and [acceptance record](governance/project-far-theory-closure-acceptance-v1.0.md);
+5. [claim-status matrix](governance/claim-status-matrix.md) and [theorem/proof register](governance/theorem-proof-status-register.md);
+6. [framework boundaries](governance/framework-boundaries.md) and [dependency specification](governance/dependency-specification.md);
+7. [limitations](governance/limitations-register.md), [open problems](governance/open-problems-register.md), and [unresolved questions](governance/unresolved-questions-register.md).
 
-If these surfaces materially conflict on a current-state claim, the conflict must be reported and the affected inference remains unresolved until governance resolves it. Generated planning reports are advisory and cannot break ties between canonical authority surfaces.
+Historical or generated status surfaces do not override this order. If current authorities materially conflict, the affected inference remains unresolved until governance corrects the conflict.
 
-## Superseded status snapshots
+## Superseded snapshots
 
-The former pre-terminal `docs/project-status.md` snapshot is preserved byte-for-byte at [`../archive/superseded/status/project-status-pre-terminal-2026-08-10.txt`](../archive/superseded/status/project-status-pre-terminal-2026-08-10.txt).
-
-The former generated W3.5 status snapshot is preserved byte-for-byte at [`../archive/superseded/status/project-status-generated-w3.5-2026-08-10.txt`](../archive/superseded/status/project-status-generated-w3.5-2026-08-10.txt).
-
-The `.txt` extension is deliberate: historical relative links remain part of the preserved bytes but are not presented as live repository documentation.
-
-Those artifacts are historical. They do not define the current project phase.
+Pre-terminal status snapshots under `archive/superseded/status/` remain historical. The historical UPP and independent-experiment artifacts remain at their original locations with explicit status boundaries.

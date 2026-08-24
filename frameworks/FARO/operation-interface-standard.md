@@ -1,5 +1,7 @@
 # FARO Operation Interface Standard
 
+Every operation that can affect an adequacy or comparison conclusion must bind to a versioned comparison contract. A contract-independent operation must explicitly state `NOT APPLICABLE` rather than omit the field silently.
+
 ## Purpose
 
 This document defines the required structure for FARO operation specifications.
@@ -17,6 +19,10 @@ The operation's canonical name.
 ### Operation Category
 
 The operation's primary category from `operation-taxonomy.md`.
+
+### Comparison Contract
+
+The versioned contract governing any adequacy, preservation, comparison, common-content, invariance, or minimality conclusion, or an explicit `NOT APPLICABLE` with reason. The operation must name cases, tests/contexts, typed outcomes, semantics, admitted transformations, profiles/frames, and any approximation or cost order that affects the result.
 
 ### Purpose
 
@@ -40,7 +46,7 @@ The ordered procedure performed by the operation.
 
 ### Outputs
 
-Artifacts produced by the operation.
+Artifacts produced by the operation, including a factorization certificate, collision witness, or `OPEN` status when representation sufficiency is assessed.
 
 ### Postconditions
 

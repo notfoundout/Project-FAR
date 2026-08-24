@@ -1,205 +1,56 @@
-# Open Questions
+# Historical Open Questions Register (Superseded)
 
-## Purpose
+Status: **Historical / superseded as current authority**
 
-This document records the active research questions currently guiding the development of Project FAR.
+This path preserves the pre-closure question inventory. It no longer records the current research queue and must not be used to reopen `PROJECT-FAR-CORE-THEORY-1.0`. Current obligations are governed by:
 
-Unlike the Backburner, the questions recorded here directly influence the present development of the architecture, theory, or methodology.
+- `theory/theorems/Project-FAR-Theory-Closure-v1.0.md`;
+- `docs/governance/open-problems-register.md`;
+- `docs/governance/unresolved-questions-register.md`;
+- `docs/governance/post-closure-assurance-and-application-program-v1.0.md`.
 
-Questions should be removed from this document only after they have been resolved, incorporated into the framework, or abandoned.
+The historical questions are retained below by topic, with the disposition that follows from the terminal result. “Closed” means closed at contract-free global scope; a separately frozen domain contract may still generate a new scoped question.
 
----
+## Terminal disposition of the historical architecture questions
 
-# Architecture
+| Historical question | Terminal disposition |
+|---|---|
+| Primitive Reduction | Closed as a contract-free primitive search by `FAR-CORE-007`; reduction is meaningful only after language, equivalence, scope, objective, and cost/order are fixed. |
+| Conditional Primitive Minimality | The historical deletion-only theorem remains conditional evidence. It is not the governing result and does not promote the seven schema roles to primitives. |
+| Global Primitive Minimality | Closed: no nontrivial contract-free minimum exists, and primitive count changes under faithful re-presentation. |
+| Conditional Primitive Independence | The historical deletion-only theorem remains conditional evidence within its stated formalization. |
+| Global Primitive Independence | Closed: the seven names are schema or contract roles, while unrestricted basis independence is not representation invariant. |
+| Universal Architecture | Rejected in the nontrivial contract-free minimal sense. Domain-relative coverage remains a contract/application question. |
+| Expressive Power | Reframed as contract-relative preservation, collision, loss, approximation, or cost analysis. No untyped global scalar is supplied by the core. |
 
-## Primitive Reduction
+## Terminal disposition of the historical theory questions
 
-Can one or more candidate primitive concepts be derived from simpler concepts without reducing the expressive power of the architecture?
+| Historical question | Terminal disposition |
+|---|---|
+| Is Investigation primitive? | No global primitive status follows. Investigation is a FARA schema/provenance aggregate and may be required by a selected engineering contract. |
+| Relationship among calculi, Ω, and resolution rules | A calculus or rule is a consequence-affecting contract parameter when it changes outcomes. Ω is a derived materialized classification/provenance view. Resolve is derived rule application. |
+| Confidence, uncertainty, and degrees of support | Open only as domain- and contract-specific typing work; the core does not force a probability or support ontology. |
+| Syntax–semantics separation | Captured by the comparison contract: profiles, interpretations, frames, tests, outcomes, and observation relations must be explicit when consequence-affecting. |
 
-**Status:** Active
+## Terminal disposition of the historical validation questions
 
----
+| Historical question | Terminal disposition |
+|---|---|
+| Architectural Stability | No representation-independent global stability follows. Stability can be tested only relative to declared contracts and transformations. |
+| Universality from future validation | Finite validation cannot establish open-domain universality. New cases may challenge a scoped contract or implementation without reopening the core theorem. |
 
-## Conditional Primitive Minimality
+## Historical OP mapping
 
-Does T-001 establish primitive minimality under the current Project FAR definitions and axioms, the current theorem primitive basis, and the deletion-only reduction standard?
+| Historical ID | Former question | Current disposition |
+|---|---|---|
+| OP-1 | Can every structured, explicit, auditable reasoning process be represented within FARA? | Not established; any renewed claim must state a domain and comparison contract. The bounded v1 kernel remains finite, explicit, and auditable only. |
+| OP-2 | Are the candidate primitives globally independent? | Closed at global contract-free scope by `FAR-CORE-007`. |
+| OP-3 | Can Ω be derived? | Yes at the current FARA boundary: Ω is a materialized view of calculus-produced classifications and provenance. |
+| OP-4 | Can reasoning states be reduced? | State descriptions are derived specifications; sufficiency is tested by factorization under a contract. |
+| OP-5 | Can semantic validity be defined without circularity? | Validity must be indexed to declared semantics, rules, and observation conditions. Broader philosophical questions are outside the core. |
+| OP-6 | Does every calculus induce an equivalent Ω? | No unqualified equivalence claim is licensed. The view depends on the calculus, classifications, provenance schema, and observation contract. |
+| OP-7 | Does a complete representation theorem exist? | A contract-relative factorization theorem and unique observational quotient are proved. No representation-independent universal FARA theorem is established. |
 
-**Status:** Resolved (Conditional)
+## Reopening rule
 
-T-001 establishes minimality only under the current Project FAR definitions and axioms, the current theorem primitive basis, and the deletion-only reduction standard. This does not establish global minimality.
-
----
-
-## Global Primitive Minimality
-
-Is the primitive basis minimal across alternative vocabularies, under non-deletion reductions, under lower-level reconstructions, or under comparative representational evaluation?
-
-**Status:** Active
-
-The original question of whether the current collection of candidate primitive concepts is minimal remains open at global scope. CRE-001 and later alternative-vocabulary work may provide relevant evidence, but CRE-001 alone would not prove global minimality.
-
----
-
-## Conditional Primitive Independence
-
-Does T-002 establish deletion-independence under its stated Project FAR definitions and deletion-only reduction standard?
-
-**Status:** Resolved (Conditional)
-
-T-002 establishes deletion-independence under its stated scope and assumptions. This does not establish global independence.
-
----
-
-## Global Primitive Independence
-
-Do the primitives remain independent under arbitrary equivalent reconstruction, alternative formal bases, lower-level ontologies, broader reduction standards, or completed VI-003 execution?
-
-**Status:** Active
-
-The original question of whether the current candidate primitive concepts are mutually independent remains open at global scope.
-
----
-
-## Universal Architecture
-
-Does there exist a universal architecture capable of representing every structured, explicit, and auditable reasoning process within the stated scope of Project FAR?
-
-**Status:** Active
-
----
-
-## Expressive Power
-
-How should expressive power be formally defined?
-
-Can expressive power be measured?
-
-Can two architectures be compared according to expressive power?
-
-**Status:** Active
-
----
-
-# Theory
-
-## Investigation
-
-Is Investigation a primitive concept?
-
-Or can it be derived from more primitive concepts?
-
-**Status:** Active
-
----
-
-## Resolution Rules
-
-What is the formal relationship between:
-
-- Reasoning Calculi
-- Admissibility Structures
-- Resolution Rules
-
-**Status:** Active
-
----
-
-## Confidence, Uncertainty, and Degrees of Support
-
-Should these concepts receive formal treatment within Project FAR?
-
-If so:
-
-- Where do they belong?
-- Are they primitive or derived concepts?
-- Can they be represented independently of probability?
-
-**Status:** Active
-
----
-
-## Syntax–Semantics Separation
-
-Can the distinction between representational structure and interpretation be established as a formal proposition or theorem?
-
-**Status:** Active
-
----
-
-# Validation
-
-## Architectural Stability
-
-Does the architecture remain unchanged across every reasoning framework successfully validated?
-
-**Status:** Active
-
----
-
-## Universality
-
-Will future validation studies require additional primitive concepts?
-
-**Status:** Active
-
----
-
-# Open Problems
-
-This section records major unresolved problems within Project FAR.
-
----
-
-## OP-1
-
-Can every structured, explicit, and auditable reasoning process be represented within FARA?
-
-**Status:** Open
-
----
-
-## OP-2 — Global Primitive Independence
-
-Do the current candidate primitive concepts remain mutually independent under arbitrary equivalent reconstruction, alternative formal bases, lower-level ontologies, broader reduction standards, or completed VI-003 execution?
-
-**Status:** Open
-
----
-
-## OP-3
-
-Can the Admissibility Structure (Ω) be derived from simpler primitive concepts?
-
-**Status:** Open
-
----
-
-## OP-4
-
-Can reasoning states be reduced to more primitive concepts?
-
-**Status:** Open
-
----
-
-## OP-5
-
-Can semantic validity be defined without circularity?
-
-**Status:** Open
-
----
-
-## OP-6
-
-Does every reasoning calculus induce an equivalent Admissibility Structure?
-
-**Status:** Open
-
----
-
-## OP-7
-
-Does a complete representation theorem exist for Project FAR?
-
-**Status:** Open
+This historical register does not reopen settled theory. Reopening requires a reproducible contradiction to a stated premise, proof step, theorem, or derivation in `PROJECT-FAR-CORE-THEORY-1.0`. New domain contracts, implementations, empirical studies, or cost models proceed through `POST-CLOSURE-001`.

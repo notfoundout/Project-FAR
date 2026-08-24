@@ -59,11 +59,7 @@ FARA must preserve the distinctions among:
 
 ## Principle 4 — Reduction Over Expansion
 
-Project FAR prefers reducing concepts to simpler concepts over expanding the primitive basis.
-
-A concept should be treated as a candidate primitive only when no successful reduction has been established.
-
-Candidate primitive status remains provisional.
+Project FAR minimizes schema commitments relative to a declared contract. The seven retained FARA roles are not global primitives. Reification, tagging, splitting, and combination must be considered before any scoped lower-bound claim.
 
 ---
 
@@ -189,3 +185,7 @@ This principle is bounded to the Accepted formal-kernel scope. It is not a claim
 This document should be updated whenever a new architectural principle is adopted or an existing principle is revised.
 
 Any change to these principles should be justified by an audit, grounding investigation, accepted promotion record, or formal methodological decision.
+
+## Contract and factorization discipline
+
+FARA conformance is structural. Exact adequacy requires a separate FAR factorization proof under a declared contract. A collision refutes sufficiency; absence of a decoder and collision remains OPEN. Audit-only distinctions and machinery costs must be disclosed.

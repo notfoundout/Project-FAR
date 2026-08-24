@@ -6,11 +6,9 @@
 
 ## Purpose
 
-FAR defines the investigation methodology layer of Project FAR.
+FAR defines Project FAR's contract-relative investigation methodology. It freezes the claim and comparison contract, evaluates candidate representations by factorization or collisions, minimizes relative to declared objectives, and reports loss and Unknown. [FARA](../FARA/README.md) is one selected representation target.
 
-It provides a structured method for conducting reasoning investigations using the representational architecture defined by [FARA](../FARA/README.md).
-
-FAR does not introduce new FARA primitives.
+FAR does not introduce or rely on global FARA primitives. Construct, Differentiate, and Restrict are workflow verbs; Resolve is derived rule application.
 
 ---
 
@@ -24,7 +22,7 @@ Future FAR changes should be driven by concrete downstream requirements, worked 
 
 ## Framework Role
 
-FAR owns investigation methodology.
+FAR owns contract freezing and investigation methodology.
 
 It defines how reasoning investigations are conducted, recorded, validated, revised, and closed.
 
@@ -83,13 +81,13 @@ FAR owns investigation methodology.
 
 It does not define representational architecture, operational procedures, mathematical evaluation, or meta-framework governance.
 
-Candidate generation remains part of Stage 6 — Perform Reasoning. Candidate admissibility classification occurs in Stage 7 through the Admissibility Structure.
+Candidate generation remains part of Stage 6 — Perform Reasoning. The applicable calculus classifies candidates; Stage 7 materializes those results and provenance in the derived Admissibility Structure.
 
 ---
 
 ## Next Steps
 
-Use canonical worked investigations to test whether the stable FAR methodology is sufficient.
+Use canonical worked investigations to test whether declared behavior factors through each representation and to expose collisions, hidden machinery, and contract sensitivity.
 
 ---
 
@@ -104,4 +102,8 @@ Use canonical worked investigations to test whether the stable FAR methodology i
 
 ## Derivation boundary
 
-FAR procedures are compatible independent methodology unless a cited derivation establishes otherwise. The workflow, selections, failure reporting, and claim-dimension analysis are not logical consequences of FARA. See the [derivation-status matrix](../../docs/governance/derivation-status-matrix.md).
+The factorization and quotient obligations are constrained by shared theory; sequencing, selection, governance, and reporting choices remain compatible independent methodology unless a cited derivation establishes otherwise. The workflow, selections, failure reporting, and claim-dimension analysis are not logical consequences of FARA. See the [derivation-status matrix](../../docs/governance/derivation-status-matrix.md).
+
+## Theory-conformance rule
+
+No FAR artifact may call a representation lossless, sufficient, minimal, or representation-independent without naming the controlling contract, admitted transformations, objective/order, and certificate or boundary required by the core theory.

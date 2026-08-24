@@ -1,3 +1,4 @@
+import hashlib
 import json
 import shutil
 import subprocess
@@ -56,3 +57,22 @@ def test_committed_export_is_fresh(tmp_path):
     assert generated_files == committed_files
     for rel in generated_files:
         assert (generated / rel).read_bytes() == (committed / rel).read_bytes(), rel
+
+
+def test_export_carries_exact_core_theory():
+    source = ROOT / "theory/theorems/Project-FAR-Theory-Closure-v1.0.md"
+    exported = ROOT / "exports/far-spec-v1/theorems/Project-FAR-Theory-Closure-v1.0.md"
+    expected_sha256 = "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5"
+
+    assert exported.read_bytes() == source.read_bytes()
+    assert hashlib.sha256(exported.read_bytes()).hexdigest() == expected_sha256
+
+    manifest = json.loads((ROOT / "exports/far-spec-v1/manifest.json").read_text())
+    assert manifest["export_version"] == "1.1.0"
+    assert manifest["exporter_version"] == "1.1.0"
+    entries = {artifact["path"]: artifact for artifact in manifest["artifacts"]}
+    record = entries["theorems/Project-FAR-Theory-Closure-v1.0.md"]
+    assert record["category"] == "theorems"
+    assert record["status"] == "canonical"
+    assert record["source"] == "theory/theorems/Project-FAR-Theory-Closure-v1.0.md"
+    assert record["sha256"] == expected_sha256

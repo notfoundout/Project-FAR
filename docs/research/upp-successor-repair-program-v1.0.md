@@ -1,5 +1,10 @@
 # UPP Successor Semantic Repair Program v1.0
 
+Status update (2026-08-24): **Optional bounded case study; not a core-closure dependency.**
+
+The original registered procedure is preserved below. Project FAR Core Theory v1.0 has closed the broad question independently: even a successful successor would establish only contract-relative reconstructability. This program may not restore the frozen theorem's authority or a representation-independent primitive architecture.
+
+
 ## Identity
 
 Program: `UPP-SR-001`

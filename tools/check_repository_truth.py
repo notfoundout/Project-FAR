@@ -60,13 +60,23 @@ def main() -> int:
     if not isinstance(latest_release, str) or not re.fullmatch(r"v\d+\.\d+\.\d+", latest_release):
         fail("release authority latest_release is missing or malformed")
 
+    status = authority.get("project_status", {})
+    if status.get("current_phase") != "post-closure assurance and application":
+        fail("project-status phase authority drift")
+    if status.get("governing_core") != "PROJECT-FAR-CORE-THEORY-1.0":
+        fail("governing core-theory authority drift")
+    if status.get("current_program") != "POST-CLOSURE-001":
+        fail("current program authority drift")
+
     readme = read_text("README.md")
     required_phrases = (
         f"## Latest release: {latest_release}",
         f"The latest published GitHub repository release is [{latest_release}]",
         "These are separate version surfaces",
-        "The deductive UPP queue is closed.",
-        "The active phase is independent criticism, countermodel search, proof review, kernel-checked reconstruction, bounded replication, and application-correspondence testing.",
+        "`PROJECT-FAR-CORE-THEORY-1.0`",
+        "## Post-closure phase",
+        "The active program is `POST-CLOSURE-001`.",
+        "Core theory reopens only for a reproducible contradiction",
         "Historical bounded-program status",
     )
     for phrase in required_phrases:
@@ -99,8 +109,10 @@ def main() -> int:
         "successful": True,
         "package_version": package_version,
         "latest_release": latest_release,
-        "status_authority": authority["project_status"]["authority"],
-        "current_phase": authority["project_status"]["current_phase"],
+        "status_authority": status["authority"],
+        "governing_core": status["governing_core"],
+        "current_program": status["current_program"],
+        "current_phase": status["current_phase"],
     }
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0

@@ -28,13 +28,16 @@ Circular dependencies are prohibited.
 
 ## Layer 1 — Foundations
 
-Foundations establish motivation, assumptions, scope, primitive-basis investigations, and representational commitments.
+Foundations establish motivation, assumptions, scope, and scoped representation/contract investigations.
 
 Canonical theory may depend on foundations.
 
 ---
 
 ## Layer 2 — Shared Theory
+
+Shared theory is governed by `PROJECT-FAR-CORE-THEORY-1.0`: declared comparison contracts induce behavior maps, factorization tests, observational equivalence and quotients, and scoped invariance/common-theory results. It supplies no contract-free primitive inventory.
+
 
 Shared theory contains canonical definitions, axioms, semantics, operators, notation, theorems, proofs, and consistency material.
 
@@ -44,7 +47,7 @@ Shared theory depends only on foundations and earlier shared-theory prerequisite
 
 ## Layer 3 — FARA
 
-FARA defines the representational architecture of reasoning analysis.
+FARA defines Project FAR's selected finite explicit auditable representation target. Its schema roles and accepted kernel are engineering commitments, not a universal source ontology.
 
 FARA depends on foundations and shared theory.
 
@@ -52,7 +55,7 @@ FARA depends on foundations and shared theory.
 
 ## Layer 4 — FAR
 
-FAR defines the methodology for conducting investigations using FARA.
+FAR defines contract freezing, mapping, factorization/collision testing, relative minimization, and loss-reporting methodology using FARA where selected.
 
 FAR depends on foundations, shared theory, and FARA.
 
@@ -60,7 +63,7 @@ FAR depends on foundations, shared theory, and FARA.
 
 ## Layer 5 — FARO
 
-FARO defines operations for comparing, auditing, transforming, and analyzing reasoning representations.
+FARO defines downstream operations for executing, materializing, comparing, auditing, transforming, and reporting reasoning representations and contract-relative results.
 
 FARO depends on foundations, shared theory, FARA, and FAR.
 

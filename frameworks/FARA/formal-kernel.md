@@ -51,7 +51,7 @@ These are formal carrier names. Their canonical conceptual correspondences are:
 | `Role` | an explicit participant position within a relation occurrence |
 | `Provenance` | an explicit source or derivational record attached to an event |
 
-The formal carrier names do not reclassify FARA's seven candidate primitives.
+The formal carrier names instantiate FARA's seven schema roles and do not confer global primitive status.
 
 ## Relation signature
 
@@ -177,7 +177,7 @@ The underlying Research artifacts remain immutable Research evidence. Promotion 
 
 ## Primitive and theory boundary
 
-The candidate primitive registry remains:
+The v1 schema-role registry remains:
 
 - Object
 - Property
@@ -187,7 +187,7 @@ The candidate primitive registry remains:
 - Investigation
 - Reasoning Calculus
 
-This kernel selection does not establish their global independence, necessity, minimality, or irreducibility.
+These roles are not globally primitive. The kernel selection does not establish a contract-free native ontology, necessity, minimality, or irreducibility.
 
 ## Nonclaims
 
@@ -195,7 +195,7 @@ This document does not establish:
 
 - global uniqueness;
 - universality outside the stated scope;
-- global primitive necessity or minimality;
+- global primitive status or contract-free minimality;
 - completeness;
 - full-signature or unbounded adequacy;
 - nonfinite continuous semantics;
@@ -207,3 +207,7 @@ This document does not establish:
 ## Change control
 
 Any revision to this kernel requires the Project FAR discovery lifecycle, FARM change control, preservation of the immutable source and replication evidence, and explicit impact analysis across FARA, FAR, and FARO.
+
+## Contract-relative adequacy boundary
+
+This kernel is a target representation, not the source ontology of every system. A mapping into it is exactly sufficient only when the declared behavior factors through that mapping. Sort-preserving relational isomorphism is one admitted equivalence for the v1 engineering contract; other contracts may induce coarser observational quotients. Audit/provenance requirements may justify retaining distinctions that are not information-minimal for another contract.

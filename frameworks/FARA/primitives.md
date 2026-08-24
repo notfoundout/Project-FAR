@@ -1,171 +1,47 @@
-# Candidate Primitives
+# FARA Schema Roles
+
+Historical path: `frameworks/FARA/primitives.md`
+
+Status: **Accepted role registry; former candidate-primitive classification superseded**
 
 ## Purpose
 
-This document identifies the concepts currently treated as candidate primitives within the Foundational Architecture of Reasoning Analysis (FARA).
+This document records the seven named schema roles used by Project FAR's finite explicit auditable v1 representation schema. Under `PROJECT-FAR-CORE-THEORY-1.0`, they are **not global primitives** and their count is not representation invariant.
 
-A candidate primitive is a concept that has not yet been successfully reduced to simpler concepts within the current framework.
+Canonical definitions remain in `theory/definitions/definitions.md`.
 
-Candidate primitive status is provisional.
+## Current schema and contract roles
 
-Every candidate primitive remains subject to future reduction, replacement, refinement, or elimination through grounding investigations.
+| Role | Terminal classification |
+|---|---|
+| Object | schema role for distinguishable items |
+| Property | schema role; representable as a unary relation in the accepted kernel |
+| Relation | schema role; reifiable, splittable, or combinable under faithful presentations |
+| Representation | comparison-contract and schema role |
+| Interpretation | consequence-affecting contract parameter |
+| Investigation | scope/provenance aggregate and schema role |
+| Reasoning Calculus | consequence-determining parameter when it changes behavior or classifications |
 
-The canonical definitions of all concepts listed here are maintained in:
+These roles are mandatory fields only where the Project FAR v1 engineering contract requires them. A target need not natively contain the same ontology.
 
-`theory/definitions/definitions.md`
+## Derived architectural concepts
 
----
+The following remain derived or optional views:
 
-# Primitive Policy
+- representational structures, mappings, transformations, fidelity, completeness, consistency, and invariance;
+- reasoning processes, states, state records, transformations, transition signatures, and traces;
+- candidates, criteria, admissibility classifications, Ω, resolution rules, executions, and resolutions;
+- claims, evidence, observations, assumptions, hypotheses, explanations, predictions, and counterexamples;
+- models, frameworks, theories, architectures, equivalences, reductions, and expressive-power claims.
 
-A concept should appear in this document only if:
+Ω is a derived materialized classification/provenance view. Resolve is derived rule application.
 
-- no complete reduction has been established;
-- no simpler definition preserves the required expressive power;
-- repeated reduction attempts have not yet succeeded.
+## Reduction and equivalence policy
 
-Candidate primitive status is not evidence of irreducibility.
+Primitive-count arguments must first freeze the admitted vocabulary, reification/tagging rules, definability, equivalence, and cost order. Without that contract, reification, tagging, splitting, and combination change the number and names of primitives without information loss.
 
-It reflects only the current state of investigation.
+No future document may promote these seven roles to a universal or irreducible basis merely because the canonical FARA schema uses separate carriers.
 
----
+## Research boundary
 
-# Current Candidate Primitives
-
-The current candidate primitive concepts are:
-
-- Object
-- Property
-- Relation
-- Representation
-- Interpretation
-- Investigation
-- Reasoning Calculus
-
-These concepts presently serve as the smallest unreduced conceptual foundation of FARA.
-
-All remaining architectural concepts are currently treated as derived concepts.
-
----
-
-# Derived Architectural Concepts
-
-The following concepts are presently defined in terms of the candidate primitives and other derived concepts.
-
-## Structural Concepts
-
-- Structure
-- Component
-- System
-- Class
-- Domain
-
----
-
-## Representational Concepts
-
-- Representational Structure
-- Representation Mapping
-- Representation Transformation
-- Representation Fidelity
-- Representation Completeness
-- Representation Consistency
-- Representation Invariance
-
----
-
-## Reasoning Concepts
-
-- Reasoning Process
-- Reasoning State
-- Reasoning State Representation
-- Reasoning State Record
-- Transformation Rule
-- Transformation Execution
-- Transition Signature
-- Reasoning Trace
-
----
-
-## Decision Concepts
-
-- Candidate
-- Criterion
-- Admissibility
-- Admissibility Classification
-- Admissibility Structure (Ω)
-- Resolution Rule
-- Resolution Execution
-- Resolution
-
----
-
-## Evidence Concepts
-
-- Claim
-- Evidence
-- Observation
-- Assumption
-- Hypothesis
-- Explanation
-- Prediction
-- Counterexample
-
----
-
-## Formal Concepts
-
-- Model
-- Framework
-- Theory
-- Architecture
-- Equivalence
-- Reduction
-- Independence
-- Universal Architecture
-- Expressive Power
-
----
-
-This list is informational.
-
-Canonical definitions remain in:
-
-`theory/definitions/definitions.md`
-
----
-
-# Primitive Stability
-
-No candidate primitive should be regarded as permanently fundamental.
-
-Grounding investigations should continually attempt to:
-
-- derive candidate primitives from simpler concepts;
-- demonstrate independence where reduction fails;
-- identify hidden assumptions;
-- eliminate unnecessary primitives;
-- establish a smaller foundational basis.
-
-Successful reductions should remove concepts from the candidate primitive list.
-
----
-
-# Research Objectives
-
-Current research focuses on:
-
-- reducing the primitive set;
-- establishing independence where reduction fails;
-- proving minimality of the remaining primitive basis;
-- identifying hidden conceptual dependencies;
-- determining whether additional candidate primitives are required;
-- producing formal reduction proofs.
-
----
-
-# Version Status
-
-This document records the current candidate primitive basis for FARA.
-
-It is expected to evolve as Project FAR's grounding investigations progress.
+Domain-specific necessity or implementation-cost claims may be studied under an explicit contract. The global primitive-independence and primitive-minimality search is closed by `FAR-CORE-007`; it is not an open FARA objective.

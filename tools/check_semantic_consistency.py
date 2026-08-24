@@ -26,7 +26,7 @@ def validate() -> list[str]:
     duplicates = sorted({term for term in terms if terms.count(term) > 1})
     if duplicates:
         errors.append("duplicate canonical term ownership: " + ", ".join(duplicates))
-    allowed_statuses = {"candidate-primitive", "candidate-operator", "derived", "derived-procedural", "independent-method", "protocol-artifact", "decision-rule"}
+    allowed_statuses = {"schema-role", "contract-role", "contract-parameter", "derived", "derived-procedural", "derived-materialized-view", "theory-constrained-method", "workflow-verb", "independent-method", "protocol-artifact", "decision-rule"}
     for entry in data["canonical_terms"]:
         if not entry.get("owner") or entry.get("status") not in allowed_statuses:
             errors.append(f"unclassified canonical term: {entry.get('term')}")

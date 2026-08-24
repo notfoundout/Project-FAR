@@ -17,8 +17,11 @@ Each concept should have one canonical source. Other documents should link to th
 | Concept | Canonical Location | Purpose |
 |---|---|---|
 | Project FAR | [`OVERVIEW.md`](OVERVIEW.md) | Provides the project overview. |
-| Central Research Program | [`governance/central-research-program.md`](governance/central-research-program.md) | Defines the central research question, research objectives, evidence standard, counterexample policy, and completion criteria. |
-| Post-Terminal Public Evaluation Program | [`governance/post-terminal-public-evaluation-program-v1.0.md`](governance/post-terminal-public-evaluation-program-v1.0.md) | Governs evaluation of the completed terminal theorem without reopening the closed UPP deductive queue. |
+| Central Research Program | [`governance/central-research-program.md`](governance/central-research-program.md) | Records the terminal research answer and current evidence discipline. |
+| Project FAR Core Theory v1.0 | [`../theory/theorems/Project-FAR-Theory-Closure-v1.0.md`](../theory/theorems/Project-FAR-Theory-Closure-v1.0.md) | Canonical contract-relative core theory and terminal verdict. |
+| Core Theory Acceptance | [`governance/project-far-theory-closure-acceptance-v1.0.md`](governance/project-far-theory-closure-acceptance-v1.0.md) | Accepts and promotes the core theory with scope, assurance, provenance, and claim impact. |
+| Post-Closure Assurance and Application Program | [`governance/post-closure-assurance-and-application-program-v1.0.md`](governance/post-closure-assurance-and-application-program-v1.0.md) | Governs independent review, formalization, contract schemas, domain contracts, and applications. |
+| Historical Post-Terminal UPP Evaluation Program | [`governance/post-terminal-public-evaluation-program-v1.0.md`](governance/post-terminal-public-evaluation-program-v1.0.md) | Superseded historical program preserved for provenance. |
 | Architecture | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Describes the repository architecture. |
 | Agent Execution Skills | [`../.claude/skills/`](../.claude/skills/) | Holds the `far-*` skills that execute the routing and authority rules stated in `AGENTS.md`. |
 | Project Status | [`project-status.md`](project-status.md) | Records current governance and milestone status. |
@@ -31,7 +34,7 @@ Each concept should have one canonical source. Other documents should link to th
 | Open Problems | [`governance/open-problems-register.md`](governance/open-problems-register.md) | Indexes research problems without authorizing execution. |
 | Counterexamples | [`governance/counterexample-register.md`](governance/counterexample-register.md) | Records strongest surviving threats and expressive-loss risks. |
 | Bounded-v1 Cross-Audit Adjudication | [`audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md`](audits/bounded-v1-three-lane-cross-audit-adjudication-v1.0.md) | Records the 2026-08-13 three-lane closure-campaign adjudication (`FROZEN_V1_NOT_REFUTED_BUT_NOT_ESTABLISHED`) and the confirmed defects `XA-001`–`XA-008`, with preserved lane evidence. |
-| UPP Successor Repair Program | [`research/upp-successor-repair-program-v1.0.md`](research/upp-successor-repair-program-v1.0.md) | Registers `UPP-SR-001`: repair hypotheses, forbidden repairs, regression matrix, gates, freeze timing, and OP-06 sequencing for the bounded-v1 derivation defects. |
+| UPP Successor Repair Program | [`research/upp-successor-repair-program-v1.0.md`](research/upp-successor-repair-program-v1.0.md) | Preserved optional bounded case-study program; no longer a core-closure dependency. |
 | Framework Boundaries | [`governance/framework-boundaries.md`](governance/framework-boundaries.md) | Fixes framework ownership and nonclaims. |
 | Dependency Specification | [`governance/dependency-specification.md`](governance/dependency-specification.md) | Fixes and machine-checks canonical dependency direction. |
 | Procedure Derivation Status | [`governance/derivation-status-matrix.md`](governance/derivation-status-matrix.md) | Separates derivation from method and governance choices. |
@@ -138,6 +141,8 @@ Each concept should have one canonical source. Other documents should link to th
 
 | Concept | Canonical Location | Purpose |
 |---|---|---|
+| Project FAR Core Theory v1.0 | [`../theory/theorems/Project-FAR-Theory-Closure-v1.0.md`](../theory/theorems/Project-FAR-Theory-Closure-v1.0.md) | Governs contract-relative sufficiency, observational quotients, invariance, and terminal boundaries. |
+| Core Theory Ledger | [`../theory/terminal/project-far-core-theory-v1.0.json`](../theory/terminal/project-far-core-theory-v1.0.json) | Machine-readable current claims, scopes, dispositions, and assurance. |
 | Shared Definitions | [`../theory/definitions/definitions.md`](../theory/definitions/definitions.md) | Provides canonical shared definitions. |
 | Axioms | [`../theory/axioms/axioms.md`](../theory/axioms/axioms.md) | Defines foundational assumptions. |
 | Axiom metadata | [`../theory/metadata/axioms.yaml`](../theory/metadata/axioms.yaml) | Registers canonical machine-readable axiom records, including AX-001 and A1 through A5. |
@@ -149,7 +154,7 @@ Each concept should have one canonical source. Other documents should link to th
 ## Related Documents
 
 - [Central Research Program](governance/central-research-program.md)
-- [Post-Terminal Public Evaluation Program](governance/post-terminal-public-evaluation-program-v1.0.md)
+- [Post-Closure Assurance and Application Program](governance/post-closure-assurance-and-application-program-v1.0.md)
 - [Project roadmap](ROADMAP.md)
 - [Project status](project-status.md)
 - [Root README](../README.md)
@@ -181,11 +186,13 @@ Each concept should have one canonical source. Other documents should link to th
 - Historical maintenance baseline: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md).
 - Historical internal-validation baseline: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
 
-## Post-Terminal Evaluation Authority
+## Theory Closure and Assurance Authority
 
-- Terminal theorem disclosure: `docs/research/upp-w15-terminal-theorem-v1.0.md` records the exact terminal result, frozen premises, boundaries, and nonclaims.
-- Terminal theorem audit: `docs/audits/upp-w15-terminal-theorem-audit.md` records the terminal dependency and assurance audit.
-- Post-terminal evaluation: `docs/governance/post-terminal-public-evaluation-program-v1.0.md` governs independent proof review, countermodel/scope challenge, kernel-checked reconstruction, independent bounded replication, and application correspondence. It does not reopen the closed UPP deductive queue.
+- Canonical theory: `theory/theorems/Project-FAR-Theory-Closure-v1.0.md`.
+- Machine claim ledger: `theory/terminal/project-far-core-theory-v1.0.json`.
+- Acceptance/promotion: `docs/governance/project-far-theory-closure-acceptance-v1.0.md`.
+- Current program: `docs/governance/post-closure-assurance-and-application-program-v1.0.md`.
+- Historical UPP disclosure, audit, cross-audit, and post-terminal program remain preserved but do not override the core theory.
 
 ## Comparative Representation Evaluation Authority
 

@@ -4,7 +4,7 @@
 
 This document defines comparison within FARO.
 
-Comparison identifies similarities and differences between FAR investigations or FARA reasoning artifacts according to explicit criteria.
+Comparison identifies similarities and differences between FAR investigations or FARA reasoning artifacts under one explicit comparison contract.
 
 Comparison is descriptive unless paired with explicit operational evaluation criteria.
 
@@ -31,6 +31,7 @@ Typical comparison inputs include:
 - two or more investigation records or reasoning artifacts;
 - comparison level;
 - comparison criteria;
+- comparison contract, tests/contexts, typed outcomes, profiles, frame, and admitted transformations;
 - relevant FAR/FARA artifact references.
 
 ---
@@ -80,4 +81,4 @@ The report identifies similarities, differences, non-comparable artifacts, and c
 
 Comparison does not determine which investigation is correct.
 
-Comparison does not redefine FAR methodology, FARA architecture, or FARE mathematics.
+Comparison must distinguish a factorization certificate, collision witness, and OPEN result. It does not redefine shared theory, FAR methodology, FARA architecture, or FARE mathematics, and it does not infer native common structure from encodability.

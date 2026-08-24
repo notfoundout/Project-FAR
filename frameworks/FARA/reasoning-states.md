@@ -171,13 +171,10 @@ Those concepts are defined by the canonical definitions and related architectura
 
 ---
 
-## Research Status
+## Theory-Derived Constraint
 
-Current research investigates:
+A reasoning state representation is sufficient only relative to a frozen comparison contract. Exact sufficiency requires the contract's behavior map to factor through the representation; a collision between two states with the same representation and different declared behavior refutes sufficiency. A universally sufficient minimal state format is not claimed.
 
-- minimal reasoning state representations;
-- reasoning state equivalence;
-- reasoning state composition;
-- reasoning state decomposition;
-- representation completeness for reasoning states;
-- formal properties of reasoning state transitions.
+## Open Implementation Questions
+
+Post-closure work may investigate computable contract-relative quotients, state normalization, trace cost, and engineering profiles. Those questions do not reopen the terminal core theorem.

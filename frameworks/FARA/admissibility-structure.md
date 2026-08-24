@@ -1,5 +1,7 @@
 # Admissibility Structure (Ω)
 
+Status: **derived materialized classification/provenance view**
+
 ## Purpose
 
 This document specifies the architectural role of the Admissibility Structure (Ω) within the Foundational Architecture of Reasoning Analysis (FARA).
@@ -40,7 +42,7 @@ The Admissibility Structure (Ω) represents those admissibility classifications.
 
 The **Admissibility Structure**, denoted **Ω**, is the representation of the admissibility classifications of candidates within an investigation.
 
-Ω represents and records those classifications without determining them.
+Ω represents and records those classifications; it does not cause or determine them. Under `FAR-CORE-013`, it is semantically eliminable as an intermediate: resolution may be composed directly with the calculus-produced classification map.
 
 Ω does not:
 
@@ -87,7 +89,7 @@ The admissibility classifications available within Ω are determined entirely by
 
 ## Resolution
 
-Ω does not itself produce a resolution.
+Ω does not itself produce a resolution and cannot be the sole lawful cause of a different consequence when every consequence-affecting input is fixed.
 
 A resolution is produced by applying a resolution rule to Ω through a resolution execution.
 
@@ -195,14 +197,6 @@ Those concepts are defined by the canonical definitions and related architectura
 
 ---
 
-## Research Status
+## Open Implementation Questions
 
-Current research investigates:
-
-- formal properties of Ω;
-- admissibility equivalence;
-- admissibility preservation across transformations;
-- completeness of admissibility classification;
-- minimality of admissibility representation;
-- relationships between Ω and resolution rules;
-- representation theorems for admissibility structures.
+Post-closure work may investigate efficient materialization, provenance completeness, admissibility-preservation certificates, and rule-interface design. Ω's status as a derived view is closed unless a genuine contradiction to `FAR-CORE-013` is produced.
