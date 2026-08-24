@@ -23,7 +23,7 @@ class FaraOperatorW2Tests(unittest.TestCase):
     def test_required_nonclaims_and_obligations_are_pinned(self):
         bad=copy.deepcopy(DATA); bad["nonclaims"].pop(); self.assertTrue(W2.validate(bad))
         bad=copy.deepcopy(DATA); bad["remaining_obligations"].pop(); self.assertTrue(W2.validate(bad))
-    def test_historical_resolve_and_select_classifications_are_preserved(self):
+    def test_resolve_and_select_remain_unresolved(self):
         actual={c["name"]:c["classification"] for c in DATA["fourth_candidates"]}
         self.assertEqual("outside_scope_unresolved",actual["Resolve"])
         self.assertEqual("outside_scope_unresolved",actual["Select"])

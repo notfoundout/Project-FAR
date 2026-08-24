@@ -99,7 +99,7 @@ class FaraFormalKernelPromotionTests(unittest.TestCase):
             checker.validate(manifest, check_files=False),
         )
 
-    def test_historical_role_registry_mutation_fails(self):
+    def test_primitive_reclassification_fails(self):
         manifest = copy.deepcopy(self.manifest)
         manifest["primitive_registry_unchanged"].remove("Property")
         self.assertIn(
@@ -240,7 +240,7 @@ class FaraFormalKernelPromotionTests(unittest.TestCase):
             ),
         )
 
-    def test_canonical_schema_role_list_mutation_fails(self):
+    def test_canonical_primitive_list_mutation_fails(self):
         text = self.primitive_text.replace(
             "| Reasoning Calculus |", "| Operation |"
         )

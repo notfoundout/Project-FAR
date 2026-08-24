@@ -17,7 +17,7 @@ class FaraPrimitiveIndependenceTests(unittest.TestCase):
     def test_canonical_result_validates(self):
         checker.validate(self.data)
 
-    def test_historical_coverage_and_fail_closed_outcomes(self):
+    def test_exact_coverage_and_fail_closed_outcomes(self):
         self.assertEqual([r["primitive"] for r in self.data["results"]], checker.EXPECTED)
         self.assertEqual({r["classification"] for r in self.data["results"]}, {"unresolved"})
 
