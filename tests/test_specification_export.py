@@ -68,6 +68,8 @@ def test_export_carries_exact_core_theory():
     assert hashlib.sha256(exported.read_bytes()).hexdigest() == expected_sha256
 
     manifest = json.loads((ROOT / "exports/far-spec-v1/manifest.json").read_text())
+    assert manifest["export_version"] == "1.1.0"
+    assert manifest["exporter_version"] == "1.1.0"
     entries = {artifact["path"]: artifact for artifact in manifest["artifacts"]}
     record = entries["theorems/Project-FAR-Theory-Closure-v1.0.md"]
     assert record["source"] == "theory/theorems/Project-FAR-Theory-Closure-v1.0.md"
