@@ -4,41 +4,173 @@
   "title": "Project FAR Core Assurance Ledger v1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "ledger_id", "theory_id", "authority", "dimension_rule", "claims"],
+  "required": [
+    "schema_version",
+    "ledger_id",
+    "theory_id",
+    "authority",
+    "dimension_rule",
+    "claims"
+  ],
   "properties": {
-    "schema_version": {"const": "1.0"},
-    "ledger_id": {"const": "FAR-CORE-ASSURANCE-1.0"},
-    "theory_id": {"const": "PROJECT-FAR-CORE-THEORY-1.1"},
-    "authority": {"const": "assurance_dimensions_only_theory_statement_from_governing_ledger"},
-    "dimension_rule": {"const": "dimensions_must_not_be_collapsed"},
-    "claims": {"type": "array", "items": {"$ref": "#/$defs/claim"}, "minItems": 14, "maxItems": 14}
+    "schema_version": {
+      "const": "1.0"
+    },
+    "ledger_id": {
+      "const": "FAR-CORE-ASSURANCE-1.0"
+    },
+    "theory_id": {
+      "const": "PROJECT-FAR-CORE-THEORY-1.1"
+    },
+    "authority": {
+      "const": "assurance_dimensions_only_theory_statement_from_governing_ledger"
+    },
+    "dimension_rule": {
+      "const": "dimensions_must_not_be_collapsed"
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/claim"
+      },
+      "minItems": 14,
+      "maxItems": 14
+    }
   },
   "$defs": {
-    "stringArray": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
     "claim": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "exact_statement", "plain_language_statement", "scope", "dependencies", "truth_disposition", "proof_status", "independent_review_status", "formalization_status", "empirical_status", "novelty_prior_art_status", "governance_status", "version", "internal_proof_artifacts", "independent_review_artifacts", "lean_declarations", "known_counterexamples_to_stronger_variants", "prior_art_relationships", "limitations"],
+      "required": [
+        "id",
+        "exact_statement",
+        "plain_language_statement",
+        "scope",
+        "dependencies",
+        "governing_ledger_provenance_status",
+        "truth_disposition",
+        "proof_status",
+        "independent_review_status",
+        "formalization_status",
+        "empirical_status",
+        "novelty_prior_art_status",
+        "governance_status",
+        "version",
+        "internal_proof_artifacts",
+        "independent_review_artifacts",
+        "lean_declarations",
+        "known_counterexamples_to_stronger_variants",
+        "prior_art_relationships",
+        "limitations"
+      ],
       "properties": {
-        "id": {"type": "string", "pattern": "^FAR-CORE-0(0[1-9]|1[0-4])$"},
-        "exact_statement": {"type": "string", "minLength": 1},
-        "plain_language_statement": {"type": "string", "minLength": 1},
-        "scope": {"type": "string", "minLength": 1},
-        "dependencies": {"$ref": "#/$defs/stringArray"},
-        "truth_disposition": {"enum": ["PROVED", "REFUTED", "OPEN", "UNDERDETERMINED"]},
-        "proof_status": {"enum": ["NARRATIVE_PROOF_ACCEPTED", "SUPPORTED_DERIVED_APPLICATION", "OPEN"]},
-        "independent_review_status": {"enum": ["COMPLETE_CONFIRMED", "COMPLETE_NARROWED", "FAILED", "OPEN"]},
-        "formalization_status": {"enum": ["IN_PROGRESS", "FORMALIZED", "PARTIAL_OBSTRUCTION", "CONTRADICTION_REOPEN_REQUIRED", "NOT_STARTED"]},
-        "empirical_status": {"enum": ["NOT_APPLICABLE", "BOUNDED_CORROBORATION_ONLY", "OPEN"]},
-        "novelty_prior_art_status": {"enum": ["NOT_ESTABLISHED_STRONG_PRIOR_ART", "NOT_ESTABLISHED", "NOT_APPLICABLE"]},
-        "governance_status": {"enum": ["ACCEPTED_CURRENT", "ACCEPTED_BOUNDED_APPLICATION", "REOPEN_REQUIRED"]},
-        "version": {"const": "PROJECT-FAR-CORE-THEORY-1.1"},
-        "internal_proof_artifacts": {"$ref": "#/$defs/stringArray"},
-        "independent_review_artifacts": {"$ref": "#/$defs/stringArray"},
-        "lean_declarations": {"$ref": "#/$defs/stringArray"},
-        "known_counterexamples_to_stronger_variants": {"$ref": "#/$defs/stringArray"},
-        "prior_art_relationships": {"$ref": "#/$defs/stringArray"},
-        "limitations": {"$ref": "#/$defs/stringArray"}
+        "id": {
+          "type": "string",
+          "pattern": "^FAR-CORE-0(0[1-9]|1[0-4])$"
+        },
+        "exact_statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plain_language_statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependencies": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "governing_ledger_provenance_status": {
+          "enum": [
+            "proved",
+            "supported_derived"
+          ]
+        },
+        "truth_disposition": {
+          "enum": [
+            "PROVED",
+            "REFUTED",
+            "OPEN",
+            "UNDERDETERMINED"
+          ]
+        },
+        "proof_status": {
+          "enum": [
+            "NARRATIVE_PROOF_ACCEPTED",
+            "SUPPORTED_DERIVED_APPLICATION",
+            "OPEN"
+          ]
+        },
+        "independent_review_status": {
+          "enum": [
+            "COMPLETE_CONFIRMED",
+            "COMPLETE_NARROWED",
+            "FAILED",
+            "OPEN"
+          ]
+        },
+        "formalization_status": {
+          "enum": [
+            "IN_PROGRESS",
+            "FORMALIZED",
+            "PARTIAL_OBSTRUCTION",
+            "CONTRADICTION_REOPEN_REQUIRED",
+            "NOT_STARTED"
+          ]
+        },
+        "empirical_status": {
+          "enum": [
+            "NOT_APPLICABLE",
+            "BOUNDED_CORROBORATION_ONLY",
+            "OPEN"
+          ]
+        },
+        "novelty_prior_art_status": {
+          "enum": [
+            "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+            "NOT_ESTABLISHED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "governance_status": {
+          "enum": [
+            "ACCEPTED_CURRENT",
+            "ACCEPTED_BOUNDED_APPLICATION",
+            "REOPEN_REQUIRED"
+          ]
+        },
+        "version": {
+          "const": "PROJECT-FAR-CORE-THEORY-1.1"
+        },
+        "internal_proof_artifacts": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "independent_review_artifacts": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "lean_declarations": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "known_counterexamples_to_stronger_variants": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "prior_art_relationships": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "limitations": {
+          "$ref": "#/$defs/stringArray"
+        }
       }
     }
   }
