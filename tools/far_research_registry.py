@@ -84,12 +84,6 @@ W1_REVIEW_BRANCH = {
     "head": "0981697546eba68651bddcd22e67ccdeb98decf4",
     "tree": "3b58ca873c210b62c5ce01f572cb1314b55d95d2",
 }
-W1_TARGET_FILES = {
-    "theory_sha256": "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
-    "ledger_sha256": "theory/terminal/project-far-core-theory-v1.1.json",
-}
-
-
 
 def load(path: str) -> dict:
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
@@ -138,11 +132,52 @@ def w1_seal_errors(promotion: dict, root: Path = ROOT) -> list[str]:
     branch = promotion.get("review_branch")
     if branch != W1_REVIEW_BRANCH:
         errors.append("W1 promotion sealed review branch identity drifted")
-    if isinstance(target, dict):
-        for field, raw_path in W1_TARGET_FILES.items():
-            path = root / raw_path
-            if not path.is_file() or sha256(path) != target.get(field):
-                errors.append(f"W1 reviewed target bytes changed without adjudication: {raw_path}")
+    try:
+        terminal = json.loads(
+            (root / "docs/research/pca-w1-independent-review/07-final-independent-review.json")
+            .read_text(encoding="utf-8")
+        )
+        capsule = json.loads(
+            (root / "research/campaigns/pca-w1-replay-capsule-v1.0.json")
+            .read_text(encoding="utf-8")
+        )
+    except (OSError, json.JSONDecodeError) as exc:
+        errors.append(f"W1 target binding source unavailable: {exc}")
+    else:
+        terminal_target = terminal.get("target", {})
+        terminal_projection = {
+            "commit": terminal_target.get("commit"),
+            "tree": terminal_target.get("tree"),
+            "theory_id": terminal_target.get("theory_id"),
+            "theory_sha256": terminal_target.get("monograph_sha256"),
+            "ledger_sha256": terminal_target.get("ledger_sha256"),
+        }
+        capsule_target = capsule.get("target", {})
+        capsule_hashes = capsule_target.get("hashes", {})
+        capsule_projection = {
+            "commit": capsule_target.get("commit"),
+            "tree": capsule_target.get("tree"),
+            "theory_id": (
+                capsule_target.get("theory_or_question", "").split(" / ", 1)[0]
+            ),
+            "theory_sha256": capsule_hashes.get("theory"),
+            "ledger_sha256": capsule_hashes.get("ledger"),
+        }
+        source_hashes = {
+            item.get("path"): item.get("sha256")
+            for item in capsule.get("source_manifest", [])
+            if isinstance(item, dict)
+        }
+        if terminal_projection != W1_REVIEW_TARGET:
+            errors.append("sealed terminal W1 target identity/hash contract drifted")
+        if capsule_projection != W1_REVIEW_TARGET:
+            errors.append("W1 replay capsule target identity/hash contract drifted")
+        if target != terminal_projection or target != capsule_projection:
+            errors.append("W1 promotion target is not cross-bound to sealed review/capsule target")
+        if source_hashes.get("theory/theorems/Project-FAR-Theory-Closure-v1.1.md") != target.get("theory_sha256"):
+            errors.append("W1 target theory hash is not bound to capsule source manifest")
+        if source_hashes.get("theory/terminal/project-far-core-theory-v1.1.json") != target.get("ledger_sha256"):
+            errors.append("W1 target ledger hash is not bound to capsule source manifest")
     for artifact in artifacts:
         if not isinstance(artifact, dict):
             continue
