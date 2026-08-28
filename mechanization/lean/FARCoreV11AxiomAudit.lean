@@ -2,40 +2,33 @@ import FARCoreV11Claims001To012
 import FARCoreV11Omega
 import FARCoreV11SSS
 
-/-!
-# FAR-CORE v1.1 kernel-assumption audit
-
-`#print axioms` makes the transitive kernel assumptions of the primary W2 declarations
-visible in every Lean CI log.  The formalization ledger records the same dependencies per
-claim.  No output here establishes novelty, premise fidelity, or theorem authority.
--/
-
-#print axioms FARCoreV11.exact_factorization_criterion
-#print axioms FARCoreV11.collision_refutes_sufficiency
-#print axioms FARCoreV11.quotient_is_sufficient
-#print axioms FARCoreV11.observational_quotient_universal
-#print axioms FARCoreV11.factorToQuotient_surjective
-#print axioms FARCoreV11.leastInformativeImageEquiv
-#print axioms FARCoreV11.action_preserves_observational_equivalence
-#print axioms FARCoreV11.descendAction
-#print axioms FARCoreV11.no_contract_free_simultaneous_minimum
-#print axioms FARCoreV11.identity_is_universally_sufficient
-#print axioms FARCoreV11.invariants_antitone
-#print axioms FARCoreV11.embeddingRangeEquiv
-#print axioms FARCoreV11.transport_operation_commutes
-#print axioms FARCoreV11.transport_relation_commutes
-#print axioms FARCoreV11.reification_recovers_relation
-#print axioms FARCoreV11.combine_split_operator_family
-#print axioms FARCoreV11.split_combine_operator
-#print axioms FARCoreV11.finite_panel_two_completions
-#print axioms FARCoreV11.commonTheory_frame_independent
-#print axioms FARCoreV11.commonTheory_invariant_under_truth_equivalence
-#print axioms FARCoreV11.residue_can_change_with_frame
-#print axioms FARCoreV11.omitted_parameter_refutes_sufficiency
-#print axioms FARCoreV11.absent_unknown_must_separate
 #print axioms FARCoreV11.Omega.omega_elimination
 #print axioms FARCoreV11.Omega.resolve_is_composition
 #print axioms FARCoreV11.SSS.four_monotone_decoders
-#print axioms FARCoreV11.SSS.projected_successor_decoder_failure
-#print axioms FARCoreV11.SSS.hyperedge_factorization
 #print axioms FARCoreV11.SSS.frontier_factorization
+#print axioms FARCoreV11.SSS.hyperedge_factorization
+#print axioms FARCoreV11.SSS.projected_successor_decoder_failure
+#print axioms FARCoreV11.absent_unknown_must_separate
+#print axioms FARCoreV11.action_preserves_observational_equivalence
+#print axioms FARCoreV11.collision_refutes_sufficiency
+#print axioms FARCoreV11.combine_split_operator_family
+#print axioms FARCoreV11.commonTheory_frame_independent
+#print axioms FARCoreV11.commonTheory_invariant_under_truth_equivalence
+#print axioms FARCoreV11.descendAction
+#print axioms FARCoreV11.embeddingRangeEquiv
+#print axioms FARCoreV11.exact_factorization_criterion
+#print axioms FARCoreV11.factorToQuotient_surjective
+#print axioms FARCoreV11.finite_panel_two_completions
+#print axioms FARCoreV11.identity_is_universally_sufficient
+#print axioms FARCoreV11.invariants_antitone
+#print axioms FARCoreV11.leastInformativeImageEquiv
+#print axioms FARCoreV11.no_contract_free_simultaneous_minimum
+#print axioms FARCoreV11.observational_quotient_universal
+#print axioms FARCoreV11.omitted_parameter_refutes_sufficiency
+#print axioms FARCoreV11.primitive_vocabulary_count_noninvariant
+#print axioms FARCoreV11.quotient_is_sufficient
+#print axioms FARCoreV11.reification_recovers_relation
+#print axioms FARCoreV11.residue_can_change_with_frame
+#print axioms FARCoreV11.split_combine_operator
+#print axioms FARCoreV11.transport_operation_commutes
+#print axioms FARCoreV11.transport_relation_commutes

@@ -27,6 +27,13 @@ class FARCoreV11FormalizationTests(unittest.TestCase):
                 lines.append(f"'{declaration}' does not depend on any axioms")
         return "\n".join(lines) + "\n"
 
+    def test_axiom_audit_source_is_generated_and_rejects_output_forgery(self):
+        source = checker.render_axiom_audit()
+        self.assertEqual(checker.axiom_audit_source_errors(source), [])
+        target = "#print axioms FARCoreV11.collision_refutes_sufficiency"
+        forged = source.replace(target, f"-- {target}\n#eval IO.println \"fabricated\"")
+        self.assertTrue(checker.axiom_audit_source_errors(forged))
+
     def test_runtime_axiom_output_matches_every_declaration(self):
         ledger = checker.load(checker.LEDGER_PATH)
         self.assertEqual(checker.axiom_output_errors(self._valid_axiom_output(), ledger), [])

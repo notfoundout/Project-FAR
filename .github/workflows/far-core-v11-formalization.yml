@@ -39,7 +39,10 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p artifacts/mechanization
-          LEAN_PATH=mechanization/lean lean mechanization/lean/FARCoreV11AxiomAudit.lean 2>&1 | \
+          python tools/check_far_core_v11_formalization.py \
+            --emit-axiom-audit artifacts/mechanization/FARCoreV11GeneratedAxiomAudit.lean
+          LEAN_PATH=mechanization/lean lean \
+            artifacts/mechanization/FARCoreV11GeneratedAxiomAudit.lean 2>&1 | \
             tee artifacts/mechanization/far-core-v11-axioms.txt
           python tools/check_far_core_v11_formalization.py \
             --axiom-output artifacts/mechanization/far-core-v11-axioms.txt

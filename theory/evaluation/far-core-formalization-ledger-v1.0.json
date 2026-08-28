@@ -344,12 +344,14 @@
         "X : Type",
         "relation : X -> X -> Prop",
         "RelationOccurrence relation := subtype of related pairs",
-        "typed left/right incidence relation"
+        "ArgumentPosition := left | right",
+        "typedIncidence : occurrence -> position -> X -> Prop",
+        "PrimitiveVocabularyCount := (sortCount, relationCount)"
       ],
       "premises": [
-        "faithful reification and typed position tags admitted"
+        "faithful reification and explicit typed position tags admitted"
       ],
-      "conclusion": "The original binary relation is recovered exactly from occurrence objects plus one typed incidence relation, changing presentation primitives.",
+      "conclusion": "The direct (one-sort, one-relation) presentation and the faithfully recoverable reified (three-sort, one-incidence-relation) presentation have unequal primitive-count profiles.",
       "dependencies": [
         "FAR-CORE-006"
       ],
@@ -364,7 +366,8 @@
       ],
       "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
       "lean_declarations": [
-        "FARCoreV11.reification_recovers_relation"
+        "FARCoreV11.reification_recovers_relation",
+        "FARCoreV11.primitive_vocabulary_count_noninvariant"
       ],
       "formalization_status": "FORMALIZED",
       "kernel_check": "PASS",

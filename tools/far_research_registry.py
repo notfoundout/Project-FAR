@@ -72,6 +72,23 @@ PROMOTED_W1_PATHS = {
     "docs/research/pca-w1-independent-review/07-final-independent-review.json",
     "docs/research/pca-w1-independent-review/08-review-artifact-manifest.json",
 }
+W1_REVIEW_TARGET = {
+    "commit": "14105775daf3c5713b134a728db2e1e53673af97",
+    "tree": "68f058199b7c94b707fd5fe978f1ef59d695ab00",
+    "theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
+    "theory_sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+    "ledger_sha256": "66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40",
+}
+W1_REVIEW_BRANCH = {
+    "name": "research/pca-w1-core-v1.1-independent-review",
+    "head": "0981697546eba68651bddcd22e67ccdeb98decf4",
+    "tree": "3b58ca873c210b62c5ce01f572cb1314b55d95d2",
+}
+W1_TARGET_FILES = {
+    "theory_sha256": "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+    "ledger_sha256": "theory/terminal/project-far-core-theory-v1.1.json",
+}
+
 
 
 def load(path: str) -> dict:
@@ -115,6 +132,17 @@ def w1_seal_errors(promotion: dict, root: Path = ROOT) -> list[str]:
     unexpected = sorted(actual - PROMOTED_W1_PATHS)
     if missing or unexpected:
         errors.append(f"W1 promotion seal coverage drift: missing={missing} unexpected={unexpected}")
+    target = promotion.get("review_target")
+    if target != W1_REVIEW_TARGET:
+        errors.append("W1 promotion review target identity/hash contract drifted")
+    branch = promotion.get("review_branch")
+    if branch != W1_REVIEW_BRANCH:
+        errors.append("W1 promotion sealed review branch identity drifted")
+    if isinstance(target, dict):
+        for field, raw_path in W1_TARGET_FILES.items():
+            path = root / raw_path
+            if not path.is_file() or sha256(path) != target.get(field):
+                errors.append(f"W1 reviewed target bytes changed without adjudication: {raw_path}")
     for artifact in artifacts:
         if not isinstance(artifact, dict):
             continue

@@ -24,7 +24,7 @@ assumption contracts. Merely printing the audit is not accepted as assurance.
 | `FAR-CORE-004` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.no_contract_free_simultaneous_minimum`<br>`FARCoreV11.identity_is_universally_sufficient` | — |
 | `FAR-CORE-005` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.invariants_antitone` | — |
 | `FAR-CORE-006` | `FORMALIZED` | `PASS` | `Classical.choice`<br>`Quot.sound`<br>`propext` | `FARCoreV11.embeddingRangeEquiv`<br>`FARCoreV11.transport_operation_commutes`<br>`FARCoreV11.transport_relation_commutes` | — |
-| `FAR-CORE-007` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.reification_recovers_relation` | — |
+| `FAR-CORE-007` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.reification_recovers_relation`<br>`FARCoreV11.primitive_vocabulary_count_noninvariant` | — |
 | `FAR-CORE-008` | `FORMALIZED` | `PASS` | `Quot.sound` | `FARCoreV11.combine_split_operator_family`<br>`FARCoreV11.split_combine_operator` | — |
 | `FAR-CORE-009` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.finite_panel_two_completions` | — |
 | `FAR-CORE-010` | `FORMALIZED` | `PASS` | `Quot.sound`<br>`propext` | `FARCoreV11.commonTheory_frame_independent`<br>`FARCoreV11.commonTheory_invariant_under_truth_equivalence`<br>`FARCoreV11.residue_can_change_with_frame` | — |
@@ -48,8 +48,8 @@ is an end-to-end Lean derivation of the actual MLL witness facts.
 
 | File | SHA-256 | Lines | Imports |
 |---|---|---:|---|
-| `mechanization/lean/FARCoreV11AxiomAudit.lean` | `cba8c9617eded443e34cbf57d444b10fce210e6cfd03f11aed4df0ff790b52b3` | 41 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
-| `mechanization/lean/FARCoreV11Claims001To012.lean` | `dbafd344e14fd966a7c3e9b3c4eaa43dfb6de97239dc7e61aabdb627676f2ca7` | 290 | `FARCoreV11Substrate` |
+| `mechanization/lean/FARCoreV11AxiomAudit.lean` | `ff68ab6e7a0eaa755413787f6a5857492f99bb674fae42604b2729eb814c1e65` | 34 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
+| `mechanization/lean/FARCoreV11Claims001To012.lean` | `9171f9a6598bfdaf2eaf37cf8994438c0095ff4a8e39081c8887ce5ea90f746e` | 318 | `FARCoreV11Substrate` |
 | `mechanization/lean/FARCoreV11Mutations.lean` | `ec389d2081c635f336aa2f3cd087f997aeb7ed800e4fa081b76f43130aa23069` | 170 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
 | `mechanization/lean/FARCoreV11Omega.lean` | `52570fe1ed0c7a76b850162d584d47e759098b054a8cd147161891d663a7044c` | 51 | `FARCoreV11Substrate` |
 | `mechanization/lean/FARCoreV11SSS.lean` | `2e3c4e12481ad206587316e34ef6a06736c5872315bc0a02285e2069f8f0b977` | 177 | `FARCoreV11Substrate` |

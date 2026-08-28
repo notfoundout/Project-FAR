@@ -134,6 +134,34 @@ theorem reification_recovers_relation {X : Type u} (relation : X -> X -> Prop) (
     subst right
     exact hrelation
 
+/-- Count only primitive sort and relation symbols in a presentation. -/
+structure PrimitiveVocabularyCount where
+  sortCount : Nat
+  relationCount : Nat
+  deriving DecidableEq
+
+/-- Direct presentation: one carrier sort and one binary relation symbol. -/
+def directBinaryVocabulary : PrimitiveVocabularyCount where
+  sortCount := 1
+  relationCount := 1
+
+/-- Reified presentation: participant, occurrence, and position sorts with one incidence relation. -/
+def reifiedIncidenceVocabulary : PrimitiveVocabularyCount where
+  sortCount := 3
+  relationCount := 1
+
+/-- Exact recovery plus unequal primitive-count profiles witnesses count noninvariance. -/
+theorem primitive_vocabulary_count_noninvariant {X : Type u}
+    (relation : X -> X -> Prop) :
+    (∀ x y, relation x y ↔
+      ∃ occurrence : RelationOccurrence relation,
+        typedIncidence occurrence .left x ∧ typedIncidence occurrence .right y) ∧
+      directBinaryVocabulary ≠ reifiedIncidenceVocabulary := by
+  constructor
+  · intro x y
+    exact reification_recovers_relation relation x y
+  · decide
+
 /-! ## FAR-CORE-008 -/
 
 /-- Combine a tagged dependent operator family into one dispatcher. -/

@@ -5,19 +5,546 @@
   "authority": "assurance_dimensions_only_theory_statement_from_governing_ledger",
   "dimension_rule": "dimensions_must_not_be_collapsed",
   "claims": [
-    {"id":"FAR-CORE-001","exact_statement":"exact sufficiency iff behavior factors through the representation","plain_language_statement":"A representation preserves every declared exact behavior exactly when an image-level decoder exists.","scope":"any Set-based exact contract; decoder on reachable representation image","dependencies":["set_presentation","explicit_totalized_semantics","fixed_contract_evaluation","extensional_exactness"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_ESTABLISHED_STRONG_PRIOR_ART","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-1--exact-factorization-criterion"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.exact_factorization_criterion","FARCoreV11.collision_refutes_sufficiency"],"known_counterexamples_to_stronger_variants":["decoder must be required only on the reachable representation image"],"prior_art_relationships":["Blackwell1953EquivalentComparisons","CousotCousot1977AbstractInterpretation"],"limitations":["exact and extensional","does not select the contract"]},
-    {"id":"FAR-CORE-002","exact_statement":"the observational quotient is the unique least-informative exact representation up to isomorphism","plain_language_statement":"Cases with identical declared behavior form the coarsest sufficient exact representation.","scope":"any Set-based exact contract; reachable-image isomorphism; cardinal minimum only when finite","dependencies":["FAR-CORE-001","set_presentation","extensional_exactness"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_ESTABLISHED_STRONG_PRIOR_ART","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-2--canonical-minimal-observational-quotient"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.quotient_is_sufficient","FARCoreV11.observational_quotient_universal","FARCoreV11.factorToQuotient_surjective","FARCoreV11.leastInformativeImageEquiv"],"known_counterexamples_to_stronger_variants":["information minimality does not imply shortest code, fastest implementation, computability, or best explanation"],"prior_art_relationships":["CousotCousot1977AbstractInterpretation","JacobsRutten1997CoalgebraTutorial"],"limitations":["set-level existence need not be computable","finite cardinal claim is a corollary of the image-to-quotient surjection"]},
-    {"id":"FAR-CORE-003","exact_statement":"context closure makes observational equivalence action-compatible","plain_language_statement":"When every allowed continuation is among the tests, actions descend to the observational quotient.","scope":"declared typed action/test continuation closure","dependencies":["FAR-CORE-002","fixed_contract_evaluation"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_ESTABLISHED_STRONG_PRIOR_ART","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-3--dynamic-descent-under-context-closure"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.action_preserves_observational_equivalence","FARCoreV11.descendAction"],"known_counterexamples_to_stronger_variants":["without typed continuation closure an action need not preserve observational equivalence"],"prior_art_relationships":["vanGlabbeek1990LinearBranchingSpectrum","JacobsRutten1997CoalgebraTutorial"],"limitations":["only declared actions and tests","multi-argument operations require corresponding one-hole contexts"]},
-    {"id":"FAR-CORE-004","exact_statement":"no single representation is simultaneously a least-informative sufficient representation for every observation contract; universal sufficiency alone is not denied","plain_language_statement":"On a nontrivial domain, the constant and injective contracts demand incompatible minimal quotients, although identity remains sufficient for every contract.","scope":"nontrivial domain with observation contract allowed to vary","dependencies":["FAR-CORE-002"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_ESTABLISHED_STRONG_PRIOR_ART","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.1.md#1-correction-to-far-core-004"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.no_contract_free_simultaneous_minimum","FARCoreV11.identity_is_universally_sufficient"],"known_counterexamples_to_stronger_variants":["identity representation refutes the false stronger claim that universal sufficiency is impossible"],"prior_art_relationships":["Blackwell1953EquivalentComparisons"],"limitations":["requires two distinct domain elements","minimality is information-relative, not cost-relative"]},
-    {"id":"FAR-CORE-005","exact_statement":"invariants are antitone in the admitted re-representation class","plain_language_statement":"A property invariant under more admitted transformations is invariant under every smaller admitted class.","scope":"compatible nested admitted transformation classes","dependencies":["declared_invariance"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"NOT_APPLICABLE","novelty_prior_art_status":"NOT_ESTABLISHED_STRONG_PRIOR_ART","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-5--invariance-antitonicity"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.invariants_antitone"],"known_counterexamples_to_stronger_variants":["incompatible source/target transformation classes make bare class inclusion ill-typed"],"prior_art_relationships":["invariant-theory general pattern"],"limitations":["representation-independent is incomplete until the transformation class is fixed"]},
-    {"id":"FAR-CORE-006","exact_statement":"unconstrained encoding establishes host capacity, not native common structure","plain_language_statement":"An injection can transport all named operations and relations to its image, so hosting alone cannot identify native shared structure.","scope":"injective transport with image decoder and no structure-preservation laws","dependencies":["set_presentation"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"NOT_APPLICABLE","novelty_prior_art_status":"NOT_ESTABLISHED_STRONG_PRIOR_ART","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-6--transport-triviality"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.embeddingRangeEquiv","FARCoreV11.transport_operation_commutes","FARCoreV11.transport_relation_commutes"],"known_counterexamples_to_stronger_variants":["byte-perfect archive plus target-specific interpreter carries capacity while the decoder contains the source structure"],"prior_art_relationships":["standard transport of structure"],"limitations":["does not formalize explanatory or native-structure predicates beyond non-uniqueness of transported structure"]},
-    {"id":"FAR-CORE-007","exact_statement":"primitive vocabulary count is not representation invariant","plain_language_statement":"Faithful reification and tagging can change the number and kinds of presentation primitives while preserving recoverable information.","scope":"faithful reification/tagging regime","dependencies":["FAR-CORE-006","declared_invariance"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_ESTABLISHED_STRONG_PRIOR_ART","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-7--primitive-vocabulary-noninvariance"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.reification_recovers_relation"],"known_counterexamples_to_stronger_variants":["tuple reification converts a relation into occurrence objects and typed position edges"],"prior_art_relationships":["standard database and graph reification"],"limitations":["schema roles may remain useful","no global primitive independence follows"]},
-    {"id":"FAR-CORE-008","exact_statement":"finite operator count is not representation invariant","plain_language_statement":"A finite family can be combined into one tagged dispatcher and recovered by fixing each tag.","scope":"finite operator family with tagged argument types admitted","dependencies":["declared_invariance"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_ESTABLISHED_STRONG_PRIOR_ART","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-8--operator-count-noninvariance"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.combine_split_operator_family","FARCoreV11.split_combine_operator"],"known_counterexamples_to_stronger_variants":["one tagged dispatcher and the split family are mutually recoverable"],"prior_art_relationships":["standard tagged-sum dispatch"],"limitations":["a stricter operator language or cost contract can make count meaningful locally"]},
-    {"id":"FAR-CORE-009","exact_statement":"finite panels do not establish open-domain universality","plain_language_statement":"An off-panel case can make the universal claim true or false while every finite observation stays fixed.","scope":"proper finite panel of an open domain without an independent coverage premise","dependencies":["scope_closure"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_APPLICABLE","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-9--finite-panel-boundary"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.finite_panel_two_completions"],"known_counterexamples_to_stronger_variants":["extend the panel by one untested counterexample"],"prior_art_relationships":["elementary model-extension argument"],"limitations":["an independent deductive coverage premise could bridge the complement"]},
-    {"id":"FAR-CORE-010","exact_statement":"exact common theory is relative to L,J,I; the substantive residue is additionally relative to Γ","plain_language_statement":"Holding interpreted models fixed, changing the frame cannot change their exact shared theory but can change what remains after frame consequences are removed.","scope":"fixed language, interpretation profiles/models, and target class; frame additionally indexes the frame-subtracted residue","dependencies":["fixed_logical_semantics","extensional_exactness"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_ESTABLISHED_STRONG_PRIOR_ART","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.1.md#2-correction-to-far-core-010"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.commonTheory_frame_independent","FARCoreV11.commonTheory_invariant_under_truth_equivalence","FARCoreV11.residue_can_change_with_frame"],"known_counterexamples_to_stronger_variants":["fixed models with Gamma0 empty and Gamma1 containing a common nonvalid sentence leave exact theory fixed but change residue"],"prior_art_relationships":["GoguenBurstall1992Institutions"],"limitations":["truth-isomorphism invariance is relative to fixed logical semantics","Gamma affects exact theory only through a changed profile/model"]},
-    {"id":"FAR-CORE-011","exact_statement":"omitting a consequence-affecting parameter refutes sufficiency","plain_language_statement":"If two contexts share the stored x but a declared test gives different outcomes, a representation that stores only x collides.","scope":"attainable same-representation/different-behavior omitted-parameter collision","dependencies":["FAR-CORE-001"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_APPLICABLE","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-11--omitted-parameter-failure"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.omitted_parameter_refutes_sufficiency"],"known_counterexamples_to_stronger_variants":["context-dependent defeat","observational versus interventional query","nondeterministic execution/history"],"prior_art_relationships":["Dung1995AcceptabilityArguments"],"limitations":["requires an attainable pair and a declared behavior difference"]},
-    {"id":"FAR-CORE-012","exact_statement":"sufficient representations must preserve that distinction","plain_language_statement":"A sufficient representation cannot identify a case known absent with a case whose status is unknown when those are distinct outcomes.","scope":"contract distinguishes reachable determinate absence and Unknown","dependencies":["FAR-CORE-001","typed_outcomes"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_APPLICABLE","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-12--determinate-absenceunknown-separation"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.absent_unknown_must_separate"],"known_counterexamples_to_stronger_variants":["historical UPP XA-005 collapses empty certified witness into Unknown"],"prior_art_relationships":["typed missingness and epistemic-status distinctions"],"limitations":["does not force one global fourth value","only contracts observing the distinction"]},
-    {"id":"FAR-CORE-013","exact_statement":"Ω is a semantically eliminable derived materialized view","plain_language_statement":"Canonical Omega records a calculus classification; composing representation and resolution yields the same consequence without an independent semantic intermediate.","scope":"canonical FARA Omega definition and semantic consequence composition","dependencies":["canonical_FARA_semantics","function_composition"],"truth_disposition":"PROVED","proof_status":"NARRATIVE_PROOF_ACCEPTED","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"FORMALIZED","empirical_status":"NOT_APPLICABLE","novelty_prior_art_status":"NOT_ESTABLISHED","governance_status":"ACCEPTED_CURRENT","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-13--elimination"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/06-stage-e-controlled-unblinding.md","docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.Omega.omega_elimination","FARCoreV11.Omega.resolve_is_composition"],"known_counterexamples_to_stronger_variants":["Omega-only divergence with fixed causal input indicates hidden parameter, changed calculus, corruption, or extra information"],"prior_art_relationships":["materialized-view composition"],"limitations":["operational caching, audit, interface, and provenance usefulness remains","not a causal irreducibility theorem"]},
-    {"id":"FAR-CORE-014","exact_statement":"Search-State Sufficiency is a bounded factorization instance, not a universal architecture","plain_language_statement":"Projected successor sets lose premise grouping for the stated MLL decoder class, while hyperedges and frontier states retain enough information under their exact rules.","scope":"only PR #453 SSS-1/2/3 stated state, transition-representation, and decoder classes; not a universal architecture","dependencies":["FAR-CORE-001","FAR-CORE-002","FAR-CORE-003","PR-453-SSS"],"truth_disposition":"PROVED","proof_status":"SUPPORTED_DERIVED_APPLICATION","independent_review_status":"COMPLETE_CONFIRMED","formalization_status":"PARTIAL_OBSTRUCTION","empirical_status":"BOUNDED_CORROBORATION_ONLY","novelty_prior_art_status":"NOT_ESTABLISHED_STRONG_PRIOR_ART","governance_status":"ACCEPTED_BOUNDED_APPLICATION","version":"PROJECT-FAR-CORE-THEORY-1.1","internal_proof_artifacts":["research/independent-dialogue-theory/PROOFS.md#1-t1-superseded-by-t1--bounded-impossibility-over-explicit-classes","research/independent-dialogue-theory/PROOFS.md#2-state-type-taxonomy-replacing-the-arity-framing"],"independent_review_artifacts":["docs/research/pca-w1-independent-review/06-stage-e-controlled-unblinding.md","docs/research/pca-w1-independent-review/07-final-independent-review.json"],"lean_declarations":["FARCoreV11.SSS.four_monotone_decoders","FARCoreV11.SSS.projected_successor_decoder_failure","FARCoreV11.SSS.hyperedge_factorization","FARCoreV11.SSS.frontier_factorization"],"known_counterexamples_to_stronger_variants":["arbitrary binary relation can encode provability","state-inspecting decoder can recompute provability","frontier state with binary transitions is sufficient"],"prior_art_relationships":["GalmichePerrier1994ProofSearchLinearLogic","LiangMiller2024FocusingGentzenLK"],"limitations":["not a characterization","not an impossibility for binary relations generally","not novel","MLL and named LK profile only for SSS-3 witnesses"]}
+    {
+      "id": "FAR-CORE-001",
+      "exact_statement": "exact sufficiency iff behavior factors through the representation",
+      "plain_language_statement": "A representation preserves every declared exact behavior exactly when an image-level decoder exists.",
+      "scope": "any Set-based exact contract; decoder on reachable representation image",
+      "dependencies": [
+        "set_presentation",
+        "explicit_totalized_semantics",
+        "fixed_contract_evaluation",
+        "extensional_exactness"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-1--exact-factorization-criterion"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.exact_factorization_criterion",
+        "FARCoreV11.collision_refutes_sufficiency"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "decoder must be required only on the reachable representation image"
+      ],
+      "prior_art_relationships": [
+        "Blackwell1953EquivalentComparisons",
+        "CousotCousot1977AbstractInterpretation"
+      ],
+      "limitations": [
+        "exact and extensional",
+        "does not select the contract"
+      ]
+    },
+    {
+      "id": "FAR-CORE-002",
+      "exact_statement": "the observational quotient is the unique least-informative exact representation up to isomorphism",
+      "plain_language_statement": "Cases with identical declared behavior form the coarsest sufficient exact representation.",
+      "scope": "any Set-based exact contract; reachable-image isomorphism; cardinal minimum only when finite",
+      "dependencies": [
+        "FAR-CORE-001",
+        "set_presentation",
+        "extensional_exactness"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-2--canonical-minimal-observational-quotient"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.quotient_is_sufficient",
+        "FARCoreV11.observational_quotient_universal",
+        "FARCoreV11.factorToQuotient_surjective",
+        "FARCoreV11.leastInformativeImageEquiv"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "information minimality does not imply shortest code, fastest implementation, computability, or best explanation"
+      ],
+      "prior_art_relationships": [
+        "CousotCousot1977AbstractInterpretation",
+        "JacobsRutten1997CoalgebraTutorial"
+      ],
+      "limitations": [
+        "set-level existence need not be computable",
+        "finite cardinal claim is a corollary of the image-to-quotient surjection"
+      ]
+    },
+    {
+      "id": "FAR-CORE-003",
+      "exact_statement": "context closure makes observational equivalence action-compatible",
+      "plain_language_statement": "When every allowed continuation is among the tests, actions descend to the observational quotient.",
+      "scope": "declared typed action/test continuation closure",
+      "dependencies": [
+        "FAR-CORE-002",
+        "fixed_contract_evaluation"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-3--dynamic-descent-under-context-closure"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.action_preserves_observational_equivalence",
+        "FARCoreV11.descendAction"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "without typed continuation closure an action need not preserve observational equivalence"
+      ],
+      "prior_art_relationships": [
+        "vanGlabbeek1990LinearBranchingSpectrum",
+        "JacobsRutten1997CoalgebraTutorial"
+      ],
+      "limitations": [
+        "only declared actions and tests",
+        "multi-argument operations require corresponding one-hole contexts"
+      ]
+    },
+    {
+      "id": "FAR-CORE-004",
+      "exact_statement": "no single representation is simultaneously a least-informative sufficient representation for every observation contract; universal sufficiency alone is not denied",
+      "plain_language_statement": "On a nontrivial domain, the constant and injective contracts demand incompatible minimal quotients, although identity remains sufficient for every contract.",
+      "scope": "nontrivial domain with observation contract allowed to vary",
+      "dependencies": [
+        "FAR-CORE-002"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.1.md#1-correction-to-far-core-004"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.no_contract_free_simultaneous_minimum",
+        "FARCoreV11.identity_is_universally_sufficient"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "identity representation refutes the false stronger claim that universal sufficiency is impossible"
+      ],
+      "prior_art_relationships": [
+        "Blackwell1953EquivalentComparisons"
+      ],
+      "limitations": [
+        "requires two distinct domain elements",
+        "minimality is information-relative, not cost-relative"
+      ]
+    },
+    {
+      "id": "FAR-CORE-005",
+      "exact_statement": "invariants are antitone in the admitted re-representation class",
+      "plain_language_statement": "A property invariant under more admitted transformations is invariant under every smaller admitted class.",
+      "scope": "compatible nested admitted transformation classes",
+      "dependencies": [
+        "declared_invariance"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "NOT_APPLICABLE",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-5--invariance-antitonicity"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.invariants_antitone"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "incompatible source/target transformation classes make bare class inclusion ill-typed"
+      ],
+      "prior_art_relationships": [
+        "invariant-theory general pattern"
+      ],
+      "limitations": [
+        "representation-independent is incomplete until the transformation class is fixed"
+      ]
+    },
+    {
+      "id": "FAR-CORE-006",
+      "exact_statement": "unconstrained encoding establishes host capacity, not native common structure",
+      "plain_language_statement": "An injection can transport all named operations and relations to its image, so hosting alone cannot identify native shared structure.",
+      "scope": "injective transport with image decoder and no structure-preservation laws",
+      "dependencies": [
+        "set_presentation"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "NOT_APPLICABLE",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-6--transport-triviality"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.embeddingRangeEquiv",
+        "FARCoreV11.transport_operation_commutes",
+        "FARCoreV11.transport_relation_commutes"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "byte-perfect archive plus target-specific interpreter carries capacity while the decoder contains the source structure"
+      ],
+      "prior_art_relationships": [
+        "standard transport of structure"
+      ],
+      "limitations": [
+        "does not formalize explanatory or native-structure predicates beyond non-uniqueness of transported structure"
+      ]
+    },
+    {
+      "id": "FAR-CORE-007",
+      "exact_statement": "primitive vocabulary count is not representation invariant",
+      "plain_language_statement": "Faithful reification and tagging can change the number and kinds of presentation primitives while preserving recoverable information.",
+      "scope": "faithful reification/tagging regime",
+      "dependencies": [
+        "FAR-CORE-006",
+        "declared_invariance"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-7--primitive-vocabulary-noninvariance"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.reification_recovers_relation",
+        "FARCoreV11.primitive_vocabulary_count_noninvariant"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "tuple reification converts a relation into occurrence objects and typed position edges"
+      ],
+      "prior_art_relationships": [
+        "standard database and graph reification"
+      ],
+      "limitations": [
+        "schema roles may remain useful",
+        "no global primitive independence follows"
+      ]
+    },
+    {
+      "id": "FAR-CORE-008",
+      "exact_statement": "finite operator count is not representation invariant",
+      "plain_language_statement": "A finite family can be combined into one tagged dispatcher and recovered by fixing each tag.",
+      "scope": "finite operator family with tagged argument types admitted",
+      "dependencies": [
+        "declared_invariance"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-8--operator-count-noninvariance"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.combine_split_operator_family",
+        "FARCoreV11.split_combine_operator"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "one tagged dispatcher and the split family are mutually recoverable"
+      ],
+      "prior_art_relationships": [
+        "standard tagged-sum dispatch"
+      ],
+      "limitations": [
+        "a stricter operator language or cost contract can make count meaningful locally"
+      ]
+    },
+    {
+      "id": "FAR-CORE-009",
+      "exact_statement": "finite panels do not establish open-domain universality",
+      "plain_language_statement": "An off-panel case can make the universal claim true or false while every finite observation stays fixed.",
+      "scope": "proper finite panel of an open domain without an independent coverage premise",
+      "dependencies": [
+        "scope_closure"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_APPLICABLE",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-9--finite-panel-boundary"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.finite_panel_two_completions"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "extend the panel by one untested counterexample"
+      ],
+      "prior_art_relationships": [
+        "elementary model-extension argument"
+      ],
+      "limitations": [
+        "an independent deductive coverage premise could bridge the complement"
+      ]
+    },
+    {
+      "id": "FAR-CORE-010",
+      "exact_statement": "exact common theory is relative to L,J,I; the substantive residue is additionally relative to Γ",
+      "plain_language_statement": "Holding interpreted models fixed, changing the frame cannot change their exact shared theory but can change what remains after frame consequences are removed.",
+      "scope": "fixed language, interpretation profiles/models, and target class; frame additionally indexes the frame-subtracted residue",
+      "dependencies": [
+        "fixed_logical_semantics",
+        "extensional_exactness"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.1.md#2-correction-to-far-core-010"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.commonTheory_frame_independent",
+        "FARCoreV11.commonTheory_invariant_under_truth_equivalence",
+        "FARCoreV11.residue_can_change_with_frame"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "fixed models with Gamma0 empty and Gamma1 containing a common nonvalid sentence leave exact theory fixed but change residue"
+      ],
+      "prior_art_relationships": [
+        "GoguenBurstall1992Institutions"
+      ],
+      "limitations": [
+        "truth-isomorphism invariance is relative to fixed logical semantics",
+        "Gamma affects exact theory only through a changed profile/model"
+      ]
+    },
+    {
+      "id": "FAR-CORE-011",
+      "exact_statement": "omitting a consequence-affecting parameter refutes sufficiency",
+      "plain_language_statement": "If two contexts share the stored x but a declared test gives different outcomes, a representation that stores only x collides.",
+      "scope": "attainable same-representation/different-behavior omitted-parameter collision",
+      "dependencies": [
+        "FAR-CORE-001"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_APPLICABLE",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-11--omitted-parameter-failure"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.omitted_parameter_refutes_sufficiency"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "context-dependent defeat",
+        "observational versus interventional query",
+        "nondeterministic execution/history"
+      ],
+      "prior_art_relationships": [
+        "Dung1995AcceptabilityArguments"
+      ],
+      "limitations": [
+        "requires an attainable pair and a declared behavior difference"
+      ]
+    },
+    {
+      "id": "FAR-CORE-012",
+      "exact_statement": "sufficient representations must preserve that distinction",
+      "plain_language_statement": "A sufficient representation cannot identify a case known absent with a case whose status is unknown when those are distinct outcomes.",
+      "scope": "contract distinguishes reachable determinate absence and Unknown",
+      "dependencies": [
+        "FAR-CORE-001",
+        "typed_outcomes"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_APPLICABLE",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-12--determinate-absenceunknown-separation"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.absent_unknown_must_separate"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "historical UPP XA-005 collapses empty certified witness into Unknown"
+      ],
+      "prior_art_relationships": [
+        "typed missingness and epistemic-status distinctions"
+      ],
+      "limitations": [
+        "does not force one global fourth value",
+        "only contracts observing the distinction"
+      ]
+    },
+    {
+      "id": "FAR-CORE-013",
+      "exact_statement": "Ω is a semantically eliminable derived materialized view",
+      "plain_language_statement": "Canonical Omega records a calculus classification; composing representation and resolution yields the same consequence without an independent semantic intermediate.",
+      "scope": "canonical FARA Omega definition and semantic consequence composition",
+      "dependencies": [
+        "canonical_FARA_semantics",
+        "function_composition"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "FORMALIZED",
+      "empirical_status": "NOT_APPLICABLE",
+      "novelty_prior_art_status": "NOT_ESTABLISHED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#theorem-13--elimination"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/06-stage-e-controlled-unblinding.md",
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.Omega.omega_elimination",
+        "FARCoreV11.Omega.resolve_is_composition"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "Omega-only divergence with fixed causal input indicates hidden parameter, changed calculus, corruption, or extra information"
+      ],
+      "prior_art_relationships": [
+        "materialized-view composition"
+      ],
+      "limitations": [
+        "operational caching, audit, interface, and provenance usefulness remains",
+        "not a causal irreducibility theorem"
+      ]
+    },
+    {
+      "id": "FAR-CORE-014",
+      "exact_statement": "Search-State Sufficiency is a bounded factorization instance, not a universal architecture",
+      "plain_language_statement": "Projected successor sets lose premise grouping for the stated MLL decoder class, while hyperedges and frontier states retain enough information under their exact rules.",
+      "scope": "only PR #453 SSS-1/2/3 stated state, transition-representation, and decoder classes; not a universal architecture",
+      "dependencies": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "PR-453-SSS"
+      ],
+      "truth_disposition": "PROVED",
+      "proof_status": "SUPPORTED_DERIVED_APPLICATION",
+      "independent_review_status": "COMPLETE_CONFIRMED",
+      "formalization_status": "PARTIAL_OBSTRUCTION",
+      "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "governance_status": "ACCEPTED_BOUNDED_APPLICATION",
+      "version": "PROJECT-FAR-CORE-THEORY-1.1",
+      "internal_proof_artifacts": [
+        "research/independent-dialogue-theory/PROOFS.md#1-t1-superseded-by-t1--bounded-impossibility-over-explicit-classes",
+        "research/independent-dialogue-theory/PROOFS.md#2-state-type-taxonomy-replacing-the-arity-framing"
+      ],
+      "independent_review_artifacts": [
+        "docs/research/pca-w1-independent-review/06-stage-e-controlled-unblinding.md",
+        "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+      ],
+      "lean_declarations": [
+        "FARCoreV11.SSS.four_monotone_decoders",
+        "FARCoreV11.SSS.projected_successor_decoder_failure",
+        "FARCoreV11.SSS.hyperedge_factorization",
+        "FARCoreV11.SSS.frontier_factorization"
+      ],
+      "known_counterexamples_to_stronger_variants": [
+        "arbitrary binary relation can encode provability",
+        "state-inspecting decoder can recompute provability",
+        "frontier state with binary transitions is sufficient"
+      ],
+      "prior_art_relationships": [
+        "GalmichePerrier1994ProofSearchLinearLogic",
+        "LiangMiller2024FocusingGentzenLK"
+      ],
+      "limitations": [
+        "not a characterization",
+        "not an impossibility for binary relations generally",
+        "not novel",
+        "MLL and named LK profile only for SSS-3 witnesses"
+      ]
+    }
   ]
 }

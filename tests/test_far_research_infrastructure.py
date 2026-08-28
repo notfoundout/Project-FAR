@@ -34,6 +34,9 @@ class RegistryTests(unittest.TestCase):
         tampered = copy.deepcopy(promotion)
         tampered["verified_artifacts"][0]["sha256"] = "0" * 64
         self.assertTrue(any("missing or changed" in error for error in registry.w1_seal_errors(tampered)))
+        retargeted = copy.deepcopy(promotion)
+        retargeted["review_target"]["theory_sha256"] = "0" * 64
+        self.assertTrue(any("target identity/hash" in error for error in registry.w1_seal_errors(retargeted)))
 
     def test_duplicate_registry_identity_is_rejected(self):
         data = {path: registry.load(path) for path in registry.DATA_SCHEMAS}

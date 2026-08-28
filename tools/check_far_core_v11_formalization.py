@@ -59,6 +59,7 @@ EXPECTED_DECLARATION_AXIOMS = {
     "FARCoreV11.transport_operation_commutes": frozenset({"Classical.choice", "Quot.sound"}),
     "FARCoreV11.transport_relation_commutes": frozenset({"Classical.choice", "Quot.sound", "propext"}),
     "FARCoreV11.reification_recovers_relation": frozenset(),
+    "FARCoreV11.primitive_vocabulary_count_noninvariant": frozenset(),
     "FARCoreV11.combine_split_operator_family": frozenset({"Quot.sound"}),
     "FARCoreV11.split_combine_operator": frozenset({"Quot.sound"}),
     "FARCoreV11.finite_panel_two_completions": frozenset(),
@@ -99,6 +100,23 @@ def declared(text: str, qualified: str) -> bool:
         rf"(?:def|theorem|structure|inductive|abbrev)\s+{re.escape(terminal)}\b",
         text,
     ))
+
+
+def render_axiom_audit() -> str:
+    lines = [
+        "import FARCoreV11Claims001To012",
+        "import FARCoreV11Omega",
+        "import FARCoreV11SSS",
+        "",
+    ]
+    lines.extend(f"#print axioms {declaration}" for declaration in sorted(EXPECTED_DECLARATION_AXIOMS))
+    return "\n".join(lines) + "\n"
+
+
+def axiom_audit_source_errors(text: str) -> list[str]:
+    if text != render_axiom_audit():
+        return ["kernel-assumption audit source is not the deterministic generated command set"]
+    return []
 
 
 def parse_axiom_output(text: str) -> tuple[dict[str, frozenset[str]], list[str]]:
@@ -204,6 +222,7 @@ def alignment_errors(ledger: dict, assurance: dict, core: dict, generated: dict)
     assurance_by_id = {item["id"]: item for item in assurance["claims"]}
     core_by_id = {item["id"]: item for item in core["claims"]}
     axiom_audit = (ROOT / "mechanization/lean/FARCoreV11AxiomAudit.lean").read_text(encoding="utf-8")
+    errors.extend(axiom_audit_source_errors(axiom_audit))
     if [item["id"] for item in ledger_claims] != expected_ids:
         errors.append("formalization ledger must cover FAR-CORE-001 through 014 in order")
     if set(assurance_by_id) != set(expected_ids) or set(core_by_id) != set(expected_ids):
@@ -220,8 +239,6 @@ def alignment_errors(ledger: dict, assurance: dict, core: dict, generated: dict)
         for declaration in item["lean_declarations"]:
             if not declared(text, declaration):
                 errors.append(f"{identifier}: missing declaration {declaration}")
-            if f"#print axioms {declaration}" not in axiom_audit:
-                errors.append(f"{identifier}: declaration absent from kernel-assumption audit: {declaration}")
         if item["kernel_axioms"] != EXPECTED_KERNEL_AXIOMS[identifier]:
             errors.append(f"{identifier}: recorded kernel assumptions drifted")
         assurance_status = item["formalization_status"].replace("/", "_")
@@ -339,6 +356,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--axiom-output", type=Path)
+    parser.add_argument("--emit-axiom-audit", type=Path)
     args = parser.parse_args(argv)
     try:
         generated, report, errors = expected()
@@ -350,6 +368,9 @@ def main(argv: list[str] | None = None) -> int:
     if errors:
         print("FAIL: " + "; ".join(errors))
         return 1
+    if args.emit_axiom_audit:
+        args.emit_axiom_audit.parent.mkdir(parents=True, exist_ok=True)
+        args.emit_axiom_audit.write_text(render_axiom_audit(), encoding="utf-8")
     outputs = {
         INVENTORY_PATH: json.dumps(generated, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
         REPORT_PATH: report,
