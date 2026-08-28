@@ -16,6 +16,7 @@
         "fixed_contract_evaluation",
         "extensional_exactness"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -56,6 +57,7 @@
         "set_presentation",
         "extensional_exactness"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -97,6 +99,7 @@
         "FAR-CORE-002",
         "fixed_contract_evaluation"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -131,10 +134,11 @@
       "id": "FAR-CORE-004",
       "exact_statement": "no single representation is simultaneously a least-informative sufficient representation for every observation contract; universal sufficiency alone is not denied",
       "plain_language_statement": "On a nontrivial domain, the constant and injective contracts demand incompatible minimal quotients, although identity remains sufficient for every contract.",
-      "scope": "nontrivial domain with observation contract allowed to vary",
+      "scope": "nontrivial domain; observation contract varies; universal sufficiency not denied",
       "dependencies": [
         "FAR-CORE-002"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -172,6 +176,7 @@
       "dependencies": [
         "declared_invariance"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -207,6 +212,7 @@
       "dependencies": [
         "set_presentation"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -245,6 +251,7 @@
         "FAR-CORE-006",
         "declared_invariance"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -278,10 +285,11 @@
       "id": "FAR-CORE-008",
       "exact_statement": "finite operator count is not representation invariant",
       "plain_language_statement": "A finite family can be combined into one tagged dispatcher and recovered by fixing each tag.",
-      "scope": "finite operator family with tagged argument types admitted",
+      "scope": "finite operator family with tagged tuples admitted",
       "dependencies": [
         "declared_invariance"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -314,10 +322,11 @@
       "id": "FAR-CORE-009",
       "exact_statement": "finite panels do not establish open-domain universality",
       "plain_language_statement": "An off-panel case can make the universal claim true or false while every finite observation stays fixed.",
-      "scope": "proper finite panel of an open domain without an independent coverage premise",
+      "scope": "proper finite panel of open domain without independent coverage premise",
       "dependencies": [
         "scope_closure"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -349,11 +358,12 @@
       "id": "FAR-CORE-010",
       "exact_statement": "exact common theory is relative to L,J,I; the substantive residue is additionally relative to Γ",
       "plain_language_statement": "Holding interpreted models fixed, changing the frame cannot change their exact shared theory but can change what remains after frame consequences are removed.",
-      "scope": "fixed language, interpretation profiles/models, and target class; frame additionally indexes the frame-subtracted residue",
+      "scope": "fixed L,J,I and interpreted models; Gamma additionally indexes the residue",
       "dependencies": [
         "fixed_logical_semantics",
         "extensional_exactness"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -392,6 +402,7 @@
       "dependencies": [
         "FAR-CORE-001"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -430,6 +441,7 @@
         "FAR-CORE-001",
         "typed_outcomes"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -467,6 +479,7 @@
         "canonical_FARA_semantics",
         "function_composition"
       ],
+      "governing_ledger_provenance_status": "proved",
       "truth_disposition": "PROVED",
       "proof_status": "NARRATIVE_PROOF_ACCEPTED",
       "independent_review_status": "COMPLETE_CONFIRMED",
@@ -508,6 +521,7 @@
         "FAR-CORE-003",
         "PR-453-SSS"
       ],
+      "governing_ledger_provenance_status": "supported_derived",
       "truth_disposition": "PROVED",
       "proof_status": "SUPPORTED_DERIVED_APPLICATION",
       "independent_review_status": "COMPLETE_CONFIRMED",
