@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "fixture_id": "PROJECT-FAR-CORE-V1.1-REGRESSIONS",
+  "purpose": "Permanent countermodels preventing reintroduction of the FAR-CORE-004 ambiguity and FAR-CORE-010 frame-dependency error.",
+  "cases": [
+    {
+      "id": "CE-CORE-004-IDENTITY-SUFFICES",
+      "claim": "Universal sufficiency alone is not impossible.",
+      "domain": ["x0", "x1"],
+      "representation": {"x0": "r0", "x1": "r1"},
+      "contracts": {
+        "constant": {"x0": "v", "x1": "v"},
+        "injective": {"x0": "v0", "x1": "v1"}
+      },
+      "expected": {
+        "representation_sufficient_for_constant": true,
+        "representation_sufficient_for_injective": true,
+        "representation_minimal_for_constant": false,
+        "representation_minimal_for_injective": true,
+        "no_single_representation_minimal_for_both": true
+      }
+    },
+    {
+      "id": "CE-CORE-010-FRAME-DOES-NOT-INDEX-T",
+      "claim": "Changing Γ alone does not change exact common theory when L,J,I and interpreted models are fixed.",
+      "language": "L",
+      "profiles": ["J1"],
+      "targets": ["M1"],
+      "common_theory": ["phi", "psi"],
+      "frames": {
+        "Gamma0": [],
+        "Gamma1": ["phi"]
+      },
+      "closures": {
+        "Cn_Gamma0_intersect_T": [],
+        "Cn_Gamma1_intersect_T": ["phi"]
+      },
+      "expected": {
+        "exact_theory_same_under_frames": true,
+        "residue_Gamma0": ["phi", "psi"],
+        "residue_Gamma1": ["psi"],
+        "residue_changes_with_frame": true
+      }
+    }
+  ]
+}

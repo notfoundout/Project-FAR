@@ -11,24 +11,30 @@ The latest published GitHub repository release is [v1.0.0](https://github.com/no
 
 ## Central result
 
-Project FAR's governing result is `PROJECT-FAR-CORE-THEORY-1.0`:
+Project FAR's governing result is `PROJECT-FAR-CORE-THEORY-1.1`:
 
 > **NONTRIVIAL CONTRACT-FREE MINIMAL ARCHITECTURE IS IMPOSSIBLE; CONTRACT-RELATIVE SUFFICIENCY AND A UNIQUE MINIMAL OBSERVATIONAL QUOTIENT ARE PROVED.**
 
-For a fixed exact comparison contract, a representation is sufficient exactly when declared behavior factors through it. The contract induces a unique least-informative observational quotient up to isomorphism. Change the cases, tests, contexts, outcomes, semantics, transformations, or loss/cost order and the quotient may change. No nontrivial representation is minimal across all observation contracts.
+For a fixed exact comparison contract, a representation is sufficient exactly when declared behavior factors through it. The contract induces a unique least-informative observational quotient up to isomorphism. No single representation is simultaneously least-informative sufficient for every observation contract on a nontrivial domain, although the identity representation can be sufficient for all such contracts on fixed `X`.
 
-Project FAR therefore closes as a **contract and audit discipline**, not as a universal inventory of reasoning primitives. The result is Accepted as an internal deductive result and has not been independently reviewed.
+The v1.1 correction also separates exact common theory from frame-relative residue: `T_{L,J,I}` is indexed by the language, interpretation profiles/models, and target class; the substantive residue `T_{L,J,I} \ Cn_L(Γ)` is additionally indexed by the frame. `Γ` alone does not change exact `T` when the interpreted models are fixed.
 
-- [Canonical core theory](theory/theorems/Project-FAR-Theory-Closure-v1.0.md)
-- [Machine-readable claim ledger](theory/terminal/project-far-core-theory-v1.0.json)
-- [Acceptance and promotion record](docs/governance/project-far-theory-closure-acceptance-v1.0.md)
-- [Conformity audit](docs/audits/project-far-theory-closure-conformity-audit-v1.0.md)
+Project FAR therefore closes as a **contract and audit discipline**, not as a universal inventory of reasoning primitives. The result is Accepted as internal deductive work corrected after a non-independent hostile audit. It has **not** been independently reviewed.
+
+- [Canonical corrected core theory v1.1](theory/theorems/Project-FAR-Theory-Closure-v1.1.md)
+- [Machine-readable v1.1 claim ledger](theory/terminal/project-far-core-theory-v1.1.json)
+- [v1.1 correction acceptance](docs/governance/project-far-theory-closure-acceptance-v1.1.md)
+- [v1.1 correction audit](docs/audits/project-far-core-theory-v1.1-correction-audit.md)
+- [Permanent v1.1 regression fixtures](theory/evaluation/project-far-core-theory-v1.1-regressions.json)
+- [Historical v1.0 core theory](theory/theorems/Project-FAR-Theory-Closure-v1.0.md) — preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`
 
 The historical UPP proposition remains not refuted, but its frozen derivation is defective and the theorem is not established. Its exact terminal string and artifacts remain preserved as history; they are not current theorem authority.
 
 ## Post-closure phase
 
-The active program is `POST-CLOSURE-001`. Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation. Current work is downstream: independent review, proof-assistant formalization, a contract/conformance schema, domain-specific contracts, approximation/cost extensions, and empirical audit-utility studies.
+The active program is `POST-CLOSURE-001`. The canonical next workstream remains `PCA-W1-INDEPENDENT-REVIEW`, now against `PROJECT-FAR-CORE-THEORY-1.1`. The hostile audit that produced the v1.1 repair is explicitly not counted as independent review.
+
+Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation. Subsequent work includes independent review, proof-assistant formalization, a contract/conformance schema, domain-specific contracts, approximation/cost extensions, and empirical audit-utility studies.
 
 ## Scoped FARA formal kernel
 
@@ -106,7 +112,7 @@ make dashboard
 python tools/check_project_far_theory_closure.py
 ```
 
-The former post-terminal UPP validator remains only to verify that the superseded program and its historical controls are preserved consistently.
+The validator now checks both the immutable historical v1.0 hash and the corrected v1.1 authority/regression chain. The former post-terminal UPP validator remains only to verify that the superseded program and its historical controls are preserved consistently.
 
 ## Certification and Architecture Navigation
 
@@ -142,7 +148,4 @@ The MVP does not encode a complete comparison contract, verify factorization, co
 
 The authoritative dependency order is **foundations → shared theory → FARA → FAR → FARO**. Start with the [canonical map](docs/CANONICAL_MAP.md), [terminology authority](docs/glossary/canonical-terminology.md), [framework boundaries](docs/governance/framework-boundaries.md), [claim-status matrix](docs/governance/claim-status-matrix.md), [limitations](docs/governance/limitations-register.md), and [open problems](docs/governance/open-problems-register.md). Methodology, evidence, examples, papers, software, commercial material, and archive records are downstream; none proves universality or supplies theory prerequisites.
 
-Repository navigation continues through the [documentation index](docs/README.md),
-[foundations](foundations/README.md), [shared theory](theory/README.md),
-[frameworks](frameworks/README.md), [methodology](methodology/README.md), and
-[papers](papers/README.md) entry points.
+Repository navigation continues through the [documentation index](docs/README.md), [foundations](foundations/README.md), [shared theory](theory/README.md), [frameworks](frameworks/README.md), [methodology](methodology/README.md), and [papers](papers/README.md) entry points.

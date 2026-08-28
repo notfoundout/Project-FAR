@@ -16,20 +16,25 @@ NEXT_WORKSTREAM = "PCA-W1-INDEPENDENT-REVIEW"
 VALID_TEXTS = {
     "readme": (
         "## Latest release: v1.0.0\n"
-        "`PROJECT-FAR-CORE-THEORY-1.0`\n"
+        "`PROJECT-FAR-CORE-THEORY-1.1`\n"
+        "Historical v1.0\n"
         "## Post-closure phase\n"
     ),
     "status": (
         "Current published repository release: [`v1.0.0`]\n"
+        "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
         "Current program: `POST-CLOSURE-001`\n"
-        "| `PCA-W1-INDEPENDENT-REVIEW` | Next |\n"
+        "| `PCA-W1-INDEPENDENT-REVIEW` | **Next / Open** | boundary |\n"
     ),
     "map": (
+        "Project FAR Core Theory v1.1\n"
+        "Historical Project FAR Core Theory v1.0\n"
         "Post-Closure Assurance and Application Program\n"
         "Current Project FAR release: [`releases/project-far-v1.0.0.md`](releases/project-far-v1.0.0.md)\n"
     ),
     "roadmap": (
         "Current published repository release: [`v1.0.0`]\n"
+        "Current governing core: [`PROJECT-FAR-CORE-THEORY-1.1`]\n"
         "Current program: [`POST-CLOSURE-001`]\n"
         "`PCA-W1-INDEPENDENT-REVIEW` — next\n"
     ),
@@ -39,6 +44,8 @@ VALID_TEXTS = {
     ),
     "next_actions": (
         "Program: `POST-CLOSURE-001`.\n"
+        "Current review target: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
+        "Historical v1.0 Core\n"
         "Canonical next workstream: `PCA-W1-INDEPENDENT-REVIEW`.\n"
     ),
     "agents": (
@@ -75,6 +82,8 @@ class CurrentStateConsistencyTests(unittest.TestCase):
         texts = copy.deepcopy(VALID_TEXTS)
         texts["next_actions"] = (
             "Program: `POST-CLOSURE-001`.\n"
+            "Current review target: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
+            "Historical v1.0 Core\n"
             "Canonical next workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.\n"
         )
         errors = self.validate(texts)
@@ -96,11 +105,17 @@ class CurrentStateConsistencyTests(unittest.TestCase):
         errors = self.validate(texts)
         self.assertTrue(any("subordinate memory" in error for error in errors))
 
+    def test_historical_v1_0_cannot_be_repromoted_as_current(self):
+        texts = copy.deepcopy(VALID_TEXTS)
+        texts["status"] += "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.0`\n"
+        errors = self.validate(texts)
+        self.assertTrue(any("stale current-state assertion" in error for error in errors))
+
     def test_program_identity_parses_registered_next_workstream(self):
         program = (
             "Program: `POST-CLOSURE-001`\n\n"
             "- `PCA-W0-REPOSITORY-CONFORMITY`: complete.\n"
-            "- `PCA-W1-INDEPENDENT-REVIEW`: independent core review — next.\n"
+            "- `PCA-W1-INDEPENDENT-REVIEW`: **open — next**. Review target is `PROJECT-FAR-CORE-THEORY-1.1`.\n"
         )
         self.assertEqual(
             (PROGRAM_ID, NEXT_WORKSTREAM), checker.program_identity(program)

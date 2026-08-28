@@ -1,7 +1,7 @@
 {
   "algorithm": "SHA-256",
   "files": {
-    "compatibility/compatibility-spec.md": "e55c247575e14c0e3d28b129ffd30bd30811b31c4a12516ee9b49c5b1f8f5f9e",
+    "compatibility/compatibility-spec.md": "44fd5f7a7be3891818ac969d3811b2db65fc30e242a68de9413c35e6d7bf2335",
     "examples/README.md": "8e3ccf239edcc4a3b8c61f33d9c49ef9cb87eba4667dd6c454e273426ee49150",
     "examples/index.json": "0fcdf90b79460599f1a9548cfeea31fe05f1bd486cbb3aef6497b6dd6a3b3343",
     "examples/invalid/broken-reference.json": "13a5cbdc8b5d339dc266039512e9bd5141198102af9d83867c3866be2d2c4017",
@@ -9,7 +9,7 @@
     "examples/valid/complete.json": "4c30ad95c222c0312c02dece3f566952003f3abc2cdb4a35c9a95d247853b602",
     "examples/valid/minimal.json": "793cce17063e401844138941d4b54f643c437570be14f5326f6899695c701829",
     "grammar/far-yaml-grammar.md": "b4cbf54f4f3e2ccea7d2ee22d41304b17a273f612dcb0d5a9b39053a0792f393",
-    "manifest.json": "eda5fc3ffbff614faacd97cda1fce7b7a6a3760581d286f5131841a853d59860",
+    "manifest.json": "e392764f82d5e29c4cbc9686f1918387ecf33f7bc4319c5dc8c8301a62855f2e",
     "schemas/far-document.schema.json": "1073c6ffd5c1fa30a5e96060eaae79a978b5e39231f6a8cae615b2202056f222",
     "schemas/far-yaml.schema.json": "034ab5938ebfa2b00d9fee9937648773352567ccc331ff7f885a7a5a9894d53a",
     "schemas/proof-object-schema.yaml": "c7a27e3c4f8a23472b65614f4a2f8e490ab922a2fb244d8fbcae6620340695e0",
@@ -25,6 +25,8 @@
     "terminology/derivation.md": "c524e76951e3245d88be95ee7e9ec6fa717801cfa3e2e43a7a56eb96c50c4b54",
     "terminology/derived-concepts.md": "e813c32b046e9a1323af0a7651c71afc36b552f5d2e9e90df10532e1c3f450e2",
     "terminology/meta-theory-definitions.md": "cf41362d5307cff4f04a7fb956238f3b96eb75dbc47cc46f890cbd2e98d2f81a",
-    "theorems/Project-FAR-Theory-Closure-v1.0.md": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5"
+    "theorems/Project-FAR-Theory-Closure-v1.0.md": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+    "theorems/Project-FAR-Theory-Closure-v1.1.md": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+    "theorems/project-far-core-theory-v1.1.json": "66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40"
   }
 }

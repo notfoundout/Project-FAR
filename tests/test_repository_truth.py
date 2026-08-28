@@ -26,7 +26,13 @@ class RepositoryTruthTests(unittest.TestCase):
         self.assertTrue(payload["successful"])
         self.assertEqual(payload["package_version"], "0.6.0")
         self.assertEqual(payload["latest_release"], "v1.0.0")
-        self.assertEqual(payload["governing_core"], "PROJECT-FAR-CORE-THEORY-1.0")
+        self.assertEqual(payload["governing_core"], "PROJECT-FAR-CORE-THEORY-1.1")
+        self.assertEqual(payload["historical_core"], "PROJECT-FAR-CORE-THEORY-1.0")
+        self.assertEqual(
+            payload["historical_core_sha256"],
+            "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+        )
+        self.assertEqual(payload["specification_export_version"], "1.2.0")
         self.assertEqual(payload["current_program"], "POST-CLOSURE-001")
         self.assertEqual(payload["current_phase"], "post-closure assurance and application")
 
@@ -103,6 +109,24 @@ class RepositoryTruthTests(unittest.TestCase):
             with self.assertRaises(SystemExit) as caught:
                 truth.main()
         self.assertIn("release record", str(caught.exception))
+
+    def test_export_manifest_cannot_repromote_v1_0(self) -> None:
+        original = truth.read_text
+
+        def mutated(path: str) -> str:
+            text = original(path)
+            if path == "exports/far-spec-v1/manifest.json":
+                payload = json.loads(text)
+                for row in payload["artifacts"]:
+                    if row["path"] == "theorems/Project-FAR-Theory-Closure-v1.0.md":
+                        row["status"] = "canonical"
+                return json.dumps(payload)
+            return text
+
+        with mock.patch.object(truth, "read_text", side_effect=mutated):
+            with self.assertRaises(SystemExit) as caught:
+                truth.main()
+        self.assertIn("preserve v1.0 as historical", str(caught.exception))
 
 
 if __name__ == "__main__":

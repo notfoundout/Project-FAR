@@ -5,6 +5,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+CURRENT_CORE = "PROJECT-FAR-CORE-THEORY-1.1"
+HISTORICAL_CORE = "PROJECT-FAR-CORE-THEORY-1.0"
 
 CURRENT_FILES = {
     "agents": ROOT / "AGENTS.md",
@@ -32,8 +34,15 @@ def newest_release_tag(root: Path = ROOT) -> str | None:
 
 def program_identity(program_text: str) -> tuple[str | None, str | None]:
     program = re.search(r"^Program:\s*`([^`]+)`", program_text, re.M)
-    next_workstream = re.search(r"^- `([^`]+)`:[^\n]*— next\.$", program_text, re.M)
-    return (program.group(1) if program else None, next_workstream.group(1) if next_workstream else None)
+    next_workstream = re.search(
+        r"^- `([^`]+)`:[^\n]*\bnext\b[^\n]*$",
+        program_text,
+        re.M | re.I,
+    )
+    return (
+        program.group(1) if program else None,
+        next_workstream.group(1) if next_workstream else None,
+    )
 
 
 def validate_texts(
@@ -50,17 +59,27 @@ def validate_texts(
 
     require("readme", f"## Latest release: {expected_release}", "README release summary drifted")
     require("readme", "## Post-closure phase", "README no longer identifies the post-closure phase")
-    require("readme", "`PROJECT-FAR-CORE-THEORY-1.0`", "README core-theory identity drifted")
+    require("readme", f"`{CURRENT_CORE}`", "README current core-theory identity drifted")
+    require("readme", "Historical v1.0", "README no longer preserves historical v1.0 boundary")
 
     require("status", f"Current published repository release: [`{expected_release}`]", "canonical status release drifted")
+    require("status", f"Current governing theory: `{CURRENT_CORE}`", "canonical status governing core drifted")
     require("status", f"Current program: `{program_id}`", "canonical status program drifted")
-    require("status", f"`{next_workstream}` | Next", "canonical status next-workstream drifted")
+    status_workstream = re.search(
+        rf"\|\s*`{re.escape(next_workstream)}`\s*\|\s*\*\*Next / Open\*\*\s*\|",
+        texts.get("status", ""),
+    )
+    if not status_workstream:
+        errors.append("status: canonical status next-workstream drifted")
 
     release_doc = f"releases/project-far-{expected_release}.md"
     require("map", f"Current Project FAR release: [`{release_doc}`]({release_doc})", "canonical map current-release navigation drifted")
+    require("map", "Project FAR Core Theory v1.1", "canonical map current core authority drifted")
+    require("map", "Historical Project FAR Core Theory v1.0", "canonical map historical core boundary drifted")
     require("map", "Post-Closure Assurance and Application Program", "canonical map lacks current assurance authority")
 
     require("roadmap", f"Current published repository release: [`{expected_release}`]", "roadmap release drifted")
+    require("roadmap", f"Current governing core: [`{CURRENT_CORE}`]", "roadmap governing core drifted")
     require("roadmap", f"Current program: [`{program_id}`]", "roadmap program drifted")
     require("roadmap", f"`{next_workstream}` — next", "roadmap next-workstream drifted")
 
@@ -70,7 +89,9 @@ def validate_texts(
         errors.append("generated: historical report still declares a Current Research Mode")
 
     require("next_actions", f"Program: `{program_id}`.", "next-actions program drifted")
+    require("next_actions", f"Current review target: `{CURRENT_CORE}`.", "next-actions review target drifted")
     require("next_actions", f"Canonical next workstream: `{next_workstream}`.", "next-actions workstream drifted")
+    require("next_actions", "Historical v1.0 Core", "next-actions historical core boundary drifted")
     if "PTE-W1-INDEPENDENT-REVIEW" in texts.get("next_actions", ""):
         errors.append("next_actions: superseded UPP evaluation planning survived into the current task queue")
 
@@ -82,6 +103,7 @@ def validate_texts(
         "status": [
             "v0.4.0 is the current release baseline",
             "Theory/dependency freeze before experiment preregistration",
+            f"Current governing theory: `{HISTORICAL_CORE}`",
         ],
         "roadmap": [
             "v0.4.0 is the current release baseline",
