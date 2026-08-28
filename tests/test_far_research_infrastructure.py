@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -37,6 +38,25 @@ class RegistryTests(unittest.TestCase):
         retargeted = copy.deepcopy(promotion)
         retargeted["review_target"]["theory_sha256"] = "0" * 64
         self.assertTrue(any("target identity/hash" in error for error in registry.w1_seal_errors(retargeted)))
+
+    def test_w1_seal_rejects_current_governing_theory_drift(self):
+        promotion = registry.load("theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
+        required = {
+            item["path"] for item in promotion["verified_artifacts"]
+        } | {
+            "research/campaigns/pca-w1-replay-capsule-v1.0.json",
+            "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for raw_path in required:
+                destination = root / raw_path
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes((ROOT / raw_path).read_bytes())
+            theory = root / "theory/theorems/Project-FAR-Theory-Closure-v1.1.md"
+            theory.write_text(theory.read_text(encoding="utf-8") + "\nmutation\n", encoding="utf-8")
+            errors = registry.w1_seal_errors(promotion, root)
+            self.assertTrue(any("current governing v1.1 theory bytes" in error for error in errors))
 
     def test_duplicate_registry_identity_is_rejected(self):
         data = {path: registry.load(path) for path in registry.DATA_SCHEMAS}
