@@ -1,0 +1,94 @@
+{
+  "schema": "project-far-pca-w1-independent-review-artifact-manifest-v1",
+  "repository": "notfoundout/Project-FAR",
+  "branch": "research/pca-w1-core-v1.1-independent-review",
+  "target_commit": "14105775daf3c5713b134a728db2e1e53673af97",
+  "target_tree": "68f058199b7c94b707fd5fe978f1ef59d695ab00",
+  "theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
+  "artifact_count_including_this_manifest": 15,
+  "artifacts_before_this_manifest": [
+    {
+      "path": "docs/research/pca-w1-independent-review/00-exposure-environment.md",
+      "commit": "a02e80079c87d5855ddba4f984a28ed1194d8d75"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/01-stage-a-blind-reconstruction.md",
+      "commit": "3b7c0508b7276c90ee011d818423a9e71dedcf7a"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/tools/stage_a_finite_checks.py",
+      "commit": "23e4dcbc3fbc0e219c7f62b290d95b1d146dd824"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/tools/stage-a-finite-check-output.md",
+      "commit": "158c98f1b6ecc5dc163be25bf2d6593d1d6f2e1c"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/02-stage-b-ledger-reconciliation.md",
+      "commit": "e2c52f6880cd2241e2bb9aadaef8c8f40dd63386"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/03-stage-c-independent-research.md",
+      "commit": "af47982f741c87023ab677ac141cc22dfc6815bf"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/04-stage-c-hostile-test-ledger.md",
+      "commit": "6a171bcc8c94bbdfc8688c73275e5a6f689ae557"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/05-stage-d-provisional-verdict-frozen.md",
+      "commit": "c764a3af9b8f69efc6fd59eae0b2bb658ab40aeb",
+      "sha256": "e27c99c7ff52f5f95e30e6f163b83cacbfa389d61d6f9408966bf983ce66902e"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/05-stage-d-freeze-manifest.json",
+      "commit": "6c142853ba8e2c37363987acc3e98d4476b196d2"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/tools/stage_e_sss_checks.py",
+      "commit": "230e859409c3d599412bb9e7b11bf31f22c95429"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/tools/stage-e-sss-check-output.json",
+      "commit": "2d5a165f876a59040fa4d2d80d5aeb363d8a75e0"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/06-stage-e-controlled-unblinding.md",
+      "commit": "e7a04af3d3a3a6481725c5c3e9f9c6b3f18b76e3"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/07-final-independent-review.md",
+      "commit": "7ea9a375dc48d69a427fd83e9165c651d9a95b8a",
+      "sha256": "03848362e0cbea1151ba3a0e042cf2872f51f0781815eaff17c1128e49589aaa"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/07-final-independent-review.json",
+      "commit": "1dcec7edcc1ab9585bb7c746e8c0df99654812e4",
+      "sha256": "f311552b877beece5245f48bbf1cf32f68d4b586fb3d65c18410b0ffe9175c37"
+    }
+  ],
+  "frozen_stage_d": {
+    "counts": {
+      "PROVED": 12,
+      "REFUTED": 0,
+      "OPEN": 0,
+      "UNDERDETERMINED": 2,
+      "NOT APPLICABLE": 0
+    },
+    "terminal_verdict": "UNDERDETERMINED"
+  },
+  "final": {
+    "counts": {
+      "PROVED": 14,
+      "REFUTED": 0,
+      "OPEN": 0,
+      "UNDERDETERMINED": 0,
+      "NOT APPLICABLE": 0
+    },
+    "terminal_verdict": "PROVED",
+    "independence": "PASS",
+    "integrity": "PASS",
+    "theorem_correction_required": false,
+    "novelty_or_priority_certified": false
+  }
+}
