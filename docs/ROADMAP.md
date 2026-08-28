@@ -42,7 +42,7 @@ FARA remains a finite explicit auditable representation target. FAR implements c
 
 The repository release and installable package version remain separate surfaces. A future release may package the corrected closure integration, but packaging does not strengthen theorem assurance.
 
-The dated `exports/far-spec-v1/` bundle is a historical generated snapshot pinned by its manifest to a pre-v1.1 source commit. It is preserved rather than silently rewritten and does not override current v1.1 authority.
+`exports/far-spec-v1/` is a current deterministic generated specification surface. Export version `1.2.0` carries `PROJECT-FAR-CORE-THEORY-1.1` and its machine ledger as canonical artifacts while retaining the immutable v1.0 monograph explicitly as `historical`. The export manifest and checksums must be regenerated whenever an exported canonical source changes.
 
 ## Historical roadmap
 
