@@ -178,6 +178,9 @@ def w1_seal_errors(promotion: dict, root: Path = ROOT) -> list[str]:
             errors.append("W1 target theory hash is not bound to capsule source manifest")
         if source_hashes.get("theory/terminal/project-far-core-theory-v1.1.json") != target.get("ledger_sha256"):
             errors.append("W1 target ledger hash is not bound to capsule source manifest")
+    governing_theory = root / "theory/theorems/Project-FAR-Theory-Closure-v1.1.md"
+    if not governing_theory.is_file() or sha256(governing_theory) != W1_REVIEW_TARGET["theory_sha256"]:
+        errors.append("current governing v1.1 theory bytes differ from the W1-reviewed target")
     for artifact in artifacts:
         if not isinstance(artifact, dict):
             continue
