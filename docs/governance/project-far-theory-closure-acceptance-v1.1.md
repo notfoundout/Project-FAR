@@ -35,7 +35,7 @@ The replication is internal. Lifecycle completion does not convert it into indep
 
 The original v1.0 monograph remains immutable at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`. Its machine ledger and acceptance record remain historical evidence. No v1.0 byte is rewritten.
 
-The dated `exports/far-spec-v1/` bundle is also preserved as a historical generated export because its manifest pins a pre-v1.1 source commit and generation timestamp. It must not be interpreted as current theorem authority.
+`exports/far-spec-v1/` is regenerated as the current deterministic export surface. Export version `1.2.0` must carry v1.1 and its machine ledger as canonical artifacts while retaining the exact v1.0 monograph as a manifest-labeled `historical` artifact.
 
 ## Governed reopening
 
@@ -88,7 +88,7 @@ Upon merge:
 
 - `PROJECT-FAR-CORE-THEORY-1.1` becomes current core authority;
 - `PROJECT-FAR-CORE-THEORY-1.0` remains preserved historical authority at its original evidence cutoff;
-- `exports/far-spec-v1/` remains a historical generated export at its pinned source commit rather than being silently rewritten;
-- current status, claim, theorem, planning, and repository-truth surfaces must point to v1.1;
+- `exports/far-spec-v1/` is regenerated to export version `1.2.0`, with v1.1 current/canonical and v1.0 retained as historical provenance;
+- current status, claim, theorem, planning, repository-truth, and specification-export surfaces must point coherently to v1.1;
 - post-closure program `POST-CLOSURE-001` remains active and W1 remains open;
 - no software conformance or CI result is treated as mathematical proof.
