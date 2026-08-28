@@ -20,7 +20,7 @@ Each concept should have one canonical source. Other documents should link to th
 | Central Research Program | [`governance/central-research-program.md`](governance/central-research-program.md) | Records the terminal research answer and current evidence discipline. |
 | Project FAR Core Theory v1.1 | [`../theory/theorems/Project-FAR-Theory-Closure-v1.1.md`](../theory/theorems/Project-FAR-Theory-Closure-v1.1.md) | Current corrected contract-relative core theory and unchanged terminal verdict. |
 | Historical Project FAR Core Theory v1.0 | [`../theory/theorems/Project-FAR-Theory-Closure-v1.0.md`](../theory/theorems/Project-FAR-Theory-Closure-v1.0.md) | Immutable historical base preserved at its recorded SHA-256; superseded only as current authority. |
-| Core Theory v1.1 Acceptance | [`governance/project-far-theory-closure-acceptance-v1.1.md`](governance/project-far-theory-closure-acceptance-v1.1.md) | Governs the W1-triggered correction, preservation, promotion, and assurance boundary. |
+| Core Theory v1.1 Acceptance | [`governance/project-far-theory-closure-acceptance-v1.1.md`](governance/project-far-theory-closure-acceptance-v1.1.md) | Governs the W1-triggered correction, lifecycle, preservation, promotion, and assurance boundary. |
 | Core Theory v1.1 Correction Audit | [`audits/project-far-core-theory-v1.1-correction-audit.md`](audits/project-far-core-theory-v1.1-correction-audit.md) | Records FAR-CORE-004, FAR-CORE-010, and Blackwell prior-art corrections and preserves FAR-CORE-014. |
 | Post-Closure Assurance and Application Program | [`governance/post-closure-assurance-and-application-program-v1.0.md`](governance/post-closure-assurance-and-application-program-v1.0.md) | Governs independent review of v1.1, formalization, contract schemas, domain contracts, and applications. |
 | Historical Post-Terminal UPP Evaluation Program | [`governance/post-terminal-public-evaluation-program-v1.0.md`](governance/post-terminal-public-evaluation-program-v1.0.md) | Superseded historical program preserved for provenance. |
@@ -58,7 +58,7 @@ Each concept should have one canonical source. Other documents should link to th
 |---|---|---|
 | FARA README | [`../frameworks/FARA/README.md`](../frameworks/FARA/README.md) | Entry point for the representational architecture layer. |
 | FARA Architecture | [`../frameworks/FARA/architecture.md`](../frameworks/FARA/architecture.md) | Defines FARA architecture. |
-| FARA Formal Kernel | [`../frameworks/FARA/formal-kernel.md`](../frameworks/FARA/formal-kernel.md) | Defines the Accepted identity-bearing many-sorted relational kernel within Project FAR v1.0 finite explicit auditable scope. The v1.1 theory correction does not alter this retained kernel. |
+| FARA Formal Kernel | [`../frameworks/FARA/formal-kernel.md`](../frameworks/FARA/formal-kernel.md) | Defines the Accepted identity-bearing many-sorted relational kernel within Project FAR v1.0 finite explicit auditable scope. |
 | FARA Dependency Graph | [`../frameworks/FARA/dependency-graph.md`](../frameworks/FARA/dependency-graph.md) | Records FARA document-maintenance dependencies. |
 | FARA Design Principles | [`../frameworks/FARA/design-principles.md`](../frameworks/FARA/design-principles.md) | Records FARA design constraints. |
 | FARA Document Map | [`../frameworks/FARA/document-map.md`](../frameworks/FARA/document-map.md) | Maps FARA documents and roles. |
@@ -109,7 +109,7 @@ Each concept should have one canonical source. Other documents should link to th
 |---|---|---|
 | FARO README | [`../frameworks/FARO/README.md`](../frameworks/FARO/README.md) | Entry point for the operational layer. |
 | FARO Architecture | [`../frameworks/FARO/architecture.md`](../frameworks/FARO/architecture.md) | Defines FARO operational architecture. |
-| FARO Dependency Graph | [`../frameworks/FARO/dependency-graph.md`](../frameworks/FARO/dependency-graph.md) | Records FARO dependency order. |
+| FARO Dependency Graph | [`../frameworks/FARO/dependency-graph.md`](../frameworks/FARO/dependency-graph.md) | Records FARO document-maintenance dependencies. |
 | FARO Design Principles | [`../frameworks/FARO/design-principles.md`](../frameworks/FARO/design-principles.md) | Defines FARO design constraints. |
 | Operation Taxonomy | [`../frameworks/FARO/operation-taxonomy.md`](../frameworks/FARO/operation-taxonomy.md) | Defines FARO operation categories. |
 | Operation Interface Standard | [`../frameworks/FARO/operation-interface-standard.md`](../frameworks/FARO/operation-interface-standard.md) | Defines required operation specification fields. |
@@ -129,7 +129,7 @@ Each concept should have one canonical source. Other documents should link to th
 |---|---|---|
 | FARM README | [`../frameworks/FARM/README.md`](../frameworks/FARM/README.md) | Entry point for the meta-framework coordination layer. |
 | FARM Architecture | [`../frameworks/FARM/architecture.md`](../frameworks/FARM/architecture.md) | Defines FARM's meta-framework role. |
-| FARM Dependency Graph | [`../frameworks/FARM/dependency-graph.md`](../frameworks/FARM/dependency-graph.md) | Records FARM dependency order. |
+| FARM Dependency Graph | [`../frameworks/FARM/dependency-graph.md`](../frameworks/FARM/dependency-graph.md) | Records FARM document-maintenance dependencies. |
 | FARM Design Principles | [`../frameworks/FARM/design-principles.md`](../frameworks/FARM/design-principles.md) | Defines FARM design constraints. |
 | Requirement Routing | [`../frameworks/FARM/requirement-routing.md`](../frameworks/FARM/requirement-routing.md) | Defines downstream requirement routing. |
 | Defect Classification | [`../frameworks/FARM/defect-classification.md`](../frameworks/FARM/defect-classification.md) | Defines defect classes and statuses. |
@@ -182,3 +182,26 @@ Each concept should have one canonical source. Other documents should link to th
 - Repository Compliance Enforcement Report: `docs/audits/repository-compliance-enforcement-report.md` is the canonical compliance enforcement compliance enforcement, automation coverage, regression prevention, and final finding disposition report.
 - Independent Repository Certification Audit: `docs/audits/independent-repository-certification-audit.md` is the canonical certification matrix, governance consistency, integrity, regression, and automation verification audit.
 - Repository Certification Status: `docs/certification/repository-certification-status.md` is the canonical repository certification decision, evidence matrix, repository integrity summary, and maintenance readiness assessment.
+
+## Release Navigation
+
+- Current Project FAR release: [`releases/project-far-v1.0.0.md`](releases/project-far-v1.0.0.md).
+- Historical external-validation baseline: [`releases/project-far-v0.4.0.md`](releases/project-far-v0.4.0.md).
+- Historical maintenance baseline: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md).
+- Historical internal-validation baseline: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
+
+## Theory Closure and Assurance Authority
+
+- Current corrected theory: `theory/theorems/Project-FAR-Theory-Closure-v1.1.md`.
+- Current machine claim ledger: `theory/terminal/project-far-core-theory-v1.1.json`.
+- Acceptance/promotion: `docs/governance/project-far-theory-closure-acceptance-v1.1.md`.
+- Internal replication: `docs/research/project-far-core-v1.1-correction-replication-v1.0.md`.
+- Historical v1.0 theory/ledger/acceptance remain immutable provenance and do not override v1.1.
+- Current program: `docs/governance/post-closure-assurance-and-application-program-v1.0.md`.
+- Historical UPP disclosure, audit, cross-audit, and post-terminal program remain preserved but do not override the core theory.
+
+## Comparative Representation Evaluation Authority
+
+- Preliminary external validation: `theory/evaluation/external-validation-methodology.md` and `theory/evaluation/external-validation-registry.yaml` are the canonical preliminary external-validation methodology and registry. They preserve historical EV-001 through EV-029 evidence for scoped mapping and pressure identification only.
+- Canonical comparative evaluation: `theory/evaluation/comparative-representation/protocol-v1.0.md` is the sole canonical source for Comparative Representation Protocol v1.0, including protocol versioning and comparative-result interpretation.
+- Comparative experiment registration: `theory/evaluation/comparative-representation/experiment-registry.json` is the canonical registry for blinded comparative representation experiments. Legacy external-validation reports must not be reclassified as CRP v1.0 experiments.
