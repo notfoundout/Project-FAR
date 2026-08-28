@@ -48,9 +48,15 @@ application as a universal theorem or erase its provenance.
 
 ## Immutability
 
-The imported review objects are sealed evidence. Future corrections must add a separately
-versioned adjudication; they must not edit the protocol, Stage-D freeze, unblinding comparison,
-terminal review, raw outputs, scripts, or artifact manifest. Historical v1.0 remains byte
+Sixteen terminal/protocol review objects are promoted byte-for-byte as sealed evidence. The
+branch's two preparatory machine templates
+(`pca-w1-independent-review-evidence-v1.0.json` and
+`pca-w1-independent-review-manifest-v1.0.json`) remain only on the sealed review branch:
+their embedded pre-run statuses are historical campaign setup, not current Project FAR state.
+
+Future corrections must add a separately versioned adjudication; they must not edit the
+protocol, Stage-D freeze, unblinding comparison, terminal review, raw outputs, scripts, or
+artifact manifest. Historical v1.0 remains byte
 identical at SHA-256
 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
 

@@ -13,7 +13,7 @@ mathematical review, novelty search, empirical validation, or substitute for Lea
 | Threat | Evidence checked | Disposition |
 |---|---|---|
 | silent theory change | governing v1.1 monograph and all 14 machine claim statements | no statement changed; only assurance, formalization, and next-workstream metadata changed |
-| frozen-review contamination | 18 imported W1 paths, review branch head/tree, artifact manifest and source hashes | byte-identical sealed evidence; no review file edited |
+| frozen-review contamination | 16 promoted terminal/protocol paths, two pre-run templates retained only on the sealed branch, review head/tree, manifest and source hashes | promoted evidence remains byte-identical; stale pre-run templates are not presented as current state; sealed branch untouched |
 | historical v1.0 mutation | canonical and exported monograph bytes | unchanged at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5` |
 | truth/provenance conflation | W1 verdicts, assurance ledger, v1.1 machine ledger | `FAR-CORE-014` remains truth `PROVED` and provenance/application `supported_derived` |
 | novelty overclaim | current status, registries, tool governance, citation relations | novelty and priority remain not established |

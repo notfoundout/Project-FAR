@@ -184,8 +184,11 @@ def run_controlled_cross_challenge(*, campaign_id: str, frozen: FrozenPass, chal
     if not frozen.freeze_sha256:
         raise ValueError("cross-challenge requires a frozen first pass")
     _validate_lanes(challengers)
-    prompt = canonical_json({"phase":"controlled-cross-challenge","frozen_pass_sha256":frozen.freeze_sha256,"issues":[dataclasses.asdict(item) for item in frozen.issues],"rules":["challenge issues, not providers","no vote is proof"]})
-    evidence_hash = _sha(canonical_json([dataclasses.asdict(item) for item in frozen.issues]))
+    raw_issue_blob = canonical_json([dataclasses.asdict(item) for item in frozen.issues])
+    outbound_issue_blob = redact_outbound(raw_issue_blob)
+    outbound_issues = json.loads(outbound_issue_blob)
+    prompt = canonical_json({"phase":"controlled-cross-challenge","frozen_pass_sha256":frozen.freeze_sha256,"issues":outbound_issues,"rules":["challenge issues, not providers","no vote is proof"]})
+    evidence_hash = _sha(outbound_issue_blob)
     invocations: list[Invocation] = []
     issues: list[IssueRevision] = list(frozen.issues)
     for ordinal, (provider_id, lane) in enumerate(sorted(challengers.items()), 1):
@@ -239,9 +242,13 @@ def replay_recorded(*, records: Iterable[Invocation], selected_invocation_ids: I
 
 def adjudication_record(*, campaign_id: str, frozen: FrozenPass, dispositions: Mapping[str, str], adjudicator: str) -> dict:
     known = {issue.issue_id for issue in frozen.issues}
-    unknown = set(dispositions) - known
+    provided = set(dispositions)
+    unknown = provided - known
     if unknown:
         raise ValueError(f"adjudication references unknown issues: {sorted(unknown)}")
+    missing = known - provided
+    if missing:
+        raise ValueError(f"adjudication omits frozen issues: {sorted(missing)}")
     return {
         "campaign_id": campaign_id,
         "frozen_pass_sha256": frozen.freeze_sha256,

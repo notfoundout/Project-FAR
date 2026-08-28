@@ -170,6 +170,42 @@ class AdversarialHarnessTests(unittest.TestCase):
             )
         self.assertFalse(called)
 
+    def test_cross_challenge_redacts_frozen_issues_and_adjudication_is_total(self):
+        leaked = "github_pat_abcdefghijklmnopqrstuvwxyz0123456789"
+        frozen = harness.run_blind_first_pass(
+            campaign_id="TEST-CROSS-REDACTION",
+            problem="frozen",
+            root=ROOT,
+            capsule=self.capsule,
+            stage_id="A",
+            evidence_paths=["theory/theorems/Project-FAR-Theory-Closure-v1.1.md"],
+            reasoners={"provider-a": self.lane(
+                "provider-a",
+                lambda _prompt, _id: f"ISSUE: token={leaked}\nISSUE: second unresolved issue",
+            )},
+        )
+        captured = []
+
+        def challenge(prompt: str, _invocation_id: str) -> str:
+            captured.append(prompt)
+            return "no additional issue"
+
+        challenged = harness.run_controlled_cross_challenge(
+            campaign_id="TEST-CROSS-REDACTION",
+            frozen=frozen,
+            challengers={"provider-b": self.lane("provider-b", challenge)},
+        )
+        self.assertEqual(challenged.invocations[0].status, "completed")
+        self.assertIn("[REDACTED]", captured[0])
+        self.assertNotIn("github_pat_", captured[0])
+        with self.assertRaisesRegex(ValueError, "omits frozen issues"):
+            harness.adjudication_record(
+                campaign_id="TEST-CROSS-REDACTION",
+                frozen=frozen,
+                dispositions={frozen.issues[0].issue_id: "accepted"},
+                adjudicator="test",
+            )
+
     def test_recorded_replay_preserves_exact_failure(self):
         def failing(_prompt: str, _invocation_id: str) -> str:
             raise RuntimeError("rate limited")
