@@ -18,6 +18,7 @@
     "historical_surfaces": [
       "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
       "theory/terminal/project-far-core-theory-v1.0.json",
+      "exports/far-spec-v1/ (generated historical snapshot pinned by its manifest to a pre-v1.1 source commit)",
       "README.md:generated bounded REP/ADJ/W3.5 dashboard",
       "docs/reports/project-status-generated.md",
       "historical UPP and independent-experiment artifacts"
@@ -32,10 +33,11 @@
   "claim_boundaries": [
     "PROJECT-FAR-CORE-THEORY-1.1 governs current theory status.",
     "PROJECT-FAR-CORE-THEORY-1.0 remains immutable historical evidence at its recorded SHA-256.",
+    "The dated exports/far-spec-v1/ bundle is historical generated evidence at its manifest-pinned source commit and does not override current v1.1 authority.",
     "FAR-CORE-004 denies one representation being simultaneously least-informative sufficient for every observation contract; it does not deny universal sufficiency of the identity representation.",
     "FAR-CORE-010 exact common theory is indexed by L,J,I; the frame-subtracted residue is additionally indexed by Γ.",
     "Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.",
-    "No historical dashboard or research artifact may identify itself as the current repository phase or theorem authority.",
+    "No historical dashboard, generated export, or research artifact may identify itself as the current repository phase or theorem authority.",
     "Package metadata versions must match executable version declarations.",
     "Repository release version and installable package version are distinct authorities and must not be inferred from one another."
   ]
