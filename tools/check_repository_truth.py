@@ -2,6 +2,7 @@
 """Fail-closed repository status/version/release authority check."""
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -10,6 +11,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 AUTHORITY = ROOT / "governance/repository-truth-authority-v1.json"
+EXPECTED_CORE = "PROJECT-FAR-CORE-THEORY-1.1"
+HISTORICAL_CORE = "PROJECT-FAR-CORE-THEORY-1.0"
+HISTORICAL_CORE_PATH = "theory/theorems/Project-FAR-Theory-Closure-v1.0.md"
+EXPECTED_V1_SHA256 = "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5"
+EXPECTED_EXPORT_VERSION = "1.2.0"
 
 
 def fail(message: str) -> None:
@@ -63,17 +69,52 @@ def main() -> int:
     status = authority.get("project_status", {})
     if status.get("current_phase") != "post-closure assurance and application":
         fail("project-status phase authority drift")
-    if status.get("governing_core") != "PROJECT-FAR-CORE-THEORY-1.0":
+    if status.get("governing_core") != EXPECTED_CORE:
         fail("governing core-theory authority drift")
+    if status.get("governing_core_source") != "theory/theorems/Project-FAR-Theory-Closure-v1.1.md":
+        fail("governing core-theory source drift")
+    if status.get("historical_core") != HISTORICAL_CORE:
+        fail("historical core-theory identity drift")
+    if status.get("historical_core_sha256") != EXPECTED_V1_SHA256:
+        fail("historical core-theory hash authority drift")
     if status.get("current_program") != "POST-CLOSURE-001":
         fail("current program authority drift")
+
+    historical_bytes = (ROOT / HISTORICAL_CORE_PATH).read_bytes()
+    if hashlib.sha256(historical_bytes).hexdigest() != EXPECTED_V1_SHA256:
+        fail("historical v1.0 core bytes changed")
+
+    export_authority = authority.get("specification_export", {})
+    if export_authority.get("export_version") != EXPECTED_EXPORT_VERSION:
+        fail("specification export authority version drift")
+    if export_authority.get("governing_core") != EXPECTED_CORE:
+        fail("specification export governing-core drift")
+    if export_authority.get("historical_core_status") != "historical":
+        fail("specification export historical-core status drift")
+
+    manifest = json.loads(read_text("exports/far-spec-v1/manifest.json"))
+    if manifest.get("export_version") != EXPECTED_EXPORT_VERSION:
+        fail("specification export manifest version drift")
+    if manifest.get("core_theory_id") != EXPECTED_CORE:
+        fail("specification export manifest core-theory drift")
+    entries = {row.get("path"): row for row in manifest.get("artifacts", [])}
+    historical_entry = entries.get("theorems/Project-FAR-Theory-Closure-v1.0.md", {})
+    if historical_entry.get("status") != "historical" or historical_entry.get("sha256") != EXPECTED_V1_SHA256:
+        fail("specification export does not preserve v1.0 as historical")
+    current_entry = entries.get("theorems/Project-FAR-Theory-Closure-v1.1.md", {})
+    if current_entry.get("status") != "canonical":
+        fail("specification export does not mark v1.1 theorem canonical")
+    ledger_entry = entries.get("theorems/project-far-core-theory-v1.1.json", {})
+    if ledger_entry.get("status") != "canonical":
+        fail("specification export does not mark v1.1 ledger canonical")
 
     readme = read_text("README.md")
     required_phrases = (
         f"## Latest release: {latest_release}",
         f"The latest published GitHub repository release is [{latest_release}]",
         "These are separate version surfaces",
-        "`PROJECT-FAR-CORE-THEORY-1.0`",
+        f"`{EXPECTED_CORE}`",
+        "Historical v1.0",
         "## Post-closure phase",
         "The active program is `POST-CLOSURE-001`.",
         "Core theory reopens only for a reproducible contradiction",
@@ -111,6 +152,9 @@ def main() -> int:
         "latest_release": latest_release,
         "status_authority": status["authority"],
         "governing_core": status["governing_core"],
+        "historical_core": status["historical_core"],
+        "historical_core_sha256": status["historical_core_sha256"],
+        "specification_export_version": export_authority["export_version"],
         "current_program": status["current_program"],
         "current_phase": status["current_phase"],
     }
