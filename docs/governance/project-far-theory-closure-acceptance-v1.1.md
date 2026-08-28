@@ -10,13 +10,32 @@ Corrected successor: [Project FAR Core Theory v1.1](../../theory/theorems/Projec
 
 Machine ledger: [project-far-core-theory-v1.1.json](../../theory/terminal/project-far-core-theory-v1.1.json)
 
+Replication record: [project-far-core-v1.1-correction-replication-v1.0.md](../research/project-far-core-v1.1-correction-replication-v1.0.md)
+
 ## Trigger
 
 A hostile W1 audit identified reproducible defects satisfying the v1.0 reopening rule. The audit was not independent under the project's evaluator-independence standard, so it supplies internal counterevidence and correction obligations but no assurance upgrade.
 
+## Discovery-lifecycle record
+
+The Research Execution Charter requires `Question → Execution → Observation → Discovery → Replication → Acceptance → Promotion → Repository Change`. This correction follows that order:
+
+1. **Question:** whether the W1 objections to `FAR-CORE-004`, `FAR-CORE-010`, and the Blackwell paragraph are reproducible against frozen v1.0.
+2. **Execution:** reconstruct the relevant definitions/proofs, execute explicit two-element and two-frame countermodels, and independently query the Blackwell literature.
+3. **Observation:** identity is universally sufficient but not universally minimal; changing `Γ` alone leaves exact `T_{L,J,I}` fixed while changing its frame-subtracted residue; Blackwell supplies a decision-problem-uniform partial order in its classical setup.
+4. **Discovery:** the three v1.0 statements require a narrow correction rather than rejection of the terminal kernel.
+5. **Replication:** `docs/research/project-far-core-v1.1-correction-replication-v1.0.md` independently recomputes the countermodels and prior-art boundary; permanent machine fixtures encode the reproduced failures.
+6. **Acceptance:** this record accepts exactly the corrected statements below and no broader claim.
+7. **Promotion:** the successor is promoted only through the current-authority surfaces listed below and only upon merge.
+8. **Repository Change:** branch changes are consequences of the accepted correction; the v1.0 source artifact is not mutated.
+
+The replication is internal. Lifecycle completion does not convert it into independent review.
+
 ## Preservation
 
 The original v1.0 monograph remains immutable at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`. Its machine ledger and acceptance record remain historical evidence. No v1.0 byte is rewritten.
+
+The dated `exports/far-spec-v1/` bundle is also preserved as a historical generated export because its manifest pins a pre-v1.1 source commit and generation timestamp. It must not be interpreted as current theorem authority.
 
 ## Governed reopening
 
@@ -59,7 +78,7 @@ Blackwell's classical comparison of experiments is recognized as stronger prior 
 
 ## Assurance
 
-Current assurance remains: **internal deductive; corrected after non-independent hostile audit; not independently reviewed**.
+Current assurance remains: **internal deductive; corrected after non-independent hostile audit; internally replicated; not independently reviewed**.
 
 `PCA-W1-INDEPENDENT-REVIEW` remains open and is the next assurance workstream. Any future reviewer must review v1.1 while retaining access to v1.0 and this correction record.
 
@@ -69,6 +88,7 @@ Upon merge:
 
 - `PROJECT-FAR-CORE-THEORY-1.1` becomes current core authority;
 - `PROJECT-FAR-CORE-THEORY-1.0` remains preserved historical authority at its original evidence cutoff;
+- `exports/far-spec-v1/` remains a historical generated export at its pinned source commit rather than being silently rewritten;
 - current status, claim, theorem, planning, and repository-truth surfaces must point to v1.1;
 - post-closure program `POST-CLOSURE-001` remains active and W1 remains open;
 - no software conformance or CI result is treated as mathematical proof.
