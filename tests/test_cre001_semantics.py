@@ -92,6 +92,10 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
             "The hostile correction audit remains non-independent.",
             ranked,
         )
+        self.assertIn(
+            "14 PROVED, no correction, novelty/priority not established",
+            ranked,
+        )
         self.assertIn("do not reopen the core without a genuine contradiction", ranked)
         for stale in (
             "POST-TERM-EVAL-001",
