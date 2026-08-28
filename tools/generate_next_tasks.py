@@ -16,28 +16,16 @@ CORE_ID = "PROJECT-FAR-CORE-THEORY-1.1"
 TASKS = [
     {
         "id": "STRATEGIC-010",
-        "workstream": "PCA-W1-INDEPENDENT-REVIEW",
-        "priority": "high",
-        "title": "Review the corrected core independently",
-        "why": "The corrected core is accepted internal deductive work but has no genuinely independent premise-by-premise review.",
-        "outcome": "An immutable review record that confirms, narrows, refutes, or leaves each obligation OPEN without changing its wording by convention.",
-        "branch": "research/pca-w1-core-v1.1-independent-review",
-        "pr": "Execute PCA-W1 independent review of core theory v1.1",
-        "review_target": CORE_ID,
-        "required_provenance": "disclose reviewer prior exposure, conflicts, tools, assumptions, checked obligations, unresolved objections, and source corpus.",
+        "workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
+        "priority": "active",
+        "title": "Close the bounded MLL formalization bridge",
+        "why": "FAR-CORE-001 through 013 are formalized, but FAR-CORE-014 still lacks Lean proofs of the actual PR #453 MLL witness profiles.",
+        "outcome": "An end-to-end certified MLL application module or preservation of the exact reproducible obstruction without added premises.",
+        "branch": "research/pca-w2-core-formalization",
+        "pr": "Complete Project FAR core v1.1 formalization",
     },
     {
         "id": "STRATEGIC-011",
-        "workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
-        "priority": "queued",
-        "title": "Formalize the corrected factorization core",
-        "why": "The core has explicit narrative proofs but no single proof-assistant-checked artifact.",
-        "outcome": "A checked formalization or an exact obstruction report with external assumptions exposed.",
-        "branch": "research/pca-w2-core-formalization",
-        "pr": "Formalize Project FAR core theorems",
-    },
-    {
-        "id": "STRATEGIC-012",
         "workstream": "PCA-W3-CONTRACT-SCHEMA",
         "priority": "queued",
         "title": "Implement the contract schema",
@@ -47,7 +35,7 @@ TASKS = [
         "pr": "Implement contract-relative FAR IR",
     },
     {
-        "id": "STRATEGIC-013",
+        "id": "STRATEGIC-012",
         "workstream": "PCA-W4-DOMAIN-CONTRACTS",
         "priority": "queued",
         "title": "Develop domain comparison contracts",
@@ -57,7 +45,7 @@ TASKS = [
         "pr": "Develop scoped domain contracts",
     },
     {
-        "id": "STRATEGIC-014",
+        "id": "STRATEGIC-013",
         "workstream": "PCA-W5-APPROXIMATION-AND-COST",
         "priority": "queued",
         "title": "Specify approximation and cost orders",
@@ -67,7 +55,7 @@ TASKS = [
         "pr": "Specify approximate and cost-relative adequacy",
     },
     {
-        "id": "STRATEGIC-015",
+        "id": "STRATEGIC-014",
         "workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
         "priority": "external-dependency",
         "title": "Test audit utility",
@@ -97,8 +85,7 @@ def nav_links() -> list[str]:
 
 
 def main() -> int:
-    assert TASKS[0]["workstream"] == "PCA-W1-INDEPENDENT-REVIEW"
-    assert TASKS[0]["review_target"] == CORE_ID
+    assert TASKS[0]["workstream"] == "PCA-W2-PROOF-ASSISTANT-FORMALIZATION"
     assert len({item["id"] for item in TASKS}) == len(TASKS)
     assert len({item["workstream"] for item in TASKS}) == len(TASKS)
 
@@ -113,13 +100,13 @@ def main() -> int:
         "",
         "Program: `POST-CLOSURE-001`.",
         "",
-        f"Current review target: `{CORE_ID}`.",
+        f"Current governing theory: `{CORE_ID}`.",
         "",
         "The core theory is closed after the governed v1.1 correction. These tasks change assurance, implementation, applicability, or utility; they do not reopen the core without a genuine contradiction.",
         "",
-        "The hostile W1 audit that found the v1.1 defects is internal/non-independent evidence. It does not satisfy `PCA-W1-INDEPENDENT-REVIEW`.",
+        "The hostile correction audit remains non-independent. The separately sealed `PCA-W1-INDEPENDENT-REVIEW` is complete: 14 PROVED, no correction, novelty/priority not established.",
         "",
-        "Canonical next workstream: `PCA-W1-INDEPENDENT-REVIEW`.",
+        "Canonical next workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.",
         "",
         "## Ranked Next Actions",
         "",

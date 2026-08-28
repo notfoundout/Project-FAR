@@ -19,22 +19,25 @@ For a fixed exact comparison contract, a representation is sufficient exactly wh
 
 The v1.1 correction also separates exact common theory from frame-relative residue: `T_{L,J,I}` is indexed by the language, interpretation profiles/models, and target class; the substantive residue `T_{L,J,I} \ Cn_L(Γ)` is additionally indexed by the frame. `Γ` alone does not change exact `T` when the interpreted models are fixed.
 
-Project FAR therefore closes as a **contract and audit discipline**, not as a universal inventory of reasoning primitives. The result is Accepted as internal deductive work corrected after a non-independent hostile audit. It has **not** been independently reviewed.
+Project FAR therefore closes as a **contract and audit discipline**, not as a universal inventory of reasoning primitives. The result is Accepted internal deductive work corrected after a non-independent hostile audit and subsequently confirmed by a sealed independent review under its exact scopes: 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED`. That review did **not** establish novelty or priority.
 
 - [Canonical corrected core theory v1.1](theory/theorems/Project-FAR-Theory-Closure-v1.1.md)
 - [Machine-readable v1.1 claim ledger](theory/terminal/project-far-core-theory-v1.1.json)
 - [v1.1 correction acceptance](docs/governance/project-far-theory-closure-acceptance-v1.1.md)
 - [v1.1 correction audit](docs/audits/project-far-core-theory-v1.1-correction-audit.md)
 - [Permanent v1.1 regression fixtures](theory/evaluation/project-far-core-theory-v1.1-regressions.json)
+- [W1 independent-review promotion](docs/governance/pca-w1-independent-review-promotion-v1.0.md)
+- [Generated multidimensional assurance ledger](docs/assurance/far-core-assurance.md)
+- [W2 formalization status](docs/governance/pca-w2-formalization-status-v1.0.md)
 - [Historical v1.0 core theory](theory/theorems/Project-FAR-Theory-Closure-v1.0.md) — preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`
 
 The historical UPP proposition remains not refuted, but its frozen derivation is defective and the theorem is not established. Its exact terminal string and artifacts remain preserved as history; they are not current theorem authority.
 
 ## Post-closure phase
 
-The active program is `POST-CLOSURE-001`. The canonical next workstream remains `PCA-W1-INDEPENDENT-REVIEW`, now against `PROJECT-FAR-CORE-THEORY-1.1`. The hostile audit that produced the v1.1 repair is explicitly not counted as independent review.
+The active program is `POST-CLOSURE-001`. `PCA-W1-INDEPENDENT-REVIEW` is complete through the separately sealed review record; the earlier hostile audit that produced the v1.1 repair remains explicitly non-independent evidence. The canonical active theoretical workstream is `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.
 
-Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation. Subsequent work includes independent review, proof-assistant formalization, a contract/conformance schema, domain-specific contracts, approximation/cost extensions, and empirical audit-utility studies.
+Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation. W2 currently has 13 `FORMALIZED`, one `PARTIAL/OBSTRUCTION`, and zero contradictions. The obstruction is confined to the missing end-to-end Lean encoding of FAR-CORE-014's actual MLL witness derivations; the four-decoder theorem and conditional hyperedge/frontier bridges are kernel-checked. W3 contract semantics remain queued.
 
 ## Scoped FARA formal kernel
 

@@ -12,7 +12,7 @@ Project FAR does not claim one universal primitive ontology or one fixed minimal
 
 ### Theory
 
-[Project FAR Core Theory v1.0](../theory/theorems/Project-FAR-Theory-Closure-v1.0.md) owns contracts, behavior maps, factorization, observational equivalence and quotients, invariance, finite-panel boundaries, and the current claim ledger.
+[Project FAR Core Theory v1.1](../theory/theorems/Project-FAR-Theory-Closure-v1.1.md) owns contracts, behavior maps, factorization, observational equivalence and quotients, invariance, finite-panel boundaries, and the current claim ledger. The v1.0 monograph remains immutable historical evidence.
 
 ### FARA
 
@@ -38,6 +38,6 @@ The Foundational Analysis of Reasoning Operations executes investigations and ma
 
 ## Current Status
 
-The theory is `TERMINAL—THEORY CLOSED` as an Accepted internal deductive result, not independently reviewed. Current work is assurance, mechanization, domain-contract, and application work under [`POST-CLOSURE-001`](governance/post-closure-assurance-and-application-program-v1.0.md).
+The theory is `TERMINAL—THEORY CLOSED`. Its exact `FAR-CORE-001`–`014` bundle passed the staged `PCA-W1-INDEPENDENT-REVIEW` at the governed scopes without theorem correction; that review did not establish novelty or priority. `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is active with `001`–`013` formalized and `014` held at a reproducible MLL infrastructure obstruction under [`POST-CLOSURE-001`](governance/post-closure-assurance-and-application-program-v1.0.md).
 
 See [project status](project-status.md), [canonical map](CANONICAL_MAP.md), and [claim status](governance/claim-status-matrix.md).

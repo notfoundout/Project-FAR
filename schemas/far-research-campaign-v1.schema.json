@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-research-campaign-v1.schema.json",
+  "title": "Project FAR Evidence Freeze and Replay Capsule v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "campaign_id", "status", "target", "evaluators", "environment", "protocol", "stages", "source_manifest", "artifacts", "times", "final_adjudication", "replay", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "campaign_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["prepared", "frozen", "unblinded", "completed", "completed_imported_sealed", "blocked"]},
+    "target": {
+      "type": "object", "additionalProperties": false,
+      "required": ["repository", "commit", "tree", "theory_or_question", "hashes"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "theory_or_question": {"type": "string", "minLength": 1},
+        "hashes": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+      }
+    },
+    "evaluators": {"type": "array", "items": {"$ref": "#/$defs/evaluator"}, "minItems": 1},
+    "environment": {"type": "object", "required": ["recorded_at", "tools"], "properties": {"recorded_at": {"type": "string"}, "tools": {"type": "object", "additionalProperties": {"type": "string"}}}, "additionalProperties": true},
+    "protocol": {"type": "object", "required": ["id", "version", "path", "sha256"], "properties": {"id": {"type": "string"}, "version": {"type": "string"}, "path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false},
+    "stages": {"type": "array", "items": {"$ref": "#/$defs/stage"}, "minItems": 1},
+    "source_manifest": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+    "artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifact"}, "minItems": 1},
+    "times": {"type": "object", "required": ["freeze_time", "unblinding_time"], "properties": {"freeze_time": {"oneOf": [{"type": "string"}, {"type": "null"}]}, "unblinding_time": {"oneOf": [{"type": "string"}, {"type": "null"}]}}, "additionalProperties": false},
+    "final_adjudication": {"type": "object", "required": ["status", "artifact"], "properties": {"status": {"type": "string", "minLength": 1}, "artifact": {"type": "string", "minLength": 1}}, "additionalProperties": true},
+    "replay": {
+      "type": "object",
+      "required": ["commands", "deterministic_claim"],
+      "properties": {
+        "commands": {
+          "type": "array",
+          "items": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+        },
+        "deterministic_claim": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true}
+  },
+  "$defs": {
+    "evaluator": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "identity", "provider", "model", "prior_exposure", "conflicts", "lane"],
+      "properties": {"id": {"type": "string"}, "identity": {"type": "string"}, "provider": {"type": "string"}, "model": {"type": "string"}, "prior_exposure": {"type": "string"}, "conflicts": {"type": "string"}, "lane": {"type": "string"}}
+    },
+    "stage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "name", "allow", "deny", "freeze_before_next", "unblinding"],
+      "properties": {"id": {"type": "string", "minLength": 1}, "name": {"type": "string", "minLength": 1}, "allow": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}, "deny": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}, "freeze_before_next": {"type": "boolean"}, "unblinding": {"type": "boolean"}}
+    },
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "role", "verify_current_path"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "role": {"type": "string", "minLength": 1}, "verify_current_path": {"type": "boolean"}}
+    }
+  }
+}

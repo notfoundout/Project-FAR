@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "promotion_id": "PCA-W1-PROMOTION-001",
+  "program_id": "POST-CLOSURE-001",
+  "workstream_id": "PCA-W1-INDEPENDENT-REVIEW",
+  "disposition": "ACCEPTED_COMPLETE",
+  "effective_on_merge": true,
+  "review_target": {
+    "commit": "14105775daf3c5713b134a728db2e1e53673af97",
+    "tree": "68f058199b7c94b707fd5fe978f1ef59d695ab00",
+    "theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
+    "theory_sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+    "ledger_sha256": "66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40"
+  },
+  "review_branch": {
+    "name": "research/pca-w1-core-v1.1-independent-review",
+    "head": "0981697546eba68651bddcd22e67ccdeb98decf4",
+    "tree": "3b58ca873c210b62c5ce01f572cb1314b55d95d2"
+  },
+  "verified_artifacts": [
+    {"path":"docs/research/pca-w1-independent-review/05-stage-d-provisional-verdict-frozen.md","sha256":"e27c99c7ff52f5f95e30e6f163b83cacbfa389d61d6f9408966bf983ce66902e","role":"pre_unblinding_freeze"},
+    {"path":"docs/research/pca-w1-independent-review/05-stage-d-freeze-manifest.json","sha256":"f48b05d997f1e1ae946072c217265f744bc3131b937118ae0e62fc518cfb3e5c","role":"freeze_manifest"},
+    {"path":"docs/research/pca-w1-independent-review/07-final-independent-review.md","sha256":"03848362e0cbea1151ba3a0e042cf2872f51f0781815eaff17c1128e49589aaa","role":"terminal_human_review"},
+    {"path":"docs/research/pca-w1-independent-review/07-final-independent-review.json","sha256":"f311552b877beece5245f48bbf1cf32f68d4b586fb3d65c18410b0ffe9175c37","role":"terminal_machine_review"},
+    {"path":"docs/research/pca-w1-independent-review/08-review-artifact-manifest.json","sha256":"1437aeb6c52e7d84958b2cc530a9c5bda71706b96386482b98867df3c4e5d1bc","role":"review_artifact_manifest"}
+  ],
+  "terminal_counts": {"PROVED":14,"REFUTED":0,"OPEN":0,"UNDERDETERMINED":0,"NOT_APPLICABLE":0},
+  "findings": {
+    "independence": "PASS",
+    "integrity": "PASS",
+    "theorem_correction_required": false,
+    "software_change_required": false,
+    "novelty_or_priority_established": false,
+    "universal_architecture_established": false
+  },
+  "status_separation": {
+    "far_core_014_truth_verdict": "PROVED",
+    "far_core_014_governing_ledger_provenance_label": "supported_derived",
+    "rule": "truth verdict does not rewrite the historical/application provenance label"
+  },
+  "preservation": {
+    "governing_theory_changed": false,
+    "historical_v1_changed": false,
+    "sealed_review_changed": false,
+    "scope_guards_retained": true
+  },
+  "next_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION"
+}

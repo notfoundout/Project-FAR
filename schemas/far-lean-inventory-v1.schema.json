@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-lean-inventory-v1.schema.json",
+  "title": "Project FAR Lean Inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "inventory_id", "authority", "toolchain", "files", "w2_summary"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "inventory_id": {"const": "PROJECT-FAR-LEAN-INVENTORY-1.0"},
+    "authority": {"const": "generated_inventory_not_theory_authority"},
+    "toolchain": {"type": "string", "minLength": 1},
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "line_count", "imports", "declarations", "role"],
+        "properties": {
+          "path": {"type": "string", "pattern": "^mechanization/lean/.+\\.lean$"},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "line_count": {"type": "integer", "minimum": 1},
+          "imports": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "declarations": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "role": {"enum": ["W2_CORE_V1_1", "LEGACY_OR_OTHER_SCOPE"]}
+        }
+      }
+    },
+    "w2_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["formalized", "partial_obstruction", "contradiction_reopen_required", "kernel_check", "forbidden_placeholders"],
+      "properties": {
+        "formalized": {"const": 13},
+        "partial_obstruction": {"const": 1},
+        "contradiction_reopen_required": {"const": 0},
+        "kernel_check": {"const": "PASS"},
+        "forbidden_placeholders": {"const": 0}
+      }
+    }
+  }
+}

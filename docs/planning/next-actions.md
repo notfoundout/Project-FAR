@@ -14,39 +14,27 @@ Generated from the registered post-closure program.
 
 Program: `POST-CLOSURE-001`.
 
-Current review target: `PROJECT-FAR-CORE-THEORY-1.1`.
+Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.
 
 The core theory is closed after the governed v1.1 correction. These tasks change assurance, implementation, applicability, or utility; they do not reopen the core without a genuine contradiction.
 
-The hostile W1 audit that found the v1.1 defects is internal/non-independent evidence. It does not satisfy `PCA-W1-INDEPENDENT-REVIEW`.
+The hostile correction audit remains non-independent. The separately sealed `PCA-W1-INDEPENDENT-REVIEW` is complete: 14 PROVED, no correction, novelty/priority not established.
 
-Canonical next workstream: `PCA-W1-INDEPENDENT-REVIEW`.
+Canonical next workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.
 
 ## Ranked Next Actions
 
-### STRATEGIC-010: Review the corrected core independently
-
-- Registered workstream: `PCA-W1-INDEPENDENT-REVIEW`
-- Review target: `PROJECT-FAR-CORE-THEORY-1.1`
-- Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
-- Priority: high
-- Why it matters: The corrected core is accepted internal deductive work but has no genuinely independent premise-by-premise review.
-- Required provenance: disclose reviewer prior exposure, conflicts, tools, assumptions, checked obligations, unresolved objections, and source corpus.
-- Expected outcome: An immutable review record that confirms, narrows, refutes, or leaves each obligation OPEN without changing its wording by convention.
-- Suggested branch name: `research/pca-w1-core-v1.1-independent-review`
-- Suggested PR title: `Execute PCA-W1 independent review of core theory v1.1`
-
-### STRATEGIC-011: Formalize the corrected factorization core
+### STRATEGIC-010: Close the bounded MLL formalization bridge
 
 - Registered workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`
 - Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
-- Priority: queued
-- Why it matters: The core has explicit narrative proofs but no single proof-assistant-checked artifact.
-- Expected outcome: A checked formalization or an exact obstruction report with external assumptions exposed.
+- Priority: active
+- Why it matters: FAR-CORE-001 through 013 are formalized, but FAR-CORE-014 still lacks Lean proofs of the actual PR #453 MLL witness profiles.
+- Expected outcome: An end-to-end certified MLL application module or preservation of the exact reproducible obstruction without added premises.
 - Suggested branch name: `research/pca-w2-core-formalization`
-- Suggested PR title: `Formalize Project FAR core theorems`
+- Suggested PR title: `Complete Project FAR core v1.1 formalization`
 
-### STRATEGIC-012: Implement the contract schema
+### STRATEGIC-011: Implement the contract schema
 
 - Registered workstream: `PCA-W3-CONTRACT-SCHEMA`
 - Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
@@ -56,7 +44,7 @@ Canonical next workstream: `PCA-W1-INDEPENDENT-REVIEW`.
 - Suggested branch name: `feat/pca-w3-contract-schema`
 - Suggested PR title: `Implement contract-relative FAR IR`
 
-### STRATEGIC-013: Develop domain comparison contracts
+### STRATEGIC-012: Develop domain comparison contracts
 
 - Registered workstream: `PCA-W4-DOMAIN-CONTRACTS`
 - Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
@@ -66,7 +54,7 @@ Canonical next workstream: `PCA-W1-INDEPENDENT-REVIEW`.
 - Suggested branch name: `research/pca-w4-domain-contracts`
 - Suggested PR title: `Develop scoped domain contracts`
 
-### STRATEGIC-014: Specify approximation and cost orders
+### STRATEGIC-013: Specify approximation and cost orders
 
 - Registered workstream: `PCA-W5-APPROXIMATION-AND-COST`
 - Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
@@ -76,7 +64,7 @@ Canonical next workstream: `PCA-W1-INDEPENDENT-REVIEW`.
 - Suggested branch name: `research/pca-w5-approximation-cost`
 - Suggested PR title: `Specify approximate and cost-relative adequacy`
 
-### STRATEGIC-015: Test audit utility
+### STRATEGIC-014: Test audit utility
 
 - Registered workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`
 - Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)

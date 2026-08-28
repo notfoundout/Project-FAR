@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "program_id": "POST-CLOSURE-001",
   "name": "Post-Closure Assurance and Application Program",
-  "status": "registered",
+  "status": "active",
   "governing_theory": "PROJECT-FAR-CORE-THEORY-1.1",
   "governing_theory_correction": "docs/governance/project-far-theory-closure-acceptance-v1.1.md",
   "preserved_historical_theory": "PROJECT-FAR-CORE-THEORY-1.0",
@@ -17,13 +17,17 @@
     },
     {
       "id": "PCA-W1-INDEPENDENT-REVIEW",
-      "state": "open",
-      "note": "A prior hostile audit found the v1.1 corrections but did not satisfy independence requirements; independent review has not yet occurred.",
+      "state": "complete",
+      "note": "The sealed independent review at branch head 0981697546eba68651bddcd22e67ccdeb98decf4 confirmed all 14 claims under exact scopes. The earlier hostile correction audit remains separately non-independent.",
+      "result": "14_PROVED_0_REFUTED_0_OPEN_0_UNDERDETERMINED_NO_CORRECTION_NOVELTY_NOT_ESTABLISHED",
+      "promotion_record": "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json",
       "deliverable": "independent mathematical review of FAR-CORE-001 through FAR-CORE-014 against PROJECT-FAR-CORE-THEORY-1.1"
     },
     {
       "id": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
-      "state": "open",
+      "state": "active_partial_obstruction",
+      "result": "FAR-CORE-001_THROUGH_013_FORMALIZED_FAR-CORE-014_PARTIAL_OBSTRUCTION_NO_CONTRADICTION",
+      "formalization_ledger": "theory/evaluation/far-core-formalization-ledger-v1.0.json",
       "deliverable": "kernel-checked formalization or exact obstruction report for the core theorems"
     },
     {
@@ -48,8 +52,9 @@
     }
   ],
   "next_action": {
-    "workstream": "PCA-W1-INDEPENDENT-REVIEW",
-    "review_target": "PROJECT-FAR-CORE-THEORY-1.1"
+    "workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
+    "theory_target": "PROJECT-FAR-CORE-THEORY-1.1",
+    "obligation": "formalize the actual PR #453 MLL witness derivations without adding premises, or preserve the reproducible FAR-CORE-014 obstruction"
   },
   "prohibited_promotions": [
     "contract_free_universal_minimal_architecture",

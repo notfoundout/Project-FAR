@@ -1,5 +1,17 @@
 # Decision Log
 
+## 2026-08-28 — Promote the sealed independent review and begin bounded W2
+
+**Question:** Does the sealed review of the immutable v1.1 target justify closing `PCA-W1-INDEPENDENT-REVIEW`, and what is the next governed theoretical workstream?
+
+**Execution:** Verified target commit `14105775daf3c5713b134a728db2e1e53673af97` and tree `68f058199b7c94b707fd5fe978f1ef59d695ab00`, inspected the 18-file sealed branch at `0981697546eba68651bddcd22e67ccdeb98decf4`, replayed its finite checks, verified artifact hashes and stage boundaries, and reconciled the terminal review with the exact v1.1 claim ledger. Imported the review record byte-for-byte through a fresh current-main integration change.
+
+**Observation:** All 14 exact governed claims received truth verdict `PROVED`; none was `REFUTED`, `OPEN`, or `UNDERDETERMINED`; no theorem correction was required. Novelty and priority were not established, and every scope guard remains binding. `FAR-CORE-014`'s truth verdict is distinct from its `supported_derived` provenance/application label.
+
+**Decision:** Complete `PCA-W1-INDEPENDENT-REVIEW` and activate `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`. Record truth, review, formalization, empirical, novelty, and governance status as separate assurance dimensions. Preserve the review package and historical v1.0 byte-for-byte.
+
+**W2 boundary:** `FAR-CORE-001`–`013` are now formalized in Lean relative to their encoded premises. `FAR-CORE-014` remains `PARTIAL/OBSTRUCTION` until the exact bounded MLL application semantics and witness derivations are encoded; no narrative witness fact is promoted to an axiom. W3 semantics remain deferred.
+
 ## 2026-08-24 — Accept and promote the contract-relative core theory
 
 **Question:** What governs Project FAR after the defective frozen UPP derivation, bounded FARA campaigns, Ω-elimination result, and independent dialogue-theory experiment are reconciled?

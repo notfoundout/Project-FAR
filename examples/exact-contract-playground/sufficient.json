@@ -1,0 +1,11 @@
+{
+  "schema_version": "far-exact-playground/1.0",
+  "cases": ["x0", "x1", "x2"],
+  "tests": ["accept", "cost"],
+  "behavior": {
+    "x0": {"accept": false, "cost": 0},
+    "x1": {"accept": true, "cost": 1},
+    "x2": {"accept": true, "cost": 1}
+  },
+  "representation": {"x0": "reject", "x1": "accept", "x2": "accept"}
+}

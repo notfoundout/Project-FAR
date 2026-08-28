@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-epistemic-threat-registry-v1.schema.json",
+  "title": "Project FAR Epistemic Threat Registry v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "authority", "threats"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "registry_id": {"const": "FAR-EPISTEMIC-THREATS-1.0"},
+    "authority": {"const": "regression_and_audit_only"},
+    "threats": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "name", "description", "protected_boundary", "detection", "negative_control", "expected_failure", "status"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^THREAT-[0-9]{3}$"},
+          "name": {"type": "string", "minLength": 1},
+          "description": {"type": "string", "minLength": 1},
+          "protected_boundary": {"type": "string", "minLength": 1},
+          "detection": {"type": "string", "minLength": 1},
+          "negative_control": {"type": "string", "minLength": 1},
+          "expected_failure": {"type": "string", "minLength": 1},
+          "status": {"const": "PERMANENT_ACTIVE_REGRESSION"}
+        }
+      }
+    }
+  }
+}

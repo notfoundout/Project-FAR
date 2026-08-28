@@ -1,0 +1,127 @@
+{
+  "schema": "project-far/pca-w1-independent-review-manifest/1.0",
+  "status": "prepared_not_started",
+  "program_id": "POST-CLOSURE-001",
+  "workstream_id": "PCA-W1-INDEPENDENT-REVIEW",
+  "target": {
+    "repository": "notfoundout/Project-FAR",
+    "commit": "14105775daf3c5713b134a728db2e1e53673af97",
+    "tree": "68f058199b7c94b707fd5fe978f1ef59d695ab00",
+    "theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
+    "theory_path": "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+    "theory_sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+    "ledger_path": "theory/terminal/project-far-core-theory-v1.1.json",
+    "ledger_sha256": "66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40",
+    "historical_v1_sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+    "specification_export_version": "1.2.0"
+  },
+  "review_branch": "research/pca-w1-core-v1.1-independent-review",
+  "initial_external_corpus": [],
+  "independence": {
+    "material_prior_exposure_allowed": false,
+    "exposure_disclosure_required": true,
+    "internal_agreement_counts_as_independent": false,
+    "failure_status": "INDEPENDENCE FAILED"
+  },
+  "stages": [
+    {
+      "id": "A",
+      "name": "blind_reconstruction",
+      "allowed_repository_paths": [
+        "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+        "docs/governance/post-closure-assurance-and-application-program-v1.0.md"
+      ],
+      "forbidden_repository_paths_or_surfaces": [
+        "pull/457",
+        "docs/audits/project-far-core-theory-v1.1-correction-audit.md",
+        "docs/research/project-far-core-v1.1-correction-replication-v1.0.md",
+        "docs/governance/project-far-theory-closure-acceptance-v1.1.md",
+        "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+        "theory/terminal/project-far-core-theory-v1.0.json",
+        "project_memory",
+        "prior_internal_source_lists"
+      ]
+    },
+    {
+      "id": "B",
+      "name": "claim_reconciliation",
+      "unlock": [
+        "theory/terminal/project-far-core-theory-v1.1.json"
+      ]
+    },
+    {
+      "id": "C",
+      "name": "independent_prior_art_and_countermodel_search",
+      "corpus_seed_policy": "empty",
+      "query_provenance_required": true
+    },
+    {
+      "id": "D",
+      "name": "provisional_verdict",
+      "freeze_before_unblinding": true
+    },
+    {
+      "id": "E",
+      "name": "controlled_unblinding",
+      "unlock_internal_history": true,
+      "must_preserve_stage_d_record": true
+    }
+  ],
+  "permitted_research_tools": [
+    "Acumen/Talarion",
+    "Consensus",
+    "SciSpace",
+    "Scite",
+    "web search",
+    "Wolfram",
+    "formal proof assistants or model checkers when independently available"
+  ],
+  "tool_rules": [
+    "Tool agreement is not proof.",
+    "Repository tests and CI are not theorem evidence.",
+    "Computational checks inherit the scope of the represented case.",
+    "Prior-art absence is not novelty proof."
+  ],
+  "required_claims": [
+    "FAR-CORE-001",
+    "FAR-CORE-002",
+    "FAR-CORE-003",
+    "FAR-CORE-004",
+    "FAR-CORE-005",
+    "FAR-CORE-006",
+    "FAR-CORE-007",
+    "FAR-CORE-008",
+    "FAR-CORE-009",
+    "FAR-CORE-010",
+    "FAR-CORE-011",
+    "FAR-CORE-012",
+    "FAR-CORE-013",
+    "FAR-CORE-014"
+  ],
+  "allowed_terminal_statuses": [
+    "PROVED",
+    "REFUTED",
+    "OPEN",
+    "BLOCKED",
+    "UNDERDETERMINED",
+    "NOT APPLICABLE",
+    "HISTORICAL/SUPERSEDED"
+  ],
+  "required_outputs": [
+    "exposure_conflict_statement",
+    "tool_environment_record",
+    "blind_reconstruction_ledger",
+    "premise_dependency_graph",
+    "countermodel_ledger",
+    "prior_art_search_log",
+    "source_corpus",
+    "claim_by_claim_verdict",
+    "unresolved_objection_register",
+    "provisional_terminal_verdict",
+    "controlled_unblinding_comparison",
+    "final_terminal_verdict",
+    "minimum_repository_consequences"
+  ],
+  "main_write_policy": "forbidden_during_review",
+  "reopening_policy": "record contradiction first; correction requires separate governed reopening after review adjudication"
+}

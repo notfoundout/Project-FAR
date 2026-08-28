@@ -20,7 +20,7 @@ For a fixed exact contract, sufficiency is equivalent to factorization through t
 
 `FAR-CORE-010` is corrected in v1.1: exact common theory `T_{L,J,I}` is indexed by language, interpretation profiles/models, and target class. The frame `Γ` additionally indexes the frame-subtracted residue `T_{L,J,I} \ Cn_L(Γ)`; changing `Γ` alone while holding the interpreted models fixed does not change exact `T`.
 
-Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; not independently reviewed.**
+Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; subsequently confirmed by sealed independent review under exact scopes. Novelty/priority not established. W2 is partial.**
 
 Current canonical authority:
 
@@ -28,7 +28,11 @@ Current canonical authority:
 - [machine-readable v1.1 claim ledger](../theory/terminal/project-far-core-theory-v1.1.json);
 - [v1.1 acceptance and promotion record](governance/project-far-theory-closure-acceptance-v1.1.md);
 - [v1.1 correction audit](audits/project-far-core-theory-v1.1-correction-audit.md);
+- [post-W1 infrastructure and W2 hostile audit](audits/post-w1-infrastructure-w2-hostile-audit-v1.0.md);
 - [v1.1 regression fixtures](../theory/evaluation/project-far-core-theory-v1.1-regressions.json).
+- [W1 independent-review promotion](governance/pca-w1-independent-review-promotion-v1.0.md);
+- [machine assurance ledger](../theory/evaluation/far-core-assurance-v1.0.json);
+- [W2 formalization status](governance/pca-w2-formalization-status-v1.0.md).
 
 Historical v1.0 is preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`:
 
@@ -56,13 +60,22 @@ The frozen source and historical theorem artifacts are not rewritten. `POST-TERM
 
 PR #453 was merged unchanged as noncanonical Research in commit `63fe943f91a0758df3bd16e66854f475fec34164`. Its E0 blocked, E1 fragmented, SSS, profile-relative irreflexivity, and open-boundary results retain exactly their recorded scope. The record does not supply the premises of the accepted core theory.
 
-## W1 correction disposition
+## W1 assurance disposition
 
 A hostile W1 review of the core identified the `FAR-CORE-004` wording ambiguity, the `FAR-CORE-010` frame-dependency error, and prior-art overstatement around Blackwell comparison. Those findings triggered the governed v1.1 correction.
 
-That W1 review is **not** classified as independent. It had prior exposure to Project FAR and therefore cannot close `PCA-W1-INDEPENDENT-REVIEW`. Its counterexamples remain valid internal evidence and permanent regression fixtures.
+That correction audit is **not** classified as independent. Its counterexamples remain valid internal evidence and permanent regression fixtures. A distinct staged review branch later tested the immutable v1.1 target under an enforced pre-unblinding boundary and completed `PCA-W1-INDEPENDENT-REVIEW`: 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED`; no theorem correction was required; novelty and priority were not established.
 
-`FAR-CORE-014` remains `SUPPORTED/DERIVED`; the surviving terminal kernel and terminal verdict remain unchanged.
+`FAR-CORE-014` retains the governing `SUPPORTED/DERIVED` provenance label while its independent-review truth verdict is `PROVED` under the exact PR #453 scope. Those dimensions are not interchangeable. The surviving terminal kernel and terminal verdict remain unchanged.
+
+## W2 formalization disposition
+
+Pinned Lean 4.19 checks 13 claims as `FORMALIZED`. `FAR-CORE-014` is
+`PARTIAL/OBSTRUCTION`: decoder exhaustiveness, bounded Boolean failure, and conditional
+hyperedge/frontier factorization compile, but the actual MLL syntax, resource-splitting
+derivability, atom-balance lemma, and two named witness proofs are not yet encoded. No
+`CONTRADICTION/REOPEN REQUIRED` outcome was found, and no narrative witness was converted into
+an axiom.
 
 ## Current phase
 
@@ -71,8 +84,8 @@ Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application 
 | Workstream | Current state | Boundary |
 |---|---|---|
 | `PCA-W0-REPOSITORY-CONFORMITY` | Complete | Original closure integration completed; v1.1 correction is governed successor maintenance. |
-| `PCA-W1-INDEPENDENT-REVIEW` | **Next / Open** | Must independently review `PROJECT-FAR-CORE-THEORY-1.1`; the hostile correction audit does not count as independence. |
-| `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | Open | Formalize the exact corrected core or preserve an explicit obstruction; implementation is not proof by itself. |
+| `PCA-W1-INDEPENDENT-REVIEW` | Complete | Sealed exact-scope review promoted; 14 PROVED, no correction; novelty/priority not established. |
+| `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | **Next / Active** | 13 FORMALIZED; FAR-CORE-014 PARTIAL/OBSTRUCTION at the actual MLL witness bridge; no contradiction. |
 | `PCA-W3-CONTRACT-SCHEMA` | Open | Implement a versioned contract/factorization format; `far-ir/1.0` is not silently reinterpreted. |
 | `PCA-W4-DOMAIN-CONTRACTS` | Open | Domain contracts remain scoped choices and cannot restore contract-free universality. |
 | `PCA-W5-APPROXIMATION-AND-COST` | Open | Approximation and implementation minimality require declared metrics, losses, tolerances, or cost orders. |

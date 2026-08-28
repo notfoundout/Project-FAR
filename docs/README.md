@@ -9,6 +9,10 @@ Project-level documentation lives here. This directory is for orientation, proje
 - `project-status.md` — current project status.
 - `../theory/theorems/Project-FAR-Theory-Closure-v1.0.md` — canonical closed core theory.
 - `governance/post-closure-assurance-and-application-program-v1.0.md` — current assurance and application program.
+- `governance/pca-w1-independent-review-promotion-v1.0.md` — completed W1 assurance promotion.
+- `governance/pca-w2-formalization-status-v1.0.md` — active W2 outcome and exact obstruction.
+- `assurance/far-core-assurance.md` — generated multidimensional FAR-CORE assurance view.
+- `planning/opportunity-registry.md` and `research/research-question-registry.md` — generated governed research-memory views.
 - `CHANGELOG.md` — chronological change history.
 - `DECISION_LOG.md` — canonical project decision log.
 - `OVERVIEW.md` — project overview.

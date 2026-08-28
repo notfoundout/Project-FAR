@@ -4,7 +4,7 @@
 
 Program: `POST-CLOSURE-001`
 
-Status: **Registered**
+Status: **Active**
 
 Governing theory: `PROJECT-FAR-CORE-THEORY-1.1`
 
@@ -18,13 +18,18 @@ This program governs work after closure of Project FAR's core theory. It may inc
 
 The core is reopened only by a reproducible contradiction to a stated theorem, proof step, or formal premise.
 
-The 2026-08-27 hostile W1 audit triggered a governed correction from v1.0 to v1.1. Because that audit had prior Project FAR exposure, it is not classified as independent review and does not close `PCA-W1-INDEPENDENT-REVIEW`.
+The 2026-08-27 hostile correction audit triggered the governed v1.0 → v1.1 repair and remains
+non-independent evidence. A later staged, sealed review with disclosed prior exposure independently
+tested the immutable v1.1 target and completed `PCA-W1-INDEPENDENT-REVIEW`: 14 `PROVED`, 0
+`REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED`, with no correction required. It did not establish
+novelty or priority. The [promotion record](pca-w1-independent-review-promotion-v1.0.md) governs
+that assurance change without rewriting the theory.
 
 ## Workstreams
 
 - `PCA-W0-REPOSITORY-CONFORMITY`: complete — original canonical integration and consistency enforcement.
-- `PCA-W1-INDEPENDENT-REVIEW`: **open — next**. Review target is `PROJECT-FAR-CORE-THEORY-1.1`.
-- `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: open — formalize the exact corrected core or issue an obstruction report.
+- `PCA-W1-INDEPENDENT-REVIEW`: complete — sealed exact-scope review promoted; novelty/priority not established.
+- `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: **active — next** — FAR-CORE-001–013 are kernel-checked; FAR-CORE-014 remains `PARTIAL/OBSTRUCTION` at the actual MLL witness bridge, with no contradiction found.
 - `PCA-W3-CONTRACT-SCHEMA`: open — specify and implement a versioned comparison-contract and factorization-report format.
 - `PCA-W4-DOMAIN-CONTRACTS`: open — develop independently motivated contracts for named domains.
 - `PCA-W5-APPROXIMATION-AND-COST`: open — add explicit metrics, losses, tolerances, or cost orders.
@@ -32,9 +37,9 @@ The 2026-08-27 hostile W1 audit triggered a governed correction from v1.0 to v1.
 
 ## Assurance rules
 
-Independent review must disclose prior exposure, conflicts, tools, premises checked, proof obligations checked, and unresolved objections. Internal agreement cannot be relabeled independent. The v1.1 hostile correction audit is expressly internal evidence, not independent validation.
+Independent review must disclose prior exposure, conflicts, tools, premises checked, proof obligations checked, and unresolved objections. Internal agreement cannot be relabeled independent. The v1.1 hostile correction audit remains expressly internal evidence; the separately sealed W1 campaign is the promoted independent-review record.
 
-Proof-assistant work may upgrade only the formalized results. Failure to formalize must preserve the exact obstruction; it does not by itself refute a theorem.
+Proof-assistant work may upgrade only the formalized results. Failure to formalize must preserve the exact obstruction; it does not by itself refute a theorem. The current W2 outcome is 13 `FORMALIZED`, one `PARTIAL/OBSTRUCTION`, zero `CONTRADICTION/REOPEN REQUIRED`. W2 stays active until the actual MLL syntax, resource split, derivability, atom-balance result, and two named witness sequents are encoded and proved without adding premises.
 
 ## Contract and application rules
 

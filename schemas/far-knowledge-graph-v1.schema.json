@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-knowledge-graph-v1.schema.json",
+  "title": "Project FAR Generated Knowledge Graph v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "graph_id", "authority", "generated_from", "nodes", "edges"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "graph_id": {"const": "PROJECT-FAR-KNOWLEDGE-GRAPH-1.0"},
+    "authority": {"const": "generated_view_not_independent_truth_system"},
+    "generated_from": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+    "nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}}
+  },
+  "$defs": {
+    "node": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "type", "label", "status", "source"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "type": {"enum": ["claim", "definition", "premise", "theorem", "proof", "counterexample", "limitation", "open_problem", "research_question", "source", "evidence_artifact", "contract", "domain", "representation", "test_context", "tool", "version", "pr_commit", "workstream"]},
+        "label": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1}
+      }
+    },
+    "edge": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "type", "source", "target", "provenance"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^EDGE-[0-9]{5}$"},
+        "type": {"enum": ["DEPENDS_ON", "PROVES", "REFUTES", "SUPPORTS", "DERIVES", "LIMITS", "SUPERSEDES", "IMPLEMENTS", "FORMALIZES", "CITES", "TESTS", "APPLIES_TO", "ASSUMES", "CONFLICTS_WITH"]},
+        "source": {"type": "string", "minLength": 1},
+        "target": {"type": "string", "minLength": 1},
+        "provenance": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

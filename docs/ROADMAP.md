@@ -10,12 +10,12 @@ Current governing core: [`PROJECT-FAR-CORE-THEORY-1.1`](../theory/theorems/Proje
 
 Current program: [`POST-CLOSURE-001`](governance/post-closure-assurance-and-application-program-v1.0.md).
 
-The core theory remains closed after the v1.1 correction. The historical UPP queue remains closed, and its defective frozen derivation is not a target for silent repair. The hostile W1 audit that triggered v1.1 was not independent and therefore does not close the next assurance workstream.
+The core theory remains closed after the v1.1 correction. The historical UPP queue remains closed, and its defective frozen derivation is not a target for silent repair. The hostile audit that triggered v1.1 remains non-independent; the later sealed W1 campaign independently confirmed all 14 exact-scope claims without establishing novelty or priority.
 
 ## Ordered post-closure work
 
-1. **`PCA-W1-INDEPENDENT-REVIEW` — next.** Review the exact corrected premises and proofs of `FAR-CORE-001`–`FAR-CORE-014` in `PROJECT-FAR-CORE-THEORY-1.1`; disclose independence, prior exposure, tools, checked obligations, and unresolved objections.
-2. **`PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.** Formalize the factorization, quotient, dynamic-descent, corrected no-contract-free-minimum, and corrected common-theory/residue results, or preserve an exact obstruction report.
+1. **`PCA-W1-INDEPENDENT-REVIEW` — complete.** The sealed review returned 14 `PROVED`, no adverse verdicts, no correction, and no novelty/priority finding under the exact scopes.
+2. **`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` — next.** Thirteen claims are `FORMALIZED`; close the reproducible FAR-CORE-014 MLL witness obstruction without adding premises, or preserve it as the exact W2 terminal blocker.
 3. **`PCA-W3-CONTRACT-SCHEMA`.** Implement a successor to `far-ir/1.0` that records comparison contracts, typed outcomes, decoders/collisions, quotients, profiles, frames, and cost/loss orders.
 4. **`PCA-W4-DOMAIN-CONTRACTS`.** Build independently motivated contracts for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory.
 5. **`PCA-W5-APPROXIMATION-AND-COST`.** Add explicit metrics, tolerances, decision losses, and cost preorders; do not call one optimum universal.
@@ -23,7 +23,7 @@ The core theory remains closed after the v1.1 correction. The historical UPP que
 
 ## Gates
 
-Every workstream must preserve scope, provenance, typed outcomes, negative results, `Unknown`, and claim impact. CI success, internal agreement, finite panels, successful encoding, and internal hostile review are not mathematical proof or independent validation.
+Every workstream must preserve scope, provenance, typed outcomes, negative results, `Unknown`, and claim impact. CI success, model agreement, finite panels, successful encoding, and the non-independent correction audit are not mathematical proof or independent validation. The promoted W1 record changes only independent-review assurance; Lean changes only formalization assurance.
 
 The v1.1 correction must preserve two permanent boundaries:
 

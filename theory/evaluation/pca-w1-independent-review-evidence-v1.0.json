@@ -1,0 +1,27 @@
+{
+  "schema": "project-far/pca-w1-independent-review-evidence/1.0",
+  "status": "empty_not_started",
+  "review_target_commit": "14105775daf3c5713b134a728db2e1e53673af97",
+  "review_target_tree": "68f058199b7c94b707fd5fe978f1ef59d695ab00",
+  "corpus_seed_policy": "empty",
+  "seeded_from_prior_internal_research": false,
+  "reviewer": null,
+  "exposure_statement": null,
+  "environment": null,
+  "searches": [],
+  "sources": [],
+  "countermodels": [],
+  "computational_checks": [],
+  "proof_reconstructions": [],
+  "claim_verdicts": [],
+  "unresolved_objections": [],
+  "stage_d_provisional_verdict": null,
+  "stage_d_frozen_at": null,
+  "stage_e_unblinding_comparison": null,
+  "final_terminal_verdict": null,
+  "notes": [
+    "This file is intentionally empty before independent review begins.",
+    "Do not seed it from Project FAR's prior source lists, correction audit, or prior review history.",
+    "Every added source or search must record discovery provenance during PCA-W1."
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-research-tool-registry-v1.schema.json",
+  "title": "Project FAR Research Tool Registry v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "canonical_state_owner", "tools"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "registry_id": {"const": "FAR-RESEARCH-TOOL-REGISTRY-1.0"},
+    "canonical_state_owner": {"const": "GitHub repository main"},
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "role", "authority", "allowed", "prohibited", "independence_rule", "contamination_controls"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^TOOL-[0-9]{3}$"},
+          "name": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1},
+          "authority": {"enum": ["canonical_repository", "proof_relative_to_encoding", "computational_evidence", "research_discovery", "bibliography_management", "replaceable_reasoner", "noncanonical_work_mirror", "prototype_platform", "application_transport"]},
+          "allowed": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+          "prohibited": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+          "independence_rule": {"type": "string", "minLength": 1},
+          "contamination_controls": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true}
+        }
+      }
+    }
+  }
+}

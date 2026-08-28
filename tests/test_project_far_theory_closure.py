@@ -95,16 +95,20 @@ class ProjectFARTheoryClosureTest(unittest.TestCase):
             case["expected"]["residue_Gamma1"],
         )
 
-    def test_w1_independent_review_remains_open(self):
+    def test_w1_is_promoted_and_w2_is_active(self):
         program = MODULE._load(
             ROOT
             / "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
         )
         workstreams = {row["id"]: row for row in program["workstreams"]}
-        self.assertEqual("open", workstreams["PCA-W1-INDEPENDENT-REVIEW"]["state"])
+        self.assertEqual("complete", workstreams["PCA-W1-INDEPENDENT-REVIEW"]["state"])
+        self.assertEqual(
+            "active_partial_obstruction",
+            workstreams["PCA-W2-PROOF-ASSISTANT-FORMALIZATION"]["state"],
+        )
         self.assertEqual(
             "PROJECT-FAR-CORE-THEORY-1.1",
-            program["next_action"]["review_target"],
+            program["next_action"]["theory_target"],
         )
 
     def test_historical_upp_is_not_current_authority(self):

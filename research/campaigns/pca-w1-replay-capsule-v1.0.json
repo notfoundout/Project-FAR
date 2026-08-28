@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "PCA-W1-INDEPENDENT-REVIEW-CAPSULE-1.0",
+  "status": "completed_imported_sealed",
+  "target": {
+    "repository": "notfoundout/Project-FAR",
+    "commit": "14105775daf3c5713b134a728db2e1e53673af97",
+    "tree": "68f058199b7c94b707fd5fe978f1ef59d695ab00",
+    "theory_or_question": "PROJECT-FAR-CORE-THEORY-1.1 / FAR-CORE-001 through FAR-CORE-014",
+    "hashes": {"theory":"91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239","ledger":"66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40","historical_v1":"b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5"}
+  },
+  "evaluators": [
+    {"id":"EVAL-W1-001","identity":"OpenAI Codex isolated review agent","provider":"OpenAI","model":"GPT-5-based; exact runtime build unavailable","prior_exposure":"none disclosed; false in sealed terminal record","conflicts":"none disclosed","lane":"independent-review-primary"}
+  ],
+  "environment": {"recorded_at":"docs/research/pca-w1-independent-review/00-exposure-environment.md","tools":{"python":"recorded in sealed environment artifact","web_research":"54 queries recorded","lean":"not used as theorem closure"}},
+  "protocol": {"id":"PCA-W1-PROTOCOL-1.0","version":"1.0","path":"docs/research/pca-w1-independent-review-protocol-v1.0.md","sha256":"2decf1bcc924101928432143535712bd6fccc4723947d97321fee2d14adea0dc"},
+  "stages": [
+    {"id":"A","name":"blind reconstruction","allow":["theory/theorems/Project-FAR-Theory-Closure-v1.1.md","docs/governance/post-closure-assurance-and-application-program-v1.0.md"],"deny":["docs/audits/**","docs/research/project-far-core-v1.1-correction-replication-v1.0.md","docs/governance/project-far-theory-closure-acceptance-v1.1.md","theory/theorems/Project-FAR-Theory-Closure-v1.0.md","theory/terminal/project-far-core-theory-v1.0.json"],"freeze_before_next":false,"unblinding":false},
+    {"id":"B","name":"claim reconciliation","allow":["theory/theorems/Project-FAR-Theory-Closure-v1.1.md","theory/terminal/project-far-core-theory-v1.1.json"],"deny":["docs/audits/**","docs/research/project-far-core-v1.1-correction-replication-v1.0.md"],"freeze_before_next":false,"unblinding":false},
+    {"id":"C","name":"independent research","allow":["theory/theorems/Project-FAR-Theory-Closure-v1.1.md","theory/terminal/project-far-core-theory-v1.1.json"],"deny":["docs/audits/**","docs/research/project-far-core-v1.1-correction-replication-v1.0.md"],"freeze_before_next":true,"unblinding":false},
+    {"id":"E","name":"controlled unblinding","allow":["theory/**","docs/**","research/independent-dialogue-theory/**"],"deny":["archive/**"],"freeze_before_next":true,"unblinding":true}
+  ],
+  "source_manifest": [
+    {"path":"theory/theorems/Project-FAR-Theory-Closure-v1.1.md","sha256":"91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239","role":"immutable target at target commit","verify_current_path":false},
+    {"path":"theory/terminal/project-far-core-theory-v1.1.json","sha256":"66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40","role":"immutable target ledger at target commit","verify_current_path":false}
+  ],
+  "artifacts": [
+    {"path":"docs/research/pca-w1-independent-review/05-stage-d-provisional-verdict-frozen.md","sha256":"e27c99c7ff52f5f95e30e6f163b83cacbfa389d61d6f9408966bf983ce66902e","role":"pre-unblinding freeze","verify_current_path":true},
+    {"path":"docs/research/pca-w1-independent-review/07-final-independent-review.json","sha256":"f311552b877beece5245f48bbf1cf32f68d4b586fb3d65c18410b0ffe9175c37","role":"terminal adjudication","verify_current_path":true},
+    {"path":"docs/research/pca-w1-independent-review/08-review-artifact-manifest.json","sha256":"1437aeb6c52e7d84958b2cc530a9c5bda71706b96386482b98867df3c4e5d1bc","role":"artifact manifest","verify_current_path":true}
+  ],
+  "times": {"freeze_time":"2026-08-28T17:17:03Z","unblinding_time":"2026-08-28 after immutable Stage-D freeze; exact time not exposed in sealed record"},
+  "final_adjudication": {"status":"PROVED:14; REFUTED:0; OPEN:0; UNDERDETERMINED:0; NOT_APPLICABLE:0","artifact":"docs/research/pca-w1-independent-review/07-final-independent-review.json"},
+  "replay": {"commands":[["python","docs/research/pca-w1-independent-review/tools/stage_a_finite_checks.py"],["python","docs/research/pca-w1-independent-review/tools/stage_e_sss_checks.py"]],"deterministic_claim":"The two committed finite scripts replay deterministically for their represented cases; external search and model reasoning are not deterministic replay claims."},
+  "limitations": ["This capsule was generated after the sealed campaign from its immutable artifacts and does not claim the new firewall enforced the historical run.","External model and search systems are nondeterministic and cannot be perfectly environmentally replayed.","Computational replay is bounded corroboration; narrative and formal proofs carry mathematical authority."]
+}

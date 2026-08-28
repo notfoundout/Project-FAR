@@ -16,7 +16,7 @@ The project no longer seeks one contract-free universal primitive inventory. It 
 - **Primitive/operator branch:** global counts are not invariant under faithful reification, tagging, splitting, or combination.
 - **Finite-evidence branch:** finite panels establish only panel-relative results unless a separate theorem covers the remainder.
 
-The central theory is Accepted as internal deductive work corrected after a non-independent hostile audit. It has not been independently reviewed.
+The central theory is Accepted as internal deductive work corrected after a non-independent hostile audit and subsequently confirmed by a separate sealed independent review under its exact scopes. That review found 14 `PROVED`, no adverse or unresolved claim verdicts, and no required correction; it did not establish novelty or priority.
 
 ## Program architecture after closure
 
@@ -36,8 +36,8 @@ Historical `PROJECT-FAR-CORE-THEORY-1.0` is also preserved byte-for-byte at SHA-
 
 The [Post-Closure Assurance and Application Program](post-closure-assurance-and-application-program-v1.0.md) authorizes:
 
-1. independent mathematical review of `PROJECT-FAR-CORE-THEORY-1.1` — `PCA-W1-INDEPENDENT-REVIEW` remains the next workstream;
-2. proof-assistant formalization;
+1. the completed `PCA-W1-INDEPENDENT-REVIEW` sealed record and its assurance promotion;
+2. proof-assistant formalization — `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is the active workstream, with 13 claims formalized and FAR-CORE-014 partial at the actual MLL witness bridge;
 3. a versioned contract and factorization-report schema;
 4. independently motivated domain contracts;
 5. approximate and cost-aware extensions;

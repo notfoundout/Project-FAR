@@ -1,0 +1,450 @@
+#!/usr/bin/env python3
+"""Validate governed research registries and generate deterministic human/graph views."""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import re
+import sys
+from pathlib import Path
+from typing import Any, Iterable
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+import jsonschema  # noqa: E402
+
+DATA_SCHEMAS = {
+    "research/registry/opportunities-v1.0.json": "schemas/far-opportunity-registry-v1.schema.json",
+    "research/registry/research-questions-v1.0.json": "schemas/far-research-question-registry-v1.schema.json",
+    "research/registry/citation-links-v1.0.json": "schemas/far-citation-registry-v1.schema.json",
+    "research/registry/research-tools-v1.0.json": "schemas/far-research-tool-registry-v1.schema.json",
+    "research/registry/epistemic-threats-v1.0.json": "schemas/far-epistemic-threat-registry-v1.schema.json",
+    "theory/evaluation/far-core-assurance-v1.0.json": "schemas/far-assurance-ledger-v1.schema.json",
+    "theory/evaluation/far-core-formalization-ledger-v1.0.json": "schemas/far-core-formalization-ledger-v1.schema.json",
+    "research/campaigns/pca-w1-replay-capsule-v1.0.json": "schemas/far-research-campaign-v1.schema.json",
+}
+
+GENERATED = {
+    "docs/planning/opportunity-registry.md": "opportunities",
+    "docs/research/research-question-registry.md": "questions",
+    "docs/assurance/far-core-assurance.md": "assurance",
+    "artifacts/knowledge-graph/project-far-knowledge-graph.json": "graph",
+}
+
+REQUIRED_THREATS = {
+    "universal sufficiency confused with universal minimality",
+    "Gamma frame residue confused with exact common theory",
+    "preference orientation silently assumed in Pareto reasoning",
+    "finite-panel result universalized",
+    "encoding confused with structure",
+    "Unknown confused with absence",
+    "decoder power silently strengthened",
+    "historical provenance status confused with truth status",
+    "contract silently changed",
+    "scope qualifier dropped",
+    "prior-art absence mistaken for novelty",
+    "model agreement mistaken for proof",
+}
+
+REQUIRED_TOOLS = {
+    "GitHub", "Lean", "Wolfram", "Consensus", "SciSpace", "Scite", "Zotero",
+    "Acumen/Talarion", "Ordinary web research", "GPT/OpenAI models",
+    "Claude or other external reasoners", "Notion", "Linear", "Base44", "Floot",
+    "OpenAI Agents SDK", "ChatGPT Apps/MCP",
+}
+
+
+def load(path: str) -> dict:
+    return json.loads((ROOT / path).read_text(encoding="utf-8"))
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _unique(items: Iterable[dict], field: str, label: str, errors: list[str]) -> None:
+    values = [item[field] for item in items]
+    if len(values) != len(set(values)):
+        errors.append(f"duplicate {label} {field}")
+
+
+def validate_schemas(data: dict[str, dict]) -> list[str]:
+    errors: list[str] = []
+    for data_path, schema_path in DATA_SCHEMAS.items():
+        for exc in jsonschema.Draft202012Validator(load(schema_path)).iter_errors(data[data_path]):
+            where = "/".join(str(part) for part in getattr(exc, "absolute_path", exc.path))
+            errors.append(f"{data_path}:{where}: {exc.message}")
+    return errors
+
+
+def parse_bib_keys(path: Path) -> list[str]:
+    return re.findall(r"(?m)^@[A-Za-z]+\{([^,\s]+),", path.read_text(encoding="utf-8"))
+
+
+def semantic_errors(data: dict[str, dict]) -> list[str]:
+    errors: list[str] = []
+    opportunities = data["research/registry/opportunities-v1.0.json"]["opportunities"]
+    questions = data["research/registry/research-questions-v1.0.json"]["questions"]
+    citations = data["research/registry/citation-links-v1.0.json"]
+    tools = data["research/registry/research-tools-v1.0.json"]["tools"]
+    threats = data["research/registry/epistemic-threats-v1.0.json"]["threats"]
+    assurance = data["theory/evaluation/far-core-assurance-v1.0.json"]["claims"]
+    formalization = data["theory/evaluation/far-core-formalization-ledger-v1.0.json"]["claims"]
+    _unique(opportunities, "id", "opportunity", errors)
+    _unique(questions, "id", "question", errors)
+    _unique(citations["sources"], "citation_key", "source", errors)
+    _unique(citations["relationships"], "id", "citation relationship", errors)
+    _unique(tools, "id", "tool", errors)
+    _unique(threats, "id", "threat", errors)
+    _unique(assurance, "id", "assurance claim", errors)
+    _unique(formalization, "id", "formalization claim", errors)
+
+    opportunity_ids = {item["id"] for item in opportunities}
+    for item in opportunities:
+        for dependency in item["implementation_dependencies"] + item["theoretical_dependencies"]:
+            if dependency.startswith("OPP-") and dependency not in opportunity_ids:
+                errors.append(f"{item['id']}: unknown opportunity dependency {dependency}")
+        if item["status"] in {"SUPERSEDED", "REJECTED"} and item["priority"] != "prohibited":
+            errors.append(f"{item['id']}: superseded/rejected opportunity is not prohibited")
+        if item["priority"] == "prohibited" and item["status"] not in {"SUPERSEDED", "REJECTED"}:
+            errors.append(f"{item['id']}: active planning status has prohibited priority")
+
+    if {item["name"] for item in threats} != REQUIRED_THREATS:
+        errors.append("epistemic threat set differs from the required permanent regression library")
+    if {item["name"] for item in tools} != REQUIRED_TOOLS:
+        errors.append("research tool authority set is incomplete or contains an ungoverned tool")
+
+    source_keys = {item["citation_key"] for item in citations["sources"]}
+    bib_keys = parse_bib_keys(ROOT / citations["bibliography"])
+    if len(bib_keys) != len(set(bib_keys)):
+        errors.append("duplicate BibTeX citation key")
+    if set(bib_keys) != source_keys:
+        errors.append(f"BibTeX/source registry drift: bib-only={sorted(set(bib_keys)-source_keys)} registry-only={sorted(source_keys-set(bib_keys))}")
+    claim_ids = {f"FAR-CORE-{index:03d}" for index in range(1, 15)} | {"NOVELTY-CORE-MATHEMATICS"}
+    for relation in citations["relationships"]:
+        if relation["citation_key"] not in source_keys:
+            errors.append(f"{relation['id']}: unknown citation key")
+        if relation["claim_id"] not in claim_ids:
+            errors.append(f"{relation['id']}: unknown claim target {relation['claim_id']}")
+        artifact = relation["research_artifact"].split("#", 1)[0]
+        if not (ROOT / artifact).is_file():
+            errors.append(f"{relation['id']}: missing research artifact {artifact}")
+
+    core = load("theory/terminal/project-far-core-theory-v1.1.json")
+    core_by_id = {item["id"]: item for item in core["claims"]}
+    review = load("docs/research/pca-w1-independent-review/07-final-independent-review.json")
+    review_by_id = {item["id"]: item for item in review["claims"]}
+    formalization_by_id = {item["id"]: item for item in formalization}
+    expected_ids = [f"FAR-CORE-{index:03d}" for index in range(1, 15)]
+    if [item["id"] for item in assurance] != expected_ids:
+        errors.append("assurance ledger claim order/coverage must be FAR-CORE-001 through 014")
+    for item in assurance:
+        identifier = item["id"]
+        if identifier not in core_by_id or identifier not in review_by_id:
+            errors.append(f"{identifier}: missing core or W1 source")
+            continue
+        if item["exact_statement"] != core_by_id[identifier]["claim"]:
+            errors.append(f"{identifier}: exact assurance statement drifted from governing ledger")
+        if item["truth_disposition"] != review_by_id[identifier]["verdict"]:
+            errors.append(f"{identifier}: truth disposition drifted from W1 terminal review")
+        if item["version"] != core["theory_id"]:
+            errors.append(f"{identifier}: version drift")
+        formal = formalization_by_id.get(identifier)
+        if formal is None:
+            errors.append(f"{identifier}: missing formalization ledger entry")
+            continue
+        if formal["canonical_prose_statement"] != item["exact_statement"]:
+            errors.append(f"{identifier}: formalization prose drifted from governing statement")
+        if formal["lean_declarations"] != item["lean_declarations"]:
+            errors.append(f"{identifier}: assurance/formalization Lean declaration drift")
+        if formal["formalization_status"].replace("/", "_") != item["formalization_status"]:
+            errors.append(f"{identifier}: assurance/formalization outcome drift")
+        if formal["kernel_check"] != "PASS":
+            errors.append(f"{identifier}: formalization has not passed the pinned Lean kernel")
+    if core_by_id["FAR-CORE-014"]["status"] != "supported_derived":
+        errors.append("FAR-CORE-014 provenance label was overwritten")
+    if next(item for item in assurance if item["id"] == "FAR-CORE-014")["truth_disposition"] != "PROVED":
+        errors.append("FAR-CORE-014 W1 truth verdict was lost")
+    if review["final"]["claim_counts"] != {"PROVED":14,"REFUTED":0,"OPEN":0,"UNDERDETERMINED":0,"NOT APPLICABLE":0}:
+        errors.append("W1 terminal count drift")
+    promotion = load("theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
+    for artifact in promotion["verified_artifacts"]:
+        path = ROOT / artifact["path"]
+        if not path.is_file() or sha256(path) != artifact["sha256"]:
+            errors.append(f"W1 sealed artifact missing or changed: {artifact['path']}")
+    return sorted(set(errors))
+
+
+def render_opportunities(data: dict) -> str:
+    rows = []
+    for item in data["opportunities"]:
+        rows.append(f"| `{item['id']}` | {item['name']} | `{item['status']}` | {item['priority']} | `{item['target_workstream']}` | {item['disposition']} |")
+    return """# Project FAR Opportunity Registry
+
+Status: **Generated canonical planning view; not theory authority**
+
+Source: [`research/registry/opportunities-v1.0.json`](../../research/registry/opportunities-v1.0.json).
+
+The registry captures useful ideas, dependencies, risks, falsifiers, commercial hypotheses,
+and permanent rejected/superseded directions. `canonical` means governed planning record, not
+mathematical authority. Edit the JSON and regenerate this view.
+
+| ID | Opportunity | Status | Priority | Workstream | Disposition |
+|---|---|---|---|---|---|
+""" + "\n".join(rows) + "\n"
+
+
+def render_questions(data: dict) -> str:
+    sections = []
+    for item in data["questions"]:
+        sections.extend([
+            f"## {item['id']}: {item['exact_question']}", "",
+            f"- Legacy/register links: {', '.join(f'`{value}`' for value in item['legacy_ids'])}",
+            f"- Disposition: `{item['current_disposition']}`", f"- Scope: {item['governing_scope']}",
+            f"- Why it matters: {item['why_it_matters']}", f"- Resolution/falsifier: {item['falsifier_resolution_criterion']}",
+            f"- Allowed next action: {item['allowed_next_action']}", f"- Workstream: `{item['relevant_workstream']}`", "",
+        ])
+    return """# Project FAR Research-Question Registry
+
+Status: **Generated index over existing question/problem authorities**
+
+Source: [`research/registry/research-questions-v1.0.json`](../../research/registry/research-questions-v1.0.json).
+
+This index connects serious active questions to the accepted unresolved-question,
+open-problem, limitation, and workstream structures. It does not replace those authorities and
+does not authorize execution by itself.
+
+""" + "\n".join(sections)
+
+
+def render_assurance(data: dict) -> str:
+    rows = []
+    for item in data["claims"]:
+        rows.append(f"| `{item['id']}` | `{item['truth_disposition']}` | `{item['proof_status']}` | `{item['independent_review_status']}` | `{item['formalization_status']}` | `{item['empirical_status']}` | `{item['novelty_prior_art_status']}` |")
+    return """# FAR-CORE assurance ledger
+
+Status: **Generated assurance view; governing statements remain in theory v1.1**
+
+Source: [`theory/evaluation/far-core-assurance-v1.0.json`](../../theory/evaluation/far-core-assurance-v1.0.json).
+
+Truth, narrative proof, independent review, proof-assistant formalization, empirical evidence,
+novelty/prior art, governance, version, and scope are independent dimensions. No column may be
+used as a substitute for another. In particular, FAR-CORE-014's W1 truth verdict is `PROVED`
+under its exact application scope while its governing-ledger provenance label remains
+`supported_derived`.
+
+| Claim | Truth | Proof | Independent review | Lean | Empirical | Novelty/prior art |
+|---|---|---|---|---|---|---|
+""" + "\n".join(rows) + "\n"
+
+
+def _slug(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()[:16]
+
+
+def build_graph(data: dict[str, dict]) -> dict:
+    source_paths = sorted(DATA_SCHEMAS)
+    generated_from = {path: sha256(ROOT / path) for path in source_paths}
+    nodes: dict[str, dict] = {}
+    raw_edges: set[tuple[str, str, str, str]] = set()
+
+    def node(identifier: str, kind: str, label: str, status: str, source: str) -> None:
+        candidate = {"id":identifier,"type":kind,"label":label,"status":status,"source":source}
+        if identifier in nodes and nodes[identifier] != candidate:
+            raise ValueError(f"contradictory node mapping: {identifier}")
+        nodes[identifier] = candidate
+
+    def edge(kind: str, source: str, target: str, provenance: str) -> None:
+        raw_edges.add((kind, source, target, provenance))
+
+    version_id = "version:PROJECT-FAR-CORE-THEORY-1.1"
+    node(version_id, "version", "Project FAR Core Theory v1.1", "governing", "theory/terminal/project-far-core-theory-v1.1.json")
+    contract_id = "contract:local-exact-comparison"
+    node(contract_id, "contract", "Local exact comparison contract C=(X,T,V,obs)", "governing-definition", "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#21-local-comparison-contract")
+    node("domain:set-based-exact", "domain", "Set-based exact contract domain", "declared-scope", "theory/terminal/project-far-core-theory-v1.1.json")
+    node("representation:finite-playground", "representation", "Finite exact playground representation", "experimental-noncanonical", "tools/exact_contract_playground.py")
+    node("test-context:declared-tests", "test_context", "Declared tests/contexts T", "contract-relative", "theory/theorems/Project-FAR-Theory-Closure-v1.0.md#21-local-comparison-contract")
+    edge("APPLIES_TO", contract_id, "domain:set-based-exact", "canonical contract scope")
+    edge("IMPLEMENTS", "representation:finite-playground", contract_id, "experimental finite demonstrator")
+    edge("APPLIES_TO", contract_id, "test-context:declared-tests", "contract definition")
+
+    assurance = data["theory/evaluation/far-core-assurance-v1.0.json"]["claims"]
+    formalization_by_id = {
+        item["id"]: item
+        for item in data["theory/evaluation/far-core-formalization-ledger-v1.0.json"]["claims"]
+    }
+    core_ids = {item["id"] for item in assurance}
+    for item in assurance:
+        claim_id = f"claim:{item['id']}"
+        node(claim_id, "claim", item["exact_statement"], item["truth_disposition"], "theory/terminal/project-far-core-theory-v1.1.json")
+        edge("DEPENDS_ON", claim_id, version_id, "assurance version")
+        edge("APPLIES_TO", claim_id, contract_id, "assurance scope")
+        for dependency in item["dependencies"]:
+            if dependency in core_ids:
+                target = f"claim:{dependency}"
+                edge("DEPENDS_ON", claim_id, target, "assurance dependencies")
+            else:
+                target = f"premise:{dependency}"
+                node(target, "premise", dependency.replace("_", " "), "declared", "theory/evaluation/far-core-assurance-v1.0.json")
+                edge("ASSUMES", claim_id, target, "assurance dependencies")
+        formal = formalization_by_id[item["id"]]
+        for declaration in formal["lean_declarations"]:
+            theorem_id = f"theorem:{declaration}"
+            node(theorem_id, "theorem", declaration, formal["formalization_status"], formal["intended_lean_module"])
+            edge("FORMALIZES", theorem_id, claim_id, "assurance Lean mapping")
+        for premise in formal["premises"]:
+            premise_id = f"premise:{_slug(item['id'] + premise)}"
+            node(premise_id, "premise", premise, "encoded", "theory/evaluation/far-core-formalization-ledger-v1.0.json")
+            edge("ASSUMES", f"theorem:{formal['lean_declarations'][0]}", premise_id, "formalization ledger premise")
+        for artifact in item["internal_proof_artifacts"]:
+            proof_id = f"proof:{_slug(artifact)}"
+            node(proof_id, "proof", artifact, item["proof_status"], artifact)
+            edge("PROVES", proof_id, claim_id, "assurance internal proof")
+        for artifact in item["independent_review_artifacts"]:
+            evidence_id = f"evidence:{_slug(artifact)}"
+            node(evidence_id, "evidence_artifact", artifact, item["independent_review_status"], artifact)
+            edge("SUPPORTS", evidence_id, claim_id, "independent review")
+        for limitation in item["limitations"]:
+            limitation_id = f"limitation:{_slug(item['id'] + limitation)}"
+            node(limitation_id, "limitation", limitation, "binding", "theory/evaluation/far-core-assurance-v1.0.json")
+            edge("LIMITS", limitation_id, claim_id, "assurance limitation")
+        for counterexample in item["known_counterexamples_to_stronger_variants"]:
+            counter_id = f"counterexample:{_slug(item['id'] + counterexample)}"
+            node(counter_id, "counterexample", counterexample, "retained", "theory/evaluation/far-core-assurance-v1.0.json")
+            edge("LIMITS", counter_id, claim_id, "counterexample to stronger variant")
+
+    opportunities = data["research/registry/opportunities-v1.0.json"]["opportunities"]
+    opportunity_ids = {item["id"] for item in opportunities}
+    for item in opportunities:
+        identifier = f"open-problem:{item['id']}"
+        node(identifier, "open_problem", item["name"], item["status"], "research/registry/opportunities-v1.0.json")
+        target = f"workstream:{item['target_workstream']}"
+        node(target, "workstream", item["target_workstream"], "registered", "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json")
+        edge("APPLIES_TO", identifier, target, "opportunity target workstream")
+        for dependency in item["implementation_dependencies"] + item["theoretical_dependencies"]:
+            if dependency in opportunity_ids:
+                edge("DEPENDS_ON", identifier, f"open-problem:{dependency}", "opportunity dependency")
+            elif dependency in core_ids:
+                edge("DEPENDS_ON", identifier, f"claim:{dependency}", "opportunity theory dependency")
+
+    questions = data["research/registry/research-questions-v1.0.json"]["questions"]
+    for item in questions:
+        identifier = f"research-question:{item['id']}"
+        node(identifier, "research_question", item["exact_question"], item["current_disposition"], "research/registry/research-questions-v1.0.json")
+        target = f"workstream:{item['relevant_workstream']}"
+        node(target, "workstream", item["relevant_workstream"], "registered", "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json")
+        edge("APPLIES_TO", identifier, target, "research question workstream")
+        for dependency in item["dependencies"]:
+            if dependency in core_ids:
+                edge("DEPENDS_ON", identifier, f"claim:{dependency}", "research question dependency")
+            elif dependency in opportunity_ids:
+                edge("DEPENDS_ON", identifier, f"open-problem:{dependency}", "research question dependency")
+
+    citations = data["research/registry/citation-links-v1.0.json"]
+    for item in citations["sources"]:
+        node(f"source:{item['citation_key']}", "source", item["identity"], item["identity_status"], item["canonical_locator"])
+    for relation in citations["relationships"]:
+        source = f"source:{relation['citation_key']}"
+        if relation["claim_id"] in core_ids:
+            target = f"claim:{relation['claim_id']}"
+            edge("CITES", target, source, relation["id"])
+            mapped = {"SUPPORTS":"SUPPORTS","DISPUTES":"CONFLICTS_WITH","CONTEXT":"APPLIES_TO","ANTICIPATES":"SUPPORTS","LIMITS":"LIMITS","DOES_NOT_ESTABLISH":"LIMITS"}[relation["relationship"]]
+            edge(mapped, source, target, relation["id"])
+
+    for item in data["research/registry/research-tools-v1.0.json"]["tools"]:
+        node(f"tool:{item['id']}", "tool", item["name"], item["authority"], "research/registry/research-tools-v1.0.json")
+
+    node("pr-commit:W1-target", "pr_commit", "W1 immutable target 14105775 / 68f05819", "sealed", "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
+    node("pr-commit:W1-review", "pr_commit", "W1 review 09816975 / 3b58ca87", "accepted-evidence", "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
+    edge("TESTS", "pr-commit:W1-review", "pr-commit:W1-target", "W1 promotion record")
+    edge("SUPPORTS", "pr-commit:W1-review", version_id, "W1 promotion record")
+
+    for node_item in list(nodes.values()):
+        if node_item["type"] == "theorem":
+            definition_id = f"definition:{node_item['id'].split(':',1)[1].split('.')[-1]}"
+            node(definition_id, "definition", f"encoded definition for {node_item['label']}", "formalization-mapped", node_item["source"])
+            edge("DERIVES", definition_id, node_item["id"], "formalization mapping")
+
+    ordered_edges = []
+    for index, (kind, source, target, provenance) in enumerate(sorted(raw_edges), 1):
+        if source not in nodes or target not in nodes:
+            raise ValueError(f"dangling graph edge: {source} -> {target}")
+        ordered_edges.append({"id":f"EDGE-{index:05d}","type":kind,"source":source,"target":target,"provenance":provenance})
+    return {"schema_version":"1.0","graph_id":"PROJECT-FAR-KNOWLEDGE-GRAPH-1.0","authority":"generated_view_not_independent_truth_system","generated_from":generated_from,"nodes":[nodes[key] for key in sorted(nodes)],"edges":ordered_edges}
+
+
+def graph_errors(graph: dict) -> list[str]:
+    errors: list[str] = []
+    ids = [item["id"] for item in graph["nodes"]]
+    if len(ids) != len(set(ids)):
+        errors.append("duplicate graph node")
+    node_ids = set(ids)
+    for edge in graph["edges"]:
+        if edge["source"] not in node_ids or edge["target"] not in node_ids:
+            errors.append(f"dangling graph edge {edge['id']}")
+    adjacency: dict[str, list[str]] = {}
+    for edge in graph["edges"]:
+        if edge["type"] == "DEPENDS_ON":
+            adjacency.setdefault(edge["source"], []).append(edge["target"])
+    visiting: set[str] = set()
+    visited: set[str] = set()
+    def visit(current: str) -> None:
+        if current in visiting:
+            errors.append(f"prohibited DEPENDS_ON cycle at {current}")
+            return
+        if current in visited:
+            return
+        visiting.add(current)
+        for target in adjacency.get(current, []):
+            visit(target)
+        visiting.remove(current)
+        visited.add(current)
+    for identifier in sorted(adjacency):
+        visit(identifier)
+    return sorted(set(errors))
+
+
+def expected_outputs(data: dict[str, dict]) -> dict[str, str]:
+    graph = build_graph(data)
+    return {
+        "docs/planning/opportunity-registry.md": render_opportunities(data["research/registry/opportunities-v1.0.json"]),
+        "docs/research/research-question-registry.md": render_questions(data["research/registry/research-questions-v1.0.json"]),
+        "docs/assurance/far-core-assurance.md": render_assurance(data["theory/evaluation/far-core-assurance-v1.0.json"]),
+        "artifacts/knowledge-graph/project-far-knowledge-graph.json": json.dumps(graph, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--write", action="store_true")
+    args = parser.parse_args()
+    try:
+        data = {path: load(path) for path in DATA_SCHEMAS}
+        errors = validate_schemas(data) + semantic_errors(data)
+        outputs = expected_outputs(data)
+        graph = json.loads(outputs["artifacts/knowledge-graph/project-far-knowledge-graph.json"])
+        errors += graph_errors(graph)
+    except (OSError, json.JSONDecodeError, jsonschema.ValidationError, ValueError) as exc:
+        print(f"FAIL: {exc}")
+        return 1
+    if errors:
+        print("FAIL: " + "; ".join(sorted(set(errors))))
+        return 1
+    if args.write:
+        for path, content in outputs.items():
+            target = ROOT / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(content, encoding="utf-8")
+        print(f"wrote {len(outputs)} generated registry/knowledge-graph views")
+        return 0
+    stale = [path for path, content in outputs.items() if not (ROOT / path).is_file() or (ROOT / path).read_text(encoding="utf-8") != content]
+    if stale:
+        print("FAIL: stale generated outputs: " + ", ".join(stale))
+        return 1
+    print(f"FAR research registries and knowledge graph: PASS (nodes={len(graph['nodes'])}, edges={len(graph['edges'])})")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-research-question-registry-v1.schema.json",
+  "title": "Project FAR Research Question Registry v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "authority", "questions"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "registry_id": {"const": "FAR-RESEARCH-QUESTION-REGISTRY-1.0"},
+    "authority": {"const": "index_over_existing_question_and_problem_authorities"},
+    "questions": {"type": "array", "items": {"$ref": "#/$defs/question"}}
+  },
+  "$defs": {
+    "stringArray": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "legacy_ids", "exact_question", "why_it_matters", "governing_scope", "current_evidence", "counterevidence", "dependencies", "current_disposition", "falsifier_resolution_criterion", "allowed_next_action", "relevant_workstream", "evidence_provenance_links"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^FAR-RQ-[0-9]{3}$"},
+        "legacy_ids": {"$ref": "#/$defs/stringArray"},
+        "exact_question": {"type": "string", "minLength": 1},
+        "why_it_matters": {"type": "string", "minLength": 1},
+        "governing_scope": {"type": "string", "minLength": 1},
+        "current_evidence": {"$ref": "#/$defs/stringArray"},
+        "counterevidence": {"$ref": "#/$defs/stringArray"},
+        "dependencies": {"$ref": "#/$defs/stringArray"},
+        "current_disposition": {"enum": ["OPEN", "ACTIVE", "BLOCKED", "UNDERDETERMINED", "RESOLVED", "EVIDENCE_EXHAUSTED", "SUPERSEDED"]},
+        "falsifier_resolution_criterion": {"type": "string", "minLength": 1},
+        "allowed_next_action": {"type": "string", "minLength": 1},
+        "relevant_workstream": {"type": "string", "minLength": 1},
+        "evidence_provenance_links": {"$ref": "#/$defs/stringArray"}
+      }
+    }
+  }
+}

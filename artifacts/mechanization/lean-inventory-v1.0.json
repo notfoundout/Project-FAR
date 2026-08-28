@@ -1,0 +1,534 @@
+{
+  "authority": "generated_inventory_not_theory_authority",
+  "files": [
+    {
+      "declarations": [
+        "CanonicalUniversality",
+        "Established",
+        "StrengtheningObligations",
+        "canonical_universality_terminal_theorem",
+        "missing_canonicality_blocks_terminal"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 37,
+      "path": "mechanization/lean/CanonicalUniversalityTerminal.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "a0a7b43ba8c9a69832428d0933bbbbe0c4bdfc249f9ddb37f9a74a35bbd8bf83"
+    },
+    {
+      "declarations": [
+        "CanonicalKernel",
+        "CategoryModel",
+        "unique_factorization"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 21,
+      "path": "mechanization/lean/Canonicality.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "e2687845baf7839794baf8b0b795c226f8da8d722b4c3c885cd6c69e8989c533"
+    },
+    {
+      "declarations": [
+        "Extension",
+        "Kernel",
+        "kernel_embeds_conservatively"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 21,
+      "path": "mechanization/lean/ConservativeExtensibility.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "aaa3c773fc377984da84ef61c69f1a6b62abd349f226b7d1cc7e85e6819785d8"
+    },
+    {
+      "declarations": [
+        "CompleteBasis",
+        "Kernel",
+        "ReasoningInvariant",
+        "every_registered_invariant_factors_through_basis"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 23,
+      "path": "mechanization/lean/DefinitionalCompleteness.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "0ea356767664500265859dbff1ebc248a8cc5f59931f55c0b2be80d5c7fb7c74"
+    },
+    {
+      "declarations": [
+        "DirectlySupported",
+        "FullCanonicalBridge",
+        "PartialCanonicalBridge",
+        "RemainingBridges",
+        "full_requires_every_far_bridge",
+        "g1_g2_g3_only_support_partial_bridge",
+        "partial_excludes_full"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 62,
+      "path": "mechanization/lean/FARCanonicalBridge.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "61529f59c3071de192beb0a1b4493aaf4161af77acbfbf35c53f594adb8461fb"
+    },
+    {
+      "declarations": [
+        "Node",
+        "PairwiseUniqueUpToRegisteredEquivalence",
+        "QualifiedForCenter",
+        "allPass",
+        "allPass_is_all_pass",
+        "current_g1_semantics_do_not_entail_canonical_uniqueness",
+        "groundedEquivalent",
+        "groundedModel",
+        "groundedPreservation",
+        "grounded_model_is_actual_g1_model",
+        "left_equivalent_to_canonical",
+        "left_is_fully_qualified",
+        "left_not_equivalent_to_right",
+        "notAllPass",
+        "right_equivalent_to_canonical",
+        "right_is_fully_qualified",
+        "unique_factorization_counterexample"
+      ],
+      "imports": [
+        "Std",
+        "UPPSemanticKernel"
+      ],
+      "line_count": 155,
+      "path": "mechanization/lean/FARCanonicalCountermodel.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "d6a60118629488ceb78eebd21117163cdd6555f88973624e23353880a5127746"
+    },
+    {
+      "declarations": [
+        "BaseEvidence",
+        "CanonicalBridges",
+        "FinalVerdict",
+        "adjudicate",
+        "allBridgeWitnesses",
+        "allBridgesEstablished",
+        "all_six_witnesses_are_sufficient",
+        "baseEstablished",
+        "base_does_not_entail_all_bridges",
+        "completeBase",
+        "conservative_extensibility_not_derivable_from_base",
+        "current_far_terminal_verdict",
+        "definitional_completeness_not_derivable_from_base",
+        "maximal_knowability_not_derivable_from_base",
+        "missing_witnesses_do_not_refute",
+        "noBridgeWitnesses",
+        "quotient_minimality_not_derivable_from_base",
+        "representation_invariance_not_derivable_from_base",
+        "unique_factorization_not_derivable_from_base"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 124,
+      "path": "mechanization/lean/FARCanonicalUniversalityDecision.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "3fc295d27690272054bf30d420779f05c91eba3e3ddd577fd7445629ab769e20"
+    },
+    {
+      "declarations": [
+        "FARRepresentation",
+        "FaithfulRepresentation",
+        "Interpretation",
+        "Investigation",
+        "OperationalPreservation",
+        "ProcessSpecification",
+        "ReasoningCalculus",
+        "ReasoningProcess",
+        "Representation",
+        "RepresentationalStructure",
+        "Scope",
+        "SemanticPreservation",
+        "StructuralPreservation",
+        "T003Premises",
+        "Trace",
+        "TracePreservation",
+        "TransitionSignature",
+        "canonicalRepresentation",
+        "canonical_representation_is_faithful",
+        "constructFARRepresentation",
+        "constructed_trace_is_empty_iff",
+        "corruptedModusPonensRepresentation",
+        "corrupted_mp_fails_operational_preservation",
+        "corrupted_mp_fails_semantic_preservation",
+        "corrupted_mp_fails_structural_preservation",
+        "corrupted_mp_is_not_faithful",
+        "defaultFARRepresentation",
+        "legalSpecification",
+        "legal_instance_is_faithful",
+        "modusPonensSpecification",
+        "modus_ponens_instance_is_faithful",
+        "placeholderRepresentation",
+        "structural_existence_does_not_imply_faithfulness",
+        "t003_existence_is_not_assumption_minimal",
+        "t003_representation_theorem",
+        "traceOf",
+        "triageSpecification",
+        "triage_instance_is_faithful",
+        "unconditional_structural_existence"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 441,
+      "path": "mechanization/lean/FARCore.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "7b004e58006ee9f5f767308f896284c4dfbaef2c37d1a56b06605e6dfc2978ab"
+    },
+    {
+      "declarations": [],
+      "imports": [
+        "FARCoreV11Claims001To012",
+        "FARCoreV11Omega",
+        "FARCoreV11SSS"
+      ],
+      "line_count": 41,
+      "path": "mechanization/lean/FARCoreV11AxiomAudit.lean",
+      "role": "W2_CORE_V1_1",
+      "sha256": "cba8c9617eded443e34cbf57d444b10fce210e6cfd03f11aed4df0ff790b52b3"
+    },
+    {
+      "declarations": [
+        "ArgumentPosition",
+        "CommonTheory",
+        "EpistemicOutcome",
+        "FiniteOperatorFamily",
+        "FiniteTagCarrier",
+        "FiniteTaggedDispatcher",
+        "InvariantUnder",
+        "RelationOccurrence",
+        "Residue",
+        "absent_unknown_must_separate",
+        "combineOperator",
+        "combine_split_operator_family",
+        "commonTheory_frame_independent",
+        "commonTheory_invariant_under_truth_equivalence",
+        "embeddingRangeEquiv",
+        "finite_panel_two_completions",
+        "identity_is_universally_sufficient",
+        "invariants_antitone",
+        "no_contract_free_simultaneous_minimum",
+        "omitted_parameter_refutes_sufficiency",
+        "reification_recovers_relation",
+        "residue_can_change_with_frame",
+        "splitOperator",
+        "split_combine_operator",
+        "transportOperation",
+        "transportRelation",
+        "transport_operation_commutes",
+        "transport_relation_commutes",
+        "typedIncidence"
+      ],
+      "imports": [
+        "FARCoreV11Substrate"
+      ],
+      "line_count": 290,
+      "path": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "role": "W2_CORE_V1_1",
+      "sha256": "dbafd344e14fd966a7c3e9b3c4eaa43dfb6de97239dc7e61aabdb627676f2ca7"
+    },
+    {
+      "declarations": [
+        "absentUnknownBehavior",
+        "absent_unknown_collapse_is_insufficient",
+        "asymmetricRelation",
+        "coarseObservation",
+        "collision_without_factorization",
+        "coverage_premise_is_not_optional",
+        "dropping_operator_tag_causes_collision",
+        "encoding_without_injectivity_loses_recovery",
+        "flipBool",
+        "frame_changes_residue_not_exact_theory",
+        "insufficient_map_has_no_factor",
+        "missing_context_closure_breaks_descent",
+        "no_behavior_change_no_refutation",
+        "reverse_invariance_inclusion_is_false",
+        "singleton_does_not_witness_no_minimum",
+        "splittingAction",
+        "strictly_more_informative_is_not_least",
+        "untypedIncidence",
+        "untyped_incidence_does_not_recover_positions"
+      ],
+      "imports": [
+        "FARCoreV11Claims001To012",
+        "FARCoreV11Omega",
+        "FARCoreV11SSS"
+      ],
+      "line_count": 170,
+      "path": "mechanization/lean/FARCoreV11Mutations.lean",
+      "role": "W2_CORE_V1_1",
+      "sha256": "ec389d2081c635f336aa2f3cd087f997aeb7ed800e4fa081b76f43130aa23069"
+    },
+    {
+      "declarations": [
+        "extra_information_is_not_canonical_omega",
+        "omega",
+        "omega_elimination",
+        "resolve_is_composition"
+      ],
+      "imports": [
+        "FARCoreV11Substrate"
+      ],
+      "line_count": 51,
+      "path": "mechanization/lean/FARCoreV11Omega.lean",
+      "role": "W2_CORE_V1_1",
+      "sha256": "52570fe1ed0c7a76b850162d584d47e759098b054a8cd147161891d663a7044c"
+    },
+    {
+      "declarations": [
+        "BoolImplies",
+        "FrontierView",
+        "HyperedgeView",
+        "SuccessorDecoder",
+        "SuccessorTruthShape",
+        "WitnessSummary",
+        "andDecoder",
+        "decodeShape",
+        "decoderPrediction",
+        "four_monotone_decoders",
+        "frontierDecoder",
+        "frontierView",
+        "frontier_binary_relation_is_not_refuted",
+        "frontier_factorization",
+        "hyperedgeDecoder",
+        "hyperedge_factorization",
+        "nonemptyDecoder",
+        "orDecoder",
+        "projected_successor_decoder_failure",
+        "sAndSummary",
+        "sOrSummary",
+        "stateInspectingDecoder",
+        "termDecoder",
+        "unrestricted_decoder_counterexample"
+      ],
+      "imports": [
+        "FARCoreV11Substrate"
+      ],
+      "line_count": 177,
+      "path": "mechanization/lean/FARCoreV11SSS.lean",
+      "role": "W2_CORE_V1_1",
+      "sha256": "2e3c4e12481ad206587316e34ef6a06736c5872315bc0a02285e2069f8f0b977"
+    },
+    {
+      "declarations": [
+        "ContextClosedFor",
+        "ExactlySufficient",
+        "IsInjective",
+        "IsSurjective",
+        "Isomorphism",
+        "KernelEqual",
+        "KernelRefines",
+        "ObservationalQuotient",
+        "ObservationallyEquivalent",
+        "RepImage",
+        "action_preserves_observational_equivalence",
+        "behaviorSetoid",
+        "collision_refutes_sufficiency",
+        "descendAction",
+        "exact_factorization_criterion",
+        "factorToQuotient",
+        "factorToQuotient_agrees",
+        "factorToQuotient_injective_of_kernel_equal",
+        "factorToQuotient_surjective",
+        "imageValue",
+        "isomorphismOfBijective",
+        "leastInformativeImageEquiv",
+        "observationSetoid",
+        "observational_quotient_universal",
+        "quotientBehavior",
+        "quotientRep",
+        "quotient_is_sufficient"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 240,
+      "path": "mechanization/lean/FARCoreV11Substrate.lean",
+      "role": "W2_CORE_V1_1",
+      "sha256": "c10ed7cd9f2bb35018d7312e2f3fa755cb292663a73ed24fb17eeac193c01410"
+    },
+    {
+      "declarations": [
+        "FullFaithfulness",
+        "IndependentLowerBoundBridge",
+        "PreservationObligations",
+        "RCCDObligations",
+        "RCCDRealized",
+        "admissibility_is_not_used_as_faithfulness",
+        "full_faithfulness_implies_rccd_obligations",
+        "g2_open_world_structural_lower_bound"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 148,
+      "path": "mechanization/lean/G2OpenWorldLowerBound.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "0a432439d96c88028ed350d3638f0fa23b58b89a9e7b2c02b5a8dc1cbff15129"
+    },
+    {
+      "declarations": [
+        "Classifier",
+        "DeterminateWarranted",
+        "DiscriminatingAccess",
+        "ObservationModel",
+        "ObservationallyEquivalent",
+        "SoundFor",
+        "StructurallyIncompatible",
+        "Verdict",
+        "adjudicate",
+        "g3_epistemic_maximality_theorem",
+        "inaccessible_adjudicates_unknown",
+        "inaccessible_never_adjudicates_fail",
+        "inaccessible_never_adjudicates_pass",
+        "incompatible_twin_refutes_discriminating_access",
+        "indistinguishable_incompatible_sources_block_joint_soundness"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 120,
+      "path": "mechanization/lean/G3EpistemicMaximality.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "83f57b5b1f269a78cbea9d45d735fc8eba23d9e4e21e042fdd649778866f9fec"
+    },
+    {
+      "declarations": [
+        "ScopeOrder",
+        "Theory",
+        "any_stronger_warranted_scope_requires_embedding",
+        "no_embedding_no_registered_scope_dominance"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 25,
+      "path": "mechanization/lean/MaximalKnowability.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "e739c023d712d768b8d47ba9e494c032f4f2b37e45f184145972b6d594fa128d"
+    },
+    {
+      "declarations": [
+        "Kernel",
+        "Quotient",
+        "Separated",
+        "complete_quotient_characterizes_equivalence",
+        "faithful_quotient_is_injective",
+        "quotient_minimality"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 45,
+      "path": "mechanization/lean/QuotientMinimality.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "682d895cb6ef7444118419e3fbf02a3583fe49e231fd25a22d41b600b804a58d"
+    },
+    {
+      "declarations": [
+        "Equivalent",
+        "Presentation",
+        "invariant_under_equivalent_presentation"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 19,
+      "path": "mechanization/lean/RepresentationInvariance.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "486a99297815db1cad0e6ebaad6da3db2d6f7f7eeb2207a3f9cb579047f58e0e"
+    },
+    {
+      "declarations": [
+        "FaithfulSplit",
+        "Source",
+        "Target",
+        "Witness",
+        "asm_sc_001_common_schema",
+        "asm_sc_002_bounded_faithful_representation",
+        "asm_sc_003_theorem_family",
+        "bounded_impossibility_refuted",
+        "encode",
+        "encodeWitness",
+        "encode_is_faithful",
+        "thm_core_rep_001"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 122,
+      "path": "mechanization/lean/SCoreW5.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "e9e5e25b941a0648df13eea91bf19fcaa187d4d7854512ae893afd0a01681703"
+    },
+    {
+      "declarations": [
+        "FrozenUPPSemantics",
+        "PreservationVector",
+        "RelativeSemanticConclusion",
+        "Status",
+        "constructRelativeSemanticConclusion",
+        "construction_requires_independent_class_membership",
+        "failed_operational_dimension_not_all_pass",
+        "faithful_candidate_equivalent_to_canonical",
+        "g1_end_to_end_relative_semantic_theorem",
+        "unknown_semantic_dimension_not_all_pass"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 195,
+      "path": "mechanization/lean/UPPSemanticKernel.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "77a6da57f3c609f2cb6e3adc42619e5aee5ac8ab964d91967dd6534b3b4d5cf7"
+    },
+    {
+      "declarations": [
+        "Authorized",
+        "Certificate",
+        "Status",
+        "authorization_binds_commit",
+        "authorization_binds_tree",
+        "authorization_requires_success",
+        "blocked_ne_passed",
+        "decide",
+        "decide_passed_iff",
+        "dependenciesPassed",
+        "failed_dependency_forces_block",
+        "runSuccessful",
+        "runSuccessful_iff_all_passed",
+        "successful_run_has_no_block",
+        "successful_run_has_no_failure"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 124,
+      "path": "mechanization/lean/ValidationEngine.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "54372afeb15f9025ea477d33aab9a4714a34f223862c27b37ad292ee63208269"
+    }
+  ],
+  "inventory_id": "PROJECT-FAR-LEAN-INVENTORY-1.0",
+  "schema_version": "1.0",
+  "toolchain": "leanprover/lean4:v4.19.0",
+  "w2_summary": {
+    "contradiction_reopen_required": 0,
+    "forbidden_placeholders": 0,
+    "formalized": 13,
+    "kernel_check": "PASS",
+    "partial_obstruction": 1
+  }
+}
