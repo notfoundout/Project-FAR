@@ -4,36 +4,253 @@
   "title": "Project FAR Generated Knowledge Graph v1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "graph_id", "authority", "generated_from", "nodes", "edges"],
+  "required": [
+    "schema_version",
+    "graph_id",
+    "authority",
+    "generated_from",
+    "nodes",
+    "edges"
+  ],
   "properties": {
-    "schema_version": {"const": "1.0"},
-    "graph_id": {"const": "PROJECT-FAR-KNOWLEDGE-GRAPH-1.0"},
-    "authority": {"const": "generated_view_not_independent_truth_system"},
-    "generated_from": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
-    "nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
-    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}}
+    "schema_version": {
+      "const": "1.0"
+    },
+    "graph_id": {
+      "const": "PROJECT-FAR-KNOWLEDGE-GRAPH-1.0"
+    },
+    "authority": {
+      "const": "generated_view_not_independent_truth_system"
+    },
+    "generated_from": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    }
   },
   "$defs": {
     "node": {
-      "type": "object", "additionalProperties": false,
-      "required": ["id", "type", "label", "status", "source"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "label",
+        "status",
+        "source"
+      ],
       "properties": {
-        "id": {"type": "string", "minLength": 1},
-        "type": {"enum": ["claim", "definition", "premise", "theorem", "proof", "counterexample", "limitation", "open_problem", "research_question", "source", "evidence_artifact", "contract", "domain", "representation", "test_context", "tool", "version", "pr_commit", "workstream"]},
-        "label": {"type": "string", "minLength": 1},
-        "status": {"type": "string", "minLength": 1},
-        "source": {"type": "string", "minLength": 1}
-      }
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": [
+            "claim",
+            "definition",
+            "premise",
+            "theorem",
+            "proof",
+            "counterexample",
+            "limitation",
+            "open_problem",
+            "research_question",
+            "source",
+            "evidence_artifact",
+            "contract",
+            "domain",
+            "representation",
+            "test_context",
+            "tool",
+            "version",
+            "pr_commit",
+            "workstream"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status_dimensions": {
+          "$ref": "#/$defs/statusDimensions"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "claim"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "scope",
+              "status_dimensions"
+            ],
+            "properties": {
+              "status": {
+                "const": "multidimensional_assurance"
+              }
+            }
+          }
+        }
+      ]
     },
     "edge": {
-      "type": "object", "additionalProperties": false,
-      "required": ["id", "type", "source", "target", "provenance"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "source",
+        "target",
+        "provenance"
+      ],
       "properties": {
-        "id": {"type": "string", "pattern": "^EDGE-[0-9]{5}$"},
-        "type": {"enum": ["DEPENDS_ON", "PROVES", "REFUTES", "SUPPORTS", "DERIVES", "LIMITS", "SUPERSEDES", "IMPLEMENTS", "FORMALIZES", "CITES", "TESTS", "APPLIES_TO", "ASSUMES", "CONFLICTS_WITH"]},
-        "source": {"type": "string", "minLength": 1},
-        "target": {"type": "string", "minLength": 1},
-        "provenance": {"type": "string", "minLength": 1}
+        "id": {
+          "type": "string",
+          "pattern": "^EDGE-[0-9]{5}$"
+        },
+        "type": {
+          "enum": [
+            "DEPENDS_ON",
+            "PROVES",
+            "REFUTES",
+            "SUPPORTS",
+            "DERIVES",
+            "LIMITS",
+            "SUPERSEDES",
+            "IMPLEMENTS",
+            "FORMALIZES",
+            "CITES",
+            "TESTS",
+            "APPLIES_TO",
+            "ASSUMES",
+            "CONFLICTS_WITH"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provenance": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "statusDimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "truth_disposition",
+        "governing_ledger_provenance_status",
+        "proof_status",
+        "independent_review_status",
+        "formalization_status",
+        "empirical_status",
+        "novelty_prior_art_status",
+        "governance_status",
+        "version"
+      ],
+      "properties": {
+        "truth_disposition": {
+          "enum": [
+            "PROVED",
+            "REFUTED",
+            "OPEN",
+            "UNDERDETERMINED"
+          ]
+        },
+        "governing_ledger_provenance_status": {
+          "enum": [
+            "proved",
+            "supported_derived"
+          ]
+        },
+        "proof_status": {
+          "enum": [
+            "NARRATIVE_PROOF_ACCEPTED",
+            "SUPPORTED_DERIVED_APPLICATION",
+            "OPEN"
+          ]
+        },
+        "independent_review_status": {
+          "enum": [
+            "COMPLETE_CONFIRMED",
+            "COMPLETE_NARROWED",
+            "FAILED",
+            "OPEN"
+          ]
+        },
+        "formalization_status": {
+          "enum": [
+            "IN_PROGRESS",
+            "FORMALIZED",
+            "PARTIAL_OBSTRUCTION",
+            "CONTRADICTION_REOPEN_REQUIRED",
+            "NOT_STARTED"
+          ]
+        },
+        "empirical_status": {
+          "enum": [
+            "NOT_APPLICABLE",
+            "BOUNDED_CORROBORATION_ONLY",
+            "OPEN"
+          ]
+        },
+        "novelty_prior_art_status": {
+          "enum": [
+            "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+            "NOT_ESTABLISHED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "governance_status": {
+          "enum": [
+            "ACCEPTED_CURRENT",
+            "ACCEPTED_BOUNDED_APPLICATION",
+            "REOPEN_REQUIRED"
+          ]
+        },
+        "version": {
+          "const": "PROJECT-FAR-CORE-THEORY-1.1"
+        }
       }
     }
   }
