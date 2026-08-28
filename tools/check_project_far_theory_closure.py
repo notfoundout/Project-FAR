@@ -104,7 +104,7 @@ def validate(root: Path = ROOT) -> list[str]:
         "PROJECT-FAR-CORE-THEORY-1.1",
         EXPECTED_VERDICT,
         "universal sufficiency alone",
-        "exact common theory is indexed by `L,J,I`",
+        "indexed by `L,J,I`",
         "10.1214/aoms/1177729032",
         "PCA-W1-INDEPENDENT-REVIEW",
     ):
@@ -163,7 +163,7 @@ def validate(root: Path = ROOT) -> list[str]:
         errors.append("repository truth authority does not preserve v1.0 hash")
 
     required_text = {
-        "README.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W1-INDEPENDENT-REVIEW", "historical v1.0"],
+        "README.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W1-INDEPENDENT-REVIEW", "Historical v1.0"],
         "docs/project-status.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W1-INDEPENDENT-REVIEW", "FAR-CORE-010"],
         "docs/governance/project-far-theory-closure-acceptance-v1.1.md": ["identity representation", "frame-subtracted residue", "not independently reviewed"],
         "docs/audits/project-far-core-theory-v1.1-correction-audit.md": ["10.1214/aoms/1177729032", "FAR-CORE-014", "independent review still open"],
