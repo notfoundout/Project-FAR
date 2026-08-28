@@ -8,7 +8,7 @@ External projects may rely only on files exported in `exports/far-spec-v1` and r
 
 ## Stable content
 
-The stable surface consists of exported grammar, normative schemas, canonical semantic contracts, canonical terminology, compatibility policy, and representative examples. Stability means changes are intentional, versioned, checksummed, and represented by a new export artifact set.
+The stable surface consists of exported grammar, normative schemas, canonical semantic contracts, canonical terminology, canonical current-theory artifacts, compatibility policy, and representative examples. Historical theory artifacts may remain exported for provenance but are explicitly labeled `historical` in the manifest. Stability means changes are intentional, versioned, checksummed, and represented by a new export artifact set.
 
 ## Semantic versioning
 
@@ -16,12 +16,12 @@ Export versions use `MAJOR.MINOR.PATCH`. MAJOR changes may alter or remove stabl
 
 ## Compatibility guarantees
 
-For a fixed major export version, artifact paths, schema identifiers, documented grammar references, and checksum verification remain reproducible. Consumers must verify checksums before use and must treat the manifest as authoritative for the export contents.
+For a fixed major export version, artifact paths, schema identifiers, documented grammar references, and checksum verification remain reproducible. Consumers must verify checksums before use and must treat the manifest as authoritative for the export contents and artifact status.
 
 ## Deprecation policy
 
-Deprecated artifacts remain present for at least one minor release within the same major version unless removal is necessary to avoid publishing obsolete or experimental material as normative. Deprecations are announced in this compatibility specification or a successor compatibility artifact.
+Deprecated or historical artifacts remain present for at least one minor release within the same major version unless removal is necessary to avoid publishing obsolete or experimental material as normative. Deprecations are announced in this compatibility specification or a successor compatibility artifact.
 
 ## Unsupported assumptions
 
-Consumers must not depend on Project FAR source tree paths, Python APIs, test fixtures outside the export, generated file ordering not recorded in the manifest, unexported schemas, research notes, archived artifacts, or inferred semantics not stated by exported canonical artifacts.
+Consumers must not depend on Project FAR source tree paths, Python APIs, test fixtures outside the export, generated file ordering not recorded in the manifest, unexported schemas, research notes, archived artifacts, historical artifacts labeled as current, or inferred semantics not stated by exported canonical artifacts.

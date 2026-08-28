@@ -4,7 +4,7 @@
     {
       "category": "compatibility",
       "path": "compatibility/compatibility-spec.md",
-      "sha256": "e55c247575e14c0e3d28b129ffd30bd30811b31c4a12516ee9b49c5b1f8f5f9e",
+      "sha256": "44fd5f7a7be3891818ac969d3811b2db65fc30e242a68de9413c35e6d7bf2335",
       "source": null,
       "status": "generated"
     },
@@ -167,14 +167,29 @@
       "path": "theorems/Project-FAR-Theory-Closure-v1.0.md",
       "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
       "source": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+      "status": "historical"
+    },
+    {
+      "category": "theorems",
+      "path": "theorems/Project-FAR-Theory-Closure-v1.1.md",
+      "sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+      "source": "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+      "status": "canonical"
+    },
+    {
+      "category": "theorems",
+      "path": "theorems/project-far-core-theory-v1.1.json",
+      "sha256": "66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40",
+      "source": "theory/terminal/project-far-core-theory-v1.1.json",
       "status": "canonical"
     }
   ],
   "commit_sha": "6d3c114c922ee9f67a5c2790836f498d52803ebb",
   "compatibility_version": "1.0.0",
+  "core_theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
   "export_timestamp": "2026-07-16T14:00:05-04:00",
-  "export_version": "1.1.0",
-  "exporter_version": "1.1.0",
+  "export_version": "1.2.0",
+  "exporter_version": "1.2.0",
   "project_far_repository": "/workspace/Project-FAR",
   "schema_version": "far-ir/1.0"
 }
