@@ -63,6 +63,27 @@ def test_committed_export_is_fresh(tmp_path):
         assert (generated / rel).read_bytes() == (committed / rel).read_bytes(), rel
 
 
+def test_export_carries_exact_core_theory():
+    """Retain the historical exact-byte regression under the v1.2 export policy."""
+    export_dir = ROOT / "exports" / "far-spec-v1"
+    source_v1 = ROOT / "theory/theorems/Project-FAR-Theory-Closure-v1.0.md"
+    exported_v1 = export_dir / "theorems/Project-FAR-Theory-Closure-v1.0.md"
+
+    assert exported_v1.read_bytes() == source_v1.read_bytes()
+    assert hashlib.sha256(exported_v1.read_bytes()).hexdigest() == V1_SHA256
+
+    manifest = json.loads((export_dir / "manifest.json").read_text())
+    assert manifest["export_version"] == "1.2.0"
+    assert manifest["exporter_version"] == "1.2.0"
+    assert manifest["core_theory_id"] == "PROJECT-FAR-CORE-THEORY-1.1"
+    entries = {artifact["path"]: artifact for artifact in manifest["artifacts"]}
+    record = entries["theorems/Project-FAR-Theory-Closure-v1.0.md"]
+    assert record["category"] == "theorems"
+    assert record["status"] == "historical"
+    assert record["source"] == "theory/theorems/Project-FAR-Theory-Closure-v1.0.md"
+    assert record["sha256"] == V1_SHA256
+
+
 def test_export_carries_canonical_v1_1_and_historical_v1_0():
     export_dir = ROOT / "exports" / "far-spec-v1"
     source_v1 = ROOT / "theory/theorems/Project-FAR-Theory-Closure-v1.0.md"
