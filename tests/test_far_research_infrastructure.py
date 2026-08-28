@@ -46,6 +46,7 @@ class RegistryTests(unittest.TestCase):
         } | {
             "research/campaigns/pca-w1-replay-capsule-v1.0.json",
             "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+            "theory/terminal/project-far-core-theory-v1.1.json",
         }
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -57,6 +58,72 @@ class RegistryTests(unittest.TestCase):
             theory.write_text(theory.read_text(encoding="utf-8") + "\nmutation\n", encoding="utf-8")
             errors = registry.w1_seal_errors(promotion, root)
             self.assertTrue(any("current governing v1.1 theory bytes" in error for error in errors))
+
+    def test_w1_seal_rejects_theorem_bearing_ledger_drift(self):
+        promotion = registry.load(
+            "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json"
+        )
+        required = {
+            item["path"] for item in promotion["verified_artifacts"]
+        } | {
+            "research/campaigns/pca-w1-replay-capsule-v1.0.json",
+            "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+            "theory/terminal/project-far-core-theory-v1.1.json",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for raw_path in required:
+                destination = root / raw_path
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes((ROOT / raw_path).read_bytes())
+            ledger_path = root / "theory/terminal/project-far-core-theory-v1.1.json"
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            ledger["claims"][0]["scope"] = "mutated after review"
+            ledger_path.write_text(
+                json.dumps(ledger, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            errors = registry.w1_seal_errors(promotion, root)
+            self.assertTrue(
+                any("theorem-bearing W1 ledger projection" in error for error in errors)
+            )
+
+    def test_reviewed_scope_and_graph_status_dimensions_are_enforced(self):
+        data = {path: registry.load(path) for path in registry.DATA_SCHEMAS}
+        mutated = copy.deepcopy(data)
+        mutated["theory/evaluation/far-core-assurance-v1.0.json"]["claims"][0][
+            "scope"
+        ] = "broadened scope"
+        self.assertTrue(
+            any(
+                "assurance scope drifted from W1 terminal review" in error
+                for error in registry.semantic_errors(mutated)
+            )
+        )
+        graph = registry.build_graph(data)
+        claim = next(
+            item for item in graph["nodes"] if item["id"] == "claim:FAR-CORE-014"
+        )
+        review = registry.load(
+            "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+        )
+        review_scope = next(
+            item["scope"] for item in review["claims"] if item["id"] == "FAR-CORE-014"
+        )
+        self.assertEqual(claim["status"], "multidimensional_assurance")
+        self.assertEqual(
+            claim["source"],
+            "theory/evaluation/far-core-assurance-v1.0.json",
+        )
+        self.assertEqual(claim["scope"], review_scope)
+        self.assertEqual(
+            claim["status_dimensions"]["truth_disposition"],
+            "PROVED",
+        )
+        self.assertEqual(
+            claim["status_dimensions"]["governing_ledger_provenance_status"],
+            "supported_derived",
+        )
 
     def test_duplicate_registry_identity_is_rejected(self):
         data = {path: registry.load(path) for path in registry.DATA_SCHEMAS}
