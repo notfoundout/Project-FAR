@@ -21,6 +21,14 @@ scripts replay deterministically against their committed outputs. The machine pr
 pins all 16 promoted protocol/review paths by SHA-256; coverage loss, duplicate paths, missing
 files, or byte drift fails repository health.
 
+The target machine ledger is also bound as an immutable theorem-bearing projection. Only
+`assurance`, `independent_review_status`, and `next_workstream` may differ after promotion,
+and their current values are enumerated. Removing those three fields and canonicalizing the
+remaining JSON must yield SHA-256
+`ee852f8ceb968861ebdee48d1b3f6ec85771751b9dd3f80abbde8cef96860ca1`.
+Any drift in a claim, premise, scope, correction, disposition, or reopening rule fails
+repository health.
+
 The terminal claim matrix is:
 
 | Verdict | Count |
