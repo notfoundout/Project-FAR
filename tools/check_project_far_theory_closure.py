@@ -18,8 +18,9 @@ CORRECTION_AUDIT = ROOT / "docs/audits/project-far-core-theory-v1.1-correction-a
 PROGRAM = ROOT / "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
 OLD_PROGRAM = ROOT / "theory/evaluation/post-terminal-public-evaluation-program-v1.0.json"
 REPOSITORY_TRUTH = ROOT / "governance/repository-truth-authority-v1.json"
-HISTORICAL_EXPORT_MANIFEST = ROOT / "exports/far-spec-v1/manifest.json"
+EXPORT_MANIFEST = ROOT / "exports/far-spec-v1/manifest.json"
 EXPECTED_V1_SHA256 = "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5"
+EXPECTED_EXPORT_VERSION = "1.2.0"
 EXPECTED_VERDICT = "NONTRIVIAL CONTRACT-FREE MINIMAL ARCHITECTURE IS IMPOSSIBLE; CONTRACT-RELATIVE SUFFICIENCY AND A UNIQUE MINIMAL OBSERVATIONAL QUOTIENT ARE PROVED."
 EXPECTED_CLAIMS = {f"FAR-CORE-{i:03d}" for i in range(1, 15)}
 
@@ -46,8 +47,7 @@ def _check_regressions(regressions: dict, errors: list[str]) -> None:
             grouped: dict[str, set[str]] = {}
             for x, r in rep.items():
                 grouped.setdefault(r, set()).add(behavior.get(x))
-            sufficient = all(len(values) <= 1 for values in grouped.values())
-            if not sufficient:
+            if not all(len(values) <= 1 for values in grouped.values()):
                 errors.append(f"FAR-CORE-004 regression: identity must be sufficient for {name}")
         if c4.get("expected", {}).get("representation_minimal_for_constant") is not False:
             errors.append("FAR-CORE-004 regression must record identity as nonminimal for constant observer")
@@ -87,17 +87,16 @@ def validate(root: Path = ROOT) -> list[str]:
         PROGRAM,
         OLD_PROGRAM,
         REPOSITORY_TRUTH,
-        HISTORICAL_EXPORT_MANIFEST,
+        EXPORT_MANIFEST,
     ]
-    paths = [root / p.relative_to(ROOT) for p in rels]
-    for path in paths:
+    for rel in rels:
+        path = root / rel.relative_to(ROOT)
         if not path.is_file():
             errors.append(f"missing authority/provenance surface: {path.relative_to(root)}")
     if errors:
         return errors
 
-    historical_theory = root / HISTORICAL_THEORY.relative_to(ROOT)
-    historical_bytes = historical_theory.read_bytes()
+    historical_bytes = (root / HISTORICAL_THEORY.relative_to(ROOT)).read_bytes()
     if hashlib.sha256(historical_bytes).hexdigest() != EXPECTED_V1_SHA256:
         errors.append("historical v1.0 theory bytes changed; immutable base violated")
     if EXPECTED_VERDICT not in historical_bytes.decode("utf-8"):
@@ -140,7 +139,6 @@ def validate(root: Path = ROOT) -> list[str]:
     c4 = _claim(current, "FAR-CORE-004")
     if "least-informative sufficient" not in c4.get("claim", "") or "universal sufficiency alone is not denied" not in c4.get("claim", ""):
         errors.append("FAR-CORE-004 corrected minimality/sufficiency boundary drifted")
-
     c10 = _claim(current, "FAR-CORE-010")
     if "L,J,I" not in c10.get("claim", "") or "Γ" not in c10.get("claim", ""):
         errors.append("FAR-CORE-010 exact-theory/residue dependency split drifted")
@@ -148,15 +146,7 @@ def validate(root: Path = ROOT) -> list[str]:
     _check_regressions(_load(root / REGRESSIONS.relative_to(ROOT)), errors)
 
     replication_text = (root / REPLICATION.relative_to(ROOT)).read_text(encoding="utf-8")
-    for needle in (
-        "REPLICATED_INTERNAL",
-        "Question",
-        "Execution",
-        "Observation",
-        "Discovery replicated",
-        "not independent review",
-        "10.1214/aoms/1177729032",
-    ):
+    for needle in ("REPLICATED_INTERNAL", "Question", "Execution", "Observation", "Discovery replicated", "not independent review", "10.1214/aoms/1177729032"):
         if needle not in replication_text:
             errors.append(f"correction replication record missing {needle!r}")
 
@@ -165,7 +155,7 @@ def validate(root: Path = ROOT) -> list[str]:
         "Question → Execution → Observation → Discovery → Replication → Acceptance → Promotion → Repository Change",
         "Accepted governance authority upon merge",
         "internally replicated",
-        "exports/far-spec-v1/",
+        "export version `1.2.0`",
     ):
         if needle not in acceptance_text:
             errors.append(f"v1.1 acceptance/promotion record missing {needle!r}")
@@ -194,23 +184,34 @@ def validate(root: Path = ROOT) -> list[str]:
         errors.append("repository truth authority does not point to v1.1")
     if status.get("historical_core_sha256") != EXPECTED_V1_SHA256:
         errors.append("repository truth authority does not preserve v1.0 hash")
-    historical_surfaces = "\n".join(status.get("historical_surfaces", []))
-    if "exports/far-spec-v1/" not in historical_surfaces:
-        errors.append("repository truth authority does not scope the dated FAR spec export as historical")
-    boundaries = "\n".join(truth.get("claim_boundaries", []))
-    if "generated export" not in boundaries or "v1.1" not in boundaries:
-        errors.append("repository truth authority lacks current-vs-historical export boundary")
+    export_truth = truth.get("specification_export", {})
+    if export_truth.get("export_version") != EXPECTED_EXPORT_VERSION:
+        errors.append("repository truth authority export version mismatch")
+    if export_truth.get("governing_core") != "PROJECT-FAR-CORE-THEORY-1.1":
+        errors.append("repository truth authority export does not mirror v1.1")
+    if export_truth.get("historical_core_status") != "historical":
+        errors.append("repository truth authority does not mark embedded v1.0 export historical")
 
-    export_manifest = _load(root / HISTORICAL_EXPORT_MANIFEST.relative_to(ROOT))
-    if export_manifest.get("export_name") != "far-spec-v1":
-        errors.append("historical FAR spec export manifest identity drifted")
-    if not export_manifest.get("source_commit") or not export_manifest.get("generated_at_utc"):
-        errors.append("historical FAR spec export must retain pinned source provenance")
+    export_manifest = _load(root / EXPORT_MANIFEST.relative_to(ROOT))
+    if export_manifest.get("export_version") != EXPECTED_EXPORT_VERSION or export_manifest.get("exporter_version") != EXPECTED_EXPORT_VERSION:
+        errors.append("FAR spec export must be regenerated at version 1.2.0")
+    if export_manifest.get("core_theory_id") != "PROJECT-FAR-CORE-THEORY-1.1":
+        errors.append("FAR spec export does not identify v1.1 as governing core")
+    entries = {row.get("path"): row for row in export_manifest.get("artifacts", [])}
+    old_entry = entries.get("theorems/Project-FAR-Theory-Closure-v1.0.md", {})
+    if old_entry.get("status") != "historical" or old_entry.get("sha256") != EXPECTED_V1_SHA256:
+        errors.append("FAR spec export must preserve v1.0 exactly as historical")
+    current_entry = entries.get("theorems/Project-FAR-Theory-Closure-v1.1.md", {})
+    if current_entry.get("status") != "canonical" or current_entry.get("source") != "theory/theorems/Project-FAR-Theory-Closure-v1.1.md":
+        errors.append("FAR spec export must carry v1.1 as canonical theorem")
+    ledger_entry = entries.get("theorems/project-far-core-theory-v1.1.json", {})
+    if ledger_entry.get("status") != "canonical" or ledger_entry.get("source") != "theory/terminal/project-far-core-theory-v1.1.json":
+        errors.append("FAR spec export must carry v1.1 machine ledger as canonical")
 
     required_text = {
         "README.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W1-INDEPENDENT-REVIEW", "Historical v1.0"],
         "docs/project-status.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W1-INDEPENDENT-REVIEW", "FAR-CORE-010"],
-        "docs/ROADMAP.md": ["PROJECT-FAR-CORE-THEORY-1.1", "exports/far-spec-v1/", "simultaneous universal least-informativeness"],
+        "docs/ROADMAP.md": ["PROJECT-FAR-CORE-THEORY-1.1", "Export version `1.2.0`", "simultaneous universal least-informativeness"],
         "docs/governance/project-far-theory-closure-acceptance-v1.1.md": ["identity representation", "frame-subtracted residue", "not independently reviewed"],
         "docs/audits/project-far-core-theory-v1.1-correction-audit.md": ["10.1214/aoms/1177729032", "FAR-CORE-014", "independent review still open"],
     }
