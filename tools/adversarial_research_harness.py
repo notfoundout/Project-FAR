@@ -111,6 +111,17 @@ def _sha(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _redact_json_strings(value):
+    """Redact string values without ever rewriting serialized JSON structure."""
+    if isinstance(value, str):
+        return redact_outbound(value)
+    if isinstance(value, list):
+        return [_redact_json_strings(item) for item in value]
+    if isinstance(value, dict):
+        return {key: _redact_json_strings(item) for key, item in value.items()}
+    return value
+
+
 def _invocation_id(campaign_id: str, phase: str, provider_id: str, ordinal: int, request: str) -> str:
     digest = _sha(f"{campaign_id}\0{phase}\0{provider_id}\0{ordinal}\0{request}")[:16]
     return f"INV-{phase.upper()}-{ordinal:03d}-{digest}"
@@ -184,9 +195,8 @@ def run_controlled_cross_challenge(*, campaign_id: str, frozen: FrozenPass, chal
     if not frozen.freeze_sha256:
         raise ValueError("cross-challenge requires a frozen first pass")
     _validate_lanes(challengers)
-    raw_issue_blob = canonical_json([dataclasses.asdict(item) for item in frozen.issues])
-    outbound_issue_blob = redact_outbound(raw_issue_blob)
-    outbound_issues = json.loads(outbound_issue_blob)
+    outbound_issues = _redact_json_strings([dataclasses.asdict(item) for item in frozen.issues])
+    outbound_issue_blob = canonical_json(outbound_issues)
     prompt = canonical_json({"phase":"controlled-cross-challenge","frozen_pass_sha256":frozen.freeze_sha256,"issues":outbound_issues,"rules":["challenge issues, not providers","no vote is proof"]})
     evidence_hash = _sha(outbound_issue_blob)
     invocations: list[Invocation] = []
