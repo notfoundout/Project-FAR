@@ -52,18 +52,6 @@ jobs:
         run: lean mechanization/lean/FARCanonicalUniversalityDecision.lean
       - name: Compile FAR canonicality countermodel
         run: LEAN_PATH=mechanization/lean lean mechanization/lean/FARCanonicalCountermodel.lean
-      - name: Compile FAR-CORE v1.1 exact-contract substrate
-        run: lean -o mechanization/lean/FARCoreV11Substrate.olean mechanization/lean/FARCoreV11Substrate.lean
-      - name: Compile FAR-CORE v1.1 claims 004-012
-        run: LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11Claims001To012.olean mechanization/lean/FARCoreV11Claims001To012.lean
-      - name: Compile FAR-CORE v1.1 canonical Omega
-        run: LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11Omega.olean mechanization/lean/FARCoreV11Omega.lean
-      - name: Compile bounded FAR-CORE-014 SSS module
-        run: LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11SSS.olean mechanization/lean/FARCoreV11SSS.lean
-      - name: Compile FAR-CORE v1.1 mutation controls
-        run: LEAN_PATH=mechanization/lean lean mechanization/lean/FARCoreV11Mutations.lean
-      - name: Print FAR-CORE v1.1 kernel assumptions
-        run: LEAN_PATH=mechanization/lean lean mechanization/lean/FARCoreV11AxiomAudit.lean
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
@@ -103,5 +91,3 @@ jobs:
         run: python -m unittest tests.test_far_canonical_universality_decision
       - name: Check FAR canonicality countermodel
         run: python -m unittest tests.test_far_canonical_countermodel_alignment
-      - name: Check FAR-CORE v1.1 formalization alignment
-        run: python -m unittest tests.test_far_core_v11_formalization

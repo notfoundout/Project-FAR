@@ -1,0 +1,39 @@
+name: FAR-CORE v1.1 Formalization
+
+on:
+  pull_request:
+    branches: [main]
+  merge_group:
+    types: [checks_requested]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  far-core-v11:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | \
+            sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Compile governed FAR-CORE v1.1 formalization
+        shell: bash
+        run: |
+          set -euo pipefail
+          lean -o mechanization/lean/FARCoreV11Substrate.olean mechanization/lean/FARCoreV11Substrate.lean
+          LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11Claims001To012.olean mechanization/lean/FARCoreV11Claims001To012.lean
+          LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11Omega.olean mechanization/lean/FARCoreV11Omega.lean
+          LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11SSS.olean mechanization/lean/FARCoreV11SSS.lean
+          LEAN_PATH=mechanization/lean lean mechanization/lean/FARCoreV11Mutations.lean
+          LEAN_PATH=mechanization/lean lean mechanization/lean/FARCoreV11AxiomAudit.lean
+      - name: Check ledger and source alignment
+        run: python -m unittest tests.test_far_core_v11_formalization -v
