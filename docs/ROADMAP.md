@@ -6,14 +6,16 @@ This is a planning surface, not theory or evidence. It cannot authorize work out
 
 Current published repository release: [`v1.0.0`](releases/project-far-v1.0.0.md).
 
+Current governing core: [`PROJECT-FAR-CORE-THEORY-1.1`](../theory/theorems/Project-FAR-Theory-Closure-v1.1.md), the governed corrected successor to the immutable historical v1.0 artifact.
+
 Current program: [`POST-CLOSURE-001`](governance/post-closure-assurance-and-application-program-v1.0.md).
 
-The core theory is closed. The historical UPP queue remains closed, and its defective frozen derivation is not a target for silent repair.
+The core theory remains closed after the v1.1 correction. The historical UPP queue remains closed, and its defective frozen derivation is not a target for silent repair. The hostile W1 audit that triggered v1.1 was not independent and therefore does not close the next assurance workstream.
 
 ## Ordered post-closure work
 
-1. **`PCA-W1-INDEPENDENT-REVIEW` — next.** Review the exact premises and proofs of `FAR-CORE-001`–`FAR-CORE-014`; disclose independence, prior exposure, tools, checked obligations, and unresolved objections.
-2. **`PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.** Formalize the factorization, quotient, dynamic-descent, and no-contract-free-minimum results, or preserve an exact obstruction report.
+1. **`PCA-W1-INDEPENDENT-REVIEW` — next.** Review the exact corrected premises and proofs of `FAR-CORE-001`–`FAR-CORE-014` in `PROJECT-FAR-CORE-THEORY-1.1`; disclose independence, prior exposure, tools, checked obligations, and unresolved objections.
+2. **`PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.** Formalize the factorization, quotient, dynamic-descent, corrected no-contract-free-minimum, and corrected common-theory/residue results, or preserve an exact obstruction report.
 3. **`PCA-W3-CONTRACT-SCHEMA`.** Implement a successor to `far-ir/1.0` that records comparison contracts, typed outcomes, decoders/collisions, quotients, profiles, frames, and cost/loss orders.
 4. **`PCA-W4-DOMAIN-CONTRACTS`.** Build independently motivated contracts for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory.
 5. **`PCA-W5-APPROXIMATION-AND-COST`.** Add explicit metrics, tolerances, decision losses, and cost preorders; do not call one optimum universal.
@@ -21,7 +23,12 @@ The core theory is closed. The historical UPP queue remains closed, and its defe
 
 ## Gates
 
-Every workstream must preserve scope, provenance, typed outcomes, negative results, `Unknown`, and claim impact. CI success, internal agreement, finite panels, and successful encoding are not mathematical proof or independent validation.
+Every workstream must preserve scope, provenance, typed outcomes, negative results, `Unknown`, and claim impact. CI success, internal agreement, finite panels, successful encoding, and internal hostile review are not mathematical proof or independent validation.
+
+The v1.1 correction must preserve two permanent boundaries:
+
+- `FAR-CORE-004` denies simultaneous universal least-informativeness/minimality, not universal sufficiency of identity on fixed `X`;
+- `FAR-CORE-010` indexes exact `T` by `L,J,I`/models and indexes the frame-subtracted residue additionally by `Γ`.
 
 ## Reopening policy
 
@@ -31,9 +38,11 @@ Do not reopen the settled core for another primitive search, operator count, fin
 
 FARA remains a finite explicit auditable representation target. FAR implements contract-relative audit methodology. FARO operationalizes execution and reporting. Stable status is not evidence of universality or global minimality.
 
-## Release track
+## Release and export track
 
-The repository release and installable package version remain separate surfaces. A future release may package the closure integration, but packaging does not strengthen theorem assurance.
+The repository release and installable package version remain separate surfaces. A future release may package the corrected closure integration, but packaging does not strengthen theorem assurance.
+
+`exports/far-spec-v1/` is a current deterministic generated specification surface. Export version `1.2.0` carries `PROJECT-FAR-CORE-THEORY-1.1` and its machine ledger as canonical artifacts while retaining the immutable v1.0 monograph explicitly as `historical`. The export manifest and checksums must be regenerated whenever an exported canonical source changes.
 
 ## Historical roadmap
 

@@ -6,26 +6,35 @@ This file is the canonical project-level status surface identified by [`CANONICA
 
 Current published repository release: [`v1.0.0`](releases/project-far-v1.0.0.md).
 
-The installable package version remains a separate surface governed by `pyproject.toml`. The core-theory integration is a post-release repository change; it does not silently retag the release or package.
+The installable package version remains a separate surface governed by `pyproject.toml`. The core-theory correction is a post-release repository change; it does not silently retag the release or package.
 
 ## Central result
 
-Current governing theory: `PROJECT-FAR-CORE-THEORY-1.0`.
+Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.
 
-Terminal verdict:
+Terminal verdict, unchanged from historical v1.0:
 
 `NONTRIVIAL CONTRACT-FREE MINIMAL ARCHITECTURE IS IMPOSSIBLE; CONTRACT-RELATIVE SUFFICIENCY AND A UNIQUE MINIMAL OBSERVATIONAL QUOTIENT ARE PROVED.`
 
-For a fixed exact contract, sufficiency is equivalent to factorization through the representation and the induced observational quotient is the unique least-informative exact representation up to isomorphism. No nontrivial representation is minimal over the unrestricted class of observation contracts. Primitive and finite-operator counts are not invariant under admitted faithful re-presentation.
+For a fixed exact contract, sufficiency is equivalent to factorization through the representation and the induced observational quotient is the unique least-informative exact representation up to isomorphism. On a nontrivial domain, no single representation is simultaneously least-informative sufficient for every observation contract. The identity representation can nevertheless be sufficient for every observation contract on fixed `X`; `FAR-CORE-004` is a minimality impossibility, not a universal-sufficiency impossibility.
 
-Assurance: **Accepted internal deductive result; not independently reviewed.**
+`FAR-CORE-010` is corrected in v1.1: exact common theory `T_{L,J,I}` is indexed by language, interpretation profiles/models, and target class. The frame `Γ` additionally indexes the frame-subtracted residue `T_{L,J,I} \ Cn_L(Γ)`; changing `Γ` alone while holding the interpreted models fixed does not change exact `T`.
 
-Canonical authority:
+Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; not independently reviewed.**
 
-- [core theory](../theory/theorems/Project-FAR-Theory-Closure-v1.0.md);
-- [machine-readable claim ledger](../theory/terminal/project-far-core-theory-v1.0.json);
-- [acceptance and promotion record](governance/project-far-theory-closure-acceptance-v1.0.md);
-- [conformity audit](audits/project-far-theory-closure-conformity-audit-v1.0.md).
+Current canonical authority:
+
+- [corrected core theory v1.1](../theory/theorems/Project-FAR-Theory-Closure-v1.1.md);
+- [machine-readable v1.1 claim ledger](../theory/terminal/project-far-core-theory-v1.1.json);
+- [v1.1 acceptance and promotion record](governance/project-far-theory-closure-acceptance-v1.1.md);
+- [v1.1 correction audit](audits/project-far-core-theory-v1.1-correction-audit.md);
+- [v1.1 regression fixtures](../theory/evaluation/project-far-core-theory-v1.1-regressions.json).
+
+Historical v1.0 is preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`:
+
+- [historical v1.0 core theory](../theory/theorems/Project-FAR-Theory-Closure-v1.0.md);
+- [historical v1.0 ledger](../theory/terminal/project-far-core-theory-v1.0.json);
+- [historical v1.0 acceptance](governance/project-far-theory-closure-acceptance-v1.0.md).
 
 ## Historical UPP disposition
 
@@ -47,15 +56,23 @@ The frozen source and historical theorem artifacts are not rewritten. `POST-TERM
 
 PR #453 was merged unchanged as noncanonical Research in commit `63fe943f91a0758df3bd16e66854f475fec34164`. Its E0 blocked, E1 fragmented, SSS, profile-relative irreflexivity, and open-boundary results retain exactly their recorded scope. The record does not supply the premises of the accepted core theory.
 
+## W1 correction disposition
+
+A hostile W1 review of the core identified the `FAR-CORE-004` wording ambiguity, the `FAR-CORE-010` frame-dependency error, and prior-art overstatement around Blackwell comparison. Those findings triggered the governed v1.1 correction.
+
+That W1 review is **not** classified as independent. It had prior exposure to Project FAR and therefore cannot close `PCA-W1-INDEPENDENT-REVIEW`. Its counterexamples remain valid internal evidence and permanent regression fixtures.
+
+`FAR-CORE-014` remains `SUPPORTED/DERIVED`; the surviving terminal kernel and terminal verdict remain unchanged.
+
 ## Current phase
 
 Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md).
 
 | Workstream | Current state | Boundary |
 |---|---|---|
-| `PCA-W0-REPOSITORY-CONFORMITY` | Complete | Canonical theory, claims, frameworks, obligations, planning, specifications, and validators reconciled. |
-| `PCA-W1-INDEPENDENT-REVIEW` | Next | Independent review may upgrade assurance only for the claims actually reviewed. |
-| `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | Open | Formalize the exact core or preserve an explicit obstruction; implementation is not proof by itself. |
+| `PCA-W0-REPOSITORY-CONFORMITY` | Complete | Original closure integration completed; v1.1 correction is governed successor maintenance. |
+| `PCA-W1-INDEPENDENT-REVIEW` | **Next / Open** | Must independently review `PROJECT-FAR-CORE-THEORY-1.1`; the hostile correction audit does not count as independence. |
+| `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | Open | Formalize the exact corrected core or preserve an explicit obstruction; implementation is not proof by itself. |
 | `PCA-W3-CONTRACT-SCHEMA` | Open | Implement a versioned contract/factorization format; `far-ir/1.0` is not silently reinterpreted. |
 | `PCA-W4-DOMAIN-CONTRACTS` | Open | Domain contracts remain scoped choices and cannot restore contract-free universality. |
 | `PCA-W5-APPROXIMATION-AND-COST` | Open | Approximation and implementation minimality require declared metrics, losses, tolerances, or cost orders. |
@@ -86,7 +103,7 @@ For state-sensitive work, use:
 1. [root README](../README.md);
 2. this status;
 3. [canonical map](CANONICAL_MAP.md);
-4. [core theory](../theory/theorems/Project-FAR-Theory-Closure-v1.0.md) and [acceptance record](governance/project-far-theory-closure-acceptance-v1.0.md);
+4. [corrected core theory v1.1](../theory/theorems/Project-FAR-Theory-Closure-v1.1.md) and [v1.1 acceptance record](governance/project-far-theory-closure-acceptance-v1.1.md);
 5. [claim-status matrix](governance/claim-status-matrix.md) and [theorem/proof register](governance/theorem-proof-status-register.md);
 6. [framework boundaries](governance/framework-boundaries.md) and [dependency specification](governance/dependency-specification.md);
 7. [limitations](governance/limitations-register.md), [open problems](governance/open-problems-register.md), and [unresolved questions](governance/unresolved-questions-register.md).
@@ -95,4 +112,4 @@ Historical or generated status surfaces do not override this order. If current a
 
 ## Superseded snapshots
 
-Pre-terminal status snapshots under `archive/superseded/status/` remain historical. The historical UPP and independent-experiment artifacts remain at their original locations with explicit status boundaries.
+Pre-terminal status snapshots under `archive/superseded/status/` remain historical. Historical v1.0, UPP, and independent-experiment artifacts remain at their original locations with explicit status boundaries.

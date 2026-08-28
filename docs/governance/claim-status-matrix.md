@@ -2,31 +2,31 @@
 
 Status: **Accepted current classification index**
 
-The current rows below govern. Dated audit sections are preserved afterward as historical evaluations at their evidence cutoffs and cannot override the terminal closure.
+The current rows below govern. Dated audit sections are preserved afterward as historical evaluations at their evidence cutoffs and cannot override the corrected terminal closure.
 
 | Claim or concept | Current classification | Boundary |
 |---|---|---|
-| `PROJECT-FAR-CORE-THEORY-1.0` | Accepted internal deductive theory; not independently reviewed | Exact, extensional, Set-based core under stated premises. |
+| `PROJECT-FAR-CORE-THEORY-1.1` | Accepted internal deductive corrected theory; not independently reviewed | Corrected successor to v1.0; exact, extensional, Set-based core under stated premises. Historical v1.0 remains immutable at its recorded SHA-256. |
 | Exact representation sufficiency | **PROVED contract-relative** (`FAR-CORE-001`) | Behavior must factor through the representation for the fixed contract. |
 | Canonical observational quotient | **PROVED contract-relative** (`FAR-CORE-002`) | Unique least-informative exact representation up to isomorphism; not cost/computability optimality. |
-| Contract-free nontrivial minimal architecture | **REFUTED** (`FAR-CORE-004`) | Constant and injective observers require incompatible minima on any nontrivial domain. |
+| Contract-free nontrivial minimal architecture | **REFUTED** (`FAR-CORE-004`, clarified v1.1) | No single representation is simultaneously least-informative sufficient for every observation contract on a nontrivial domain. Identity may be sufficient for all fixed-domain contracts; the impossibility is simultaneous minimality. |
 | Representation-independent claims without a transformation class | **UNDERDETERMINED / malformed** | Admitted re-representations must be fixed. |
 | FARA seven-role vocabulary | Schema and contract roles; **not global primitives** | Primitive count is noninvariant under faithful reification/tagging (`FAR-CORE-007`). |
 | Construct/Differentiate/Restrict | FAR workflow verbs; **not a global operator basis** | Finite operator count is noninvariant under tagged combination (`FAR-CORE-008`). |
 | Resolve | Derived rule application | Not a representation primitive. |
 | Ω | Derived materialized classification/provenance view | Semantically eliminable under the canonical definition (`FAR-CORE-013`). |
-| Common theory | Profile-relative | Must name language, interpretations, frame, and target class (`FAR-CORE-010`). |
+| Common theory | Profile-relative with corrected dependency split (`FAR-CORE-010`) | Exact `T_{L,J,I}` requires language, interpretation profiles/models, and target class; the frame `Γ` additionally indexes only the frame-subtracted residue when those models are fixed. |
 | Open-domain universality from a finite panel | **REJECTED inference** | `FAR-CORE-009`; panel results remain bounded. |
 | Historical UPP theorem | Proposition not refuted; derivation defective; theorem not established | Frozen terminal string remains historical evidence only. |
 | `FARA-FORMAL-KERNEL-001` | Retained bounded engineering standard | Finite explicit auditable Project FAR v1 only; not globally unique/minimal. |
 | FAR workflow | Theory-constrained independent methodology | Factorization/collision obligations derive from shared theory; sequencing and governance choices remain selected methods. |
 | FARO operations | Downstream selected operations | Execution and conformance do not prove upstream theory. |
-| SSS / PR #453 | Supported bounded factorization instance | Exact/robust common theory, maximality, and novelty remain unresolved in that experiment. |
-| Novelty of the core mathematical pattern | No novelty claim | Prior art supplies observer-relative quotient/factorization instances. |
+| SSS / PR #453 | **SUPPORTED/DERIVED** bounded factorization instance (`FAR-CORE-014`); unchanged in v1.1 | Exact/robust common theory, maximality, and novelty remain unresolved in that experiment. |
+| Novelty of the core mathematical pattern | No novelty claim | Blackwell comparison and other prior art already supply mature contract/decision-relative informativeness, quotient, factorization, and equivalence patterns. |
 
-## 2026-08-24 terminal closure ledger
+## 2026-08-27 corrected closure ledger
 
-The authoritative detailed ledger is [`theory/terminal/project-far-core-theory-v1.0.json`](../../theory/terminal/project-far-core-theory-v1.0.json). `FAR-CORE-001`–`013` are PROVED at their stated scopes; `FAR-CORE-014` is SUPPORTED/DERIVED. A new result may narrow or refute one only by addressing its explicit premises and falsifier.
+The authoritative detailed ledger is [`theory/terminal/project-far-core-theory-v1.1.json`](../../theory/terminal/project-far-core-theory-v1.1.json). `FAR-CORE-001`–`013` remain PROVED at their corrected stated scopes; `FAR-CORE-014` remains SUPPORTED/DERIVED. The v1.0 monograph remains immutable historical evidence. `PCA-W1-INDEPENDENT-REVIEW` remains open because the hostile audit that triggered v1.1 was not independent.
 
 ## Historical audit record
 
