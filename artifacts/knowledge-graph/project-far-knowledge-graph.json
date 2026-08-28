@@ -838,7 +838,7 @@
       "id": "EDGE-00120",
       "provenance": "formalization ledger premise",
       "source": "theorem:FARCoreV11.reification_recovers_relation",
-      "target": "premise:3b62209194797944",
+      "target": "premise:53687732e655df33",
       "type": "ASSUMES"
     },
     {
@@ -3578,13 +3578,6 @@
       "type": "premise"
     },
     {
-      "id": "premise:3b62209194797944",
-      "label": "faithful reification and typed position tags admitted",
-      "source": "theory/evaluation/far-core-formalization-ledger-v1.0.json",
-      "status": "encoded",
-      "type": "premise"
-    },
-    {
       "id": "premise:3cd221e1adfc46e1",
       "label": "decoder only on RepImage e",
       "source": "theory/evaluation/far-core-formalization-ledger-v1.0.json",
@@ -3594,6 +3587,13 @@
     {
       "id": "premise:424b47352f873220",
       "label": "finite cardinal result is represented by the general surjection from the represented image onto Q_beta",
+      "source": "theory/evaluation/far-core-formalization-ledger-v1.0.json",
+      "status": "encoded",
+      "type": "premise"
+    },
+    {
+      "id": "premise:53687732e655df33",
+      "label": "faithful reification and explicit typed position tags admitted",
       "source": "theory/evaluation/far-core-formalization-ledger-v1.0.json",
       "status": "encoded",
       "type": "premise"
