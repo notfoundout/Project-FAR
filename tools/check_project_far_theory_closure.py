@@ -110,7 +110,7 @@ def validate(root: Path = ROOT) -> list[str]:
     for needle in (
         "PROJECT-FAR-CORE-THEORY-1.1",
         EXPECTED_VERDICT,
-        "universal sufficiency alone",
+        "does **not** say that no representation can be sufficient for every contract",
         "indexed by `L,J,I`",
         "10.1214/aoms/1177729032",
         "PCA-W1-INDEPENDENT-REVIEW",
