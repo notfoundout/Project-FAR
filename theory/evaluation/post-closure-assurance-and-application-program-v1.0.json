@@ -3,7 +3,9 @@
   "program_id": "POST-CLOSURE-001",
   "name": "Post-Closure Assurance and Application Program",
   "status": "registered",
-  "governing_theory": "PROJECT-FAR-CORE-THEORY-1.0",
+  "governing_theory": "PROJECT-FAR-CORE-THEORY-1.1",
+  "governing_theory_correction": "docs/governance/project-far-theory-closure-acceptance-v1.1.md",
+  "preserved_historical_theory": "PROJECT-FAR-CORE-THEORY-1.0",
   "purpose": "Increase assurance and utility of the closed contract-relative core without reopening it or restoring superseded universal primitive claims.",
   "core_theory_closed": true,
   "reopening_condition": "a reproducible contradiction to a stated theorem, proof step, or formal premise",
@@ -16,7 +18,8 @@
     {
       "id": "PCA-W1-INDEPENDENT-REVIEW",
       "state": "open",
-      "deliverable": "independent mathematical review of FAR-CORE-001 through FAR-CORE-014"
+      "note": "A prior hostile audit found the v1.1 corrections but did not satisfy independence requirements; independent review has not yet occurred.",
+      "deliverable": "independent mathematical review of FAR-CORE-001 through FAR-CORE-014 against PROJECT-FAR-CORE-THEORY-1.1"
     },
     {
       "id": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
@@ -45,7 +48,8 @@
     }
   ],
   "next_action": {
-    "workstream": "PCA-W1-INDEPENDENT-REVIEW"
+    "workstream": "PCA-W1-INDEPENDENT-REVIEW",
+    "review_target": "PROJECT-FAR-CORE-THEORY-1.1"
   },
   "prohibited_promotions": [
     "contract_free_universal_minimal_architecture",
