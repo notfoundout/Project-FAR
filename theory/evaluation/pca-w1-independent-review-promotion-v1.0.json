@@ -12,6 +12,22 @@
     "theory_sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
     "ledger_sha256": "66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40"
   },
+  "reviewed_ledger_contract": {
+    "source_path": "theory/terminal/project-far-core-theory-v1.1.json",
+    "target_whole_file_sha256": "66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40",
+    "canonicalization": "json_sorted_keys_utf8_compact",
+    "excluded_post_review_metadata_fields": [
+      "assurance",
+      "independent_review_status",
+      "next_workstream"
+    ],
+    "reviewed_projection_sha256": "ee852f8ceb968861ebdee48d1b3f6ec85771751b9dd3f80abbde8cef96860ca1",
+    "permitted_current_metadata_values": {
+      "assurance": "internal_deductive_corrected_then_independently_reviewed_exact_scopes_w2_partial_novelty_not_established",
+      "independent_review_status": "complete_confirmed_14_proved_exact_scopes_novelty_not_established",
+      "next_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION"
+    }
+  },
   "review_branch": {
     "name": "research/pca-w1-core-v1.1-independent-review",
     "head": "0981697546eba68651bddcd22e67ccdeb98decf4",
