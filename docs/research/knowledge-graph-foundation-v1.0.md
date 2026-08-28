@@ -14,8 +14,11 @@ are `DEPENDS_ON`, `PROVES`, `REFUTES`, `SUPPORTS`, `DERIVES`, `LIMITS`, `SUPERSE
 `IMPLEMENTS`, `FORMALIZES`, `CITES`, `TESTS`, `APPLIES_TO`, `ASSUMES`, `CONFLICTS_WITH`.
 
 The generator rejects unknown identifiers, dangling edges, contradictory node mappings,
-duplicate ownership, prohibited dependency cycles, assurance/core/review status disagreement,
-and stale output. Conclusions are not hand-entered in the graph; they are projected from
+duplicate ownership, prohibited dependency cycles, assurance/core/review status or scope
+disagreement, and stale output. Claim nodes use the neutral status
+`multidimensional_assurance`: their W1 truth disposition, governing-ledger provenance,
+narrative-proof, independent-review, Lean, empirical, novelty/prior-art, governance, version,
+and exact reviewed scope fields remain separately queryable. Conclusions are not hand-entered in the graph; they are projected from
 governed machine data. To change a conclusion, change its authoritative source through the
 governed lifecycle and regenerate.
 
