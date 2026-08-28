@@ -2579,113 +2579,284 @@
     }
   ],
   "generated_from": {
+    "docs/research/pca-w1-independent-review/07-final-independent-review.json": "f311552b877beece5245f48bbf1cf32f68d4b586fb3d65c18410b0ffe9175c37",
     "research/campaigns/pca-w1-replay-capsule-v1.0.json": "d32791ef93608993ace7966f75652d5c47393cc8dc073f743d8e0738cb5bfe92",
     "research/registry/citation-links-v1.0.json": "04ddfc04679f2fa2e716d14c1a8130e139b981e92c15cfb7cb2106a05b3a0853",
     "research/registry/epistemic-threats-v1.0.json": "7b01f6eea9cc4dfd51a5ccc64b22d018473111727d27cbb880028dc34c59e905",
     "research/registry/opportunities-v1.0.json": "65dc1c36f47e5dbe6420b54d0f3e01ff59daff05f1ba6d1958a6390992bc77a2",
     "research/registry/research-questions-v1.0.json": "0343925af6f4cb67a2075f6f8e1f23348d022cb0d080a8794fa3f3afcf790ced",
     "research/registry/research-tools-v1.0.json": "6fea638875a6efa1f9b18e52260f468ef81e8f62cab15f66f19d38998cc298da",
-    "theory/evaluation/far-core-assurance-v1.0.json": "b8ff991621985c0f0a5a1aa8b37967364a111d4d0d9d5c8e8ed1b06ab746db65",
-    "theory/evaluation/far-core-formalization-ledger-v1.0.json": "3a83a3a50e038a344fdfe0431dd15c588b5319de2507c67965bd2859e862439e"
+    "theory/evaluation/far-core-assurance-v1.0.json": "27efce7e8be567a0a2055761a19e6ad410562db3ce62161d11e7c358ce8e6f05",
+    "theory/evaluation/far-core-formalization-ledger-v1.0.json": "3a83a3a50e038a344fdfe0431dd15c588b5319de2507c67965bd2859e862439e",
+    "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json": "b8ddcc0556d3f20745c07c3306c5889ce537b3396bc5e88ff968debcfcf58d8d",
+    "theory/terminal/project-far-core-theory-v1.1.json": "9fa6f791fd84772f5668afc836439f5fe4aaf46dd1ed8745faa0ec8aa5a62cc1"
   },
   "graph_id": "PROJECT-FAR-KNOWLEDGE-GRAPH-1.0",
   "nodes": [
     {
       "id": "claim:FAR-CORE-001",
       "label": "exact sufficiency iff behavior factors through the representation",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "any Set-based exact contract; decoder on reachable representation image",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-002",
       "label": "the observational quotient is the unique least-informative exact representation up to isomorphism",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "any Set-based exact contract; reachable-image isomorphism; cardinal minimum only when finite",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-003",
       "label": "context closure makes observational equivalence action-compatible",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "declared typed action/test continuation closure",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-004",
       "label": "no single representation is simultaneously a least-informative sufficient representation for every observation contract; universal sufficiency alone is not denied",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "nontrivial domain; observation contract varies; universal sufficiency not denied",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-005",
       "label": "invariants are antitone in the admitted re-representation class",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "compatible nested admitted transformation classes",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "NOT_APPLICABLE",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-006",
       "label": "unconstrained encoding establishes host capacity, not native common structure",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "injective transport with image decoder and no structure-preservation laws",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "NOT_APPLICABLE",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-007",
       "label": "primitive vocabulary count is not representation invariant",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "faithful reification/tagging regime",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-008",
       "label": "finite operator count is not representation invariant",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "finite operator family with tagged tuples admitted",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-009",
       "label": "finite panels do not establish open-domain universality",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "proper finite panel of open domain without independent coverage premise",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_APPLICABLE",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-010",
       "label": "exact common theory is relative to L,J,I; the substantive residue is additionally relative to Γ",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "fixed L,J,I and interpreted models; Gamma additionally indexes the residue",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-011",
       "label": "omitting a consequence-affecting parameter refutes sufficiency",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "attainable same-representation/different-behavior omitted-parameter collision",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_APPLICABLE",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-012",
       "label": "sufficient representations must preserve that distinction",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "contract distinguishes reachable determinate absence and Unknown",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_APPLICABLE",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-013",
       "label": "Ω is a semantically eliminable derived materialized view",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "canonical FARA Omega definition and semantic consequence composition",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "NOT_APPLICABLE",
+        "formalization_status": "FORMALIZED",
+        "governance_status": "ACCEPTED_CURRENT",
+        "governing_ledger_provenance_status": "proved",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED",
+        "proof_status": "NARRATIVE_PROOF_ACCEPTED",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
       "id": "claim:FAR-CORE-014",
       "label": "Search-State Sufficiency is a bounded factorization instance, not a universal architecture",
-      "source": "theory/terminal/project-far-core-theory-v1.1.json",
-      "status": "PROVED",
+      "scope": "only PR #453 SSS-1/2/3 stated state, transition-representation, and decoder classes; not a universal architecture",
+      "source": "theory/evaluation/far-core-assurance-v1.0.json",
+      "status": "multidimensional_assurance",
+      "status_dimensions": {
+        "empirical_status": "BOUNDED_CORROBORATION_ONLY",
+        "formalization_status": "PARTIAL_OBSTRUCTION",
+        "governance_status": "ACCEPTED_BOUNDED_APPLICATION",
+        "governing_ledger_provenance_status": "supported_derived",
+        "independent_review_status": "COMPLETE_CONFIRMED",
+        "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+        "proof_status": "SUPPORTED_DERIVED_APPLICATION",
+        "truth_disposition": "PROVED",
+        "version": "PROJECT-FAR-CORE-THEORY-1.1"
+      },
       "type": "claim"
     },
     {
