@@ -18,3 +18,16 @@ For a governed remote snapshot, use `--output` to write the deterministic report
 to fail on drift. A summary may disclose the full observed branch count while supplying exact
 heads/unique-commit comparisons only for the subset the GitHub interface could classify. Every
 unclassified branch remains retained; a name or apparent age is never deletion evidence.
+
+## Current governed snapshot
+
+The 2026-08-28 [snapshot](../../artifacts/governance/live-branch-pr-snapshot-v1.0.json)
+and generated [triage report](../../artifacts/governance/branch-pr-triage-v1.0.json) observed
+415 remote branches. Bulk GitHub branch search did not expose enough head/PR/compare data to
+classify 412 of them, so all 412 remain retained. Eighty-two evidence-sensitive names are
+signals for review, not deletion or freeze classifications.
+
+Three exact comparisons are classified: the W1 branch is frozen evidence; the active W2
+integration branch is retained under PR #458; and PR #452's branch has seven unique unmerged
+commits, is retained as evidence, and is superseded by #458. Closing #452 did not delete its
+branch or any evidence. No destructive action is authorized by the report.
