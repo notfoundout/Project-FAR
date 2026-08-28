@@ -84,6 +84,33 @@ W1_REVIEW_BRANCH = {
     "head": "0981697546eba68651bddcd22e67ccdeb98decf4",
     "tree": "3b58ca873c210b62c5ce01f572cb1314b55d95d2",
 }
+W1_REVIEWED_LEDGER_CONTRACT = {
+    "source_path": "theory/terminal/project-far-core-theory-v1.1.json",
+    "target_whole_file_sha256": W1_REVIEW_TARGET["ledger_sha256"],
+    "canonicalization": "json_sorted_keys_utf8_compact",
+    "excluded_post_review_metadata_fields": [
+        "assurance",
+        "independent_review_status",
+        "next_workstream",
+    ],
+    "reviewed_projection_sha256": "ee852f8ceb968861ebdee48d1b3f6ec85771751b9dd3f80abbde8cef96860ca1",
+    "permitted_current_metadata_values": {
+        "assurance": (
+            "internal_deductive_corrected_then_independently_reviewed_"
+            "exact_scopes_w2_partial_novelty_not_established"
+        ),
+        "independent_review_status": (
+            "complete_confirmed_14_proved_exact_scopes_novelty_not_established"
+        ),
+        "next_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
+    },
+}
+GRAPH_ADDITIONAL_SOURCES = {
+    "theory/terminal/project-far-core-theory-v1.1.json",
+    "docs/research/pca-w1-independent-review/07-final-independent-review.json",
+    "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json",
+}
+
 
 def load(path: str) -> dict:
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
@@ -91,6 +118,10 @@ def load(path: str) -> dict:
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def canonical_json(value: object) -> str:
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
 
 def _unique(items: Iterable[dict], field: str, label: str, errors: list[str]) -> None:
@@ -132,6 +163,34 @@ def w1_seal_errors(promotion: dict, root: Path = ROOT) -> list[str]:
     branch = promotion.get("review_branch")
     if branch != W1_REVIEW_BRANCH:
         errors.append("W1 promotion sealed review branch identity drifted")
+    ledger_contract = promotion.get("reviewed_ledger_contract")
+    if ledger_contract != W1_REVIEWED_LEDGER_CONTRACT:
+        errors.append("W1 reviewed ledger contract drifted")
+    else:
+        ledger_path = root / ledger_contract["source_path"]
+        try:
+            current_ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"current W1-reviewed ledger unavailable: {exc}")
+        else:
+            excluded = ledger_contract["excluded_post_review_metadata_fields"]
+            if not all(field in current_ledger for field in excluded):
+                errors.append("current W1-reviewed ledger is missing permitted metadata fields")
+            projection = {
+                key: value for key, value in current_ledger.items() if key not in excluded
+            }
+            projection_sha256 = hashlib.sha256(
+                canonical_json(projection).encode("utf-8")
+            ).hexdigest()
+            if projection_sha256 != ledger_contract["reviewed_projection_sha256"]:
+                errors.append(
+                    "current theorem-bearing W1 ledger projection differs from reviewed target"
+                )
+            current_metadata = {
+                field: current_ledger.get(field) for field in excluded
+            }
+            if current_metadata != ledger_contract["permitted_current_metadata_values"]:
+                errors.append("current W1 ledger metadata exceeds the permitted promotion changes")
     try:
         terminal = json.loads(
             (root / "docs/research/pca-w1-independent-review/07-final-independent-review.json")
@@ -261,6 +320,15 @@ def semantic_errors(data: dict[str, dict]) -> list[str]:
             errors.append(f"{identifier}: exact assurance statement drifted from governing ledger")
         if item["truth_disposition"] != review_by_id[identifier]["verdict"]:
             errors.append(f"{identifier}: truth disposition drifted from W1 terminal review")
+        if item["scope"] != review_by_id[identifier]["scope"]:
+            errors.append(f"{identifier}: assurance scope drifted from W1 terminal review")
+        if (
+            item["governing_ledger_provenance_status"]
+            != core_by_id[identifier]["status"]
+        ):
+            errors.append(
+                f"{identifier}: governing-ledger provenance status drifted from core ledger"
+            )
         if item["version"] != core["theory_id"]:
             errors.append(f"{identifier}: version drift")
         formal = formalization_by_id.get(identifier)
@@ -331,7 +399,7 @@ does not authorize execution by itself.
 def render_assurance(data: dict) -> str:
     rows = []
     for item in data["claims"]:
-        rows.append(f"| `{item['id']}` | `{item['truth_disposition']}` | `{item['proof_status']}` | `{item['independent_review_status']}` | `{item['formalization_status']}` | `{item['empirical_status']}` | `{item['novelty_prior_art_status']}` |")
+        rows.append(f"| `{item['id']}` | `{item['truth_disposition']}` | `{item['governing_ledger_provenance_status']}` | `{item['proof_status']}` | `{item['independent_review_status']}` | `{item['formalization_status']}` | `{item['empirical_status']}` | `{item['novelty_prior_art_status']}` |")
     return """# FAR-CORE assurance ledger
 
 Status: **Generated assurance view; governing statements remain in theory v1.1**
@@ -344,8 +412,8 @@ used as a substitute for another. In particular, FAR-CORE-014's W1 truth verdict
 under its exact application scope while its governing-ledger provenance label remains
 `supported_derived`.
 
-| Claim | Truth | Proof | Independent review | Lean | Empirical | Novelty/prior art |
-|---|---|---|---|---|---|---|
+| Claim | Truth | Governing provenance | Proof | Independent review | Lean | Empirical | Novelty/prior art |
+|---|---|---|---|---|---|---|---|
 """ + "\n".join(rows) + "\n"
 
 
@@ -354,13 +422,27 @@ def _slug(value: str) -> str:
 
 
 def build_graph(data: dict[str, dict]) -> dict:
-    source_paths = sorted(DATA_SCHEMAS)
+    source_paths = sorted(set(DATA_SCHEMAS) | GRAPH_ADDITIONAL_SOURCES)
     generated_from = {path: sha256(ROOT / path) for path in source_paths}
     nodes: dict[str, dict] = {}
     raw_edges: set[tuple[str, str, str, str]] = set()
 
-    def node(identifier: str, kind: str, label: str, status: str, source: str) -> None:
-        candidate = {"id":identifier,"type":kind,"label":label,"status":status,"source":source}
+    def node(
+        identifier: str,
+        kind: str,
+        label: str,
+        status: str,
+        source: str,
+        **metadata: Any,
+    ) -> None:
+        candidate = {
+            "id": identifier,
+            "type": kind,
+            "label": label,
+            "status": status,
+            "source": source,
+            **metadata,
+        }
         if identifier in nodes and nodes[identifier] != candidate:
             raise ValueError(f"contradictory node mapping: {identifier}")
         nodes[identifier] = candidate
@@ -387,7 +469,27 @@ def build_graph(data: dict[str, dict]) -> dict:
     core_ids = {item["id"] for item in assurance}
     for item in assurance:
         claim_id = f"claim:{item['id']}"
-        node(claim_id, "claim", item["exact_statement"], item["truth_disposition"], "theory/terminal/project-far-core-theory-v1.1.json")
+        node(
+            claim_id,
+            "claim",
+            item["exact_statement"],
+            "multidimensional_assurance",
+            "theory/evaluation/far-core-assurance-v1.0.json",
+            scope=item["scope"],
+            status_dimensions={
+                "truth_disposition": item["truth_disposition"],
+                "governing_ledger_provenance_status": item[
+                    "governing_ledger_provenance_status"
+                ],
+                "proof_status": item["proof_status"],
+                "independent_review_status": item["independent_review_status"],
+                "formalization_status": item["formalization_status"],
+                "empirical_status": item["empirical_status"],
+                "novelty_prior_art_status": item["novelty_prior_art_status"],
+                "governance_status": item["governance_status"],
+                "version": item["version"],
+            },
+        )
         edge("DEPENDS_ON", claim_id, version_id, "assurance version")
         edge("APPLIES_TO", claim_id, contract_id, "assurance scope")
         for dependency in item["dependencies"]:
@@ -465,8 +567,30 @@ def build_graph(data: dict[str, dict]) -> dict:
     for item in data["research/registry/research-tools-v1.0.json"]["tools"]:
         node(f"tool:{item['id']}", "tool", item["name"], item["authority"], "research/registry/research-tools-v1.0.json")
 
-    node("pr-commit:W1-target", "pr_commit", "W1 immutable target 14105775 / 68f05819", "sealed", "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
-    node("pr-commit:W1-review", "pr_commit", "W1 review 09816975 / 3b58ca87", "accepted-evidence", "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
+    promotion_path = "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json"
+    promotion = load(promotion_path)
+    review_target = promotion["review_target"]
+    review_branch = promotion["review_branch"]
+    node(
+        "pr-commit:W1-target",
+        "pr_commit",
+        (
+            f"W1 immutable target {review_target['commit'][:8]} / "
+            f"{review_target['tree'][:8]}"
+        ),
+        "sealed",
+        promotion_path,
+    )
+    node(
+        "pr-commit:W1-review",
+        "pr_commit",
+        (
+            f"W1 review {review_branch['head'][:8]} / "
+            f"{review_branch['tree'][:8]}"
+        ),
+        "accepted-evidence",
+        promotion_path,
+    )
     edge("TESTS", "pr-commit:W1-review", "pr-commit:W1-target", "W1 promotion record")
     edge("SUPPORTS", "pr-commit:W1-review", version_id, "W1 promotion record")
 
