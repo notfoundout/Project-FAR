@@ -10,6 +10,10 @@ Lean proves machine-checked derivations relative to the encoded premises. It doe
 novelty, empirical validity, universal architecture, or correctness of an unencoded narrative
 application bridge. The W1 truth verdicts and proof-assistant status remain separate dimensions.
 
+The W2 workflow captures every `#print axioms` result and rejects missing declarations,
+unexpected transitive assumptions, or any mismatch with the declaration-level and claim-level
+assumption contracts. Merely printing the audit is not accepted as assurance.
+
 ## Outcome matrix
 
 | Claim | W2 outcome | Kernel | Kernel assumptions | Declarations | Obstruction |

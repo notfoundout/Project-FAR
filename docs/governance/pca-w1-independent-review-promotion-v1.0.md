@@ -17,7 +17,9 @@ Sealed review branch: `research/pca-w1-core-v1.1-independent-review`, head
 The branch adds 18 review artifacts and modifies none of the target tree's files. The target
 commit, tree, theory hash, ledger hash, historical-v1 hash, pre-unblinding freeze, terminal
 review, and artifact manifest were independently checked. The Stage-A and Stage-E finite
-scripts replay deterministically against their committed outputs.
+scripts replay deterministically against their committed outputs. The machine promotion record
+pins all 16 promoted protocol/review paths by SHA-256; coverage loss, duplicate paths, missing
+files, or byte drift fails repository health.
 
 The terminal claim matrix is:
 

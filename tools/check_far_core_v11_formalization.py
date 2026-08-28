@@ -43,11 +43,45 @@ EXPECTED_KERNEL_AXIOMS = {
     "FAR-CORE-013": ["none"],
     "FAR-CORE-014": ["propext"],
 }
-FORBIDDEN = re.compile(r"(?m)^\s*(?:axiom\b|sorry\b|admit\b|unsafe\s+(?:def|theorem)\b)")
+EXPECTED_DECLARATION_AXIOMS = {
+    "FARCoreV11.exact_factorization_criterion": frozenset({"Classical.choice"}),
+    "FARCoreV11.collision_refutes_sufficiency": frozenset(),
+    "FARCoreV11.quotient_is_sufficient": frozenset(),
+    "FARCoreV11.observational_quotient_universal": frozenset({"Classical.choice", "Quot.sound"}),
+    "FARCoreV11.factorToQuotient_surjective": frozenset({"Classical.choice", "Quot.sound"}),
+    "FARCoreV11.leastInformativeImageEquiv": frozenset({"Classical.choice", "Quot.sound"}),
+    "FARCoreV11.action_preserves_observational_equivalence": frozenset(),
+    "FARCoreV11.descendAction": frozenset({"Quot.sound"}),
+    "FARCoreV11.no_contract_free_simultaneous_minimum": frozenset(),
+    "FARCoreV11.identity_is_universally_sufficient": frozenset(),
+    "FARCoreV11.invariants_antitone": frozenset(),
+    "FARCoreV11.embeddingRangeEquiv": frozenset({"Classical.choice"}),
+    "FARCoreV11.transport_operation_commutes": frozenset({"Classical.choice", "Quot.sound"}),
+    "FARCoreV11.transport_relation_commutes": frozenset({"Classical.choice", "Quot.sound", "propext"}),
+    "FARCoreV11.reification_recovers_relation": frozenset(),
+    "FARCoreV11.combine_split_operator_family": frozenset({"Quot.sound"}),
+    "FARCoreV11.split_combine_operator": frozenset({"Quot.sound"}),
+    "FARCoreV11.finite_panel_two_completions": frozenset(),
+    "FARCoreV11.commonTheory_frame_independent": frozenset(),
+    "FARCoreV11.commonTheory_invariant_under_truth_equivalence": frozenset({"Quot.sound", "propext"}),
+    "FARCoreV11.residue_can_change_with_frame": frozenset(),
+    "FARCoreV11.omitted_parameter_refutes_sufficiency": frozenset(),
+    "FARCoreV11.absent_unknown_must_separate": frozenset(),
+    "FARCoreV11.Omega.omega_elimination": frozenset(),
+    "FARCoreV11.Omega.resolve_is_composition": frozenset(),
+    "FARCoreV11.SSS.four_monotone_decoders": frozenset({"propext"}),
+    "FARCoreV11.SSS.projected_successor_decoder_failure": frozenset({"propext"}),
+    "FARCoreV11.SSS.hyperedge_factorization": frozenset({"propext"}),
+    "FARCoreV11.SSS.frontier_factorization": frozenset({"propext"}),
+}
+FORBIDDEN = re.compile(r"(?m)^\s*(?:axiom\b|constant\b|sorry\b|admit\b|unsafe\s+(?:def|theorem)\b)")
 DECLARATION = re.compile(
     r"(?m)^\s*(?:(?:noncomputable|protected)\s+)?"
     r"(?:def|theorem|structure|inductive|abbrev)\s+([A-Za-z_][A-Za-z0-9_']*)"
 )
+
+AXIOM_DEPENDS = re.compile(r"^'([^']+)' depends on axioms: \[([^\]]*)\]$")
+AXIOM_NONE = re.compile(r"^'([^']+)' does not depend on any axioms$")
 
 
 def load(path: str) -> dict:
@@ -65,6 +99,69 @@ def declared(text: str, qualified: str) -> bool:
         rf"(?:def|theorem|structure|inductive|abbrev)\s+{re.escape(terminal)}\b",
         text,
     ))
+
+
+def parse_axiom_output(text: str) -> tuple[dict[str, frozenset[str]], list[str]]:
+    observed: dict[str, frozenset[str]] = {}
+    errors: list[str] = []
+    for raw in text.splitlines():
+        line = raw.strip()
+        match = AXIOM_DEPENDS.fullmatch(line)
+        if match:
+            declaration = match.group(1)
+            axioms = frozenset(value.strip() for value in match.group(2).split(",") if value.strip())
+        else:
+            match = AXIOM_NONE.fullmatch(line)
+            if not match:
+                continue
+            declaration = match.group(1)
+            axioms = frozenset()
+        if declaration in observed:
+            errors.append(f"duplicate #print axioms output for {declaration}")
+        observed[declaration] = axioms
+    return observed, errors
+
+
+def axiom_contract_errors(ledger: dict) -> list[str]:
+    errors: list[str] = []
+    declarations = [declaration for claim in ledger["claims"] for declaration in claim["lean_declarations"]]
+    if len(declarations) != len(set(declarations)):
+        errors.append("formalization ledger repeats a Lean declaration")
+    expected = set(EXPECTED_DECLARATION_AXIOMS)
+    actual = set(declarations)
+    if actual != expected:
+        errors.append(
+            f"declaration-level axiom contract coverage drift: missing={sorted(expected-actual)} "
+            f"unexpected={sorted(actual-expected)}"
+        )
+    for claim in ledger["claims"]:
+        mapped = [EXPECTED_DECLARATION_AXIOMS[name] for name in claim["lean_declarations"] if name in EXPECTED_DECLARATION_AXIOMS]
+        union = frozenset().union(*mapped) if mapped else frozenset()
+        recorded = frozenset() if claim["kernel_axioms"] == ["none"] else frozenset(claim["kernel_axioms"])
+        if union != recorded:
+            errors.append(
+                f"{claim['id']}: declaration-level axiom union {sorted(union)} "
+                f"does not equal ledger {sorted(recorded)}"
+            )
+    return sorted(set(errors))
+
+
+def axiom_output_errors(text: str, ledger: dict) -> list[str]:
+    observed, errors = parse_axiom_output(text)
+    errors.extend(axiom_contract_errors(ledger))
+    expected = set(EXPECTED_DECLARATION_AXIOMS)
+    actual = set(observed)
+    missing = sorted(expected - actual)
+    unexpected = sorted(actual - expected)
+    if missing or unexpected:
+        errors.append(f"runtime #print axioms coverage drift: missing={missing} unexpected={unexpected}")
+    for declaration in sorted(expected & actual):
+        if observed[declaration] != EXPECTED_DECLARATION_AXIOMS[declaration]:
+            errors.append(
+                f"{declaration}: actual axiom set {sorted(observed[declaration])} "
+                f"does not equal expected {sorted(EXPECTED_DECLARATION_AXIOMS[declaration])}"
+            )
+    return sorted(set(errors))
 
 
 def inventory(ledger: dict) -> dict:
@@ -101,7 +198,7 @@ def inventory(ledger: dict) -> dict:
 
 
 def alignment_errors(ledger: dict, assurance: dict, core: dict, generated: dict) -> list[str]:
-    errors: list[str] = []
+    errors: list[str] = axiom_contract_errors(ledger)
     expected_ids = [f"FAR-CORE-{index:03d}" for index in range(1, 15)]
     ledger_claims = ledger["claims"]
     assurance_by_id = {item["id"]: item for item in assurance["claims"]}
@@ -194,6 +291,10 @@ Lean proves machine-checked derivations relative to the encoded premises. It doe
 novelty, empirical validity, universal architecture, or correctness of an unencoded narrative
 application bridge. The W1 truth verdicts and proof-assistant status remain separate dimensions.
 
+The W2 workflow captures every `#print axioms` result and rejects missing declarations,
+unexpected transitive assumptions, or any mismatch with the declaration-level and claim-level
+assumption contracts. Merely printing the audit is not accepted as assurance.
+
 ## Outcome matrix
 
 | Claim | W2 outcome | Kernel | Kernel assumptions | Declarations | Obstruction |
@@ -237,9 +338,12 @@ def expected() -> tuple[dict, str, list[str]]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--write", action="store_true")
+    parser.add_argument("--axiom-output", type=Path)
     args = parser.parse_args(argv)
     try:
         generated, report, errors = expected()
+        if args.axiom_output:
+            errors += axiom_output_errors(args.axiom_output.read_text(encoding="utf-8"), load(LEDGER_PATH))
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"FAIL: {exc}")
         return 1

@@ -13,14 +13,14 @@ mathematical review, novelty search, empirical validation, or substitute for Lea
 | Threat | Evidence checked | Disposition |
 |---|---|---|
 | silent theory change | governing v1.1 monograph and all 14 machine claim statements | no statement changed; only assurance, formalization, and next-workstream metadata changed |
-| frozen-review contamination | 16 promoted terminal/protocol paths, two pre-run templates retained only on the sealed branch, review head/tree, manifest and source hashes | promoted evidence remains byte-identical; stale pre-run templates are not presented as current state; sealed branch untouched |
+| frozen-review contamination | 16 promoted terminal/protocol paths, two pre-run templates retained only on the sealed branch, review head/tree, full SHA-256 seal and source hashes | every promoted path is pinned and byte-identical; stale pre-run templates are not current state; sealed branch untouched |
 | historical v1.0 mutation | canonical and exported monograph bytes | unchanged at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5` |
 | truth/provenance conflation | W1 verdicts, assurance ledger, v1.1 machine ledger | `FAR-CORE-014` remains truth `PROVED` and provenance/application `supported_derived` |
 | novelty overclaim | current status, registries, tool governance, citation relations | novelty and priority remain not established |
 | W1-open drift | current status, roadmap, program, repository truth, generated tasks and exports | W1 complete; W2 active; old statements survive only in sealed or historical records |
 | hidden W3 semantics | playground, opportunity registry, deferred product surfaces | finite playground is noncanonical; production contract/API/MCP semantics remain deferred |
 | duplicated authority | graph, generated views, Zotero map and status generation | generated artifacts carry source hashes and reject drift; GitHub machine sources remain authoritative |
-| vacuous or hidden Lean assumptions | exact declarations, mutation controls, forbidden-placeholder scan and `#print axioms` output | no `axiom`, `sorry`, `admit`, or unsafe declaration; avoidable choice/propext dependencies were removed; remaining kernel assumptions are recorded per claim |
+| vacuous or hidden Lean assumptions | exact declarations, mutation controls, forbidden-placeholder/`constant` scan and machine-parsed `#print axioms` output | every declaration's transitive axiom set is enforced exactly; avoidable assumptions were removed; remaining choice/quotient/extensionality dependencies are recorded per claim |
 | scope loss | theorem modules, ledger premises, negative controls | identity does not become a universal minimum; finite panels stay finite; decoder/state/application restrictions remain explicit |
 | stale PR #452 state | complete diff and five unresolved review findings | stale state not imported; only provider-neutral machinery reimplemented with outbound redaction, lane isolation, exact recorded replay, and durable failures |
 | evidence destruction | branch classifier and GitHub comparisons | no branch or evidence deleted; every unknown or unique branch is retained |

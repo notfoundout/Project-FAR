@@ -117,6 +117,17 @@ def validate_capsule(capsule: dict, root: Path = ROOT) -> list[str]:
         overlap = set(stage["allow"]) & set(stage["deny"])
         if overlap:
             errors.append(f"stage {stage['id']} exact allow/deny overlap: {sorted(overlap)}")
+    protocol = capsule.get("protocol", {})
+    try:
+        protocol_path = normalize_repo_path(protocol["path"])
+    except (CampaignError, KeyError, TypeError) as exc:
+        errors.append(f"invalid protocol path: {exc}")
+    else:
+        candidate = root / protocol_path
+        if not candidate.is_file():
+            errors.append(f"missing protocol artifact: {protocol_path}")
+        elif sha256_path(candidate) != protocol.get("sha256"):
+            errors.append(f"protocol hash mismatch: {protocol_path}")
     for artifact in capsule["source_manifest"] + capsule["artifacts"]:
         try:
             path = normalize_repo_path(artifact["path"])

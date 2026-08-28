@@ -17,6 +17,29 @@ class FARCoreV11FormalizationTests(unittest.TestCase):
         generated, _report, _errors = checker.expected()
         self.assertEqual(generated["w2_summary"]["forbidden_placeholders"], 0)
 
+    @staticmethod
+    def _valid_axiom_output():
+        lines = []
+        for declaration, axioms in sorted(checker.EXPECTED_DECLARATION_AXIOMS.items()):
+            if axioms:
+                lines.append(f"'{declaration}' depends on axioms: [{', '.join(sorted(axioms))}]")
+            else:
+                lines.append(f"'{declaration}' does not depend on any axioms")
+        return "\n".join(lines) + "\n"
+
+    def test_runtime_axiom_output_matches_every_declaration(self):
+        ledger = checker.load(checker.LEDGER_PATH)
+        self.assertEqual(checker.axiom_output_errors(self._valid_axiom_output(), ledger), [])
+
+    def test_hidden_transitive_axiom_and_constant_are_rejected(self):
+        ledger = checker.load(checker.LEDGER_PATH)
+        target = "FARCoreV11.collision_refutes_sufficiency"
+        original = f"'{target}' does not depend on any axioms"
+        hidden = f"'{target}' depends on axioms: [Hidden.secret]"
+        errors = checker.axiom_output_errors(self._valid_axiom_output().replace(original, hidden), ledger)
+        self.assertTrue(any("actual axiom set" in error and "Hidden.secret" in error for error in errors))
+        self.assertIsNotNone(checker.FORBIDDEN.search("constant hidden : False\n"))
+
     def test_generated_views_are_current(self):
         self.assertEqual(checker.main([]), 0)
 

@@ -54,6 +54,25 @@ REQUIRED_TOOLS = {
     "OpenAI Agents SDK", "ChatGPT Apps/MCP",
 }
 
+PROMOTED_W1_PATHS = {
+    "docs/research/pca-w1-independent-review-protocol-v1.0.md",
+    "docs/research/pca-w1-independent-review/00-exposure-environment.md",
+    "docs/research/pca-w1-independent-review/01-stage-a-blind-reconstruction.md",
+    "docs/research/pca-w1-independent-review/tools/stage_a_finite_checks.py",
+    "docs/research/pca-w1-independent-review/tools/stage-a-finite-check-output.md",
+    "docs/research/pca-w1-independent-review/02-stage-b-ledger-reconciliation.md",
+    "docs/research/pca-w1-independent-review/03-stage-c-independent-research.md",
+    "docs/research/pca-w1-independent-review/04-stage-c-hostile-test-ledger.md",
+    "docs/research/pca-w1-independent-review/05-stage-d-provisional-verdict-frozen.md",
+    "docs/research/pca-w1-independent-review/05-stage-d-freeze-manifest.json",
+    "docs/research/pca-w1-independent-review/tools/stage_e_sss_checks.py",
+    "docs/research/pca-w1-independent-review/tools/stage-e-sss-check-output.json",
+    "docs/research/pca-w1-independent-review/06-stage-e-controlled-unblinding.md",
+    "docs/research/pca-w1-independent-review/07-final-independent-review.md",
+    "docs/research/pca-w1-independent-review/07-final-independent-review.json",
+    "docs/research/pca-w1-independent-review/08-review-artifact-manifest.json",
+}
+
 
 def load(path: str) -> dict:
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
@@ -80,6 +99,34 @@ def validate_schemas(data: dict[str, dict]) -> list[str]:
 
 def parse_bib_keys(path: Path) -> list[str]:
     return re.findall(r"(?m)^@[A-Za-z]+\{([^,\s]+),", path.read_text(encoding="utf-8"))
+
+
+def w1_seal_errors(promotion: dict, root: Path = ROOT) -> list[str]:
+    """Require exact SHA-256 coverage of every W1 object promoted into current state."""
+    errors: list[str] = []
+    artifacts = promotion.get("verified_artifacts")
+    if not isinstance(artifacts, list):
+        return ["W1 promotion verified_artifacts must be a list"]
+    paths = [item.get("path") for item in artifacts if isinstance(item, dict)]
+    if len(paths) != len(artifacts) or len(paths) != len(set(paths)):
+        errors.append("W1 promotion seal has malformed or duplicate artifact paths")
+    actual = {path for path in paths if isinstance(path, str)}
+    missing = sorted(PROMOTED_W1_PATHS - actual)
+    unexpected = sorted(actual - PROMOTED_W1_PATHS)
+    if missing or unexpected:
+        errors.append(f"W1 promotion seal coverage drift: missing={missing} unexpected={unexpected}")
+    for artifact in artifacts:
+        if not isinstance(artifact, dict):
+            continue
+        raw_path = artifact.get("path")
+        expected = artifact.get("sha256")
+        if not isinstance(raw_path, str) or not isinstance(expected, str):
+            errors.append("W1 promotion seal entry is malformed")
+            continue
+        path = root / raw_path
+        if not path.is_file() or sha256(path) != expected:
+            errors.append(f"W1 sealed artifact missing or changed: {raw_path}")
+    return sorted(set(errors))
 
 
 def semantic_errors(data: dict[str, dict]) -> list[str]:
@@ -169,10 +216,7 @@ def semantic_errors(data: dict[str, dict]) -> list[str]:
     if review["final"]["claim_counts"] != {"PROVED":14,"REFUTED":0,"OPEN":0,"UNDERDETERMINED":0,"NOT APPLICABLE":0}:
         errors.append("W1 terminal count drift")
     promotion = load("theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
-    for artifact in promotion["verified_artifacts"]:
-        path = ROOT / artifact["path"]
-        if not path.is_file() or sha256(path) != artifact["sha256"]:
-            errors.append(f"W1 sealed artifact missing or changed: {artifact['path']}")
+    errors.extend(w1_seal_errors(promotion))
     return sorted(set(errors))
 
 

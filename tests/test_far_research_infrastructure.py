@@ -25,6 +25,16 @@ class RegistryTests(unittest.TestCase):
         for path, content in expected.items():
             self.assertEqual((ROOT / path).read_text(encoding="utf-8"), content)
 
+    def test_w1_seal_requires_all_promoted_paths_and_exact_hashes(self):
+        promotion = registry.load("theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
+        self.assertEqual(registry.w1_seal_errors(promotion), [])
+        missing = copy.deepcopy(promotion)
+        missing["verified_artifacts"].pop()
+        self.assertTrue(any("coverage drift" in error for error in registry.w1_seal_errors(missing)))
+        tampered = copy.deepcopy(promotion)
+        tampered["verified_artifacts"][0]["sha256"] = "0" * 64
+        self.assertTrue(any("missing or changed" in error for error in registry.w1_seal_errors(tampered)))
+
     def test_duplicate_registry_identity_is_rejected(self):
         data = {path: registry.load(path) for path in registry.DATA_SCHEMAS}
         duplicate = copy.deepcopy(data)
@@ -40,6 +50,11 @@ class CampaignFirewallTests(unittest.TestCase):
 
     def test_capsule_hashes_and_stages_validate(self):
         self.assertEqual(campaign.validate_capsule(self.capsule), [])
+
+    def test_capsule_protocol_hash_is_enforced(self):
+        tampered = copy.deepcopy(self.capsule)
+        tampered["protocol"]["sha256"] = "0" * 64
+        self.assertTrue(any("protocol hash mismatch" in error for error in campaign.validate_capsule(tampered)))
 
     def test_pre_unblinding_denylist_blocks_correction_audit(self):
         with self.assertRaises(campaign.CampaignError):
