@@ -179,7 +179,7 @@
     {
       "category": "theorems",
       "path": "theorems/project-far-core-theory-v1.1.json",
-      "sha256": "9fa6f791fd84772f5668afc836439f5fe4aaf46dd1ed8745faa0ec8aa5a62cc1",
+      "sha256": "46ae9476e2ea9e5fa44112cad11007361d2b88227b7bec5695a153b8a1212b9b",
       "source": "theory/terminal/project-far-core-theory-v1.1.json",
       "status": "canonical"
     }

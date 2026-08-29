@@ -9,7 +9,7 @@
     "examples/valid/complete.json": "4c30ad95c222c0312c02dece3f566952003f3abc2cdb4a35c9a95d247853b602",
     "examples/valid/minimal.json": "793cce17063e401844138941d4b54f643c437570be14f5326f6899695c701829",
     "grammar/far-yaml-grammar.md": "b4cbf54f4f3e2ccea7d2ee22d41304b17a273f612dcb0d5a9b39053a0792f393",
-    "manifest.json": "9863c694d43cfc219375beb01fc9fdf89cce2a06695bc95c70689f710f1e1028",
+    "manifest.json": "44266fd06ce6f1582e34220d4331cd81162c27f50ee9bc7baf12e3f3bdb34fb6",
     "schemas/far-document.schema.json": "1073c6ffd5c1fa30a5e96060eaae79a978b5e39231f6a8cae615b2202056f222",
     "schemas/far-yaml.schema.json": "034ab5938ebfa2b00d9fee9937648773352567ccc331ff7f885a7a5a9894d53a",
     "schemas/proof-object-schema.yaml": "c7a27e3c4f8a23472b65614f4a2f8e490ab922a2fb244d8fbcae6620340695e0",
@@ -27,6 +27,6 @@
     "terminology/meta-theory-definitions.md": "cf41362d5307cff4f04a7fb956238f3b96eb75dbc47cc46f890cbd2e98d2f81a",
     "theorems/Project-FAR-Theory-Closure-v1.0.md": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
     "theorems/Project-FAR-Theory-Closure-v1.1.md": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
-    "theorems/project-far-core-theory-v1.1.json": "9fa6f791fd84772f5668afc836439f5fe4aaf46dd1ed8745faa0ec8aa5a62cc1"
+    "theorems/project-far-core-theory-v1.1.json": "46ae9476e2ea9e5fa44112cad11007361d2b88227b7bec5695a153b8a1212b9b"
   }
 }
