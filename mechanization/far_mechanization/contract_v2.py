@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, FormatChecker
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_PATH = REPO_ROOT / "schemas" / "far-contract-v2.schema.json"
@@ -56,7 +56,7 @@ def _load_schema() -> Mapping[str, Any]:
 def _schema_errors(document: object) -> list[ContractDiagnostic]:
     schema = _load_schema()
     Draft202012Validator.check_schema(schema)
-    validator = Draft202012Validator(schema, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
     return [
         ContractDiagnostic("SCHEMA_CONSTRAINT_VIOLATION", error.message, tuple(error.path))
         for error in sorted(validator.iter_errors(document), key=lambda e: (tuple(e.path), e.message))
