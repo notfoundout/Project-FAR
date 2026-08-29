@@ -22,6 +22,7 @@ import FARCoreV11SSS
 #print axioms FARCoreV11.embeddingRangeEquiv
 #print axioms FARCoreV11.exact_factorization_criterion
 #print axioms FARCoreV11.factorToQuotient_surjective
+#print axioms FARCoreV11.finite_operator_count_noninvariant
 #print axioms FARCoreV11.finite_panel_two_completions
 #print axioms FARCoreV11.identity_is_universally_sufficient
 #print axioms FARCoreV11.invariants_antitone

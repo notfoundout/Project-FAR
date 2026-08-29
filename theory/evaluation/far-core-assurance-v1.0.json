@@ -306,7 +306,8 @@
       ],
       "lean_declarations": [
         "FARCoreV11.combine_split_operator_family",
-        "FARCoreV11.split_combine_operator"
+        "FARCoreV11.split_combine_operator",
+        "FARCoreV11.finite_operator_count_noninvariant"
       ],
       "known_counterexamples_to_stronger_variants": [
         "one tagged dispatcher and the split family are mutually recoverable"

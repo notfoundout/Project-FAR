@@ -396,13 +396,14 @@
         "argument family A : I -> Type",
         "common result B",
         "operator family f : (i : I) -> A i -> B",
-        "tagged sum Sigma A -> B"
+        "tagged sum Sigma A -> B",
+        "PrimitiveOperatorCount := operatorCount : Nat"
       ],
       "premises": [
         "finite operator family",
         "tagged argument types admitted"
       ],
-      "conclusion": "Combining and splitting are inverse on the tagged domain.",
+      "conclusion": "Combining and splitting are inverse on the tagged domain; a concrete two-operator presentation is recoverable from one tagged dispatcher while the declared primitive operator counts differ (2 versus 1).",
       "dependencies": [
         "none"
       ],
@@ -418,7 +419,8 @@
       "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
       "lean_declarations": [
         "FARCoreV11.combine_split_operator_family",
-        "FARCoreV11.split_combine_operator"
+        "FARCoreV11.split_combine_operator",
+        "FARCoreV11.finite_operator_count_noninvariant"
       ],
       "formalization_status": "FORMALIZED",
       "kernel_check": "PASS",
