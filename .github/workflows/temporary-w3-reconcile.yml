@@ -1,9 +1,11 @@
 name: Temporary W3 Reconciliation
 
 on:
-  push:
+  pull_request:
     branches:
-      - research/pca-w3-contract-schema
+      - main
+    types:
+      - synchronize
 
 permissions:
   contents: write
