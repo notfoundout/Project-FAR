@@ -237,7 +237,7 @@ theorem derivable_atom_balance {sequent : Sequent}
   | ax name =>
       by_cases h : name = target <;>
         simp [sequentWeight, atomWeight, h]
-  | tensor leftDerivation rightDerivation leftIH rightIH =>
+  | @tensor gamma delta left right leftDerivation rightDerivation leftIH rightIH =>
       have hLeft := leftIH
       have hRight := rightIH
       simp only [sequentWeight_append, sequentWeight, atomWeight, Int.add_zero] at hLeft hRight ⊢

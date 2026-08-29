@@ -49,7 +49,7 @@ formalization does not enlarge FAR-CORE-014 into a universal architecture claim.
 | `mechanization/lean/FARCoreV11Claims001To012.lean` | `9171f9a6598bfdaf2eaf37cf8994438c0095ff4a8e39081c8887ce5ea90f746e` | 318 | `FARCoreV11Substrate` |
 | `mechanization/lean/FARCoreV11Mutations.lean` | `ec389d2081c635f336aa2f3cd087f997aeb7ed800e4fa081b76f43130aa23069` | 170 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
 | `mechanization/lean/FARCoreV11Omega.lean` | `52570fe1ed0c7a76b850162d584d47e759098b054a8cd147161891d663a7044c` | 51 | `FARCoreV11Substrate` |
-| `mechanization/lean/FARCoreV11SSS.lean` | `61af5f1e15546827b9dae72000b7c7c4ab36118eb46bf70fa695208ac010813e` | 375 | `FARCoreV11Substrate` |
+| `mechanization/lean/FARCoreV11SSS.lean` | `15fdf821d878cedcf205891fc2d29822a0cc49c3dcedc8610eb4609169060465` | 375 | `FARCoreV11Substrate` |
 | `mechanization/lean/FARCoreV11Substrate.lean` | `c10ed7cd9f2bb35018d7312e2f3fa755cb292663a73ed24fb17eeac193c01410` | 240 | `Std` |
 
 The inventory also records every pre-existing Lean file as `LEGACY_OR_OTHER_SCOPE`. Those files
