@@ -178,11 +178,11 @@ def validate(root: Path = ROOT) -> list[str]:
     workstreams = {w.get("id"): w for w in program.get("workstreams", [])}
     if workstreams.get("PCA-W1-INDEPENDENT-REVIEW", {}).get("state") != "complete":
         errors.append("PCA-W1 must reflect the promoted sealed independent review")
-    if workstreams.get("PCA-W2-PROOF-ASSISTANT-FORMALIZATION", {}).get("state") != "active_partial_obstruction":
-        errors.append("PCA-W2 must remain active at the FAR-CORE-014 obstruction")
+    if workstreams.get("PCA-W2-PROOF-ASSISTANT-FORMALIZATION", {}).get("state") != "complete":
+        errors.append("PCA-W2 must reflect completed 14/14 formalization")
     next_action = program.get("next_action", {})
-    if next_action.get("workstream") != "PCA-W2-PROOF-ASSISTANT-FORMALIZATION" or next_action.get("theory_target") != "PROJECT-FAR-CORE-THEORY-1.1":
-        errors.append("post-closure next action must be W2 formalization of v1.1")
+    if next_action.get("workstream") != "PCA-W3-CONTRACT-SCHEMA" or next_action.get("theory_target") != "PROJECT-FAR-CORE-THEORY-1.1":
+        errors.append("post-closure next action must be W3 contract schema against v1.1")
 
     promotion = _load(root / W1_PROMOTION.relative_to(ROOT))
     review = _load(root / W1_REVIEW.relative_to(ROOT))
@@ -204,8 +204,7 @@ def validate(root: Path = ROOT) -> list[str]:
         if assurance_by_id.get(identifier, {}).get("truth_disposition") != "PROVED":
             errors.append(f"{identifier}: promoted truth disposition drifted")
         formal = formal_by_id.get(identifier, {})
-        expected_formal = "PARTIAL/OBSTRUCTION" if identifier == "FAR-CORE-014" else "FORMALIZED"
-        if formal.get("formalization_status") != expected_formal or formal.get("kernel_check") != "PASS":
+        if formal.get("formalization_status") != "FORMALIZED" or formal.get("kernel_check") != "PASS":
             errors.append(f"{identifier}: W2 outcome/kernel status drifted")
 
     old_program = _load(root / OLD_PROGRAM.relative_to(ROOT))
@@ -218,6 +217,10 @@ def validate(root: Path = ROOT) -> list[str]:
         errors.append("repository truth authority does not point to v1.1")
     if status.get("historical_core_sha256") != EXPECTED_V1_SHA256:
         errors.append("repository truth authority does not preserve v1.0 hash")
+    if status.get("active_workstream") != "PCA-W3-CONTRACT-SCHEMA":
+        errors.append("repository truth authority does not point to W3")
+    if status.get("formalization_status") != "14_formalized_0_partial_obstruction_0_contradiction":
+        errors.append("repository truth authority does not record completed W2 formalization")
     export_truth = truth.get("specification_export", {})
     if export_truth.get("export_version") != EXPECTED_EXPORT_VERSION:
         errors.append("repository truth authority export version mismatch")
@@ -243,8 +246,8 @@ def validate(root: Path = ROOT) -> list[str]:
         errors.append("FAR spec export must carry v1.1 machine ledger as canonical")
 
     required_text = {
-        "README.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W2-PROOF-ASSISTANT-FORMALIZATION", "Historical v1.0"],
-        "docs/project-status.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W2-PROOF-ASSISTANT-FORMALIZATION", "FAR-CORE-010"],
+        "README.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W2-PROOF-ASSISTANT-FORMALIZATION", "PCA-W3-CONTRACT-SCHEMA", "Historical v1.0"],
+        "docs/project-status.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W2-PROOF-ASSISTANT-FORMALIZATION", "PCA-W3-CONTRACT-SCHEMA", "FAR-CORE-010"],
         "docs/ROADMAP.md": ["PROJECT-FAR-CORE-THEORY-1.1", "Export version `1.2.0`", "simultaneous universal least-informativeness"],
         "docs/governance/project-far-theory-closure-acceptance-v1.1.md": ["identity representation", "frame-subtracted residue", "not independently reviewed"],
         "docs/audits/project-far-core-theory-v1.1-correction-audit.md": ["10.1214/aoms/1177729032", "FAR-CORE-014", "independent review still open"],
