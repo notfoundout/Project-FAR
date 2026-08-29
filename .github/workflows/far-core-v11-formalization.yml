@@ -29,6 +29,7 @@ jobs:
           set -euo pipefail
           git add \
             mechanization/lean/FARCoreV11SSS.lean \
+            tools/check_far_core_v11_formalization.py \
             theory/evaluation/far-core-formalization-ledger-v1.0.json \
             theory/evaluation/far-core-assurance-v1.0.json \
             mechanization/lean/FARCoreV11AxiomAudit.lean \
