@@ -56,25 +56,23 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         ranked = text.split("## Maintainer Boundaries", 1)[0]
         ids = re.findall(r"^### ([A-Z]+-\d{3}):", ranked, re.M)
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(ids, [f"STRATEGIC-{number:03d}" for number in range(10, 15)])
-        self.assertEqual(len(ids), 5)
+        self.assertEqual(ids, [f"STRATEGIC-{number:03d}" for number in range(11, 15)])
+        self.assertEqual(len(ids), 4)
         self.assertEqual(
             ranked.count(
                 "- Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md]"
             ),
-            5,
+            4,
         )
-        self.assertEqual(ranked.count("- Expected outcome:"), 5)
+        self.assertEqual(ranked.count("- Expected outcome:"), 4)
         self.assertIn("Program: `POST-CLOSURE-001`.", ranked)
         self.assertIn(
             "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.", ranked
         )
         self.assertIn(
-            "Canonical next workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.", ranked
+            "Canonical next workstream: `PCA-W3-CONTRACT-SCHEMA`.", ranked
         )
-        self.assertIn(
-            "### STRATEGIC-010: Close the bounded MLL formalization bridge", ranked
-        )
+        self.assertNotIn("### STRATEGIC-010:", ranked)
         self.assertIn("### STRATEGIC-011: Implement the contract schema", ranked)
         self.assertIn(
             "### STRATEGIC-012: Develop domain comparison contracts", ranked
@@ -84,16 +82,15 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         )
         self.assertIn("### STRATEGIC-014: Test audit utility", ranked)
         self.assertIn(
-            "- Registered workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`", ranked
+            "- Registered workstream: `PCA-W3-CONTRACT-SCHEMA`", ranked
         )
         self.assertIn("- Priority: active", ranked)
         self.assertIn("The core theory is closed after the governed v1.1 correction.", ranked)
         self.assertIn(
-            "The hostile correction audit remains non-independent.",
-            ranked,
+            "The sealed `PCA-W1-INDEPENDENT-REVIEW` is complete", ranked
         )
         self.assertIn(
-            "14 PROVED, no correction, novelty/priority not established",
+            "`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: 14/14 governed claims are FORMALIZED",
             ranked,
         )
         self.assertIn("do not reopen the core without a genuine contradiction", ranked)
@@ -112,7 +109,9 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
             "Global Primitive Minimality",
             "Global Primitive Independence",
             "### STRATEGIC-010: Review the closed core independently",
+            "### STRATEGIC-010: Close the bounded MLL formalization bridge",
             "### STRATEGIC-011: Formalize the factorization core",
+            "Canonical next workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.",
         ):
             self.assertNotIn(stale, ranked)
 
