@@ -106,7 +106,7 @@ W1_REVIEWED_LEDGER_CONTRACT = {
         "independent_review_status": (
             "complete_confirmed_14_proved_exact_scopes_novelty_not_established"
         ),
-        "next_workstream": "PCA-W3-CONTRACT-SCHEMA",
+        "next_workstream": "PCA-W4-DOMAIN-CONTRACTS",
     },
 }
 GRAPH_ADDITIONAL_SOURCES = {
