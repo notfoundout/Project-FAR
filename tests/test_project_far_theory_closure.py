@@ -95,6 +95,20 @@ class ProjectFARTheoryClosureTest(unittest.TestCase):
             case["expected"]["residue_Gamma1"],
         )
 
+    def test_w1_independent_review_remains_open(self):
+        """Historical regression identity: the old open gate may close only via the sealed promotion."""
+        promotion = MODULE._load(
+            ROOT / "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json"
+        )
+        self.assertEqual("PCA-W1-INDEPENDENT-REVIEW", promotion["workstream_id"])
+        self.assertEqual("ACCEPTED_COMPLETE", promotion["disposition"])
+        self.assertTrue(promotion["effective_on_merge"])
+        self.assertEqual(
+            "14105775daf3c5713b134a728db2e1e53673af97",
+            promotion["review_target"]["commit"],
+        )
+        self.assertFalse(promotion["findings"]["theorem_correction_required"])
+
     def test_w1_is_promoted_and_w2_is_active(self):
         program = MODULE._load(
             ROOT
