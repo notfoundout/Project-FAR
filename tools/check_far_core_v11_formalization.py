@@ -74,13 +74,16 @@ EXPECTED_DECLARATION_AXIOMS = {
     "FARCoreV11.SSS.projected_successor_decoder_failure": frozenset({"propext"}),
     "FARCoreV11.SSS.hyperedge_factorization": frozenset({"propext"}),
     "FARCoreV11.SSS.frontier_factorization": frozenset({"propext"}),
+    "FARCoreV11.SSS.MLL.derivable_atom_balance": frozenset(),
+    "FARCoreV11.SSS.MLL.sOr_witness_certified": frozenset(),
+    "FARCoreV11.SSS.MLL.sAnd_witness_certified": frozenset(),
+    "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure": frozenset({"propext"}),
 }
 FORBIDDEN = re.compile(r"(?m)^\s*(?:axiom\b|constant\b|sorry\b|admit\b|unsafe\s+(?:def|theorem)\b)")
 DECLARATION = re.compile(
     r"(?m)^\s*(?:(?:noncomputable|protected)\s+)?"
     r"(?:def|theorem|structure|inductive|abbrev)\s+([A-Za-z_][A-Za-z0-9_']*)"
 )
-
 AXIOM_DEPENDS = re.compile(r"^'([^']+)' depends on axioms: \[([^\]]*)\]$")
 AXIOM_NONE = re.compile(r"^'([^']+)' does not depend on any axioms$")
 
@@ -252,20 +255,18 @@ def alignment_errors(ledger: dict, assurance: dict, core: dict, generated: dict)
                 errors.append(f"{identifier}: canonical source hash drift at {source['path']}")
         if item["formalization_status"] == "FORMALIZED" and item["obstruction"]["classification"] != "none":
             errors.append(f"{identifier}: formalized claim retains an obstruction")
-    if [item["formalization_status"] for item in ledger_claims[:13]] != ["FORMALIZED"] * 13:
-        errors.append("FAR-CORE-001 through 013 must be FORMALIZED")
+    if [item["formalization_status"] for item in ledger_claims] != ["FORMALIZED"] * 14:
+        errors.append("FAR-CORE-001 through 014 must be FORMALIZED after the governed MLL bridge compiles")
     last = ledger_claims[-1]
-    if last["formalization_status"] != "PARTIAL/OBSTRUCTION":
-        errors.append("FAR-CORE-014 must remain PARTIAL/OBSTRUCTION until actual MLL witnesses compile")
-    if last["obstruction"]["classification"] == "none":
-        errors.append("FAR-CORE-014 partial status has no classified obstruction")
+    if last["obstruction"]["classification"] != "none":
+        errors.append("FAR-CORE-014 formalized status retains a classified obstruction")
     if core_by_id["FAR-CORE-014"]["status"] != "supported_derived":
         errors.append("FAR-CORE-014 historical/application provenance status was overwritten")
     if assurance_by_id["FAR-CORE-014"]["truth_disposition"] != "PROVED":
         errors.append("FAR-CORE-014 truth disposition was conflated with provenance")
     if generated["w2_summary"] != {
-        "formalized": 13,
-        "partial_obstruction": 1,
+        "formalized": 14,
+        "partial_obstruction": 0,
         "contradiction_reopen_required": 0,
         "kernel_check": "PASS",
         "forbidden_placeholders": 0,
@@ -295,7 +296,6 @@ def render_report(ledger: dict, generated: dict) -> str:
         f"{', '.join(f'`{value}`' for value in item['imports']) or 'none'} |"
         for item in w2_files
     ]
-    obstruction = ledger["claims"][-1]["obstruction"]
     return """# FAR-CORE v1.1 proof-assistant formalization
 
 Status: **Generated W2 assurance view; not governing theory authority**
@@ -305,8 +305,8 @@ and [`artifacts/mechanization/lean-inventory-v1.0.json`](../../artifacts/mechani
 Edit the machine ledger or Lean sources and regenerate this view.
 
 Lean proves machine-checked derivations relative to the encoded premises. It does not establish
-novelty, empirical validity, universal architecture, or correctness of an unencoded narrative
-application bridge. The W1 truth verdicts and proof-assistant status remain separate dimensions.
+novelty, empirical validity, or universal architecture. The W1 truth verdicts, historical
+provenance labels, and proof-assistant status remain separate dimensions.
 
 The W2 workflow captures every `#print axioms` result and rejects missing declarations,
 unexpected transitive assumptions, or any mismatch with the declaration-level and claim-level
@@ -316,18 +316,15 @@ assumption contracts. Merely printing the audit is not accepted as assurance.
 
 | Claim | W2 outcome | Kernel | Kernel assumptions | Declarations | Obstruction |
 |---|---|---|---|---|---|
-""" + "\n".join(rows) + f"""
+""" + "\n".join(rows) + """
 
-## FAR-CORE-014 governed obstruction
+## FAR-CORE-014 bounded application bridge
 
-- Classification: `{obstruction['classification']}`
-- Affected surface: {obstruction['affected_surface']}
-- Reproducible detail: {obstruction['details']}
-- Allowed resolution: {obstruction['allowed_resolution']}
-
-This is not a refutation. The decoder enumeration, Boolean witness-profile theorem, conditional
-hyperedge factorization, and conditional frontier factorization are kernel-checked. What is absent
-is an end-to-end Lean derivation of the actual MLL witness facts.
+The governed MLL syntax, cut-free unit-free derivability rules, atom-balance invariant, both named
+witness sequents, their mixed projected-successor truth profiles, and the uniform-decoder failure
+are now kernel-checked in `FARCoreV11SSS.lean`. The positive hyperedge and frontier statements
+remain explicitly conditional on their stated rule-characterization/recursion premises. This
+formalization does not enlarge FAR-CORE-014 into a universal architecture claim.
 
 ## W2 module inventory
 
@@ -387,7 +384,7 @@ def main(argv: list[str] | None = None) -> int:
     if stale:
         print("FAIL: stale generated formalization outputs: " + ", ".join(stale))
         return 1
-    print("FAR-CORE v1.1 formalization alignment: PASS (13 FORMALIZED, 1 PARTIAL/OBSTRUCTION)")
+    print("FAR-CORE v1.1 formalization alignment: PASS (14 FORMALIZED, 0 PARTIAL/OBSTRUCTION)")
     return 0
 
 
