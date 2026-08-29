@@ -25,8 +25,8 @@
     },
     {
       "id": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
-      "state": "active_partial_obstruction",
-      "result": "FAR-CORE-001_THROUGH_013_FORMALIZED_FAR-CORE-014_PARTIAL_OBSTRUCTION_NO_CONTRADICTION",
+      "state": "complete",
+      "result": "FAR-CORE-001_THROUGH_014_FORMALIZED_NO_CONTRADICTION",
       "formalization_ledger": "theory/evaluation/far-core-formalization-ledger-v1.0.json",
       "deliverable": "kernel-checked formalization or exact obstruction report for the core theorems"
     },
@@ -52,9 +52,9 @@
     }
   ],
   "next_action": {
-    "workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
+    "workstream": "PCA-W3-CONTRACT-SCHEMA",
     "theory_target": "PROJECT-FAR-CORE-THEORY-1.1",
-    "obligation": "formalize the actual PR #453 MLL witness derivations without adding premises, or preserve the reproducible FAR-CORE-014 obstruction"
+    "obligation": "specify and implement a versioned successor to far-ir/1.0 for explicit contract, factorization, collision, quotient, scope, provenance, and failure reporting without silently reinterpreting the legacy schema"
   },
   "prohibited_promotions": [
     "contract_free_universal_minimal_architecture",
