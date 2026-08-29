@@ -62,6 +62,7 @@ EXPECTED_DECLARATION_AXIOMS = {
     "FARCoreV11.primitive_vocabulary_count_noninvariant": frozenset(),
     "FARCoreV11.combine_split_operator_family": frozenset({"Quot.sound"}),
     "FARCoreV11.split_combine_operator": frozenset({"Quot.sound"}),
+    "FARCoreV11.finite_operator_count_noninvariant": frozenset({"Quot.sound"}),
     "FARCoreV11.finite_panel_two_completions": frozenset(),
     "FARCoreV11.commonTheory_frame_independent": frozenset(),
     "FARCoreV11.commonTheory_invariant_under_truth_equivalence": frozenset({"Quot.sound", "propext"}),

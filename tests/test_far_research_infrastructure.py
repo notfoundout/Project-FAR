@@ -39,6 +39,32 @@ class RegistryTests(unittest.TestCase):
         retargeted["review_target"]["theory_sha256"] = "0" * 64
         self.assertTrue(any("target identity/hash" in error for error in registry.w1_seal_errors(retargeted)))
 
+    def test_w1_seal_rejects_coordinated_artifact_and_promotion_rewrite(self):
+        promotion = registry.load("theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
+        required = set(registry.PROMOTED_W1_PATHS) | {
+            "research/campaigns/pca-w1-replay-capsule-v1.0.json",
+            "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+            "theory/terminal/project-far-core-theory-v1.1.json",
+        }
+        target = "docs/research/pca-w1-independent-review/01-stage-a-blind-reconstruction.md"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for raw_path in required:
+                destination = root / raw_path
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes((ROOT / raw_path).read_bytes())
+            target_path = root / target
+            target_path.write_text(
+                target_path.read_text(encoding="utf-8") + "\ncoordinated mutation\n",
+                encoding="utf-8",
+            )
+            tampered = copy.deepcopy(promotion)
+            entry = next(item for item in tampered["verified_artifacts"] if item["path"] == target)
+            entry["sha256"] = registry.sha256(target_path)
+            errors = registry.w1_seal_errors(tampered, root)
+            self.assertTrue(any("artifact hash contract drift" in error for error in errors))
+            self.assertTrue(any("missing or changed" in error for error in errors))
+
     def test_w1_seal_rejects_current_governing_theory_drift(self):
         promotion = registry.load("theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
         required = {
