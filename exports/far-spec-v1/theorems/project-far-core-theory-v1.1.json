@@ -143,6 +143,6 @@
   },
   "core_theory_closed": true,
   "independent_review_status": "complete_confirmed_14_proved_exact_scopes_novelty_not_established",
-  "next_workstream": "PCA-W3-CONTRACT-SCHEMA",
+  "next_workstream": "PCA-W4-DOMAIN-CONTRACTS",
   "reopening_rule": "Only a genuine contradiction to a stated proof or premise may reopen the minimum affected core claims. Assurance, application, and contract-design work is downstream."
 }
