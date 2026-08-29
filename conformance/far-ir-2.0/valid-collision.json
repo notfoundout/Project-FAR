@@ -1,0 +1,20 @@
+{
+  "format_version": "far-ir/2.0",
+  "id": "demo.collision",
+  "contract": {
+    "id": "collision.contract",
+    "contract_version": "2.0",
+    "mode": "exact",
+    "source_domain": {"status": "EXPLICIT", "kind": "finite_explicit", "description": "Two explicit cases", "cases": [{"id": "case.a", "value": {"n": 0}}, {"id": "case.b", "value": {"n": 1}}]},
+    "required_behavior": {"status": "EXPLICIT", "description": "Parity label", "table": [{"case_id": "case.a", "value": "even"}, {"case_id": "case.b", "value": "odd"}]},
+    "representation": {"status": "EXPLICIT", "description": "Collapsed constant representation", "table": [{"case_id": "case.a", "value": "same"}, {"case_id": "case.b", "value": "same"}]},
+    "observation_contexts": [{"id": "obs.primary", "description": "Required parity observation", "status": "EXPLICIT"}],
+    "admitted_transformations": [{"id": "eq.identity", "kind": "equivalence", "description": "Literal equality of table values", "status": "EXPLICIT"}],
+    "interpretation_profile": {"id": "interp.demo", "description": "Literal finite-table interpretation", "status": "EXPLICIT"},
+    "target_model_class": {"id": "target.demo", "description": "The two listed cases only", "status": "EXPLICIT"},
+    "frame": {"id": "frame.empty", "description": "No additional background premises", "status": "EXPLICIT"}
+  },
+  "report": {"outcome": "REFUTED", "evidence": {"kind": "collision", "status": "CHECKED_FINITE_EXPLICIT", "left_case_id": "case.a", "right_case_id": "case.b"}, "failure_report": ["Representation collision merges cases whose required behavior differs."]},
+  "provenance": {"producer": "PCA-W3 conformance fixture", "created_at": "2026-08-29T20:00:00Z", "sources": []},
+  "freeze": {"status": "FROZEN", "frozen_at": "2026-08-29T20:00:00Z", "contract_sha256": "bd16bfdc55ec103e59289f86d82b4b46492e529168a2a63c9234d43b0a4a773a"}
+}
