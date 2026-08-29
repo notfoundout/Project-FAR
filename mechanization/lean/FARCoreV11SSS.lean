@@ -240,12 +240,14 @@ theorem derivable_atom_balance {sequent : Sequent}
   | tensor leftDerivation rightDerivation leftIH rightIH =>
       have hLeft := leftIH
       have hRight := rightIH
-      simp [sequentWeight_append, sequentWeight, atomWeight] at hLeft hRight ⊢
-      omega
+      simp only [sequentWeight_append, sequentWeight, atomWeight, Int.add_zero] at hLeft hRight ⊢
+      calc
+        _ = (sequentWeight target gamma + atomWeight target left) +
+            (sequentWeight target delta + atomWeight target right) := by ac_rfl
+        _ = 0 := by rw [hLeft, hRight]; rfl
   | par premise premiseIH =>
       have hPremise := premiseIH
-      simp [sequentWeight_append, sequentWeight, atomWeight] at hPremise ⊢
-      omega
+      simpa [sequentWeight_append, sequentWeight, atomWeight, Int.add_assoc] using hPremise
   | exchange premise premiseIH =>
       have hPremise := premiseIH
       simpa [sequentWeight_append, sequentWeight, Int.add_assoc, Int.add_comm, Int.add_left_comm] using hPremise

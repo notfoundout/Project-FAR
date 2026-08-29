@@ -525,7 +525,7 @@
       "truth_disposition": "PROVED",
       "proof_status": "SUPPORTED_DERIVED_APPLICATION",
       "independent_review_status": "COMPLETE_CONFIRMED",
-      "formalization_status": "PARTIAL_OBSTRUCTION",
+      "formalization_status": "FORMALIZED",
       "empirical_status": "BOUNDED_CORROBORATION_ONLY",
       "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
       "governance_status": "ACCEPTED_BOUNDED_APPLICATION",
@@ -542,7 +542,11 @@
         "FARCoreV11.SSS.four_monotone_decoders",
         "FARCoreV11.SSS.projected_successor_decoder_failure",
         "FARCoreV11.SSS.hyperedge_factorization",
-        "FARCoreV11.SSS.frontier_factorization"
+        "FARCoreV11.SSS.frontier_factorization",
+        "FARCoreV11.SSS.MLL.derivable_atom_balance",
+        "FARCoreV11.SSS.MLL.sOr_witness_certified",
+        "FARCoreV11.SSS.MLL.sAnd_witness_certified",
+        "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure"
       ],
       "known_counterexamples_to_stronger_variants": [
         "arbitrary binary relation can encode provability",

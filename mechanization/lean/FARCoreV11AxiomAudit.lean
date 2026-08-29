@@ -4,6 +4,10 @@ import FARCoreV11SSS
 
 #print axioms FARCoreV11.Omega.omega_elimination
 #print axioms FARCoreV11.Omega.resolve_is_composition
+#print axioms FARCoreV11.SSS.MLL.bounded_projected_decoder_failure
+#print axioms FARCoreV11.SSS.MLL.derivable_atom_balance
+#print axioms FARCoreV11.SSS.MLL.sAnd_witness_certified
+#print axioms FARCoreV11.SSS.MLL.sOr_witness_certified
 #print axioms FARCoreV11.SSS.four_monotone_decoders
 #print axioms FARCoreV11.SSS.frontier_factorization
 #print axioms FARCoreV11.SSS.hyperedge_factorization

@@ -737,15 +737,19 @@
         "FARCoreV11.SSS.four_monotone_decoders",
         "FARCoreV11.SSS.projected_successor_decoder_failure",
         "FARCoreV11.SSS.hyperedge_factorization",
-        "FARCoreV11.SSS.frontier_factorization"
+        "FARCoreV11.SSS.frontier_factorization",
+        "FARCoreV11.SSS.MLL.derivable_atom_balance",
+        "FARCoreV11.SSS.MLL.sOr_witness_certified",
+        "FARCoreV11.SSS.MLL.sAnd_witness_certified",
+        "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure"
       ],
-      "formalization_status": "PARTIAL/OBSTRUCTION",
+      "formalization_status": "FORMALIZED",
       "kernel_check": "PASS",
       "obstruction": {
-        "classification": "encoding_inconvenience",
-        "details": "The decoder enumeration, two Boolean witness profiles, and conditional hyperedge/frontier factorization bridges are kernel-checked. The repository has no Lean encoding of the actual MLL syntax, resource-splitting rules, derivability relation, atom-balance lemma, or the two named sequents. Treating the PR #453 MLL witness facts as axioms or definitions would silently replace their narrative proofs with premises and would not be exact end-to-end formalization.",
-        "affected_surface": "Only the application bridge from the Boolean S_or/S_and summaries to actual MLL sequents; FAR-CORE-014 truth and W1 review disposition are not contradicted.",
-        "allowed_resolution": "Add a separate application module formalizing the certified MLL presentation, prove balance and both witness profiles, then remove this obstruction without changing v1.1 or PR #453 scope."
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
       },
       "mutation_negative_controls": [
         "FARCoreV11.SSS.unrestricted_decoder_counterexample",

@@ -194,10 +194,10 @@
         "FARCoreV11Omega",
         "FARCoreV11SSS"
       ],
-      "line_count": 34,
+      "line_count": 38,
       "path": "mechanization/lean/FARCoreV11AxiomAudit.lean",
       "role": "W2_CORE_V1_1",
-      "sha256": "ff68ab6e7a0eaa755413787f6a5857492f99bb674fae42604b2729eb814c1e65"
+      "sha256": "3a5f71c40a06336f6d08ebe877bdcf6c9aa8782b8760e7de5885fd757f6e5736"
     },
     {
       "declarations": [
@@ -293,14 +293,28 @@
     {
       "declarations": [
         "BoolImplies",
+        "Derivable",
+        "Formula",
         "FrontierView",
         "HyperedgeView",
+        "MixedSuccessors",
+        "ProjectedSuccessor",
+        "Sequent",
         "SuccessorDecoder",
         "SuccessorTruthShape",
+        "Terminal",
         "WitnessSummary",
+        "a",
+        "aPerp",
+        "aPerp_b_not_derivable",
         "andDecoder",
+        "atomWeight",
+        "b",
+        "bPerp",
+        "bounded_projected_decoder_failure",
         "decodeShape",
         "decoderPrediction",
+        "derivable_atom_balance",
         "four_monotone_decoders",
         "frontierDecoder",
         "frontierView",
@@ -311,8 +325,20 @@
         "nonemptyDecoder",
         "orDecoder",
         "projected_successor_decoder_failure",
+        "sAnd",
         "sAndSummary",
+        "sAnd_derivable",
+        "sAnd_mixed_successors",
+        "sAnd_not_terminal",
+        "sAnd_witness_certified",
+        "sOr",
         "sOrSummary",
+        "sOr_mixed_successors",
+        "sOr_not_derivable",
+        "sOr_not_terminal",
+        "sOr_witness_certified",
+        "sequentWeight",
+        "singleton_a_not_derivable",
         "stateInspectingDecoder",
         "termDecoder",
         "unrestricted_decoder_counterexample"
@@ -320,10 +346,10 @@
       "imports": [
         "FARCoreV11Substrate"
       ],
-      "line_count": 177,
+      "line_count": 375,
       "path": "mechanization/lean/FARCoreV11SSS.lean",
       "role": "W2_CORE_V1_1",
-      "sha256": "2e3c4e12481ad206587316e34ef6a06736c5872315bc0a02285e2069f8f0b977"
+      "sha256": "61af5f1e15546827b9dae72000b7c7c4ab36118eb46bf70fa695208ac010813e"
     },
     {
       "declarations": [
@@ -531,8 +557,8 @@
   "w2_summary": {
     "contradiction_reopen_required": 0,
     "forbidden_placeholders": 0,
-    "formalized": 13,
+    "formalized": 14,
     "kernel_check": "PASS",
-    "partial_obstruction": 1
+    "partial_obstruction": 0
   }
 }

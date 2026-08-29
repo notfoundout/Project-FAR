@@ -7,8 +7,8 @@ and [`artifacts/mechanization/lean-inventory-v1.0.json`](../../artifacts/mechani
 Edit the machine ledger or Lean sources and regenerate this view.
 
 Lean proves machine-checked derivations relative to the encoded premises. It does not establish
-novelty, empirical validity, universal architecture, or correctness of an unencoded narrative
-application bridge. The W1 truth verdicts and proof-assistant status remain separate dimensions.
+novelty, empirical validity, or universal architecture. The W1 truth verdicts, historical
+provenance labels, and proof-assistant status remain separate dimensions.
 
 The W2 workflow captures every `#print axioms` result and rejects missing declarations,
 unexpected transitive assumptions, or any mismatch with the declaration-level and claim-level
@@ -31,28 +31,25 @@ assumption contracts. Merely printing the audit is not accepted as assurance.
 | `FAR-CORE-011` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.omitted_parameter_refutes_sufficiency` | — |
 | `FAR-CORE-012` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.absent_unknown_must_separate` | — |
 | `FAR-CORE-013` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.Omega.omega_elimination`<br>`FARCoreV11.Omega.resolve_is_composition` | — |
-| `FAR-CORE-014` | `PARTIAL/OBSTRUCTION` | `PASS` | `propext` | `FARCoreV11.SSS.four_monotone_decoders`<br>`FARCoreV11.SSS.projected_successor_decoder_failure`<br>`FARCoreV11.SSS.hyperedge_factorization`<br>`FARCoreV11.SSS.frontier_factorization` | The decoder enumeration, two Boolean witness profiles, and conditional hyperedge/frontier factorization bridges are kernel-checked. The repository has no Lean encoding of the actual MLL syntax, resource-splitting rules, derivability relation, atom-balance lemma, or the two named sequents. Treating the PR #453 MLL witness facts as axioms or definitions would silently replace their narrative proofs with premises and would not be exact end-to-end formalization. |
+| `FAR-CORE-014` | `FORMALIZED` | `PASS` | `propext` | `FARCoreV11.SSS.four_monotone_decoders`<br>`FARCoreV11.SSS.projected_successor_decoder_failure`<br>`FARCoreV11.SSS.hyperedge_factorization`<br>`FARCoreV11.SSS.frontier_factorization`<br>`FARCoreV11.SSS.MLL.derivable_atom_balance`<br>`FARCoreV11.SSS.MLL.sOr_witness_certified`<br>`FARCoreV11.SSS.MLL.sAnd_witness_certified`<br>`FARCoreV11.SSS.MLL.bounded_projected_decoder_failure` | — |
 
-## FAR-CORE-014 governed obstruction
+## FAR-CORE-014 bounded application bridge
 
-- Classification: `encoding_inconvenience`
-- Affected surface: Only the application bridge from the Boolean S_or/S_and summaries to actual MLL sequents; FAR-CORE-014 truth and W1 review disposition are not contradicted.
-- Reproducible detail: The decoder enumeration, two Boolean witness profiles, and conditional hyperedge/frontier factorization bridges are kernel-checked. The repository has no Lean encoding of the actual MLL syntax, resource-splitting rules, derivability relation, atom-balance lemma, or the two named sequents. Treating the PR #453 MLL witness facts as axioms or definitions would silently replace their narrative proofs with premises and would not be exact end-to-end formalization.
-- Allowed resolution: Add a separate application module formalizing the certified MLL presentation, prove balance and both witness profiles, then remove this obstruction without changing v1.1 or PR #453 scope.
-
-This is not a refutation. The decoder enumeration, Boolean witness-profile theorem, conditional
-hyperedge factorization, and conditional frontier factorization are kernel-checked. What is absent
-is an end-to-end Lean derivation of the actual MLL witness facts.
+The governed MLL syntax, cut-free unit-free derivability rules, atom-balance invariant, both named
+witness sequents, their mixed projected-successor truth profiles, and the uniform-decoder failure
+are now kernel-checked in `FARCoreV11SSS.lean`. The positive hyperedge and frontier statements
+remain explicitly conditional on their stated rule-characterization/recursion premises. This
+formalization does not enlarge FAR-CORE-014 into a universal architecture claim.
 
 ## W2 module inventory
 
 | File | SHA-256 | Lines | Imports |
 |---|---|---:|---|
-| `mechanization/lean/FARCoreV11AxiomAudit.lean` | `ff68ab6e7a0eaa755413787f6a5857492f99bb674fae42604b2729eb814c1e65` | 34 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
+| `mechanization/lean/FARCoreV11AxiomAudit.lean` | `3a5f71c40a06336f6d08ebe877bdcf6c9aa8782b8760e7de5885fd757f6e5736` | 38 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
 | `mechanization/lean/FARCoreV11Claims001To012.lean` | `9171f9a6598bfdaf2eaf37cf8994438c0095ff4a8e39081c8887ce5ea90f746e` | 318 | `FARCoreV11Substrate` |
 | `mechanization/lean/FARCoreV11Mutations.lean` | `ec389d2081c635f336aa2f3cd087f997aeb7ed800e4fa081b76f43130aa23069` | 170 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
 | `mechanization/lean/FARCoreV11Omega.lean` | `52570fe1ed0c7a76b850162d584d47e759098b054a8cd147161891d663a7044c` | 51 | `FARCoreV11Substrate` |
-| `mechanization/lean/FARCoreV11SSS.lean` | `2e3c4e12481ad206587316e34ef6a06736c5872315bc0a02285e2069f8f0b977` | 177 | `FARCoreV11Substrate` |
+| `mechanization/lean/FARCoreV11SSS.lean` | `61af5f1e15546827b9dae72000b7c7c4ab36118eb46bf70fa695208ac010813e` | 375 | `FARCoreV11Substrate` |
 | `mechanization/lean/FARCoreV11Substrate.lean` | `c10ed7cd9f2bb35018d7312e2f3fa755cb292663a73ed24fb17eeac193c01410` | 240 | `Std` |
 
 The inventory also records every pre-existing Lean file as `LEGACY_OR_OTHER_SCOPE`. Those files
