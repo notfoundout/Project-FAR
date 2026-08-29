@@ -97,6 +97,9 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
             ranked,
         )
         self.assertIn("do not reopen the core without a genuine contradiction", ranked)
+        self.assertNotIn(
+            "Current review target: `PROJECT-FAR-CORE-THEORY-1.1`.", ranked
+        )
         for stale in (
             "POST-TERM-EVAL-001",
             "PTE-W1-INDEPENDENT-REVIEW",
