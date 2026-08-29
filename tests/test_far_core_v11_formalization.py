@@ -9,9 +9,22 @@ class FARCoreV11FormalizationTests(unittest.TestCase):
     def test_machine_ledger_and_lean_sources_align(self):
         generated, _report, errors = checker.expected()
         self.assertEqual(errors, [])
-        self.assertEqual(generated["w2_summary"]["formalized"], 13)
-        self.assertEqual(generated["w2_summary"]["partial_obstruction"], 1)
+        self.assertEqual(generated["w2_summary"]["formalized"], 14)
+        self.assertEqual(generated["w2_summary"]["partial_obstruction"], 0)
         self.assertEqual(generated["w2_summary"]["contradiction_reopen_required"], 0)
+
+    def test_far_core_014_is_end_to_end_formalized_without_provenance_rewrite(self):
+        ledger = checker.load(checker.LEDGER_PATH)
+        assurance = checker.load(checker.ASSURANCE_PATH)
+        claim = next(item for item in ledger["claims"] if item["id"] == "FAR-CORE-014")
+        assurance_claim = next(item for item in assurance["claims"] if item["id"] == "FAR-CORE-014")
+        self.assertEqual(claim["formalization_status"], "FORMALIZED")
+        self.assertEqual(claim["obstruction"]["classification"], "none")
+        self.assertIn("FARCoreV11.SSS.MLL.sOr_witness_certified", claim["lean_declarations"])
+        self.assertIn("FARCoreV11.SSS.MLL.sAnd_witness_certified", claim["lean_declarations"])
+        self.assertIn("FARCoreV11.SSS.MLL.bounded_projected_decoder_failure", claim["lean_declarations"])
+        self.assertEqual(assurance_claim["truth_disposition"], "PROVED")
+        self.assertEqual(assurance_claim["formalization_status"], "FORMALIZED")
 
     def test_no_w2_axiom_or_placeholder(self):
         generated, _report, _errors = checker.expected()
