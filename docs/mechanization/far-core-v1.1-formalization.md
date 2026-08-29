@@ -31,7 +31,7 @@ assumption contracts. Merely printing the audit is not accepted as assurance.
 | `FAR-CORE-011` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.omitted_parameter_refutes_sufficiency` | — |
 | `FAR-CORE-012` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.absent_unknown_must_separate` | — |
 | `FAR-CORE-013` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.Omega.omega_elimination`<br>`FARCoreV11.Omega.resolve_is_composition` | — |
-| `FAR-CORE-014` | `FORMALIZED` | `PASS` | `propext` | `FARCoreV11.SSS.four_monotone_decoders`<br>`FARCoreV11.SSS.projected_successor_decoder_failure`<br>`FARCoreV11.SSS.hyperedge_factorization`<br>`FARCoreV11.SSS.frontier_factorization`<br>`FARCoreV11.SSS.MLL.derivable_atom_balance`<br>`FARCoreV11.SSS.MLL.sOr_witness_certified`<br>`FARCoreV11.SSS.MLL.sAnd_witness_certified`<br>`FARCoreV11.SSS.MLL.bounded_projected_decoder_failure` | — |
+| `FAR-CORE-014` | `FORMALIZED` | `PASS` | `Quot.sound`<br>`propext` | `FARCoreV11.SSS.four_monotone_decoders`<br>`FARCoreV11.SSS.projected_successor_decoder_failure`<br>`FARCoreV11.SSS.hyperedge_factorization`<br>`FARCoreV11.SSS.frontier_factorization`<br>`FARCoreV11.SSS.MLL.derivable_atom_balance`<br>`FARCoreV11.SSS.MLL.sOr_witness_certified`<br>`FARCoreV11.SSS.MLL.sAnd_witness_certified`<br>`FARCoreV11.SSS.MLL.bounded_projected_decoder_failure` | — |
 
 ## FAR-CORE-014 bounded application bridge
 

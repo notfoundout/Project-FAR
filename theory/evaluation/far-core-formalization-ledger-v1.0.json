@@ -730,6 +730,7 @@
         "propositional extensionality"
       ],
       "kernel_axioms": [
+        "Quot.sound",
         "propext"
       ],
       "intended_lean_module": "mechanization/lean/FARCoreV11SSS.lean",

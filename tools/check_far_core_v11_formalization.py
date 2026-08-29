@@ -41,7 +41,7 @@ EXPECTED_KERNEL_AXIOMS = {
     "FAR-CORE-011": ["none"],
     "FAR-CORE-012": ["none"],
     "FAR-CORE-013": ["none"],
-    "FAR-CORE-014": ["propext"],
+    "FAR-CORE-014": ["Quot.sound", "propext"],
 }
 EXPECTED_DECLARATION_AXIOMS = {
     "FARCoreV11.exact_factorization_criterion": frozenset({"Classical.choice"}),
@@ -74,10 +74,10 @@ EXPECTED_DECLARATION_AXIOMS = {
     "FARCoreV11.SSS.projected_successor_decoder_failure": frozenset({"propext"}),
     "FARCoreV11.SSS.hyperedge_factorization": frozenset({"propext"}),
     "FARCoreV11.SSS.frontier_factorization": frozenset({"propext"}),
-    "FARCoreV11.SSS.MLL.derivable_atom_balance": frozenset(),
-    "FARCoreV11.SSS.MLL.sOr_witness_certified": frozenset(),
-    "FARCoreV11.SSS.MLL.sAnd_witness_certified": frozenset(),
-    "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure": frozenset({"propext"}),
+    "FARCoreV11.SSS.MLL.derivable_atom_balance": frozenset({"Quot.sound", "propext"}),
+    "FARCoreV11.SSS.MLL.sOr_witness_certified": frozenset({"Quot.sound", "propext"}),
+    "FARCoreV11.SSS.MLL.sAnd_witness_certified": frozenset({"Quot.sound", "propext"}),
+    "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure": frozenset({"Quot.sound", "propext"}),
 }
 FORBIDDEN = re.compile(r"(?m)^\s*(?:axiom\b|constant\b|sorry\b|admit\b|unsafe\s+(?:def|theorem)\b)")
 DECLARATION = re.compile(
