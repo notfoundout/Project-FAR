@@ -46,10 +46,14 @@ jobs:
           PY
       - name: Apply review repairs
         run: python tools/_tmp_pr458_review_fix.py
-      - name: Regenerate formalization views and axiom audit
+      - name: Regenerate axiom audit source directly
         run: |
-          python tools/check_far_core_v11_formalization.py --emit-axiom-audit mechanization/lean/FARCoreV11AxiomAudit.lean
-          python tools/check_far_core_v11_formalization.py --write
+          python - <<'PY'
+          from tools import check_far_core_v11_formalization as checker
+          checker.AXIOM_AUDIT_PATH.write_text(checker.render_axiom_audit(), encoding='utf-8')
+          PY
+      - name: Regenerate formalization views
+        run: python tools/check_far_core_v11_formalization.py --write
       - name: Regenerate research/assurance graph views
         run: python tools/far_research_registry.py --write
       - name: Run targeted Python regressions
