@@ -26,6 +26,8 @@ Current canonical authority includes the corrected core theory v1.1, machine-rea
 
 The historical UPP adjudication remains: **Frozen proposition not refuted; frozen derivation defective; theorem not established.** `POST-TERM-EVAL-001` is superseded and `UPP-SR-001` is optional bounded historical work, not a core dependency.
 
+The frozen SWE-agent v2 comparison remains a bounded historical result: v1.0.0 resolved **0/2** preregistered runs and v1.0.1 resolved **0/2** preregistered runs, yielding `no_observed_resolution_difference` and bounded-case decision `REVIEW_REQUIRED`. Those observations do not establish equivalence, superiority, safety, readiness, or general performance for either release.
+
 PR #453 remains noncanonical Research. Its E0 blocked, E1 fragmented, SSS, profile-relative irreflexivity, and open-boundary results retain their recorded scopes and do not supply premises of the accepted core theory except where the governing v1.1 claim explicitly depends on the bounded application record.
 
 ## W1 assurance disposition
