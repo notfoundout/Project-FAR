@@ -63,7 +63,7 @@ The existing Phase 3 `far-ir/1.0` mechanization remains a historical/current MVP
 
 The authoritative dependency order is **foundations → shared theory → FARA → FAR → FARO**.
 
-- FARA: formal/schema representation layer; its former seven candidate primitives are schema/contract roles, not globally necessary primitives.
+- FARA: formal/schema representation layer. `FARA-FORMAL-KERNEL-001` remains the accepted bounded formal-kernel promotion at its stated scope; the former seven candidate primitives are schema/contract roles, not globally necessary primitives.
 - FAR: contract-relative methodology and audit protocol.
 - FARO: downstream execution, comparison, materialized views, audit, and reporting.
 - FARE: requirement-driven mathematical support.
@@ -75,7 +75,7 @@ Construct, Differentiate, and Restrict are workflow verbs. Resolve and Ω are de
 
 The historical UPP proposition remains not refuted, but its frozen derivation is defective and the theorem is not established. Its artifacts are preserved as history and are not current theorem authority.
 
-Historical bounded-program status remains historical only. PR #453 remains a noncanonical Research record at its exact bounded scope. Preserved SWE-agent, REP, ADJ, W3.5, CRE, FARA-kernel, comparative-representation, and external-system records likewise retain only their original scopes. The frozen SWE-agent v2 comparison observed 0/2 resolved runs for v1.0.0 and 0/2 for v1.0.1 on one task; that bounded observation does not establish equivalence, superiority, safety, readiness, or general performance. No finite execution establishes open-domain universality or commercial value.
+Historical bounded-program status remains historical only. PR #453 remains a noncanonical Research record at its exact bounded scope. Preserved SWE-agent, REP, ADJ, W3.5, CRE, FARA-kernel, comparative-representation, and external-system records likewise retain only their original scopes. The frozen SWE-agent v2 comparison observed 0/2 resolved runs for v1.0.0 and 0/2 for v1.0.1 on one task; its recorded result is `no_observed_resolution_difference` and its bounded case decision is `REVIEW_REQUIRED`. That bounded observation does not establish equivalence, superiority, safety, readiness, or general performance. No finite execution establishes open-domain universality or commercial value.
 
 ## Certification and architecture navigation
 
