@@ -49,8 +49,11 @@ jobs:
       - name: Regenerate axiom audit source directly
         run: |
           python - <<'PY'
+          from pathlib import Path
           from tools import check_far_core_v11_formalization as checker
-          checker.AXIOM_AUDIT_PATH.write_text(checker.render_axiom_audit(), encoding='utf-8')
+          Path('mechanization/lean/FARCoreV11AxiomAudit.lean').write_text(
+              checker.render_axiom_audit(), encoding='utf-8'
+          )
           PY
       - name: Regenerate formalization views
         run: python tools/check_far_core_v11_formalization.py --write
