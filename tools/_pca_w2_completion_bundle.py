@@ -32,7 +32,20 @@ def write(path: str, value: dict) -> None:
     )
 
 
+def remove_tactic_only_mll_axioms() -> None:
+    path = ROOT / "mechanization/lean/FARCoreV11SSS.lean"
+    text = path.read_text(encoding="utf-8")
+    old_tensor = """      have hLeft := leftIH\n      have hRight := rightIH\n      simp [sequentWeight_append, sequentWeight, atomWeight] at hLeft hRight ⊢\n      omega\n"""
+    new_tensor = """      have hLeft := leftIH\n      have hRight := rightIH\n      simp only [sequentWeight_append, sequentWeight, atomWeight, Int.add_zero] at hLeft hRight ⊢\n      calc\n        _ = (sequentWeight target gamma + atomWeight target left) +\n            (sequentWeight target delta + atomWeight target right) := by ac_rfl\n        _ = 0 := by rw [hLeft, hRight]; rfl\n"""
+    old_par = """      have hPremise := premiseIH\n      simp [sequentWeight_append, sequentWeight, atomWeight] at hPremise ⊢\n      omega\n"""
+    new_par = """      have hPremise := premiseIH\n      simpa [sequentWeight_append, sequentWeight, atomWeight, Int.add_assoc] using hPremise\n"""
+    if old_tensor not in text or old_par not in text:
+        raise SystemExit("MLL proof migration target not found exactly")
+    path.write_text(text.replace(old_tensor, new_tensor).replace(old_par, new_par), encoding="utf-8")
+
+
 def main() -> int:
+    remove_tactic_only_mll_axioms()
     ledger = load(checker.LEDGER_PATH)
     assurance = load(checker.ASSURANCE_PATH)
     claim = next(item for item in ledger["claims"] if item["id"] == "FAR-CORE-014")
