@@ -48,15 +48,16 @@ jobs:
 
           registry_path = Path("tools/far_research_registry.py")
           text = registry_path.read_text()
-          old_assurance = "internal_deductive_corrected_then_independently_reviewed_exact_scopes_w2_partial_novelty_not_established"
-          if old_assurance not in text:
-              raise SystemExit("expected stale W2 assurance marker not found")
-          text = text.replace(old_assurance, assurance)
-          old = '        "next_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",\n    },\n}'
-          new = f'        "next_workstream": "{next_ws}",\n    }},\n}}'
-          if old not in text:
+          old_assurance_fragment = '            "exact_scopes_w2_partial_novelty_not_established"'
+          new_assurance_fragment = '            "exact_scopes_w2_complete_novelty_not_established"'
+          if old_assurance_fragment not in text:
+              raise SystemExit("expected stale W2 assurance fragment not found")
+          text = text.replace(old_assurance_fragment, new_assurance_fragment, 1)
+          old_next = '        "next_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",'
+          new_next = f'        "next_workstream": "{next_ws}",'
+          if old_next not in text:
               raise SystemExit("expected reviewed-ledger next-workstream marker not found")
-          text = text.replace(old, new, 1)
+          text = text.replace(old_next, new_next, 1)
           registry_path.write_text(text)
           PY
           python tools/far_research_registry.py --write
