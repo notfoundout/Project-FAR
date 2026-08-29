@@ -35,7 +35,6 @@ jobs:
             LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11Claims001To012.olean mechanization/lean/FARCoreV11Claims001To012.lean
             LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11Omega.olean mechanization/lean/FARCoreV11Omega.lean
             LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11SSS.olean mechanization/lean/FARCoreV11SSS.lean
-            LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11SSSMLL.olean mechanization/lean/FARCoreV11SSSMLL.lean
             LEAN_PATH=mechanization/lean lean mechanization/lean/FARCoreV11Mutations.lean
           } 2>&1 | tee artifacts/mechanization/far-core-v11-compile.txt
       - name: Upload compile diagnostics
