@@ -20,19 +20,29 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install jsonschema
-      - name: Normalize checker insertion anchor
+      - name: Normalize checker and migration script
         run: |
           python - <<'PY'
           from pathlib import Path
-          path = Path('tools/check_far_core_v11_formalization.py')
-          text = path.read_text(encoding='utf-8')
+
+          checker = Path('tools/check_far_core_v11_formalization.py')
+          text = checker.read_text(encoding='utf-8')
           target = '    "FARCoreV11.finite_panel_two_completions": frozenset(),\n'
           inserted = '    "FARCoreV11.finite_operator_count_noninvariant": frozenset({"Quot.sound"}),\n' + target
           if '"FARCoreV11.finite_operator_count_noninvariant"' not in text:
               if target not in text:
                   raise SystemExit('finite-panel axiom anchor missing')
-              text = text.replace(target, inserted, 1)
-              path.write_text(text, encoding='utf-8')
+              checker.write_text(text.replace(target, inserted, 1), encoding='utf-8')
+
+          migration = Path('tools/_tmp_pr458_review_fix.py')
+          source = migration.read_text(encoding='utf-8')
+          start_marker = '# Formalization checker: make the new declaration mandatory in the exact axiom contract.\n'
+          end_marker = '# W1: an independent hard-coded seal prevents coordinated artifact+promotion hash rewrites.\n'
+          if start_marker in source:
+              start = source.index(start_marker)
+              end = source.index(end_marker)
+              source = source[:start] + '# Formalization checker normalized by workflow before migration.\n\n' + source[end:]
+              migration.write_text(source, encoding='utf-8')
           PY
       - name: Apply review repairs
         run: python tools/_tmp_pr458_review_fix.py
