@@ -1,0 +1,20 @@
+{
+  "format_version": "far-ir/2.0",
+  "id": "demo.factorization.invalid",
+  "contract": {
+    "id": "demo.contract",
+    "contract_version": "2.0",
+    "mode": "exact",
+    "source_domain": {"status": "EXPLICIT", "kind": "finite_explicit", "description": "Two explicit cases", "cases": [{"id": "case.a", "value": {"n": 0}}, {"id": "case.b", "value": {"n": 1}}]},
+    "required_behavior": {"status": "EXPLICIT", "description": "Parity label", "table": [{"case_id": "case.a", "value": "even"}, {"case_id": "case.b", "value": "odd"}]},
+    "representation": {"status": "EXPLICIT", "description": "Identity bit", "table": [{"case_id": "case.a", "value": 0}, {"case_id": "case.b", "value": 1}]},
+    "observation_contexts": [{"id": "obs.primary", "description": "Required parity observation", "status": "EXPLICIT"}],
+    "admitted_transformations": [{"id": "eq.identity", "kind": "equivalence", "description": "Literal equality of table values", "status": "EXPLICIT"}],
+    "interpretation_profile": {"id": "interp.demo", "description": "Literal finite-table interpretation", "status": "EXPLICIT"},
+    "target_model_class": {"id": "target.demo", "description": "The two listed cases only", "status": "EXPLICIT"},
+    "frame": {"id": "frame.empty", "description": "No additional background premises", "status": "EXPLICIT"}
+  },
+  "report": {"outcome": "PROVED", "evidence": {"kind": "factorization", "status": "CHECKED_FINITE_EXPLICIT", "decoder_table": [{"representation_value": 0, "behavior_value": "even"}, {"representation_value": 1, "behavior_value": "even"}]}, "failure_report": []},
+  "provenance": {"producer": "PCA-W3 conformance fixture", "created_at": "2026-08-29T20:00:00Z", "sources": []},
+  "freeze": {"status": "FROZEN", "frozen_at": "2026-08-29T20:00:00Z", "contract_sha256": "852cd2748bc42a121fecc5a738f7e578820dd1569a32969b2ffc17bd893f93ae"}
+}
