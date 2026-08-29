@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""Temporary deterministic migration helper for PCA-W2 completion."""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from tools import check_far_core_v11_formalization as checker
+
+ROOT = Path(__file__).resolve().parents[1]
+NEW_DECLARATIONS = [
+    "FARCoreV11.SSS.four_monotone_decoders",
+    "FARCoreV11.SSS.projected_successor_decoder_failure",
+    "FARCoreV11.SSS.hyperedge_factorization",
+    "FARCoreV11.SSS.frontier_factorization",
+    "FARCoreV11.SSS.MLL.derivable_atom_balance",
+    "FARCoreV11.SSS.MLL.sOr_witness_certified",
+    "FARCoreV11.SSS.MLL.sAnd_witness_certified",
+    "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure",
+]
+
+
+def load(path: str) -> dict:
+    return json.loads((ROOT / path).read_text(encoding="utf-8"))
+
+
+def write(path: str, value: dict) -> None:
+    (ROOT / path).write_text(
+        json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+
+
+def main() -> int:
+    ledger = load(checker.LEDGER_PATH)
+    assurance = load(checker.ASSURANCE_PATH)
+    claim = next(item for item in ledger["claims"] if item["id"] == "FAR-CORE-014")
+    claim["lean_declarations"] = NEW_DECLARATIONS
+    claim["formalization_status"] = "FORMALIZED"
+    claim["kernel_check"] = "PASS"
+    claim["obstruction"] = {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none",
+    }
+    assurance_claim = next(item for item in assurance["claims"] if item["id"] == "FAR-CORE-014")
+    assurance_claim["formalization_status"] = "FORMALIZED"
+    assurance_claim["lean_declarations"] = NEW_DECLARATIONS
+    write(checker.LEDGER_PATH, ledger)
+    write(checker.ASSURANCE_PATH, assurance)
+    (ROOT / "mechanization/lean/FARCoreV11AxiomAudit.lean").write_text(
+        checker.render_axiom_audit(), encoding="utf-8"
+    )
+    generated, report, errors = checker.expected()
+    if errors:
+        raise SystemExit("; ".join(errors))
+    (ROOT / checker.INVENTORY_PATH).write_text(
+        json.dumps(generated, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    (ROOT / checker.REPORT_PATH).write_text(report, encoding="utf-8")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
