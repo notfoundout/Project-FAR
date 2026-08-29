@@ -11,7 +11,7 @@ import check_current_state_consistency as checker
 
 EXPECTED_RELEASE = "v1.0.0"
 PROGRAM_ID = "POST-CLOSURE-001"
-NEXT_WORKSTREAM = "PCA-W2-PROOF-ASSISTANT-FORMALIZATION"
+NEXT_WORKSTREAM = "PCA-W3-CONTRACT-SCHEMA"
 
 VALID_TEXTS = {
     "readme": (
@@ -24,7 +24,7 @@ VALID_TEXTS = {
         "Current published repository release: [`v1.0.0`]\n"
         "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
         "Current program: `POST-CLOSURE-001`\n"
-        "| `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | **Next / Active** | boundary |\n"
+        "| `PCA-W3-CONTRACT-SCHEMA` | **Next / Active** | boundary |\n"
     ),
     "map": (
         "Project FAR Core Theory v1.1\n"
@@ -36,7 +36,7 @@ VALID_TEXTS = {
         "Current published repository release: [`v1.0.0`]\n"
         "Current governing core: [`PROJECT-FAR-CORE-THEORY-1.1`]\n"
         "Current program: [`POST-CLOSURE-001`]\n"
-        "`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` — next\n"
+        "`PCA-W3-CONTRACT-SCHEMA` — next\n"
     ),
     "generated": (
         "# Historical Bounded-Program Status (Generated)\n"
@@ -46,7 +46,7 @@ VALID_TEXTS = {
         "Program: `POST-CLOSURE-001`.\n"
         "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
         "Historical v1.0 Core\n"
-        "Canonical next workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.\n"
+        "Canonical next workstream: `PCA-W3-CONTRACT-SCHEMA`.\n"
     ),
     "agents": (
         "If purported current-authority surfaces conflict, stop. "
@@ -84,7 +84,7 @@ class CurrentStateConsistencyTests(unittest.TestCase):
             "Program: `POST-CLOSURE-001`.\n"
             "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
             "Historical v1.0 Core\n"
-            "Canonical next workstream: `PCA-W3-CONTRACT-SCHEMA`.\n"
+            "Canonical next workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.\n"
         )
         errors = self.validate(texts)
         self.assertTrue(any("next-actions workstream drifted" in error for error in errors))
@@ -116,7 +116,8 @@ class CurrentStateConsistencyTests(unittest.TestCase):
             "Program: `POST-CLOSURE-001`\n\n"
             "- `PCA-W0-REPOSITORY-CONFORMITY`: complete.\n"
             "- `PCA-W1-INDEPENDENT-REVIEW`: complete.\n"
-            "- `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: **active — next**.\n"
+            "- `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete.\n"
+            "- `PCA-W3-CONTRACT-SCHEMA`: **open — next**.\n"
         )
         self.assertEqual(
             (PROGRAM_ID, NEXT_WORKSTREAM), checker.program_identity(program)
