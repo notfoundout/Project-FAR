@@ -7,7 +7,9 @@ Project FAR is a framework for representing, analyzing, and comparing structured
 
 ## Latest release: v1.0.0
 
-The latest published repository release is `v1.0.0`; executable package metadata is a separate version surface. The current governing theory is `PROJECT-FAR-CORE-THEORY-1.1`.
+The latest published GitHub repository release is [v1.0.0](https://github.com/notfoundout/Project-FAR/releases/tag/v1.0.0). The executable package metadata currently declares a separate installable version. These are separate version surfaces: the GitHub release records the published repository release, while package metadata governs the installable software version.
+
+The current governing theory is `PROJECT-FAR-CORE-THEORY-1.1`.
 
 > **NONTRIVIAL CONTRACT-FREE MINIMAL ARCHITECTURE IS IMPOSSIBLE; CONTRACT-RELATIVE SUFFICIENCY AND A UNIQUE MINIMAL OBSERVATIONAL QUOTIENT ARE PROVED.**
 
@@ -21,7 +23,7 @@ Project FAR therefore closes as a **contract-relative audit discipline**, not as
 
 The corrected v1.1 theory survived the sealed `PCA-W1-INDEPENDENT-REVIEW` under its exact scopes: 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, 0 `UNDERDETERMINED`; no theorem correction was required. Novelty and priority were not established.
 
-`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is also complete: all 14 governed claims are `FORMALIZED` under pinned Lean 4.19.0, with zero partial obstructions and zero contradiction/reopen outcomes. FAR-CORE-014 includes the bounded unit-free MLL witness bridge, and exact transitive kernel assumptions are runtime-audited rather than inferred from CI success.
+`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: all 14 governed claims are `FORMALIZED` under pinned Lean 4.19.0, with zero partial obstructions and zero contradiction/reopen outcomes. FAR-CORE-014 includes the bounded unit-free MLL witness bridge, and exact transitive kernel assumptions are runtime-audited rather than inferred from CI success.
 
 These are separate assurance dimensions. Independent review does not imply novelty; Lean formalization does not imply empirical utility, efficiency, open-domain universality, or product readiness.
 
@@ -49,7 +51,7 @@ The active program is `POST-CLOSURE-001`.
 - `PCA-W5-APPROXIMATION-AND-COST`: open.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open.
 
-The core reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.
+Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.
 
 ## W3 boundary
 
@@ -73,7 +75,20 @@ Construct, Differentiate, and Restrict are workflow verbs. Resolve and Ω are de
 
 The historical UPP proposition remains not refuted, but its frozen derivation is defective and the theorem is not established. Its artifacts are preserved as history and are not current theorem authority.
 
-PR #453 remains a noncanonical Research record at its exact bounded scope. Preserved SWE-agent, REP, ADJ, W3.5, CRE, FARA-kernel, comparative-representation, and external-system records likewise retain only their original scopes. No finite execution establishes open-domain universality, commercial value, safety, readiness, or general performance.
+Historical bounded-program status remains historical only. PR #453 remains a noncanonical Research record at its exact bounded scope. Preserved SWE-agent, REP, ADJ, W3.5, CRE, FARA-kernel, comparative-representation, and external-system records likewise retain only their original scopes. The frozen SWE-agent v2 comparison observed 0/2 resolved runs for v1.0.0 and 0/2 for v1.0.1 on one task; that bounded observation does not establish equivalence, superiority, safety, readiness, or general performance. No finite execution establishes open-domain universality or commercial value.
+
+## Certification and architecture navigation
+
+- [Repository certification governance](docs/governance/repository-certification-standard.md)
+- [Repository certification inventory baseline](docs/audits/repository-certification-inventory-audit.md)
+- [Semantic certification baseline](docs/audits/semantic-certification-report.md)
+- [Canonical vocabulary index](docs/glossary/canonical-vocabulary-index.md)
+- [Repository architecture certification](docs/audits/repository-architecture-certification-report.md)
+- [Documentation standardization report](docs/audits/documentation-standardization-report.md)
+- [Repository domain registry](docs/architecture/repository-domain-registry.md)
+- [Repository compliance enforcement report](docs/audits/repository-compliance-enforcement-report.md)
+- [Independent repository certification audit](docs/audits/independent-repository-certification-audit.md)
+- [Repository certification status](docs/certification/repository-certification-status.md)
 
 ## Validation
 
