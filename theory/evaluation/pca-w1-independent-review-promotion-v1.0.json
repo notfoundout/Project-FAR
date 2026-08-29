@@ -23,9 +23,9 @@
     ],
     "reviewed_projection_sha256": "ee852f8ceb968861ebdee48d1b3f6ec85771751b9dd3f80abbde8cef96860ca1",
     "permitted_current_metadata_values": {
-      "assurance": "internal_deductive_corrected_then_independently_reviewed_exact_scopes_w2_partial_novelty_not_established",
+      "assurance": "internal_deductive_corrected_then_independently_reviewed_exact_scopes_w2_complete_novelty_not_established",
       "independent_review_status": "complete_confirmed_14_proved_exact_scopes_novelty_not_established",
-      "next_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION"
+      "next_workstream": "PCA-W3-CONTRACT-SCHEMA"
     }
   },
   "review_branch": {
@@ -141,5 +141,5 @@
     "sealed_review_changed": false,
     "scope_guards_retained": true
   },
-  "next_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION"
+  "next_workstream": "PCA-W3-CONTRACT-SCHEMA"
 }

@@ -97,12 +97,12 @@ W1_REVIEWED_LEDGER_CONTRACT = {
     "permitted_current_metadata_values": {
         "assurance": (
             "internal_deductive_corrected_then_independently_reviewed_"
-            "exact_scopes_w2_partial_novelty_not_established"
+            "exact_scopes_w2_complete_novelty_not_established"
         ),
         "independent_review_status": (
             "complete_confirmed_14_proved_exact_scopes_novelty_not_established"
         ),
-        "next_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
+        "next_workstream": "PCA-W3-CONTRACT-SCHEMA",
     },
 }
 GRAPH_ADDITIONAL_SOURCES = {
