@@ -5,7 +5,7 @@
 
 Project FAR is a framework for representing, analyzing, and comparing structured, explicit, auditable reasoning under declared contracts.
 
-## Current release and authority
+## Latest release: v1.0.0
 
 The latest published repository release is `v1.0.0`; executable package metadata is a separate version surface. The current governing theory is `PROJECT-FAR-CORE-THEORY-1.1`.
 
@@ -37,7 +37,7 @@ Canonical links:
 - [Roadmap](docs/ROADMAP.md)
 - [Historical v1.0 core theory](theory/theorems/Project-FAR-Theory-Closure-v1.0.md), preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`
 
-## Current program
+## Post-closure phase
 
 The active program is `POST-CLOSURE-001`.
 
