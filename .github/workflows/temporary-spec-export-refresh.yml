@@ -1,0 +1,43 @@
+name: Temporary specification export refresh
+
+on:
+  push:
+    branches:
+      - research/post-w1-infrastructure-w2-formalization
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/post-w1-infrastructure-w2-formalization
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install pytest pyyaml
+      - name: Regenerate and verify specification export
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/export_specification.py
+          python -m pytest tests/test_specification_export.py -q
+      - name: Commit deterministic export
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add exports/far-spec-v1
+          if git diff --cached --quiet; then
+            echo "No export changes required"
+            exit 0
+          fi
+          git commit -m "fix: regenerate specification export after W2 promotion"
+          git push origin HEAD:research/post-w1-infrastructure-w2-formalization
