@@ -189,6 +189,19 @@ structure FiniteTaggedDispatcher (I : Type u) (A : I -> Type v) (B : Type w) whe
   tags : FiniteTagCarrier I
   dispatch : Sigma A -> B
 
+/-- Count the named primitive operator symbols in a presentation. -/
+structure PrimitiveOperatorCount where
+  operatorCount : Nat
+  deriving DecidableEq
+
+/-- A concrete two-operator presentation before tagged dispatch. -/
+def splitTwoOperatorVocabulary : PrimitiveOperatorCount where
+  operatorCount := 2
+
+/-- The faithfully equivalent tagged-dispatch presentation uses one primitive dispatcher. -/
+def combinedDispatcherVocabulary : PrimitiveOperatorCount where
+  operatorCount := 1
+
 /-- Splitting the combined finite family recovers every tagged operator. -/
 theorem combine_split_operator_family {I : Type u}
     {A : I -> Type v} {B : Type w} (family : FiniteOperatorFamily I A B) :
@@ -203,6 +216,23 @@ theorem split_combine_operator {I : Type u}
   funext tagged
   cases tagged
   rfl
+
+/-- A concrete finite two-operator presentation is faithfully recoverable from one tagged
+    dispatcher while the primitive operator counts differ. -/
+theorem finite_operator_count_noninvariant
+    {A : Bool -> Type v} {B : Type w}
+    (opFalse : A false -> B) (opTrue : A true -> B) :
+    let family : (i : Bool) -> A i -> B := fun
+      | false => opFalse
+      | true => opTrue
+    let dispatcher : Sigma A -> B := combineOperator family
+    (splitOperator dispatcher = family) ∧
+      splitTwoOperatorVocabulary ≠ combinedDispatcherVocabulary := by
+  dsimp
+  constructor
+  · funext i argument
+    cases i <;> rfl
+  · decide
 
 /-! ## FAR-CORE-009 -/
 

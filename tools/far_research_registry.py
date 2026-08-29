@@ -72,6 +72,10 @@ PROMOTED_W1_PATHS = {
     "docs/research/pca-w1-independent-review/07-final-independent-review.json",
     "docs/research/pca-w1-independent-review/08-review-artifact-manifest.json",
 }
+# Independent trust root for the 16 byte-promoted W1 artifacts.
+# These values are not derived from the mutable promotion JSON at validation time.
+W1_PROMOTED_ARTIFACT_SHA256 = {'docs/research/pca-w1-independent-review-protocol-v1.0.md': '2decf1bcc924101928432143535712bd6fccc4723947d97321fee2d14adea0dc', 'docs/research/pca-w1-independent-review/00-exposure-environment.md': 'f9edff7c8385d49064c1ea92a529bbb5d4f32e38a667531687bc123057c7a73d', 'docs/research/pca-w1-independent-review/01-stage-a-blind-reconstruction.md': 'bbc33980d8b5f68d6c3c9d89857cf5706561b0679781fff9f487aa80654c5662', 'docs/research/pca-w1-independent-review/tools/stage_a_finite_checks.py': 'b5c912eaacb766faecec61a60c997cacb53c5f01741952018e1513a29eafa137', 'docs/research/pca-w1-independent-review/tools/stage-a-finite-check-output.md': '342204f48178c68160f5f700d43ab5cafd6ff5fde327a025129983f368b8832b', 'docs/research/pca-w1-independent-review/02-stage-b-ledger-reconciliation.md': '623838d5ff4daded5a35539ecf558264e70ad10fcf4428165c1ceb46cf55ecd7', 'docs/research/pca-w1-independent-review/03-stage-c-independent-research.md': '413e9f9ac2cacc116188dad511fb0726a952bc15f83b1f44dd88c343057fc9db', 'docs/research/pca-w1-independent-review/04-stage-c-hostile-test-ledger.md': 'bceb586e71800375935902ad5653e8d02d1211de24b13eed572d85228fc9dbd5', 'docs/research/pca-w1-independent-review/05-stage-d-provisional-verdict-frozen.md': 'e27c99c7ff52f5f95e30e6f163b83cacbfa389d61d6f9408966bf983ce66902e', 'docs/research/pca-w1-independent-review/05-stage-d-freeze-manifest.json': 'f48b05d997f1e1ae946072c217265f744bc3131b937118ae0e62fc518cfb3e5c', 'docs/research/pca-w1-independent-review/tools/stage_e_sss_checks.py': '746fa76d097e747bdb1ee3a4742401b0a4a01ffd81fa176148b00d926ca5292e', 'docs/research/pca-w1-independent-review/tools/stage-e-sss-check-output.json': 'a17d5b7549a3b66c1ae450a6fb5a6d2cbe000202a6196cd1247310930354498b', 'docs/research/pca-w1-independent-review/06-stage-e-controlled-unblinding.md': '787229856619ce47fc71107550d5afc2940558d0e1443281ecc008bee0c370b6', 'docs/research/pca-w1-independent-review/07-final-independent-review.md': '03848362e0cbea1151ba3a0e042cf2872f51f0781815eaff17c1128e49589aaa', 'docs/research/pca-w1-independent-review/07-final-independent-review.json': 'f311552b877beece5245f48bbf1cf32f68d4b586fb3d65c18410b0ffe9175c37', 'docs/research/pca-w1-independent-review/08-review-artifact-manifest.json': '1437aeb6c52e7d84958b2cc530a9c5bda71706b96386482b98867df3c4e5d1bc'}
+
 W1_REVIEW_TARGET = {
     "commit": "14105775daf3c5713b134a728db2e1e53673af97",
     "tree": "68f058199b7c94b707fd5fe978f1ef59d695ab00",
@@ -240,14 +244,17 @@ def w1_seal_errors(promotion: dict, root: Path = ROOT) -> list[str]:
     governing_theory = root / "theory/theorems/Project-FAR-Theory-Closure-v1.1.md"
     if not governing_theory.is_file() or sha256(governing_theory) != W1_REVIEW_TARGET["theory_sha256"]:
         errors.append("current governing v1.1 theory bytes differ from the W1-reviewed target")
-    for artifact in artifacts:
-        if not isinstance(artifact, dict):
-            continue
-        raw_path = artifact.get("path")
-        expected = artifact.get("sha256")
-        if not isinstance(raw_path, str) or not isinstance(expected, str):
-            errors.append("W1 promotion seal entry is malformed")
-            continue
+    if set(W1_PROMOTED_ARTIFACT_SHA256) != PROMOTED_W1_PATHS:
+        errors.append("independent W1 artifact seal coverage drift")
+    reported_hashes = {
+        item.get("path"): item.get("sha256")
+        for item in artifacts
+        if isinstance(item, dict) and isinstance(item.get("path"), str)
+    }
+    for raw_path, expected in W1_PROMOTED_ARTIFACT_SHA256.items():
+        if reported_hashes.get(raw_path) != expected:
+            errors.append(f"W1 promotion artifact hash contract drift: {raw_path}")
+            errors.append(f"W1 sealed artifact missing or changed: {raw_path}")
         path = root / raw_path
         if not path.is_file() or sha256(path) != expected:
             errors.append(f"W1 sealed artifact missing or changed: {raw_path}")

@@ -18,8 +18,9 @@ The branch adds 18 review artifacts and modifies none of the target tree's files
 commit, tree, theory hash, ledger hash, historical-v1 hash, pre-unblinding freeze, terminal
 review, and artifact manifest were independently checked. The Stage-A and Stage-E finite
 scripts replay deterministically against their committed outputs. The machine promotion record
-pins all 16 promoted protocol/review paths by SHA-256; coverage loss, duplicate paths, missing
-files, or byte drift fails repository health.
+and an independently hard-coded validator seal both pin all 16 promoted protocol/review paths
+by SHA-256; coverage loss, duplicate paths, coordinated promotion-record rewrites, missing files,
+or byte drift fails repository health.
 
 The target machine ledger is also bound as an immutable theorem-bearing projection. Only
 `assurance`, `independent_review_status`, and `next_workstream` may differ after promotion,

@@ -194,10 +194,10 @@
         "FARCoreV11Omega",
         "FARCoreV11SSS"
       ],
-      "line_count": 38,
+      "line_count": 39,
       "path": "mechanization/lean/FARCoreV11AxiomAudit.lean",
       "role": "W2_CORE_V1_1",
-      "sha256": "3a5f71c40a06336f6d08ebe877bdcf6c9aa8782b8760e7de5885fd757f6e5736"
+      "sha256": "f6d697817af156216bb65731219323d80bde3b3a07ef0c9c95d37b87e247bca8"
     },
     {
       "declarations": [
@@ -208,16 +208,19 @@
         "FiniteTagCarrier",
         "FiniteTaggedDispatcher",
         "InvariantUnder",
+        "PrimitiveOperatorCount",
         "PrimitiveVocabularyCount",
         "RelationOccurrence",
         "Residue",
         "absent_unknown_must_separate",
         "combineOperator",
         "combine_split_operator_family",
+        "combinedDispatcherVocabulary",
         "commonTheory_frame_independent",
         "commonTheory_invariant_under_truth_equivalence",
         "directBinaryVocabulary",
         "embeddingRangeEquiv",
+        "finite_operator_count_noninvariant",
         "finite_panel_two_completions",
         "identity_is_universally_sufficient",
         "invariants_antitone",
@@ -228,6 +231,7 @@
         "reifiedIncidenceVocabulary",
         "residue_can_change_with_frame",
         "splitOperator",
+        "splitTwoOperatorVocabulary",
         "split_combine_operator",
         "transportOperation",
         "transportRelation",
@@ -238,10 +242,10 @@
       "imports": [
         "FARCoreV11Substrate"
       ],
-      "line_count": 318,
+      "line_count": 348,
       "path": "mechanization/lean/FARCoreV11Claims001To012.lean",
       "role": "W2_CORE_V1_1",
-      "sha256": "9171f9a6598bfdaf2eaf37cf8994438c0095ff4a8e39081c8887ce5ea90f746e"
+      "sha256": "e4fc930ff50c23075d55d534dc82c4e541eee40de3d1674df866d791e383f266"
     },
     {
       "declarations": [

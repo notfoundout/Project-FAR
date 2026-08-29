@@ -13,6 +13,16 @@ class FARCoreV11FormalizationTests(unittest.TestCase):
         self.assertEqual(generated["w2_summary"]["partial_obstruction"], 0)
         self.assertEqual(generated["w2_summary"]["contradiction_reopen_required"], 0)
 
+    def test_far_core_008_encodes_count_noninvariance(self):
+        ledger = checker.load(checker.LEDGER_PATH)
+        assurance = checker.load(checker.ASSURANCE_PATH)
+        claim = next(item for item in ledger["claims"] if item["id"] == "FAR-CORE-008")
+        assurance_claim = next(item for item in assurance["claims"] if item["id"] == "FAR-CORE-008")
+        declaration = "FARCoreV11.finite_operator_count_noninvariant"
+        self.assertIn(declaration, claim["lean_declarations"])
+        self.assertIn(declaration, assurance_claim["lean_declarations"])
+        self.assertIn(declaration, checker.EXPECTED_DECLARATION_AXIOMS)
+
     def test_far_core_014_is_end_to_end_formalized_without_provenance_rewrite(self):
         ledger = checker.load(checker.LEDGER_PATH)
         assurance = checker.load(checker.ASSURANCE_PATH)
