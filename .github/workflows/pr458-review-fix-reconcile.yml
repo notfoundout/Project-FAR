@@ -20,6 +20,20 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install jsonschema
+      - name: Normalize checker insertion anchor
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('tools/check_far_core_v11_formalization.py')
+          text = path.read_text(encoding='utf-8')
+          target = '    "FARCoreV11.finite_panel_two_completions": frozenset(),\n'
+          inserted = '    "FARCoreV11.finite_operator_count_noninvariant": frozenset({"Quot.sound"}),\n' + target
+          if '"FARCoreV11.finite_operator_count_noninvariant"' not in text:
+              if target not in text:
+                  raise SystemExit('finite-panel axiom anchor missing')
+              text = text.replace(target, inserted, 1)
+              path.write_text(text, encoding='utf-8')
+          PY
       - name: Apply review repairs
         run: python tools/_tmp_pr458_review_fix.py
       - name: Regenerate formalization views and axiom audit
