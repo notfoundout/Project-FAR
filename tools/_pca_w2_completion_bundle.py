@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
-from tools import check_far_core_v11_formalization as checker
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools import check_far_core_v11_formalization as checker  # noqa: E402
+
 NEW_DECLARATIONS = [
     "FARCoreV11.SSS.four_monotone_decoders",
     "FARCoreV11.SSS.projected_successor_decoder_failure",
