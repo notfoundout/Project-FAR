@@ -41,9 +41,9 @@ inductive Derivable : Sequent -> Prop where
   | par {gamma : Sequent} {left right : Formula} :
       Derivable (gamma ++ [left, right]) ->
       Derivable (gamma ++ [.par left right])
-  | exchange {prefix suffix : Sequent} {first second : Formula} :
-      Derivable (prefix ++ first :: second :: suffix) ->
-      Derivable (prefix ++ second :: first :: suffix)
+  | exchange {pre post : Sequent} {first second : Formula} :
+      Derivable (pre ++ first :: second :: post) ->
+      Derivable (pre ++ second :: first :: post)
 
 /-- Signed occurrence count of one atom in a formula. -/
 def atomWeight (target : Nat) : Formula -> Int
@@ -63,7 +63,7 @@ def sequentWeight (target : Nat) : Sequent -> Int
   induction left with
   | nil => simp [sequentWeight]
   | cons formula rest ih =>
-      simp [sequentWeight, ih, add_assoc]
+      simp [sequentWeight, ih, Int.add_assoc]
 
 /-- Atom balance is an invariant of every derivation in the governed fragment. -/
 theorem derivable_atom_balance {sequent : Sequent}
@@ -83,7 +83,7 @@ theorem derivable_atom_balance {sequent : Sequent}
       omega
   | exchange premise premiseIH =>
       have hPremise := premiseIH target
-      simpa [sequentWeight_append, sequentWeight, add_assoc, add_comm, add_left_comm] using hPremise
+      simpa [sequentWeight_append, sequentWeight, Int.add_assoc, Int.add_comm, Int.add_left_comm] using hPremise
 
 open Formula
 
