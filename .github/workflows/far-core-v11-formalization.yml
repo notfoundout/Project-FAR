@@ -18,6 +18,19 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Materialize deterministic W2 completion bundle
+        run: python tools/_pca_w2_completion_bundle.py
+      - name: Upload W2 completion bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: pca-w2-completion-${{ github.sha }}
+          path: |
+            theory/evaluation/far-core-formalization-ledger-v1.0.json
+            theory/evaluation/far-core-assurance-v1.0.json
+            mechanization/lean/FARCoreV11AxiomAudit.lean
+            artifacts/mechanization/lean-inventory-v1.0.json
+            docs/mechanization/far-core-v1.1-formalization.md
+          if-no-files-found: error
       - name: Install pinned Lean toolchain
         shell: bash
         run: |
