@@ -29,8 +29,8 @@ that assurance change without rewriting the theory.
 
 - `PCA-W0-REPOSITORY-CONFORMITY`: complete — original canonical integration and consistency enforcement.
 - `PCA-W1-INDEPENDENT-REVIEW`: complete — sealed exact-scope review promoted; novelty/priority not established.
-- `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: **active — next** — FAR-CORE-001–013 are kernel-checked; FAR-CORE-014 remains `PARTIAL/OBSTRUCTION` at the actual MLL witness bridge, with no contradiction found.
-- `PCA-W3-CONTRACT-SCHEMA`: open — specify and implement a versioned comparison-contract and factorization-report format.
+- `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete — FAR-CORE-001–014 are kernel-checked against the governed v1.1 statements; FAR-CORE-014 includes the bounded MLL syntax, resource split, atom-balance invariant, named witness sequents, and projected-decoder failure, with no contradiction found.
+- `PCA-W3-CONTRACT-SCHEMA`: **open — next** — specify and implement a versioned comparison-contract and factorization-report format without silently reinterpreting `far-ir/1.0`.
 - `PCA-W4-DOMAIN-CONTRACTS`: open — develop independently motivated contracts for named domains.
 - `PCA-W5-APPROXIMATION-AND-COST`: open — add explicit metrics, losses, tolerances, or cost orders.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open — test whether the audit discipline detects material loss or reduces disagreement.
@@ -39,7 +39,7 @@ that assurance change without rewriting the theory.
 
 Independent review must disclose prior exposure, conflicts, tools, premises checked, proof obligations checked, and unresolved objections. Internal agreement cannot be relabeled independent. The v1.1 hostile correction audit remains expressly internal evidence; the separately sealed W1 campaign is the promoted independent-review record.
 
-Proof-assistant work may upgrade only the formalized results. Failure to formalize must preserve the exact obstruction; it does not by itself refute a theorem. The current W2 outcome is 13 `FORMALIZED`, one `PARTIAL/OBSTRUCTION`, zero `CONTRADICTION/REOPEN REQUIRED`. W2 stays active until the actual MLL syntax, resource split, derivability, atom-balance result, and two named witness sequents are encoded and proved without adding premises.
+Proof-assistant work may upgrade only the formalized results. Failure to formalize must preserve the exact obstruction; it does not by itself refute a theorem. W2 completed with 14 `FORMALIZED`, zero `PARTIAL/OBSTRUCTION`, and zero `CONTRADICTION/REOPEN REQUIRED`. The runtime `#print axioms` audit records the exact transitive Lean kernel dependencies of every governed declaration; those dependencies are proof-assistant metadata, not new FAR premises.
 
 ## Contract and application rules
 
