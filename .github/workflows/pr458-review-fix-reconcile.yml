@@ -1,0 +1,57 @@
+name: PR458 Review Fix Reconcile
+
+on:
+  push:
+    branches:
+      - research/post-w1-infrastructure-w2-formalization
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    if: "!contains(github.event.head_commit.message, '[pr458-reconciled]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install jsonschema
+      - name: Apply review repairs
+        run: python tools/_tmp_pr458_review_fix.py
+      - name: Regenerate formalization views and axiom audit
+        run: |
+          python tools/check_far_core_v11_formalization.py --emit-axiom-audit mechanization/lean/FARCoreV11AxiomAudit.lean
+          python tools/check_far_core_v11_formalization.py --write
+      - name: Regenerate research/assurance graph views
+        run: python tools/far_research_registry.py --write
+      - name: Run targeted Python regressions
+        run: |
+          python -m unittest tests.test_far_core_v11_formalization
+          python -m unittest tests.test_far_research_infrastructure
+      - name: Commit deterministic repair
+        run: |
+          if git diff --quiet; then
+            echo 'No repair changes required.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add mechanization/lean/FARCoreV11Claims001To012.lean \
+                  mechanization/lean/FARCoreV11AxiomAudit.lean \
+                  theory/evaluation/far-core-formalization-ledger-v1.0.json \
+                  theory/evaluation/far-core-assurance-v1.0.json \
+                  tools/check_far_core_v11_formalization.py \
+                  tools/far_research_registry.py \
+                  tests/test_far_core_v11_formalization.py \
+                  tests/test_far_research_infrastructure.py \
+                  docs/governance/pca-w1-independent-review-promotion-v1.0.md \
+                  artifacts/mechanization/lean-inventory-v1.0.json \
+                  docs/mechanization/far-core-v1.1-formalization.md \
+                  docs/assurance/far-core-assurance.md \
+                  artifacts/knowledge-graph/project-far-knowledge-graph.json
+          git commit -m 'Fix final W1 seal and FAR-CORE-008 review gaps [pr458-reconciled]'
+          git push origin HEAD:research/post-w1-infrastructure-w2-formalization
