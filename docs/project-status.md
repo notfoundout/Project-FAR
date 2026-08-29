@@ -20,7 +20,7 @@ For a fixed exact contract, sufficiency is equivalent to factorization through t
 
 Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; subsequently confirmed by sealed independent review under exact scopes; all 14 governed claims subsequently mechanized under pinned Lean 4.19.0. Novelty/priority not established.**
 
-Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, and W2 formalization status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
+Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, and W3 contract-schema status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
 
 ## Historical boundaries
 
@@ -42,6 +42,14 @@ FAR-CORE-014 now includes the bounded unit-free MLL witness bridge end to end: s
 
 W2 changes only mechanization assurance. It does not establish novelty, priority, empirical utility, computational efficiency, open-domain universality, or product readiness.
 
+## W3 contract-schema disposition
+
+`PCA-W3-CONTRACT-SCHEMA` is complete. `far-ir/2.0` is the versioned comparison-contract successor; `far-ir/1.0` remains unchanged as the legacy reasoning-document interchange format.
+
+The v2 contract explicitly represents source/case domain, required behavior, representation, observation contexts, admitted transformations/equivalences, interpretation profile, target/model class, frame, typed outcomes including `Unknown`, factorization/collision/quotient evidence, failure reporting, provenance/freeze metadata, and optional approximation/loss/cost declarations. Checked finite-explicit evidence is recomputed by the semantic verifier. Loss-explicit migration from v1 preserves the legacy primitive payload and marks semantics absent from v1 `Unknown` rather than fabricating them.
+
+W3 does not establish application correspondence for any external domain and does not establish W5 approximation/cost semantics. Schema reuse is not primitive necessity or universal architecture evidence.
+
 ## Current phase
 
 Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md).
@@ -51,14 +59,16 @@ Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application 
 | `PCA-W0-REPOSITORY-CONFORMITY` | Complete | Original closure integration completed; v1.1 correction is governed successor maintenance. |
 | `PCA-W1-INDEPENDENT-REVIEW` | Complete | Sealed exact-scope review promoted; 14 PROVED, no correction; novelty/priority not established. |
 | `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | Complete | 14 FORMALIZED; exact kernel assumptions audited; no contradiction/reopen condition. |
-| `PCA-W3-CONTRACT-SCHEMA` | **Next / Active** | Implement a versioned successor contract/factorization format; `far-ir/1.0` is not silently reinterpreted. |
-| `PCA-W4-DOMAIN-CONTRACTS` | Open | Domain contracts remain scoped choices and cannot restore contract-free universality. |
+| `PCA-W3-CONTRACT-SCHEMA` | Complete | `far-ir/2.0` successor, semantic verifier, loss-explicit migration, and conformance fixtures complete; v1 unchanged. |
+| `PCA-W4-DOMAIN-CONTRACTS` | **Next / Active** | Independently motivate and instantiate six named domain contracts; schema usage cannot restore contract-free universality. |
 | `PCA-W5-APPROXIMATION-AND-COST` | Open | Approximation and implementation minimality require declared metrics, losses, tolerances, or cost orders. |
 | `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | Open | Empirical utility evidence does not alter deductive theorem status automatically. |
 
-## W3 entry boundary
+## W4 entry boundary
 
-W3 must implement a successor to `far-ir/1.0`, not reinterpret it in place. The successor contract must explicitly represent the case/source domain, required behavior, representation, decoder/factorization or collision evidence, observation contexts, typed outcomes including `Unknown`, observational equivalence/quotient evidence, admitted transformations/equivalences, interpretation profile, target/model class, frame, provenance/freeze metadata, and optional approximation/loss/cost declarations.
+W4 must use the frozen `far-ir/2.0` comparison-contract fields rather than inventing domain-specific implicit parameters. For formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory, each application must independently justify its source domain, required behavior, observation contexts, admitted transformations/equivalences, interpretation profile, target/model class, and frame before factorization or collision results are interpreted.
+
+A finite-explicit software certificate proves only the table property encoded in that record. It does not prove that the table exhausts or faithfully represents the external domain.
 
 ## Framework status
 
