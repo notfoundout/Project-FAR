@@ -71,18 +71,19 @@ theorem derivable_atom_balance {sequent : Sequent}
     sequentWeight target sequent = 0 := by
   induction derivation with
   | ax name =>
-      simp [sequentWeight, atomWeight]
+      by_cases h : name = target <;>
+        simp [sequentWeight, atomWeight, h]
   | tensor leftDerivation rightDerivation leftIH rightIH =>
-      have hLeft := leftIH target
-      have hRight := rightIH target
+      have hLeft := leftIH
+      have hRight := rightIH
       simp [sequentWeight_append, sequentWeight, atomWeight] at hLeft hRight ⊢
       omega
   | par premise premiseIH =>
-      have hPremise := premiseIH target
+      have hPremise := premiseIH
       simp [sequentWeight_append, sequentWeight, atomWeight] at hPremise ⊢
       omega
   | exchange premise premiseIH =>
-      have hPremise := premiseIH target
+      have hPremise := premiseIH
       simpa [sequentWeight_append, sequentWeight, Int.add_assoc, Int.add_comm, Int.add_left_comm] using hPremise
 
 open Formula
