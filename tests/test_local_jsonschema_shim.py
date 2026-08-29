@@ -4,6 +4,8 @@ from jsonschema import Draft202012Validator
 
 
 class LocalJsonSchemaShimTests(unittest.TestCase):
+    """Protect Draft 2020-12 type unions used by governed FAR schemas."""
+
     def errors(self, schema, instance):
         return list(Draft202012Validator(schema).iter_errors(instance))
 
