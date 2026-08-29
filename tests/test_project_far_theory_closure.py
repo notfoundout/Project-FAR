@@ -110,6 +110,7 @@ class ProjectFARTheoryClosureTest(unittest.TestCase):
         self.assertFalse(promotion["findings"]["theorem_correction_required"])
 
     def test_w1_is_promoted_and_w2_is_active(self):
+        """Historical regression identity: W1 promotion must lead through W2 to the registered successor."""
         program = MODULE._load(
             ROOT
             / "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
@@ -117,8 +118,12 @@ class ProjectFARTheoryClosureTest(unittest.TestCase):
         workstreams = {row["id"]: row for row in program["workstreams"]}
         self.assertEqual("complete", workstreams["PCA-W1-INDEPENDENT-REVIEW"]["state"])
         self.assertEqual(
-            "active_partial_obstruction",
+            "complete",
             workstreams["PCA-W2-PROOF-ASSISTANT-FORMALIZATION"]["state"],
+        )
+        self.assertEqual(
+            "PCA-W3-CONTRACT-SCHEMA",
+            program["next_action"]["workstream"],
         )
         self.assertEqual(
             "PROJECT-FAR-CORE-THEORY-1.1",
