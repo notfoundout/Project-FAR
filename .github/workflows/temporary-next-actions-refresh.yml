@@ -1,0 +1,41 @@
+name: Temporary next-actions refresh
+
+on:
+  push:
+    branches:
+      - research/post-w1-infrastructure-w2-formalization
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/post-w1-infrastructure-w2-formalization
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Regenerate next actions and run targeted invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/generate_next_tasks.py
+          python -m unittest tests.test_cre001_semantics tests.test_current_state_consistency tests.test_post_swe_agent_v2_stabilization tests.test_fara_formal_kernel_promotion
+          python tools/check_current_state_consistency.py
+      - name: Commit generated next actions
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add docs/planning/next-actions.md
+          if git diff --cached --quiet; then
+            echo "No generated changes required"
+            exit 0
+          fi
+          git commit -m "fix: regenerate W3 next-actions surface"
+          git push origin HEAD:research/post-w1-infrastructure-w2-formalization
