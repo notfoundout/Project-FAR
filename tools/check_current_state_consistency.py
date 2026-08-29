@@ -66,7 +66,7 @@ def validate_texts(
     require("status", f"Current governing theory: `{CURRENT_CORE}`", "canonical status governing core drifted")
     require("status", f"Current program: `{program_id}`", "canonical status program drifted")
     status_workstream = re.search(
-        rf"\|\s*`{re.escape(next_workstream)}`\s*\|\s*\*\*Next / Open\*\*\s*\|",
+        rf"\|\s*`{re.escape(next_workstream)}`\s*\|\s*\*\*Next / Active\*\*\s*\|",
         texts.get("status", ""),
     )
     if not status_workstream:
@@ -89,7 +89,7 @@ def validate_texts(
         errors.append("generated: historical report still declares a Current Research Mode")
 
     require("next_actions", f"Program: `{program_id}`.", "next-actions program drifted")
-    require("next_actions", f"Current review target: `{CURRENT_CORE}`.", "next-actions review target drifted")
+    require("next_actions", f"Current governing theory: `{CURRENT_CORE}`.", "next-actions theory target drifted")
     require("next_actions", f"Canonical next workstream: `{next_workstream}`.", "next-actions workstream drifted")
     require("next_actions", "Historical v1.0 Core", "next-actions historical core boundary drifted")
     if "PTE-W1-INDEPENDENT-REVIEW" in texts.get("next_actions", ""):

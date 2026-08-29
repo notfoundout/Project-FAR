@@ -6,21 +6,21 @@ Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.
 
 | Claim family | Current status | Assurance and boundary |
 |---|---|---|
-| `FAR-CORE-001` exact factorization | **Proved** | Explicit narrative proof; internal deductive, not proof-assistant checked or independently reviewed. |
-| `FAR-CORE-002` observational quotient | **Proved** | Explicit construction/universality proof; information minimality only. |
-| `FAR-CORE-003` dynamic descent | **Proved** | Requires declared context/test closure. |
-| `FAR-CORE-004` no contract-free minimum | **Proved negative; clarified in v1.1** | No single representation is simultaneously least-informative sufficient for every observation contract on a nontrivial domain. The identity representation may still be sufficient for all contracts on fixed `X`. |
-| `FAR-CORE-005`–`008` invariance/transport/noninvariance | **Proved** | Explicit set-theoretic inclusions and reification/tagging constructions. |
-| `FAR-CORE-009` finite-panel boundary | **Proved** | Requires a proper finite subset of an open domain. |
-| `FAR-CORE-010` common theory/residue | **Proved; corrected in v1.1** | Exact `T_{L,J,I}` depends directly on language, interpretation profiles/models, and target class; the frame-subtracted residue additionally depends on `Γ`. |
-| `FAR-CORE-011`–`013` parameter/typed-outcome/Ω results | **Proved** | Exact contracts; Ω result uses the current canonical definition. |
-| `FAR-CORE-014` SSS classification | **Supported/derived; unchanged** | Depends on the merged PR #453 bounded proofs and stated decoder classes. |
+| `FAR-CORE-001` exact factorization | **PROVED; independently confirmed; FORMALIZED** | Decoder is only on the reachable image; classical choice is explicit in the reverse construction. |
+| `FAR-CORE-002` observational quotient | **PROVED; independently confirmed; FORMALIZED** | Explicit construction/universality and image isomorphism; information minimality only. |
+| `FAR-CORE-003` dynamic descent | **PROVED; independently confirmed; FORMALIZED** | Requires declared context/test closure. |
+| `FAR-CORE-004` no contract-free minimum | **PROVED; independently confirmed; FORMALIZED** | No simultaneous least-informative representation across every contract on a nontrivial domain; identity universal sufficiency is preserved. |
+| `FAR-CORE-005`–`008` invariance/transport/noninvariance | **PROVED; independently confirmed; FORMALIZED** | Typed inclusion, transport, reification, and explicitly finite tagged-family constructions. |
+| `FAR-CORE-009` finite-panel boundary | **PROVED; independently confirmed; FORMALIZED** | Requires a proper finite list/panel with a witnessed outside case. |
+| `FAR-CORE-010` common theory/residue | **PROVED; independently confirmed; FORMALIZED** | Exact `T_{L,J,I}` excludes `Γ`; only frame-subtracted residue varies with `Γ` when models stay fixed. |
+| `FAR-CORE-011`–`013` parameter/typed-outcome/Ω results | **PROVED; independently confirmed; FORMALIZED** | Exact contracts; Ω uses the current canonical materialized-view definition. |
+| `FAR-CORE-014` SSS classification | **Truth PROVED under exact scope; provenance SUPPORTED/DERIVED; PARTIAL/OBSTRUCTION in Lean** | Four decoders and conditional factorization bridges compile; actual MLL witness derivations are not encoded. Not a universal architecture. |
 | Historical `PROJECT-FAR-CORE-THEORY-1.0` | **Superseded as current authority; preserved** | Byte-identical v1.0 monograph retained at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`. |
 | Historical terminal UPP theorem | **Not established by frozen derivation** | Proposition not refuted; defects `XA-001`–`XA-005`; historical artifacts preserved. |
 | `FARA-FORMAL-KERNEL-001` | Accepted bounded specification/engineering result | Finite explicit auditable v1 target; not a global primitive/minimality theorem. |
 | Empirical and executable campaigns | Observations or bounded corroboration | Never proofs of the core or open-domain universality. |
 
-The hostile W1 audit that triggered v1.1 is **not independent validation**. `PCA-W1-INDEPENDENT-REVIEW` remains open. Independent review and proof-assistant reconstruction remain open assurance dimensions under `POST-CLOSURE-001`; their absence limits assurance, not the surviving terminal kernel.
+The hostile audit that triggered v1.1 remains **non-independent**. The separately sealed W1 review is complete and confirms truth under exact scopes; it does not establish novelty or priority. W2 is a separate assurance dimension: 13 claims are formalized, FAR-CORE-014 is partial, and no contradiction was found. See the generated [assurance ledger](../assurance/far-core-assurance.md) for per-claim dimensions.
 
 ## Historical pre-closure entries
 

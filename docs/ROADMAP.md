@@ -10,20 +10,24 @@ Current governing core: [`PROJECT-FAR-CORE-THEORY-1.1`](../theory/theorems/Proje
 
 Current program: [`POST-CLOSURE-001`](governance/post-closure-assurance-and-application-program-v1.0.md).
 
-The core theory remains closed after the v1.1 correction. The historical UPP queue remains closed, and its defective frozen derivation is not a target for silent repair. The hostile W1 audit that triggered v1.1 was not independent and therefore does not close the next assurance workstream.
+The core theory remains closed after the v1.1 correction. The historical UPP queue remains closed, and its defective frozen derivation is not a target for silent repair. The hostile audit that triggered v1.1 remains non-independent; the later sealed W1 campaign independently confirmed all 14 exact-scope claims without establishing novelty or priority. W2 subsequently mechanized all 14 governed claims under the pinned Lean toolchain without finding a contradiction.
 
 ## Ordered post-closure work
 
-1. **`PCA-W1-INDEPENDENT-REVIEW` — next.** Review the exact corrected premises and proofs of `FAR-CORE-001`–`FAR-CORE-014` in `PROJECT-FAR-CORE-THEORY-1.1`; disclose independence, prior exposure, tools, checked obligations, and unresolved objections.
-2. **`PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.** Formalize the factorization, quotient, dynamic-descent, corrected no-contract-free-minimum, and corrected common-theory/residue results, or preserve an exact obstruction report.
-3. **`PCA-W3-CONTRACT-SCHEMA`.** Implement a successor to `far-ir/1.0` that records comparison contracts, typed outcomes, decoders/collisions, quotients, profiles, frames, and cost/loss orders.
+1. **`PCA-W1-INDEPENDENT-REVIEW` — complete.** The sealed review returned 14 `PROVED`, no adverse verdicts, no correction, and no novelty/priority finding under the exact scopes.
+2. **`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` — complete.** All 14 governed claims are `FORMALIZED`; FAR-CORE-014 includes the bounded unit-free MLL witness bridge and exact transitive kernel assumptions are machine-audited. No contradiction/reopen condition was found.
+3. **`PCA-W3-CONTRACT-SCHEMA` — next.** Implement a successor to `far-ir/1.0` that records comparison contracts, typed outcomes, decoders/collisions, quotients, profiles, frames, transformations, provenance, and declared cost/loss orders. Do not silently reinterpret `far-ir/1.0`.
 4. **`PCA-W4-DOMAIN-CONTRACTS`.** Build independently motivated contracts for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory.
 5. **`PCA-W5-APPROXIMATION-AND-COST`.** Add explicit metrics, tolerances, decision losses, and cost preorders; do not call one optimum universal.
 6. **`PCA-W6-EMPIRICAL-AUDIT-UTILITY`.** Preregister tests of whether the discipline catches material loss or reduces disagreement.
 
+## W3 entry gate
+
+W3 starts from the frozen v1.1 theorem and completed W1/W2 assurance surfaces. Its schema must make the application contract explicit rather than embedding new mathematical premises into the core. At minimum it must represent contract identity/version, source/case domain, required behavior, representation, decoder/factorization or collision evidence, observation contexts, typed outcomes including `Unknown`, observational equivalence/quotient evidence, admitted transformations/equivalences, interpretation profile, target/model class, frame, provenance/freeze metadata, and optional approximation/loss/cost declarations.
+
 ## Gates
 
-Every workstream must preserve scope, provenance, typed outcomes, negative results, `Unknown`, and claim impact. CI success, internal agreement, finite panels, successful encoding, and internal hostile review are not mathematical proof or independent validation.
+Every workstream must preserve scope, provenance, typed outcomes, negative results, `Unknown`, and claim impact. CI success, model agreement, finite panels, successful encoding, and the non-independent correction audit are not mathematical proof or independent validation. The promoted W1 record changes independent-review assurance; Lean changes formalization assurance.
 
 The v1.1 correction must preserve two permanent boundaries:
 
@@ -40,7 +44,7 @@ FARA remains a finite explicit auditable representation target. FAR implements c
 
 ## Release and export track
 
-The repository release and installable package version remain separate surfaces. A future release may package the corrected closure integration, but packaging does not strengthen theorem assurance.
+The repository release and installable package version remain separate surfaces. A future release may package the corrected closure integration and completed assurance work, but packaging does not strengthen theorem assurance.
 
 `exports/far-spec-v1/` is a current deterministic generated specification surface. Export version `1.2.0` carries `PROJECT-FAR-CORE-THEORY-1.1` and its machine ledger as canonical artifacts while retaining the immutable v1.0 monograph explicitly as `historical`. The export manifest and checksums must be regenerated whenever an exported canonical source changes.
 

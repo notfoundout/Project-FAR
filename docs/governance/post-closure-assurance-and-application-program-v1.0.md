@@ -4,7 +4,7 @@
 
 Program: `POST-CLOSURE-001`
 
-Status: **Registered**
+Status: **Active**
 
 Governing theory: `PROJECT-FAR-CORE-THEORY-1.1`
 
@@ -18,23 +18,28 @@ This program governs work after closure of Project FAR's core theory. It may inc
 
 The core is reopened only by a reproducible contradiction to a stated theorem, proof step, or formal premise.
 
-The 2026-08-27 hostile W1 audit triggered a governed correction from v1.0 to v1.1. Because that audit had prior Project FAR exposure, it is not classified as independent review and does not close `PCA-W1-INDEPENDENT-REVIEW`.
+The 2026-08-27 hostile correction audit triggered the governed v1.0 → v1.1 repair and remains
+non-independent evidence. A later staged, sealed review with disclosed prior exposure independently
+tested the immutable v1.1 target and completed `PCA-W1-INDEPENDENT-REVIEW`: 14 `PROVED`, 0
+`REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED`, with no correction required. It did not establish
+novelty or priority. The [promotion record](pca-w1-independent-review-promotion-v1.0.md) governs
+that assurance change without rewriting the theory.
 
 ## Workstreams
 
 - `PCA-W0-REPOSITORY-CONFORMITY`: complete — original canonical integration and consistency enforcement.
-- `PCA-W1-INDEPENDENT-REVIEW`: **open — next**. Review target is `PROJECT-FAR-CORE-THEORY-1.1`.
-- `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: open — formalize the exact corrected core or issue an obstruction report.
-- `PCA-W3-CONTRACT-SCHEMA`: open — specify and implement a versioned comparison-contract and factorization-report format.
+- `PCA-W1-INDEPENDENT-REVIEW`: complete — sealed exact-scope review promoted; novelty/priority not established.
+- `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete — FAR-CORE-001–014 are kernel-checked against the governed v1.1 statements; FAR-CORE-014 includes the bounded MLL syntax, resource split, atom-balance invariant, named witness sequents, and projected-decoder failure, with no contradiction found.
+- `PCA-W3-CONTRACT-SCHEMA`: **open — next** — specify and implement a versioned comparison-contract and factorization-report format without silently reinterpreting `far-ir/1.0`.
 - `PCA-W4-DOMAIN-CONTRACTS`: open — develop independently motivated contracts for named domains.
 - `PCA-W5-APPROXIMATION-AND-COST`: open — add explicit metrics, losses, tolerances, or cost orders.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open — test whether the audit discipline detects material loss or reduces disagreement.
 
 ## Assurance rules
 
-Independent review must disclose prior exposure, conflicts, tools, premises checked, proof obligations checked, and unresolved objections. Internal agreement cannot be relabeled independent. The v1.1 hostile correction audit is expressly internal evidence, not independent validation.
+Independent review must disclose prior exposure, conflicts, tools, premises checked, proof obligations checked, and unresolved objections. Internal agreement cannot be relabeled independent. The v1.1 hostile correction audit remains expressly internal evidence; the separately sealed W1 campaign is the promoted independent-review record.
 
-Proof-assistant work may upgrade only the formalized results. Failure to formalize must preserve the exact obstruction; it does not by itself refute a theorem.
+Proof-assistant work may upgrade only the formalized results. Failure to formalize must preserve the exact obstruction; it does not by itself refute a theorem. W2 completed with 14 `FORMALIZED`, zero `PARTIAL/OBSTRUCTION`, and zero `CONTRADICTION/REOPEN REQUIRED`. The runtime `#print axioms` audit records the exact transitive Lean kernel dependencies of every governed declaration; those dependencies are proof-assistant metadata, not new FAR premises.
 
 ## Contract and application rules
 

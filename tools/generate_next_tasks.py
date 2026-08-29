@@ -15,49 +15,27 @@ CORE_ID = "PROJECT-FAR-CORE-THEORY-1.1"
 
 TASKS = [
     {
-        "id": "STRATEGIC-010",
-        "workstream": "PCA-W1-INDEPENDENT-REVIEW",
-        "priority": "high",
-        "title": "Review the corrected core independently",
-        "why": "The corrected core is accepted internal deductive work but has no genuinely independent premise-by-premise review.",
-        "outcome": "An immutable review record that confirms, narrows, refutes, or leaves each obligation OPEN without changing its wording by convention.",
-        "branch": "research/pca-w1-core-v1.1-independent-review",
-        "pr": "Execute PCA-W1 independent review of core theory v1.1",
-        "review_target": CORE_ID,
-        "required_provenance": "disclose reviewer prior exposure, conflicts, tools, assumptions, checked obligations, unresolved objections, and source corpus.",
-    },
-    {
         "id": "STRATEGIC-011",
-        "workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
-        "priority": "queued",
-        "title": "Formalize the corrected factorization core",
-        "why": "The core has explicit narrative proofs but no single proof-assistant-checked artifact.",
-        "outcome": "A checked formalization or an exact obstruction report with external assumptions exposed.",
-        "branch": "research/pca-w2-core-formalization",
-        "pr": "Formalize Project FAR core theorems",
-    },
-    {
-        "id": "STRATEGIC-012",
         "workstream": "PCA-W3-CONTRACT-SCHEMA",
-        "priority": "queued",
+        "priority": "active",
         "title": "Implement the contract schema",
-        "why": "`far-ir/1.0` cannot natively certify contracts, decoders, collisions, quotients, profiles, frames, or cost orders.",
-        "outcome": "A new versioned schema, deterministic implementation, migration boundary, and conformance suite.",
+        "why": "`far-ir/1.0` cannot natively certify complete comparison contracts, decoders, collisions, quotients, profiles, frames, or declared approximation/cost orders.",
+        "outcome": "A versioned successor schema, deterministic implementation, migration boundary, validator, and conformance suite without silently reinterpreting `far-ir/1.0`.",
         "branch": "feat/pca-w3-contract-schema",
         "pr": "Implement contract-relative FAR IR",
     },
     {
-        "id": "STRATEGIC-013",
+        "id": "STRATEGIC-012",
         "workstream": "PCA-W4-DOMAIN-CONTRACTS",
         "priority": "queued",
         "title": "Develop domain comparison contracts",
-        "why": "The core theorem does not select tests, outcome types, or normative objectives for a domain.",
+        "why": "The core theorem does not select tests, outcome types, semantics, transformations, profiles, frames, or normative objectives for a domain.",
         "outcome": "Independently motivated, versioned contracts with explicit nonclaims and collision tests.",
         "branch": "research/pca-w4-domain-contracts",
         "pr": "Develop scoped domain contracts",
     },
     {
-        "id": "STRATEGIC-014",
+        "id": "STRATEGIC-013",
         "workstream": "PCA-W5-APPROXIMATION-AND-COST",
         "priority": "queued",
         "title": "Specify approximation and cost orders",
@@ -67,7 +45,7 @@ TASKS = [
         "pr": "Specify approximate and cost-relative adequacy",
     },
     {
-        "id": "STRATEGIC-015",
+        "id": "STRATEGIC-014",
         "workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
         "priority": "external-dependency",
         "title": "Test audit utility",
@@ -97,8 +75,7 @@ def nav_links() -> list[str]:
 
 
 def main() -> int:
-    assert TASKS[0]["workstream"] == "PCA-W1-INDEPENDENT-REVIEW"
-    assert TASKS[0]["review_target"] == CORE_ID
+    assert TASKS[0]["workstream"] == "PCA-W3-CONTRACT-SCHEMA"
     assert len({item["id"] for item in TASKS}) == len(TASKS)
     assert len({item["workstream"] for item in TASKS}) == len(TASKS)
 
@@ -113,13 +90,13 @@ def main() -> int:
         "",
         "Program: `POST-CLOSURE-001`.",
         "",
-        f"Current review target: `{CORE_ID}`.",
+        f"Current governing theory: `{CORE_ID}`.",
         "",
         "The core theory is closed after the governed v1.1 correction. These tasks change assurance, implementation, applicability, or utility; they do not reopen the core without a genuine contradiction.",
         "",
-        "The hostile W1 audit that found the v1.1 defects is internal/non-independent evidence. It does not satisfy `PCA-W1-INDEPENDENT-REVIEW`.",
+        "The sealed `PCA-W1-INDEPENDENT-REVIEW` is complete: 14 PROVED under exact scopes, no correction required, novelty/priority not established. `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: 14/14 governed claims are FORMALIZED, including the bounded MLL bridge for FAR-CORE-014, with no contradiction/reopen outcome.",
         "",
-        "Canonical next workstream: `PCA-W1-INDEPENDENT-REVIEW`.",
+        "Canonical next workstream: `PCA-W3-CONTRACT-SCHEMA`.",
         "",
         "## Ranked Next Actions",
         "",
@@ -129,17 +106,9 @@ def main() -> int:
             f"### {task['id']}: {task['title']}",
             "",
             f"- Registered workstream: `{task['workstream']}`",
-        ]
-        if task.get("review_target"):
-            lines.append(f"- Review target: `{task['review_target']}`")
-        lines += [
             f"- Source: {repository_link(PROGRAM)}",
             f"- Priority: {task['priority']}",
             f"- Why it matters: {task['why']}",
-        ]
-        if task.get("required_provenance"):
-            lines.append(f"- Required provenance: {task['required_provenance']}")
-        lines += [
             f"- Expected outcome: {task['outcome']}",
             f"- Suggested branch name: `{task['branch']}`",
             f"- Suggested PR title: `{task['pr']}`",

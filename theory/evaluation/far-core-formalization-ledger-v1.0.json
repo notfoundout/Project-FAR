@@ -1,0 +1,774 @@
+{
+  "schema_version": "1.0",
+  "ledger_id": "PCA-W2-FORMALIZATION-LEDGER-1.0",
+  "theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
+  "lean_toolchain": "leanprover/lean4:v4.19.0",
+  "authority": "formalization_mapping_only_no_prose_repair",
+  "claims": [
+    {
+      "id": "FAR-CORE-001",
+      "canonical_prose_statement": "exact sufficiency iff behavior factors through the representation",
+      "quantified_objects_types": [
+        "X : Type u cases",
+        "B : Type v complete exact behavior values",
+        "R : Type w representation carrier",
+        "beta : X -> B",
+        "rho : X -> R",
+        "decoder : RepImage rho -> B"
+      ],
+      "premises": [
+        "decoder is required only on the reachable image RepImage rho",
+        "extensional equality of behavior values"
+      ],
+      "conclusion": "ExactlySufficient beta rho iff every rho-collision is a beta-collision; a beta-separating rho-collision refutes sufficiency.",
+      "dependencies": [
+        "none"
+      ],
+      "classical_assumptions": [
+        "Classical.choice for the kernel-to-image-decoder construction"
+      ],
+      "choice_extensionality_assumptions": [
+        "choice",
+        "function extensionality for decoder equality is not needed"
+      ],
+      "kernel_axioms": [
+        "Classical.choice"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Substrate.lean",
+      "lean_declarations": [
+        "FARCoreV11.exact_factorization_criterion",
+        "FARCoreV11.collision_refutes_sufficiency"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.collision_without_factorization",
+        "finite playground absent/Unknown collision"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 326-366; retained by v1.1 section 0"
+        },
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+          "sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+          "locator": "claim ledger line 176"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-002",
+      "canonical_prose_statement": "the observational quotient is the unique least-informative exact representation up to isomorphism",
+      "quantified_objects_types": [
+        "X : Type u cases",
+        "B : Type v behavior values",
+        "beta : X -> B",
+        "rho : X -> R",
+        "Q_beta := Quotient of beta equality",
+        "factor map RepImage rho -> Q_beta"
+      ],
+      "premises": [
+        "rho is exactly sufficient",
+        "least informative means ker rho equals ker beta",
+        "finite cardinal result is represented by the general surjection from the represented image onto Q_beta"
+      ],
+      "conclusion": "The quotient is sufficient; every sufficient rho has a unique image-to-quotient factor; kernel equality makes that factor an equivalence, and sufficiency always makes it surjective.",
+      "dependencies": [
+        "FAR-CORE-001"
+      ],
+      "classical_assumptions": [
+        "Classical.choice for a representative of each reachable representation value"
+      ],
+      "choice_extensionality_assumptions": [
+        "choice",
+        "quotient soundness/exactness",
+        "function extensionality for uniqueness"
+      ],
+      "kernel_axioms": [
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Substrate.lean",
+      "lean_declarations": [
+        "FARCoreV11.quotient_is_sufficient",
+        "FARCoreV11.observational_quotient_universal",
+        "FARCoreV11.factorToQuotient_surjective",
+        "FARCoreV11.leastInformativeImageEquiv"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.strictly_more_informative_is_not_least",
+        "FARCoreV11Mutations.insufficient_map_has_no_factor"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 368-406; retained by v1.1 section 0"
+        },
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+          "sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+          "locator": "claim ledger line 177"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-003",
+      "canonical_prose_statement": "context closure makes observational equivalence action-compatible",
+      "quantified_objects_types": [
+        "X : Type cases",
+        "T : Type declared tests",
+        "V : Type outcomes",
+        "obs : T -> X -> V",
+        "action : X -> X",
+        "closure : every test after action is represented by a declared test"
+      ],
+      "premises": [
+        "typed semantic continuation closure for the named action"
+      ],
+      "conclusion": "Observational equivalence is preserved by the action and Quotient.map defines the descended action.",
+      "dependencies": [
+        "FAR-CORE-002"
+      ],
+      "classical_assumptions": [
+        "Quot.sound for the descended quotient action"
+      ],
+      "choice_extensionality_assumptions": [
+        "quotient soundness"
+      ],
+      "kernel_axioms": [
+        "Quot.sound"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Substrate.lean",
+      "lean_declarations": [
+        "FARCoreV11.action_preserves_observational_equivalence",
+        "FARCoreV11.descendAction"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.missing_context_closure_breaks_descent"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 408-437; retained by v1.1 section 0"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-004",
+      "canonical_prose_statement": "no single representation is simultaneously a least-informative sufficient representation for every observation contract; universal sufficiency alone is not denied",
+      "quantified_objects_types": [
+        "X : Type with x0 != x1",
+        "rho : X -> R",
+        "constant behavior : X -> Bool",
+        "injective behavior : X -> X"
+      ],
+      "premises": [
+        "nontrivial domain witnessed by two distinct cases",
+        "contract may vary"
+      ],
+      "conclusion": "rho cannot have the exact kernel of both constant and identity behavior; identity is nevertheless sufficient for every fixed behavior map.",
+      "dependencies": [
+        "FAR-CORE-001",
+        "FAR-CORE-002"
+      ],
+      "classical_assumptions": [
+        "none"
+      ],
+      "choice_extensionality_assumptions": [
+        "none"
+      ],
+      "kernel_axioms": [
+        "none"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "lean_declarations": [
+        "FARCoreV11.no_contract_free_simultaneous_minimum",
+        "FARCoreV11.identity_is_universally_sufficient"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.singleton_does_not_witness_no_minimum",
+        "identity_is_universally_sufficient guards the false stronger reading"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+          "sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+          "locator": "lines 33-66"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-005",
+      "canonical_prose_statement": "invariants are antitone in the admitted re-representation class",
+      "quantified_objects_types": [
+        "X : Type",
+        "G1 G2 : Set (X -> X)",
+        "P : X -> Prop"
+      ],
+      "premises": [
+        "G1 subset G2",
+        "same typed transformation universe"
+      ],
+      "conclusion": "every property invariant under G2 is invariant under G1.",
+      "dependencies": [
+        "none"
+      ],
+      "classical_assumptions": [
+        "none"
+      ],
+      "choice_extensionality_assumptions": [
+        "none"
+      ],
+      "kernel_axioms": [
+        "none"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "lean_declarations": [
+        "FARCoreV11.invariants_antitone"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.reverse_invariance_inclusion_is_false"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 471-493; retained by v1.1 section 0"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-006",
+      "canonical_prose_statement": "unconstrained encoding establishes host capacity, not native common structure",
+      "quantified_objects_types": [
+        "X : Type source carrier",
+        "H : Type host carrier",
+        "e : X -> H injective",
+        "n : Nat",
+        "source operations (Fin n -> X) -> X",
+        "source relations (Fin n -> X) -> Prop"
+      ],
+      "premises": [
+        "injective encoding",
+        "decoder only on RepImage e",
+        "no independent host structure-preservation law"
+      ],
+      "conclusion": "e is equivalent to its image and transports/reconstructs every named finitary operation and relation; the code alone therefore does not select one source structure.",
+      "dependencies": [
+        "none"
+      ],
+      "classical_assumptions": [
+        "Classical.choice for the inverse on RepImage e"
+      ],
+      "choice_extensionality_assumptions": [
+        "choice",
+        "function extensionality/quotient soundness",
+        "propositional extensionality for transported relations"
+      ],
+      "kernel_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "lean_declarations": [
+        "FARCoreV11.embeddingRangeEquiv",
+        "FARCoreV11.transport_operation_commutes",
+        "FARCoreV11.transport_relation_commutes"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "The normative words native and explanatory are represented only by the exact non-selection result: arbitrary source structure is supplied to transport, not derived from the host code.",
+        "affected_surface": "formal predicate for explanatory structure",
+        "allowed_resolution": "Any stronger explanatory predicate requires a separately governed contract; do not add one to v1.1."
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.encoding_without_injectivity_loses_recovery"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 495-526; retained by v1.1 section 0"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-007",
+      "canonical_prose_statement": "primitive vocabulary count is not representation invariant",
+      "quantified_objects_types": [
+        "X : Type",
+        "relation : X -> X -> Prop",
+        "RelationOccurrence relation := subtype of related pairs",
+        "ArgumentPosition := left | right",
+        "typedIncidence : occurrence -> position -> X -> Prop",
+        "PrimitiveVocabularyCount := (sortCount, relationCount)"
+      ],
+      "premises": [
+        "faithful reification and explicit typed position tags admitted"
+      ],
+      "conclusion": "The direct (one-sort, one-relation) presentation and the faithfully recoverable reified (three-sort, one-incidence-relation) presentation have unequal primitive-count profiles.",
+      "dependencies": [
+        "FAR-CORE-006"
+      ],
+      "classical_assumptions": [
+        "none"
+      ],
+      "choice_extensionality_assumptions": [
+        "none"
+      ],
+      "kernel_axioms": [
+        "none"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "lean_declarations": [
+        "FARCoreV11.reification_recovers_relation",
+        "FARCoreV11.primitive_vocabulary_count_noninvariant"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.untyped_incidence_does_not_recover_positions"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 528-553; retained by v1.1 section 0"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-008",
+      "canonical_prose_statement": "finite operator count is not representation invariant",
+      "quantified_objects_types": [
+        "finite tag carrier I with explicit List enumeration and coverage",
+        "argument family A : I -> Type",
+        "common result B",
+        "operator family f : (i : I) -> A i -> B",
+        "tagged sum Sigma A -> B"
+      ],
+      "premises": [
+        "finite operator family",
+        "tagged argument types admitted"
+      ],
+      "conclusion": "Combining and splitting are inverse on the tagged domain.",
+      "dependencies": [
+        "none"
+      ],
+      "classical_assumptions": [
+        "none"
+      ],
+      "choice_extensionality_assumptions": [
+        "dependent function extensionality via quotient soundness"
+      ],
+      "kernel_axioms": [
+        "Quot.sound"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "lean_declarations": [
+        "FARCoreV11.combine_split_operator_family",
+        "FARCoreV11.split_combine_operator"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.dropping_operator_tag_causes_collision"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 555-593; retained by v1.1 section 0"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-009",
+      "canonical_prose_statement": "finite panels do not establish open-domain universality",
+      "quantified_objects_types": [
+        "D : Type target domain",
+        "panel : List D",
+        "outside : D with outside not in panel",
+        "Ptrue Pfalse : D -> Prop"
+      ],
+      "premises": [
+        "proper finite panel witnessed by outside",
+        "no independent coverage premise"
+      ],
+      "conclusion": "Two predicates agree on the entire panel and disagree at outside.",
+      "dependencies": [
+        "none"
+      ],
+      "classical_assumptions": [
+        "decidable equality on D for List membership"
+      ],
+      "choice_extensionality_assumptions": [
+        "none"
+      ],
+      "kernel_axioms": [
+        "none"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "lean_declarations": [
+        "FARCoreV11.finite_panel_two_completions"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.coverage_premise_is_not_optional"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 595-614; retained by v1.1 section 0"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-010",
+      "canonical_prose_statement": "exact common theory is relative to L,J,I; the substantive residue is additionally relative to Γ",
+      "quantified_objects_types": [
+        "Sentence : Type determined by L",
+        "I : Type target index",
+        "truth : I -> Sentence -> Prop determined by J/models",
+        "Gamma : Set Sentence",
+        "Cn : Set Sentence -> Set Sentence"
+      ],
+      "premises": [
+        "L, J, I, interpreted models, and truth held fixed when Gamma changes",
+        "fixed logical semantics",
+        "for the change witness: phi common, phi not in Cn Gamma0, phi in Cn Gamma1"
+      ],
+      "conclusion": "CommonTheory truth contains no Gamma parameter and is frame-independent; Residue truth Cn Gamma can change with Gamma.",
+      "dependencies": [
+        "none"
+      ],
+      "classical_assumptions": [
+        "propositional extensionality for equality of sets of sentences"
+      ],
+      "choice_extensionality_assumptions": [
+        "propositional extensionality",
+        "function/set extensionality via quotient soundness"
+      ],
+      "kernel_axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "lean_declarations": [
+        "FARCoreV11.commonTheory_frame_independent",
+        "FARCoreV11.commonTheory_invariant_under_truth_equivalence",
+        "FARCoreV11.residue_can_change_with_frame"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.frame_changes_residue_not_exact_theory"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
+          "sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+          "locator": "lines 68-149"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-011",
+      "canonical_prose_statement": "omitting a consequence-affecting parameter refutes sufficiency",
+      "quantified_objects_types": [
+        "X : Type base cases",
+        "C : Type context/calculus parameter",
+        "B : Type behavior",
+        "rho0 : X -> R",
+        "beta : X x C -> B",
+        "x, c1, c2 with beta (x,c1) != beta (x,c2)"
+      ],
+      "premises": [
+        "representation of (x,c) is rho0 x",
+        "attainable declared behavior difference"
+      ],
+      "conclusion": "The omitted-parameter representation is not exactly sufficient.",
+      "dependencies": [
+        "FAR-CORE-001"
+      ],
+      "classical_assumptions": [
+        "none"
+      ],
+      "choice_extensionality_assumptions": [
+        "none"
+      ],
+      "kernel_axioms": [
+        "none"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "lean_declarations": [
+        "FARCoreV11.omitted_parameter_refutes_sufficiency"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.no_behavior_change_no_refutation"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 655-688; retained by v1.1 section 0"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-012",
+      "canonical_prose_statement": "sufficient representations must preserve that distinction",
+      "quantified_objects_types": [
+        "X : Type cases",
+        "rho : X -> R",
+        "beta : X -> EpistemicOutcome",
+        "xAbsent xUnknown : X"
+      ],
+      "premises": [
+        "beta xAbsent = absent",
+        "beta xUnknown = unknown",
+        "absent != unknown",
+        "rho is exactly sufficient"
+      ],
+      "conclusion": "rho xAbsent != rho xUnknown.",
+      "dependencies": [
+        "FAR-CORE-001"
+      ],
+      "classical_assumptions": [
+        "none beyond supplied exact sufficiency"
+      ],
+      "choice_extensionality_assumptions": [
+        "none"
+      ],
+      "kernel_axioms": [
+        "none"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "lean_declarations": [
+        "FARCoreV11.absent_unknown_must_separate"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11Mutations.absent_unknown_collapse_is_insufficient",
+        "finite playground absent/Unknown fixture"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 690-706; retained by v1.1 section 0"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-013",
+      "canonical_prose_statement": "Ω is a semantically eliminable derived materialized view",
+      "quantified_objects_types": [
+        "Z : Type complete investigation/calculus input",
+        "Classification : Type",
+        "OmegaRecord : Type",
+        "Result : Type",
+        "classify_kappa : Z -> Classification",
+        "represent : Classification -> OmegaRecord",
+        "resolve : OmegaRecord -> Result"
+      ],
+      "premises": [
+        "canonical Omega z is definitionally represent (classify_kappa z)"
+      ],
+      "conclusion": "resolve (Omega z) equals (resolve composed with represent composed with classify_kappa) z.",
+      "dependencies": [
+        "canonical FARA Omega definition"
+      ],
+      "classical_assumptions": [
+        "none"
+      ],
+      "choice_extensionality_assumptions": [
+        "none"
+      ],
+      "kernel_axioms": [
+        "none"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11Omega.lean",
+      "lean_declarations": [
+        "FARCoreV11.Omega.omega_elimination",
+        "FARCoreV11.Omega.resolve_is_composition"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11.Omega.extra_information_is_not_canonical_omega"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 708-754; retained by v1.1 section 0"
+        },
+        {
+          "path": "frameworks/FARA/admissibility-structure.md",
+          "sha256": "15fb60ff0908d1e9269f2599b2a5813c060c5d1c2c03999afd38c6c0f5821483",
+          "locator": "canonical Omega records classifications and does not determine them"
+        }
+      ]
+    },
+    {
+      "id": "FAR-CORE-014",
+      "canonical_prose_statement": "Search-State Sufficiency is a bounded factorization instance, not a universal architecture",
+      "quantified_objects_types": [
+        "four uniform monotone successor-set decoders",
+        "bounded S_or and S_and truth-profile witnesses",
+        "rule-instance hyperedges",
+        "frontier state and binary expansion relation"
+      ],
+      "premises": [
+        "PR #453 SSS-1 frontier recursion",
+        "PR #453 SSS-2 hyperedge AND/OR characterization",
+        "PR #453 SSS-3 actual MLL witnesses and decoder restrictions"
+      ],
+      "conclusion": "The four projected-successor decoders fail on the two bounded profiles, while hyperedge and frontier characterizations factor their declared derivability behavior; no universal architecture follows.",
+      "dependencies": [
+        "FAR-CORE-001",
+        "FAR-CORE-003",
+        "PR-453-SSS"
+      ],
+      "classical_assumptions": [
+        "propositional extensionality in decoder proof fields and Prop-valued factorization"
+      ],
+      "choice_extensionality_assumptions": [
+        "propositional extensionality"
+      ],
+      "kernel_axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "intended_lean_module": "mechanization/lean/FARCoreV11SSS.lean",
+      "lean_declarations": [
+        "FARCoreV11.SSS.four_monotone_decoders",
+        "FARCoreV11.SSS.projected_successor_decoder_failure",
+        "FARCoreV11.SSS.hyperedge_factorization",
+        "FARCoreV11.SSS.frontier_factorization",
+        "FARCoreV11.SSS.MLL.derivable_atom_balance",
+        "FARCoreV11.SSS.MLL.sOr_witness_certified",
+        "FARCoreV11.SSS.MLL.sAnd_witness_certified",
+        "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure"
+      ],
+      "formalization_status": "FORMALIZED",
+      "kernel_check": "PASS",
+      "obstruction": {
+        "classification": "none",
+        "details": "",
+        "affected_surface": "none",
+        "allowed_resolution": "none"
+      },
+      "mutation_negative_controls": [
+        "FARCoreV11.SSS.unrestricted_decoder_counterexample",
+        "FARCoreV11.SSS.frontier_binary_relation_is_not_refuted",
+        "removing either state-type or decoder restriction prevents the bounded negative theorem"
+      ],
+      "source_locations": [
+        {
+          "path": "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
+          "sha256": "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5",
+          "locator": "lines 756-780; retained by v1.1 section 0"
+        },
+        {
+          "path": "research/independent-dialogue-theory/PROOFS.md",
+          "sha256": "afafb08b62ba5201689675384e7f2896d9d5addbb9b6d06b9f6731339e1dd0db",
+          "locator": "sections 1-2"
+        }
+      ]
+    }
+  ]
+}

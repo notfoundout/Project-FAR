@@ -92,6 +92,9 @@ release-check:
 	python tools/check_release_consistency.py
 
 research-check:
+	python tools/far_research_registry.py
+	python tools/check_far_core_v11_formalization.py
+	python tools/research_campaign.py
 	python tools/check_fara_foundation_comparison.py
 	python tools/check_research_gates.py
 	python tools/check_investigation_execution.py
@@ -128,6 +131,13 @@ research-check:
 	python tools/check_pbts001_replication_run001_controls.py
 	python research/theory-dependency-audit/execute.py
 	python -m unittest tests.test_theory_dependency_audit -v
+
+.PHONY: far-research-infrastructure-check
+far-research-infrastructure-check:
+	python tools/far_research_registry.py
+	python tools/check_far_core_v11_formalization.py
+	python tools/research_campaign.py
+	python -m unittest tests.test_far_research_infrastructure tests.test_far_core_v11_formalization -v
 
 status:
 	python tools/project_status_report.py

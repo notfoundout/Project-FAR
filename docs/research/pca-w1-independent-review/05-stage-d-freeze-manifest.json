@@ -1,0 +1,32 @@
+{
+  "schema": "project-far-pca-independent-review-stage-d-freeze-v1",
+  "review_program": "PCA-W1-INDEPENDENT-REVIEW",
+  "freeze_id": "PCA-W1-D-20260828T171703Z",
+  "freeze_time_utc": "2026-08-28T17:17:03Z",
+  "target_commit": "14105775daf3c5713b134a728db2e1e53673af97",
+  "target_tree": "68f058199b7c94b707fd5fe978f1ef59d695ab00",
+  "governing_theory": "PROJECT-FAR-CORE-THEORY-1.1",
+  "write_branch": "research/pca-w1-core-v1.1-independent-review",
+  "frozen_document": {
+    "path": "docs/research/pca-w1-independent-review/05-stage-d-provisional-verdict-frozen.md",
+    "sha256": "e27c99c7ff52f5f95e30e6f163b83cacbfa389d61d6f9408966bf983ce66902e",
+    "freeze_commit": "c764a3af9b8f69efc6fd59eae0b2bb658ab40aeb"
+  },
+  "controlled_unblinding_started_at_freeze": false,
+  "verdict_vocabulary": [
+    "PROVED",
+    "REFUTED",
+    "OPEN",
+    "UNDERDETERMINED",
+    "NOT APPLICABLE"
+  ],
+  "claim_counts": {
+    "PROVED": 12,
+    "REFUTED": 0,
+    "OPEN": 0,
+    "UNDERDETERMINED": 2,
+    "NOT APPLICABLE": 0
+  },
+  "terminal_verdict": "UNDERDETERMINED",
+  "scope_lock_far_core_014": "only the representation and decoder classes stated in PR #453; bounded supported/derived Search-State Sufficiency factorization instance; not a universal architecture"
+}

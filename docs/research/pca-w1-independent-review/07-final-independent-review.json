@@ -1,0 +1,183 @@
+{
+  "schema": "project-far-independent-review-terminal-v1",
+  "review_program": "PCA-W1-INDEPENDENT-REVIEW",
+  "reviewer": {
+    "identity": "OpenAI Codex isolated review agent",
+    "model_disclosure": "GPT-5-based; no more precise runtime build exposed",
+    "prior_project_far_exposure": false,
+    "conflict_or_outcome_incentive": false,
+    "independence_result": "PASS"
+  },
+  "target": {
+    "repository": "notfoundout/Project-FAR",
+    "commit": "14105775daf3c5713b134a728db2e1e53673af97",
+    "tree": "68f058199b7c94b707fd5fe978f1ef59d695ab00",
+    "theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
+    "monograph_sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+    "ledger_sha256": "66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40",
+    "integrity_result": "PASS"
+  },
+  "write_branch": "research/pca-w1-core-v1.1-independent-review",
+  "verdict_vocabulary": [
+    "PROVED",
+    "REFUTED",
+    "OPEN",
+    "UNDERDETERMINED",
+    "NOT APPLICABLE"
+  ],
+  "stage_d_freeze": {
+    "freeze_id": "PCA-W1-D-20260828T171703Z",
+    "commit": "c764a3af9b8f69efc6fd59eae0b2bb658ab40aeb",
+    "document_sha256": "e27c99c7ff52f5f95e30e6f163b83cacbfa389d61d6f9408966bf983ce66902e",
+    "claim_counts": {
+      "PROVED": 12,
+      "REFUTED": 0,
+      "OPEN": 0,
+      "UNDERDETERMINED": 2,
+      "NOT APPLICABLE": 0
+    },
+    "terminal_verdict": "UNDERDETERMINED",
+    "underdetermined_claims": [
+      "FAR-CORE-013",
+      "FAR-CORE-014"
+    ]
+  },
+  "final": {
+    "claim_counts": {
+      "PROVED": 14,
+      "REFUTED": 0,
+      "OPEN": 0,
+      "UNDERDETERMINED": 0,
+      "NOT APPLICABLE": 0
+    },
+    "terminal_verdict": "PROVED",
+    "novelty_or_priority_certified": false,
+    "universal_architecture_certified": false,
+    "theorem_correction_required": false,
+    "software_change_required": false,
+    "governance_assurance_promotion_required_if_accepted": true
+  },
+  "claims": [
+    {
+      "id": "FAR-CORE-001",
+      "verdict": "PROVED",
+      "scope": "any Set-based exact contract; decoder on reachable representation image",
+      "basis": "kernel inclusion iff image-level behavior factorization"
+    },
+    {
+      "id": "FAR-CORE-002",
+      "verdict": "PROVED",
+      "scope": "any Set-based exact contract; reachable-image isomorphism; cardinal minimum only when finite",
+      "basis": "universal property of the behavioral quotient"
+    },
+    {
+      "id": "FAR-CORE-003",
+      "verdict": "PROVED",
+      "scope": "declared typed action/test continuation closure",
+      "basis": "continuation equality implies action-stable observational equivalence"
+    },
+    {
+      "id": "FAR-CORE-004",
+      "verdict": "PROVED",
+      "scope": "nontrivial domain; observation contract varies; universal sufficiency not denied",
+      "basis": "incompatible constant and injective least quotients"
+    },
+    {
+      "id": "FAR-CORE-005",
+      "verdict": "PROVED",
+      "scope": "compatible nested admitted transformation classes",
+      "basis": "Inv(H) subseteq Inv(G) when G subseteq H"
+    },
+    {
+      "id": "FAR-CORE-006",
+      "verdict": "PROVED",
+      "scope": "injective transport with image decoder and no structure-preservation laws",
+      "basis": "fixed code equations admit arbitrary variation of source structures"
+    },
+    {
+      "id": "FAR-CORE-007",
+      "verdict": "PROVED",
+      "scope": "faithful reification/tagging regime",
+      "basis": "invertible presentation changes alter primitive vocabulary count"
+    },
+    {
+      "id": "FAR-CORE-008",
+      "verdict": "PROVED",
+      "scope": "finite operator family with tagged tuples admitted",
+      "basis": "single tagged dispatcher and tag-fixed recovery"
+    },
+    {
+      "id": "FAR-CORE-009",
+      "verdict": "PROVED",
+      "scope": "proper finite panel of open domain without independent coverage premise",
+      "basis": "off-panel two-completion countermodel"
+    },
+    {
+      "id": "FAR-CORE-010",
+      "verdict": "PROVED",
+      "scope": "fixed L,J,I and interpreted models; Gamma additionally indexes the residue",
+      "basis": "definition-level index audit plus sentence witness"
+    },
+    {
+      "id": "FAR-CORE-011",
+      "verdict": "PROVED",
+      "scope": "attainable same-representation/different-behavior omitted-parameter collision",
+      "basis": "collision violates FAR-CORE-001"
+    },
+    {
+      "id": "FAR-CORE-012",
+      "verdict": "PROVED",
+      "scope": "contract distinguishes reachable determinate absence and Unknown",
+      "basis": "distinguishing outcomes prohibit representational collapse"
+    },
+    {
+      "id": "FAR-CORE-013",
+      "verdict": "PROVED",
+      "scope": "canonical FARA Omega definition and semantic consequence composition",
+      "basis": "Omega(z)=Rep(Class_kappa(z)); composition eliminates the semantic intermediate",
+      "changed_after_unblinding": true
+    },
+    {
+      "id": "FAR-CORE-014",
+      "verdict": "PROVED",
+      "scope": "only PR #453 SSS-1/2/3 stated state, transition-representation, and decoder classes; not a universal architecture",
+      "basis": "frontier/hyperedge factorization proofs plus exhaustive four-decoder MLL countermodels",
+      "changed_after_unblinding": true
+    }
+  ],
+  "external_research": {
+    "started_from_empty_corpus": true,
+    "exact_query_count": 54,
+    "admitted_primary_or_authoritative_source_count": 18,
+    "negative_results_and_rejection_reasons_recorded": true,
+    "independent_novelty_conclusion": "no novelty or priority certified"
+  },
+  "computational_checks": {
+    "stage_a": {
+      "factorization_instances": 11141,
+      "quotient_comparisons": 11141,
+      "contract_minimum_domain_sizes": [2, 3, 4, 5],
+      "transition_descent_instances": 26122,
+      "result": "PASS"
+    },
+    "stage_e_sss": {
+      "decoder_class_size": 4,
+      "decoder_class_exhaustive": true,
+      "witnesses": ["S_or", "S_and"],
+      "result": "PASS"
+    },
+    "epistemic_weight": "consistency only; proofs carry the mathematical burden"
+  },
+  "status_mapping": {
+    "ledger_supported_derived_far_core_014": "historical governance/evidence-provenance label; final truth verdict is PROVED",
+    "pr453_blocked_fragmented_theory_unresolved": "statuses of a separate retrieval/common-theory experiment; not FAR-CORE claim verdicts",
+    "historical_v1_0": "preserved evidence authority, not a current truth verdict"
+  },
+  "minimum_repository_consequences": [
+    "governance acceptance or rejection of this independent review",
+    "if accepted, close PCA-W1-INDEPENDENT-REVIEW and update current assurance/status pointers and export metadata",
+    "preserve v1.0 bytes and retain v1.1 as governing theory",
+    "record FAR-CORE-014 truth verdict separately from its supported_derived provenance label unless deliberately versioning the ledger",
+    "make no theorem or software behavior change solely because of this review"
+  ]
+}

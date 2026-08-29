@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-citation-registry-v1.schema.json",
+  "title": "Project FAR Citation Relationship Registry v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "bibliography", "authority", "sources", "relationships"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "registry_id": {"const": "FAR-CITATION-REGISTRY-1.0"},
+    "bibliography": {"const": "research/bibliography/project-far.bib"},
+    "authority": {"const": "github_claim_relationships_zotero_bibliographic_workflow"},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "relationships": {"type": "array", "items": {"$ref": "#/$defs/relationship"}}
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["citation_key", "identity", "source_type", "identity_status", "canonical_locator"],
+      "properties": {
+        "citation_key": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_:-]+$"},
+        "identity": {"type": "string", "minLength": 1},
+        "source_type": {"enum": ["primary", "near_primary", "project_record", "standard", "secondary"]},
+        "identity_status": {"enum": ["verified_from_source", "verified_from_project_record", "provisional"]},
+        "canonical_locator": {"type": "string", "minLength": 1}
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "citation_key", "claim_id", "research_artifact", "relationship", "prior_art_relationship", "scope", "exact_locator"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^CITE-REL-[0-9]{3}$"},
+        "citation_key": {"type": "string", "minLength": 1},
+        "claim_id": {"type": "string", "minLength": 1},
+        "research_artifact": {"type": "string", "minLength": 1},
+        "relationship": {"enum": ["SUPPORTS", "DISPUTES", "CONTEXT", "ANTICIPATES", "LIMITS", "DOES_NOT_ESTABLISH"]},
+        "prior_art_relationship": {"type": "string", "minLength": 1},
+        "scope": {"type": "string", "minLength": 1},
+        "exact_locator": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

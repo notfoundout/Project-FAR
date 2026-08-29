@@ -1,0 +1,52 @@
+{
+  "check": "independent_pr453_sss3_finite_witness_reconstruction",
+  "decoder_count": 4,
+  "decoders": {
+    "AND": [
+      0,
+      0,
+      1
+    ],
+    "NONEMPTY": [
+      1,
+      1,
+      1
+    ],
+    "OR": [
+      0,
+      1,
+      1
+    ],
+    "TERM": [
+      0,
+      0,
+      0
+    ]
+  },
+  "interpretation": "finite consistency plus exhaustive check of the stated four-decoder class; not a substitute for the general proofs",
+  "refuting_witness_by_decoder": {
+    "AND": "S_and",
+    "NONEMPTY": "S_or",
+    "OR": "S_or",
+    "TERM": "S_and"
+  },
+  "result": "PASS",
+  "witnesses": {
+    "S_and": {
+      "projected_successor_count": 8,
+      "provable": true,
+      "successor_truth_set": [
+        0,
+        1
+      ]
+    },
+    "S_or": {
+      "projected_successor_count": 6,
+      "provable": false,
+      "successor_truth_set": [
+        0,
+        1
+      ]
+    }
+  }
+}

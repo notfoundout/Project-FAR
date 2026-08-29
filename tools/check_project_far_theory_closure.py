@@ -16,6 +16,10 @@ REPLICATION = ROOT / "docs/research/project-far-core-v1.1-correction-replication
 ACCEPTANCE = ROOT / "docs/governance/project-far-theory-closure-acceptance-v1.1.md"
 CORRECTION_AUDIT = ROOT / "docs/audits/project-far-core-theory-v1.1-correction-audit.md"
 PROGRAM = ROOT / "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
+W1_PROMOTION = ROOT / "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json"
+W1_REVIEW = ROOT / "docs/research/pca-w1-independent-review/07-final-independent-review.json"
+ASSURANCE_LEDGER = ROOT / "theory/evaluation/far-core-assurance-v1.0.json"
+FORMALIZATION_LEDGER = ROOT / "theory/evaluation/far-core-formalization-ledger-v1.0.json"
 OLD_PROGRAM = ROOT / "theory/evaluation/post-terminal-public-evaluation-program-v1.0.json"
 REPOSITORY_TRUTH = ROOT / "governance/repository-truth-authority-v1.json"
 EXPORT_MANIFEST = ROOT / "exports/far-spec-v1/manifest.json"
@@ -85,6 +89,10 @@ def validate(root: Path = ROOT) -> list[str]:
         ACCEPTANCE,
         CORRECTION_AUDIT,
         PROGRAM,
+        W1_PROMOTION,
+        W1_REVIEW,
+        ASSURANCE_LEDGER,
+        FORMALIZATION_LEDGER,
         OLD_PROGRAM,
         REPOSITORY_TRUTH,
         EXPORT_MANIFEST,
@@ -125,8 +133,8 @@ def validate(root: Path = ROOT) -> list[str]:
         errors.append("current machine ledger terminal verdict mismatch")
     if current.get("preserved_base", {}).get("sha256") != EXPECTED_V1_SHA256:
         errors.append("v1.1 ledger does not pin immutable v1.0 SHA-256")
-    if current.get("independent_review_status") != "open":
-        errors.append("v1.1 ledger must keep independent review open")
+    if current.get("independent_review_status") != "complete_confirmed_14_proved_exact_scopes_novelty_not_established":
+        errors.append("v1.1 ledger independent-review promotion drifted")
     claims = {row.get("id") for row in current.get("claims", [])}
     if claims != EXPECTED_CLAIMS:
         errors.append(f"core claim set mismatch: {sorted(claims ^ EXPECTED_CLAIMS)}")
@@ -161,18 +169,43 @@ def validate(root: Path = ROOT) -> list[str]:
             errors.append(f"v1.1 acceptance/promotion record missing {needle!r}")
 
     program = _load(root / PROGRAM.relative_to(ROOT))
-    if program.get("program_id") != "POST-CLOSURE-001" or program.get("status") != "registered":
+    if program.get("program_id") != "POST-CLOSURE-001" or program.get("status") != "active":
         errors.append("post-closure program identity/status mismatch")
     if program.get("governing_theory") != "PROJECT-FAR-CORE-THEORY-1.1":
         errors.append("post-closure program does not govern v1.1")
     if program.get("core_theory_closed") is not True:
         errors.append("post-closure program reopens the terminal kernel")
     workstreams = {w.get("id"): w for w in program.get("workstreams", [])}
-    if workstreams.get("PCA-W1-INDEPENDENT-REVIEW", {}).get("state") != "open":
-        errors.append("PCA-W1 must remain open; hostile correction audit is not independent review")
+    if workstreams.get("PCA-W1-INDEPENDENT-REVIEW", {}).get("state") != "complete":
+        errors.append("PCA-W1 must reflect the promoted sealed independent review")
+    if workstreams.get("PCA-W2-PROOF-ASSISTANT-FORMALIZATION", {}).get("state") != "complete":
+        errors.append("PCA-W2 must reflect completed 14/14 formalization")
     next_action = program.get("next_action", {})
-    if next_action.get("workstream") != "PCA-W1-INDEPENDENT-REVIEW" or next_action.get("review_target") != "PROJECT-FAR-CORE-THEORY-1.1":
-        errors.append("post-closure next action must be independent review of v1.1")
+    if next_action.get("workstream") != "PCA-W3-CONTRACT-SCHEMA" or next_action.get("theory_target") != "PROJECT-FAR-CORE-THEORY-1.1":
+        errors.append("post-closure next action must be W3 contract schema against v1.1")
+
+    promotion = _load(root / W1_PROMOTION.relative_to(ROOT))
+    review = _load(root / W1_REVIEW.relative_to(ROOT))
+    if promotion.get("disposition") != "ACCEPTED_COMPLETE" or promotion.get("terminal_counts") != {
+        "PROVED": 14, "REFUTED": 0, "OPEN": 0, "UNDERDETERMINED": 0, "NOT_APPLICABLE": 0
+    }:
+        errors.append("W1 promotion disposition/counts drifted")
+    if review.get("final", {}).get("claim_counts") != {
+        "PROVED": 14, "REFUTED": 0, "OPEN": 0, "UNDERDETERMINED": 0, "NOT APPLICABLE": 0
+    }:
+        errors.append("sealed W1 final-review counts drifted")
+    assurance = _load(root / ASSURANCE_LEDGER.relative_to(ROOT))
+    assurance_by_id = {item["id"]: item for item in assurance.get("claims", [])}
+    formalization = _load(root / FORMALIZATION_LEDGER.relative_to(ROOT))
+    formal_by_id = {item["id"]: item for item in formalization.get("claims", [])}
+    if set(assurance_by_id) != EXPECTED_CLAIMS or set(formal_by_id) != EXPECTED_CLAIMS:
+        errors.append("assurance/formalization ledger coverage drifted")
+    for identifier in sorted(EXPECTED_CLAIMS):
+        if assurance_by_id.get(identifier, {}).get("truth_disposition") != "PROVED":
+            errors.append(f"{identifier}: promoted truth disposition drifted")
+        formal = formal_by_id.get(identifier, {})
+        if formal.get("formalization_status") != "FORMALIZED" or formal.get("kernel_check") != "PASS":
+            errors.append(f"{identifier}: W2 outcome/kernel status drifted")
 
     old_program = _load(root / OLD_PROGRAM.relative_to(ROOT))
     if old_program.get("status") != "superseded" or old_program.get("superseded_by") != "POST-CLOSURE-001":
@@ -184,6 +217,10 @@ def validate(root: Path = ROOT) -> list[str]:
         errors.append("repository truth authority does not point to v1.1")
     if status.get("historical_core_sha256") != EXPECTED_V1_SHA256:
         errors.append("repository truth authority does not preserve v1.0 hash")
+    if status.get("active_workstream") != "PCA-W3-CONTRACT-SCHEMA":
+        errors.append("repository truth authority does not point to W3")
+    if status.get("formalization_status") != "14_formalized_0_partial_obstruction_0_contradiction":
+        errors.append("repository truth authority does not record completed W2 formalization")
     export_truth = truth.get("specification_export", {})
     if export_truth.get("export_version") != EXPECTED_EXPORT_VERSION:
         errors.append("repository truth authority export version mismatch")
@@ -209,8 +246,8 @@ def validate(root: Path = ROOT) -> list[str]:
         errors.append("FAR spec export must carry v1.1 machine ledger as canonical")
 
     required_text = {
-        "README.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W1-INDEPENDENT-REVIEW", "Historical v1.0"],
-        "docs/project-status.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W1-INDEPENDENT-REVIEW", "FAR-CORE-010"],
+        "README.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W2-PROOF-ASSISTANT-FORMALIZATION", "PCA-W3-CONTRACT-SCHEMA", "Historical v1.0"],
+        "docs/project-status.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W2-PROOF-ASSISTANT-FORMALIZATION", "PCA-W3-CONTRACT-SCHEMA", "FAR-CORE-010"],
         "docs/ROADMAP.md": ["PROJECT-FAR-CORE-THEORY-1.1", "Export version `1.2.0`", "simultaneous universal least-informativeness"],
         "docs/governance/project-far-theory-closure-acceptance-v1.1.md": ["identity representation", "frame-subtracted residue", "not independently reviewed"],
         "docs/audits/project-far-core-theory-v1.1-correction-audit.md": ["10.1214/aoms/1177729032", "FAR-CORE-014", "independent review still open"],

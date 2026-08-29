@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-core-formalization-ledger-v1.schema.json",
+  "title": "Project FAR Core v1.1 Formalization Ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "ledger_id", "theory_id", "lean_toolchain", "authority", "claims"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "ledger_id": {"const": "PCA-W2-FORMALIZATION-LEDGER-1.0"},
+    "theory_id": {"const": "PROJECT-FAR-CORE-THEORY-1.1"},
+    "lean_toolchain": {"const": "leanprover/lean4:v4.19.0"},
+    "authority": {"const": "formalization_mapping_only_no_prose_repair"},
+    "claims": {"type": "array", "minItems": 14, "maxItems": 14, "items": {"$ref": "#/$defs/claim"}}
+  },
+  "$defs": {
+    "strings": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "locator"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "locator": {"type": "string", "minLength": 1}}
+    },
+    "obstruction": {
+      "type": "object", "additionalProperties": false,
+      "required": ["classification", "details", "affected_surface", "allowed_resolution"],
+      "properties": {
+        "classification": {"enum": ["none", "encoding_inconvenience", "missing_explicit_premise", "ambiguity", "genuine_contradiction"]},
+        "details": {"type": "string"},
+        "affected_surface": {"type": "string"},
+        "allowed_resolution": {"type": "string"}
+      }
+    },
+    "claim": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "canonical_prose_statement", "quantified_objects_types", "premises", "conclusion", "dependencies", "classical_assumptions", "choice_extensionality_assumptions", "kernel_axioms", "intended_lean_module", "lean_declarations", "formalization_status", "kernel_check", "obstruction", "mutation_negative_controls", "source_locations"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^FAR-CORE-0(0[1-9]|1[0-4])$"},
+        "canonical_prose_statement": {"type": "string", "minLength": 1},
+        "quantified_objects_types": {"$ref": "#/$defs/strings"},
+        "premises": {"$ref": "#/$defs/strings"},
+        "conclusion": {"type": "string", "minLength": 1},
+        "dependencies": {"$ref": "#/$defs/strings"},
+        "classical_assumptions": {"$ref": "#/$defs/strings"},
+        "choice_extensionality_assumptions": {"$ref": "#/$defs/strings"},
+        "kernel_axioms": {"$ref": "#/$defs/strings"},
+        "intended_lean_module": {"type": "string", "minLength": 1},
+        "lean_declarations": {"$ref": "#/$defs/strings"},
+        "formalization_status": {"enum": ["FORMALIZED", "PARTIAL/OBSTRUCTION", "CONTRADICTION/REOPEN REQUIRED"]},
+        "kernel_check": {"enum": ["PENDING_CI", "PASS", "FAIL"]},
+        "obstruction": {"$ref": "#/$defs/obstruction"},
+        "mutation_negative_controls": {"$ref": "#/$defs/strings"},
+        "source_locations": {"type": "array", "items": {"$ref": "#/$defs/source"}, "minItems": 1}
+      }
+    }
+  }
+}

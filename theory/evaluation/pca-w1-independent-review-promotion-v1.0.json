@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "promotion_id": "PCA-W1-PROMOTION-001",
+  "program_id": "POST-CLOSURE-001",
+  "workstream_id": "PCA-W1-INDEPENDENT-REVIEW",
+  "disposition": "ACCEPTED_COMPLETE",
+  "effective_on_merge": true,
+  "review_target": {
+    "commit": "14105775daf3c5713b134a728db2e1e53673af97",
+    "tree": "68f058199b7c94b707fd5fe978f1ef59d695ab00",
+    "theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
+    "theory_sha256": "91513dce21273364ef8ad24ebd1102e3b5957b513bbd5bc429f2b10917fa8239",
+    "ledger_sha256": "66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40"
+  },
+  "reviewed_ledger_contract": {
+    "source_path": "theory/terminal/project-far-core-theory-v1.1.json",
+    "target_whole_file_sha256": "66372644e5a2fe65c93f7e893e41eae74211934f92827cadcfe28dd81290ab40",
+    "canonicalization": "json_sorted_keys_utf8_compact",
+    "excluded_post_review_metadata_fields": [
+      "assurance",
+      "independent_review_status",
+      "next_workstream"
+    ],
+    "reviewed_projection_sha256": "ee852f8ceb968861ebdee48d1b3f6ec85771751b9dd3f80abbde8cef96860ca1",
+    "permitted_current_metadata_values": {
+      "assurance": "internal_deductive_corrected_then_independently_reviewed_exact_scopes_w2_complete_novelty_not_established",
+      "independent_review_status": "complete_confirmed_14_proved_exact_scopes_novelty_not_established",
+      "next_workstream": "PCA-W3-CONTRACT-SCHEMA"
+    }
+  },
+  "review_branch": {
+    "name": "research/pca-w1-core-v1.1-independent-review",
+    "head": "0981697546eba68651bddcd22e67ccdeb98decf4",
+    "tree": "3b58ca873c210b62c5ce01f572cb1314b55d95d2"
+  },
+  "verified_artifacts": [
+    {
+      "path": "docs/research/pca-w1-independent-review-protocol-v1.0.md",
+      "sha256": "2decf1bcc924101928432143535712bd6fccc4723947d97321fee2d14adea0dc",
+      "role": "frozen_protocol"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/00-exposure-environment.md",
+      "sha256": "f9edff7c8385d49064c1ea92a529bbb5d4f32e38a667531687bc123057c7a73d",
+      "role": "exposure_environment"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/01-stage-a-blind-reconstruction.md",
+      "sha256": "bbc33980d8b5f68d6c3c9d89857cf5706561b0679781fff9f487aa80654c5662",
+      "role": "blind_reconstruction"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/tools/stage_a_finite_checks.py",
+      "sha256": "b5c912eaacb766faecec61a60c997cacb53c5f01741952018e1513a29eafa137",
+      "role": "stage_a_replay_script"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/tools/stage-a-finite-check-output.md",
+      "sha256": "342204f48178c68160f5f700d43ab5cafd6ff5fde327a025129983f368b8832b",
+      "role": "stage_a_replay_output"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/02-stage-b-ledger-reconciliation.md",
+      "sha256": "623838d5ff4daded5a35539ecf558264e70ad10fcf4428165c1ceb46cf55ecd7",
+      "role": "claim_reconciliation"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/03-stage-c-independent-research.md",
+      "sha256": "413e9f9ac2cacc116188dad511fb0726a952bc15f83b1f44dd88c343057fc9db",
+      "role": "independent_research"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/04-stage-c-hostile-test-ledger.md",
+      "sha256": "bceb586e71800375935902ad5653e8d02d1211de24b13eed572d85228fc9dbd5",
+      "role": "hostile_test_ledger"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/05-stage-d-provisional-verdict-frozen.md",
+      "sha256": "e27c99c7ff52f5f95e30e6f163b83cacbfa389d61d6f9408966bf983ce66902e",
+      "role": "pre_unblinding_freeze"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/05-stage-d-freeze-manifest.json",
+      "sha256": "f48b05d997f1e1ae946072c217265f744bc3131b937118ae0e62fc518cfb3e5c",
+      "role": "freeze_manifest"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/tools/stage_e_sss_checks.py",
+      "sha256": "746fa76d097e747bdb1ee3a4742401b0a4a01ffd81fa176148b00d926ca5292e",
+      "role": "stage_e_replay_script"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/tools/stage-e-sss-check-output.json",
+      "sha256": "a17d5b7549a3b66c1ae450a6fb5a6d2cbe000202a6196cd1247310930354498b",
+      "role": "stage_e_replay_output"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/06-stage-e-controlled-unblinding.md",
+      "sha256": "787229856619ce47fc71107550d5afc2940558d0e1443281ecc008bee0c370b6",
+      "role": "controlled_unblinding"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/07-final-independent-review.md",
+      "sha256": "03848362e0cbea1151ba3a0e042cf2872f51f0781815eaff17c1128e49589aaa",
+      "role": "terminal_human_review"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/07-final-independent-review.json",
+      "sha256": "f311552b877beece5245f48bbf1cf32f68d4b586fb3d65c18410b0ffe9175c37",
+      "role": "terminal_machine_review"
+    },
+    {
+      "path": "docs/research/pca-w1-independent-review/08-review-artifact-manifest.json",
+      "sha256": "1437aeb6c52e7d84958b2cc530a9c5bda71706b96386482b98867df3c4e5d1bc",
+      "role": "review_artifact_manifest"
+    }
+  ],
+  "terminal_counts": {
+    "PROVED": 14,
+    "REFUTED": 0,
+    "OPEN": 0,
+    "UNDERDETERMINED": 0,
+    "NOT_APPLICABLE": 0
+  },
+  "findings": {
+    "independence": "PASS",
+    "integrity": "PASS",
+    "theorem_correction_required": false,
+    "software_change_required": false,
+    "novelty_or_priority_established": false,
+    "universal_architecture_established": false
+  },
+  "status_separation": {
+    "far_core_014_truth_verdict": "PROVED",
+    "far_core_014_governing_ledger_provenance_label": "supported_derived",
+    "rule": "truth verdict does not rewrite the historical/application provenance label"
+  },
+  "preservation": {
+    "governing_theory_changed": false,
+    "historical_v1_changed": false,
+    "sealed_review_changed": false,
+    "scope_guards_retained": true
+  },
+  "next_workstream": "PCA-W3-CONTRACT-SCHEMA"
+}

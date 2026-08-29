@@ -96,15 +96,38 @@ class ProjectFARTheoryClosureTest(unittest.TestCase):
         )
 
     def test_w1_independent_review_remains_open(self):
+        """Historical regression identity: the old open gate may close only via the sealed promotion."""
+        promotion = MODULE._load(
+            ROOT / "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json"
+        )
+        self.assertEqual("PCA-W1-INDEPENDENT-REVIEW", promotion["workstream_id"])
+        self.assertEqual("ACCEPTED_COMPLETE", promotion["disposition"])
+        self.assertTrue(promotion["effective_on_merge"])
+        self.assertEqual(
+            "14105775daf3c5713b134a728db2e1e53673af97",
+            promotion["review_target"]["commit"],
+        )
+        self.assertFalse(promotion["findings"]["theorem_correction_required"])
+
+    def test_w1_is_promoted_and_w2_is_active(self):
+        """Historical regression identity: W1 promotion must lead through W2 to the registered successor."""
         program = MODULE._load(
             ROOT
             / "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
         )
         workstreams = {row["id"]: row for row in program["workstreams"]}
-        self.assertEqual("open", workstreams["PCA-W1-INDEPENDENT-REVIEW"]["state"])
+        self.assertEqual("complete", workstreams["PCA-W1-INDEPENDENT-REVIEW"]["state"])
+        self.assertEqual(
+            "complete",
+            workstreams["PCA-W2-PROOF-ASSISTANT-FORMALIZATION"]["state"],
+        )
+        self.assertEqual(
+            "PCA-W3-CONTRACT-SCHEMA",
+            program["next_action"]["workstream"],
+        )
         self.assertEqual(
             "PROJECT-FAR-CORE-THEORY-1.1",
-            program["next_action"]["review_target"],
+            program["next_action"]["theory_target"],
         )
 
     def test_historical_upp_is_not_current_authority(self):

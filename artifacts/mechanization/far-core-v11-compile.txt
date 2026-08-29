@@ -1,0 +1,3 @@
+Tracked placeholder for the FAR-CORE v1.1 compile diagnostics path.
+
+The `FAR-CORE v1.1 Formalization` workflow overwrites this path in its job workspace with the exact Lean compile transcript for the checked commit and uploads that runtime transcript as a GitHub Actions artifact. This tracked file exists only so repository path-integrity checks can verify that workflow references resolve; it is not proof evidence and must not be cited as a compile result.
