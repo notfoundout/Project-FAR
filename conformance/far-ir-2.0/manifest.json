@@ -1,0 +1,10 @@
+{
+  "format_version": "far-ir/2.0",
+  "suite_id": "PCA-W3-CONTRACT-SCHEMA-CONFORMANCE-1.0",
+  "cases": [
+    {"id": "W3-CF-001", "path": "valid-factorization.json", "expected_valid": true, "expected_codes": [], "obligation": "finite explicit exact factorization witness"},
+    {"id": "W3-CF-002", "path": "valid-collision.json", "expected_valid": true, "expected_codes": [], "obligation": "finite explicit collision witness"},
+    {"id": "W3-CF-003", "path": "valid-quotient.json", "expected_valid": true, "expected_codes": [], "obligation": "finite explicit exact beta-kernel quotient witness"},
+    {"id": "W3-CF-004", "path": "invalid-factorization.json", "expected_valid": false, "expected_codes": ["FACTORIZATION_FAILURE"], "obligation": "reject false decoder/factorization certificate"}
+  ]
+}
