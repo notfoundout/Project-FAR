@@ -29,9 +29,10 @@ Canonical next workstream: `PCA-W5-APPROXIMATION-AND-COST`.
 - Registered workstream: `PCA-W4-DOMAIN-CONTRACTS`
 - Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
 - Priority: complete
-- Result: Six source-motivated native contracts were frozen before controlled mapping; twelve `far-ir/2.0` records certify six finite collisions and six scoped repairs.
-- Boundary: The mappings and evaluations are internally authored; no minimal-repair, external-domain-validation, novelty, or open-domain-completeness claim follows.
-- Status: [PCA-W4 domain-contract status](../governance/pca-w4-domain-contracts-status-v1.0.md)
+- Why it matters: The core theorem does not select tests, outcome types, semantics, transformations, profiles, frames, or normative objectives for a domain.
+- Expected outcome: Six source-motivated native contracts, twelve far-ir/2.0 records, six checked collisions, and six checked scoped repairs with explicit nonclaims.
+- Suggested branch name: `research/pca-w4-domain-contracts`
+- Suggested PR title: `Develop scoped domain contracts`
 
 ### STRATEGIC-013: Specify approximation and cost orders
 

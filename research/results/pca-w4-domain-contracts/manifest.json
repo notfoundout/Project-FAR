@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "campaign_id": "PCA-W4-DOMAIN-CONTRACTS-1.0",
-  "generated_at": "2026-08-30T10:54:22.000Z",
+  "generated_at": "2026-08-30T11:00:01.000Z",
   "base_commit": "3923fd88bb1549d816edcbdff66ce3412b7e80bc",
   "protocol_commit": "9638185b2f92913b3ce13ee2aaae5289e93945b1",
   "native_freeze_commit": "f823c4daf08b61241483bc1cc50d88d22746fa83",
@@ -134,7 +134,7 @@
       "path": "docs/project-status.md"
     },
     {
-      "sha256": "5aa926ddb39bb33e6022f5514353f30486e8463117d2c0db4ba2e377f7e22c7a",
+      "sha256": "007e68a99972bce337489727dcd2ad516bf977befe36a5858f535b2ced96d8e7",
       "path": "docs/planning/next-actions.md"
     },
     {
@@ -210,6 +210,10 @@
       "path": "research/campaigns/pca-w4-domain-contracts-v1.0.json"
     },
     {
+      "sha256": "36840c51c2b1963b0046093113fee88b4f1f0a56a4fb20c42fa767f92829de59",
+      "path": "tests/test_cre001_semantics.py"
+    },
+    {
       "sha256": "1852290b3fe89271e99ea1749fb81f197bac46d7a576d6ec3df0b1c95fa7a3d7",
       "path": "tests/test_project_far_theory_closure.py"
     },
@@ -240,6 +244,10 @@
     {
       "sha256": "32ba096a6e7dcda4ab9384fe0942649ee294ae34a3c2e420f09a1f1358e11e80",
       "path": "tools/check_repository_truth.py"
+    },
+    {
+      "sha256": "82f99e473c46369cf644562986e786831282fa0d35c01914199d55a68cb26b1c",
+      "path": "tools/generate_next_tasks.py"
     }
   ],
   "acceptance": {

@@ -70,7 +70,7 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
             "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.", ranked
         )
         self.assertIn(
-            "Canonical next workstream: `PCA-W4-DOMAIN-CONTRACTS`.", ranked
+            "Canonical next workstream: `PCA-W5-APPROXIMATION-AND-COST`.", ranked
         )
         self.assertNotIn("### STRATEGIC-010:", ranked)
         self.assertNotIn("### STRATEGIC-011:", ranked)
@@ -97,6 +97,10 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
             "`PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is the governed versioned successor",
             ranked,
         )
+        self.assertIn(
+            "`PCA-W4-DOMAIN-CONTRACTS` is complete at six finite-explicit scopes",
+            ranked,
+        )
         self.assertIn("do not reopen the core without a genuine contradiction", ranked)
         self.assertNotIn(
             "Current review target: `PROJECT-FAR-CORE-THEORY-1.1`.", ranked
@@ -118,6 +122,7 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
             "### STRATEGIC-011: Implement the contract schema",
             "Canonical next workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.",
             "Canonical next workstream: `PCA-W3-CONTRACT-SCHEMA`.",
+            "Canonical next workstream: `PCA-W4-DOMAIN-CONTRACTS`.",
         ):
             self.assertNotIn(stale, ranked)
 
