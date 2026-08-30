@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "campaign_id": "PCA-W4-DOMAIN-CONTRACTS-1.0",
-  "generated_at": "2026-08-30T12:00:00Z",
+  "generated_at": "2026-08-30T10:37:24Z",
   "zotero_status": "UNAVAILABLE_NOT_ZOTERO_MANAGED",
   "sources": [
     {"key":"feitosa2001conservative","domain":"formal_logic","type":"article","title":"Conservative translations","authors":["Hercules Araujo Feitosa","Itala M. Loffredo D'Ottaviano"],"year":2001,"doi":"10.1016/S0168-0072(00)00046-4","stable_url":"https://www.sciencedirect.com/science/article/pii/S0168007200000464","role":"Defines logics via consequence and translations via consequence preservation; motivates the bounded consequence-observation contract.","verification":["Scite DOI match and indexed full-text excerpts","publisher record","Consensus fetched record"]},
