@@ -6,7 +6,13 @@ import unittest
 from pathlib import Path
 
 from mechanization.far_mechanization.contract_v2 import contract_sha256
-from tools.check_pca_w4_domain_contracts import RESULTS, audit_document, load_json, validate_campaign
+from tools.check_pca_w4_domain_contracts import (
+    RESULTS,
+    audit_document,
+    load_json,
+    manifest_record_set_errors,
+    validate_campaign,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -38,6 +44,30 @@ class PCAW4DomainContractTests(unittest.TestCase):
         codes = {item["code"] for item in audit_document(broken)}
         self.assertIn("W4_NATIVE_BEHAVIOR_MISMATCH", codes)
 
+    def test_native_recomputation_honors_declared_causal_distribution(self) -> None:
+        document = load_json(RESULTS / "bayesian-causal-lossy.json")
+        broken = copy.deepcopy(document)
+        for case in broken["contract"]["source_domain"]["cases"]:
+            case["value"]["u_distribution"] = [
+                {"u": 0, "probability": "3/4"},
+                {"u": 1, "probability": "1/4"},
+            ]
+        broken["freeze"]["contract_sha256"] = contract_sha256(broken["contract"])
+        codes = {item["code"] for item in audit_document(broken)}
+        self.assertIn("W4_NATIVE_BEHAVIOR_MISMATCH", codes)
+        self.assertIn("W4_NATIVE_REPRESENTATION_MISMATCH", codes)
+
+    def test_native_recomputation_rejects_invalid_causal_distribution(self) -> None:
+        document = load_json(RESULTS / "bayesian-causal-lossy.json")
+        broken = copy.deepcopy(document)
+        broken["contract"]["source_domain"]["cases"][0]["value"]["u_distribution"] = [
+            {"u": 0, "probability": "3/4"},
+            {"u": 1, "probability": "1/2"},
+        ]
+        broken["freeze"]["contract_sha256"] = contract_sha256(broken["contract"])
+        codes = {item["code"] for item in audit_document(broken)}
+        self.assertIn("W4_NATIVE_CASE_INVALID", codes)
+
     def test_native_recomputation_rejects_changed_repair(self) -> None:
         document = load_json(RESULTS / "argumentation-repaired.json")
         broken = copy.deepcopy(document)
@@ -53,6 +83,13 @@ class PCAW4DomainContractTests(unittest.TestCase):
         broken["provenance"]["sources"][0]["sha256"] = "0" * 64
         codes = {item["code"] for item in audit_document(broken)}
         self.assertIn("W4_SOURCE_HASH_MISMATCH", codes)
+
+    def test_manifest_requires_every_frozen_result(self) -> None:
+        manifest = load_json(RESULTS / "manifest.json")
+        broken = copy.deepcopy(manifest)
+        broken["records"] = broken["records"][:-1]
+        codes = {item["code"] for item in manifest_record_set_errors(broken)}
+        self.assertIn("W4_MANIFEST_RECORD_SET_MISMATCH", codes)
 
     def test_records_remain_exact_and_do_not_claim_w5_semantics(self) -> None:
         for path in RESULTS.glob("*.json"):
