@@ -1,0 +1,283 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "PCA-W5-APPROXIMATION-AND-COST-1.0",
+  "stage": "B_NATIVE_CONCEPT_SOURCE_FREEZE",
+  "frozen_at": "2026-08-30T18:16:49Z",
+  "query_freeze_commit": "11a93ba0db812ec849aac9b136be5d5538a0b44e",
+  "far_mapping_performed_before_freeze": false,
+  "selected_sources": [
+    {
+      "key": "lecam1964approx",
+      "family": "decision_experiments",
+      "status": "SELECTED_PRIMARY",
+      "title": "Sufficiency and Approximate Sufficiency",
+      "authors": ["Lucien Le Cam"],
+      "year": 1964,
+      "venue": "The Annals of Mathematical Statistics",
+      "volume": "35",
+      "issue": "4",
+      "pages": "1419-1455",
+      "doi": "10.1214/AOMS/1177700372",
+      "verification_url": "https://www.jstor.org/stable/2238284",
+      "role": "Primary source for approximate sufficiency/deficiency and its decision-theoretic interpretation.",
+      "native_points": [
+        "Approximation of statistical experiments is defined relative to experiments indexed by the same parameter set and randomizations/decision procedures.",
+        "Deficiency quantifies approximate simulation of one experiment by another; risk comparison for bounded losses is the operational decision-theoretic interpretation.",
+        "Normalization conventions for total-variation/deficiency constants must be declared rather than silently assumed."
+      ]
+    },
+    {
+      "key": "blackwell1953experiments",
+      "family": "decision_experiments",
+      "status": "SELECTED_PRIMARY",
+      "title": "Equivalent Comparisons of Experiments",
+      "authors": ["David Blackwell"],
+      "year": 1953,
+      "venue": "The Annals of Mathematical Statistics",
+      "volume": "24",
+      "issue": "2",
+      "pages": "265-272",
+      "doi": "10.1214/AOMS/1177729032",
+      "verification_url": "https://celebratio.org/Blackwell_DH/article/26/",
+      "role": "Exact decision-comparison baseline for information ordering of experiments.",
+      "native_points": [
+        "Comparison is stated in terms of attainable risk across decision problems.",
+        "Exact comparison/equivalence is weaker or stronger depending on the decision class; Blackwell also introduced k-decision comparisons."
+      ]
+    },
+    {
+      "key": "torgersen1991comparison",
+      "family": "decision_experiments",
+      "status": "SELECTED_AUTHORITATIVE",
+      "title": "Comparison of Statistical Experiments",
+      "authors": ["Erik Torgersen"],
+      "year": 1991,
+      "venue": "Encyclopedia of Mathematics and its Applications 36",
+      "publisher": "Cambridge University Press",
+      "doi": "10.1017/CBO9780511666353",
+      "verification_url": "https://www.cambridge.org/core/books/comparison-of-statistical-experiments/405F64D2A2FB3A4E6A1893C1C8A4A60B",
+      "role": "Authoritative monograph connecting risk, deficiency, sufficiency, randomization, distance, ordering, equivalence, and convergence.",
+      "native_points": [
+        "Deficiency is a quantitative information-comparison device, not a free-standing universal metric.",
+        "The theory explicitly relates deficiency to decision theory and randomization."
+      ]
+    },
+    {
+      "key": "mariucci2016lecam",
+      "family": "decision_experiments",
+      "status": "SELECTED_EXPOSITORY",
+      "title": "Le cam theory on the comparison of statistical models",
+      "authors": ["Ester Mariucci"],
+      "year": 2016,
+      "venue": "arXiv",
+      "identifier": "arXiv:1605.03301",
+      "verification_url": "https://arxiv.org/abs/1605.03301",
+      "role": "Accessible expository cross-check of Le Cam distance and decision-risk interpretation; not used as the foundational authority.",
+      "native_points": [
+        "Reviews Le Cam distance, deficiency, and classical tools for bounding them.",
+        "Provides an accessible modern statement linking small deficiency to uniformly small increases in bounded-loss risk."
+      ]
+    },
+    {
+      "key": "shannon1959fidelity",
+      "family": "information_theory",
+      "status": "SELECTED_PRIMARY",
+      "title": "Coding Theorems for a Discrete Source With a Fidelity Criterion",
+      "authors": ["Claude E. Shannon"],
+      "year": 1959,
+      "venue": "IRE International Convention Record",
+      "volume": "7",
+      "issue": "4",
+      "pages": "142-163",
+      "verification_url": "https://ieeexplore.ieee.org/document/5311476",
+      "role": "Primary rate-distortion source.",
+      "native_points": [
+        "A nonnegative distortion matrix is supplied as part of the problem.",
+        "Average distortion is probability-weighted over source/reproduction pairs.",
+        "A tolerable distortion level is an explicit constraint, and the rate-distortion function depends on the source and chosen distortion measure."
+      ]
+    },
+    {
+      "key": "tishby1999ib",
+      "family": "information_theory",
+      "status": "SELECTED_PRIMARY",
+      "title": "The Information Bottleneck Method",
+      "authors": ["Naftali Tishby", "Fernando C. Pereira", "William Bialek"],
+      "year": 1999,
+      "venue": "Proceedings of the 37th Annual Allerton Conference on Communication, Control, and Computing",
+      "pages": "368-377",
+      "identifier": "arXiv:physics/0004057",
+      "verification_url": "https://arxiv.org/abs/physics/0004057",
+      "role": "Primary relevance-sensitive compression formulation.",
+      "native_points": [
+        "Compression is defined relative to a relevance variable/joint distribution rather than by a universal distortion.",
+        "The constrained optimization trades compression against preserved relevant information.",
+        "The formulation is described as a rate-distortion generalization in which an effective distortion arises from joint statistics."
+      ]
+    },
+    {
+      "key": "girardpappas2007metrics",
+      "family": "behavioral_model_abstraction",
+      "status": "SELECTED_PRIMARY",
+      "title": "Approximation Metrics for Discrete and Continuous Systems",
+      "authors": ["Antoine Girard", "George J. Pappas"],
+      "year": 2007,
+      "venue": "IEEE Transactions on Automatic Control",
+      "volume": "52",
+      "issue": "5",
+      "pages": "782-798",
+      "doi": "10.1109/TAC.2007.895849",
+      "verification_url": "https://ieeecss.org/paper/approximation-metrics-discrete-and-continuous-systems",
+      "role": "Primary system-approximation metric source.",
+      "native_points": [
+        "Approximate language inclusion/simulation/bisimulation are quantified by a hierarchy of pseudometrics.",
+        "The pseudometrics are built for metric transition systems and depend on the observation/system structure.",
+        "Established exact relationships are recovered as zero sections within the stated framework."
+      ]
+    },
+    {
+      "key": "bartlett2006risk",
+      "family": "statistical_learning",
+      "status": "SELECTED_PRIMARY",
+      "title": "Convexity, Classification, and Risk Bounds",
+      "authors": ["Peter L. Bartlett", "Michael I. Jordan", "Jon D. McAuliffe"],
+      "year": 2006,
+      "venue": "Journal of the American Statistical Association",
+      "volume": "101",
+      "issue": "473",
+      "pages": "138-156",
+      "doi": "10.1198/016214505000000907",
+      "verification_url": "https://www.stat.berkeley.edu/~bartlett/publications/articles_bib.html",
+      "role": "Primary surrogate-to-target excess-risk calibration source.",
+      "native_points": [
+        "Surrogate loss improves computational tractability but changes the statistical objective.",
+        "The paper gives a quantitative relationship between surrogate risk and 0-1 target risk.",
+        "Nontrivial target-risk control requires a calibration/Fisher-consistency condition on the chosen surrogate loss."
+      ]
+    },
+    {
+      "key": "miettinen1999moo",
+      "family": "multiobjective_orders",
+      "status": "SELECTED_AUTHORITATIVE",
+      "title": "Nonlinear Multiobjective Optimization",
+      "authors": ["Kaisa Miettinen"],
+      "year": 1999,
+      "venue": "International Series in Operations Research & Management Science 12",
+      "publisher": "Kluwer Academic Publishers",
+      "isbn": "0-7923-8278-1",
+      "doi": "10.1007/978-1-4615-5563-6",
+      "verification_url": "https://users.jyu.fi/~miettine/book/index.html",
+      "role": "Authoritative multiobjective optimization monograph.",
+      "native_points": [
+        "Multiple objectives may be conflicting or incommensurable, so single-objective methods are insufficient without additional structure.",
+        "The literature distinguishes no-preference, a posteriori, a priori, and interactive methods, reflecting different roles for preference information.",
+        "A Pareto/efficient set is not automatically a unique most-preferred solution."
+      ]
+    },
+    {
+      "key": "miettinenmakela2002scalar",
+      "family": "multiobjective_orders",
+      "status": "SELECTED_PRIMARY",
+      "title": "On scalarizing functions in multiobjective optimization",
+      "authors": ["Kaisa Miettinen", "Marko M. Mäkelä"],
+      "year": 2002,
+      "venue": "OR Spectrum",
+      "volume": "24",
+      "issue": "2",
+      "pages": "193-213",
+      "doi": "10.1007/s00291-001-0092-9",
+      "verification_url": "https://link.springer.com/article/10.1007/s00291-001-0092-9",
+      "role": "Primary comparison of scalarization choices and their relationship to supplied preference information.",
+      "native_points": [
+        "Different scalarizing functions encode different approaches and can have different theoretical/numerical behavior.",
+        "Preference/reference information is part of many scalarized formulations; scalarization is not a preference-free canonical collapse."
+      ]
+    },
+    {
+      "key": "chandrasekaranjordan2013tradeoffs",
+      "family": "resource_cost",
+      "status": "SELECTED_PRIMARY",
+      "title": "Computational and Statistical Tradeoffs via Convex Relaxation",
+      "authors": ["Venkat Chandrasekaran", "Michael I. Jordan"],
+      "year": 2013,
+      "venue": "Proceedings of the National Academy of Sciences",
+      "volume": "110",
+      "issue": "13",
+      "pages": "E1181-E1190",
+      "doi": "10.1073/pnas.1302293110",
+      "verification_url": "https://authors.library.caltech.edu/records/q9azt-at733",
+      "role": "Primary example showing explicit tradeoffs between computational and statistical resources.",
+      "native_points": [
+        "Inference quality is studied under bounded computational resources such as time or space.",
+        "Algorithms can be ordered by both computational and statistical efficiency.",
+        "The paper derives concrete runtime-versus-data tradeoffs rather than collapsing the two resources by default."
+      ]
+    },
+    {
+      "key": "hansenyu2001mdl",
+      "family": "resource_cost",
+      "status": "SELECTED_PRIMARY",
+      "title": "Model Selection and the Principle of Minimum Description Length",
+      "authors": ["Mark H. Hansen", "Bin Yu"],
+      "year": 2001,
+      "venue": "Journal of the American Statistical Association",
+      "volume": "96",
+      "issue": "454",
+      "pages": "746-774",
+      "doi": "10.1198/016214501753168398",
+      "verification_url": "https://binyu.stat.berkeley.edu/papers/",
+      "role": "Primary/authoritative statistical treatment of description length as a model-selection complexity criterion.",
+      "native_points": [
+        "MDL compares models through coding/description complexity of data and model representations.",
+        "Description length is a distinct complexity notion and is not identified with runtime, memory, sample count, or communication cost."
+      ]
+    }
+  ],
+  "discovery_execution": {
+    "acumen": {
+      "status": "FAILED_OFF_TARGET",
+      "protocol_deviation": {
+        "occurred": true,
+        "description": "The first Acumen call paraphrased W5-Q-DE-01 and is inadmissible. It was rerun verbatim; the exact rerun also returned off-target material and is retained as a failed lane."
+      }
+    },
+    "consensus": {
+      "status": "EXECUTED",
+      "queries": ["W5-Q-DE-01", "W5-Q-IT-01", "W5-Q-BM-01", "W5-Q-SL-01", "W5-Q-MO-01", "W5-Q-RC-01"]
+    },
+    "scispace": {
+      "status": "EXECUTED",
+      "queries": ["W5-Q-DE-02", "W5-Q-IT-02", "W5-Q-BM-02", "W5-Q-SL-02", "W5-Q-MO-02", "W5-Q-RC-02"]
+    },
+    "scite": {
+      "status": "EXECUTED",
+      "queries": ["W5-Q-DE-03", "W5-Q-IT-03", "W5-Q-BM-03", "W5-Q-SL-03", "W5-Q-MO-03", "W5-Q-RC-03"],
+      "full_text_status": "BLOCKED_ARTICLE_GALAXY_NOT_ENABLED"
+    },
+    "primary_web": {
+      "status": "EXECUTED",
+      "role": "verified source identities and authoritative/author pages; no web summary is promoted as proof"
+    },
+    "zotero": {
+      "status": "BLOCKED",
+      "reason": "Installed skill is present, but no Zotero tool namespace or local helper/Desktop endpoint is exposed in this chat runtime; a helper-path probe returned no executable helper. No Zotero-managed-library claim is made."
+    },
+    "wolfram": {
+      "status": "DEFERRED_BY_PROTOCOL",
+      "reason": "Stage D only; no Wolfram computation before this native freeze."
+    }
+  },
+  "rejected_or_quarantined": [
+    {"class": "Acumen outputs", "reason": "Both the inadmissible paraphrased run and the exact rerun were off-topic; retained as tool failures only."},
+    {"class": "2026 representation-learning/Le Cam secondary preprints", "reason": "Potentially relevant applications but not needed to establish foundational W5 semantics; avoid anchoring the native freeze on unestablished recent formulations."},
+    {"class": "generic recent surveys and applied benchmark papers", "reason": "Useful for recall but not selected where a primary/authoritative definition source was available."},
+    {"class": "Scite full-text proxy", "reason": "Article Galaxy MCP access not enabled; no unavailable text was inferred."},
+    {"class": "Zotero-managed bibliography", "reason": "Current runtime cannot operate the local Zotero library; references.bib is repository-managed only."}
+  ],
+  "cross_family_observations": [
+    "No selected native source establishes a universal approximation metric, loss, tolerance, aggregation rule, or scalar cost.",
+    "Approximation structures differ materially across families: deficiency/risk over randomizations, probability-weighted distortion, system pseudometrics, calibrated surrogate/target risks, Pareto/preference orders, and heterogeneous resource tradeoffs.",
+    "Zero numerical discrepancy recovers an exact relation only under family-specific separation/equivalence conditions; it is not a generic consequence of calling a field 'loss' or 'metric'.",
+    "Cost and adequacy are distinct in the selected sources; computational, statistical, and description-complexity resources are not identified as one natural scalar."
+  ]
+}
