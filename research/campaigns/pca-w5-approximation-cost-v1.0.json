@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "PCA-W5-APPROXIMATION-AND-COST-1.0",
+  "program_id": "POST-CLOSURE-001",
+  "workstream_id": "PCA-W5-APPROXIMATION-AND-COST",
+  "status": "QUERY_PROTOCOL_FROZEN",
+  "governing_theory": "PROJECT-FAR-CORE-THEORY-1.1",
+  "base_commit": "e31ab40df0d0c75d3edfe3884681e3596dd65abd",
+  "base_tree": "078b91999ebe21bb77c777f2cace62c23e5415da",
+  "branch": "research/pca-w5-approximation-cost",
+  "frozen_at": "2026-08-30T18:04:48Z",
+  "objective": "Independently reconstruct native approximation, loss, tolerance, aggregation, and cost-order semantics before any controlled mapping into Project FAR, then implement only the weakest governed operational successor justified by that frozen evidence.",
+  "entry_boundary": {
+    "w4_records_remain_exact": true,
+    "w4_repairs_are_not_cost_optima": true,
+    "far_ir_2_0_approximation_fields_are_declaration_only": true,
+    "far_ir_2_0_w5_semantics_established": false,
+    "silent_v2_reinterpretation_prohibited": true
+  },
+  "stages": [
+    {
+      "id": "A",
+      "name": "native_discovery",
+      "state": "authorized_after_this_freeze",
+      "far_mapping_allowed": false
+    },
+    {
+      "id": "B",
+      "name": "native_concept_source_freeze",
+      "state": "pending",
+      "far_mapping_allowed": false
+    },
+    {
+      "id": "C",
+      "name": "controlled_far_mapping",
+      "state": "blocked_until_stage_b_freeze"
+    },
+    {
+      "id": "D",
+      "name": "formal_computational_checks",
+      "state": "blocked_until_stage_b_freeze"
+    },
+    {
+      "id": "E",
+      "name": "hostile_audit_promotion",
+      "state": "blocked_until_results_exist"
+    }
+  ],
+  "query_families": [
+    {
+      "id": "decision_experiments",
+      "queries": [
+        {"id": "W5-Q-DE-01", "text": "comparison of statistical experiments deficiency distance decision risk approximate sufficiency"},
+        {"id": "W5-Q-DE-02", "text": "Le Cam deficiency randomization criterion bounded loss decision problems"},
+        {"id": "W5-Q-DE-03", "text": "approximate sufficient statistics excess risk decision theory"}
+      ]
+    },
+    {
+      "id": "information_theory",
+      "queries": [
+        {"id": "W5-Q-IT-01", "text": "rate distortion theory distortion measure lossy compression optimal representation"},
+        {"id": "W5-Q-IT-02", "text": "information bottleneck relevance distortion task loss representation"},
+        {"id": "W5-Q-IT-03", "text": "rate distortion multiple distortion measures nonunique optimum"}
+      ]
+    },
+    {
+      "id": "behavioral_model_abstraction",
+      "queries": [
+        {"id": "W5-Q-BM-01", "text": "approximate bisimulation behavioral pseudometric model reduction error bounds"},
+        {"id": "W5-Q-BM-02", "text": "simulation metrics abstraction error probabilistic systems"},
+        {"id": "W5-Q-BM-03", "text": "model reduction output error norms approximation error bounds"}
+      ]
+    },
+    {
+      "id": "statistical_learning",
+      "queries": [
+        {"id": "W5-Q-SL-01", "text": "surrogate loss calibration excess risk decision tasks"},
+        {"id": "W5-Q-SL-02", "text": "task aware representation learning sufficiency risk information"},
+        {"id": "W5-Q-SL-03", "text": "loss functions Bayes risk approximation representation"}
+      ]
+    },
+    {
+      "id": "multiobjective_orders",
+      "queries": [
+        {"id": "W5-Q-MO-01", "text": "multiobjective optimization Pareto preorder scalarization nonunique optimum"},
+        {"id": "W5-Q-MO-02", "text": "partial order costs resource tradeoffs Pareto minimality"},
+        {"id": "W5-Q-MO-03", "text": "multiobjective optimization preference dependence scalarization limitations"}
+      ]
+    },
+    {
+      "id": "resource_cost",
+      "queries": [
+        {"id": "W5-Q-RC-01", "text": "computational complexity time space communication tradeoff representation"},
+        {"id": "W5-Q-RC-02", "text": "description length model complexity computation tradeoff"},
+        {"id": "W5-Q-RC-03", "text": "sample complexity computational complexity statistical tradeoff"}
+      ]
+    }
+  ],
+  "discovery_stack": [
+    {"tool": "Acumen/Talarion", "role": "first current-state and missing-angle brief", "canonical_evidence": false},
+    {"tool": "Consensus", "role": "academic discovery and paper retrieval", "canonical_evidence": false},
+    {"tool": "SciSpace", "role": "independent academic discovery and triage", "canonical_evidence": false},
+    {"tool": "Scite", "role": "citation-context support/dispute/context checks", "canonical_evidence": false},
+    {"tool": "ordinary_web", "role": "primary-source and current-gap discovery", "canonical_evidence": false},
+    {"tool": "Wolfram", "role": "post-freeze formal/computational verification", "canonical_evidence": false},
+    {"tool": "Zotero", "role": "bibliography/provenance management when executable", "runtime_state": "installed_skill_but_local_desktop_helper_not_exposed_in_current_chat_runtime", "canonical_evidence": false},
+    {"tool": "GitHub", "role": "sole canonical freeze/result/governance authority", "canonical_evidence": true}
+  ],
+  "required_native_freeze_dimensions": [
+    "source_identity",
+    "native_definition",
+    "scope_and_assumptions",
+    "discrepancy_or_loss",
+    "metric_or_divergence_if_required",
+    "aggregation_or_reference_measure",
+    "tolerance_or_acceptance_relation",
+    "randomization_if_relevant",
+    "cost_object",
+    "cost_preorder_or_preference_relation",
+    "existence_conditions",
+    "uniqueness_conditions",
+    "nonuniqueness_or_incomparability",
+    "counterexamples_and_negative_results"
+  ],
+  "required_controls": [
+    "loss_choice_dependence",
+    "aggregation_or_distribution_dependence",
+    "tolerance_dependence",
+    "zero_loss_nonseparation",
+    "cost_preorder_incomparability",
+    "nonunique_minimal_candidates",
+    "scalarization_preference_dependence",
+    "exact_approximate_boundary",
+    "missing_declaration_failure"
+  ],
+  "prohibited_promotions": [
+    "universal_metric",
+    "universal_loss",
+    "universal_tolerance",
+    "universal_aggregation_rule",
+    "universal_cost_order",
+    "universal_unique_cost_optimum",
+    "w4_exact_repair_as_approximate_optimum",
+    "zero_loss_as_exact_sufficiency_without_separation_conditions",
+    "finite_candidate_minimum_as_global_optimum",
+    "empirical_utility_from_formal_success",
+    "external_independence_from_internal_mapping",
+    "novelty_or_priority_from_negative_search"
+  ],
+  "terminal_outcomes": [
+    "PROVED",
+    "REFUTED",
+    "OPEN",
+    "BLOCKED",
+    "UNDERDETERMINED",
+    "NOT_APPLICABLE",
+    "Unknown"
+  ]
+}
