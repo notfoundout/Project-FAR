@@ -1,0 +1,278 @@
+{
+  "format_version": "far-ir/2.0",
+  "id": "w4.bayesian_causal_reasoning.repaired",
+  "contract": {
+    "id": "w4.bayesian_causal_reasoning.repaired",
+    "contract_version": "1.0",
+    "mode": "exact",
+    "source_domain": {
+      "status": "EXPLICIT",
+      "kind": "finite_explicit",
+      "description": "Two frozen native cases for bayesian_causal_reasoning.",
+      "cases": [
+        {
+          "id": "case.bc.xtoy",
+          "value": {
+            "variables": [
+              "U",
+              "X",
+              "Y"
+            ],
+            "u_distribution": [
+              {
+                "u": 0,
+                "probability": "1/2"
+              },
+              {
+                "u": 1,
+                "probability": "1/2"
+              }
+            ],
+            "equations": {
+              "X": "U",
+              "Y": "X"
+            }
+          }
+        },
+        {
+          "id": "case.bc.ytox",
+          "value": {
+            "variables": [
+              "U",
+              "X",
+              "Y"
+            ],
+            "u_distribution": [
+              {
+                "u": 0,
+                "probability": "1/2"
+              },
+              {
+                "u": 1,
+                "probability": "1/2"
+              }
+            ],
+            "equations": {
+              "Y": "U",
+              "X": "Y"
+            }
+          }
+        }
+      ]
+    },
+    "required_behavior": {
+      "status": "EXPLICIT",
+      "description": "Probability P(Y=1 | do(X=0)).",
+      "table": [
+        {
+          "case_id": "case.bc.xtoy",
+          "value": {
+            "numerator": 0,
+            "denominator": 1
+          }
+        },
+        {
+          "case_id": "case.bc.ytox",
+          "value": {
+            "numerator": 1,
+            "denominator": 2
+          }
+        }
+      ]
+    },
+    "representation": {
+      "status": "EXPLICIT",
+      "description": "Observational distribution plus the full response distribution for do(X=0).",
+      "table": [
+        {
+          "case_id": "case.bc.xtoy",
+          "value": {
+            "observational": [
+              {
+                "x": 0,
+                "y": 0,
+                "probability": "1/2"
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "probability": "1/2"
+              }
+            ],
+            "do_X_0": [
+              {
+                "x": 0,
+                "y": 0,
+                "probability": "1"
+              }
+            ]
+          }
+        },
+        {
+          "case_id": "case.bc.ytox",
+          "value": {
+            "observational": [
+              {
+                "x": 0,
+                "y": 0,
+                "probability": "1/2"
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "probability": "1/2"
+              }
+            ],
+            "do_X_0": [
+              {
+                "x": 0,
+                "y": 0,
+                "probability": "1/2"
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "probability": "1/2"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "observation_contexts": [
+      {
+        "id": "obs.bayesian_causal.primary",
+        "description": "Interventional probability of Y=1 under do(X=0).",
+        "status": "EXPLICIT"
+      }
+    ],
+    "admitted_transformations": [
+      {
+        "id": "eq.literal-json",
+        "kind": "equivalence",
+        "description": "Literal equality of canonical JSON table values.",
+        "status": "EXPLICIT"
+      }
+    ],
+    "interpretation_profile": {
+      "id": "interp.bayesian_causal",
+      "description": "Finite recursive Boolean structural causal models with U fair.",
+      "status": "EXPLICIT"
+    },
+    "target_model_class": {
+      "id": "target.bayesian_causal",
+      "description": "Exactly MXtoY and MYtoX with intervention do(X=0).",
+      "status": "EXPLICIT"
+    },
+    "frame": {
+      "id": "frame.bayesian_causal",
+      "description": "Structural equations replace the equation for X under intervention; U remains Bernoulli(1/2).",
+      "status": "EXPLICIT"
+    },
+    "extensions": {
+      "w4.domain": "bayesian_causal_reasoning",
+      "w4.variant": "repaired",
+      "w4.native_memo": "docs/research/pca-w4-domain-contracts/native/bayesian-causal.md",
+      "w4.source_keys": [
+        "blackwell1953equivalent",
+        "beckers2019abstracting"
+      ],
+      "w4.native_freeze_commit": "f823c4daf08b61241483bc1cc50d88d22746fa83"
+    }
+  },
+  "report": {
+    "outcome": "PROVED",
+    "evidence": {
+      "kind": "factorization",
+      "status": "CHECKED_FINITE_EXPLICIT",
+      "decoder_table": [
+        {
+          "representation_value": {
+            "observational": [
+              {
+                "x": 0,
+                "y": 0,
+                "probability": "1/2"
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "probability": "1/2"
+              }
+            ],
+            "do_X_0": [
+              {
+                "x": 0,
+                "y": 0,
+                "probability": "1"
+              }
+            ]
+          },
+          "behavior_value": {
+            "numerator": 0,
+            "denominator": 1
+          }
+        },
+        {
+          "representation_value": {
+            "observational": [
+              {
+                "x": 0,
+                "y": 0,
+                "probability": "1/2"
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "probability": "1/2"
+              }
+            ],
+            "do_X_0": [
+              {
+                "x": 0,
+                "y": 0,
+                "probability": "1/2"
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "probability": "1/2"
+              }
+            ]
+          },
+          "behavior_value": {
+            "numerator": 1,
+            "denominator": 2
+          }
+        }
+      ],
+      "notes": "Decoder is checked only over the two explicit frozen cases."
+    },
+    "failure_report": []
+  },
+  "provenance": {
+    "producer": "PCA-W4-DOMAIN-CONTRACTS",
+    "created_at": "2026-08-30T10:41:10.018Z",
+    "sources": [
+      {
+        "path": "docs/research/pca-w4-domain-contracts/native/bayesian-causal.md",
+        "sha256": "b6ea359f8ce277adcef3c319bb39594e32699109e3d0626a7b5fa0f098a38f75"
+      },
+      {
+        "path": "docs/research/pca-w4-domain-contracts/01-source-manifest.json",
+        "sha256": "00d6d2c1a68aa9b0f11234975162c2b42a63edb07f82aefa5c443c8c1e02c7a0"
+      },
+      {
+        "path": "docs/research/pca-w4-domain-contracts/01-discovery-log.md",
+        "sha256": "683edbc72110612a9d2c0d9799f6ee65ea2d1c4df4347965a9677983037dbebe"
+      }
+    ],
+    "notes": "External-domain correspondence is supported by the native memo and source manifest; checked evidence certifies only the encoded finite tables."
+  },
+  "freeze": {
+    "status": "FROZEN",
+    "frozen_at": "2026-08-30T10:41:10.018Z",
+    "contract_sha256": "e216a51536a8f7c443fd73682f21f420717048e88e880e2112e58af0558dcc25",
+    "notes": "Contract object frozen after native memo commit f823c4daf08b61241483bc1cc50d88d22746fa83."
+  }
+}

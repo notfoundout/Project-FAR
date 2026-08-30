@@ -1,0 +1,172 @@
+{
+  "format_version": "far-ir/2.0",
+  "id": "w4.type_theory.repaired",
+  "contract": {
+    "id": "w4.type_theory.repaired",
+    "contract_version": "1.0",
+    "mode": "exact",
+    "source_domain": {
+      "status": "EXPLICIT",
+      "kind": "finite_explicit",
+      "description": "Two frozen native cases for type_theory.",
+      "cases": [
+        {
+          "id": "case.tt.nat",
+          "value": {
+            "raw_term": "x",
+            "context": {
+              "x": "Nat"
+            },
+            "operator": {
+              "succ": "Nat->Nat"
+            }
+          }
+        },
+        {
+          "id": "case.tt.bool",
+          "value": {
+            "raw_term": "x",
+            "context": {
+              "x": "Bool"
+            },
+            "operator": {
+              "succ": "Nat->Nat"
+            }
+          }
+        }
+      ]
+    },
+    "required_behavior": {
+      "status": "EXPLICIT",
+      "description": "Whether succ x checks at Nat in the listed context.",
+      "table": [
+        {
+          "case_id": "case.tt.nat",
+          "value": true
+        },
+        {
+          "case_id": "case.tt.bool",
+          "value": false
+        }
+      ]
+    },
+    "representation": {
+      "status": "EXPLICIT",
+      "description": "Raw term paired with its explicit typing context.",
+      "table": [
+        {
+          "case_id": "case.tt.nat",
+          "value": {
+            "raw_term": "x",
+            "context": {
+              "x": "Nat"
+            }
+          }
+        },
+        {
+          "case_id": "case.tt.bool",
+          "value": {
+            "raw_term": "x",
+            "context": {
+              "x": "Bool"
+            }
+          }
+        }
+      ]
+    },
+    "observation_contexts": [
+      {
+        "id": "obs.type_theory.primary",
+        "description": "Boolean judgment: context proves succ x has type Nat.",
+        "status": "EXPLICIT"
+      }
+    ],
+    "admitted_transformations": [
+      {
+        "id": "eq.literal-json",
+        "kind": "equivalence",
+        "description": "Literal equality of canonical JSON table values.",
+        "status": "EXPLICIT"
+      }
+    ],
+    "interpretation_profile": {
+      "id": "interp.type_theory",
+      "description": "Literal lookup and application checking in the stated simply typed fragment.",
+      "status": "EXPLICIT"
+    },
+    "target_model_class": {
+      "id": "target.type_theory",
+      "description": "Exactly contexts x:Nat and x:Bool with succ:Nat->Nat.",
+      "status": "EXPLICIT"
+    },
+    "frame": {
+      "id": "frame.type_theory",
+      "description": "Only base types Nat and Bool, variable x, and operator succ.",
+      "status": "EXPLICIT"
+    },
+    "extensions": {
+      "w4.domain": "type_theory",
+      "w4.variant": "repaired",
+      "w4.native_memo": "docs/research/pca-w4-domain-contracts/native/type-theory.md",
+      "w4.source_keys": [
+        "pientka2020contextual",
+        "angiuli2026principles"
+      ],
+      "w4.native_freeze_commit": "f823c4daf08b61241483bc1cc50d88d22746fa83"
+    }
+  },
+  "report": {
+    "outcome": "PROVED",
+    "evidence": {
+      "kind": "factorization",
+      "status": "CHECKED_FINITE_EXPLICIT",
+      "decoder_table": [
+        {
+          "representation_value": {
+            "raw_term": "x",
+            "context": {
+              "x": "Nat"
+            }
+          },
+          "behavior_value": true
+        },
+        {
+          "representation_value": {
+            "raw_term": "x",
+            "context": {
+              "x": "Bool"
+            }
+          },
+          "behavior_value": false
+        }
+      ],
+      "notes": "Decoder is checked only over the two explicit frozen cases."
+    },
+    "failure_report": []
+  },
+  "provenance": {
+    "producer": "PCA-W4-DOMAIN-CONTRACTS",
+    "created_at": "2026-08-30T10:41:10.018Z",
+    "sources": [
+      {
+        "path": "docs/research/pca-w4-domain-contracts/native/type-theory.md",
+        "sha256": "e95c33a8635594c4d9e8247a983f3cc78fef88430822985c7c0c47714679ff69"
+      },
+      {
+        "path": "docs/research/pca-w4-domain-contracts/01-source-manifest.json",
+        "sha256": "00d6d2c1a68aa9b0f11234975162c2b42a63edb07f82aefa5c443c8c1e02c7a0"
+      },
+      {
+        "path": "docs/research/pca-w4-domain-contracts/01-discovery-log.md",
+        "sha256": "683edbc72110612a9d2c0d9799f6ee65ea2d1c4df4347965a9677983037dbebe"
+      }
+    ],
+    "notes": "External-domain correspondence is supported by the native memo and source manifest; checked evidence certifies only the encoded finite tables."
+  },
+  "freeze": {
+    "status": "FROZEN",
+    "frozen_at": "2026-08-30T10:41:10.018Z",
+    "contract_sha256": "69c458a96fb56440d547939d32db5aed9558a25231ad74cb6242d600461e061a",
+    "notes": "Contract object frozen after native memo commit f823c4daf08b61241483bc1cc50d88d22746fa83."
+  }
+}
