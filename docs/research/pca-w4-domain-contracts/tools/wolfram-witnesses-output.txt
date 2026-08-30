@@ -1,0 +1,43 @@
+Out[1]= <|
+  "allCollisions" -> True,
+  "allRepairsFactorize" -> True,
+  "witnesses" -> <|
+    "logic" -> <|
+      "lossy" -> {True, True},
+      "behavior" -> {False, True},
+      "collision" -> True,
+      "factorizes" -> True
+    |>,
+    "causal" -> <|
+      "observationalForward" -> {{0, 0}, {1, 1}},
+      "observationalReverse" -> {{0, 0}, {1, 1}},
+      "behaviorPYa1DoXa0" -> {0, 1/2},
+      "collision" -> True,
+      "factorizes" -> True
+    |>,
+    "argumentation" -> <|
+      "defeat" -> {{{"A", "B"}}, {{"B", "A"}}},
+      "behaviorAccepted" -> {"A", "B"},
+      "collision" -> True,
+      "factorizes" -> True
+    |>,
+    "modelBasedReasoning" -> <|
+      "lossyInitialOutput" -> {0, 0},
+      "behaviorTrace" -> {{0, 0}, {0, 1}},
+      "collision" -> True,
+      "factorizes" -> True
+    |>,
+    "typeTheory" -> <|
+      "lossyRawTerm" -> {"x", "x"},
+      "behaviorAddOneTypechecks" -> {True, False},
+      "collision" -> True,
+      "factorizes" -> True
+    |>,
+    "proofTheory" -> <|
+      "lossyEndSequent" -> {"A|-A", "A|-A"},
+      "behaviorAlreadyCutFree" -> {True, False},
+      "collision" -> True,
+      "factorizes" -> True
+    |>
+  |>
+|>

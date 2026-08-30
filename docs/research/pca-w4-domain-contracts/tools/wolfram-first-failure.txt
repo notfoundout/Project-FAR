@@ -1,0 +1,21 @@
+PCA-W4 Wolfram evaluator — retained first failed run
+Execution date: 2026-08-30
+
+Diagnostic:
+Function::slotn: Slot number 2 in Last[#2] could not be filled inside the
+argumentation repair decoder.
+
+Observed aggregate consequence:
+- formal logic collision: True; repair factorizes: True
+- causal collision: True; repair factorizes: True
+- argumentation collision: True; repair factorizes: False
+- model-based collision: True; repair factorizes: True
+- type-theory collision: True; repair factorizes: True
+- proof-theory collision: True; repair factorizes: True
+
+Disposition:
+The argumentation decoder used a malformed nested pure-function slot. The run is
+invalid as a six-domain verification result and is preserved as a negative tool
+receipt. The corrected run replaces the nested slot with a named
+acceptedFromDefeats function and returns allCollisions=True and
+allRepairsFactorize=True.

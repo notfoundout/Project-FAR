@@ -14,13 +14,14 @@ Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.
 | `FAR-CORE-009` finite-panel boundary | **PROVED; independently confirmed; FORMALIZED** | Requires a proper finite list/panel with a witnessed outside case. |
 | `FAR-CORE-010` common theory/residue | **PROVED; independently confirmed; FORMALIZED** | Exact `T_{L,J,I}` excludes `Γ`; only frame-subtracted residue varies with `Γ` when models stay fixed. |
 | `FAR-CORE-011`–`013` parameter/typed-outcome/Ω results | **PROVED; independently confirmed; FORMALIZED** | Exact contracts; Ω uses the current canonical materialized-view definition. |
-| `FAR-CORE-014` SSS classification | **Truth PROVED under exact scope; provenance SUPPORTED/DERIVED; PARTIAL/OBSTRUCTION in Lean** | Four decoders and conditional factorization bridges compile; actual MLL witness derivations are not encoded. Not a universal architecture. |
+| `FAR-CORE-014` SSS classification | **Truth PROVED under exact scope; provenance SUPPORTED/DERIVED; FORMALIZED in Lean** | The bounded unit-free MLL syntax, resource split, atom-balance invariant, named witnesses, exhaustive decoder classification, and projected-decoder failure are encoded. Not a universal architecture. |
+| `PCA-W4-DOMAIN-CONTRACTS` finite applications | **6 REFUTED lossy sufficiency claims; 6 PROVED scoped repair claims** | Generic and native recomputation certify twelve finite records. The results are application certificates, not new core theorems, external-domain review, or minimality results. |
 | Historical `PROJECT-FAR-CORE-THEORY-1.0` | **Superseded as current authority; preserved** | Byte-identical v1.0 monograph retained at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`. |
 | Historical terminal UPP theorem | **Not established by frozen derivation** | Proposition not refuted; defects `XA-001`–`XA-005`; historical artifacts preserved. |
 | `FARA-FORMAL-KERNEL-001` | Accepted bounded specification/engineering result | Finite explicit auditable v1 target; not a global primitive/minimality theorem. |
 | Empirical and executable campaigns | Observations or bounded corroboration | Never proofs of the core or open-domain universality. |
 
-The hostile audit that triggered v1.1 remains **non-independent**. The separately sealed W1 review is complete and confirms truth under exact scopes; it does not establish novelty or priority. W2 is a separate assurance dimension: 13 claims are formalized, FAR-CORE-014 is partial, and no contradiction was found. See the generated [assurance ledger](../assurance/far-core-assurance.md) for per-claim dimensions.
+The hostile audit that triggered v1.1 remains **non-independent**. The separately sealed W1 review is complete and confirms truth under exact scopes; it does not establish novelty or priority. W2 is a separate assurance dimension: all 14 governed claims are formalized and no contradiction was found. W4 adds only bounded application certificates under six frozen contracts. See the generated [assurance ledger](../assurance/far-core-assurance.md) for per-claim dimensions.
 
 ## Historical pre-closure entries
 

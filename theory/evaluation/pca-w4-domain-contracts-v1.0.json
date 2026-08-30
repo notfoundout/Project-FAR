@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "program": "POST-CLOSURE-001",
+  "workstream": "PCA-W4-DOMAIN-CONTRACTS",
+  "status": "COMPLETE_FINITE_EXPLICIT",
+  "native_freeze_commit": "f823c4daf08b61241483bc1cc50d88d22746fa83",
+  "mapping_commit": "8f8ad0a9b18f704a892c8bdb1b5fe304e18aae17",
+  "domains": [
+    "formal_logic",
+    "bayesian_causal_reasoning",
+    "argumentation",
+    "model_based_reasoning",
+    "type_theory",
+    "proof_theory"
+  ],
+  "counts": {
+    "checked_lossy_collisions": 6,
+    "checked_repaired_factorizations": 6,
+    "schema_semantic_records": 12,
+    "adverse_generic_verifier_results": 0,
+    "adverse_native_recomputation_results": 0
+  },
+  "evidence_class": "internal_model_assisted_multi_tool_research",
+  "independent_domain_review": false,
+  "zotero_status": "BLOCKED_NO_LOCAL_PROFILE_API_OR_CONNECTOR",
+  "w5_semantics_established": false,
+  "w6_empirical_utility_established": false,
+  "novelty_or_priority_established": false,
+  "nonclaims": [
+    "contract-free universality",
+    "open-domain completeness",
+    "minimal or unique repair",
+    "approximation or cost optimality",
+    "empirical audit utility",
+    "external-investigator independence",
+    "novelty or priority"
+  ],
+  "next_workstream": "PCA-W5-APPROXIMATION-AND-COST"
+}

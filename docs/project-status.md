@@ -20,7 +20,7 @@ For a fixed exact contract, sufficiency is equivalent to factorization through t
 
 Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; subsequently confirmed by sealed independent review under exact scopes; all 14 governed claims subsequently mechanized under pinned Lean 4.19.0. Novelty/priority not established.**
 
-Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, and W3 contract-schema status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
+Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, W3 contract-schema status, and W4 domain-contract status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
 
 ## Historical boundaries
 
@@ -50,6 +50,14 @@ The v2 contract explicitly represents source/case domain, required behavior, rep
 
 W3 does not establish application correspondence for any external domain and does not establish W5 approximation/cost semantics. Schema reuse is not primitive necessity or universal architecture evidence.
 
+## W4 domain-contract disposition
+
+`PCA-W4-DOMAIN-CONTRACTS` is complete at six finite-explicit domain scopes. Native memos for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory were frozen before controlled `far-ir/2.0` mapping.
+
+Each domain has a checked lossy collision and a checked repaired factorization. The generic v2 verifier, domain-specific native recomputation, source/memo hash checks, mutation controls, and a corrected Wolfram finite enumeration all pass. Zotero remained unavailable locally; the failure is retained and the repository bibliography is not represented as Zotero-managed.
+
+W4 does not establish minimal or unique repairs, open-domain completeness, approximation/cost semantics, empirical utility, novelty/priority, or external-investigator independence.
+
 ## Current phase
 
 Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md).
@@ -60,15 +68,15 @@ Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application 
 | `PCA-W1-INDEPENDENT-REVIEW` | Complete | Sealed exact-scope review promoted; 14 PROVED, no correction; novelty/priority not established. |
 | `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | Complete | 14 FORMALIZED; exact kernel assumptions audited; no contradiction/reopen condition. |
 | `PCA-W3-CONTRACT-SCHEMA` | Complete | `far-ir/2.0` successor, semantic verifier, loss-explicit migration, and conformance fixtures complete; v1 unchanged. |
-| `PCA-W4-DOMAIN-CONTRACTS` | **Next / Active** | Independently motivate and instantiate six named domain contracts; schema usage cannot restore contract-free universality. |
-| `PCA-W5-APPROXIMATION-AND-COST` | Open | Approximation and implementation minimality require declared metrics, losses, tolerances, or cost orders. |
+| `PCA-W4-DOMAIN-CONTRACTS` | Complete | Six frozen native contracts; six checked lossy collisions and six checked scoped repairs; internal mapping only. |
+| `PCA-W5-APPROXIMATION-AND-COST` | **Next / Active** | Approximation and implementation minimality require declared metrics, losses, tolerances, or cost orders. |
 | `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | Open | Empirical utility evidence does not alter deductive theorem status automatically. |
 
-## W4 entry boundary
+## W5 entry boundary
 
-W4 must use the frozen `far-ir/2.0` comparison-contract fields rather than inventing domain-specific implicit parameters. For formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory, each application must independently justify its source domain, required behavior, observation contexts, admitted transformations/equivalences, interpretation profile, target/model class, and frame before factorization or collision results are interpreted.
+W5 must not reinterpret W4's exact repairs as approximate or cost-optimal. Every approximate claim must add a declared metric or divergence, tolerance, decision loss, and cost preorder under a new freeze.
 
-A finite-explicit software certificate proves only the table property encoded in that record. It does not prove that the table exhausts or faithfully represents the external domain.
+The W4 finite-explicit certificates prove only the encoded table properties. They do not prove that the tables exhaust or faithfully represent their external domains.
 
 ## Framework status
 

@@ -3,13 +3,27 @@
   "campaign_id": "PCA-W4-DOMAIN-CONTRACTS-1.0",
   "program": "POST-CLOSURE-001",
   "workstream": "PCA-W4-DOMAIN-CONTRACTS",
-  "status": "QUERY_PROTOCOL_FROZEN_PRE_SEARCH",
+  "status": "COMPLETE_FINITE_EXPLICIT",
   "base": {
     "commit": "3923fd88bb1549d816edcbdff66ce3412b7e80bc",
     "tree": "f95175fa7efe0556193ed5b37d546d6fc0fd152e",
     "branch": "research/pca-w4-domain-contracts"
   },
   "frozen_at": "2026-08-30T10:27:08Z",
+  "completed_at": "2026-08-30T10:45:38.778Z",
+  "stage_commits": {
+    "protocol_freeze": "9638185b2f92913b3ce13ee2aaae5289e93945b1",
+    "native_contract_freeze": "f823c4daf08b61241483bc1cc50d88d22746fa83",
+    "controlled_mapping": "8f8ad0a9b18f704a892c8bdb1b5fe304e18aae17"
+  },
+  "results": {
+    "domains": 6,
+    "checked_lossy_collisions": 6,
+    "checked_repaired_factorizations": 6,
+    "independent_domain_review": false,
+    "w5_semantics_established": false,
+    "w6_empirical_utility_established": false
+  },
   "discovery_rule": "Select and characterize native-domain sources before reading a result through Project FAR terminology or far-ir/2.0 fields.",
   "queries": [
     {

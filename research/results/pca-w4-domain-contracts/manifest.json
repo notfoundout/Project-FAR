@@ -1,0 +1,232 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "PCA-W4-DOMAIN-CONTRACTS-1.0",
+  "generated_at": "2026-08-30T10:48:46.013Z",
+  "base_commit": "3923fd88bb1549d816edcbdff66ce3412b7e80bc",
+  "protocol_commit": "9638185b2f92913b3ce13ee2aaae5289e93945b1",
+  "native_freeze_commit": "f823c4daf08b61241483bc1cc50d88d22746fa83",
+  "mapping_commit": "8f8ad0a9b18f704a892c8bdb1b5fe304e18aae17",
+  "records": [
+    {
+      "sha256": "4d2079d21a8ef9d94999ba4fda7100d10145c3512699e94fa6251bb07b543aec",
+      "path": "research/results/pca-w4-domain-contracts/argumentation-lossy.json",
+      "variant": "lossy",
+      "expected_outcome": "REFUTED",
+      "expected_evidence": "collision"
+    },
+    {
+      "sha256": "1ac74ce88366e1e2f3e502831e98b2cd232116357e223f20e5f1d8f2297245b4",
+      "path": "research/results/pca-w4-domain-contracts/argumentation-repaired.json",
+      "variant": "repaired",
+      "expected_outcome": "PROVED",
+      "expected_evidence": "factorization"
+    },
+    {
+      "sha256": "9828c6a72b9f999186636d6e9569f89a186689e44e4b087f12adc77994247a42",
+      "path": "research/results/pca-w4-domain-contracts/bayesian-causal-lossy.json",
+      "variant": "lossy",
+      "expected_outcome": "REFUTED",
+      "expected_evidence": "collision"
+    },
+    {
+      "sha256": "68fdd6d206ec9d0aca8d7d32afccf671026dcd5c0f1554154e9bd35c5b25b8c8",
+      "path": "research/results/pca-w4-domain-contracts/bayesian-causal-repaired.json",
+      "variant": "repaired",
+      "expected_outcome": "PROVED",
+      "expected_evidence": "factorization"
+    },
+    {
+      "sha256": "8071cdef4f44d069168735239190eedb743062321f223f24ad106790a7b5d4ad",
+      "path": "research/results/pca-w4-domain-contracts/formal-logic-lossy.json",
+      "variant": "lossy",
+      "expected_outcome": "REFUTED",
+      "expected_evidence": "collision"
+    },
+    {
+      "sha256": "bb4451477becb1b4b8479a411290cad2489424907ccd88e17218b140804dc80f",
+      "path": "research/results/pca-w4-domain-contracts/formal-logic-repaired.json",
+      "variant": "repaired",
+      "expected_outcome": "PROVED",
+      "expected_evidence": "factorization"
+    },
+    {
+      "sha256": "f8c919330a7620e6ac749a0b3437affcb11ad3a74d54e9de29bbba69552520da",
+      "path": "research/results/pca-w4-domain-contracts/model-based-reasoning-lossy.json",
+      "variant": "lossy",
+      "expected_outcome": "REFUTED",
+      "expected_evidence": "collision"
+    },
+    {
+      "sha256": "e147f2b577a7340e8dd3bc582e250d9b4f5a1b1a16180ddb07858ada854b5c46",
+      "path": "research/results/pca-w4-domain-contracts/model-based-reasoning-repaired.json",
+      "variant": "repaired",
+      "expected_outcome": "PROVED",
+      "expected_evidence": "factorization"
+    },
+    {
+      "sha256": "9cb7114370fbf7b561b308c5fdf31bfcb4107461483d9f1dfdeb2174d921bfd3",
+      "path": "research/results/pca-w4-domain-contracts/proof-theory-lossy.json",
+      "variant": "lossy",
+      "expected_outcome": "REFUTED",
+      "expected_evidence": "collision"
+    },
+    {
+      "sha256": "4122b0d63007f62f2b24e49312589836e4f17364c1904b6d3068c455cb4734da",
+      "path": "research/results/pca-w4-domain-contracts/proof-theory-repaired.json",
+      "variant": "repaired",
+      "expected_outcome": "PROVED",
+      "expected_evidence": "factorization"
+    },
+    {
+      "sha256": "4ca97cc26b14f2cae0c43486bfd4979ea4d024382db5e0418ef15f4ef17880fe",
+      "path": "research/results/pca-w4-domain-contracts/type-theory-lossy.json",
+      "variant": "lossy",
+      "expected_outcome": "REFUTED",
+      "expected_evidence": "collision"
+    },
+    {
+      "sha256": "458eee9a3cbfac5688dd3c6d0105c3d2235f2c7feb5b65f65000e3e600caeab2",
+      "path": "research/results/pca-w4-domain-contracts/type-theory-repaired.json",
+      "variant": "repaired",
+      "expected_outcome": "PROVED",
+      "expected_evidence": "factorization"
+    }
+  ],
+  "supporting_artifacts": [
+    {
+      "sha256": "003a9608787daf4b578aa7ad4be716f1935c77077be75f06f3d3f416de5b365b",
+      "path": "README.md"
+    },
+    {
+      "sha256": "0a14f0f52aabe8600170770be5703867700cc4a9ec6930914f5cd169f4b1379c",
+      "path": "docs/CANONICAL_MAP.md"
+    },
+    {
+      "sha256": "5c72dd236b4a2a71a9581339b820c286736800481948da7c9121c9f38700dfa1",
+      "path": "docs/ROADMAP.md"
+    },
+    {
+      "sha256": "3313c31037199c870d92fc32d52725d30d13a4705306aa75e4ee37734b54cc3f",
+      "path": "docs/governance/claim-status-matrix.md"
+    },
+    {
+      "sha256": "5db48e4ecb8d39b694b45febb03b6ae3c0279a7e48806b9d6d867e1cae28e1ca",
+      "path": "docs/governance/limitations-register.md"
+    },
+    {
+      "sha256": "0e65819ea31e2920ec2f916c45bc0fe9230d5bec052a58e24a4d98f95d0bb7a7",
+      "path": "docs/governance/open-problems-register.md"
+    },
+    {
+      "sha256": "e1bab9bd50df14ad22d00a10f3c6514acbb566869eb00dd16eeac153a12a1f3d",
+      "path": "docs/governance/pca-w4-domain-contracts-status-v1.0.md"
+    },
+    {
+      "sha256": "876b317cd2e8d0cdb69a3ef4db7b52e73526a0bc457747d6e5c9b60296f90d79",
+      "path": "docs/governance/post-closure-assurance-and-application-program-v1.0.md"
+    },
+    {
+      "sha256": "702d857a748b24931b2ad607895c60da0d48f1145f6954889c01661ee1c45c05",
+      "path": "docs/governance/theorem-proof-status-register.md"
+    },
+    {
+      "sha256": "70889d608d1a2a66e9bf375434c62514f27b136ae08427b5605d0ef206e3ad35",
+      "path": "docs/project-status.md"
+    },
+    {
+      "sha256": "e842da790507ad915ee849a5bb11f0648d3d6d9f985f146bf3d7c1e482732e8d",
+      "path": "docs/research/pca-w4-domain-contracts/00-protocol.md"
+    },
+    {
+      "sha256": "683edbc72110612a9d2c0d9799f6ee65ea2d1c4df4347965a9677983037dbebe",
+      "path": "docs/research/pca-w4-domain-contracts/01-discovery-log.md"
+    },
+    {
+      "sha256": "00d6d2c1a68aa9b0f11234975162c2b42a63edb07f82aefa5c443c8c1e02c7a0",
+      "path": "docs/research/pca-w4-domain-contracts/01-source-manifest.json"
+    },
+    {
+      "sha256": "b89a2970f5861d9e06784bed322e9066dffd0cfbe77ba027cb3e3d6d8a697dac",
+      "path": "docs/research/pca-w4-domain-contracts/02-results.md"
+    },
+    {
+      "sha256": "51e28bfa901f66968435c985a7e3c3d9433705a2ba1ccbe4f056ecdcdd087fd0",
+      "path": "docs/research/pca-w4-domain-contracts/native/argumentation.md"
+    },
+    {
+      "sha256": "b6ea359f8ce277adcef3c319bb39594e32699109e3d0626a7b5fa0f098a38f75",
+      "path": "docs/research/pca-w4-domain-contracts/native/bayesian-causal.md"
+    },
+    {
+      "sha256": "b6c68b58e1821da4ff90db58a7669d5892a479afe83722ddaf4f3f2cffea9432",
+      "path": "docs/research/pca-w4-domain-contracts/native/formal-logic.md"
+    },
+    {
+      "sha256": "dbabce7eade4b912b5a9ad02271b4f579590f63eaf92496a5e92fdaf0d25b32d",
+      "path": "docs/research/pca-w4-domain-contracts/native/model-based-reasoning.md"
+    },
+    {
+      "sha256": "93cb8041130854f2640bf101c6eb094eecb5b938b3ac4661c1fd01694288a4af",
+      "path": "docs/research/pca-w4-domain-contracts/native/proof-theory.md"
+    },
+    {
+      "sha256": "e95c33a8635594c4d9e8247a983f3cc78fef88430822985c7c0c47714679ff69",
+      "path": "docs/research/pca-w4-domain-contracts/native/type-theory.md"
+    },
+    {
+      "sha256": "12b1c3e7d5e2af707313916641cb790665eda8b06853fdecb65aefdba797188f",
+      "path": "docs/research/pca-w4-domain-contracts/references.bib"
+    },
+    {
+      "sha256": "e4db39e7462f3cd90340be3667df47efa5741b710f20c70abbf7f7e11fea23cc",
+      "path": "docs/research/pca-w4-domain-contracts/tools/wolfram-final-raw.txt"
+    },
+    {
+      "sha256": "d26e2a7972e8b0d7e04165f1111fdec6c575c473a854a13a5fdb9091fe39e11f",
+      "path": "docs/research/pca-w4-domain-contracts/tools/wolfram-first-failure.txt"
+    },
+    {
+      "sha256": "ac09a6970ff6a08304ed76fb856bf1e504eea5eab6e1911d802345d706a647a9",
+      "path": "docs/research/pca-w4-domain-contracts/tools/wolfram-witnesses-output.txt"
+    },
+    {
+      "sha256": "b6a61b768bc290642225358c06bf316b5916b8650b8b5642e250498a03a2bcf6",
+      "path": "docs/research/pca-w4-domain-contracts/tools/wolfram-witnesses.wl"
+    },
+    {
+      "sha256": "3d3d840cc94d492088f84e20a9f03ceacc69d50ef2127c5a3f4133c29f752a4f",
+      "path": "docs/research/pca-w4-domain-contracts/tools/zotero-status.json"
+    },
+    {
+      "sha256": "c69f0e1e054d482faac1921f5a4d5d4add013c3a56d0425d9e29c2c857f6ae98",
+      "path": "research/campaigns/pca-w4-domain-contracts-v1.0.json"
+    },
+    {
+      "sha256": "4d8e4ea17aa3f6df3e038d384b554ea15fac1898a28fd31f9ed5987798ba60e9",
+      "path": "tests/test_pca_w4_domain_contracts.py"
+    },
+    {
+      "sha256": "6b24e1d334f1f28edc5f170aeead19fbc76d34e603818b300b2554f8cbf37a69",
+      "path": "theory/evaluation/pca-w4-domain-contracts-v1.0.json"
+    },
+    {
+      "sha256": "eeef1c6d501b21323bfe4199c966815903ec42a60d90fe43cb902c69238a23bb",
+      "path": "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
+    },
+    {
+      "sha256": "abd1f7f4ce75193e724a982e4ee99ab4c6dfb13eae37f78849c25ffdd837a4e6",
+      "path": "tools/check_pca_w4_domain_contracts.py"
+    }
+  ],
+  "acceptance": {
+    "expected_records": 12,
+    "expected_lossy_collisions": 6,
+    "expected_repaired_factorizations": 6,
+    "generic_verifier_required": true,
+    "native_recomputation_required": true,
+    "mutation_tests_required": true,
+    "canonical_status_propagation_required": true,
+    "independent_review_claimed": false,
+    "w5_semantics_established": false
+  }
+}

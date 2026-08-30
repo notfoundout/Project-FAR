@@ -1,0 +1,15 @@
+{
+  "profile": null,
+  "prefs_file": null,
+  "local_api_enabled_pref": null,
+  "api_running": false,
+  "api_status": null,
+  "api_error": "<urlopen error [Errno 111] Connection refused>",
+  "zotero_version": null,
+  "api_version": null,
+  "schema_version": null,
+  "connector_running": false,
+  "connector_status": null,
+  "connector_error": "<urlopen error [Errno 111] Connection refused>",
+  "base_url": "http://127.0.0.1:23119"
+}
