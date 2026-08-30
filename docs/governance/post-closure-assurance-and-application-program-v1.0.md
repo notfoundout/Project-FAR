@@ -30,8 +30,8 @@ that assurance change without rewriting the theory.
 - `PCA-W0-REPOSITORY-CONFORMITY`: complete — original canonical integration and consistency enforcement.
 - `PCA-W1-INDEPENDENT-REVIEW`: complete — sealed exact-scope review promoted; novelty/priority not established.
 - `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete — FAR-CORE-001–014 are kernel-checked against the governed v1.1 statements; FAR-CORE-014 includes the bounded MLL syntax, resource split, atom-balance invariant, named witness sequents, and projected-decoder failure, with no contradiction found.
-- `PCA-W3-CONTRACT-SCHEMA`: **open — next** — specify and implement a versioned comparison-contract and factorization-report format without silently reinterpreting `far-ir/1.0`.
-- `PCA-W4-DOMAIN-CONTRACTS`: open — develop independently motivated contracts for named domains.
+- `PCA-W3-CONTRACT-SCHEMA`: complete — `far-ir/2.0` is a versioned comparison-contract successor with explicit contract/scope/provenance/failure fields, finite-explicit factorization/collision/quotient verification, loss-explicit v1 migration, and conformance fixtures. `far-ir/1.0` remains unchanged and is not silently reinterpreted.
+- `PCA-W4-DOMAIN-CONTRACTS`: **open — next** — develop independently motivated contracts and collision audits for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory.
 - `PCA-W5-APPROXIMATION-AND-COST`: open — add explicit metrics, losses, tolerances, or cost orders.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open — test whether the audit discipline detects material loss or reduces disagreement.
 
@@ -40,6 +40,8 @@ that assurance change without rewriting the theory.
 Independent review must disclose prior exposure, conflicts, tools, premises checked, proof obligations checked, and unresolved objections. Internal agreement cannot be relabeled independent. The v1.1 hostile correction audit remains expressly internal evidence; the separately sealed W1 campaign is the promoted independent-review record.
 
 Proof-assistant work may upgrade only the formalized results. Failure to formalize must preserve the exact obstruction; it does not by itself refute a theorem. W2 completed with 14 `FORMALIZED`, zero `PARTIAL/OBSTRUCTION`, and zero `CONTRADICTION/REOPEN REQUIRED`. The runtime `#print axioms` audit records the exact transitive Lean kernel dependencies of every governed declaration; those dependencies are proof-assistant metadata, not new FAR premises.
+
+W3 software checks may certify only properties recomputable from the encoded finite-explicit record. Abstract declarations, migration, schema validity, or CI success cannot be promoted to application correspondence or mathematical proof. A migrated `far-ir/1.0` record is `Unknown` for W3 semantics until the missing contract dimensions are supplied and frozen.
 
 ## Contract and application rules
 
@@ -51,7 +53,8 @@ A representation receives:
 
 - `PROVED` sufficiency only from a decoder/factorization proof;
 - `REFUTED` sufficiency from a valid collision;
-- `OPEN` when neither is established.
+- `OPEN` when neither is established;
+- `Unknown` when the contract/evidence needed to classify the claim is not represented or not available.
 
 Domain success does not establish contract-free universality. Domain failure does not refute the core unless it contradicts a theorem under its exact premises.
 
@@ -71,7 +74,9 @@ The program prohibits:
 
 ## Terminal outputs
 
-Every workstream returns one or more of: `PROVED`, `REFUTED`, `OPEN`, `BLOCKED`, `UNDERDETERMINED`, `NOT APPLICABLE`, or `HISTORICAL/SUPERSEDED`, with scope, contract, evidence, provenance, falsifier, and claim impact.
+Every workstream returns one or more of: `PROVED`, `REFUTED`, `OPEN`, `BLOCKED`, `UNDERDETERMINED`, `NOT APPLICABLE`, `HISTORICAL/SUPERSEDED`, or `Unknown`, with scope, contract, evidence, provenance, falsifier, and claim impact.
+
+W3 specification: [`far-ir/2.0` comparison-contract specification](../specification/far-ir-2.0-contract.md).
 
 Machine-readable authority: [post-closure-assurance-and-application-program-v1.0.json](../../theory/evaluation/post-closure-assurance-and-application-program-v1.0.json).
 

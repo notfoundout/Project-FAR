@@ -81,12 +81,16 @@ def main() -> int:
         fail("current program authority drift")
     if status.get("completed_assurance_workstream") != "PCA-W2-PROOF-ASSISTANT-FORMALIZATION":
         fail("completed W2 assurance authority drift")
-    if status.get("active_workstream") != "PCA-W3-CONTRACT-SCHEMA":
+    if status.get("completed_contract_schema_workstream") != "PCA-W3-CONTRACT-SCHEMA":
+        fail("completed W3 contract-schema authority drift")
+    if status.get("active_workstream") != "PCA-W4-DOMAIN-CONTRACTS":
         fail("active workstream authority drift")
     if status.get("independent_review_status") != "complete_confirmed_14_proved_exact_scopes_novelty_not_established":
         fail("independent-review authority drift")
     if status.get("formalization_status") != "14_formalized_0_partial_obstruction_0_contradiction":
         fail("formalization authority drift")
+    if status.get("contract_schema_status") != "far-ir_2.0_versioned_successor_complete_finite_explicit_semantic_checks_v1_unchanged":
+        fail("W3 contract-schema status authority drift")
 
     historical_bytes = (ROOT / HISTORICAL_CORE_PATH).read_bytes()
     if hashlib.sha256(historical_bytes).hexdigest() != EXPECTED_V1_SHA256:
@@ -125,6 +129,8 @@ def main() -> int:
         "Historical v1.0",
         "## Post-closure phase",
         "The active program is `POST-CLOSURE-001`.",
+        "`PCA-W3-CONTRACT-SCHEMA`: complete.",
+        "`PCA-W4-DOMAIN-CONTRACTS`: **next**.",
         "Core theory reopens only for a reproducible contradiction",
         "Historical bounded-program status",
     )
@@ -165,6 +171,8 @@ def main() -> int:
         "specification_export_version": export_authority["export_version"],
         "current_program": status["current_program"],
         "active_workstream": status["active_workstream"],
+        "completed_contract_schema_workstream": status["completed_contract_schema_workstream"],
+        "contract_schema_status": status["contract_schema_status"],
         "independent_review_status": status["independent_review_status"],
         "formalization_status": status["formalization_status"],
         "current_phase": status["current_phase"],

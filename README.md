@@ -25,7 +25,9 @@ The corrected v1.1 theory survived the sealed `PCA-W1-INDEPENDENT-REVIEW` under 
 
 `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: all 14 governed claims are `FORMALIZED` under pinned Lean 4.19.0, with zero partial obstructions and zero contradiction/reopen outcomes. FAR-CORE-014 includes the bounded unit-free MLL witness bridge, and exact transitive kernel assumptions are runtime-audited rather than inferred from CI success.
 
-These are separate assurance dimensions. Independent review does not imply novelty; Lean formalization does not imply empirical utility, efficiency, open-domain universality, or product readiness.
+`PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is a versioned comparison-contract successor with explicit contract/scope/provenance/failure fields, finite-explicit factorization/collision/quotient verification, loss-explicit migration from v1, and registered conformance fixtures. `far-ir/1.0` remains unchanged and is not silently reinterpreted.
+
+These are separate assurance dimensions. Independent review does not imply novelty; Lean formalization does not imply empirical utility, efficiency, open-domain universality, or product readiness; schema/software conformance does not establish application correspondence.
 
 Canonical links:
 
@@ -35,6 +37,8 @@ Canonical links:
 - [W1 independent-review promotion](docs/governance/pca-w1-independent-review-promotion-v1.0.md)
 - [Machine assurance ledger](theory/evaluation/far-core-assurance-v1.0.json)
 - [W2 formalization status](docs/governance/pca-w2-formalization-status-v1.0.md)
+- [W3 contract-schema status](docs/governance/pca-w3-contract-schema-status-v1.0.md)
+- [`far-ir/2.0` contract specification](docs/specification/far-ir-2.0-contract.md)
 - [Canonical project status](docs/project-status.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Historical v1.0 core theory](theory/theorems/Project-FAR-Theory-Closure-v1.0.md), preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`
@@ -46,18 +50,22 @@ The active program is `POST-CLOSURE-001`.
 - `PCA-W0-REPOSITORY-CONFORMITY`: complete.
 - `PCA-W1-INDEPENDENT-REVIEW`: complete.
 - `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete, 14/14 formalized.
-- `PCA-W3-CONTRACT-SCHEMA`: **next**.
-- `PCA-W4-DOMAIN-CONTRACTS`: open.
+- `PCA-W3-CONTRACT-SCHEMA`: complete.
+- `PCA-W4-DOMAIN-CONTRACTS`: **next**.
 - `PCA-W5-APPROXIMATION-AND-COST`: open.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open.
 
 Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.
 
-## W3 boundary
+## W3 result and W4 boundary
 
-W3 must implement a versioned successor to `far-ir/1.0`; it must not silently reinterpret the existing interchange format. The successor contract must explicitly represent contract identity/version, source/case domain, required behavior, representation, decoder/factorization or collision evidence, observation contexts, typed outcomes including `Unknown`, observational equivalence/quotient evidence, admitted transformations/equivalences, interpretation profile, target/model class, frame, provenance/freeze metadata, and optional approximation/loss/cost declarations.
+`far-ir/2.0` explicitly represents contract identity/version, source/case domain, required behavior, representation, decoder/factorization or collision evidence, observation contexts, typed outcomes including `Unknown`, observational equivalence/quotient evidence, admitted transformations/equivalences, interpretation profile, target/model class, frame, provenance/freeze metadata, failure reporting, and optional approximation/loss/cost declarations.
 
-The existing Phase 3 `far-ir/1.0` mechanization remains a historical/current MVP for its stated interchange scope. It does not itself encode the complete W3 comparison contract, verify factorization, compute observational quotients, or establish application correspondence.
+For finite explicit records, checked factorization, collision, and exact beta-kernel quotient claims are recomputed by the semantic verifier. A migrated `far-ir/1.0` record preserves the legacy primitive payload but remains `Unknown` and unfrozen for comparison semantics that v1 never represented. Approximation fields are declarations only; W3 does not establish W5 metric/loss/cost semantics.
+
+W4 must now independently motivate contracts for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory. A software certificate for an encoded table does not prove that the table faithfully represents or exhausts an external domain.
+
+The existing Phase 3 `far-ir/1.0` mechanization remains a historical/current MVP for its stated reasoning-document interchange scope. It is not redefined by v2.
 
 ## Framework roles
 
@@ -103,6 +111,13 @@ W2 formalization alignment:
 ```bash
 python tools/check_far_core_v11_formalization.py
 python -m unittest tests.test_far_core_v11_formalization
+```
+
+W3 contract-schema conformance:
+
+```bash
+python -m mechanization.far_mechanization.contract_conformance
+python -m unittest tests.test_far_contract_v2
 ```
 
 Repository command center:

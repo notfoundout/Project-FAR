@@ -1,0 +1,20 @@
+{
+  "format_version": "far-ir/2.0",
+  "id": "demo.quotient",
+  "contract": {
+    "id": "quotient.contract",
+    "contract_version": "2.0",
+    "mode": "exact",
+    "source_domain": {"status": "EXPLICIT", "kind": "finite_explicit", "description": "Four explicit cases", "cases": [{"id": "case.a", "value": "a"}, {"id": "case.b", "value": "b"}, {"id": "case.c", "value": "c"}, {"id": "case.d", "value": "d"}]},
+    "required_behavior": {"status": "EXPLICIT", "description": "Two observation classes", "table": [{"case_id": "case.a", "value": "x"}, {"case_id": "case.b", "value": "x"}, {"case_id": "case.c", "value": "y"}, {"case_id": "case.d", "value": "y"}]},
+    "representation": {"status": "EXPLICIT", "description": "Arbitrary explicit pre-quotient representation", "table": [{"case_id": "case.a", "value": "a"}, {"case_id": "case.b", "value": "b"}, {"case_id": "case.c", "value": "c"}, {"case_id": "case.d", "value": "d"}]},
+    "observation_contexts": [{"id": "obs.primary", "description": "Required parity observation", "status": "EXPLICIT"}],
+    "admitted_transformations": [{"id": "eq.identity", "kind": "equivalence", "description": "Literal equality of table values", "status": "EXPLICIT"}],
+    "interpretation_profile": {"id": "interp.demo", "description": "Literal finite-table interpretation", "status": "EXPLICIT"},
+    "target_model_class": {"id": "target.demo", "description": "The four listed cases only", "status": "EXPLICIT"},
+    "frame": {"id": "frame.empty", "description": "No additional background premises", "status": "EXPLICIT"}
+  },
+  "report": {"outcome": "PROVED", "evidence": {"kind": "quotient", "status": "CHECKED_FINITE_EXPLICIT", "classes": [{"id": "class.x", "case_ids": ["case.a", "case.b"]}, {"id": "class.y", "case_ids": ["case.c", "case.d"]}], "claims_exact_observational_quotient": true}, "failure_report": []},
+  "provenance": {"producer": "PCA-W3 conformance fixture", "created_at": "2026-08-29T20:00:00Z", "sources": []},
+  "freeze": {"status": "FROZEN", "frozen_at": "2026-08-29T20:00:00Z", "contract_sha256": "cfcda84029c49dab0da242b02db70f331455405f025563953103a73c577fe8ce"}
+}

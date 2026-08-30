@@ -30,12 +30,15 @@ def _resolve(ref: str, root: dict[str, Any]) -> dict[str, Any]:
         cur = cur[part]
     return cur
 
-def _type_ok(instance: Any, typ: str) -> bool:
+def _type_ok(instance: Any, typ: Any) -> bool:
+    if isinstance(typ, list):
+        return any(_type_ok(instance, member) for member in typ)
     return {
         "object": isinstance(instance, dict),
         "array": isinstance(instance, list),
         "string": isinstance(instance, str),
         "integer": isinstance(instance, int) and not isinstance(instance, bool),
+        "number": isinstance(instance, (int, float)) and not isinstance(instance, bool),
         "null": instance is None,
         "boolean": isinstance(instance, bool),
     }.get(typ, True)
@@ -60,17 +63,17 @@ def _validate(instance: Any, schema: dict[str, Any], root: dict[str, Any], path:
     typ=schema.get("type")
     if typ and not _type_ok(instance, typ):
         yield ValidationError(f"expected type {typ}", path, spath+("type",)); return
-    if typ == "string":
+    if isinstance(instance, str):
         import re
         if schema.get("minLength") is not None and len(instance)<schema["minLength"]: yield ValidationError("string is shorter than minLength", path, spath+("minLength",))
         if schema.get("pattern") and not re.fullmatch(schema["pattern"], instance): yield ValidationError("string does not match pattern", path, spath+("pattern",))
-    if typ == "integer" and schema.get("minimum") is not None and instance < schema["minimum"]:
-        yield ValidationError("integer is below minimum", path, spath+("minimum",))
-    if typ == "array":
+    if isinstance(instance, (int, float)) and not isinstance(instance, bool) and schema.get("minimum") is not None and instance < schema["minimum"]:
+        yield ValidationError("number is below minimum", path, spath+("minimum",))
+    if isinstance(instance, list):
         item_schema=schema.get("items")
         if item_schema:
             for i, item in enumerate(instance): yield from _validate(item, item_schema, root, path+(i,), spath+("items",))
-    if typ == "object" or "properties" in schema:
+    if isinstance(instance, dict) or "properties" in schema:
         if not isinstance(instance, dict): return
         for req in schema.get("required", []):
             if req not in instance: yield ValidationError(f"required property {req!r} is missing", path, spath+("required",))

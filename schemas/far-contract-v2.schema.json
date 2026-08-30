@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-contract-v2.schema.json",
+  "title": "Project FAR contract-relative comparison record",
+  "description": "Versioned far-ir/2.0 successor for explicit comparison contracts and factorization/collision/quotient reports. It does not reinterpret far-ir/1.0.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format_version", "id", "contract", "report", "provenance", "freeze"],
+  "properties": {
+    "format_version": {"const": "far-ir/2.0"},
+    "id": {"$ref": "#/$defs/Identifier"},
+    "contract": {"$ref": "#/$defs/Contract"},
+    "report": {"$ref": "#/$defs/Report"},
+    "provenance": {"$ref": "#/$defs/Provenance"},
+    "freeze": {"$ref": "#/$defs/Freeze"},
+    "legacy_document": {"type": ["object", "null"], "description": "Optional byte-model-preserving far-ir/1.0 payload supplied only by validated migration tooling."},
+    "extensions": {"$ref": "#/$defs/Extensions"}
+  },
+  "$defs": {
+    "Identifier": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"},
+    "NonEmptyText": {"type": "string", "minLength": 1},
+    "Extensions": {"type": "object", "propertyNames": {"pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"}, "additionalProperties": true},
+    "TypedOutcome": {"enum": ["PROVED", "REFUTED", "OPEN", "BLOCKED", "UNDERDETERMINED", "NOT_APPLICABLE", "HISTORICAL_SUPERSEDED", "Unknown"]},
+    "SemanticStatus": {"enum": ["EXPLICIT", "DECLARED", "Unknown"]},
+    "JsonValue": {},
+    "Case": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "value"],
+      "properties": {"id": {"$ref": "#/$defs/Identifier"}, "value": {"$ref": "#/$defs/JsonValue"}, "extensions": {"$ref": "#/$defs/Extensions"}}
+    },
+    "SourceDomain": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "kind", "description", "cases"],
+      "properties": {
+        "status": {"$ref": "#/$defs/SemanticStatus"},
+        "kind": {"enum": ["finite_explicit", "described", "Unknown"]},
+        "description": {"$ref": "#/$defs/NonEmptyText"},
+        "cases": {"type": "array", "items": {"$ref": "#/$defs/Case"}},
+        "extensions": {"$ref": "#/$defs/Extensions"}
+      }
+    },
+    "CaseValue": {
+      "type": "object", "additionalProperties": false,
+      "required": ["case_id", "value"],
+      "properties": {"case_id": {"$ref": "#/$defs/Identifier"}, "value": {"$ref": "#/$defs/JsonValue"}}
+    },
+    "RequiredBehavior": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "description", "table"],
+      "properties": {
+        "status": {"$ref": "#/$defs/SemanticStatus"},
+        "description": {"$ref": "#/$defs/NonEmptyText"},
+        "table": {"type": "array", "items": {"$ref": "#/$defs/CaseValue"}},
+        "extensions": {"$ref": "#/$defs/Extensions"}
+      }
+    },
+    "Representation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "description", "table"],
+      "properties": {
+        "status": {"$ref": "#/$defs/SemanticStatus"},
+        "description": {"$ref": "#/$defs/NonEmptyText"},
+        "table": {"type": "array", "items": {"$ref": "#/$defs/CaseValue"}},
+        "extensions": {"$ref": "#/$defs/Extensions"}
+      }
+    },
+    "ObservationContext": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "description", "status"],
+      "properties": {"id": {"$ref": "#/$defs/Identifier"}, "description": {"$ref": "#/$defs/NonEmptyText"}, "status": {"$ref": "#/$defs/SemanticStatus"}, "extensions": {"$ref": "#/$defs/Extensions"}}
+    },
+    "Transformation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "description", "status"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Identifier"},
+        "kind": {"enum": ["transformation", "equivalence", "isomorphism", "embedding", "other"]},
+        "description": {"$ref": "#/$defs/NonEmptyText"},
+        "status": {"$ref": "#/$defs/SemanticStatus"},
+        "extensions": {"$ref": "#/$defs/Extensions"}
+      }
+    },
+    "ScopeDescriptor": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "description", "status"],
+      "properties": {"id": {"$ref": "#/$defs/Identifier"}, "description": {"$ref": "#/$defs/NonEmptyText"}, "status": {"$ref": "#/$defs/SemanticStatus"}, "extensions": {"$ref": "#/$defs/Extensions"}}
+    },
+    "Approximation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "w5_semantics_established", "metric", "loss", "cost"],
+      "properties": {
+        "status": {"enum": ["DECLARED_ONLY", "Unknown"]},
+        "w5_semantics_established": {"const": false},
+        "metric": {"type": ["string", "null"]},
+        "loss": {"type": ["string", "null"]},
+        "cost": {"type": ["string", "null"]},
+        "tolerance": {},
+        "extensions": {"$ref": "#/$defs/Extensions"}
+      }
+    },
+    "Contract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "contract_version", "mode", "source_domain", "required_behavior", "representation", "observation_contexts", "admitted_transformations", "interpretation_profile", "target_model_class", "frame"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Identifier"},
+        "contract_version": {"type": "string", "minLength": 1},
+        "mode": {"enum": ["exact", "approximate", "Unknown"]},
+        "source_domain": {"$ref": "#/$defs/SourceDomain"},
+        "required_behavior": {"$ref": "#/$defs/RequiredBehavior"},
+        "representation": {"$ref": "#/$defs/Representation"},
+        "observation_contexts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/ObservationContext"}},
+        "admitted_transformations": {"type": "array", "items": {"$ref": "#/$defs/Transformation"}},
+        "interpretation_profile": {"$ref": "#/$defs/ScopeDescriptor"},
+        "target_model_class": {"$ref": "#/$defs/ScopeDescriptor"},
+        "frame": {"$ref": "#/$defs/ScopeDescriptor"},
+        "approximation": {"$ref": "#/$defs/Approximation"},
+        "extensions": {"$ref": "#/$defs/Extensions"}
+      },
+      "allOf": [
+        {"if": {"properties": {"mode": {"const": "approximate"}}, "required": ["mode"]}, "then": {"required": ["approximation"]}}
+      ]
+    },
+    "DecoderEntry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["representation_value", "behavior_value"],
+      "properties": {"representation_value": {"$ref": "#/$defs/JsonValue"}, "behavior_value": {"$ref": "#/$defs/JsonValue"}}
+    },
+    "FactorizationEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "status", "decoder_table"],
+      "properties": {
+        "kind": {"const": "factorization"},
+        "status": {"enum": ["CHECKED_FINITE_EXPLICIT", "DECLARED_UNCHECKED"]},
+        "decoder_table": {"type": "array", "items": {"$ref": "#/$defs/DecoderEntry"}},
+        "notes": {"type": "string"}
+      }
+    },
+    "CollisionEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "status", "left_case_id", "right_case_id"],
+      "properties": {
+        "kind": {"const": "collision"},
+        "status": {"enum": ["CHECKED_FINITE_EXPLICIT", "DECLARED_UNCHECKED"]},
+        "left_case_id": {"$ref": "#/$defs/Identifier"},
+        "right_case_id": {"$ref": "#/$defs/Identifier"},
+        "notes": {"type": "string"}
+      }
+    },
+    "QuotientClass": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "case_ids"],
+      "properties": {"id": {"$ref": "#/$defs/Identifier"}, "case_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/Identifier"}}}
+    },
+    "QuotientEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "status", "classes", "claims_exact_observational_quotient"],
+      "properties": {
+        "kind": {"const": "quotient"},
+        "status": {"enum": ["CHECKED_FINITE_EXPLICIT", "DECLARED_UNCHECKED"]},
+        "classes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/QuotientClass"}},
+        "claims_exact_observational_quotient": {"type": "boolean"},
+        "notes": {"type": "string"}
+      }
+    },
+    "UnknownEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "reason"],
+      "properties": {"kind": {"const": "unknown"}, "reason": {"$ref": "#/$defs/NonEmptyText"}}
+    },
+    "Report": {
+      "type": "object", "additionalProperties": false,
+      "required": ["outcome", "evidence", "failure_report"],
+      "properties": {
+        "outcome": {"$ref": "#/$defs/TypedOutcome"},
+        "evidence": {"oneOf": [{"$ref": "#/$defs/FactorizationEvidence"}, {"$ref": "#/$defs/CollisionEvidence"}, {"$ref": "#/$defs/QuotientEvidence"}, {"$ref": "#/$defs/UnknownEvidence"}]},
+        "failure_report": {"type": "array", "items": {"$ref": "#/$defs/NonEmptyText"}},
+        "extensions": {"$ref": "#/$defs/Extensions"}
+      }
+    },
+    "SourceHash": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {"path": {"$ref": "#/$defs/NonEmptyText"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+    },
+    "Provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["producer", "created_at", "sources"],
+      "properties": {
+        "producer": {"$ref": "#/$defs/NonEmptyText"},
+        "created_at": {"type": "string", "format": "date-time"},
+        "sources": {"type": "array", "items": {"$ref": "#/$defs/SourceHash"}},
+        "notes": {"type": "string"},
+        "extensions": {"$ref": "#/$defs/Extensions"}
+      }
+    },
+    "Freeze": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "frozen_at", "contract_sha256"],
+      "properties": {
+        "status": {"enum": ["FROZEN", "DRAFT"]},
+        "frozen_at": {"type": ["string", "null"], "format": "date-time"},
+        "contract_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "notes": {"type": "string"}
+      },
+      "allOf": [
+        {"if": {"properties": {"status": {"const": "FROZEN"}}, "required": ["status"]}, "then": {"properties": {"frozen_at": {"type": "string", "format": "date-time"}, "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}}
+      ]
+    }
+  }
+}

@@ -32,7 +32,12 @@
     },
     {
       "id": "PCA-W3-CONTRACT-SCHEMA",
-      "state": "open",
+      "state": "complete",
+      "result": "FAR_IR_2_0_VERSIONED_CONTRACT_SCHEMA_WITH_FINITE_EXPLICIT_SEMANTIC_CHECKER_MIGRATION_AND_CONFORMANCE",
+      "schema": "schemas/far-contract-v2.schema.json",
+      "specification": "docs/specification/far-ir-2.0-contract.md",
+      "conformance_manifest": "conformance/far-ir-2.0/manifest.json",
+      "legacy_boundary": "far-ir/1.0 remains unchanged and is not silently reinterpreted",
       "deliverable": "versioned contract and factorization-report schema with conformance fixtures"
     },
     {
@@ -52,9 +57,9 @@
     }
   ],
   "next_action": {
-    "workstream": "PCA-W3-CONTRACT-SCHEMA",
+    "workstream": "PCA-W4-DOMAIN-CONTRACTS",
     "theory_target": "PROJECT-FAR-CORE-THEORY-1.1",
-    "obligation": "specify and implement a versioned successor to far-ir/1.0 for explicit contract, factorization, collision, quotient, scope, provenance, and failure reporting without silently reinterpreting the legacy schema"
+    "obligation": "instantiate independently motivated far-ir/2.0 contracts and collision audits for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory without treating schema usage as evidence of universal architecture"
   },
   "prohibited_promotions": [
     "contract_free_universal_minimal_architecture",
@@ -72,7 +77,8 @@
     "BLOCKED",
     "UNDERDETERMINED",
     "NOT_APPLICABLE",
-    "HISTORICAL_SUPERSEDED"
+    "HISTORICAL_SUPERSEDED",
+    "Unknown"
   ],
   "supersedes_current_authority": [
     "POST-TERM-EVAL-001",
