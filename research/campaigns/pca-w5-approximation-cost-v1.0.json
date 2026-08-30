@@ -3,12 +3,14 @@
   "campaign_id": "PCA-W5-APPROXIMATION-AND-COST-1.0",
   "program_id": "POST-CLOSURE-001",
   "workstream_id": "PCA-W5-APPROXIMATION-AND-COST",
-  "status": "QUERY_PROTOCOL_FROZEN",
+  "status": "NATIVE_CONCEPT_SOURCE_FROZEN",
   "governing_theory": "PROJECT-FAR-CORE-THEORY-1.1",
   "base_commit": "e31ab40df0d0c75d3edfe3884681e3596dd65abd",
   "base_tree": "078b91999ebe21bb77c777f2cace62c23e5415da",
   "branch": "research/pca-w5-approximation-cost",
-  "frozen_at": "2026-08-30T18:04:48Z",
+  "query_protocol_freeze_commit": "11a93ba0db812ec849aac9b136be5d5538a0b44e",
+  "query_protocol_frozen_at": "2026-08-30T18:04:48Z",
+  "native_freeze_at": "2026-08-30T18:16:49Z",
   "objective": "Independently reconstruct native approximation, loss, tolerance, aggregation, and cost-order semantics before any controlled mapping into Project FAR, then implement only the weakest governed operational successor justified by that frozen evidence.",
   "entry_boundary": {
     "w4_records_remain_exact": true,
@@ -21,24 +23,24 @@
     {
       "id": "A",
       "name": "native_discovery",
-      "state": "authorized_after_this_freeze",
+      "state": "complete",
       "far_mapping_allowed": false
     },
     {
       "id": "B",
       "name": "native_concept_source_freeze",
-      "state": "pending",
+      "state": "complete",
       "far_mapping_allowed": false
     },
     {
       "id": "C",
       "name": "controlled_far_mapping",
-      "state": "blocked_until_stage_b_freeze"
+      "state": "authorized_after_native_freeze"
     },
     {
       "id": "D",
       "name": "formal_computational_checks",
-      "state": "blocked_until_stage_b_freeze"
+      "state": "authorized_after_native_freeze"
     },
     {
       "id": "E",
@@ -106,6 +108,31 @@
     {"tool": "Zotero", "role": "bibliography/provenance management when executable", "runtime_state": "installed_skill_but_local_desktop_helper_not_exposed_in_current_chat_runtime", "canonical_evidence": false},
     {"tool": "GitHub", "role": "sole canonical freeze/result/governance authority", "canonical_evidence": true}
   ],
+  "discovery_summary": {
+    "all_18_frozen_queries_executed_before_source_selection": true,
+    "far_mapping_before_native_freeze": false,
+    "selected_source_count": 12,
+    "source_manifest": "docs/research/pca-w5-approximation-cost/01-source-manifest.json",
+    "discovery_log": "docs/research/pca-w5-approximation-cost/01-discovery-log.md",
+    "native_concept_freeze": "docs/research/pca-w5-approximation-cost/02-native-concept-freeze.md",
+    "bibliography": "docs/research/pca-w5-approximation-cost/references.bib",
+    "acumen_first_run_inadmissible": true,
+    "acumen_exact_rerun_off_target": true,
+    "scite_full_text_blocked": true,
+    "zotero_runtime_blocked": true,
+    "wolfram_deferred_until_stage_d": true
+  },
+  "frozen_native_findings": [
+    "No selected source establishes a universal approximation metric, loss, tolerance, aggregation rule, or scalar cost.",
+    "A metric is a special case: selected native families also use deficiency/risk, distortion, calibrated surrogate/target loss, pseudometrics, and order relations.",
+    "Aggregation is semantically substantive; worst-case and probability-weighted expected loss need not classify the same representation alike.",
+    "Tolerance is a distinct declared acceptance relation, not the achieved discrepancy value itself.",
+    "Randomized transformations are native to statistical-experiment comparison and cannot be excluded by default.",
+    "Cost comparison can be partial; multiple Pareto-minimal candidates can be incomparable and nonunique.",
+    "Scalarization imports preference parameters and is not a preference-free canonical collapse.",
+    "Zero approximate loss recovers an exact relation only under family-specific separation/equivalence and aggregation conditions.",
+    "Approximate adequacy and implementation/resource cost are distinct questions."
+  ],
   "required_native_freeze_dimensions": [
     "source_identity",
     "native_definition",
@@ -127,6 +154,7 @@
     "aggregation_or_distribution_dependence",
     "tolerance_dependence",
     "zero_loss_nonseparation",
+    "randomization_necessity",
     "cost_preorder_incomparability",
     "nonunique_minimal_candidates",
     "scalarization_preference_dependence",
