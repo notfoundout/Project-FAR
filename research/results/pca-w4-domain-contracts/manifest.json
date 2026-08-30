@@ -222,7 +222,7 @@
       "path": "tests/test_repository_truth.py"
     },
     {
-      "sha256": "4d8e4ea17aa3f6df3e038d384b554ea15fac1898a28fd31f9ed5987798ba60e9",
+      "sha256": "40b178bd475f0fac866318b94ff860ce69aaf954bc0eae43e5c023886e082032",
       "path": "tests/test_pca_w4_domain_contracts.py"
     },
     {
@@ -234,7 +234,7 @@
       "path": "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
     },
     {
-      "sha256": "abd1f7f4ce75193e724a982e4ee99ab4c6dfb13eae37f78849c25ffdd837a4e6",
+      "sha256": "f453d003f3362b081979d1388da27dca329ccf34cbd04f6caadb7b487f7329de",
       "path": "tools/check_pca_w4_domain_contracts.py"
     },
     {
