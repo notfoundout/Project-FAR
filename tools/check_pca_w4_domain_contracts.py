@@ -5,7 +5,6 @@ import argparse
 import hashlib
 import json
 import sys
-from collections import Counter
 from copy import deepcopy
 from fractions import Fraction
 from pathlib import Path
@@ -63,12 +62,14 @@ def probability_text(value: Fraction) -> str:
     return str(value.numerator) if value.denominator == 1 else f"{value.numerator}/{value.denominator}"
 
 
-def distribution(rows: list[tuple[int, int]]) -> list[dict[str, Any]]:
-    counts = Counter(rows)
-    total = len(rows)
+def distribution(rows: list[tuple[int, int, Fraction]]) -> list[dict[str, Any]]:
+    masses: dict[tuple[int, int], Fraction] = {}
+    for x, y, probability in rows:
+        masses[(x, y)] = masses.get((x, y), Fraction(0)) + probability
     return [
-        {"x": x, "y": y, "probability": probability_text(Fraction(count, total))}
-        for (x, y), count in sorted(counts.items())
+        {"x": x, "y": y, "probability": probability_text(probability)}
+        for (x, y), probability in sorted(masses.items())
+        if probability != 0
     ]
 
 
@@ -87,18 +88,33 @@ def formal_logic(cases: list[Mapping[str, Any]]) -> tuple[dict[str, Any], dict[s
 def causal(cases: list[Mapping[str, Any]]) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     behavior, lossy, repaired = {}, {}, {}
     for case in cases:
-        cid, equations = str(case["id"]), case["value"]["equations"]
-        observational, intervened = [], []
-        for u in (0, 1):
+        cid = str(case["id"])
+        value = case["value"]
+        equations = value["equations"]
+        u_distribution: list[tuple[int, Fraction]] = []
+        total_probability = Fraction(0)
+        for row in value["u_distribution"]:
+            u = int(row["u"])
+            probability = Fraction(str(row["probability"]))
+            if probability < 0:
+                raise ValueError(f"{cid}: negative u_distribution probability")
+            total_probability += probability
+            u_distribution.append((u, probability))
+        if total_probability != 1:
+            raise ValueError(f"{cid}: u_distribution probabilities sum to {probability_text(total_probability)}, not 1")
+
+        observational: list[tuple[int, int, Fraction]] = []
+        intervened: list[tuple[int, int, Fraction]] = []
+        for u, probability in u_distribution:
             if equations["X"] == "U":
                 x, y = u, u
             else:
                 y, x = u, u
-            observational.append((x, y))
+            observational.append((x, y, probability))
             x_do = 0
             y_do = x_do if equations["Y"] == "X" else u
-            intervened.append((x_do, y_do))
-        p_y1 = Fraction(sum(y for _, y in intervened), len(intervened))
+            intervened.append((x_do, y_do, probability))
+        p_y1 = sum((probability for _, y, probability in intervened if y == 1), Fraction(0))
         behavior[cid] = {"numerator": p_y1.numerator, "denominator": p_y1.denominator}
         obs = distribution(observational)
         lossy[cid] = {"observational": obs}
@@ -204,7 +220,11 @@ def audit_document(document: Mapping[str, Any], root: Path = ROOT) -> list[dict[
         errors.append({"code": "W4_UNKNOWN_VARIANT", "message": str(variant)})
 
     cases = contract["source_domain"]["cases"]
-    expected_behavior, expected_lossy, expected_repaired = RECOMPUTERS[domain](cases)
+    try:
+        expected_behavior, expected_lossy, expected_repaired = RECOMPUTERS[domain](cases)
+    except (KeyError, TypeError, ValueError, ZeroDivisionError) as exc:
+        errors.append({"code": "W4_NATIVE_CASE_INVALID", "message": f"{domain}: {exc}"})
+        return errors
     actual_behavior = indexed(contract["required_behavior"]["table"])
     if canonical_json(actual_behavior) != canonical_json(expected_behavior):
         errors.append({"code": "W4_NATIVE_BEHAVIOR_MISMATCH", "message": domain})
@@ -221,6 +241,21 @@ def audit_document(document: Mapping[str, Any], root: Path = ROOT) -> list[dict[
         elif sha256_path(source_path) != source["sha256"]:
             errors.append({"code": "W4_SOURCE_HASH_MISMATCH", "message": source["path"]})
     return errors
+
+
+def manifest_record_set_errors(artifact_manifest: Mapping[str, Any]) -> list[dict[str, str]]:
+    expected_paths = {
+        f"research/results/pca-w4-domain-contracts/{slug}-{variant}.json"
+        for slug in DOMAINS
+        for variant in VARIANTS
+    }
+    actual_paths = {str(item.get("path")) for item in artifact_manifest.get("records", [])}
+    if actual_paths == expected_paths:
+        return []
+    return [{
+        "code": "W4_MANIFEST_RECORD_SET_MISMATCH",
+        "message": f"missing={sorted(expected_paths-actual_paths)} extra={sorted(actual_paths-expected_paths)}",
+    }]
 
 
 def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
@@ -251,6 +286,7 @@ def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
             errors.append({"code": "W4_BIBLIOGRAPHY_KEY_MISSING", "message": key})
 
     artifact_manifest = load_json(results / "manifest.json")
+    errors.extend(manifest_record_set_errors(artifact_manifest))
     manifest_items = artifact_manifest.get("records", []) + artifact_manifest.get(
         "supporting_artifacts", []
     )
