@@ -182,9 +182,11 @@ def validate(root: Path = ROOT) -> list[str]:
         errors.append("PCA-W2 must reflect completed 14/14 formalization")
     if workstreams.get("PCA-W3-CONTRACT-SCHEMA", {}).get("state") != "complete":
         errors.append("PCA-W3 must reflect the completed versioned contract-schema implementation")
+    if workstreams.get("PCA-W4-DOMAIN-CONTRACTS", {}).get("state") != "complete":
+        errors.append("PCA-W4 must reflect the completed finite-explicit domain-contract campaign")
     next_action = program.get("next_action", {})
-    if next_action.get("workstream") != "PCA-W4-DOMAIN-CONTRACTS" or next_action.get("theory_target") != "PROJECT-FAR-CORE-THEORY-1.1":
-        errors.append("post-closure next action must be W4 domain contracts against v1.1")
+    if next_action.get("workstream") != "PCA-W5-APPROXIMATION-AND-COST" or next_action.get("theory_target") != "PROJECT-FAR-CORE-THEORY-1.1":
+        errors.append("post-closure next action must be W5 approximation and cost against v1.1")
 
     promotion = _load(root / W1_PROMOTION.relative_to(ROOT))
     review = _load(root / W1_REVIEW.relative_to(ROOT))
@@ -221,10 +223,14 @@ def validate(root: Path = ROOT) -> list[str]:
         errors.append("repository truth authority does not preserve v1.0 hash")
     if status.get("completed_contract_schema_workstream") != "PCA-W3-CONTRACT-SCHEMA":
         errors.append("repository truth authority does not record completed W3")
-    if status.get("active_workstream") != "PCA-W4-DOMAIN-CONTRACTS":
-        errors.append("repository truth authority does not point to W4")
+    if status.get("completed_domain_contracts_workstream") != "PCA-W4-DOMAIN-CONTRACTS":
+        errors.append("repository truth authority does not record completed W4")
+    if status.get("active_workstream") != "PCA-W5-APPROXIMATION-AND-COST":
+        errors.append("repository truth authority does not point to W5")
     if status.get("formalization_status") != "14_formalized_0_partial_obstruction_0_contradiction":
         errors.append("repository truth authority does not record completed W2 formalization")
+    if status.get("domain_contracts_status") != "six_finite_explicit_native_contracts_six_lossy_collisions_six_scoped_repairs_internal_mapping_only":
+        errors.append("repository truth authority does not record the bounded W4 result")
     export_truth = truth.get("specification_export", {})
     if export_truth.get("export_version") != EXPECTED_EXPORT_VERSION:
         errors.append("repository truth authority export version mismatch")
@@ -250,8 +256,8 @@ def validate(root: Path = ROOT) -> list[str]:
         errors.append("FAR spec export must carry v1.1 machine ledger as canonical")
 
     required_text = {
-        "README.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W2-PROOF-ASSISTANT-FORMALIZATION", "PCA-W3-CONTRACT-SCHEMA", "PCA-W4-DOMAIN-CONTRACTS", "Historical v1.0"],
-        "docs/project-status.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W2-PROOF-ASSISTANT-FORMALIZATION", "PCA-W3-CONTRACT-SCHEMA", "PCA-W4-DOMAIN-CONTRACTS", "FAR-CORE-010"],
+        "README.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W2-PROOF-ASSISTANT-FORMALIZATION", "PCA-W3-CONTRACT-SCHEMA", "PCA-W4-DOMAIN-CONTRACTS", "PCA-W5-APPROXIMATION-AND-COST", "Historical v1.0"],
+        "docs/project-status.md": ["PROJECT-FAR-CORE-THEORY-1.1", "PCA-W2-PROOF-ASSISTANT-FORMALIZATION", "PCA-W3-CONTRACT-SCHEMA", "PCA-W4-DOMAIN-CONTRACTS", "PCA-W5-APPROXIMATION-AND-COST", "FAR-CORE-010"],
         "docs/ROADMAP.md": ["PROJECT-FAR-CORE-THEORY-1.1", "Export version `1.2.0`", "simultaneous universal least-informativeness"],
         "docs/governance/project-far-theory-closure-acceptance-v1.1.md": ["identity representation", "frame-subtracted residue", "not independently reviewed"],
         "docs/audits/project-far-core-theory-v1.1-correction-audit.md": ["10.1214/aoms/1177729032", "FAR-CORE-014", "independent review still open"],

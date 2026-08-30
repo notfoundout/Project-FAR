@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "campaign_id": "PCA-W4-DOMAIN-CONTRACTS-1.0",
-  "generated_at": "2026-08-30T10:48:46.013Z",
+  "generated_at": "2026-08-30T10:54:22.000Z",
   "base_commit": "3923fd88bb1549d816edcbdff66ce3412b7e80bc",
   "protocol_commit": "9638185b2f92913b3ce13ee2aaae5289e93945b1",
   "native_freeze_commit": "f823c4daf08b61241483bc1cc50d88d22746fa83",
@@ -134,6 +134,10 @@
       "path": "docs/project-status.md"
     },
     {
+      "sha256": "5aa926ddb39bb33e6022f5514353f30486e8463117d2c0db4ba2e377f7e22c7a",
+      "path": "docs/planning/next-actions.md"
+    },
+    {
       "sha256": "e842da790507ad915ee849a5bb11f0648d3d6d9f985f146bf3d7c1e482732e8d",
       "path": "docs/research/pca-w4-domain-contracts/00-protocol.md"
     },
@@ -146,7 +150,7 @@
       "path": "docs/research/pca-w4-domain-contracts/01-source-manifest.json"
     },
     {
-      "sha256": "b89a2970f5861d9e06784bed322e9066dffd0cfbe77ba027cb3e3d6d8a697dac",
+      "sha256": "1ac57a5ce8585d5a586f1dc6d1ac3ed9c1a5ac6fcc8afbdc0111552d8d642892",
       "path": "docs/research/pca-w4-domain-contracts/02-results.md"
     },
     {
@@ -198,8 +202,20 @@
       "path": "docs/research/pca-w4-domain-contracts/tools/zotero-status.json"
     },
     {
+      "sha256": "4f00dad63e3afb52815edfda048fc701c5b8485fc2673295cacbb75d83564c37",
+      "path": "governance/repository-truth-authority-v1.json"
+    },
+    {
       "sha256": "c69f0e1e054d482faac1921f5a4d5d4add013c3a56d0425d9e29c2c857f6ae98",
       "path": "research/campaigns/pca-w4-domain-contracts-v1.0.json"
+    },
+    {
+      "sha256": "1852290b3fe89271e99ea1749fb81f197bac46d7a576d6ec3df0b1c95fa7a3d7",
+      "path": "tests/test_project_far_theory_closure.py"
+    },
+    {
+      "sha256": "4d0cee7275bfc384aa11818b614a2a9880305e523b0e802119adfa9eaa104212",
+      "path": "tests/test_repository_truth.py"
     },
     {
       "sha256": "4d8e4ea17aa3f6df3e038d384b554ea15fac1898a28fd31f9ed5987798ba60e9",
@@ -216,6 +232,14 @@
     {
       "sha256": "abd1f7f4ce75193e724a982e4ee99ab4c6dfb13eae37f78849c25ffdd837a4e6",
       "path": "tools/check_pca_w4_domain_contracts.py"
+    },
+    {
+      "sha256": "0e584641edfe2987885fea6d9d469a82d904e7f82f8422d7dfa3048ae6583d37",
+      "path": "tools/check_project_far_theory_closure.py"
+    },
+    {
+      "sha256": "32ba096a6e7dcda4ab9384fe0942649ee294ae34a3c2e420f09a1f1358e11e80",
+      "path": "tools/check_repository_truth.py"
     }
   ],
   "acceptance": {

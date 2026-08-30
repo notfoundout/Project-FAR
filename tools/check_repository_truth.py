@@ -83,7 +83,9 @@ def main() -> int:
         fail("completed W2 assurance authority drift")
     if status.get("completed_contract_schema_workstream") != "PCA-W3-CONTRACT-SCHEMA":
         fail("completed W3 contract-schema authority drift")
-    if status.get("active_workstream") != "PCA-W4-DOMAIN-CONTRACTS":
+    if status.get("completed_domain_contracts_workstream") != "PCA-W4-DOMAIN-CONTRACTS":
+        fail("completed W4 domain-contract authority drift")
+    if status.get("active_workstream") != "PCA-W5-APPROXIMATION-AND-COST":
         fail("active workstream authority drift")
     if status.get("independent_review_status") != "complete_confirmed_14_proved_exact_scopes_novelty_not_established":
         fail("independent-review authority drift")
@@ -91,6 +93,8 @@ def main() -> int:
         fail("formalization authority drift")
     if status.get("contract_schema_status") != "far-ir_2.0_versioned_successor_complete_finite_explicit_semantic_checks_v1_unchanged":
         fail("W3 contract-schema status authority drift")
+    if status.get("domain_contracts_status") != "six_finite_explicit_native_contracts_six_lossy_collisions_six_scoped_repairs_internal_mapping_only":
+        fail("W4 domain-contract status authority drift")
 
     historical_bytes = (ROOT / HISTORICAL_CORE_PATH).read_bytes()
     if hashlib.sha256(historical_bytes).hexdigest() != EXPECTED_V1_SHA256:
@@ -130,7 +134,8 @@ def main() -> int:
         "## Post-closure phase",
         "The active program is `POST-CLOSURE-001`.",
         "`PCA-W3-CONTRACT-SCHEMA`: complete.",
-        "`PCA-W4-DOMAIN-CONTRACTS`: **next**.",
+        "`PCA-W4-DOMAIN-CONTRACTS`: complete at six finite-explicit domain scopes.",
+        "`PCA-W5-APPROXIMATION-AND-COST`: **next**.",
         "Core theory reopens only for a reproducible contradiction",
         "Historical bounded-program status",
     )
@@ -172,7 +177,9 @@ def main() -> int:
         "current_program": status["current_program"],
         "active_workstream": status["active_workstream"],
         "completed_contract_schema_workstream": status["completed_contract_schema_workstream"],
+        "completed_domain_contracts_workstream": status["completed_domain_contracts_workstream"],
         "contract_schema_status": status["contract_schema_status"],
+        "domain_contracts_status": status["domain_contracts_status"],
         "independent_review_status": status["independent_review_status"],
         "formalization_status": status["formalization_status"],
         "current_phase": status["current_phase"],
