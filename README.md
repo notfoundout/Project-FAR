@@ -27,6 +27,8 @@ The corrected v1.1 theory survived the sealed `PCA-W1-INDEPENDENT-REVIEW` under 
 
 `PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is a versioned comparison-contract successor with explicit contract/scope/provenance/failure fields, finite-explicit factorization/collision/quotient verification, loss-explicit migration from v1, and registered conformance fixtures. `far-ir/1.0` remains unchanged and is not silently reinterpreted.
 
+`PCA-W4-DOMAIN-CONTRACTS` is complete at its recorded finite-explicit scopes: six independently motivated native comparison dimensions were frozen before controlled mapping; each domain has one checked lossy collision and one checked repaired factorization. The mappings and evaluations remain project-authored and do not establish external-investigator independence, novelty, minimal repair, or open-domain completeness.
+
 These are separate assurance dimensions. Independent review does not imply novelty; Lean formalization does not imply empirical utility, efficiency, open-domain universality, or product readiness; schema/software conformance does not establish application correspondence.
 
 Canonical links:
@@ -38,6 +40,8 @@ Canonical links:
 - [Machine assurance ledger](theory/evaluation/far-core-assurance-v1.0.json)
 - [W2 formalization status](docs/governance/pca-w2-formalization-status-v1.0.md)
 - [W3 contract-schema status](docs/governance/pca-w3-contract-schema-status-v1.0.md)
+- [W4 domain-contract status](docs/governance/pca-w4-domain-contracts-status-v1.0.md)
+- [W4 finite-explicit results](docs/research/pca-w4-domain-contracts/02-results.md)
 - [`far-ir/2.0` contract specification](docs/specification/far-ir-2.0-contract.md)
 - [Canonical project status](docs/project-status.md)
 - [Roadmap](docs/ROADMAP.md)
@@ -51,19 +55,21 @@ The active program is `POST-CLOSURE-001`.
 - `PCA-W1-INDEPENDENT-REVIEW`: complete.
 - `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete, 14/14 formalized.
 - `PCA-W3-CONTRACT-SCHEMA`: complete.
-- `PCA-W4-DOMAIN-CONTRACTS`: **next**.
-- `PCA-W5-APPROXIMATION-AND-COST`: open.
+- `PCA-W4-DOMAIN-CONTRACTS`: complete at six finite-explicit domain scopes.
+- `PCA-W5-APPROXIMATION-AND-COST`: **next**.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open.
 
 Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.
 
-## W3 result and W4 boundary
+## W4 result and W5 boundary
 
 `far-ir/2.0` explicitly represents contract identity/version, source/case domain, required behavior, representation, decoder/factorization or collision evidence, observation contexts, typed outcomes including `Unknown`, observational equivalence/quotient evidence, admitted transformations/equivalences, interpretation profile, target/model class, frame, provenance/freeze metadata, failure reporting, and optional approximation/loss/cost declarations.
 
 For finite explicit records, checked factorization, collision, and exact beta-kernel quotient claims are recomputed by the semantic verifier. A migrated `far-ir/1.0` record preserves the legacy primitive payload but remains `Unknown` and unfrozen for comparison semantics that v1 never represented. Approximation fields are declarations only; W3 does not establish W5 metric/loss/cost semantics.
 
-W4 must now independently motivate contracts for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory. A software certificate for an encoded table does not prove that the table faithfully represents or exhausts an external domain.
+W4 froze native contracts for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory before mapping them into `far-ir/2.0`. Across the six domains, deliberately lossy representations expose six checked consequence-affecting collisions, while explicit scoped repairs supply six checked finite factorization witnesses. Domain-specific recomputation and mutation controls supplement the generic v2 verifier.
+
+These results certify only the frozen cases and behavior queries. W5 must separately declare approximation metrics, tolerances, decision losses, computational costs, and cost preorders; W4 supplies none of those semantics.
 
 The existing Phase 3 `far-ir/1.0` mechanization remains a historical/current MVP for its stated reasoning-document interchange scope. It is not redefined by v2.
 
@@ -118,6 +124,13 @@ W3 contract-schema conformance:
 ```bash
 python -m mechanization.far_mechanization.contract_conformance
 python -m unittest tests.test_far_contract_v2
+```
+
+W4 domain-contract recomputation:
+
+```bash
+python tools/check_pca_w4_domain_contracts.py
+python -m unittest tests.test_pca_w4_domain_contracts
 ```
 
 Repository command center:

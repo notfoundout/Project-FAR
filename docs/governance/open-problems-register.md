@@ -6,10 +6,6 @@ The core theory is closed. Current open problems are downstream assurance, imple
 
 | ID | Current problem | Kind | Blocking evidence / completion condition |
 |---|---|---|---|
-| OP-23 | Independently review `FAR-CORE-001`–`014`. | proof assurance | No reviewer independent of the construction has issued a premise-by-premise verdict. |
-| OP-24 | Formalize the core in a proof assistant. | proof assurance | Current proofs are explicit narrative deductions; no end-to-end checked object exists. |
-| OP-25 | Implement a versioned contract/factorization schema and conformance suite. | implementation | `far-ir/1.0` lacks mandatory contract, decoder/collision, quotient, profile/frame, and cost fields. |
-| OP-26 | Develop independently motivated domain contracts. | theoretical/empirical | Contract selection is consequential and not supplied by the core theorem. |
 | OP-27 | Develop approximate and cost-aware quotient methods. | theoretical/algorithmic | Metrics, losses, tolerances, and cost preorders are domain choices; exact quotient existence does not imply computability. |
 | OP-28 | Test whether FAR's audit discipline catches material loss or reduces disagreement. | empirical | No preregistered external effectiveness evidence. |
 | OP-29 | Evaluate the FARA kernel under external real-world cost and audit contracts. | engineering/empirical | Current selection remains finite, explicit, auditable, and project-internal. |
@@ -18,14 +14,18 @@ The core theory is closed. Current open problems are downstream assurance, imple
 
 | Earlier ID(s) | Terminal disposition |
 |---|---|
+| OP-23 | Closed at exact W1 scope: sealed independent review returned 14 PROVED, no correction; novelty/priority not established. |
+| OP-24 | Closed for the governed v1.1 claims: W2 formalized all 14 under pinned Lean 4.19.0 with exact kernel assumptions audited. |
+| OP-25 | Closed by W3: `far-ir/2.0`, semantic verification, loss-explicit v1 migration, and conformance fixtures are complete; v1 remains unchanged. |
+| OP-26 | Closed at six bounded finite scopes by W4: six source-motivated native contracts, six checked collisions, and six checked repairs. External framing/evaluation and domain completeness remain limitations, not a claim of completion beyond these scopes. |
 | OP-01 | Closed: contract-free common minimal architecture is refuted; the contract-relative quotient is proved. |
 | OP-02–OP-03 | Closed as global searches: finite operator count is noninvariant; Resolve is derived. Scoped operator lower bounds require a new explicit operator contract. |
-| OP-05 | Exact case closed by factorization/collision; approximate and ontology-changing cases move to OP-26/OP-27. |
-| OP-06 | Historical UPP reconstruction target retired; current core formalization is OP-24. |
+| OP-05 | Exact bounded cases closed by factorization/collision; approximate and ontology-changing cases move to OP-27. |
+| OP-06 | Historical UPP reconstruction target retired; current core formalization completed under OP-24. |
 | OP-08 | Necessity rejected; FAR/FARO procedures are selected downstream methods/operations. Utility remains OP-28. |
 | OP-10–OP-12 | Retained only as FARA engineering/application questions under explicit contracts; they cannot reopen the contract-free branch. |
 | OP-20 | Prior-art search remains relevant to novelty only; the core makes no novelty claim. |
-| OP-21 | Its subsidiary quotient-schema question is closed positively by `FAR-CORE-001`–`002`; normative contract comparison remains external and moves to OP-26. |
+| OP-21 | Its subsidiary quotient-schema question is closed positively by `FAR-CORE-001`–`002`; W4 supplies six bounded domain contracts while externally chosen normative comparison remains a recorded limitation. |
 | OP-22 | No longer a core-closure dependency. `UPP-SR-001` is optional bounded case-study work. |
 
 ## Historical pre-closure register
@@ -76,4 +76,3 @@ Status: **Accepted problem index; not execution authorization**
 <!-- FARA-FOUNDATION-COMP-001 evidence snapshot: end -->
 
 - **FARA-EXPANDED-BOUND-001:** enumerate justified full-signature cross-products or larger carriers; independently replicate the implementation; and supply executable oracle, continuous, hybrid, and embodied semantics before adjudicating those cases.
-

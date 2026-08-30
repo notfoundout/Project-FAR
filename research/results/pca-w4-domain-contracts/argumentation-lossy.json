@@ -1,0 +1,206 @@
+{
+  "format_version": "far-ir/2.0",
+  "id": "w4.argumentation.lossy",
+  "contract": {
+    "id": "w4.argumentation.lossy",
+    "contract_version": "1.0",
+    "mode": "exact",
+    "source_domain": {
+      "status": "EXPLICIT",
+      "kind": "finite_explicit",
+      "description": "Two frozen native cases for argumentation.",
+      "cases": [
+        {
+          "id": "case.ar.a_over_b",
+          "value": {
+            "arguments": [
+              "A",
+              "B"
+            ],
+            "attacks": [
+              [
+                "A",
+                "B"
+              ],
+              [
+                "B",
+                "A"
+              ]
+            ],
+            "strict_preference": [
+              [
+                "A",
+                "B"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "case.ar.b_over_a",
+          "value": {
+            "arguments": [
+              "A",
+              "B"
+            ],
+            "attacks": [
+              [
+                "A",
+                "B"
+              ],
+              [
+                "B",
+                "A"
+              ]
+            ],
+            "strict_preference": [
+              [
+                "B",
+                "A"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    "required_behavior": {
+      "status": "EXPLICIT",
+      "description": "Grounded extension after preference-sensitive attacks are converted to defeats.",
+      "table": [
+        {
+          "case_id": "case.ar.a_over_b",
+          "value": [
+            "A"
+          ]
+        },
+        {
+          "case_id": "case.ar.b_over_a",
+          "value": [
+            "B"
+          ]
+        }
+      ]
+    },
+    "representation": {
+      "status": "EXPLICIT",
+      "description": "Arguments and attack relation with preference omitted.",
+      "table": [
+        {
+          "case_id": "case.ar.a_over_b",
+          "value": {
+            "arguments": [
+              "A",
+              "B"
+            ],
+            "attacks": [
+              [
+                "A",
+                "B"
+              ],
+              [
+                "B",
+                "A"
+              ]
+            ]
+          }
+        },
+        {
+          "case_id": "case.ar.b_over_a",
+          "value": {
+            "arguments": [
+              "A",
+              "B"
+            ],
+            "attacks": [
+              [
+                "A",
+                "B"
+              ],
+              [
+                "B",
+                "A"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    "observation_contexts": [
+      {
+        "id": "obs.argumentation.primary",
+        "description": "Grounded extension of the derived two-argument defeat graph.",
+        "status": "EXPLICIT"
+      }
+    ],
+    "admitted_transformations": [
+      {
+        "id": "eq.literal-json",
+        "kind": "equivalence",
+        "description": "Literal equality of canonical JSON table values.",
+        "status": "EXPLICIT"
+      }
+    ],
+    "interpretation_profile": {
+      "id": "interp.argumentation",
+      "description": "An attack x->y succeeds iff y is not strictly preferred to x.",
+      "status": "EXPLICIT"
+    },
+    "target_model_class": {
+      "id": "target.argumentation",
+      "description": "Exactly the two mutual-attack frameworks with opposite strict preferences.",
+      "status": "EXPLICIT"
+    },
+    "frame": {
+      "id": "frame.argumentation",
+      "description": "Grounded semantics; no additional arguments or attacks.",
+      "status": "EXPLICIT"
+    },
+    "extensions": {
+      "w4.domain": "argumentation",
+      "w4.variant": "lossy",
+      "w4.native_memo": "docs/research/pca-w4-domain-contracts/native/argumentation.md",
+      "w4.source_keys": [
+        "prakken2010abstract",
+        "modgil2014aspic"
+      ],
+      "w4.native_freeze_commit": "f823c4daf08b61241483bc1cc50d88d22746fa83"
+    }
+  },
+  "report": {
+    "outcome": "REFUTED",
+    "evidence": {
+      "kind": "collision",
+      "status": "CHECKED_FINITE_EXPLICIT",
+      "left_case_id": "case.ar.a_over_b",
+      "right_case_id": "case.ar.b_over_a",
+      "notes": "The two distinct frozen cases have equal representation values and unequal required behavior values."
+    },
+    "failure_report": [
+      "The deliberately lossy representation merges the two cases while the frozen required behavior differs."
+    ]
+  },
+  "provenance": {
+    "producer": "PCA-W4-DOMAIN-CONTRACTS",
+    "created_at": "2026-08-30T10:41:10.018Z",
+    "sources": [
+      {
+        "path": "docs/research/pca-w4-domain-contracts/native/argumentation.md",
+        "sha256": "51e28bfa901f66968435c985a7e3c3d9433705a2ba1ccbe4f056ecdcdd087fd0"
+      },
+      {
+        "path": "docs/research/pca-w4-domain-contracts/01-source-manifest.json",
+        "sha256": "00d6d2c1a68aa9b0f11234975162c2b42a63edb07f82aefa5c443c8c1e02c7a0"
+      },
+      {
+        "path": "docs/research/pca-w4-domain-contracts/01-discovery-log.md",
+        "sha256": "683edbc72110612a9d2c0d9799f6ee65ea2d1c4df4347965a9677983037dbebe"
+      }
+    ],
+    "notes": "External-domain correspondence is supported by the native memo and source manifest; checked evidence certifies only the encoded finite tables."
+  },
+  "freeze": {
+    "status": "FROZEN",
+    "frozen_at": "2026-08-30T10:41:10.018Z",
+    "contract_sha256": "40743e01246be83713788d3dd7b8a5c0dde56608ec89e6d15b4e274efcb40f0c",
+    "notes": "Contract object frozen after native memo commit f823c4daf08b61241483bc1cc50d88d22746fa83."
+  }
+}

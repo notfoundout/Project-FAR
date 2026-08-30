@@ -18,9 +18,9 @@ Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.
 
 The core theory is closed after the governed v1.1 correction. These tasks change assurance, implementation, applicability, or utility; they do not reopen the core without a genuine contradiction.
 
-The sealed `PCA-W1-INDEPENDENT-REVIEW` is complete: 14 PROVED under exact scopes, no correction required, novelty/priority not established. `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: 14/14 governed claims are FORMALIZED, including the bounded MLL bridge for FAR-CORE-014, with no contradiction/reopen outcome. `PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is the governed versioned successor, finite-explicit semantic checks are implemented, and `far-ir/1.0` remains unchanged.
+The sealed `PCA-W1-INDEPENDENT-REVIEW` is complete: 14 PROVED under exact scopes, no correction required, novelty/priority not established. `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: 14/14 governed claims are FORMALIZED, including the bounded MLL bridge for FAR-CORE-014, with no contradiction/reopen outcome. `PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is the governed versioned successor, finite-explicit semantic checks are implemented, and `far-ir/1.0` remains unchanged. `PCA-W4-DOMAIN-CONTRACTS` is complete at six finite-explicit scopes: six checked lossy collisions and six checked repairs, with internally authored mappings and no external-domain validation claim.
 
-Canonical next workstream: `PCA-W4-DOMAIN-CONTRACTS`.
+Canonical next workstream: `PCA-W5-APPROXIMATION-AND-COST`.
 
 ## Ranked Next Actions
 
@@ -28,9 +28,9 @@ Canonical next workstream: `PCA-W4-DOMAIN-CONTRACTS`.
 
 - Registered workstream: `PCA-W4-DOMAIN-CONTRACTS`
 - Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
-- Priority: active
+- Priority: complete
 - Why it matters: The core theorem does not select tests, outcome types, semantics, transformations, profiles, frames, or normative objectives for a domain.
-- Expected outcome: Independently motivated, versioned far-ir/2.0 contracts with explicit nonclaims and collision tests.
+- Expected outcome: Six source-motivated native contracts, twelve far-ir/2.0 records, six checked collisions, and six checked scoped repairs with explicit nonclaims.
 - Suggested branch name: `research/pca-w4-domain-contracts`
 - Suggested PR title: `Develop scoped domain contracts`
 
@@ -38,7 +38,7 @@ Canonical next workstream: `PCA-W4-DOMAIN-CONTRACTS`.
 
 - Registered workstream: `PCA-W5-APPROXIMATION-AND-COST`
 - Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
-- Priority: queued
+- Priority: active
 - Why it matters: Exact information minimality does not choose metrics, decision losses, tolerances, runtime, storage, or explanatory cost.
 - Expected outcome: Scoped approximate adequacy and cost-minimality specifications without a universal optimum claim.
 - Suggested branch name: `research/pca-w5-approximation-cost`
@@ -69,13 +69,3 @@ Validation commands:
 - `make semantic-check`
 - `make docs-check`
 - `make health-fast`
-
-## Navigation
-
-- README Command Center: [README.md](../../README.md)
-- Current Project Status: [docs/project-status.md](../project-status.md)
-- Core Theory: [theory/theorems/Project-FAR-Theory-Closure-v1.1.md](../../theory/theorems/Project-FAR-Theory-Closure-v1.1.md)
-- Historical v1.0 Core: [theory/theorems/Project-FAR-Theory-Closure-v1.0.md](../../theory/theorems/Project-FAR-Theory-Closure-v1.0.md)
-- Post-Closure Program: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
-- Historical Bounded Status: [docs/reports/project-status-generated.md](../reports/project-status-generated.md)
-- Next Actions: [docs/planning/next-actions.md](next-actions.md)

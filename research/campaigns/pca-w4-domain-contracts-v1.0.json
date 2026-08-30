@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "PCA-W4-DOMAIN-CONTRACTS-1.0",
+  "program": "POST-CLOSURE-001",
+  "workstream": "PCA-W4-DOMAIN-CONTRACTS",
+  "status": "COMPLETE_FINITE_EXPLICIT",
+  "base": {
+    "commit": "3923fd88bb1549d816edcbdff66ce3412b7e80bc",
+    "tree": "f95175fa7efe0556193ed5b37d546d6fc0fd152e",
+    "branch": "research/pca-w4-domain-contracts"
+  },
+  "frozen_at": "2026-08-30T10:27:08Z",
+  "completed_at": "2026-08-30T10:45:38.778Z",
+  "stage_commits": {
+    "protocol_freeze": "9638185b2f92913b3ce13ee2aaae5289e93945b1",
+    "native_contract_freeze": "f823c4daf08b61241483bc1cc50d88d22746fa83",
+    "controlled_mapping": "8f8ad0a9b18f704a892c8bdb1b5fe304e18aae17"
+  },
+  "results": {
+    "domains": 6,
+    "checked_lossy_collisions": 6,
+    "checked_repaired_factorizations": 6,
+    "independent_domain_review": false,
+    "w5_semantics_established": false,
+    "w6_empirical_utility_established": false
+  },
+  "discovery_rule": "Select and characterize native-domain sources before reading a result through Project FAR terminology or far-ir/2.0 fields.",
+  "queries": [
+    {
+      "id": "W4-Q-FL-01",
+      "domain": "formal_logic",
+      "query": "logical consequence preservation translations institutions satisfaction condition conservative translation"
+    },
+    {
+      "id": "W4-Q-FL-02",
+      "domain": "formal_logic",
+      "query": "abstract model theory equivalence of logics interpretations consequence relations"
+    },
+    {
+      "id": "W4-Q-FL-03",
+      "domain": "formal_logic",
+      "query": "logic translation preservation reflection theoremhood models counterexample"
+    },
+    {
+      "id": "W4-Q-BC-01",
+      "domain": "bayesian_causal_reasoning",
+      "query": "Blackwell comparison statistical experiments sufficient statistics Markov kernels decision problems"
+    },
+    {
+      "id": "W4-Q-BC-02",
+      "domain": "bayesian_causal_reasoning",
+      "query": "causal models observational equivalence intervention equivalence structural causal models"
+    },
+    {
+      "id": "W4-Q-BC-03",
+      "domain": "bayesian_causal_reasoning",
+      "query": "causal abstraction exact transformation interventional distributions preservation"
+    },
+    {
+      "id": "W4-Q-AR-01",
+      "domain": "argumentation",
+      "query": "abstract argumentation strong equivalence contextual equivalence semantics"
+    },
+    {
+      "id": "W4-Q-AR-02",
+      "domain": "argumentation",
+      "query": "preference based argumentation attack defeat relation accepted arguments"
+    },
+    {
+      "id": "W4-Q-AR-03",
+      "domain": "argumentation",
+      "query": "structured argumentation translation preservation semantics ASPIC plus"
+    },
+    {
+      "id": "W4-Q-MB-01",
+      "domain": "model_based_reasoning",
+      "query": "scientific models empirical equivalence prediction extrapolation underdetermination"
+    },
+    {
+      "id": "W4-Q-MB-02",
+      "domain": "model_based_reasoning",
+      "query": "model reduction behavioral equivalence bisimulation preservation observations"
+    },
+    {
+      "id": "W4-Q-MB-03",
+      "domain": "model_based_reasoning",
+      "query": "system identification finite observations indistinguishable models different predictions"
+    },
+    {
+      "id": "W4-Q-TT-01",
+      "domain": "type_theory",
+      "query": "dependent type theory judgments contexts definitional equality type checking"
+    },
+    {
+      "id": "W4-Q-TT-02",
+      "domain": "type_theory",
+      "query": "translations dependent type theories preservation judgmental equality conservativity"
+    },
+    {
+      "id": "W4-Q-TT-03",
+      "domain": "type_theory",
+      "query": "type erasure dependent types loss of typing context counterexample"
+    },
+    {
+      "id": "W4-Q-PT-01",
+      "domain": "proof_theory",
+      "query": "identity of proofs normalization cut elimination proof nets equivalence"
+    },
+    {
+      "id": "W4-Q-PT-02",
+      "domain": "proof_theory",
+      "query": "translations between proof systems preservation provability derivations"
+    },
+    {
+      "id": "W4-Q-PT-03",
+      "domain": "proof_theory",
+      "query": "same end sequent different proofs cut free proof identity"
+    }
+  ],
+  "discovery_tools": [
+    "Consensus",
+    "SciSpace",
+    "Scite",
+    "Acumen/Talarion",
+    "ordinary_web",
+    "Zotero"
+  ],
+  "computational_tools": [
+    "Wolfram",
+    "far-ir/2.0 semantic verifier"
+  ],
+  "inclusion": [
+    "primary or authoritative technical source with stable identity",
+    "native definition of behavior, consequence, observation, equivalence, transformation, judgment, or proof distinction",
+    "source supports a bounded contract dimension or a direct counterexample"
+  ],
+  "exclusion": [
+    "discovery-system summary without primary-source verification",
+    "source selected only because it resembles Project FAR vocabulary",
+    "citation count or platform support label treated as proof",
+    "negative search result treated as novelty"
+  ],
+  "pre_search_tool_receipt": {
+    "GitHub": "AVAILABLE",
+    "Consensus": "AVAILABLE",
+    "SciSpace": "AVAILABLE",
+    "Scite": "AVAILABLE",
+    "Acumen/Talarion": "AVAILABLE",
+    "ordinary_web": "AVAILABLE",
+    "Wolfram": "AVAILABLE",
+    "Zotero": "UNAVAILABLE_NO_LOCAL_PROFILE_API_OR_CONNECTOR",
+    "local_authenticated_git_checkout": "UNAVAILABLE"
+  },
+  "evidence_class": "internal_model_assisted_multi_tool_research",
+  "independent_review_claimed": false,
+  "terminal_outputs": [
+    "PROVED",
+    "REFUTED",
+    "OPEN",
+    "BLOCKED",
+    "UNDERDETERMINED",
+    "NOT_APPLICABLE",
+    "HISTORICAL_SUPERSEDED",
+    "Unknown"
+  ]
+}

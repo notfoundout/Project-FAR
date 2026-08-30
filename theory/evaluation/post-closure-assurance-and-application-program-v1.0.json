@@ -42,7 +42,10 @@
     },
     {
       "id": "PCA-W4-DOMAIN-CONTRACTS",
-      "state": "open",
+      "state": "complete",
+      "result": "SIX_CHECKED_LOSSY_COLLISIONS_SIX_CHECKED_SCOPED_REPAIRS_INTERNAL_MAPPING",
+      "status_record": "theory/evaluation/pca-w4-domain-contracts-v1.0.json",
+      "records_manifest": "research/results/pca-w4-domain-contracts/manifest.json",
       "deliverable": "independently motivated domain contracts and collision audits"
     },
     {
@@ -57,9 +60,9 @@
     }
   ],
   "next_action": {
-    "workstream": "PCA-W4-DOMAIN-CONTRACTS",
+    "workstream": "PCA-W5-APPROXIMATION-AND-COST",
     "theory_target": "PROJECT-FAR-CORE-THEORY-1.1",
-    "obligation": "instantiate independently motivated far-ir/2.0 contracts and collision audits for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory without treating schema usage as evidence of universal architecture"
+    "obligation": "declare metrics or divergences, tolerances, decision losses, and cost preorders before certifying any approximate or cost-aware comparison; do not infer them from W4 exact repairs"
   },
   "prohibited_promotions": [
     "contract_free_universal_minimal_architecture",

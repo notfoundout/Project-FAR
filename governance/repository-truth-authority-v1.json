@@ -17,10 +17,12 @@
     "current_program": "POST-CLOSURE-001",
     "completed_assurance_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
     "completed_contract_schema_workstream": "PCA-W3-CONTRACT-SCHEMA",
-    "active_workstream": "PCA-W4-DOMAIN-CONTRACTS",
+    "completed_domain_contracts_workstream": "PCA-W4-DOMAIN-CONTRACTS",
+    "active_workstream": "PCA-W5-APPROXIMATION-AND-COST",
     "independent_review_status": "complete_confirmed_14_proved_exact_scopes_novelty_not_established",
     "formalization_status": "14_formalized_0_partial_obstruction_0_contradiction",
     "contract_schema_status": "far-ir_2.0_versioned_successor_complete_finite_explicit_semantic_checks_v1_unchanged",
+    "domain_contracts_status": "six_finite_explicit_native_contracts_six_lossy_collisions_six_scoped_repairs_internal_mapping_only",
     "historical_surfaces": [
       "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
       "theory/terminal/project-far-core-theory-v1.0.json",
@@ -53,7 +55,8 @@
     "W1 independent review is complete under exact scopes; novelty and priority remain not established.",
     "W2 formalization is complete: FAR-CORE-001 through FAR-CORE-014 are kernel-checked under the governed v1.1 statements, with no contradiction/reopen outcome.",
     "W3 contract schema is complete as far-ir/2.0, a versioned successor rather than a silent reinterpretation of far-ir/1.0; far-ir/1.0 remains unchanged.",
-    "W4 domain contracts are the next active workstream; schema conformance alone is not evidence that an encoded contract faithfully represents an external domain.",
+    "W4 domain contracts are complete at six finite-explicit scopes with six lossy collisions and six scoped repairs; internal mapping and schema conformance are not evidence that an encoded contract faithfully represents an external domain.",
+    "W5 approximation and cost is the next active workstream; W4 exact repairs do not supply metrics, tolerances, losses, or cost preorders.",
     "No historical dashboard or research artifact may identify itself as the current repository phase or theorem authority.",
     "Package metadata versions must match executable version declarations.",
     "Repository release version and installable package version are distinct authorities and must not be inferred from one another."

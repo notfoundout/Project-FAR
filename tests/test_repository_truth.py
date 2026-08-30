@@ -34,6 +34,15 @@ class RepositoryTruthTests(unittest.TestCase):
         )
         self.assertEqual(payload["specification_export_version"], "1.2.0")
         self.assertEqual(payload["current_program"], "POST-CLOSURE-001")
+        self.assertEqual(
+            payload["completed_domain_contracts_workstream"],
+            "PCA-W4-DOMAIN-CONTRACTS",
+        )
+        self.assertEqual(payload["active_workstream"], "PCA-W5-APPROXIMATION-AND-COST")
+        self.assertEqual(
+            payload["domain_contracts_status"],
+            "six_finite_explicit_native_contracts_six_lossy_collisions_six_scoped_repairs_internal_mapping_only",
+        )
         self.assertEqual(payload["current_phase"], "post-closure assurance and application")
 
     def test_version_drift_fails_closed(self) -> None:

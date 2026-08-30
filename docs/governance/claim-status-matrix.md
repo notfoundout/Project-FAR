@@ -6,7 +6,7 @@ The current rows below govern. Dated audit sections are preserved afterward as h
 
 | Claim or concept | Current classification | Boundary |
 |---|---|---|
-| `PROJECT-FAR-CORE-THEORY-1.1` | Accepted corrected internal deductive theory; independently confirmed under exact scopes | W1: 14 PROVED, no correction, novelty/priority not established. W2: 13 FORMALIZED, FAR-CORE-014 PARTIAL/OBSTRUCTION. Historical v1.0 remains immutable. |
+| `PROJECT-FAR-CORE-THEORY-1.1` | Accepted corrected internal deductive theory; independently confirmed under exact scopes | W1: 14 PROVED, no correction, novelty/priority not established. W2: 14 FORMALIZED, zero partial obstructions. Historical v1.0 remains immutable. |
 | Exact representation sufficiency | **PROVED contract-relative** (`FAR-CORE-001`) | Behavior must factor through the representation for the fixed contract. |
 | Canonical observational quotient | **PROVED contract-relative** (`FAR-CORE-002`) | Unique least-informative exact representation up to isomorphism; not cost/computability optimality. |
 | Contract-free nontrivial minimal architecture | **REFUTED** (`FAR-CORE-004`, clarified v1.1) | No single representation is simultaneously least-informative sufficient for every observation contract on a nontrivial domain. Identity may be sufficient for all fixed-domain contracts; the impossibility is simultaneous minimality. |
@@ -21,12 +21,14 @@ The current rows below govern. Dated audit sections are preserved afterward as h
 | `FARA-FORMAL-KERNEL-001` | Retained bounded engineering standard | Finite explicit auditable Project FAR v1 only; not globally unique/minimal. |
 | FAR workflow | Theory-constrained independent methodology | Factorization/collision obligations derive from shared theory; sequencing and governance choices remain selected methods. |
 | FARO operations | Downstream selected operations | Execution and conformance do not prove upstream theory. |
-| SSS / PR #453 | Truth `PROVED` by W1 under exact scope; governing provenance **SUPPORTED/DERIVED**; W2 `PARTIAL/OBSTRUCTION` | The four-decoder result and conditional bridges compile; actual MLL witness derivations do not. Exact/robust common theory, maximality, and novelty remain unresolved in that experiment. |
+| SSS / PR #453 | Truth `PROVED` by W1 under exact scope; governing provenance **SUPPORTED/DERIVED**; W2 `FORMALIZED` | The bounded unit-free MLL witness bridge, named sequents, decoder classification, and projected-decoder failure are kernel-checked. Exact/robust common theory, maximality, and novelty remain unresolved in that experiment. |
+| W4 six-domain lossy representations | **REFUTED under six frozen finite contracts** | One checked consequence-affecting collision per domain; no open-domain or contract-free inference. |
+| W4 six explicit repairs | **PROVED sufficient for the recorded finite cases** | One checked decoder/factorization per domain; no minimality, uniqueness, efficiency, approximation, or completeness claim. |
 | Novelty of the core mathematical pattern | No novelty claim | Blackwell comparison and other prior art already supply mature contract/decision-relative informativeness, quotient, factorization, and equivalence patterns. |
 
 ## 2026-08-27 corrected closure ledger
 
-The authoritative detailed ledger is [`theory/terminal/project-far-core-theory-v1.1.json`](../../theory/terminal/project-far-core-theory-v1.1.json). `FAR-CORE-001`–`013` remain PROVED at their corrected stated scopes; `FAR-CORE-014` remains SUPPORTED/DERIVED as a provenance/application label. The separate W1 truth ledger records all 14 as `PROVED`. The v1.0 monograph remains immutable historical evidence. `PCA-W1-INDEPENDENT-REVIEW` is complete; `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is active.
+The authoritative detailed ledger is [`theory/terminal/project-far-core-theory-v1.1.json`](../../theory/terminal/project-far-core-theory-v1.1.json). `FAR-CORE-001`–`013` remain PROVED at their corrected stated scopes; `FAR-CORE-014` remains SUPPORTED/DERIVED as a provenance/application label. The separate W1 truth ledger records all 14 as `PROVED`. The v1.0 monograph remains immutable historical evidence. `PCA-W1-INDEPENDENT-REVIEW`, `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`, `PCA-W3-CONTRACT-SCHEMA`, and bounded `PCA-W4-DOMAIN-CONTRACTS` are complete.
 
 ## Historical audit record
 

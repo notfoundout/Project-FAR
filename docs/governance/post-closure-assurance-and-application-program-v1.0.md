@@ -31,8 +31,8 @@ that assurance change without rewriting the theory.
 - `PCA-W1-INDEPENDENT-REVIEW`: complete — sealed exact-scope review promoted; novelty/priority not established.
 - `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete — FAR-CORE-001–014 are kernel-checked against the governed v1.1 statements; FAR-CORE-014 includes the bounded MLL syntax, resource split, atom-balance invariant, named witness sequents, and projected-decoder failure, with no contradiction found.
 - `PCA-W3-CONTRACT-SCHEMA`: complete — `far-ir/2.0` is a versioned comparison-contract successor with explicit contract/scope/provenance/failure fields, finite-explicit factorization/collision/quotient verification, loss-explicit v1 migration, and conformance fixtures. `far-ir/1.0` remains unchanged and is not silently reinterpreted.
-- `PCA-W4-DOMAIN-CONTRACTS`: **open — next** — develop independently motivated contracts and collision audits for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory.
-- `PCA-W5-APPROXIMATION-AND-COST`: open — add explicit metrics, losses, tolerances, or cost orders.
+- `PCA-W4-DOMAIN-CONTRACTS`: complete at finite-explicit scopes — six native contracts were frozen before mapping; six deliberately lossy representations have checked collisions and six explicit scoped repairs have checked factorizations. The domain mappings remain internally authored.
+- `PCA-W5-APPROXIMATION-AND-COST`: **open — next** — add explicit metrics, losses, tolerances, or cost orders.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open — test whether the audit discipline detects material loss or reduces disagreement.
 
 ## Assurance rules
@@ -42,6 +42,8 @@ Independent review must disclose prior exposure, conflicts, tools, premises chec
 Proof-assistant work may upgrade only the formalized results. Failure to formalize must preserve the exact obstruction; it does not by itself refute a theorem. W2 completed with 14 `FORMALIZED`, zero `PARTIAL/OBSTRUCTION`, and zero `CONTRADICTION/REOPEN REQUIRED`. The runtime `#print axioms` audit records the exact transitive Lean kernel dependencies of every governed declaration; those dependencies are proof-assistant metadata, not new FAR premises.
 
 W3 software checks may certify only properties recomputable from the encoded finite-explicit record. Abstract declarations, migration, schema validity, or CI success cannot be promoted to application correspondence or mathematical proof. A migrated `far-ir/1.0` record is `Unknown` for W3 semantics until the missing contract dimensions are supplied and frozen.
+
+W4 native memos and bibliographic identities supply bounded domain correspondence for the recorded questions; they do not establish domain completeness. The six collision and six repair certificates are internally mapped finite results, not external-investigator review, minimality, novelty, approximation, cost, or empirical-utility evidence.
 
 ## Contract and application rules
 
@@ -77,6 +79,8 @@ The program prohibits:
 Every workstream returns one or more of: `PROVED`, `REFUTED`, `OPEN`, `BLOCKED`, `UNDERDETERMINED`, `NOT APPLICABLE`, `HISTORICAL/SUPERSEDED`, or `Unknown`, with scope, contract, evidence, provenance, falsifier, and claim impact.
 
 W3 specification: [`far-ir/2.0` comparison-contract specification](../specification/far-ir-2.0-contract.md).
+
+W4 status: [PCA-W4 domain-contract status](pca-w4-domain-contracts-status-v1.0.md).
 
 Machine-readable authority: [post-closure-assurance-and-application-program-v1.0.json](../../theory/evaluation/post-closure-assurance-and-application-program-v1.0.json).
 
