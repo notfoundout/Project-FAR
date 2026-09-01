@@ -85,7 +85,9 @@ def main() -> int:
         fail("completed W3 contract-schema authority drift")
     if status.get("completed_domain_contracts_workstream") != "PCA-W4-DOMAIN-CONTRACTS":
         fail("completed W4 domain-contract authority drift")
-    if status.get("active_workstream") != "PCA-W5-APPROXIMATION-AND-COST":
+    if status.get("completed_approximation_cost_workstream") != "PCA-W5-APPROXIMATION-AND-COST":
+        fail("completed W5 approximation-cost authority drift")
+    if status.get("active_workstream") != "PCA-W6-EMPIRICAL-AUDIT-UTILITY":
         fail("active workstream authority drift")
     if status.get("independent_review_status") != "complete_confirmed_14_proved_exact_scopes_novelty_not_established":
         fail("independent-review authority drift")
@@ -135,7 +137,7 @@ def main() -> int:
         "The active program is `POST-CLOSURE-001`.",
         "`PCA-W3-CONTRACT-SCHEMA`: complete.",
         "`PCA-W4-DOMAIN-CONTRACTS`: complete at six finite-explicit domain scopes.",
-        "`PCA-W5-APPROXIMATION-AND-COST`: **next**.",
+        "`PCA-W5-APPROXIMATION-AND-COST`: **complete at its finite-explicit operational scope**.",
         "Core theory reopens only for a reproducible contradiction",
         "Historical bounded-program status",
     )

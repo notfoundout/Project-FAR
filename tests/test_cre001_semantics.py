@@ -70,7 +70,7 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
             "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.", ranked
         )
         self.assertIn(
-            "Canonical next workstream: `PCA-W5-APPROXIMATION-AND-COST`.", ranked
+            "Canonical next workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`.", ranked
         )
         self.assertNotIn("### STRATEGIC-010:", ranked)
         self.assertNotIn("### STRATEGIC-011:", ranked)

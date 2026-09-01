@@ -18,16 +18,16 @@ The core theory remains closed after the v1.1 correction. The historical UPP que
 2. **`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` — complete.** All 14 governed claims are `FORMALIZED`; FAR-CORE-014 includes the bounded unit-free MLL witness bridge and exact transitive kernel assumptions are machine-audited. No contradiction/reopen condition was found.
 3. **`PCA-W3-CONTRACT-SCHEMA` — complete.** `far-ir/2.0` records explicit comparison contracts, typed outcomes including `Unknown`, finite-explicit decoder/collision/quotient evidence, profiles, frames, transformations, provenance/freeze metadata, loss-explicit v1 migration, and declared-only approximation/cost fields. `far-ir/1.0` remains unchanged.
 4. **`PCA-W4-DOMAIN-CONTRACTS` — complete at finite-explicit scopes.** Native consequence, intervention, defeat, trace, typing-context, and derivation-structure contracts were source-motivated and frozen before controlled mapping. Twelve `far-ir/2.0` records contain six checked collisions and six checked repairs. The mappings remain internally authored and are not external-domain validation.
-5. **`PCA-W5-APPROXIMATION-AND-COST` — next.** Add explicit metrics, tolerances, decision losses, and cost preorders; do not call one optimum universal.
-6. **`PCA-W6-EMPIRICAL-AUDIT-UTILITY`.** Preregister tests of whether the discipline catches material loss or reduces disagreement.
+5. **`PCA-W5-APPROXIMATION-AND-COST` — complete at finite-explicit operational scope.** `far-ir/2.1` checks metrics, reference/aggregation semantics, losses, tolerances, randomized decoders, product cost preorders, Pareto/least sets, and exact recovery without a universal scalar objective.
+6. **`PCA-W6-EMPIRICAL-AUDIT-UTILITY` — next.** Preregister tests of whether the discipline catches material loss or reduces disagreement.
 
-## W4 completion and W5 entry gate
+## W4-to-W5 boundary
 
 W4 started from the frozen v1.1 theorem, completed W1/W2 assurance surfaces, and completed W3 `far-ir/2.0` format. Its six native memos and source set were committed before controlled mapping. Each paired record fixes the source/case domain, required behavior, representation, observation context, admitted equality, interpretation profile, target/model class, and frame.
 
 A `CHECKED_FINITE_EXPLICIT` result certifies only the recorded finite table property. W4's literature-backed correspondence is a project-authored bounded defense, not an external expert verdict and not domain completeness.
 
-W5 may begin from these exact records only after fixing a metric or divergence, tolerance, decision loss, and cost order for every approximate claim. No W4 field or successful exact repair supplies those choices implicitly.
+W5 proceeded under separate `far-ir/2.1` freezes fixing a metric, reference/aggregation rule, tolerance, decision loss, randomized decoder, and product cost order for each checked claim. No W4 field or successful exact repair supplied those choices implicitly.
 
 ## Gates
 

@@ -100,7 +100,7 @@ class PCAW4DomainContractTests(unittest.TestCase):
             self.assertNotIn("approximation", document["contract"])
             self.assertNotIn("minimal", document["report"]["evidence"]["notes"].lower())
 
-    def test_w4_is_complete_and_w5_is_next_in_machine_authority(self) -> None:
+    def test_w4_remains_complete_after_w5_progression(self) -> None:
         program = load_json(
             ROOT
             / "theory"
@@ -109,7 +109,9 @@ class PCAW4DomainContractTests(unittest.TestCase):
         )
         workstreams = {item["id"]: item for item in program["workstreams"]}
         self.assertEqual(workstreams["PCA-W4-DOMAIN-CONTRACTS"]["state"], "complete")
-        self.assertEqual(program["next_action"]["workstream"], "PCA-W5-APPROXIMATION-AND-COST")
+        self.assertEqual(program["next_action"]["workstream"], "PCA-W6-EMPIRICAL-AUDIT-UTILITY")
+        workstreams = {item["id"]: item for item in program["workstreams"]}
+        self.assertEqual(workstreams["PCA-W5-APPROXIMATION-AND-COST"]["state"], "complete")
 
 
 if __name__ == "__main__":

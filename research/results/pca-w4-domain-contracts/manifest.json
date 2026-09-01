@@ -94,15 +94,15 @@
   ],
   "supporting_artifacts": [
     {
-      "sha256": "003a9608787daf4b578aa7ad4be716f1935c77077be75f06f3d3f416de5b365b",
+      "sha256": "a50021ba44f2e53e24bb9cf32a6685f894fb4c0f3162f2aaf2e7b466a01ce2d7",
       "path": "README.md"
     },
     {
-      "sha256": "0a14f0f52aabe8600170770be5703867700cc4a9ec6930914f5cd169f4b1379c",
+      "sha256": "da4334c2a31cf84f071d225c5a53373c24377fc7ba5de4854c29d6371df0a800",
       "path": "docs/CANONICAL_MAP.md"
     },
     {
-      "sha256": "5c72dd236b4a2a71a9581339b820c286736800481948da7c9121c9f38700dfa1",
+      "sha256": "277a0c575aad8665e531da2327b5dd262a96a09b52a73dcd5b11d012aac9ebde",
       "path": "docs/ROADMAP.md"
     },
     {
@@ -122,7 +122,7 @@
       "path": "docs/governance/pca-w4-domain-contracts-status-v1.0.md"
     },
     {
-      "sha256": "876b317cd2e8d0cdb69a3ef4db7b52e73526a0bc457747d6e5c9b60296f90d79",
+      "sha256": "33b08cfbd8efbf177b38fba86f6c6a0cbebc887f89d310ca1d27556bec76409e",
       "path": "docs/governance/post-closure-assurance-and-application-program-v1.0.md"
     },
     {
@@ -130,11 +130,11 @@
       "path": "docs/governance/theorem-proof-status-register.md"
     },
     {
-      "sha256": "70889d608d1a2a66e9bf375434c62514f27b136ae08427b5605d0ef206e3ad35",
+      "sha256": "eea1c02df0cac6966a5c0ff02705d4e588c5fd4f1aaf8af575f35487cb6de922",
       "path": "docs/project-status.md"
     },
     {
-      "sha256": "007e68a99972bce337489727dcd2ad516bf977befe36a5858f535b2ced96d8e7",
+      "sha256": "02a0e339bf2eed22f1c3086ed193c1bea08c940774c58bbf95f39e76697ea234",
       "path": "docs/planning/next-actions.md"
     },
     {
@@ -202,7 +202,7 @@
       "path": "docs/research/pca-w4-domain-contracts/tools/zotero-status.json"
     },
     {
-      "sha256": "4f00dad63e3afb52815edfda048fc701c5b8485fc2673295cacbb75d83564c37",
+      "sha256": "4046038af3f2c3627888e659af7f5466b16491be0fe7bbd07867048d2374f6e8",
       "path": "governance/repository-truth-authority-v1.json"
     },
     {
@@ -210,7 +210,7 @@
       "path": "research/campaigns/pca-w4-domain-contracts-v1.0.json"
     },
     {
-      "sha256": "36840c51c2b1963b0046093113fee88b4f1f0a56a4fb20c42fa767f92829de59",
+      "sha256": "670b25ce8f2a4888b90396c008be4613603a9cce5670ccfed324f7a8b7540674",
       "path": "tests/test_cre001_semantics.py"
     },
     {
@@ -218,11 +218,11 @@
       "path": "tests/test_project_far_theory_closure.py"
     },
     {
-      "sha256": "4d0cee7275bfc384aa11818b614a2a9880305e523b0e802119adfa9eaa104212",
+      "sha256": "48a55b397b504dec932340faecc9e94a51a3b2a20c35af133f2866fc8795a340",
       "path": "tests/test_repository_truth.py"
     },
     {
-      "sha256": "40b178bd475f0fac866318b94ff860ce69aaf954bc0eae43e5c023886e082032",
+      "sha256": "256aca13ca837f0c4de8a4946ae924e04a594ba1fb49e76e05514f34bf9afd93",
       "path": "tests/test_pca_w4_domain_contracts.py"
     },
     {
@@ -230,23 +230,23 @@
       "path": "theory/evaluation/pca-w4-domain-contracts-v1.0.json"
     },
     {
-      "sha256": "eeef1c6d501b21323bfe4199c966815903ec42a60d90fe43cb902c69238a23bb",
+      "sha256": "e833e70ff7a143f6c46baefdcac3f2100015b2db3991e4f77a4f67b77c23fcb7",
       "path": "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
     },
     {
-      "sha256": "f453d003f3362b081979d1388da27dca329ccf34cbd04f6caadb7b487f7329de",
+      "sha256": "dc6cdbab41fe0fff981b8a9615a784d6f154b76c23a30dcf6023fc61370c929c",
       "path": "tools/check_pca_w4_domain_contracts.py"
     },
     {
-      "sha256": "0e584641edfe2987885fea6d9d469a82d904e7f82f8422d7dfa3048ae6583d37",
+      "sha256": "3802064bb7004b4b4567638bed9a1d09f67f4e37554c7b549bcbc312ebf2a202",
       "path": "tools/check_project_far_theory_closure.py"
     },
     {
-      "sha256": "32ba096a6e7dcda4ab9384fe0942649ee294ae34a3c2e420f09a1f1358e11e80",
+      "sha256": "b15313c7b458fd70dbf1037dde06f218f0c22cea7d89d6ca5008d6837a245c2c",
       "path": "tools/check_repository_truth.py"
     },
     {
-      "sha256": "82f99e473c46369cf644562986e786831282fa0d35c01914199d55a68cb26b1c",
+      "sha256": "c421ead936de264b0a59c1231b39d40ab501bd413f3500b88c827c46674399e4",
       "path": "tools/generate_next_tasks.py"
     }
   ],

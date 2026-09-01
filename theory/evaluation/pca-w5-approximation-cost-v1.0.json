@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "program": "POST-CLOSURE-001",
+  "workstream": "PCA-W5-APPROXIMATION-AND-COST",
+  "status": "COMPLETE_FINITE_EXPLICIT",
+  "format": "far-ir/2.1",
+  "terminal_verdict": "PROVED_FINITE_EXPLICIT_OPERATIONAL_SCOPE",
+  "semantics": ["metric", "reference_probability", "expected_or_maximum_aggregation", "decision_loss", "tolerance", "randomized_decoder", "product_cost_preorder", "pareto_minimality", "least_elements", "exact_recovery"],
+  "results": {"checked_records": 2, "incomparable_pareto_minima": 2, "least_elements": 0, "zero_tolerance_exact_boundary": true},
+  "independent_external_review": false,
+  "w6_empirical_utility_established": false,
+  "nonclaims": ["universal metric or reference", "universal scalar cost", "unique optimum", "open-domain completeness", "external-domain correspondence", "novelty or priority", "empirical utility"]
+}

@@ -11,3 +11,5 @@ Core typed objects reject unknown fields with `additionalProperties: false`. Ext
 The v1 schema remains used by its executable parser, normalizer, serialization, graph, CLI, and conformance suite. `far-ir/2.0` is intentionally separate: `mechanization.far_mechanization.contract_v2` validates its schema and finite-explicit comparison evidence, `migrate_v1_to_v2` performs loss-explicit migration, and `contract_conformance` runs the registered v2 fixtures.
 
 Both schemas use JSON Schema Draft 2020-12 and local `#/$defs/...` references only; ordinary validation must not fetch remote schemas. Software conformance is assurance for the encoded contract, not mathematical proof of application correspondence, novelty, empirical utility, or contract-free universality.
+
+`far-contract-v2.1.schema.json` is the additive `far-ir/2.1` W5 successor for checked finite-explicit approximation and cost semantics. It does not alter either predecessor. `mechanization.far_mechanization.contract_v21` recomputes exact-rational losses, feasibility, Pareto minima, least elements, and exact recovery.

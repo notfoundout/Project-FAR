@@ -18,7 +18,7 @@
     "completed_assurance_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
     "completed_contract_schema_workstream": "PCA-W3-CONTRACT-SCHEMA",
     "completed_domain_contracts_workstream": "PCA-W4-DOMAIN-CONTRACTS",
-    "active_workstream": "PCA-W5-APPROXIMATION-AND-COST",
+    "active_workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
     "independent_review_status": "complete_confirmed_14_proved_exact_scopes_novelty_not_established",
     "formalization_status": "14_formalized_0_partial_obstruction_0_contradiction",
     "contract_schema_status": "far-ir_2.0_versioned_successor_complete_finite_explicit_semantic_checks_v1_unchanged",
@@ -29,7 +29,9 @@
       "README.md:generated bounded REP/ADJ/W3.5 dashboard",
       "docs/reports/project-status-generated.md",
       "historical UPP and independent-experiment artifacts"
-    ]
+    ],
+    "completed_approximation_cost_workstream": "PCA-W5-APPROXIMATION-AND-COST",
+    "approximation_cost_status": "far_ir_2_1_finite_explicit_operational_semantics_no_universal_scalarization"
   },
   "specification_export": {
     "authority": "tools/export_specification.py plus exports/far-spec-v1/manifest.json",
@@ -50,7 +52,7 @@
     "PROJECT-FAR-CORE-THEORY-1.0 remains immutable historical evidence at its recorded SHA-256.",
     "exports/far-spec-v1/ is a current deterministic generated specification surface and must mirror PROJECT-FAR-CORE-THEORY-1.1; its embedded v1.0 theorem entry is historical provenance, not current authority.",
     "FAR-CORE-004 denies one representation being simultaneously least-informative sufficient for every observation contract; it does not deny universal sufficiency of the identity representation.",
-    "FAR-CORE-010 exact common theory is indexed by L,J,I; the frame-subtracted residue is additionally indexed by Γ.",
+    "FAR-CORE-010 exact common theory is indexed by L,J,I; the frame-subtracted residue is additionally indexed by \u0393.",
     "Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.",
     "W1 independent review is complete under exact scopes; novelty and priority remain not established.",
     "W2 formalization is complete: FAR-CORE-001 through FAR-CORE-014 are kernel-checked under the governed v1.1 statements, with no contradiction/reopen outcome.",

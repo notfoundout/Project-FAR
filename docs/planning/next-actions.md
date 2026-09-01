@@ -18,9 +18,9 @@ Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.
 
 The core theory is closed after the governed v1.1 correction. These tasks change assurance, implementation, applicability, or utility; they do not reopen the core without a genuine contradiction.
 
-The sealed `PCA-W1-INDEPENDENT-REVIEW` is complete: 14 PROVED under exact scopes, no correction required, novelty/priority not established. `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: 14/14 governed claims are FORMALIZED, including the bounded MLL bridge for FAR-CORE-014, with no contradiction/reopen outcome. `PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is the governed versioned successor, finite-explicit semantic checks are implemented, and `far-ir/1.0` remains unchanged. `PCA-W4-DOMAIN-CONTRACTS` is complete at six finite-explicit scopes: six checked lossy collisions and six checked repairs, with internally authored mappings and no external-domain validation claim.
+The sealed `PCA-W1-INDEPENDENT-REVIEW` is complete: 14 PROVED under exact scopes, no correction required, novelty/priority not established. `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: 14/14 governed claims are FORMALIZED, including the bounded MLL bridge for FAR-CORE-014, with no contradiction/reopen outcome. `PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is the governed versioned successor, finite-explicit semantic checks are implemented, and `far-ir/1.0` remains unchanged. `PCA-W4-DOMAIN-CONTRACTS` is complete at six finite-explicit scopes: six checked lossy collisions and six checked repairs, with internally authored mappings and no external-domain validation claim. `PCA-W5-APPROXIMATION-AND-COST` is complete at its frozen finite-explicit operational scope under additive `far-ir/2.1`; no universal scalar cost or unique optimum is claimed.
 
-Canonical next workstream: `PCA-W5-APPROXIMATION-AND-COST`.
+Canonical next workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`.
 
 ## Ranked Next Actions
 
@@ -38,9 +38,9 @@ Canonical next workstream: `PCA-W5-APPROXIMATION-AND-COST`.
 
 - Registered workstream: `PCA-W5-APPROXIMATION-AND-COST`
 - Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
-- Priority: active
+- Priority: complete
 - Why it matters: Exact information minimality does not choose metrics, decision losses, tolerances, runtime, storage, or explanatory cost.
-- Expected outcome: Scoped approximate adequacy and cost-minimality specifications without a universal optimum claim.
+- Expected outcome: Checked finite-explicit far-ir/2.1 approximation and product-cost semantics without a universal optimum claim.
 - Suggested branch name: `research/pca-w5-approximation-cost`
 - Suggested PR title: `Specify approximate and cost-relative adequacy`
 
@@ -48,7 +48,7 @@ Canonical next workstream: `PCA-W5-APPROXIMATION-AND-COST`.
 
 - Registered workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`
 - Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
-- Priority: external-dependency
+- Priority: active / external-dependency
 - Why it matters: No preregistered external study shows that contract/factorization auditing catches material loss or reduces disagreement.
 - Expected outcome: Bounded empirical evidence with negative results, protocol deviations, and independence disclosed.
 - Suggested branch name: `research/pca-w6-audit-utility`

@@ -238,3 +238,8 @@ fara-foundation-comparison-check:
 
 fara-expanded-check:
 	python tools/check_fara_expanded_campaign.py
+
+.PHONY: pca-w5-check
+pca-w5-check:
+	python tools/check_pca_w5_approximation_cost.py
+	python -m unittest tests.test_pca_w5_approximation_cost -v

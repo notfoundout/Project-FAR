@@ -50,8 +50,11 @@
     },
     {
       "id": "PCA-W5-APPROXIMATION-AND-COST",
-      "state": "open",
-      "deliverable": "declared metric/loss/cost extensions and algorithms"
+      "state": "complete",
+      "deliverable": "declared metric/loss/cost extensions and algorithms",
+      "result": "FAR_IR_2_1_FINITE_EXPLICIT_APPROXIMATION_AND_PRODUCT_COST_PREORDER_CHECKED",
+      "schema": "schemas/far-contract-v2.1.schema.json",
+      "status_record": "theory/evaluation/pca-w5-approximation-cost-v1.0.json"
     },
     {
       "id": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
@@ -60,9 +63,9 @@
     }
   ],
   "next_action": {
-    "workstream": "PCA-W5-APPROXIMATION-AND-COST",
+    "workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
     "theory_target": "PROJECT-FAR-CORE-THEORY-1.1",
-    "obligation": "declare metrics or divergences, tolerances, decision losses, and cost preorders before certifying any approximate or cost-aware comparison; do not infer them from W4 exact repairs"
+    "obligation": "preregister bounded empirical tests without promoting finite operational W5 controls to universal cost or utility claims"
   },
   "prohibited_promotions": [
     "contract_free_universal_minimal_architecture",
