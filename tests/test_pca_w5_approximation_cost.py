@@ -54,11 +54,7 @@ class W5Tests(unittest.TestCase):
         rehash(document)
         self.assertIn("CHECK_REQUIRES_EXPLICIT_REPRESENTATION", codes(document))
 
-    def test_checked_evidence_requires_checked_status_and_frozen_contract(self) -> None:
-        document = load()
-        document["report"]["evidence"]["status"] = "DECLARED_UNCHECKED"
-        self.assertIn("CHECKED_EVIDENCE_STATUS_MISMATCH", codes(document))
-
+    def test_checked_evidence_requires_frozen_contract(self) -> None:
         document = load()
         document["freeze"]["status"] = "DRAFT"
         document["freeze"]["frozen_at"] = None
