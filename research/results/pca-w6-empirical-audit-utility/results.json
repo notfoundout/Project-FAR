@@ -1,0 +1,198 @@
+{
+  "schema_version": "1.0",
+  "campaign": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+  "protocol_freeze_commit": "3813b9e3eb49562bd8b9f4d3179c3d9536831de6",
+  "protocol_base_commit": "2cecf2e21cc27208f606dcd38337af4369e66af2",
+  "corpus": {
+    "domains": [
+      "argumentation",
+      "bayesian-causal",
+      "formal-logic",
+      "model-based-reasoning",
+      "proof-theory",
+      "type-theory"
+    ],
+    "primary_negative_controls": 6,
+    "primary_collision_mutants": 6,
+    "secondary_native_lossy_controls": 6
+  },
+  "primary": {
+    "items": [
+      {
+        "domain": "argumentation",
+        "clean": {
+          "schema_valid": true,
+          "audit_valid": true,
+          "oracle_material_collision": false
+        },
+        "mutant": {
+          "schema_valid": true,
+          "audit_valid": false,
+          "audit_diagnostic_codes": [
+            "FACTORIZATION_FAILURE"
+          ],
+          "oracle_material_collision": true
+        }
+      },
+      {
+        "domain": "bayesian-causal",
+        "clean": {
+          "schema_valid": true,
+          "audit_valid": true,
+          "oracle_material_collision": false
+        },
+        "mutant": {
+          "schema_valid": true,
+          "audit_valid": false,
+          "audit_diagnostic_codes": [
+            "FACTORIZATION_FAILURE"
+          ],
+          "oracle_material_collision": true
+        }
+      },
+      {
+        "domain": "formal-logic",
+        "clean": {
+          "schema_valid": true,
+          "audit_valid": true,
+          "oracle_material_collision": false
+        },
+        "mutant": {
+          "schema_valid": true,
+          "audit_valid": false,
+          "audit_diagnostic_codes": [
+            "FACTORIZATION_FAILURE"
+          ],
+          "oracle_material_collision": true
+        }
+      },
+      {
+        "domain": "model-based-reasoning",
+        "clean": {
+          "schema_valid": true,
+          "audit_valid": true,
+          "oracle_material_collision": false
+        },
+        "mutant": {
+          "schema_valid": true,
+          "audit_valid": false,
+          "audit_diagnostic_codes": [
+            "FACTORIZATION_FAILURE"
+          ],
+          "oracle_material_collision": true
+        }
+      },
+      {
+        "domain": "proof-theory",
+        "clean": {
+          "schema_valid": true,
+          "audit_valid": true,
+          "oracle_material_collision": false
+        },
+        "mutant": {
+          "schema_valid": true,
+          "audit_valid": false,
+          "audit_diagnostic_codes": [
+            "FACTORIZATION_FAILURE"
+          ],
+          "oracle_material_collision": true
+        }
+      },
+      {
+        "domain": "type-theory",
+        "clean": {
+          "schema_valid": true,
+          "audit_valid": true,
+          "oracle_material_collision": false
+        },
+        "mutant": {
+          "schema_valid": true,
+          "audit_valid": false,
+          "audit_diagnostic_codes": [
+            "FACTORIZATION_FAILURE"
+          ],
+          "oracle_material_collision": true
+        }
+      }
+    ],
+    "schema_only_baseline": {
+      "true_positives": 0,
+      "false_negatives": 6,
+      "true_negatives": 6,
+      "false_positives": 0,
+      "sensitivity": "0/6",
+      "specificity": "6/6"
+    },
+    "far_semantic_audit": {
+      "true_positives": 6,
+      "false_negatives": 0,
+      "true_negatives": 6,
+      "false_positives": 0,
+      "sensitivity": "6/6",
+      "specificity": "6/6"
+    },
+    "audit_oracle_agreement": "12/12",
+    "registered_all_items_claim": "PROVED"
+  },
+  "secondary": {
+    "items": [
+      {
+        "domain": "argumentation",
+        "schema_valid": true,
+        "audit_valid_checked_refutation": true,
+        "oracle_material_collision": true
+      },
+      {
+        "domain": "bayesian-causal",
+        "schema_valid": true,
+        "audit_valid_checked_refutation": true,
+        "oracle_material_collision": true
+      },
+      {
+        "domain": "formal-logic",
+        "schema_valid": true,
+        "audit_valid_checked_refutation": true,
+        "oracle_material_collision": true
+      },
+      {
+        "domain": "model-based-reasoning",
+        "schema_valid": true,
+        "audit_valid_checked_refutation": true,
+        "oracle_material_collision": true
+      },
+      {
+        "domain": "proof-theory",
+        "schema_valid": true,
+        "audit_valid_checked_refutation": true,
+        "oracle_material_collision": true
+      },
+      {
+        "domain": "type-theory",
+        "schema_valid": true,
+        "audit_valid_checked_refutation": true,
+        "oracle_material_collision": true
+      }
+    ],
+    "native_lossy_controls_detected": "6/6",
+    "registered_control_claim": "PROVED"
+  },
+  "analysis_policy": {
+    "population_inference": false,
+    "p_values": false,
+    "confidence_intervals": false,
+    "reason": "finite project-authored exhaustive registered corpus; not a probability sample"
+  },
+  "independence": {
+    "external_investigator": false,
+    "human_participants": false,
+    "human_disagreement_tested": false,
+    "machine_oracle_independent_of_far_verifier": true
+  },
+  "deviations": [],
+  "terminal": {
+    "bounded_material_loss_detection": "PROVED",
+    "human_disagreement_reduction": "UNDERDETERMINED",
+    "external_real_world_utility": "OPEN",
+    "core_theory_impact": "NONE"
+  }
+}
