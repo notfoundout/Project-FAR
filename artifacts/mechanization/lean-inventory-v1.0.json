@@ -565,11 +565,13 @@
         "random_not_leq_exact",
         "zero_sum_boundary"
       ],
-      "imports": [],
-      "line_count": 16,
+      "imports": [
+        "Std"
+      ],
+      "line_count": 18,
       "path": "mechanization/lean/W5ApproximationCost.lean",
       "role": "LEGACY_OR_OTHER_SCOPE",
-      "sha256": "77a14d35bbe0a3b96ce7c40385740d53930eb6876e9c1a2f1243f650ed1c4430"
+      "sha256": "d917224723c192222e05dfb43e0407750ded575bdc0bee26c803fdc1052f4976"
     }
   ],
   "inventory_id": "PROJECT-FAR-LEAN-INVENTORY-1.0",

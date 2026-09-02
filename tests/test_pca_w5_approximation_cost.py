@@ -24,6 +24,12 @@ class W5Tests(unittest.TestCase):
   d=load();d['contract']['approximation']['aggregation']='maximum';rehash(d)
   # Candidate "dominated" has one case loss 1: expected-feasible, maximum-infeasible.
   self.assertIn('FEASIBLE_SET_MISMATCH',codes(d))
+ def test_duplicate_reference_case_is_not_silently_aggregated(self):
+  d=load();d['contract']['approximation']['reference']['weights'][1]['case_id']='case.zero';rehash(d)
+  self.assertIn('DUPLICATE_REFERENCE_CASE',codes(d))
+ def test_incomplete_case_table_fails_closed_without_exception(self):
+  d=load();d['contract']['representation']['table'].pop();rehash(d)
+  self.assertIn('CASE_TABLE_COVERAGE_MISMATCH',codes(d))
  def test_metric_axioms_and_loss_link(self):
   d=load();d['contract']['approximation']['metric']['entries'][1]['distance']='0';rehash(d)
   c=codes(d);self.assertIn('METRIC_SEPARATION_FAILURE',c);self.assertIn('LOSS_METRIC_MISMATCH',c)
@@ -38,10 +44,34 @@ class W5Tests(unittest.TestCase):
  def test_cost_is_multidimensional_partial_order(self):
   d=load();d['report']['evidence']['candidates'][0]['costs'][0]['dimension_id']='evaluation'
   self.assertIn('COST_COVERAGE_MISMATCH',codes(d))
+ def test_duplicate_decoder_action_is_not_silently_aggregated(self):
+  d=load();distribution=d['report']['evidence']['candidates'][0]['decoder_table'][0]['distribution']
+  distribution[1]['action']=False
+  self.assertIn('DUPLICATE_DECODER_ACTION',codes(d))
  def test_false_exact_recovery_rejected(self):
   d=load();d['report']['evidence']['exact_recovery_claims'].append('randomized')
   self.assertIn('EXACT_RECOVERY_SET_MISMATCH',codes(d))
  def test_freeze_provenance_binding(self):
   d=load();d['contract']['frame']['description']='mutation'
   self.assertIn('FREEZE_HASH_MISMATCH',codes(d))
-if __name__=='__main__':unittest.main()
+class W5LeanAlignmentTests(unittest.TestCase):
+    def test_pinned_workflow_compiles_w5_artifact(self) -> None:
+        workflow = (ROOT / ".github/workflows/pca-w5.yml").read_text(encoding="utf-8")
+        self.assertIn("lean mechanization/lean/W5ApproximationCost.lean", workflow)
+        self.assertEqual((ROOT / "lean-toolchain").read_text(encoding="utf-8").strip(), "leanprover/lean4:v4.19.0")
+
+    def test_w5_artifact_has_no_admissions(self) -> None:
+        source = (ROOT / "mechanization/lean/W5ApproximationCost.lean").read_text(encoding="utf-8")
+        for forbidden in ("sorry", "admit", "axiom "):
+            self.assertNotIn(forbidden, source)
+        for theorem in (
+            "random_not_leq_exact",
+            "exact_not_leq_random",
+            "no_least_of_two",
+            "zero_sum_boundary",
+        ):
+            self.assertIn(f"theorem {theorem}", source)
+
+
+if __name__ == '__main__':
+    unittest.main()

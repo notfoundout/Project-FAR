@@ -10,8 +10,8 @@
   ],
   "artifacts": [
     {
-      "path": "research/results/pca-w5-approximation-and-cost/frontier.json",
-      "sha256": "c0fc50714ad3e9f0094838def03e9d36504be7145ff05aac8caea5df64de02fe"
+      "path": ".github/workflows/pca-w5.yml",
+      "sha256": "f371f9c6466a07d1964806248b7ab3ada14fece1f4469c4d71c4b2925dfb467b"
     },
     {
       "path": "conformance/far-ir-2.1/valid-frontier.json",
@@ -22,14 +22,6 @@
       "sha256": "d2d726f23471f4036f13a8cc3e98b989fbc80bb0763a97dcb07f7bb79d66855b"
     },
     {
-      "path": "schemas/far-contract-v2.1.schema.json",
-      "sha256": "4c699ed5eb19808bc4b1a0c7479f941bef432128071544b9da7c8fbda46be5da"
-    },
-    {
-      "path": "docs/specification/far-ir-2.1-approximation-cost.md",
-      "sha256": "a732a4f9adee107c2067c9798a24431f4224c732f9c558f29500109083a21e40"
-    },
-    {
       "path": "docs/research/pca-w5-approximation-and-cost/00-protocol.md",
       "sha256": "caad1308a0f4dcceaadd52508e3d489e4b377ae1c3727b7316bf49250b625507"
     },
@@ -38,8 +30,28 @@
       "sha256": "d706f80e2237a73bb99fd48cee41da20ec684bb9b2dea20b2d93f355c7dbf95d"
     },
     {
+      "path": "docs/specification/far-ir-2.1-approximation-cost.md",
+      "sha256": "a732a4f9adee107c2067c9798a24431f4224c732f9c558f29500109083a21e40"
+    },
+    {
+      "path": "mechanization/far_mechanization/contract_v21.py",
+      "sha256": "0779f36e9b1ffede06c95a417ed8caeb9302c19285771bb20772290bfc1edf9a"
+    },
+    {
       "path": "mechanization/lean/W5ApproximationCost.lean",
-      "sha256": "77a14d35bbe0a3b96ce7c40385740d53930eb6876e9c1a2f1243f650ed1c4430"
+      "sha256": "d917224723c192222e05dfb43e0407750ded575bdc0bee26c803fdc1052f4976"
+    },
+    {
+      "path": "research/results/pca-w5-approximation-and-cost/frontier.json",
+      "sha256": "c0fc50714ad3e9f0094838def03e9d36504be7145ff05aac8caea5df64de02fe"
+    },
+    {
+      "path": "schemas/far-contract-v2.1.schema.json",
+      "sha256": "4c699ed5eb19808bc4b1a0c7479f941bef432128071544b9da7c8fbda46be5da"
+    },
+    {
+      "path": "tests/test_pca_w5_approximation_cost.py",
+      "sha256": "b97e2e3d9b05921c707ceaf2d114127f95fcfebe13bc60a2333d0d12b9aa451f"
     }
   ]
 }

@@ -1,3 +1,5 @@
+import Std
+
 /- PCA-W5 bounded cost-order control. No universal scalarization is assumed. -/
 structure Cost where storage : Nat; evaluation : Nat deriving DecidableEq
 
