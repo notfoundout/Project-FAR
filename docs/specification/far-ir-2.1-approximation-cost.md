@@ -6,10 +6,10 @@ Status: **Accepted for PCA-W5 finite-explicit operational semantics**
 
 ## Frozen semantics
 
-An approximate record declares all of the following inside the hash-bound contract:
+A checked approximate record must itself be `FROZEN`, and its source domain, required behavior, and representation tables must be explicitly enumerated rather than merely declared. The frozen contract declares all of the following:
 
 1. a total finite metric table, checked for identity, separation, symmetry, and triangle inequality;
-2. a finite probability mass over every source case (the reference semantics);
+2. a finite probability mass over every source case (the reference semantics), permitting zero mass where explicitly declared;
 3. either reference-weighted expected aggregation or worst-case (`maximum`) aggregation;
 4. a total decision-loss table over the behavior range and action set, checked here to equal the declared metric on those values;
 5. an explicit nonnegative rational tolerance;
@@ -28,7 +28,13 @@ Costs are not silently scalarized. Candidate `a` is below `b` exactly when it is
 
 ## Exact boundary
 
-Because the checked loss is a separating metric and reference weights are explicit, the verifier reports exact recovery only when every case has zero expected loss. At zero tolerance the fixture's feasible set is recomputed to equal its exact-recovery set. This boundary is finite and operational; it is not a theorem about arbitrary measures, pseudometrics, unrepresented cases, or all representations.
+The checked loss is a separating metric. Under `maximum` aggregation, exact recovery therefore means zero expected decision loss on every source case. Under reference-weighted `expected` aggregation, exact recovery is defined relative to the positive-mass support of the frozen reference: zero-mass cases do not affect the aggregate and cannot be inferred from a zero aggregate. With these definitions and nonnegative loss, zero tolerance makes the feasible set equal the corresponding exact-recovery set. The registered zero-tolerance fixture uses positive mass on every case, so its support-relative statement is also exact on the full listed domain.
+
+This boundary is finite and operational; it is not a theorem about arbitrary measures, pseudometrics, unrepresented cases, or all representations.
+
+## Governed evidence
+
+Terminal W5 evidence is accepted only when the campaign manifest independently matches the registered record/artifact set and the recorded SHA-256 values match the repository bytes. The manifest must bind the semantic verifier and the campaign checker themselves; removing records or artifacts cannot turn validation loops vacuous.
 
 ## Boundaries
 
