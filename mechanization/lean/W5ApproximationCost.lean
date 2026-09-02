@@ -13,10 +13,10 @@ def leq (a b : Cost) : Prop := a.storage ≤ b.storage ∧ a.evaluation ≤ b.ev
 def randomCost : Cost := ⟨1, 3⟩
 def exactCost : Cost := ⟨3, 1⟩
 
-theorem random_not_leq_exact : ¬ leq randomCost exactCost := by decide
-theorem exact_not_leq_random : ¬ leq exactCost randomCost := by decide
+theorem random_not_leq_exact : ¬ leq randomCost exactCost := by simp [leq, randomCost, exactCost]
+theorem exact_not_leq_random : ¬ leq exactCost randomCost := by simp [leq, randomCost, exactCost]
 
-theorem no_least_of_two : ¬ (leq randomCost exactCost ∨ leq exactCost randomCost) := by decide
+theorem no_least_of_two : ¬ (leq randomCost exactCost ∨ leq exactCost randomCost) := by simp [leq, randomCost, exactCost]
 
 -- With 0/1 metric loss, zero expected loss under positive case mass forces
 -- each case loss to be zero; this is the finite two-case recovery boundary.
