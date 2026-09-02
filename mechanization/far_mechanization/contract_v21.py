@@ -112,12 +112,33 @@ def validate_contract(document: object) -> Result:
             "CHECKED_EVIDENCE_OUTCOME_MISMATCH",
             "checked approximation evidence requires PROVED",
         )
+    freeze = document["freeze"]
+    if freeze["status"] != "FROZEN":
+        _add(
+            errors,
+            "CHECK_REQUIRES_FROZEN_CONTRACT",
+            "checked approximation evidence requires a frozen contract",
+        )
+    elif freeze.get("contract_sha256") != contract_sha256(contract):
+        _add(errors, "FREEZE_HASH_MISMATCH", "contract hash")
     domain = contract["source_domain"]
     if domain["kind"] != "finite_explicit" or domain["status"] != "EXPLICIT":
         _add(
             errors,
             "CHECK_REQUIRES_FINITE_EXPLICIT_DOMAIN",
             "finite explicit domain required",
+        )
+    if contract["required_behavior"]["status"] != "EXPLICIT":
+        _add(
+            errors,
+            "CHECK_REQUIRES_EXPLICIT_BEHAVIOR",
+            "checked approximation evidence requires explicit required behavior",
+        )
+    if contract["representation"]["status"] != "EXPLICIT":
+        _add(
+            errors,
+            "CHECK_REQUIRES_EXPLICIT_REPRESENTATION",
+            "checked approximation evidence requires explicit representation",
         )
     case_ids = [str(case["id"]) for case in domain["cases"]]
     if len(case_ids) != len(set(case_ids)):
@@ -241,7 +262,7 @@ def validate_contract(document: object) -> Result:
             # No malformed candidate may participate in a frontier calculation.
             continue
         per_case: list[tuple[Fraction, Fraction]] = []
-        candidate_exact = True
+        candidate_exact_on_support = True
         for case_id in case_ids:
             truth = _key(behavior[case_id])
             distribution = decoder[_key(representation[case_id])]
@@ -250,14 +271,18 @@ def validate_contract(document: object) -> Result:
                 Fraction(),
             )
             per_case.append((weights[case_id], case_loss))
-            candidate_exact = candidate_exact and case_loss == 0
+            case_is_in_exact_support = (
+                approximation["aggregation"] == "maximum" or weights[case_id] > 0
+            )
+            if case_is_in_exact_support:
+                candidate_exact_on_support = candidate_exact_on_support and case_loss == 0
         if approximation["aggregation"] == "maximum":
             aggregate = max(value for _weight, value in per_case)
         else:
             aggregate = sum((weight * value for weight, value in per_case), Fraction())
         aggregate_loss[candidate_id] = aggregate
         candidates[candidate_id] = costs
-        if candidate_exact:
+        if candidate_exact_on_support:
             exact_recovery.add(candidate_id)
     if errors:
         return Result(tuple(errors))
@@ -303,9 +328,6 @@ def validate_contract(document: object) -> Result:
             "ZERO_TOLERANCE_EXACT_BOUNDARY_FAILURE",
             "zero tolerance feasible set must equal exact recovery set",
         )
-    freeze = document["freeze"]
-    if freeze["status"] == "FROZEN" and freeze["contract_sha256"] != contract_sha256(contract):
-        _add(errors, "FREEZE_HASH_MISMATCH", "contract hash")
     return Result(tuple(errors))
 
 

@@ -22,20 +22,24 @@
       "sha256": "d2d726f23471f4036f13a8cc3e98b989fbc80bb0763a97dcb07f7bb79d66855b"
     },
     {
+      "path": "docs/governance/pca-w5-approximation-cost-status-v1.0.md",
+      "sha256": "d79bd2456767a943007735255405252b9a4d448a9a12bedc82a7e29bab94caa6"
+    },
+    {
       "path": "docs/research/pca-w5-approximation-and-cost/00-protocol.md",
-      "sha256": "caad1308a0f4dcceaadd52508e3d489e4b377ae1c3727b7316bf49250b625507"
+      "sha256": "af73404c1005879c1a1bbe14553c6bb39028b772c015d514e71d30e5e5aea405"
     },
     {
       "path": "docs/research/pca-w5-approximation-and-cost/01-execution-and-results.md",
-      "sha256": "d706f80e2237a73bb99fd48cee41da20ec684bb9b2dea20b2d93f355c7dbf95d"
+      "sha256": "2a398a42a34cd160ca59b2bc713f812eceb6c413fd0e333376e0be5cb2725f73"
     },
     {
       "path": "docs/specification/far-ir-2.1-approximation-cost.md",
-      "sha256": "a732a4f9adee107c2067c9798a24431f4224c732f9c558f29500109083a21e40"
+      "sha256": "39e4a033650e1fd3480eeca211389c53ed2bed0fb6f7a5478cd82c52be0c1d48"
     },
     {
       "path": "mechanization/far_mechanization/contract_v21.py",
-      "sha256": "0779f36e9b1ffede06c95a417ed8caeb9302c19285771bb20772290bfc1edf9a"
+      "sha256": "a6814bfab91ebc2dc9f55f06161eea2fa5adcec7f7176699bfdbb7849c1ee37e"
     },
     {
       "path": "mechanization/lean/W5ApproximationCost.lean",
@@ -51,7 +55,15 @@
     },
     {
       "path": "tests/test_pca_w5_approximation_cost.py",
-      "sha256": "b97e2e3d9b05921c707ceaf2d114127f95fcfebe13bc60a2333d0d12b9aa451f"
+      "sha256": "5023ae6bdb0983ceb7ee63f3de67ae5c37281536a49ade19df556ca5b45dc198"
+    },
+    {
+      "path": "theory/evaluation/pca-w5-approximation-cost-v1.0.json",
+      "sha256": "dbc769a36eb1ed1165d77f7fc2e975b707faf2c231357f2f0d811c2ca5e8a79c"
+    },
+    {
+      "path": "tools/check_pca_w5_approximation_cost.py",
+      "sha256": "27701c8dca708561a777212089c029812a1944d84a27b3d5cb1df5ad0de8296f"
     }
   ]
 }
