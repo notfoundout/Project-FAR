@@ -1,0 +1,196 @@
+name: W5 Review Remediation
+
+on:
+  push:
+    branches:
+      - codex/execute-w5-implementation-as-single-pr
+
+permissions:
+  contents: write
+
+jobs:
+  remediate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/execute-w5-implementation-as-single-pr
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Close semantic review gaps and rebuild governed W5 manifest
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path('.')
+          verifier_path = root / 'mechanization/far_mechanization/contract_v21.py'
+          text = verifier_path.read_text(encoding='utf-8')
+
+          def replace_once(old: str, new: str) -> None:
+              global text
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'expected one verifier patch target, found {count}: {old[:80]!r}')
+              text = text.replace(old, new, 1)
+
+          replace_once(
+              '''    if document["report"]["outcome"] != "PROVED":
+        _add(
+            errors,
+            "CHECKED_EVIDENCE_OUTCOME_MISMATCH",
+            "checked approximation evidence requires PROVED",
+        )
+    domain = contract["source_domain"]
+''',
+              '''    if document["report"]["outcome"] != "PROVED":
+        _add(
+            errors,
+            "CHECKED_EVIDENCE_OUTCOME_MISMATCH",
+            "checked approximation evidence requires PROVED",
+        )
+    freeze = document["freeze"]
+    if freeze["status"] != "FROZEN":
+        _add(
+            errors,
+            "CHECK_REQUIRES_FROZEN_CONTRACT",
+            "checked approximation evidence requires a frozen contract",
+        )
+    elif freeze.get("contract_sha256") != contract_sha256(contract):
+        _add(errors, "FREEZE_HASH_MISMATCH", "contract hash")
+    domain = contract["source_domain"]
+''',
+          )
+
+          replace_once(
+              '''    if domain["kind"] != "finite_explicit" or domain["status"] != "EXPLICIT":
+        _add(
+            errors,
+            "CHECK_REQUIRES_FINITE_EXPLICIT_DOMAIN",
+            "finite explicit domain required",
+        )
+    case_ids = [str(case["id"]) for case in domain["cases"]]
+''',
+              '''    if domain["kind"] != "finite_explicit" or domain["status"] != "EXPLICIT":
+        _add(
+            errors,
+            "CHECK_REQUIRES_FINITE_EXPLICIT_DOMAIN",
+            "finite explicit domain required",
+        )
+    if contract["required_behavior"]["status"] != "EXPLICIT":
+        _add(
+            errors,
+            "CHECK_REQUIRES_EXPLICIT_BEHAVIOR",
+            "checked approximation evidence requires explicit required behavior",
+        )
+    if contract["representation"]["status"] != "EXPLICIT":
+        _add(
+            errors,
+            "CHECK_REQUIRES_EXPLICIT_REPRESENTATION",
+            "checked approximation evidence requires explicit representation",
+        )
+    case_ids = [str(case["id"]) for case in domain["cases"]]
+''',
+          )
+
+          replace_once('''        candidate_exact = True
+''', '''        candidate_exact_on_support = True
+''')
+          replace_once(
+              '''            per_case.append((weights[case_id], case_loss))
+            candidate_exact = candidate_exact and case_loss == 0
+''',
+              '''            per_case.append((weights[case_id], case_loss))
+            case_is_in_exact_support = (
+                approximation["aggregation"] == "maximum" or weights[case_id] > 0
+            )
+            if case_is_in_exact_support:
+                candidate_exact_on_support = candidate_exact_on_support and case_loss == 0
+''',
+          )
+          replace_once('''        if candidate_exact:
+            exact_recovery.add(candidate_id)
+''', '''        if candidate_exact_on_support:
+            exact_recovery.add(candidate_id)
+''')
+
+          replace_once(
+              '''    freeze = document["freeze"]
+    if freeze["status"] == "FROZEN" and freeze["contract_sha256"] != contract_sha256(contract):
+        _add(errors, "FREEZE_HASH_MISMATCH", "contract hash")
+    return Result(tuple(errors))
+''',
+              '''    return Result(tuple(errors))
+''',
+          )
+
+          verifier_path.write_text(text, encoding='utf-8')
+
+          checked_records = [
+              'research/results/pca-w5-approximation-and-cost/frontier.json',
+              'conformance/far-ir-2.1/valid-frontier.json',
+              'conformance/far-ir-2.1/valid-zero-boundary.json',
+          ]
+          artifact_paths = [
+              '.github/workflows/pca-w5.yml',
+              'conformance/far-ir-2.1/valid-frontier.json',
+              'conformance/far-ir-2.1/valid-zero-boundary.json',
+              'docs/governance/pca-w5-approximation-cost-status-v1.0.md',
+              'docs/research/pca-w5-approximation-and-cost/00-protocol.md',
+              'docs/research/pca-w5-approximation-and-cost/01-execution-and-results.md',
+              'docs/specification/far-ir-2.1-approximation-cost.md',
+              'mechanization/far_mechanization/contract_v21.py',
+              'mechanization/lean/W5ApproximationCost.lean',
+              'research/results/pca-w5-approximation-and-cost/frontier.json',
+              'schemas/far-contract-v2.1.schema.json',
+              'tests/test_pca_w5_approximation_cost.py',
+              'theory/evaluation/pca-w5-approximation-cost-v1.0.json',
+              'tools/check_pca_w5_approximation_cost.py',
+          ]
+
+          def digest(rel: str) -> str:
+              path = root / rel
+              if not path.is_file():
+                  raise SystemExit(f'missing required W5 artifact: {rel}')
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+
+          manifest = {
+              'schema_version': '1.0',
+              'campaign': 'PCA-W5-APPROXIMATION-AND-COST',
+              'status': 'COMPLETE_FINITE_EXPLICIT',
+              'terminal_verdict': 'PROVED_FINITE_EXPLICIT_OPERATIONAL_SCOPE',
+              'checked_records': checked_records,
+              'artifacts': [
+                  {'path': rel, 'sha256': digest(rel)}
+                  for rel in artifact_paths
+              ],
+          }
+          manifest_path = root / 'research/results/pca-w5-approximation-and-cost/manifest.json'
+          manifest_path.write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+          PY
+      - name: Run W5 semantic and manifest adversarial tests
+        run: python -m unittest tests.test_pca_w5_approximation_cost -v
+      - name: Recompute complete W5 campaign
+        run: python tools/check_pca_w5_approximation_cost.py
+      - name: Preserve W4 frozen campaign integrity
+        run: python tools/check_pca_w4_domain_contracts.py
+      - name: Run canonical fast test suite
+        run: python tools/run_tests.py --fast
+      - name: Commit verified remediation
+        run: |
+          if git diff --quiet -- mechanization/far_mechanization/contract_v21.py research/results/pca-w5-approximation-and-cost/manifest.json; then
+            echo 'remediation already applied'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add mechanization/far_mechanization/contract_v21.py research/results/pca-w5-approximation-and-cost/manifest.json
+          git commit -m 'fix: close W5 adversarial review gaps'
+          git push origin HEAD:codex/execute-w5-implementation-as-single-pr
