@@ -198,7 +198,7 @@
       "path": "docs/research/pca-w4-domain-contracts/tools/wolfram-witnesses.wl"
     },
     {
-      "sha256": "3d3d840cc94d492088f84e20a9f03ceacc69d50ef2121d802345d706a647a9",
+      "sha256": "3d3d840cc94d492088f84e20a9f03ceacc69d50ef2127c5a3f4133c29f752a4f",
       "path": "docs/research/pca-w4-domain-contracts/tools/zotero-status.json"
     },
     {
@@ -226,7 +226,7 @@
       "path": "tests/test_pca_w4_domain_contracts.py"
     },
     {
-      "sha256": "6b24e1d334f1f28edc5fdf31bfcb4107461483d9f1dfdeb2174d921bfd3",
+      "sha256": "6b24e1d334f1f28edc5f170aeead19fbc76d34e603818b300b2554f8cbf37a69",
       "path": "theory/evaluation/pca-w4-domain-contracts-v1.0.json"
     },
     {
