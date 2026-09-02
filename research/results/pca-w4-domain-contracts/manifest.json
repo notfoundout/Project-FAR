@@ -198,7 +198,7 @@
       "path": "docs/research/pca-w4-domain-contracts/tools/wolfram-witnesses.wl"
     },
     {
-      "sha256": "3d3d840cc94d492088f84e20a9f03ceacc69d50ef2127c5a3f4133c29f752a4f",
+      "sha256": "3d3d840cc94d492088f84e20a9f03ceacc69d50ef2121d802345d706a647a9",
       "path": "docs/research/pca-w4-domain-contracts/tools/zotero-status.json"
     },
     {
@@ -222,11 +222,11 @@
       "path": "tests/test_repository_truth.py"
     },
     {
-      "sha256": "256aca13ca837f0c4de8a4946ae924e04a594ba1fb49e76e05514f34bf9afd93",
+      "sha256": "c533a8b9c89aa931a6c3aee133d2677684e74cf7b4f6bf159414ec371582427a",
       "path": "tests/test_pca_w4_domain_contracts.py"
     },
     {
-      "sha256": "6b24e1d334f1f28edc5f170aeead19fbc76d34e603818b300b2554f8cbf37a69",
+      "sha256": "6b24e1d334f1f28edc5fdf31bfcb4107461483d9f1dfdeb2174d921bfd3",
       "path": "theory/evaluation/pca-w4-domain-contracts-v1.0.json"
     },
     {
@@ -234,7 +234,7 @@
       "path": "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
     },
     {
-      "sha256": "dc6cdbab41fe0fff981b8a9615a784d6f154b76c23a30dcf6023fc61370c929c",
+      "sha256": "486219e2a6ce3d53ce2bf8a9ce239b6b99f9fbf7d68fcdd3ae5fd4da3d5acce8",
       "path": "tools/check_pca_w4_domain_contracts.py"
     },
     {
