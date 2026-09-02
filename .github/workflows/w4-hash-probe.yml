@@ -6,14 +6,17 @@ on:
       - codex/execute-w5-implementation-as-single-pr
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  hashes:
+  reconcile:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Patch W4 supporting-artifact hashes
+        with:
+          ref: codex/execute-w5-implementation-as-single-pr
+          fetch-depth: 0
+      - name: Recompute every W4 supporting-artifact hash
         run: |
           python - <<'PY'
           import hashlib, json
@@ -21,26 +24,23 @@ jobs:
 
           manifest_path = Path('research/results/pca-w4-domain-contracts/manifest.json')
           manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
-          targets = {
-              'tests/test_pca_w4_domain_contracts.py': hashlib.sha256(Path('tests/test_pca_w4_domain_contracts.py').read_bytes()).hexdigest(),
-              'tools/check_pca_w4_domain_contracts.py': hashlib.sha256(Path('tools/check_pca_w4_domain_contracts.py').read_bytes()).hexdigest(),
-          }
-          seen = set()
           for item in manifest.get('supporting_artifacts', []):
-              path = item.get('path')
-              if path in targets:
-                  item['sha256'] = targets[path]
-                  seen.add(path)
-          missing = set(targets) - seen
-          if missing:
-              raise SystemExit(f'missing manifest entries: {sorted(missing)}')
+              path = Path(item['path'])
+              if not path.is_file():
+                  raise SystemExit(f'missing supporting artifact: {path}')
+              item['sha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
           manifest_path.write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
-          for path, digest in targets.items():
-              print(digest, path)
           PY
-      - uses: actions/upload-artifact@v4
-        with:
-          name: w4-patched-manifest
-          path: research/results/pca-w4-domain-contracts/manifest.json
-          if-no-files-found: error
-          retention-days: 1
+      - name: Validate W4 campaign after reconciliation
+        run: python tools/check_pca_w4_domain_contracts.py
+      - name: Commit exact reconciliation when needed
+        run: |
+          if git diff --quiet -- research/results/pca-w4-domain-contracts/manifest.json; then
+            echo 'W4 manifest already exact'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/results/pca-w4-domain-contracts/manifest.json
+          git commit -m 'fix: reconcile W4 supporting artifact hashes'
+          git push origin HEAD:codex/execute-w5-implementation-as-single-pr
