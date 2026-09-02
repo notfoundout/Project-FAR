@@ -32,8 +32,8 @@ that assurance change without rewriting the theory.
 - `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete — FAR-CORE-001–014 are kernel-checked against the governed v1.1 statements; FAR-CORE-014 includes the bounded MLL syntax, resource split, atom-balance invariant, named witness sequents, and projected-decoder failure, with no contradiction found.
 - `PCA-W3-CONTRACT-SCHEMA`: complete — `far-ir/2.0` is a versioned comparison-contract successor with explicit contract/scope/provenance/failure fields, finite-explicit factorization/collision/quotient verification, loss-explicit v1 migration, and conformance fixtures. `far-ir/1.0` remains unchanged and is not silently reinterpreted.
 - `PCA-W4-DOMAIN-CONTRACTS`: complete at finite-explicit scopes — six native contracts were frozen before mapping; six deliberately lossy representations have checked collisions and six explicit scoped repairs have checked factorizations. The domain mappings remain internally authored.
-- `PCA-W5-APPROXIMATION-AND-COST`: **open — next** — add explicit metrics, losses, tolerances, or cost orders.
-- `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open — test whether the audit discipline detects material loss or reduces disagreement.
+- `PCA-W5-APPROXIMATION-AND-COST`: complete at finite-explicit operational scope — `far-ir/2.1` establishes checked approximation and cost semantics without universal scalarization.
+- `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open — next — test whether the audit discipline detects material loss or reduces disagreement.
 
 ## Assurance rules
 

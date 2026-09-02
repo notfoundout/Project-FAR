@@ -4,15 +4,15 @@ Navigation: [README Command Center](../../README.md) | [Project Status](../repor
 
 | Metric | Current | Previous | Change | Source |
 |---|---:|---:|---:|---|
-| Markdown files | 847 | 847 | +0 | [.](../..) |
-| Theory files | 301 | 301 | +0 | [theory](../../theory) |
-| Python tools | 60 | 60 | +0 | [tools](../../tools) |
+| Markdown files | 1290 | 1290 | +0 | [.](../..) |
+| Theory files | 604 | 604 | +0 | [theory](../../theory) |
+| Python tools | 210 | 210 | +0 | [tools](../../tools) |
 | Reports | 187 | 187 | +0 | [docs/reports](../reports) |
-| Registries | 10 | 10 | +0 | [theory](../../theory) |
+| Registries | 35 | 35 | +0 | [theory](../../theory) |
 | Proof objects | 15 | 15 | +0 | [theory/proof-objects](../../theory/proof-objects) |
-| Examples | 43 | 43 | +0 | [examples](../../examples) |
-| Maintenance documents | 5 | 5 | +0 | [docs/maintenance](../maintenance) |
-| Releases | 17 | 17 | +0 | [docs/releases](../releases) |
+| Examples | 55 | 55 | +0 | [examples](../../examples) |
+| Maintenance documents | 6 | 6 | +0 | [docs/maintenance](../maintenance) |
+| Releases | 25 | 25 | +0 | [docs/releases](../releases) |
 | Internal evaluations | 23 | 23 | +0 | [theory/evaluation/evidence-registry.yaml](../../theory/evaluation/evidence-registry.yaml) |
 | External evaluations | 29 | 29 | +0 | [theory/evaluation/external-validation-registry.yaml](../../theory/evaluation/external-validation-registry.yaml) |
 | Adversarial fixtures | 14 | 14 | +0 | [theory/falsification/adversarial-test-suite.yaml](../../theory/falsification/adversarial-test-suite.yaml) |
@@ -21,8 +21,8 @@ Navigation: [README Command Center](../../README.md) | [Project Status](../repor
 | Conservative extensions | 35 | 35 | +0 | [theory/falsification/primitive-pressure-registry.yaml](../../theory/falsification/primitive-pressure-registry.yaml) |
 | Fits FAR | 14 | 14 | +0 | [theory/evaluation/evidence-registry.yaml](../../theory/evaluation/evidence-registry.yaml) |
 | Unresolved cases | 17 | 17 | +0 | [docs/reports/research-gap-report.md](../reports/research-gap-report.md) |
-| Unresolved gaps | 162 | 162 | +0 | [docs/reports/research-gap-report.md](../reports/research-gap-report.md) |
-| Documentation coverage | 847 | 847 | +0 | [docs](..) |
+| Unresolved gaps | 335 | 335 | +0 | [docs/reports/research-gap-report.md](../reports/research-gap-report.md) |
+| Documentation coverage | 1290 | 1290 | +0 | [docs](..) |
 | Health-check availability | 1 | 1 | +0 | [tools/repo_health_check.py](../../tools/repo_health_check.py) |
 
 Trend tracking compares the current snapshot with dashboard-metrics-history.json.

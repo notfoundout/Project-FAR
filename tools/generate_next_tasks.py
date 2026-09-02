@@ -27,17 +27,17 @@ TASKS = [
     {
         "id": "STRATEGIC-013",
         "workstream": "PCA-W5-APPROXIMATION-AND-COST",
-        "priority": "active",
+        "priority": "complete",
         "title": "Specify approximation and cost orders",
         "why": "Exact information minimality does not choose metrics, decision losses, tolerances, runtime, storage, or explanatory cost.",
-        "outcome": "Scoped approximate adequacy and cost-minimality specifications without a universal optimum claim.",
+        "outcome": "Checked finite-explicit far-ir/2.1 approximation and product-cost semantics without a universal optimum claim.",
         "branch": "research/pca-w5-approximation-cost",
         "pr": "Specify approximate and cost-relative adequacy",
     },
     {
         "id": "STRATEGIC-014",
         "workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
-        "priority": "external-dependency",
+        "priority": "active / external-dependency",
         "title": "Test audit utility",
         "why": "No preregistered external study shows that contract/factorization auditing catches material loss or reduces disagreement.",
         "outcome": "Bounded empirical evidence with negative results, protocol deviations, and independence disclosed.",
@@ -65,7 +65,7 @@ def nav_links() -> list[str]:
 
 
 def main() -> int:
-    assert TASKS[1]["workstream"] == "PCA-W5-APPROXIMATION-AND-COST"
+    assert TASKS[2]["workstream"] == "PCA-W6-EMPIRICAL-AUDIT-UTILITY"
     assert len({item["id"] for item in TASKS}) == len(TASKS)
     assert len({item["workstream"] for item in TASKS}) == len(TASKS)
 
@@ -84,9 +84,9 @@ def main() -> int:
         "",
         "The core theory is closed after the governed v1.1 correction. These tasks change assurance, implementation, applicability, or utility; they do not reopen the core without a genuine contradiction.",
         "",
-        "The sealed `PCA-W1-INDEPENDENT-REVIEW` is complete: 14 PROVED under exact scopes, no correction required, novelty/priority not established. `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: 14/14 governed claims are FORMALIZED, including the bounded MLL bridge for FAR-CORE-014, with no contradiction/reopen outcome. `PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is the governed versioned successor, finite-explicit semantic checks are implemented, and `far-ir/1.0` remains unchanged. `PCA-W4-DOMAIN-CONTRACTS` is complete at six finite-explicit scopes: six checked lossy collisions and six checked repairs, with internally authored mappings and no external-domain validation claim.",
+        "The sealed `PCA-W1-INDEPENDENT-REVIEW` is complete: 14 PROVED under exact scopes, no correction required, novelty/priority not established. `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: 14/14 governed claims are FORMALIZED, including the bounded MLL bridge for FAR-CORE-014, with no contradiction/reopen outcome. `PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is the governed versioned successor, finite-explicit semantic checks are implemented, and `far-ir/1.0` remains unchanged. `PCA-W4-DOMAIN-CONTRACTS` is complete at six finite-explicit scopes: six checked lossy collisions and six checked repairs, with internally authored mappings and no external-domain validation claim. `PCA-W5-APPROXIMATION-AND-COST` is complete at its frozen finite-explicit operational scope under additive `far-ir/2.1`; no universal scalar cost or unique optimum is claimed.",
         "",
-        "Canonical next workstream: `PCA-W5-APPROXIMATION-AND-COST`.",
+        "Canonical next workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`.",
         "",
         "## Ranked Next Actions",
         "",

@@ -553,6 +553,25 @@
       "path": "mechanization/lean/ValidationEngine.lean",
       "role": "LEGACY_OR_OTHER_SCOPE",
       "sha256": "54372afeb15f9025ea477d33aab9a4714a34f223862c27b37ad292ee63208269"
+    },
+    {
+      "declarations": [
+        "Cost",
+        "exactCost",
+        "exact_not_leq_random",
+        "leq",
+        "no_least_of_two",
+        "randomCost",
+        "random_not_leq_exact",
+        "zero_sum_boundary"
+      ],
+      "imports": [
+        "Std"
+      ],
+      "line_count": 35,
+      "path": "mechanization/lean/W5ApproximationCost.lean",
+      "role": "LEGACY_OR_OTHER_SCOPE",
+      "sha256": "5c47f6b835c9e76644be08206b3f6a1ac2f9a8e967893692ee0ac87581ade236"
     }
   ],
   "inventory_id": "PROJECT-FAR-LEAN-INVENTORY-1.0",

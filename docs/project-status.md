@@ -69,12 +69,12 @@ Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application 
 | `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | Complete | 14 FORMALIZED; exact kernel assumptions audited; no contradiction/reopen condition. |
 | `PCA-W3-CONTRACT-SCHEMA` | Complete | `far-ir/2.0` successor, semantic verifier, loss-explicit migration, and conformance fixtures complete; v1 unchanged. |
 | `PCA-W4-DOMAIN-CONTRACTS` | Complete | Six frozen native contracts; six checked lossy collisions and six checked scoped repairs; internal mapping only. |
-| `PCA-W5-APPROXIMATION-AND-COST` | **Next / Active** | Approximation and implementation minimality require declared metrics, losses, tolerances, or cost orders. |
-| `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | Open | Empirical utility evidence does not alter deductive theorem status automatically. |
+| `PCA-W5-APPROXIMATION-AND-COST` | **Complete** | `far-ir/2.1` checks finite metrics, references/aggregation, losses, tolerances, randomized decoders, product cost preorders, Pareto/least sets, and exact recovery. |
+| `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | **Next / Active** | Empirical utility evidence does not alter deductive theorem status automatically. |
 
-## W5 entry boundary
+## W5 approximation-and-cost disposition
 
-W5 must not reinterpret W4's exact repairs as approximate or cost-optimal. Every approximate claim must add a declared metric or divergence, tolerance, decision loss, and cost preorder under a new freeze.
+W5 did not reinterpret W4's exact repairs as approximate or cost-optimal. Its additive `far-ir/2.1` controls separately freeze a metric, reference and aggregation rule, decision loss, tolerance, randomized decoder, and multidimensional cost preorder. Checked finite results distinguish Pareto minima from least elements and enforce the zero-loss recovery boundary.
 
 The W4 finite-explicit certificates prove only the encoded table properties. They do not prove that the tables exhaust or faithfully represent their external domains.
 

@@ -29,6 +29,8 @@ The corrected v1.1 theory survived the sealed `PCA-W1-INDEPENDENT-REVIEW` under 
 
 `PCA-W4-DOMAIN-CONTRACTS` is complete at its recorded finite-explicit scopes: six independently motivated native comparison dimensions were frozen before controlled mapping; each domain has one checked lossy collision and one checked repaired factorization. The mappings and evaluations remain project-authored and do not establish external-investigator independence, novelty, minimal repair, or open-domain completeness.
 
+`PCA-W5-APPROXIMATION-AND-COST` is complete at its frozen finite-explicit operational scope. The additive `far-ir/2.1` verifier checks exact-rational metric/loss/reference/tolerance semantics, randomized decoders, multidimensional product cost orders, Pareto minima versus least elements, and zero-loss recovery. It does not select a universal scalar cost or unique optimum.
+
 These are separate assurance dimensions. Independent review does not imply novelty; Lean formalization does not imply empirical utility, efficiency, open-domain universality, or product readiness; schema/software conformance does not establish application correspondence.
 
 Canonical links:
@@ -41,6 +43,8 @@ Canonical links:
 - [W2 formalization status](docs/governance/pca-w2-formalization-status-v1.0.md)
 - [W3 contract-schema status](docs/governance/pca-w3-contract-schema-status-v1.0.md)
 - [W4 domain-contract status](docs/governance/pca-w4-domain-contracts-status-v1.0.md)
+- [W5 approximation/cost status](docs/governance/pca-w5-approximation-cost-status-v1.0.md)
+- [`far-ir/2.1` approximation/cost specification](docs/specification/far-ir-2.1-approximation-cost.md)
 - [W4 finite-explicit results](docs/research/pca-w4-domain-contracts/02-results.md)
 - [`far-ir/2.0` contract specification](docs/specification/far-ir-2.0-contract.md)
 - [Canonical project status](docs/project-status.md)
@@ -56,12 +60,12 @@ The active program is `POST-CLOSURE-001`.
 - `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete, 14/14 formalized.
 - `PCA-W3-CONTRACT-SCHEMA`: complete.
 - `PCA-W4-DOMAIN-CONTRACTS`: complete at six finite-explicit domain scopes.
-- `PCA-W5-APPROXIMATION-AND-COST`: **next**.
+- `PCA-W5-APPROXIMATION-AND-COST`: **complete at its finite-explicit operational scope**.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open.
 
 Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.
 
-## W4 result and W5 boundary
+## W4 result and W5 completion boundary
 
 `far-ir/2.0` explicitly represents contract identity/version, source/case domain, required behavior, representation, decoder/factorization or collision evidence, observation contexts, typed outcomes including `Unknown`, observational equivalence/quotient evidence, admitted transformations/equivalences, interpretation profile, target/model class, frame, provenance/freeze metadata, failure reporting, and optional approximation/loss/cost declarations.
 
@@ -69,7 +73,7 @@ For finite explicit records, checked factorization, collision, and exact beta-ke
 
 W4 froze native contracts for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory before mapping them into `far-ir/2.0`. Across the six domains, deliberately lossy representations expose six checked consequence-affecting collisions, while explicit scoped repairs supply six checked finite factorization witnesses. Domain-specific recomputation and mutation controls supplement the generic v2 verifier.
 
-These results certify only the frozen cases and behavior queries. W5 must separately declare approximation metrics, tolerances, decision losses, computational costs, and cost preorders; W4 supplies none of those semantics.
+These W4 results certify only the frozen cases and behavior queries. W5 separately established its finite-explicit controls under `far-ir/2.1`; W4 supplies none of those approximation or cost semantics.
 
 The existing Phase 3 `far-ir/1.0` mechanization remains a historical/current MVP for its stated reasoning-document interchange scope. It is not redefined by v2.
 

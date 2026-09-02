@@ -1,0 +1,339 @@
+{
+  "format_version": "far-ir/2.1",
+  "id": "w5.zero.boundary",
+  "contract": {
+    "id": "w5.zero.boundary",
+    "contract_version": "1.0",
+    "mode": "approximate",
+    "source_domain": {
+      "status": "EXPLICIT",
+      "kind": "finite_explicit",
+      "description": "Frozen two-case binary decision scope.",
+      "cases": [
+        {
+          "id": "case.zero",
+          "value": {
+            "label": 0
+          }
+        },
+        {
+          "id": "case.one",
+          "value": {
+            "label": 1
+          }
+        }
+      ]
+    },
+    "required_behavior": {
+      "status": "EXPLICIT",
+      "description": "Correct binary action.",
+      "table": [
+        {
+          "case_id": "case.zero",
+          "value": false
+        },
+        {
+          "case_id": "case.one",
+          "value": true
+        }
+      ]
+    },
+    "representation": {
+      "status": "EXPLICIT",
+      "description": "Distinct finite representation values.",
+      "table": [
+        {
+          "case_id": "case.zero",
+          "value": "r0"
+        },
+        {
+          "case_id": "case.one",
+          "value": "r1"
+        }
+      ]
+    },
+    "observation_contexts": [
+      {
+        "id": "obs.binary",
+        "description": "Binary decision under declared loss.",
+        "status": "EXPLICIT"
+      }
+    ],
+    "admitted_transformations": [
+      {
+        "id": "eq.literal",
+        "kind": "equivalence",
+        "description": "Canonical JSON equality.",
+        "status": "EXPLICIT"
+      }
+    ],
+    "interpretation_profile": {
+      "id": "interp.binary",
+      "description": "Literal binary outcomes and actions.",
+      "status": "EXPLICIT"
+    },
+    "target_model_class": {
+      "id": "target.two",
+      "description": "Exactly the two listed cases.",
+      "status": "EXPLICIT"
+    },
+    "frame": {
+      "id": "frame.empty",
+      "description": "No background premises.",
+      "status": "EXPLICIT"
+    },
+    "approximation": {
+      "status": "CHECKED_FINITE_EXPLICIT",
+      "w5_semantics_established": true,
+      "metric": {
+        "kind": "finite_table_metric",
+        "values": [
+          false,
+          true
+        ],
+        "entries": [
+          {
+            "left": false,
+            "right": false,
+            "distance": "0"
+          },
+          {
+            "left": false,
+            "right": true,
+            "distance": "1"
+          },
+          {
+            "left": true,
+            "right": false,
+            "distance": "1"
+          },
+          {
+            "left": true,
+            "right": true,
+            "distance": "0"
+          }
+        ]
+      },
+      "reference": {
+        "kind": "finite_probability_mass",
+        "weights": [
+          {
+            "case_id": "case.zero",
+            "weight": "1/2"
+          },
+          {
+            "case_id": "case.one",
+            "weight": "1/2"
+          }
+        ]
+      },
+      "aggregation": "expected",
+      "loss": {
+        "kind": "finite_decision_loss",
+        "actions": [
+          false,
+          true
+        ],
+        "entries": [
+          {
+            "truth": false,
+            "action": false,
+            "loss": "0"
+          },
+          {
+            "truth": false,
+            "action": true,
+            "loss": "1"
+          },
+          {
+            "truth": true,
+            "action": false,
+            "loss": "1"
+          },
+          {
+            "truth": true,
+            "action": true,
+            "loss": "0"
+          }
+        ]
+      },
+      "tolerance": "0",
+      "cost_preorder": {
+        "kind": "product_preorder",
+        "dimensions": [
+          {
+            "id": "storage",
+            "description": "Frozen abstract storage units.",
+            "direction": "minimize"
+          },
+          {
+            "id": "evaluation",
+            "description": "Frozen abstract evaluation units.",
+            "direction": "minimize"
+          }
+        ]
+      },
+      "extensions": {
+        "w5.scope": "finite_explicit_only"
+      }
+    }
+  },
+  "report": {
+    "outcome": "PROVED",
+    "evidence": {
+      "kind": "approximation_cost",
+      "status": "CHECKED_FINITE_EXPLICIT",
+      "candidates": [
+        {
+          "id": "randomized",
+          "decoder_table": [
+            {
+              "representation_value": "r0",
+              "distribution": [
+                {
+                  "action": false,
+                  "probability": "1/2"
+                },
+                {
+                  "action": true,
+                  "probability": "1/2"
+                }
+              ]
+            },
+            {
+              "representation_value": "r1",
+              "distribution": [
+                {
+                  "action": false,
+                  "probability": "1/2"
+                },
+                {
+                  "action": true,
+                  "probability": "1/2"
+                }
+              ]
+            }
+          ],
+          "costs": [
+            {
+              "dimension_id": "storage",
+              "value": "1"
+            },
+            {
+              "dimension_id": "evaluation",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "exact",
+          "decoder_table": [
+            {
+              "representation_value": "r0",
+              "distribution": [
+                {
+                  "action": false,
+                  "probability": "1"
+                },
+                {
+                  "action": true,
+                  "probability": "0"
+                }
+              ]
+            },
+            {
+              "representation_value": "r1",
+              "distribution": [
+                {
+                  "action": false,
+                  "probability": "0"
+                },
+                {
+                  "action": true,
+                  "probability": "1"
+                }
+              ]
+            }
+          ],
+          "costs": [
+            {
+              "dimension_id": "storage",
+              "value": "3"
+            },
+            {
+              "dimension_id": "evaluation",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "dominated",
+          "decoder_table": [
+            {
+              "representation_value": "r0",
+              "distribution": [
+                {
+                  "action": false,
+                  "probability": "1"
+                },
+                {
+                  "action": true,
+                  "probability": "0"
+                }
+              ]
+            },
+            {
+              "representation_value": "r1",
+              "distribution": [
+                {
+                  "action": false,
+                  "probability": "1"
+                },
+                {
+                  "action": true,
+                  "probability": "0"
+                }
+              ]
+            }
+          ],
+          "costs": [
+            {
+              "dimension_id": "storage",
+              "value": "4"
+            },
+            {
+              "dimension_id": "evaluation",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "claimed_feasible": [
+        "exact"
+      ],
+      "claimed_pareto_minimal": [
+        "exact"
+      ],
+      "claimed_least_elements": [
+        "exact"
+      ],
+      "exact_recovery_claims": [
+        "exact"
+      ],
+      "notes": "Randomized decoding is operational; two incomparable Pareto minima exist and no least element exists."
+    },
+    "failure_report": []
+  },
+  "provenance": {
+    "producer": "PCA-W5-APPROXIMATION-AND-COST",
+    "created_at": "2026-09-01T00:00:00Z",
+    "sources": [],
+    "notes": "Constructed finite control; no external-domain correspondence claim."
+  },
+  "freeze": {
+    "status": "FROZEN",
+    "frozen_at": "2026-09-01T00:00:00Z",
+    "contract_sha256": "151399357b9841f8f3741c67cc5c2e3dacbd6c10e9020df3cf0760401e0cd050",
+    "notes": "Frozen W5 operational contract."
+  }
+}

@@ -1,0 +1,33 @@
+name: PCA-W5 Approximation and Cost
+
+on:
+  pull_request:
+    branches: [main]
+  merge_group:
+    types: [checks_requested]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pca-w5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | \
+            sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Compile PCA-W5 formal control
+        run: lean mechanization/lean/W5ApproximationCost.lean
+      - name: Recompute PCA-W5 campaign
+        run: python tools/check_pca_w5_approximation_cost.py
+      - name: Run PCA-W5 conformance and adversarial tests
+        run: python -m unittest tests.test_pca_w5_approximation_cost -v

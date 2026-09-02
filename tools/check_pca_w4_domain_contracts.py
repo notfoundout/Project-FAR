@@ -352,8 +352,11 @@ def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
     workstreams = {item["id"]: item for item in program["workstreams"]}
     if workstreams["PCA-W4-DOMAIN-CONTRACTS"]["state"] != "complete":
         errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "W4 is not complete"})
-    if program["next_action"]["workstream"] != "PCA-W5-APPROXIMATION-AND-COST":
-        errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "W5 is not next"})
+    if workstreams["PCA-W5-APPROXIMATION-AND-COST"]["state"] == "complete":
+        if program["next_action"]["workstream"] != "PCA-W6-EMPIRICAL-AUDIT-UTILITY":
+            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "completed W5 does not advance to W6"})
+    elif program["next_action"]["workstream"] != "PCA-W5-APPROXIMATION-AND-COST":
+        errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "incomplete W5 is not next"})
 
     current_authority = {
         "docs/CANONICAL_MAP.md": ["Records 13 formalized claims"],

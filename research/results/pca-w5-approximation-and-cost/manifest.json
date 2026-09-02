@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "campaign": "PCA-W5-APPROXIMATION-AND-COST",
+  "status": "COMPLETE_FINITE_EXPLICIT",
+  "terminal_verdict": "PROVED_FINITE_EXPLICIT_OPERATIONAL_SCOPE",
+  "checked_records": [
+    "research/results/pca-w5-approximation-and-cost/frontier.json",
+    "conformance/far-ir-2.1/valid-frontier.json",
+    "conformance/far-ir-2.1/valid-zero-boundary.json"
+  ],
+  "artifacts": [
+    {
+      "path": ".github/workflows/pca-w5.yml",
+      "sha256": "f371f9c6466a07d1964806248b7ab3ada14fece1f4469c4d71c4b2925dfb467b"
+    },
+    {
+      "path": "conformance/far-ir-2.1/valid-frontier.json",
+      "sha256": "c0fc50714ad3e9f0094838def03e9d36504be7145ff05aac8caea5df64de02fe"
+    },
+    {
+      "path": "conformance/far-ir-2.1/valid-zero-boundary.json",
+      "sha256": "d2d726f23471f4036f13a8cc3e98b989fbc80bb0763a97dcb07f7bb79d66855b"
+    },
+    {
+      "path": "docs/governance/pca-w5-approximation-cost-status-v1.0.md",
+      "sha256": "d79bd2456767a943007735255405252b9a4d448a9a12bedc82a7e29bab94caa6"
+    },
+    {
+      "path": "docs/research/pca-w5-approximation-and-cost/00-protocol.md",
+      "sha256": "af73404c1005879c1a1bbe14553c6bb39028b772c015d514e71d30e5e5aea405"
+    },
+    {
+      "path": "docs/research/pca-w5-approximation-and-cost/01-execution-and-results.md",
+      "sha256": "2a398a42a34cd160ca59b2bc713f812eceb6c413fd0e333376e0be5cb2725f73"
+    },
+    {
+      "path": "docs/specification/far-ir-2.1-approximation-cost.md",
+      "sha256": "39e4a033650e1fd3480eeca211389c53ed2bed0fb6f7a5478cd82c52be0c1d48"
+    },
+    {
+      "path": "mechanization/far_mechanization/contract_v21.py",
+      "sha256": "a6814bfab91ebc2dc9f55f06161eea2fa5adcec7f7176699bfdbb7849c1ee37e"
+    },
+    {
+      "path": "mechanization/lean/W5ApproximationCost.lean",
+      "sha256": "5c47f6b835c9e76644be08206b3f6a1ac2f9a8e967893692ee0ac87581ade236"
+    },
+    {
+      "path": "research/results/pca-w5-approximation-and-cost/frontier.json",
+      "sha256": "c0fc50714ad3e9f0094838def03e9d36504be7145ff05aac8caea5df64de02fe"
+    },
+    {
+      "path": "schemas/far-contract-v2.1.schema.json",
+      "sha256": "4c699ed5eb19808bc4b1a0c7479f941bef432128071544b9da7c8fbda46be5da"
+    },
+    {
+      "path": "tests/test_pca_w5_approximation_cost.py",
+      "sha256": "5023ae6bdb0983ceb7ee63f3de67ae5c37281536a49ade19df556ca5b45dc198"
+    },
+    {
+      "path": "theory/evaluation/pca-w5-approximation-cost-v1.0.json",
+      "sha256": "dbc769a36eb1ed1165d77f7fc2e975b707faf2c231357f2f0d811c2ca5e8a79c"
+    },
+    {
+      "path": "tools/check_pca_w5_approximation_cost.py",
+      "sha256": "27701c8dca708561a777212089c029812a1944d84a27b3d5cb1df5ad0de8296f"
+    }
+  ]
+}

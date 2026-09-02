@@ -214,3 +214,10 @@ Each concept should have one canonical source. Other documents should link to th
 - Preliminary external validation: `theory/evaluation/external-validation-methodology.md` and `theory/evaluation/external-validation-registry.yaml` are the canonical preliminary external-validation methodology and registry. They preserve historical EV-001 through EV-029 evidence for scoped mapping and pressure identification only.
 - Canonical comparative evaluation: `theory/evaluation/comparative-representation/protocol-v1.0.md` is the sole canonical source for Comparative Representation Protocol v1.0, including protocol versioning and comparative-result interpretation.
 - Comparative experiment registration: `theory/evaluation/comparative-representation/experiment-registry.json` is the canonical registry for blinded comparative representation experiments. Legacy external-validation reports must not be reclassified as CRP v1.0 experiments.
+
+## W5 Approximation and Cost Authority
+
+- Specification: [`far-ir/2.1`](specification/far-ir-2.1-approximation-cost.md).
+- Terminal governance: [`PCA-W5 status`](governance/pca-w5-approximation-cost-status-v1.0.md).
+- Machine result: [`pca-w5-approximation-cost-v1.0.json`](../theory/evaluation/pca-w5-approximation-cost-v1.0.json).
+- `far-ir/2.0` and `far-ir/1.0` remain unchanged. W5 authority is limited to frozen finite-explicit operational semantics.
