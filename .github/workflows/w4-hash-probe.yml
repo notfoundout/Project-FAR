@@ -1,0 +1,19 @@
+name: W4 Hash Probe
+
+on:
+  push:
+    branches:
+      - codex/execute-w5-implementation-as-single-pr
+
+permissions:
+  contents: read
+
+jobs:
+  hashes:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print W4 supporting-artifact SHA-256 values
+        run: |
+          sha256sum tests/test_pca_w4_domain_contracts.py
+          sha256sum tools/check_pca_w4_domain_contracts.py
