@@ -39,7 +39,7 @@
     },
     {
       "path": "mechanization/lean/W5ApproximationCost.lean",
-      "sha256": "d917224723c192222e05dfb43e0407750ded575bdc0bee26c803fdc1052f4976"
+      "sha256": "78c44b722b70cb6584c8e48b03ff4a3fc62dc4d5b4ac9c4d7a6a790141774cf5"
     },
     {
       "path": "research/results/pca-w5-approximation-and-cost/frontier.json",
