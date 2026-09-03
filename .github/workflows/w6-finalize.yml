@@ -49,7 +49,7 @@ jobs:
           lim43 = "| LIM-043 | W6 uses a Project-FAR-authored six-domain finite corpus, Project-FAR-authored deterministic collision mutation, Project-FAR-authored semantic implementation, and Project-FAR-authored independent machine oracle. The schema-only comparator is a syntactic machine baseline, not unaided human review. | Empirical audit-utility evidence | Open external boundary. The registered bounded result establishes only detection of the registered representation-collision defect on the frozen corpus. It does not establish human disagreement reduction, population sensitivity/specificity, external real-world utility, superiority over alternative audit methods, or external-investigator independence. Evidence: `docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md`. |"
           replace_once('docs/governance/limitations-register.md', lim42, lim42 + '\n' + lim43)
           PY
-      - name: Rebind governed W4 mutable support surfaces
+      - name: Rebind governed W4 downstream support surfaces
         run: |
           python - <<'PY'
           import hashlib
@@ -59,7 +59,9 @@ jobs:
           root = Path('.')
           manifest_path = root / 'research/results/pca-w4-domain-contracts/manifest.json'
           manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
-          mutable = {
+          # Closed transition set: ten repository-wide authority/status surfaces
+          # plus the W4 checker/test pair changed to recognize the terminal W6 state.
+          rebind = {
               'README.md',
               'docs/CANONICAL_MAP.md',
               'docs/ROADMAP.md',
@@ -70,19 +72,21 @@ jobs:
               'docs/planning/next-actions.md',
               'governance/repository-truth-authority-v1.json',
               'theory/evaluation/post-closure-assurance-and-application-program-v1.0.json',
+              'tests/test_pca_w4_domain_contracts.py',
+              'tools/check_pca_w4_domain_contracts.py',
           }
           seen = set()
           for item in manifest['supporting_artifacts']:
               rel = item['path']
-              if rel not in mutable:
+              if rel not in rebind:
                   continue
               artifact = root / rel
               if not artifact.is_file():
                   raise SystemExit(f'missing governed W4 support surface: {rel}')
               item['sha256'] = hashlib.sha256(artifact.read_bytes()).hexdigest()
               seen.add(rel)
-          if seen != mutable:
-              raise SystemExit(f'W4 support manifest missing governed surfaces: {sorted(mutable - seen)}')
+          if seen != rebind:
+              raise SystemExit(f'W4 support manifest missing governed surfaces: {sorted(rebind - seen)}')
           manifest_path.write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
           PY
       - name: Verify preregistered W6 execution and frozen W4 evidence
