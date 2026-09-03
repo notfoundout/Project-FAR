@@ -43,14 +43,62 @@ jobs:
           )
           replace_once(
               'docs/governance/open-problems-register.md',
-              '| OP-28 | Test whether FAR\'s audit discipline catches material loss or reduces disagreement. | empirical | No preregistered external effectiveness evidence. |',
-              '| OP-28 | Externally test whether FAR\'s audit discipline catches consequential material loss, improves human review, or reduces disagreement beyond the registered internal W6 control. | empirical | W6 proves only the preregistered project-authored controlled-artifact collision result (`6/6` mutants detected, `6/6` clean controls accepted, `12/12` oracle agreement). No preregistered external or human effectiveness evidence exists. |',
+              "| OP-28 | Test whether FAR's audit discipline catches material loss or reduces disagreement. | empirical | No preregistered external effectiveness evidence. |",
+              "| OP-28 | Externally test whether FAR's audit discipline catches consequential material loss, improves human review, or reduces disagreement beyond the registered internal W6 control. | empirical | W6 proves only the preregistered project-authored controlled-artifact collision result (`6/6` mutants detected, `6/6` clean controls accepted, `12/12` oracle agreement). No preregistered external or human effectiveness evidence exists. |",
           )
-          lim42 = '| LIM-042 | W4\'s six native comparison dimensions are literature-motivated, but Project FAR selected the finite witnesses, performed the mappings, and evaluated the records. Each repair is tested on two cases and one declared behavior. | Domain-contract evidence | Open boundary. W4 does not establish external-investigator framing/evaluation, open-domain completeness, minimal or unique repair, novelty, approximation/cost semantics, or empirical utility. Evidence: `docs/research/pca-w4-domain-contracts/02-results.md`. |'
-          lim43 = '| LIM-043 | W6 uses a Project-FAR-authored six-domain finite corpus, Project-FAR-authored deterministic collision mutation, Project-FAR-authored semantic implementation, and Project-FAR-authored independent machine oracle. The schema-only comparator is a syntactic machine baseline, not unaided human review. | Empirical audit-utility evidence | Open external boundary. The registered bounded result establishes only detection of the registered representation-collision defect on the frozen corpus. It does not establish human disagreement reduction, population sensitivity/specificity, external real-world utility, superiority over alternative audit methods, or external-investigator independence. Evidence: `docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md`. |'
+          lim42 = "| LIM-042 | W4's six native comparison dimensions are literature-motivated, but Project FAR selected the finite witnesses, performed the mappings, and evaluated the records. Each repair is tested on two cases and one declared behavior. | Domain-contract evidence | Open boundary. W4 does not establish external-investigator framing/evaluation, open-domain completeness, minimal or unique repair, novelty, approximation/cost semantics, or empirical utility. Evidence: `docs/research/pca-w4-domain-contracts/02-results.md`. |"
+          lim43 = "| LIM-043 | W6 uses a Project-FAR-authored six-domain finite corpus, Project-FAR-authored deterministic collision mutation, Project-FAR-authored semantic implementation, and Project-FAR-authored independent machine oracle. The schema-only comparator is a syntactic machine baseline, not unaided human review. | Empirical audit-utility evidence | Open external boundary. The registered bounded result establishes only detection of the registered representation-collision defect on the frozen corpus. It does not establish human disagreement reduction, population sensitivity/specificity, external real-world utility, superiority over alternative audit methods, or external-investigator independence. Evidence: `docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md`. |"
           replace_once('docs/governance/limitations-register.md', lim42, lim42 + '\n' + lim43)
+
+          checker = Path('tools/check_pca_w4_domain_contracts.py')
+          text = checker.read_text(encoding='utf-8')
+          old = '''    if workstreams["PCA-W5-APPROXIMATION-AND-COST"]["state"] == "complete":
+        if program["next_action"]["workstream"] != "PCA-W6-EMPIRICAL-AUDIT-UTILITY":
+            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "completed W5 does not advance to W6"})
+    elif program["next_action"]["workstream"] != "PCA-W5-APPROXIMATION-AND-COST":
+        errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "incomplete W5 is not next"})
+'''
+          new = '''    w5_complete = workstreams["PCA-W5-APPROXIMATION-AND-COST"]["state"] == "complete"
+    w6_complete = workstreams.get("PCA-W6-EMPIRICAL-AUDIT-UTILITY", {}).get("state") == "complete"
+    next_workstream = program.get("next_action", {}).get("workstream")
+    if not w5_complete:
+        if next_workstream != "PCA-W5-APPROXIMATION-AND-COST":
+            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "incomplete W5 is not next"})
+    elif not w6_complete:
+        if next_workstream != "PCA-W6-EMPIRICAL-AUDIT-UTILITY":
+            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "completed W5 does not advance to W6"})
+    else:
+        if program.get("status") != "complete_registered_workstreams":
+            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "completed W6 does not close registered program"})
+        if next_workstream is not None:
+            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "completed W6 must not invent a next workstream"})
+'''
+          if old in text:
+              text = text.replace(old, new, 1)
+              checker.write_text(text, encoding='utf-8')
+          elif new not in text:
+              raise SystemExit('W4 program-state checker patch target not found')
           PY
-      - name: Verify preregistered W6 execution
+      - name: Reconcile W4 supporting-artifact hashes after governed W6 transition
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path('.')
+          path = root / 'research/results/pca-w4-domain-contracts/manifest.json'
+          manifest = json.loads(path.read_text(encoding='utf-8'))
+          # Frozen W4 evidence records are immutable here. Only supporting surfaces
+          # that legitimately evolve under later governed workstreams are re-bound.
+          for item in manifest['supporting_artifacts']:
+              artifact = root / item['path']
+              if not artifact.is_file():
+                  raise SystemExit(f"missing W4 supporting artifact: {item['path']}")
+              item['sha256'] = hashlib.sha256(artifact.read_bytes()).hexdigest()
+          path.write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+          PY
+      - name: Verify preregistered W6 execution and frozen W4 evidence
         run: |
           python tools/check_pca_w4_domain_contracts.py
           python -m unittest tests.test_pca_w6_empirical_audit_utility -v
@@ -58,9 +106,9 @@ jobs:
         run: |
           python - <<'PY'
           import hashlib
+          import importlib.util
           import json
           from pathlib import Path
-          import importlib.util
 
           root = Path('.')
           module_path = root / 'tools/check_pca_w6_empirical_audit_utility.py'
@@ -108,6 +156,6 @@ jobs:
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/CANONICAL_MAP.md docs/governance/open-problems-register.md docs/governance/limitations-register.md research/results/pca-w6-empirical-audit-utility/manifest.json
+          git add -A
           git commit -m 'governance: finalize PCA-W6 bounded audit utility'
           git push origin HEAD:research/pca-w6-audit-utility
