@@ -1,0 +1,113 @@
+name: W6 Finalize
+
+on:
+  push:
+    branches:
+      - research/pca-w6-audit-utility
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/pca-w6-audit-utility
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Apply bounded W6 governance propagation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str) -> None:
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              count = text.count(old)
+              if count == 0 and new in text:
+                  return
+              if count != 1:
+                  raise SystemExit(f'{path}: expected exactly one replacement target, found {count}')
+              p.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          replace_once(
+              'docs/CANONICAL_MAP.md',
+              '| PCA-W4 Domain-Contracts Status | [`governance/pca-w4-domain-contracts-status-v1.0.md`](governance/pca-w4-domain-contracts-status-v1.0.md) | Records six bounded native contracts, six lossy collisions, six scoped repairs, and the internal-mapping boundary. |',
+              '| PCA-W4 Domain-Contracts Status | [`governance/pca-w4-domain-contracts-status-v1.0.md`](governance/pca-w4-domain-contracts-status-v1.0.md) | Records six bounded native contracts, six lossy collisions, six scoped repairs, and the internal-mapping boundary. |\n| PCA-W5 Approximation-and-Cost Status | [`governance/pca-w5-approximation-cost-status-v1.0.md`](governance/pca-w5-approximation-cost-status-v1.0.md) | Records the frozen finite-explicit `far-ir/2.1` approximation/cost result and its nonclaims. |\n| PCA-W6 Empirical Audit-Utility Status | [`governance/pca-w6-empirical-audit-utility-status-v1.0.md`](governance/pca-w6-empirical-audit-utility-status-v1.0.md) | Records the preregistered bounded internal collision-detection result while preserving human/external utility as unestablished. |',
+          )
+          replace_once(
+              'docs/governance/open-problems-register.md',
+              '| OP-28 | Test whether FAR\'s audit discipline catches material loss or reduces disagreement. | empirical | No preregistered external effectiveness evidence. |',
+              '| OP-28 | Externally test whether FAR\'s audit discipline catches consequential material loss, improves human review, or reduces disagreement beyond the registered internal W6 control. | empirical | W6 proves only the preregistered project-authored controlled-artifact collision result (`6/6` mutants detected, `6/6` clean controls accepted, `12/12` oracle agreement). No preregistered external or human effectiveness evidence exists. |',
+          )
+          lim42 = '| LIM-042 | W4\'s six native comparison dimensions are literature-motivated, but Project FAR selected the finite witnesses, performed the mappings, and evaluated the records. Each repair is tested on two cases and one declared behavior. | Domain-contract evidence | Open boundary. W4 does not establish external-investigator framing/evaluation, open-domain completeness, minimal or unique repair, novelty, approximation/cost semantics, or empirical utility. Evidence: `docs/research/pca-w4-domain-contracts/02-results.md`. |'
+          lim43 = '| LIM-043 | W6 uses a Project-FAR-authored six-domain finite corpus, Project-FAR-authored deterministic collision mutation, Project-FAR-authored semantic implementation, and Project-FAR-authored independent machine oracle. The schema-only comparator is a syntactic machine baseline, not unaided human review. | Empirical audit-utility evidence | Open external boundary. The registered bounded result establishes only detection of the registered representation-collision defect on the frozen corpus. It does not establish human disagreement reduction, population sensitivity/specificity, external real-world utility, superiority over alternative audit methods, or external-investigator independence. Evidence: `docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md`. |'
+          replace_once('docs/governance/limitations-register.md', lim42, lim42 + '\n' + lim43)
+          PY
+      - name: Verify preregistered W6 execution
+        run: |
+          python tools/check_pca_w4_domain_contracts.py
+          python -m unittest tests.test_pca_w6_empirical_audit_utility -v
+      - name: Build exact W6 artifact manifest
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          import importlib.util
+
+          root = Path('.')
+          module_path = root / 'tools/check_pca_w6_empirical_audit_utility.py'
+          spec = importlib.util.spec_from_file_location('pca_w6', module_path)
+          assert spec is not None and spec.loader is not None
+          w6 = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(w6)
+
+          def digest(rel: str) -> str:
+              path = root / rel
+              if not path.is_file():
+                  raise SystemExit(f'missing required W6 artifact: {rel}')
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+
+          manifest = {
+              'schema_version': '1.0',
+              'campaign': 'PCA-W6-EMPIRICAL-AUDIT-UTILITY',
+              'status': 'COMPLETE_BOUNDED_INTERNAL_CONTROL',
+              'protocol_freeze_commit': w6.PROTOCOL_FREEZE_COMMIT,
+              'protocol_base_commit': w6.PROTOCOL_BASE_COMMIT,
+              'artifacts': [
+                  {'path': rel, 'sha256': digest(rel)}
+                  for rel in w6.EXPECTED_ARTIFACTS
+              ],
+          }
+          path = root / 'research/results/pca-w6-empirical-audit-utility/manifest.json'
+          path.write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+          PY
+      - name: Verify complete W6 campaign
+        run: python tools/check_pca_w6_empirical_audit_utility.py
+      - name: Run targeted canonical consistency checks
+        run: |
+          python tools/check_project_far_theory_closure.py
+          python tools/check_repository_truth.py
+          python tools/check_current_state_consistency.py
+          python tools/check_internal_links.py
+          python tools/validate_docs.py
+      - name: Run canonical fast validation suite
+        run: python tools/run_tests.py --fast
+      - name: Commit verified W6 finalization
+        run: |
+          if git diff --quiet; then
+            echo 'W6 finalization already applied'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/CANONICAL_MAP.md docs/governance/open-problems-register.md docs/governance/limitations-register.md research/results/pca-w6-empirical-audit-utility/manifest.json
+          git commit -m 'governance: finalize PCA-W6 bounded audit utility'
+          git push origin HEAD:research/pca-w6-audit-utility
