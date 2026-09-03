@@ -72,7 +72,7 @@ def _indexed_table(rows: list[Mapping[str, Any]]) -> dict[str, object]:
 
 
 def oracle_has_material_collision(document: Mapping[str, Any]) -> bool:
-    """Independent pairwise oracle: no FAR verifier and no report/evidence access."""
+    """Independently identify pairwise material collisions from contract tables."""
     contract = document["contract"]
     case_ids = [str(case["id"]) for case in contract["source_domain"]["cases"]]
     behavior = _indexed_table(contract["required_behavior"]["table"])
@@ -275,16 +275,16 @@ def compute_results() -> dict[str, Any]:
             "registered_control_claim": "PROVED" if secondary_pass else "REFUTED",
         },
         "analysis_policy": {
-            "population_inference": false,
-            "p_values": false,
-            "confidence_intervals": false,
+            "population_inference": False,
+            "p_values": False,
+            "confidence_intervals": False,
             "reason": "finite project-authored exhaustive registered corpus; not a probability sample",
         },
         "independence": {
-            "external_investigator": false,
-            "human_participants": false,
-            "human_disagreement_tested": false,
-            "machine_oracle_independent_of_far_verifier": true,
+            "external_investigator": False,
+            "human_participants": False,
+            "human_disagreement_tested": False,
+            "machine_oracle_independent_of_far_verifier": True,
         },
         "deviations": [],
         "terminal": {
