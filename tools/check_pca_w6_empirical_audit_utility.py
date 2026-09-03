@@ -8,11 +8,10 @@ import sys
 from pathlib import Path
 from typing import Any, Mapping
 
-from jsonschema import Draft202012Validator
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from jsonschema import Draft202012Validator  # noqa: E402
 from mechanization.far_mechanization.contract_v2 import (  # noqa: E402
     contract_sha256,
     validate_contract,
