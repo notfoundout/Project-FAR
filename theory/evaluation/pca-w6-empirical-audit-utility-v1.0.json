@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "program": "POST-CLOSURE-001",
+  "workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+  "status": "COMPLETE_BOUNDED_INTERNAL_CONTROL",
+  "protocol_freeze_commit": "3813b9e3eb49562bd8b9f4d3179c3d9536831de6",
+  "protocol_base_commit": "2cecf2e21cc27208f606dcd38337af4369e66af2",
+  "result_record": "research/results/pca-w6-empirical-audit-utility/results.json",
+  "corpus": {
+    "domains": 6,
+    "negative_controls": 6,
+    "registered_collision_mutants": 6,
+    "native_lossy_positive_controls": 6
+  },
+  "results": {
+    "schema_only_mutation_detection": "0/6",
+    "far_semantic_mutation_detection": "6/6",
+    "far_semantic_clean_acceptance": "6/6",
+    "far_oracle_primary_agreement": "12/12",
+    "native_lossy_controls_detected": "6/6"
+  },
+  "terminal": {
+    "bounded_material_loss_detection": "PROVED",
+    "human_disagreement_reduction": "UNDERDETERMINED",
+    "external_real_world_utility": "OPEN",
+    "core_theory_impact": "NONE"
+  },
+  "independence": {
+    "external_investigator": false,
+    "human_participants": false,
+    "project_authored_corpus": true,
+    "project_authored_mutation": true,
+    "independent_machine_oracle": true,
+    "external_replication": false
+  },
+  "nonclaims": [
+    "human reviewer effectiveness",
+    "human disagreement reduction",
+    "population sensitivity or specificity",
+    "external real-world utility",
+    "domain completeness",
+    "superiority over alternative audit methods",
+    "novelty or priority",
+    "change to deductive theorem status"
+  ]
+}
