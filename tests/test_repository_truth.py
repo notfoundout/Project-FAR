@@ -38,12 +38,39 @@ class RepositoryTruthTests(unittest.TestCase):
             payload["completed_domain_contracts_workstream"],
             "PCA-W4-DOMAIN-CONTRACTS",
         )
-        self.assertEqual(payload["active_workstream"], "PCA-W6-EMPIRICAL-AUDIT-UTILITY")
+        self.assertEqual(
+            payload["completed_approximation_cost_workstream"],
+            "PCA-W5-APPROXIMATION-AND-COST",
+        )
+        self.assertEqual(
+            payload["completed_audit_utility_workstream"],
+            "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+        )
+        self.assertIsNone(payload["active_workstream"])
         self.assertEqual(
             payload["domain_contracts_status"],
             "six_finite_explicit_native_contracts_six_lossy_collisions_six_scoped_repairs_internal_mapping_only",
         )
-        self.assertEqual(payload["current_phase"], "post-closure assurance and application")
+        self.assertEqual(
+            payload["audit_utility_status"],
+            "bounded_internal_registered_collision_detection_6_of_6_clean_acceptance_6_of_6_oracle_agreement_12_of_12_human_and_external_utility_not_established",
+        )
+        self.assertEqual(
+            payload["current_phase"],
+            "post-closure registered program complete; downstream external utility open",
+        )
+
+    def test_terminal_w6_boundary_cannot_reopen_a_registered_w7(self) -> None:
+        authority = json.loads((ROOT / "governance/repository-truth-authority-v1.json").read_text())
+        status = authority["project_status"]
+        self.assertIsNone(status["active_workstream"])
+        self.assertEqual(
+            status["completed_audit_utility_workstream"],
+            "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+        )
+        boundaries = " ".join(authority["claim_boundaries"])
+        self.assertIn("no registered W7", boundaries)
+        self.assertIn("OP-28", boundaries)
 
     def test_version_drift_fails_closed(self) -> None:
         original = truth.read_text
